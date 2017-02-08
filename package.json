@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "lerna": "2.0.0-beta.36"
+  },
+  "name": "@ngrx/source",
+  "version": "3.0.0-alpha.0",
+  "description": "monorepo for ngrx development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ngrx",
+    "angular",
+    "rxjs"
+  ],
+  "author": "Rob Wormald <robwormald@gmail.com>",
+  "license": "MIT"
+}
