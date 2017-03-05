@@ -1,0 +1,3 @@
+describe('@ngrx/effects', function() {
+
+});
