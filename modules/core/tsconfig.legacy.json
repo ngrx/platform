@@ -1,0 +1,23 @@
+
+{
+  "compilerOptions": {
+    "declaration": true,
+    "stripInternal": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": false,
+    "outDir": "./release",
+    "sourceMap": false,
+    "lib": ["es2015", "dom"],
+    "target": "es5",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
+  }
+}
