@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"outDir": "./output",
+    "lib": ["es2015", "dom"]
+	},
+	"files": [
+    "main.ts"
+	],
+  "angularCompilerOptions": {
+    "genDir": "ngfactory"
+  }
+}
