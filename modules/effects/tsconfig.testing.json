@@ -8,14 +8,14 @@
     "module": "es2015",
     "moduleResolution": "node",
     "noEmitOnError": false,
-    "outDir": "./release",
-    "rootDir": ".",
+    "outDir": "./release/testing",
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2015", "dom"],
     "target": "es5",
     "skipLibCheck": true,
     "paths": {
+      "@ngrx/store": ["../store/release"],
       "@ngrx/effects": ["./release"]
     }
   },
@@ -23,6 +23,7 @@
     "testing/index.ts"
   ],
   "angularCompilerOptions": {
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "genDir": "./release"
   }
 }

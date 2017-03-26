@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "baseUrl": ".",
@@ -10,17 +9,20 @@
     "moduleResolution": "node",
     "noEmitOnError": false,
     "outDir": "./release",
-    "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2015", "dom"],
     "target": "es5",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@ngrx/store": ["../store/release"]
+    }
   },
   "files": [
     "index.ts"
   ],
   "angularCompilerOptions": {
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "genDir": "./release"
   }
 }

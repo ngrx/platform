@@ -1,0 +1,8 @@
+machine:
+  node:
+    version: 6.9.5
+test:
+  override:
+    - npm install -g yarn
+    - yarn run bootstrap
+    - yarn run build

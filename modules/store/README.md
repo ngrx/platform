@@ -42,7 +42,7 @@ Includes Ahead-of-Time (AOT) compilation, hot module reloading (HMR), devtools, 
 - [Reactive Angular 2 with ngrx (video)](https://youtu.be/mhA7zZ23Odw)
 - [Comprehensive Introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510)
 - [@ngrx/store in 10 minutes (video)](https://egghead.io/lessons/angular-2-ngrx-store-in-10-minutes)
-- [Build Redux Style Applications with Angular2, RxJS, and ngrx/store (video)](https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs)
+- [Build Redux Style Applications with Angular, RxJS, and ngrx/store (video)](https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs)
 
 
 ### Setup

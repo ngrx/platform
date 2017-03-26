@@ -17,7 +17,7 @@ import { ScannedActionsSubject } from './scanned_actions_subject';
 export abstract class StateObservable extends Observable<any> { }
 
 @Injectable()
-export class State extends BehaviorSubject<any> implements OnDestroy {
+export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   static readonly INIT = '@ngrx/store/init';
 
   private stateSubscription: Subscription;

@@ -20,7 +20,7 @@ describe('enterZone Operator', function() {
           done();
         },
         error(err) {
-          done(err);
+          done();
         }
       });
   });
