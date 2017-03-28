@@ -1,9 +1,9 @@
-import { Injectable, ModuleWithProviders, NgModule, Optional } from "@angular/core";
+import { Injectable, ModuleWithProviders, NgModule, Optional } from '@angular/core';
 import {
   ActivatedRouteSnapshot, CanActivateChild, ExtraOptions, RouterModule, RouterStateSnapshot,
   Routes, Router, NavigationCancel, RoutesRecognized, NavigationError
-} from "@angular/router";
-import { Store, StoreModule, provideStore } from "@ngrx/store";
+} from '@angular/router';
+import { Store, StoreModule } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 
 /**
@@ -50,7 +50,7 @@ export type RouterErrorPayload<T> = {
 export type RouterReducerState = { state: RouterStateSnapshot, navigationId: number };
 
 export function routerReducer(state: RouterReducerState, action: any): RouterReducerState {
-  if (action.type === "ROUTER_NAVIGATION" || action.type === "ROUTER_ERROR" || action.type === "ROUTER_CANCEL") {
+  if (action.type === 'ROUTER_NAVIGATION' || action.type === 'ROUTER_ERROR' || action.type === 'ROUTER_CANCEL') {
     return ({ state: action.payload.routerState, navigationId: action.payload.event.id });
   } else {
     return state;
