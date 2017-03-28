@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noEmitOnError": false,
+    "outDir": "./release",
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2015", "dom"],
+    "target": "es5",
+    "skipLibCheck": true,
+    "paths": {
+      "@ngrx/store": ["../store/release"]
+    }
+  },
+  "files": [
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true,
+    "genDir": "./release"
+  }
+}

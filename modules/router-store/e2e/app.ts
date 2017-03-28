@@ -1,9 +1,9 @@
-import { Component, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { Router, RouterModule } from "@angular/router";
+import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Router, RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { ROUTER_NAVIGATION, ROUTER_CANCEL, ROUTER_ERROR, StoreRouterConnectingModule } from "../src/index";
+import { ROUTER_NAVIGATION, ROUTER_CANCEL, ROUTER_ERROR, StoreRouterConnectingModule } from '../src/index';
 
 @Component({
   selector: 'test-app',
@@ -17,7 +17,7 @@ export class AppCmp { }
 })
 export class SimpleCmp { }
 
-export function reducer (state: string = "", action: any) {
+export function reducer (state: string = '', action: any) {
   if (action.type === ROUTER_NAVIGATION) {
     return action.payload.routerState.url.toString();
   } else {
@@ -33,7 +33,7 @@ export function reducer (state: string = "", action: any) {
       { path: '', component: SimpleCmp },
       { path: 'next', component: SimpleCmp }
     ]),
-    StoreModule.provideStore({ reducer }),
+    StoreModule.forRoot({ reducer }),
     StoreRouterConnectingModule
   ],
   bootstrap: [AppCmp]

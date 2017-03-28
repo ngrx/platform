@@ -1,5 +1,5 @@
 export default {
-  entry: './release/src/index.js',
+  entry: './release/index.js',
   dest: './release/bundles/router-store.umd.js',
   format: 'umd',
   moduleName: 'ngrx.routerStore',

@@ -1,25 +1,31 @@
 {
+  "version": "2.0.0",
+  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "stripInternal": true,
+    "outDir": "./release",
+    "target": "es5",
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "es2015",
+    "removeComments": false,
     "moduleResolution": "node",
-    "noEmitOnError": false,
-    "outDir": "./release",
-    "rootDir": ".",
-    "lib": ["es2015", "dom"],
-    "target": "es5",
-    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "declaration": true,
+    "module": "commonjs",
+    "lib": ["es5", "dom", "es2015"],
     "types": [
-      "node",
-      "jasmine"
-    ]
+      "jasmine",
+      "node"
+    ],
+    "baseUrl": ".",
+    "rootDir": "../",
+    "paths": {
+      "@ngrx/store": ["../store"]
+    }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "release"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true

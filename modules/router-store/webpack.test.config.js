@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.join(process.cwd(), 'release'),
     publicPath: 'release/',
-    filename: "bundle.js"
+    filename: 'bundle.js'
   },
   module: {
     rules: [

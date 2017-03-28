@@ -1,20 +1,20 @@
-import { Component, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { Router, RouterModule, NavigationEnd } from "@angular/router";
-import { Store, StoreModule } from "@ngrx/store";
-import { ROUTER_NAVIGATION, ROUTER_CANCEL, ROUTER_ERROR, StoreRouterConnectingModule, routerReducer } from "../src/index";
+import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { Store, StoreModule } from '@ngrx/store';
+import { ROUTER_NAVIGATION, ROUTER_CANCEL, ROUTER_ERROR, StoreRouterConnectingModule, routerReducer } from '../src/index';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/toPromise';
 
 describe('integration spec', () => {
   beforeEach(() => {
-    document.body.appendChild(document.createElement("test-app"));
+    document.body.appendChild(document.createElement('test-app'));
   });
 
   it('should work', (done) => {
-    const reducer = (state: string = "", action: any) => {
+    const reducer = (state: string = '', action: any) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
       } else {
@@ -29,24 +29,24 @@ describe('integration spec', () => {
       const store = ref.injector.get(Store);
       const log = logOfRouterAndStore(router, store);
 
-      router.navigateByUrl("/").then(() => {
+      router.navigateByUrl('/').then(() => {
         expect(log).toEqual([
-          { type: 'store', state: "" }, //init event. has nothing to do with the router
+          { type: 'store', state: '' }, //init event. has nothing to do with the router
           { type: 'router', event: 'NavigationStart', url: '/' },
           { type: 'router', event: 'RoutesRecognized', url: '/' },
-          { type: 'store', state: "/" }, // ROUTER_NAVIGATION event in the store
+          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
           { type: 'router', event: 'NavigationEnd', url: '/' }
         ]);
 
       }).then(() => {
         log.splice(0);
-        return router.navigateByUrl("next");
+        return router.navigateByUrl('next');
 
       }).then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'store', state: "/next" },
+          { type: 'store', state: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' }
         ]);
 
@@ -55,10 +55,10 @@ describe('integration spec', () => {
     });
   });
 
-  it("should support preventing navigation", (done) => {
-    const reducer = (state: string = "", action: any) => {
-      if (action.type === ROUTER_NAVIGATION && action.payload.routerState.url.toString() === "/next") {
-        throw new Error("You shall not pass!");
+  it('should support preventing navigation', (done) => {
+    const reducer = (state: string = '', action: any) => {
+      if (action.type === ROUTER_NAVIGATION && action.payload.routerState.url.toString() === '/next') {
+        throw new Error('You shall not pass!');
       } else {
         return state;
       }
@@ -70,12 +70,12 @@ describe('integration spec', () => {
       const store = ref.injector.get(Store);
       const log = logOfRouterAndStore(router, store);
 
-      router.navigateByUrl("/").then(() => {
+      router.navigateByUrl('/').then(() => {
         log.splice(0);
-        return router.navigateByUrl("next");
+        return router.navigateByUrl('next');
 
       }).catch((e) => {
-        expect(e.message).toEqual("You shall not pass!");
+        expect(e.message).toEqual('You shall not pass!');
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
@@ -87,8 +87,8 @@ describe('integration spec', () => {
     });
   });
 
-  it("should support rolling back if navigation gets canceled", (done) => {
-    const reducer = (state: string = "", action: any): any => {
+  it('should support rolling back if navigation gets canceled', (done) => {
+    const reducer = (state: string = '', action: any): any => {
       console.log(action)
       if (action.type === ROUTER_NAVIGATION) {
         return { url: action.payload.routerState.url.toString(), lastAction: ROUTER_NAVIGATION };
@@ -108,9 +108,9 @@ describe('integration spec', () => {
       const store = ref.injector.get(Store);
       const log = logOfRouterAndStore(router, store);
 
-      router.navigateByUrl("/").then(() => {
+      router.navigateByUrl('/').then(() => {
         log.splice(0);
-        return router.navigateByUrl("next");
+        return router.navigateByUrl('next');
 
       }).then((r) => {
         expect(r).toEqual(false);
@@ -127,8 +127,8 @@ describe('integration spec', () => {
     });
   });
 
-  it("should support rolling back if navigation errors", (done) => {
-    const reducer = (state: string = "", action: any): any => {
+  it('should support rolling back if navigation errors', (done) => {
+    const reducer = (state: string = '', action: any): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return { url: action.payload.routerState.url.toString(), lastAction: ROUTER_NAVIGATION };
 
@@ -140,19 +140,19 @@ describe('integration spec', () => {
       }
     };
 
-    const ngModule = createNgModule({ reducers: { reducer }, canActivate: () => { throw new Error("BOOM!"); } });
+    const ngModule = createNgModule({ reducers: { reducer }, canActivate: () => { throw new Error('BOOM!'); } });
 
     platformBrowserDynamic().bootstrapModule(ngModule).then(ref => {
       const router: Router = ref.injector.get(Router);
       const store = ref.injector.get(Store);
       const log = logOfRouterAndStore(router, store);
 
-      router.navigateByUrl("/").then(() => {
+      router.navigateByUrl('/').then(() => {
         log.splice(0);
-        return router.navigateByUrl("next");
+        return router.navigateByUrl('next');
 
       }).catch((e) => {
-        expect(e.message).toEqual("BOOM!");
+        expect(e.message).toEqual('BOOM!');
 
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
@@ -167,7 +167,7 @@ describe('integration spec', () => {
     });
   });
 
-  it("should call navigateByUrl when resetting state of the routerReducer", (done) => {
+  it('should call navigateByUrl when resetting state of the routerReducer', (done) => {
     const reducer = (state: any, action: any) => {
       const r = routerReducer(state, action);
       return r && r.state ? ({ url: r.state.url, navigationId: r.navigationId }) : null;
@@ -187,15 +187,15 @@ describe('integration spec', () => {
         }
       });
 
-      router.navigateByUrl("/").then(() => {
+      router.navigateByUrl('/').then(() => {
         log.splice(0);
-        return router.navigateByUrl("next");
+        return router.navigateByUrl('next');
 
       }).then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'store', state: { url: "/next", navigationId: 2 } },
+          { type: 'store', state: { url: '/next', navigationId: 2 } },
           { type: 'router', event: 'NavigationEnd', url: '/next' }
         ]);
         log.splice(0);
@@ -209,7 +209,7 @@ describe('integration spec', () => {
       }).then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'store', state: { url: "/", navigationId: 1 } }, //restored
+          { type: 'store', state: { url: '/', navigationId: 1 } }, //restored
           { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'router', event: 'NavigationEnd', url: '/' }
         ]);
@@ -224,7 +224,7 @@ describe('integration spec', () => {
 
       }).then(() => {
         expect(log).toEqual([
-          { type: 'store', state: { url: "/next", navigationId: 2 } }, //restored
+          { type: 'store', state: { url: '/next', navigationId: 2 } }, //restored
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' }
@@ -257,15 +257,15 @@ function createNgModule(opts: { reducers?: any, canActivate?: Function } = {}) {
     declarations: [AppCmp, SimpleCmp],
     imports: [
       BrowserModule,
-      StoreModule.provideStore(opts.reducers),
+      StoreModule.forRoot(opts.reducers),
       RouterModule.forRoot([
         { path: '', component: SimpleCmp },
-        { path: 'next', component: SimpleCmp, canActivate: ["CanActivateNext"] }
+        { path: 'next', component: SimpleCmp, canActivate: ['CanActivateNext'] }
       ], { useHash: true, initialNavigation: false }),
       StoreRouterConnectingModule
     ],
     providers: [
-      { provide: "CanActivateNext", useValue: opts.canActivate || (() => true) }
+      { provide: 'CanActivateNext', useValue: opts.canActivate || (() => true) }
     ],
     bootstrap: [AppCmp]
   })

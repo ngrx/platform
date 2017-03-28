@@ -1,25 +1,37 @@
 {
+  "version": "2.0.0",
+  "compileOnSave": false,
   "compilerOptions": {
-    "module": "es2015",
-    "moduleResolution": "node",
+    "outDir": "./release",
     "target": "es5",
-    "noImplicitAny": false,
-    "sourceMap": true,
-    "mapRoot": "",
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "es2015",
-      "dom"
+    "removeComments": false,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "declaration": true,
+    "module": "commonjs",
+    "lib": ["es5", "dom", "es2015"],
+    "types": [
+      "jasmine",
+      "node"
     ],
-    "outDir": "lib",
-    "skipLibCheck": true,
-    "rootDir": "."
+    "baseUrl": ".",
+    "rootDir": "../",
+    "paths": {
+      "@ngrx/store": ["../store"]
+    }
   },
   "files": [
     "./e2e/main.ts"
   ],
+  "exclude": [
+    "node_modules",
+    "release"
+  ],
   "angularCompilerOptions": {
+    "strictMetadataEmit": true,
     "entryModule": "./e2e/app#AppModule"
   }
 }
