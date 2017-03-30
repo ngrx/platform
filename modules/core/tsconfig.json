@@ -10,7 +10,6 @@
     "moduleResolution": "node",
     "noEmitOnError": false,
     "outDir": "./release",
-    "rootDir": ".",
     "lib": ["es2015", "dom"],
     "target": "es5",
     "skipLibCheck": true,

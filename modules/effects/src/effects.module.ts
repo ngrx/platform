@@ -37,4 +37,6 @@ export class EffectsModule {
       ]
     };
   }
+
+  constructor(private effectsSubscription: EffectsSubscription) {}
 }

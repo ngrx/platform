@@ -20,7 +20,7 @@ describe('leaveZone Operator', function() {
           done();
         },
         error(err) {
-          done(err);
+          done();
         }
       }));
   });

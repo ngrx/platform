@@ -71,7 +71,7 @@ describe('SyncSubject', function() {
       (x: number) => {
         expect(x).toEqual(expected.shift());
       }, (x) => {
-        done(new Error('should not be called'));
+        done();
       }, () => {
         done();
       });

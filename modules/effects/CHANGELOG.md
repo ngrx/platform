@@ -1,3 +1,25 @@
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/ngrx/effects/compare/v2.0.1...v2.0.2) (2017-03-23)
+
+
+### Bug Fixes
+
+* **index:** missing export `runAfterBootstrapEffects` ([#116](https://github.com/ngrx/effects/issues/116)) ([78804c7](https://github.com/ngrx/effects/commit/78804c7))
+
+
+
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/ngrx/effects/compare/v2.0.0...v2.0.1) (2017-03-18)
+
+
+### Bug Fixes
+
+* **build:** Enable compiling with no-implicit-any option ([#107](https://github.com/ngrx/effects/issues/107)) ([986b5df](https://github.com/ngrx/effects/commit/986b5df))
+* **Effects:** Inject Effects Subscriptions into Effects Module ([3cf1e0e](https://github.com/ngrx/effects/commit/3cf1e0e))
+* **subscription:** Updated type for effects subscription ([#97](https://github.com/ngrx/effects/issues/97)) ([7aa2e00](https://github.com/ngrx/effects/commit/7aa2e00))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/ngrx/effects/compare/v1.1.1...v2.0.0) (2016-09-27)
 
@@ -42,7 +64,7 @@
 
 ### Bug Fixes
 
-* Fix toPayload and add MockStateUpdates.whenAction ([#7](https://github.com/ngrx/effects/issues/7)) ([aa22152](https://github.com/ngrx/effects/commit/aa22152)), closes [#7](https://github.com/ngrx/effects/issues/7) [#5](https://github.com/ngrx/effects/issues/5)
+* Fix toPayload and add MockStateUpdates.whenAction ([#7](https://github.com/ngrx/effects/issues/7)) ([aa22152](https://github.com/ngrx/effects/commit/aa22152)), closes [#5](https://github.com/ngrx/effects/issues/5)
 
 
 

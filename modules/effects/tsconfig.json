@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "moduleResolution": "node",
+    "noImplicitAny": true,
     "declaration": true,
     "module": "commonjs",
     "lib": ["es5", "dom", "es2015"],
@@ -17,9 +18,10 @@
       "node"
     ],
     "baseUrl": ".",
-    "rootDir": ".",
+    "rootDir": "../",
     "paths": {
-      "@ngrx/effects": ["./"]
+      "@ngrx/effects": ["./"],
+      "@ngrx/store": ["../store"]
     }
   },
   "exclude": [

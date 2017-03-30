@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "baseUrl": ".",
@@ -10,7 +9,6 @@
     "moduleResolution": "node",
     "noEmitOnError": false,
     "outDir": "./release",
-    "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2015", "dom"],
@@ -21,6 +19,7 @@
     "index.ts"
   ],
   "angularCompilerOptions": {
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "genDir": "./release"
   }
 }

@@ -3,9 +3,9 @@ import { Effect, getEffectsMetadata } from '../src/effects';
 describe('Effect Metadata', () => {
   it('should get the effects metadata for a class instance', () => {
     class Fixture {
-      @Effect() a;
-      @Effect() b;
-      @Effect({ dispatch: false }) c;
+      @Effect() a: any;
+      @Effect() b: any;
+      @Effect({ dispatch: false }) c: any;
     }
 
     const mock = new Fixture();
@@ -19,9 +19,9 @@ describe('Effect Metadata', () => {
 
   it('should return an empty array if the class has not been decorated', () => {
     class Fixture {
-      a;
-      b;
-      c;
+      a: any;
+      b: any;
+      c: any;
     }
 
     const mock = new Fixture();

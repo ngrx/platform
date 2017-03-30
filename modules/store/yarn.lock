@@ -2,64 +2,25 @@
 # yarn lockfile v1
 
 
-"@angular/common@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-4.0.0-rc.1.tgz#b5bc1e14ca97689048277b2f5f8e5f6065018eb9"
-
-"@angular/compiler-cli@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-4.0.0-rc.1.tgz#48cdcfb691eac2152602f296fb9fa7ffc4bfa5bd"
+"@angular/compiler-cli@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-4.0.0.tgz#35b2d40cd35135aecec4be659532148f5ac67da6"
   dependencies:
-    "@angular/tsc-wrapped" "4.0.0-rc.1"
+    "@angular/tsc-wrapped" "4.0.0"
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-4.0.0-rc.1.tgz#e89f2d76f8800cb599e9dc6c7f8a381e79b92715"
-
-"@angular/core@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-4.0.0-rc.1.tgz#7f87b7696b407476e45d6d3c1880a50d5afbb6e3"
-
-"@angular/http@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/http/-/http-4.0.0-rc.1.tgz#66c548eed938933ef22ab706cb6371b58b6bc397"
-
-"@angular/platform-browser-dynamic@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-4.0.0-rc.1.tgz#3332caeabe4f29746fff5699701b3bed3e35c480"
-
-"@angular/platform-browser@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-4.0.0-rc.1.tgz#74e5834c9fd22185851eb15ab1444679f7fe87b0"
-
-"@angular/platform-server@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-4.0.0-rc.1.tgz#67b28aaca4af046b585f059f9939f9b5eb213900"
-  dependencies:
-    parse5 "^3.0.1"
-    xhr2 "^0.1.4"
-
-"@angular/tsc-wrapped@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/tsc-wrapped/-/tsc-wrapped-4.0.0-rc.1.tgz#767ce64d70c66b9d4bd8ba1ef99a47bc02836336"
+"@angular/tsc-wrapped@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/tsc-wrapped/-/tsc-wrapped-4.0.0.tgz#ea91eeda98029cdb0a4ac37d5e25d9d12a4333c1"
   dependencies:
     tsickle "^0.21.0"
-
-"@ngrx/core@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/core/-/core-1.2.0.tgz#882b46abafa2e0e6d887cb71a1b2c2fa3e6d0dc6"
 
 "@types/jasmine@^2.5.42":
   version "2.5.43"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.43.tgz#6328a8c26082f2fd84f043c802c9ed7fa110b2dd"
   dependencies:
     typescript ">=2.1.4"
-
-"@types/node@^6.0.46":
-  version "6.0.63"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.63.tgz#e08acbbd5946e0e95990b1c76f3ce5b7882a48eb"
 
 "@types/node@^7.0.5":
   version "7.0.5"
@@ -1937,12 +1898,6 @@ parse-json@^2.1.0, parse-json@^2.2.0:
   dependencies:
     error-ex "^1.2.0"
 
-parse5@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/parse5/-/parse5-3.0.2.tgz#05eff57f0ef4577fb144a79f8b9a967a6cc44510"
-  dependencies:
-    "@types/node" "^6.0.46"
-
 path-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
@@ -2781,10 +2736,6 @@ xdg-basedir@^2.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-2.0.0.tgz#edbc903cc385fc04523d966a335504b5504d1bd2"
   dependencies:
     os-homedir "^1.0.0"
-
-xhr2@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.1.4.tgz#7f87658847716db5026323812f818cadab387a5f"
 
 xtend@^4.0.0:
   version "4.0.1"

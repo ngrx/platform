@@ -29,7 +29,7 @@ describe('Effects Subscription', () => {
     class Source {
       @Effect() a$ = of('a');
       @Effect() b$ = of('b');
-      @Effect() c$ = of('c')
+      @Effect() c$ = of('c');
     }
     const instance = new Source();
     const observer: any = { next: jasmine.createSpy('next') };

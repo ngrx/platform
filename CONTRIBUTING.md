@@ -4,7 +4,7 @@
 
 ```
 npm install
-npm run typings
+npm run bootstrap
 ```
 
 ### Testing
@@ -20,8 +20,8 @@ npm test
 * Please rebase your branch against the current master
 * Run ```npm install``` to make sure your development dependencies are up-to-date
 * Please ensure the test suite passes before submitting a PR
-* If you've added new functionality, **please** include tests which validate its behaviour
-* Make reference to possible [issues](https://github.com/ngrx/store/issues) on PR comment
+* If you've added new functionality, **please** include tests which validate its behavior
+* Make reference to possible [issues](https://github.com/ngrx/platform/issues) on PR comment
 
 ## Submitting bug reports
 
