@@ -4,5 +4,5 @@ machine:
 test:
   override:
     - npm install -g yarn
-    - yarn run bootstrap
+    - yarn run bootstrap -- --concurrency=1
     - yarn run build
