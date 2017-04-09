@@ -17,7 +17,6 @@ require('zone.js/dist/jasmine-patch.js');
 const { getTestBed } = require('@angular/core/testing');
 const { ServerTestingModule, platformServerTesting } = require('@angular/platform-server/testing');
 
-
 getTestBed().initTestEnvironment(ServerTestingModule, platformServerTesting());
 
 runner.loadConfig({

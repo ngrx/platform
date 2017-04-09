@@ -3,14 +3,13 @@ import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { ReflectiveInjector } from '@angular/core';
-import { Action, StoreModule, ActionsSubject } from '@ngrx/store';
-
+import { Action, StoreModule, ScannedActionsSubject, ActionsSubject } from '@ngrx/store';
 import { Actions } from '../src/actions';
 
 
 describe('Actions', function() {
   let actions$: Actions;
-  let dispatcher: ActionsSubject;
+  let dispatcher: ScannedActionsSubject;
 
   const ADD = 'ADD';
   const SUBTRACT = 'SUBTRACT';
@@ -33,10 +32,10 @@ describe('Actions', function() {
     ]);
 
     actions$ = injector.get(Actions);
-    dispatcher = injector.get(ActionsSubject);
+    dispatcher = injector.get(ScannedActionsSubject);
   });
 
-  xit('should be an observable of actions', function() {
+  it('should be an observable of actions', function() {
     const actions = [
       { type: ADD },
       { type: SUBTRACT },
@@ -45,7 +44,6 @@ describe('Actions', function() {
     ];
 
     let iterations = [
-      { type: ActionsSubject.INIT },
       ...actions
     ];
 
@@ -59,7 +57,7 @@ describe('Actions', function() {
     actions.forEach(action => dispatcher.next(action));
   });
 
-  xit('should let you filter out actions', function() {
+  it('should let you filter out actions', function() {
     const actions = [ ADD, ADD, SUBTRACT, ADD, SUBTRACT ];
     const expected = actions.filter(type => type === ADD);
 

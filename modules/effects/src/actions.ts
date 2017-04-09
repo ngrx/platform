@@ -1,7 +1,5 @@
-// TODO: This is a copy of this: https://github.com/redux-observable/redux-observable/blob/master/src/ActionsObservable.js
-// Remove after this is resolved: https://github.com/redux-observable/redux-observable/issues/95
 import { Injectable, Inject } from '@angular/core';
-import { Action, ActionsSubject } from '@ngrx/store';
+import { Action, ScannedActionsSubject } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Operator } from 'rxjs/Operator';
 import { filter } from 'rxjs/operator/filter';
@@ -9,7 +7,7 @@ import { filter } from 'rxjs/operator/filter';
 
 @Injectable()
 export class Actions extends Observable<Action> {
-  constructor(@Inject(ActionsSubject) actionsSubject: Observable<Action>) {
+  constructor(@Inject(ScannedActionsSubject) actionsSubject: Observable<Action>) {
     super();
     this.source = actionsSubject;
   }
