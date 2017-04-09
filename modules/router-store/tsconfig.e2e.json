@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es5",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "mapRoot": "",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "outDir": "lib",
+    "skipLibCheck": true,
+    "rootDir": "."
+  },
+  "files": [
+    "./e2e/main.ts"
+  ],
+  "angularCompilerOptions": {
+    "entryModule": "./e2e/app#AppModule"
+  }
+}
