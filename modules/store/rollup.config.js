@@ -5,7 +5,6 @@ export default {
   moduleName: 'ngrx.store',
   globals: {
     '@angular/core': 'ng.core',
-    '@ngrx/core': 'ngrx.core',
     
     'rxjs/Observable': 'Rx',
     'rxjs/BehaviorSubject': 'Rx',

@@ -51,7 +51,6 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "^4.0.0",
-    "@ngrx/core": "^1.0.0",
     "@ngrx/store": "^2.1.2",
     "cpy-cli": "^1.0.1",
     "jasmine": "^2.5.3",
