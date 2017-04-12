@@ -3,9 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { ReflectiveInjector } from '@angular/core';
 import { hot } from 'jasmine-marbles';
 import { createInjector } from './helpers/injector';
-import {Store, Action, combineReducers, StoreModule} from '../';
+import { Store, Action, combineReducers, StoreModule } from '../';
 import { ActionsSubject } from '../src/private_export';
-import {counterReducer, INCREMENT, DECREMENT, RESET} from './fixtures/counter';
+import { counterReducer, INCREMENT, DECREMENT, RESET } from './fixtures/counter';
 
 
 interface TestAppSchema {

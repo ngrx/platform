@@ -2,8 +2,8 @@ export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory } from '.
 export { StoreModule } from './src/store_module';
 export { Store } from './src/store';
 export { combineReducers, compose } from './src/utils';
-export { ActionsSubject } from './src/actions_subject';
-export { ReducerManager, ReducerObservable } from './src/reducer_manager';
+export { ActionsSubject, INIT } from './src/actions_subject';
+export { ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE } from './src/reducer_manager';
 export { ScannedActionsSubject } from './src/scanned_actions_subject';
 export { State, StateObservable, reduceState } from './src/state';
 export { INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES } from './src/tokens';

@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es5", "dom", "es2015"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./release",
+    "paths": { "@ngrx/store": ["../store/release"] },
+    "removeComments": false,
+    "rootDir": "../",
+    "sourceMap": false,
+    "strict": true,
+    "target": "es5"
+  },
+  "exclude": [
+    "node_modules",
+    "release"
+  ],
+  "angularCompilerOptions": {
+    "genDir": ".ngc"
+  }
+}

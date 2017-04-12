@@ -54,7 +54,7 @@ export class Store<T> extends Observable<Readonly<T>> implements Observer<Action
     return store;
   }
 
-  dispatch<V extends Action>(action: V) {
+  dispatch<V extends Action = Action>(action: V) {
     this.actionsObserver.next(action);
   }
 
@@ -70,7 +70,7 @@ export class Store<T> extends Observable<Readonly<T>> implements Observer<Action
     this.actionsObserver.complete();
   }
 
-  addReducer<State, Actions extends Action>(key: string, reducer: ActionReducer<State, Actions>) {
+  addReducer<State, Actions extends Action = Action>(key: string, reducer: ActionReducer<State, Actions>) {
     this.reducerManager.addReducer(key, reducer);
   }
 

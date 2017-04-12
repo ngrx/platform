@@ -29,12 +29,11 @@ export class StoreFeatureModule implements OnDestroy {
   }
 }
 
-export type StoreConfig<T, V extends Action> = { initialState?: T, reducerFactory?: ActionReducerFactory<T, V> };
+export type StoreConfig<T, V extends Action = Action> = { initialState?: T, reducerFactory?: ActionReducerFactory<T, V> };
 
 @NgModule({ })
 export class StoreModule {
-  static forRoot<T, V extends Action>(reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
-  static forRoot<T>(reducers: ActionReducerMap<T, Action>, config?: StoreConfig<T, Action>): ModuleWithProviders;
+  static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
   static forRoot(reducers: ActionReducerMap<any, any>, config: StoreConfig<any, any> = { }): ModuleWithProviders {
     return {
       ngModule: StoreRootModule,
@@ -51,8 +50,7 @@ export class StoreModule {
     };
   }
 
-  static forFeature<T, V extends Action>(featureName: string, reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
-  static forFeature<T>(featureName: string, reducers: ActionReducerMap<T, Action>, config?: StoreConfig<T, Action>): ModuleWithProviders;
+  static forFeature<T, V extends Action = Action>(featureName: string, reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
   static forFeature(featureName: string, reducers: ActionReducerMap<any, any>, config: StoreConfig<any, any> = {}): ModuleWithProviders {
     return {
       ngModule: StoreFeatureModule,

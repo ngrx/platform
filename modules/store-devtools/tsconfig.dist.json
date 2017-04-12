@@ -10,6 +10,7 @@
     "moduleResolution": "node",
     "noEmitOnError": false,
     "outDir": "./release",
+    "paths": { "@ngrx/store": ["../store/release"] },
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,

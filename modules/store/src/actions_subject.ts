@@ -5,12 +5,12 @@ import { Observer } from 'rxjs/Observer';
 import { Action } from './models';
 
 
+export const INIT = '@ngrx/store/init';
+
 @Injectable()
 export class ActionsSubject extends BehaviorSubject<Action> implements OnDestroy {
-  static readonly INIT = '@ngrx/store/init';
-
   constructor() {
-    super({ type: ActionsSubject.INIT });
+    super({ type: INIT });
   }
 
   next(action: Action): void {
