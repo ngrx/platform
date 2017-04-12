@@ -5,7 +5,6 @@ export default {
   moduleName: 'ngrx.storeDevtools',
   globals: {
     '@angular/core': 'ng.core',
-    '@ngrx/core/operator/select': 'ngrx.core',
     '@ngrx/store': 'ngrx.store',
     
     'rxjs/Observable': 'Rx',

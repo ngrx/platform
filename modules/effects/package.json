@@ -41,7 +41,6 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "^4.0.0",
-    "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.0.0",
     "cpy-cli": "^1.0.1",
     "conventional-changelog-cli": "^1.1.1",
