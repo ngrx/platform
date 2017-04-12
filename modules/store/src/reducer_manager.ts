@@ -8,13 +8,13 @@ import { ActionsSubject } from './actions_subject';
 
 
 export abstract class ReducerObservable extends Observable<ActionReducer<any, any>> { }
+export abstract class ReducerManagerDispatcher extends ActionsSubject { }
+export const UPDATE = '@ngrx/store/update-reducers';
 
 @Injectable()
 export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>> implements OnDestroy {
-  static readonly UPDATE = '@ngrx/store/update-reducers';
-
   constructor(
-    private dispatcher: ActionsSubject,
+    private dispatcher: ReducerManagerDispatcher,
     @Inject(INITIAL_STATE) private initialState: any,
     @Inject(INITIAL_REDUCERS) private reducers: ActionReducerMap<any, any>,
     @Inject(REDUCER_FACTORY) private reducerFactory: ActionReducerFactory<any, any>
@@ -46,7 +46,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>> imp
 
   private updateReducers() {
     this.next(this.reducerFactory(this.reducers, this.initialState));
-    this.dispatcher.next({ type: ReducerManager.UPDATE });
+    this.dispatcher.next({ type: UPDATE });
   }
 
   ngOnDestroy() {
@@ -57,4 +57,5 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>> imp
 export const REDUCER_MANAGER_PROVIDERS: Provider[] = [
   ReducerManager,
   { provide: ReducerObservable, useExisting: ReducerManager },
+  { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
 ];

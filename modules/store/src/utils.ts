@@ -1,8 +1,7 @@
 import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory } from './models';
 
 
-export function combineReducers<T, V extends Action>(reducers: ActionReducerMap<T, V>, initialState?: Partial<T>): ActionReducer<T, V>;
-export function combineReducers<T>(reducers: ActionReducerMap<T, Action>, initialState?: Partial<T>): ActionReducer<T, Action>;
+export function combineReducers<T, V extends Action = Action>(reducers: ActionReducerMap<T, V>, initialState?: Partial<T>): ActionReducer<T, V>;
 export function combineReducers(reducers: any, initialState: any = {}): ActionReducer<any, Action> {
   const reducerKeys = Object.keys(reducers);
   const finalReducers: any = {};
