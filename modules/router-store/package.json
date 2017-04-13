@@ -5,7 +5,7 @@
   "main": "./bundles/router-store.umd.js",
   "module": "index.js",
   "scripts": {
-    "test": "npm run clean:pre && webpack --config webpack.test.config.js && karma start && npm run clean:pre",
+    "test": "nyc node ../../tests.js",
     "e2e": "npm run clean:pre && webpack --config webpack.e2e.config.js",
     "clean:pre": "rimraf release && rimraf dist",
     "clean:post": "rimraf \"release/**/*.ngfactory.ts\" \"release/node_modules\" \"release/store\"",
@@ -13,7 +13,7 @@
     "build:js": "ngc -p tsconfig.dist.json",
     "build:umd": "rollup -c rollup.config.js",
     "build:uglify": "uglifyjs -c --screw-ie8 --comments -o ./release/bundles/router-store.min.umd.js ./release/bundles/router-store.umd.js",
-    "prebuild": "npm run test && npm run clean:pre",
+    "prebuild": "npm run test && npm run e2e && npm run clean:pre",
     "postbuild": "npm run clean:post && npm run copy",
     "build": "npm run build:js && npm run build:umd && npm run build:uglify"
   },
@@ -43,13 +43,22 @@
     "@ngtools/webpack": "^1.2.9",
     "cpy-cli": "^1.0.1",
     "jasmine-core": "^2.5.2",
-    "karma": "^1.4.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.1.0",
+    "nyc": "^10.1.2",
     "rimraf": "^2.5.4",
     "rollup": "^0.34.13",
     "ts-loader": "^2.0.0",
     "uglifyjs": "^2.4.10",
     "webpack": "^2.2.0"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "spec/**/*.spec"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ]
   }
 }
