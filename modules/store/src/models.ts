@@ -20,3 +20,7 @@ export interface StoreFeature<T, V extends Action = Action> {
   reducerFactory: ActionReducerFactory<T, V>;
   initialState: T | undefined;
 }
+
+export interface Selector<T, V> {
+  (state: T): V;
+}

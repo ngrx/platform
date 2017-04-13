@@ -1,10 +1,11 @@
-export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory } from './src/models';
+export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, Selector } from './src/models';
 export { StoreModule } from './src/store_module';
 export { Store } from './src/store';
 export { combineReducers, compose } from './src/utils';
 export { ActionsSubject, INIT } from './src/actions_subject';
 export { ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE } from './src/reducer_manager';
 export { ScannedActionsSubject } from './src/scanned_actions_subject';
+export { createSelector, createFeatureSelector, MemoizedSelector } from './src/selector';
 export { State, StateObservable, reduceState } from './src/state';
 export { INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES } from './src/tokens';
 export { StoreRootModule, StoreFeatureModule } from './src/store_module';
