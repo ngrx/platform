@@ -7,17 +7,17 @@ import { EffectsSubscription } from '../src/effects-subscription';
 describe('Effects Subscription', () => {
   it('should add itself to a parent subscription if one exists', () => {
     const observer: any = { next() { } };
-    const root = new EffectsSubscription(observer, null, null);
+    const root = new EffectsSubscription(observer, undefined, undefined);
 
     spyOn(root, 'add');
-    const child = new EffectsSubscription(observer, root, null);
+    const child = new EffectsSubscription(observer, root, undefined);
 
     expect(root.add).toHaveBeenCalledWith(child);
   });
 
   it('should unsubscribe for all effects when destroyed', () => {
     const observer: any = { next() { } };
-    const subscription = new EffectsSubscription(observer, null, null);
+    const subscription = new EffectsSubscription(observer, undefined, undefined);
 
     spyOn(subscription, 'unsubscribe');
     subscription.ngOnDestroy();
@@ -34,7 +34,7 @@ describe('Effects Subscription', () => {
     const instance = new Source();
     const observer: any = { next: jasmine.createSpy('next') };
 
-    const subscription = new EffectsSubscription(observer, null, [ instance ]);
+    const subscription = new EffectsSubscription(observer, undefined, [ instance ]);
 
     expect(observer.next).toHaveBeenCalledTimes(3);
     expect(observer.next).toHaveBeenCalledWith('a');

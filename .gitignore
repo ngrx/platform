@@ -53,6 +53,7 @@ __build__/**
 .idea/
 *.swp
 !/typings/custom.d.ts
+.vscode/
 
 # Build Artifacts #
 release
@@ -62,3 +63,5 @@ lerna-debug.log
 /lib/
 ngfactory
 output
+*.ngsummary.json
+*.ngfactory.ts

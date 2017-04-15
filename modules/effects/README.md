@@ -1,19 +1,6 @@
-# @ngrx/effects
-### Side effect model for @ngrx/store
-[![Join the chat at https://gitter.im/ngrx/store](https://badges.gitter.im/ngrx/store.svg)](https://gitter.im/ngrx/store?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+@ngrx/effects
+=======
 
-### Installation
-To install @ngrx/effects from npm:
-```bash
-npm install @ngrx/effects --save
-```
+The sources for this package are in the main [ngrx/platform](https://github.com/ngrx/platform) repo. Please file issues and pull requests against that repo.
 
-### Documentation
-
-* [Intro to @ngrx/effects](./docs/intro.md)
-* [API](./docs/api.md)
-* [Testing](./docs/testing.md)
-
-### Example Application
-
-https://github.com/ngrx/example-app
+License: MIT

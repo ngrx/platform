@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { cold } from 'jasmine-marbles';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '../';
+import { createSelector, createFeatureSelector } from '../';
 
 
 describe('Selectors', () => {
@@ -87,7 +87,7 @@ describe('Selectors', () => {
 
   describe('createFeatureSelector', () => {
     let featureName = '@ngrx/router-store';
-    let featureSelector: MemoizedSelector<any, number>;
+    let featureSelector: (state: any) => number;
 
     beforeEach(() => {
       featureSelector = createFeatureSelector<number>(featureName);

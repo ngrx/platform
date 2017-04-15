@@ -168,8 +168,8 @@ describe('integration spec', () => {
     const store = TestBed.get(Store);
     const log = logOfRouterAndStore(router, store);
 
-    const routerReducerStates = [];
-    store.subscribe(state => {
+    const routerReducerStates: any[] = [];
+    store.subscribe((state: any) => {
       if (state.routerReducer) {
         routerReducerStates.push(state.routerReducer);
       }
@@ -252,14 +252,14 @@ function createTestModule(opts: { reducers?: any, canActivate?: Function } = {})
   });
 
   TestBed.createComponent(AppCmp);
-}  
+}
 
 function waitForNavigation(router: Router): Promise<any> {
   return router.events.filter(e => e instanceof NavigationEnd).first().toPromise();
 }
 
 function logOfRouterAndStore(router: Router, store: Store<any>): any[] {
-  const log = [];
+  const log: any[] = [];
   router.events.
     subscribe(e => log.push({ type: 'router', event: e.constructor.name, url: (<any>e).url.toString() }));
   store.subscribe(store => log.push({ type: 'store', state: store.reducer }));

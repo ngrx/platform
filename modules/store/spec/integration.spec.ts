@@ -98,21 +98,21 @@ describe('ngRx Integration spec', () => {
       store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
       store.dispatch({ type: COMPLETE_TODO, payload: { id: state.value.todos[0].id } });
 
-      const filterVisibleTodos = (visibilityFilter, todos) => {
+      const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
         let predicate;
         if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
           predicate = () => true;
         }
         else if (visibilityFilter === VisibilityFilters.SHOW_ACTIVE) {
-          predicate = (todo) => !todo.completed;
+          predicate = (todo: any) => !todo.completed;
         }
         else {
-          predicate = (todo) => todo.completed;
+          predicate = (todo: any) => todo.completed;
         }
         return todos.filter(predicate);
       };
 
-      let currentlyVisibleTodos;
+      let currentlyVisibleTodos: any;
 
       Observable.combineLatest(store.select('visibilityFilter'), store.select('todos'), filterVisibleTodos)
         .subscribe(visibleTodos => {

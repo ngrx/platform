@@ -3,27 +3,26 @@
     "baseUrl": ".",
     "declaration": true,
     "stripInternal": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "es2015",
     "moduleResolution": "node",
-    "noEmitOnError": false,
-    "outDir": "./release/testing",
+    "outDir": "../../dist/packages/store",
+    "paths": { },
+    "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
+    "target": "es2015",
     "lib": ["es2015", "dom"],
-    "target": "es5",
     "skipLibCheck": true,
-    "paths": {
-      "@ngrx/store": ["../store/release"],
-      "@ngrx/effects": ["./release"]
-    }
+    "strict": true
   },
   "files": [
-    "testing/index.ts"
+    "public_api.ts"
   ],
   "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
-    "genDir": "./release"
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@ngrx/store"
   }
 }

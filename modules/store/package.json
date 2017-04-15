@@ -2,26 +2,13 @@
   "name": "@ngrx/store",
   "version": "2.2.1",
   "description": "RxJS powered Redux for Angular apps",
-  "main": "./bundles/store.umd.js",
-  "module": "./index.js",
-  "scripts": {
-    "test:unit": "node ../../tests.js",
-    "test:unit:coverage": "nyc npm run test:unit",
-    "test:ngc": "ngc -p ./spec/ngc/tsconfig.ngc.json",
-    "test": "npm run test:unit && npm run test:ngc",
-    "clean:pre": "rimraf release",
-    "clean:post": "rimraf \"release/**/*.ngfactory.ts\" \"release/node_modules\"",
-    "copy": "cpy LICENSE package.json README.md release",
-    "build:js": "ngc -p tsconfig.dist.json",
-    "build:umd": "rollup -c rollup.config.js",
-    "build:uglify": "uglifyjs -c --screw-ie8 --comments -o ./release/bundles/store.min.umd.js ./release/bundles/store.umd.js",
-    "prebuild": "npm run test && npm run clean:pre",
-    "postbuild": "npm run clean:post && npm run copy",
-    "build": "npm run build:js && npm run build:umd && npm run build:uglify"
-  },
+  "module": "@ngrx/store.es5.js", 
+  "es2015": "@ngrx/store.js", 
+  "main": "bundles/store.umd.js", 
+  "typings": "store.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ngrx/store.git"
+    "url": "git+https://github.com/ngrx/platform.git"
   },
   "keywords": [
     "RxJS",
@@ -31,33 +18,11 @@
   "author": "Rob Wormald <robwormald@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ngrx/store/issues"
+    "url": "https://github.com/ngrx/platform/issues"
   },
-  "homepage": "https://github.com/ngrx/store#readme",
+  "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "^4.0.0",
     "rxjs": "^5.0.0"
-  },
-  "devDependencies": {
-    "@angular/compiler-cli": "^4.0.0",
-    "cpy-cli": "^1.0.1",
-    "jasmine": "^2.5.3",
-    "jasmine-marbles": "^0.0.2",
-    "nyc": "^10.1.2",
-    "rimraf": "^2.5.4",
-    "rollup": "^0.41.4",
-    "typescript": "^2.3.0",
-    "uglifyjs": "^2.4.10"
-  },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "spec/**/*.spec"
-    ],
-    "include": [
-      "src/**/*.ts"
-    ]
   }
 }

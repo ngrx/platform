@@ -24,7 +24,7 @@ describe('ngRx Store', () => {
     let store: Store<TodoAppSchema>;
 
     beforeEach(() => {
-      const injector = createInjector(StoreModule.forRoot<TodoAppSchema>({ todos, todoCount }));
+      const injector = createInjector(StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any));
 
       store = injector.get(Store);
     });

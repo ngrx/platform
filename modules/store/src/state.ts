@@ -48,8 +48,8 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   }
 }
 
-export type StateActionPair<T, V extends Action> = { state: T | undefined, action?: V };
-export function reduceState<T, V extends Action>(
+export type StateActionPair<T, V extends Action = Action> = { state: T | undefined, action?: V };
+export function reduceState<T, V extends Action = Action>(
   { state }: StateActionPair<T, V> = { state: undefined },
   [ action, reducer ]: [ V, ActionReducer<T, V> ]
 ): StateActionPair<T, V> {
