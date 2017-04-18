@@ -5,4 +5,4 @@ test:
   override:
     - npm install -g yarn
     - yarn run bootstrap -- --concurrency=1
-    - yarn run build
+    - yarn run ci
