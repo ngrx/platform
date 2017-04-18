@@ -4,11 +4,11 @@
   "description": "monorepo for ngrx development",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "prebuild": "yarn run test:unit",
     "build": "ts-node ./build/index.ts",
     "test:unit": "node ./tests.js",
-    "test": "nyc yarn run test:unit",
-    "clean": "git clean -xdf && yarn && yarn run bootstrap"
+    "test": "nyc npm run test:unit",
+    "clean": "git clean -xdf && npm && npm run bootstrap",
+    "ci": "npm run build && npm run test && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "ngrx",
@@ -48,6 +48,7 @@
     "@types/ora": "^0.3.31",
     "@types/rimraf": "^0.0.28",
     "core-js": "^2.4.1",
+    "coveralls": "^2.13.0",
     "cpy-cli": "^1.0.1",
     "fs-extra": "^2.1.2",
     "glob": "^7.1.1",
