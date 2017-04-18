@@ -1,48 +1,72 @@
 {
-   "name": "@ngrx/platform",
-   "version": "4.0.0-alpha.0",
-   "description": "monorepo for ngrx development",
-   "scripts": {
-      "bootstrap": "lerna bootstrap",
-      "build": "lerna run build",
-      "test": "lerna run test",
-      "clean": "git clean -xdf && yarn && yarn run bootstrap"
-   },
-   "keywords": [
-      "ngrx",
-      "angular",
-      "rxjs"
-   ],
-   "author": "Rob Wormald <robwormald@gmail.com>",
-   "license": "MIT",
-   "repository": {},
-   "devDependencies": {
-      "@angular/animations": "^4.0.0",
-      "@angular/common": "^4.0.0",
-      "@angular/compiler": "^4.0.0",
-      "@angular/compiler-cli": "^4.0.0",
-      "@angular/core": "^4.0.0",
-      "@angular/http": "^4.0.0",
-      "@angular/platform-browser": "^4.0.0",
-      "@angular/platform-browser-dynamic": "^4.0.0",
-      "@angular/platform-server": "4.0.0",
-      "@angular/router": "^4.0.0",
-      "@types/jasmine": "^2.5.43",
-      "@types/node": "^7.0.5",
-      "core-js": "^2.4.1",
-      "cpy-cli": "^1.0.1",
-      "jasmine": "^2.5.3",
-      "lerna": "^2.0.0-rc.1",
-      "nyc": "^10.1.2",
-      "reflect-metadata": "^0.1.9",
-      "rimraf": "^2.5.4",
-      "rollup": "^0.41.4",
-      "rxjs": "^5.1.0",
-      "ts-node": "^2.1.0",
-      "tslib": "1.6.0",
-      "tslint": "^4.4.2",
-      "typescript": "^2.3.0",
-      "uglifyjs": "^2.4.10",
-      "zone.js": "^0.8.4"
-   }
+  "name": "@ngrx/platform",
+  "version": "4.0.0-alpha.0",
+  "description": "monorepo for ngrx development",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "prebuild": "yarn run test:unit",
+    "build": "ts-node ./build/index.ts",
+    "test:unit": "node ./tests.js",
+    "test": "nyc yarn run test:unit",
+    "clean": "git clean -xdf && yarn && yarn run bootstrap"
+  },
+  "keywords": [
+    "ngrx",
+    "angular",
+    "rxjs"
+  ],
+  "author": "Rob Wormald <robwormald@gmail.com>",
+  "license": "MIT",
+  "repository": {},
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.spec",
+      "**/spec/**/*"
+    ],
+    "include": [
+      "**/*.ts"
+    ]
+  },
+  "devDependencies": {
+    "@angular/animations": "^4.1.0-beta.1",
+    "@angular/common": "^4.1.0-beta.1",
+    "@angular/compiler": "^4.1.0-beta.1",
+    "@angular/compiler-cli": "^4.1.0-beta.1",
+    "@angular/core": "^4.1.0-beta.1",
+    "@angular/http": "^4.1.0-beta.1",
+    "@angular/platform-browser": "^4.1.0-beta.1",
+    "@angular/platform-browser-dynamic": "^4.1.0-beta.1",
+    "@angular/platform-server": "^4.1.0-beta.1",
+    "@angular/router": "^4.1.0-beta.1",
+    "@types/fs-extra": "^2.0.0",
+    "@types/glob": "^5.0.30",
+    "@types/jasmine": "^2.5.43",
+    "@types/node": "^7.0.5",
+    "@types/ora": "^0.3.31",
+    "@types/rimraf": "^0.0.28",
+    "core-js": "^2.4.1",
+    "cpy-cli": "^1.0.1",
+    "fs-extra": "^2.1.2",
+    "glob": "^7.1.1",
+    "jasmine": "^2.5.3",
+    "jasmine-marbles": "^0.0.2",
+    "lerna": "^2.0.0-rc.1",
+    "module-alias": "^2.0.0",
+    "nyc": "^10.1.2",
+    "ora": "^1.2.0",
+    "reflect-metadata": "^0.1.9",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.4",
+    "rxjs": "^5.1.0",
+    "sorcery": "^0.10.0",
+    "ts-node": "^3.0.2",
+    "tslib": "1.6.0",
+    "tslint": "^4.4.2",
+    "typescript": "^2.3.0",
+    "uglify-js": "^2.8.22",
+    "zone.js": "^0.8.4"
+  }
 }

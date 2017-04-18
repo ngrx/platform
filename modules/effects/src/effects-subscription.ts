@@ -12,16 +12,16 @@ export const effects = new OpaqueToken('ngrx/effects: Effects');
 export class EffectsSubscription extends Subscription implements OnDestroy {
   constructor(
     @Inject(Store) private store: Observer<Action>,
-    @Optional() @SkipSelf() public parent: EffectsSubscription,
+    @Optional() @SkipSelf() public parent?: EffectsSubscription,
     @Optional() @Inject(effects) effectInstances?: any[]
   ) {
     super();
 
-    if (Boolean(parent)) {
+    if (parent) {
       parent.add(this);
     }
 
-    if (Boolean(effectInstances)) {
+    if (typeof effectInstances !== 'undefined' && effectInstances) {
       this.addEffects(effectInstances);
     }
   }

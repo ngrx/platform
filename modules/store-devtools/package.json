@@ -2,26 +2,13 @@
   "name": "@ngrx/store-devtools",
   "version": "3.2.4",
   "description": "Developer tools for @ngrx/store",
-  "main": "./bundles/store-devtools.umd.js",
-  "module": "./index.js",
-  "scripts": {
-    "karma": "karma start --single-run",
-    "test:raw": "node tests.js",
-    "test": "nyc node tests.js",
-    "clean:pre": "rimraf release",
-    "clean:post": "rimraf src/**/*.ngfactory.ts",
-    "copy": "cpy LICENSE package.json README.md release",
-    "build:js": "tsc -p tsconfig.dist.json",
-    "build:umd": "rollup -c rollup.config.js",
-    "build:uglify": "uglifyjs -c --screw-ie8 --comments -o ./release/bundles/store-devtools.min.umd.js ./release/bundles/store-devtools.umd.js",
-    "prebuild": "npm run test && npm run clean:pre",
-    "postbuild": "npm run clean:post && npm run copy",
-    "build": "npm run build:js && npm run build:umd && npm run build:uglify",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
-  },
+  "module": "@ngrx/store-devtools.es5.js", 
+  "es2015": "@ngrx/store-devtools.js", 
+  "main": "bundles/store-devtools.umd.js", 
+  "typings": "store-devtools.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ngrx/devtools.git"
+    "url": "git+https://github.com/ngrx/platform.git"
   },
   "keywords": [
     "RxJS",
@@ -42,34 +29,11 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ngrx/devtools/issues"
+    "url": "https://github.com/ngrx/platform/issues"
   },
-  "homepage": "https://github.com/ngrx/devtools#readme",
+  "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@ngrx/store": "^2.0.0",
     "rxjs": "^5.0.0-beta.12"
-  },
-  "devDependencies": {
-    "@angular/compiler-cli": "^4.0.0",
-    "@ngrx/store": "^2.1.2",
-    "cpy-cli": "^1.0.1",
-    "jasmine": "^2.5.3",
-    "jasmine-marbles": "^0.0.2",
-    "nyc": "^10.1.2",
-    "rimraf": "^2.5.4",
-    "rollup": "^0.41.4",
-    "typescript": "^2.3.0",
-    "uglifyjs": "^2.4.10"
-  },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "spec/**/*.spec"
-    ],
-    "include": [
-      "src/**/*.ts"
-    ]
   }
 }

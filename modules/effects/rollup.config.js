@@ -1,7 +1,8 @@
 export default {
-  entry: './release/index.js',
-  dest: './release/bundles/effects.umd.js',
+  entry: './dist/effects/@ngrx/effects.es5.js',
+  dest: './dist/effects/bundles/effects.umd.js',
   format: 'umd',
+  exports: 'named',
   moduleName: 'ngrx.effects',
   globals: {
     '@angular/core': 'ng.core',

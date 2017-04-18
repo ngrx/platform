@@ -1,16 +1,19 @@
 export default {
-  entry: './release/index.js',
-  dest: './release/bundles/store-devtools.umd.js',
+  entry: './dist/store-devtools/@ngrx/store-devtools.es5.js',
+  dest: './dist/store-devtools/bundles/store-devtools.umd.js',
   format: 'umd',
+  exports: 'named',
   moduleName: 'ngrx.storeDevtools',
   globals: {
     '@angular/core': 'ng.core',
     '@ngrx/store': 'ngrx.store',
     
-    'rxjs/Observable': 'Rx',
     'rxjs/BehaviorSubject': 'Rx',
+    'rxjs/Observable': 'Rx',
+    'rxjs/Observer': 'Rx',
     'rxjs/ReplaySubject': 'Rx',
     'rxjs/Subscriber': 'Rx',
+    'rxjs/Subscription': 'Rx',
     
     'rxjs/scheduler/queue': 'Rx.Scheduler',
 

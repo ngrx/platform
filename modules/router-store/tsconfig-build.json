@@ -8,21 +8,26 @@
     "module": "es2015",
     "moduleResolution": "node",
     "noEmitOnError": false,
-    "outDir": "./release",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "outDir": "../../dist/packages/router-store",
+    "paths": {
+      "@ngrx/store": ["../../dist/packages/store"]
+    },
+    "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2015", "dom"],
-    "target": "es5",
-    "skipLibCheck": true,
-    "paths": {
-      "@ngrx/store": ["../store/release"]
-    }
+    "target": "es2015",
+    "skipLibCheck": true
   },
   "files": [
-    "index.ts"
+    "public_api.ts"
   ],
   "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
-    "genDir": "./release"
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@ngrx/router-store"
   }
 }

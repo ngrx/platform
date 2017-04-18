@@ -8,8 +8,8 @@ import {
   StoreDevtoolsModule,
   LiftedState,
   StoreDevtoolsConfig,
-  StoreDevtoolsOptions,
-  IS_EXTENSION_OR_MONITOR_PRESENT, } from '../';
+  StoreDevtoolsOptions, } from '../';
+import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/instrument';
 
 const counter = jasmine.createSpy('counter').and.callFake(function (state = 0, action: Action) {
   switch (action.type) {

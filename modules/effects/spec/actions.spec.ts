@@ -27,7 +27,7 @@ describe('Actions', function() {
 
   beforeEach(function() {
     const injector = ReflectiveInjector.resolveAndCreate([
-      StoreModule.forRoot(reducer).providers,
+      StoreModule.forRoot(reducer).providers || [],
       Actions
     ]);
 
@@ -50,7 +50,7 @@ describe('Actions', function() {
     actions$.subscribe({
       next(value) {
         let change = iterations.shift();
-        expect(value.type).toEqual(change.type);
+        expect(value.type).toEqual(change!.type);
       }
     });
 
