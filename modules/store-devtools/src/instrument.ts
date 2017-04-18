@@ -64,21 +64,15 @@ export function createConfig(_options: StoreDevtoolsOptions): StoreDevtoolsConfi
   return config;
 }
 
-@NgModule({
-  imports: [
-    StoreModule
-  ],
-  providers: [
-    DevtoolsExtension,
-    DevtoolsDispatcher,
-    StoreDevtools,
-  ]
-})
+@NgModule({ })
 export class StoreDevtoolsModule {
   static instrument(options: StoreDevtoolsOptions = {}): ModuleWithProviders {
     return {
       ngModule: StoreDevtoolsModule,
       providers: [
+        DevtoolsExtension,
+        DevtoolsDispatcher,
+        StoreDevtools,
         {
           provide: INITIAL_OPTIONS,
           useValue: options

@@ -2,15 +2,21 @@ import { NgModule, Inject, ModuleWithProviders, OnDestroy, InjectionToken } from
 import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature, InitialState } from './models';
 import { combineReducers } from './utils';
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE } from './tokens';
-import { ACTIONS_SUBJECT_PROVIDERS } from './actions_subject';
-import { REDUCER_MANAGER_PROVIDERS, ReducerManager } from './reducer_manager';
-import { SCANNED_ACTIONS_SUBJECT_PROVIDERS } from './scanned_actions_subject';
+import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
+import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable } from './reducer_manager';
+import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS } from './store';
 
 @NgModule({})
 export class StoreRootModule {
+  constructor(
+    actions$: ActionsSubject,
+    reducer$: ReducerObservable,
+    scannedActions$: ScannedActionsSubject,
+  ) {
 
+  }
 }
 
 @NgModule({})
