@@ -4,7 +4,6 @@
 
 ```
 npm install
-npm run bootstrap
 ```
 
 ### Testing
