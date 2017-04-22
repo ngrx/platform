@@ -1,10 +1,10 @@
 {
   "name": "@ngrx/store-devtools",
-  "version": "3.2.4",
+  "version": "4.0.0-alpha.0",
   "description": "Developer tools for @ngrx/store",
-  "module": "@ngrx/store-devtools.es5.js", 
-  "es2015": "@ngrx/store-devtools.js", 
-  "main": "bundles/store-devtools.umd.js", 
+  "module": "@ngrx/store-devtools.es5.js",
+  "es2015": "@ngrx/store-devtools.js",
+  "main": "bundles/store-devtools.umd.js",
   "typings": "store-devtools.d.ts",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@ngrx/store": "^2.0.0",
-    "rxjs": "^5.0.0-beta.12"
+    "@ngrx/store": "^4.0.0-alpha.0",
+    "rxjs": "^5.0.0"
   }
 }

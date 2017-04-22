@@ -1,10 +1,10 @@
 {
   "name": "@ngrx/effects",
-  "version": "2.0.2",
+  "version": "4.0.0-alpha.0",
   "description": "Side effect model for @ngrx/store",
-  "module": "@ngrx/effects.es5.js", 
-  "es2015": "@ngrx/effects.js", 
-  "main": "bundles/effects.umd.js", 
+  "module": "@ngrx/effects.es5.js",
+  "es2015": "@ngrx/effects.js",
+  "main": "bundles/effects.umd.js",
   "typings": "effects.d.ts",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/core": "^4.0.0",
-    "@ngrx/store": "^2.0.0",
+    "@ngrx/store": "^4.0.0-alpha.0",
     "rxjs": "^5.0.0"
   }
 }

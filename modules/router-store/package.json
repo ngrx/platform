@@ -1,10 +1,10 @@
 {
   "name": "@ngrx/router-store",
-  "version": "0.0.1",
+  "version": "4.0.0-alpha.0",
   "description": "Bindings to connect @angular/router to @ngrx/store",
-  "module": "@ngrx/router-store.es5.js", 
-  "es2015": "@ngrx/router-store.js", 
-  "main": "bundles/router-store.umd.js", 
+  "module": "@ngrx/router-store.es5.js",
+  "es2015": "@ngrx/router-store.js",
+  "main": "bundles/router-store.umd.js",
   "typings": "router-store.d.ts",
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
     "@angular/common": "^4.0.0",
     "@angular/core": "^4.0.0",
     "@angular/router": "^4.0.0",
-    "@ngrx/store": "^2.0.0"
+    "@ngrx/store": "^4.0.0-alpha.0"
   }
 }
