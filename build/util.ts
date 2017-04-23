@@ -19,6 +19,14 @@ export function writeFile(target: string, contents: string) {
   fs.writeFileSync(target, contents);
 }
 
+export function mkdir(target: string) {
+  fs.mkdirSync(target);
+}
+
+export function rmdir(target: string) {
+  fs.rmdirSync(target);
+}
+
 export function getListOfFiles(globPath: string, exclude?: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const options = exclude ? { ignore: exclude } : { };
@@ -46,9 +54,9 @@ export function removeRecursively(glob: string) {
   });
 }
 
-export function exec(command: string, args: string[]): Promise<string> {
+export function exec(command: string, args: string[], base: (command: string) => string = fromNpm): Promise<string> {
   return new Promise((resolve, reject) => {
-    cp.exec(fromNpm(command) + ' ' + args.join(' '), (err, stdout, stderr) => {
+    cp.exec(base(command) + ' ' + args.join(' '), (err, stdout, stderr) => {
       if (err) {
         return reject(err);
       }
@@ -56,6 +64,14 @@ export function exec(command: string, args: string[]): Promise<string> {
       resolve(stdout.toString());
     });
   });
+}
+
+export function cmd(command: string, args: string[]): Promise<string> {
+  return exec(command, args, (command: string) => command);
+}
+
+export function git(args: string[]): Promise<string> {
+  return exec('git', args, (command: string) => command);
 }
 
 export async function ignoreErrors<T>(promise: Promise<T>): Promise<T | null> {
