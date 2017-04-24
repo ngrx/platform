@@ -1,10 +1,10 @@
 {
   "name": "@ngrx/store",
-  "version": "2.2.1",
+  "version": "4.0.0-alpha.0",
   "description": "RxJS powered Redux for Angular apps",
-  "module": "@ngrx/store.es5.js", 
-  "es2015": "@ngrx/store.js", 
-  "main": "bundles/store.umd.js", 
+  "module": "@ngrx/store.es5.js",
+  "es2015": "@ngrx/store.js",
+  "main": "bundles/store.umd.js",
   "typings": "store.d.ts",
   "repository": {
     "type": "git",

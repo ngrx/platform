@@ -6,3 +6,8 @@ test:
     - npm install -g yarn
     - yarn run bootstrap -- --concurrency=1
     - yarn run ci
+deployment:
+  builds:
+    branch: master
+    commands:
+      - yarn run deploy:builds

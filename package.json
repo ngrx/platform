@@ -5,6 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "ts-node ./build/index.ts",
+    "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc npm run test:unit",
     "clean": "git clean -xdf && npm && npm run bootstrap",

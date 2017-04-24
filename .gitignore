@@ -65,3 +65,4 @@ ngfactory
 output
 *.ngsummary.json
 *.ngfactory.ts
+tmp
