@@ -1,11 +1,9 @@
-import { Component, NgModule } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { Router, RouterModule, NavigationEnd } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { ROUTER_NAVIGATION, ROUTER_CANCEL, ROUTER_ERROR, StoreRouterConnectingModule, routerReducer } from '../src/index';
+import {Component} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {NavigationEnd, Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Store, StoreModule} from '@ngrx/store';
+import {ROUTER_CANCEL, ROUTER_ERROR, ROUTER_NAVIGATION, routerReducer, StoreRouterConnectingModule} from '../src/index';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/toPromise';

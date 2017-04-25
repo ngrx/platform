@@ -1,10 +1,7 @@
-import { Injectable, ModuleWithProviders, NgModule, Optional } from '@angular/core';
-import {
-  ActivatedRouteSnapshot, CanActivateChild, ExtraOptions, RouterModule, RouterStateSnapshot,
-  Routes, Router, NavigationCancel, RoutesRecognized, NavigationError
-} from '@angular/router';
-import { Store, StoreModule } from '@ngrx/store';
-import { of } from 'rxjs/observable/of';
+import {NgModule} from '@angular/core';
+import {NavigationCancel, NavigationError, Router, RouterStateSnapshot, RoutesRecognized} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {of} from 'rxjs/observable/of';
 
 /**
  * An action dispatched when the router navigates.
@@ -17,7 +14,7 @@ export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
 export type RouterNavigationPayload = {
   routerState: RouterStateSnapshot,
   event: RoutesRecognized
-}
+};
 
 /**
  * An action dispatched when the router cancels navigation.
@@ -105,7 +102,7 @@ export class StoreRouterConnectingModule {
   private storeState: any;
   private lastRoutesRecognized: RoutesRecognized;
 
-  private dispatchTriggeredfByRouter: boolean = false; // used only in dev mode in combination with routerReducer
+  private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
 
   constructor(private store: Store<any>, private router: Router) {
@@ -130,12 +127,12 @@ export class StoreRouterConnectingModule {
   }
 
   private dispatchEvent(): void {
-    this.dispatchTriggeredfByRouter = true;
+    this.dispatchTriggeredByRouter = true;
     try {
       const payload = { routerState: this.routerState, event: this.lastRoutesRecognized };
       this.store.dispatch({ type: ROUTER_NAVIGATION, payload });
     } finally {
-      this.dispatchTriggeredfByRouter = false;
+      this.dispatchTriggeredByRouter = false;
       this.navigationTriggeredByDispatch = false;
     }
   }
@@ -147,7 +144,7 @@ export class StoreRouterConnectingModule {
 
   private navigateIfNeeded(): void {
     if (!this.storeState['routerReducer']) return;
-    if (this.dispatchTriggeredfByRouter) return;
+    if (this.dispatchTriggeredByRouter) return;
 
     if (this.router.url !== this.storeState['routerReducer'].state.url) {
       this.navigationTriggeredByDispatch = true;
