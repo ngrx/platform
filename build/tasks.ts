@@ -217,7 +217,11 @@ export async function publishToRepo(config: Config) {
     await process.chdir(`${REPO_DIR}`);
     await util.git([`init`]);
     await util.git([`remote add origin ${REPO_URL}`]);
+    await util.git(['fetch origin master --depth=1']);
+    await util.git(['checkout origin/master']);
+    await util.git(['checkout -b master']);
     await process.chdir('../../');
+    await util.cmd('rm -rf', [`${REPO_DIR}/*`]);
     await util.cmd('cp', [`-R ${SOURCE_DIR}/* ${REPO_DIR}/`]);
     await process.chdir(`${REPO_DIR}`);
     await util.git([`config user.name "${COMMITTER_USER_NAME}"`]);
