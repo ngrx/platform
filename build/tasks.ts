@@ -227,7 +227,8 @@ export async function publishToRepo(config: Config) {
     await util.git([`config user.name "${COMMITTER_USER_NAME}"`]);
     await util.git([`config user.email "${COMMITTER_USER_EMAIL}"`]);
     await util.git(['add --all']);
-    await util.git([`commit -m "${COMMIT_MSG}"`]);
+    await util.cmd('echo', [`"${COMMIT_MSG.replace(/\r?\n|\r/g, '')}" > commit_message`]);
+    await util.git([`commit -F commit_message`]);
     await util.git(['push origin master --force']);
     await process.chdir('../../');
   }

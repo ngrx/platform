@@ -8,6 +8,7 @@ test:
     - yarn run ci
 deployment:
   builds:
+    owner: ngrx
     branch: master
     commands:
       - yarn run deploy:builds
