@@ -23,7 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     StoreModule.forRoot(reducers),
     // Note that you must instrument after importing StoreModule
     StoreDevtoolsModule.instrument({
-      maxAge: 25 //  Only retain last 25 states
+      maxAge: 25 //  Retains last 25 states
     })
   ]
 })
