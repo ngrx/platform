@@ -6,8 +6,8 @@ Feature module for @ngrx/effects.
 
 ### run
 
-Registers an effects class to be run immediately when the target module is
-created. Must be called multiple times for each effect class you want to run.
+Registers an effects class to run when the target module bootstraps.
+Call once per each effect class you want to run.
 
 Usage:
 ```ts
@@ -21,9 +21,9 @@ export class AppModule { }
 
 ### runAfterBootstrap
 
-Registers an effects class to be run after root components are bootstrapped.
-Only works in the root module. Useful if your effects class requires components
-to be bootstrapped.
+Registers an effects class to run after root components bootstrap.
+Must use in the root module. Useful if your effects class requires 
+the a bootstrapped component.
 
 Usage:
 ```ts
@@ -42,7 +42,7 @@ dispatched by effect streams.
 
 ### ofType
 
-Filter actions by action type. Accepts multiple action types.
+Filter actions by action types.
 
 Usage:
 
@@ -52,9 +52,7 @@ actions$.ofType('LOGIN', 'LOGOUT');
 
 
 ### Non-dispatching Effects
-Observables decorated with the `@Effect()` decorator are expected to be a stream
-of actions to be dispatched. Pass `{ dispatch: false }` to the decorator to
-prevent actions from being dispatched.
+Pass `{ dispatch: false }` to the decorator to prevent dispatching.
 
 Usage:
 ```ts
@@ -109,7 +107,7 @@ class MyComponent {
 ```
 
 ### addEffects
-Add additional instances of effect classes to the subscription.
+Add instances of effect classes to the subscription.
 
 Usage:
 ```ts

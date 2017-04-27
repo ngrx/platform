@@ -2,10 +2,10 @@
 
 RxJS powered side effect model for @ngrx/store
 
-@ngrx/effects provides an API to model UI events and additional sources of events as actions. Effects:
+@ngrx/effects provides an API to model event sources as actions. Effects:
 
 - Listen for actions dispatched from @ngrx/store
-- Isolate side effects from components, allowing for more _pure_ components that only select state and dispatch actions
+- Isolate side effects from components, allowing for more _pure_ components that select state and dispatch actions
 - Provide new sources of actions to reduce state based on external
 interactions such as network requests, web socket messages and time-based events.
 
@@ -23,15 +23,14 @@ Effects are injectable service classes that use two main APIs.
 
 ### Effect decorator
 
-The `@Effect` decorator adds metadata to each decorated class variable. Once the
-effect is registered, the hinted observables are merged into a single stream
-and subscribed to the store. The action provided by the effect is dispatched to
-the store resulting in a new state being reduced.
+Use the `@Effect()` decorator to hint to @ngrx/effects observable side-effects
+on the effects class. @ngrx/effects dispatches actions emitted by every decorated
+effect to the store.
 
 ### Actions Observable
 
-The `Actions` observable provides a notification event every time an action is dispatched
-to the store. The `ofType` operator lets you filter for actions of a certain type in which you
+The `Actions` observable represents an observable of all actions dispatched to the 
+store. The `ofType` operator lets you filter for actions of a certain type in which you
 want to use to perform a side effect.
 
 ## Example
