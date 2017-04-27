@@ -115,7 +115,7 @@ export class MyAppComponent {
 - [Providing initial state](./api.md#initial-state)
 - [Reducer composition](./api.md#reducer-factory)
 
-### Additional material
+### Additional Material
 - [From Inactive to Reactive with ngrx](https://www.youtube.com/watch?v=cyaAhXHhxgk)
 - [Reactive Angular 2 with ngrx (video)](https://youtu.be/mhA7zZ23Odw)
 - [Comprehensive Introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510)

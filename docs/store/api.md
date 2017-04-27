@@ -2,7 +2,7 @@
 
 ## Initial State
 
-The initial state for the store is provided when configuring the application state.
+Configure initial state when providing Store:
 
 ```ts
 import { StoreModule } from '@ngrx/store';
@@ -22,8 +22,8 @@ export class AppModule {}
 
 ## Reducer Factory
 
-@ngrx/store composes your map of reducers into a single reducer. In order to provide additional
-composition of reducers, you can use the `reducerFactory` configuration option.
+@ngrx/store composes your map of reducers into a single reducer. Use the `reducerFactory`
+configuration option to provide a composed action reducer factory:
 
 ```ts
 import { StoreModule, combineReducers, compose } from '@ngrx/store';
@@ -50,9 +50,9 @@ export class AppModule {}
 ## Feature Module State Composition
 
 Store uses fractal state management, which provides state composition through feature modules,
-loaded eagerly or lazily. Feature states are added using the `StoreModule.forFeature` method. This
-method defines the name of the feature state, the reducers that make up the state. The same `initialState`
-and `reducerFactory` configuration options are also available.
+loaded eagerly or lazily. Provide feature states using the `StoreModule.forFeature` method. This
+method defines the name of the feature state and the reducers that make up the state. The same `initialState`
+and `reducerFactory` configuration options are available.
 
 ```ts
 // feature.module.ts

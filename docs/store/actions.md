@@ -2,7 +2,7 @@
 
 ## Typed Actions
 
-Actions can be typed to take advantage of TypeScript's compile-time checking.
+Strongly type actions to take advantage of TypeScript's compile-time checking.
 
 ```ts
 // counter.actions.ts
@@ -61,7 +61,7 @@ export function reducer(state: number = 0, action: Action): State {
 }
 ```
 
-Dispatching actions can use TypeScript's type check to ensure correct payload is used.
+Instantiate actions and use `Store.dispatch()` to dispatch them:
 
 ```ts
 import { Store } from '@ngrx/store';
