@@ -18,10 +18,11 @@ export type RouterNavigationPayload = {
 }
 ```
 
-- Either a reducer or an effect can be invoked in response to this action. If the invoked reducer throws, the navigation will be canceled.
-- If navigation gets canceled because of a guard, a ROUTER_CANCEL action will be dispatched.
-- If navigation results in an error, a ROUTER_ERROR action will be dispatched.
-- Both ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation which can be used to restore the consistency of the store.
+- Reducers recieve this action. Throwing an error in the reducer cancels navigation.
+- Effects can listen for this action.
+- The `ROUTER_CANCEL` action represents a guard canceling navigation.
+- A `ROUTER_ERROR` action represents a navigation error .
+- `ROUTER_CANCEL` and `ROUTER_ERROR` contain the store state before the navigation. Use the previous state to restore the consistency of the store.
 
 ## Setup
 
