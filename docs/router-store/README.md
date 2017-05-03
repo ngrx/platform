@@ -5,9 +5,12 @@ Bindings to connect the Angular Router with @ngrx/store
 ### Installation
 Install @ngrx/router-store from npm:
 
-```bash
-npm install @ngrx/router-store --save
-```
+`npm install @ngrx/router-store --save` OR `yarn add @ngrx/router-store`
+
+
+### Nightly builds
+
+`npm install github:ngrx/router-store-builds` OR `yarn add github:ngrx/router-store-builds`
 
 During the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:
 

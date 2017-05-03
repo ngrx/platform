@@ -2,10 +2,15 @@
 
 Devtools for [@ngrx/store](../store/README.md).
 
-## Installation
-```bash
-npm install @ngrx/store-devtools --save-dev
-```
+### Installation
+Install @ngrx/store-devtools from npm:
+
+`npm install @ngrx/store-devtools --save` OR `yarn add @ngrx/store-devtools`
+
+
+### Nightly builds
+
+`npm install github:ngrx/store-devtools-builds` OR `yarn add github:ngrx/store-devtools-builds`
 
 
 ## Instrumentation

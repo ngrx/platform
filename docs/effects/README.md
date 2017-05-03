@@ -1,4 +1,4 @@
-# Introduction
+# @ngrx/effects
 
 RxJS powered side effect model for @ngrx/store
 
@@ -9,13 +9,15 @@ RxJS powered side effect model for @ngrx/store
 - Provide new sources of actions to reduce state based on external
 interactions such as network requests, web socket messages and time-based events.
 
-## Installation
-
+### Installation
 Install @ngrx/effects from npm:
 
-```bash
-npm install @ngrx/effects --save
-```
+`npm install @ngrx/effects --save` OR `yarn add @ngrx/effects`
+
+
+### Nightly builds
+
+`npm install github:ngrx/effects-builds` OR `yarn add github:ngrx/effects-builds`
 
 ## Setup
 
@@ -29,7 +31,7 @@ effect to the store.
 
 ### Actions Observable
 
-The `Actions` observable represents an observable of all actions dispatched to the 
+The `Actions` observable represents an observable of all actions dispatched to the
 store. The `ofType` operator lets you filter for actions of a certain type in which you
 want to use to perform a side effect.
 
