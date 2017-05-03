@@ -1,4 +1,5 @@
 # @ngrx/store
+
 RxJS powered state management for Angular applications, inspired by Redux
 
 @ngrx/store is a controlled state container designed to help write performant, consistent applications
@@ -15,9 +16,13 @@ throughout your application.
 ### Installation
 Install @ngrx/store from npm:
 
-```bash
-npm install @ngrx/store --save
-```
+`npm install @ngrx/store --save` OR `yarn add @ngrx/store`
+
+
+### Nightly builds
+
+`npm install github:ngrx/store-builds` OR `yarn add github:ngrx/store-builds`
+
 
 ### Setup
 Create a reducer function for each data type you have in your application. The combination of these reducers will
