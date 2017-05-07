@@ -4,10 +4,18 @@
 
 Feature module for @ngrx/effects.
 
+### forRoot
+Registers internal @ngrx/effects services to run in your application.
+This is required once in your root app module.
+
 ### run
 
 Registers an effects class to run when the target module bootstraps.
 Call once per each effect class you want to run.
+
+Note that running an effects class multiple times (for example via
+different lazy loaded modules) will not cause Effects to run multiple
+times.
 
 Usage:
 ```ts

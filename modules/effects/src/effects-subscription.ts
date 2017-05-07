@@ -4,6 +4,7 @@ import { Observer } from 'rxjs/Observer';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { mergeEffects } from './effects';
+import { SingletonEffectsService } from './singleton-effects.service';
 
 
 export const effects = new OpaqueToken('ngrx/effects: Effects');
@@ -12,6 +13,7 @@ export const effects = new OpaqueToken('ngrx/effects: Effects');
 export class EffectsSubscription extends Subscription implements OnDestroy {
   constructor(
     @Inject(Store) private store: Observer<Action>,
+    @Inject(SingletonEffectsService) private singletonEffectsService: SingletonEffectsService,
     @Optional() @SkipSelf() public parent?: EffectsSubscription,
     @Optional() @Inject(effects) effectInstances?: any[]
   ) {
@@ -27,6 +29,8 @@ export class EffectsSubscription extends Subscription implements OnDestroy {
   }
 
   addEffects(effectInstances: any[]) {
+    effectInstances = this.singletonEffectsService.removeExistingAndRegisterNew(effectInstances);
+
     const sources = effectInstances.map(mergeEffects);
     const merged = merge(...sources);
 

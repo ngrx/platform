@@ -85,7 +85,7 @@ export async function ignoreErrors<T>(promise: Promise<T>): Promise<T | null> {
 }
 
 export function fromNpm(command: string) {
-  return `./node_modules/.bin/${command}`;
+  return path.normalize(`./node_modules/.bin/${command}`);
 }
 
 export function getPackageFilePath(pkg: string, filename: string) {
