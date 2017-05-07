@@ -13,7 +13,7 @@
 		}
 	},
 	"files": [
-    "main.ts"
+    "ngc.spec.ts"
 	],
   "angularCompilerOptions": {
     "genDir": "ngfactory"
