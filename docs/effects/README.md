@@ -36,7 +36,19 @@ store. The `ofType` operator lets you filter for actions of a certain type in wh
 want to use to perform a side effect.
 
 ## Example
-1. Create an AuthEffects service that describes a source of login actions:
+1. Register the EffectsModule in your application root imports:
+```ts
+import { EffectsModule } from '@ngrx/effects';
+
+@NgModule({
+  imports: [
+    EffectsModule.forRoot()
+  ]
+})
+export class AppModule { }
+```
+
+2. Create an AuthEffects service that describes a source of login actions:
 
 ```ts
 // ./effects/auth.ts
@@ -70,7 +82,7 @@ export class AuthEffects {
 }
 ```
 
-2. Register your effects via `EffectsModule.run` method in your module's `imports`:
+3. Register your effects via `EffectsModule.run` method in your module's `imports`:
 
 ```ts
 import { EffectsModule } from '@ngrx/effects';
@@ -81,7 +93,7 @@ import { AuthEffects } from './effects/auth';
     EffectsModule.run(AuthEffects)
   ]
 })
-export class AppModule { }
+export class YourAuthModule { }
 ```
 
 ## API Documentation
