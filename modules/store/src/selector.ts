@@ -125,3 +125,7 @@ export function createFeatureSelector<T>(featureName: string): MemoizedSelector<
 
   return Object.assign(memoized, { release: reset });
 }
+
+export function isSelector(v: any): v is MemoizedSelector<any, any> {
+  return typeof v === 'function' && v.release && typeof v.release === 'function';
+}

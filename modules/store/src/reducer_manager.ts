@@ -23,7 +23,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>> imp
   }
 
   addFeature({ reducers, reducerFactory, initialState, key }: StoreFeature<any, any>) {
-    const reducer = reducerFactory(reducers, initialState);
+    const reducer = typeof reducers === 'function' ? reducers : reducerFactory(reducers, initialState);
 
     this.addReducer(key, reducer);
   }

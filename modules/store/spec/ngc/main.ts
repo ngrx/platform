@@ -45,13 +45,13 @@ export const reducerToken = new InjectionToken('Reducers');
 })
 export class NgcSpecComponent {
   count: Observable<number>;
-  constructor(public store:Store<AppState>){
+  constructor(public store: Store<AppState>) {
     this.count = store.select(state => state.count);
   }
-  increment(){
+  increment() {
     this.store.dispatch({ type: INCREMENT });
   }
-  decrement(){
+  decrement() {
     this.store.dispatch({ type: DECREMENT });
   }
 }
@@ -59,13 +59,19 @@ export class NgcSpecComponent {
 @NgModule({
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ count: counterReducer }, {
-      initialState: { count : 0 },
+    StoreModule.forRoot(reducerToken, {
+      initialState: { count: 0 },
       reducerFactory: combineReducers
     }),
     FeatureModule
   ],
+  providers: [
+    {
+      provide: reducerToken,
+      useValue: { count: counterReducer }
+    }
+  ],
   declarations: [NgcSpecComponent],
   bootstrap: [NgcSpecComponent]
 })
-export class NgcSpecModule {}
+export class NgcSpecModule { }
