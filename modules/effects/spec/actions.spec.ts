@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { ReflectiveInjector } from '@angular/core';
 import { Action, StoreModule, ScannedActionsSubject, ActionsSubject } from '@ngrx/store';
-import { Actions } from '../src/actions';
+import { Actions } from '../';
 
 
 describe('Actions', function() {

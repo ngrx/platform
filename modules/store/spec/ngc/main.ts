@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, InjectionToken } from '@angular/core';
 import { platformDynamicServer } from '@angular/platform-server';
 import { BrowserModule } from '@angular/platform-browser';
 import { Store, StoreModule, combineReducers } from '../../';
@@ -30,6 +30,8 @@ export class FeatureModule { }
 export interface AppState {
   count: number;
 }
+
+export const reducerToken = new InjectionToken('Reducers');
 
 @Component({
   selector: 'ngc-spec-component',
