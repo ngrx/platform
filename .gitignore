@@ -26,9 +26,7 @@ build/Release
 
 # OS generated files #
 .DS_Store
-ehthumbs.db
 Icon?
-Thumbs.db
 
 # Node Files #
 node_modules

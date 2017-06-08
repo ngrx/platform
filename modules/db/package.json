@@ -1,0 +1,45 @@
+{
+  "name": "@ngrx/db",
+  "version": "2.0.1",
+  "description": "RxJS + IndexedDB for Angular",
+  "main": "bundles/db.umd.js",
+  "module": "index.js",
+  "scripts": {
+    "test:unit": "karma start --single-run",
+    "test": "npm run test:unit",
+    "clean:pre": "rimraf release",
+    "clean:post": "rimraf \"release/**/*.ngfactory.ts\" \"release/node_modules\"",
+    "copy": "cpy LICENSE package.json README.md release",
+    "build:js": "ngc -p tsconfig.dist.json",
+    "build:umd": "rollup -c rollup.config.js",
+    "build:uglify": "uglifyjs -c --screw-ie8 --comments -o ./release/bundles/db.min.umd.js ./release/bundles/db.umd.js",
+    "prebuild": "npm run test && npm run clean:pre",
+    "postbuild": "npm run clean:post && npm run copy",
+    "build": "npm run build:js && npm run build:umd && npm run build:uglify"
+  },
+  "author": "Rob Wormald <robwormald@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.0.0"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^4.0.0",
+    "@ngrx/core": "^1.2.0",
+    "cpy-cli": "^1.0.1",
+    "istanbul-instrumenter-loader": "^0.2.0",
+    "jasmine": "^2.5.3",
+    "karma": "^1.2.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.1.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.0",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.4",
+    "ts-loader": "^2.0.0",
+    "webpack": "^2.2.0",
+    "uglifyjs": "^2.4.10"
+  }
+}
