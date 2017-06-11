@@ -30,11 +30,13 @@ import { StoreModule, combineReducers, compose } from '@ngrx/store';
 import { reducers } from './reducers';
 
 // console.log all actions
-function debug(state, action) {
-  console.log('state', state);
-  console.log('action', action);
+function debug(reducer) {
+  return function(state, action) {
+    console.log('state', state);
+    console.log('action', action);
 
-  return state;
+    return reducer(state, action);
+  }
 }
 
 const debugReducerFactory = compose(debug, combineReducers);

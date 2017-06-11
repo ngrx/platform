@@ -36,19 +36,7 @@ store. The `ofType` operator lets you filter for actions of a certain type in wh
 want to use to perform a side effect.
 
 ## Example
-1. Register the EffectsModule in your application root imports:
-```ts
-import { EffectsModule } from '@ngrx/effects';
-
-@NgModule({
-  imports: [
-    EffectsModule.forRoot()
-  ]
-})
-export class AppModule { }
-```
-
-2. Create an AuthEffects service that describes a source of login actions:
+1. Create an AuthEffects service that describes a source of login actions:
 
 ```ts
 // ./effects/auth.ts
@@ -82,22 +70,37 @@ export class AuthEffects {
 }
 ```
 
-3. Register your effects via `EffectsModule.run` method in your module's `imports`:
-
+2. Register the EffectsModule in your application root imports:
 ```ts
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './effects/auth';
 
 @NgModule({
   imports: [
-    EffectsModule.run(AuthEffects)
+    EffectsModule.forRoot([AuthEffects])
   ]
 })
-export class YourAuthModule { }
+export class AppModule {}
+```
+
+## Feature Modules
+
+For feature modules, register your effects via `EffectsModule.forFeature` method in your module's `imports`:
+
+```ts
+import { EffectsModule } from '@ngrx/effects';
+import { AdminEffects } from './effects/admin';
+
+@NgModule({
+  imports: [
+    EffectsModule.forFeature([AdminEffects])
+  ]
+})
+export class AdminModule {}
 ```
 
 ## API Documentation
-- [Run effects after bootstrap](./api.md#runafterbootstrap)
+- [Controlling Effects](./api.md#controlling-effects)
 - [Filtering Actions](./api.md#oftype)
 - [Non-dispatching effects](./api.md#non-dispatching-effects)
-- [Managing Effects Subscriptions](./api.md#effectssubscription)
+- [Utilities](./api.md#utilities)

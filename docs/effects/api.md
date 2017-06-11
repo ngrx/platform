@@ -2,75 +2,127 @@
 
 ## EffectsModule
 
-Feature module for @ngrx/effects.
+NgModule for @ngrx/effects.
 
 ### forRoot
-Registers internal @ngrx/effects services to run in your application.
-This is required once in your root app module.
-
-### run
-
-Registers an effects class to run when the target module bootstraps.
-Call once per each effect class you want to run.
-
-Note that running an effects class multiple times (for example via
-different lazy loaded modules) will not cause Effects to run multiple
-times.
+Registers internal @ngrx/effects services to run in your application. This is required once in your root NgModule.
 
 Usage:
 ```ts
 @NgModule({
   imports: [
-    EffectsModule.run(SomeEffectsClass)
+    EffectsModule.forRoot([
+      FirstEffectsClass,
+      SecondEffectsClass,
+    ])
   ]
 })
-export class AppModule { }
+export class FeatureModule { }
 ```
 
-### runAfterBootstrap
+### forFeature
+Registers @ngrx/effects services to run with your feature modules.
 
-Registers an effects class to run after root components bootstrap.
-Must use in the root module. Useful if your effects class requires 
-the a bootstrapped component.
+**Note**: Running an effects class multiple times (for example via different lazy loaded modules) will not cause Effects to run multiple times.
 
 Usage:
 ```ts
 @NgModule({
   imports: [
-    EffectsModule.runAfterBootstrap(SomeEffectsClass)
+    EffectsModule.forFeature([
+      SomeEffectsClass,
+      AnotherEffectsClass,
+    ])
   ]
 })
+export class FeatureModule {}
 ```
-
 
 ## Actions
 
-Stream of all actions dispatched in your application including actions
-dispatched by effect streams.
+Stream of all actions dispatched in your application including actions dispatched by effect streams.
+
+Usage:
+```ts
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) {}
+}
+```
 
 ### ofType
 
 Filter actions by action types.
 
 Usage:
-
 ```ts
-actions$.ofType('LOGIN', 'LOGOUT');
-```
+import 'rxjs/add/operator/do';
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
 
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) {}
+
+  @Effect() authActions$ = this.action$.ofType('LOGIN', 'LOGOUT')
+    .do(action => {
+      console.log(action);
+    });
+}
+```
 
 ### Non-dispatching Effects
 Pass `{ dispatch: false }` to the decorator to prevent dispatching.
 
 Usage:
 ```ts
-class MyEffects {
+import 'rxjs/add/operator/do';
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+
+@Injectable()
+export class SomeEffectsClass {
   constructor(private actions$: Actions) { }
 
   @Effect({ dispatch: false }) logActions$ = this.actions$
     .do(action => {
       console.log(action);
     });
+}
+```
+
+## Controlling Effects
+
+### OnRunEffects
+By default, effects are merged and subscribed to the store. Implement the `OnRunEffects` interface to control the lifecycle of the resolved effects.
+
+Usage:
+```ts
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/exhaustMap';
+import 'rxjs/add/operator/takeUntil';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Action } from '@ngrx/store';
+import { Actions, Effect, OnRunEffects } from '@ngrx/effects';
+
+@Injectable()
+export class UserEffects implements OnRunEffects {
+  constructor(private actions$: Actions) {}
+
+  @Effect() updateUser$: Observable<Action> = this.actions$
+    .ofType('UPDATE_USER')
+    .do(action => {
+      console.log(action);
+    });
+
+  ngrxOnRunEffects(resolvedEffects$: Observable<Action>) {
+    return this.actions$.ofType('LOGGED_IN')
+      .exhaustMap(() => resolvedEffects$.takeUntil('LOGGED_OUT'));
+  }
 }
 ```
 
@@ -81,7 +133,21 @@ Maps an action to its payload.
 
 Usage:
 ```ts
-actions$.ofType('LOGIN').map(toPayload);
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import { Injectable } from '@angular/core';
+import { Actions, toPayload } from '@ngrx/effects';
+
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) {}
+
+  @Effect() authActions$ = this.action$.ofType('LOGIN', 'LOGOUT')
+    .map(toPayload)
+    .do(payload => {
+      console.log(payload);
+    });
+}
 ```
 
 ### mergeEffects
@@ -89,48 +155,13 @@ Manually merges all decorated effects into a combined observable.
 
 Usage:
 ```ts
+import { mergeEffects } from '@ngrx/effects';
+
 export class MyService {
   constructor(effects: SomeEffectsClass) {
     mergeEffects(effects).subscribe(result => {
-
+      console.log(result);
     });
   }
 }
-```
-
-## EffectsSubscription
-
-An RxJS subscription of all effects running for the current injector. Can be
-used to stop all running effects contained in the subscription.
-
-Usage:
-```ts
-class MyComponent {
-  constructor(private subscription: EffectsSubscription) { }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-}
-```
-
-### addEffects
-Add instances of effect classes to the subscription.
-
-Usage:
-```ts
-class MyComponent {
-  constructor(moreEffects: MoreEffects, subscription: EffectsSubscription) {
-    subscription.addEffects([ moreEffects ]);
-  }
-}
-```
-
-### parent
-A pointer to the parent subscription. Used to access an entire tree of
-subscriptions.
-
-Usage:
-```ts
-subscription.parent.unsubscribe();
 ```
