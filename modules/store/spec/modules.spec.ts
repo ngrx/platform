@@ -1,29 +1,73 @@
-import 'rxjs/add/operator/take';
-import { zip } from 'rxjs/observable/zip';
-import { ReflectiveInjector } from '@angular/core';
-import { createInjector, createChildInjector } from './helpers/injector';
-import { StoreModule, Store } from '../';
+import { TestBed } from '@angular/core/testing';
+import { NgModule, InjectionToken } from '@angular/core';
+import { StoreModule, Store, ActionReducer, ActionReducerMap } from '../';
 
 
 describe('Nested Store Modules', () => {
-  let store: Store<any>;
+  type RootState = { fruit: string };
+  type FeatureAState = number;
+  type FeatureBState = { list: number[], index: number };
+  type State = RootState & { a: FeatureAState } & { b: FeatureBState };
+
+  let store: Store<State>;
+
+  const reducersToken = new InjectionToken<ActionReducerMap<RootState>>('Root Reducers');
+  const rootFruitReducer: ActionReducer<string> = () => 'apple';
+  const featureAReducer: ActionReducer<FeatureAState> = () => 5;
+  const featureBListReducer: ActionReducer<number[]> = () => [1, 2, 3];
+  const featureBIndexReducer: ActionReducer<number> = () => 2;
+  const featureBReducerMap: ActionReducerMap<FeatureBState> = {
+    list: featureBListReducer,
+    index: featureBIndexReducer,
+  };
+
+  @NgModule({
+    imports: [
+      StoreModule.forFeature('a', featureAReducer),
+    ]
+  })
+  class FeatureAModule { }
+
+  @NgModule({
+    imports: [
+      StoreModule.forFeature('b', featureBReducerMap),
+    ]
+  })
+  class FeatureBModule { }
+
+  @NgModule({
+    imports: [
+      StoreModule.forRoot<RootState>(reducersToken),
+      FeatureAModule,
+      FeatureBModule,
+    ],
+    providers: [
+      {
+        provide: reducersToken,
+        useValue: { fruit: rootFruitReducer },
+      }
+    ]
+  })
+  class RootModule { }
 
   beforeEach(() => {
-    const parentReducers = { stateKey: () => 'root' };
-    const featureReducers = { stateKey: () => 'child' };
+    TestBed.configureTestingModule({
+      imports: [
+        RootModule,
+      ]
+    });
 
-    const rootInjector = createInjector(StoreModule.forRoot(parentReducers));
-    const featureInjector = createChildInjector(rootInjector, StoreModule.forFeature('inner', featureReducers));
-
-    store = rootInjector.get(Store);
+    store = TestBed.get(Store);
   });
 
   it('should nest the child module in the root store object', () => {
     store.take(1).subscribe(state => {
       expect(state).toEqual({
-        stateKey: 'root',
-        inner: {
-          stateKey: 'child'
+        fruit: 'apple',
+        a: 5,
+        b: {
+          list: [1, 2, 3],
+          index: 2,
         }
       });
     });

@@ -1,5 +1,5 @@
-import { NgModule, Inject, ModuleWithProviders, OnDestroy } from '@angular/core';
-import { Action, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
+import { NgModule, Inject, ModuleWithProviders, OnDestroy, InjectionToken } from '@angular/core';
+import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
 import { combineReducers } from './utils';
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS } from './actions_subject';
@@ -10,12 +10,12 @@ import { STORE_PROVIDERS } from './store';
 
 
 
-@NgModule({ })
+@NgModule({})
 export class StoreRootModule {
 
 }
 
-@NgModule({ })
+@NgModule({})
 export class StoreFeatureModule implements OnDestroy {
   constructor(
     @Inject(STORE_FEATURES) private features: StoreFeature<any, any>[],
@@ -31,15 +31,15 @@ export class StoreFeatureModule implements OnDestroy {
 
 export type StoreConfig<T, V extends Action = Action> = { initialState?: T, reducerFactory?: ActionReducerFactory<T, V> };
 
-@NgModule({ })
+@NgModule({})
 export class StoreModule {
-  static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
-  static forRoot(reducers: ActionReducerMap<any, any>, config: StoreConfig<any, any> = { }): ModuleWithProviders {
+  static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: StoreConfig<T, V>): ModuleWithProviders;
+  static forRoot(reducers: ActionReducerMap<any, any> | InjectionToken<ActionReducerMap<any, any>>, config: StoreConfig<any, any> = {}): ModuleWithProviders {
     return {
       ngModule: StoreRootModule,
       providers: [
         { provide: INITIAL_STATE, useValue: config.initialState },
-        { provide: INITIAL_REDUCERS, useValue: reducers },
+        reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
         { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
         ACTIONS_SUBJECT_PROVIDERS,
         REDUCER_MANAGER_PROVIDERS,
@@ -51,7 +51,8 @@ export class StoreModule {
   }
 
   static forFeature<T, V extends Action = Action>(featureName: string, reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
-  static forFeature(featureName: string, reducers: ActionReducerMap<any, any>, config: StoreConfig<any, any> = {}): ModuleWithProviders {
+  static forFeature<T, V extends Action = Action>(featureName: string, reducer: ActionReducer<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
+  static forFeature(featureName: string, reducers: ActionReducerMap<any, any> | ActionReducer<any, any>, config: StoreConfig<any, any> = {}): ModuleWithProviders {
     return {
       ngModule: StoreFeatureModule,
       providers: [

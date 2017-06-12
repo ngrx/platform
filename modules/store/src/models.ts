@@ -16,7 +16,7 @@ export interface ActionReducerFactory<T, V extends Action = Action> {
 
 export interface StoreFeature<T, V extends Action = Action> {
   key: string;
-  reducers: ActionReducerMap<T, V>;
+  reducers: ActionReducerMap<T, V> | ActionReducer<T, V>;
   reducerFactory: ActionReducerFactory<T, V>;
   initialState: T | undefined;
 }

@@ -9,6 +9,7 @@ import { Action, ActionReducer } from './models';
 import { ActionsSubject } from './actions_subject';
 import { StateObservable } from './state';
 import { ReducerManager } from './reducer_manager';
+import { isSelector, createSelector } from './selector';
 
 
 @Injectable()
@@ -36,11 +37,14 @@ export class Store<T> extends Observable<Readonly<T>> implements Observer<Action
     if (typeof pathOrMapFn === 'string') {
       mapped$ = pluck.call(this, pathOrMapFn, ...paths);
     }
-    else if (typeof pathOrMapFn === 'function') {
+    else if (typeof pathOrMapFn === 'function' && isSelector(pathOrMapFn)) {
       mapped$ = map.call(this, pathOrMapFn);
     }
+    else if (typeof pathOrMapFn === 'function') {
+      mapped$ = map.call(this, createSelector(s => s, pathOrMapFn));
+    }
     else {
-      throw new TypeError(`Unexpected type '${ typeof pathOrMapFn }' in select operator,`
+      throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,`
         + ` expected 'string' or 'function'`);
     }
 
