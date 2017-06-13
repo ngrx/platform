@@ -17,7 +17,7 @@ Usage:
     ])
   ]
 })
-export class FeatureModule { }
+export class AppModule { }
 ```
 
 ### forFeature
