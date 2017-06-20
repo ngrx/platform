@@ -1,16 +1,16 @@
 import { NgModule, Inject, Type } from '@angular/core';
-import { EffectSources } from './effect_sources';
+import { EffectsRootModule } from './effects_root_module';
 import { FEATURE_EFFECTS } from './tokens';
 
 @NgModule({})
 export class EffectsFeatureModule {
   constructor(
-    private effectSources: EffectSources,
+    private root: EffectsRootModule,
     @Inject(FEATURE_EFFECTS) effectSourceGroups: any[][],
   ) {
     effectSourceGroups.forEach(group =>
       group.forEach(effectSourceInstance =>
-        effectSources.addEffects(effectSourceInstance),
+        root.addEffects(effectSourceInstance),
       ),
     );
   }

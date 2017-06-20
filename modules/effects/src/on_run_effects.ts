@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { getSourceForInstance } from './effects_metadata';
-import { EffectNotification } from './effects_resolver';
+import { EffectNotification } from './effect_notification';
 
 export interface OnRunEffects {
   ngrxOnRunEffects(
