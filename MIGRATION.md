@@ -82,7 +82,48 @@ export class AppModule {}
 
 ## @ngrx/effects
 
-There were no API changes made.
+BEFORE:
+
+`app.module.ts`
+```ts
+@NgModule({
+  imports: [
+    EffectsModule.run(SourceA),
+    EffectsModule.run(SourceB),
+  ]
+})
+export class AppModule { }
+```
+
+AFTER:
+
+`app.module.ts`
+```ts
+@NgModule({
+  imports: [
+    EffectsModule.forRoot([
+      SourceA,
+      SourceB,
+      SourceC,
+    ])
+  ]
+})
+export class AppModule { }
+```
+
+`feature.module.ts`
+```ts
+@NgModule({
+  imports: [
+    EffectsModule.forFeature([
+      FeatureSourceA,
+      FeatureSourceB,
+      FeatureSourceC,
+    ])
+  ]
+})
+export class FeatureModule { }
+```
 
 ## @ngrx/router-store
 
