@@ -3,9 +3,9 @@ import { EffectSources } from './effect_sources';
 import { Actions } from './actions';
 import { ROOT_EFFECTS, FEATURE_EFFECTS, CONSOLE } from './tokens';
 import { EffectsFeatureModule } from './effects_feature_module';
+import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
 import { ErrorReporter } from './error_reporter';
-import { RUN_EFFECTS } from './run_effects';
 
 @NgModule({})
 export class EffectsModule {
@@ -26,13 +26,12 @@ export class EffectsModule {
 
   static forRoot(rootEffects: Type<any>[]): ModuleWithProviders {
     return {
-      ngModule: EffectsModule,
+      ngModule: EffectsRootModule,
       providers: [
         EffectsRunner,
         EffectSources,
         ErrorReporter,
         Actions,
-        RUN_EFFECTS,
         rootEffects,
         {
           provide: ROOT_EFFECTS,
