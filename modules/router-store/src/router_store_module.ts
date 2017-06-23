@@ -17,6 +17,14 @@ export type RouterNavigationPayload = {
 };
 
 /**
+ * An action dispatched when the router navigates.
+ */
+export type RouterNavigationAction = {
+  type: typeof ROUTER_NAVIGATION,
+  payload: RouterNavigationPayload
+};
+
+/**
  * An action dispatched when the router cancels navigation.
  */
 export const ROUTER_CANCEL = 'ROUTER_CANCEL';
@@ -28,6 +36,14 @@ export type RouterCancelPayload<T> = {
   routerState: RouterStateSnapshot,
   storeState: T,
   event: NavigationCancel
+};
+
+/**
+ * An action dispatched when the router cancel navigation.
+ */
+export type RouterCancelAction<T> = {
+  type: typeof ROUTER_CANCEL,
+  payload: RouterCancelPayload<T>
 };
 
 /**
@@ -44,13 +60,29 @@ export type RouterErrorPayload<T> = {
   event: NavigationError
 };
 
+/**
+ * An action dispatched when the router errors.
+ */
+export type RouterErrorAction<T> = {
+  type: typeof ROUTER_ERROR,
+  payload: RouterErrorPayload<T>
+};
+
+/**
+ * An union type of router actions.
+ */
+export type RouterAction<T> = RouterNavigationAction | RouterCancelAction<T> | RouterErrorAction<T>;
+
 export type RouterReducerState = { state: RouterStateSnapshot, navigationId: number };
 
-export function routerReducer(state: RouterReducerState, action: any): RouterReducerState {
-  if (action.type === 'ROUTER_NAVIGATION' || action.type === 'ROUTER_ERROR' || action.type === 'ROUTER_CANCEL') {
-    return ({ state: action.payload.routerState, navigationId: action.payload.event.id });
-  } else {
-    return state;
+export function routerReducer(state: RouterReducerState, action: RouterAction<any>): RouterReducerState {
+  switch (action.type) {
+    case ROUTER_NAVIGATION:
+    case ROUTER_ERROR:
+    case ROUTER_CANCEL:
+      return ({ state: action.payload.routerState, navigationId: action.payload.event.id });
+    default:
+      return state;
   }
 }
 

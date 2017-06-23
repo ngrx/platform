@@ -3,14 +3,14 @@ import {TestBed} from '@angular/core/testing';
 import {NavigationEnd, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Store, StoreModule} from '@ngrx/store';
-import {ROUTER_CANCEL, ROUTER_ERROR, ROUTER_NAVIGATION, routerReducer, StoreRouterConnectingModule} from '../src/index';
+import { ROUTER_CANCEL, ROUTER_ERROR, ROUTER_NAVIGATION, routerReducer, StoreRouterConnectingModule, RouterNavigationAction, RouterCancelAction, RouterAction } from '../src/index';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/toPromise';
 
 describe('integration spec', () => {
   it('should work', (done) => {
-    const reducer = (state: string = '', action: any) => {
+    const reducer = (state: string = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
       } else {
@@ -49,7 +49,7 @@ describe('integration spec', () => {
   });
 
   it('should support preventing navigation', (done) => {
-    const reducer = (state: string = '', action: any) => {
+    const reducer = (state: string = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION && action.payload.routerState.url.toString() === '/next') {
         throw new Error('You shall not pass!');
       } else {
@@ -80,7 +80,7 @@ describe('integration spec', () => {
   });
 
   it('should support rolling back if navigation gets canceled', (done) => {
-    const reducer = (state: string = '', action: any): any => {
+    const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return { url: action.payload.routerState.url.toString(), lastAction: ROUTER_NAVIGATION };
 
@@ -117,7 +117,7 @@ describe('integration spec', () => {
   });
 
   it('should support rolling back if navigation errors', (done) => {
-    const reducer = (state: string = '', action: any): any => {
+    const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return { url: action.payload.routerState.url.toString(), lastAction: ROUTER_NAVIGATION };
 
@@ -155,7 +155,7 @@ describe('integration spec', () => {
   });
 
   it('should call navigateByUrl when resetting state of the routerReducer', (done) => {
-    const reducer = (state: any, action: any) => {
+    const reducer = (state: any, action: RouterAction<any>) => {
       const r = routerReducer(state, action);
       return r && r.state ? ({ url: r.state.url, navigationId: r.navigationId }) : null;
     };
