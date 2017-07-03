@@ -5,7 +5,7 @@ export { combineReducers, compose } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
 export { ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE } from './reducer_manager';
 export { ScannedActionsSubject } from './scanned_actions_subject';
-export { createSelector, createFeatureSelector } from './selector';
+export { createSelector, createFeatureSelector, MemoizedSelector } from './selector';
 export { State, StateObservable, reduceState } from './state';
 export { INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES } from './tokens';
 export { StoreRootModule, StoreFeatureModule } from './store_module';

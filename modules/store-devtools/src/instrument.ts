@@ -14,7 +14,7 @@ import {
   INITIAL_REDUCERS,
   REDUCER_FACTORY } from '@ngrx/store';
 import { StoreDevtools, DevtoolsDispatcher } from './devtools';
-import { StoreDevtoolsConfig, StoreDevtoolsOptions, STORE_DEVTOOLS_CONFIG, INITIAL_OPTIONS, SHOULD_INSTRUMENT } from './config';
+import { StoreDevtoolsConfig, StoreDevtoolsOptions, STORE_DEVTOOLS_CONFIG, INITIAL_OPTIONS } from './config';
 import { DevtoolsExtension, REDUX_DEVTOOLS_EXTENSION, ReduxDevtoolsExtension } from './extension';
 
 
@@ -40,12 +40,8 @@ export function createReduxDevtoolsExtension() {
   }
 }
 
-export function createStateObservable(shouldInstrument: boolean, injector: Injector) {
-  return shouldInstrument ? injector.get(StoreDevtools).state : injector.get(State);
-}
-
-export function createReducerManagerDispatcher(shouldInstrument: boolean, injector: Injector) {
-  return shouldInstrument ? injector.get(DevtoolsDispatcher) : injector.get(ActionsSubject);
+export function createStateObservable(devtools: StoreDevtools) {
+  return devtools.state;
 }
 
 export function noMonitor(): null {
@@ -55,8 +51,7 @@ export function noMonitor(): null {
 export function createConfig(_options: StoreDevtoolsOptions): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
-    monitor: noMonitor,
-    shouldInstrument: IS_EXTENSION_OR_MONITOR_PRESENT,
+    monitor: noMonitor
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
@@ -67,10 +62,6 @@ export function createConfig(_options: StoreDevtoolsOptions): StoreDevtoolsConfi
   }
 
   return config;
-}
-
-export function createShouldInstrument(injector: Injector, config: StoreDevtoolsConfig) {
-  return injector.get(config.shouldInstrument);
 }
 
 @NgModule({
@@ -102,24 +93,18 @@ export class StoreDevtoolsModule {
           useFactory: createReduxDevtoolsExtension
         },
         {
-          provide: SHOULD_INSTRUMENT,
-          deps: [ Injector, STORE_DEVTOOLS_CONFIG ],
-          useFactory: createShouldInstrument
-        },
-        {
           provide: STORE_DEVTOOLS_CONFIG,
           deps: [ INITIAL_OPTIONS ],
           useFactory: createConfig
         },
         {
           provide: StateObservable,
-          deps: [ SHOULD_INSTRUMENT, Injector ],
+          deps: [ StoreDevtools ],
           useFactory: createStateObservable
         },
         {
           provide: ReducerManagerDispatcher,
-          deps: [ SHOULD_INSTRUMENT, Injector ],
-          useFactory: createReducerManagerDispatcher
+          useExisting: DevtoolsDispatcher
         },
       ]
     };
