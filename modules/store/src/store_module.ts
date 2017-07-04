@@ -1,14 +1,12 @@
 import { NgModule, Inject, ModuleWithProviders, OnDestroy, InjectionToken } from '@angular/core';
-import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
+import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature, InitialState } from './models';
 import { combineReducers } from './utils';
-import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES } from './tokens';
+import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS } from './actions_subject';
 import { REDUCER_MANAGER_PROVIDERS, ReducerManager } from './reducer_manager';
 import { SCANNED_ACTIONS_SUBJECT_PROVIDERS } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS } from './store';
-
-
 
 @NgModule({})
 export class StoreRootModule {
@@ -29,7 +27,7 @@ export class StoreFeatureModule implements OnDestroy {
   }
 }
 
-export type StoreConfig<T, V extends Action = Action> = { initialState?: T, reducerFactory?: ActionReducerFactory<T, V> };
+export type StoreConfig<T, V extends Action = Action> = { initialState?: InitialState<T>, reducerFactory?: ActionReducerFactory<T, V> };
 
 @NgModule({})
 export class StoreModule {
@@ -38,7 +36,8 @@ export class StoreModule {
     return {
       ngModule: StoreRootModule,
       providers: [
-        { provide: INITIAL_STATE, useValue: config.initialState },
+        { provide: _INITIAL_STATE, useValue: config.initialState },
+        { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [ _INITIAL_STATE ] },
         reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
         { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
         ACTIONS_SUBJECT_PROVIDERS,
@@ -69,4 +68,13 @@ export class StoreModule {
       ]
     };
   }
+}
+
+/** @internal */
+export function _initialStateFactory(initialState: any): any {
+  if (typeof initialState === 'function') {
+    return initialState();
+  }
+
+  return initialState;
 }

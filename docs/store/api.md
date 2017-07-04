@@ -2,7 +2,7 @@
 
 ## Initial State
 
-Configure initial state when providing Store:
+Configure initial state when providing Store. `config.initialState` can be either the actual state, or a function that returns the initial state:
 
 ```ts
 import { StoreModule } from '@ngrx/store';
@@ -18,6 +18,29 @@ import { reducers } from './reducers';
   ]
 })
 export class AppModule {}
+```
+
+### Initial State and Ahead of Time (AoT) Compilation
+
+Angular AoT requires all symbols referenced in the construction of its types (think `@NgModule`, `@Component`, `@Injectable`, etc.) to be statically defined. For this reason, we cannot dynamically inject state at runtime with AoT unless we provide `initialState` as a function. Thus the above `NgModule` definition simply changes to:
+
+```ts
+/// Pretend this is dynamically injected at runtime
+const initialStateFromSomewhere = { counter: 3 };
+
+/// Static state
+const initialState = { counter: 2 };
+
+/// In this function dynamic state slices, if they exist, will overwrite static state at runtime.
+export function getInitialState() {
+  return {...initialState, ...initialStateFromSomewhere};
+}
+
+@NgModule({
+  imports: [
+    StoreModule.forRoot(reducers, {initialState: getInitialState})
+  ]
+})
 ```
 
 ## Reducer Factory
