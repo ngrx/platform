@@ -21,31 +21,51 @@ interface TodoAppSchema {
   todos: Todo[];
 }
 
-
-
 describe('ngRx Store', () => {
+  let injector: ReflectiveInjector;
+  let store: Store<TestAppSchema>;
+  let dispatcher: ActionsSubject;
+
+  function setup(initialState: any = { counter1: 0, counter2: 1 }) {
+    const reducers = {
+      counter1: counterReducer,
+      counter2: counterReducer,
+      counter3: counterReducer
+    };
+
+    injector = createInjector(StoreModule.forRoot(reducers, { initialState }));
+    store = injector.get(Store);
+    dispatcher = injector.get(ActionsSubject);
+  }
+
+  describe('initial state', () => {
+    it('should handle an initial state object', (done) => {
+      setup();
+
+      store.take(1).subscribe({
+        next(val) {
+          expect(val).toEqual({ counter1: 0, counter2: 1, counter3: 0 });
+        },
+        error: done,
+        complete: done
+      });
+    });
+
+    it('should handle an initial state function', (done) => {
+      setup(() => ({ counter1: 0, counter2: 5 }));
+
+      store.take(1).subscribe({
+        next(val) {
+          expect(val).toEqual({ counter1: 0, counter2: 5, counter3: 0 });
+        },
+        error: done,
+        complete: done
+      });
+    });
+  });
 
   describe('basic store actions', function() {
-
-    let injector: ReflectiveInjector;
-    let store: Store<TestAppSchema>;
-    let dispatcher: ActionsSubject;
-    let initialState: any;
-
-    beforeEach(() => {
-      const reducers = {
-        counter1: counterReducer,
-        counter2: counterReducer,
-        counter3: counterReducer
-      };
-
-      initialState = { counter1: 0, counter2: 1 };
-
-      injector = createInjector(StoreModule.forRoot(reducers, { initialState }));
-
-      store = injector.get(Store);
-      dispatcher = injector.get(ActionsSubject);
-    });
+    beforeEach(() => setup());
 
     it('should provide an Observable Store', () => {
       expect(store).toBeDefined();
@@ -95,18 +115,6 @@ describe('ngRx Store', () => {
       const result = store.select('counter1');
 
       expect(result instanceof Store).toBe(true);
-
-    });
-
-    it('should appropriately handle initial state', (done) => {
-
-      store.take(1).subscribe({
-        next(val) {
-          expect(val).toEqual({ counter1: 0, counter2: 1, counter3: 0 });
-        },
-        error: done,
-        complete: done
-      });
 
     });
 
