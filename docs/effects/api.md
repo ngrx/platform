@@ -74,6 +74,28 @@ export class SomeEffectsClass {
 }
 ```
 
+### groupOfType
+
+Filter actions by action types and only execute when all actions have been dispatched.
+
+Usage:
+```ts
+import 'rxjs/add/operator/do';
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) {}
+
+  // log action only if both `GET_HERO_SUCCESS` and `GET_ENEMY_SUCCESS` have been dispatched
+  @Effect() startGame$ = this.action$.ofType('GET_HERO_SUCCESS', 'GET_ENEMY_SUCCESS')
+    .do(action => {
+      console.log(action);
+    });
+}
+```
+
 ### Non-dispatching Effects
 Pass `{ dispatch: false }` to the decorator to prevent dispatching.
 
