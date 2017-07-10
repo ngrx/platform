@@ -76,7 +76,7 @@ export class SomeEffectsClass {
 
 ### groupOfType
 
-Filter actions by action types and only execute when all actions have been dispatched.
+Once all of the action types have been observed, only than return the observable.
 
 Usage:
 ```ts
