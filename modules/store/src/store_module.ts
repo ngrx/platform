@@ -70,7 +70,6 @@ export class StoreModule {
   }
 }
 
-/** @internal */
 export function _initialStateFactory(initialState: any): any {
   if (typeof initialState === 'function') {
     return initialState();
