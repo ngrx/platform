@@ -1,4 +1,4 @@
-export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, Selector } from './models';
+export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, Selector, ActionThunk, StateSelector } from './models';
 export { StoreModule } from './store_module';
 export { Store } from './store';
 export { combineReducers, compose } from './utils';
