@@ -73,8 +73,8 @@ export class Store<T> extends Observable<Readonly<T>> implements Observer<Action
     return store;
   }
 
-  dispatch<TState>(this: Store<TState>, action: ActionThunk) {
-    const result: Action | undefined = typeof action === 'function'
+  dispatch<TState, V extends ActionThunk = ActionThunk>(this: Store<TState>, action: V) {
+    const result: Action | undefined = action instanceof Function
       ? action(this.getSync.bind(this))
       : action;
 
