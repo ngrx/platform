@@ -67,7 +67,7 @@
     "ts-node": "^3.0.2",
     "tslib": "1.6.0",
     "tslint": "^4.4.2",
-    "typescript": "^2.3.0",
+    "typescript": "2.3.4",
     "uglify-js": "^2.8.22",
     "zone.js": "^0.8.4"
   }

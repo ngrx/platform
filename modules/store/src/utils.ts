@@ -1,4 +1,4 @@
-import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory } from './models';
+import { Action, ActionThunk, ActionReducer, ActionReducerMap, ActionReducerFactory } from './models';
 
 
 export function combineReducers<T, V extends Action = Action>(reducers: ActionReducerMap<T, V>, initialState?: Partial<T>): ActionReducer<T, V>;
@@ -54,4 +54,8 @@ export function compose(...functions: any[]) {
 
     return rest.reduceRight((composed, fn) => fn(composed), last(arg));
   }
+}
+
+export function isAction(action: Action | ActionThunk): action is Action {
+    return (action as Action).type !== undefined;
 }

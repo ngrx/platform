@@ -6,11 +6,25 @@ Strongly type actions to take advantage of TypeScript's compile-time checking.
 
 ```ts
 // counter.actions.ts
-import { Action } from '@ngrx/store';
+import { Action, StateSelector } from '@ngrx/store';
 
 export const INCREMENT  = '[Counter] Increment';
 export const DECREMENT  = '[Counter] Decrement';
 export const RESET      = '[Counter] Reset';
+
+// thunked action
+export function resetIfNeeded() {
+  return (getState: StateSelector<number>): Action | undefined => {
+      const state = getState(x => x);
+      if (state) {
+          return {
+            type: CounterActions.RESET,
+            payload: 0
+          };
+      }
+      return undefined;
+  };
+}
 
 export class Increment implements Action {
   readonly type = INCREMENT;
@@ -100,5 +114,10 @@ export class MyAppComponent {
 	reset(){
 		this.store.dispatch(new Counter.Reset(3));
 	}
+
+  resetIfNeeded(){
+    this.store.dispatch(Counter.resetIfNeeded());
+  }
+
 }
 ```

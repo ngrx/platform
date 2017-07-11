@@ -2,7 +2,8 @@ import { Injectable, OnDestroy, Provider } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { Action } from './models';
+import { Action, ActionThunk } from './models';
+import { isAction } from './utils';
 
 
 export const INIT = '@ngrx/store/init';
@@ -17,7 +18,7 @@ export class ActionsSubject extends BehaviorSubject<Action> implements OnDestroy
     if (typeof action === 'undefined') {
       throw new Error(`Actions must be objects`);
     }
-    else if (typeof action.type === 'undefined') {
+    else if (!isAction(action)) {
       throw new Error(`Actions must have a type property`);
     }
 

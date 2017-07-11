@@ -2,10 +2,11 @@ import { Injectable, Provider } from '@angular/core';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 import { Operator } from 'rxjs/Operator';
+import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operator/map';
 import { pluck } from 'rxjs/operator/pluck';
 import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
-import { Action, ActionReducer } from './models';
+import { Action, ActionThunk, ActionReducer } from './models';
 import { ActionsSubject } from './actions_subject';
 import { StateObservable } from './state';
 import { ReducerManager } from './reducer_manager';
@@ -14,6 +15,9 @@ import { isSelector, createSelector } from './selector';
 
 @Injectable()
 export class Store<T> extends Observable<Readonly<T>> implements Observer<Action> {
+  readonly subscriptions = new WeakMap<Store<any>, Subscription>();
+  readonly currentStates = new WeakMap<Store<any>, any>();
+
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,
@@ -51,6 +55,17 @@ export class Store<T> extends Observable<Readonly<T>> implements Observer<Action
     return distinctUntilChanged.call(mapped$);
   }
 
+  getSync<TState, TResult>(this: Store<TState>, selector?: (state: TState) => TResult): TResult {
+    if (!this.subscriptions.get(this)) {
+      this.subscriptions.set(this, this.subscribe(data => {
+        this.currentStates.set(this, data);
+      }));
+    }
+
+    const state = this.currentStates.get(this);
+    return selector ? selector(state) : state;
+  }
+
   lift<R>(operator: Operator<T, R>): Store<R> {
     const store = new Store<R>(this, this.actionsObserver, this.reducerManager);
     store.operator = operator;
@@ -58,8 +73,15 @@ export class Store<T> extends Observable<Readonly<T>> implements Observer<Action
     return store;
   }
 
-  dispatch<V extends Action = Action>(action: V) {
-    this.actionsObserver.next(action);
+  dispatch<TState, V extends ActionThunk = ActionThunk>(this: Store<TState>, action: V) {
+    const result: Action | undefined = action instanceof Function
+      ? action(this.getSync.bind(this))
+      : action;
+
+    if (!result) {
+      return;
+    }
+    this.next(result);
   }
 
   next(action: Action) {

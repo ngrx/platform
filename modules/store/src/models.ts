@@ -2,6 +2,12 @@ export interface Action {
   type: string;
 }
 
+export interface StateSelector<TState> {
+  <TResult>(keySelector: (state: TState) => TResult): TResult;
+}
+
+export type ActionThunk = Action | ((getState: StateSelector<any>) => Action | undefined);
+
 export type TypeId<T> = () => T;
 
 export type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;

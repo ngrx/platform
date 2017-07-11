@@ -36,14 +36,17 @@ import * as fromRoot from './reducers';
 @Component({
 	selector: 'my-app',
 	template: `
-		<div>Current Count: {{ counter | async }}</div>
+		<div>Current Count: {{ counter$ | async }}</div>
 	`
 })
 class MyAppComponent {
-	counter: Observable<number>;
+	counter$: Observable<number>;
+	counter: number
 
 	constructor(private store: Store<fromRoot.AppState>){
-		this.counter = store.select(fromRoot.selectFeatureCount);
+		this.counter$ = store.select(fromRoot.selectFeatureCount);
+		// selector is run synchronously and current value is returned
+		this.counter = store.getSync(fromRoot.selectFeatureCount);
 	}
 }
 ```

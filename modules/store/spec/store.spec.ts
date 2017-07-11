@@ -3,10 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { ReflectiveInjector } from '@angular/core';
 import { hot } from 'jasmine-marbles';
 import { createInjector } from './helpers/injector';
-import { Store, Action, combineReducers, StoreModule } from '../';
+import { Store, Action, combineReducers, StoreModule, StateSelector } from '../';
 import { ActionsSubject } from '../src/private_export';
 import { counterReducer, INCREMENT, DECREMENT, RESET } from './fixtures/counter';
-
 
 interface TestAppSchema {
   counter1: number;
@@ -21,12 +20,14 @@ interface TodoAppSchema {
   todos: Todo[];
 }
 
+const INITIAL_STATE: TestAppSchema = { counter1: 0, counter2: 1, counter3: 0 };
+
 describe('ngRx Store', () => {
   let injector: ReflectiveInjector;
   let store: Store<TestAppSchema>;
   let dispatcher: ActionsSubject;
 
-  function setup(initialState: any = { counter1: 0, counter2: 1 }) {
+  function setup(initialState: any = INITIAL_STATE) {
     const reducers = {
       counter1: counterReducer,
       counter2: counterReducer,
@@ -52,7 +53,7 @@ describe('ngRx Store', () => {
     });
 
     it('should handle an initial state function', (done) => {
-      setup(() => ({ counter1: 0, counter2: 5 }));
+      setup(() => ({ counter1: 0, counter2: 5, counter3: 0 }));
 
       store.take(1).subscribe({
         next(val) {
@@ -64,7 +65,7 @@ describe('ngRx Store', () => {
     });
   });
 
-  describe('basic store actions', function() {
+  describe('basic store actions', function () {
     beforeEach(() => setup());
 
     it('should provide an Observable Store', () => {
@@ -80,7 +81,7 @@ describe('ngRx Store', () => {
       e: { type: INCREMENT }
     };
 
-    it('should let you select state with a key name', function() {
+    it('should let you select state with a key name', function () {
 
       const counterSteps = hot(actionSequence, actionValues);
 
@@ -95,7 +96,7 @@ describe('ngRx Store', () => {
 
     });
 
-    it('should let you select state with a selector function', function() {
+    it('should let you select state with a selector function', function () {
 
       const counterSteps = hot(actionSequence, actionValues);
 
@@ -110,7 +111,7 @@ describe('ngRx Store', () => {
 
     });
 
-    it('should correctly lift itself', function() {
+    it('should correctly lift itself', function () {
 
       const result = store.select('counter1');
 
@@ -118,7 +119,7 @@ describe('ngRx Store', () => {
 
     });
 
-    it('should increment and decrement counter1', function() {
+    it('should increment and decrement counter1', function () {
 
       const counterSteps = hot(actionSequence, actionValues);
 
@@ -133,7 +134,7 @@ describe('ngRx Store', () => {
 
     });
 
-    it('should increment and decrement counter1 using the dispatcher', function() {
+    it('should increment and decrement counter1 using the dispatcher', function () {
 
       const counterSteps = hot(actionSequence, actionValues);
 
@@ -148,7 +149,7 @@ describe('ngRx Store', () => {
     });
 
 
-    it('should increment and decrement counter2 separately', function() {
+    it('should increment and decrement counter2 separately', function () {
 
       const counterSteps = hot(actionSequence, actionValues);
 
@@ -164,7 +165,7 @@ describe('ngRx Store', () => {
 
     });
 
-    it('should implement the observer interface forwarding actions and errors to the dispatcher', function() {
+    it('should implement the observer interface forwarding actions and errors to the dispatcher', function () {
 
       spyOn(dispatcher, 'next');
       spyOn(dispatcher, 'error');
@@ -177,7 +178,7 @@ describe('ngRx Store', () => {
 
     });
 
-    it('should not be completable', function() {
+    it('should not be completable', function () {
 
       const storeSubscription = store.subscribe();
       const dispatcherSubscription = dispatcher.subscribe();
@@ -197,6 +198,36 @@ describe('ngRx Store', () => {
 
       expect(storeSubscription.closed).toBe(true);
       expect(dispatcherSubscription.closed).toBe(true);
+    });
+
+    it('getSync should return the current state', () => {
+      const state = store.getSync();
+      expect(state).toEqual(INITIAL_STATE);
+    });
+
+    it('getSync should return the correct substate', () => {
+      const getCounter1 = (state: TestAppSchema) => state.counter1;
+      const counter1 = store.getSync(getCounter1);
+      expect(counter1).toEqual(getCounter1(INITIAL_STATE));
+    });
+
+    it('dispatch action thunk', () => {
+      spyOn(store, 'next');
+      const selector = () => {
+        return (getState: StateSelector<TestAppSchema>) => {
+          const payload = getState(x => x.counter1);
+          return {
+            type: 'get',
+            payload
+          };
+        };
+      };
+
+      store.dispatch(selector());
+      expect(store.next).toHaveBeenCalledWith(jasmine.objectContaining({
+        type: 'get',
+        payload: INITIAL_STATE.counter1
+      }));
     });
   });
 });
