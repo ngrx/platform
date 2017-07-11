@@ -74,7 +74,7 @@ export class SomeEffectsClass {
 }
 ```
 
-### groupOfType
+### whenAll
 
 Once all of the action types have been observed, only than return the observable.
 
@@ -89,7 +89,7 @@ export class SomeEffectsClass {
   constructor(private actions$: Actions) {}
 
   // log action only if both `GET_HERO_SUCCESS` and `GET_ENEMY_SUCCESS` have been dispatched
-  @Effect() startGame$ = this.action$.groupOfType('GET_HERO_SUCCESS', 'GET_ENEMY_SUCCESS')
+  @Effect() startGame$ = this.action$.whenAll('GET_HERO_SUCCESS', 'GET_ENEMY_SUCCESS')
     .do(action => {
       console.log(action);
     });
