@@ -2,12 +2,13 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import { fakeAsync } from '@angular/core/testing';
 import { ReflectiveInjector } from '@angular/core';
 import { Action, StoreModule, ScannedActionsSubject, ActionsSubject } from '@ngrx/store';
 import { Actions } from '../';
 
 
-describe('Actions', function() {
+describe('Actions', function () {
   let actions$: Actions;
   let dispatcher: ScannedActionsSubject;
 
@@ -25,7 +26,7 @@ describe('Actions', function() {
     }
   }
 
-  beforeEach(function() {
+  beforeEach(function () {
     const injector = ReflectiveInjector.resolveAndCreate([
       StoreModule.forRoot(reducer).providers || [],
       Actions
@@ -35,7 +36,7 @@ describe('Actions', function() {
     dispatcher = injector.get(ScannedActionsSubject);
   });
 
-  it('should be an observable of actions', function() {
+  it('should be an observable of actions', function () {
     const actions = [
       { type: ADD },
       { type: SUBTRACT },
@@ -57,21 +58,42 @@ describe('Actions', function() {
     actions.forEach(action => dispatcher.next(action));
   });
 
-  it('should let you filter out actions', function() {
-    const actions = [ ADD, ADD, SUBTRACT, ADD, SUBTRACT ];
-    const expected = actions.filter(type => type === ADD);
-
+  it('should let you filter out grouped actions', fakeAsync(() => {
+    const actions = [ADD, ADD, SUBTRACT];
+    const spy = jasmine.createSpy('spy', (): null => null);
     actions$
-      .ofType(ADD)
-      .map(update => update.type)
-      .toArray()
-      .subscribe({
-        next(actual) {
-          expect(actual).toEqual(expected);
-        }
-      });
+      .groupOfType(ADD, SUBTRACT)
+      .subscribe(spy);
 
     actions.forEach(action => dispatcher.next({ type: action }));
     dispatcher.complete();
-  });
+
+    expect(spy).toHaveBeenCalled();
+  }));
+
+  it('should let you filter out grouped actions multiple times', fakeAsync(() => {
+    const actions = [ADD, SUBTRACT, ADD, SUBTRACT];
+    const spy = jasmine.createSpy('spy', (): null => null);
+    actions$
+      .groupOfType(ADD, SUBTRACT)
+      .subscribe(spy);
+
+    actions.forEach(action => dispatcher.next({ type: action }));
+    dispatcher.complete();
+
+    expect(spy).toHaveBeenCalledTimes(2);
+  }));
+
+  it('should not be called if not all actions are dispatched', fakeAsync(() => {
+    const actions = [ADD, ADD];
+    const spy = jasmine.createSpy('spy', (): null => null);
+    actions$
+      .groupOfType(ADD, SUBTRACT)
+      .subscribe(spy);
+
+    actions.forEach(action => dispatcher.next({ type: action }));
+    dispatcher.complete();
+
+    expect(spy).not.toHaveBeenCalled();
+  }));
 });

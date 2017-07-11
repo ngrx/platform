@@ -74,6 +74,28 @@ export class SomeEffectsClass {
 }
 ```
 
+### whenAll
+
+Once all of the action types have been observed, only than return the observable.
+
+Usage:
+```ts
+import 'rxjs/add/operator/do';
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) {}
+
+  // log action only if both `GET_HERO_SUCCESS` and `GET_ENEMY_SUCCESS` have been dispatched
+  @Effect() startGame$ = this.action$.whenAll('GET_HERO_SUCCESS', 'GET_ENEMY_SUCCESS')
+    .do(action => {
+      console.log(action);
+    });
+}
+```
+
 ### Non-dispatching Effects
 Pass `{ dispatch: false }` to the decorator to prevent dispatching.
 

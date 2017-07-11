@@ -33,7 +33,7 @@ effect to the store.
 
 The `Actions` observable represents an observable of all actions dispatched to the
 store. The `ofType` operator lets you filter for actions of a certain type in which you
-want to use to perform a side effect.
+want to use to perform a side effect. The `whenAll` operator lets you observe on all the actions defined and only when all of the actions have been observed it performs the side effect.
 
 ## Example
 1. Create an AuthEffects service that describes a source of login actions:
