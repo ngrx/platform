@@ -128,3 +128,48 @@ export function createBuilder(tasks: [ string, (config: Config) => Promise<any> 
     }
   };
 }
+
+export function flatMap<K, J>(list: K[], mapFn: (item: K) => J[]): J[] {
+  return list.reduce(function (newList, nextItem) {
+    return [ ...newList, ...mapFn(nextItem) ];
+  }, [] as J[]);
+}
+
+export function getTopLevelPackages(config: Config) {
+  return config.packages.map(packageDescription => packageDescription.name);
+}
+
+export function getTestingPackages(config: Config) {
+  return flatMap(config.packages, ({ name, hasTestingModule }) => {
+    if (hasTestingModule) {
+      return [ `${name}/testing` ];
+    }
+
+    return [ ];
+  });
+}
+
+export function getAllPackages(config: Config) {
+  return flatMap(config.packages, packageDescription => {
+    if (packageDescription.hasTestingModule) {
+      return [
+        packageDescription.name,
+        `${packageDescription.name}/testing`,
+      ];
+    }
+
+    return [ packageDescription.name ];
+  });
+}
+
+export function getDestinationName(packageName: string) {
+  return packageName.replace('/testing', '-testing');
+}
+
+export function getTopLevelName(packageName: string) {
+  return packageName.replace('/testing', '');
+}
+
+export function getBottomLevelName(packageName: string) {
+  return packageName.includes('/testing') ? 'testing' : packageName;
+}

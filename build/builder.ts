@@ -13,6 +13,7 @@ export default createBuilder([
   [ 'Removing remaining sourcemap files', tasks.removeRemainingSourceMapFiles ],
   [ 'Copying type definition files', tasks.copyTypeDefinitionFiles ],
   [ 'Minifying UMD bundles', tasks.minifyUmdBundles ],
-  [ 'Copying package documents', tasks.copyPackageDocs ],
+  [ 'Copying documents', tasks.copyDocs ],
+  [ 'Copying package.json files', tasks.copyPackageJsonFiles ],
   [ 'Removing "./dist/packages" Folder', tasks.removePackagesFolder ],
 ]);
