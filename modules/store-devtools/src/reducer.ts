@@ -6,11 +6,11 @@ import * as Actions from './actions';
 
 export type InitAction = {
   readonly type: typeof INIT;
-}
+};
 
 export type UpdateReducerAction = {
   readonly type: typeof UPDATE;
-}
+};
 
 export type CoreActions = InitAction | UpdateReducerAction;
 export type Actions = Actions.All | CoreActions;

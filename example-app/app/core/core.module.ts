@@ -37,6 +37,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [ GoogleBooksService ]
-    }
+    };
   }
 }

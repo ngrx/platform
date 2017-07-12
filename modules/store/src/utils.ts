@@ -53,5 +53,5 @@ export function compose(...functions: any[]) {
     const rest = functions.slice(0, -1);
 
     return rest.reduceRight((composed, fn) => fn(composed), last(arg));
-  }
+  };
 }
