@@ -13,7 +13,7 @@ import { isSelector, createSelector } from './selector';
 
 
 @Injectable()
-export class Store<T> extends Observable<Readonly<T>> implements Observer<Action> {
+export class Store<T> extends Observable<T> implements Observer<Action> {
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,
