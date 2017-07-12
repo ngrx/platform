@@ -2,7 +2,7 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/first';
 import { Observable } from 'rxjs/Observable';
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, Action, combineReducers } from '../';
+import { Store, StoreModule, Action, combineReducers, ActionReducer, ActionReducerMap } from '../';
 import { ReducerManager, INITIAL_STATE, State } from '../src/private_export';
 import { counterReducer, INCREMENT, DECREMENT, RESET } from './fixtures/counter';
 import { todos, visibilityFilter, VisibilityFilters, SET_VISIBILITY_FILTER, ADD_TODO, COMPLETE_TODO, COMPLETE_ALL_TODOS } from './fixtures/todos';
@@ -25,7 +25,7 @@ describe('ngRx Integration spec', () => {
     let state: State<TodoAppSchema>;
 
     const initialState = { todos: [], visibilityFilter: VisibilityFilters.SHOW_ALL };
-    const reducers = { todos, visibilityFilter };
+    const reducers: ActionReducerMap<TodoAppSchema, any> = { todos: todos, visibilityFilter: visibilityFilter };
 
     beforeEach(() => {
       spyOn(reducers, 'todos').and.callThrough();
@@ -48,7 +48,7 @@ describe('ngRx Integration spec', () => {
       const action = { type: 'Test Action' };
       const reducer$: ReducerManager = TestBed.get(ReducerManager);
 
-      reducer$.first().subscribe(reducer => {
+      reducer$.first().subscribe((reducer: ActionReducer<any, any>) => {
         expect(reducer).toBeDefined();
         expect(typeof reducer === 'function').toBe(true);
 

@@ -71,7 +71,7 @@ export class StoreDevtools implements Observer<any> {
       }
     });
 
-    const liftedState$ = liftedStateSubject.asObservable();
+    const liftedState$ = liftedStateSubject.asObservable() as Observable<LiftedState>;
     const state$ = map.call(liftedState$, unliftState);
 
     this.stateSubscription = liftedStateSubscription;

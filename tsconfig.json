@@ -5,10 +5,11 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "noStrictGenericChecks": true,
     "lib": [
       "es2016",
       "dom"
-      ],
+    ],
     "outDir": "../out-tsc/app",
     "target": "es5",
     "module": "commonjs",
@@ -16,10 +17,18 @@
     "rootDir": "./",
     "strict": true,
     "paths": {
-      "@ngrx/effects": ["./modules/effects"],
-      "@ngrx/store": ["./modules/store"],
-      "@ngrx/store-devtools": ["./modules/store-devtools"],
-      "@ngrx/router-store": ["./modules/router-store"]
+      "@ngrx/effects": [
+        "./modules/effects"
+      ],
+      "@ngrx/store": [
+        "./modules/store"
+      ],
+      "@ngrx/store-devtools": [
+        "./modules/store-devtools"
+      ],
+      "@ngrx/router-store": [
+        "./modules/router-store"
+      ]
     }
   },
   "exclude": [
@@ -28,5 +37,7 @@
   ],
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }

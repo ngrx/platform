@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "outDir": "../out-tsc/spec",
+    "module": "commonjs",
+    "target": "es6",
+    "types": [
+      "jasmine",
+      "node"
+    ],
+    "baseUrl": ".",
+    "rootDir": "../",
+    "paths": {
+      "@ngrx/effects": ["../modules/effects"],
+      "@ngrx/store": ["../modules/store"],
+      "@ngrx/router-store": ["../modules/router-store"],
+      "@ngrx/store-devtools": ["../modules/store-devtools"]
+    }
+  },
+  "files": [
+    "test.ts"
+  ],
+  "include": [
+    "**/*.spec.ts"
+  ]
+}
