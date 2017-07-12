@@ -47,7 +47,7 @@ export function logger(reducer: ActionReducer<State>) {
     console.log('action', action);
 
     return reducer(state, action);
-  }
+  };
 }
 
 /**

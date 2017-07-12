@@ -15,7 +15,8 @@
     "cli": "ng",
     "example:start": "yarn run cli -- serve",
     "example:test": "yarn run cli -- test --code-coverage",
-    "ci": "npm run build && npm run test && nyc report --reporter=text-lcov | coveralls"
+    "ci": "npm run build && npm run test && nyc report --reporter=text-lcov | coveralls",
+    "lint": "yarn run cli -- lint"
   },
   "keywords": [
     "ngrx",

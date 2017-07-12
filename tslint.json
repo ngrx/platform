@@ -10,7 +10,7 @@
       "spaces"
     ],
     "no-duplicate-variable": true,
-    "no-eval": true,
+    "no-eval": false,
     "no-internal-module": true,
     "no-trailing-whitespace": true,
     "no-var-keyword": true,

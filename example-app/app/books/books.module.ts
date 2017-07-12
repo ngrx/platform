@@ -40,7 +40,7 @@ import { reducers } from './reducers';
      * Effects.forFeature is used to regiser effects
      * from feature modules. Effects can be loaded
      * eagerly or lazily and will be started immediately.
-     * 
+     *
      * All Effects will only be instantiated once regardless of
      * whether they are registered once or multiple times.
      */
