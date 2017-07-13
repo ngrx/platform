@@ -1,6 +1,10 @@
 import { reducer } from './books';
 import * as fromBooks from './books';
-import { SearchCompleteAction, LoadAction, SelectAction } from '../actions/book';
+import {
+  SearchCompleteAction,
+  LoadAction,
+  SelectAction,
+} from '../actions/book';
 import { Book } from '../models/book';
 import { LoadSuccessAction } from '../actions/collection';
 
@@ -16,15 +20,15 @@ describe('BooksReducer', () => {
 
   describe('SEARCH_COMPLETE & LOAD_SUCCESS', () => {
     function noExistingBooks(action: any) {
-      const book1 = {id: '111'} as Book;
-      const book2 = {id: '222'} as Book;
+      const book1 = { id: '111' } as Book;
+      const book2 = { id: '222' } as Book;
       const createAction = new action([book1, book2]);
 
       const expectedResult = {
         ids: ['111', '222'],
         entities: {
           '111': book1,
-          '222': book2
+          '222': book2,
         },
         selectedBookId: null,
       };
@@ -34,19 +38,19 @@ describe('BooksReducer', () => {
     }
 
     function existingBooks(action: any) {
-      const book1 = {id: '111'} as Book;
-      const book2 = {id: '222'} as Book;
+      const book1 = { id: '111' } as Book;
+      const book2 = { id: '222' } as Book;
       const initialState = {
         ids: ['111', '222'],
         entities: {
           '111': book1,
-          '222': book2
+          '222': book2,
         },
         selectedBookId: null,
       } as any;
       // should not replace existing books
-      const differentBook2 = {id: '222', foo: 'bar'} as any;
-      const book3 = {id: '333'} as Book;
+      const differentBook2 = { id: '222', foo: 'bar' } as any;
+      const book3 = { id: '333' } as Book;
       const createAction = new action([book3, differentBook2]);
 
       const expectedResult = {
@@ -54,7 +58,7 @@ describe('BooksReducer', () => {
         entities: {
           '111': book1,
           '222': book2,
-          '333': book3
+          '333': book3,
         },
         selectedBookId: null,
       };
@@ -76,15 +80,15 @@ describe('BooksReducer', () => {
 
   describe('LOAD', () => {
     it('should add a single book, if the book does not exist', () => {
-      const book = {id: '888'} as Book;
+      const book = { id: '888' } as Book;
       const action = new LoadAction(book);
 
       const expectedResult = {
         ids: ['888'],
         entities: {
-          '888': book
+          '888': book,
         },
-        selectedBookId: null
+        selectedBookId: null,
       };
 
       const result = reducer(fromBooks.initialState, action);
@@ -95,10 +99,10 @@ describe('BooksReducer', () => {
       const initialState = {
         ids: ['999'],
         entities: {
-          '999': {id: '999'}
-        }
+          '999': { id: '999' },
+        },
       } as any;
-      const book = {id: '999', foo: 'baz'} as any;
+      const book = { id: '999', foo: 'baz' } as any;
       const action = new LoadAction(book);
 
       const result = reducer(initialState, action);
@@ -116,15 +120,15 @@ describe('BooksReducer', () => {
   });
 
   describe('Selections', () => {
-    const book1 = {id: '111'} as Book;
-    const book2 = {id: '222'} as Book;
+    const book1 = { id: '111' } as Book;
+    const book2 = { id: '222' } as Book;
     const state: fromBooks.State = {
       ids: ['111', '222'],
       entities: {
         '111': book1,
         '222': book2,
       },
-      selectedBookId: '111'
+      selectedBookId: '111',
     };
 
     describe('getEntities', () => {
@@ -161,6 +165,5 @@ describe('BooksReducer', () => {
         expect(result).toEqual([book1, book2]);
       });
     });
-
   });
 });

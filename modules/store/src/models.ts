@@ -11,11 +11,14 @@ export interface ActionReducer<T, V extends Action = Action> {
 }
 
 export type ActionReducerMap<T, V extends Action = Action> = {
-  [p in keyof T]: ActionReducer<T[p], V>;
+  [p in keyof T]: ActionReducer<T[p], V>
 };
 
 export interface ActionReducerFactory<T, V extends Action = Action> {
-  (reducerMap: ActionReducerMap<T, V>, initialState?: InitialState<T>): ActionReducer<T, V>;
+  (
+    reducerMap: ActionReducerMap<T, V>,
+    initialState?: InitialState<T>
+  ): ActionReducer<T, V>;
 }
 
 export interface StoreFeature<T, V extends Action = Action> {

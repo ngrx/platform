@@ -16,7 +16,9 @@ describe('Pipe: Add Commas', () => {
   });
 
   it('should transform ["Kim", "Ryan", "Amanda"] to "Kim, Ryan, and Amanda"', () => {
-    expect(pipe.transform(['Kim', 'Ryan', 'Amanda'])).toEqual('Kim, Ryan, and Amanda');
+    expect(pipe.transform(['Kim', 'Ryan', 'Amanda'])).toEqual(
+      'Kim, Ryan, and Amanda'
+    );
   });
 
   it('transforms undefined to "Author Unknown"', () => {

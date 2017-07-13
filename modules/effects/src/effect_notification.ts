@@ -11,12 +11,18 @@ export interface EffectNotification {
   notification: Notification<Action | null | undefined>;
 }
 
-export function verifyOutput(output: EffectNotification, reporter: ErrorReporter) {
+export function verifyOutput(
+  output: EffectNotification,
+  reporter: ErrorReporter
+) {
   reportErrorThrown(output, reporter);
   reportInvalidActions(output, reporter);
 }
 
-function reportErrorThrown(output: EffectNotification, reporter: ErrorReporter) {
+function reportErrorThrown(
+  output: EffectNotification,
+  reporter: ErrorReporter
+) {
   if (output.notification.kind === 'E') {
     const errorReason = `Effect ${getEffectName(output)} threw an error`;
 
@@ -29,13 +35,18 @@ function reportErrorThrown(output: EffectNotification, reporter: ErrorReporter) 
   }
 }
 
-function reportInvalidActions(output: EffectNotification, reporter: ErrorReporter) {
+function reportInvalidActions(
+  output: EffectNotification,
+  reporter: ErrorReporter
+) {
   if (output.notification.kind === 'N') {
     const action = output.notification.value;
     const isInvalidAction = !isAction(action);
 
     if (isInvalidAction) {
-      const errorReason = `Effect ${getEffectName(output)} dispatched an invalid action`;
+      const errorReason = `Effect ${getEffectName(
+        output
+      )} dispatched an invalid action`;
 
       reporter.report(errorReason, {
         Source: output.sourceInstance,
@@ -51,7 +62,11 @@ function isAction(action: any): action is Action {
   return action && action.type && typeof action.type === 'string';
 }
 
-function getEffectName({ propertyName, sourceInstance, sourceName }: EffectNotification) {
+function getEffectName({
+  propertyName,
+  sourceInstance,
+  sourceName,
+}: EffectNotification) {
   const isMethod = typeof sourceInstance[propertyName] === 'function';
 
   return `"${sourceName}.${propertyName}${isMethod ? '()' : ''}"`;

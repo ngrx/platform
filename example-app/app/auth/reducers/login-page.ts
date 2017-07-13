@@ -4,11 +4,11 @@ import { User } from '../models/user';
 export interface State {
   error: string | null;
   pending: boolean;
-};
+}
 
 export const initialState: State = {
   error: null,
-  pending: false
+  pending: false,
 };
 
 export function reducer(state = initialState, action: auth.Actions): State {
@@ -17,7 +17,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
       return {
         ...state,
         error: null,
-        pending: true
+        pending: true,
       };
     }
 
@@ -25,7 +25,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
       return {
         ...state,
         error: null,
-        pending: false
+        pending: false,
       };
     }
 
@@ -33,13 +33,13 @@ export function reducer(state = initialState, action: auth.Actions): State {
       return {
         ...state,
         error: action.payload,
-        pending: false
+        pending: false,
       };
     }
 
     default: {
       return state;
-    };
+    }
   }
 }
 

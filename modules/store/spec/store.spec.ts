@@ -5,8 +5,12 @@ import { hot } from 'jasmine-marbles';
 import { createInjector } from './helpers/injector';
 import { Store, Action, combineReducers, StoreModule } from '../';
 import { ActionsSubject } from '../src/private_export';
-import { counterReducer, INCREMENT, DECREMENT, RESET } from './fixtures/counter';
-
+import {
+  counterReducer,
+  INCREMENT,
+  DECREMENT,
+  RESET,
+} from './fixtures/counter';
 
 interface TestAppSchema {
   counter1: number;
@@ -14,7 +18,7 @@ interface TestAppSchema {
   counter3: number;
 }
 
-interface Todo { }
+interface Todo {}
 
 interface TodoAppSchema {
   visibilityFilter: string;
@@ -30,7 +34,7 @@ describe('ngRx Store', () => {
     const reducers = {
       counter1: counterReducer,
       counter2: counterReducer,
-      counter3: counterReducer
+      counter3: counterReducer,
     };
 
     injector = createInjector(StoreModule.forRoot(reducers, { initialState }));
@@ -39,7 +43,7 @@ describe('ngRx Store', () => {
   }
 
   describe('initial state', () => {
-    it('should handle an initial state object', (done) => {
+    it('should handle an initial state object', done => {
       setup();
 
       store.take(1).subscribe({
@@ -47,11 +51,11 @@ describe('ngRx Store', () => {
           expect(val).toEqual({ counter1: 0, counter2: 1, counter3: 0 });
         },
         error: done,
-        complete: done
+        complete: done,
       });
     });
 
-    it('should handle an initial state function', (done) => {
+    it('should handle an initial state function', done => {
       setup(() => ({ counter1: 0, counter2: 5 }));
 
       store.take(1).subscribe({
@@ -59,7 +63,7 @@ describe('ngRx Store', () => {
           expect(val).toEqual({ counter1: 0, counter2: 5, counter3: 0 });
         },
         error: done,
-        complete: done
+        complete: done,
       });
     });
   });
@@ -77,52 +81,49 @@ describe('ngRx Store', () => {
       b: { type: INCREMENT },
       c: { type: DECREMENT },
       d: { type: RESET },
-      e: { type: INCREMENT }
+      e: { type: INCREMENT },
     };
 
     it('should let you select state with a key name', function() {
-
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe((action) => store.dispatch(action));
+      counterSteps.subscribe(action => store.dispatch(action));
 
       const counterStateWithString = store.select('counter1');
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
 
-      expect(counterStateWithString).toBeObservable(hot(stateSequence, counter1Values));
-
+      expect(counterStateWithString).toBeObservable(
+        hot(stateSequence, counter1Values)
+      );
     });
 
     it('should let you select state with a selector function', function() {
-
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe((action) => store.dispatch(action));
+      counterSteps.subscribe(action => store.dispatch(action));
 
       const counterStateWithFunc = store.select(s => s.counter1);
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
 
-      expect(counterStateWithFunc).toBeObservable(hot(stateSequence, counter1Values));
-
+      expect(counterStateWithFunc).toBeObservable(
+        hot(stateSequence, counter1Values)
+      );
     });
 
     it('should correctly lift itself', function() {
-
       const result = store.select('counter1');
 
       expect(result instanceof Store).toBe(true);
-
     });
 
     it('should increment and decrement counter1', function() {
-
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe((action) => store.dispatch(action));
+      counterSteps.subscribe(action => store.dispatch(action));
 
       const counterState = store.select('counter1');
 
@@ -130,14 +131,12 @@ describe('ngRx Store', () => {
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
 
       expect(counterState).toBeObservable(hot(stateSequence, counter1Values));
-
     });
 
     it('should increment and decrement counter1 using the dispatcher', function() {
-
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe((action) => dispatcher.next(action));
+      counterSteps.subscribe(action => dispatcher.next(action));
 
       const counterState = store.select('counter1');
 
@@ -147,12 +146,10 @@ describe('ngRx Store', () => {
       expect(counterState).toBeObservable(hot(stateSequence, counter1Values));
     });
 
-
     it('should increment and decrement counter2 separately', function() {
-
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe((action) => store.dispatch(action));
+      counterSteps.subscribe(action => store.dispatch(action));
 
       const counter1State = store.select('counter1');
       const counter2State = store.select('counter2');
@@ -161,11 +158,9 @@ describe('ngRx Store', () => {
       const counter2Values = { i: 1, v: 2, w: 3, x: 2, y: 0, z: 1 };
 
       expect(counter2State).toBeObservable(hot(stateSequence, counter2Values));
-
     });
 
     it('should implement the observer interface forwarding actions and errors to the dispatcher', function() {
-
       spyOn(dispatcher, 'next');
       spyOn(dispatcher, 'error');
 
@@ -174,11 +169,9 @@ describe('ngRx Store', () => {
 
       expect(dispatcher.next).toHaveBeenCalledWith(1);
       expect(dispatcher.error).toHaveBeenCalledWith(2);
-
     });
 
     it('should not be completable', function() {
-
       const storeSubscription = store.subscribe();
       const dispatcherSubscription = dispatcher.subscribe();
 

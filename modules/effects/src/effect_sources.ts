@@ -15,9 +15,7 @@ import { ErrorReporter } from './error_reporter';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
-  constructor(
-    private errorReporter: ErrorReporter,
-  ) {
+  constructor(private errorReporter: ErrorReporter) {
     super();
   }
 
@@ -39,9 +37,9 @@ export class EffectSources extends Subject<any> {
               verifyOutput(output, this.errorReporter);
 
               return output.notification;
-            },
-          ),
-        ),
+            }
+          )
+        )
     );
   }
 }

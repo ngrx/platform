@@ -38,5 +38,5 @@ export function getSourceForInstance(instance: Object): any {
 
 export const getSourceMetadata = compose(
   getEffectMetadataEntries,
-  getSourceForInstance,
+  getSourceForInstance
 );

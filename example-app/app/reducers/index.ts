@@ -11,7 +11,6 @@ import {
 import * as fromRouter from '@ngrx/router-store';
 import { environment } from '../../environments/environment';
 
-
 /**
  * Every reducer module's default export is the reducer function itself. In
  * addition, each module should export a type or interface that describes
@@ -29,16 +28,14 @@ export interface State {
   layout: fromLayout.State;
 }
 
-
 /**
  * Our state is composed of a map of action reducer functions.
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  layout: fromLayout.reducer
+  layout: fromLayout.reducer,
 };
-
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>) {
@@ -47,7 +44,7 @@ export function logger(reducer: ActionReducer<State>) {
     console.log('action', action);
 
     return reducer(state, action);
-  }
+  };
 }
 
 /**
@@ -72,11 +69,17 @@ export function logger(reducer: ActionReducer<State>) {
  * By default, @ngrx/store uses combineReducers with the reducer map to compose the root meta-reducer.
  * To add more meta-reducers, provide a custom reducer factory.
  */
-export const developmentReducerFactory: ActionReducerFactory<State, Action> = compose(logger, combineReducers);
+export const developmentReducerFactory: ActionReducerFactory<
+  State,
+  Action
+> = compose(logger, combineReducers);
 
 /**
  * Layout Reducers
  */
 export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
 
-export const getShowSidenav = createSelector(getLayoutState, fromLayout.getShowSidenav);
+export const getShowSidenav = createSelector(
+  getLayoutState,
+  fromLayout.getShowSidenav
+);

@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../models/book';
 
-
 @Component({
   selector: 'bc-book-detail',
   template: `
@@ -29,7 +28,8 @@ import { Book } from '../models/book';
     </md-card>
 
   `,
-  styles: [`
+  styles: [
+    `
     :host {
       display: flex;
       justify-content: center;
@@ -56,7 +56,8 @@ import { Book } from '../models/book';
       padding: 0 25px 25px;
       position: relative;
     }
-  `]
+  `,
+  ],
 })
 export class BookDetailComponent {
   /**
@@ -71,7 +72,6 @@ export class BookDetailComponent {
   @Input() inCollection: boolean;
   @Output() add = new EventEmitter<Book>();
   @Output() remove = new EventEmitter<Book>();
-
 
   /**
    * Tip: Utilize getters to keep templates clean
@@ -93,7 +93,9 @@ export class BookDetailComponent {
   }
 
   get thumbnail() {
-    return this.book.volumeInfo.imageLinks
-      && this.book.volumeInfo.imageLinks.smallThumbnail;
+    return (
+      this.book.volumeInfo.imageLinks &&
+      this.book.volumeInfo.imageLinks.smallThumbnail
+    );
   }
 }

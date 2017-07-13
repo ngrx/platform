@@ -2,9 +2,9 @@ import { Injectable, Provider, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Action } from './models';
 
-
 @Injectable()
-export class ScannedActionsSubject extends Subject<Action> implements OnDestroy {
+export class ScannedActionsSubject extends Subject<Action>
+  implements OnDestroy {
   ngOnDestroy() {
     this.complete();
   }

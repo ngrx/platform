@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Book } from '../models/book';
 
-
 @Component({
   selector: 'bc-book-preview',
   template: `
@@ -21,7 +20,8 @@ import { Book } from '../models/book';
       </md-card>
     </a>
   `,
-  styles: [`
+  styles: [
+    `
     md-card {
       width: 400px;
       height: 300px;
@@ -61,7 +61,8 @@ import { Book } from '../models/book';
     md-card-footer {
       padding: 0 25px 25px;
     }
-  `]
+  `,
+  ],
 })
 export class BookPreviewComponent {
   @Input() book: Book;

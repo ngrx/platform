@@ -18,8 +18,9 @@ import * as book from '../actions/book';
 import { Book } from '../models/book';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
-export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>('Search Scheduler');
-
+export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
+  'Search Scheduler'
+);
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -52,22 +53,26 @@ export class BookEffects {
 
       const nextSearch$ = this.actions$.ofType(book.SEARCH).skip(1);
 
-      return this.googleBooks.searchBooks(query)
+      return this.googleBooks
+        .searchBooks(query)
         .takeUntil(nextSearch$)
         .map((books: Book[]) => new book.SearchCompleteAction(books))
         .catch(() => of(new book.SearchCompleteAction([])));
     });
 
-    constructor(
-      private actions$: Actions,
-      private googleBooks: GoogleBooksService,
-      @Optional() @Inject(SEARCH_DEBOUNCE) private debounce: number = 300,
-
-      /**
+  constructor(
+    private actions$: Actions,
+    private googleBooks: GoogleBooksService,
+    @Optional()
+    @Inject(SEARCH_DEBOUNCE)
+    private debounce: number = 300,
+    /**
        * You inject an optional Scheduler that will be undefined
        * in normal application usage, but its injected here so that you can mock out
        * during testing using the RxJS TestScheduler for simulating passages of time.
        */
-      @Optional() @Inject(SEARCH_SCHEDULER) private scheduler: Scheduler
-    ) { }
+    @Optional()
+    @Inject(SEARCH_SCHEDULER)
+    private scheduler: Scheduler
+  ) {}
 }

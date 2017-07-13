@@ -1,5 +1,12 @@
 import { Injectable, Inject, OnDestroy } from '@angular/core';
-import { State, Action, INITIAL_STATE, ReducerObservable, ActionsSubject, ScannedActionsSubject } from '@ngrx/store';
+import {
+  State,
+  Action,
+  INITIAL_STATE,
+  ReducerObservable,
+  ActionsSubject,
+  ScannedActionsSubject,
+} from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observer } from 'rxjs/Observer';
@@ -19,7 +26,7 @@ import * as Actions from './actions';
 import { StoreDevtoolsConfig, STORE_DEVTOOLS_CONFIG } from './config';
 
 @Injectable()
-export class DevtoolsDispatcher extends ActionsSubject { }
+export class DevtoolsDispatcher extends ActionsSubject {}
 
 @Injectable()
 export class StoreDevtools implements Observer<any> {
@@ -38,29 +45,37 @@ export class StoreDevtools implements Observer<any> {
     @Inject(STORE_DEVTOOLS_CONFIG) config: StoreDevtoolsConfig
   ) {
     const liftedInitialState = liftInitialState(initialState, config.monitor);
-    const liftReducer = liftReducerWith(initialState, liftedInitialState, config.monitor,
-      config.maxAge ? { maxAge: config.maxAge } : { });
+    const liftReducer = liftReducerWith(
+      initialState,
+      liftedInitialState,
+      config.monitor,
+      config.maxAge ? { maxAge: config.maxAge } : {}
+    );
 
     const liftedAction$ = applyOperators(actions$.asObservable(), [
-      [ skip, 1 ],
-      [ merge, extension.actions$ ],
-      [ map, liftAction ],
-      [ merge, dispatcher, extension.liftedActions$ ],
-      [ observeOn, queue ]
+      [skip, 1],
+      [merge, extension.actions$],
+      [map, liftAction],
+      [merge, dispatcher, extension.liftedActions$],
+      [observeOn, queue],
     ]);
 
     const liftedReducer$ = map.call(reducers$, liftReducer);
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
     const liftedStateSubscription = applyOperators(liftedAction$, [
-      [ withLatestFrom, liftedReducer$ ],
-      [ scan, ({ state: liftedState }: any, [ action, reducer ]: any) => {
-        const state = reducer(liftedState, action);
+      [withLatestFrom, liftedReducer$],
+      [
+        scan,
+        ({ state: liftedState }: any, [action, reducer]: any) => {
+          const state = reducer(liftedState, action);
 
-        extension.notify(action, state);
+          extension.notify(action, state);
 
-        return { state, action };
-      }, { state: liftedInitialState, action: null }]
+          return { state, action };
+        },
+        { state: liftedInitialState, action: null },
+      ],
     ]).subscribe(({ state, action }) => {
       liftedStateSubject.next(state);
 
@@ -71,7 +86,9 @@ export class StoreDevtools implements Observer<any> {
       }
     });
 
-    const liftedState$ = liftedStateSubject.asObservable() as Observable<LiftedState>;
+    const liftedState$ = liftedStateSubject.asObservable() as Observable<
+      LiftedState
+    >;
     const state$ = map.call(liftedState$, unliftState);
 
     this.stateSubscription = liftedStateSubscription;
@@ -88,9 +105,9 @@ export class StoreDevtools implements Observer<any> {
     this.dispatcher.next(action);
   }
 
-  error(error: any) { }
+  error(error: any) {}
 
-  complete() { }
+  complete() {}
 
   performAction(action: any) {
     this.dispatch(new Actions.PerformAction(action));

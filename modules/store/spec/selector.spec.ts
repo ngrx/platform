@@ -3,7 +3,6 @@ import 'rxjs/add/operator/map';
 import { cold } from 'jasmine-marbles';
 import { createSelector, createFeatureSelector } from '../';
 
-
 describe('Selectors', () => {
   let countOne: number;
   let countTwo: number;
@@ -35,7 +34,9 @@ describe('Selectors', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
 
-      const selector = createSelector(incrementOne, incrementTwo, projectFn)({ });
+      const selector = createSelector(incrementOne, incrementTwo, projectFn)(
+        {}
+      );
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
@@ -44,7 +45,12 @@ describe('Selectors', () => {
       const firstState = { first: 'state' };
       const secondState = { second: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(incrementOne, incrementTwo, incrementThree, projectFn);
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        incrementThree,
+        projectFn
+      );
 
       selector(firstState);
       selector(firstState);
@@ -99,8 +105,11 @@ describe('Selectors', () => {
       const secondValue = { secondValue: 'value' };
       const secondState = { [featureName]: secondValue };
 
-      const state$ =    cold('--a--a--a--b--', { a: firstState, b: secondState });
-      const expected$ = cold('--a--------b--', { a: firstValue, b: secondValue });
+      const state$ = cold('--a--a--a--b--', { a: firstState, b: secondState });
+      const expected$ = cold('--a--------b--', {
+        a: firstValue,
+        b: secondValue,
+      });
       const featureState$ = state$.map(featureSelector).distinctUntilChanged();
 
       expect(featureState$).toBeObservable(expected$);

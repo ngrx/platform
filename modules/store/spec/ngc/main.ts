@@ -10,22 +10,16 @@ import { Observable } from 'rxjs/Observable';
   selector: 'ngc-spec-child-component',
   template: `
   
-  `
+  `,
 })
-export class NgcSpecChildComponent { }
+export class NgcSpecChildComponent {}
 
 @NgModule({
-  imports: [
-    StoreModule.forFeature('feature', { todos: todos })
-  ],
-  declarations: [
-    NgcSpecChildComponent,
-  ],
-  exports: [
-    NgcSpecChildComponent,
-  ]
+  imports: [StoreModule.forFeature('feature', { todos: todos })],
+  declarations: [NgcSpecChildComponent],
+  exports: [NgcSpecChildComponent],
 })
-export class FeatureModule { }
+export class FeatureModule {}
 
 export interface AppState {
   count: number;
@@ -41,7 +35,7 @@ export const reducerToken = new InjectionToken('Reducers');
     <button (click)="decrement()"> + </button>
 
     <ngc-spec-child-component></ngc-spec-child-component>
-  `
+  `,
 })
 export class NgcSpecComponent {
   count: Observable<number>;
@@ -61,17 +55,17 @@ export class NgcSpecComponent {
     BrowserModule,
     StoreModule.forRoot(reducerToken, {
       initialState: { count: 0 },
-      reducerFactory: combineReducers
+      reducerFactory: combineReducers,
     }),
-    FeatureModule
+    FeatureModule,
   ],
   providers: [
     {
       provide: reducerToken,
-      useValue: { count: counterReducer }
-    }
+      useValue: { count: counterReducer },
+    },
   ],
   declarations: [NgcSpecComponent],
-  bootstrap: [NgcSpecComponent]
+  bootstrap: [NgcSpecComponent],
 })
-export class NgcSpecModule { }
+export class NgcSpecModule {}

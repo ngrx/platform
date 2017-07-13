@@ -1,6 +1,6 @@
 export interface PackageDescription {
-  name: string,
-  hasTestingModule: boolean,
+  name: string;
+  hasTestingModule: boolean;
 }
 
 export interface Config {

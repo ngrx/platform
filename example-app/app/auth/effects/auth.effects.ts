@@ -14,20 +14,24 @@ import * as Auth from '../actions/auth';
 @Injectable()
 export class AuthEffects {
   @Effect()
-  login$ = this.actions$.ofType(Auth.LOGIN)
+  login$ = this.actions$
+    .ofType(Auth.LOGIN)
     .map((action: Auth.Login) => action.payload)
     .exhaustMap(auth =>
-      this.authService.login(auth)
-        .map(user => new Auth.LoginSuccess({user}))
+      this.authService
+        .login(auth)
+        .map(user => new Auth.LoginSuccess({ user }))
         .catch(error => of(new Auth.LoginFailure(error)))
     );
 
   @Effect({ dispatch: false })
-  loginSuccess$ = this.actions$.ofType(Auth.LOGIN_SUCCESS)
+  loginSuccess$ = this.actions$
+    .ofType(Auth.LOGIN_SUCCESS)
     .do(() => this.router.navigate(['/']));
 
   @Effect({ dispatch: false })
-  loginRedirect$ = this.actions$.ofType(Auth.LOGIN_REDIRECT, Auth.LOGOUT)
+  loginRedirect$ = this.actions$
+    .ofType(Auth.LOGIN_REDIRECT, Auth.LOGOUT)
     .do(authed => {
       this.router.navigate(['/login']);
     });
@@ -35,6 +39,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {}
 }

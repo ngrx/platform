@@ -8,7 +8,6 @@ import * as fromAuth from '../../auth/reducers';
 import * as layout from '../actions/layout';
 import * as Auth from '../../auth/actions/auth';
 
-
 @Component({
   selector: 'bc-app',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +33,7 @@ import * as Auth from '../../auth/actions/auth';
 
       <router-outlet></router-outlet>
     </bc-layout>
-  `
+  `,
 })
 export class AppComponent {
   showSidenav$: Observable<boolean>;

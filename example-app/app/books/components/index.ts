@@ -12,7 +12,6 @@ import { BookSearchComponent } from './book-search';
 
 import { PipesModule } from '../../shared/pipes';
 
-
 export const COMPONENTS = [
   BookAuthorsComponent,
   BookDetailComponent,
@@ -20,7 +19,6 @@ export const COMPONENTS = [
   BookPreviewListComponent,
   BookSearchComponent,
 ];
-
 
 @NgModule({
   imports: [
@@ -31,6 +29,6 @@ export const COMPONENTS = [
     PipesModule,
   ],
   declarations: COMPONENTS,
-  exports: COMPONENTS
+  exports: COMPONENTS,
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

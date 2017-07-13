@@ -15,7 +15,6 @@ import { GoogleBooksService } from '../../core/services/google-books';
 import * as fromBooks from '../reducers';
 import * as book from '../actions/book';
 
-
 /**
  * Guards are hooks into the route resolution process, providing an opportunity
  * to inform the router's navigation process whether the route should continue
@@ -27,7 +26,7 @@ export class BookExistsGuard implements CanActivate {
     private store: Store<fromBooks.State>,
     private googleBooks: GoogleBooksService,
     private router: Router
-  ) { }
+  ) {}
 
   /**
    * This method creates an observable that waits for the `loaded` property
@@ -35,7 +34,8 @@ export class BookExistsGuard implements CanActivate {
    * has finished.
    */
   waitForCollectionToLoad(): Observable<boolean> {
-    return this.store.select(fromBooks.getCollectionLoaded)
+    return this.store
+      .select(fromBooks.getCollectionLoaded)
       .filter(loaded => loaded)
       .take(1);
   }
@@ -45,7 +45,8 @@ export class BookExistsGuard implements CanActivate {
    * in the Store
    */
   hasBookInStore(id: string): Observable<boolean> {
-    return this.store.select(fromBooks.getBookEntities)
+    return this.store
+      .select(fromBooks.getBookEntities)
       .map(entities => !!entities[id])
       .take(1);
   }
@@ -55,7 +56,8 @@ export class BookExistsGuard implements CanActivate {
    * it in the store, returning `true` or `false` if it was found.
    */
   hasBookInApi(id: string): Observable<boolean> {
-    return this.googleBooks.retrieveBook(id)
+    return this.googleBooks
+      .retrieveBook(id)
       .map(bookEntity => new book.LoadAction(bookEntity))
       .do((action: book.LoadAction) => this.store.dispatch(action))
       .map(book => !!book)
@@ -71,14 +73,13 @@ export class BookExistsGuard implements CanActivate {
    * API.
    */
   hasBook(id: string): Observable<boolean> {
-    return this.hasBookInStore(id)
-      .switchMap(inStore => {
-        if (inStore) {
-          return of(inStore);
-        }
+    return this.hasBookInStore(id).switchMap(inStore => {
+      if (inStore) {
+        return of(inStore);
+      }
 
-        return this.hasBookInApi(id);
-      });
+      return this.hasBookInApi(id);
+    });
   }
 
   /**
@@ -95,7 +96,8 @@ export class BookExistsGuard implements CanActivate {
    * to the 404 page.
    */
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.waitForCollectionToLoad()
-      .switchMap(() => this.hasBook(route.params['id']));
+    return this.waitForCollectionToLoad().switchMap(() =>
+      this.hasBook(route.params['id'])
+    );
   }
 }

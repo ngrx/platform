@@ -2,47 +2,71 @@ import 'rxjs/add/operator/take';
 import { Subscription } from 'rxjs/Subscription';
 import { ReflectiveInjector } from '@angular/core';
 import { TestBed, getTestBed } from '@angular/core/testing';
-import { StoreModule, Store, StateObservable, ActionReducer, Action, ReducerManager } from '@ngrx/store';
+import {
+  StoreModule,
+  Store,
+  StateObservable,
+  ActionReducer,
+  Action,
+  ReducerManager,
+} from '@ngrx/store';
 import {
   StoreDevtools,
   StoreDevtoolsModule,
   LiftedState,
   StoreDevtoolsConfig,
-  StoreDevtoolsOptions, } from '../';
+  StoreDevtoolsOptions,
+} from '../';
 import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/instrument';
 
-const counter = jasmine.createSpy('counter').and.callFake(function (state = 0, action: Action) {
-  switch (action.type) {
-  case 'INCREMENT': return state + 1;
-  case 'DECREMENT': return state - 1;
-  default: return state;
-  }
-});
+const counter = jasmine
+  .createSpy('counter')
+  .and.callFake(function(state = 0, action: Action) {
+    switch (action.type) {
+      case 'INCREMENT':
+        return state + 1;
+      case 'DECREMENT':
+        return state - 1;
+      default:
+        return state;
+    }
+  });
 
 declare var mistake: any;
 function counterWithBug(state = 0, action: Action) {
   switch (action.type) {
-    case 'INCREMENT': return state + 1;
-    case 'DECREMENT': return mistake - 1; // mistake is undefined
-    case 'SET_UNDEFINED': return undefined;
-    default: return state;
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return mistake - 1; // mistake is undefined
+    case 'SET_UNDEFINED':
+      return undefined;
+    default:
+      return state;
   }
 }
 
 function counterWithAnotherBug(state = 0, action: Action) {
   switch (action.type) {
-    case 'INCREMENT': return mistake + 1; // eslint-disable-line no-undef
-    case 'DECREMENT': return state - 1;
-    case 'SET_UNDEFINED': return undefined;
-    default: return state;
+    case 'INCREMENT':
+      return mistake + 1; // eslint-disable-line no-undef
+    case 'DECREMENT':
+      return state - 1;
+    case 'SET_UNDEFINED':
+      return undefined;
+    default:
+      return state;
   }
 }
 
 function doubleCounter(state = 0, action: Action) {
   switch (action.type) {
-    case 'INCREMENT': return state + 2;
-    case 'DECREMENT': return state - 2;
-    default: return state;
+    case 'INCREMENT':
+      return state + 2;
+    case 'DECREMENT':
+      return state - 2;
+    default:
+      return state;
   }
 }
 
@@ -56,15 +80,16 @@ type Fixture<T> = {
   replaceReducer: (reducer: ActionReducer<any, any>) => void;
 };
 
-function createStore<T>(reducer: ActionReducer<T, Action>, options: StoreDevtoolsOptions = {}): Fixture<T> {
+function createStore<T>(
+  reducer: ActionReducer<T, Action>,
+  options: StoreDevtoolsOptions = {}
+): Fixture<T> {
   TestBed.configureTestingModule({
     imports: [
       StoreModule.forRoot({ state: reducer }),
-      StoreDevtoolsModule.instrument(options)
+      StoreDevtoolsModule.instrument(options),
     ],
-    providers: [
-      { provide: IS_EXTENSION_OR_MONITOR_PRESENT, useValue: true },
-    ]
+    providers: [{ provide: IS_EXTENSION_OR_MONITOR_PRESENT, useValue: true }],
   });
 
   const testbed: TestBed = getTestBed();
@@ -75,8 +100,8 @@ function createStore<T>(reducer: ActionReducer<T, Action>, options: StoreDevtool
   let liftedValue: LiftedState;
   let value: any;
 
-  const liftedStateSub = devtools.liftedState.subscribe(s => liftedValue = s);
-  const stateSub = devtools.state.subscribe(s => value = s);
+  const liftedStateSub = devtools.liftedState.subscribe(s => (liftedValue = s));
+  const stateSub = devtools.state.subscribe(s => (value = s));
 
   const getState = (): T => value.state;
   const getLiftedState = (): LiftedState => liftedValue;
@@ -90,8 +115,15 @@ function createStore<T>(reducer: ActionReducer<T, Action>, options: StoreDevtool
     reducerManager.addReducer('state', reducer);
   };
 
-
-  return { store, state, devtools, cleanup, getState, getLiftedState, replaceReducer };
+  return {
+    store,
+    state,
+    devtools,
+    cleanup,
+    getState,
+    getLiftedState,
+    replaceReducer,
+  };
 }
 
 describe('Store Devtools', () => {
@@ -114,7 +146,7 @@ describe('Store Devtools', () => {
       fixture.cleanup();
     });
 
-    it('should alias devtools unlifted state to Store\'s state', () => {
+    it("should alias devtools unlifted state to Store's state", () => {
       expect(devtools.state).toBe(fixture.state as any);
     });
 
@@ -248,9 +280,7 @@ describe('Store Devtools', () => {
       store.dispatch({ type: 'INCREMENT' });
 
       let { computedStates } = fixture.getLiftedState();
-      expect(computedStates[2].error).toMatch(
-        /ReferenceError/
-      );
+      expect(computedStates[2].error).toMatch(/ReferenceError/);
       expect(computedStates[3].error).toMatch(
         /Interrupted by an error up the chain/
       );
@@ -261,9 +291,7 @@ describe('Store Devtools', () => {
     it('should catch invalid action type', () => {
       expect(() => {
         store.dispatch({ type: undefined } as any);
-      }).toThrowError(
-        'Actions must have a type property'
-      );
+      }).toThrowError('Actions must have a type property');
     });
 
     it('should not recompute old states when toggling an action', () => {
@@ -355,7 +383,6 @@ describe('Store Devtools', () => {
     });
   });
 
-
   describe('maxAge option', () => {
     it('should auto-commit earliest non-@@INIT action when maxAge is reached', () => {
       const fixture = createStore(counter, { maxAge: 3 });
@@ -444,10 +471,11 @@ describe('Store Devtools', () => {
       // currentStateIndex should stay at 2 as actions are committed.
       fixture.store.dispatch({ type: 'INCREMENT' });
       const liftedStoreState = fixture.getLiftedState();
-      const currentComputedState = liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
+      const currentComputedState =
+        liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
 
       expect(liftedStoreState.currentStateIndex).toBe(2);
-      expect(currentComputedState.state).toEqual({ state: 3});
+      expect(currentComputedState.state).toEqual({ state: 3 });
 
       fixture.cleanup();
     });
@@ -462,7 +490,8 @@ describe('Store Devtools', () => {
       fixture.store.dispatch({ type: 'DECREMENT' });
 
       let liftedStoreState = fixture.getLiftedState();
-      let currentComputedState = liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
+      let currentComputedState =
+        liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
       expect(liftedStoreState.currentStateIndex).toBe(4);
       expect(currentComputedState.state).toEqual({ state: 0 });
       expect(currentComputedState.error).toBeDefined();
@@ -482,7 +511,8 @@ describe('Store Devtools', () => {
       // Auto-commit 2 actions by "fixing" reducer bug.
       fixture.replaceReducer(counter);
       let liftedStoreState = fixture.getLiftedState();
-      let currentComputedState = liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
+      let currentComputedState =
+        liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
       expect(liftedStoreState.currentStateIndex).toBe(2);
       expect(currentComputedState.state).toEqual({ state: -4 });
 
@@ -502,7 +532,8 @@ describe('Store Devtools', () => {
       // Auto-commit 2 actions by "fixing" reducer bug.
       fixture.replaceReducer(counter);
       let liftedStoreState = fixture.getLiftedState();
-      let currentComputedState = liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
+      let currentComputedState =
+        liftedStoreState.computedStates[liftedStoreState.currentStateIndex];
       expect(liftedStoreState.currentStateIndex).toBe(0);
       expect(currentComputedState.state).toEqual({ state: -2 });
 

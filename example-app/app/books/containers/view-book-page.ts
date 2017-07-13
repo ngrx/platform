@@ -23,7 +23,7 @@ import * as book from '../actions/book';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <bc-selected-book-page></bc-selected-book-page>
-  `
+  `,
 })
 export class ViewBookPageComponent implements OnDestroy {
   actionsSubscription: Subscription;

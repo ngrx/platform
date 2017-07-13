@@ -24,8 +24,12 @@ import { reducers } from './reducers';
     ComponentsModule,
     RouterModule.forChild([
       { path: 'find', component: FindBookPageComponent },
-      { path: ':id', component: ViewBookPageComponent, canActivate: [ BookExistsGuard ] },
-      { path: '',  component: CollectionPageComponent },
+      {
+        path: ':id',
+        component: ViewBookPageComponent,
+        canActivate: [BookExistsGuard],
+      },
+      { path: '', component: CollectionPageComponent },
     ]),
 
     /**
@@ -44,10 +48,7 @@ import { reducers } from './reducers';
      * All Effects will only be instantiated once regardless of
      * whether they are registered once or multiple times.
      */
-    EffectsModule.forFeature([
-      BookEffects,
-      CollectionEffects
-    ]),
+    EffectsModule.forFeature([BookEffects, CollectionEffects]),
   ],
   declarations: [
     FindBookPageComponent,
@@ -55,8 +56,6 @@ import { reducers } from './reducers';
     SelectedBookPageComponent,
     CollectionPageComponent,
   ],
-  providers: [
-    BookExistsGuard
-  ]
+  providers: [BookExistsGuard],
 })
 export class BooksModule {}

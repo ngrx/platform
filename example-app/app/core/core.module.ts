@@ -12,7 +12,6 @@ import { ToolbarComponent } from './components/toolbar';
 
 import { GoogleBooksService } from './services/google-books';
 
-
 export const COMPONENTS = [
   AppComponent,
   NotFoundPageComponent,
@@ -22,21 +21,16 @@ export const COMPONENTS = [
   ToolbarComponent,
 ];
 
-
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    MaterialModule,
-  ],
+  imports: [CommonModule, RouterModule, MaterialModule],
   declarations: COMPONENTS,
-  exports: COMPONENTS
+  exports: COMPONENTS,
 })
 export class CoreModule {
   static forRoot() {
     return {
       ngModule: CoreModule,
-      providers: [ GoogleBooksService ]
-    }
+      providers: [GoogleBooksService],
+    };
   }
 }

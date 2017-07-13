@@ -1,4 +1,8 @@
-import { Effect, getSourceMetadata, getSourceForInstance } from '../src/effects_metadata';
+import {
+  Effect,
+  getSourceMetadata,
+  getSourceForInstance,
+} from '../src/effects_metadata';
 
 describe('Effect Metadata', () => {
   describe('getSourceMetadata', () => {
@@ -6,7 +10,8 @@ describe('Effect Metadata', () => {
       class Fixture {
         @Effect() a: any;
         @Effect() b: any;
-        @Effect({ dispatch: false }) c: any;
+        @Effect({ dispatch: false })
+        c: any;
       }
 
       const mock = new Fixture();
@@ -14,7 +19,7 @@ describe('Effect Metadata', () => {
       expect(getSourceMetadata(mock)).toEqual([
         { propertyName: 'a', dispatch: true },
         { propertyName: 'b', dispatch: true },
-        { propertyName: 'c', dispatch: false }
+        { propertyName: 'c', dispatch: false },
       ]);
     });
 
@@ -33,7 +38,7 @@ describe('Effect Metadata', () => {
 
   describe('getSourceProto', () => {
     it('should get the prototype for an instance of a source', () => {
-      class Fixture { }
+      class Fixture {}
       const instance = new Fixture();
 
       const proto = getSourceForInstance(instance);

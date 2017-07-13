@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
-
 @Component({
   selector: 'bc-toolbar',
   template: `
@@ -10,7 +9,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
       </button>
       <ng-content></ng-content>
     </md-toolbar>
-  `
+  `,
 })
 export class ToolbarComponent {
   @Output() openMenu = new EventEmitter();

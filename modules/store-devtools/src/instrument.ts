@@ -1,4 +1,9 @@
-import { NgModule, InjectionToken, Injector, ModuleWithProviders } from '@angular/core';
+import {
+  NgModule,
+  InjectionToken,
+  Injector,
+  ModuleWithProviders,
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
   StoreModule,
@@ -12,11 +17,20 @@ import {
   ActionReducerFactory,
   INITIAL_STATE,
   INITIAL_REDUCERS,
-  REDUCER_FACTORY } from '@ngrx/store';
+  REDUCER_FACTORY,
+} from '@ngrx/store';
 import { StoreDevtools, DevtoolsDispatcher } from './devtools';
-import { StoreDevtoolsConfig, StoreDevtoolsOptions, STORE_DEVTOOLS_CONFIG, INITIAL_OPTIONS } from './config';
-import { DevtoolsExtension, REDUX_DEVTOOLS_EXTENSION, ReduxDevtoolsExtension } from './extension';
-
+import {
+  StoreDevtoolsConfig,
+  StoreDevtoolsOptions,
+  STORE_DEVTOOLS_CONFIG,
+  INITIAL_OPTIONS,
+} from './config';
+import {
+  DevtoolsExtension,
+  REDUX_DEVTOOLS_EXTENSION,
+  ReduxDevtoolsExtension,
+} from './extension';
 
 export const IS_EXTENSION_OR_MONITOR_PRESENT = new InjectionToken<boolean>(
   'Is Devtools Extension or Monitor Present'
@@ -32,10 +46,12 @@ export function createIsExtensionOrMonitorPresent(
 export function createReduxDevtoolsExtension() {
   const extensionKey = '__REDUX_DEVTOOLS_EXTENSION__';
 
-  if (typeof window === 'object' && typeof (window as any)[extensionKey] !== 'undefined') {
+  if (
+    typeof window === 'object' &&
+    typeof (window as any)[extensionKey] !== 'undefined'
+  ) {
     return (window as any)[extensionKey];
-  }
-  else {
+  } else {
     return null;
   }
 }
@@ -48,23 +64,27 @@ export function noMonitor(): null {
   return null;
 }
 
-export function createConfig(_options: StoreDevtoolsOptions): StoreDevtoolsConfig {
+export function createConfig(
+  _options: StoreDevtoolsOptions
+): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
-    monitor: noMonitor
+    monitor: noMonitor,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
   const config = Object.assign({}, DEFAULT_OPTIONS, options);
 
   if (config.maxAge && config.maxAge < 2) {
-    throw new Error(`Devtools 'maxAge' cannot be less than 2, got ${config.maxAge}`);
+    throw new Error(
+      `Devtools 'maxAge' cannot be less than 2, got ${config.maxAge}`
+    );
   }
 
   return config;
 }
 
-@NgModule({ })
+@NgModule({})
 export class StoreDevtoolsModule {
   static instrument(options: StoreDevtoolsOptions = {}): ModuleWithProviders {
     return {
@@ -75,32 +95,32 @@ export class StoreDevtoolsModule {
         StoreDevtools,
         {
           provide: INITIAL_OPTIONS,
-          useValue: options
+          useValue: options,
         },
         {
           provide: IS_EXTENSION_OR_MONITOR_PRESENT,
-          deps: [ REDUX_DEVTOOLS_EXTENSION, STORE_DEVTOOLS_CONFIG ],
-          useFactory: createIsExtensionOrMonitorPresent
+          deps: [REDUX_DEVTOOLS_EXTENSION, STORE_DEVTOOLS_CONFIG],
+          useFactory: createIsExtensionOrMonitorPresent,
         },
         {
           provide: REDUX_DEVTOOLS_EXTENSION,
-          useFactory: createReduxDevtoolsExtension
+          useFactory: createReduxDevtoolsExtension,
         },
         {
           provide: STORE_DEVTOOLS_CONFIG,
-          deps: [ INITIAL_OPTIONS ],
-          useFactory: createConfig
+          deps: [INITIAL_OPTIONS],
+          useFactory: createConfig,
         },
         {
           provide: StateObservable,
-          deps: [ StoreDevtools ],
-          useFactory: createStateObservable
+          deps: [StoreDevtools],
+          useFactory: createStateObservable,
         },
         {
           provide: ReducerManagerDispatcher,
-          useExisting: DevtoolsDispatcher
+          useExisting: DevtoolsDispatcher,
         },
-      ]
+      ],
     };
   }
 }

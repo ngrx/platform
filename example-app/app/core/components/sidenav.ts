@@ -9,11 +9,13 @@ import { Component, Input } from '@angular/core';
       </md-nav-list>
     </md-sidenav>
   `,
-  styles: [`
+  styles: [
+    `
     md-sidenav {
       width: 300px;
     }
-  `]
+  `,
+  ],
 })
 export class SidenavComponent {
   @Input() open = false;

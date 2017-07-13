@@ -6,7 +6,6 @@ import * as path from 'path';
 import * as rimraf from 'rimraf';
 import { Config } from './config';
 
-
 export function copy(target: string, destination: string) {
   fsExtra.copySync(target, destination);
 }
@@ -27,9 +26,12 @@ export function rmdir(target: string) {
   fs.rmdirSync(target);
 }
 
-export function getListOfFiles(globPath: string, exclude?: string): Promise<string[]> {
+export function getListOfFiles(
+  globPath: string,
+  exclude?: string
+): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    const options = exclude ? { ignore: exclude } : { };
+    const options = exclude ? { ignore: exclude } : {};
 
     glob(globPath, options, (error, matches) => {
       if (error) {
@@ -46,15 +48,18 @@ export function removeRecursively(glob: string) {
     rimraf(glob, err => {
       if (err) {
         reject(err);
-      }
-      else {
+      } else {
         resolve();
       }
     });
   });
 }
 
-export function exec(command: string, args: string[], base: (command: string) => string = fromNpm): Promise<string> {
+export function exec(
+  command: string,
+  args: string[],
+  base: (command: string) => string = fromNpm
+): Promise<string> {
   return new Promise((resolve, reject) => {
     cp.exec(base(command) + ' ' + args.join(' '), (err, stdout, stderr) => {
       if (err) {
@@ -78,8 +83,7 @@ export async function ignoreErrors<T>(promise: Promise<T>): Promise<T | null> {
   try {
     const result = await promise;
     return result;
-  }
-  catch (err) {
+  } catch (err) {
     return null;
   }
 }
@@ -95,7 +99,8 @@ export function getPackageFilePath(pkg: string, filename: string) {
 const sorcery = require('sorcery');
 export function mapSources(file: string) {
   return new Promise((resolve, reject) => {
-    sorcery.load(file)
+    sorcery
+      .load(file)
       .then((chain: any) => {
         chain.write();
         resolve();
@@ -121,17 +126,19 @@ async function runTask(name: string, taskFn: () => Promise<any>) {
   }
 }
 
-export function createBuilder(tasks: [ string, (config: Config) => Promise<any> ][]) {
-  return async function (config: Config) {
-    for (let [ name, runner ] of tasks) {
+export function createBuilder(
+  tasks: [string, (config: Config) => Promise<any>][]
+) {
+  return async function(config: Config) {
+    for (let [name, runner] of tasks) {
       await runTask(name, () => runner(config));
     }
   };
 }
 
 export function flatMap<K, J>(list: K[], mapFn: (item: K) => J[]): J[] {
-  return list.reduce(function (newList, nextItem) {
-    return [ ...newList, ...mapFn(nextItem) ];
+  return list.reduce(function(newList, nextItem) {
+    return [...newList, ...mapFn(nextItem)];
   }, [] as J[]);
 }
 
@@ -142,23 +149,20 @@ export function getTopLevelPackages(config: Config) {
 export function getTestingPackages(config: Config) {
   return flatMap(config.packages, ({ name, hasTestingModule }) => {
     if (hasTestingModule) {
-      return [ `${name}/testing` ];
+      return [`${name}/testing`];
     }
 
-    return [ ];
+    return [];
   });
 }
 
 export function getAllPackages(config: Config) {
   return flatMap(config.packages, packageDescription => {
     if (packageDescription.hasTestingModule) {
-      return [
-        packageDescription.name,
-        `${packageDescription.name}/testing`,
-      ];
+      return [packageDescription.name, `${packageDescription.name}/testing`];
     }
 
-    return [ packageDescription.name ];
+    return [packageDescription.name];
   });
 }
 
