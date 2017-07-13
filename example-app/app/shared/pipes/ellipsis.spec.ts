@@ -39,7 +39,7 @@ describe('Pipe: Ellipsis', () => {
     pipe = new EllipsisPipe();
   });
 
-  it('should return the string if it\'s length is less than 250', () => {
+  it("should return the string if it's length is less than 250", () => {
     expect(pipe.transform('string')).toEqual('string');
   });
 

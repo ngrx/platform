@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-
 @Component({
   selector: 'bc-layout',
   template: `
@@ -10,7 +9,8 @@ import { Component } from '@angular/core';
 
     </md-sidenav-container>
   `,
-  styles: [`
+  styles: [
+    `
     md-sidenav-container {
       background: rgba(0, 0, 0, 0.03);
     }
@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-  `]
+  `,
+  ],
 })
-export class LayoutComponent { }
+export class LayoutComponent {}

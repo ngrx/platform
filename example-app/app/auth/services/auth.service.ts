@@ -5,8 +5,7 @@ import { User, Authenticate } from '../models/user';
 
 @Injectable()
 export class AuthService {
-
-  constructor() { }
+  constructor() {}
 
   login({ username, password }: Authenticate) {
     /**

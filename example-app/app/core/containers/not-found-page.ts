@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
-
 @Component({
   selector: 'bc-not-found-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,10 +14,12 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       </md-card-actions>
     </md-card>
   `,
-  styles: [`
+  styles: [
+    `
     :host {
       text-align: center;
     }
-  `]
+  `,
+  ],
 })
-export class NotFoundPageComponent { }
+export class NotFoundPageComponent {}

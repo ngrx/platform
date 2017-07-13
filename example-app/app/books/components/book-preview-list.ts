@@ -6,13 +6,15 @@ import { Book } from '../models/book';
   template: `
     <bc-book-preview *ngFor="let book of books" [book]="book"></bc-book-preview>
   `,
-  styles: [`
+  styles: [
+    `
     :host {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
     }
-  `]
+  `,
+  ],
 })
 export class BookPreviewListComponent {
   @Input() books: Book[];

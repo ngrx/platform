@@ -8,7 +8,7 @@ export class EffectsRootModule {
   constructor(
     private sources: EffectSources,
     runner: EffectsRunner,
-    @Inject(ROOT_EFFECTS) rootEffects: any[],
+    @Inject(ROOT_EFFECTS) rootEffects: any[]
   ) {
     runner.start();
 

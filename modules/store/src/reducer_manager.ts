@@ -1,29 +1,46 @@
 import { Injectable, Inject, OnDestroy, Provider } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
+import {
+  Action,
+  ActionReducer,
+  ActionReducerMap,
+  ActionReducerFactory,
+  StoreFeature,
+} from './models';
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from './tokens';
 import { omit } from './utils';
 import { ActionsSubject } from './actions_subject';
 
-
-export abstract class ReducerObservable extends Observable<ActionReducer<any, any>> { }
-export abstract class ReducerManagerDispatcher extends ActionsSubject { }
+export abstract class ReducerObservable extends Observable<
+  ActionReducer<any, any>
+> {}
+export abstract class ReducerManagerDispatcher extends ActionsSubject {}
 export const UPDATE = '@ngrx/store/update-reducers';
 
 @Injectable()
-export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>> implements OnDestroy {
+export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
+  implements OnDestroy {
   constructor(
     private dispatcher: ReducerManagerDispatcher,
     @Inject(INITIAL_STATE) private initialState: any,
     @Inject(INITIAL_REDUCERS) private reducers: ActionReducerMap<any, any>,
-    @Inject(REDUCER_FACTORY) private reducerFactory: ActionReducerFactory<any, any>
+    @Inject(REDUCER_FACTORY)
+    private reducerFactory: ActionReducerFactory<any, any>
   ) {
     super(reducerFactory(reducers, initialState));
   }
 
-  addFeature({ reducers, reducerFactory, initialState, key }: StoreFeature<any, any>) {
-    const reducer = typeof reducers === 'function' ? reducers : reducerFactory(reducers, initialState);
+  addFeature({
+    reducers,
+    reducerFactory,
+    initialState,
+    key,
+  }: StoreFeature<any, any>) {
+    const reducer =
+      typeof reducers === 'function'
+        ? reducers
+        : reducerFactory(reducers, initialState);
 
     this.addReducer(key, reducer);
   }

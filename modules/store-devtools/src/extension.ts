@@ -14,10 +14,12 @@ export const ExtensionActionTypes = {
   START: 'START',
   DISPATCH: 'DISPATCH',
   STOP: 'STOP',
-  ACTION: 'ACTION'
+  ACTION: 'ACTION',
 };
 
-export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<ReduxDevtoolsExtension>('Redux Devtools Extension');
+export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<
+  ReduxDevtoolsExtension
+>('Redux Devtools Extension');
 
 export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;
@@ -26,10 +28,17 @@ export interface ReduxDevtoolsExtensionConnection {
 }
 
 export interface ReduxDevtoolsExtension {
-  connect(options: { shouldStringify?: boolean, instanceId: string }): ReduxDevtoolsExtensionConnection;
-  send(action: any, state: any, shouldStringify?: boolean, instanceId?: string): void;
+  connect(options: {
+    shouldStringify?: boolean;
+    instanceId: string;
+  }): ReduxDevtoolsExtensionConnection;
+  send(
+    action: any,
+    state: any,
+    shouldStringify?: boolean,
+    instanceId?: string
+  ): void;
 }
-
 
 @Injectable()
 export class DevtoolsExtension {
@@ -60,7 +69,9 @@ export class DevtoolsExtension {
     }
 
     return new Observable(subscriber => {
-      const connection = this.devtoolsExtension.connect({ instanceId: this.instanceId });
+      const connection = this.devtoolsExtension.connect({
+        instanceId: this.instanceId,
+      });
 
       connection.subscribe((change: any) => subscriber.next(change));
 
@@ -73,21 +84,27 @@ export class DevtoolsExtension {
     const changes$ = share.call(this.createChangesObservable());
 
     // Listen for the start action
-    const start$ = filter.call(changes$, (change: any) => change.type === ExtensionActionTypes.START);
+    const start$ = filter.call(
+      changes$,
+      (change: any) => change.type === ExtensionActionTypes.START
+    );
 
     // Listen for the stop action
-    const stop$ = filter.call(changes$, (change: any) => change.type === ExtensionActionTypes.STOP);
+    const stop$ = filter.call(
+      changes$,
+      (change: any) => change.type === ExtensionActionTypes.STOP
+    );
 
     // Listen for lifted actions
     const liftedActions$ = applyOperators(changes$, [
-      [ filter, (change: any) => change.type === ExtensionActionTypes.DISPATCH ],
-      [ map,  (change: any) => this.unwrapAction(change.payload) ]
+      [filter, (change: any) => change.type === ExtensionActionTypes.DISPATCH],
+      [map, (change: any) => this.unwrapAction(change.payload)],
     ]);
 
     // Listen for unlifted actions
     const actions$ = applyOperators(changes$, [
-      [ filter, (change: any) => change.type === ExtensionActionTypes.ACTION ],
-      [ map,  (change: any) => this.unwrapAction(change.payload) ]
+      [filter, (change: any) => change.type === ExtensionActionTypes.ACTION],
+      [map, (change: any) => this.unwrapAction(change.payload)],
     ]);
 
     const actionsUntilStop$ = takeUntil.call(actions$, stop$);

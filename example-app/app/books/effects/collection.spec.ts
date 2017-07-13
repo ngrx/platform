@@ -28,23 +28,30 @@ describe('CollectionEffects', () => {
   let effects: CollectionEffects;
   let actions$: TestActions;
 
-  const book1 = {id: '111', volumeInfo: {}} as Book;
-  const book2 = {id: '222', volumeInfo: {}} as Book;
+  const book1 = { id: '111', volumeInfo: {} } as Book;
+  const book2 = { id: '222', volumeInfo: {} } as Book;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         CollectionEffects,
-        { provide: Database,  useValue: jasmine.createSpyObj('database', ['open', 'query', 'insert', 'executeWrite']) },
+        {
+          provide: Database,
+          useValue: jasmine.createSpyObj('database', [
+            'open',
+            'query',
+            'insert',
+            'executeWrite',
+          ]),
+        },
         { provide: Actions, useFactory: getActions },
-      ]
+      ],
     });
 
     db = TestBed.get(Database);
     effects = TestBed.get(CollectionEffects);
     actions$ = TestBed.get(Actions);
   });
-
 
   describe('openDB$', () => {
     it('should call db.open when initially subscribed to', () => {
@@ -72,7 +79,7 @@ describe('CollectionEffects', () => {
       const completion = new collection.LoadFailAction(error);
 
       actions$.stream = hot('-a', { a: action });
-      const response = cold('-#', { }, error);
+      const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
       db.query.and.returnValue(response);
 
@@ -100,7 +107,7 @@ describe('CollectionEffects', () => {
       const error = 'Error!';
 
       actions$.stream = hot('-a', { a: action });
-      const response = cold('-#', { }, error);
+      const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
       db.insert.and.returnValue(response);
 
@@ -118,7 +125,9 @@ describe('CollectionEffects', () => {
         db.executeWrite.and.returnValue(response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
-        expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [book1.id]);
+        expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [
+          book1.id,
+        ]);
       });
 
       it('should return a collection.RemoveBookFailAction, with the book, when the db insert throws', () => {
@@ -127,12 +136,14 @@ describe('CollectionEffects', () => {
         const error = 'Error!';
 
         actions$.stream = hot('-a', { a: action });
-        const response = cold('-#', { }, error);
+        const response = cold('-#', {}, error);
         const expected = cold('--c', { c: completion });
         db.executeWrite.and.returnValue(response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
-        expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [book1.id]);
+        expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [
+          book1.id,
+        ]);
       });
     });
   });

@@ -13,28 +13,18 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthEffects } from './effects/auth.effects';
 import { reducers } from './reducers';
 
-export const COMPONENTS = [
-  LoginPageComponent,
-  LoginFormComponent
-];
+export const COMPONENTS = [LoginPageComponent, LoginFormComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MaterialModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule],
   declarations: COMPONENTS,
-  exports: COMPONENTS
+  exports: COMPONENTS,
 })
 export class AuthModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: RootAuthModule,
-      providers: [
-        AuthService,
-        AuthGuard
-      ]
+      providers: [AuthService, AuthGuard],
     };
   }
 }
@@ -42,13 +32,9 @@ export class AuthModule {
 @NgModule({
   imports: [
     AuthModule,
-    RouterModule.forChild([
-      { path: 'login', component: LoginPageComponent }
-    ]),
+    RouterModule.forChild([{ path: 'login', component: LoginPageComponent }]),
     StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([
-      AuthEffects
-    ]),
-  ]
+    EffectsModule.forFeature([AuthEffects]),
+  ],
 })
 export class RootAuthModule {}

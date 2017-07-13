@@ -1,7 +1,13 @@
-import {NgModule} from '@angular/core';
-import {NavigationCancel, NavigationError, Router, RouterStateSnapshot, RoutesRecognized} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { NgModule } from '@angular/core';
+import {
+  NavigationCancel,
+  NavigationError,
+  Router,
+  RouterStateSnapshot,
+  RoutesRecognized,
+} from '@angular/router';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs/observable/of';
 
 /**
  * An action dispatched when the router navigates.
@@ -12,16 +18,16 @@ export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
  * Payload of ROUTER_NAVIGATION.
  */
 export type RouterNavigationPayload = {
-  routerState: RouterStateSnapshot,
-  event: RoutesRecognized
+  routerState: RouterStateSnapshot;
+  event: RoutesRecognized;
 };
 
 /**
  * An action dispatched when the router navigates.
  */
 export type RouterNavigationAction = {
-  type: typeof ROUTER_NAVIGATION,
-  payload: RouterNavigationPayload
+  type: typeof ROUTER_NAVIGATION;
+  payload: RouterNavigationPayload;
 };
 
 /**
@@ -33,17 +39,17 @@ export const ROUTER_CANCEL = 'ROUTER_CANCEL';
  * Payload of ROUTER_CANCEL.
  */
 export type RouterCancelPayload<T> = {
-  routerState: RouterStateSnapshot,
-  storeState: T,
-  event: NavigationCancel
+  routerState: RouterStateSnapshot;
+  storeState: T;
+  event: NavigationCancel;
 };
 
 /**
  * An action dispatched when the router cancel navigation.
  */
 export type RouterCancelAction<T> = {
-  type: typeof ROUTER_CANCEL,
-  payload: RouterCancelPayload<T>
+  type: typeof ROUTER_CANCEL;
+  payload: RouterCancelPayload<T>;
 };
 
 /**
@@ -55,32 +61,44 @@ export const ROUTER_ERROR = 'ROUTE_ERROR';
  * Payload of ROUTER_ERROR.
  */
 export type RouterErrorPayload<T> = {
-  routerState: RouterStateSnapshot,
-  storeState: T,
-  event: NavigationError
+  routerState: RouterStateSnapshot;
+  storeState: T;
+  event: NavigationError;
 };
 
 /**
  * An action dispatched when the router errors.
  */
 export type RouterErrorAction<T> = {
-  type: typeof ROUTER_ERROR,
-  payload: RouterErrorPayload<T>
+  type: typeof ROUTER_ERROR;
+  payload: RouterErrorPayload<T>;
 };
 
 /**
  * An union type of router actions.
  */
-export type RouterAction<T> = RouterNavigationAction | RouterCancelAction<T> | RouterErrorAction<T>;
+export type RouterAction<T> =
+  | RouterNavigationAction
+  | RouterCancelAction<T>
+  | RouterErrorAction<T>;
 
-export type RouterReducerState = { state: RouterStateSnapshot, navigationId: number };
+export type RouterReducerState = {
+  state: RouterStateSnapshot;
+  navigationId: number;
+};
 
-export function routerReducer(state: RouterReducerState, action: RouterAction<any>): RouterReducerState {
+export function routerReducer(
+  state: RouterReducerState,
+  action: RouterAction<any>
+): RouterReducerState {
   switch (action.type) {
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:
     case ROUTER_CANCEL:
-      return ({ state: action.payload.routerState, navigationId: action.payload.event.id });
+      return {
+        state: action.payload.routerState,
+        navigationId: action.payload.event.id,
+      };
     default:
       return state;
   }
@@ -144,7 +162,9 @@ export class StoreRouterConnectingModule {
   }
 
   private setUpBeforePreactivationHook(): void {
-    (<any>this.router).hooks.beforePreactivation = (routerState: RouterStateSnapshot) => {
+    (<any>this.router).hooks.beforePreactivation = (
+      routerState: RouterStateSnapshot
+    ) => {
       this.routerState = routerState;
       if (this.shouldDispatch()) this.dispatchEvent();
       return of(true);
@@ -161,7 +181,10 @@ export class StoreRouterConnectingModule {
   private dispatchEvent(): void {
     this.dispatchTriggeredByRouter = true;
     try {
-      const payload = { routerState: this.routerState, event: this.lastRoutesRecognized };
+      const payload = {
+        routerState: this.routerState,
+        event: this.lastRoutesRecognized,
+      };
       this.store.dispatch({ type: ROUTER_NAVIGATION, payload });
     } finally {
       this.dispatchTriggeredByRouter = false;
@@ -197,12 +220,20 @@ export class StoreRouterConnectingModule {
   }
 
   private dispatchRouterCancel(event: NavigationCancel): void {
-    const payload = { routerState: this.routerState, storeState: this.storeState, event };
+    const payload = {
+      routerState: this.routerState,
+      storeState: this.storeState,
+      event,
+    };
     this.store.dispatch({ type: ROUTER_CANCEL, payload });
   }
 
   private dispatchRouterError(event: NavigationError): void {
-    const payload = { routerState: this.routerState, storeState: this.storeState, event };
+    const payload = {
+      routerState: this.routerState,
+      storeState: this.storeState,
+      event,
+    };
     this.store.dispatch({ type: ROUTER_ERROR, payload });
   }
 }

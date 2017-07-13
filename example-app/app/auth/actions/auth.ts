@@ -33,8 +33,8 @@ export class Logout implements Action {
   readonly type = LOGOUT;
 }
 
-export type Actions
-  = Login
+export type Actions =
+  | Login
   | LoginSuccess
   | LoginFailure
   | LoginRedirect

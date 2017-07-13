@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import * as fromBooks from '../reducers';
 import { Book } from '../models/book';
 
-
 @Component({
   selector: 'bc-collection-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,12 +22,14 @@ import { Book } from '../models/book';
    * consider breaking them out into presentational
    * components.
    */
-  styles: [`
+  styles: [
+    `
     md-card-title {
       display: flex;
       justify-content: center;
     }
-  `]
+  `,
+  ],
 })
 export class CollectionPageComponent {
   books$: Observable<Book[]>;

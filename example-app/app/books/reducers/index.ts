@@ -7,7 +7,7 @@ import {
   combineReducers,
   Action,
   ActionReducerFactory,
-  MemoizedSelector
+  MemoizedSelector,
 } from '@ngrx/store';
 import * as fromSearch from './search';
 import * as fromBooks from './books';
@@ -60,44 +60,91 @@ export const getBooksState = createFeatureSelector<BooksState>('books');
  * only recompute when arguments change. The created selectors can also be composed 
  * together to select different pieces of state.
  */
-export const getBookEntitiesState = createSelector(getBooksState, (state: BooksState) => state.books);
-export const getBookEntities = createSelector(getBookEntitiesState, fromBooks.getEntities);
-export const getBookIds = createSelector(getBookEntitiesState, fromBooks.getIds);
-export const getSelectedBookId = createSelector(getBookEntitiesState, fromBooks.getSelectedId);
-export const getSelectedBook = createSelector(getBookEntitiesState, fromBooks.getSelected);
-
+export const getBookEntitiesState = createSelector(
+  getBooksState,
+  (state: BooksState) => state.books
+);
+export const getBookEntities = createSelector(
+  getBookEntitiesState,
+  fromBooks.getEntities
+);
+export const getBookIds = createSelector(
+  getBookEntitiesState,
+  fromBooks.getIds
+);
+export const getSelectedBookId = createSelector(
+  getBookEntitiesState,
+  fromBooks.getSelectedId
+);
+export const getSelectedBook = createSelector(
+  getBookEntitiesState,
+  fromBooks.getSelected
+);
 
 /**
  * Just like with the books selectors, we also have to compose the search
  * reducer's and collection reducer's selectors.
  */
-export const getSearchState = createSelector(getBooksState, (state: BooksState) => state.search);
+export const getSearchState = createSelector(
+  getBooksState,
+  (state: BooksState) => state.search
+);
 
-export const getSearchBookIds = createSelector(getSearchState, fromSearch.getIds);
-export const getSearchQuery = createSelector(getSearchState, fromSearch.getQuery);
-export const getSearchLoading = createSelector(getSearchState, fromSearch.getLoading);
-
+export const getSearchBookIds = createSelector(
+  getSearchState,
+  fromSearch.getIds
+);
+export const getSearchQuery = createSelector(
+  getSearchState,
+  fromSearch.getQuery
+);
+export const getSearchLoading = createSelector(
+  getSearchState,
+  fromSearch.getLoading
+);
 
 /**
  * Some selector functions create joins across parts of state. This selector
  * composes the search result IDs to return an array of books in the store.
  */
-export const getSearchResults = createSelector(getBookEntities, getSearchBookIds, (books, searchIds) => {
-  return searchIds.map(id => books[id]);
-});
+export const getSearchResults = createSelector(
+  getBookEntities,
+  getSearchBookIds,
+  (books, searchIds) => {
+    return searchIds.map(id => books[id]);
+  }
+);
 
+export const getCollectionState = createSelector(
+  getBooksState,
+  (state: BooksState) => state.collection
+);
 
+export const getCollectionLoaded = createSelector(
+  getCollectionState,
+  fromCollection.getLoaded
+);
+export const getCollectionLoading = createSelector(
+  getCollectionState,
+  fromCollection.getLoading
+);
+export const getCollectionBookIds = createSelector(
+  getCollectionState,
+  fromCollection.getIds
+);
 
-export const getCollectionState = createSelector(getBooksState, (state: BooksState) => state.collection);
+export const getBookCollection = createSelector(
+  getBookEntities,
+  getCollectionBookIds,
+  (entities, ids) => {
+    return ids.map(id => entities[id]);
+  }
+);
 
-export const getCollectionLoaded = createSelector(getCollectionState, fromCollection.getLoaded);
-export const getCollectionLoading = createSelector(getCollectionState, fromCollection.getLoading);
-export const getCollectionBookIds = createSelector(getCollectionState, fromCollection.getIds);
-
-export const getBookCollection = createSelector(getBookEntities, getCollectionBookIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});
-
-export const isSelectedBookInCollection = createSelector(getCollectionBookIds, getSelectedBookId, (ids, selected) => {
-  return ids.indexOf(selected) > -1;
-});
+export const isSelectedBookInCollection = createSelector(
+  getCollectionBookIds,
+  getSelectedBookId,
+  (ids, selected) => {
+    return ids.indexOf(selected) > -1;
+  }
+);

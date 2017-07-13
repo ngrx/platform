@@ -13,8 +13,7 @@ import { INITIAL_STATE } from './tokens';
 import { ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
 
-
-export abstract class StateObservable extends Observable<any> { }
+export abstract class StateObservable extends Observable<any> {}
 
 @Injectable()
 export class State<T> extends BehaviorSubject<any> implements OnDestroy {
@@ -31,14 +30,19 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
     super(initialState);
 
     const actionsOnQueue$: Observable<Action> = observeOn.call(actions$, queue);
-    const withLatestReducer$: Observable<[ Action, ActionReducer<any, Action> ]> = withLatestFrom.call(actionsOnQueue$, reducer$);
-    const stateAndAction$: Observable<{ state: any, action: Action }> = scan.call(withLatestReducer$, reduceState, initialState);
+    const withLatestReducer$: Observable<
+      [Action, ActionReducer<any, Action>]
+    > = withLatestFrom.call(actionsOnQueue$, reducer$);
+    const stateAndAction$: Observable<{
+      state: any;
+      action: Action;
+    }> = scan.call(withLatestReducer$, reduceState, initialState);
 
     this.stateSubscription = stateAndAction$.subscribe({
       next: ({ state, action }) => {
         this.next(state);
         scannedActions.next(action);
-      }
+      },
     });
   }
 
@@ -48,10 +52,13 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   }
 }
 
-export type StateActionPair<T, V extends Action = Action> = { state: T | undefined, action?: V };
+export type StateActionPair<T, V extends Action = Action> = {
+  state: T | undefined;
+  action?: V;
+};
 export function reduceState<T, V extends Action = Action>(
   { state }: StateActionPair<T, V> = { state: undefined },
-  [ action, reducer ]: [ V, ActionReducer<T, V> ]
+  [action, reducer]: [V, ActionReducer<T, V>]
 ): StateActionPair<T, V> {
   return { state: reducer(state, action), action };
 }

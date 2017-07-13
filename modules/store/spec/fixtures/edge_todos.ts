@@ -1,5 +1,3 @@
-
-
 interface State {
   id: string;
   text: string;
@@ -12,7 +10,7 @@ const todo = (state: State | undefined, action: any) => {
       return {
         id: action.payload.id,
         text: action.payload.text,
-        completed: false
+        completed: false,
       };
     case 'TOGGLE_TODO':
       if (state!.id !== action.id) {
@@ -20,7 +18,7 @@ const todo = (state: State | undefined, action: any) => {
       }
 
       return Object.assign({}, state, {
-        completed: !state!.completed
+        completed: !state!.completed,
       });
 
     default:
@@ -31,21 +29,16 @@ const todo = (state: State | undefined, action: any) => {
 export const todos = (state = [], action: any) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return [
-        ...state,
-        todo(undefined, action)
-      ];
+      return [...state, todo(undefined, action)];
     case 'TOGGLE_TODO':
-      return state.map(t =>
-        todo(t, action)
-      );
+      return state.map(t => todo(t, action));
     default:
       return state;
   }
 };
 
 export const todoCount = (state = 0, action: any) => {
-  switch (action.type){
+  switch (action.type) {
     case 'SET_COUNT':
       return action.payload;
     default:

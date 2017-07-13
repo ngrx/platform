@@ -6,12 +6,12 @@ import { FEATURE_EFFECTS } from './tokens';
 export class EffectsFeatureModule {
   constructor(
     private root: EffectsRootModule,
-    @Inject(FEATURE_EFFECTS) effectSourceGroups: any[][],
+    @Inject(FEATURE_EFFECTS) effectSourceGroups: any[][]
   ) {
     effectSourceGroups.forEach(group =>
       group.forEach(effectSourceInstance =>
-        root.addEffects(effectSourceInstance),
-      ),
+        root.addEffects(effectSourceInstance)
+      )
     );
   }
 }

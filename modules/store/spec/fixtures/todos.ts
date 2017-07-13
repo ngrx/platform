@@ -14,19 +14,25 @@ let _id = 0;
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
+  SHOW_ACTIVE: 'SHOW_ACTIVE',
 };
 
-export function visibilityFilter(state = VisibilityFilters.SHOW_ALL, {type, payload}: any) {
+export function visibilityFilter(
+  state = VisibilityFilters.SHOW_ALL,
+  { type, payload }: any
+) {
   switch (type) {
     case SET_VISIBILITY_FILTER:
       return payload;
     default:
       return state;
   }
-};
+}
 
-export function todos(state: TodoItem[] = [], {type, payload}: any): TodoItem[] {
+export function todos(
+  state: TodoItem[] = [],
+  { type, payload }: any
+): TodoItem[] {
   switch (type) {
     case ADD_TODO:
       return [
@@ -34,16 +40,16 @@ export function todos(state: TodoItem[] = [], {type, payload}: any): TodoItem[] 
         {
           id: ++_id,
           text: payload.text,
-          completed: false
-        }
+          completed: false,
+        },
       ];
     case COMPLETE_ALL_TODOS:
       return state.map(todo => ({ ...todo, completed: true }));
     case COMPLETE_TODO:
-      return state.map(todo =>
-        todo.id === payload.id ? { ...todo, completed: true } : todo
+      return state.map(
+        todo => (todo.id === payload.id ? { ...todo, completed: true } : todo)
       );
     default:
       return state;
   }
-};
+}

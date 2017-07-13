@@ -31,11 +31,14 @@ describe('BookEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         BookEffects,
-        { provide: GoogleBooksService, useValue: jasmine.createSpyObj('GoogleBooksService', ['searchBooks']) },
+        {
+          provide: GoogleBooksService,
+          useValue: jasmine.createSpyObj('GoogleBooksService', ['searchBooks']),
+        },
         { provide: Actions, useFactory: getActions },
         { provide: SEARCH_SCHEDULER, useFactory: getTestScheduler },
         { provide: SEARCH_DEBOUNCE, useValue: 30 },
-      ]
+      ],
     });
 
     effects = TestBed.get(BookEffects);
@@ -45,8 +48,8 @@ describe('BookEffects', () => {
 
   describe('search$', () => {
     it('should return a new book.SearchCompleteAction, with the books, on success, after the de-bounce', () => {
-      const book1 = {id: '111', volumeInfo: {}} as Book;
-      const book2 = {id: '222', volumeInfo: {}} as Book;
+      const book1 = { id: '111', volumeInfo: {} } as Book;
+      const book2 = { id: '222', volumeInfo: {} } as Book;
       const books = [book1, book2];
       const action = new SearchAction('query');
       const completion = new SearchCompleteAction(books);
@@ -59,7 +62,7 @@ describe('BookEffects', () => {
       expect(effects.search$).toBeObservable(expected);
     });
 
-    it('should return a new book.SearchCompleteAction, with an empty array, if the books service throws', (() => {
+    it('should return a new book.SearchCompleteAction, with an empty array, if the books service throws', () => {
       const action = new SearchAction('query');
       const completion = new SearchCompleteAction([]);
       const error = 'Error!';
@@ -70,15 +73,18 @@ describe('BookEffects', () => {
       googleBooksService.searchBooks.and.returnValue(response);
 
       expect(effects.search$).toBeObservable(expected);
-    }));
+    });
 
-    it(`should not do anything if the query is an empty string`, fakeAsync(() => {
-      const action = new SearchAction('');
+    it(
+      `should not do anything if the query is an empty string`,
+      fakeAsync(() => {
+        const action = new SearchAction('');
 
-      actions$.stream = hot('-a---', { a: action });
-      const expected = cold('---');
+        actions$.stream = hot('-a---', { a: action });
+        const expected = cold('---');
 
-      expect(effects.search$).toBeObservable(expected);
-    }));
+        expect(effects.search$).toBeObservable(expected);
+      })
+    );
   });
 });

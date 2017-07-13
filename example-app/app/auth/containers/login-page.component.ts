@@ -13,16 +13,15 @@ import * as Auth from '../actions/auth';
       [errorMessage]="error$ | async">
     </bc-login-form>
   `,
-  styles: []
+  styles: [],
 })
 export class LoginPageComponent implements OnInit {
   pending$ = this.store.select(fromAuth.getLoginPagePending);
   error$ = this.store.select(fromAuth.getLoginPageError);
 
-  constructor(private store: Store<fromAuth.State>) { }
+  constructor(private store: Store<fromAuth.State>) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit($event: Authenticate) {
     this.store.dispatch(new Auth.Login($event));

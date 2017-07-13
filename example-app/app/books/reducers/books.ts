@@ -3,12 +3,11 @@ import { Book } from '../models/book';
 import * as book from '../actions/book';
 import * as collection from '../actions/collection';
 
-
 export interface State {
   ids: string[];
   entities: { [id: string]: Book };
   selectedBookId: string | null;
-};
+}
 
 export const initialState: State = {
   ids: [],
@@ -16,7 +15,10 @@ export const initialState: State = {
   selectedBookId: null,
 };
 
-export function reducer(state = initialState, action: book.Actions | collection.Actions): State {
+export function reducer(
+  state = initialState,
+  action: book.Actions | collection.Actions
+): State {
   switch (action.type) {
     case book.SEARCH_COMPLETE:
     case collection.LOAD_SUCCESS: {
@@ -24,16 +26,19 @@ export function reducer(state = initialState, action: book.Actions | collection.
       const newBooks = books.filter(book => !state.entities[book.id]);
 
       const newBookIds = newBooks.map(book => book.id);
-      const newBookEntities = newBooks.reduce((entities: { [id: string]: Book }, book: Book) => {
-        return Object.assign(entities, {
-          [book.id]: book
-        });
-      }, {});
+      const newBookEntities = newBooks.reduce(
+        (entities: { [id: string]: Book }, book: Book) => {
+          return Object.assign(entities, {
+            [book.id]: book,
+          });
+        },
+        {}
+      );
 
       return {
-        ids: [ ...state.ids, ...newBookIds ],
+        ids: [...state.ids, ...newBookIds],
         entities: Object.assign({}, state.entities, newBookEntities),
-        selectedBookId: state.selectedBookId
+        selectedBookId: state.selectedBookId,
       };
     }
 
@@ -45,11 +50,11 @@ export function reducer(state = initialState, action: book.Actions | collection.
       }
 
       return {
-        ids: [ ...state.ids, book.id ],
+        ids: [...state.ids, book.id],
         entities: Object.assign({}, state.entities, {
-          [book.id]: book
+          [book.id]: book,
         }),
-        selectedBookId: state.selectedBookId
+        selectedBookId: state.selectedBookId,
       };
     }
 
@@ -57,7 +62,7 @@ export function reducer(state = initialState, action: book.Actions | collection.
       return {
         ids: state.ids,
         entities: state.entities,
-        selectedBookId: action.payload
+        selectedBookId: action.payload,
       };
     }
 
@@ -82,9 +87,13 @@ export const getIds = (state: State) => state.ids;
 
 export const getSelectedId = (state: State) => state.selectedBookId;
 
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
+export const getSelected = createSelector(
+  getEntities,
+  getSelectedId,
+  (entities, selectedId) => {
+    return entities[selectedId];
+  }
+);
 
 export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);

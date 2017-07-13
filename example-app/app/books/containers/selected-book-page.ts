@@ -6,7 +6,6 @@ import * as fromBooks from '../reducers';
 import * as collection from '../actions/collection';
 import { Book } from '../models/book';
 
-
 @Component({
   selector: 'bc-selected-book-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,7 +16,7 @@ import { Book } from '../models/book';
       (add)="addToCollection($event)"
       (remove)="removeFromCollection($event)">
     </bc-book-detail>
-  `
+  `,
 })
 export class SelectedBookPageComponent {
   book$: Observable<Book>;
@@ -25,7 +24,9 @@ export class SelectedBookPageComponent {
 
   constructor(private store: Store<fromBooks.State>) {
     this.book$ = store.select(fromBooks.getSelectedBook);
-    this.isSelectedBookInCollection$ = store.select(fromBooks.isSelectedBookInCollection);
+    this.isSelectedBookInCollection$ = store.select(
+      fromBooks.isSelectedBookInCollection
+    );
   }
 
   addToCollection(book: Book) {

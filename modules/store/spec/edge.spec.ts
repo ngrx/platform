@@ -3,28 +3,27 @@ import { todos, todoCount } from './fixtures/edge_todos';
 import { createInjector } from './helpers/injector';
 import { Store, StoreModule } from '../';
 
-
 interface TestAppSchema {
   counter1: number;
   counter2: number;
   counter3: number;
 }
 
-interface Todo { }
+interface Todo {}
 
 interface TodoAppSchema {
   todoCount: number;
   todos: Todo[];
 }
 
-
-
 describe('ngRx Store', () => {
   describe('basic store actions', () => {
     let store: Store<TodoAppSchema>;
 
     beforeEach(() => {
-      const injector = createInjector(StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any));
+      const injector = createInjector(
+        StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any)
+      );
 
       store = injector.get(Store);
     });
@@ -33,13 +32,13 @@ describe('ngRx Store', () => {
       expect(store).toBeDefined();
     });
 
-    it('should handle re-entrancy', (done) => {
+    it('should handle re-entrancy', done => {
       let todosNextCount = 0;
       let todosCountNextCount = 0;
 
       store.select('todos').subscribe((todos: any[]) => {
         todosNextCount++;
-        store.dispatch({ type: 'SET_COUNT', payload: todos.length })
+        store.dispatch({ type: 'SET_COUNT', payload: todos.length });
       });
 
       store.select('todoCount').subscribe(count => {

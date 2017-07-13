@@ -1,8 +1,18 @@
-import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory } from './models';
+import {
+  Action,
+  ActionReducer,
+  ActionReducerMap,
+  ActionReducerFactory,
+} from './models';
 
-
-export function combineReducers<T, V extends Action = Action>(reducers: ActionReducerMap<T, V>, initialState?: Partial<T>): ActionReducer<T, V>;
-export function combineReducers(reducers: any, initialState: any = {}): ActionReducer<any, Action> {
+export function combineReducers<T, V extends Action = Action>(
+  reducers: ActionReducerMap<T, V>,
+  initialState?: Partial<T>
+): ActionReducer<T, V>;
+export function combineReducers(
+  reducers: any,
+  initialState: any = {}
+): ActionReducer<any, Action> {
   const reducerKeys = Object.keys(reducers);
   const finalReducers: any = {};
 
@@ -31,7 +41,10 @@ export function combineReducers(reducers: any, initialState: any = {}): ActionRe
   };
 }
 
-export function omit<T extends { [key: string]: any }>(object: T, keyToRemove: keyof T): Partial<T> {
+export function omit<T extends { [key: string]: any }>(
+  object: T,
+  keyToRemove: keyof T
+): Partial<T> {
   return Object.keys(object)
     .filter(key => key !== keyToRemove)
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
@@ -40,9 +53,24 @@ export function omit<T extends { [key: string]: any }>(object: T, keyToRemove: k
 export function compose<A>(): (i: A) => A;
 export function compose<A, B>(b: (i: A) => B): (i: A) => B;
 export function compose<A, B, C>(c: (i: B) => C, b: (i: A) => B): (i: A) => C;
-export function compose<A, B, C, D>(d: (i: C) => D, c: (i: B) => C, b: (i: A) => B): (i: A) => D;
-export function compose<A, B, C, D, E>(e: (i: D) => E, d: (i: C) => D, c: (i: B) => C, b: (i: A) => B): (i: A) => E;
-export function compose<A, B, C, D, E, F>(f: (i: E) => F, e: (i: D) => E, d: (i: C) => D, c: (i: B) => C, b: (i: A) => B): (i: A) => F;
+export function compose<A, B, C, D>(
+  d: (i: C) => D,
+  c: (i: B) => C,
+  b: (i: A) => B
+): (i: A) => D;
+export function compose<A, B, C, D, E>(
+  e: (i: D) => E,
+  d: (i: C) => D,
+  c: (i: B) => C,
+  b: (i: A) => B
+): (i: A) => E;
+export function compose<A, B, C, D, E, F>(
+  f: (i: E) => F,
+  e: (i: D) => E,
+  d: (i: C) => D,
+  c: (i: B) => C,
+  b: (i: A) => B
+): (i: A) => F;
 export function compose(...functions: any[]) {
   return function(arg: any) {
     if (functions.length === 0) {
@@ -53,5 +81,5 @@ export function compose(...functions: any[]) {
     const rest = functions.slice(0, -1);
 
     return rest.reduceRight((composed, fn) => fn(composed), last(arg));
-  }
+  };
 }

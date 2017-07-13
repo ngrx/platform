@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Authenticate } from '../models/user';
 
@@ -33,7 +40,8 @@ import { Authenticate } from '../models/user';
       </md-card-content>
     </md-card>
   `,
-  styles: [`
+  styles: [
+    `
     :host {
       display: flex;
       justify-content: center;
@@ -62,10 +70,12 @@ import { Authenticate } from '../models/user';
       flex-direction: row;
       justify-content: flex-end;
     }
-  `]
+  `,
+  ],
 })
 export class LoginFormComponent implements OnInit {
-  @Input() set pending(isPending: boolean) {
+  @Input()
+  set pending(isPending: boolean) {
     if (isPending) {
       this.form.disable();
     }
@@ -79,17 +89,16 @@ export class LoginFormComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
-    password: new FormControl('')
+    password: new FormControl(''),
   });
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   submit() {
     if (this.form.valid) {
-     this.submitted.emit(this.form.value);
+      this.submitted.emit(this.form.value);
     }
   }
 }

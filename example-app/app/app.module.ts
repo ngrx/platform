@@ -1,4 +1,4 @@
-import { NgModule, } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,7 +38,9 @@ import { environment } from '../environments/environment';
      * based application.
      */
     StoreModule.forRoot(reducers, {
-      reducerFactory: !environment.production ? developmentReducerFactory : undefined
+      reducerFactory: !environment.production
+        ? developmentReducerFactory
+        : undefined,
     }),
 
     /**
@@ -75,7 +77,7 @@ import { environment } from '../environments/environment';
 
     CoreModule.forRoot(),
 
-    AuthModule.forRoot()
+    AuthModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })

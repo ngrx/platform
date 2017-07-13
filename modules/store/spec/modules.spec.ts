@@ -3,16 +3,17 @@ import { TestBed } from '@angular/core/testing';
 import { NgModule, InjectionToken } from '@angular/core';
 import { StoreModule, Store, ActionReducer, ActionReducerMap } from '../';
 
-
 describe('Nested Store Modules', () => {
   type RootState = { fruit: string };
   type FeatureAState = number;
-  type FeatureBState = { list: number[], index: number };
+  type FeatureBState = { list: number[]; index: number };
   type State = RootState & { a: FeatureAState } & { b: FeatureBState };
 
   let store: Store<State>;
 
-  const reducersToken = new InjectionToken<ActionReducerMap<RootState>>('Root Reducers');
+  const reducersToken = new InjectionToken<ActionReducerMap<RootState>>(
+    'Root Reducers'
+  );
   const rootFruitReducer: ActionReducer<string> = () => 'apple';
   const featureAReducer: ActionReducer<FeatureAState> = () => 5;
   const featureBListReducer: ActionReducer<number[]> = () => [1, 2, 3];
@@ -23,18 +24,14 @@ describe('Nested Store Modules', () => {
   };
 
   @NgModule({
-    imports: [
-      StoreModule.forFeature('a', featureAReducer),
-    ]
+    imports: [StoreModule.forFeature('a', featureAReducer)],
   })
-  class FeatureAModule { }
+  class FeatureAModule {}
 
   @NgModule({
-    imports: [
-      StoreModule.forFeature('b', featureBReducerMap),
-    ]
+    imports: [StoreModule.forFeature('b', featureBReducerMap)],
   })
-  class FeatureBModule { }
+  class FeatureBModule {}
 
   @NgModule({
     imports: [
@@ -46,16 +43,14 @@ describe('Nested Store Modules', () => {
       {
         provide: reducersToken,
         useValue: { fruit: rootFruitReducer },
-      }
-    ]
+      },
+    ],
   })
-  class RootModule { }
+  class RootModule {}
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RootModule,
-      ]
+      imports: [RootModule],
     });
 
     store = TestBed.get(Store);
@@ -69,9 +64,8 @@ describe('Nested Store Modules', () => {
         b: {
           list: [1, 2, 3],
           index: 2,
-        }
+        },
       });
     });
   });
 });
-

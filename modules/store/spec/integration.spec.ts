@@ -2,10 +2,30 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/first';
 import { Observable } from 'rxjs/Observable';
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, Action, combineReducers, ActionReducer, ActionReducerMap } from '../';
+import {
+  Store,
+  StoreModule,
+  Action,
+  combineReducers,
+  ActionReducer,
+  ActionReducerMap,
+} from '../';
 import { ReducerManager, INITIAL_STATE, State } from '../src/private_export';
-import { counterReducer, INCREMENT, DECREMENT, RESET } from './fixtures/counter';
-import { todos, visibilityFilter, VisibilityFilters, SET_VISIBILITY_FILTER, ADD_TODO, COMPLETE_TODO, COMPLETE_ALL_TODOS } from './fixtures/todos';
+import {
+  counterReducer,
+  INCREMENT,
+  DECREMENT,
+  RESET,
+} from './fixtures/counter';
+import {
+  todos,
+  visibilityFilter,
+  VisibilityFilters,
+  SET_VISIBILITY_FILTER,
+  ADD_TODO,
+  COMPLETE_TODO,
+  COMPLETE_ALL_TODOS,
+} from './fixtures/todos';
 
 interface Todo {
   id: number;
@@ -19,21 +39,24 @@ interface TodoAppSchema {
 }
 
 describe('ngRx Integration spec', () => {
-
   describe('todo integration spec', function() {
     let store: Store<TodoAppSchema>;
     let state: State<TodoAppSchema>;
 
-    const initialState = { todos: [], visibilityFilter: VisibilityFilters.SHOW_ALL };
-    const reducers: ActionReducerMap<TodoAppSchema, any> = { todos: todos, visibilityFilter: visibilityFilter };
+    const initialState = {
+      todos: [],
+      visibilityFilter: VisibilityFilters.SHOW_ALL,
+    };
+    const reducers: ActionReducerMap<TodoAppSchema, any> = {
+      todos: todos,
+      visibilityFilter: visibilityFilter,
+    };
 
     beforeEach(() => {
       spyOn(reducers, 'todos').and.callThrough();
 
       TestBed.configureTestingModule({
-        imports: [
-          StoreModule.forRoot(reducers, { initialState }),
-        ]
+        imports: [StoreModule.forRoot(reducers, { initialState })],
       });
 
       store = TestBed.get(Store);
@@ -88,7 +111,10 @@ describe('ngRx Integration spec', () => {
 
     it('should complete the first todo', () => {
       store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-      store.dispatch({ type: COMPLETE_TODO, payload: { id: state.value.todos[0].id } });
+      store.dispatch({
+        type: COMPLETE_TODO,
+        payload: { id: state.value.todos[0].id },
+      });
 
       expect(state.value.todos[0].completed).toEqual(true);
     });
@@ -96,17 +122,18 @@ describe('ngRx Integration spec', () => {
     it('should use visibilityFilter to filter todos', () => {
       store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
       store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-      store.dispatch({ type: COMPLETE_TODO, payload: { id: state.value.todos[0].id } });
+      store.dispatch({
+        type: COMPLETE_TODO,
+        payload: { id: state.value.todos[0].id },
+      });
 
       const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
         let predicate;
         if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
           predicate = () => true;
-        }
-        else if (visibilityFilter === VisibilityFilters.SHOW_ACTIVE) {
+        } else if (visibilityFilter === VisibilityFilters.SHOW_ACTIVE) {
           predicate = (todo: any) => !todo.completed;
-        }
-        else {
+        } else {
           predicate = (todo: any) => todo.completed;
         }
         return todos.filter(predicate);
@@ -114,19 +141,28 @@ describe('ngRx Integration spec', () => {
 
       let currentlyVisibleTodos: any;
 
-      Observable.combineLatest(store.select('visibilityFilter'), store.select('todos'), filterVisibleTodos)
-        .subscribe(visibleTodos => {
-          currentlyVisibleTodos = visibleTodos;
-        });
+      Observable.combineLatest(
+        store.select('visibilityFilter'),
+        store.select('todos'),
+        filterVisibleTodos
+      ).subscribe(visibleTodos => {
+        currentlyVisibleTodos = visibleTodos;
+      });
 
       expect(currentlyVisibleTodos.length).toBe(2);
 
-      store.dispatch({ type: SET_VISIBILITY_FILTER, payload: VisibilityFilters.SHOW_ACTIVE });
+      store.dispatch({
+        type: SET_VISIBILITY_FILTER,
+        payload: VisibilityFilters.SHOW_ACTIVE,
+      });
 
       expect(currentlyVisibleTodos.length).toBe(1);
       expect(currentlyVisibleTodos[0].completed).toBe(false);
 
-      store.dispatch({ type: SET_VISIBILITY_FILTER, payload: VisibilityFilters.SHOW_COMPLETED });
+      store.dispatch({
+        type: SET_VISIBILITY_FILTER,
+        payload: VisibilityFilters.SHOW_COMPLETED,
+      });
 
       expect(currentlyVisibleTodos.length).toBe(1);
       expect(currentlyVisibleTodos[0].completed).toBe(true);
@@ -137,10 +173,12 @@ describe('ngRx Integration spec', () => {
       expect(currentlyVisibleTodos[0].completed).toBe(true);
       expect(currentlyVisibleTodos[1].completed).toBe(true);
 
-      store.dispatch({ type: SET_VISIBILITY_FILTER, payload: VisibilityFilters.SHOW_ACTIVE });
+      store.dispatch({
+        type: SET_VISIBILITY_FILTER,
+        payload: VisibilityFilters.SHOW_ACTIVE,
+      });
 
       expect(currentlyVisibleTodos.length).toBe(0);
-
     });
   });
 });

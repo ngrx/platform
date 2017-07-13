@@ -1,16 +1,15 @@
 import * as book from '../actions/book';
 
-
 export interface State {
   ids: string[];
   loading: boolean;
   query: string;
-};
+}
 
 const initialState: State = {
   ids: [],
   loading: false,
-  query: ''
+  query: '',
 };
 
 export function reducer(state = initialState, action: book.Actions): State {
@@ -22,13 +21,13 @@ export function reducer(state = initialState, action: book.Actions): State {
         return {
           ids: [],
           loading: false,
-          query
+          query,
         };
       }
 
       return Object.assign({}, state, {
         query,
-        loading: true
+        loading: true,
       });
     }
 
@@ -38,7 +37,7 @@ export function reducer(state = initialState, action: book.Actions): State {
       return {
         ids: books.map(book => book.id),
         loading: false,
-        query: state.query
+        query: state.query,
       };
     }
 
@@ -47,7 +46,6 @@ export function reducer(state = initialState, action: book.Actions): State {
     }
   }
 }
-
 
 export const getIds = (state: State) => state.ids;
 

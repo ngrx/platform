@@ -11,5 +11,5 @@ export {
   RouterReducerState,
   RouterCancelPayload,
   RouterNavigationPayload,
-  StoreRouterConnectingModule
+  StoreRouterConnectingModule,
 } from './router_store_module';
