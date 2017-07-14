@@ -7,11 +7,9 @@ import {
   ROUTER_CANCEL,
   ROUTER_ERROR,
   ROUTER_NAVIGATION,
+  RouterAction,
   routerReducer,
   StoreRouterConnectingModule,
-  RouterNavigationAction,
-  RouterCancelAction,
-  RouterAction,
 } from '../src/index';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
@@ -106,7 +104,7 @@ describe('integration spec', () => {
       } else if (action.type === ROUTER_CANCEL) {
         return {
           url: action.payload.routerState.url.toString(),
-          storeState: action.payload.storeState,
+          storeState: action.payload.storeState.reducer,
           lastAction: ROUTER_CANCEL,
         };
       } else {
@@ -114,7 +112,10 @@ describe('integration spec', () => {
       }
     };
 
-    createTestModule({ reducers: { reducer }, canActivate: () => false });
+    createTestModule({
+      reducers: { reducer, routerReducer },
+      canActivate: () => false,
+    });
 
     const router: Router = TestBed.get(Router);
     const store = TestBed.get(Store);
@@ -128,6 +129,7 @@ describe('integration spec', () => {
       })
       .then(r => {
         expect(r).toEqual(false);
+
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
@@ -140,9 +142,7 @@ describe('integration spec', () => {
             state: {
               url: '/next',
               lastAction: ROUTER_CANCEL,
-              storeState: {
-                reducer: { url: '/next', lastAction: ROUTER_NAVIGATION },
-              },
+              storeState: { url: '/next', lastAction: ROUTER_NAVIGATION },
             },
           },
           { type: 'router', event: 'NavigationCancel', url: '/next' },
@@ -162,7 +162,7 @@ describe('integration spec', () => {
       } else if (action.type === ROUTER_ERROR) {
         return {
           url: action.payload.routerState.url.toString(),
-          storeState: action.payload.storeState,
+          storeState: action.payload.storeState.reducer,
           lastAction: ROUTER_ERROR,
         };
       } else {
@@ -171,7 +171,7 @@ describe('integration spec', () => {
     };
 
     createTestModule({
-      reducers: { reducer },
+      reducers: { reducer, routerReducer },
       canActivate: () => {
         throw new Error('BOOM!');
       },
@@ -202,9 +202,7 @@ describe('integration spec', () => {
             state: {
               url: '/next',
               lastAction: ROUTER_ERROR,
-              storeState: {
-                reducer: { url: '/next', lastAction: ROUTER_NAVIGATION },
-              },
+              storeState: { url: '/next', lastAction: ROUTER_NAVIGATION },
             },
           },
           { type: 'router', event: 'NavigationError', url: '/next' },
