@@ -16,7 +16,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 
 import { routes } from './routes';
-import { reducers, developmentReducerFactory } from './reducers';
+import { reducers } from './reducers';
 import { schema } from './db';
 
 import { AppComponent } from './core/containers/app';
@@ -37,11 +37,7 @@ import { environment } from '../environments/environment';
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    StoreModule.forRoot(reducers, {
-      reducerFactory: !environment.production
-        ? developmentReducerFactory
-        : undefined,
-    }),
+    StoreModule.forRoot(reducers),
 
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
