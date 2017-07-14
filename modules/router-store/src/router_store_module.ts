@@ -166,7 +166,8 @@ export class StoreRouterConnectingModule {
       routerState: RouterStateSnapshot
     ) => {
       this.routerState = routerState;
-      if (this.shouldDispatch()) this.dispatchEvent();
+      if (this.shouldDispatchRouterNavigation())
+        this.dispatchRouterNavigation();
       return of(true);
     };
   }
@@ -178,21 +179,7 @@ export class StoreRouterConnectingModule {
     });
   }
 
-  private dispatchEvent(): void {
-    this.dispatchTriggeredByRouter = true;
-    try {
-      const payload = {
-        routerState: this.routerState,
-        event: this.lastRoutesRecognized,
-      };
-      this.store.dispatch({ type: ROUTER_NAVIGATION, payload });
-    } finally {
-      this.dispatchTriggeredByRouter = false;
-      this.navigationTriggeredByDispatch = false;
-    }
-  }
-
-  private shouldDispatch(): boolean {
+  private shouldDispatchRouterNavigation(): boolean {
     if (!this.storeState['routerReducer']) return true;
     return !this.navigationTriggeredByDispatch;
   }
@@ -219,21 +206,36 @@ export class StoreRouterConnectingModule {
     });
   }
 
+  private dispatchRouterNavigation(): void {
+    this.dispatchRouterAction(ROUTER_NAVIGATION, {
+      routerState: this.routerState,
+      event: this.lastRoutesRecognized,
+    });
+  }
+
   private dispatchRouterCancel(event: NavigationCancel): void {
-    const payload = {
+    this.dispatchRouterAction(ROUTER_CANCEL, {
       routerState: this.routerState,
       storeState: this.storeState,
       event,
-    };
-    this.store.dispatch({ type: ROUTER_CANCEL, payload });
+    });
   }
 
   private dispatchRouterError(event: NavigationError): void {
-    const payload = {
+    this.dispatchRouterAction(ROUTER_ERROR, {
       routerState: this.routerState,
       storeState: this.storeState,
       event,
-    };
-    this.store.dispatch({ type: ROUTER_ERROR, payload });
+    });
+  }
+
+  private dispatchRouterAction(type: string, payload: any): void {
+    this.dispatchTriggeredByRouter = true;
+    try {
+      this.store.dispatch({ type, payload });
+    } finally {
+      this.dispatchTriggeredByRouter = false;
+      this.navigationTriggeredByDispatch = false;
+    }
   }
 }
