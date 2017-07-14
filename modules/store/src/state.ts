@@ -57,9 +57,10 @@ export type StateActionPair<T, V extends Action = Action> = {
   action?: V;
 };
 export function reduceState<T, V extends Action = Action>(
-  { state }: StateActionPair<T, V> = { state: undefined },
+  stateActionPair: StateActionPair<T, V> = { state: undefined },
   [action, reducer]: [V, ActionReducer<T, V>]
 ): StateActionPair<T, V> {
+  const { state } = stateActionPair;
   return { state: reducer(state, action), action };
 }
 
