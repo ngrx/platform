@@ -82,6 +82,8 @@ export class AppModule {}
 
 ## @ngrx/effects
 
+### Registering Effects
+
 BEFORE:
 
 `app.module.ts`
@@ -123,6 +125,85 @@ export class AppModule { }
   ]
 })
 export class FeatureModule { }
+```
+
+### Testing Effects
+
+BEFORE:
+```ts
+import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+import { MyEffects } from './my-effects';
+
+describe('My Effects', () => {
+  let effects: MyEffects;
+  let runner: EffectsRunner;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        EffectsTestingModule
+      ],
+      providers: [
+        MyEffects,
+        // other providers
+      ],
+    });
+
+    effects = TestBed.get(MyEffects);
+    runner = TestBed.get(EffectsRunner);
+  });
+
+  it('should work', () => {
+    runner.queue(SomeAction);
+
+    effects.someSource$.subscribe(result => {
+      expect(result).toBe(AnotherAction);
+    });
+  });
+});
+```
+
+AFTER:
+```ts
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { hot, cold } from 'jasmine-marbles';
+import { MyEffects } from './my-effects';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+
+describe('My Effects', () => {
+  let effects: MyEffects;
+  let actions: Observable<any>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        MyEffects,
+        provideMockActions(() => actions),
+        // other providers
+      ],
+    });
+
+    effects = TestBed.get(MyEffects);
+  });
+
+  it('should work', () => {
+    actions = hot('--a-', { a: SomeAction, ... });
+    
+    const expected = cold('--b', { b: AnotherAction });
+
+    expect(effects.someSource$).toBeObservable(expected);
+  });
+
+  it('should work also', () => {
+    actions = new ReplaySubject(1);
+
+    actions.next(SomeAction);
+
+    effects.someSource$.subscribe(result => {
+      expect(result).toBe(AnotherAction);
+    });
+  });
+});
 ```
 
 ## @ngrx/router-store

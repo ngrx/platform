@@ -104,3 +104,4 @@ export class AdminModule {}
 - [Filtering Actions](./api.md#oftype)
 - [Non-dispatching effects](./api.md#non-dispatching-effects)
 - [Utilities](./api.md#utilities)
+- [Testing](./testing.md)

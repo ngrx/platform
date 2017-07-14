@@ -2,7 +2,7 @@
 
 ## Initial State
 
-Configure initial state when providing Store. `config.initialState` can be either the actual state, or a function that returns the initial state:
+Configure initial state when providing Store. `initialState` can be either the actual state, or a function that returns the initial state:
 
 ```ts
 import { StoreModule } from '@ngrx/store';
