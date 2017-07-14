@@ -42,7 +42,7 @@ import { environment } from '../environments/environment';
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
-    // StoreRouterConnectingModule,
+    StoreRouterConnectingModule,
 
     /**
      * Store devtools instrument the store retaining past versions of state
