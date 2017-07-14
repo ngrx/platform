@@ -35,7 +35,7 @@ export interface ReduxDevtoolsExtension {
   send(
     action: any,
     state: any,
-    shouldStringify?: boolean,
+    options?: boolean | { serialize: boolean | object },
     instanceId?: string
   ): void;
 }
@@ -60,7 +60,12 @@ export class DevtoolsExtension {
       return;
     }
 
-    this.devtoolsExtension.send(null, state, false, this.instanceId);
+    this.devtoolsExtension.send(
+      null,
+      state,
+      { serialize: false },
+      this.instanceId
+    );
   }
 
   private createChangesObservable(): Observable<any> {
