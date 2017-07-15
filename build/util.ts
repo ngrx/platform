@@ -6,24 +6,35 @@ import * as path from 'path';
 import * as rimraf from 'rimraf';
 import { Config } from './config';
 
-export function copy(target: string, destination: string) {
-  fsExtra.copySync(target, destination);
+export type RunnerFn = (config: Config) => Promise<any>;
+export type TaskDef = [string, RunnerFn];
+export type BaseFn = (command: string) => string;
+
+export function copy(target: string, destination: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fsExtra.copy(target, destination, err => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
 }
 
-export function remove(target: string) {
-  fsExtra.removeSync(target);
+export function remove(target: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fsExtra.remove(target, err => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
 }
 
 export function writeFile(target: string, contents: string) {
-  fs.writeFileSync(target, contents);
-}
-
-export function mkdir(target: string) {
-  fs.mkdirSync(target);
-}
-
-export function rmdir(target: string) {
-  fs.rmdirSync(target);
+  return new Promise((resolve, reject) => {
+    fs.writeFile(target, contents, err => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
 }
 
 export function getListOfFiles(
@@ -58,10 +69,10 @@ export function removeRecursively(glob: string) {
 export function exec(
   command: string,
   args: string[],
-  base: (command: string) => string = fromNpm
+  base: BaseFn = fromNpm
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    cp.exec(base(command) + ' ' + args.join(' '), (err, stdout, stderr) => {
+    cp.exec(base(command) + ' ' + args.join(' '), (err, stdout) => {
       if (err) {
         return reject(err);
       }
@@ -76,37 +87,25 @@ export function cmd(command: string, args: string[]): Promise<string> {
 }
 
 export function git(args: string[]): Promise<string> {
-  return exec('git', args, (command: string) => command);
+  return cmd('git', args);
 }
 
-export async function ignoreErrors<T>(promise: Promise<T>): Promise<T | null> {
-  try {
-    const result = await promise;
-    return result;
-  } catch (err) {
-    return null;
-  }
+export function ignoreErrors<T>(promise: Promise<T>): Promise<T | null> {
+  return promise.catch(() => null);
 }
 
 export function fromNpm(command: string) {
-  return path.normalize(`./node_modules/.bin/${command}`);
+  return baseDir(`./node_modules/.bin/${command}`);
 }
 
 export function getPackageFilePath(pkg: string, filename: string) {
-  return path.resolve(process.cwd(), `./modules/${pkg}/${filename}`);
+  return baseDir(`./modules/${pkg}/${filename}`);
 }
 
 const sorcery = require('sorcery');
-export function mapSources(file: string) {
-  return new Promise((resolve, reject) => {
-    sorcery
-      .load(file)
-      .then((chain: any) => {
-        chain.write();
-        resolve();
-      })
-      .catch(reject);
-  });
+export async function mapSources(file: string) {
+  const chain = await sorcery.load(file);
+  chain.write();
 }
 
 const ora = require('ora');
@@ -126,9 +125,7 @@ async function runTask(name: string, taskFn: () => Promise<any>) {
   }
 }
 
-export function createBuilder(
-  tasks: [string, (config: Config) => Promise<any>][]
-) {
+export function createBuilder(tasks: TaskDef[]) {
   return async function(config: Config) {
     for (let [name, runner] of tasks) {
       await runTask(name, () => runner(config));
@@ -157,12 +154,12 @@ export function getTestingPackages(config: Config) {
 }
 
 export function getAllPackages(config: Config) {
-  return flatMap(config.packages, packageDescription => {
-    if (packageDescription.hasTestingModule) {
-      return [packageDescription.name, `${packageDescription.name}/testing`];
+  return flatMap(config.packages, ({ name, hasTestingModule }) => {
+    if (hasTestingModule) {
+      return [name, `${name}/testing`];
     }
 
-    return [packageDescription.name];
+    return [name];
   });
 }
 
@@ -176,4 +173,8 @@ export function getTopLevelName(packageName: string) {
 
 export function getBottomLevelName(packageName: string) {
   return packageName.includes('/testing') ? 'testing' : packageName;
+}
+
+export function baseDir(...dirs: string[]): string {
+  return path.resolve(__dirname, '../', ...dirs);
 }
