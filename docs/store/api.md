@@ -45,8 +45,8 @@ export function getInitialState() {
 
 ## Reducer Factory
 
-@ngrx/store composes your map of reducers into a single reducer. Use the `reducerFactory`
-configuration option to provide a composed action reducer factory:
+@ngrx/store composes your map of reducers into a single reducer. Use the `metaReducers`
+configuration option to provide an array of meta-reducers that are composed from right to left.
 
 ```ts
 import { StoreModule, combineReducers, compose } from '@ngrx/store';
@@ -62,11 +62,11 @@ function debug(reducer) {
   }
 }
 
-const debugReducerFactory = compose(debug, combineReducers);
+const metaReducers = [debug];
 
 @NgModule({
   imports: [
-    StoreModule.forRoot(reducers, { reducerFactory: debugReducerFactory })
+    StoreModule.forRoot(reducers, { metaReducers })
   ]
 })
 export class AppModule {}
@@ -77,7 +77,7 @@ export class AppModule {}
 Store uses fractal state management, which provides state composition through feature modules,
 loaded eagerly or lazily. Provide feature states using the `StoreModule.forFeature` method. This
 method defines the name of the feature state and the reducers that make up the state. The same `initialState`
-and `reducerFactory` configuration options are available.
+and `metaReducers` configuration options are available.
 
 ```ts
 // feature.module.ts

@@ -13,13 +13,15 @@ import {
   StoreFeature,
   InitialState,
 } from './models';
-import { combineReducers } from './utils';
+import { compose, combineReducers, createReducerFactory } from './utils';
 import {
   INITIAL_STATE,
   INITIAL_REDUCERS,
   REDUCER_FACTORY,
+  _REDUCER_FACTORY,
   STORE_FEATURES,
   _INITIAL_STATE,
+  META_REDUCERS,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -62,6 +64,7 @@ export class StoreFeatureModule implements OnDestroy {
 export type StoreConfig<T, V extends Action = Action> = {
   initialState?: InitialState<T>;
   reducerFactory?: ActionReducerFactory<T, V>;
+  metaReducers?: ActionReducer<T, V>[];
 };
 
 @NgModule({})
@@ -89,10 +92,19 @@ export class StoreModule {
           ? { provide: INITIAL_REDUCERS, useExisting: reducers }
           : { provide: INITIAL_REDUCERS, useValue: reducers },
         {
-          provide: REDUCER_FACTORY,
+          provide: META_REDUCERS,
+          useValue: config.metaReducers ? config.metaReducers : [],
+        },
+        {
+          provide: _REDUCER_FACTORY,
           useValue: config.reducerFactory
             ? config.reducerFactory
             : combineReducers,
+        },
+        {
+          provide: REDUCER_FACTORY,
+          deps: [_REDUCER_FACTORY, META_REDUCERS],
+          useFactory: createReducerFactory,
         },
         ACTIONS_SUBJECT_PROVIDERS,
         REDUCER_MANAGER_PROVIDERS,
@@ -130,6 +142,7 @@ export class StoreModule {
             reducerFactory: config.reducerFactory
               ? config.reducerFactory
               : combineReducers,
+            metaReducers: config.metaReducers ? config.metaReducers : [],
             initialState: config.initialState,
           },
         },

@@ -7,7 +7,7 @@ export {
 } from './models';
 export { StoreModule } from './store_module';
 export { Store } from './store';
-export { combineReducers, compose } from './utils';
+export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
 export {
   ReducerManager,
@@ -24,10 +24,12 @@ export {
 export { State, StateObservable, reduceState } from './state';
 export {
   INITIAL_STATE,
+  _REDUCER_FACTORY,
   REDUCER_FACTORY,
   INITIAL_REDUCERS,
   STORE_FEATURES,
   _INITIAL_STATE,
+  META_REDUCERS,
 } from './tokens';
 export {
   StoreRootModule,

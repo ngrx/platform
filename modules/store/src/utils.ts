@@ -83,3 +83,14 @@ export function compose(...functions: any[]) {
     return rest.reduceRight((composed, fn) => fn(composed), last(arg));
   };
 }
+
+export function createReducerFactory(
+  reducerFactory: ActionReducerFactory<any, any>,
+  metaReducers?: ActionReducer<any, any>[]
+): ActionReducerFactory<any, any> {
+  if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+    return compose.apply(null, [...metaReducers, reducerFactory]);
+  }
+
+  return reducerFactory;
+}

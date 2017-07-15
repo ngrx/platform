@@ -9,7 +9,7 @@ import {
   StoreFeature,
 } from './models';
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from './tokens';
-import { omit } from './utils';
+import { omit, createReducerFactory } from './utils';
 import { ActionsSubject } from './actions_subject';
 
 export abstract class ReducerObservable extends Observable<
@@ -34,13 +34,17 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   addFeature({
     reducers,
     reducerFactory,
+    metaReducers,
     initialState,
     key,
   }: StoreFeature<any, any>) {
     const reducer =
       typeof reducers === 'function'
         ? reducers
-        : reducerFactory(reducers, initialState);
+        : createReducerFactory(reducerFactory, metaReducers)(
+            reducers,
+            initialState
+          );
 
     this.addReducer(key, reducer);
   }
