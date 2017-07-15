@@ -1,9 +1,12 @@
 machine:
   node:
     version: 6.9.5
+dependencies:
+  override:
+    - npm install -g yarn@0.28.1
+    - yarn
 test:
   override:
-    - npm install -g yarn
     - yarn run bootstrap -- --concurrency=1
     - yarn run ci
 deployment:
