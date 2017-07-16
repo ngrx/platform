@@ -5,10 +5,8 @@ import * as util from './util';
  * Cleans the top level dist folder. All npm-ready packages are created
  * in the dist folder.
  */
-export async function removeDistFolder(config: Config) {
-  const args = ['./dist'];
-
-  return await util.exec('rimraf', args);
+export function removeDistFolder(config: Config) {
+  return util.exec('rimraf', ['./dist']);
 }
 
 /**
@@ -22,8 +20,8 @@ export async function compilePackagesWithNgc(config: Config) {
   const testPkgs = util.getTestingPackages(config);
 
   await _compilePackagesWithNgc(storePkg);
-  await mapPackages(restPkgs, _compilePackagesWithNgc);
-  await mapPackages(testPkgs, _compilePackagesWithNgc);
+  await mapAsync(restPkgs, _compilePackagesWithNgc);
+  await mapAsync(testPkgs, _compilePackagesWithNgc);
 }
 
 async function _compilePackagesWithNgc(pkg: string) {
@@ -32,8 +30,10 @@ async function _compilePackagesWithNgc(pkg: string) {
   const entryTypeDefinition = `export * from './${pkg}/index';`;
   const entryMetadata = `{"__symbolic":"module","version":3,"metadata":{},"exports":[{"from":"./${pkg}/index"}]}`;
 
-  util.writeFile(`./dist/packages/${pkg}.d.ts`, entryTypeDefinition);
-  util.writeFile(`./dist/packages/${pkg}.metadata.json`, entryMetadata);
+  await Promise.all([
+    util.writeFile(`./dist/packages/${pkg}.d.ts`, entryTypeDefinition),
+    util.writeFile(`./dist/packages/${pkg}.metadata.json`, entryMetadata),
+  ]);
 }
 
 /**
@@ -43,7 +43,7 @@ async function _compilePackagesWithNgc(pkg: string) {
 export async function bundleFesms(config: Config) {
   const pkgs = util.getAllPackages(config);
 
-  await mapPackages(pkgs, async pkg => {
+  await mapAsync(pkgs, async pkg => {
     const topLevelName = util.getTopLevelName(pkg);
 
     await util.exec('rollup', [
@@ -64,14 +64,13 @@ export async function downLevelFesmsToES5(config: Config) {
   const packages = util.getAllPackages(config);
   const tscArgs = ['--target es5', '--module es2015', '--noLib', '--sourceMap'];
 
-  await mapPackages(packages, async pkg => {
+  await mapAsync(packages, async pkg => {
     const topLevelName = util.getTopLevelName(pkg);
 
     const file = `./dist/${topLevelName}/${config.scope}/${pkg}.js`;
     const target = `./dist/${topLevelName}/${config.scope}/${pkg}.es5.ts`;
 
-    util.copy(file, target);
-
+    await util.copy(file, target);
     await util.ignoreErrors(util.exec('tsc', [target, ...tscArgs]));
     await util.mapSources(target.replace('.ts', '.js'));
     await util.remove(target);
@@ -84,7 +83,7 @@ export async function downLevelFesmsToES5(config: Config) {
  * Re-runs Rollup on the downleveled ES5 to produce a UMD bundle
  */
 export async function createUmdBundles(config: Config) {
-  await mapPackages(util.getAllPackages(config), async pkg => {
+  await mapAsync(util.getAllPackages(config), async pkg => {
     const topLevelName = util.getTopLevelName(pkg);
     const destinationName = util.getDestinationName(pkg);
 
@@ -106,9 +105,7 @@ export async function cleanTypeScriptFiles(config: Config) {
   const dtsFilesFlob = './dist/packages/**/*.d.ts';
   const filesToRemove = await util.getListOfFiles(tsFilesGlob, dtsFilesFlob);
 
-  for (let file of filesToRemove) {
-    util.remove(file);
-  }
+  await mapAsync(filesToRemove, util.remove);
 }
 
 /**
@@ -116,16 +113,17 @@ export async function cleanTypeScriptFiles(config: Config) {
  * of the package.
  */
 export async function renamePackageEntryFiles(config: Config) {
-  await mapPackages(util.getAllPackages(config), async pkg => {
+  await mapAsync(util.getAllPackages(config), async pkg => {
     const bottomLevelName = util.getBottomLevelName(pkg);
 
     const files = await util.getListOfFiles(`./dist/packages/${pkg}/index.**`);
 
-    for (let file of files) {
+    await mapAsync(files, async file => {
       const target = file.replace('index', bottomLevelName);
-      util.copy(file, target);
-      util.remove(file);
-    }
+
+      await util.copy(file, target);
+      await util.remove(file);
+    });
   });
 }
 
@@ -150,10 +148,10 @@ export async function copyTypeDefinitionFiles(config: Config) {
     `./dist/packages/?(${packages.join('|')})/**/*`
   );
 
-  for (let file of files) {
+  await mapAsync(files, async file => {
     const target = file.replace('packages/', '');
-    util.copy(file, target);
-  }
+    await util.copy(file, target);
+  });
 
   await util.removeRecursively(`./dist/packages/?(${packages.join('|')})`);
 }
@@ -164,7 +162,7 @@ export async function copyTypeDefinitionFiles(config: Config) {
 export async function minifyUmdBundles(config: Config) {
   const uglifyArgs = ['-c', '-m', '--screw-ie8', '--comments'];
 
-  await mapPackages(util.getAllPackages(config), async pkg => {
+  await mapAsync(util.getAllPackages(config), async pkg => {
     const topLevelName = util.getTopLevelName(pkg);
     const destinationName = util.getDestinationName(pkg);
     const file = `./dist/${topLevelName}/bundles/${destinationName}.umd.js`;
@@ -187,24 +185,26 @@ export async function minifyUmdBundles(config: Config) {
 export async function copyDocs(config: Config) {
   const packages = util.getTopLevelPackages(config);
 
-  for (let pkg of packages) {
+  await mapAsync(packages, async pkg => {
     const source = `./modules/${pkg}`;
     const target = `./dist/${pkg}`;
 
-    util.copy(`${source}/README.md`, `${target}/README.md`);
-    util.copy('./LICENSE', `${target}/LICENSE`);
-  }
+    await Promise.all([
+      util.copy(`${source}/README.md`, `${target}/README.md`),
+      util.copy('./LICENSE', `${target}/LICENSE`),
+    ]);
+  });
 }
 
 export async function copyPackageJsonFiles(config: Config) {
   const packages = util.getAllPackages(config);
 
-  for (let pkg of packages) {
+  await mapAsync(packages, async pkg => {
     const source = `./modules/${pkg}`;
     const target = `./dist/${pkg}`;
 
-    util.copy(`${source}/package.json`, `${target}/package.json`);
-  }
+    await util.copy(`${source}/package.json`, `${target}/package.json`);
+  });
 }
 
 /**
@@ -254,9 +254,9 @@ export async function publishToRepo(config: Config) {
   }
 }
 
-export function mapPackages(
-  packages: string[],
-  mapFn: (pkg: string, i: number) => Promise<any>
+export function mapAsync<T>(
+  list: T[],
+  mapFn: (v: T, i: number) => Promise<any>
 ) {
-  return Promise.all(packages.map(mapFn));
+  return Promise.all(list.map(mapFn));
 }
