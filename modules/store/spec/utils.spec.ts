@@ -1,21 +1,16 @@
-/**
- * @fileOverview
- * @author Brian Frichette (brian@eturi.com)
- */
-
 import { omit } from '../src/utils';
 import { combineReducers, compose } from '@ngrx/store';
 
 describe(`Store utils`, () => {
   describe(`combineReducers()`, () => {
-    const s1 = { x: '' };
-    const s2 = { y: '' };
-    const r1 = (s = s1, a: any): typeof s1 =>
-      a.type === 's1' ? { ...s, x: a.payload } : s;
-    const r2 = (s = s2, a: any): typeof s2 =>
-      a.type === 's2' ? { ...s, y: a.payload } : s;
-    const reducers = { r1, r2, extraneous: true };
-    const initialState = { r1: { x: 'foo' }, r2: { y: 'bar' } };
+    const state1 = { x: '' };
+    const state2 = { y: '' };
+    const reducer1 = (state = state1, action: any): typeof state1 =>
+      action.type === 'state1' ? { ...state, x: action.payload } : state;
+    const reducer2 = (state = state2, action: any): typeof state2 =>
+      action.type === 'state2' ? { ...state, y: action.payload } : state;
+    const reducers = { reducer1, reducer2, extraneous: true };
+    const initialState = { reducer1: { x: 'foo' }, reducer2: { y: 'bar' } };
 
     let combination: any;
 
@@ -28,10 +23,10 @@ describe(`Store utils`, () => {
     });
 
     it(`should create a function that accepts state and action and returns combined state object`, () => {
-      const updateAction1 = { type: 's1', payload: 'baz' };
+      const updateAction1 = { type: 'state1', payload: 'baz' };
       expect(combination(initialState, updateAction1)).toEqual({
         ...initialState,
-        r1: { x: updateAction1.payload },
+        reducer1: { x: updateAction1.payload },
       });
     });
 

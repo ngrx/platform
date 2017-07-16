@@ -1,9 +1,16 @@
 import 'rxjs/add/operator/take';
 import { TestBed } from '@angular/core/testing';
 import { NgModule, InjectionToken } from '@angular/core';
-import { StoreModule, Store, ActionReducer, ActionReducerMap } from '../';
+import {
+  StoreModule,
+  Store,
+  ActionReducer,
+  ActionReducerMap,
+  combineReducers,
+} from '../';
+import createSpy = jasmine.createSpy;
 
-describe('Nested Store Modules', () => {
+describe(`Store Modules`, () => {
   type RootState = { fruit: string };
   type FeatureAState = number;
   type FeatureBState = { list: number[]; index: number };
@@ -14,57 +21,144 @@ describe('Nested Store Modules', () => {
   const reducersToken = new InjectionToken<ActionReducerMap<RootState>>(
     'Root Reducers'
   );
-  const rootFruitReducer: ActionReducer<string> = () => 'apple';
-  const featureAReducer: ActionReducer<FeatureAState> = () => 5;
-  const featureBListReducer: ActionReducer<number[]> = () => [1, 2, 3];
-  const featureBIndexReducer: ActionReducer<number> = () => 2;
+
+  // Trigger here is basically an action type used to trigger state update
+  const createDummyReducer = <T>(def: T, trigger: string): ActionReducer<T> => (
+    s = def,
+    { type, payload }: any
+  ) => (type === trigger ? payload : s);
+  const rootFruitReducer = createDummyReducer('apple', 'fruit');
+  const featureAReducer = createDummyReducer(5, 'a');
+  const featureBListReducer = createDummyReducer([1, 2, 3], 'bList');
+  const featureBIndexReducer = createDummyReducer(2, 'bIndex');
   const featureBReducerMap: ActionReducerMap<FeatureBState> = {
     list: featureBListReducer,
     index: featureBIndexReducer,
   };
 
-  @NgModule({
-    imports: [StoreModule.forFeature('a', featureAReducer)],
-  })
-  class FeatureAModule {}
+  describe(`: Config`, () => {
+    let featureAReducerFactory: any;
+    let rootReducerFactory: any;
 
-  @NgModule({
-    imports: [StoreModule.forFeature('b', featureBReducerMap)],
-  })
-  class FeatureBModule {}
+    const featureAInitial = () => ({ a: 42 });
+    const rootInitial = { fruit: 'orange' };
 
-  @NgModule({
-    imports: [
-      StoreModule.forRoot<RootState>(reducersToken),
-      FeatureAModule,
-      FeatureBModule,
-    ],
-    providers: [
-      {
-        provide: reducersToken,
-        useValue: { fruit: rootFruitReducer },
-      },
-    ],
-  })
-  class RootModule {}
+    beforeEach(() => {
+      featureAReducerFactory = createSpy(
+        'featureAReducerFactory'
+      ).and.callFake((rm: any, initialState?: any) => {
+        return (state: any, action: any) => 4;
+      });
+      rootReducerFactory = createSpy('rootReducerFactory').and.callFake(
+        combineReducers
+      );
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [RootModule],
+      @NgModule({
+        imports: [
+          StoreModule.forFeature(
+            'a',
+            { a: featureAReducer },
+            {
+              initialState: featureAInitial,
+              reducerFactory: featureAReducerFactory,
+            }
+          ),
+        ],
+      })
+      class FeatureAModule {}
+
+      @NgModule({
+        imports: [
+          StoreModule.forRoot<RootState>(reducersToken, {
+            initialState: rootInitial,
+            reducerFactory: rootReducerFactory,
+          }),
+          FeatureAModule,
+        ],
+        providers: [
+          {
+            provide: reducersToken,
+            useValue: { fruit: rootFruitReducer },
+          },
+        ],
+      })
+      class RootModule {}
+
+      TestBed.configureTestingModule({
+        imports: [RootModule],
+      });
+
+      store = TestBed.get(Store);
     });
 
-    store = TestBed.get(Store);
+    it(`should accept configurations`, () => {
+      expect(featureAReducerFactory).toHaveBeenCalledWith(
+        { a: featureAReducer },
+        featureAInitial()
+      );
+      expect(rootReducerFactory).toHaveBeenCalledWith(
+        { fruit: rootFruitReducer },
+        rootInitial
+      );
+    });
+
+    it(`should should use config.reducerFactory`, () => {
+      store.dispatch({ type: 'fruit', payload: 'banana' });
+      store.dispatch({ type: 'a', payload: 42 });
+
+      store.take(1).subscribe((s: any) => {
+        expect(s).toEqual({
+          fruit: 'banana',
+          a: 4,
+        });
+      });
+    });
   });
 
-  it('should nest the child module in the root store object', () => {
-    store.take(1).subscribe((state: State) => {
-      expect(state).toEqual({
-        fruit: 'apple',
-        a: 5,
-        b: {
-          list: [1, 2, 3],
-          index: 2,
+  describe(`: Nested`, () => {
+    @NgModule({
+      imports: [StoreModule.forFeature('a', featureAReducer)],
+    })
+    class FeatureAModule {}
+
+    @NgModule({
+      imports: [StoreModule.forFeature('b', featureBReducerMap)],
+    })
+    class FeatureBModule {}
+
+    @NgModule({
+      imports: [
+        StoreModule.forRoot<RootState>(reducersToken),
+        FeatureAModule,
+        FeatureBModule,
+      ],
+      providers: [
+        {
+          provide: reducersToken,
+          useValue: { fruit: rootFruitReducer },
         },
+      ],
+    })
+    class RootModule {}
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [RootModule],
+      });
+
+      store = TestBed.get(Store);
+    });
+
+    it('should nest the child module in the root store object', () => {
+      store.take(1).subscribe((state: State) => {
+        expect(state).toEqual({
+          fruit: 'apple',
+          a: 5,
+          b: {
+            list: [1, 2, 3],
+            index: 2,
+          },
+        });
       });
     });
   });

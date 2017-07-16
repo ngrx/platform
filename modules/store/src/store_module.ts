@@ -51,7 +51,13 @@ export class StoreFeatureModule implements OnDestroy {
     @Inject(STORE_FEATURES) private features: StoreFeature<any, any>[],
     private reducerManager: ReducerManager
   ) {
-    features.forEach(feature => reducerManager.addFeature(feature));
+    features
+      .map(feature => {
+        return typeof feature.initialState === 'function'
+          ? { ...feature, initialState: feature.initialState() }
+          : feature;
+      })
+      .forEach(feature => reducerManager.addFeature(feature));
   }
 
   ngOnDestroy() {

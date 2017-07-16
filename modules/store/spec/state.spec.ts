@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { ReflectiveInjector } from '@angular/core';
 import { createInjector } from './helpers/injector';
-import { StoreModule, Store } from '../';
+import { StoreModule, Store, INIT } from '../';
 
 describe('ngRx State', () => {
   const initialState = 123;
@@ -22,7 +22,7 @@ describe('ngRx State', () => {
     injector.get(Store);
 
     expect(reducer).toHaveBeenCalledWith(initialState, {
-      type: '@ngrx/store/init',
+      type: INIT,
     });
   });
 });
