@@ -7,6 +7,9 @@ This guide covers the changes between the ngrx projects migrating from V1.x/2.x 
 [@ngrx/router-store](#ngrxrouter-store)  
 [@ngrx/store-devtools](#ngrxstore-devtools)
 
+## @ngrx/core
+@ngrx/core is no longer used, and can conflict with @ngrx/store. You should remove it from your project.
+
 ## @ngrx/store
 
 Previously to be AOT compatible, it was required to pass a function to the `provideStore` method to compose the reducers into one root reducer. The `initialState`
