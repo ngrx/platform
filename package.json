@@ -17,7 +17,8 @@
     "example:start": "yarn run cli -- serve",
     "example:test": "yarn run cli -- test --code-coverage",
     "ci": "npm run build && npm run test && nyc report --reporter=text-lcov | coveralls",
-    "prettier": "prettier --parser typescript --single-quote --trailing-comma --write \"./**/*.ts\""
+    "prettier": "prettier --parser typescript --single-quote --trailing-comma --write \"./**/*.ts\"",
+    "postinstall": "opencollective postinstall"
   },
   "keywords": [
     "ngrx",
@@ -98,6 +99,12 @@
     "zone.js": "^0.8.12"
   },
   "dependencies": {
-    "@angular/cdk": "^2.0.0-beta.8"
+    "@angular/cdk": "^2.0.0-beta.8",
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/ngrx",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
   }
 }
