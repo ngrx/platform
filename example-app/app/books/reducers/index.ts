@@ -12,6 +12,7 @@ import {
 import * as fromSearch from './search';
 import * as fromBooks from './books';
 import * as fromCollection from './collection';
+import * as fromRoot from '../../reducers';
 
 export interface BooksState {
   search: fromSearch.State;
@@ -19,7 +20,7 @@ export interface BooksState {
   collection: fromCollection.State;
 }
 
-export interface State extends fromBooks.State {
+export interface State extends fromRoot.State {
   'books': BooksState;
 }
 
