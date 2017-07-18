@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "precommit": "yarn run prettier",
@@ -78,7 +78,7 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "lerna": "^2.0.0-rc.1",
+    "lerna": "^2.0.0",
     "module-alias": "^2.0.0",
     "ngrx-store-freeze": "^0.1.9",
     "nyc": "^10.1.2",

@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/effects",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0",
   "description": "Side effect model for @ngrx/store",
   "module": "@ngrx/effects.es5.js",
   "es2015": "@ngrx/effects.js",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/core": "^4.0.0",
-    "@ngrx/store": "^4.0.0-alpha.0",
+    "@ngrx/store": "^4.0.0",
     "rxjs": "^5.0.0"
   }
 }
