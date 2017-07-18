@@ -26,6 +26,7 @@ export interface StoreFeature<T, V extends Action = Action> {
   reducers: ActionReducerMap<T, V> | ActionReducer<T, V>;
   reducerFactory: ActionReducerFactory<T, V>;
   initialState?: InitialState<T>;
+  metaReducers?: ActionReducer<any, any>[];
 }
 
 export interface Selector<T, V> {
