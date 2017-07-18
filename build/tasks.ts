@@ -27,7 +27,20 @@ export async function compilePackagesWithNgc(config: Config) {
 async function _compilePackagesWithNgc(pkg: string) {
   await util.exec('ngc', [`-p ./modules/${pkg}/tsconfig-build.json`]);
 
-  const entryTypeDefinition = `export * from './${pkg}/index';`;
+  /**
+   * Test modules are treated differently because nested inside top-level.
+   * This step removes the top-level package from testing modules from the
+   * export statement.
+   * Also changes the module name from 'index' to 'testing'
+   * i.e. export * from './effects/testing/index' becomes './testing/testing';
+   *
+   * See https://github.com/ngrx/platform/issues/94
+   */
+  let [exportPath, moduleName] = /\/testing$/.test(pkg)
+    ? [pkg.replace(/(.*\/)testing/i, 'testing'), 'testing']
+    : [pkg, 'index'];
+
+  const entryTypeDefinition = `export * from './${exportPath}/${moduleName}';`;
   const entryMetadata = `{"__symbolic":"module","version":3,"metadata":{},"exports":[{"from":"./${pkg}/index"}]}`;
 
   await Promise.all([
