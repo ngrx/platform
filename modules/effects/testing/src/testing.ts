@@ -12,10 +12,10 @@ export function provideMockActions(
     provide: Actions,
     useFactory: (): Observable<any> => {
       if (typeof factoryOrSource === 'function') {
-        return defer(factoryOrSource);
+        return new Actions(defer(factoryOrSource));
       }
 
-      return factoryOrSource;
+      return new Actions(factoryOrSource);
     },
   };
 }
