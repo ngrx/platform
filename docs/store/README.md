@@ -118,7 +118,8 @@ export class MyAppComponent {
 - [Selectors](./selectors.md)
 - [State composition through feature modules](./api.md#feature-module-state-composition)
 - [Providing initial state](./api.md#initial-state)
-- [Reducer composition](./api.md#reducer-factory)
+- [Meta-Reducers](./api.md#meta-reducers)
+- [Injecting reducers](./api.md#injecting-reducers)
 
 ### Additional Material
 - [From Inactive to Reactive with ngrx](https://www.youtube.com/watch?v=cyaAhXHhxgk)

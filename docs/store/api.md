@@ -43,7 +43,7 @@ export function getInitialState() {
 })
 ```
 
-## Reducer Factory
+## Meta Reducers
 
 @ngrx/store composes your map of reducers into a single reducer. Use the `metaReducers`
 configuration option to provide an array of meta-reducers that are composed from right to left.
@@ -90,4 +90,36 @@ import { reducers } from './reducers';
   ]
 })
 export class FeatureModule {}
+```
+
+## Injecting Reducers
+
+To inject the root reducers into your application, use an `InjectionToken` and a `Provider` to register the reducers through dependency injection.
+
+```ts
+import { NgModule, InjectionToken } from '@angular/core';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+
+import { SomeService } from './some.service';
+import * as fromRoot from './reducers';
+
+export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<fromRoot.State>>('Registered Reducers');
+
+export function getReducers(someService: SomeService) {
+  return someService.getReducers();
+}
+
+@NgModule({
+  imports: [
+    StoreModule.forRoot(REDUCER_TOKEN),
+  ],
+  providers: [
+    {
+      provide: REDUCER_TOKEN,
+      deps: [SomeService],
+      useFactory: getReducers
+    }
+  ]
+})
+export class AppModule { }
 ```

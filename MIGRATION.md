@@ -2,13 +2,26 @@
 
 This guide covers the changes between the ngrx projects migrating from V1.x/2.x to V4.
 
+[@ngrx/core](#ngrxcore)  
 [@ngrx/store](#ngrxstore)  
 [@ngrx/effects](#ngrxeffects)  
 [@ngrx/router-store](#ngrxrouter-store)  
 [@ngrx/store-devtools](#ngrxstore-devtools)
 
 ## @ngrx/core
-@ngrx/core is no longer used, and can conflict with @ngrx/store. You should remove it from your project.
+@ngrx/core is no longer needed, and can conflict with @ngrx/store. You should remove it from your project.
+
+BEFORE:
+
+```ts
+import { compose } from '@ngrx/core/compose';
+```
+
+AFTER:
+
+```ts
+import { compose } from '@ngrx/store';
+```
 
 ## @ngrx/store
 
@@ -191,7 +204,7 @@ describe('My Effects', () => {
 
   it('should work', () => {
     actions = hot('--a-', { a: SomeAction, ... });
-    
+
     const expected = cold('--b', { b: AnotherAction });
 
     expect(effects.someSource$).toBeObservable(expected);
