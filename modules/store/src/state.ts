@@ -4,10 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { queue } from 'rxjs/scheduler/queue';
 import { observeOn } from 'rxjs/operator/observeOn';
-import { startWith } from 'rxjs/operator/startWith';
 import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
 import { scan } from 'rxjs/operator/scan';
-import { ActionsSubject } from './actions_subject';
+import { ActionsSubject, INIT } from './actions_subject';
 import { Action, ActionReducer } from './models';
 import { INITIAL_STATE } from './tokens';
 import { ReducerObservable } from './reducer_manager';
@@ -17,7 +16,7 @@ export abstract class StateObservable extends Observable<any> {}
 
 @Injectable()
 export class State<T> extends BehaviorSubject<any> implements OnDestroy {
-  static readonly INIT = '@ngrx/store/init';
+  static readonly INIT = INIT;
 
   private stateSubscription: Subscription;
 

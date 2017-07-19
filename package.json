@@ -14,10 +14,12 @@
     "clean:ng-tools-ts": "rimraf \"./node_modules/@ngtools/webpack/node_modules/typescript\"",
     "clean:ts": "yarn run clean:ng-cli-ts && yarn run clean:ng-tools-ts",
     "cli": "ng",
+    "coverage:html": "nyc report --reporter=html",
     "example:start": "yarn run cli -- serve",
     "example:test": "yarn run cli -- test --code-coverage",
-    "ci": "npm run build && npm run test && nyc report --reporter=text-lcov | coveralls",
+    "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --single-quote --trailing-comma --write \"./**/*.ts\"",
+    "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
     "postinstall": "opencollective postinstall"
   },
   "keywords": [
@@ -61,6 +63,8 @@
     "@types/node": "^7.0.5",
     "@types/ora": "^0.3.31",
     "@types/rimraf": "^0.0.28",
+    "chokidar": "^1.7.0",
+    "chokidar-cli": "^1.2.0",
     "codelyzer": "^2.1.1",
     "core-js": "^2.4.1",
     "coveralls": "^2.13.0",

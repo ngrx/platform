@@ -1,28 +1,22 @@
 import 'rxjs/add/operator/take';
-import { Observable } from 'rxjs/Observable';
 import { ReflectiveInjector } from '@angular/core';
 import { hot } from 'jasmine-marbles';
 import { createInjector } from './helpers/injector';
-import { Store, Action, combineReducers, StoreModule } from '../';
-import { ActionsSubject } from '../src/private_export';
+import { ActionsSubject, ReducerManager, Store, StoreModule } from '../';
 import {
   counterReducer,
   INCREMENT,
   DECREMENT,
   RESET,
 } from './fixtures/counter';
+import Spy = jasmine.Spy;
+import any = jasmine.any;
 
 interface TestAppSchema {
   counter1: number;
   counter2: number;
   counter3: number;
-}
-
-interface Todo {}
-
-interface TodoAppSchema {
-  visibilityFilter: string;
-  todos: Todo[];
+  counter4?: number;
 }
 
 describe('ngRx Store', () => {
@@ -68,7 +62,7 @@ describe('ngRx Store', () => {
     });
   });
 
-  describe('basic store actions', function() {
+  describe('basic store actions', () => {
     beforeEach(() => setup());
 
     it('should provide an Observable Store', () => {
@@ -84,7 +78,7 @@ describe('ngRx Store', () => {
       e: { type: INCREMENT },
     };
 
-    it('should let you select state with a key name', function() {
+    it('should let you select state with a key name', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe(action => store.dispatch(action));
@@ -99,7 +93,7 @@ describe('ngRx Store', () => {
       );
     });
 
-    it('should let you select state with a selector function', function() {
+    it('should let you select state with a selector function', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe(action => store.dispatch(action));
@@ -114,13 +108,13 @@ describe('ngRx Store', () => {
       );
     });
 
-    it('should correctly lift itself', function() {
+    it('should correctly lift itself', () => {
       const result = store.select('counter1');
 
       expect(result instanceof Store).toBe(true);
     });
 
-    it('should increment and decrement counter1', function() {
+    it('should increment and decrement counter1', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe(action => store.dispatch(action));
@@ -133,7 +127,7 @@ describe('ngRx Store', () => {
       expect(counterState).toBeObservable(hot(stateSequence, counter1Values));
     });
 
-    it('should increment and decrement counter1 using the dispatcher', function() {
+    it('should increment and decrement counter1 using the dispatcher', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe(action => dispatcher.next(action));
@@ -146,7 +140,7 @@ describe('ngRx Store', () => {
       expect(counterState).toBeObservable(hot(stateSequence, counter1Values));
     });
 
-    it('should increment and decrement counter2 separately', function() {
+    it('should increment and decrement counter2 separately', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe(action => store.dispatch(action));
@@ -160,7 +154,7 @@ describe('ngRx Store', () => {
       expect(counter2State).toBeObservable(hot(stateSequence, counter2Values));
     });
 
-    it('should implement the observer interface forwarding actions and errors to the dispatcher', function() {
+    it('should implement the observer interface forwarding actions and errors to the dispatcher', () => {
       spyOn(dispatcher, 'next');
       spyOn(dispatcher, 'error');
 
@@ -171,7 +165,7 @@ describe('ngRx Store', () => {
       expect(dispatcher.error).toHaveBeenCalledWith(2);
     });
 
-    it('should not be completable', function() {
+    it('should not be completable', () => {
       const storeSubscription = store.subscribe();
       const dispatcherSubscription = dispatcher.subscribe();
 
@@ -190,6 +184,43 @@ describe('ngRx Store', () => {
       dispatcher.ngOnDestroy();
 
       expect(dispatcherSubscription.closed).toBe(true);
+    });
+  });
+
+  describe(`add/remove reducers`, () => {
+    let addReducerSpy: Spy;
+    let removeReducerSpy: Spy;
+    const key = 'counter4';
+
+    beforeEach(() => {
+      setup();
+      const reducerManager = injector.get(ReducerManager);
+      addReducerSpy = spyOn(reducerManager, 'addReducer').and.callThrough();
+      removeReducerSpy = spyOn(
+        reducerManager,
+        'removeReducer'
+      ).and.callThrough();
+    });
+
+    it(`should delegate add/remove to ReducerManager`, () => {
+      store.addReducer(key, counterReducer);
+      expect(addReducerSpy).toHaveBeenCalledWith(key, counterReducer);
+
+      store.removeReducer(key);
+      expect(removeReducerSpy).toHaveBeenCalledWith(key);
+    });
+
+    it(`should work with added / removed reducers`, () => {
+      store.addReducer(key, counterReducer);
+      store.take(1).subscribe(val => {
+        expect(val.counter4).toBe(0);
+      });
+
+      store.removeReducer(key);
+      store.dispatch({ type: INCREMENT });
+      store.take(1).subscribe(val => {
+        expect(val.counter4).toBeUndefined();
+      });
     });
   });
 });

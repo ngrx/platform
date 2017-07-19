@@ -139,7 +139,7 @@ describe('ngRx Integration spec', () => {
         return todos.filter(predicate);
       };
 
-      let currentlyVisibleTodos: any;
+      let currentlyVisibleTodos: Todo[] = [];
 
       Observable.combineLatest(
         store.select('visibilityFilter'),
