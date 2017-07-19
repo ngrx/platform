@@ -1,14 +1,4 @@
-import {
-  ActionReducerMap,
-  createSelector,
-  createFeatureSelector,
-  compose,
-  ActionReducer,
-  combineReducers,
-  Action,
-  ActionReducerFactory,
-  MemoizedSelector,
-} from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import * as fromSearch from './search';
 import * as fromBooks from './books';
 import * as fromCollection from './collection';
@@ -58,7 +48,7 @@ export const getBooksState = createFeatureSelector<BooksState>('books');
  * need to make new selectors that wrap them.
  *
  * The createSelector function creates very efficient selectors that are memoized and
- * only recompute when arguments change. The created selectors can also be composed 
+ * only recompute when arguments change. The created selectors can also be composed
  * together to select different pieces of state.
  */
 export const getBookEntitiesState = createSelector(

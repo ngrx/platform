@@ -3,11 +3,7 @@ import {
   createSelector,
   createFeatureSelector,
   ActionReducer,
-  combineReducers,
-  Action,
-  ActionReducerFactory,
 } from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
 import { environment } from '../../environments/environment';
 
 /**

@@ -1,4 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Http } from '@angular/http';
 import { cold } from 'jasmine-marbles';
 import { GoogleBooksService } from './google-books';

@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
 import { Actions } from '@ngrx/effects';
 import { cold, hot, getTestScheduler } from 'jasmine-marbles';
 import { empty } from 'rxjs/observable/empty';

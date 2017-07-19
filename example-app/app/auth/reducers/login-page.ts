@@ -1,5 +1,4 @@
 import * as auth from '../actions/auth';
-import { User } from '../models/user';
 
 export interface State {
   error: string | null;
