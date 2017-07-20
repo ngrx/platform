@@ -7,7 +7,6 @@ This guide covers the changes between the ngrx projects migrating from V1.x/2.x 
 [@ngrx/effects](#ngrxeffects)  
 [@ngrx/router-store](#ngrxrouter-store)  
 [@ngrx/store-devtools](#ngrxstore-devtools)  
-[@ngrx/store/init](#@ngrx/store/init)
 
 ## @ngrx/core
 @ngrx/core is no longer needed, and can conflict with @ngrx/store. You should remove it from your project.
@@ -142,6 +141,60 @@ export class AppModule { }
   ]
 })
 export class FeatureModule { }
+```
+
+### Init Action
+The `@ngrx/store/init` action now fires prior to effects starting. Use defer() for the same behaviour.
+
+BEFORE:
+
+`app.effects.ts`
+```ts
+import { Dispatcher, Action } from '@ngrx/store';
+import { Actions, Effect } from '@ngrx/effects';
+
+import * as auth from '../actions/auth.actions';
+
+@Injectable()
+export class AppEffects {
+  
+    @Effect()
+    init$: Observable<Action> = this.actions$
+        .ofType(Dispatcher.INIT)
+        .switchMap(action => {
+
+            return of(new auth.LoginAction());
+
+        });
+        
+    constructor(private actions$: Actions) { }
+}
+```
+
+AFTER:
+
+`app.effects.ts`
+```ts
+
+import { Action } from '@ngrx/store';
+import { Actions, Effect } from '@ngrx/effects';
+import { defer } from 'rxjs/observable/defer';
+
+import * as auth from '../actions/auth.actions';
+
+@Injectable()
+export class AppEffects {
+  
+    @Effect()
+    init$: Observable<Action> = defer(() => {
+
+      return of(new auth.LoginAction());
+
+    });
+        
+    constructor(private actions$: Actions) { }
+}
+
 ```
 
 ### Testing Effects
@@ -329,59 +382,4 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
   ]
 })
 export class AppModule {}
-```
-
-## @ngrx/store/init
-
-Action type @ngrx/store/init fires prior to event subscription. Use defer() to execute the same behaviour.
-
-BEFORE:
-
-`app.effects.ts`
-```ts
-import { Dispatcher, Action } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
-
-import * as auth from '../actions/auth.actions';
-
-@Injectable()
-export class AppEffects {
-  
-    @Effect()
-    init$: Observable<Action> = this.actions$
-        .ofType(Dispatcher.INIT)
-        .switchMap(action => {
-
-            return of(new auth.LoginAction());
-
-        });
-        
-    constructor(private actions$: Actions) { }
-}
-```
-
-AFTER:
-
-`app.effects.ts`
-```ts
-
-import { Action } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
-import { defer } from 'rxjs/observable/defer';
-
-import * as auth from '../actions/auth.actions';
-
-@Injectable()
-export class AppEffects {
-  
-    @Effect()
-    init$: Observable<Action> = defer(() => {
-
-      return of(new auth.LoginAction());
-
-    });
-        
-    constructor(private actions$: Actions) { }
-}
-
 ```
