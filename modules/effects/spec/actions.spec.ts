@@ -72,4 +72,28 @@ describe('Actions', function() {
     actions.forEach(action => dispatcher.next({ type: action }));
     dispatcher.complete();
   });
+
+  it('should let you specify type with ofType', function() {
+    const ACTIONTYPE = 'ActionWithNumberType';
+    class ActionWithNumber implements Action {
+      readonly type = ACTIONTYPE;
+      constructor(public payload: number) {}
+    }
+
+    const increment = (x: number) => x + 1;
+
+    // The real test here is that this compiles, with the compiler understanding that
+    // payload is a number
+    actions$
+      .ofType<ActionWithNumber>(ACTIONTYPE)
+      .map(action => increment(action.payload))
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(2);
+        },
+      });
+
+    dispatcher.next(new ActionWithNumber(1));
+    dispatcher.complete();
+  });
 });

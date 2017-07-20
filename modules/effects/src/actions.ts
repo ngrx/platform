@@ -21,7 +21,7 @@ export class Actions<V = Action> extends Observable<V> {
     return observable;
   }
 
-  ofType(...allowedTypes: string[]): Actions<V> {
+  ofType<T extends V = V>(...allowedTypes: string[]): Actions<T> {
     return filter.call(this, (action: Action) =>
       allowedTypes.some(type => type === action.type)
     );
