@@ -1,6 +1,5 @@
 import { Actions } from '@ngrx/effects';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs/observable/of';
 import { empty } from 'rxjs/observable/empty';
 import { cold, hot } from 'jasmine-marbles';
 import { CollectionEffects } from './collection';

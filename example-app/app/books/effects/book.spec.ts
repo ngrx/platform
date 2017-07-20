@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Actions } from '@ngrx/effects';
 import { cold, hot, getTestScheduler } from 'jasmine-marbles';
 import { empty } from 'rxjs/observable/empty';
@@ -75,16 +75,13 @@ describe('BookEffects', () => {
       expect(effects.search$).toBeObservable(expected);
     });
 
-    it(
-      `should not do anything if the query is an empty string`,
-      fakeAsync(() => {
-        const action = new SearchAction('');
+    it(`should not do anything if the query is an empty string`, () => {
+      const action = new SearchAction('');
 
-        actions$.stream = hot('-a---', { a: action });
-        const expected = cold('---');
+      actions$.stream = hot('-a---', { a: action });
+      const expected = cold('---');
 
-        expect(effects.search$).toBeObservable(expected);
-      })
-    );
+      expect(effects.search$).toBeObservable(expected);
+    });
   });
 });
