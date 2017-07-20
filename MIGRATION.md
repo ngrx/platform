@@ -409,6 +409,11 @@ export class AppModule {}
 
 ## @ngrx/store-devtools
 
+**NOTE:** store-devtools currently causes severe performance problems when
+used with router-store. We are working to
+[fix this](https://github.com/ngrx/platform/issues/97), but for now, avoid
+using them together.
+
 BEFORE:
 
 `app.module.ts`
