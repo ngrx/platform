@@ -17,6 +17,7 @@ describe('LoginPageReducer', () => {
     it('should make pending to true', () => {
       const user = { username: 'test' } as Authenticate;
       const createAction = new Login(user);
+
       const expectedResult = {
         error: null,
         pending: true,
@@ -31,6 +32,7 @@ describe('LoginPageReducer', () => {
     it('should have no error and no pending state', () => {
       const user = { name: 'test' } as User;
       const createAction = new LoginSuccess({ user });
+
       const expectedResult = {
         error: null,
         pending: false,
@@ -45,6 +47,7 @@ describe('LoginPageReducer', () => {
     it('should have an error and no pending state', () => {
       const error = 'login failed';
       const createAction = new LoginFailure(error);
+
       const expectedResult = {
         error: error,
         pending: false,
