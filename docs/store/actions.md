@@ -1,8 +1,25 @@
 # Actions
 
+## Action reducers
+
+Provide the `ActionReducerMap<T>` with your reducer map for added type checking.
+
+```ts
+import { ActionReducerMap } from '@ngrx/store';
+import * as fromAuth from './auth';
+
+export interface State {
+  auth: fromAuth.State;
+}
+
+export const reducers: ActionReducerMap<State> = {
+  auth: fromAuth.reducer
+};
+```
+
 ## Typed Actions
 
-Strongly type actions to take advantage of TypeScript's compile-time checking.
+Use strongly typed actions to take advantage of TypeScript's compile-time checking.
 
 ```ts
 // counter.actions.ts
