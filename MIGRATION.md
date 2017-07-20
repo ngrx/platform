@@ -1,6 +1,15 @@
 # Migration Guide
 
-This guide covers the changes between the ngrx projects migrating from V1.x/2.x to V4.
+## Documentation
+
+Links to the current documentation for ngrx 4.x
+
+- [@ngrx/store](./docs/store/README.md)  
+- [@ngrx/effects](./docs/effects/README.md)  
+- [@ngrx/router-store](./docs/router-store/README.md)  
+- [@ngrx/store-devtools](./docs/store-devtools/README.md)
+
+The sections below cover the changes between the ngrx projects migrating from V1.x/2.x to V4.
 
 [@ngrx/core](#ngrxcore)  
 [@ngrx/store](#ngrxstore)  
@@ -25,8 +34,47 @@ import { compose } from '@ngrx/store';
 
 ## @ngrx/store
 
-Previously to be AOT compatible, it was required to pass a function to the `provideStore` method to compose the reducers into one root reducer. The `initialState`
-was also provided to the method as an object in the second argument.
+### Action interface
+
+The `payload` property has been removed from the `Action` interface.
+
+BEFORE:
+```ts
+import 'rxjs/add/operator/map';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Effect, Actions } from '@ngrx/effects';
+
+@Injectable()
+export class MyEffects {
+  @Effect() someEffect$: Observable<Action> = this.actions$.ofType(UserActions.LOGIN)
+    .map(action => action.payload)
+    .map(() => new AnotherAction())
+
+  constructor(private actions$: Actions) {}
+}
+```
+
+AFTER:
+```ts
+import 'rxjs/add/operator/map';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Effect, Actions } from '@ngrx/effects';
+
+@Injectable()
+export class MyEffects {
+  @Effect() someEffect$: Observable<Action> = this.actions$.ofType(UserActions.LOGIN)
+    .map((action: UserActions.Login) => action.payload)
+    .map(() => new AnotherAction())
+
+  constructor(private actions$: Actions) {}
+}
+```
+
+### Registering Reducers
+
+Previously to be AOT compatible, it was required to pass a function to the `provideStore` method to compose the reducers into one root reducer. The `initialState` was also provided to the method as an object in the second argument.
 
 BEFORE:
 
@@ -62,16 +110,21 @@ import { reducer } from './reducers';
 export class AppModule {}
 ```
 
-This has been simplified to only require a map of reducers that
-will be composed together by the library. The second argument is a configuration
-object where you can provide the `initialState`.
+This has been simplified to only require a map of reducers that will be composed together by the library. The second argument is a configuration object where you provide the `initialState`.
 
 AFTER:
 
 `reducers/index.ts`
 
 ```ts
-export const reducers = {
+import { ActionReducerMap } from '@ngrx/store';
+
+export interface State {
+  auth: fromAuth.State;
+  layout: fromLayout.State;
+}
+
+export const reducers: ActionReducerMap<State> = {
   auth: fromAuth.reducer,
   layout: fromLayout.reducer
 };
@@ -115,6 +168,9 @@ export class AppModule { }
 
 AFTER:
 
+The `EffectsModule.forRoot` method is *required* in your root `AppModule`. Provide an empty array
+if you don't need to register any root-level effects.
+
 `app.module.ts`
 ```ts
 @NgModule({
@@ -128,6 +184,8 @@ AFTER:
 })
 export class AppModule { }
 ```
+
+Import `EffectsModule.forFeature` in any NgModule, whether be the `AppModule`, or a feature module.
 
 `feature.module.ts`
 ```ts

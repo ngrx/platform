@@ -114,6 +114,7 @@ export class MyAppComponent {
 ```
 
 ## API Documentation
+- [Action Reducers](./actions.md#action-reducers)
 - [Typed Actions](./actions.md#typed-actions)
 - [Selectors](./selectors.md)
 - [State composition through feature modules](./api.md#feature-module-state-composition)

@@ -70,7 +70,9 @@ export class AuthEffects {
 }
 ```
 
-2. Register the EffectsModule in your application root imports:
+2. Register the EffectsModule in your application root imports. This NgModule *must* be added to
+your root `NgModule` for the effects providers to be registered and start when your application is loaded.
+
 ```ts
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './effects/auth';
