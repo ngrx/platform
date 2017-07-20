@@ -42,7 +42,7 @@ describe('LoginPageReducer', () => {
   });
 
   describe('LOGIN_FAILURE', () => {
-    it('should have no error and no pending state', () => {
+    it('should have an error and no pending state', () => {
       const error = 'login failed';
       const createAction = new LoginFailure(error);
       const expectedResult = {
