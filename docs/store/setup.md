@@ -35,7 +35,7 @@ function in the `imports` array them in the `AppModule`.
 ```ts
 import { NgModule } from '@angular/core'
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter';
+import { counter } from './counter';
 
 @NgModule({
   imports: [
