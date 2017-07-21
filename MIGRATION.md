@@ -441,7 +441,7 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
 
 @NgModule({
   imports: [
-    !environment.prod ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
   ]
 })
 export class AppModule {}
