@@ -16,6 +16,7 @@ dependencies:
 test:
   override:
     - yarn run ci
+    - yarn run example:test -- --watch=false
 
 deployment:
   builds:

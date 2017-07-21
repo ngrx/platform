@@ -58,7 +58,7 @@ describe('Effect Metadata', () => {
 
   describe('getSourceProto', () => {
     it('should get the prototype for an instance of a source', () => {
-      class Fixture { }
+      class Fixture {}
       const instance = new Fixture();
 
       const proto = getSourceForInstance(instance);
