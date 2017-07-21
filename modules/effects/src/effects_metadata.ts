@@ -28,7 +28,7 @@ function getStaticMetadataEntry(metadataEntry: any, propertyName: string) {
     .filter((entry: any) => entry.type === Effect)
     .map((entry: any) => {
       let dispatch = true;
-      if (entry.args.length) {
+      if (entry.args && entry.args.length) {
         dispatch = !!entry.args[0].dispatch;
       }
       return { propertyName, dispatch };

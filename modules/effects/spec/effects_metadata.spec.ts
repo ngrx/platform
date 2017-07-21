@@ -29,6 +29,7 @@ describe('Effect Metadata', () => {
           return {
             a: [{ type: Effect, args: [{ dispatch: false }] }],
             b: [{ type: Effect, args: [] }],
+            c: [{ type: Effect }],
           };
         }
       }
@@ -38,6 +39,7 @@ describe('Effect Metadata', () => {
       expect(getSourceMetadata(mock)).toEqual([
         { propertyName: 'a', dispatch: false },
         { propertyName: 'b', dispatch: true },
+        { propertyName: 'c', dispatch: true },
       ]);
     });
 
@@ -56,7 +58,7 @@ describe('Effect Metadata', () => {
 
   describe('getSourceProto', () => {
     it('should get the prototype for an instance of a source', () => {
-      class Fixture {}
+      class Fixture { }
       const instance = new Fixture();
 
       const proto = getSourceForInstance(instance);
