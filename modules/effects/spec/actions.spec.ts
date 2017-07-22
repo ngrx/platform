@@ -3,6 +3,7 @@ import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { ReflectiveInjector } from '@angular/core';
+import { toPayload, toPayloadTyped } from '@ngrx/effects';
 import {
   Action,
   StoreModule,
@@ -70,6 +71,30 @@ describe('Actions', function() {
     });
 
     actions.forEach(action => dispatcher.next({ type: action }));
+    dispatcher.complete();
+  });
+
+  it('should let you specify types with ofType and infer the type with toPayloadType', function() {
+    const ACTIONTYPE = 'ActionWithNumberType';
+    class ActionWithNumber implements Action {
+      readonly type = ACTIONTYPE;
+      constructor(public payload: number) {}
+    }
+
+    const increment = (x: number) => x + 1;
+
+    actions$
+      .ofType<ActionWithNumber>(ACTIONTYPE)
+      .map(toPayloadTyped)
+      // Note: at this point the compiler knows the actual type of payload--it is not just "any"
+      .map(payload => increment(payload))
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(2);
+        },
+      });
+
+    dispatcher.next(new ActionWithNumber(1));
     dispatcher.complete();
   });
 });
