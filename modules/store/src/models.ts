@@ -2,6 +2,10 @@ export interface Action {
   type: string;
 }
 
+export interface ActionWithPayload<T> {
+  payload: T;
+}
+
 export type TypeId<T> = () => T;
 
 export type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;
