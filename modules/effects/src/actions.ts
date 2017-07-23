@@ -26,4 +26,10 @@ export class Actions<V = Action> extends Observable<V> {
       allowedTypes.some(type => type === action.type)
     );
   }
+
+  ofClass<T extends V>(...allowedClasses: (new () => T)[]): Actions<T> {
+    return filter.call(this, (action: Action) =>
+      allowedClasses.some(allowedClass => action instanceof allowedClass)
+    );
+  }
 }
