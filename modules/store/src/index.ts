@@ -3,6 +3,7 @@ export {
   ActionReducer,
   ActionReducerMap,
   ActionReducerFactory,
+  ActionWithPayload,
   Selector,
 } from './models';
 export { StoreModule } from './store_module';
