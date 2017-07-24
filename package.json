@@ -20,7 +20,8 @@
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --single-quote --trailing-comma --write \"./**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
-    "postinstall": "opencollective postinstall"
+    "postinstall": "opencollective postinstall",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "keywords": [
     "ngrx",
@@ -66,6 +67,7 @@
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
     "codelyzer": "^2.1.1",
+    "conventional-changelog": "^1.1.4",
     "core-js": "^2.4.1",
     "coveralls": "^2.13.0",
     "cpy-cli": "^1.0.1",
