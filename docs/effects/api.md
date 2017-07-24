@@ -61,7 +61,7 @@ Usage:
 ```ts
 import 'rxjs/add/operator/do';
 import { Injectable } from '@angular/core';
-import { Actions } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 
 @Injectable()
 export class SomeEffectsClass {
@@ -81,7 +81,7 @@ Usage:
 ```ts
 import 'rxjs/add/operator/do';
 import { Injectable } from '@angular/core';
-import { Actions } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 
 @Injectable()
 export class SomeEffectsClass {
@@ -136,7 +136,7 @@ Usage:
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { Actions, toPayload } from '@ngrx/effects';
+import { Actions, Effect, toPayload } from '@ngrx/effects';
 
 @Injectable()
 export class SomeEffectsClass {
