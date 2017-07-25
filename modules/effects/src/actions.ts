@@ -26,4 +26,26 @@ export class Actions<V = Action> extends Observable<V> {
       allowedTypes.some(type => type === action.type)
     );
   }
+
+  ofClass<T1 extends V>(a: new () => T1): Actions<T1>;
+  ofClass<T1 extends V, T2 extends V>(
+    a: new () => T1,
+    b: new () => T2
+  ): Actions<T1 | T2>;
+  ofClass<T1 extends V, T2 extends V, T3 extends V>(
+    a: new () => T1,
+    b: new () => T2,
+    c: new () => T3
+  ): Actions<T1 | T2 | T3>;
+  ofClass<T1 extends V, T2 extends V, T3 extends V, T4 extends V>(
+    a: new () => T1,
+    b: new () => T2,
+    c: new () => T3,
+    d: new () => T4
+  ): Actions<T1 | T2 | T3 | T4>;
+  ofClass(...allowedClasses: (new () => any)[]): Actions<V> {
+    return filter.call(this, (action: Action) =>
+      allowedClasses.some(allowedClass => action instanceof allowedClass)
+    );
+  }
 }

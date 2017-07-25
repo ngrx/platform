@@ -72,4 +72,36 @@ describe('Actions', function() {
     actions.forEach(action => dispatcher.next({ type: action }));
     dispatcher.complete();
   });
+
+  it('should let you filter out actions by class', function() {
+    class AddAction {
+      type = ADD;
+    }
+
+    class SubtractAction {
+      type = SUBTRACT;
+    }
+
+    const AddActionInstance = new AddAction();
+    const SubtractActionInstance = new SubtractAction();
+
+    const actionInstances = [
+      AddActionInstance,
+      AddActionInstance,
+      SubtractActionInstance,
+      AddActionInstance,
+      SubtractActionInstance,
+    ];
+
+    const expected = [ADD, ADD, ADD];
+
+    actions$.ofClass(AddAction).map(update => update.type).toArray().subscribe({
+      next(actual) {
+        expect(actual).toEqual(expected);
+      },
+    });
+
+    actionInstances.forEach(action => dispatcher.next(action));
+    dispatcher.complete();
+  });
 });
