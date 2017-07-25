@@ -16,10 +16,10 @@
     "baseUrl": ".",
     "rootDir": "../",
     "paths": {
-      "@ngrx/effects": ["../modules/effects"],
-      "@ngrx/store": ["../modules/store"],
-      "@ngrx/router-store": ["../modules/router-store"],
-      "@ngrx/store-devtools": ["../modules/store-devtools"]
+      "@ngrx/effects": ["../dist/effects"],
+      "@ngrx/store": ["../dist/store"],
+      "@ngrx/router-store": ["../dist/router-store"],
+      "@ngrx/store-devtools": ["../dist/store-devtools"]
     }
   },
   "exclude": [

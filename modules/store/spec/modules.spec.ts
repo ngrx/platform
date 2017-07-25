@@ -22,6 +22,10 @@ describe(`Store Modules`, () => {
     'Root Reducers'
   );
 
+  const featureToken = new InjectionToken<ActionReducerMap<RootState>>(
+    'Feature Reducers'
+  );
+
   // Trigger here is basically an action type used to trigger state update
   const createDummyReducer = <T>(def: T, trigger: string): ActionReducer<T> => (
     s = def,
@@ -127,10 +131,22 @@ describe(`Store Modules`, () => {
     class FeatureBModule {}
 
     @NgModule({
+      imports: [StoreModule.forFeature('c', featureToken)],
+      providers: [
+        {
+          provide: featureToken,
+          useValue: featureBReducerMap,
+        },
+      ],
+    })
+    class FeatureCModule {}
+
+    @NgModule({
       imports: [
         StoreModule.forRoot<RootState>(reducersToken),
         FeatureAModule,
         FeatureBModule,
+        FeatureCModule,
       ],
       providers: [
         {
@@ -155,6 +171,10 @@ describe(`Store Modules`, () => {
           fruit: 'apple',
           a: 5,
           b: {
+            list: [1, 2, 3],
+            index: 2,
+          },
+          c: {
             list: [1, 2, 3],
             index: 2,
           },
