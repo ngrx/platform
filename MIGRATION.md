@@ -1,5 +1,8 @@
 # Migration Guide
 
+**note:** `store-devtools` currently causes severe performance problems when used with `router-store`.
+If you depend on `store-devtools` and `router-store` we advice not to update until [the issue](https://github.com/ngrx/platform/issues/97) is resolved.
+
 ## Documentation
 
 Links to the current documentation for ngrx 4.x
