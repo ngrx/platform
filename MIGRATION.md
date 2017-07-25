@@ -187,6 +187,8 @@ export class AppModule { }
 
 Import `EffectsModule.forFeature` in any NgModule, whether be the `AppModule`, or a feature module.
 
+*Important*: import `EffectsModule` after `StoreModule`.
+
 `feature.module.ts`
 ```ts
 @NgModule({
@@ -407,6 +409,8 @@ import { reducers } from './reducers';
 export class AppModule {}
 ```
 
+*Important*: import `StoreRouterConnectingModule` after `StoreModule` and `RouterModule`.
+
 ## @ngrx/store-devtools
 
 **NOTE:** store-devtools currently causes severe performance problems when
@@ -446,3 +450,5 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
 })
 export class AppModule {}
 ```
+
+*Important*: import `StoreDevtoolsModule` after `StoreModule`.
