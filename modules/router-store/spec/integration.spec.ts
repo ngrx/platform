@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import {
@@ -10,6 +10,7 @@ import {
   RouterAction,
   routerReducer,
   StoreRouterConnectingModule,
+  RouterStateSerializer,
 } from '../src/index';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
@@ -315,11 +316,60 @@ describe('integration spec', () => {
       ]);
       done();
     });
+
+    it('should support a custom RouterStateSnapshot serializer ', done => {
+      const reducer = (state: any, action: RouterAction<any>) => {
+        const r = routerReducer(state, action);
+        return r && r.state
+          ? { url: r.state.url, navigationId: r.navigationId }
+          : null;
+      };
+
+      class CustomSerializer implements RouterStateSerializer<{ url: string }> {
+        serialize(routerState: RouterStateSnapshot) {
+          const url = `${routerState.url}-custom`;
+
+          return { url };
+        }
+      }
+
+      const providers = [
+        { provide: RouterStateSerializer, useClass: CustomSerializer },
+      ];
+
+      createTestModule({ reducers: { routerReducer, reducer }, providers });
+
+      const router = TestBed.get(Router);
+      const store = TestBed.get(Store);
+      const log = logOfRouterAndStore(router, store);
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'store', state: { url: '/next-custom', navigationId: 2 } },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+          log.splice(0);
+          done();
+        });
+    });
   });
 });
 
 function createTestModule(
-  opts: { reducers?: any; canActivate?: Function; canLoad?: Function } = {}
+  opts: {
+    reducers?: any;
+    canActivate?: Function;
+    canLoad?: Function;
+    providers?: Provider[];
+  } = {}
 ) {
   @Component({
     selector: 'test-app',
@@ -361,6 +411,7 @@ function createTestModule(
         provide: 'CanLoadNext',
         useValue: opts.canLoad || (() => true),
       },
+      opts.providers || [],
     ],
   });
 

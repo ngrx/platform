@@ -5,6 +5,7 @@ import {
   ActionReducer,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
+import * as fromRouter from '@ngrx/router-store';
 
 /**
  * Every reducer module's default export is the reducer function itself. In
@@ -21,6 +22,7 @@ import * as fromLayout from '../core/reducers/layout';
  */
 export interface State {
   layout: fromLayout.State;
+  routerReducer: fromRouter.RouterReducerState;
 }
 
 /**
@@ -30,6 +32,7 @@ export interface State {
  */
 export const reducers: ActionReducerMap<State> = {
   layout: fromLayout.reducer,
+  routerReducer: fromRouter.routerReducer,
 };
 
 // console.log all actions

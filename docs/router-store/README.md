@@ -15,8 +15,8 @@ Install @ngrx/router-store from npm:
 During the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:
 
 ```ts
-export type RouterNavigationPayload = {
-  routerState: RouterStateSnapshot,
+export type RouterNavigationPayload<T> = {
+  routerState: T,
   event: RoutesRecognized
 }
 ```
@@ -46,3 +46,6 @@ import { App } from './app.component';
 })
 export class AppModule { }
 ```
+
+## API Documentation
+- [Custom Router State Serializer](./api.md#custom-router-state-serializer)
