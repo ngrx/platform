@@ -1,3 +1,4 @@
+<!-- ❤️ ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate) -->
 
 ## I'm submitting a...
 <!-- Check one of the following options with "x" -->
@@ -27,5 +28,3 @@ http://plnkr.co/edit/tpl:757r6L
 ## Other information:
 
 
-
-:heartpulse: ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate)
