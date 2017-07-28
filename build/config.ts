@@ -25,4 +25,8 @@ export const packages: PackageDescription[] = [
     name: 'store-devtools',
     hasTestingModule: false,
   },
+  {
+    name: 'entity',
+    hasTestingModule: false,
+  },
 ];
