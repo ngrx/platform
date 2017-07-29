@@ -78,7 +78,13 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
       );
     }
 
-    return distinctUntilChanged.call(mapped$);
+    return distinctUntilChanged.call(mapped$, (x: any, y: any) => {
+      const isPrimitive = typeof x === 'boolean' || typeof y === 'boolean' ||
+                          typeof x === 'number' || typeof y === 'number' ||
+                          typeof x === 'string' || typeof y === 'string' ||
+                          typeof x === 'undefined' || typeof y === 'undefined';
+      return isPrimitive ? false : (x === y);
+    });
   }
 
   lift<R>(operator: Operator<T, R>): Store<R> {
