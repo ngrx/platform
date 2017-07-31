@@ -1,5 +1,5 @@
 import 'rxjs/add/operator/let';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -32,7 +32,7 @@ import { Book } from '../models/book';
   `,
   ],
 })
-export class CollectionPageComponent {
+export class CollectionPageComponent implements OnInit {
   books$: Observable<Book[]>;
 
   constructor(private store: Store<fromBooks.State>) {
