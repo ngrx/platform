@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import * as fromBooks from '../reducers';
+import * as collection from '../actions/collection';
 import { Book } from '../models/book';
 
 @Component({
@@ -34,7 +35,11 @@ import { Book } from '../models/book';
 export class CollectionPageComponent {
   books$: Observable<Book[]>;
 
-  constructor(store: Store<fromBooks.State>) {
+  constructor(private store: Store<fromBooks.State>) {
     this.books$ = store.select(fromBooks.getBookCollection);
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new collection.LoadAction());
   }
 }
