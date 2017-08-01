@@ -158,7 +158,7 @@ export async function removeRemainingSourceMapFiles(config: Config) {
 export async function copyTypeDefinitionFiles(config: Config) {
   const packages = util.getTopLevelPackages(config);
   const files = await util.getListOfFiles(
-    `./dist/packages/?(${packages.join('|')})/**/*`
+    `./dist/packages/?(${packages.join('|')})/**/*.*`
   );
 
   await mapAsync(files, async file => {
