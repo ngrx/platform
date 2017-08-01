@@ -185,7 +185,12 @@ export class StoreRouterConnectingModule {
   }
 
   private navigateIfNeeded(): void {
-    if (!this.storeState['routerReducer']) return;
+    if (
+      !this.storeState['routerReducer'] ||
+      !this.storeState['routerReducer'].state
+    ) {
+      return;
+    }
     if (this.dispatchTriggeredByRouter) return;
 
     if (this.router.url !== this.storeState['routerReducer'].state.url) {
