@@ -1,6 +1,5 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
@@ -32,14 +31,9 @@ export class CollectionEffects {
     return this.db.open('books_app');
   });
 
-  /**
-   * This effect makes use of the `startWith` operator to trigger
-   * the effect immediately on startup.
-   */
   @Effect()
   loadCollection$: Observable<Action> = this.actions$
     .ofType(collection.LOAD)
-    .startWith(new collection.LoadAction())
     .switchMap(() =>
       this.db
         .query('books')

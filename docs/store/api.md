@@ -123,3 +123,32 @@ export function getReducers(someService: SomeService) {
 })
 export class AppModule { }
 ```
+
+Reducers are also injected when composing state through feature modules.
+
+```ts
+import { NgModule, InjectionToken } from '@angular/core';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+
+import * as fromFeature from './reducers';
+
+export const FEATURE_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<fromFeature.State>>('Feature Reducers');
+
+// map of reducers
+export const reducers: ActionReducerMap<fromFeature.State> = {
+
+};
+
+@NgModule({
+  imports: [
+    StoreModule.forFeature('feature', FEATURE_REDUCER_TOKEN),
+  ],
+  providers: [
+    {
+      provide: FEATURE_REDUCER_TOKEN,
+      useValue: reducers
+    }
+  ]
+})
+export class FeatureModule { }
+```

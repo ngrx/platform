@@ -115,12 +115,14 @@ export class MyAppComponent {
 
 ## API Documentation
 - [Action Reducers](./actions.md#action-reducers)
-- [Typed Actions](./actions.md#typed-actions)
-- [Selectors](./selectors.md)
-- [State composition through feature modules](./api.md#feature-module-state-composition)
-- [Providing initial state](./api.md#initial-state)
-- [Meta-Reducers](./api.md#meta-reducers)
 - [Injecting reducers](./api.md#injecting-reducers)
+- [Meta-Reducers/Enhancers](./api.md#meta-reducers)
+- [Providing initial state](./api.md#initial-state)
+- [State composition through feature modules](./api.md#feature-module-state-composition)
+- [State selectors](./selectors.md)
+- [Testing](./testing.md)
+- [Typed Actions](./actions.md#typed-actions)
+
 
 ### Additional Material
 - [From Inactive to Reactive with ngrx](https://www.youtube.com/watch?v=cyaAhXHhxgk)
