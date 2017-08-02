@@ -41,6 +41,23 @@ describe('Selectors', () => {
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
 
+    it('should call the projector function only when the value of a dependent selector change', () => {
+      const firstState = { first: 'state', unchanged: 'state' };
+      const secondState = { second: 'state', unchanged: 'state' };
+      const neverChangingSelector = jasmine
+        .createSpy('unchangedSelector')
+        .and.callFake((state: any) => {
+          return state.unchanged;
+        });
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(neverChangingSelector, projectFn);
+
+      selector(firstState);
+      selector(secondState);
+
+      expect(projectFn).toHaveBeenCalledTimes(1);
+    });
+
     it('should memoize the function', () => {
       const firstState = { first: 'state' };
       const secondState = { second: 'state' };

@@ -115,19 +115,24 @@ export function createSelector(...args: any[]): Selector<any, any> {
       selector.release && typeof selector.release === 'function'
   );
 
-  const { memoized, reset } = memoize(function(state: any) {
+  const memoizedProjector = memoize(function(...selectors: any[]) {
+    return projector.apply(null, selectors);
+  });
+
+  const memoizedState = memoize(function(state: any) {
     const args = selectors.map(fn => fn(state));
 
-    return projector.apply(null, args);
+    return memoizedProjector.memoized.apply(null, args);
   });
 
   function release() {
-    reset();
+    memoizedState.reset();
+    memoizedProjector.reset();
 
     memoizedSelectors.forEach(selector => selector.release());
   }
 
-  return Object.assign(memoized, { release });
+  return Object.assign(memoizedState.memoized, { release });
 }
 
 export function createFeatureSelector<T>(
