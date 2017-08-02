@@ -44,14 +44,13 @@ describe('Selectors', () => {
     it('should call the projector function only when the value of a dependent selector change', () => {
       const firstState = { first: 'state', unchanged: 'state' };
       const secondState = { second: 'state', unchanged: 'state' };
-      const neverChangingSelector = jasmine.createSpy('unchangedSelector').and.callFake((state: any) => {
-        return state.unchanged;
-      });
+      const neverChangingSelector = jasmine
+        .createSpy('unchangedSelector')
+        .and.callFake((state: any) => {
+          return state.unchanged;
+        });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        neverChangingSelector,
-        projectFn
-      );
+      const selector = createSelector(neverChangingSelector, projectFn);
 
       selector(firstState);
       selector(secondState);
