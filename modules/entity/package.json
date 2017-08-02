@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/entity",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Common utilities for entity reducers",
   "module": "@ngrx/entity.es5.js",
   "es2015": "@ngrx/entity.js",
