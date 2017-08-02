@@ -1,17 +1,24 @@
 <a name="4.0.0"></a>
-# [4.0.0](https://github.com/ngrx/platform/compare/v4.0.1...v4.0.0) (2017-07-22)
+# [4.0.0](https://github.com/ngrx/platform/compare/v4.0.2...v4.0.0) (2017-08-02)
+
+
+
+<a name="4.0.2"></a>
+## [4.0.2](https://github.com/ngrx/platform/compare/v4.0.1...v4.0.2) (2017-08-02)
 
 
 ### Bug Fixes
 
-* **docs:** update angular-cli variable ([eeb7d5d](https://github.com/ngrx/platform/commit/eeb7d5d))
+* **createSelector:** memoize projector function (#228) ([e2f1e57](https://github.com/ngrx/platform/commit/e2f1e57)), closes [#226](https://github.com/ngrx/platform/issues/226)
 * **Effects:** Wrap testing source in an Actions observable (#121) ([bfdb83b](https://github.com/ngrx/platform/commit/bfdb83b)), closes [#117](https://github.com/ngrx/platform/issues/117)
+* **RouterStore:** Add support for cancellation with CanLoad guard (#223) ([2c006e8](https://github.com/ngrx/platform/commit/2c006e8)), closes [#213](https://github.com/ngrx/platform/issues/213)
 * **Store:** Remove auto-memoization of selector functions ([90899f7](https://github.com/ngrx/platform/commit/90899f7)), closes [#118](https://github.com/ngrx/platform/issues/118)
 
 
 ### Features
 
 * **Effects:** Add generic type to the "ofType" operator ([55c13b2](https://github.com/ngrx/platform/commit/55c13b2))
+* **Store:** Add injection token option for feature modules (#153) ([7f77693](https://github.com/ngrx/platform/commit/7f77693)), closes [#116](https://github.com/ngrx/platform/issues/116) [#141](https://github.com/ngrx/platform/issues/141) [#147](https://github.com/ngrx/platform/issues/147)
 * **Store:** Added initial state function support for features. Added more tests (#85) ([5e5d7dd](https://github.com/ngrx/platform/commit/5e5d7dd))
 
 
