@@ -286,10 +286,40 @@ describe('integration spec', () => {
         done();
       });
   });
+
+  it('should support cancellation of initial navigation using canLoad guard', done => {
+    const reducer = (state: any, action: RouterAction<any>) => {
+      const r = routerReducer(state, action);
+      return r && r.state
+        ? { url: r.state.url, navigationId: r.navigationId }
+        : null;
+    };
+
+    createTestModule({
+      reducers: { routerReducer, reducer },
+      canLoad: () => false,
+    });
+
+    const router = TestBed.get(Router);
+    const store = TestBed.get(Store);
+    const log = logOfRouterAndStore(router, store);
+
+    router.navigateByUrl('/load').then((r: boolean) => {
+      expect(r).toBe(false);
+
+      expect(log).toEqual([
+        { type: 'store', state: null },
+        { type: 'router', event: 'NavigationStart', url: '/load' },
+        { type: 'store', state: null },
+        { type: 'router', event: 'NavigationCancel', url: '/load' },
+      ]);
+      done();
+    });
+  });
 });
 
 function createTestModule(
-  opts: { reducers?: any; canActivate?: Function } = {}
+  opts: { reducers?: any; canActivate?: Function; canLoad?: Function } = {}
 ) {
   @Component({
     selector: 'test-app',
@@ -314,6 +344,11 @@ function createTestModule(
           component: SimpleCmp,
           canActivate: ['CanActivateNext'],
         },
+        {
+          path: 'load',
+          loadChildren: 'test',
+          canLoad: ['CanLoadNext'],
+        },
       ]),
       StoreRouterConnectingModule,
     ],
@@ -321,6 +356,10 @@ function createTestModule(
       {
         provide: 'CanActivateNext',
         useValue: opts.canActivate || (() => true),
+      },
+      {
+        provide: 'CanLoadNext',
+        useValue: opts.canLoad || (() => true),
       },
     ],
   });
