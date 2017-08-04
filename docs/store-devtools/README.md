@@ -12,6 +12,12 @@ Install @ngrx/store-devtools from npm:
 
 `npm install github:ngrx/store-devtools-builds` OR `yarn add github:ngrx/store-devtools-builds`
 
+### Warning
+store-devtools currently causes severe performance problems when
+used with router-store. We are working to
+[fix this](https://github.com/ngrx/platform/issues/97), but for now, avoid
+using them together.
+
 
 ## Instrumentation
 ### Instrumentation with the Chrome / Firefox Extension
