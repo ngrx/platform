@@ -181,4 +181,49 @@ describe('ngRx Integration spec', () => {
       expect(currentlyVisibleTodos.length).toBe(0);
     });
   });
+
+  describe('feature state', () => {
+    const initialState = {
+      todos: [
+        {
+          id: 1,
+          text: 'do things',
+          completed: false,
+        },
+      ],
+      visibilityFilter: VisibilityFilters.SHOW_ALL,
+    };
+
+    const reducers: ActionReducerMap<TodoAppSchema, any> = {
+      todos: todos,
+      visibilityFilter: visibilityFilter,
+    };
+
+    const featureInitialState = [{ id: 1, completed: false, text: 'Item' }];
+
+    it('should initialize properly', () => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot(reducers, { initialState }),
+          StoreModule.forFeature('items', todos, {
+            initialState: featureInitialState,
+          }),
+        ],
+      });
+
+      const store: Store<any> = TestBed.get(Store);
+
+      let expected = [
+        {
+          todos: initialState.todos,
+          visibilityFilter: initialState.visibilityFilter,
+          items: featureInitialState,
+        },
+      ];
+
+      store.select(state => state).subscribe(state => {
+        expect(state).toEqual(expected.shift());
+      });
+    });
+  });
 });
