@@ -40,7 +40,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   }: StoreFeature<any, any>) {
     const reducer =
       typeof reducers === 'function'
-        ? reducers
+        ? (state = initialState, action: any) => reducers(state, action)
         : createReducerFactory(reducerFactory, metaReducers)(
             reducers,
             initialState
