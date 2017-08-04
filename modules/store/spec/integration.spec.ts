@@ -27,6 +27,8 @@ import {
   COMPLETE_ALL_TODOS,
 } from './fixtures/todos';
 
+import { foos } from './fixtures/foos';
+
 interface Todo {
   id: number;
   text: string;
@@ -39,6 +41,54 @@ interface TodoAppSchema {
 }
 
 describe('ngRx Integration spec', () => {
+  describe('feature state', () => {
+    const initialState = {
+      todos: [
+        {
+          id: 1,
+          text: 'do things',
+          completed: false,
+        },
+      ],
+      visibilityFilter: VisibilityFilters.SHOW_ALL,
+    };
+    const reducers: ActionReducerMap<TodoAppSchema, any> = {
+      todos: todos,
+      visibilityFilter: visibilityFilter,
+    };
+
+    const featureInitialState = ['bar'];
+
+    it('should initialize properly', () => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot(reducers, { initialState }),
+          StoreModule.forFeature('foos', foos, {
+            initialState: featureInitialState,
+          }),
+        ],
+      });
+      const store: Store<any> = TestBed.get(Store);
+
+      let expected = [
+        {
+          todos: [
+            {
+              id: 1,
+              text: 'do things',
+              completed: false,
+            },
+          ],
+          visibilityFilter: 'SHOW_ALL',
+          foos: ['bar'],
+        },
+      ];
+      store.select(state => state).subscribe(state => {
+        expect(state).toEqual(expected.shift());
+      });
+      expect(expected.length).toBe(0);
+    });
+  });
   describe('todo integration spec', function() {
     let store: Store<TodoAppSchema>;
     let state: State<TodoAppSchema>;
