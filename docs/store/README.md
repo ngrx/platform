@@ -54,7 +54,7 @@ export function counterReducer(state: number = 0, action: Action) {
 ```
 
 To register the state container within your application, import the reducers and use the `StoreModule.forRoot`
-function in the `imports` array them in the `AppModule`.
+function in the `imports` array of the `@NgModule` decorator for your `AppModule`.
 
 ```ts
 import { NgModule } from '@angular/core'
