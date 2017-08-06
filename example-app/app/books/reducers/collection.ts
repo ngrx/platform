@@ -18,41 +18,38 @@ export function reducer(
 ): State {
   switch (action.type) {
     case collection.LOAD: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
-      });
+      };
     }
 
     case collection.LOAD_SUCCESS: {
-      const books = action.payload;
-
       return {
         loaded: true,
         loading: false,
-        ids: books.map(book => book.id),
+        ids: action.payload.map(book => book.id),
       };
     }
 
     case collection.ADD_BOOK_SUCCESS:
     case collection.REMOVE_BOOK_FAIL: {
-      const book = action.payload;
-
-      if (state.ids.indexOf(book.id) > -1) {
+      if (state.ids.indexOf(action.payload.id) > -1) {
         return state;
       }
 
-      return Object.assign({}, state, {
-        ids: [...state.ids, book.id],
-      });
+      return {
+        ...state,
+        ids: [...state.ids, action.payload.id],
+      };
     }
 
     case collection.REMOVE_BOOK_SUCCESS:
     case collection.ADD_BOOK_FAIL: {
-      const book = action.payload;
-
-      return Object.assign({}, state, {
-        ids: state.ids.filter(id => id !== book.id),
-      });
+      return {
+        ...state,
+        ids: state.ids.filter(id => id !== action.payload.id),
+      };
     }
 
     default: {
