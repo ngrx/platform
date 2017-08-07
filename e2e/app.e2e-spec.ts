@@ -7,8 +7,8 @@ describe('example-app App', function() {
     page = new ExampleAppPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display the app title in the menu', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getAppDescription()).toContain('Book Collection');
   });
 });

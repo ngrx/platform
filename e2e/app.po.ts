@@ -5,7 +5,7 @@ export class ExampleAppPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getAppDescription() {
+    return element(by.css('md-toolbar-row')).getText();
   }
 }
