@@ -71,7 +71,7 @@ describe('My Component', () => {
 
     store = TestBed.get(Store);
 
-    spyOn(store.dispatch).and.callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
 
     fixture = TestBed.createComponent(MyComponent);
     component = fixture.componentInstance;
