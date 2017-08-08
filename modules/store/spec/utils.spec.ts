@@ -1,5 +1,11 @@
 import { omit } from '../src/utils';
-import { combineReducers, compose } from '@ngrx/store';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  combineReducers,
+  compose,
+  createReducerFactory,
+} from '@ngrx/store';
 
 describe(`Store utils`, () => {
   describe(`combineReducers()`, () => {
@@ -71,6 +77,63 @@ describe(`Store utils`, () => {
     it(`should act as identity if no functions passed`, () => {
       const id = compose();
       expect(id(1)).toBe(1);
+    });
+  });
+
+  describe(`createReducerFactory()`, () => {
+    const fruitReducer = (state: string = 'banana', action: any) =>
+      action.type === 'fruit' ? action.payload : state;
+    type FruitState = { fruit: string };
+    const reducerMap: ActionReducerMap<FruitState> = { fruit: fruitReducer };
+    const initialState: FruitState = { fruit: 'apple' };
+
+    const runWithExpectations = (
+      metaReducers: any[],
+      initialState: any,
+      expectedState: any
+    ) => () => {
+      let spiedFactory: jasmine.Spy;
+      let reducer: ActionReducer<FruitState>;
+      beforeEach(() => {
+        spiedFactory = jasmine
+          .createSpy('spied factory')
+          .and.callFake(combineReducers);
+        reducer = createReducerFactory(spiedFactory, metaReducers)(
+          reducerMap,
+          initialState
+        );
+      });
+      it(`should pass the reducers and initialState to the factory method`, () => {
+        expect(spiedFactory).toHaveBeenCalledWith(reducerMap, initialState);
+      });
+      it(`should return the expected initialState`, () => {
+        expect(reducer(undefined, { type: 'init' })).toEqual(expectedState);
+      });
+    };
+
+    describe(`without meta reducers`, () => {
+      const metaReducers: any[] = [];
+      describe(
+        `with initial state`,
+        runWithExpectations(metaReducers, initialState, initialState)
+      );
+      describe(
+        `without initial state`,
+        runWithExpectations(metaReducers, undefined, { fruit: 'banana' })
+      );
+    });
+
+    describe(`with meta reducers`, () => {
+      const noopMetaReducer = (r: any) => r;
+      const metaReducers: any[] = [noopMetaReducer];
+      describe(
+        `with initial state`,
+        runWithExpectations(metaReducers, initialState, initialState)
+      );
+      describe(
+        `without initial state`,
+        runWithExpectations(metaReducers, undefined, { fruit: 'banana' })
+      );
     });
   });
 });
