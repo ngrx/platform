@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
+import { Action, ActionWithPayload } from '@ngrx/store';
 
-export function toPayload(action: Action): any {
+export function toPayload<T = any>(action: ActionWithPayload<T> | Action): T {
   return (action as any).payload;
 }
