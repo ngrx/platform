@@ -4,7 +4,7 @@ import {
   ModuleWithProviders,
   OnDestroy,
   InjectionToken,
-  Optional,
+  Injector,
 } from '@angular/core';
 import {
   Action,
@@ -114,10 +114,7 @@ export class StoreModule {
         },
         {
           provide: INITIAL_REDUCERS,
-          deps: [
-            _INITIAL_REDUCERS,
-            [new Optional(), new Inject(_STORE_REDUCERS)],
-          ],
+          deps: [Injector, _INITIAL_REDUCERS, [new Inject(_STORE_REDUCERS)]],
           useFactory: _createStoreReducers,
         },
         {
@@ -185,8 +182,9 @@ export class StoreModule {
           provide: FEATURE_REDUCERS,
           multi: true,
           deps: [
+            Injector,
             _FEATURE_REDUCERS,
-            [new Optional(), new Inject(_FEATURE_REDUCERS_TOKEN)],
+            [new Inject(_FEATURE_REDUCERS_TOKEN)],
           ],
           useFactory: _createFeatureReducers,
         },
@@ -196,20 +194,20 @@ export class StoreModule {
 }
 
 export function _createStoreReducers(
+  injector: Injector,
   reducers: ActionReducerMap<any, any>,
   tokenReducers: ActionReducerMap<any, any>
 ) {
-  return reducers instanceof InjectionToken ? tokenReducers : reducers;
+  return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
 
 export function _createFeatureReducers(
+  injector: Injector,
   reducerCollection: ActionReducerMap<any, any>[],
   tokenReducerCollection: ActionReducerMap<any, any>[]
 ) {
   return reducerCollection.map((reducer, index) => {
-    return reducer instanceof InjectionToken
-      ? tokenReducerCollection[index]
-      : reducer;
+    return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
 }
 
