@@ -11,7 +11,7 @@
 </code></pre>
 
 ## What is the current behavior?
-<!-- Describe what is the current behavior. -->
+<!-- Describe the current behavior. -->
 
 ## Expected behavior:
 <!-- Describe what the desired behavior would be. -->
