@@ -55,7 +55,7 @@ export class SomeEffectsClass {
 
 ### ofType
 
-Filter actions by action types.
+Filter actions by action types. Specify the action type to allow type-safe mapping to other data on the action, including payload.
 
 Usage:
 ```ts
@@ -67,7 +67,7 @@ import { Actions, Effect } from '@ngrx/effects';
 export class SomeEffectsClass {
   constructor(private actions$: Actions) {}
 
-  @Effect() authActions$ = this.action$.ofType('LOGIN', 'LOGOUT')
+  @Effect() authActions$ = this.action$.ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT')
     .do(action => {
       console.log(action);
     });
@@ -128,8 +128,8 @@ export class UserEffects implements OnRunEffects {
 
 ## Utilities
 
-### toPayload
-Maps an action to its payload.
+### toPayload (DEPRECATED)
+Maps an action to its payload. This function is deprecated, and will be removed in version 5.0.
 
 Usage:
 ```ts
@@ -148,6 +148,15 @@ export class SomeEffectsClass {
       console.log(payload);
     });
 }
+```
+
+Recommended alternative to deprecated toPayload function. Note that the type
+of the action is specified so that mapping to payload (or whatever data is available in the action) is type-safe.
+```ts
+  @Effect() authActions$ = this.action$.ofType<LoadingAction | LogoutAction>('LOGIN', 'LOGOUT')
+    .map(action => action.payload)
+    .do(payload => {
+      console.log(payload);
 ```
 
 ### mergeEffects

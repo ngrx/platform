@@ -5,7 +5,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/takeUntil';
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
+import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Scheduler } from 'rxjs/Scheduler';
@@ -25,12 +25,6 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 /**
  * Effects offer a way to isolate and easily test side-effects within your
  * application.
- * The `toPayload` helper function returns just
- * the payload of the currently dispatched action, useful in
- * instances where the current state is not necessary.
- *
- * Documentation on `toPayload` can be found here:
- * https://github.com/ngrx/platform/blob/master/docs/effects/api.md#topayload
  *
  * If you are unfamiliar with the operators being used in these examples, please
  * check out the sources below:
@@ -43,9 +37,9 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 export class BookEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(book.SEARCH)
+    .ofType<book.SearchAction>(book.SEARCH)
     .debounceTime(this.debounce, this.scheduler || async)
-    .map(toPayload)
+    .map(action => action.payload)
     .switchMap(query => {
       if (query === '') {
         return empty();
