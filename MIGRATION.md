@@ -458,7 +458,7 @@ export class Back implements Action {
 }
 
 export class Forward implements Action {
-  readonly type = FOWARD;
+  readonly type = FORWARD;
 }
 
 export type Actions
