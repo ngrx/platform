@@ -3,6 +3,7 @@ import {
   createSelector,
   createFeatureSelector,
   ActionReducer,
+  MetaReducer,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import * as fromRouter from '@ngrx/router-store';
@@ -36,7 +37,7 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 // console.log all actions
-export function logger(reducer: ActionReducer<State>): ActionReducer<any, any> {
+export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   return function(state: State, action: any): State {
     console.log('state', state);
     console.log('action', action);
@@ -50,7 +51,7 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<any, any> {
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
  */
-export const metaReducers: ActionReducer<any, any>[] = !environment.production
+export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [logger]
   : [];
 

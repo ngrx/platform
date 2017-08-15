@@ -21,12 +21,16 @@ export interface ActionReducerFactory<T, V extends Action = Action> {
   ): ActionReducer<T, V>;
 }
 
+export type MetaReducer<T, V extends Action = Action> = (
+  reducer: ActionReducer<T, V>
+) => ActionReducer<T, V>;
+
 export interface StoreFeature<T, V extends Action = Action> {
   key: string;
   reducers: ActionReducerMap<T, V> | ActionReducer<T, V>;
   reducerFactory: ActionReducerFactory<T, V>;
   initialState?: InitialState<T>;
-  metaReducers?: ActionReducer<any, any>[];
+  metaReducers?: MetaReducer<T, V>[];
 }
 
 export interface Selector<T, V> {

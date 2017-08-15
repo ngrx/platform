@@ -49,11 +49,11 @@ export function getInitialState() {
 configuration option to provide an array of meta-reducers that are composed from right to left.
 
 ```ts
-import { StoreModule, combineReducers, compose } from '@ngrx/store';
+import { StoreModule, ActionReducer } from '@ngrx/store';
 import { reducers } from './reducers';
 
 // console.log all actions
-function debug(reducer) {
+export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state, action) {
     console.log('state', state);
     console.log('action', action);
@@ -62,7 +62,7 @@ function debug(reducer) {
   }
 }
 
-const metaReducers = [debug];
+export const metaReducers = [debug];
 
 @NgModule({
   imports: [

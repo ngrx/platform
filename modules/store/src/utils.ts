@@ -3,6 +3,7 @@ import {
   ActionReducer,
   ActionReducerMap,
   ActionReducerFactory,
+  MetaReducer,
 } from './models';
 
 export function combineReducers<T, V extends Action = Action>(
@@ -84,10 +85,10 @@ export function compose(...functions: any[]) {
   };
 }
 
-export function createReducerFactory(
-  reducerFactory: ActionReducerFactory<any, any>,
-  metaReducers?: ActionReducer<any, any>[]
-): ActionReducerFactory<any, any> {
+export function createReducerFactory<T, V extends Action = Action>(
+  reducerFactory: ActionReducerFactory<T, V>,
+  metaReducers?: MetaReducer<T, V>[]
+): ActionReducerFactory<T, V> {
   if (Array.isArray(metaReducers) && metaReducers.length > 0) {
     return compose(...metaReducers)(reducerFactory) as ActionReducerFactory<
       any,

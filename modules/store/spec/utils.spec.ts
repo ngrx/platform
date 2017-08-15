@@ -5,6 +5,7 @@ import {
   combineReducers,
   compose,
   createReducerFactory,
+  MetaReducer
 } from '@ngrx/store';
 
 describe(`Store utils`, () => {
@@ -88,7 +89,7 @@ describe(`Store utils`, () => {
     const initialState: FruitState = { fruit: 'apple' };
 
     const runWithExpectations = (
-      metaReducers: any[],
+      metaReducers: MetaReducer<FruitState>[],
       initialState: any,
       expectedState: any
     ) => () => {
