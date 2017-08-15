@@ -21,7 +21,7 @@ export type RouterNavigationPayload<T> = {
 }
 ```
 
-- Reducers recieve this action. Throwing an error in the reducer cancels navigation.
+- Reducers receive this action. Throwing an error in the reducer cancels navigation.
 - Effects can listen for this action.
 - The `ROUTER_CANCEL` action represents a guard canceling navigation.
 - A `ROUTER_ERROR` action represents a navigation error .
