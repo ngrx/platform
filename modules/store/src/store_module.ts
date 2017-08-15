@@ -13,6 +13,7 @@ import {
   ActionReducerFactory,
   StoreFeature,
   InitialState,
+  MetaReducer,
 } from './models';
 import { compose, combineReducers, createReducerFactory } from './utils';
 import {
@@ -82,7 +83,7 @@ export class StoreFeatureModule implements OnDestroy {
 export type StoreConfig<T, V extends Action = Action> = {
   initialState?: InitialState<T>;
   reducerFactory?: ActionReducerFactory<T, V>;
-  metaReducers?: ActionReducer<T, V>[];
+  metaReducers?: MetaReducer<T, V>[];
 };
 
 @NgModule({})
