@@ -325,11 +325,13 @@ describe('integration spec', () => {
           : null;
       };
 
-      class CustomSerializer implements RouterStateSerializer<{ url: string }> {
+      class CustomSerializer
+        implements RouterStateSerializer<{ url: string; params: any }> {
         serialize(routerState: RouterStateSnapshot) {
           const url = `${routerState.url}-custom`;
+          const params = { test: 1 };
 
-          return { url };
+          return { url, params };
         }
       }
 
@@ -353,7 +355,14 @@ describe('integration spec', () => {
           expect(log).toEqual([
             { type: 'router', event: 'NavigationStart', url: '/next' },
             { type: 'router', event: 'RoutesRecognized', url: '/next' },
-            { type: 'store', state: { url: '/next-custom', navigationId: 2 } },
+            {
+              type: 'store',
+              state: {
+                url: '/next-custom',
+                navigationId: 2,
+                params: { test: 1 },
+              },
+            },
             { type: 'router', event: 'NavigationEnd', url: '/next' },
           ]);
           log.splice(0);
