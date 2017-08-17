@@ -45,7 +45,7 @@ describe('Selectors', () => {
       const projectFn = jasmine.createSpy('projectionFn');
       const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
-      selector.projectorFunc('', '');
+      selector.resultFunc('', '');
 
       expect(incrementOne).not.toHaveBeenCalled();
       expect(incrementTwo).not.toHaveBeenCalled();
