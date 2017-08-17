@@ -40,7 +40,7 @@ export class EffectsModule {
         },
         {
           provide: CONSOLE,
-          useValue: console,
+          useFactory: getConsole,
         },
       ],
     };
@@ -49,4 +49,8 @@ export class EffectsModule {
 
 export function createSourceInstances(...instances: any[]) {
   return instances;
+}
+
+export function getConsole() {
+  return console;
 }
