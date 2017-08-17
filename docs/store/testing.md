@@ -40,7 +40,7 @@ export class MyComponent implements OnInit {
 my-component.spec.ts
 ```ts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoreModule, combineReducers } from '@ngrx/store';
+import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { MyComponent } from './my.component';
 import * as fromRoot from '../reducers';
 import * as fromFeature from './reducers';
