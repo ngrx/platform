@@ -32,7 +32,10 @@ npm install
 yarn
 
 # start the server
-npm run example:start
+npm run build && npm run cli -- serve
+
+# OR
+yarn run example:start
 ```
 
 Navigate to [http://localhost:4200/](http://localhost:4200/) in your browser
