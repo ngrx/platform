@@ -49,7 +49,7 @@ export function getInitialState() {
 configuration option to provide an array of meta-reducers that are composed from right to left.
 
 ```ts
-import { StoreModule, ActionReducer } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { reducers } from './reducers';
 
 // console.log all actions
@@ -62,7 +62,7 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   }
 }
 
-export const metaReducers = [debug];
+export const metaReducers: MetaReducer<any> = [debug];
 
 @NgModule({
   imports: [
@@ -81,16 +81,22 @@ and `metaReducers` configuration options are available.
 
 ```ts
 // feature.module.ts
-import { StoreModule } from '@ngrx/store';
-import { reducers } from './reducers';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+
+export const reducers: ActionReducerMap<any> = {
+  subFeatureA: featureAReducer,
+  subFeatureB: featureBReducer,
+};
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('featureName', reducers, { })
+    StoreModule.forFeature('featureName', reducers)
   ]
 })
 export class FeatureModule {}
 ```
+
+The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [./selectors.md#createFeatureSelector](createFeatureSelector) convenience method.
 
 ## Injecting Reducers
 

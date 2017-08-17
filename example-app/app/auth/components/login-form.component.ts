@@ -71,9 +71,9 @@ export class LoginFormComponent implements OnInit {
   set pending(isPending: boolean) {
     if (isPending) {
       this.form.disable();
+    } else {
+      this.form.enable();
     }
-
-    this.form.enable();
   }
 
   @Input() errorMessage: string | null;
