@@ -28,7 +28,7 @@ export type RouterNavigationPayload<T> = {
 /**
  * An action dispatched when the router navigates.
  */
-export type RouterNavigationAction<T> = {
+export type RouterNavigationAction<T = RouterStateSnapshot> = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
 };
@@ -41,8 +41,8 @@ export const ROUTER_CANCEL = 'ROUTER_CANCEL';
 /**
  * Payload of ROUTER_CANCEL.
  */
-export type RouterCancelPayload<T> = {
-  routerState: RouterStateSnapshot;
+export type RouterCancelPayload<T, V> = {
+  routerState: V;
   storeState: T;
   event: NavigationCancel;
 };
@@ -50,9 +50,9 @@ export type RouterCancelPayload<T> = {
 /**
  * An action dispatched when the router cancel navigation.
  */
-export type RouterCancelAction<T> = {
+export type RouterCancelAction<T, V = RouterStateSnapshot> = {
   type: typeof ROUTER_CANCEL;
-  payload: RouterCancelPayload<T>;
+  payload: RouterCancelPayload<T, V>;
 };
 
 /**
@@ -63,8 +63,8 @@ export const ROUTER_ERROR = 'ROUTE_ERROR';
 /**
  * Payload of ROUTER_ERROR.
  */
-export type RouterErrorPayload<T> = {
-  routerState: RouterStateSnapshot;
+export type RouterErrorPayload<T, V> = {
+  routerState: V;
   storeState: T;
   event: NavigationError;
 };
@@ -72,28 +72,28 @@ export type RouterErrorPayload<T> = {
 /**
  * An action dispatched when the router errors.
  */
-export type RouterErrorAction<T> = {
+export type RouterErrorAction<T, V = RouterStateSnapshot> = {
   type: typeof ROUTER_ERROR;
-  payload: RouterErrorPayload<T>;
+  payload: RouterErrorPayload<T, V>;
 };
 
 /**
  * An union type of router actions.
  */
-export type RouterAction<T> =
+export type RouterAction<T, V = RouterStateSnapshot> =
   | RouterNavigationAction<T>
-  | RouterCancelAction<T>
-  | RouterErrorAction<T>;
+  | RouterCancelAction<T, V>
+  | RouterErrorAction<T, V>;
 
-export type RouterReducerState = {
-  state: RouterStateSnapshot;
+export type RouterReducerState<T = RouterStateSnapshot> = {
+  state: T;
   navigationId: number;
 };
 
-export function routerReducer(
-  state: RouterReducerState,
+export function routerReducer<T = RouterStateSnapshot>(
+  state: RouterReducerState<T>,
   action: RouterAction<any>
-): RouterReducerState {
+): RouterReducerState<T> {
   switch (action.type) {
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:

@@ -8,31 +8,43 @@ issues when used with the Store Devtools. In most cases, you may only need a pie
 To use the time-traveling debugging in the Devtools, you must return an object containing the `url` when using the `routerReducer`.
 
 ```ts
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+import { Params } from '@angular/router';
 import {
   StoreRouterConnectingModule,
   routerReducer,
+  RouterReducerState,
   RouterStateSerializer,
-  RouterStateSnapshotType
+  RouterStateSnapshot
 } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
   url: string;
+  queryParams: Params;
+}
+
+export interface State {
+  routerReducer: RouterReducerState<RouterStateUrl>;
 }
 
 export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     const { url } = routerState;
+    const queryParams = routerState.root.queryParams;
 
-    // Only return an object including the URL
+    // Only return an object including the URL and query params
     // instead of the entire snapshot
-    return { url };
+    return { url, queryParams };
   }
 }
 
+export const reducers: ActionReducerMap<State> = {
+  routerReducer: routerReducer
+};
+
 @NgModule({
   imports: [
-    StoreModule.forRoot({ routerReducer: routerReducer }),
+    StoreModule.forRoot(reducers),
     RouterModule.forRoot([
       // routes
     ]),
