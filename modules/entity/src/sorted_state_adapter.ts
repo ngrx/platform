@@ -88,35 +88,21 @@ export function createSortedStateAdapter<T>(
     }
   }
 
-  function findTargetIndex(
-    state: R,
-    model: T,
-    left = 0,
-    right = state.ids.length - 1
-  ) {
-    if (right === -1) {
+  function findTargetIndex(state: R, model: T) {
+    if (state.ids.length === 0) {
       return 0;
     }
 
-    let middle: number;
+    for (let i = 0; i < state.ids.length; i++) {
+      const entity = state.entities[state.ids[i]];
+      const isSmaller = sort(model, entity) < 0;
 
-    while (true) {
-      middle = Math.floor((left + right) / 2);
-
-      const result = sort(state.entities[state.ids[middle]], model);
-
-      if (result === 0) {
-        return middle;
-      } else if (result < 0) {
-        left = middle + 1;
-      } else {
-        right = middle - 1;
-      }
-
-      if (left > right) {
-        return state.ids.length - 1;
+      if (isSmaller) {
+        return i;
       }
     }
+
+    return state.ids.length - 1;
   }
 
   return {
