@@ -51,7 +51,7 @@ class MyAppComponent {
 
 ## createFeatureSelector
 
-The `createFeatureSelector` methods returns a selector function for a feature slice of state.
+The `createFeatureSelector` is a convenience method for returning a top level feature state. It returns a typed selector function for a feature slice of state.
 
 ### Example
 
