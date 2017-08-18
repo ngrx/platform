@@ -24,7 +24,7 @@ Reactive libraries for Angular
 ## Contributing
 Please read [contributing guidelines here](./CONTRIBUTING.md).
 
-<a href="graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
+<a href="https://github.com/ngrx/platform/graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
 
 
 ## Backers
