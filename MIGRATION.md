@@ -424,7 +424,7 @@ custom navigation actions that use the `Router` within effects to navigate.
 BEFORE:
 
 ```ts
-import { go } from '@ngrx/router-store';
+import { go, back, forward } from '@ngrx/router-store';
 
 store.dispatch(go(['/path', { routeParam: 1 }], { page: 1 }, { replaceUrl: false }));
 
