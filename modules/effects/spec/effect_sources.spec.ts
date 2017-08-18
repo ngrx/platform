@@ -1,8 +1,10 @@
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/catch';
-import { cold } from 'jasmine-marbles';
+import 'rxjs/add/operator/map';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { timer } from 'rxjs/observable/timer';
 import { _throw } from 'rxjs/observable/throw';
 import { never } from 'rxjs/observable/never';
 import { empty } from 'rxjs/observable/empty';
@@ -69,6 +71,11 @@ describe('EffectSources', () => {
       @Effect() e$ = _throw(error);
     }
 
+    class SourceG {
+      @Effect() empty = of('value');
+      @Effect() never = timer(50, getTestScheduler()).map(() => 'update');
+    }
+
     it('should resolve effects from instances', () => {
       const sources$ = cold('--a--', { a: new SourceA() });
       const expected = cold('--a--', { a });
@@ -97,6 +104,17 @@ describe('EffectSources', () => {
       toActions(sources$).subscribe();
 
       expect(mockErrorReporter.report).toHaveBeenCalled();
+    });
+
+    it('should not complete the group if just one effect completes', () => {
+      const sources$ = cold('g', {
+        g: new SourceG(),
+      });
+      const expected = cold('a----b-----', { a: 'value', b: 'update' });
+
+      const output = toActions(sources$);
+
+      expect(output).toBeObservable(expected);
     });
 
     function toActions(source: any): Observable<any> {

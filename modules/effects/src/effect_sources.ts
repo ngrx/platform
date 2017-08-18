@@ -3,9 +3,11 @@ import { mergeMap } from 'rxjs/operator/mergeMap';
 import { exhaustMap } from 'rxjs/operator/exhaustMap';
 import { map } from 'rxjs/operator/map';
 import { dematerialize } from 'rxjs/operator/dematerialize';
+import { filter } from 'rxjs/operator/filter';
 import { concat } from 'rxjs/observable/concat';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Notification } from 'rxjs/Notification';
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { EffectNotification, verifyOutput } from './effect_notification';
@@ -31,13 +33,16 @@ export class EffectSources extends Subject<any> {
       groupBy.call(this, getSourceForInstance),
       (source$: GroupedObservable<any, any>) =>
         dematerialize.call(
-          map.call(
-            exhaustMap.call(source$, resolveEffectSource),
-            (output: EffectNotification) => {
-              verifyOutput(output, this.errorReporter);
+          filter.call(
+            map.call(
+              exhaustMap.call(source$, resolveEffectSource),
+              (output: EffectNotification) => {
+                verifyOutput(output, this.errorReporter);
 
-              return output.notification;
-            }
+                return output.notification;
+              }
+            ),
+            (notification: Notification<any>) => notification.kind === 'N'
           )
         )
     );
