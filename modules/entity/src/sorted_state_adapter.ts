@@ -19,26 +19,31 @@ export function createSortedStateAdapter<T>(
     selectId
   );
 
-  function addOneMutably(entity: T, state: R): void {
+  function addOneMutably(entity: T, state: R): boolean {
     const key = selectId(entity);
-    const index = state.ids.indexOf(key);
 
-    if (index !== -1) {
-      return;
+    if (key in state.entities) {
+      return false;
     }
 
     const insertAt = findTargetIndex(state, entity);
     state.ids.splice(insertAt, 0, key);
     state.entities[key] = entity;
+
+    return true;
   }
 
-  function addManyMutably(newModels: T[], state: R): void {
+  function addManyMutably(newModels: T[], state: R): boolean {
+    let didMutate = false;
+
     for (let index in newModels) {
-      addOneMutably(newModels[index], state);
+      didMutate = addOneMutably(newModels[index], state) || didMutate;
     }
+
+    return didMutate;
   }
 
-  function addAllMutably(models: T[], state: R): void {
+  function addAllMutably(models: T[], state: R): boolean {
     const sortedModels = models.sort(sort);
 
     state.entities = {};
@@ -47,13 +52,13 @@ export function createSortedStateAdapter<T>(
       state.entities[id] = model;
       return id;
     });
+
+    return true;
   }
 
-  function updateOneMutably(update: Update<T>, state: R): void {
-    const index = state.ids.indexOf(update.id);
-
-    if (index === -1) {
-      return;
+  function updateOneMutably(update: Update<T>, state: R): boolean {
+    if (!(update.id in state.entities)) {
+      return false;
     }
 
     const original = state.entities[update.id];
@@ -64,14 +69,16 @@ export function createSortedStateAdapter<T>(
     if (result === 0) {
       if (updatedKey !== update.id) {
         delete state.entities[update.id];
+        const index = state.ids.indexOf(update.id);
         state.ids[index] = updatedKey;
       }
 
       state.entities[updatedKey] = updated;
 
-      return;
+      return true;
     }
 
+    const index = state.ids.indexOf(update.id);
     state.ids.splice(index, 1);
     state.ids.splice(findTargetIndex(state, updated), 0, updatedKey);
 
@@ -80,12 +87,18 @@ export function createSortedStateAdapter<T>(
     }
 
     state.entities[updatedKey] = updated;
+
+    return true;
   }
 
-  function updateManyMutably(updates: Update<T>[], state: R): void {
+  function updateManyMutably(updates: Update<T>[], state: R): boolean {
+    let didMutate = false;
+
     for (let index in updates) {
-      updateOneMutably(updates[index], state);
+      didMutate = updateOneMutably(updates[index], state) || didMutate;
     }
+
+    return didMutate;
   }
 
   function findTargetIndex(state: R, model: T) {

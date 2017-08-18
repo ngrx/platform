@@ -35,7 +35,7 @@ describe('Unsorted State Adapter', () => {
 
     const readded = adapter.addOne(TheGreatGatsby, withOneEntity);
 
-    expect(readded).toEqual(withOneEntity);
+    expect(readded).toBe(withOneEntity);
   });
 
   it('should let you add many entities to the state', () => {
@@ -149,7 +149,7 @@ describe('Unsorted State Adapter', () => {
       state
     );
 
-    expect(withUpdates).toEqual(state);
+    expect(withUpdates).toBe(state);
   });
 
   it('should let you update the id of entity', () => {

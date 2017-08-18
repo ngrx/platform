@@ -6,46 +6,59 @@ export function createUnsortedStateAdapter<T>(
 ): EntityStateAdapter<T> {
   type R = EntityState<T>;
 
-  function addOneMutably(entity: T, state: R): void {
+  function addOneMutably(entity: T, state: R): boolean {
     const key = selectId(entity);
-    const index = state.ids.indexOf(key);
 
-    if (index !== -1) {
-      return;
+    if (key in state.entities) {
+      return false;
     }
 
     state.ids.push(key);
     state.entities[key] = entity;
+
+    return true;
   }
 
-  function addManyMutably(entities: T[], state: R): void {
+  function addManyMutably(entities: T[], state: R): boolean {
+    let didMutate = false;
+
     for (let index in entities) {
-      addOneMutably(entities[index], state);
+      didMutate = addOneMutably(entities[index], state) || didMutate;
     }
+
+    return didMutate;
   }
 
-  function addAllMutably(entities: T[], state: R): void {
+  function addAllMutably(entities: T[], state: R): boolean {
     state.ids = [];
     state.entities = {};
 
     addManyMutably(entities, state);
+
+    return true;
   }
 
-  function removeOneMutably(key: string, state: R): void {
+  function removeOneMutably(key: string, state: R): boolean {
     const index = state.ids.indexOf(key);
 
     if (index === -1) {
-      return;
+      return false;
     }
 
     state.ids.splice(index, 1);
     delete state.entities[key];
+
+    return true;
   }
 
-  function removeManyMutably(keys: string[], state: R): void {
+  function removeManyMutably(keys: string[], state: R): boolean {
+    let didMutate = false;
+
     for (let index in keys) {
-      removeOneMutably(keys[index], state);
+      didMutate = removeOneMutably(keys[index], state) || didMutate;
     }
+
+    return didMutate;
   }
 
   function removeAll<S extends R>(state: S): S {
@@ -55,11 +68,11 @@ export function createUnsortedStateAdapter<T>(
     });
   }
 
-  function updateOneMutably(update: Update<T>, state: R): void {
+  function updateOneMutably(update: Update<T>, state: R): boolean {
     const index = state.ids.indexOf(update.id);
 
     if (index === -1) {
-      return;
+      return false;
     }
 
     const original = state.entities[update.id];
@@ -72,12 +85,18 @@ export function createUnsortedStateAdapter<T>(
     }
 
     state.entities[newKey] = updated;
+
+    return true;
   }
 
-  function updateManyMutably(updates: Update<T>[], state: R): void {
+  function updateManyMutably(updates: Update<T>[], state: R): boolean {
+    let didMutate = false;
+
     for (let index in updates) {
-      updateOneMutably(updates[index], state);
+      didMutate = updateOneMutably(updates[index], state) || didMutate;
     }
+
+    return didMutate;
   }
 
   return {
