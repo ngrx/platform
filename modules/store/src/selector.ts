@@ -5,7 +5,7 @@ export type AnyFn = (...args: any[]) => any;
 export interface MemoizedSelector<State, Result>
   extends Selector<State, Result> {
   release(): void;
-  resultFunc: AnyFn;
+  projector: AnyFn;
 }
 
 export function memoize(t: AnyFn): { memoized: AnyFn; reset: () => void } {
@@ -135,7 +135,7 @@ export function createSelector(...args: any[]): Selector<any, any> {
 
   return Object.assign(memoizedState.memoized, {
     release,
-    resultFunc: memoizedProjector.memoized,
+    projector: memoizedProjector.memoized,
   });
 }
 
@@ -146,5 +146,5 @@ export function createFeatureSelector<T>(
     return state[featureName];
   });
 
-  return Object.assign(memoized, { release: reset, resultFunc: memoized });
+  return Object.assign(memoized, { release: reset, projector: memoized });
 }
