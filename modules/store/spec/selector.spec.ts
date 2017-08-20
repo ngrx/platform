@@ -41,6 +41,17 @@ describe('Selectors', () => {
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
 
+    it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(incrementOne, incrementTwo, projectFn);
+
+      selector.projector('', '');
+
+      expect(incrementOne).not.toHaveBeenCalled();
+      expect(incrementTwo).not.toHaveBeenCalled();
+      expect(projectFn).toHaveBeenCalledWith('', '');
+    });
+
     it('should call the projector function only when the value of a dependent selector change', () => {
       const firstState = { first: 'state', unchanged: 'state' };
       const secondState = { second: 'state', unchanged: 'state' };

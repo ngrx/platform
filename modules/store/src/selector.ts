@@ -1,11 +1,12 @@
 import { Selector } from './models';
 
+export type AnyFn = (...args: any[]) => any;
+
 export interface MemoizedSelector<State, Result>
   extends Selector<State, Result> {
   release(): void;
+  projector: AnyFn;
 }
-
-export type AnyFn = (...args: any[]) => any;
 
 export function memoize(t: AnyFn): { memoized: AnyFn; reset: () => void } {
   let lastArguments: null | IArguments = null;
@@ -132,7 +133,10 @@ export function createSelector(...args: any[]): Selector<any, any> {
     memoizedSelectors.forEach(selector => selector.release());
   }
 
-  return Object.assign(memoizedState.memoized, { release });
+  return Object.assign(memoizedState.memoized, {
+    release,
+    projector: memoizedProjector.memoized,
+  });
 }
 
 export function createFeatureSelector<T>(
@@ -142,5 +146,5 @@ export function createFeatureSelector<T>(
     return state[featureName];
   });
 
-  return Object.assign(memoized, { release: reset });
+  return Object.assign(memoized, { release: reset, projector: memoized });
 }
