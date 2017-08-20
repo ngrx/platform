@@ -43,7 +43,7 @@ import { compose } from '@ngrx/store';
 
 ### Action interface
 
-The `payload` property has been removed from the `Action` interface. As a result `payload` will no longer be included in the typing for `Actions` in your IDE.  Of course `Actions` may still recieve a `payload` but as an optional parameter.
+The optional property `payload` has been removed from the `Action` interface. As a result `payload` is no longer be included in the typing for `Actions` (i.e. will not show as a property in your IDE).  `Actions` may still recieve a `payload`, just don't be supprised when your IDE does not hint that you provide one.
 
 ### Registering Reducers
 
