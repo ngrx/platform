@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "monorepo for ngrx development",
   "scripts": {
-    "precommit": "yarn run prettier",
+    "precommit": "lint-staged",
     "bootstrap": "lerna bootstrap",
     "build": "ts-node ./build/index.ts",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
@@ -16,11 +16,17 @@
     "example:start:aot": "yarn run build && yarn run cli -- serve --aot",
     "example:test": "yarn run cli -- test --code-coverage",
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
-    "prettier": "prettier --parser typescript --single-quote --trailing-comma --write \"./**/*.ts\"",
+    "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"./**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "lerna publish --skip-npm --conventional-commits && npm run build"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "yarn prettier",
+      "git add"
+    ]
   },
   "keywords": [
     "ngrx",
@@ -86,6 +92,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "lerna": "^2.0.0",
+    "lint-staged": "^4.0.3",
     "module-alias": "^2.0.0",
     "ngrx-store-freeze": "^0.1.9",
     "nyc": "^10.1.2",
