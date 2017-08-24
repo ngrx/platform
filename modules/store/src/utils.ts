@@ -26,7 +26,8 @@ export function combineReducers(
 
   const finalReducerKeys = Object.keys(finalReducers);
 
-  return function combination(state = initialState, action) {
+  return function combination(state, action) {
+    state = state || initialState;
     let hasChanged = false;
     const nextState: any = {};
     for (let i = 0; i < finalReducerKeys.length; i++) {
