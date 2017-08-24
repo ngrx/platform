@@ -43,41 +43,17 @@ import { compose } from '@ngrx/store';
 
 ### Action interface
 
-The `payload` property has been removed from the `Action` interface.
+The optional property `payload` has been removed from the `Action` interface. To maintain previous behavior the `payload` may be added back to the Action interface (this approach may be helpful in migrating).  The intent of this change is to require `payload` or other properties to be typed.
 
-BEFORE:
-```ts
-import 'rxjs/add/operator/map';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Effect, Actions } from '@ngrx/effects';
-
-@Injectable()
-export class MyEffects {
-  @Effect() someEffect$: Observable<Action> = this.actions$.ofType(UserActions.LOGIN)
-    .map(action => action.payload)
-    .map(() => new AnotherAction())
-
-  constructor(private actions$: Actions) {}
+SAME AS BEFORE:
+export interface UnsafeAction implements Action {
+  payload?: any;
 }
-```
 
 AFTER:
-```ts
-import 'rxjs/add/operator/map';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Effect, Actions } from '@ngrx/effects';
-
-@Injectable()
-export class MyEffects {
-  @Effect() someEffect$: Observable<Action> = this.actions$.ofType(UserActions.LOGIN)
-    .map((action: UserActions.Login) => action.payload)
-    .map(() => new AnotherAction())
-
-  constructor(private actions$: Actions) {}
+export interface ActionWithPayload<T> extends Action {
+  payload: T;
 }
-```
 
 ### Registering Reducers
 
