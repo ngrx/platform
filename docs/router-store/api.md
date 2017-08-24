@@ -9,13 +9,12 @@ To use the time-traveling debugging in the Devtools, you must return an object c
 
 ```ts
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
-import { Params } from '@angular/router';
+import { Params, RouterStateSnapshot } from '@angular/router';
 import {
   StoreRouterConnectingModule,
   routerReducer,
   RouterReducerState,
-  RouterStateSerializer,
-  RouterStateSnapshot
+  RouterStateSerializer
 } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
