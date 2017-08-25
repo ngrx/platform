@@ -43,7 +43,9 @@ import { compose } from '@ngrx/store';
 
 ### Action interface
 
-The `payload` property has been removed from the `Action` interface.
+The `payload` property has been removed from the `Action` interface. It was a source of type-safety
+issues, especially when used with `@ngrx/effects`. If your interface/class has a payload, you need to provide
+the type.
 
 BEFORE:
 ```ts
@@ -76,6 +78,22 @@ export class MyEffects {
     .map(() => new AnotherAction())
 
   constructor(private actions$: Actions) {}
+}
+```
+
+If you prefer to keep the `payload` interface property, you can provide your own parameterized version.
+
+```ts
+export interface ActionWithPayload<T> extends Action {
+  payload: T;
+}
+```
+
+And if you need an unsafe version to help with transition.
+
+```ts
+export interface UnsafeAction implements Action {
+  payload?: any;
 }
 ```
 
