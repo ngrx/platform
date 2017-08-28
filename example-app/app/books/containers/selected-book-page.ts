@@ -30,10 +30,10 @@ export class SelectedBookPageComponent {
   }
 
   addToCollection(book: Book) {
-    this.store.dispatch(new collection.AddBookAction(book));
+    this.store.dispatch(new collection.AddBook(book));
   }
 
   removeFromCollection(book: Book) {
-    this.store.dispatch(new collection.RemoveBookAction(book));
+    this.store.dispatch(new collection.RemoveBook(book));
   }
 }

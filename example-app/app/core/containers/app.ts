@@ -22,7 +22,7 @@ import * as Auth from '../../auth/actions/auth';
         </bc-nav-item>
         <bc-nav-item (activate)="closeSidenav()" *ngIf="!(loggedIn$ | async)">
           Sign In
-        </bc-nav-item>        
+        </bc-nav-item>
         <bc-nav-item (activate)="logout()" *ngIf="loggedIn$ | async">
           Sign Out
         </bc-nav-item>
@@ -55,11 +55,11 @@ export class AppComponent {
      * updates and user interaction through the life of our
      * application.
      */
-    this.store.dispatch(new layout.CloseSidenavAction());
+    this.store.dispatch(new layout.CloseSidenav());
   }
 
   openSidenav() {
-    this.store.dispatch(new layout.OpenSidenavAction());
+    this.store.dispatch(new layout.OpenSidenav());
   }
 
   logout() {

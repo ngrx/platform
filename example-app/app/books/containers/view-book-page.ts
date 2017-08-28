@@ -30,7 +30,7 @@ export class ViewBookPageComponent implements OnDestroy {
 
   constructor(store: Store<fromBooks.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
-      .map(params => new book.SelectAction(params.id))
+      .map(params => new book.Select(params.id))
       .subscribe(store);
   }
 

@@ -5,7 +5,7 @@ import { empty } from 'rxjs/observable/empty';
 import { BookEffects, SEARCH_SCHEDULER, SEARCH_DEBOUNCE } from './book';
 import { GoogleBooksService } from '../../core/services/google-books';
 import { Observable } from 'rxjs/Observable';
-import { SearchAction, SearchCompleteAction } from '../actions/book';
+import { Search, SearchComplete } from '../actions/book';
 import { Book } from '../models/book';
 
 export class TestActions extends Actions {
@@ -47,12 +47,12 @@ describe('BookEffects', () => {
   });
 
   describe('search$', () => {
-    it('should return a new book.SearchCompleteAction, with the books, on success, after the de-bounce', () => {
+    it('should return a new book.SearchComplete, with the books, on success, after the de-bounce', () => {
       const book1 = { id: '111', volumeInfo: {} } as Book;
       const book2 = { id: '222', volumeInfo: {} } as Book;
       const books = [book1, book2];
-      const action = new SearchAction('query');
-      const completion = new SearchCompleteAction(books);
+      const action = new Search('query');
+      const completion = new SearchComplete(books);
 
       actions$.stream = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
@@ -62,9 +62,9 @@ describe('BookEffects', () => {
       expect(effects.search$).toBeObservable(expected);
     });
 
-    it('should return a new book.SearchCompleteAction, with an empty array, if the books service throws', () => {
-      const action = new SearchAction('query');
-      const completion = new SearchCompleteAction([]);
+    it('should return a new book.SearchComplete, with an empty array, if the books service throws', () => {
+      const action = new Search('query');
+      const completion = new SearchComplete([]);
       const error = 'Error!';
 
       actions$.stream = hot('-a---', { a: action });
@@ -76,7 +76,7 @@ describe('BookEffects', () => {
     });
 
     it(`should not do anything if the query is an empty string`, () => {
-      const action = new SearchAction('');
+      const action = new Search('');
 
       actions$.stream = hot('-a---', { a: action });
       const expected = cold('---');

@@ -37,7 +37,7 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 export class BookEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType<book.SearchAction>(book.SEARCH)
+    .ofType<book.Search>(book.SEARCH)
     .debounceTime(this.debounce, this.scheduler || async)
     .map(action => action.payload)
     .switchMap(query => {
@@ -50,8 +50,8 @@ export class BookEffects {
       return this.googleBooks
         .searchBooks(query)
         .takeUntil(nextSearch$)
-        .map((books: Book[]) => new book.SearchCompleteAction(books))
-        .catch(() => of(new book.SearchCompleteAction([])));
+        .map((books: Book[]) => new book.SearchComplete(books))
+        .catch(() => of(new book.SearchComplete([])));
     });
 
   constructor(
