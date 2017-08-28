@@ -176,5 +176,5 @@ export function getBottomLevelName(packageName: string) {
 }
 
 export function baseDir(...dirs: string[]): string {
-  return path.resolve(__dirname, '../', ...dirs);
+  return `"${path.resolve(__dirname, '../', ...dirs)}"`;
 }
