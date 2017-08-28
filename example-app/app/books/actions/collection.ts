@@ -14,19 +14,19 @@ export const LOAD_FAIL = '[Collection] Load Fail';
 /**
  * Add Book to Collection Actions
  */
-export class AddBookAction implements Action {
+export class AddBook implements Action {
   readonly type = ADD_BOOK;
 
   constructor(public payload: Book) {}
 }
 
-export class AddBookSuccessAction implements Action {
+export class AddBookSuccess implements Action {
   readonly type = ADD_BOOK_SUCCESS;
 
   constructor(public payload: Book) {}
 }
 
-export class AddBookFailAction implements Action {
+export class AddBookFail implements Action {
   readonly type = ADD_BOOK_FAIL;
 
   constructor(public payload: Book) {}
@@ -35,19 +35,19 @@ export class AddBookFailAction implements Action {
 /**
  * Remove Book from Collection Actions
  */
-export class RemoveBookAction implements Action {
+export class RemoveBook implements Action {
   readonly type = REMOVE_BOOK;
 
   constructor(public payload: Book) {}
 }
 
-export class RemoveBookSuccessAction implements Action {
+export class RemoveBookSuccess implements Action {
   readonly type = REMOVE_BOOK_SUCCESS;
 
   constructor(public payload: Book) {}
 }
 
-export class RemoveBookFailAction implements Action {
+export class RemoveBookFail implements Action {
   readonly type = REMOVE_BOOK_FAIL;
 
   constructor(public payload: Book) {}
@@ -56,29 +56,29 @@ export class RemoveBookFailAction implements Action {
 /**
  * Load Collection Actions
  */
-export class LoadAction implements Action {
+export class Load implements Action {
   readonly type = LOAD;
 }
 
-export class LoadSuccessAction implements Action {
+export class LoadSuccess implements Action {
   readonly type = LOAD_SUCCESS;
 
   constructor(public payload: Book[]) {}
 }
 
-export class LoadFailAction implements Action {
+export class LoadFail implements Action {
   readonly type = LOAD_FAIL;
 
   constructor(public payload: any) {}
 }
 
 export type Actions =
-  | AddBookAction
-  | AddBookSuccessAction
-  | AddBookFailAction
-  | RemoveBookAction
-  | RemoveBookSuccessAction
-  | RemoveBookFailAction
-  | LoadAction
-  | LoadSuccessAction
-  | LoadFailAction;
+  | AddBook
+  | AddBookSuccess
+  | AddBookFail
+  | RemoveBook
+  | RemoveBookSuccess
+  | RemoveBookFail
+  | Load
+  | LoadSuccess
+  | LoadFail;

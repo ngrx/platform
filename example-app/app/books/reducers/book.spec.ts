@@ -1,12 +1,8 @@
 import { reducer } from './books';
 import * as fromBooks from './books';
-import {
-  SearchCompleteAction,
-  LoadAction,
-  SelectAction,
-} from '../actions/book';
+import { SearchComplete, Load, Select } from '../actions/book';
 import { Book } from '../models/book';
-import { LoadSuccessAction } from '../actions/collection';
+import { LoadSuccess } from '../actions/collection';
 
 describe('BooksReducer', () => {
   describe('undefined action', () => {
@@ -68,20 +64,20 @@ describe('BooksReducer', () => {
     }
 
     it('should add all books in the payload when none exist', () => {
-      noExistingBooks(SearchCompleteAction);
-      noExistingBooks(LoadSuccessAction);
+      noExistingBooks(SearchComplete);
+      noExistingBooks(LoadSuccess);
     });
 
     it('should add only new books when books already exist', () => {
-      existingBooks(SearchCompleteAction);
-      existingBooks(LoadSuccessAction);
+      existingBooks(SearchComplete);
+      existingBooks(LoadSuccess);
     });
   });
 
   describe('LOAD', () => {
     it('should add a single book, if the book does not exist', () => {
       const book = { id: '888' } as Book;
-      const action = new LoadAction(book);
+      const action = new Load(book);
 
       const expectedResult = {
         ids: ['888'],
@@ -103,7 +99,7 @@ describe('BooksReducer', () => {
         },
       } as any;
       const book = { id: '999', foo: 'baz' } as any;
-      const action = new LoadAction(book);
+      const action = new Load(book);
 
       const result = reducer(initialState, action);
       expect(result).toEqual(initialState);
@@ -112,7 +108,7 @@ describe('BooksReducer', () => {
 
   describe('SELECT', () => {
     it('should set the selected book id on the state', () => {
-      const action = new SelectAction('1');
+      const action = new Select('1');
 
       const result = reducer(fromBooks.initialState, action);
       expect(result.selectedBookId).toBe('1');

@@ -13,25 +13,25 @@ export const SELECT = '[Book] Select';
  *
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
  */
-export class SearchAction implements Action {
+export class Search implements Action {
   readonly type = SEARCH;
 
   constructor(public payload: string) {}
 }
 
-export class SearchCompleteAction implements Action {
+export class SearchComplete implements Action {
   readonly type = SEARCH_COMPLETE;
 
   constructor(public payload: Book[]) {}
 }
 
-export class LoadAction implements Action {
+export class Load implements Action {
   readonly type = LOAD;
 
   constructor(public payload: Book) {}
 }
 
-export class SelectAction implements Action {
+export class Select implements Action {
   readonly type = SELECT;
 
   constructor(public payload: string) {}
@@ -41,8 +41,4 @@ export class SelectAction implements Action {
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type Actions =
-  | SearchAction
-  | SearchCompleteAction
-  | LoadAction
-  | SelectAction;
+export type Actions = Search | SearchComplete | Load | Select;
