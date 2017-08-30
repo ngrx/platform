@@ -1,7 +1,7 @@
 # @ngrx example application
 
 Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
-Take a look at the [live app](http://ngrx.github.io/example-app/).
+Take a look at the [live app](https://ngrx.github.io/platform/example-app/).
 
 This app is a book collection manager. The user can authenticate, use the Google Books API to search for
 books and add them to their collection. This application utilizes [@ngrx/db](https://github.com/ngrx/db)
