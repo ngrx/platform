@@ -12,6 +12,8 @@ Install @ngrx/router-store from npm:
 
 `npm install github:ngrx/router-store-builds` OR `yarn add github:ngrx/router-store-builds`
 
+## Usage
+
 During the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:
 
 ```ts
