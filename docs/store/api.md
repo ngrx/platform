@@ -159,6 +159,8 @@ export const reducers: ActionReducerMap<fromFeature.State> = {
 export class FeatureModule { }
 ```
 
+## Injecting Meta-Reducers
+
 To inject meta reducers, use the `META_REDUCERS` injection token exported in
 the Store API and a `Provider` to register the meta reducers through dependency
 injection.
