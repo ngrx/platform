@@ -107,7 +107,7 @@ import 'rxjs/add/operator/takeUntil';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { Actions, Effect, OnRunEffects, EffectsNotification } from '@ngrx/effects';
+import { Actions, Effect, OnRunEffects, EffectNotification } from '@ngrx/effects';
 
 @Injectable()
 export class UserEffects implements OnRunEffects {
@@ -119,7 +119,7 @@ export class UserEffects implements OnRunEffects {
       console.log(action);
     });
 
-  ngrxOnRunEffects(resolvedEffects$: Observable<EffectsNotification>) {
+  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
     return this.actions$.ofType('LOGGED_IN')
       .exhaustMap(() => resolvedEffects$.takeUntil('LOGGED_OUT'));
   }
