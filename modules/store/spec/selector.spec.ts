@@ -119,6 +119,92 @@ describe('Selectors', () => {
     });
   });
 
+  describe('createSelector with arrays', () => {
+    it('should deliver the value of selectors to the projection function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector([incrementOne, incrementTwo], projectFn)(
+        {}
+      );
+
+      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
+    });
+
+    it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector([incrementOne, incrementTwo], projectFn);
+
+      selector.projector('', '');
+
+      expect(incrementOne).not.toHaveBeenCalled();
+      expect(incrementTwo).not.toHaveBeenCalled();
+      expect(projectFn).toHaveBeenCalledWith('', '');
+    });
+
+    it('should call the projector function only when the value of a dependent selector change', () => {
+      const firstState = { first: 'state', unchanged: 'state' };
+      const secondState = { second: 'state', unchanged: 'state' };
+      const neverChangingSelector = jasmine
+        .createSpy('unchangedSelector')
+        .and.callFake((state: any) => {
+          return state.unchanged;
+        });
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector([neverChangingSelector], projectFn);
+
+      selector(firstState);
+      selector(secondState);
+
+      expect(projectFn).toHaveBeenCalledTimes(1);
+    });
+
+    it('should memoize the function', () => {
+      const firstState = { first: 'state' };
+      const secondState = { second: 'state' };
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        [incrementOne, incrementTwo, incrementThree],
+        projectFn
+      );
+
+      selector(firstState);
+      selector(firstState);
+      selector(firstState);
+      selector(secondState);
+
+      expect(incrementOne).toHaveBeenCalledTimes(2);
+      expect(incrementTwo).toHaveBeenCalledTimes(2);
+      expect(incrementThree).toHaveBeenCalledTimes(2);
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should allow you to release memoized arguments', () => {
+      const state = { first: 'state' };
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector([incrementOne], projectFn);
+
+      selector(state);
+      selector(state);
+      selector.release();
+      selector(state);
+      selector(state);
+
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should recursively release ancestor selectors', () => {
+      const grandparent = createSelector([incrementOne], a => a);
+      const parent = createSelector([grandparent], a => a);
+      const child = createSelector([parent], a => a);
+      spyOn(grandparent, 'release').and.callThrough();
+      spyOn(parent, 'release').and.callThrough();
+
+      child.release();
+
+      expect(grandparent.release).toHaveBeenCalled();
+      expect(parent.release).toHaveBeenCalled();
+    });
+  });
+
   describe('createFeatureSelector', () => {
     let featureName = '@ngrx/router-store';
     let featureSelector: (state: any) => number;
