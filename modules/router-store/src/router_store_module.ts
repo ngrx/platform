@@ -186,6 +186,8 @@ export class StoreRouterConnectingModule {
   private setUpStoreStateListener(): void {
     this.store.subscribe(s => {
       this.storeState = s;
+    });
+    this.store.select('routerReducer').subscribe(() => {
       this.navigateIfNeeded();
     });
   }
