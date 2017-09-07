@@ -92,7 +92,7 @@ export interface ActionWithPayload<T> extends Action {
 And if you need an unsafe version to help with transition.
 
 ```ts
-export interface UnsafeAction implements Action {
+export interface UnsafeAction extends Action {
   payload?: any;
 }
 ```
