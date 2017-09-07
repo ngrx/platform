@@ -14,7 +14,10 @@ import {
 } from '../src/index';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/mapTo';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
+import { of } from 'rxjs/observable/of';
 
 describe('integration spec', () => {
   it('should work', done => {
@@ -369,6 +372,38 @@ describe('integration spec', () => {
           done();
         });
     });
+  });
+
+  it('should support event during an async canActivate guard', done => {
+    createTestModule({
+      reducers: { routerReducer },
+      canActivate: () => {
+        store.dispatch({ type: 'USER_EVENT' });
+        return store.take(1).mapTo(true);
+      },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const store: Store<any> = TestBed.get(Store);
+    const log = logOfRouterAndStore(router, store);
+
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        log.splice(0);
+        return router.navigateByUrl('next');
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'store', state: undefined }, // after ROUTER_NAVIGATION
+          { type: 'store', state: undefined }, // after USER_EVENT
+          { type: 'router', event: 'NavigationEnd', url: '/next' },
+        ]);
+
+        done();
+      });
   });
 });
 
