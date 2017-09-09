@@ -1,19 +1,40 @@
 import { createSelector } from '@ngrx/store';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '../models/book';
 import * as book from '../actions/book';
 import * as collection from '../actions/collection';
 
-export interface State {
-  ids: string[];
-  entities: { [id: string]: Book };
+/**
+ * @ngrx/entity provides a predefined interface for handling
+ * a structured dictionary of records. This interface
+ * includes an array of ids, and a dictionary of the provided
+ * model type by id. This interface is extended to include
+ * any additional interface properties.
+ */
+export interface State extends EntityState<Book> {
   selectedBookId: string | null;
 }
 
-export const initialState: State = {
-  ids: [],
-  entities: {},
+/**
+ * createEntityAdapter creates many an object of helper
+ * functions for single or multiple operations
+ * against the dictionary of records. The configuration
+ * object takes a record id selector function and
+ * a sort option whether to sort the records when performing
+ * operations
+ */
+export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
+  selectId: (book: Book) => book.id,
+  sort: false,
+});
+
+/** getInitialState returns the default initial state
+ * for the generated entity state. Initial state
+ * additional properties can also be defined.
+*/
+export const initialState: State = adapter.getInitialState({
   selectedBookId: null,
-};
+});
 
 export function reducer(
   state = initialState,
@@ -22,46 +43,36 @@ export function reducer(
   switch (action.type) {
     case book.SEARCH_COMPLETE:
     case collection.LOAD_SUCCESS: {
-      const books = action.payload;
-      const newBooks = books.filter(book => !state.entities[book.id]);
-
-      const newBookIds = newBooks.map(book => book.id);
-      const newBookEntities = newBooks.reduce(
-        (entities: { [id: string]: Book }, book: Book) => {
-          return Object.assign(entities, {
-            [book.id]: book,
-          });
-        },
-        {}
-      );
-
       return {
-        ids: [...state.ids, ...newBookIds],
-        entities: Object.assign({}, state.entities, newBookEntities),
+        /**
+         * The addMany function provided by the created adapter
+         * adds many records to the entity dictionary
+         * and returns a new state including those records. If
+         * the collection is to be sorted, the adapter will
+         * sort each record upon entry into the sorted array.
+         */
+        ...adapter.addMany(action.payload, state),
         selectedBookId: state.selectedBookId,
       };
     }
 
     case book.LOAD: {
-      const book = action.payload;
-
-      if (state.ids.indexOf(book.id) > -1) {
-        return state;
-      }
-
       return {
-        ids: [...state.ids, book.id],
-        entities: Object.assign({}, state.entities, {
-          [book.id]: book,
-        }),
+        /**
+         * The addOne function provided by the created adapter
+         * adds one record to the entity dictionary
+         * and returns a new state including that records if it doesn't
+         * exist already. If the collection is to be sorted, the adapter will
+         * insert the new record into the sorted array.
+         */
+        ...adapter.addOne(action.payload, state),
         selectedBookId: state.selectedBookId,
       };
     }
 
     case book.SELECT: {
       return {
-        ids: state.ids,
-        entities: state.entities,
+        ...state,
         selectedBookId: action.payload,
       };
     }
@@ -81,20 +92,4 @@ export function reducer(
  * use-case.
  */
 
-export const getEntities = (state: State) => state.entities;
-
-export const getIds = (state: State) => state.ids;
-
 export const getSelectedId = (state: State) => state.selectedBookId;
-
-export const getSelected = createSelector(
-  getEntities,
-  getSelectedId,
-  (entities, selectedId) => {
-    return entities[selectedId];
-  }
-);
-
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});

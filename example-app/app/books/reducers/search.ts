@@ -25,17 +25,16 @@ export function reducer(state = initialState, action: book.Actions): State {
         };
       }
 
-      return Object.assign({}, state, {
+      return {
+        ...state,
         query,
         loading: true,
-      });
+      };
     }
 
     case book.SEARCH_COMPLETE: {
-      const books = action.payload;
-
       return {
-        ids: books.map(book => book.id),
+        ids: action.payload.map(book => book.id),
         loading: false,
         query: state.query,
       };
