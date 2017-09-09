@@ -21,4 +21,4 @@ Install @ngrx/entity from npm:
 ## API Documentation
 - [Interfaces](./interfaces.md)
 - [Entity Adapter](./adapter.md)
-- [Selectors]('./adapter.md#entity-selectors)
+- [Selectors](./adapter.md#entity-selectors)
