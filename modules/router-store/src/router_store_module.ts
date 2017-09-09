@@ -248,7 +248,7 @@ export class StoreRouterConnectingModule {
     this.dispatchRouterAction(ROUTER_ERROR, {
       routerState: this.routerState,
       storeState: this.storeState,
-      event,
+      event: new NavigationError(event.id, event.url, `${event}`),
     });
   }
 
