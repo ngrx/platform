@@ -32,7 +32,7 @@ describe('ngRx Store', () => {
       expect(store).toBeDefined();
     });
 
-    it('should handle re-entrancy', done => {
+    it('should handle re-entrancy', (done: any) => {
       let todosNextCount = 0;
       let todosCountNextCount = 0;
 

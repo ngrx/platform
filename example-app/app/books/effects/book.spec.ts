@@ -33,7 +33,7 @@ describe('BookEffects', () => {
         BookEffects,
         {
           provide: GoogleBooksService,
-          useValue: jasmine.createSpyObj('GoogleBooksService', ['searchBooks']),
+          useValue: { searchBooks: jest.fn() },
         },
         { provide: Actions, useFactory: getActions },
         { provide: SEARCH_SCHEDULER, useFactory: getTestScheduler },
@@ -57,7 +57,7 @@ describe('BookEffects', () => {
       actions$.stream = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
       const expected = cold('-----b', { b: completion });
-      googleBooksService.searchBooks.and.returnValue(response);
+      googleBooksService.searchBooks = jest.fn(() => response);
 
       expect(effects.search$).toBeObservable(expected);
     });
@@ -70,7 +70,7 @@ describe('BookEffects', () => {
       actions$.stream = hot('-a---', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('-----b', { b: completion });
-      googleBooksService.searchBooks.and.returnValue(response);
+      googleBooksService.searchBooks = jest.fn(() => response);
 
       expect(effects.search$).toBeObservable(expected);
     });

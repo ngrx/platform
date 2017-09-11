@@ -14,7 +14,7 @@
     "coverage:html": "nyc report --reporter=html",
     "example:start": "yarn run build && yarn run cli -- serve",
     "example:start:aot": "yarn run build && yarn run cli -- serve --aot",
-    "example:test": "yarn run cli -- test --code-coverage",
+    "example:test": "jest --watch",
     "example:build:prod": "yarn build && yarn cli -- build --aot -prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"./**/*.ts\"",
@@ -24,16 +24,30 @@
     "release": "lerna publish --skip-npm --conventional-commits && npm run build"
   },
   "lint-staged": {
-    "*.ts": ["yarn prettier", "git add"]
+    "*.ts": [
+      "yarn prettier",
+      "git add"
+    ]
   },
-  "keywords": ["ngrx", "angular", "rxjs"],
+  "keywords": [
+    "ngrx",
+    "angular",
+    "rxjs"
+  ],
   "author": "Rob Wormald <robwormald@gmail.com>",
   "license": "MIT",
   "repository": {},
   "nyc": {
-    "extension": [".ts"],
-    "exclude": ["**/*.spec", "**/spec/**/*"],
-    "include": ["**/*.ts"]
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.spec",
+      "**/spec/**/*"
+    ],
+    "include": [
+      "**/*.ts"
+    ]
   },
   "devDependencies": {
     "@angular/animations": "^4.2.0",
@@ -52,7 +66,9 @@
     "@ngrx/db": "^2.0.1",
     "@types/fs-extra": "^2.1.0",
     "@types/glob": "^5.0.30",
-    "@types/jasmine": "2.5.38",
+    "@types/jasmine": "2.5.45",
+    "@types/jasminewd2": "^2.0.2",
+    "@types/jest": "^20.0.2",
     "@types/node": "^7.0.5",
     "@types/ora": "^0.3.31",
     "@types/rimraf": "^0.0.28",
@@ -72,6 +88,9 @@
     "jasmine-core": "~2.5.2",
     "jasmine-marbles": "^0.0.2",
     "jasmine-spec-reporter": "~3.2.0",
+    "jest": "^21.0.2",
+    "jest-preset-angular": "^3.0.1",
+    "jest-zone-patch": "^0.0.7",
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.0.0",
     "karma-cli": "~1.0.1",
@@ -106,5 +125,40 @@
     "type": "opencollective",
     "url": "https://opencollective.com/ngrx",
     "logo": "https://opencollective.com/opencollective/logo.txt"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/setup-jest.ts",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "example-app/tsconfig.spec.json"
+      },
+      "__TRANSFORM_HTML__": true
+    },
+    "transform": {
+      "^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
+    },
+    "testMatch": [
+      "<rootDir>/example-app/**/*.spec.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "html",
+      "json"
+    ],
+    "mapCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/modules/*.*/"
+    ],
+    "moduleNameMapper": {
+      "^@ngrx/(?!db)(.*)": "<rootDir>/modules/$1"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx)"
+    ],
+    "modulePathIgnorePatterns": [
+      "dist"
+    ]
   }
 }
