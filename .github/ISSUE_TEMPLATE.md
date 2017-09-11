@@ -7,7 +7,6 @@
 [ ] Bug report  <!-- Please search GitHub for a similar issue or PR before submitting -->
 [ ] Feature request
 [ ] Documentation issue or request
-[ ] Support request
 </code></pre>
 
 ## What is the current behavior?
