@@ -4,9 +4,9 @@ Entity State adapter for managing record collections.
 
 @ngrx/entity provides an API to manipulate and query entity collections.
 
-- Reduces boilerplate for managing common datasets
-- Provides performant operations for managing entity collections
-- Extensible type-safe adapters for selecting entity information
+- Reduces boilerplate for creating reducers that manage a collection of models.
+- Provides performant CRUD operations for managing entity collections.
+- Extensible type-safe adapters for selecting entity information.
 
 ### Installation
 Install @ngrx/entity from npm:

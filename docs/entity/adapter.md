@@ -7,7 +7,7 @@ returned adapter provides many [methods](#adapter-methods) for performing operat
 against the collection type. The method takes an object for configuration with 2 properties.
 
  - `selectId`: A `method` for selecting the primary id for the collection
- - `sort`: A [sort function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) for sorting the collection. Set to `false` to leave collection unsorted.
+ - `sort`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to use leave the collection unsorted, which is more performant during CRUD operations.
 
 Usage:
 
@@ -84,8 +84,8 @@ state if no changes were made.
 * `addOne`: Add one entity to the collection
 * `addMany`: Add multiple entities to the collection
 * `addAll`: Replace current collection with provided collection
-* `removeOne`: Remove one entity to the collection
-* `removeMany`: Remove multiple entities to the collection
+* `removeOne`: Remove one entity from the collection
+* `removeMany`: Remove multiple entities from the collection
 * `removeAll`: Clear entity collection
 * `updateOne`: Update one entity in the collection
 * `updateMany`: Update multiple entities in the collection
@@ -176,7 +176,9 @@ export type All =
 
 `user.reducer.ts`
 ```ts
-import * as user from './user.actions';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { User } from './user.model';
+import * as UserActions from './user.actions';
 
 export interface State extends EntityState<User> {
   // additional entities state properties
@@ -184,8 +186,7 @@ export interface State extends EntityState<User> {
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
-  selectId: (user: User) => user.id,
-  sort: true,
+  selectId: (user: User) => user.id
 });
 
 export const initialState: State = adapter.getInitialState({
@@ -198,46 +199,28 @@ export function reducer(
   action: UserActions.All
 ): State {
   switch (action.type) {        
-    case user.ADD_USER: {
-      return {
-        ...state,
-        ...adapter.addOne(action.payload.user, state),
-      };
+    case UserActions.ADD_USER: {
+      return adapter.addOne(action.payload.user, state);
     }
 
-    case user.ADD_USERS: {
-      return {
-        ...state,
-        ...adapter.addMany(action.payload.users, state),
-      };
+    case UserActions.ADD_USERS: {
+      return adapter.addMany(action.payload.users, state);
     }
 
-    case user.UPDATE_USER: {
-      return {
-        ...state,
-        ...adapter.updateOne(action.payload.user, state),
-      };
+    case UserActions.UPDATE_USER: {
+      return adapter.updateOne(action.payload.user, state);
     }
 
-    case user.UPDATE_USERS: {
-      return {
-        ...state,
-        ...adapter.updateMany(action.payload.users, state),
-      };
+    case UserActions.UPDATE_USERS: {
+      return adapter.updateMany(action.payload.users, state);
     }
 
-    case user.LOAD_USERS: {
-      return {
-        ...state,
-        ...adapter.addAll(action.payload.users, state),
-      };
+    case UserActions.LOAD_USERS: {
+      return adapter.addAll(action.payload.users, state);
     }
 
-    case user.CLEAR_USERS: {
-      return {
-        ...adapter.removeAll(state),
-        selectedUserId: null
-      };
+    case UserActions.CLEAR_USERS: {
+      return adapter.removeAll({ ...state, selectedUserId: null });
     }        
 
     default: {
