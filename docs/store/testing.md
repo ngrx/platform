@@ -96,15 +96,17 @@ describe('My Component', () => {
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 
-  it('should display a list of items after the data is loaded', () => {
+  it('should display a list of items after the data is loaded', (done) => {
     const items = [1, 2, 3];
     const action = new Data.LoadDataSuccess({ items });
 
     store.dispatch(action);
 
-    component.items$.subscribe(data => {
-      expect(data.length).toBe(items.length);
-    });
+    component.items$.subscribe(
+      data => expect(data.length).toBe(items.length),
+      err => throw new Error(err),
+      () => done()
+    );
   });  
 });
 ```
