@@ -43,6 +43,10 @@ describe('integration spec', () => {
           { type: 'router', event: 'NavigationStart', url: '/' },
           { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+          { type: 'router', event: 'GuardsCheckStart', url: '/' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+          { type: 'router', event: 'ResolveStart', url: '/' },
+          { type: 'router', event: 'ResolveEnd', url: '/' },
           { type: 'router', event: 'NavigationEnd', url: '/' },
         ]);
       })
@@ -55,6 +59,10 @@ describe('integration spec', () => {
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
 
@@ -141,6 +149,8 @@ describe('integration spec', () => {
             type: 'store',
             state: { url: '/next', lastAction: ROUTER_NAVIGATION },
           },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           {
             type: 'store',
             state: {
@@ -201,6 +211,7 @@ describe('integration spec', () => {
             type: 'store',
             state: { url: '/next', lastAction: ROUTER_NAVIGATION },
           },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           {
             type: 'store',
             state: {
@@ -248,6 +259,10 @@ describe('integration spec', () => {
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: { url: '/next', navigationId: 2 } },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
         log.splice(0);
@@ -266,6 +281,10 @@ describe('integration spec', () => {
           { type: 'router', event: 'NavigationStart', url: '/' },
           { type: 'store', state: { url: '/', navigationId: 1 } }, // restored
           { type: 'router', event: 'RoutesRecognized', url: '/' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+          { type: 'router', event: 'ResolveStart', url: '/' },
+          { type: 'router', event: 'ResolveEnd', url: '/' },
           { type: 'router', event: 'NavigationEnd', url: '/' },
         ]);
         log.splice(0);
@@ -285,6 +304,10 @@ describe('integration spec', () => {
           { type: 'store', state: { url: '/next', navigationId: 2 } }, // restored
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
         done();
@@ -319,59 +342,63 @@ describe('integration spec', () => {
       ]);
       done();
     });
+  });
 
-    it('should support a custom RouterStateSnapshot serializer ', done => {
-      const reducer = (state: any, action: RouterAction<any>) => {
-        const r = routerReducer(state, action);
-        return r && r.state
-          ? { url: r.state.url, navigationId: r.navigationId }
-          : null;
-      };
+  it('should support a custom RouterStateSnapshot serializer ', done => {
+    const reducer = (state: any, action: RouterAction<any>) => {
+      const r = routerReducer(state, action);
+      return r && r.state
+        ? { url: r.state.url, navigationId: r.navigationId }
+        : null;
+    };
 
-      class CustomSerializer
-        implements RouterStateSerializer<{ url: string; params: any }> {
-        serialize(routerState: RouterStateSnapshot) {
-          const url = `${routerState.url}-custom`;
-          const params = { test: 1 };
+    class CustomSerializer
+      implements RouterStateSerializer<{ url: string; params: any }> {
+      serialize(routerState: RouterStateSnapshot) {
+        const url = `${routerState.url}-custom`;
+        const params = { test: 1 };
 
-          return { url, params };
-        }
+        return { url, params };
       }
+    }
 
-      const providers = [
-        { provide: RouterStateSerializer, useClass: CustomSerializer },
-      ];
+    const providers = [
+      { provide: RouterStateSerializer, useClass: CustomSerializer },
+    ];
 
-      createTestModule({ reducers: { routerReducer, reducer }, providers });
+    createTestModule({ reducers: { routerReducer, reducer }, providers });
 
-      const router = TestBed.get(Router);
-      const store = TestBed.get(Store);
-      const log = logOfRouterAndStore(router, store);
+    const router = TestBed.get(Router);
+    const store = TestBed.get(Store);
+    const log = logOfRouterAndStore(router, store);
 
-      router
-        .navigateByUrl('/')
-        .then(() => {
-          log.splice(0);
-          return router.navigateByUrl('next');
-        })
-        .then(() => {
-          expect(log).toEqual([
-            { type: 'router', event: 'NavigationStart', url: '/next' },
-            { type: 'router', event: 'RoutesRecognized', url: '/next' },
-            {
-              type: 'store',
-              state: {
-                url: '/next-custom',
-                navigationId: 2,
-                params: { test: 1 },
-              },
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        log.splice(0);
+        return router.navigateByUrl('next');
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          {
+            type: 'store',
+            state: {
+              url: '/next-custom',
+              navigationId: 2,
+              params: { test: 1 },
             },
-            { type: 'router', event: 'NavigationEnd', url: '/next' },
-          ]);
-          log.splice(0);
-          done();
-        });
-    });
+          },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
+          { type: 'router', event: 'NavigationEnd', url: '/next' },
+        ]);
+        log.splice(0);
+        done();
+      });
   });
 
   it('should support event during an async canActivate guard', done => {
@@ -398,7 +425,11 @@ describe('integration spec', () => {
           { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: undefined }, // after ROUTER_NAVIGATION
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'store', state: undefined }, // after USER_EVENT
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
 
