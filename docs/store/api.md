@@ -140,10 +140,12 @@ import * as fromFeature from './reducers';
 
 export const FEATURE_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<fromFeature.State>>('Feature Reducers');
 
-// map of reducers
-export const reducers: ActionReducerMap<fromFeature.State> = {
-
-};
+export function getReducers(): ActionReducerMap<fromFeature.State> {
+  // map of reducers
+  return {
+  
+  };
+}
 
 @NgModule({
   imports: [
@@ -152,7 +154,7 @@ export const reducers: ActionReducerMap<fromFeature.State> = {
   providers: [
     {
       provide: FEATURE_REDUCER_TOKEN,
-      useValue: reducers
+      useFactory: getReducers
     }
   ]
 })
