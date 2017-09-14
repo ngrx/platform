@@ -20,13 +20,13 @@ The Entity State is a predefined generic interface for a given entity collection
 
 export interface State extends EntityState<User> {
   // additional entity state properties
-  selectedUserId: string | null;
+  selectedUserId: number | null;
 }
 ```
 
 ## EntityAdapter<T>
 
-Provides a generic type interface for the provided [entity adapter](./adapter#createEntityAdapter). The entity adapter provides many [collection methods](./adapter.md#adapter-collection-methods) for managing the entity state.
+Provides a generic type interface for the provided [entity adapter](./adapter.md#createentityadapter). The entity adapter provides many [collection methods](./adapter.md#adapter-collection-methods) for managing the entity state.
 
 Usage:
 
