@@ -20,12 +20,12 @@ export interface State extends EntityState<Book> {
  * functions for single or multiple operations
  * against the dictionary of records. The configuration
  * object takes a record id selector function and
- * a sort option whether to sort the records when performing
- * operations
+ * a sortComparer option which is set to a compare
+ * function if the records are to be sorted.
  */
 export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
   selectId: (book: Book) => book.id,
-  sort: false,
+  sortComparer: false,
 });
 
 /** getInitialState returns the default initial state

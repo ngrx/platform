@@ -14,7 +14,7 @@ describe('Sorted State Adapter', () => {
   beforeEach(() => {
     adapter = createEntityAdapter({
       selectId: (book: BookModel) => book.id,
-      sort: (a, b) => a.title.localeCompare(b.title),
+      sortComparer: (a, b) => a.title.localeCompare(b.title),
     });
 
     state = { ids: [], entities: {} };
