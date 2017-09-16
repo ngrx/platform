@@ -1,0 +1,243 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page should compile 1`] = `
+<bc-login-page
+  error$={[Function Store]}
+  pending$={[Function Store]}
+  store={[Function Store]}
+>
+  
+      <bc-login-form
+    _nghost-c0=""
+    ng-reflect-pending="false"
+  >
+    
+      
+    <md-card
+      _ngcontent-c0=""
+      class="mat-card"
+    >
+      
+        
+      <md-card-title
+        _ngcontent-c0=""
+        class="mat-card-title "
+      >
+        Login
+      </md-card-title>
+      
+        
+      <md-card-content
+        _ngcontent-c0=""
+        class="mat-card-content"
+      >
+        
+          
+        <form
+          _ngcontent-c0=""
+          class="ng-untouched ng-pristine ng-valid"
+          ng-reflect-form="[object Object]"
+          novalidate=""
+        >
+          
+            
+          <p
+            _ngcontent-c0=""
+          >
+            
+              
+            <md-input-container
+              _ngcontent-c0=""
+              class="mat-input-container ng-tns-c2-0 ng-untouched ng-pristine ng-valid"
+            >
+              <div
+                class="mat-input-wrapper"
+              >
+                <div
+                  class="mat-input-flex"
+                >
+                  
+                  <div
+                    class="mat-input-infix"
+                  >
+                    
+                
+                    <input
+                      _ngcontent-c0=""
+                      aria-invalid="false"
+                      class="mat-input-element ng-untouched ng-pristine ng-valid"
+                      formcontrolname="username"
+                      id="md-input-1"
+                      mdinput=""
+                      ng-reflect-name="username"
+                      ng-reflect-placeholder="Username"
+                      ng-reflect-type="text"
+                      placeholder="Username"
+                      type="text"
+                    />
+                    
+              
+                    <span
+                      class="mat-input-placeholder-wrapper"
+                    >
+                      
+                      <label
+                        class="mat-input-placeholder ng-tns-c2-0 mat-empty mat-float"
+                        for="md-input-1"
+                      >
+                        Username 
+                        
+                      </label>
+                    </span>
+                  </div>
+                  
+                </div>
+                <div
+                  class="mat-input-underline"
+                >
+                  <span
+                    class="mat-input-ripple"
+                  />
+                </div>
+                <div
+                  class="mat-input-subscript-wrapper"
+                  ng-reflect-ng-switch="hint"
+                >
+                  
+                  
+                  <div
+                    class="mat-input-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages"
+                    style="opacity: 1;"
+                  >
+                    
+                    <div
+                      class="mat-input-hint-spacer"
+                    />
+                  </div>
+                </div>
+              </div>
+            </md-input-container>
+            
+            
+          </p>
+          
+  
+            
+          <p
+            _ngcontent-c0=""
+          >
+            
+              
+            <md-input-container
+              _ngcontent-c0=""
+              class="mat-input-container ng-tns-c2-1 ng-untouched ng-pristine ng-valid"
+            >
+              <div
+                class="mat-input-wrapper"
+              >
+                <div
+                  class="mat-input-flex"
+                >
+                  
+                  <div
+                    class="mat-input-infix"
+                  >
+                    
+                
+                    <input
+                      _ngcontent-c0=""
+                      aria-invalid="false"
+                      class="mat-input-element ng-untouched ng-pristine ng-valid"
+                      formcontrolname="password"
+                      id="md-input-3"
+                      mdinput=""
+                      ng-reflect-name="password"
+                      ng-reflect-placeholder="Password"
+                      ng-reflect-type="password"
+                      placeholder="Password"
+                      type="password"
+                    />
+                    
+              
+                    <span
+                      class="mat-input-placeholder-wrapper"
+                    >
+                      
+                      <label
+                        class="mat-input-placeholder ng-tns-c2-1 mat-empty mat-float"
+                        for="md-input-3"
+                      >
+                        Password 
+                        
+                      </label>
+                    </span>
+                  </div>
+                  
+                </div>
+                <div
+                  class="mat-input-underline"
+                >
+                  <span
+                    class="mat-input-ripple"
+                  />
+                </div>
+                <div
+                  class="mat-input-subscript-wrapper"
+                  ng-reflect-ng-switch="hint"
+                >
+                  
+                  
+                  <div
+                    class="mat-input-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages"
+                    style="opacity: 1;"
+                  >
+                    
+                    <div
+                      class="mat-input-hint-spacer"
+                    />
+                  </div>
+                </div>
+              </div>
+            </md-input-container>
+            
+            
+          </p>
+          
+  
+            
+          
+                    
+          
+            
+          <p
+            _ngcontent-c0=""
+            class="loginButtons"
+          >
+            
+              
+            <button
+              _ngcontent-c0=""
+              md-button=""
+              type="submit"
+            >
+              Login
+            </button>
+            
+            
+          </p>
+          
+  
+          
+        </form>
+        
+        
+      </md-card-content>
+      
+      
+    </md-card>
+    
+    
+  </bc-login-form>
+    
+</bc-login-page>
+`;

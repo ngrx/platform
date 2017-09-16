@@ -7,7 +7,7 @@ returned adapter provides many [methods](#adapter-methods) for performing operat
 against the collection type. The method takes an object for configuration with 2 properties.
 
  - `selectId`: A `method` for selecting the primary id for the collection
- - `sortComparer`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to use leave the collection unsorted, which is more performant during CRUD operations.
+ - `sortComparer`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to leave the collection unsorted, which is more performant during CRUD operations.
 
 Usage:
 

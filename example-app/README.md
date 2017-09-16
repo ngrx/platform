@@ -18,6 +18,7 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
  - [@angular/router](https://github.com/angular/angular) - Angular Router
  - [@ngrx/db](https://github.com/ngrx/db) - RxJS powered IndexedDB for Angular apps
  - [@ngrx/store-devtools](https://github.com/ngrx/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
+ - [jest](https://facebook.github.io/jest/) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
 
 ### Quick start
 

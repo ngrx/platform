@@ -1,0 +1,375 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page should compile 1`] = `
+<bc-login-form
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  
+      <md-card
+    _ngcontent-c0=""
+  >
+    
+        
+    <md-card-title
+      _ngcontent-c0=""
+    >
+      Login
+    </md-card-title>
+    
+        
+    <md-card-content
+      _ngcontent-c0=""
+    >
+      
+          
+      <form
+        _ngcontent-c0=""
+        class="ng-untouched ng-pristine ng-valid"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        
+            
+        <p
+          _ngcontent-c0=""
+        >
+          
+              
+          <md-input-container
+            _ngcontent-c0=""
+          >
+            
+                
+            <input
+              _ngcontent-c0=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="username"
+              mdinput=""
+              ng-reflect-name="username"
+              placeholder="Username"
+              type="text"
+            />
+            
+              
+          </md-input-container>
+          
+            
+        </p>
+        
+  
+            
+        <p
+          _ngcontent-c0=""
+        >
+          
+              
+          <md-input-container
+            _ngcontent-c0=""
+          >
+            
+                
+            <input
+              _ngcontent-c0=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="password"
+              mdinput=""
+              ng-reflect-name="password"
+              placeholder="Password"
+              type="password"
+            />
+            
+              
+          </md-input-container>
+          
+            
+        </p>
+        
+  
+            
+        
+                  
+          
+            
+        <p
+          _ngcontent-c0=""
+          class="loginButtons"
+        >
+          
+              
+          <button
+            _ngcontent-c0=""
+            md-button=""
+            type="submit"
+          >
+            Login
+          </button>
+          
+            
+        </p>
+        
+  
+          
+      </form>
+      
+        
+    </md-card-content>
+    
+      
+  </md-card>
+    
+</bc-login-form>
+`;
+
+exports[`Login Page should disable the form if pending 1`] = `
+<bc-login-form
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  
+      <md-card
+    _ngcontent-c1=""
+  >
+    
+        
+    <md-card-title
+      _ngcontent-c1=""
+    >
+      Login
+    </md-card-title>
+    
+        
+    <md-card-content
+      _ngcontent-c1=""
+    >
+      
+          
+      <form
+        _ngcontent-c1=""
+        class="ng-untouched ng-pristine"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        
+            
+        <p
+          _ngcontent-c1=""
+        >
+          
+              
+          <md-input-container
+            _ngcontent-c1=""
+          >
+            
+                
+            <input
+              _ngcontent-c1=""
+              class="ng-untouched ng-pristine"
+              disabled=""
+              formcontrolname="username"
+              mdinput=""
+              ng-reflect-name="username"
+              placeholder="Username"
+              type="text"
+            />
+            
+              
+          </md-input-container>
+          
+            
+        </p>
+        
+  
+            
+        <p
+          _ngcontent-c1=""
+        >
+          
+              
+          <md-input-container
+            _ngcontent-c1=""
+          >
+            
+                
+            <input
+              _ngcontent-c1=""
+              class="ng-untouched ng-pristine"
+              disabled=""
+              formcontrolname="password"
+              mdinput=""
+              ng-reflect-name="password"
+              placeholder="Password"
+              type="password"
+            />
+            
+              
+          </md-input-container>
+          
+            
+        </p>
+        
+  
+            
+        
+                  
+          
+            
+        <p
+          _ngcontent-c1=""
+          class="loginButtons"
+        >
+          
+              
+          <button
+            _ngcontent-c1=""
+            md-button=""
+            type="submit"
+          >
+            Login
+          </button>
+          
+            
+        </p>
+        
+  
+          
+      </form>
+      
+        
+    </md-card-content>
+    
+      
+  </md-card>
+    
+</bc-login-form>
+`;
+
+exports[`Login Page should display an error message if provided 1`] = `
+<bc-login-form
+  errorMessage={[Function String]}
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  
+      <md-card
+    _ngcontent-c2=""
+  >
+    
+        
+    <md-card-title
+      _ngcontent-c2=""
+    >
+      Login
+    </md-card-title>
+    
+        
+    <md-card-content
+      _ngcontent-c2=""
+    >
+      
+          
+      <form
+        _ngcontent-c2=""
+        class="ng-untouched ng-pristine ng-valid"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        
+            
+        <p
+          _ngcontent-c2=""
+        >
+          
+              
+          <md-input-container
+            _ngcontent-c2=""
+          >
+            
+                
+            <input
+              _ngcontent-c2=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="username"
+              mdinput=""
+              ng-reflect-name="username"
+              placeholder="Username"
+              type="text"
+            />
+            
+              
+          </md-input-container>
+          
+            
+        </p>
+        
+  
+            
+        <p
+          _ngcontent-c2=""
+        >
+          
+              
+          <md-input-container
+            _ngcontent-c2=""
+          >
+            
+                
+            <input
+              _ngcontent-c2=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="password"
+              mdinput=""
+              ng-reflect-name="password"
+              placeholder="Password"
+              type="password"
+            />
+            
+              
+          </md-input-container>
+          
+            
+        </p>
+        
+  
+            
+        
+        <p
+          _ngcontent-c2=""
+          class="loginError"
+        >
+          
+              Invalid credentials
+            
+        </p>
+                  
+          
+            
+        <p
+          _ngcontent-c2=""
+          class="loginButtons"
+        >
+          
+              
+          <button
+            _ngcontent-c2=""
+            md-button=""
+            type="submit"
+          >
+            Login
+          </button>
+          
+            
+        </p>
+        
+  
+          
+      </form>
+      
+        
+    </md-card-content>
+    
+      
+  </md-card>
+    
+</bc-login-form>
+`;

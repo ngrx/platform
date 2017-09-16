@@ -9,7 +9,8 @@ describe('LoginPageReducer', () => {
       const action = {} as any;
 
       const result = reducer(undefined, action);
-      expect(result).toEqual(fromLoginPage.initialState);
+
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -24,7 +25,8 @@ describe('LoginPageReducer', () => {
       };
 
       const result = reducer(fromLoginPage.initialState, createAction);
-      expect(result).toEqual(expectedResult);
+
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -39,7 +41,8 @@ describe('LoginPageReducer', () => {
       };
 
       const result = reducer(fromLoginPage.initialState, createAction);
-      expect(result).toEqual(expectedResult);
+
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -54,7 +57,8 @@ describe('LoginPageReducer', () => {
       };
 
       const result = reducer(fromLoginPage.initialState, createAction);
-      expect(result).toEqual(expectedResult);
+
+      expect(result).toMatchSnapshot();
     });
   });
 });

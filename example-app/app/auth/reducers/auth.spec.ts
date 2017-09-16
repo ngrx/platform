@@ -9,7 +9,15 @@ describe('AuthReducer', () => {
       const action = {} as any;
 
       const result = reducer(undefined, action);
-      expect(result).toEqual(fromAuth.initialState);
+
+      /**
+       * Snapshot tests are a quick way to validate
+       * the state produced by a reducer since
+       * its plain JavaScript object. These snapshots
+       * are used to validate against the current state
+       * if the functionality of the reducer ever changes.
+       */
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -21,7 +29,8 @@ describe('AuthReducer', () => {
       const expectedResult = fromAuth.initialState;
 
       const result = reducer(fromAuth.initialState, createAction);
-      expect(result).toEqual(expectedResult);
+
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -36,7 +45,8 @@ describe('AuthReducer', () => {
       };
 
       const result = reducer(fromAuth.initialState, createAction);
-      expect(result).toEqual(expectedResult);
+
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -51,7 +61,8 @@ describe('AuthReducer', () => {
       const expectedResult = fromAuth.initialState;
 
       const result = reducer(initialState, createAction);
-      expect(result).toEqual(expectedResult);
+
+      expect(result).toMatchSnapshot();
     });
   });
 });

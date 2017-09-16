@@ -20,7 +20,7 @@ import 'rxjs/add/operator/toPromise';
 import { of } from 'rxjs/observable/of';
 
 describe('integration spec', () => {
-  it('should work', done => {
+  it('should work', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
@@ -62,7 +62,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support preventing navigation', done => {
+  it('should support preventing navigation', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>) => {
       if (
         action.type === ROUTER_NAVIGATION &&
@@ -98,7 +98,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support rolling back if navigation gets canceled', done => {
+  it('should support rolling back if navigation gets canceled', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
@@ -156,7 +156,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support rolling back if navigation errors', done => {
+  it('should support rolling back if navigation errors', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
@@ -216,7 +216,9 @@ describe('integration spec', () => {
       });
   });
 
-  it('should call navigateByUrl when resetting state of the routerReducer', done => {
+  it('should call navigateByUrl when resetting state of the routerReducer', (
+    done: any
+  ) => {
     const reducer = (state: any, action: RouterAction<any>) => {
       const r = routerReducer(state, action);
       return r && r.state
@@ -291,7 +293,9 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support cancellation of initial navigation using canLoad guard', done => {
+  it('should support cancellation of initial navigation using canLoad guard', (
+    done: any
+  ) => {
     const reducer = (state: any, action: RouterAction<any>) => {
       const r = routerReducer(state, action);
       return r && r.state
@@ -320,7 +324,9 @@ describe('integration spec', () => {
       done();
     });
 
-    it('should support a custom RouterStateSnapshot serializer ', done => {
+    it('should support a custom RouterStateSnapshot serializer ', (
+      done: any
+    ) => {
       const reducer = (state: any, action: RouterAction<any>) => {
         const r = routerReducer(state, action);
         return r && r.state
@@ -374,7 +380,7 @@ describe('integration spec', () => {
     });
   });
 
-  it('should support event during an async canActivate guard', done => {
+  it('should support event during an async canActivate guard', (done: any) => {
     createTestModule({
       reducers: { routerReducer },
       canActivate: () => {

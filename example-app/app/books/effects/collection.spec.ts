@@ -36,12 +36,12 @@ describe('CollectionEffects', () => {
         CollectionEffects,
         {
           provide: Database,
-          useValue: jasmine.createSpyObj('database', [
-            'open',
-            'query',
-            'insert',
-            'executeWrite',
-          ]),
+          useValue: {
+            open: jest.fn(),
+            query: jest.fn(),
+            insert: jest.fn(),
+            executeWrite: jest.fn(),
+          },
         },
         { provide: Actions, useFactory: getActions },
       ],
@@ -67,7 +67,7 @@ describe('CollectionEffects', () => {
       actions$.stream = hot('-a', { a: action });
       const response = cold('-a-b|', { a: book1, b: book2 });
       const expected = cold('-----c', { c: completion });
-      db.query.and.returnValue(response);
+      db.query = jest.fn(() => response);
 
       expect(effects.loadCollection$).toBeObservable(expected);
     });
@@ -80,7 +80,7 @@ describe('CollectionEffects', () => {
       actions$.stream = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
-      db.query.and.returnValue(response);
+      db.query = jest.fn(() => response);
 
       expect(effects.loadCollection$).toBeObservable(expected);
     });
@@ -94,7 +94,7 @@ describe('CollectionEffects', () => {
       actions$.stream = hot('-a', { a: action });
       const response = cold('-b', { b: true });
       const expected = cold('--c', { c: completion });
-      db.insert.and.returnValue(response);
+      db.insert = jest.fn(() => response);
 
       expect(effects.addBookToCollection$).toBeObservable(expected);
       expect(db.insert).toHaveBeenCalledWith('books', [book1]);
@@ -108,7 +108,7 @@ describe('CollectionEffects', () => {
       actions$.stream = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
-      db.insert.and.returnValue(response);
+      db.insert = jest.fn(() => response);
 
       expect(effects.addBookToCollection$).toBeObservable(expected);
     });
@@ -121,7 +121,7 @@ describe('CollectionEffects', () => {
         actions$.stream = hot('-a', { a: action });
         const response = cold('-b', { b: true });
         const expected = cold('--c', { c: completion });
-        db.executeWrite.and.returnValue(response);
+        db.executeWrite = jest.fn(() => response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
         expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [
@@ -137,7 +137,7 @@ describe('CollectionEffects', () => {
         actions$.stream = hot('-a', { a: action });
         const response = cold('-#', {}, error);
         const expected = cold('--c', { c: completion });
-        db.executeWrite.and.returnValue(response);
+        db.executeWrite = jest.fn(() => response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
         expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [

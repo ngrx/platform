@@ -17,15 +17,7 @@
       "node"
     ],
     "baseUrl": ".",
-    "rootDir": "../",
-    "paths": {
-      "@ngrx/effects": ["../modules/effects"],
-      "@ngrx/effects/testing": ["../modules/effects/testing"],
-      "@ngrx/store": ["../modules/store"],
-      "@ngrx/router-store": ["../modules/router-store"],
-      "@ngrx/store-devtools": ["../modules/store-devtools"],
-      "@ngrx/entity": ["../modules/entity"]
-    }
+    "rootDir": "../"
   },
   "files": [
     "test.ts"
