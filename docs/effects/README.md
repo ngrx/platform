@@ -46,17 +46,15 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class AuthEffects {
   // Listen for the 'LOGIN' action
   @Effect() login$: Observable<Action> = this.actions$.ofType('LOGIN')
-    // Map the payload into JSON to use as the request body
-    .map(toPayload)
-    .mergeMap(payload =>
-      this.http.post('/auth', payload)
+    .mergeMap(action =>
+      this.http.post('/auth', action.payload)
         // If successful, dispatch success action with result
         .map(data => ({ type: 'LOGIN_SUCCESS', payload: data }))
         // If request fails, dispatch failed action
