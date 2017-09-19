@@ -10,10 +10,13 @@ import { createSelectorsFactory } from './state_selectors';
 import { createSortedStateAdapter } from './sorted_state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
 
-export function createEntityAdapter<T>(options: {
+export function createEntityAdapter<T>(): EntityAdapter<T>;
+export function createEntityAdapter<T>(options?: {
   selectId: IdSelector<T>;
   sortComparer?: false | Comparer<T>;
 }): EntityAdapter<T> {
+  options = options || { selectId: (instance: any) => instance.id };
+
   const { selectId, sortComparer }: EntityDefinition<T> = {
     sortComparer: false,
     ...options,
