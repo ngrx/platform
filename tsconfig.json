@@ -28,6 +28,9 @@
       ],
       "@ngrx/router-store": [
         "./modules/router-store"
+      ],
+      "@ngrx/entity": [
+        "./modules/entity"
       ]
     }
   },

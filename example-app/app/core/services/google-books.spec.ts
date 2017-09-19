@@ -10,7 +10,7 @@ describe('Service: GoogleBooks', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Http, useValue: jasmine.createSpyObj('Http', ['get']) },
+        { provide: Http, useValue: { get: jest.fn() } },
         GoogleBooksService,
       ],
     });
@@ -41,7 +41,7 @@ describe('Service: GoogleBooks', () => {
 
     const response = cold('-a|', { a: httpResponse });
     const expected = cold('-b|', { b: books.items });
-    http.get.and.returnValue(response);
+    http.get = jest.fn(() => response);
 
     expect(service.searchBooks(queryTitle)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(
@@ -56,7 +56,7 @@ describe('Service: GoogleBooks', () => {
 
     const response = cold('-a|', { a: httpResponse });
     const expected = cold('-b|', { b: data });
-    http.get.and.returnValue(response);
+    http.get = jest.fn(() => response);
 
     expect(service.retrieveBook(data.volumeId)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(

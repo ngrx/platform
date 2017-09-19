@@ -8,7 +8,10 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
-
+import {
+  DefaultRouterStateSerializer,
+  RouterStateSerializer,
+} from './serializer';
 /**
  * An action dispatched when the router navigates.
  */
@@ -17,17 +20,17 @@ export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
 /**
  * Payload of ROUTER_NAVIGATION.
  */
-export type RouterNavigationPayload = {
-  routerState: RouterStateSnapshot;
+export type RouterNavigationPayload<T> = {
+  routerState: T;
   event: RoutesRecognized;
 };
 
 /**
  * An action dispatched when the router navigates.
  */
-export type RouterNavigationAction = {
+export type RouterNavigationAction<T = RouterStateSnapshot> = {
   type: typeof ROUTER_NAVIGATION;
-  payload: RouterNavigationPayload;
+  payload: RouterNavigationPayload<T>;
 };
 
 /**
@@ -38,8 +41,8 @@ export const ROUTER_CANCEL = 'ROUTER_CANCEL';
 /**
  * Payload of ROUTER_CANCEL.
  */
-export type RouterCancelPayload<T> = {
-  routerState: RouterStateSnapshot;
+export type RouterCancelPayload<T, V> = {
+  routerState: V;
   storeState: T;
   event: NavigationCancel;
 };
@@ -47,9 +50,9 @@ export type RouterCancelPayload<T> = {
 /**
  * An action dispatched when the router cancel navigation.
  */
-export type RouterCancelAction<T> = {
+export type RouterCancelAction<T, V = RouterStateSnapshot> = {
   type: typeof ROUTER_CANCEL;
-  payload: RouterCancelPayload<T>;
+  payload: RouterCancelPayload<T, V>;
 };
 
 /**
@@ -60,8 +63,8 @@ export const ROUTER_ERROR = 'ROUTE_ERROR';
 /**
  * Payload of ROUTER_ERROR.
  */
-export type RouterErrorPayload<T> = {
-  routerState: RouterStateSnapshot;
+export type RouterErrorPayload<T, V> = {
+  routerState: V;
   storeState: T;
   event: NavigationError;
 };
@@ -69,28 +72,28 @@ export type RouterErrorPayload<T> = {
 /**
  * An action dispatched when the router errors.
  */
-export type RouterErrorAction<T> = {
+export type RouterErrorAction<T, V = RouterStateSnapshot> = {
   type: typeof ROUTER_ERROR;
-  payload: RouterErrorPayload<T>;
+  payload: RouterErrorPayload<T, V>;
 };
 
 /**
  * An union type of router actions.
  */
-export type RouterAction<T> =
-  | RouterNavigationAction
-  | RouterCancelAction<T>
-  | RouterErrorAction<T>;
+export type RouterAction<T, V = RouterStateSnapshot> =
+  | RouterNavigationAction<T>
+  | RouterCancelAction<T, V>
+  | RouterErrorAction<T, V>;
 
-export type RouterReducerState = {
-  state: RouterStateSnapshot;
+export type RouterReducerState<T = RouterStateSnapshot> = {
+  state: T;
   navigationId: number;
 };
 
-export function routerReducer(
-  state: RouterReducerState,
+export function routerReducer<T = RouterStateSnapshot>(
+  state: RouterReducerState<T>,
   action: RouterAction<any>
-): RouterReducerState {
+): RouterReducerState<T> {
   switch (action.type) {
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:
@@ -133,7 +136,7 @@ export function routerReducer(
  *   declarations: [AppCmp, SimpleCmp],
  *   imports: [
  *     BrowserModule,
- *     StoreModule.provideStore(mapOfReducers),
+ *     StoreModule.forRoot(mapOfReducers),
  *     RouterModule.forRoot([
  *       { path: '', component: SimpleCmp },
  *       { path: 'next', component: SimpleCmp }
@@ -146,16 +149,24 @@ export function routerReducer(
  * }
  * ```
  */
-@NgModule({})
+@NgModule({
+  providers: [
+    { provide: RouterStateSerializer, useClass: DefaultRouterStateSerializer },
+  ],
+})
 export class StoreRouterConnectingModule {
-  private routerState: RouterStateSnapshot | null = null;
+  private routerState: RouterStateSnapshot;
   private storeState: any;
   private lastRoutesRecognized: RoutesRecognized;
 
   private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
 
-  constructor(private store: Store<any>, private router: Router) {
+  constructor(
+    private store: Store<any>,
+    private router: Router,
+    private serializer: RouterStateSerializer<RouterStateSnapshot>
+  ) {
     this.setUpBeforePreactivationHook();
     this.setUpStoreStateListener();
     this.setUpStateRollbackEvents();
@@ -165,7 +176,7 @@ export class StoreRouterConnectingModule {
     (<any>this.router).hooks.beforePreactivation = (
       routerState: RouterStateSnapshot
     ) => {
-      this.routerState = routerState;
+      this.routerState = this.serializer.serialize(routerState);
       if (this.shouldDispatchRouterNavigation())
         this.dispatchRouterNavigation();
       return of(true);
@@ -175,6 +186,8 @@ export class StoreRouterConnectingModule {
   private setUpStoreStateListener(): void {
     this.store.subscribe(s => {
       this.storeState = s;
+    });
+    this.store.select('routerReducer').subscribe(() => {
       this.navigateIfNeeded();
     });
   }
@@ -185,7 +198,12 @@ export class StoreRouterConnectingModule {
   }
 
   private navigateIfNeeded(): void {
-    if (!this.storeState['routerReducer']) return;
+    if (
+      !this.storeState['routerReducer'] ||
+      !this.storeState['routerReducer'].state
+    ) {
+      return;
+    }
     if (this.dispatchTriggeredByRouter) return;
 
     if (this.router.url !== this.storeState['routerReducer'].state.url) {
@@ -209,7 +227,12 @@ export class StoreRouterConnectingModule {
   private dispatchRouterNavigation(): void {
     this.dispatchRouterAction(ROUTER_NAVIGATION, {
       routerState: this.routerState,
-      event: this.lastRoutesRecognized,
+      event: new RoutesRecognized(
+        this.lastRoutesRecognized.id,
+        this.lastRoutesRecognized.url,
+        this.lastRoutesRecognized.urlAfterRedirects,
+        this.routerState
+      ),
     });
   }
 
@@ -225,7 +248,7 @@ export class StoreRouterConnectingModule {
     this.dispatchRouterAction(ROUTER_ERROR, {
       routerState: this.routerState,
       storeState: this.storeState,
-      event,
+      event: new NavigationError(event.id, event.url, `${event}`),
     });
   }
 

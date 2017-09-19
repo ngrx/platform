@@ -53,23 +53,35 @@ export const getBooksState = createFeatureSelector<BooksState>('books');
  */
 export const getBookEntitiesState = createSelector(
   getBooksState,
-  (state: BooksState) => state.books
+  state => state.books
 );
-export const getBookEntities = createSelector(
-  getBookEntitiesState,
-  fromBooks.getEntities
-);
-export const getBookIds = createSelector(
-  getBookEntitiesState,
-  fromBooks.getIds
-);
+
 export const getSelectedBookId = createSelector(
   getBookEntitiesState,
   fromBooks.getSelectedId
 );
+
+/**
+ * Adapters created with @ngrx/entity generate
+ * commonly used selector functions including
+ * getting all ids in the record set, a dictionary
+ * of the records by id, an array of records and
+ * the total number of records. This reducers boilerplate
+ * in selecting records from the entity state.
+ */
+export const {
+  selectIds: getBookIds,
+  selectEntities: getBookEntities,
+  selectAll: getAllBooks,
+  selectTotal: getTotalBooks,
+} = fromBooks.adapter.getSelectors(getBookEntitiesState);
+
 export const getSelectedBook = createSelector(
-  getBookEntitiesState,
-  fromBooks.getSelected
+  getBookEntities,
+  getSelectedBookId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  }
 );
 
 /**

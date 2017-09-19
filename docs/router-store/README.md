@@ -12,16 +12,28 @@ Install @ngrx/router-store from npm:
 
 `npm install github:ngrx/router-store-builds` OR `yarn add github:ngrx/router-store-builds`
 
-During the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:
+## Usage
+
+During the navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the signature `RouterNavigationAction`:
 
 ```ts
-export type RouterNavigationPayload = {
-  routerState: RouterStateSnapshot,
-  event: RoutesRecognized
-}
+/**
+ * Payload of ROUTER_NAVIGATION.
+ */
+export declare type RouterNavigationPayload<T> = {
+    routerState: T;
+    event: RoutesRecognized;
+};
+/**
+ * An action dispatched when the router navigates.
+ */
+export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
+    type: typeof ROUTER_NAVIGATION;
+    payload: RouterNavigationPayload<T>;
+};
 ```
 
-- Reducers recieve this action. Throwing an error in the reducer cancels navigation.
+- Reducers receive this action. Throwing an error in the reducer cancels navigation.
 - Effects can listen for this action.
 - The `ROUTER_CANCEL` action represents a guard canceling navigation.
 - A `ROUTER_ERROR` action represents a navigation error .
@@ -46,3 +58,6 @@ import { App } from './app.component';
 })
 export class AppModule { }
 ```
+
+## API Documentation
+- [Custom Router State Serializer](./api.md#custom-router-state-serializer)

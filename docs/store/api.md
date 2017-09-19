@@ -49,11 +49,11 @@ export function getInitialState() {
 configuration option to provide an array of meta-reducers that are composed from right to left.
 
 ```ts
-import { StoreModule, combineReducers, compose } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { reducers } from './reducers';
 
 // console.log all actions
-function debug(reducer) {
+export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state, action) {
     console.log('state', state);
     console.log('action', action);
@@ -62,7 +62,7 @@ function debug(reducer) {
   }
 }
 
-const metaReducers = [debug];
+export const metaReducers: MetaReducer<any>[] = [debug];
 
 @NgModule({
   imports: [
@@ -81,16 +81,22 @@ and `metaReducers` configuration options are available.
 
 ```ts
 // feature.module.ts
-import { StoreModule } from '@ngrx/store';
-import { reducers } from './reducers';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+
+export const reducers: ActionReducerMap<any> = {
+  subFeatureA: featureAReducer,
+  subFeatureB: featureBReducer,
+};
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('featureName', reducers, { })
+    StoreModule.forFeature('featureName', reducers)
   ]
 })
 export class FeatureModule {}
 ```
+
+The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [./selectors.md#createFeatureSelector](createFeatureSelector) convenience method.
 
 ## Injecting Reducers
 
@@ -122,4 +128,61 @@ export function getReducers(someService: SomeService) {
   ]
 })
 export class AppModule { }
+```
+
+Reducers are also injected when composing state through feature modules.
+
+```ts
+import { NgModule, InjectionToken } from '@angular/core';
+import { StoreModule, ActionReducerMap } from '@ngrx/store';
+
+import * as fromFeature from './reducers';
+
+export const FEATURE_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<fromFeature.State>>('Feature Reducers');
+
+export function getReducers(): ActionReducerMap<fromFeature.State> {
+  // map of reducers
+  return {
+  
+  };
+}
+
+@NgModule({
+  imports: [
+    StoreModule.forFeature('feature', FEATURE_REDUCER_TOKEN),
+  ],
+  providers: [
+    {
+      provide: FEATURE_REDUCER_TOKEN,
+      useFactory: getReducers
+    }
+  ]
+})
+export class FeatureModule { }
+```
+
+## Injecting Meta-Reducers
+
+To inject meta reducers, use the `META_REDUCERS` injection token exported in
+the Store API and a `Provider` to register the meta reducers through dependency
+injection.
+
+```
+import { MetaReducer, META_REDUCERS } '@ngrx/store';
+import { SomeService } from './some.service';
+
+export function getMetaReducers(some: SomeService): MetaReducer[] {
+  // return array of meta reducers;
+}
+
+@NgModule({
+  providers: [
+    {
+      provide: META_REDUCERS,
+      deps: [SomeService],
+      useFactory: getMetaReducers
+    }
+  ]
+})
+export class AppModule {}
 ```

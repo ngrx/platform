@@ -17,9 +17,11 @@
     "rootDir": "../",
     "paths": {
       "@ngrx/effects": ["../dist/effects"],
+      "@ngrx/effects/testing": ["../dist/effects/testing"],
       "@ngrx/store": ["../dist/store"],
       "@ngrx/router-store": ["../dist/router-store"],
-      "@ngrx/store-devtools": ["../dist/store-devtools"]
+      "@ngrx/store-devtools": ["../dist/store-devtools"],
+      "@ngrx/entity": ["../dist/entity"]
     }
   },
   "exclude": [

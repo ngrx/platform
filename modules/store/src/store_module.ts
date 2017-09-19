@@ -4,7 +4,7 @@ import {
   ModuleWithProviders,
   OnDestroy,
   InjectionToken,
-  Optional,
+  Injector,
 } from '@angular/core';
 import {
   Action,
@@ -13,6 +13,7 @@ import {
   ActionReducerFactory,
   StoreFeature,
   InitialState,
+  MetaReducer,
 } from './models';
 import { compose, combineReducers, createReducerFactory } from './utils';
 import {
@@ -82,7 +83,7 @@ export class StoreFeatureModule implements OnDestroy {
 export type StoreConfig<T, V extends Action = Action> = {
   initialState?: InitialState<T>;
   reducerFactory?: ActionReducerFactory<T, V>;
-  metaReducers?: ActionReducer<T, V>[];
+  metaReducers?: MetaReducer<T, V>[];
 };
 
 @NgModule({})
@@ -107,15 +108,14 @@ export class StoreModule {
           deps: [_INITIAL_STATE],
         },
         { provide: _INITIAL_REDUCERS, useValue: reducers },
-        reducers instanceof InjectionToken
-          ? [{ provide: _STORE_REDUCERS, useExisting: reducers }]
-          : [],
+        {
+          provide: _STORE_REDUCERS,
+          useExisting:
+            reducers instanceof InjectionToken ? reducers : _INITIAL_REDUCERS,
+        },
         {
           provide: INITIAL_REDUCERS,
-          deps: [
-            _INITIAL_REDUCERS,
-            [new Optional(), new Inject(_STORE_REDUCERS)],
-          ],
+          deps: [Injector, _INITIAL_REDUCERS, [new Inject(_STORE_REDUCERS)]],
           useFactory: _createStoreReducers,
         },
         {
@@ -144,17 +144,17 @@ export class StoreModule {
 
   static forFeature<T, V extends Action = Action>(
     featureName: string,
-    reducers: ActionReducerMap<T, V>,
+    reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
     config?: StoreConfig<T, V>
   ): ModuleWithProviders;
   static forFeature<T, V extends Action = Action>(
     featureName: string,
-    reducer: ActionReducer<T, V>,
+    reducer: ActionReducer<T, V>| InjectionToken<ActionReducer<T, V>>,
     config?: StoreConfig<T, V>
   ): ModuleWithProviders;
   static forFeature(
     featureName: string,
-    reducers: ActionReducerMap<any, any> | ActionReducer<any, any>,
+    reducers: ActionReducerMap<any, any> | InjectionToken<ActionReducerMap<any, any>> | ActionReducer<any, any> | InjectionToken<ActionReducer<any, any>>,
     config: StoreConfig<any, any> = {}
   ): ModuleWithProviders {
     return {
@@ -183,8 +183,9 @@ export class StoreModule {
           provide: FEATURE_REDUCERS,
           multi: true,
           deps: [
+            Injector,
             _FEATURE_REDUCERS,
-            [new Optional(), new Inject(_FEATURE_REDUCERS_TOKEN)],
+            [new Inject(_FEATURE_REDUCERS_TOKEN)],
           ],
           useFactory: _createFeatureReducers,
         },
@@ -194,20 +195,20 @@ export class StoreModule {
 }
 
 export function _createStoreReducers(
+  injector: Injector,
   reducers: ActionReducerMap<any, any>,
   tokenReducers: ActionReducerMap<any, any>
 ) {
-  return reducers instanceof InjectionToken ? tokenReducers : reducers;
+  return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
 
 export function _createFeatureReducers(
+  injector: Injector,
   reducerCollection: ActionReducerMap<any, any>[],
   tokenReducerCollection: ActionReducerMap<any, any>[]
 ) {
   return reducerCollection.map((reducer, index) => {
-    return reducer instanceof InjectionToken
-      ? tokenReducerCollection[index]
-      : reducer;
+    return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
 }
 

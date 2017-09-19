@@ -15,13 +15,16 @@ Reactive libraries for Angular
 - [@ngrx/store-devtools](./docs/store-devtools/README.md) - Store instrumentation that enables a
 [powerful time-travelling debugger](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
 
+## Examples
+- [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
+
 ## Migration
 - [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
 
 ## Contributing
 Please read [contributing guidelines here](./CONTRIBUTING.md).
 
-<a href="graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
+<a href="https://github.com/ngrx/platform/graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
 
 
 ## Backers

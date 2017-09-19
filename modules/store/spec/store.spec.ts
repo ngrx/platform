@@ -37,7 +37,7 @@ describe('ngRx Store', () => {
   }
 
   describe('initial state', () => {
-    it('should handle an initial state object', done => {
+    it('should handle an initial state object', (done: any) => {
       setup();
 
       store.take(1).subscribe({
@@ -49,7 +49,7 @@ describe('ngRx Store', () => {
       });
     });
 
-    it('should handle an initial state function', done => {
+    it('should handle an initial state function', (done: any) => {
       setup(() => ({ counter1: 0, counter2: 5 }));
 
       store.take(1).subscribe({

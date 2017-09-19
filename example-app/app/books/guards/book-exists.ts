@@ -58,8 +58,8 @@ export class BookExistsGuard implements CanActivate {
   hasBookInApi(id: string): Observable<boolean> {
     return this.googleBooks
       .retrieveBook(id)
-      .map(bookEntity => new book.LoadAction(bookEntity))
-      .do((action: book.LoadAction) => this.store.dispatch(action))
+      .map(bookEntity => new book.Load(bookEntity))
+      .do((action: book.Load) => this.store.dispatch(action))
       .map(book => !!book)
       .catch(() => {
         this.router.navigate(['/404']);

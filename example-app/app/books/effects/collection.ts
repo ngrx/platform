@@ -1,6 +1,5 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
@@ -32,42 +31,37 @@ export class CollectionEffects {
     return this.db.open('books_app');
   });
 
-  /**
-   * This effect makes use of the `startWith` operator to trigger
-   * the effect immediately on startup.
-   */
   @Effect()
   loadCollection$: Observable<Action> = this.actions$
     .ofType(collection.LOAD)
-    .startWith(new collection.LoadAction())
     .switchMap(() =>
       this.db
         .query('books')
         .toArray()
-        .map((books: Book[]) => new collection.LoadSuccessAction(books))
-        .catch(error => of(new collection.LoadFailAction(error)))
+        .map((books: Book[]) => new collection.LoadSuccess(books))
+        .catch(error => of(new collection.LoadFail(error)))
     );
 
   @Effect()
   addBookToCollection$: Observable<Action> = this.actions$
     .ofType(collection.ADD_BOOK)
-    .map((action: collection.AddBookAction) => action.payload)
+    .map((action: collection.AddBook) => action.payload)
     .mergeMap(book =>
       this.db
         .insert('books', [book])
-        .map(() => new collection.AddBookSuccessAction(book))
-        .catch(() => of(new collection.AddBookFailAction(book)))
+        .map(() => new collection.AddBookSuccess(book))
+        .catch(() => of(new collection.AddBookFail(book)))
     );
 
   @Effect()
   removeBookFromCollection$: Observable<Action> = this.actions$
     .ofType(collection.REMOVE_BOOK)
-    .map((action: collection.RemoveBookAction) => action.payload)
+    .map((action: collection.RemoveBook) => action.payload)
     .mergeMap(book =>
       this.db
         .executeWrite('books', 'delete', [book.id])
-        .map(() => new collection.RemoveBookSuccessAction(book))
-        .catch(() => of(new collection.RemoveBookFailAction(book)))
+        .map(() => new collection.RemoveBookSuccess(book))
+        .catch(() => of(new collection.RemoveBookFail(book)))
     );
 
   constructor(private actions$: Actions, private db: Database) {}

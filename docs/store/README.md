@@ -54,7 +54,7 @@ export function counterReducer(state: number = 0, action: Action) {
 ```
 
 To register the state container within your application, import the reducers and use the `StoreModule.forRoot`
-function in the `imports` array them in the `AppModule`.
+function in the `imports` array of the `@NgModule` decorator for your `AppModule`.
 
 ```ts
 import { NgModule } from '@angular/core'
@@ -96,7 +96,7 @@ export class MyAppComponent {
 	counter: Observable<number>;
 
 	constructor(private store: Store<AppState>) {
-		this.counter = store.select<number>('counter');
+		this.counter = store.select('counter');
 	}
 
 	increment(){
@@ -115,12 +115,15 @@ export class MyAppComponent {
 
 ## API Documentation
 - [Action Reducers](./actions.md#action-reducers)
-- [Typed Actions](./actions.md#typed-actions)
-- [Selectors](./selectors.md)
-- [State composition through feature modules](./api.md#feature-module-state-composition)
-- [Providing initial state](./api.md#initial-state)
-- [Meta-Reducers](./api.md#meta-reducers)
 - [Injecting reducers](./api.md#injecting-reducers)
+- [Meta-Reducers/Enhancers](./api.md#meta-reducers)
+- [Injecting Meta-Reducers](./api.md#injecting-meta-reducers)
+- [Providing initial state](./api.md#initial-state)
+- [State composition through feature modules](./api.md#feature-module-state-composition)
+- [State selectors](./selectors.md)
+- [Testing](./testing.md)
+- [Typed Actions](./actions.md#typed-actions)
+
 
 ### Additional Material
 - [From Inactive to Reactive with ngrx](https://www.youtube.com/watch?v=cyaAhXHhxgk)

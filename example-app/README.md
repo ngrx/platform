@@ -1,7 +1,7 @@
 # @ngrx example application
 
 Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
-Take a look at the [live app](http://ngrx.github.io/example-app/).
+Take a look at the [live app](https://ngrx.github.io/platform/example-app/).
 
 This app is a book collection manager. The user can authenticate, use the Google Books API to search for
 books and add them to their collection. This application utilizes [@ngrx/db](https://github.com/ngrx/db)
@@ -18,6 +18,7 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
  - [@angular/router](https://github.com/angular/angular) - Angular Router
  - [@ngrx/db](https://github.com/ngrx/db) - RxJS powered IndexedDB for Angular apps
  - [@ngrx/store-devtools](https://github.com/ngrx/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
+ - [jest](https://facebook.github.io/jest/) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
 
 ### Quick start
 
@@ -32,7 +33,10 @@ npm install
 yarn
 
 # start the server
-npm run example:start
+npm run build && npm run cli -- serve
+
+# OR
+yarn run example:start
 ```
 
 Navigate to [http://localhost:4200/](http://localhost:4200/) in your browser

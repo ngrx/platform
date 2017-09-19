@@ -1,3 +1,4 @@
+<!-- ❤️ ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate) -->
 
 ## I'm submitting a...
 <!-- Check one of the following options with "x" -->
@@ -6,11 +7,10 @@
 [ ] Bug report  <!-- Please search GitHub for a similar issue or PR before submitting -->
 [ ] Feature request
 [ ] Documentation issue or request
-[ ] Support request
 </code></pre>
 
 ## What is the current behavior?
-<!-- Describe what the current behavior would is. -->
+<!-- Describe the current behavior. -->
 
 ## Expected behavior:
 <!-- Describe what the desired behavior would be. -->
@@ -27,5 +27,3 @@ http://plnkr.co/edit/tpl:757r6L
 ## Other information:
 
 
-
-:heartpulse: ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate)
