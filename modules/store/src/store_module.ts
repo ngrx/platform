@@ -149,12 +149,16 @@ export class StoreModule {
   ): ModuleWithProviders;
   static forFeature<T, V extends Action = Action>(
     featureName: string,
-    reducer: ActionReducer<T, V>| InjectionToken<ActionReducer<T, V>>,
+    reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
     config?: StoreConfig<T, V>
   ): ModuleWithProviders;
   static forFeature(
     featureName: string,
-    reducers: ActionReducerMap<any, any> | InjectionToken<ActionReducerMap<any, any>> | ActionReducer<any, any> | InjectionToken<ActionReducer<any, any>>,
+    reducers:
+      | ActionReducerMap<any, any>
+      | InjectionToken<ActionReducerMap<any, any>>
+      | ActionReducer<any, any>
+      | InjectionToken<ActionReducer<any, any>>,
     config: StoreConfig<any, any> = {}
   ): ModuleWithProviders {
     return {
