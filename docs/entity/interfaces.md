@@ -2,20 +2,26 @@
 
 ## EntityState<T>
 
-The Entity State is a predefined generic interface for a given entity collection with the following properties:
+The Entity State is a predefined generic interface for a given entity collection with the following interface:
 
- * `ids`: An array of all the primary ids in the collection
- * `entities`: A dictionary of entities in the collection indexed by the primary id
+```ts
+interface EntityState<V> {
+  ids: string[];
+  entities: { [id: string]: V };
+}
+```
 
- Extend this interface to provided any additional properties for the entity state.
+* `ids`: An array of all the primary ids in the collection
+* `entities`: A dictionary of entities in the collection indexed by the primary id
 
- Usage:
+Extend this interface to provided any additional properties for the entity state.
 
- ```ts
+Usage:
+
+```ts
  export interface User {
-  id: number;
+  id: string;
   name: string;
-  description: string;
 }
 
 export interface State extends EntityState<User> {
@@ -31,7 +37,5 @@ Provides a generic type interface for the provided [entity adapter](./adapter.md
 Usage:
 
 ```ts
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
-  selectId: (user: User) => user.id
-});
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 ```

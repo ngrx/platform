@@ -15,9 +15,8 @@ Usage:
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
-  description: string;
 }
 
 export interface State extends EntityState<User> {
@@ -30,7 +29,6 @@ export function sortByName(a: User, b: User): number {
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
-  selectId: (user: User) => user.id,
   sortComparer: sortByName,
 });
 ```
@@ -38,7 +36,7 @@ export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
 ## Adapter Methods
 
 These methods are provided by the adapter object returned
-when using [createEntityAdapter](#createEntityAdapter). The methods are used inside your reducer function to manage
+when using [createEntityAdapter](#createentityadapter). The methods are used inside your reducer function to manage
 the entity collection based on your provided actions.
 
 ### getInitialState
@@ -51,9 +49,8 @@ Usage:
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
-  description: string;
 }
 
 export interface State extends EntityState<User> {
@@ -96,9 +93,8 @@ Usage:
 
 ```ts
 export interface User {
-  id: number;
+  id: string;
   name: string;
-  description: string;
 }
 ```
 
@@ -138,25 +134,25 @@ export class AddUsers implements Action {
 export class UpdateUser implements Action {
   readonly type = UPDATE_USER;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: { id: string, changes: User } }) {}
 }
 
 export class UpdateUsers implements Action {
   readonly type = UPDATE_USERS;
 
-  constructor(public payload: { users: User[] }) {}
+  constructor(public payload: { users: { id: string, changes: User }[] }) {}
 }
 
 export class DeleteUser implements Action {
   readonly type = DELETE_USER;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export class DeleteUsers implements Action {
   readonly type = DELETE_USERS;
 
-  constructor(public payload: { users: User[] }) {}
+  constructor(public payload: { ids: string[] }) {}
 }
 
 export class ClearUsers implements Action {
@@ -185,9 +181,7 @@ export interface State extends EntityState<User> {
   selectedUserId: number | null;
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
-  selectId: (user: User) => user.id
-});
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
@@ -215,6 +209,14 @@ export function reducer(
       return adapter.updateMany(action.payload.users, state);
     }
 
+    case UserActions.DELETE_USER: {
+      return adapter.removeOne(action.payload.id, state);
+    }
+
+    case UserActions.DELETE_USERS: {
+      return adapter.removeMany(action.payload.ids, state);
+    }    
+
     case UserActions.LOAD_USERS: {
       return adapter.addAll(action.payload.users, state);
     }
@@ -236,41 +238,40 @@ export const getSelectedUserId = (state: State) => state.selectedUserId;
 
 The `getSelectors` method returned by the created entity adapter provides functions for selecting information from the entity.
 
-The `getSelectors` method takes a selector function
-as its only argument to select the piece of state for a defined entity.
+The `getSelectors` method takes a selector function as its only argument to select the piece of state for a defined entity.
 
 Usage:
 
 `reducers/index.ts`
 
 ```ts
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 import * as fromUser from './user.reducer';
 
 export interface State {
   users: fromUser.State;
 }
 
-export const selectUserState =  createFeatureSelector<fromUser.State>('users');
+export const reducers: ActionReducerMap<State> = {
+  users: fromUser.reducer
+};
+
+export const selectUserState = createFeatureSelector<fromUser.State>('users');
 
 export const {
   // select the array of user ids
-  selectIds: getUserIds,
+  selectIds: selectUserIds,
 
   // select the dictionary of user entities
-  selectEntities: getUserEntities,
+  selectEntities: selectUserEntities,
 
   // select the array of users
-  selectAll: getAllUsers,
+  selectAll: selectAllUsers,
 
   // select the total user count
-  selectTotal: getUserTotal
+  selectTotal: selectUserTotal
 } = fromUser.adapter.getSelectors(selectUserState);
 
-export const selectUserIds = createSelector(selectUserState, getUserIds);
-export const selectUserEntities = createSelector(selectUserState, getUserEntities);
-export const selectAllUsers = createSelector(selectUserState, getAllUsers);
-export const selectUserCount = createSelector(selectUserState, getUserTotal);
 export const selectCurrentUserId = createSelector(selectUserState, fromUser.getSelectedUserId);
 export const selectCurrentUser = createSelector(
   selectUserEntities,
