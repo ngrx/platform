@@ -167,7 +167,7 @@ To inject meta reducers, use the `META_REDUCERS` injection token exported in
 the Store API and a `Provider` to register the meta reducers through dependency
 injection.
 
-```
+```ts
 import { MetaReducer, META_REDUCERS } '@ngrx/store';
 import { SomeService } from './some.service';
 
