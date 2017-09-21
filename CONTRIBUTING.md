@@ -3,21 +3,10 @@
 ### Setup
 
 ```
-npm install
-```
-
-OR
-```
 yarn
 ```
 
 ### Testing
-
-```
-npm test
-```
-
-OR
 
 ```
 yarn test
