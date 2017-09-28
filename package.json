@@ -23,6 +23,11 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "lerna publish --skip-npm --conventional-commits && npm run build"
   },
+  "engines": {
+    "node": ">=6.9.5",
+    "npm": ">=4.0.0",
+    "yarn": ">=0.27.5 <2.0.0"
+  },  
   "lint-staged": {
     "*.ts": [
       "yarn prettier",
@@ -100,7 +105,7 @@
     "lerna": "^2.0.0",
     "lint-staged": "^4.0.3",
     "module-alias": "^2.0.0",
-    "ngrx-store-freeze": "^0.1.9",
+    "ngrx-store-freeze": "^0.2.0",
     "nyc": "^10.1.2",
     "ora": "^1.2.0",
     "prettier": "^1.5.2",
