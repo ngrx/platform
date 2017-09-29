@@ -66,11 +66,7 @@ export function createUnsortedStateAdapter<T>(
     keys: { [id: string]: string },
     update: Update<T>,
     state: R
-  ): boolean {
-    if (!(update.id in state.entities)) {
-      return false;
-    }
-
+  ): void {
     const original = state.entities[update.id];
     const updated: T = Object.assign({}, original, update.changes);
     const newKey = selectId(updated);
@@ -81,8 +77,6 @@ export function createUnsortedStateAdapter<T>(
     }
 
     state.entities[newKey] = updated;
-
-    return true;
   }
 
   function updateOneMutably(update: Update<T>, state: R): boolean {
@@ -92,9 +86,10 @@ export function createUnsortedStateAdapter<T>(
   function updateManyMutably(updates: Update<T>[], state: R): boolean {
     const newKeys: { [id: string]: string } = {};
 
-    const didMutate = updates
-      .map(update => takeNewKey(newKeys, update, state))
-      .includes(true);
+    const didMutate =
+      updates
+        .filter(update => update.id in state.entities)
+        .map(update => takeNewKey(newKeys, update, state)).length > 0;
 
     if (didMutate) {
       state.ids = state.ids.map(id => newKeys[id] || id);
