@@ -35,7 +35,9 @@ export function createSortedStateAdapter<T>(
     state.entities = {};
     state.ids = [];
 
-    return addManyMutably(models, state);
+    addManyMutably(models, state);
+
+    return true;
   }
 
   function updateOneMutably(update: Update<T>, state: R): boolean {
