@@ -12,18 +12,21 @@ import { createUnsortedStateAdapter } from './unsorted_state_adapter';
 export function createSortedStateAdapter<T>(
   selectId: IdSelector<T>,
   sort: Comparer<T>
-): EntityStateAdapter<T> {
+): EntityStateAdapter<T>;
+export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   type R = EntityState<T>;
 
   const { removeOne, removeMany, removeAll } = createUnsortedStateAdapter(
     selectId
   );
 
-  function addOneMutably(entity: T, state: R): boolean {
+  function addOneMutably(entity: T, state: R): boolean;
+  function addOneMutably(entity: any, state: any): boolean {
     return addManyMutably([entity], state);
   }
 
-  function addManyMutably(newModels: T[], state: R): boolean {
+  function addManyMutably(newModels: T[], state: R): boolean;
+  function addManyMutably(newModels: any[], state: any): boolean {
     const models = newModels.filter(
       model => !(selectId(model) in state.entities)
     );
@@ -31,7 +34,8 @@ export function createSortedStateAdapter<T>(
     return merge(models, state);
   }
 
-  function addAllMutably(models: T[], state: R): boolean {
+  function addAllMutably(models: T[], state: R): boolean;
+  function addAllMutably(models: any[], state: any): boolean {
     state.entities = {};
     state.ids = [];
 
@@ -40,11 +44,13 @@ export function createSortedStateAdapter<T>(
     return true;
   }
 
-  function updateOneMutably(update: Update<T>, state: R): boolean {
+  function updateOneMutably(update: Update<T>, state: R): boolean;
+  function updateOneMutably(update: any, state: any): boolean {
     return updateManyMutably([update], state);
   }
 
-  function takeUpdatedModel(models: T[], update: Update<T>, state: R): void {
+  function takeUpdatedModel(models: T[], update: Update<T>, state: R): void;
+  function takeUpdatedModel(models: any[], update: any, state: any): void {
     if (!(update.id in state.entities)) {
       return;
     }
@@ -57,26 +63,28 @@ export function createSortedStateAdapter<T>(
     models.push(updated);
   }
 
-  function updateManyMutably(updates: Update<T>[], state: R): boolean {
+  function updateManyMutably(updates: Update<T>[], state: R): boolean;
+  function updateManyMutably(updates: any[], state: any): boolean {
     const models: T[] = [];
 
     updates.forEach(update => takeUpdatedModel(models, update, state));
 
     if (models.length) {
-      state.ids = state.ids.filter(id => id in state.entities);
+      state.ids = state.ids.filter((id: any) => id in state.entities);
     }
 
     return merge(models, state);
   }
 
-  function merge(models: T[], state: R): boolean {
+  function merge(models: T[], state: R): boolean;
+  function merge(models: any[], state: any): boolean {
     if (models.length === 0) {
       return false;
     }
 
     models.sort(sort);
 
-    const ids: string[] = [];
+    const ids: any[] = [];
 
     let i = 0;
     let j = 0;
