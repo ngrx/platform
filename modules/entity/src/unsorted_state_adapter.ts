@@ -39,23 +39,17 @@ export function createUnsortedStateAdapter<T>(
   }
 
   function removeOneMutably(key: string, state: R): boolean {
-    const index = state.ids.indexOf(key);
-
-    if (index === -1) {
-      return false;
-    }
-
-    state.ids.splice(index, 1);
-    delete state.entities[key];
-
-    return true;
+    return removeManyMutably([key], state);
   }
 
   function removeManyMutably(keys: string[], state: R): boolean {
-    let didMutate = false;
+    const didMutate =
+      keys
+        .filter(key => key in state.entities)
+        .map(key => delete state.entities[key]).length > 0;
 
-    for (let index in keys) {
-      didMutate = removeOneMutably(keys[index], state) || didMutate;
+    if (didMutate) {
+      state.ids = state.ids.filter(id => id in state.entities);
     }
 
     return didMutate;
@@ -68,32 +62,37 @@ export function createUnsortedStateAdapter<T>(
     });
   }
 
-  function updateOneMutably(update: Update<T>, state: R): boolean {
-    const index = state.ids.indexOf(update.id);
-
-    if (index === -1) {
-      return false;
-    }
-
+  function takeNewKey(
+    keys: { [id: string]: string },
+    update: Update<T>,
+    state: R
+  ): void {
     const original = state.entities[update.id];
     const updated: T = Object.assign({}, original, update.changes);
     const newKey = selectId(updated);
 
     if (newKey !== update.id) {
-      state.ids[index] = newKey;
+      keys[update.id] = newKey;
       delete state.entities[update.id];
     }
 
     state.entities[newKey] = updated;
+  }
 
-    return true;
+  function updateOneMutably(update: Update<T>, state: R): boolean {
+    return updateManyMutably([update], state);
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): boolean {
-    let didMutate = false;
+    const newKeys: { [id: string]: string } = {};
 
-    for (let index in updates) {
-      didMutate = updateOneMutably(updates[index], state) || didMutate;
+    const didMutate =
+      updates
+        .filter(update => update.id in state.entities)
+        .map(update => takeNewKey(newKeys, update, state)).length > 0;
+
+    if (didMutate) {
+      state.ids = state.ids.map(id => newKeys[id] || id);
     }
 
     return didMutate;
