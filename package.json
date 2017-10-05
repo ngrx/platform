@@ -112,7 +112,7 @@
     "protractor": "~5.1.0",
     "reflect-metadata": "^0.1.9",
     "rimraf": "^2.5.4",
-    "rollup": "^0.41.4",
+    "rollup": "^0.50.0",
     "rxjs": "^5.4.0",
     "sorcery": "^0.10.0",
     "ts-node": "^3.1.0",
