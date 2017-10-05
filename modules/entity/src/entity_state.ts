@@ -1,4 +1,4 @@
-import { EntityState } from './models';
+import { EntityState, EntityStateStr, EntityStateNum } from './models';
 
 export function getInitialEntityState<V>(): EntityState<V> {
   return {
