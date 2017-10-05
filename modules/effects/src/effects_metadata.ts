@@ -25,6 +25,9 @@ function setEffectMetadataEntries(sourceProto: any, entries: EffectMetadata[]) {
   Array.prototype.push.apply(meta, entries);
 }
 
+/**
+ * @ExportDecoratedItems
+ */
 export function Effect({ dispatch } = { dispatch: true }): PropertyDecorator {
   return function(target: any, propertyName: string) {
     const metadata: EffectMetadata = { propertyName, dispatch };
