@@ -15,7 +15,7 @@
     "example:start": "yarn run build && yarn run cli -- serve",
     "example:start:aot": "yarn run build && yarn run cli -- serve --aot",
     "example:test": "jest --watch",
-    "example:build:prod": "yarn build && yarn cli -- build --aot -prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
+    "example:build:prod": "yarn build && yarn cli -- build -prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"./**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
