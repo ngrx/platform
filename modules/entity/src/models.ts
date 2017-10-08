@@ -40,17 +40,10 @@ export type UpdateNum<T> = {
 
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
-export interface EntityStateStr<T> {
-  ids: string[];
+export interface EntityState<T> {
+  ids: string[] | number[];
   entities: Dictionary<T>;
 }
-
-export interface EntityStateNum<T> {
-  ids: number[];
-  entities: Dictionary<T>;
-}
-
-export type EntityState<T> = EntityStateStr<T> | EntityStateNum<T>;
 
 export interface EntityDefinition<T> {
   selectId: IdSelector<T>;
