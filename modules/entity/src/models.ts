@@ -18,15 +18,13 @@ export type IdSelectorNum<T> = {
 
 export type IdSelector<T> = IdSelectorStr<T> | IdSelectorNum<T>;
 
-export type DictionaryStr<T> = {
-  [id: string]: T;
-};
-
 export type DictionaryNum<T> = {
   [id: number]: T;
 };
 
-export type Dictionary<T> = DictionaryStr<T> | DictionaryNum<T>;
+export abstract class Dictionary<T> implements DictionaryNum<T> {
+  [id: string]: T;
+}
 
 export type UpdateStr<T> = {
   id: string;
@@ -40,17 +38,10 @@ export type UpdateNum<T> = {
 
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
-export interface EntityStateStr<T> {
-  ids: string[];
+export interface EntityState<T> {
+  ids: any[];
   entities: Dictionary<T>;
 }
-
-export interface EntityStateNum<T> {
-  ids: number[];
-  entities: Dictionary<T>;
-}
-
-export type EntityState<T> = EntityStateStr<T> | EntityStateNum<T>;
 
 export interface EntityDefinition<T> {
   selectId: IdSelector<T>;
