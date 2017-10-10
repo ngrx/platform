@@ -217,7 +217,7 @@ export class StoreRouterConnectingModule {
     private store: Store<any>,
     private router: Router,
     private serializer: RouterStateSerializer<RouterStateSnapshot>,
-    private config: StoreRouterConfig
+    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
     this.stateKey = this.config.stateKey as string;
 
