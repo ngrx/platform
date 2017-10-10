@@ -112,10 +112,30 @@ export function routerReducer<T = RouterStateSnapshot>(
   }
 }
 
-export interface StoreRouterConfig {
+export type StoreRouterConfig = {
   stateKey?: string;
+};
+
+export const _ROUTER_CONFIG = new InjectionToken(
+  '@ngrx/router Internal Configuration'
+);
+export const ROUTER_CONFIG = new InjectionToken('@ngrx/router Configuration');
+export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
+
+export function _createDefaultRouterConfig(config: any): StoreRouterConfig {
+  let _config = {};
+
+  if (typeof config === 'function') {
+    _config = config();
+  }
+
+  return {
+    stateKey: DEFAULT_ROUTER_FEATURENAME,
+    ..._config,
+  };
 }
-export const _ROUTER_CONFIG = new InjectionToken('@ngrx/router Configuration');
+
+export type StoreRouterConfigFunction = () => StoreRouterConfig;
 
 /**
  * Connects RouterModule with StoreModule.
@@ -165,11 +185,22 @@ export const _ROUTER_CONFIG = new InjectionToken('@ngrx/router Configuration');
   ],
 })
 export class StoreRouterConnectingModule {
-  static forRoot(config?: StoreRouterConfig): ModuleWithProviders;
-  static forRoot(config: StoreRouterConfig = {}): ModuleWithProviders {
+  static forRoot(
+    config?: StoreRouterConfig | StoreRouterConfigFunction
+  ): ModuleWithProviders;
+  static forRoot(
+    config: StoreRouterConfig | StoreRouterConfigFunction = {}
+  ): ModuleWithProviders {
     return {
       ngModule: StoreRouterConnectingModule,
-      providers: [{ provide: _ROUTER_CONFIG, useValue: config }],
+      providers: [
+        { provide: _ROUTER_CONFIG, useValue: config },
+        {
+          provide: ROUTER_CONFIG,
+          useFactory: _createDefaultRouterConfig,
+          deps: [_ROUTER_CONFIG],
+        },
+      ],
     };
   }
 
@@ -180,15 +211,15 @@ export class StoreRouterConnectingModule {
   private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
 
-  private stateKey: string = 'routerReducer';
+  private stateKey: string;
 
   constructor(
     private store: Store<any>,
     private router: Router,
     private serializer: RouterStateSerializer<RouterStateSnapshot>,
-    @Inject(_ROUTER_CONFIG) private config: StoreRouterConfig
+    private config: StoreRouterConfig
   ) {
-    this.stateKey = (config && config.stateKey) || this.stateKey;
+    this.stateKey = this.config.stateKey as string;
 
     this.setUpBeforePreactivationHook();
     this.setUpStoreStateListener();
