@@ -16,11 +16,12 @@ export class EffectsRootModule {
     @Optional() storeModule: StoreModule
   ) {
     runner.start();
-    store.dispatch({ type: ROOT_EFFECTS_INIT });
 
     rootEffects.forEach(effectSourceInstance =>
       sources.addEffects(effectSourceInstance)
     );
+
+    store.dispatch({ type: ROOT_EFFECTS_INIT });
   }
 
   addEffects(effectSourceInstance: any) {
