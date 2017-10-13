@@ -36,7 +36,7 @@ describe('Effects Root Module', () => {
     });
   });
 
-  it("doens't dispatch the root effects init action when EffectsModule isn't used", () => {
+  it("doesn't dispatch the root effects init action when EffectsModule isn't used", () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({ reducer }, { initialState: { reducer: foo } }),
