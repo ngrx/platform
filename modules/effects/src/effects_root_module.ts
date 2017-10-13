@@ -4,7 +4,7 @@ import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
 import { ROOT_EFFECTS } from './tokens';
 
-export const ROOT_EFFECTS_INIT = '@ngrx/effects/init' as '@ngrx/effects/init';
+export const ROOT_EFFECTS_INIT = '@ngrx/effects/init';
 
 @NgModule({})
 export class EffectsRootModule {
