@@ -119,6 +119,42 @@ describe(`Store Modules`, () => {
     });
   });
 
+  describe(`: With initial state`, () => {
+    const initialState: RootState = { fruit: 'banana' };
+    const reducerMap: ActionReducerMap<RootState> = { fruit: rootFruitReducer };
+    const noopMetaReducer = (r: Function) => (state: any, action: any) => {
+      return r(state, action);
+    };
+
+    const testWithMetaReducers = (metaReducers: any[]) => () => {
+      beforeEach(() => {
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot(reducerMap, { initialState, metaReducers }),
+          ],
+        });
+
+        store = TestBed.get(Store);
+      });
+
+      it('should have initial state', () => {
+        store.take(1).subscribe((s: any) => {
+          expect(s).toEqual(initialState);
+        });
+      });
+    };
+
+    describe(
+      'should add initial state with no meta-reducers',
+      testWithMetaReducers([])
+    );
+
+    describe(
+      'should add initial state with registered meta-reducers',
+      testWithMetaReducers([noopMetaReducer])
+    );
+  });
+
   describe(`: Nested`, () => {
     @NgModule({
       imports: [StoreModule.forFeature('a', featureAReducer)],

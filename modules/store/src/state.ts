@@ -35,7 +35,7 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
     const stateAndAction$: Observable<{
       state: any;
       action: Action;
-    }> = scan.call(withLatestReducer$, reduceState, initialState);
+    }> = scan.call(withLatestReducer$, reduceState, { state: initialState });
 
     this.stateSubscription = stateAndAction$.subscribe({
       next: ({ state, action }) => {
