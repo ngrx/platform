@@ -51,7 +51,7 @@ export class BookEffects {
         .searchBooks(query)
         .takeUntil(nextSearch$)
         .map((books: Book[]) => new book.SearchComplete(books))
-        .catch(() => of(new book.SearchComplete([])));
+        .catch(err => of(new book.SearchError(err)));
     });
 
   constructor(
