@@ -43,3 +43,16 @@ export const getSourceMetadata = compose(
   getEffectMetadataEntries,
   getSourceForInstance
 );
+
+export interface PartialEffectMetadata {
+  dispatch: boolean;
+}
+
+export function effectMetadata(
+  instance: any,
+  effectName: string
+): PartialEffectMetadata {
+  return getSourceMetadata(instance)
+    .filter(({ propertyName }) => propertyName === effectName)
+    .map(({ dispatch }) => ({ dispatch }))[0];
+}

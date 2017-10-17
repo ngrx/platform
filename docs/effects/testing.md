@@ -47,6 +47,46 @@ describe('My Effects', () => {
     effects.someSource$.subscribe(result => {
       expect(result).toEqual(AnotherAction);
     });
-  });  
+  });
+});
+```
+
+### effectMetadata
+Returns decorator configuration for an effect in an instance of effects.
+Use this function to ensure that an effect has been properly decorated.
+
+If the decorator was not supplied, the result is `undefined`.
+
+Usage:
+```ts
+import { TestBed } from '@angular/core/testing';
+import { effectMetadata } from '@ngrx/effects';
+import { MyEffects } from './my-effects';
+
+describe('My Effects', () => {
+  let effects: MyEffects;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        MyEffects,
+        // other providers
+      ],
+    });
+
+    effects = TestBed.get(MyEffects);
+  });
+
+  it('should register someSource$', () => {
+    expect(effectMetadata(effects, 'someSource$')).toEqual({
+      dispatch: true,
+    });
+  });
+
+  it('should register someOtherSource$', () => {
+    expect(effectMetadata(effects, 'someOtherSource$')).toEqual({
+      dispatch: false,
+    });
+  });
 });
 ```
