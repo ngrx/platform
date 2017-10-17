@@ -41,15 +41,18 @@ export const getSourceMetadata = compose(
   getSourceForInstance
 );
 
-export interface PartialEffectMetadata {
-  dispatch: boolean;
+export interface EffectsMetadata {
+  [propertyName: string]: {
+    dispatch: boolean;
+  };
 }
 
-export function effectMetadata(
-  instance: any,
-  effectName: string
-): PartialEffectMetadata {
-  return getSourceMetadata(instance)
-    .filter(({ propertyName }) => propertyName === effectName)
-    .map(({ dispatch }) => ({ dispatch }))[0];
+export function getEffectsMetadata(instance: any): EffectsMetadata {
+  const metadata: EffectsMetadata = {};
+
+  getSourceMetadata(instance).forEach(({ propertyName, dispatch }) => {
+    metadata[propertyName] = { dispatch };
+  });
+
+  return metadata;
 }

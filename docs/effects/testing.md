@@ -51,20 +51,19 @@ describe('My Effects', () => {
 });
 ```
 
-### effectMetadata
-Returns decorator configuration for an effect in an instance of effects.
-Use this function to ensure that an effect has been properly decorated.
-
-If the decorator was not supplied, the result is `undefined`.
+### effectsMetadata
+Returns decorator configuration for all effects in a class instance.
+Use this function to ensure that effects have been properly decorated.
 
 Usage:
 ```ts
 import { TestBed } from '@angular/core/testing';
-import { effectMetadata } from '@ngrx/effects';
+import { effectsMetadata, EffectsMetadata } from '@ngrx/effects';
 import { MyEffects } from './my-effects';
 
 describe('My Effects', () => {
   let effects: MyEffects;
+  let metadata: EffectsMetadata;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -75,18 +74,19 @@ describe('My Effects', () => {
     });
 
     effects = TestBed.get(MyEffects);
+    metadata = getEffectsMetadata(effects);
   });
 
-  it('should register someSource$', () => {
-    expect(effectMetadata(effects, 'someSource$')).toEqual({
-      dispatch: true,
-    });
+  it('should register someSource$ that dispatches an action', () => {
+    expect(metadata.someSource$).toEqual({ dispatch: true });
   });
 
-  it('should register someOtherSource$', () => {
-    expect(effectMetadata(effects, 'someOtherSource$')).toEqual({
-      dispatch: false,
-    });
+  it('should register someOtherSource$ that does not dispatch an action', () => {
+    expect(metadata.someOtherSource$).toEqual({ dispatch: false });
+  });
+
+  it('should not register undecoratedSource$', () => {
+    expect(metadata.undecoratedSource$).toBeUndefined();
   });
 });
 ```

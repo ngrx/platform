@@ -1,6 +1,6 @@
 import {
   Effect,
-  effectMetadata,
+  getEffectsMetadata,
   getSourceMetadata,
   getSourceForInstance,
 } from '../src/effects_metadata';
@@ -48,31 +48,35 @@ describe('Effect Metadata', () => {
     });
   });
 
-  describe('effectMetadata', () => {
-    it('should get the effect metadata for a class instance with known effect name', () => {
+  describe('getEffectsMetadata', () => {
+    it('should get map of metadata for all decorated effects in a class instance', () => {
       class Fixture {
-        @Effect() a$: any;
+        @Effect() a: any;
         @Effect({ dispatch: true })
-        b$: any;
+        b: any;
         @Effect({ dispatch: false })
-        c$: any;
+        c: any;
       }
 
       const mock = new Fixture();
 
-      expect(effectMetadata(mock, 'a$')).toEqual({ dispatch: true });
-      expect(effectMetadata(mock, 'b$')).toEqual({ dispatch: true });
-      expect(effectMetadata(mock, 'c$')).toEqual({ dispatch: false });
+      expect(getEffectsMetadata(mock)).toEqual({
+        a: { dispatch: true },
+        b: { dispatch: true },
+        c: { dispatch: false },
+      });
     });
 
-    it('should return "undefined" if the effect has not been decorated', () => {
+    it('should return an empty map if the class has not been decorated', () => {
       class Fixture {
-        a$: any;
+        a: any;
+        b: any;
+        c: any;
       }
 
       const mock = new Fixture();
 
-      expect(effectMetadata(mock, 'a$')).toBeUndefined();
+      expect(getEffectsMetadata(mock)).toEqual({});
     });
   });
 });
