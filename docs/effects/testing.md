@@ -51,14 +51,14 @@ describe('My Effects', () => {
 });
 ```
 
-### effectsMetadata
+### getEffectsMetadata
 Returns decorator configuration for all effects in a class instance.
 Use this function to ensure that effects have been properly decorated.
 
 Usage:
 ```ts
 import { TestBed } from '@angular/core/testing';
-import { effectsMetadata, EffectsMetadata } from '@ngrx/effects';
+import { EffectsMetadata, getEffectsMetadata } from '@ngrx/effects';
 import { MyEffects } from './my-effects';
 
 describe('My Effects', () => {
