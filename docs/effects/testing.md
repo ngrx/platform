@@ -63,7 +63,7 @@ import { MyEffects } from './my-effects';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let metadata: EffectsMetadata;
+  let metadata: EffectsMetadata<MyEffects>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
