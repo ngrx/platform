@@ -1,5 +1,6 @@
 import {
   Effect,
+  getEffectsMetadata,
   getSourceMetadata,
   getSourceForInstance,
 } from '../src/effects_metadata';
@@ -44,6 +45,38 @@ describe('Effect Metadata', () => {
       const proto = getSourceForInstance(instance);
 
       expect(proto).toBe(Fixture.prototype);
+    });
+  });
+
+  describe('getEffectsMetadata', () => {
+    it('should get map of metadata for all decorated effects in a class instance', () => {
+      class Fixture {
+        @Effect() a: any;
+        @Effect({ dispatch: true })
+        b: any;
+        @Effect({ dispatch: false })
+        c: any;
+      }
+
+      const mock = new Fixture();
+
+      expect(getEffectsMetadata(mock)).toEqual({
+        a: { dispatch: true },
+        b: { dispatch: true },
+        c: { dispatch: false },
+      });
+    });
+
+    it('should return an empty map if the class has not been decorated', () => {
+      class Fixture {
+        a: any;
+        b: any;
+        c: any;
+      }
+
+      const mock = new Fixture();
+
+      expect(getEffectsMetadata(mock)).toEqual({});
     });
   });
 });
