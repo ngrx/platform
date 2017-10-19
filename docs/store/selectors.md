@@ -27,28 +27,6 @@ export const selectFeature = (state: AppState) => state.feature;
 export const selectFeatureCount = createSelector(selectFeature, (state: FeatureState) => state.counter);
 ```
 
-```ts
-// app.component.ts
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-
-import * as fromRoot from './reducers';
-
-@Component({
-	selector: 'my-app',
-	template: `
-		<div>Current Count: {{ counter | async }}</div>
-	`
-})
-class MyAppComponent {
-	counter: Observable<number>;
-
-	constructor(private store: Store<fromRoot.AppState>){
-		this.counter = store.select(fromRoot.selectFeatureCount);
-	}
-}
-```
-
 ## createFeatureSelector
 
 The `createFeatureSelector` is a convenience method for returning a top level feature state. It returns a typed selector function for a feature slice of state.
@@ -69,4 +47,34 @@ export interface AppState {
 
 export const selectFeature = createFeatureSelector<FeatureState>('feature');
 export const selectFeatureCount = createSelector(selectFeature, (state: FeatureState) => state.counter);
+
+```
+
+## Using a Selector with the Store 
+
+The functions returned by the `createSelector` and `createFeatureSelector` methods become alternatives to the string syntax for retrieving the relevant piece of state. 
+
+### Example 
+
+```ts
+// app.component.ts
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from './reducers';
+
+@Component({
+	selector: 'my-app',
+	template: `
+		<div>Current Count: {{ counter | async }}</div>
+	`
+})
+class MyAppComponent {
+	counter: Observable<number>;
+
+	constructor(private store: Store<fromRoot.AppState>){
+		this.counter = store.select(fromRoot.selectFeatureCount);
+	}
+}
 ```
