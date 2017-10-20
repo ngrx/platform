@@ -64,12 +64,15 @@ export function noMonitor(): null {
   return null;
 }
 
+export const defaultInstanceName = 'StoreDevToolInstance';
+
 export function createConfig(
   _options: StoreDevtoolsOptions
 ): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
+    name: defaultInstanceName,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;

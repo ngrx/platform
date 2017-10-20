@@ -4,6 +4,7 @@ import { InjectionToken, Type } from '@angular/core';
 export class StoreDevtoolsConfig {
   maxAge: number | false;
   monitor: ActionReducer<any, any>;
+  name: string;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
