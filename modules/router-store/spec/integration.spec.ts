@@ -199,14 +199,13 @@ describe('integration spec', () => {
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
           {
             type: 'store',
-            state: { url: '/next', lastAction: ROUTER_NAVIGATION },
-          },
-          {
-            type: 'store',
             state: {
-              url: '/next',
-              lastAction: ROUTER_ERROR,
-              storeState: { url: '/next', lastAction: ROUTER_NAVIGATION },
+              url: '/',
+              storeState: {
+                url: '/',
+                lastAction: 'ROUTER_NAVIGATION',
+              },
+              lastAction: 'ROUTE_ERROR',
             },
           },
           { type: 'router', event: 'NavigationError', url: '/next' },
