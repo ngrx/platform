@@ -21,6 +21,9 @@ Reactive libraries for Angular
 ## Migration
 - [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
 
+## News
+- [Official editor on Medium](https://medium.com/ngrx)
+
 ## Contributing
 Please read [contributing guidelines here](./CONTRIBUTING.md).
 
