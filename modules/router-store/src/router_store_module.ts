@@ -167,13 +167,13 @@ export class StoreRouterConnectingModule {
     private router: Router,
     private serializer: RouterStateSerializer<RouterStateSnapshot>
   ) {
-    this.setUpBeforePreactivationHook();
+    this.setUpAfterPreactivationHook();
     this.setUpStoreStateListener();
     this.setUpStateRollbackEvents();
   }
 
-  private setUpBeforePreactivationHook(): void {
-    (<any>this.router).hooks.beforePreactivation = (
+  private setUpAfterPreactivationHook(): void {
+    (<any>this.router).hooks.afterPreactivation = (
       routerState: RouterStateSnapshot
     ) => {
       this.routerState = this.serializer.serialize(routerState);
