@@ -58,6 +58,7 @@ import { App } from './app.component';
 })
 export class AppModule { }
 ```
-
 ## API Documentation
+- [Navigation actions](./api.md#navigation-actions)
+- [Effects](./api.md#effects)
 - [Custom Router State Serializer](./api.md#custom-router-state-serializer)

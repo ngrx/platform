@@ -168,7 +168,7 @@ the Store API and a `Provider` to register the meta reducers through dependency
 injection.
 
 ```ts
-import { MetaReducer, META_REDUCERS } '@ngrx/store';
+import { MetaReducer, META_REDUCERS } from '@ngrx/store';
 import { SomeService } from './some.service';
 
 export function getMetaReducers(some: SomeService): MetaReducer[] {

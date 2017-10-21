@@ -15,13 +15,18 @@
     "example:start": "yarn run build && yarn run cli -- serve",
     "example:start:aot": "yarn run build && yarn run cli -- serve --aot",
     "example:test": "jest --watch",
-    "example:build:prod": "yarn build && yarn cli -- build --aot -prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
+    "example:build:prod": "yarn build && yarn cli -- build -prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"./**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "lerna publish --skip-npm --conventional-commits && npm run build"
+  },
+  "engines": {
+    "node": ">=6.9.5",
+    "npm": ">=4.0.0",
+    "yarn": ">=0.27.5 <2.0.0"
   },
   "lint-staged": {
     "*.ts": [
@@ -51,7 +56,7 @@
   },
   "devDependencies": {
     "@angular/animations": "^4.2.0",
-    "@angular/cli": "^1.2.0",
+    "@angular/cli": "~1.2.0",
     "@angular/common": "^4.2.0",
     "@angular/compiler": "^4.2.0",
     "@angular/compiler-cli": "^4.2.0",
@@ -100,14 +105,14 @@
     "lerna": "^2.0.0",
     "lint-staged": "^4.0.3",
     "module-alias": "^2.0.0",
-    "ngrx-store-freeze": "^0.1.9",
+    "ngrx-store-freeze": "^0.2.0",
     "nyc": "^10.1.2",
     "ora": "^1.2.0",
     "prettier": "^1.5.2",
     "protractor": "~5.1.0",
     "reflect-metadata": "^0.1.9",
     "rimraf": "^2.5.4",
-    "rollup": "^0.41.4",
+    "rollup": "^0.50.0",
     "rxjs": "^5.4.0",
     "sorcery": "^0.10.0",
     "ts-node": "^3.1.0",

@@ -47,6 +47,46 @@ describe('My Effects', () => {
     effects.someSource$.subscribe(result => {
       expect(result).toEqual(AnotherAction);
     });
-  });  
+  });
+});
+```
+
+### getEffectsMetadata
+Returns decorator configuration for all effects in a class instance.
+Use this function to ensure that effects have been properly decorated.
+
+Usage:
+```ts
+import { TestBed } from '@angular/core/testing';
+import { EffectsMetadata, getEffectsMetadata } from '@ngrx/effects';
+import { MyEffects } from './my-effects';
+
+describe('My Effects', () => {
+  let effects: MyEffects;
+  let metadata: EffectsMetadata<MyEffects>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        MyEffects,
+        // other providers
+      ],
+    });
+
+    effects = TestBed.get(MyEffects);
+    metadata = getEffectsMetadata(effects);
+  });
+
+  it('should register someSource$ that dispatches an action', () => {
+    expect(metadata.someSource$).toEqual({ dispatch: true });
+  });
+
+  it('should register someOtherSource$ that does not dispatch an action', () => {
+    expect(metadata.someOtherSource$).toEqual({ dispatch: false });
+  });
+
+  it('should not register undecoratedSource$', () => {
+    expect(metadata.undecoratedSource$).toBeUndefined();
+  });
 });
 ```
