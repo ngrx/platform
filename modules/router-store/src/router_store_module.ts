@@ -117,9 +117,11 @@ export type StoreRouterConfig = {
 };
 
 export const _ROUTER_CONFIG = new InjectionToken(
-  '@ngrx/router Internal Configuration'
+  '@ngrx/router-store Internal Configuration'
 );
-export const ROUTER_CONFIG = new InjectionToken('@ngrx/router Configuration');
+export const ROUTER_CONFIG = new InjectionToken(
+  '@ngrx/router-store Configuration'
+);
 export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
 
 export function _createDefaultRouterConfig(config: any): StoreRouterConfig {
@@ -182,6 +184,15 @@ export type StoreRouterConfigFunction = () => StoreRouterConfig;
 @NgModule({
   providers: [
     { provide: RouterStateSerializer, useClass: DefaultRouterStateSerializer },
+    {
+      provide: _ROUTER_CONFIG,
+      useValue: { stateKey: DEFAULT_ROUTER_FEATURENAME },
+    },
+    {
+      provide: ROUTER_CONFIG,
+      useFactory: _createDefaultRouterConfig,
+      deps: [_ROUTER_CONFIG],
+    },
   ],
 })
 export class StoreRouterConnectingModule {
