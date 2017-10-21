@@ -64,12 +64,22 @@ export function noMonitor(): null {
   return null;
 }
 
+export function noActionSanitizer(): null {
+  return null;
+}
+
+export function noStateSanitizer(): null {
+  return null;
+}
+
 export function createConfig(
   _options: StoreDevtoolsOptions
 ): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
+    actionSanitizer: noActionSanitizer,
+    stateSanitizer: noStateSanitizer,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
