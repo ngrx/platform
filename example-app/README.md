@@ -26,20 +26,18 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
 # clone the repo
 git clone https://github.com/ngrx/platform.git
 
-# Use npm or yarn to install the dependencies:
-npm install
-
-# OR
+# Install the dependencies:
 yarn
 
 # start the server
-npm run build && npm run cli -- serve
+yarn run build && yarn run cli -- serve
 
 # OR
 yarn run example:start
 ```
 
-Navigate to [http://localhost:4200/](http://localhost:4200/) in your browser
+Navigate to [http://localhost:4200/](http://localhost:4200/) in your browser. To login, the username and password is `test`.
+ 
 
 _NOTE:_ The above setup instructions assume you have added local npm bin folders to your path.
 If this is not the case you will need to install the Angular CLI globally.

@@ -1,5 +1,6 @@
 import {
   Effect,
+  getEffectsMetadata,
   getSourceMetadata,
   getSourceForInstance,
 } from '../src/effects_metadata';
@@ -20,26 +21,6 @@ describe('Effect Metadata', () => {
         { propertyName: 'a', dispatch: true },
         { propertyName: 'b', dispatch: true },
         { propertyName: 'c', dispatch: false },
-      ]);
-    });
-
-    it('should get the effects metadata for a downleveled class instance', () => {
-      class Fixture {
-        static get propDecorators() {
-          return {
-            a: [{ type: Effect, args: [{ dispatch: false }] }],
-            b: [{ type: Effect, args: [] }],
-            c: [{ type: Effect }],
-          };
-        }
-      }
-
-      const mock = new Fixture();
-
-      expect(getSourceMetadata(mock)).toEqual([
-        { propertyName: 'a', dispatch: false },
-        { propertyName: 'b', dispatch: true },
-        { propertyName: 'c', dispatch: true },
       ]);
     });
 
@@ -64,6 +45,38 @@ describe('Effect Metadata', () => {
       const proto = getSourceForInstance(instance);
 
       expect(proto).toBe(Fixture.prototype);
+    });
+  });
+
+  describe('getEffectsMetadata', () => {
+    it('should get map of metadata for all decorated effects in a class instance', () => {
+      class Fixture {
+        @Effect() a: any;
+        @Effect({ dispatch: true })
+        b: any;
+        @Effect({ dispatch: false })
+        c: any;
+      }
+
+      const mock = new Fixture();
+
+      expect(getEffectsMetadata(mock)).toEqual({
+        a: { dispatch: true },
+        b: { dispatch: true },
+        c: { dispatch: false },
+      });
+    });
+
+    it('should return an empty map if the class has not been decorated', () => {
+      class Fixture {
+        a: any;
+        b: any;
+        c: any;
+      }
+
+      const mock = new Fixture();
+
+      expect(getEffectsMetadata(mock)).toEqual({});
     });
   });
 });

@@ -7,51 +7,98 @@ import {
   TheGreatGatsby,
 } from './fixtures/book';
 
-describe('Entity State', () => {
-  interface State {
-    books: EntityState<BookModel>;
-  }
+describe('Entity State Selectors', () => {
+  describe('Composed Selectors', () => {
+    interface State {
+      books: EntityState<BookModel>;
+    }
 
-  let adapter: EntityAdapter<BookModel>;
-  let selectors: EntitySelectors<BookModel, State>;
-  let state: State;
+    let adapter: EntityAdapter<BookModel>;
+    let selectors: EntitySelectors<BookModel, State>;
+    let state: State;
 
-  beforeEach(() => {
-    adapter = createEntityAdapter({
-      selectId: (book: BookModel) => book.id,
+    beforeEach(() => {
+      adapter = createEntityAdapter({
+        selectId: (book: BookModel) => book.id,
+      });
+
+      state = {
+        books: adapter.addAll(
+          [AClockworkOrange, AnimalFarm, TheGreatGatsby],
+          adapter.getInitialState()
+        ),
+      };
+
+      selectors = adapter.getSelectors((state: State) => state.books);
     });
 
-    state = {
-      books: adapter.addAll(
+    it('should create a selector for selecting the ids', () => {
+      const ids = selectors.selectIds(state);
+
+      expect(ids).toEqual(state.books.ids);
+    });
+
+    it('should create a selector for selecting the entities', () => {
+      const entities = selectors.selectEntities(state);
+
+      expect(entities).toEqual(state.books.entities);
+    });
+
+    it('should create a selector for selecting the list of models', () => {
+      const models = selectors.selectAll(state);
+
+      expect(models).toEqual([AClockworkOrange, AnimalFarm, TheGreatGatsby]);
+    });
+
+    it('should create a selector for selecting the count of models', () => {
+      const total = selectors.selectTotal(state);
+
+      expect(total).toEqual(3);
+    });
+  });
+
+  describe('Uncomposed Selectors', () => {
+    type State = EntityState<BookModel>;
+
+    let adapter: EntityAdapter<BookModel>;
+    let selectors: EntitySelectors<BookModel, EntityState<BookModel>>;
+    let state: State;
+
+    beforeEach(() => {
+      adapter = createEntityAdapter({
+        selectId: (book: BookModel) => book.id,
+      });
+
+      state = adapter.addAll(
         [AClockworkOrange, AnimalFarm, TheGreatGatsby],
         adapter.getInitialState()
-      ),
-    };
+      );
 
-    selectors = adapter.getSelectors((state: State) => state.books);
-  });
+      selectors = adapter.getSelectors();
+    });
 
-  it('should create a selector for selecting the ids', () => {
-    const ids = selectors.selectIds(state);
+    it('should create a selector for selecting the ids', () => {
+      const ids = selectors.selectIds(state);
 
-    expect(ids).toEqual(state.books.ids);
-  });
+      expect(ids).toEqual(state.ids);
+    });
 
-  it('should create a selector for selecting the entities', () => {
-    const entities = selectors.selectEntities(state);
+    it('should create a selector for selecting the entities', () => {
+      const entities = selectors.selectEntities(state);
 
-    expect(entities).toEqual(state.books.entities);
-  });
+      expect(entities).toEqual(state.entities);
+    });
 
-  it('should create a selector for selecting the list of models', () => {
-    const models = selectors.selectAll(state);
+    it('should create a selector for selecting the list of models', () => {
+      const models = selectors.selectAll(state);
 
-    expect(models).toEqual([AClockworkOrange, AnimalFarm, TheGreatGatsby]);
-  });
+      expect(models).toEqual([AClockworkOrange, AnimalFarm, TheGreatGatsby]);
+    });
 
-  it('should create a selector for selecting the count of models', () => {
-    const total = selectors.selectTotal(state);
+    it('should create a selector for selecting the count of models', () => {
+      const total = selectors.selectTotal(state);
 
-    expect(total).toEqual(3);
+      expect(total).toEqual(3);
+    });
   });
 });

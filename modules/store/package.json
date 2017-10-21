@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "description": "RxJS powered Redux for Angular apps",
   "module": "@ngrx/store.es5.js",
   "es2015": "@ngrx/store.js",

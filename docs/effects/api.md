@@ -121,7 +121,7 @@ export class UserEffects implements OnRunEffects {
 
   ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
     return this.actions$.ofType('LOGGED_IN')
-      .exhaustMap(() => resolvedEffects$.takeUntil('LOGGED_OUT'));
+      .exhaustMap(() => resolvedEffects$.takeUntil(this.actions$.ofType('LOGGED_OUT')));
   }
 }
 ```

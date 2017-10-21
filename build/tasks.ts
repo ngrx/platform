@@ -62,6 +62,7 @@ export async function bundleFesms(config: Config) {
     await util.exec('rollup', [
       `-i ./dist/packages/${pkg}/index.js`,
       `-o ./dist/${topLevelName}/${config.scope}/${pkg}.js`,
+      `-f es`,
       `--sourcemap`,
     ]);
 
