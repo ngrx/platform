@@ -5,7 +5,7 @@ import { empty } from 'rxjs/observable/empty';
 import { BookEffects, SEARCH_SCHEDULER, SEARCH_DEBOUNCE } from './book';
 import { GoogleBooksService } from '../../core/services/google-books';
 import { Observable } from 'rxjs/Observable';
-import { Search, SearchComplete } from '../actions/book';
+import { Search, SearchComplete, SearchError } from '../actions/book';
 import { Book } from '../models/book';
 
 export class TestActions extends Actions {
@@ -62,10 +62,10 @@ describe('BookEffects', () => {
       expect(effects.search$).toBeObservable(expected);
     });
 
-    it('should return a new book.SearchComplete, with an empty array, if the books service throws', () => {
+    it('should return a new book.SearchError if the books service throws', () => {
       const action = new Search('query');
-      const completion = new SearchComplete([]);
-      const error = 'Error!';
+      const completion = new SearchError('Unexpected Error. Try again later.');
+      const error = 'Unexpected Error. Try again later.';
 
       actions$.stream = hot('-a---', { a: action });
       const response = cold('-#|', {}, error);
