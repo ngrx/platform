@@ -64,13 +64,7 @@ export function noMonitor(): null {
   return null;
 }
 
-export function noActionSanitizer(): null {
-  return null;
-}
-
-export function noStateSanitizer(): null {
-  return null;
-}
+export const DEFAULT_NAME = 'store-devtool-instance';
 
 export function createConfig(
   _options: StoreDevtoolsOptions
@@ -78,8 +72,7 @@ export function createConfig(
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
-    actionSanitizer: noActionSanitizer,
-    stateSanitizer: noStateSanitizer,
+    name: DEFAULT_NAME,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
