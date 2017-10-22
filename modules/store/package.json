@@ -10,11 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
   },
-  "keywords": [
-    "RxJS",
-    "Angular",
-    "Redux"
-  ],
+  "keywords": ["RxJS", "Angular", "Redux"],
   "author": "Rob Wormald <robwormald@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -22,7 +18,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^4.0.0",
+    "@angular/core": "^4.0.0 || ^5.0.0-rc.2",
     "rxjs": "^5.0.0"
   }
 }

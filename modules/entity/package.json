@@ -10,12 +10,10 @@
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
   },
-  "authors": [
-    "Mike Ryan"
-  ],
+  "authors": ["Mike Ryan"],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "^4.0.0",
+    "@angular/core": "^4.0.0 || ^5.0.0-rc.2",
     "@ngrx/store": "^4.0.0",
     "rxjs": "^5.0.0"
   }
