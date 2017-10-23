@@ -10,19 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
   },
-  "keywords": [
-    "RxJS",
-    "Angular",
-    "Redux"
-  ],
-  "authors": [
-    "Victor Savkin <avix1000@gmail.com>"
-  ],
+  "keywords": ["RxJS", "Angular", "Redux"],
+  "authors": ["Victor Savkin <avix1000@gmail.com>"],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/router": "^4.0.0",
+    "@angular/common": "^4.0.0 || ^5.0.0-rc.2",
+    "@angular/core": "^4.0.0 || ^5.0.0-rc.2",
+    "@angular/router": "^4.0.0 || ^5.0.0-rc.2",
     "@ngrx/store": "^4.0.0",
     "rxjs": "^5.0.0"
   }

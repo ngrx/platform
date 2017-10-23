@@ -458,7 +458,6 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
           { type: 'router', event: 'ResolveEnd', url: '/next' },
-
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
 
