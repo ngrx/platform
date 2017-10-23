@@ -1,11 +1,11 @@
-import { ROUTER_RESOLVE_END } from '../src/router_store_module';
-import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
 
+import { ROUTER_RESOLVE_END } from '../src/router_store_module';
+import { StoreRouterConfig } from '../src/router_store_module';
 import { Component, Provider, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
@@ -528,6 +528,7 @@ function createTestModule(
     canLoad?: Function;
     resolvedContact?: string;
     providers?: Provider[];
+    config?: StoreRouterConfig;
   } = {}
 ) {
   @Component({
@@ -562,7 +563,7 @@ function createTestModule(
           canLoad: ['CanLoadNext'],
         },
       ]),
-      StoreRouterConnectingModule,
+      StoreRouterConnectingModule.forRoot(opts.config),
     ],
     providers: [
       ContactResolver,
