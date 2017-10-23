@@ -18,6 +18,7 @@ Reactive libraries for Angular
 
 ## Examples
 - [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
+- [todoMVC-app](https://github.com/nicobytes/todo-app-ngrx/blob/master/README.md) Example and simple TodoApp utilizing @ngrx/store.
 
 ## Migration
 - [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
