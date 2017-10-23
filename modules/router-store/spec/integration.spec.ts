@@ -5,8 +5,9 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
-
+import { StoreRouterConfig } from '../src/router_store_module';
 import { Component, Provider, Injectable } from '@angular/core';
+
 import { TestBed } from '@angular/core/testing';
 import {
   NavigationEnd,
@@ -56,7 +57,9 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
+ 
           { type: 'store', state: '/' }, // ROUTER_RESOLVE_END event in the store
+ 
           { type: 'router', event: 'ResolveEnd', url: '/' },
 
           { type: 'router', event: 'NavigationEnd', url: '/' },
@@ -76,7 +79,9 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
+ 
           { type: 'store', state: '/next' }, // ROUTER_RESOLVE_END event in the store
+ 
           { type: 'router', event: 'ResolveEnd', url: '/next' },
 
           { type: 'router', event: 'NavigationEnd', url: '/next' },
@@ -289,7 +294,9 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
+ 
           { type: 'store', state: { url: '/next', navigationId: 2 } },
+ 
           { type: 'router', event: 'ResolveEnd', url: '/next' },
 
           { type: 'router', event: 'NavigationEnd', url: '/next' },
@@ -314,7 +321,9 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
+ 
           { type: 'store', state: { url: '/', navigationId: 3 } },
+ 
           { type: 'router', event: 'ResolveEnd', url: '/' },
 
           { type: 'router', event: 'NavigationEnd', url: '/' },
@@ -325,8 +334,10 @@ describe('integration spec', () => {
         store.dispatch({
           type: ROUTER_NAVIGATION,
           payload: {
+ 
             routerState: routerReducerStates[2].state,
             event: { id: routerReducerStates[2].navigationId },
+ 
           },
         });
         return waitForNavigation(router);
@@ -341,7 +352,9 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
+ 
           { type: 'store', state: { url: '/next', navigationId: 4 } },
+ 
           { type: 'router', event: 'ResolveEnd', url: '/next' },
 
           { type: 'router', event: 'NavigationEnd', url: '/next' },
@@ -467,7 +480,64 @@ describe('integration spec', () => {
           { type: 'store', state: undefined }, // after USER_EVENT
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
+ 
           { type: 'store', state: undefined }, // after resolve start
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
+
+ 
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
+          { type: 'router', event: 'NavigationEnd', url: '/next' },
+        ]);
+
+        done();
+      });
+  });
+
+  it('should work when defining state key', (done: any) => {
+    const reducer = (state: string = '', action: RouterAction<any>) => {
+      if (action.type === ROUTER_NAVIGATION) {
+        return action.payload.routerState.url.toString();
+      } else {
+        return state;
+      }
+    };
+
+    createTestModule({
+      reducers: { reducer },
+      config: { stateKey: 'router-reducer' },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const store = TestBed.get(Store);
+    const log = logOfRouterAndStore(router, store);
+
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'store', state: '' }, // init event. has nothing to do with the router
+          { type: 'router', event: 'NavigationStart', url: '/' },
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
+          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+          { type: 'router', event: 'GuardsCheckStart', url: '/' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+          { type: 'router', event: 'ResolveStart', url: '/' },
+          { type: 'router', event: 'ResolveEnd', url: '/' },
+          { type: 'router', event: 'NavigationEnd', url: '/' },
+        ]);
+      })
+      .then(() => {
+        log.splice(0);
+        return router.navigateByUrl('next');
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'store', state: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
           { type: 'router', event: 'ResolveEnd', url: '/next' },
 
           { type: 'router', event: 'NavigationEnd', url: '/next' },
@@ -526,8 +596,9 @@ function createTestModule(
     reducers?: any;
     canActivate?: Function;
     canLoad?: Function;
-    resolvedContact?: string;
-    providers?: Provider[];
+	   resolvedContact?: string;  providers?: Provider[];
+    config?: StoreRouterConfig;
+
   } = {}
 ) {
   @Component({
@@ -562,7 +633,7 @@ function createTestModule(
           canLoad: ['CanLoadNext'],
         },
       ]),
-      StoreRouterConnectingModule,
+      StoreRouterConnectingModule.forRoot(opts.config),
     ],
     providers: [
       ContactResolver,

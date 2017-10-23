@@ -1,22 +1,22 @@
 import { TestBed } from '@angular/core/testing';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { cold } from 'jasmine-marbles';
 import { GoogleBooksService } from './google-books';
 
 describe('Service: GoogleBooks', () => {
   let service: GoogleBooksService;
-  let http: any;
+  let http: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Http, useValue: { get: jest.fn() } },
+        { provide: HttpClient, useValue: { get: jest.fn() } },
         GoogleBooksService,
       ],
     });
 
     service = TestBed.get(GoogleBooksService);
-    http = TestBed.get(Http);
+    http = TestBed.get(HttpClient);
   });
 
   const data = {
@@ -35,11 +35,7 @@ describe('Service: GoogleBooks', () => {
   const queryTitle = 'Book Title';
 
   it('should call the search api and return the search results', () => {
-    const httpResponse = {
-      json: () => books,
-    };
-
-    const response = cold('-a|', { a: httpResponse });
+    const response = cold('-a|', { a: books });
     const expected = cold('-b|', { b: books.items });
     http.get = jest.fn(() => response);
 
@@ -50,11 +46,7 @@ describe('Service: GoogleBooks', () => {
   });
 
   it('should retrieve the book from the volumeId', () => {
-    const httpResponse = {
-      json: () => data,
-    };
-
-    const response = cold('-a|', { a: httpResponse });
+    const response = cold('-a|', { a: data });
     const expected = cold('-b|', { b: data });
     http.get = jest.fn(() => response);
 

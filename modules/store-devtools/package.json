@@ -10,13 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
   },
-  "keywords": [
-    "RxJS",
-    "Angular",
-    "Redux",
-    "Store",
-    "@ngrx/store"
-  ],
+  "keywords": ["RxJS", "Angular", "Redux", "Store", "@ngrx/store"],
   "contributors": [
     {
       "name": "Rob Wormald",
