@@ -1,3 +1,4 @@
+import * as console from 'console';
 import { NgModule } from '@angular/core';
 import {
   NavigationCancel,
@@ -5,6 +6,7 @@ import {
   Router,
   RouterStateSnapshot,
   RoutesRecognized,
+  ResolveEnd,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
@@ -31,6 +33,27 @@ export type RouterNavigationPayload<T> = {
 export type RouterNavigationAction<T = RouterStateSnapshot> = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
+};
+
+/**
+ * An action dispatched when the router resolve end.
+ */
+export const ROUTER_RESOLVE_END = 'ROUTER_RESOLVE_END';
+
+/**
+ * Payload of ROUTER_RESOLVE_END.
+ */
+export type RouterResolveEndPayload<T> = {
+  routerState: T;
+  event: RoutesRecognized;
+};
+
+/**
+ * An action dispatched when the router resolve end.
+ */
+export type RouterResolveEndAction<T = RouterStateSnapshot> = {
+  type: typeof ROUTER_RESOLVE_END;
+  payload: RouterResolveEndPayload<T>;
 };
 
 /**
@@ -82,6 +105,7 @@ export type RouterErrorAction<T, V = RouterStateSnapshot> = {
  */
 export type RouterAction<T, V = RouterStateSnapshot> =
   | RouterNavigationAction<T>
+  | RouterResolveEndAction<T>
   | RouterCancelAction<T, V>
   | RouterErrorAction<T, V>;
 
@@ -96,6 +120,7 @@ export function routerReducer<T = RouterStateSnapshot>(
 ): RouterReducerState<T> {
   switch (action.type) {
     case ROUTER_NAVIGATION:
+    case ROUTER_RESOLVE_END:
     case ROUTER_ERROR:
     case ROUTER_CANCEL:
       return {
@@ -119,7 +144,8 @@ export function routerReducer<T = RouterStateSnapshot>(
  *   event: RoutesRecognized
  * }
  * ```
- *
+ * Router dispatches ROUTER_RESOLVE_END action when resolve phase ends.
+ * 
  * Either a reducer or an effect can be invoked in response to this action.
  * If the invoked reducer throws, the navigation will be canceled.
  *
@@ -220,6 +246,8 @@ export class StoreRouterConnectingModule {
         this.dispatchRouterCancel(e);
       } else if (e instanceof NavigationError) {
         this.dispatchRouterError(e);
+      } else if (e instanceof ResolveEnd) {
+        this.dispatchRouterResolveEnd(e);
       }
     });
   }
@@ -233,6 +261,14 @@ export class StoreRouterConnectingModule {
         this.lastRoutesRecognized.urlAfterRedirects,
         this.routerState
       ),
+    });
+  }
+
+  private dispatchRouterResolveEnd(event: ResolveEnd): void {
+    this.dispatchRouterAction(ROUTER_RESOLVE_END, {
+      routerState: this.routerState,
+      storeState: this.storeState,
+      event,
     });
   }
 
