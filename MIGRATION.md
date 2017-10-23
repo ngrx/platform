@@ -534,10 +534,7 @@ export class RouterEffects {
 
 ## @ngrx/store-devtools
 
-**NOTE:** store-devtools currently causes severe performance problems when
-used with router-store. We are working to
-[fix this](https://github.com/ngrx/platform/issues/97), but for now, avoid
-using them together.
+**NOTE:** Because of [this issue](https://github.com/ngrx/platform/issues/97), you should use version 4.0.3 or newer of router-store if you are using it together with store-devtools.
 
 BEFORE:
 
