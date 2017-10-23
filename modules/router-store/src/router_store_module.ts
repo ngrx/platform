@@ -1,4 +1,9 @@
-import { NgModule } from '@angular/core';
+import {
+  NgModule,
+  ModuleWithProviders,
+  InjectionToken,
+  Inject,
+} from '@angular/core';
 import {
   NavigationCancel,
   NavigationError,
@@ -107,6 +112,33 @@ export function routerReducer<T = RouterStateSnapshot>(
   }
 }
 
+export type StoreRouterConfig = {
+  stateKey?: string;
+};
+
+export const _ROUTER_CONFIG = new InjectionToken(
+  '@ngrx/router-store Internal Configuration'
+);
+export const ROUTER_CONFIG = new InjectionToken(
+  '@ngrx/router-store Configuration'
+);
+export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
+
+export function _createDefaultRouterConfig(config: any): StoreRouterConfig {
+  let _config = {};
+
+  if (typeof config === 'function') {
+    _config = config();
+  }
+
+  return {
+    stateKey: DEFAULT_ROUTER_FEATURENAME,
+    ..._config,
+  };
+}
+
+export type StoreRouterConfigFunction = () => StoreRouterConfig;
+
 /**
  * Connects RouterModule with StoreModule.
  *
@@ -152,9 +184,37 @@ export function routerReducer<T = RouterStateSnapshot>(
 @NgModule({
   providers: [
     { provide: RouterStateSerializer, useClass: DefaultRouterStateSerializer },
+    {
+      provide: _ROUTER_CONFIG,
+      useValue: { stateKey: DEFAULT_ROUTER_FEATURENAME },
+    },
+    {
+      provide: ROUTER_CONFIG,
+      useFactory: _createDefaultRouterConfig,
+      deps: [_ROUTER_CONFIG],
+    },
   ],
 })
 export class StoreRouterConnectingModule {
+  static forRoot(
+    config?: StoreRouterConfig | StoreRouterConfigFunction
+  ): ModuleWithProviders;
+  static forRoot(
+    config: StoreRouterConfig | StoreRouterConfigFunction = {}
+  ): ModuleWithProviders {
+    return {
+      ngModule: StoreRouterConnectingModule,
+      providers: [
+        { provide: _ROUTER_CONFIG, useValue: config },
+        {
+          provide: ROUTER_CONFIG,
+          useFactory: _createDefaultRouterConfig,
+          deps: [_ROUTER_CONFIG],
+        },
+      ],
+    };
+  }
+
   private routerState: RouterStateSnapshot;
   private storeState: any;
   private lastRoutesRecognized: RoutesRecognized;
@@ -162,11 +222,16 @@ export class StoreRouterConnectingModule {
   private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
 
+  private stateKey: string;
+
   constructor(
     private store: Store<any>,
     private router: Router,
-    private serializer: RouterStateSerializer<RouterStateSnapshot>
+    private serializer: RouterStateSerializer<RouterStateSnapshot>,
+    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
+    this.stateKey = this.config.stateKey as string;
+
     this.setUpBeforePreactivationHook();
     this.setUpStoreStateListener();
     this.setUpStateRollbackEvents();
@@ -187,28 +252,28 @@ export class StoreRouterConnectingModule {
     this.store.subscribe(s => {
       this.storeState = s;
     });
-    this.store.select('routerReducer').subscribe(() => {
+    this.store.select(this.stateKey).subscribe(() => {
       this.navigateIfNeeded();
     });
   }
 
   private shouldDispatchRouterNavigation(): boolean {
-    if (!this.storeState['routerReducer']) return true;
+    if (!this.storeState[this.stateKey]) return true;
     return !this.navigationTriggeredByDispatch;
   }
 
   private navigateIfNeeded(): void {
     if (
-      !this.storeState['routerReducer'] ||
-      !this.storeState['routerReducer'].state
+      !this.storeState[this.stateKey] ||
+      !this.storeState[this.stateKey].state
     ) {
       return;
     }
     if (this.dispatchTriggeredByRouter) return;
 
-    if (this.router.url !== this.storeState['routerReducer'].state.url) {
+    if (this.router.url !== this.storeState[this.stateKey].state.url) {
       this.navigationTriggeredByDispatch = true;
-      this.router.navigateByUrl(this.storeState['routerReducer'].state.url);
+      this.router.navigateByUrl(this.storeState[this.stateKey].state.url);
     }
   }
 
