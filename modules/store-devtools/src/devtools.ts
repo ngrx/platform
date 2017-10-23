@@ -49,7 +49,7 @@ export class StoreDevtools implements Observer<any> {
       initialState,
       liftedInitialState,
       config.monitor,
-      config.maxAge ? { maxAge: config.maxAge } : {}
+      config.maxAge ? { maxAge: config.maxAge, name: config.name } : {}
     );
 
     const liftedAction$ = applyOperators(actions$.asObservable(), [
@@ -80,9 +80,9 @@ export class StoreDevtools implements Observer<any> {
       liftedStateSubject.next(state);
 
       if (action.type === Actions.PERFORM_ACTION) {
-        const unlifedAction = (action as Actions.PerformAction).action;
+        const unliftedAction = (action as Actions.PerformAction).action;
 
-        scannedActions.next(unlifedAction);
+        scannedActions.next(unliftedAction);
       }
     });
 

@@ -129,7 +129,7 @@ export function liftReducerWith(
   initialCommittedState: any,
   initialLiftedState: LiftedState,
   monitorReducer?: any,
-  options: { maxAge?: number } = {}
+  options: { maxAge?: number; name?: string } = {}
 ) {
   /**
   * Manages how the history actions modify the history state.
