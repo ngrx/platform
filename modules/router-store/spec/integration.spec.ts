@@ -4,17 +4,9 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
 
-import { ROUTER_RESOLVE_END } from '../src/router_store_module';
-import { StoreRouterConfig } from '../src/router_store_module';
-import { Component, Provider, Injectable } from '@angular/core';
-
+import { Component, Injectable, Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import {
-  NavigationEnd,
-  Router,
-  RouterStateSnapshot,
-  Resolve,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
 
@@ -22,11 +14,13 @@ import {
   ROUTER_CANCEL,
   ROUTER_ERROR,
   ROUTER_NAVIGATION,
+  ROUTER_RESOLVE_END,
   RouterAction,
   routerReducer,
   RouterStateSerializer,
   StoreRouterConnectingModule,
 } from '../src/index';
+import { StoreRouterConfig } from '../src/router_store_module';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
@@ -481,8 +475,6 @@ describe('integration spec', () => {
 
           { type: 'store', state: undefined }, // after resolve start
           { type: 'router', event: 'ResolveEnd', url: '/next' },
-
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
 
@@ -519,6 +511,7 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
+          { type: 'store', state: '/' }, //ROUTER_RESOLVE_END event in the store
           { type: 'router', event: 'ResolveEnd', url: '/' },
           { type: 'router', event: 'NavigationEnd', url: '/' },
         ]);
@@ -535,6 +528,7 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'store', state: '/next' }, //ROUTER_RESOLVE_END event in the store
           { type: 'router', event: 'ResolveEnd', url: '/next' },
 
           { type: 'router', event: 'NavigationEnd', url: '/next' },
@@ -578,7 +572,7 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'store', state: { name: 'ngrx' } }, // after resolve start received resolved data.
+          { type: 'store', state: { name: 'ngrx' } }, //ROUTER_RESOLVE_END event in the store
           { type: 'router', event: 'ResolveEnd', url: '/next' },
 
           { type: 'router', event: 'NavigationEnd', url: '/next' },
