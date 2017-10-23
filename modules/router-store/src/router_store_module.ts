@@ -1,4 +1,3 @@
-import * as console from 'console';
 import { NgModule } from '@angular/core';
 import {
   NavigationCancel,
