@@ -1,5 +1,5 @@
-import { ActionReducer, Action } from '@ngrx/store';
-import { InjectionToken, Type } from '@angular/core';
+import { InjectionToken } from '@angular/core';
+import { ActionReducer } from '@ngrx/store';
 
 export class StoreDevtoolsConfig {
   maxAge: number | false;
