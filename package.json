@@ -21,7 +21,8 @@
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "release": "lerna publish --skip-npm --conventional-commits && npm run build"
+    "release": "lerna publish --skip-npm --conventional-commits && npm run build",
+    "codegen": "ts-node modules/codegen/src/collect-metadata.ts"
   },
   "engines": {
     "node": ">=6.9.5",
@@ -74,6 +75,7 @@
     "@types/jasmine": "2.5.45",
     "@types/jasminewd2": "^2.0.2",
     "@types/jest": "^20.0.2",
+    "@types/lodash": "^4.14.80",
     "@types/node": "^7.0.5",
     "@types/ora": "^0.3.31",
     "@types/rimraf": "^0.0.28",
@@ -124,6 +126,7 @@
   },
   "dependencies": {
     "@angular/cdk": "^2.0.0-beta.8",
+    "lodash": "^4.17.4",
     "opencollective": "^1.0.3"
   },
   "collective": {
