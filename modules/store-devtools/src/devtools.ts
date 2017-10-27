@@ -49,7 +49,11 @@ export class StoreDevtools implements Observer<any> {
       initialState,
       liftedInitialState,
       config.monitor,
-      config.maxAge ? { maxAge: config.maxAge } : {}
+      {
+        maxAge: config.maxAge as number,
+        actionSanitizer: config.actionSanitizer,
+        stateSanitizer: config.stateSanitizer,
+      }
     );
 
     const liftedAction$ = applyOperators(actions$.asObservable(), [
