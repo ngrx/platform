@@ -52,6 +52,7 @@ export class StoreDevtools implements Observer<any> {
       {
         maxAge: config.maxAge as number,
         name: config.name,
+        serialize: config.serialize,
       }
     );
 
