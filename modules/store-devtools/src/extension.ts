@@ -1,4 +1,5 @@
-import { InjectionToken, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { filter } from 'rxjs/operator/filter';
@@ -6,7 +7,8 @@ import { map } from 'rxjs/operator/map';
 import { share } from 'rxjs/operator/share';
 import { switchMap } from 'rxjs/operator/switchMap';
 import { takeUntil } from 'rxjs/operator/takeUntil';
-import { Action } from '@ngrx/store';
+
+import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { LiftedState } from './reducer';
 import { applyOperators } from './utils';
 
@@ -35,7 +37,7 @@ export interface ReduxDevtoolsExtension {
   send(
     action: any,
     state: any,
-    options?: boolean | { serialize: boolean | object },
+    options: StoreDevtoolsConfig,
     instanceId?: string
   ): void;
 }
@@ -49,7 +51,8 @@ export class DevtoolsExtension {
   actions$: Observable<any>;
 
   constructor(
-    @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension
+    @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
+    @Inject(STORE_DEVTOOLS_CONFIG) private config: StoreDevtoolsConfig
   ) {
     this.devtoolsExtension = devtoolsExtension;
     this.createActionStreams();
@@ -60,12 +63,7 @@ export class DevtoolsExtension {
       return;
     }
 
-    this.devtoolsExtension.send(
-      null,
-      state,
-      { serialize: false },
-      this.instanceId
-    );
+    this.devtoolsExtension.send(null, state, this.config, this.instanceId);
   }
 
   private createChangesObservable(): Observable<any> {

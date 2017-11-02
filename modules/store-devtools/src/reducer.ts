@@ -6,7 +6,7 @@ import {
   UPDATE,
   INIT,
 } from '@ngrx/store';
-
+import { StoreDevtoolsConfig } from './config';
 import { difference, liftAction } from './utils';
 import * as Actions from './actions';
 
@@ -129,11 +129,7 @@ export function liftReducerWith(
   initialCommittedState: any,
   initialLiftedState: LiftedState,
   monitorReducer?: any,
-  options: {
-    maxAge?: number;
-    actionSanitizer?: <A extends Action>(action: A, id: number) => A;
-    stateSanitizer?: <S>(state: S, index: number) => S;
-  } = {}
+  options: Partial<StoreDevtoolsConfig> = {}
 ) {
   /**
   * Manages how the history actions modify the history state.
