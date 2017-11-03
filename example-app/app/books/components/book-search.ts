@@ -14,14 +14,21 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
         </md-input-container>
         <md-spinner [class.show]="searching"></md-spinner>
       </md-card-content>
+      <md-card-footer><span *ngIf="error">{{error}}</span></md-card-footer>
     </md-card>
   `,
   styles: [
     `
     md-card-title,
-    md-card-content {
+    md-card-content,
+    md-card-footer {
       display: flex;
       justify-content: center;
+    }
+
+    md-card-footer {
+      color: #FF0000;
+      padding: 5px 0;
     }
 
     input {
@@ -50,5 +57,6 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 export class BookSearchComponent {
   @Input() query = '';
   @Input() searching = false;
+  @Input() error = '';
   @Output() search = new EventEmitter<string>();
 }

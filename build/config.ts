@@ -29,4 +29,8 @@ export const packages: PackageDescription[] = [
     name: 'entity',
     hasTestingModule: false,
   },
+  {
+    name: 'codegen',
+    hasTestingModule: false,
+  },
 ];
