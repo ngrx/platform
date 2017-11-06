@@ -112,6 +112,32 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return didMutate;
   }
 
+  function upsertOneMutably(update: Update<T>, state: R): boolean;
+  function upsertOneMutably(update: any, state: any): boolean {
+    return upsertManyMutably([update], state);
+  }
+
+  function upsertManyMutably(updates: Update<T>[], state: R): boolean;
+  function upsertManyMutably(updates: any[], state: any): boolean {
+    const added: T[] = [];
+    const updated: Update<T>[] = [];
+
+    for (let index in updates) {
+      const update = updates[index];
+      if (update.id in state.entities) {
+        updated.push(update);
+      } else {
+        added.push({
+          ...update.changes,
+          id: update.id,
+        });
+      }
+    }
+
+    const didMutate = updateManyMutably(updated, state);
+    return addManyMutably(added, state) || didMutate;
+  }
+
   return {
     removeAll,
     addOne: createStateOperator(addOneMutably),
@@ -119,6 +145,8 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     addAll: createStateOperator(addAllMutably),
     updateOne: createStateOperator(updateOneMutably),
     updateMany: createStateOperator(updateManyMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    upsertMany: createStateOperator(upsertManyMutably),
     removeOne: createStateOperator(removeOneMutably),
     removeMany: createStateOperator(removeManyMutably),
   };

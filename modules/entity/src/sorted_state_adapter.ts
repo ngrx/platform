@@ -76,6 +76,32 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     return merge(models, state);
   }
 
+  function upsertOneMutably(update: Update<T>, state: R): boolean;
+  function upsertOneMutably(update: any, state: any): boolean {
+    return upsertManyMutably([update], state);
+  }
+
+  function upsertManyMutably(updates: Update<T>[], state: R): boolean;
+  function upsertManyMutably(updates: any[], state: any): boolean {
+    const added: T[] = [];
+    const updated: Update<T>[] = [];
+
+    for (let index in updates) {
+      const update = updates[index];
+      if (update.id in state.entities) {
+        updated.push(update);
+      } else {
+        added.push({
+          ...update.changes,
+          id: update.id,
+        });
+      }
+    }
+
+    const didMutate = updateManyMutably(updated, state);
+    return addManyMutably(added, state) || didMutate;
+  }
+
   function merge(models: T[], state: R): boolean;
   function merge(models: any[], state: any): boolean {
     if (models.length === 0) {
@@ -123,8 +149,10 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     removeAll,
     addOne: createStateOperator(addOneMutably),
     updateOne: createStateOperator(updateOneMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
     addAll: createStateOperator(addAllMutably),
     addMany: createStateOperator(addManyMutably),
     updateMany: createStateOperator(updateManyMutably),
+    upsertMany: createStateOperator(upsertManyMutably),
   };
 }
