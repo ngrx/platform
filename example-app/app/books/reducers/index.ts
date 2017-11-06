@@ -105,6 +105,10 @@ export const getSearchLoading = createSelector(
   getSearchState,
   fromSearch.getLoading
 );
+export const getSearchError = createSelector(
+  getSearchState,
+  fromSearch.getError
+);
 
 /**
  * Some selector functions create joins across parts of state. This selector
