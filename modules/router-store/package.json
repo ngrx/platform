@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/router-store",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Bindings to connect @angular/router to @ngrx/store",
   "module": "@ngrx/router-store.es5.js",
   "es2015": "@ngrx/router-store.js",
@@ -10,8 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
   },
-  "keywords": ["RxJS", "Angular", "Redux"],
-  "authors": ["Victor Savkin <avix1000@gmail.com>"],
+  "keywords": [
+    "RxJS",
+    "Angular",
+    "Redux"
+  ],
+  "authors": [
+    "Victor Savkin <avix1000@gmail.com>"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^4.0.0 || ^5.0.0-rc.2 || ^5.0.0",

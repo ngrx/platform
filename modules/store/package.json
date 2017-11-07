@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "RxJS powered Redux for Angular apps",
   "module": "@ngrx/store.es5.js",
   "es2015": "@ngrx/store.js",
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
   },
-  "keywords": ["RxJS", "Angular", "Redux"],
+  "keywords": [
+    "RxJS",
+    "Angular",
+    "Redux"
+  ],
   "author": "Rob Wormald <robwormald@gmail.com>",
   "license": "MIT",
   "bugs": {
