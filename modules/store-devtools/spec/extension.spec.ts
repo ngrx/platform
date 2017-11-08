@@ -39,7 +39,7 @@ describe('DevtoolsExtension', () => {
       const defaultOptions = {
         maxAge: false,
         monitor: noMonitor,
-        name: 'ngrx-store-devtool-instance',
+        name: 'NgRx Store DevTools',
         serialize: false,
       };
       const action = {} as Action;

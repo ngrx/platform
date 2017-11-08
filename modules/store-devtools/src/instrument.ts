@@ -64,12 +64,12 @@ export function noMonitor(): null {
   return null;
 }
 
-export const DEFAULT_NAME = 'ngrx-store-devtool-instance';
+export const DEFAULT_NAME = 'NgRx Store DevTools';
 
 export function createConfig(
   _options: StoreDevtoolsOptions
 ): StoreDevtoolsConfig {
-  const DEFAULT_OPTIONS: Partial<StoreDevtoolsConfig> = {
+  const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
     name: DEFAULT_NAME,
