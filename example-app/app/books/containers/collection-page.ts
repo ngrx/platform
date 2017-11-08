@@ -11,9 +11,9 @@ import { Book } from '../models/book';
   selector: 'bc-collection-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <md-card>
-      <md-card-title>My Collection</md-card-title>
-    </md-card>
+    <mat-card>
+      <mat-card-title>My Collection</mat-card-title>
+    </mat-card>
 
     <bc-book-preview-list [books]="books$ | async"></bc-book-preview-list>
   `,
@@ -25,7 +25,7 @@ import { Book } from '../models/book';
    */
   styles: [
     `
-    md-card-title {
+    mat-card-title {
       display: flex;
       justify-content: center;
     }
