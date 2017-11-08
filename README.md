@@ -14,6 +14,7 @@ Reactive libraries for Angular
 - [@ngrx/router-store](./docs/router-store/README.md) - Bindings to connect the Angular Router to @ngrx/store  
 - [@ngrx/store-devtools](./docs/store-devtools/README.md) - Store instrumentation that enables a
 [powerful time-travelling debugger](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
+- [@ngrx/entity](./docs/entity/README.md) - Entity State adapter for managing record collections.
 
 ## Examples
 - [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.

@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/entity",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Common utilities for entity reducers",
   "module": "@ngrx/entity.es5.js",
   "es2015": "@ngrx/entity.js",
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "^4.0.0",
+    "@angular/core": "^4.0.0 || ^5.0.0-rc.2 || ^5.0.0",
     "@ngrx/store": "^4.0.0",
     "rxjs": "^5.0.0"
   }

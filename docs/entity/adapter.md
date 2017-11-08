@@ -101,7 +101,7 @@ export interface User {
 `user.actions.ts`
 
 ```ts
-import { Action } from '@ngrx/action';
+import { Action } from '@ngrx/store';
 import { User } from './user.model';
 
 export const LOAD_USERS = '[User] Load Users';
