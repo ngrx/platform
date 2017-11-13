@@ -221,7 +221,6 @@ export class StoreRouterConnectingModule {
 
   private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
-
   private stateKey: string;
 
   constructor(

@@ -9,6 +9,7 @@ import {
 
 import { difference, liftAction } from './utils';
 import * as Actions from './actions';
+import { StoreDevtoolsConfig } from './config';
 
 export type InitAction = {
   readonly type: typeof INIT;
@@ -129,7 +130,7 @@ export function liftReducerWith(
   initialCommittedState: any,
   initialLiftedState: LiftedState,
   monitorReducer?: any,
-  options: { maxAge?: number } = {}
+  options: Partial<StoreDevtoolsConfig> = {}
 ) {
   /**
   * Manages how the history actions modify the history state.
