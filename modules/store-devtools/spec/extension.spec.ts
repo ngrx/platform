@@ -34,6 +34,8 @@ describe('DevtoolsExtension', () => {
         monitor: noMonitor,
         actionSanitizer: noActionSanitizer,
         stateSanitizer: noStateSanitizer,
+        name: 'NgRx Store DevTools',
+        serialize: false,
       };
       const action = {} as Action;
       const state = {} as LiftedState;
@@ -57,6 +59,7 @@ describe('DevtoolsExtension', () => {
         createConfig({
           actionSanitizer: myActionSanitizer,
           stateSanitizer: myStateSanitizer,
+          name: 'ngrx-store-devtool-todolist',
         })
       );
       const defaultOptions = {
@@ -64,6 +67,8 @@ describe('DevtoolsExtension', () => {
         monitor: noMonitor,
         actionSanitizer: myActionSanitizer,
         stateSanitizer: myStateSanitizer,
+        name: 'ngrx-store-devtool-todolist',
+        serialize: false,
       };
       const action = {} as Action;
       const state = {} as LiftedState;
