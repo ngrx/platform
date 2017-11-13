@@ -3,7 +3,12 @@ import { of } from 'rxjs/observable/of';
 
 import { LiftedState } from '../';
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
-import { createConfig, noActionSanitizer, noMonitor, noStateSanitizer } from '../src/instrument';
+import {
+  createConfig,
+  noActionSanitizer,
+  noMonitor,
+  noStateSanitizer,
+} from '../src/instrument';
 
 describe('DevtoolsExtension', () => {
   let reduxDevtoolsExtension: ReduxDevtoolsExtension;
