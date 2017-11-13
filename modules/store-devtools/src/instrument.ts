@@ -66,7 +66,6 @@ export function noMonitor(): null {
   return null;
 }
 
-
 export function noActionSanitizer(): null {
   return null;
 }
@@ -76,7 +75,6 @@ export function noStateSanitizer(): null {
 }
 
 export const DEFAULT_NAME = 'NgRx Store DevTools';
-
 
 export function createConfig(
   _options: StoreDevtoolsOptions
