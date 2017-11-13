@@ -174,7 +174,7 @@ export async function copyTypeDefinitionFiles(config: Config) {
  * Creates minified copies of each UMD bundle
  */
 export async function minifyUmdBundles(config: Config) {
-  const uglifyArgs = ['-c', '-m', '--screw-ie8', '--comments'];
+  const uglifyArgs = ['-c', '-m', '--comments'];
 
   await mapAsync(util.getAllPackages(config), async pkg => {
     const topLevelName = util.getTopLevelName(pkg);
@@ -183,11 +183,10 @@ export async function minifyUmdBundles(config: Config) {
     const out = `./dist/${topLevelName}/bundles/${destinationName}.umd.min.js`;
 
     return util.exec('uglifyjs', [
+      file,
       ...uglifyArgs,
       `-o ${out}`,
-      `--source-map ${out}.map`,
-      `--source-map-include-sources ${file}`,
-      `--in-source-map ${file}.map`,
+      `--source-map "filename='${out}.map' includeSources='${file}', content='${file}.map'"`,
     ]);
   });
 }

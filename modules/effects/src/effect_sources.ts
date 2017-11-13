@@ -26,7 +26,7 @@ export class EffectSources extends Subject<any> {
   }
 
   /**
-   * @private
+   * @internal
    */
   toActions(): Observable<Action> {
     return mergeMap.call(
