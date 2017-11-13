@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/codegen",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Codegen for Ngrx and Redux actions",
   "module": "@ngrx/codegen.es5.js",
   "es2015": "@ngrx/codegen.js",
@@ -10,7 +10,9 @@
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
   },
-  "authors": ["Mike Ryan"],
+  "authors": [
+    "Mike Ryan"
+  ],
   "license": "MIT",
   "dependencies": {
     "glob": "^7.1.2",

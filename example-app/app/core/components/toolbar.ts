@@ -3,12 +3,12 @@ import { Component, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'bc-toolbar',
   template: `
-    <md-toolbar color="primary">
-      <button md-icon-button (click)="openMenu.emit()">
-        <md-icon>menu</md-icon>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="openMenu.emit()">
+        <mat-icon>menu</mat-icon>
       </button>
       <ng-content></ng-content>
-    </md-toolbar>
+    </mat-toolbar>
   `,
 })
 export class ToolbarComponent {

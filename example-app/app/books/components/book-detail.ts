@@ -4,28 +4,28 @@ import { Book } from '../models/book';
 @Component({
   selector: 'bc-book-detail',
   template: `
-    <md-card *ngIf="book">
-      <md-card-title-group>
-        <md-card-title>{{ title }}</md-card-title>
-        <md-card-subtitle *ngIf="subtitle">{{ subtitle }}</md-card-subtitle>
-        <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
-      </md-card-title-group>
-      <md-card-content>
+    <mat-card *ngIf="book">
+      <mat-card-title-group>
+        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-subtitle *ngIf="subtitle">{{ subtitle }}</mat-card-subtitle>
+        <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
+      </mat-card-title-group>
+      <mat-card-content>
         <p [innerHtml]="description"></p>
-      </md-card-content>
-      <md-card-footer class="footer">
+      </mat-card-content>
+      <mat-card-footer class="footer">
         <bc-book-authors [book]="book"></bc-book-authors>
-      </md-card-footer>
-      <md-card-actions align="start">
-        <button md-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(book)">
+      </mat-card-footer>
+      <mat-card-actions align="start">
+        <button mat-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(book)">
         Remove Book from Collection
         </button>
 
-        <button md-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(book)">
+        <button mat-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(book)">
         Add Book to Collection
         </button>
-      </md-card-actions>
-    </md-card>
+      </mat-card-actions>
+    </mat-card>
 
   `,
   styles: [
@@ -35,10 +35,10 @@ import { Book } from '../models/book';
       justify-content: center;
       margin: 75px 0;
     }
-    md-card {
+    mat-card {
       max-width: 600px;
     }
-    md-card-title-group {
+    mat-card-title-group {
       margin-left: 0;
     }
     img {
@@ -46,13 +46,13 @@ import { Book } from '../models/book';
       min-width: 60px;
       margin-left: 5px;
     }
-    md-card-content {
+    mat-card-content {
       margin: 15px 0 50px;
     }
-    md-card-actions {
+    mat-card-actions {
       margin: 25px 0 0 !important;
     }
-    md-card-footer {
+    mat-card-footer {
       padding: 0 25px 25px;
       position: relative;
     }

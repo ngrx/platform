@@ -6,49 +6,44 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 @Component({
   selector: 'bc-book-search',
   template: `
-    <md-card>
-      <md-card-title>Find a Book</md-card-title>
-      <md-card-content>
-        <md-input-container>
-          <input mdInput placeholder="Search for a book" [value]="query" (keyup)="search.emit($event.target.value)">
-        </md-input-container>
-        <md-spinner [class.show]="searching"></md-spinner>
-      </md-card-content>
-      <md-card-footer><span *ngIf="error">{{error}}</span></md-card-footer>
-    </md-card>
+    <mat-card>
+      <mat-card-title>Find a Book</mat-card-title>
+      <mat-card-content>
+        <mat-input-container>
+          <input matInput placeholder="Search for a book" [value]="query" (keyup)="search.emit($event.target.value)">
+        </mat-input-container>
+        <mat-spinner [class.show]="searching" [diameter]="30" [strokeWidth]="3"></mat-spinner>
+      </mat-card-content>
+      <mat-card-footer><span *ngIf="error">{{error}}</span></mat-card-footer>
+    </mat-card>
   `,
   styles: [
     `
-    md-card-title,
-    md-card-content,
-    md-card-footer {
+    mat-card-title,
+    mat-card-content,
+    mat-card-footer {
       display: flex;
       justify-content: center;
     }
 
-    md-card-footer {
+    mat-card-footer {
       color: #FF0000;
       padding: 5px 0;
     }
 
-    input {
-      width: 300px;
+    .mat-form-field {
+      min-width: 300px;
     }
 
-    md-card-spinner {
-      padding-left: 60px; // Make room for the spinner
-    }
-
-    md-spinner {
-      width: 30px;
-      height: 30px;
+    .mat-spinner {
       position: relative;
       top: 10px;
       left: 10px;
       opacity: 0.0;
+      padding-left: 60px; // Make room for the spinner
     }
 
-    md-spinner.show {
+    .mat-spinner.show {
       opacity: 1.0;
     }
   `,

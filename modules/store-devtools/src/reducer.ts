@@ -9,6 +9,7 @@ import {
 import { StoreDevtoolsConfig } from './config';
 import { difference, liftAction } from './utils';
 import * as Actions from './actions';
+import { StoreDevtoolsConfig } from './config';
 
 export type InitAction = {
   readonly type: typeof INIT;
