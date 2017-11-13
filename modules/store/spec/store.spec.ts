@@ -176,8 +176,7 @@ describe('ngRx Store', () => {
       expect(dispatcherSubscription.closed).toBe(false);
     });
 
-    // TODO: Investigate why this is no longer working
-    xit('should complete if the dispatcher is destroyed', () => {
+    it('should complete if the dispatcher is destroyed', () => {
       const storeSubscription = store.subscribe();
       const dispatcherSubscription = dispatcher.subscribe();
 
