@@ -56,8 +56,6 @@ export function createReduxDevtoolsExtension() {
   }
 }
 
-export const DEFAULT_NAME = 'NgRx Store DevTools';
-
 export function createStateObservable(devtools: StoreDevtools) {
   return devtools.state;
 }
