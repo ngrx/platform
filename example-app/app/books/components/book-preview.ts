@@ -5,40 +5,51 @@ import { Book } from '../models/book';
   selector: 'bc-book-preview',
   template: `
     <a [routerLink]="['/books', id]">
-      <md-card>
-        <md-card-title-group>
-          <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
-          <md-card-title>{{ title | bcEllipsis:35 }}</md-card-title>
-          <md-card-subtitle *ngIf="subtitle">{{ subtitle | bcEllipsis:40 }}</md-card-subtitle>
-        </md-card-title-group>
-        <md-card-content>
+      <mat-card>
+        <mat-card-title-group>
+          <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
+          <mat-card-title>{{ title | bcEllipsis:35 }}</mat-card-title>
+          <mat-card-subtitle *ngIf="subtitle">{{ subtitle | bcEllipsis:40 }}</mat-card-subtitle>
+        </mat-card-title-group>
+        <mat-card-content>
           <p *ngIf="description">{{ description | bcEllipsis }}</p>
-        </md-card-content>
-        <md-card-footer>
+        </mat-card-content>
+        <mat-card-footer>
           <bc-book-authors [book]="book"></bc-book-authors>
-        </md-card-footer>
-      </md-card>
+        </mat-card-footer>
+      </mat-card>
     </a>
   `,
   styles: [
     `
-    md-card {
-      width: 400px;
-      height: 300px;
-      margin: 15px;
+    :host {
+      display: flex;
     }
+
+    :host a {
+      display: flex;
+    }
+
+    mat-card {
+      width: 400px;
+      margin: 15px;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+    }
+
     @media only screen and (max-width: 768px) {
-      md-card {
+      mat-card {
         margin: 15px 0 !important;
       }
     }
-    md-card:hover {
+    mat-card:hover {
       box-shadow: 3px 3px 16px -2px rgba(0, 0, 0, .5);
     }
-    md-card-title {
+    mat-card-title {
       margin-right: 10px;
     }
-    md-card-title-group {
+    mat-card-title-group {
       margin: 0;
     }
     a {
@@ -50,7 +61,7 @@ import { Book } from '../models/book';
       min-width: 60px;
       margin-left: 5px;
     }
-    md-card-content {
+    mat-card-content {
       margin-top: 15px;
       margin: 15px 0 0;
     }
@@ -58,7 +69,7 @@ import { Book } from '../models/book';
       display: inline-block;
       font-size: 13px;
     }
-    md-card-footer {
+    mat-card-footer {
       padding: 0 25px 25px;
     }
   `,

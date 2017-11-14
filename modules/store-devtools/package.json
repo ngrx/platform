@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store-devtools",
-  "version": "4.0.0",
+  "version": "4.1.1",
   "description": "Developer tools for @ngrx/store",
   "module": "@ngrx/store-devtools.es5.js",
   "es2015": "@ngrx/store-devtools.js",
@@ -10,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
   },
-  "keywords": ["RxJS", "Angular", "Redux", "Store", "@ngrx/store"],
+  "keywords": [
+    "RxJS",
+    "Angular",
+    "Redux",
+    "Store",
+    "@ngrx/store"
+  ],
   "contributors": [
     {
       "name": "Rob Wormald",
