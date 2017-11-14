@@ -16,12 +16,13 @@ describe('StoreDevtoolsOptions', () => {
     options.actionSanitizer = sanitizer;
     expect(options.actionSanitizer).toEqual(sanitizer);
   });
+
   it('can be initialized with stateSanitizer', () => {
     const options = new StoreDevtoolsConfig();
     function stateSanitizer(state: any, index: number): any {
       return state;
     }
-    options.actionSanitizer = stateSanitizer;
-    expect(options.actionSanitizer).toEqual(stateSanitizer);
+    options.stateSanitizer = stateSanitizer;
+    expect(options.stateSanitizer).toEqual(stateSanitizer);
   });
 });
