@@ -2,6 +2,7 @@ export {
   ROUTER_ERROR,
   ROUTER_CANCEL,
   ROUTER_NAVIGATION,
+  ROUTER_RESOLVE_END,
   RouterNavigationAction,
   RouterCancelAction,
   RouterErrorAction,
