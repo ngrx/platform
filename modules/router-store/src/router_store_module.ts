@@ -86,7 +86,7 @@ export type RouterErrorAction<T, V = RouterStateSnapshot> = {
  * An union type of router actions.
  */
 export type RouterAction<T, V = RouterStateSnapshot> =
-  | RouterNavigationAction<T>
+  | RouterNavigationAction<V>
   | RouterCancelAction<T, V>
   | RouterErrorAction<T, V>;
 
@@ -97,7 +97,7 @@ export type RouterReducerState<T = RouterStateSnapshot> = {
 
 export function routerReducer<T = RouterStateSnapshot>(
   state: RouterReducerState<T>,
-  action: RouterAction<any>
+  action: RouterAction<any, T>
 ): RouterReducerState<T> {
   switch (action.type) {
     case ROUTER_NAVIGATION:
