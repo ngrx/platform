@@ -55,7 +55,7 @@ import { Authenticate } from '../models/user';
     .loginError {
       padding: 16px;
       width: 300px;
-      font-color: white;
+      color: white;
       background-color: red;
     }
 
