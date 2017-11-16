@@ -1,21 +1,14 @@
-import {
-  StoreDevtools,
-  StoreDevtoolsModule,
-  LiftedState,
-  StoreDevtoolsConfig,
-  StoreDevtoolsOptions,
-} from '../';
-import {
-  StoreModule,
-  Store,
-  StateObservable,
-  ActionReducer,
-  Action,
-  ReducerManager,
-} from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
-import { createConfig, noMonitor } from '../src/instrument';
+
+import { LiftedState } from '../';
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
+import {
+  createConfig,
+  noActionSanitizer,
+  noMonitor,
+  noStateSanitizer,
+} from '../src/instrument';
 
 describe('DevtoolsExtension', () => {
   let reduxDevtoolsExtension: ReduxDevtoolsExtension;
@@ -39,6 +32,8 @@ describe('DevtoolsExtension', () => {
       const defaultOptions = {
         maxAge: false,
         monitor: noMonitor,
+        actionSanitizer: noActionSanitizer,
+        stateSanitizer: noStateSanitizer,
         name: 'NgRx Store DevTools',
         serialize: false,
       };
@@ -52,16 +47,28 @@ describe('DevtoolsExtension', () => {
         'ngrx-store-1509655064369'
       );
     });
+
+    function myActionSanitizer() {
+      return { type: 'sanitizer' };
+    }
+    function myStateSanitizer() {
+      return { state: 'new state' };
+    }
+
     it('should send notification with given options', () => {
       devtoolsExtension = new DevtoolsExtension(
         reduxDevtoolsExtension,
         createConfig({
+          actionSanitizer: myActionSanitizer,
+          stateSanitizer: myStateSanitizer,
           name: 'ngrx-store-devtool-todolist',
         })
       );
       const defaultOptions = {
         maxAge: false,
         monitor: noMonitor,
+        actionSanitizer: myActionSanitizer,
+        stateSanitizer: myStateSanitizer,
         name: 'ngrx-store-devtool-todolist',
         serialize: false,
       };

@@ -64,6 +64,14 @@ export function noMonitor(): null {
   return null;
 }
 
+export function noActionSanitizer(): null {
+  return null;
+}
+
+export function noStateSanitizer(): null {
+  return null;
+}
+
 export const DEFAULT_NAME = 'NgRx Store DevTools';
 
 export function createConfig(
@@ -72,6 +80,8 @@ export function createConfig(
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
+    actionSanitizer: noActionSanitizer,
+    stateSanitizer: noStateSanitizer,
     name: DEFAULT_NAME,
     serialize: false,
   };

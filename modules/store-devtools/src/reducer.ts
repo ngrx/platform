@@ -6,7 +6,6 @@ import {
   UPDATE,
   INIT,
 } from '@ngrx/store';
-
 import { difference, liftAction } from './utils';
 import * as Actions from './actions';
 import { StoreDevtoolsConfig } from './config';
