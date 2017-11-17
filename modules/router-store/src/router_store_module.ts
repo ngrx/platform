@@ -124,11 +124,15 @@ export const ROUTER_CONFIG = new InjectionToken(
 );
 export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
 
-export function _createDefaultRouterConfig(config: any): StoreRouterConfig {
-  let _config = {};
+export function _createDefaultRouterConfig(
+  config: StoreRouterConfig | StoreRouterConfigFunction
+): StoreRouterConfig {
+  let _config: StoreRouterConfig;
 
   if (typeof config === 'function') {
     _config = config();
+  } else {
+    _config = config || {};
   }
 
   return {
