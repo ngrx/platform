@@ -38,7 +38,7 @@ export class BookEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType<book.Search>(book.SEARCH)
-    .debounceTime(this.debounce, this.scheduler || async)
+    .debounceTime(this.debounce || 300, this.scheduler || async)
     .map(action => action.payload)
     .switchMap(query => {
       if (query === '') {
@@ -59,7 +59,7 @@ export class BookEffects {
     private googleBooks: GoogleBooksService,
     @Optional()
     @Inject(SEARCH_DEBOUNCE)
-    private debounce: number = 300,
+    private debounce: number,
     /**
        * You inject an optional Scheduler that will be undefined
        * in normal application usage, but its injected here so that you can mock out
