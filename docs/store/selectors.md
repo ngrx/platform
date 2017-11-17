@@ -6,7 +6,7 @@ When using the `createSelector` and `createFeatureSelector`functions @ngrx/store
 
 ## createSelector
 
-The `createSelector` method returns a callback function for selecting a slice of state. 
+The `createSelector` method returns a callback function for selecting a slice of state.
 
 
 ### Example
@@ -97,11 +97,89 @@ export const selectFeatureCount = createSelector(selectFeature, (state: FeatureS
 
 ```
 
-## Using a Selector with the Store 
+## Reset Memoized Selector
 
-The functions returned by the `createSelector` and `createFeatureSelector` methods become alternatives to the string syntax for retrieving the relevant piece of state. 
+The selector function returned by calling `createSelector` or `createFeatureSelector` initially has a memoized value of `null`. After a selector is invoked the first time its memoized value is stored in memory. If the selector is subsequently invoked with the same arguments it will return the memoized value. If the selector is then invoked with different arguments it will recompute, and update its memoized value. Consider the following:
 
-### Example 
+```ts
+import { createSelector } from '@ngrx/store';
+
+export interface State {
+  counter1: number;
+  counter2: number;
+}
+
+export const selectCounter1 = (state: State) => state.counter1;
+export const selectCounter2 = (state: State) => state.counter2;
+export const selectTotal = createSelector(
+  selectCounter1,
+  selectCounter2,
+  (counter1, counter2) => counter1 + counter2
+); // selectTotal has a memoized value of null, because it has not yet been invoked.
+
+let state = { counter1: 3, counter2: 4 };
+
+selectTotal(state); // computes the sum of 3 & 4, returning 7. selectTotal now has a memoized value of 7
+selectTotal(state); // does not compute the sum of 3 & 4. selectTotal instead returns the memoized value of 7
+
+state = { ...state, counter2: 5 };
+
+selectTotal(state); // computes the sum of 3 & 5, returning 8. selectTotal now has a memoized value of 8
+
+```
+A selector's memoized value stays in memory indefinitely. If the memoized value is, for example, a large dataset that is no longer needed it's possible to reset the memoized value to null so that the large dataset can be removed from memory. This can be accomplished by invoking the `release` method on the selector.
+```ts
+selectTotal(state); // returns the memoized value of 8
+selectTotal.release() // memoized value of selectTotal is now null
+```
+Releasing a selector also recursively releases any ancestor selectors. Consider the following:
+```ts
+export interface State {
+  evenNums: number[];
+  oddNums: number[];
+}
+
+export const selectSumEvenNums = createSelector(
+  (state: State) => state.evenNums,
+  (evenNums) => evenNums.reduce((prev, curr) => prev + curr)
+);
+export const selectSumOddNums = createSelector(
+  (state: State) => state.oddNums,
+  (oddNums) => oddNums.reduce((prev, curr) => prev + curr)
+);
+export const selectTotal = createSelector(
+  selectSumEvenNums,
+  selectSumOddNums,
+  (evenSum, oddSum) => evenSum + oddSum
+);
+
+selectTotal({
+  evenNums: [2, 4],
+  oddNums: [1, 3]
+});
+
+/**
+ * Memoized Values before calling selectTotal.release()
+ *   selectSumEvenNums  6
+ *   selectSumOddNums   4
+ *   selectTotal        10
+ */
+
+selectTotal.release();
+
+/**
+ * Memoized Values after calling selectTotal.release()
+ *   selectSumEvenNums  null
+ *   selectSumOddNums   null
+ *   selectTotal        null
+ */
+```
+
+## Using a Selector with the Store
+
+The functions returned by the `createSelector` and `createFeatureSelector` methods become alternatives to the string syntax for retrieving the relevant piece of state.
+
+### Example
 
 ```ts
 // app.component.ts
