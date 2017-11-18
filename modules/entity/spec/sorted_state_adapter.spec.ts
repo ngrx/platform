@@ -153,6 +153,24 @@ describe('Sorted State Adapter', () => {
     expect(withUpdates).toBe(state);
   });
 
+  it('should not change ids state if you attempt to update an entity that does not impact sorting', () => {
+    const withAll = adapter.addAll(
+      [TheGreatGatsby, AClockworkOrange, AnimalFarm],
+      state
+    );
+    const changes = { title: 'The Great Gatsby II' };
+
+    const withUpdates = adapter.updateOne(
+      {
+        id: TheGreatGatsby.id,
+        changes,
+      },
+      withAll
+    );
+
+    expect(withAll.ids).toBe(withUpdates.ids);
+  });
+
   it('should let you update the id of entity', () => {
     const withOne = adapter.addOne(TheGreatGatsby, state);
     const changes = { id: 'A New Id' };
@@ -172,6 +190,34 @@ describe('Sorted State Adapter', () => {
           ...TheGreatGatsby,
           ...changes,
         },
+      },
+    });
+  });
+
+  it('should resort correctly if same id but sort key update', () => {
+    const withAll = adapter.addAll(
+      [TheGreatGatsby, AnimalFarm, AClockworkOrange],
+      state
+    );
+    const changes = { title: 'A New Hope' };
+
+    const withUpdates = adapter.updateOne(
+      {
+        id: TheGreatGatsby.id,
+        changes,
+      },
+      withAll
+    );
+
+    expect(withUpdates).toEqual({
+      ids: [AClockworkOrange.id, TheGreatGatsby.id, AnimalFarm.id],
+      entities: {
+        [AClockworkOrange.id]: AClockworkOrange,
+        [TheGreatGatsby.id]: {
+          ...TheGreatGatsby,
+          ...changes,
+        },
+        [AnimalFarm.id]: AnimalFarm,
       },
     });
   });

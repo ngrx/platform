@@ -152,6 +152,21 @@ describe('Unsorted State Adapter', () => {
     expect(withUpdates).toBe(state);
   });
 
+  it('should not change ids state if you attempt to update an entity that has already been added', () => {
+    const withOne = adapter.addOne(TheGreatGatsby, state);
+    const changes = { title: 'A New Hope' };
+
+    const withUpdates = adapter.updateOne(
+      {
+        id: TheGreatGatsby.id,
+        changes,
+      },
+      withOne
+    );
+
+    expect(withOne.ids).toBe(withUpdates.ids);
+  });
+
   it('should let you update the id of entity', () => {
     const withOne = adapter.addOne(TheGreatGatsby, state);
     const changes = { id: 'A New Id' };
