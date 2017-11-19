@@ -1,0 +1,7 @@
+{
+  "name": "@ngrx/effects/testing",
+  "typings": "../testing.d.ts",
+  "main": "../bundles/effects-testing.umd.js",
+  "module": "../@ngrx/effects/testing.es5.js",
+  "es2015": "../@ngrx/effects/testing.js"
+}
