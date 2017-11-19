@@ -1,1 +1,0 @@
-{"moduleName":null,"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"function","parameters":["props"],"value":{"__symbolic":"error","message":"Function call not supported","line":6,"character":54}}}],"symbols":[{"__symbol":0,"name":"getOptionalProperties","filePath":"./get-optional-properties"}]}
