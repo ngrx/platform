@@ -2,16 +2,15 @@ machine:
   environment:
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
   node:
-    version: 6.9.5
+    version: 8.6.0
 
 dependencies:
   pre:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.28.1
+    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.1.0
   cache_directories:
     - ~/.cache/yarn
   override:
     - yarn
-    - yarn run bootstrap -- --concurrency=1
 
 test:
   override:

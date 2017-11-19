@@ -211,9 +211,11 @@ export function _createFeatureReducers(
   reducerCollection: ActionReducerMap<any, any>[],
   tokenReducerCollection: ActionReducerMap<any, any>[]
 ) {
-  return reducerCollection.map((reducer, index) => {
+  const reducers = reducerCollection.map((reducer, index) => {
     return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
+
+  return reducers;
 }
 
 export function _initialStateFactory(initialState: any): any {

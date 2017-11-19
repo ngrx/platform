@@ -112,9 +112,9 @@ export function routerReducer<T = RouterStateSnapshot>(
   }
 }
 
-export type StoreRouterConfig = {
+export interface StoreRouterConfig {
   stateKey?: string;
-};
+}
 
 export const _ROUTER_CONFIG = new InjectionToken(
   '@ngrx/router-store Internal Configuration'
