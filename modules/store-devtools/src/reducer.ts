@@ -9,6 +9,7 @@ import {
 import { difference, liftAction } from './utils';
 import * as Actions from './actions';
 import { StoreDevtoolsConfig } from './config';
+import { PerformAction } from './actions';
 
 export type InitAction = {
   readonly type: typeof INIT;
@@ -300,7 +301,6 @@ export function liftReducerWith(
         } = liftedAction.nextLiftedState);
         break;
       }
-      case UPDATE:
       case INIT: {
         // Always recompute states on hot reload and init.
         minInvalidatedStateIndex = 0;
@@ -318,6 +318,66 @@ export function liftReducerWith(
           );
 
           commitExcessActions(stagedActionIds.length - options.maxAge);
+
+          // Avoid double computation.
+          minInvalidatedStateIndex = Infinity;
+        }
+
+        break;
+      }
+      case UPDATE: {
+        const stateHasErrors =
+          computedStates.filter(state => state.error).length > 0;
+
+        if (stateHasErrors) {
+          // Recompute all states
+          minInvalidatedStateIndex = 0;
+
+          if (options.maxAge && stagedActionIds.length > options.maxAge) {
+            // States must be recomputed before committing excess.
+            computedStates = recomputeStates(
+              computedStates,
+              minInvalidatedStateIndex,
+              reducer,
+              committedState,
+              actionsById,
+              stagedActionIds,
+              skippedActionIds
+            );
+
+            commitExcessActions(stagedActionIds.length - options.maxAge);
+
+            // Avoid double computation.
+            minInvalidatedStateIndex = Infinity;
+          }
+        } else {
+          if (currentStateIndex === stagedActionIds.length - 1) {
+            currentStateIndex++;
+          }
+
+          // Add a new action to only recompute state
+          const actionId = nextActionId++;
+          actionsById[actionId] = new PerformAction(liftedAction);
+          stagedActionIds = [...stagedActionIds, actionId];
+
+          minInvalidatedStateIndex = stagedActionIds.length - 1;
+
+          // States must be recomputed before committing excess.
+          computedStates = recomputeStates(
+            computedStates,
+            minInvalidatedStateIndex,
+            reducer,
+            committedState,
+            actionsById,
+            stagedActionIds,
+            skippedActionIds
+          );
+
+          currentStateIndex = minInvalidatedStateIndex;
+
+          if (options.maxAge && stagedActionIds.length > options.maxAge) {
+            commitExcessActions(stagedActionIds.length - options.maxAge);
+          }
 
           // Avoid double computation.
           minInvalidatedStateIndex = Infinity;

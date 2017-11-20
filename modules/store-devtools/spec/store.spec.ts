@@ -259,7 +259,7 @@ describe('Store Devtools', () => {
       expect(getState()).toBe(2);
     });
 
-    it('should replace the reducer', () => {
+    it('should replace the reducer and preserve previous states', () => {
       store.dispatch({ type: 'INCREMENT' });
       store.dispatch({ type: 'DECREMENT' });
       store.dispatch({ type: 'INCREMENT' });
@@ -268,7 +268,21 @@ describe('Store Devtools', () => {
 
       fixture.replaceReducer(doubleCounter);
 
-      expect(getState()).toBe(2);
+      expect(getState()).toBe(1);
+    });
+
+    it('should replace the reducer and compute new state with latest reducer', () => {
+      store.dispatch({ type: 'INCREMENT' });
+      store.dispatch({ type: 'DECREMENT' });
+      store.dispatch({ type: 'INCREMENT' });
+
+      expect(getState()).toBe(1);
+
+      fixture.replaceReducer(doubleCounter);
+
+      store.dispatch({ type: 'INCREMENT' });
+
+      expect(getState()).toBe(3);
     });
 
     it('should catch and record errors', () => {
@@ -280,8 +294,8 @@ describe('Store Devtools', () => {
       store.dispatch({ type: 'INCREMENT' });
 
       let { computedStates } = fixture.getLiftedState();
-      expect(computedStates[2].error).toMatch(/ReferenceError/);
-      expect(computedStates[3].error).toMatch(
+      expect(computedStates[3].error).toMatch(/ReferenceError/);
+      expect(computedStates[4].error).toMatch(
         /Interrupted by an error up the chain/
       );
 
