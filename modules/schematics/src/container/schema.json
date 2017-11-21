@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgrxContainer",
+  "title": "NgRx Container Options Schema",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "default": "app"
+    },
+    "appRoot": {
+      "type": "string"
+    },
+    "sourceDir": {
+      "type": "string",
+      "default": "src",
+      "alias": "sd"
+    },
+    "name": {
+      "type": "string"
+    },
+    "inlineStyle": {
+      "description": "Specifies if the style will be in the ts file.",
+      "type": "boolean",
+      "default": false,
+      "alias": "is"
+    },
+    "inlineTemplate": {
+      "description": "Specifies if the template will be in the ts file.",
+      "type": "boolean",
+      "default": false,
+      "alias": "it"
+    },
+    "viewEncapsulation": {
+      "description": "Specifies the view encapsulation strategy.",
+      "enum": ["Emulated", "Native", "None"],
+      "type": "string",
+      "alias": "ve"
+    },
+    "changeDetection": {
+      "description": "Specifies the change detection strategy.",
+      "enum": ["Default", "OnPush"],
+      "type": "string",
+      "default": "Default",
+      "alias": "cd"
+    },
+    "routing": {
+      "type": "boolean",
+      "default": false
+    },
+    "prefix": {
+      "type": "string",
+      "description": "The prefix to apply to generated selectors.",
+      "default": "app",
+      "alias": "p"
+    },
+    "styleext": {
+      "description": "The file extension to be used for style files.",
+      "type": "string",
+      "default": "css"
+    },
+    "spec": {
+      "type": "boolean",
+      "default": true
+    },
+    "flat": {
+      "type": "boolean",
+      "description": "Flag to indicate if a dir is created.",
+      "default": false
+    },
+    "htmlTemplate": {
+      "type": "string"
+    },
+    "skipImport": {
+      "type": "boolean",
+      "default": false
+    },
+    "selector": {
+      "type": "string"
+    },
+    "module":  {
+      "type": "string",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m"
+    },
+    "export": {
+      "type": "boolean",
+      "default": false,
+      "description": "Specifies if declaring module exports the component."
+    },
+    "state": {
+      "type": "string",
+      "description": "Specifies the path to the state exports.",
+      "alias": "s"
+    },
+    "stateInterface": {
+      "type": "string",
+      "default": "State",
+      "description": "Specifies the interface for the state.",
+      "alias": "si"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

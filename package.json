@@ -6,7 +6,7 @@
     "precommit": "lint-staged",
     "bootstrap": "lerna bootstrap",
     "build": "ts-node ./build/index.ts",
-    "postbuild": "rimraf dist/**/*.ngsummary.json dist/**/src/*.ngsummary.json",
+    "postbuild": "rimraf **/dist/**/*.ngsummary.json",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc yarn run test:unit",
@@ -51,7 +51,9 @@
     ],
     "exclude": [
       "**/*.spec",
-      "**/spec/**/*"
+      "**/spec/**/*",
+      "/modules/schematics/src/*/files/**/*",
+      "**/schematics/src/utility/*"
     ],
     "include": [
       "**/*.ts"
@@ -113,7 +115,7 @@
     "ngrx-store-freeze": "^0.2.0",
     "nyc": "^10.1.2",
     "ora": "^1.3.0",
-    "prettier": "^1.5.2",
+    "prettier": "^1.8.2",
     "protractor": "~5.1.0",
     "reflect-metadata": "^0.1.9",
     "rimraf": "^2.5.4",
