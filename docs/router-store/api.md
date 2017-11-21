@@ -123,7 +123,7 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
     const queryParams = routerState.root.queryParams;
     const params = route.params;
 
-    // Only return an object including the URL and query params
+    // Only return an object including the URL, params and query params
     // instead of the entire snapshot
     return { url, params, queryParams };
   }
