@@ -26,9 +26,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
-    // Note that you must instrument after importing StoreModule
+    // Note that you must instrument after importing StoreModule (config is optional)
     StoreDevtoolsModule.instrument({
       maxAge: 25 //  Retains last 25 states
+      // name: 'devtool title name' // default to 'NgRx Store DevTools'
+      // monitor: () => null,
+      // actionSanitizer: () => null,
+      // stateSanitizer: () => null,
+      // serialize: false,
     })
   ]
 })
