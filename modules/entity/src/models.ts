@@ -39,7 +39,7 @@ export type UpdateNum<T> = {
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
 export interface EntityState<T> {
-  ids: string[] | number[];
+  ids: Array<string|number>;
   entities: Dictionary<T>;
 }
 
