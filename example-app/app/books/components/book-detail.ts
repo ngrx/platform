@@ -61,7 +61,7 @@ import { Book } from '../models/book';
 })
 export class BookDetailComponent {
   /**
-   * Presentational components receieve data through @Input() and communicate events
+   * Presentational components receive data through @Input() and communicate events
    * through @Output() but generally maintain no internal state of their
    * own. All decisions are delegated to 'container', or 'smart'
    * components before data updates flow back down.
