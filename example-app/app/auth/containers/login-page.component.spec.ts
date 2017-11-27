@@ -44,7 +44,7 @@ describe('Login Page', () => {
    * If pure components are functions of their inputs, containers are functions of state
    *
    * Traditionally you would query the components rendered template
-   * to validate its state. Since the components are analagous to
+   * to validate its state. Since the components are analogous to
    * pure functions, we take snapshots of these components for a given state
    * to validate the rendered output and verify the component's output
    * against changes in state.

@@ -44,7 +44,7 @@ export const getBooksState = createFeatureSelector<BooksState>('books');
 
 /**
  * Every reducer module exports selector functions, however child reducers
- * have no knowledge of the overall state tree. To make them useable, we
+ * have no knowledge of the overall state tree. To make them usable, we
  * need to make new selectors that wrap them.
  *
  * The createSelector function creates very efficient selectors that are memoized and
