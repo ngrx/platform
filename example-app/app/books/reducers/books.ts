@@ -28,10 +28,11 @@ export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
   sortComparer: false,
 });
 
-/** getInitialState returns the default initial state
+/**
+ * getInitialState returns the default initial state
  * for the generated entity state. Initial state
  * additional properties can also be defined.
-*/
+ */
 export const initialState: State = adapter.getInitialState({
   selectedBookId: null,
 });
