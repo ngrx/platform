@@ -63,6 +63,9 @@ export interface EntityStateAdapter<T> {
 
   updateOne<S extends EntityState<T>>(update: Update<T>, state: S): S;
   updateMany<S extends EntityState<T>>(updates: Update<T>[], state: S): S;
+
+  upsertOne<S extends EntityState<T>>(update: Update<T>, state: S): S;
+  upsertMany<S extends EntityState<T>>(updates: Update<T>[], state: S): S;
 }
 
 export type EntitySelectors<T, V> = {
