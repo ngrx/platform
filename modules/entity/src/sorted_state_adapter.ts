@@ -6,7 +6,7 @@ import {
   EntityStateAdapter,
   Update,
 } from './models';
-import { createStateOperator } from './state_adapter';
+import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
 
 export function createSortedStateAdapter<T>(
@@ -20,68 +20,94 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     selectId
   );
 
-  function addOneMutably(entity: T, state: R): boolean;
-  function addOneMutably(entity: any, state: any): boolean {
+  function addOneMutably(entity: T, state: R): DidMutate;
+  function addOneMutably(entity: any, state: any): DidMutate {
     return addManyMutably([entity], state);
   }
 
-  function addManyMutably(newModels: T[], state: R): boolean;
-  function addManyMutably(newModels: any[], state: any): boolean {
+  function addManyMutably(newModels: T[], state: R): DidMutate;
+  function addManyMutably(newModels: any[], state: any): DidMutate {
     const models = newModels.filter(
       model => !(selectId(model) in state.entities)
     );
 
-    return merge(models, state);
+    if (models.length === 0) {
+      return DidMutate.None;
+    } else {
+      merge(models, state);
+      return DidMutate.Both;
+    }
   }
 
-  function addAllMutably(models: T[], state: R): boolean;
-  function addAllMutably(models: any[], state: any): boolean {
+  function addAllMutably(models: T[], state: R): DidMutate;
+  function addAllMutably(models: any[], state: any): DidMutate {
     state.entities = {};
     state.ids = [];
 
     addManyMutably(models, state);
 
-    return true;
+    return DidMutate.Both;
   }
 
-  function updateOneMutably(update: Update<T>, state: R): boolean;
-  function updateOneMutably(update: any, state: any): boolean {
+  function updateOneMutably(update: Update<T>, state: R): DidMutate;
+  function updateOneMutably(update: any, state: any): DidMutate {
     return updateManyMutably([update], state);
   }
 
-  function takeUpdatedModel(models: T[], update: Update<T>, state: R): void;
-  function takeUpdatedModel(models: any[], update: any, state: any): void {
+  function takeUpdatedModel(models: T[], update: Update<T>, state: R): boolean;
+  function takeUpdatedModel(models: any[], update: any, state: any): boolean {
     if (!(update.id in state.entities)) {
-      return;
+      return false;
     }
 
     const original = state.entities[update.id];
     const updated = Object.assign({}, original, update.changes);
+    const newKey = selectId(updated);
 
     delete state.entities[update.id];
 
     models.push(updated);
+
+    return newKey !== update.id;
   }
 
-  function updateManyMutably(updates: Update<T>[], state: R): boolean;
-  function updateManyMutably(updates: any[], state: any): boolean {
+  function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
+  function updateManyMutably(updates: any[], state: any): DidMutate {
     const models: T[] = [];
 
-    updates.forEach(update => takeUpdatedModel(models, update, state));
+    const didMutateIds =
+      updates.filter(update => takeUpdatedModel(models, update, state)).length >
+      0;
 
-    if (models.length) {
-      state.ids = state.ids.filter((id: any) => id in state.entities);
+    if (models.length === 0) {
+      return DidMutate.None;
+    } else {
+      const originalIds = state.ids;
+      const updatedIndexes: any[] = [];
+      state.ids = state.ids.filter((id: any, index: number) => {
+        if (id in state.entities) {
+          return true;
+        } else {
+          updatedIndexes.push(index);
+          return false;
+        }
+      });
+
+      merge(models, state);
+
+      if (
+        !didMutateIds &&
+        updatedIndexes.every((i: number) => state.ids[i] === originalIds[i])
+      ) {
+        return DidMutate.EntitiesOnly;
+      } else {
+        return DidMutate.Both;
+      }
     }
-
-    return merge(models, state);
   }
 
-  function merge(models: T[], state: R): boolean;
-  function merge(models: any[], state: any): boolean {
-    if (models.length === 0) {
-      return false;
-    }
-
+  function merge(models: T[], state: R): void;
+  function merge(models: any[], state: any): void {
     models.sort(sort);
 
     const ids: any[] = [];
@@ -113,8 +139,6 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     models.forEach((model, i) => {
       state.entities[selectId(model)] = model;
     });
-
-    return true;
   }
 
   return {
