@@ -19,7 +19,7 @@
     "example:test": "jest --watch",
     "example:build:prod": "yarn build && yarn run copy:dist && yarn cli -- build -prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
-    "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"./**/*.ts\"",
+    "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
