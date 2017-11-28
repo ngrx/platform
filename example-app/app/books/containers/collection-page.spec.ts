@@ -51,16 +51,11 @@ describe('Collection Page', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it(
-    'should dispatch a collection.Load on init',
-    async(() => {
-      const action = new collection.Load();
+  it('should dispatch a collection.Load on init', () => {
+    const action = new collection.Load();
 
-      fixture.detectChanges();
+    fixture.detectChanges();
 
-      fixture.whenStable().then(() => {
-        expect(store.dispatch).toHaveBeenCalledWith(action);
-      });
-    })
-  );
+    expect(store.dispatch).toHaveBeenCalledWith(action);
+  });
 });
