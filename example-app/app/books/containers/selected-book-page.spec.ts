@@ -46,7 +46,7 @@ describe('Selected Book Page', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should dispatch a collection.AddBook action on addToCollection', () => {
+  it('should dispatch a collection.AddBook action when addToCollection is called', () => {
     const $event: Book = generateMockBook();
     const action = new collection.AddBook($event);
 
