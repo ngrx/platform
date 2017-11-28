@@ -7,7 +7,13 @@ import { Router } from '@angular/router';
 
 import { AuthEffects } from './auth.effects';
 import { AuthService } from '../services/auth.service';
-import { Login, LoginFailure, LoginSuccess } from '../actions/auth';
+import {
+  Login,
+  LoginFailure,
+  LoginRedirect,
+  LoginSuccess,
+  Logout,
+} from '../actions/auth';
 import { Authenticate, User } from '../models/user';
 
 export class TestActions extends Actions {
@@ -89,16 +95,35 @@ describe('AuthEffects', () => {
 
   describe('loginSuccess$', () => {
     it('should dispatch a RouterNavigation action', () => {
+      const user = { name: 'User' } as User;
+      const action = new LoginSuccess({ user });
+
+      actions$.stream = hot('-a---', { a: action });
+
       effects.loginSuccess$.subscribe(() => {
-        expect(routerService.navigate).toHaveBeenCalledWith('/');
+        expect(routerService.navigate).toHaveBeenCalledWith(['/']);
       });
     });
   });
 
   describe('loginRedirect$', () => {
-    it('should dispatch a RouterNavigation action', () => {
+    it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', () => {
+      const action = new LoginRedirect();
+
+      actions$.stream = hot('-a---', { a: action });
+
       effects.loginRedirect$.subscribe(() => {
-        expect(routerService.navigate).toHaveBeenCalledWith('/login');
+        expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
+      });
+    });
+
+    it('should dispatch a RouterNavigation action when auth.Logout is dispatched', () => {
+      const action = new Logout();
+
+      actions$.stream = hot('-a---', { a: action });
+
+      effects.loginRedirect$.subscribe(() => {
+        expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
       });
     });
   });
