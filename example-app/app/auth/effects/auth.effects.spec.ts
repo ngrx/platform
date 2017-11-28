@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Actions } from '@ngrx/effects';
-import { RouterTestingModule } from '@angular/router/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/empty';
+import { empty } from 'rxjs/observable/empty';
+import { Router } from '@angular/router';
 
 import { AuthEffects } from './auth.effects';
 import { AuthService } from '../services/auth.service';
@@ -12,7 +12,7 @@ import { Authenticate, User } from '../models/user';
 
 export class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(empty());
   }
 
   set stream(source: Observable<any>) {
@@ -31,7 +31,6 @@ describe('AuthEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
       providers: [
         AuthEffects,
         {
@@ -42,6 +41,10 @@ describe('AuthEffects', () => {
           provide: Actions,
           useFactory: getActions,
         },
+        {
+          provide: Router,
+          useValue: { navigate: jest.fn() },
+        },
       ],
     });
 
@@ -51,7 +54,7 @@ describe('AuthEffects', () => {
   });
 
   describe('login$', () => {
-    it('should return a new auth.LoginSuccess, with user information', () => {
+    it('should return an auth.LoginSuccess action, with user information if login succeeds', () => {
       const credentials: Authenticate = { username: 'test', password: '' };
       const user = { name: 'User' } as User;
       const action = new Login(credentials);
