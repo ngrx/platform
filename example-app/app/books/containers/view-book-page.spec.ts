@@ -1,12 +1,16 @@
-import { async, ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { MatCardModule } from '@angular/material';
 
 import { ViewBookPageComponent } from './view-book-page';
 import * as book from '../actions/book';
 import * as fromBooks from '../reducers';
+import { SelectedBookPageComponent } from './selected-book-page';
+import { BookDetailComponent } from '../components/book-detail';
+import { BookAuthorsComponent } from '../components/book-authors';
+import { AddCommasPipe } from '../../shared/pipes/add-commas';
 
 describe('View Book Page', () => {
   let params = new BehaviorSubject({});
@@ -20,6 +24,7 @@ describe('View Book Page', () => {
         StoreModule.forRoot({
           books: combineReducers(fromBooks.reducers),
         }),
+        MatCardModule,
       ],
       providers: [
         {
@@ -27,15 +32,20 @@ describe('View Book Page', () => {
           useValue: { params },
         },
       ],
-      declarations: [ViewBookPageComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [
+        ViewBookPageComponent,
+        SelectedBookPageComponent,
+        BookDetailComponent,
+        BookAuthorsComponent,
+        AddCommasPipe,
+      ],
     });
 
     fixture = TestBed.createComponent(ViewBookPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
 
-    spyOn(store, 'dispatch').and.callThrough();
+    spyOn(store, 'next').and.callThrough();
   });
 
   it('should compile', () => {
@@ -44,17 +54,12 @@ describe('View Book Page', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it(
-    'should dispatch a book.Select action on init',
-    async(() => {
-      const action = new book.Select('2');
-      params.next({ id: '2' });
+  it('should dispatch a book.Select action on init', () => {
+    const action = new book.Select('2');
+    params.next({ id: '2' });
 
-      fixture.detectChanges();
+    fixture.detectChanges();
 
-      fixture.whenStable().then(() => {
-        expect(store.dispatch).toHaveBeenLastCalledWith(action);
-      });
-    })
-  );
+    expect(store.next).toHaveBeenLastCalledWith(action);
+  });
 });
