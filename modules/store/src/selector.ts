@@ -224,9 +224,8 @@ export function createSelector(...input: any[]): Selector<any, any> {
 export function createFeatureSelector<T>(
   featureName: string
 ): MemoizedSelector<object, T> {
-  const { memoized, reset } = memoize(function(state: any): any {
-    return state[featureName];
-  });
-
-  return Object.assign(memoized, { release: reset, projector: memoized });
+  return createSelector(
+    (state: any) => state[featureName],
+    (featureState: any) => featureState
+  );
 }
