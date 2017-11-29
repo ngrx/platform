@@ -23,16 +23,19 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
 ### Quick start
 
 ```bash
-# clone the repo
+# Clone the repository
 git clone https://github.com/ngrx/platform.git
 
-# Install the dependencies:
+# Go to the example directory
+cd platform
+
+# Install the dependencies
 yarn
 
-# start the server
+# Start the server
 yarn run build && yarn run cli -- serve
 
-# OR
+# Or try
 yarn run example:start
 ```
 
