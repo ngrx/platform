@@ -16,7 +16,7 @@ test:
   override:
     - yarn run ci
     - yarn run example:build:prod
-    - yarn run example:test -- --watch=false
+    - yarn run example:test --watch=false
 
 deployment:
   builds:
