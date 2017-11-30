@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   pre:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.1.0
+    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
   cache_directories:
     - ~/.cache/yarn
   override:
@@ -16,7 +16,7 @@ test:
   override:
     - yarn run ci
     - yarn run example:build:prod
-    - yarn run example:test -- --watch=false
+    - yarn run example:test --watch=false
 
 deployment:
   builds:

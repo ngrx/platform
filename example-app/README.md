@@ -33,7 +33,7 @@ cd platform
 yarn
 
 # Start the server
-yarn run build && yarn run cli -- serve
+yarn run build && yarn run cli serve
 
 # Or try
 yarn run example:start
