@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatCardModule } from '@angular/material';
@@ -20,16 +20,18 @@ describe('View Book Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({
-          books: combineReducers(fromBooks.reducers),
-        }),
-        MatCardModule,
-      ],
+      imports: [MatCardModule],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: { params },
+        },
+        {
+          provide: Store,
+          useValue: {
+            select: jest.fn(),
+            next: jest.fn(),
+          },
         },
       ],
       declarations: [
@@ -44,8 +46,6 @@ describe('View Book Page', () => {
     fixture = TestBed.createComponent(ViewBookPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
-
-    spyOn(store, 'next').and.callThrough();
   });
 
   it('should compile', () => {
