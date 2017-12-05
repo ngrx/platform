@@ -13,7 +13,7 @@ export function getType(
   }
 
   return ts.isLiteralTypeNode(typeProperty.type as any)
-    ? typeProperty.type as any
+    ? (typeProperty.type as any)
     : undefined;
 
   // return !!typeProperty && ts.isLiteralTypeNode(typeProperty.type) ? typeProperty.type : undefined;

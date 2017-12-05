@@ -240,9 +240,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should call navigateByUrl when resetting state of the routerReducer', (
-    done: any
-  ) => {
+  it('should call navigateByUrl when resetting state of the routerReducer', (done: any) => {
     const reducer = (state: any, action: RouterAction<any>) => {
       const r = routerReducer(state, action);
       return r && r.state
@@ -338,9 +336,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support cancellation of initial navigation using canLoad guard', (
-    done: any
-  ) => {
+  it('should support cancellation of initial navigation using canLoad guard', (done: any) => {
     const reducer = (state: any, action: RouterAction<any>) => {
       const r = routerReducer(state, action);
       return r && r.state
@@ -369,9 +365,7 @@ describe('integration spec', () => {
       done();
     });
 
-    it('should support a custom RouterStateSnapshot serializer ', (
-      done: any
-    ) => {
+    it('should support a custom RouterStateSnapshot serializer ', (done: any) => {
       const reducer = (state: any, action: RouterAction<any>) => {
         const r = routerReducer(state, action);
         return r && r.state

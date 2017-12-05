@@ -33,7 +33,7 @@ describe('Login Page', () => {
      * HTML.
      *
      * We can also use this as a validation tool against changes
-     * to the component's template against the currently stored 
+     * to the component's template against the currently stored
      * snapshot.
      */
     expect(fixture).toMatchSnapshot();

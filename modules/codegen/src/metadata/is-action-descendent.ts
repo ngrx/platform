@@ -9,9 +9,9 @@ export function isActionDescendent(
     return heritageClauses.some(clause => {
       /**
        * TODO: This breaks if the interface looks like this:
-       * 
+       *
        *   interface MyAction extends ngrx.Action { }
-       * 
+       *
        */
       return clause.types.some(type => type.expression.getText() === 'Action');
     });
