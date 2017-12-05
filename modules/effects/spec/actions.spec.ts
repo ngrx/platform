@@ -63,11 +63,15 @@ describe('Actions', function() {
     const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
     const expected = actions.filter(type => type === ADD);
 
-    actions$.ofType(ADD).map(update => update.type).toArray().subscribe({
-      next(actual) {
-        expect(actual).toEqual(expected);
-      },
-    });
+    actions$
+      .ofType(ADD)
+      .map(update => update.type)
+      .toArray()
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
 
     actions.forEach(action => dispatcher.next({ type: action }));
     dispatcher.complete();

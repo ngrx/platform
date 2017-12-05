@@ -61,10 +61,10 @@ export class BookEffects {
     @Inject(SEARCH_DEBOUNCE)
     private debounce: number,
     /**
-       * You inject an optional Scheduler that will be undefined
-       * in normal application usage, but its injected here so that you can mock out
-       * during testing using the RxJS TestScheduler for simulating passages of time.
-       */
+     * You inject an optional Scheduler that will be undefined
+     * in normal application usage, but its injected here so that you can mock out
+     * during testing using the RxJS TestScheduler for simulating passages of time.
+     */
     @Optional()
     @Inject(SEARCH_SCHEDULER)
     private scheduler: Scheduler
