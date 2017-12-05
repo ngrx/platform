@@ -123,6 +123,21 @@ export async function cleanTypeScriptFiles(config: Config) {
 }
 
 /**
+ * Removes any leftover Javascript files from previous compilation steps,
+ * leaving the bundles and FESM in place
+ */
+export async function cleanJavaScriptFiles(config: Config) {
+  const jsFilesGlob = './dist/packages/**/*.js';
+  const jsExcludeFilesFlob = './dist/packages/(bundles|@ngrx)/**/*.js';
+  const filesToRemove = await util.getListOfFiles(
+    jsFilesGlob,
+    jsExcludeFilesFlob
+  );
+
+  await mapAsync(filesToRemove, util.remove);
+}
+
+/**
  * Renames the index files in each package to the name
  * of the package.
  */
