@@ -9,6 +9,7 @@ export default createBuilder([
   ['Creating UMD Bundles', tasks.createUmdBundles],
   ['Renaming package entry files', tasks.renamePackageEntryFiles],
   ['Cleaning TypeScript files', tasks.cleanTypeScriptFiles],
+  ['Cleaning JavaScript files', tasks.cleanJavaScriptFiles],
   ['Removing remaining sourcemap files', tasks.removeRemainingSourceMapFiles],
   ['Copying type definition files', tasks.copyTypeDefinitionFiles],
   ['Minifying UMD bundles', tasks.minifyUmdBundles],
