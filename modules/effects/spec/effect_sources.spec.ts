@@ -9,27 +9,19 @@ import { _throw } from 'rxjs/observable/throw';
 import { never } from 'rxjs/observable/never';
 import { empty } from 'rxjs/observable/empty';
 import { TestBed } from '@angular/core/testing';
-import { ErrorReporter } from '../src/error_reporter';
-import { CONSOLE } from '../src/tokens';
+import { ErrorHandler } from '@angular/core';
 import { Effect, EffectSources } from '../';
 
 describe('EffectSources', () => {
-  let mockErrorReporter: ErrorReporter;
+  let mockErrorReporter: ErrorHandler;
   let effectSources: EffectSources;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        EffectSources,
-        ErrorReporter,
-        {
-          provide: CONSOLE,
-          useValue: console,
-        },
-      ],
+      providers: [EffectSources],
     });
 
-    mockErrorReporter = TestBed.get(ErrorReporter);
+    mockErrorReporter = TestBed.get(ErrorHandler);
     effectSources = TestBed.get(EffectSources);
 
     spyOn(mockErrorReporter, 'handleError');
@@ -118,7 +110,7 @@ describe('EffectSources', () => {
     });
 
     function toActions(source: any): Observable<any> {
-      source['errorReporter'] = mockErrorReporter;
+      source['errorHandler'] = mockErrorReporter;
       return effectSources.toActions.call(source);
     }
   });

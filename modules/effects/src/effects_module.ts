@@ -1,11 +1,10 @@
 import { NgModule, ModuleWithProviders, Type } from '@angular/core';
 import { EffectSources } from './effect_sources';
 import { Actions } from './actions';
-import { ROOT_EFFECTS, FEATURE_EFFECTS, CONSOLE } from './tokens';
+import { ROOT_EFFECTS, FEATURE_EFFECTS } from './tokens';
 import { EffectsFeatureModule } from './effects_feature_module';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
-import { ErrorReporter } from './error_reporter';
 
 @NgModule({})
 export class EffectsModule {
@@ -30,17 +29,12 @@ export class EffectsModule {
       providers: [
         EffectsRunner,
         EffectSources,
-        ErrorReporter,
         Actions,
         rootEffects,
         {
           provide: ROOT_EFFECTS,
           deps: rootEffects,
           useFactory: createSourceInstances,
-        },
-        {
-          provide: CONSOLE,
-          useFactory: getConsole,
         },
       ],
     };
@@ -49,8 +43,4 @@ export class EffectsModule {
 
 export function createSourceInstances(...instances: any[]) {
   return instances;
-}
-
-export function getConsole() {
-  return console;
 }
