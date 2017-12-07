@@ -1,3 +1,4 @@
+import { Load } from './../actions/book';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
@@ -11,7 +12,18 @@ import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
 import { of } from 'rxjs/observable/of';
 
-import * as collection from '../actions/collection';
+import {
+  CollectionActions,
+  LoadFail,
+  LoadSuccess,
+  AddBookSuccess,
+  AddBookFail,
+  CollectionActionTypes,
+  RemoveBook,
+  RemoveBookFail,
+  RemoveBookSuccess,
+  AddBook,
+} from './../actions/collection';
 import { Book } from '../models/book';
 
 @Injectable()
@@ -33,35 +45,35 @@ export class CollectionEffects {
 
   @Effect()
   loadCollection$: Observable<Action> = this.actions$
-    .ofType(collection.LOAD)
+    .ofType(CollectionActionTypes.Load)
     .switchMap(() =>
       this.db
         .query('books')
         .toArray()
-        .map((books: Book[]) => new collection.LoadSuccess(books))
-        .catch(error => of(new collection.LoadFail(error)))
+        .map((books: Book[]) => new LoadSuccess(books))
+        .catch(error => of(new LoadFail(error)))
     );
 
   @Effect()
   addBookToCollection$: Observable<Action> = this.actions$
-    .ofType(collection.ADD_BOOK)
-    .map((action: collection.AddBook) => action.payload)
+    .ofType(CollectionActionTypes.AddBook)
+    .map((action: AddBook) => action.payload)
     .mergeMap(book =>
       this.db
         .insert('books', [book])
-        .map(() => new collection.AddBookSuccess(book))
-        .catch(() => of(new collection.AddBookFail(book)))
+        .map(() => new AddBookSuccess(book))
+        .catch(() => of(new AddBookFail(book)))
     );
 
   @Effect()
   removeBookFromCollection$: Observable<Action> = this.actions$
-    .ofType(collection.REMOVE_BOOK)
-    .map((action: collection.RemoveBook) => action.payload)
+    .ofType(CollectionActionTypes.RemoveBook)
+    .map((action: RemoveBook) => action.payload)
     .mergeMap(book =>
       this.db
         .executeWrite('books', 'delete', [book.id])
-        .map(() => new collection.RemoveBookSuccess(book))
-        .catch(() => of(new collection.RemoveBookFail(book)))
+        .map(() => new RemoveBookSuccess(book))
+        .catch(() => of(new RemoveBookFail(book)))
     );
 
   constructor(private actions$: Actions, private db: Database) {}
