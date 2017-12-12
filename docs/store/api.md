@@ -96,7 +96,7 @@ export const reducers: ActionReducerMap<any> = {
 export class FeatureModule {}
 ```
 
-The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [./selectors.md#createFeatureSelector](createFeatureSelector) convenience method.
+The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [createFeatureSelector](./selectors.md#createFeatureSelector) convenience method.
 
 ## Injecting Reducers
 
