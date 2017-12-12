@@ -11,7 +11,7 @@ export interface BooksState {
 }
 
 export interface State extends fromRoot.State {
-  'books': BooksState;
+  books: BooksState;
 }
 
 export const reducers = {
@@ -39,7 +39,7 @@ export const reducers = {
 /**
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
-*/
+ */
 export const getBooksState = createFeatureSelector<BooksState>('books');
 
 /**

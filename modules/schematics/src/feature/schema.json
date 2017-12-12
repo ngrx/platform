@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxFeature",
+  "title": "NgRx Feature State Options Schema",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "default": "src"
+    },
+    "sourceDir": {
+      "type": "string",
+      "default": "src",
+      "alias": "sd"
+    },
+    "name": {
+      "type": "string"
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Flag to indicate if a dir is created."
+    },
+    "module": {
+      "type": "string",
+      "description": "Specifies the declaring module.",
+      "aliases": ["m"]
+    },
+    "spec": {
+      "type": "boolean",
+      "default": true,
+      "description": "Specifies if a spec file is generated."
+    },
+    "reducers": {
+      "type": "string",
+      "description": "Specifies the reducers file.",
+      "aliases": ["r"]
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

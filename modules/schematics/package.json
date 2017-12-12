@@ -1,0 +1,24 @@
+{
+  "name": "@ngrx/schematics",
+  "version": "4.1.1",
+  "description": "NgRx Schematics for Angular",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "RxJS",
+    "Angular",
+    "Redux",
+    "NgRx",
+    "Schematics",
+    "Angular CLI"
+  ],
+  "author": "Brandon Roberts <robertsbt@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "schematics": "./collection.json"
+}

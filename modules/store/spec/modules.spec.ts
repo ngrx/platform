@@ -48,11 +48,11 @@ describe(`Store Modules`, () => {
     const rootInitial = { fruit: 'orange' };
 
     beforeEach(() => {
-      featureAReducerFactory = createSpy(
-        'featureAReducerFactory'
-      ).and.callFake((rm: any, initialState?: any) => {
-        return (state: any, action: any) => 4;
-      });
+      featureAReducerFactory = createSpy('featureAReducerFactory').and.callFake(
+        (rm: any, initialState?: any) => {
+          return (state: any, action: any) => 4;
+        }
+      );
       rootReducerFactory = createSpy('rootReducerFactory').and.callFake(
         combineReducers
       );

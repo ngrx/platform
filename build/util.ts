@@ -134,9 +134,12 @@ export function createBuilder(tasks: TaskDef[]) {
 }
 
 export function flatMap<K, J>(list: K[], mapFn: (item: K) => J[]): J[] {
-  return list.reduce(function(newList, nextItem) {
-    return [...newList, ...mapFn(nextItem)];
-  }, [] as J[]);
+  return list.reduce(
+    function(newList, nextItem) {
+      return [...newList, ...mapFn(nextItem)];
+    },
+    [] as J[]
+  );
 }
 
 export function getTopLevelPackages(config: Config) {
@@ -177,4 +180,10 @@ export function getBottomLevelName(packageName: string) {
 
 export function baseDir(...dirs: string[]): string {
   return `"${path.resolve(__dirname, '../', ...dirs)}"`;
+}
+
+export function shouldBundle(config: Config, packageName: string) {
+  const pkg = config.packages.find(pkg => pkg.name === packageName);
+
+  return pkg ? pkg.bundle : false;
 }

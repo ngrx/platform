@@ -22,8 +22,8 @@ export function unliftAction(liftedState: LiftedState) {
 }
 
 /**
-* Lifts an app's action into an action on the lifted store.
-*/
+ * Lifts an app's action into an action on the lifted store.
+ */
 export function liftAction(action: Action) {
   return new Actions.PerformAction(action);
 }
