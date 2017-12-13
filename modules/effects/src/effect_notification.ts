@@ -1,7 +1,11 @@
 import { Observable } from 'rxjs/Observable';
 import { Notification } from 'rxjs/Notification';
 import { Action } from '@ngrx/store';
-import { ErrorReporter } from './error_reporter';
+import {
+  ErrorReporter,
+  EffectError,
+  InvalidActionError,
+} from './error_reporter';
 
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);
@@ -24,14 +28,16 @@ function reportErrorThrown(
   reporter: ErrorReporter
 ) {
   if (output.notification.kind === 'E') {
-    const errorReason = `Effect ${getEffectName(output)} threw an error`;
+    const errorReason = new Error(
+      `Effect ${getEffectName(output)} threw an error`
+    ) as EffectError;
 
-    reporter.report(errorReason, {
-      Source: output.sourceInstance,
-      Effect: output.effect,
-      Error: output.notification.error,
-      Notification: output.notification,
-    });
+    errorReason.Source = output.sourceInstance;
+    errorReason.Effect = output.effect;
+    errorReason.Error = output.notification.error;
+    errorReason.Notification = output.notification;
+
+    reporter.handleError(errorReason);
   }
 }
 
@@ -44,16 +50,16 @@ function reportInvalidActions(
     const isInvalidAction = !isAction(action);
 
     if (isInvalidAction) {
-      const errorReason = `Effect ${getEffectName(
-        output
-      )} dispatched an invalid action`;
+      const errorReason = new Error(
+        `Effect ${getEffectName(output)} dispatched an invalid action`
+      ) as InvalidActionError;
 
-      reporter.report(errorReason, {
-        Source: output.sourceInstance,
-        Effect: output.effect,
-        Dispatched: action,
-        Notification: output.notification,
-      });
+      errorReason.Source = output.sourceInstance;
+      errorReason.Effect = output.effect;
+      errorReason.Dispatched = action;
+      errorReason.Notification = output.notification;
+
+      reporter.handleError(errorReason);
     }
   }
 }

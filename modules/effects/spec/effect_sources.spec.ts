@@ -32,7 +32,7 @@ describe('EffectSources', () => {
     mockErrorReporter = TestBed.get(ErrorReporter);
     effectSources = TestBed.get(EffectSources);
 
-    spyOn(mockErrorReporter, 'report');
+    spyOn(mockErrorReporter, 'handleError');
   });
 
   it('should have an "addEffects" method to push new source instances', () => {
@@ -103,7 +103,7 @@ describe('EffectSources', () => {
 
       toActions(sources$).subscribe();
 
-      expect(mockErrorReporter.report).toHaveBeenCalled();
+      expect(mockErrorReporter.handleError).toHaveBeenCalled();
     });
 
     it('should not complete the group if just one effect completes', () => {
