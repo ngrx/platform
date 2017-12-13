@@ -39,7 +39,7 @@ export type UpdateNum<T> = {
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
 export interface EntityState<T> {
-  ids: string[] | number[];
+  ids: Array<string|number>;
   entities: Dictionary<T>;
 }
 
@@ -66,7 +66,7 @@ export interface EntityStateAdapter<T> {
 }
 
 export type EntitySelectors<T, V> = {
-  selectIds: (state: V) => string[] | number[];
+  selectIds: (state: V) => Array<string|number>;
   selectEntities: (state: V) => Dictionary<T>;
   selectAll: (state: V) => T[];
   selectTotal: (state: V) => number;
