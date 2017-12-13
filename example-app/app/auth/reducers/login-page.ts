@@ -1,4 +1,4 @@
-import * as auth from '../actions/auth';
+import { AuthActionTypes, AuthActions } from './../actions/auth';
 
 export interface State {
   error: string | null;
@@ -10,9 +10,9 @@ export const initialState: State = {
   pending: false,
 };
 
-export function reducer(state = initialState, action: auth.Actions): State {
+export function reducer(state = initialState, action: AuthActions): State {
   switch (action.type) {
-    case auth.LOGIN: {
+    case AuthActionTypes.Login: {
       return {
         ...state,
         error: null,
@@ -20,7 +20,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
       };
     }
 
-    case auth.LOGIN_SUCCESS: {
+    case AuthActionTypes.LoginSuccess: {
       return {
         ...state,
         error: null,
@@ -28,7 +28,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
       };
     }
 
-    case auth.LOGIN_FAILURE: {
+    case AuthActionTypes.LoginFailure: {
       return {
         ...state,
         error: action.payload,
