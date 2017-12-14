@@ -1,13 +1,14 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/skip';
-import 'rxjs/add/operator/takeUntil';
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import {
+  catchError,
+  debounceTime,
+  map,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import { Scheduler } from 'rxjs/Scheduler';
 import { async } from 'rxjs/scheduler/async';
 import { empty } from 'rxjs/observable/empty';
@@ -44,21 +45,27 @@ export class BookEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType<Search>(BookActionTypes.Search)
-    .debounceTime(this.debounce || 300, this.scheduler || async)
-    .map(action => action.payload)
-    .switchMap(query => {
-      if (query === '') {
-        return empty();
-      }
+    .pipe(
+      debounceTime(this.debounce || 300, this.scheduler || async),
+      map(action => action.payload),
+      switchMap(query => {
+        if (query === '') {
+          return empty();
+        }
 
-      const nextSearch$ = this.actions$.ofType(BookActionTypes.Search).skip(1);
+        const nextSearch$ = this.actions$
+          .ofType(BookActionTypes.Search)
+          .skip(1);
 
-      return this.googleBooks
-        .searchBooks(query)
-        .takeUntil(nextSearch$)
-        .map((books: Book[]) => new SearchComplete(books))
-        .catch(err => of(new SearchError(err)));
-    });
+        return this.googleBooks
+          .searchBooks(query)
+          .pipe(
+            takeUntil(nextSearch$),
+            map((books: Book[]) => new SearchComplete(books)),
+            catchError(err => of(new SearchError(err)))
+          );
+      })
+    );
 
   constructor(
     private actions$: Actions,
