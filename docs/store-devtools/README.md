@@ -45,7 +45,7 @@ number (>1) | false - maximum allowed actions to be stored in the history tree. 
 string - the instance name to be showed on the monitor page. Default value is _NgRx Store DevTools_.
 
 #### `monitor`:
-function - the monitor function configuration that you what to hook.
+function - the monitor function configuration that you want to hook.
 
 #### `actionSanitizer`
 function which takes `action` object and id number as arguments, and should return `action` object back.
