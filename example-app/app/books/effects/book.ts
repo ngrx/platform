@@ -6,6 +6,7 @@ import {
   catchError,
   debounceTime,
   map,
+  skip,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -55,7 +56,7 @@ export class BookEffects {
 
         const nextSearch$ = this.actions$
           .ofType(BookActionTypes.Search)
-          .skip(1);
+          .pipe(skip(1));
 
         return this.googleBooks
           .searchBooks(query)
