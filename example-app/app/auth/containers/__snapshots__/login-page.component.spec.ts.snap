@@ -83,7 +83,7 @@ exports[`Login Page should compile 1`] = `
                       
                       <label
                         aria-owns="mat-input-0"
-                        class="mat-input-placeholder mat-form-field-placeholder ng-tns-c2-0 mat-empty mat-form-field-empty"
+                        class="mat-input-placeholder mat-form-field-placeholder ng-tns-c2-0 mat-empty mat-form-field-empty ng-star-inserted"
                         for="mat-input-0"
                       >
                         Username 
@@ -107,7 +107,7 @@ exports[`Login Page should compile 1`] = `
                   
                   
                   <div
-                    class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages"
+                    class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
                     style="opacity: 1;"
                   >
                     
@@ -166,7 +166,7 @@ exports[`Login Page should compile 1`] = `
                       
                       <label
                         aria-owns="mat-input-1"
-                        class="mat-input-placeholder mat-form-field-placeholder ng-tns-c2-1 mat-empty mat-form-field-empty"
+                        class="mat-input-placeholder mat-form-field-placeholder ng-tns-c2-1 mat-empty mat-form-field-empty ng-star-inserted"
                         for="mat-input-1"
                       >
                         Password 
@@ -190,7 +190,7 @@ exports[`Login Page should compile 1`] = `
                   
                   
                   <div
-                    class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages"
+                    class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
                     style="opacity: 1;"
                   >
                     
