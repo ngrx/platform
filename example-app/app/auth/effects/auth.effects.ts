@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { User } from '../models/user';
 
 import { AuthService } from '../services/auth.service';
 import {
@@ -23,7 +24,7 @@ export class AuthEffects {
         this.authService
           .login(auth)
           .pipe(
-            map(user => new LoginSuccess({ user })),
+            map((user: User) => new LoginSuccess({ user })),
             catchError(error => of(new LoginFailure(error)))
           )
       )
