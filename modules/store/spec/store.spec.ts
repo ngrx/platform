@@ -2,7 +2,13 @@ import 'rxjs/add/operator/take';
 import { ReflectiveInjector } from '@angular/core';
 import { hot } from 'jasmine-marbles';
 import { createInjector } from './helpers/injector';
-import { ActionsSubject, ReducerManager, Store, StoreModule } from '../';
+import {
+  ActionsSubject,
+  ReducerManager,
+  Store,
+  StoreModule,
+  select,
+} from '../';
 import {
   counterReducer,
   INCREMENT,
@@ -83,7 +89,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counterStateWithString = store.select('counter1');
+      const counterStateWithString = store.pipe(select('counter1'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -98,7 +104,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counterStateWithFunc = store.select(s => s.counter1);
+      const counterStateWithFunc = store.pipe(select(s => s.counter1));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -109,7 +115,7 @@ describe('ngRx Store', () => {
     });
 
     it('should correctly lift itself', () => {
-      const result = store.select('counter1');
+      const result = store.pipe(select('counter1'));
 
       expect(result instanceof Store).toBe(true);
     });
@@ -119,7 +125,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counterState = store.select('counter1');
+      const counterState = store.pipe(select('counter1'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -132,7 +138,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => dispatcher.next(action));
 
-      const counterState = store.select('counter1');
+      const counterState = store.pipe(select('counter1'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -145,8 +151,8 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counter1State = store.select('counter1');
-      const counter2State = store.select('counter2');
+      const counter1State = store.pipe(select('counter1'));
+      const counter2State = store.pipe(select('counter2'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter2Values = { i: 1, v: 2, w: 3, x: 2, y: 0, z: 1 };
