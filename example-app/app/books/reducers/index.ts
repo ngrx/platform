@@ -30,7 +30,7 @@ export const reducers = {
  * ```ts
  * class MyComponent {
  * 	constructor(state$: Observable<State>) {
- * 	  this.booksState$ = state$.select(getBooksState);
+ * 	  this.booksState$ = state$.pipe(select(getBooksState));
  * 	}
  * }
  * ```
