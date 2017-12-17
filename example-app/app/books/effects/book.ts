@@ -1,11 +1,5 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/skip';
-import 'rxjs/add/operator/takeUntil';
 import { Injectable, InjectionToken, Optional, Inject } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Scheduler } from 'rxjs/Scheduler';
@@ -22,6 +16,14 @@ import {
   Search,
 } from '../actions/book';
 import { Book } from '../models/book';
+import {
+  debounceTime,
+  map,
+  switchMap,
+  skip,
+  takeUntil,
+  catchError,
+} from 'rxjs/operators';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
 export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
@@ -42,23 +44,29 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 @Injectable()
 export class BookEffects {
   @Effect()
-  search$: Observable<Action> = this.actions$
-    .ofType<Search>(BookActionTypes.Search)
-    .debounceTime(this.debounce || 300, this.scheduler || async)
-    .map(action => action.payload)
-    .switchMap(query => {
+  search$: Observable<Action> = this.actions$.pipe(
+    ofType<Search>(BookActionTypes.Search),
+    debounceTime(this.debounce || 300, this.scheduler || async),
+    map(action => action.payload),
+    switchMap(query => {
       if (query === '') {
         return empty();
       }
 
-      const nextSearch$ = this.actions$.ofType(BookActionTypes.Search).skip(1);
+      const nextSearch$ = this.actions$.pipe(
+        ofType(BookActionTypes.Search),
+        skip(1)
+      );
 
       return this.googleBooks
         .searchBooks(query)
-        .takeUntil(nextSearch$)
-        .map((books: Book[]) => new SearchComplete(books))
-        .catch(err => of(new SearchError(err)));
-    });
+        .pipe(
+          takeUntil(nextSearch$),
+          map((books: Book[]) => new SearchComplete(books)),
+          catchError(err => of(new SearchError(err)))
+        );
+    })
+  );
 
   constructor(
     private actions$: Actions,
