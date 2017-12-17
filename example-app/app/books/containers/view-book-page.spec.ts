@@ -31,6 +31,7 @@ describe('View Book Page', () => {
           useValue: {
             select: jest.fn(),
             next: jest.fn(),
+            pipe: jest.fn(),
           },
         },
       ],

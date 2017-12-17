@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store-devtools",
-  "version": "4.1.1",
+  "version": "5.0.0-alpha.0",
   "description": "Developer tools for @ngrx/store",
   "module": "@ngrx/store-devtools.es5.js",
   "es2015": "@ngrx/store-devtools.js",
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@ngrx/store": "^4.0.0",
-    "rxjs": "^5.0.0"
+    "@ngrx/store": "^5.0.0-alpha.0",
+    "rxjs": "^5.5.0"
   }
 }
