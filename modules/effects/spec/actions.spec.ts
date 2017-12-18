@@ -9,7 +9,8 @@ import {
   ScannedActionsSubject,
   ActionsSubject,
 } from '@ngrx/store';
-import { Actions } from '../';
+import { Actions, ofType } from '../';
+import { map, toArray } from 'rxjs/operators';
 
 describe('Actions', function() {
   let actions$: Actions;
@@ -64,9 +65,7 @@ describe('Actions', function() {
     const expected = actions.filter(type => type === ADD);
 
     actions$
-      .ofType(ADD)
-      .map(update => update.type)
-      .toArray()
+      .pipe(ofType(ADD), map(update => update.type), toArray())
       .subscribe({
         next(actual) {
           expect(actual).toEqual(expected);

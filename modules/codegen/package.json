@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/codegen",
-  "version": "4.1.1",
+  "version": "5.0.0-alpha.0",
   "description": "Codegen for Ngrx and Redux actions",
   "module": "@ngrx/codegen.es5.js",
   "es2015": "@ngrx/codegen.js",

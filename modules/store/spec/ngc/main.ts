@@ -1,7 +1,7 @@
 import { NgModule, Component, InjectionToken } from '@angular/core';
 import { platformDynamicServer } from '@angular/platform-server';
 import { BrowserModule } from '@angular/platform-browser';
-import { Store, StoreModule, combineReducers } from '../../';
+import { Store, StoreModule, combineReducers, select } from '../../';
 import { counterReducer, INCREMENT, DECREMENT } from '../fixtures/counter';
 import { todos } from '../fixtures/todos';
 import { Observable } from 'rxjs/Observable';
@@ -40,7 +40,7 @@ export const reducerToken = new InjectionToken('Reducers');
 export class NgcSpecComponent {
   count: Observable<number>;
   constructor(public store: Store<AppState>) {
-    this.count = store.select(state => state.count);
+    this.count = store.pipe(select(state => state.count));
   }
   increment() {
     this.store.dispatch({ type: INCREMENT });

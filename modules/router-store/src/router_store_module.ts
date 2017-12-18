@@ -11,7 +11,7 @@ import {
   RouterStateSnapshot,
   RoutesRecognized,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 import {
   DefaultRouterStateSerializer,
@@ -255,7 +255,7 @@ export class StoreRouterConnectingModule {
     this.store.subscribe(s => {
       this.storeState = s;
     });
-    this.store.select(this.stateKey).subscribe(() => {
+    this.store.pipe(select(this.stateKey)).subscribe(() => {
       this.navigateIfNeeded();
     });
   }
