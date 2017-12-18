@@ -37,19 +37,19 @@ export const DECREMENT = 'DECREMENT';
 export const RESET = 'RESET';
 
 export function counterReducer(state: number = 0, action: Action) {
-	switch (action.type) {
-		case INCREMENT:
-			return state + 1;
+  switch (action.type) {
+    case INCREMENT:
+      return state + 1;
 
-		case DECREMENT:
-			return state - 1;
+    case DECREMENT:
+      return state - 1;
 
-		case RESET:
-			return 0;
+    case RESET:
+      return 0;
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 }
 ```
 
@@ -83,33 +83,33 @@ interface AppState {
 }
 
 @Component({
-	selector: 'my-app',
-	template: `
-		<button (click)="increment()">Increment</button>
-		<div>Current Count: {{ counter | async }}</div>
-		<button (click)="decrement()">Decrement</button>
+  selector: 'my-app',
+  template: `
+    <button (click)="increment()">Increment</button>
+    <div>Current Count: {{ counter | async }}</div>
+    <button (click)="decrement()">Decrement</button>
 
-		<button (click)="reset()">Reset Counter</button>
-	`
+    <button (click)="reset()">Reset Counter</button>
+  `
 })
 export class MyAppComponent {
-	counter: Observable<number>;
+  counter: Observable<number>;
 
-	constructor(private store: Store<AppState>) {
-		this.counter = store.select('counter');
-	}
+  constructor(private store: Store<AppState>) {
+    this.counter = store.select('counter');
+  }
 
-	increment(){
-		this.store.dispatch({ type: INCREMENT });
-	}
+  increment(){
+    this.store.dispatch({ type: INCREMENT });
+  }
 
-	decrement(){
-		this.store.dispatch({ type: DECREMENT });
-	}
+  decrement(){
+    this.store.dispatch({ type: DECREMENT });
+  }
 
-	reset(){
-		this.store.dispatch({ type: RESET });
-	}
+  reset(){
+    this.store.dispatch({ type: RESET });
+  }
 }
 ```
 
