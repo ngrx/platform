@@ -192,7 +192,7 @@ export function reducer(
   state = initialState,
   action: UserActions.All
 ): State {
-  switch (action.type) {        
+  switch (action.type) {
     case UserActions.ADD_USER: {
       return adapter.addOne(action.payload.user, state);
     }
@@ -215,7 +215,7 @@ export function reducer(
 
     case UserActions.DELETE_USERS: {
       return adapter.removeMany(action.payload.ids, state);
-    }    
+    }
 
     case UserActions.LOAD_USERS: {
       return adapter.addAll(action.payload.users, state);
@@ -223,11 +223,11 @@ export function reducer(
 
     case UserActions.CLEAR_USERS: {
       return adapter.removeAll({ ...state, selectedUserId: null });
-    }        
+    }
 
     default: {
       return state;
-    }    
+    }
   }
 }
 

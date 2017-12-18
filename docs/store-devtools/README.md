@@ -49,9 +49,9 @@ function - the monitor function configuration that you want to hook.
 
 #### `actionSanitizer`
 function which takes `action` object and id number as arguments, and should return `action` object back.
- 
+
 #### `stateSanitizer`
 function which takes `state` object and index as arguments, and should return `state` object back.
 
-#### `serialize` 
-false | configuration object - Handle the way you want to serialize your state, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#serialize). 
+#### `serialize`
+false | configuration object - Handle the way you want to serialize your state, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#serialize).

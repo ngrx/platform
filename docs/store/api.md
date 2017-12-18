@@ -143,7 +143,7 @@ export const FEATURE_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<fromFea
 export function getReducers(): ActionReducerMap<fromFeature.State> {
   // map of reducers
   return {
-  
+
   };
 }
 

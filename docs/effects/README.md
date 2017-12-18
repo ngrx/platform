@@ -65,7 +65,7 @@ export class AuthEffects {
   constructor(
     private http: Http,
     private actions$: Actions
-  ) {}      
+  ) {}
 }
 ```
 

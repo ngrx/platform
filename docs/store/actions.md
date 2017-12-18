@@ -69,7 +69,7 @@ export function reducer(state: number = 0, action: Action): State {
 
     case CounterActions.RESET: {
       return action.payload; // typed to number
-    }    
+    }
 
     default: {
       return state;
