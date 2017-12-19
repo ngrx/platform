@@ -12,7 +12,7 @@ export type BaseFn = (command: string) => string;
 
 export function copy(target: string, destination: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    fsExtra.copy(target, destination, err => {
+    fsExtra.copy(target, path.resolve(destination), err => {
       if (err) return reject(err);
       resolve();
     });
