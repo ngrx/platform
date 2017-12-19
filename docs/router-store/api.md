@@ -74,7 +74,7 @@ export class RouterEffects {
 
   @Effect({ dispatch: false })
   navigateForward$ = this.actions$.ofType(RouterActions.FORWARD)
-    .do(() => this.location.forward());    
+    .do(() => this.location.forward());
 
   constructor(
     private actions$: Actions,

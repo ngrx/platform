@@ -190,16 +190,16 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from './reducers';
 
 @Component({
-	selector: 'my-app',
-	template: `
-		<div>Current Count: {{ counter | async }}</div>
-	`
+  selector: 'my-app',
+  template: `
+    <div>Current Count: {{ counter | async }}</div>
+  `
 })
 class MyAppComponent {
-	counter: Observable<number>;
+  counter: Observable<number>;
 
-	constructor(private store: Store<fromRoot.AppState>){
-		this.counter = store.select(fromRoot.selectFeatureCount);
-	}
+  constructor(private store: Store<fromRoot.AppState>){
+    this.counter = store.select(fromRoot.selectFeatureCount);
+  }
 }
 ```

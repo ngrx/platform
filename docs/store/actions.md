@@ -69,7 +69,7 @@ export function reducer(state: number = 0, action: Action): State {
 
     case CounterActions.RESET: {
       return action.payload; // typed to number
-    }    
+    }
 
     default: {
       return state;
@@ -90,32 +90,32 @@ interface AppState {
 }
 
 @Component({
-	selector: 'my-app',
-	template: `
-		<button (click)="increment()">Increment</button>
-		<div>Current Count: {{ counter | async }}</div>
-		<button (click)="decrement()">Decrement</button>
+  selector: 'my-app',
+  template: `
+    <button (click)="increment()">Increment</button>
+    <div>Current Count: {{ counter | async }}</div>
+    <button (click)="decrement()">Decrement</button>
 
-		<button (click)="reset()">Reset Counter</button>
-	`
+    <button (click)="reset()">Reset Counter</button>
+  `
 })
 export class MyAppComponent {
-	counter: Observable<number>;
+  counter: Observable<number>;
 
-	constructor(private store: Store<AppState>) {
-		this.counter = store.select('counter');
-	}
+  constructor(private store: Store<AppState>) {
+    this.counter = store.select('counter');
+  }
 
-	increment(){
-		this.store.dispatch(new Counter.Increment());
-	}
+  increment(){
+    this.store.dispatch(new Counter.Increment());
+  }
 
-	decrement(){
-		this.store.dispatch(new Counter.Decrement());
-	}
+  decrement(){
+    this.store.dispatch(new Counter.Decrement());
+  }
 
-	reset(){
-		this.store.dispatch(new Counter.Reset(3));
-	}
+  reset(){
+    this.store.dispatch(new Counter.Reset(3));
+  }
 }
 ```

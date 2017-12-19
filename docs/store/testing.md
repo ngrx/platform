@@ -105,6 +105,6 @@ describe('My Component', () => {
     component.items$.subscribe(data => {
       expect(data.length).toBe(items.length);
     });
-  });  
+  });
 });
 ```

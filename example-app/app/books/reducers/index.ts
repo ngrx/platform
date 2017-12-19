@@ -29,9 +29,9 @@ export const reducers = {
  *
  * ```ts
  * class MyComponent {
- * 	constructor(state$: Observable<State>) {
- * 	  this.booksState$ = state$.pipe(select(getBooksState));
- * 	}
+ *   constructor(state$: Observable<State>) {
+ *     this.booksState$ = state$.pipe(select(getBooksState));
+ *   }
  * }
  * ```
  */
