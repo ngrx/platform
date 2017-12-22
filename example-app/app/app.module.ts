@@ -59,7 +59,7 @@ import { environment } from '../environments/environment';
      */
     !environment.production
       ? StoreDevtoolsModule.instrument({
-          name: 'NgRx Book Store DevTools',
+          maxAge: 5,
         })
       : [],
 
