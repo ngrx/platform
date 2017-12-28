@@ -12,7 +12,7 @@ against the collection type. The method takes an object for configuration with 2
 Usage:
 
 ```ts
-import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
   id: string;
@@ -103,6 +103,7 @@ export interface User {
 ```ts
 import { Action } from '@ngrx/store';
 import { User } from './user.model';
+import { Update } from '@ngrx/entity';
 
 export const LOAD_USERS = '[User] Load Users';
 export const ADD_USER = '[User] Add User';
