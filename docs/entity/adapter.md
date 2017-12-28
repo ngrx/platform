@@ -12,7 +12,7 @@ against the collection type. The method takes an object for configuration with 2
 Usage:
 
 ```ts
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
 
 export interface User {
   id: string;
@@ -134,13 +134,13 @@ export class AddUsers implements Action {
 export class UpdateUser implements Action {
   readonly type = UPDATE_USER;
 
-  constructor(public payload: { user: { id: string, changes: User } }) {}
+  constructor(public payload: { user: Update<User> }) {}
 }
 
 export class UpdateUsers implements Action {
   readonly type = UPDATE_USERS;
 
-  constructor(public payload: { users: { id: string, changes: User }[] }) {}
+  constructor(public payload: { users: Update<User>[] }) {}
 }
 
 export class DeleteUser implements Action {
