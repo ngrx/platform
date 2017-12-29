@@ -102,8 +102,9 @@ export interface User {
 
 ```ts
 import { Action } from '@ngrx/store';
-import { User } from './user.model';
 import { Update } from '@ngrx/entity';
+
+import { User } from './user.model';
 
 export const LOAD_USERS = '[User] Load Users';
 export const ADD_USER = '[User] Add User';
