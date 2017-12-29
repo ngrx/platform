@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
 import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
 
 export enum <%= classify(name) %>ActionTypes {
@@ -33,13 +34,13 @@ export class Add<%= classify(name) %>s implements Action {
 export class Update<%= classify(name) %> implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Update<%= classify(name) %>;
 
-  constructor(public payload: { <%= lowercase(name) %>: { id: string, changes: <%= classify(name) %> } }) {}
+  constructor(public payload: { <%= lowercase(name) %>: Update<<%= classify(name) %>> }) {}
 }
 
 export class Update<%= classify(name) %>s implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Update<%= classify(name) %>s;
 
-  constructor(public payload: { <%= lowercase(name) %>s: { id: string, changes: <%= classify(name) %> }[] }) {}
+  constructor(public payload: { <%= lowercase(name) %>s: Update<<%= classify(name) %>>[] }) {}
 }
 
 export class Delete<%= classify(name) %> implements Action {

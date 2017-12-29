@@ -102,6 +102,8 @@ export interface User {
 
 ```ts
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
 import { User } from './user.model';
 
 export const LOAD_USERS = '[User] Load Users';
@@ -134,13 +136,13 @@ export class AddUsers implements Action {
 export class UpdateUser implements Action {
   readonly type = UPDATE_USER;
 
-  constructor(public payload: { user: { id: string, changes: User } }) {}
+  constructor(public payload: { user: Update<User> }) {}
 }
 
 export class UpdateUsers implements Action {
   readonly type = UPDATE_USERS;
 
-  constructor(public payload: { users: { id: string, changes: User }[] }) {}
+  constructor(public payload: { users: Update<User>[] }) {}
 }
 
 export class DeleteUser implements Action {

@@ -1,2 +1,2 @@
 export { createEntityAdapter } from './create_adapter';
-export { EntityState, EntityAdapter } from './models';
+export { EntityState, EntityAdapter, Update } from './models';
