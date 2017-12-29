@@ -185,7 +185,7 @@ The functions returned by the `createSelector` and `createFeatureSelector` metho
 // app.component.ts
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import * as fromRoot from './reducers';
 
@@ -199,7 +199,7 @@ class MyAppComponent {
   counter: Observable<number>;
 
   constructor(private store: Store<fromRoot.AppState>){
-    this.counter = store.select(fromRoot.selectFeatureCount);
+    this.counter = store.pipe(select(fromRoot.selectFeatureCount));
   }
 }
 ```

@@ -13,7 +13,6 @@ Install @ngrx/entity from npm:
 
 `npm install @ngrx/entity --save` OR `yarn add @ngrx/entity`
 
-
 ### Nightly builds
 
 `npm install github:ngrx/entity-builds` OR `yarn add github:ngrx/entity-builds`

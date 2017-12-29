@@ -21,15 +21,15 @@ During the navigation, before any guards or resolvers run, the router will dispa
  * Payload of ROUTER_NAVIGATION.
  */
 export declare type RouterNavigationPayload<T> = {
-    routerState: T;
-    event: RoutesRecognized;
+  routerState: T;
+  event: RoutesRecognized;
 };
 /**
  * An action dispatched when the router navigates.
  */
 export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
-    type: typeof ROUTER_NAVIGATION;
-    payload: RouterNavigationPayload<T>;
+  type: typeof ROUTER_NAVIGATION;
+  payload: RouterNavigationPayload<T>;
 };
 ```
 
@@ -43,7 +43,7 @@ export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
 
 ```ts
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import { App } from './app.component';
+import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
@@ -52,9 +52,9 @@ import { App } from './app.component';
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule.forRoot()
   ],
-  bootstrap: [App]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```

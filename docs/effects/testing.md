@@ -4,8 +4,7 @@
 
 ### provideMockActions
 Provides a mock test provider of the `Actions` Observable for testing effects. This works well with writing
-marble tests and tests using the `subscribe` method on an Observable. The mock Actions will deliver a new Observable
-to subscribe to for each test.
+marble tests and tests using the `subscribe` method on an Observable. The mock Actions will deliver a new Observable to subscribe to for each test.
 
 Details on marble tests and their syntax, as shown in the `hot` and `cold` methods, can be found in [Writing Marble Tests](https://github.com/ReactiveX/rxjs/blob/master/doc/writing-marble-tests.md).
 

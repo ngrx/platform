@@ -71,10 +71,10 @@ export class AppModule {}
 ```
 
 
-You can then inject the `Store` service into your components and services. Use `store.select` to _select_ slice(s) of state:
+You can then inject the `Store` service into your components and services. Use `select` operator to _select_ slice(s) of state:
 
 ```ts
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { INCREMENT, DECREMENT, RESET } from './counter';
 
@@ -96,7 +96,7 @@ export class MyAppComponent {
   counter: Observable<number>;
 
   constructor(private store: Store<AppState>) {
-    this.counter = store.select('counter');
+    this.counter = store.pipe(select('counter'));
   }
 
   increment(){
