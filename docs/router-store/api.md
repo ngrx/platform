@@ -52,29 +52,34 @@ store.dispatch(new RouterActions.Forward());
 ## Effects
 
 ```ts
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
+import { map, tap } from 'rxjs/operators';
 import * as RouterActions from './actions/router';
 
 @Injectable()
 export class RouterEffects {
   @Effect({ dispatch: false })
-  navigate$ = this.actions$.ofType(RouterActions.GO)
-    .map((action: RouterActions.Go) => action.payload)
-    .do(({ path, query: queryParams, extras})
-      => this.router.navigate(path, { queryParams, ...extras }));
+  navigate$ = this.actions$.pipe(
+    ofType(RouterActions.GO),
+    map((action: RouterActions.Go) => action.payload),
+    tap(({ path, query: queryParams, extras})
+      => this.router.navigate(path, { queryParams, ...extras }))
+  )
 
   @Effect({ dispatch: false })
-  navigateBack$ = this.actions$.ofType(RouterActions.BACK)
-    .do(() => this.location.back());
+  navigateBack$ = this.actions$.pipe(
+    ofType(RouterActions.BACK),
+    tap(() => this.location.back())
+  );
 
   @Effect({ dispatch: false })
-  navigateForward$ = this.actions$.ofType(RouterActions.FORWARD)
-    .do(() => this.location.forward());
+  navigateForward$ = this.actions$.pipe(
+    ofType(RouterActions.FORWARD),
+    tap(() => this.location.forward())
+  );
 
   constructor(
     private actions$: Actions,
@@ -83,6 +88,7 @@ export class RouterEffects {
   ) {}
 }
 ```
+
 ## Custom Router State Serializer
 
 During each navigation cycle, a `RouterNavigationAction` is dispatched with a snapshot of the state in its payload, the `RouterStateSnapshot`. The `RouterStateSnapshot` is a large complex structure, containing many pieces of information about the current state and what's rendered by the router. This can cause performance

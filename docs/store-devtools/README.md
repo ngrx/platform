@@ -7,11 +7,9 @@ Install @ngrx/store-devtools from npm:
 
 `npm install @ngrx/store-devtools --save` OR `yarn add @ngrx/store-devtools`
 
-
 ### Nightly builds
 
 `npm install github:ngrx/store-devtools-builds` OR `yarn add github:ngrx/store-devtools-builds`
-
 
 ## Instrumentation
 ### Instrumentation with the Chrome / Firefox Extension
@@ -22,20 +20,23 @@ Install @ngrx/store-devtools from npm:
 
 ```ts
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment'; // Angular CLI environemnt
 
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
-    // Note that you must instrument after importing StoreModule (config is optional)
-    StoreDevtoolsModule.instrument({
-      maxAge: 25 //  Retains last 25 states
-    })
+    // Instrumentation must be imported after importing StoreModule (config is optional)
+    !environment.production ?
+      StoreDevtoolsModule.instrument({
+        maxAge: 25 // Retains last 25 states
+      })
+      : [],
   ]
 })
 export class AppModule { }
 ```
 
-### Available options
+### Instrumentation options
 When you call the instrumentation, you can give an optional configuration object:
 
 #### `maxAge`

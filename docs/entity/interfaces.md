@@ -6,8 +6,8 @@ The Entity State is a predefined generic interface for a given entity collection
 
 ```ts
 interface EntityState<V> {
-  ids: string[];
-  entities: { [id: string]: V };
+  ids: string[] | number[];
+  entities: { [id: string | id: number]: V };
 }
 ```
 

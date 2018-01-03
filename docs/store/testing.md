@@ -10,7 +10,7 @@ Use the `StoreModule.forRoot` in your `TestBed` configuration when testing compo
 my-component.ts
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import * as Data from '../actions/data';
 
@@ -23,7 +23,7 @@ import * as Data from '../actions/data';
   `,
 })
 export class MyComponent implements OnInit {
-  items$ = this.store.select(fromFeature.selectFeatureItems);
+  items$ = this.store.pipe(select(fromFeature.selectFeatureItems));
 
   constructor(private store: Store<fromFeature.State>) {}
 
