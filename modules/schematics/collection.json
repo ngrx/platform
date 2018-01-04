@@ -1,6 +1,7 @@
 {
   "schematics": {
     "action": {
+      "aliases": [ "a" ],
       "factory": "./src/action",
       "schema": "./src/action/schema.json",
       "description": "Add store actions"
@@ -17,6 +18,7 @@
     },
 
     "container": {
+      "aliases": [ "co" ],
       "factory": "./src/container",
       "schema": "./src/container/schema.json",
       "description": "Add store container component"
@@ -51,7 +53,7 @@
       "factory": "./src/feature",
       "schema": "./src/feature/schema.json",
       "description": "Add feature state"
-    },    
+    },
 
     "guard": {
       "aliases": [ "g" ],
@@ -85,6 +87,7 @@
     },
 
     "store": {
+      "aliases": [ "st" ],
       "factory": "./src/store",
       "schema": "./src/store/schema.json",
       "description": "Adds initial setup for state managment"
