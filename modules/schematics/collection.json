@@ -1,6 +1,7 @@
 {
   "schematics": {
     "action": {
+      "aliases": [ "a" ],
       "factory": "./src/action",
       "schema": "./src/action/schema.json",
       "description": "Add store actions"
@@ -17,6 +18,7 @@
     },
 
     "container": {
+      "aliases": [ "co" ],
       "factory": "./src/container",
       "schema": "./src/container/schema.json",
       "description": "Add store container component"
@@ -86,6 +88,7 @@
     },
 
     "store": {
+      "aliases": [ "st" ],
       "factory": "./src/store",
       "schema": "./src/store/schema.json",
       "description": "Adds initial setup for state managment"
