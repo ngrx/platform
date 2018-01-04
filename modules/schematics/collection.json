@@ -51,7 +51,7 @@
       "factory": "./src/feature",
       "schema": "./src/feature/schema.json",
       "description": "Add feature state"
-    },    
+    },
 
     "guard": {
       "aliases": [ "g" ],
@@ -74,6 +74,7 @@
     },
 
     "reducer": {
+      "aliases": [ "r" ],
       "factory": "./src/reducer",
       "schema": "./src/reducer/schema.json",
       "description": "Add state reducer"
