@@ -17,4 +17,5 @@ export default createBuilder([
   ['Copying documents', tasks.copyDocs],
   ['Copying package.json files', tasks.copyPackageJsonFiles],
   ['Removing "./dist/packages" Folder', tasks.removePackagesFolder],
+  ['Removing summary files', tasks.removeSummaryFiles],
 ]);

@@ -6,7 +6,6 @@
     "precommit": "lint-staged",
     "bootstrap": "lerna bootstrap",
     "build": "ts-node ./build/index.ts",
-    "postbuild": "rimraf **/dist/**/*.ngsummary.json",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc yarn run test:unit",
