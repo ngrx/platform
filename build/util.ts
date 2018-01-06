@@ -39,7 +39,7 @@ export function writeFile(target: string, contents: string) {
 
 export function getListOfFiles(
   globPath: string,
-  exclude?: string
+  exclude?: string | string[]
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const options = exclude ? { ignore: exclude } : {};

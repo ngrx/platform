@@ -59,10 +59,11 @@ export async function bundleFesms(config: Config) {
   const pkgs = util.getAllPackages(config);
 
   await mapAsync(pkgs, async pkg => {
-    if (!util.shouldBundle(config, pkg)) {
+    const topLevelName = util.getTopLevelName(pkg);
+
+    if (!util.shouldBundle(config, topLevelName)) {
       return;
     }
-    const topLevelName = util.getTopLevelName(pkg);
 
     await util.exec('rollup', [
       `-i ./dist/packages/${pkg}/index.js`,
@@ -84,10 +85,11 @@ export async function downLevelFesmsToES5(config: Config) {
   const tscArgs = ['--target es5', '--module es2015', '--noLib', '--sourceMap'];
 
   await mapAsync(packages, async pkg => {
-    if (!util.shouldBundle(config, pkg)) {
+    const topLevelName = util.getTopLevelName(pkg);
+
+    if (!util.shouldBundle(config, topLevelName)) {
       return;
     }
-    const topLevelName = util.getTopLevelName(pkg);
 
     const file = `./dist/${topLevelName}/${config.scope}/${pkg}.js`;
     const target = `./dist/${topLevelName}/${config.scope}/${pkg}.es5.ts`;
@@ -106,10 +108,12 @@ export async function downLevelFesmsToES5(config: Config) {
  */
 export async function createUmdBundles(config: Config) {
   await mapAsync(util.getAllPackages(config), async pkg => {
-    if (!util.shouldBundle(config, pkg)) {
+    const topLevelName = util.getTopLevelName(pkg);
+
+    if (!util.shouldBundle(config, topLevelName)) {
       return;
     }
-    const topLevelName = util.getTopLevelName(pkg);
+
     const destinationName = util.getDestinationName(pkg);
 
     const rollupArgs = [`-c ./modules/${pkg}/rollup.config.js`, `--sourcemap`];
@@ -142,7 +146,10 @@ export async function cleanJavaScriptFiles(config: Config) {
     .getTopLevelPackages(config)
     .filter(pkg => !util.shouldBundle(config, pkg));
   const jsFilesGlob = './dist/packages/**/*.js';
-  const jsExcludeFilesFlob = './dist/packages/(bundles|@ngrx)/**/*.js';
+  const jsExcludeFilesFlob = [
+    './dist/packages/(bundles|@ngrx)/**/*.js',
+    './dist/**/((?-)testing)/**/*.js',
+  ];
   const filesToRemove = await util.getListOfFiles(
     jsFilesGlob,
     jsExcludeFilesFlob
@@ -161,9 +168,12 @@ export async function cleanJavaScriptFiles(config: Config) {
  */
 export async function renamePackageEntryFiles(config: Config) {
   await mapAsync(util.getAllPackages(config), async pkg => {
-    if (!util.shouldBundle(config, pkg)) {
+    const topLevelName = util.getTopLevelName(pkg);
+
+    if (!util.shouldBundle(config, topLevelName)) {
       return;
     }
+
     const bottomLevelName = util.getBottomLevelName(pkg);
 
     const files = await util.getListOfFiles(`./dist/packages/${pkg}/index.**`);
@@ -213,10 +223,12 @@ export async function minifyUmdBundles(config: Config) {
   const uglifyArgs = ['-c', '-m', '--comments'];
 
   await mapAsync(util.getAllPackages(config), async pkg => {
-    if (!util.shouldBundle(config, pkg)) {
+    const topLevelName = util.getTopLevelName(pkg);
+
+    if (!util.shouldBundle(config, topLevelName)) {
       return;
     }
-    const topLevelName = util.getTopLevelName(pkg);
+
     const destinationName = util.getDestinationName(pkg);
     const file = `./dist/${topLevelName}/bundles/${destinationName}.umd.js`;
     const out = `./dist/${topLevelName}/bundles/${destinationName}.umd.min.js`;
@@ -266,6 +278,13 @@ export async function copyPackageJsonFiles(config: Config) {
  */
 export async function removePackagesFolder(config: Config) {
   await util.removeRecursively('./dist/packages');
+}
+
+/**
+ * Removes the ngsummary files
+ */
+export function removeSummaryFiles() {
+  return util.exec('rimraf', ['**/dist/**/*.ngsummary.json']);
 }
 
 /**
