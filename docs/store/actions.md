@@ -25,7 +25,7 @@ Use strongly typed actions to take advantage of TypeScript's compile-time checki
 // counter.actions.ts
 import { Action } from '@ngrx/store';
 
-export enum CounterActionTypes = {
+export enum CounterActionTypes {
   INCREMENT = '[Counter] Increment',
   DECREMENT = '[Counter] Decrement',
   RESET = '[Counter] Reset'
