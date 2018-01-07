@@ -64,7 +64,7 @@ import { counterReducer } from './counter';
 @NgModule({
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ counter: counterReducer })
+    StoreModule.forRoot({ count: counterReducer })
   ]
 })
 export class AppModule {}
@@ -79,24 +79,24 @@ import { Observable } from 'rxjs/Observable';
 import { INCREMENT, DECREMENT, RESET } from './counter';
 
 interface AppState {
-  counter: number;
+  count: number;
 }
 
 @Component({
   selector: 'my-app',
   template: `
     <button (click)="increment()">Increment</button>
-    <div>Current Count: {{ counter | async }}</div>
+    <div>Current Count: {{ count$ | async }}</div>
     <button (click)="decrement()">Decrement</button>
 
     <button (click)="reset()">Reset Counter</button>
   `
 })
 export class MyAppComponent {
-  counter: Observable<number>;
+  count$: Observable<number>;
 
   constructor(private store: Store<AppState>) {
-    this.counter = store.pipe(select('counter'));
+    this.count$ = store.pipe(select('count'));
   }
 
   increment(){
