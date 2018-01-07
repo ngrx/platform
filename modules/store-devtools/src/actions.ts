@@ -8,6 +8,7 @@ export const SWEEP = 'SWEEP';
 export const TOGGLE_ACTION = 'TOGGLE_ACTION';
 export const SET_ACTIONS_ACTIVE = 'SET_ACTIONS_ACTIVE';
 export const JUMP_TO_STATE = 'JUMP_TO_STATE';
+export const JUMP_TO_ACTION = 'JUMP_TO_ACTION';
 export const IMPORT_STATE = 'IMPORT_STATE';
 
 export class PerformAction implements Action {
@@ -67,6 +68,12 @@ export class JumpToState implements Action {
   constructor(public index: number) {}
 }
 
+export class JumpToAction implements Action {
+  readonly type = JUMP_TO_ACTION;
+
+  constructor(public actionId: number) {}
+}
+
 export class ImportState implements Action {
   readonly type = IMPORT_STATE;
 
@@ -82,4 +89,5 @@ export type All =
   | ToggleAction
   | SetActionsActive
   | JumpToState
+  | JumpToAction
   | ImportState;

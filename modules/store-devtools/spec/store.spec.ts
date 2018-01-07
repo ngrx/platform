@@ -259,6 +259,16 @@ describe('Store Devtools', () => {
       expect(getState()).toBe(2);
     });
 
+    it('should jump to action', () => {
+      store.dispatch({ type: 'INCREMENT' });
+      store.dispatch({ type: 'DECREMENT' });
+      store.dispatch({ type: 'INCREMENT' });
+      expect(getState()).toBe(1);
+
+      devtools.jumpToAction(2);
+      expect(getState()).toBe(0);
+    });
+
     it('should replace the reducer and preserve previous states', () => {
       store.dispatch({ type: 'INCREMENT' });
       store.dispatch({ type: 'DECREMENT' });
