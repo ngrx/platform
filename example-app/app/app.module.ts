@@ -45,7 +45,13 @@ import { environment } from '../environments/environment';
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot({
+      /*
+        They stateKey defines the name of the state used by the router-store reducer.
+        This matches the key defined in the map of reducers
+      */
+      stateKey: 'router',
+    }),
 
     /**
      * Store devtools instrument the store retaining past versions of state

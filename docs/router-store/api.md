@@ -96,7 +96,7 @@ issues when used with the Store Devtools. In most cases, you may only need a pie
 
 Additionally, the router state snapshot is a mutable object, which can cause issues when developing with [store freeze](https://github.com/brandonroberts/ngrx-store-freeze) to prevent direct state mutations. This can be avoided by using a custom serializer.
 
-To use the time-traveling debugging in the Devtools, you must return an object containing the `url` when using the `routerReducer`.
+**NOTE**: To use the time-traveling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
 
 ```ts
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
@@ -115,19 +115,19 @@ export interface RouterStateUrl {
 }
 
 export interface State {
-  routerReducer: RouterReducerState<RouterStateUrl>;
+  router: RouterReducerState<RouterStateUrl>;
 }
 
 export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     let route = routerState.root;
+
     while (route.firstChild) {
       route = route.firstChild;
     }
 
-    const { url } = routerState;
-    const queryParams = routerState.root.queryParams;
-    const params = route.params;
+    const { url, root: { queryParams } } = routerState;
+    const { params } = route;
 
     // Only return an object including the URL, params and query params
     // instead of the entire snapshot
@@ -136,7 +136,7 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  routerReducer: routerReducer
+  router: routerReducer
 };
 
 @NgModule({
@@ -145,7 +145,9 @@ export const reducers: ActionReducerMap<State> = {
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router'
+    })
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: CustomSerializer }
