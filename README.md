@@ -22,6 +22,9 @@ Reactive libraries for Angular
 ## Migration
 - [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
 
+## Events
+Join us at ngATL in Atlanta, Georgia on January 30 - February 2. [Read here to learn more](http://ng-atl.org/) or [use this special offer to buy one ticket and get another free](https://t.co/2071F6VvbV)
+
 ## News
 - [Official editor on Medium](https://medium.com/ngrx)
 
