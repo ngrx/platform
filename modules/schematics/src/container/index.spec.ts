@@ -263,4 +263,18 @@ describe('Container Schematic', () => {
       /import { FooComponent } from '.\/foo\/foo.component/
     );
   });
+
+  it('should respect the state option if not provided', () => {
+    const options = { ...defaultOptions, state: undefined };
+    const tree = schematicRunner.runSchematic('container', options, appTree);
+    const content = getFileContent(tree, '/src/app/foo/foo.component.ts');
+    expect(content).not.toMatch(/import \* as fromStore/);
+  });
+
+  it('should import the state path if provided', () => {
+    const options = { ...defaultOptions, state: 'reducers' };
+    const tree = schematicRunner.runSchematic('container', options, appTree);
+    const content = getFileContent(tree, '/src/app/foo/foo.component.ts');
+    expect(content).toMatch(/import \* as fromStore from '..\/reducers';/);
+  });
 });

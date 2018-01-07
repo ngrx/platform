@@ -123,13 +123,18 @@ export default function(options: ContainerOptions): Rule {
     options.path = options.path ? normalize(options.path) : options.path;
     options.module = findModuleFromOptions(host, options);
 
-    const statePath = `/${options.sourceDir}/${options.path}/${options.state}`;
     const componentPath =
       `/${options.sourceDir}/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.component';
-    options.state = buildRelativePath(componentPath, statePath);
+
+    if (options.state) {
+      const statePath = `/${options.sourceDir}/${options.path}/${
+        options.state
+      }`;
+      options.state = buildRelativePath(componentPath, statePath);
+    }
 
     const templateSource = apply(url('./files'), [
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
