@@ -259,6 +259,14 @@ export function liftReducerWith(
         minInvalidatedStateIndex = Infinity;
         break;
       }
+      case Actions.JUMP_TO_ACTION: {
+        // Jumps to a corresponding state to a specific action.
+        // Useful when filtering actions.
+        const index = stagedActionIds.indexOf(liftedAction.actionId);
+        if (index !== -1) currentStateIndex = index;
+        minInvalidatedStateIndex = Infinity;
+        break;
+      }
       case Actions.SWEEP: {
         // Forget any actions that are currently being skipped.
         stagedActionIds = difference(stagedActionIds, skippedActionIds);

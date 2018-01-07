@@ -133,6 +133,10 @@ export class StoreDevtools implements Observer<any> {
     this.dispatch(new Actions.ToggleAction(id));
   }
 
+  jumpToAction(actionId: number) {
+    this.dispatch(new Actions.JumpToAction(actionId));
+  }
+
   jumpToState(index: number) {
     this.dispatch(new Actions.JumpToState(index));
   }
