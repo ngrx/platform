@@ -1,3 +1,7 @@
+---
+# [Click here for documentation for the latest release (4.1.1)](https://github.com/ngrx/platform/blob/v4.1.1/example-app/README.md)
+---
+
 # @ngrx example application
 
 Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
