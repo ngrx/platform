@@ -102,8 +102,26 @@ import { AdminEffects } from './effects/admin.effects';
 })
 export class AdminModule {}
 ```
+## Effects that use State
+Since the store and any selections of it are just observables, to use them in effects you can merge them in. There are many ways to do this, below is just one using `withLatestFrom`. The key here is that you inject the Store into the Class containing effects. 
 
-## API Documentation
+```ts
+...
+import 'rxjs/add/operator/withLatestFrom';
+...
+class SomeEffects {
+@Effect() someEffect$ = this.actions$
+    .ofType(SomeActions.SOME_ACTION)
+    .withLatestFrom(this.state$) # merging state in
+    .map(([action, state]) => state.search.query)
+... 
+
+constructor(private actions$: Actions,
+            private state$: Store<AppState>) { }
+}
+```
+
+## APIDocumentation
 - [Controlling Effects](./api.md#controlling-effects)
 - [Filtering Actions](./api.md#oftype)
 - [Non-dispatching effects](./api.md#non-dispatching-effects)
