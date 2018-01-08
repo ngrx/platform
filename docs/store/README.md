@@ -1,3 +1,7 @@
+---
+# [Click here for documentation for the latest release (4.1.1)](https://github.com/ngrx/platform/blob/v4.1.1/docs/store/README.md)
+---
+
 # @ngrx/store
 
 RxJS powered state management for Angular applications, inspired by Redux
@@ -13,11 +17,11 @@ These core principles enable building components that can use the `OnPush` chang
 giving you [intelligent, performant change detection](http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html#smarter-change-detection)
 throughout your application.
 
+
 ### Installation
 Install @ngrx/store from npm:
 
 `npm install @ngrx/store --save` OR `yarn add @ngrx/store`
-
 
 ### Nightly builds
 
