@@ -8,16 +8,15 @@ import { concat } from 'rxjs/observable/concat';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Notification } from 'rxjs/Notification';
-import { Injectable } from '@angular/core';
+import { ErrorHandler, Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { EffectNotification, verifyOutput } from './effect_notification';
 import { getSourceForInstance } from './effects_metadata';
 import { resolveEffectSource } from './effects_resolver';
-import { ErrorReporter } from './error_reporter';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
-  constructor(private errorReporter: ErrorReporter) {
+  constructor(private errorHandler: ErrorHandler) {
     super();
   }
 
@@ -37,7 +36,7 @@ export class EffectSources extends Subject<any> {
             map.call(
               exhaustMap.call(source$, resolveEffectSource),
               (output: EffectNotification) => {
-                verifyOutput(output, this.errorReporter);
+                verifyOutput(output, this.errorHandler);
 
                 return output.notification;
               }

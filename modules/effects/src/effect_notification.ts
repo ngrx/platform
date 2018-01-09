@@ -1,11 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Notification } from 'rxjs/Notification';
 import { Action } from '@ngrx/store';
-import {
-  ErrorReporter,
-  EffectError,
-  InvalidActionError,
-} from './error_reporter';
+import { ErrorHandler } from '@angular/core';
 
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);
@@ -17,49 +13,34 @@ export interface EffectNotification {
 
 export function verifyOutput(
   output: EffectNotification,
-  reporter: ErrorReporter
+  reporter: ErrorHandler
 ) {
   reportErrorThrown(output, reporter);
   reportInvalidActions(output, reporter);
 }
 
-function reportErrorThrown(
-  output: EffectNotification,
-  reporter: ErrorReporter
-) {
+function reportErrorThrown(output: EffectNotification, reporter: ErrorHandler) {
   if (output.notification.kind === 'E') {
-    const errorReason = new Error(
-      `Effect ${getEffectName(output)} threw an error`
-    ) as EffectError;
-
-    errorReason.Source = output.sourceInstance;
-    errorReason.Effect = output.effect;
-    errorReason.Error = output.notification.error;
-    errorReason.Notification = output.notification;
-
-    reporter.handleError(errorReason);
+    reporter.handleError(output.notification.error);
   }
 }
 
 function reportInvalidActions(
   output: EffectNotification,
-  reporter: ErrorReporter
+  reporter: ErrorHandler
 ) {
   if (output.notification.kind === 'N') {
     const action = output.notification.value;
     const isInvalidAction = !isAction(action);
 
     if (isInvalidAction) {
-      const errorReason = new Error(
-        `Effect ${getEffectName(output)} dispatched an invalid action`
-      ) as InvalidActionError;
-
-      errorReason.Source = output.sourceInstance;
-      errorReason.Effect = output.effect;
-      errorReason.Dispatched = action;
-      errorReason.Notification = output.notification;
-
-      reporter.handleError(errorReason);
+      reporter.handleError(
+        new Error(
+          `Effect ${getEffectName(output)} dispatched an invalid action: ${
+            action
+          }`
+        )
+      );
     }
   }
 }

@@ -9,4 +9,3 @@ export const ROOT_EFFECTS = new InjectionToken<Type<any>[]>(
 export const FEATURE_EFFECTS = new InjectionToken<any[][]>(
   'ngrx/effects: Feature Effects'
 );
-export const CONSOLE = new InjectionToken<Console>('Browser Console');
