@@ -4,147 +4,131 @@ import {
   SchematicContext,
   SchematicsException,
   Tree,
-  apply,
-  branchAndMerge,
   chain,
-  filter,
-  mergeWith,
-  move,
-  noop,
-  template,
+  externalSchematic,
+  apply,
   url,
+  noop,
+  filter,
+  template,
+  move,
+  branchAndMerge,
+  mergeWith,
 } from '@angular-devkit/schematics';
-import 'rxjs/add/operator/merge';
 import * as ts from 'typescript';
+import * as fs from 'fs';
+import * as path from 'path';
 import * as stringUtils from '../strings';
-import {
-  addDeclarationToModule,
-  addExportToModule,
-} from '../utility/ast-utils';
-import { InsertChange } from '../utility/change';
-import {
-  buildRelativePath,
-  findModuleFromOptions,
-} from '../utility/find-module';
-import { Schema as ContainerOptions } from './schema';
+import { Schema as FeatureOptions } from './schema';
+import { buildRelativePath } from '../utility/find-module';
+import { NoopChange, InsertChange, ReplaceChange } from '../utility/change';
+import { insertImport } from '../utility/route-utils';
+import { omit } from '../utility/ngrx-utils';
 
-function addDeclarationToNgModule(options: ContainerOptions): Rule {
+function addStateToComponent(options: FeatureOptions) {
   return (host: Tree) => {
-    if (options.skipImport || !options.module) {
+    if (!options.state && !options.stateInterface) {
       return host;
     }
 
-    const modulePath = options.module;
-    const text = host.read(modulePath);
-    if (text === null) {
-      throw new SchematicsException(`File ${modulePath} does not exist.`);
+    const statePath = `/${options.sourceDir}/${options.path}/${options.state}`;
+
+    if (options.state) {
+      if (!host.exists(statePath)) {
+        throw new Error('Specified state path does not exist');
+      }
     }
+
+    const componentPath =
+      `/${options.sourceDir}/${options.path}/` +
+      (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
+      stringUtils.dasherize(options.name) +
+      '.component.ts';
+
+    const text = host.read(componentPath);
+
+    if (text === null) {
+      throw new SchematicsException(`File ${componentPath} does not exist.`);
+    }
+
     const sourceText = text.toString('utf-8');
+
     const source = ts.createSourceFile(
-      modulePath,
+      componentPath,
       sourceText,
       ts.ScriptTarget.Latest,
       true
     );
 
-    const componentPath =
-      `/${options.sourceDir}/${options.path}/` +
-      (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
-      stringUtils.dasherize(options.name) +
-      '.component';
-    const relativePath = buildRelativePath(modulePath, componentPath);
-    const classifiedName = stringUtils.classify(`${options.name}Component`);
-    const declarationChanges = addDeclarationToModule(
-      source,
-      modulePath,
-      classifiedName,
-      relativePath
+    const stateImportPath = buildRelativePath(componentPath, statePath);
+    const stateImport = options.state
+      ? insertImport(
+          source,
+          componentPath,
+          `* as fromStore`,
+          stateImportPath,
+          true
+        )
+      : new NoopChange();
+
+    const componentClass = source.statements.find(
+      stm => stm.kind === ts.SyntaxKind.ClassDeclaration
+    );
+    const component = componentClass as ts.ClassDeclaration;
+    const componentConstructor = component.members.find(
+      member => member.kind === ts.SyntaxKind.Constructor
+    );
+    const cmpCtr = componentConstructor as ts.ConstructorDeclaration;
+    const { pos } = cmpCtr;
+    const stateType = options.state
+      ? `fromStore.${options.stateInterface}`
+      : 'any';
+    const constructorText = cmpCtr.getText();
+    const [start, end] = constructorText.split('()');
+    const storeText = `private store: Store<${stateType}>`;
+    const storeConstructor = [start, `(${storeText})`, end].join('');
+    const constructorUpdate = new ReplaceChange(
+      componentPath,
+      pos,
+      `  ${constructorText}`,
+      `\n\n  ${storeConstructor}`
     );
 
-    const declarationRecorder = host.beginUpdate(modulePath);
-    for (const change of declarationChanges) {
+    const changes = [stateImport, constructorUpdate];
+    const recorder = host.beginUpdate(componentPath);
+
+    for (const change of changes) {
       if (change instanceof InsertChange) {
-        declarationRecorder.insertLeft(change.pos, change.toAdd);
+        recorder.insertLeft(change.pos, change.toAdd);
+      } else if (change instanceof ReplaceChange) {
+        recorder.remove(pos, change.oldText.length);
+        recorder.insertLeft(change.order, change.newText);
       }
     }
-    host.commitUpdate(declarationRecorder);
 
-    if (options.export) {
-      // Need to refresh the AST because we overwrote the file in the host.
-      const text = host.read(modulePath);
-      if (text === null) {
-        throw new SchematicsException(`File ${modulePath} does not exist.`);
-      }
-      const sourceText = text.toString('utf-8');
-      const source = ts.createSourceFile(
-        modulePath,
-        sourceText,
-        ts.ScriptTarget.Latest,
-        true
-      );
-
-      const exportRecorder = host.beginUpdate(modulePath);
-      const exportChanges = addExportToModule(
-        source,
-        modulePath,
-        stringUtils.classify(`${options.name}Component`),
-        relativePath
-      );
-
-      for (const change of exportChanges) {
-        if (change instanceof InsertChange) {
-          exportRecorder.insertLeft(change.pos, change.toAdd);
-        }
-      }
-      host.commitUpdate(exportRecorder);
-    }
+    host.commitUpdate(recorder);
 
     return host;
   };
 }
 
-function buildSelector(options: ContainerOptions) {
-  let selector = stringUtils.dasherize(options.name);
-  if (options.prefix) {
-    selector = `${options.prefix}-${selector}`;
-  }
-
-  return selector;
-}
-
-export default function(options: ContainerOptions): Rule {
-  const sourceDir = options.sourceDir;
-  if (!sourceDir) {
-    throw new SchematicsException(`sourceDir option is required.`);
-  }
-
+export default function(options: FeatureOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
-    options.selector = options.selector || buildSelector(options);
-    options.path = options.path ? normalize(options.path) : options.path;
-    options.module = findModuleFromOptions(host, options);
+    const sourceDir = options.sourceDir;
 
-    const componentPath =
-      `/${options.sourceDir}/${options.path}/` +
-      (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
-      stringUtils.dasherize(options.name) +
-      '.component';
-
-    if (options.state) {
-      const statePath = `/${options.sourceDir}/${options.path}/${
-        options.state
-      }`;
-      options.state = buildRelativePath(componentPath, statePath);
+    if (!sourceDir) {
+      throw new SchematicsException(`sourceDir option is required.`);
     }
+
+    const opts = ['state', 'stateInterface'].reduce((current, key) => {
+      return omit(current, key as any);
+    }, options);
 
     const templateSource = apply(url('./files'), [
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
-      options.inlineStyle
-        ? filter(path => !path.endsWith('.__styleext__'))
-        : noop(),
-      options.inlineTemplate ? filter(path => !path.endsWith('.html')) : noop(),
       template({
-        ...stringUtils,
         'if-flat': (s: string) => (options.flat ? '' : s),
+        ...stringUtils,
         ...(options as object),
         dot: () => '.',
       }),
@@ -152,9 +136,12 @@ export default function(options: ContainerOptions): Rule {
     ]);
 
     return chain([
-      branchAndMerge(
-        chain([addDeclarationToNgModule(options), mergeWith(templateSource)])
-      ),
+      externalSchematic('@schematics/angular', 'component', {
+        ...opts,
+        spec: false,
+      }),
+      addStateToComponent(options),
+      mergeWith(templateSource),
     ])(host, context);
   };
 }

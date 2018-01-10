@@ -106,8 +106,8 @@ export class ReplaceChange implements Change {
   constructor(
     public path: string,
     private pos: number,
-    private oldText: string,
-    private newText: string
+    public oldText: string,
+    public newText: string
   ) {
     if (pos < 0) {
       throw new Error('Negative positions are invalid');
