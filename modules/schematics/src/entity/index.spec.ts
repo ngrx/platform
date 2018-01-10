@@ -31,6 +31,17 @@ describe('Entity Schematic', () => {
     expect(tree.files[2]).toEqual('/src/app/foo.reducer.ts');
   });
 
+  it('should create a folder if flat is false', () => {
+    const tree = schematicRunner.runSchematic('entity', {
+      ...defaultOptions,
+      flat: false,
+    });
+    expect(tree.files.length).toEqual(3);
+    expect(tree.files[0]).toEqual('/src/app/foo/foo.actions.ts');
+    expect(tree.files[1]).toEqual('/src/app/foo/foo.model.ts');
+    expect(tree.files[2]).toEqual('/src/app/foo/foo.reducer.ts');
+  });
+
   it('should create 4 files if spec is true', () => {
     const options = {
       ...defaultOptions,
