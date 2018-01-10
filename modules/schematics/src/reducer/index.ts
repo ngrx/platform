@@ -57,7 +57,12 @@ export default function(options: ReducerOptions): Rule {
     ]);
 
     return chain([
-      addReducerToState(options),
+      branchAndMerge(
+        chain([
+          filter(path => !path.includes('node_modules')),
+          addReducerToState(options),
+        ])
+      ),
       branchAndMerge(
         chain([
           filter(

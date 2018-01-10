@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { <%= classify(name) %>Component } from './<%= dasherize(name) %>.component';
 import { Store, StoreModule } from '@ngrx/store';
