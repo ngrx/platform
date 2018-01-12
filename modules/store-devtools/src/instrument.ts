@@ -84,10 +84,16 @@ export function createConfig(
     stateSanitizer: noStateSanitizer,
     name: DEFAULT_NAME,
     serialize: false,
+    logOnly: false,
+    features: false,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
-  const config = Object.assign({}, DEFAULT_OPTIONS, options);
+  const logOnly = options.logOnly
+    ? { pause: true, export: true, test: true }
+    : false;
+  const features = options.features || logOnly;
+  const config = Object.assign({}, DEFAULT_OPTIONS, { features }, options);
 
   if (config.maxAge && config.maxAge < 2) {
     throw new Error(

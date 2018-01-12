@@ -36,6 +36,8 @@ describe('DevtoolsExtension', () => {
         stateSanitizer: noStateSanitizer,
         name: 'NgRx Store DevTools',
         serialize: false,
+        logOnly: false,
+        features: false,
       };
       const action = {} as Action;
       const state = {} as LiftedState;
@@ -71,6 +73,8 @@ describe('DevtoolsExtension', () => {
         stateSanitizer: myStateSanitizer,
         name: 'ngrx-store-devtool-todolist',
         serialize: false,
+        logOnly: false,
+        features: false,
       };
       const action = {} as Action;
       const state = {} as LiftedState;
