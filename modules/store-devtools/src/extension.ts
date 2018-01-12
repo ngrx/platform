@@ -27,13 +27,18 @@ export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;
   unsubscribe(): void;
   send(action: any, state: any): void;
+  init(state?: any): void;
+}
+export interface ReduxDevtoolsExtensionConfig {
+  features?: object | boolean;
+  name: string | undefined;
+  instanceId: string;
 }
 
 export interface ReduxDevtoolsExtension {
-  connect(options: {
-    shouldStringify?: boolean;
-    instanceId: string;
-  }): ReduxDevtoolsExtensionConnection;
+  connect(
+    options: ReduxDevtoolsExtensionConfig
+  ): ReduxDevtoolsExtensionConnection;
   send(
     action: any,
     state: any,
@@ -74,7 +79,10 @@ export class DevtoolsExtension {
     return new Observable(subscriber => {
       const connection = this.devtoolsExtension.connect({
         instanceId: this.instanceId,
+        name: this.config.name,
+        features: this.config.features,
       });
+      connection.init();
 
       connection.subscribe((change: any) => subscriber.next(change));
 
