@@ -352,8 +352,12 @@ function _addSymbolToNgModuleMetadata(
       return [];
     }
 
-    const effectsModule = nodeArray.find(node =>
-      node.getText().includes('EffectsModule')
+    const effectsModule = nodeArray.find(
+      node =>
+        (node.getText().includes('EffectsModule.forRoot') &&
+          symbolName.includes('EffectsModule.forRoot')) ||
+        (node.getText().includes('EffectsModule.forFeature') &&
+          symbolName.includes('EffectsModule.forFeature'))
     );
 
     if (effectsModule && symbolName.includes('EffectsModule')) {
