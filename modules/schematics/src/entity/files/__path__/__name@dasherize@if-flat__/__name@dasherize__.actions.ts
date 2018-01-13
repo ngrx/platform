@@ -16,31 +16,31 @@ export enum <%= classify(name) %>ActionTypes {
 export class Load<%= classify(name) %>s implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>s;
 
-  constructor(public payload: { <%= lowercase(name) %>s: <%= classify(name) %>[] }) {}
+  constructor(public payload: { <%= camelize(name) %>s: <%= classify(name) %>[] }) {}
 }
 
 export class Add<%= classify(name) %> implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Add<%= classify(name) %>;
 
-  constructor(public payload: { <%= lowercase(name) %>: <%= classify(name) %> }) {}
+  constructor(public payload: { <%= camelize(name) %>: <%= classify(name) %> }) {}
 }
 
 export class Add<%= classify(name) %>s implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Add<%= classify(name) %>s;
 
-  constructor(public payload: { <%= lowercase(name) %>s: <%= classify(name) %>[] }) {}
+  constructor(public payload: { <%= camelize(name) %>s: <%= classify(name) %>[] }) {}
 }
 
 export class Update<%= classify(name) %> implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Update<%= classify(name) %>;
 
-  constructor(public payload: { <%= lowercase(name) %>: Update<<%= classify(name) %>> }) {}
+  constructor(public payload: { <%= camelize(name) %>: Update<<%= classify(name) %>> }) {}
 }
 
 export class Update<%= classify(name) %>s implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Update<%= classify(name) %>s;
 
-  constructor(public payload: { <%= lowercase(name) %>s: Update<<%= classify(name) %>>[] }) {}
+  constructor(public payload: { <%= camelize(name) %>s: Update<<%= classify(name) %>>[] }) {}
 }
 
 export class Delete<%= classify(name) %> implements Action {

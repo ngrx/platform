@@ -18,19 +18,19 @@ export function reducer(
 ): State {
   switch (action.type) {
     case <%= classify(name) %>ActionTypes.Add<%= classify(name) %>: {
-      return adapter.addOne(action.payload.<%= lowercase(classify(name)) %>, state);
+      return adapter.addOne(action.payload.<%= camelize(name) %>, state);
     }
 
     case <%= classify(name) %>ActionTypes.Add<%= classify(name) %>s: {
-      return adapter.addMany(action.payload.<%= lowercase(classify(name)) %>s, state);
+      return adapter.addMany(action.payload.<%= camelize(name) %>s, state);
     }
 
     case <%= classify(name) %>ActionTypes.Update<%= classify(name) %>: {
-      return adapter.updateOne(action.payload.<%= lowercase(classify(name)) %>, state);
+      return adapter.updateOne(action.payload.<%= camelize(name) %>, state);
     }
 
     case <%= classify(name) %>ActionTypes.Update<%= classify(name) %>s: {
-      return adapter.updateMany(action.payload.<%= lowercase(classify(name)) %>s, state);
+      return adapter.updateMany(action.payload.<%= camelize(name) %>s, state);
     }
 
     case <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>: {
@@ -42,7 +42,7 @@ export function reducer(
     }
 
     case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>s: {
-      return adapter.addAll(action.payload.<%= lowercase(classify(name)) %>s, state);
+      return adapter.addAll(action.payload.<%= camelize(name) %>s, state);
     }
 
     case <%= classify(name) %>ActionTypes.Clear<%= classify(name) %>s: {
