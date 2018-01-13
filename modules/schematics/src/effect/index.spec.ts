@@ -104,7 +104,11 @@ describe('Effect Schematic', () => {
 
   it('should add an effect to the empty array of registered effects', () => {
     const storeModule = '/src/app/store.module.ts';
-    const options = { ...defaultOptions, module: 'store.module.ts' };
+    const options = {
+      ...defaultOptions,
+      root: true,
+      module: 'store.module.ts',
+    };
     appTree = createAppModuleWithEffects(
       appTree,
       storeModule,
@@ -117,9 +121,13 @@ describe('Effect Schematic', () => {
     expect(content).toMatch(/EffectsModule\.forRoot\(\[FooEffects\]\)/);
   });
 
-  it('should add an effect to the existing registered effects', () => {
+  it('should add an effect to the existing registered root effects', () => {
     const storeModule = '/src/app/store.module.ts';
-    const options = { ...defaultOptions, module: 'store.module.ts' };
+    const options = {
+      ...defaultOptions,
+      root: true,
+      module: 'store.module.ts',
+    };
     appTree = createAppModuleWithEffects(
       appTree,
       storeModule,
@@ -131,6 +139,23 @@ describe('Effect Schematic', () => {
 
     expect(content).toMatch(
       /EffectsModule\.forRoot\(\[UserEffects, FooEffects\]\)/
+    );
+  });
+
+  it('should add an effect to the existing registered feature effects', () => {
+    const storeModule = '/src/app/store.module.ts';
+    const options = { ...defaultOptions, module: 'store.module.ts' };
+    appTree = createAppModuleWithEffects(
+      appTree,
+      storeModule,
+      `EffectsModule.forRoot([RootEffects])\n    EffectsModule.forFeature([UserEffects])`
+    );
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = getFileContent(tree, '/src/app/store.module.ts');
+
+    expect(content).toMatch(
+      /EffectsModule\.forFeature\(\[UserEffects, FooEffects\]\)/
     );
   });
 
