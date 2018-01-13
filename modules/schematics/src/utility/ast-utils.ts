@@ -352,8 +352,49 @@ function _addSymbolToNgModuleMetadata(
       return [];
     }
 
-    node = node[node.length - 1];
+    const effectsModule = nodeArray.find(node =>
+      node.getText().includes('EffectsModule')
+    );
+
+    if (effectsModule && symbolName.includes('EffectsModule')) {
+      const effectsArgs = (effectsModule as ts.CallExpression).arguments.shift();
+
+      if (
+        effectsArgs &&
+        effectsArgs.kind === ts.SyntaxKind.ArrayLiteralExpression
+      ) {
+        const effectsElements = (effectsArgs as ts.ArrayLiteralExpression)
+          .elements;
+        const [, effectsSymbol] = (<any>symbolName).match(/\[(.*)\]/);
+
+        let epos;
+        if (effectsElements.length === 0) {
+          epos = effectsArgs.getStart() + 1;
+          return [new InsertChange(ngModulePath, epos, effectsSymbol)];
+        } else {
+          const lastEffect = effectsElements[
+            effectsElements.length - 1
+          ] as ts.Expression;
+          epos = lastEffect.getEnd();
+          // Get the indentation of the last element, if any.
+          const text: any = lastEffect.getFullText(source);
+
+          let effectInsert: string;
+          if (text.match('^\r?\r?\n')) {
+            effectInsert = `,${text.match(/^\r?\n\s+/)[0]}${effectsSymbol}`;
+          } else {
+            effectInsert = `, ${effectsSymbol}`;
+          }
+
+          return [new InsertChange(ngModulePath, epos, effectInsert)];
+        }
+      } else {
+        return [];
+      }
+    }
   }
+
+  node = node[node.length - 1];
 
   let toInsert: string;
   let position = node.getEnd();
