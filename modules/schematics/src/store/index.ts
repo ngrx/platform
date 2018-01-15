@@ -66,13 +66,30 @@ function addImportToNgModule(options: ServiceOptions): Rule {
         ? `StoreModule.forRoot(reducers, { metaReducers })`
         : `StoreModule.forFeature('${stringUtils.camelize(
             options.name
-          )}', reducers, { metaReducers })`,
+          )}', from${stringUtils.classify(
+            options.name
+          )}.reducers, { metaReducers: from${stringUtils.classify(
+            options.name
+          )}.metaReducers })`,
       relativePath
     ).shift();
 
     let commonImports = [
       insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
-      insertImport(source, modulePath, 'reducers, metaReducers', relativePath),
+      options.root
+        ? insertImport(
+            source,
+            modulePath,
+            'reducers, metaReducers',
+            relativePath
+          )
+        : insertImport(
+            source,
+            modulePath,
+            `* as from${stringUtils.classify(options.name)}`,
+            relativePath,
+            true
+          ),
       storeNgModuleImport,
     ];
     let rootImports: (Change | undefined)[] = [];

@@ -26,6 +26,7 @@ export default function(options: FeatureOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     return chain([
       schematic('action', {
+        flat: options.flat,
         name: options.name,
         path: options.path,
         sourceDir: options.sourceDir,
