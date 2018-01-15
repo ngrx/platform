@@ -73,7 +73,15 @@ describe('Store Schematic', () => {
     const tree = schematicRunner.runSchematic('store', options, appTree);
     const content = getFileContent(tree, '/src/app/app.module.ts');
     expect(content).toMatch(
-      /StoreModule\.forFeature\('foo', reducers, { metaReducers }\)/
+      /StoreModule\.forFeature\('foo', fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
     );
+  });
+
+  it('should use a wildcard for a feature import ', () => {
+    const options = { ...defaultOptions, root: false, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = getFileContent(tree, '/src/app/app.module.ts');
+    expect(content).toMatch(/import \* as fromFoo from '\.\/reducers';/);
   });
 });
