@@ -138,13 +138,13 @@ export class AddUsers implements Action {
 export class UpdateUser implements Action {
   readonly type = UserActionTypes.UPDATE_USER;
 
-  constructor(public payload: { user: Update<User> }) {}
+  constructor(public payload: { id: string | number, changes: Partial<User> }) {}
 }
 
 export class UpdateUsers implements Action {
   readonly type = UserActionTypes.UPDATE_USERS;
 
-  constructor(public payload: { users: Update<User>[] }) {}
+  constructor(public payload: { id: string | number, changes: Partial<User> }[]) {}
 }
 
 export class DeleteUser implements Action {
@@ -206,11 +206,11 @@ export function reducer(
     }
 
     case UserActionTypes.UPDATE_USER: {
-      return adapter.updateOne(action.payload.user, state);
+      return adapter.updateOne(action.payload, state);
     }
 
     case UserActionTypes.UPDATE_USERS: {
-      return adapter.updateMany(action.payload.users, state);
+      return adapter.updateMany(action.payload, state);
     }
 
     case UserActionTypes.DELETE_USER: {
