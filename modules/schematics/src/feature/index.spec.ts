@@ -17,6 +17,7 @@ describe('Feature Schematic', () => {
     sourceDir: 'src',
     module: '',
     spec: true,
+    group: false,
   };
 
   it('should create all files of a feature', () => {
@@ -32,6 +33,28 @@ describe('Feature Schematic', () => {
     expect(files.indexOf('/src/app/foo.effects.ts')).toBeGreaterThanOrEqual(0);
     expect(
       files.indexOf('/src/app/foo.effects.spec.ts')
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create all files of a feature within grouped folders if group is set', () => {
+    const options = { ...defaultOptions, group: true };
+
+    const tree = schematicRunner.runSchematic('feature', options);
+    const files = tree.files;
+    expect(
+      files.indexOf('/src/app/actions/foo.actions.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/reducers/foo.reducer.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/reducers/foo.reducer.spec.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/effects/foo.effects.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/effects/foo.effects.spec.ts')
     ).toBeGreaterThanOrEqual(0);
   });
 });

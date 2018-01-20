@@ -134,10 +134,10 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.substr(1);
 }
 
-export function uppercase(str: string): string {
-  return str.toUpperCase();
+export function group(path: string, group: string | undefined) {
+  return group ? `${group}/${path}` : path;
 }
 
-export function lowercase(str: string): string {
-  return str.toLowerCase();
+export function featurePath(group: boolean | undefined, path: string) {
+  return group ? `../${path}/` : './';
 }

@@ -17,4 +17,5 @@ export interface Schema {
   module?: string;
   root?: boolean;
   feature?: boolean;
+  group?: boolean;
 }

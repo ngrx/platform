@@ -27,6 +27,7 @@ export default function(options: FeatureOptions): Rule {
     return chain([
       schematic('action', {
         flat: options.flat,
+        group: options.group,
         name: options.name,
         path: options.path,
         sourceDir: options.sourceDir,
@@ -34,6 +35,7 @@ export default function(options: FeatureOptions): Rule {
       }),
       schematic('reducer', {
         flat: options.flat,
+        group: options.group,
         module: options.module,
         name: options.name,
         path: options.path,
@@ -44,6 +46,7 @@ export default function(options: FeatureOptions): Rule {
       }),
       schematic('effect', {
         flat: options.flat,
+        group: options.group,
         module: options.module,
         name: options.name,
         path: options.path,

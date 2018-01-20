@@ -38,6 +38,7 @@ export function addReducerToState(options: ReducerOptions): Rule {
 
     const reducerPath =
       `/${options.sourceDir}/${options.path}/` +
+      (options.group ? 'reducers/' : '') +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.reducer';
@@ -216,6 +217,7 @@ export function addReducerImportToNgModule(options: ReducerOptions): Rule {
 
     const reducerPath =
       `/${options.sourceDir}/${options.path}/` +
+      (options.group ? 'reducers/' : '') +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.reducer';

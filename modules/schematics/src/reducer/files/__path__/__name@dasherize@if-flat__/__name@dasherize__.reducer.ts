@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-<% if(feature) { %>import { <%= classify(name) %>Actions, <%= classify(name) %>ActionTypes } from './<%= dasherize(name) %>.actions';<% } %>
+<% if(feature) { %>import { <%= classify(name) %>Actions, <%= classify(name) %>ActionTypes } from '<%= featurePath(group, "actions") %><%= dasherize(name) %>.actions';<% } %>
 
 export interface State {
 
