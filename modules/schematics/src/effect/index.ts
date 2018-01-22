@@ -61,8 +61,8 @@ function addImportToNgModule(options: EffectOptions): Rule {
 
     const effectsPath =
       `/${options.sourceDir}/${options.path}/` +
-      (options.group ? 'effects/' : '') +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
+      (options.group ? 'effects/' : '') +
       stringUtils.dasherize(options.name) +
       '.effects';
     const relativePath = buildRelativePath(modulePath, effectsPath);
