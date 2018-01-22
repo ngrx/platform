@@ -61,6 +61,7 @@ function addImportToNgModule(options: EffectOptions): Rule {
 
     const effectsPath =
       `/${options.sourceDir}/${options.path}/` +
+      (options.group ? 'effects/' : '') +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.effects';
@@ -108,7 +109,11 @@ export default function(options: EffectOptions): Rule {
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
       template({
         ...stringUtils,
-        'if-flat': (s: string) => (options.flat ? '' : s),
+        'if-flat': (s: string) =>
+          stringUtils.group(
+            options.flat ? '' : s,
+            options.group ? 'effects' : ''
+          ),
         ...(options as object),
         dot: () => '.',
       }),

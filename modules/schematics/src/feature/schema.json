@@ -35,6 +35,11 @@
       "type": "string",
       "description": "Specifies the reducers file.",
       "aliases": ["r"]
+    },
+    "group": {
+      "type": "boolean",
+      "default": false,
+      "description": "Group actions, reducers and effects within relative subfolders"
     }
   },
   "required": [

@@ -44,7 +44,12 @@
       "type": "boolean",
       "default": false,
       "description": "Flag to indicate if part of a feature schematic."
-    }    
+    },
+    "group": {
+      "type": "boolean",
+      "default": false,
+      "description": "Group effects file within 'effects' folder"
+    }
   },
   "required": [
     "name"

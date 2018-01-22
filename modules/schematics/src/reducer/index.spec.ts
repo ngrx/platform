@@ -89,4 +89,13 @@ describe('Reducer Schematic', () => {
 
     expect(reducers).toMatch(/foo\: fromFoo.reducer/);
   });
+
+  it('should group within a "reducers" folder if group is set', () => {
+    const tree = schematicRunner.runSchematic('reducer', {
+      ...defaultOptions,
+      group: true,
+    });
+    expect(tree.files.length).toEqual(1);
+    expect(tree.files[0]).toEqual('/src/app/reducers/foo.reducer.ts');
+  });
 });

@@ -13,6 +13,8 @@ describe('Action Schematic', () => {
     path: 'app',
     sourceDir: 'src',
     spec: false,
+    group: false,
+    flat: true,
   };
 
   it('should create one file', () => {
@@ -43,5 +45,14 @@ describe('Action Schematic', () => {
       const fileContent = fileEntry.content.toString();
       expect(fileContent).toMatch(/export enum FooActionTypes/);
     }
+  });
+
+  it('should group within an "actions" folder if group is set', () => {
+    const tree = schematicRunner.runSchematic('action', {
+      ...defaultOptions,
+      group: true,
+    });
+    expect(tree.files.length).toEqual(1);
+    expect(tree.files[0]).toEqual('/src/app/actions/foo.actions.ts');
   });
 });

@@ -49,7 +49,11 @@ export default function(options: ReducerOptions): Rule {
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
       template({
         ...stringUtils,
-        'if-flat': (s: string) => (options.flat ? '' : s),
+        'if-flat': (s: string) =>
+          stringUtils.group(
+            options.flat ? '' : s,
+            options.group ? 'reducers' : ''
+          ),
         ...(options as object),
         dot: () => '.',
       }),
