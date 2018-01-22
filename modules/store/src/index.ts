@@ -18,7 +18,12 @@ export {
 export { ScannedActionsSubject } from './scanned_actions_subject';
 export {
   createSelector,
+  createSelectorFactory,
   createFeatureSelector,
+  defaultMemoize,
+  defaultStateFn,
+  MemoizeFn,
+  MemoizedProjection,
   MemoizedSelector,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';

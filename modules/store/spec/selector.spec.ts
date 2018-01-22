@@ -1,7 +1,12 @@
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { cold } from 'jasmine-marbles';
-import { createSelector, createFeatureSelector } from '../';
+import {
+  createSelector,
+  createFeatureSelector,
+  defaultMemoize,
+  createSelectorFactory,
+} from '../';
 
 describe('Selectors', () => {
   let countOne: number;
@@ -227,6 +232,55 @@ describe('Selectors', () => {
       const featureState$ = state$.map(featureSelector).distinctUntilChanged();
 
       expect(featureState$).toBeObservable(expected$);
+    });
+  });
+
+  describe('createSelectorFactory', () => {
+    it('should return a selector creator function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selectorFunc = createSelectorFactory(defaultMemoize);
+
+      const selector = selectorFunc(incrementOne, incrementTwo, projectFn)({});
+
+      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
+    });
+
+    it('should allow a custom memoization function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const anyFn = jasmine.createSpy('t').and.callFake(() => true);
+      const equalFn = jasmine.createSpy('isEqual').and.callFake(() => true);
+      const customMemoizer = (aFn: any = anyFn, eFn: any = equalFn) =>
+        defaultMemoize(anyFn, equalFn);
+      const customSelector = createSelectorFactory(customMemoizer);
+
+      const selector = customSelector(incrementOne, incrementTwo, projectFn);
+      selector(1);
+      selector(2);
+
+      expect(anyFn.calls.count()).toEqual(1);
+    });
+
+    it('should allow a custom state memoization function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const stateFn = jasmine.createSpy('stateFn');
+      const selectorFunc = createSelectorFactory(defaultMemoize, { stateFn });
+
+      const selector = selectorFunc(incrementOne, incrementTwo, projectFn)({});
+
+      expect(stateFn).toHaveBeenCalled();
+    });
+  });
+
+  describe('defaultMemoize', () => {
+    it('should allow a custom equality function', () => {
+      const anyFn = jasmine.createSpy('t').and.callFake(() => true);
+      const equalFn = jasmine.createSpy('isEqual').and.callFake(() => true);
+      const memoizer = defaultMemoize(anyFn, equalFn);
+
+      memoizer.memoized(1, 2, 3);
+      memoizer.memoized(1, 2);
+
+      expect(anyFn.calls.count()).toEqual(1);
     });
   });
 });
