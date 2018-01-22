@@ -14,6 +14,15 @@ import { Book } from '../models/book';
       <mat-card-title>My Collection</mat-card-title>
     </mat-card>
 
+    <button (click)="increment()">
+      Increment
+    </button>
+    <button (click)="decrement()">
+      Decrement
+    </button>
+    <h4>Count: {{ count$ | async }}</h4>
+
+
     <bc-book-preview-list [books]="books$ | async"></bc-book-preview-list>
   `,
   /**
@@ -38,7 +47,22 @@ export class CollectionPageComponent implements OnInit {
     this.books$ = store.pipe(select(fromBooks.getBookCollection));
   }
 
+  localStore = this.store.createLocalStore({
+    name: 'Collection Page',
+    initialState: 0,
+  });
+
+  count$ = this.store.pipe(select(this.localStore.selector));
+
   ngOnInit() {
     this.store.dispatch(new collection.Load());
+  }
+
+  increment() {
+    this.localStore.update('Increment', value => value + 1);
+  }
+
+  decrement() {
+    this.localStore.update('Decrement', value => value - 1);
   }
 }

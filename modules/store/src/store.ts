@@ -5,8 +5,10 @@ import { Operator } from 'rxjs/Operator';
 import { map } from 'rxjs/operator/map';
 import { pluck } from 'rxjs/operator/pluck';
 import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
-import { Action, ActionReducer } from './models';
+import { Action, ActionReducer, Selector } from './models';
 import { ActionsSubject } from './actions_subject';
+import { LocalState, LocalStoreOptions } from './local_state';
+import { createSelector } from './selector';
 import { StateObservable } from './state';
 import { ReducerManager } from './reducer_manager';
 
@@ -15,7 +17,8 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,
-    private reducerManager: ReducerManager
+    private reducerManager: ReducerManager,
+    private localState: LocalState<T>
   ) {
     super();
 
@@ -69,7 +72,13 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
   }
 
   lift<R>(operator: Operator<T, R>): Store<R> {
-    const store = new Store<R>(this, this.actionsObserver, this.reducerManager);
+    const store = new Store<R>(
+      this,
+      this.actionsObserver,
+      this.reducerManager,
+      this.localState as any
+    );
+
     store.operator = operator;
 
     return store;
@@ -101,6 +110,10 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
   removeReducer<Key extends keyof T>(key: Key) {
     this.reducerManager.removeReducer(key);
   }
+
+  createLocalStore<R>(options: LocalStoreOptions<R>) {
+    return this.localState.createLocalStore(options);
+  }
 }
 
 export const STORE_PROVIDERS: Provider[] = [Store];
@@ -108,6 +121,36 @@ export const STORE_PROVIDERS: Provider[] = [Store];
 export function select<T, K>(
   mapFn: ((state: T) => K) | string
 ): (source$: Observable<T>) => Store<K>;
+export function select<T, S1, R>(
+  s1: Selector<T, S1>,
+  projector: (s1: S1) => R
+): (source$: Observable<T>) => Store<R>;
+export function select<T, S1, S2, R>(
+  s1: Selector<T, S1>,
+  s2: Selector<T, S2>,
+  projector: (s1: S1, s2: S2) => R
+): (source$: Observable<T>) => Store<R>;
+export function select<T, S1, S2, S3, R>(
+  s1: Selector<T, S1>,
+  s2: Selector<T, S2>,
+  s3: Selector<T, S3>,
+  projector: (s1: S1, s2: S2, s3: S3) => R
+): (source$: Observable<T>) => Store<R>;
+export function select<T, S1, S2, S3, S4, R>(
+  s1: Selector<T, S1>,
+  s2: Selector<T, S2>,
+  s3: Selector<T, S3>,
+  s4: Selector<T, S4>,
+  projector: (s1: S1, s2: S2, s3: S3, s4: S4) => R
+): (source$: Observable<T>) => Store<R>;
+export function select<T, S1, S2, S3, S4, S5, R>(
+  s1: Selector<T, S1>,
+  s2: Selector<T, S2>,
+  s3: Selector<T, S3>,
+  s4: Selector<T, S4>,
+  s5: Selector<T, S5>,
+  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => R
+): (source$: Observable<T>) => Store<R>;
 export function select<T, a extends keyof T>(
   key: a
 ): (source$: Store<a>) => Store<T[a]>;
@@ -165,15 +208,20 @@ export function select<
 ): (source$: Store<a>) => Store<T[a][b][c][d][e][f]>;
 export function select<T, K>(
   pathOrMapFn: ((state: T) => any) | string,
-  ...paths: string[]
+  ...paths: (string | ((...args: any[]) => any[]))[]
 ) {
   return function selectOperator(source$: Store<T>): Store<K> {
     let mapped$: Store<any>;
 
     if (typeof pathOrMapFn === 'string') {
-      mapped$ = pluck.call(source$, pathOrMapFn, ...paths);
-    } else if (typeof pathOrMapFn === 'function') {
+      mapped$ = pluck.call(source$, pathOrMapFn, ...(paths as any[]));
+    } else if (typeof pathOrMapFn === 'function' && paths.length === 0) {
       mapped$ = map.call(source$, pathOrMapFn);
+    } else if (typeof pathOrMapFn === 'function' && paths.length > 0) {
+      mapped$ = map.call(
+        source$,
+        (createSelector as any)(pathOrMapFn, ...paths)
+      );
     } else {
       throw new TypeError(
         `Unexpected type '${typeof pathOrMapFn}' in select operator,` +

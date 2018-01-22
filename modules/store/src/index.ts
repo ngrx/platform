@@ -9,6 +9,7 @@ export {
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
+export { LocalState } from './local_state';
 export {
   ReducerManager,
   ReducerObservable,

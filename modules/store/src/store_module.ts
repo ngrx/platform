@@ -6,6 +6,7 @@ import {
   InjectionToken,
   Injector,
 } from '@angular/core';
+import { LocalState } from './local_state';
 import {
   Action,
   ActionReducer,
@@ -138,6 +139,7 @@ export class StoreModule {
         SCANNED_ACTIONS_SUBJECT_PROVIDERS,
         STATE_PROVIDERS,
         STORE_PROVIDERS,
+        LocalState,
       ],
     };
   }
