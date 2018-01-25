@@ -1,7 +1,3 @@
----
-# [Click here for documentation for the latest release (4.1.1)](https://github.com/ngrx/platform/blob/v4.1.1/docs/store-devtools/README.md)
----
-
 # @ngrx/store-devtools
 
 Devtools for [@ngrx/store](../store/README.md).

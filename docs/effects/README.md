@@ -1,7 +1,3 @@
----
-# [Click here for documentation for the latest release (4.1.1)](https://github.com/ngrx/platform/blob/v4.1.1/docs/effects/README.md)
----
-
 # @ngrx/effects
 
 RxJS powered side effect model for @ngrx/store
