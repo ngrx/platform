@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/router-store",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Bindings to connect @angular/router to @ngrx/store",
   "module": "@ngrx/router-store.es5.js",
   "es2015": "@ngrx/router-store.js",
