@@ -16,7 +16,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/core": "^5.0.0",
-    "@ngrx/store": "^5.0.0-alpha.0",
+    "@ngrx/store": "^5.0.0",
     "rxjs": "^5.5.0"
   }
 }
