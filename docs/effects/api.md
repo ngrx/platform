@@ -132,7 +132,7 @@ export class SomeEffectsClass {
     );
 
   // Should be your last effect
-  @Effect() init$: Observable<any> = defer(() => {
+  @Effect() init$: Observable<action> = defer(() => {
     return of(new LogoutAction());
   });
 }
