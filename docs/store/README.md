@@ -1,7 +1,3 @@
----
-# [Click here for documentation for the latest release (4.1.1)](https://github.com/ngrx/platform/blob/v4.1.1/docs/store/README.md)
----
-
 # @ngrx/store
 
 RxJS powered state management for Angular applications, inspired by Redux
