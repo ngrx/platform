@@ -10,7 +10,9 @@ import {
   ActionsSubject,
 } from '@ngrx/store';
 import { Actions, ofType } from '../';
-import { map, toArray } from 'rxjs/operators';
+import { map, toArray, switchMap } from 'rxjs/operators';
+import { hot, cold } from 'jasmine-marbles';
+import { of } from 'rxjs/observable/of';
 
 describe('Actions', function() {
   let actions$: Actions;
@@ -74,5 +76,18 @@ describe('Actions', function() {
 
     actions.forEach(action => dispatcher.next({ type: action }));
     dispatcher.complete();
+  });
+
+  it('should support using the ofType instance operator', () => {
+    const action = { type: ADD };
+
+    const response = cold('-b', { b: true });
+    const expected = cold('--c', { c: true });
+
+    const effect$ = new Actions(hot('-a', { a: action }))
+      .ofType(ADD)
+      .pipe(switchMap(() => response));
+
+    expect(effect$).toBeObservable(expected);
   });
 });

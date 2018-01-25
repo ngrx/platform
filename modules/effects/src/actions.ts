@@ -23,7 +23,7 @@ export class Actions<V = Action> extends Observable<V> {
   }
 
   ofType<V2 extends V = V>(...allowedTypes: string[]): Actions<V2> {
-    return ofType<any>(...allowedTypes)(this.source as Actions<V2>);
+    return ofType<any>(...allowedTypes)(this as Actions<any>);
   }
 }
 
