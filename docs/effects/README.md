@@ -103,5 +103,6 @@ export class AdminModule {}
 - [Controlling Effects](./api.md#controlling-effects)
 - [Filtering Actions](./api.md#oftype)
 - [Non-dispatching effects](./api.md#non-dispatching-effects)
+- [Initializing effect](./api.md#initializing-effect)
 - [Utilities](./api.md#utilities)
 - [Testing](./testing.md)
