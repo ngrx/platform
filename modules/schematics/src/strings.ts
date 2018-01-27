@@ -134,10 +134,19 @@ export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.substr(1);
 }
 
-export function group(path: string, group: string | undefined) {
-  return group ? `${group}/${path}` : path;
+export function group(name: string, group: string | undefined) {
+  return group ? `${group}/${name}` : name;
 }
 
-export function featurePath(group: boolean | undefined, path: string) {
+export function featurePath(
+  group: boolean | undefined,
+  flat: boolean | undefined,
+  path: string,
+  name: string
+) {
+  if (group && !flat) {
+    return `../../${path}/${name}/`;
+  }
+
   return group ? `../${path}/` : './';
 }
