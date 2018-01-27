@@ -15,6 +15,7 @@ Reactive libraries for Angular
 - [@ngrx/store-devtools](./docs/store-devtools/README.md) - Store instrumentation that enables a
 [powerful time-travelling debugger](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
 - [@ngrx/entity](./docs/entity/README.md) - Entity State adapter for managing record collections.
+- [@ngrx/schematics](./docs/schematics/README.md) - Scaffolding library for Angular applications using NgRx.
 
 ## Examples
 - [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.

@@ -31,7 +31,8 @@
     "group": {
       "type": "boolean",
       "default": false,
-      "description": "Group actions file within 'actions' folder"
+      "description": "Group actions file within 'actions' folder",
+      "aliases": ["g"]
     }
   },
   "required": [

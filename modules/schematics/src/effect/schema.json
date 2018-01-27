@@ -48,7 +48,8 @@
     "group": {
       "type": "boolean",
       "default": false,
-      "description": "Group effects file within 'effects' folder"
+      "description": "Group effects file within 'effects' folder",
+      "aliases": ["g"]
     }
   },
   "required": [
