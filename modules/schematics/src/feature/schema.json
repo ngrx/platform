@@ -6,7 +6,7 @@
   "properties": {
     "path": {
       "type": "string",
-      "default": "src"
+      "default": "app"
     },
     "sourceDir": {
       "type": "string",
@@ -39,7 +39,8 @@
     "group": {
       "type": "boolean",
       "default": false,
-      "description": "Group actions, reducers and effects within relative subfolders"
+      "description": "Group actions, reducers and effects within relative subfolders",
+      "aliases": ["g"]
     }
   },
   "required": [

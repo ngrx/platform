@@ -46,7 +46,8 @@
     "group": {
       "type": "boolean",
       "default": false,
-      "description": "Group reducer file within 'reducers' folder"
+      "description": "Group reducer file within 'reducers' folder",
+      "aliases": ["g"]
     }
   },
   "required": [
