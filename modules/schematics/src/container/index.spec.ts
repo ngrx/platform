@@ -46,6 +46,15 @@ describe('Container Schematic', () => {
     expect(content).toMatch(/import \* as fromStore from '..\/reducers';/);
   });
 
+  it('should import Store into the component', () => {
+    const options = { ...defaultOptions, state: 'reducers' };
+    appTree.create('/src/app/reducers', '');
+    const tree = schematicRunner.runSchematic('container', options, appTree);
+    const content = getFileContent(tree, '/src/app/foo/foo.component.ts');
+    console.log(content);
+    expect(content).toMatch(/import\ {\ Store\ }\ from\ '@ngrx\/store';/);
+  });
+
   it('should update the component constructor if the state path if provided', () => {
     const options = { ...defaultOptions, state: 'reducers' };
     appTree.create('/src/app/reducers', '');
