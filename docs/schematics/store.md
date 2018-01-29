@@ -3,7 +3,7 @@
 
 ## Overview
 
-Generates the intial setup for state management and registering new feature states. It registers the `@ngrx/store-devtools` integration and generates a state management file containing the state interface, the object map of action reducers and any associated meta-reducers.
+Generates the initial setup for state management and registering new feature states. It registers the `@ngrx/store-devtools` integration and generates a state management file containing the state interface, the object map of action reducers and any associated meta-reducers.
 
 ## Command
 
