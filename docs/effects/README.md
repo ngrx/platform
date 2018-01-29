@@ -53,7 +53,7 @@ export class AuthEffects {
     mergeMap(action =>
       this.http.post('/auth', action.payload).pipe(
         // If successful, dispatch success action with result
-        map(data => ({ type: 'LOGIN_SUCCESS', payload: data }))
+        map(data => ({ type: 'LOGIN_SUCCESS', payload: data })),
         // If request fails, dispatch failed action
         catchError(() => of({ type: 'LOGIN_FAILED' }))
       )
