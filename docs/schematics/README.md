@@ -45,7 +45,7 @@ add the following to the `defaults` section in your `.angular-cli.json`.
 
 The [collection schema](../../modules/schematics/collection.json) also has aliases to the most common blueprints used to generate files.
 
-## Inital State Setup
+## Initial State Setup
 
 Generate the initial state management and register it within the `app.module.ts`
 
@@ -53,7 +53,7 @@ Generate the initial state management and register it within the `app.module.ts`
 ng generate store State --root --module app.module.ts --collection @ngrx/schematics
 ```
 
-## Inital Effects Setup
+## Initial Effects Setup
 
 Generate the root effects and register it within the `app.module.ts`
 
