@@ -25,7 +25,7 @@ ng generate co ComponentName [options]
 
 Provide the path to your file with an exported state interface
 
-- `--reducers`
+- `--state`
   - Type: `string`
 
 Provide the name of the interface exported for your state interface
@@ -39,5 +39,5 @@ Provide the name of the interface exported for your state interface
 Generate a `UsersPage` container component with your reducers imported and the `Store` typed a custom interface named `MyState`.
 
 ```sh
-ng generate container UsersPage --reducers reducers/index.ts --stateInterface MyState
+ng generate container UsersPage --state reducers/index.ts --stateInterface MyState
 ```

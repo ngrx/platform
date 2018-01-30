@@ -61,6 +61,12 @@ function addStateToComponent(options: FeatureOptions) {
     );
 
     const stateImportPath = buildRelativePath(componentPath, statePath);
+    const storeImport = insertImport(
+      source,
+      componentPath,
+      'Store',
+      '@ngrx/store'
+    );
     const stateImport = options.state
       ? insertImport(
           source,
@@ -94,7 +100,7 @@ function addStateToComponent(options: FeatureOptions) {
       `\n\n  ${storeConstructor}`
     );
 
-    const changes = [stateImport, constructorUpdate];
+    const changes = [storeImport, stateImport, constructorUpdate];
     const recorder = host.beginUpdate(componentPath);
 
     for (const change of changes) {
