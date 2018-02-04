@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs/operator/takeUntil';
 import { Action } from '@ngrx/store';
 import { LiftedState } from './reducer';
 import { applyOperators } from './utils';
+import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 
 export const ExtensionActionTypes = {
   START: 'START',
@@ -28,28 +29,27 @@ export interface ReduxDevtoolsExtensionConnection {
 }
 
 export interface ReduxDevtoolsExtension {
-  connect(options: {
-    shouldStringify?: boolean;
-    instanceId: string;
-  }): ReduxDevtoolsExtensionConnection;
+  connect(options: StoreDevtoolsConfig): ReduxDevtoolsExtensionConnection;
   send(
     action: any,
     state: any,
-    options?: boolean | { serialize: boolean | object },
+    options?: boolean | StoreDevtoolsConfig,
     instanceId?: string
   ): void;
 }
 
 @Injectable()
 export class DevtoolsExtension {
-  private instanceId = `ngrx-store-${Date.now()}`;
   private devtoolsExtension: ReduxDevtoolsExtension;
+  private devToolConnection: ReduxDevtoolsExtensionConnection;
 
   liftedActions$: Observable<any>;
   actions$: Observable<any>;
 
   constructor(
-    @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension
+    @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
+    @Inject(STORE_DEVTOOLS_CONFIG)
+    private storeDevtoolsConfig: StoreDevtoolsConfig
   ) {
     this.devtoolsExtension = devtoolsExtension;
     this.createActionStreams();
@@ -60,12 +60,15 @@ export class DevtoolsExtension {
       return;
     }
 
+    // this function call is to get message in devtool monitor
     this.devtoolsExtension.send(
       null,
       state,
-      { serialize: false },
-      this.instanceId
+      this.storeDevtoolsConfig // instance id is inside config, devtool extension library can read it from config.
     );
+
+    // this function call is required to make sure action/state sanitizer are getting called.
+    this.devToolConnection.send(action, state);
   }
 
   private createChangesObservable(): Observable<any> {
@@ -74,13 +77,14 @@ export class DevtoolsExtension {
     }
 
     return new Observable(subscriber => {
-      const connection = this.devtoolsExtension.connect({
-        instanceId: this.instanceId,
-      });
+      this.devToolConnection = this.devtoolsExtension.connect(
+        this.storeDevtoolsConfig
+      );
+      this.devToolConnection.subscribe((change: any) =>
+        subscriber.next(change)
+      );
 
-      connection.subscribe((change: any) => subscriber.next(change));
-
-      return connection.unsubscribe;
+      return this.devToolConnection.unsubscribe;
     });
   }
 

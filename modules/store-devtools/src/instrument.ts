@@ -80,6 +80,8 @@ export function createConfig(
     monitor: noMonitor,
     actionSanitizer: noActionSanitizer,
     stateSanitizer: noStateSanitizer,
+    serialize: false,
+    instanceId: `ngrx-store-${Date.now()}`,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;

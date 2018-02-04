@@ -6,6 +6,8 @@ export class StoreDevtoolsConfig {
   monitor: ActionReducer<any, any>;
   actionSanitizer?: <A extends Action>(action: A, id: number) => A;
   stateSanitizer?: <S>(state: S, index: number) => S;
+  serialize: boolean | object;
+  instanceId: string;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
