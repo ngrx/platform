@@ -106,6 +106,43 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     }
   }
 
+  function upsertOneMutably(update: Update<T>, state: R): DidMutate;
+  function upsertOneMutably(update: any, state: any): DidMutate {
+    return upsertManyMutably([update], state);
+  }
+
+  function upsertManyMutably(updates: Update<T>[], state: R): DidMutate;
+  function upsertManyMutably(updates: any[], state: any): DidMutate {
+    const added: T[] = [];
+    const updated: Update<T>[] = [];
+
+    for (let index in updates) {
+      const update = updates[index];
+      if (update.id in state.entities) {
+        updated.push(update);
+      } else {
+        added.push({
+          ...update.changes,
+          id: update.id,
+        });
+      }
+    }
+
+    const didMutateByUpdated = updateManyMutably(updated, state);
+    const didMutateByAdded = addManyMutably(added, state);
+
+    switch (true) {
+      case didMutateByAdded === DidMutate.None &&
+        didMutateByUpdated === DidMutate.None:
+        return DidMutate.None;
+      case didMutateByAdded === DidMutate.Both ||
+        didMutateByUpdated === DidMutate.Both:
+        return DidMutate.Both;
+      default:
+        return DidMutate.EntitiesOnly;
+    }
+  }
+
   function merge(models: T[], state: R): void;
   function merge(models: any[], state: any): void {
     models.sort(sort);
@@ -147,8 +184,10 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     removeAll,
     addOne: createStateOperator(addOneMutably),
     updateOne: createStateOperator(updateOneMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
     addAll: createStateOperator(addAllMutably),
     addMany: createStateOperator(addManyMutably),
     updateMany: createStateOperator(updateManyMutably),
+    upsertMany: createStateOperator(upsertManyMutably),
   };
 }
