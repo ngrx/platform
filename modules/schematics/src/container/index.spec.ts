@@ -51,7 +51,6 @@ describe('Container Schematic', () => {
     appTree.create('/src/app/reducers', '');
     const tree = schematicRunner.runSchematic('container', options, appTree);
     const content = getFileContent(tree, '/src/app/foo/foo.component.ts');
-    console.log(content);
     expect(content).toMatch(/import\ {\ Store\ }\ from\ '@ngrx\/store';/);
   });
 
