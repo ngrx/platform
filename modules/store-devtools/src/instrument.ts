@@ -80,10 +80,9 @@ export function createConfig(
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
-    actionSanitizer: noActionSanitizer,
-    stateSanitizer: noStateSanitizer,
-    name: DEFAULT_NAME,
     serialize: false,
+    instanceId: `ngrx-store-${Date.now()}`,
+    name: DEFAULT_NAME,
     logOnly: false,
     features: false,
   };

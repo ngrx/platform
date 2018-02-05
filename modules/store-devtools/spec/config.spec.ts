@@ -16,7 +16,6 @@ describe('StoreDevtoolsOptions', () => {
     options.actionSanitizer = sanitizer;
     expect(options.actionSanitizer).toEqual(sanitizer);
   });
-
   it('can be initialized with stateSanitizer', () => {
     const options = new StoreDevtoolsConfig();
     function stateSanitizer(state: any, index: number): any {

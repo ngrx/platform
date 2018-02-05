@@ -2,7 +2,11 @@ import { Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 
 import { LiftedState } from '../';
-import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
+import {
+  DevtoolsExtension,
+  ReduxDevtoolsExtension,
+  ReduxDevtoolsExtensionConnection,
+} from '../src/extension';
 import {
   createConfig,
   noActionSanitizer,
@@ -13,12 +17,14 @@ import {
 describe('DevtoolsExtension', () => {
   let reduxDevtoolsExtension: ReduxDevtoolsExtension;
   let devtoolsExtension: DevtoolsExtension;
+  let devToolConnection: ReduxDevtoolsExtensionConnection;
 
   beforeEach(() => {
     reduxDevtoolsExtension = jasmine.createSpyObj('reduxDevtoolsExtension', [
       'send',
       'connect',
     ]);
+    devToolConnection = jasmine.createSpyObj('devToolConnection', ['send']);
     (reduxDevtoolsExtension.connect as jasmine.Spy).and.returnValue(of({}));
     spyOn(Date, 'now').and.returnValue('1509655064369');
   });
@@ -29,30 +35,37 @@ describe('DevtoolsExtension', () => {
         reduxDevtoolsExtension,
         createConfig({})
       );
+
+      devtoolsExtension.devToolConnection = devToolConnection;
+
       const defaultOptions = {
         maxAge: false,
         monitor: noMonitor,
-        actionSanitizer: noActionSanitizer,
-        stateSanitizer: noStateSanitizer,
-        name: 'NgRx Store DevTools',
         serialize: false,
+        instanceId: 'ngrx-store-1509655064369',
+        name: 'NgRx Store DevTools',
         logOnly: false,
         features: false,
       };
+
       const action = {} as Action;
       const state = {} as LiftedState;
+
       devtoolsExtension.notify(action, state);
+
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         {},
-        defaultOptions,
-        'ngrx-store-1509655064369'
+        defaultOptions
       );
+
+      expect(devToolConnection.send).toHaveBeenCalledWith(action, state);
     });
 
     function myActionSanitizer() {
       return { type: 'sanitizer' };
     }
+
     function myStateSanitizer() {
       return { state: 'new state' };
     }
@@ -66,25 +79,32 @@ describe('DevtoolsExtension', () => {
           name: 'ngrx-store-devtool-todolist',
         })
       );
+
+      devtoolsExtension.devToolConnection = devToolConnection;
+
       const defaultOptions = {
         maxAge: false,
         monitor: noMonitor,
-        actionSanitizer: myActionSanitizer,
-        stateSanitizer: myStateSanitizer,
-        name: 'ngrx-store-devtool-todolist',
         serialize: false,
+        instanceId: 'ngrx-store-1509655064369',
+        name: 'ngrx-store-devtool-todolist',
         logOnly: false,
         features: false,
+        actionSanitizer: myActionSanitizer,
+        stateSanitizer: myStateSanitizer,
       };
+
       const action = {} as Action;
       const state = {} as LiftedState;
       devtoolsExtension.notify(action, state);
+
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         {},
-        defaultOptions,
-        'ngrx-store-1509655064369'
+        defaultOptions
       );
+
+      expect(devToolConnection.send).toHaveBeenCalledWith(action, state);
     });
   });
 });

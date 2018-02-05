@@ -29,6 +29,15 @@ export interface ReduxDevtoolsExtensionConnection {
   send(action: any, state: any): void;
   init(state?: any): void;
 }
+
+/*
+ Hi Brandon please suggest: 
+ I think ReduxDevtoolsExtensionConfig interface we may not need. 
+ Because already all of these properties are there in our StoreDevToolsConfig interface. 
+ Therefore, I just did not use it. If you agree then we can delete this interface. 
+ Or we can inherit StoreDevToolsConfig from  ReduxDevtoolsExtensionConfig. 
+ Please advice.
+ */
 export interface ReduxDevtoolsExtensionConfig {
   features?: object | boolean;
   name: string | undefined;
@@ -36,28 +45,27 @@ export interface ReduxDevtoolsExtensionConfig {
 }
 
 export interface ReduxDevtoolsExtension {
-  connect(
-    options: ReduxDevtoolsExtensionConfig
-  ): ReduxDevtoolsExtensionConnection;
+  connect(options: StoreDevtoolsConfig): ReduxDevtoolsExtensionConnection;
   send(
     action: any,
     state: any,
-    options: StoreDevtoolsConfig,
+    options?: boolean | StoreDevtoolsConfig,
     instanceId?: string
   ): void;
 }
 
 @Injectable()
 export class DevtoolsExtension {
-  private instanceId = `ngrx-store-${Date.now()}`;
   private devtoolsExtension: ReduxDevtoolsExtension;
+  devToolConnection: ReduxDevtoolsExtensionConnection;
 
   liftedActions$: Observable<any>;
   actions$: Observable<any>;
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
-    @Inject(STORE_DEVTOOLS_CONFIG) private config: StoreDevtoolsConfig
+    @Inject(STORE_DEVTOOLS_CONFIG)
+    private storeDevtoolsConfig: StoreDevtoolsConfig
   ) {
     this.devtoolsExtension = devtoolsExtension;
     this.createActionStreams();
@@ -68,7 +76,15 @@ export class DevtoolsExtension {
       return;
     }
 
-    this.devtoolsExtension.send(null, state, this.config, this.instanceId);
+    // this function call is to get message in devtool monitor
+    this.devtoolsExtension.send(
+      null,
+      state,
+      this.storeDevtoolsConfig // instance id is inside config, devtool extension library can read it from config.
+    );
+
+    // this function call is required to make sure action/state sanitizer are getting called.
+    this.devToolConnection.send(action, state);
   }
 
   private createChangesObservable(): Observable<any> {
@@ -77,16 +93,17 @@ export class DevtoolsExtension {
     }
 
     return new Observable(subscriber => {
-      const connection = this.devtoolsExtension.connect({
-        instanceId: this.instanceId,
-        name: this.config.name,
-        features: this.config.features,
-      });
-      connection.init();
+      this.devToolConnection = this.devtoolsExtension.connect(
+        this.storeDevtoolsConfig // passing entire config for future properties which enduser can pass.
+      );
 
-      connection.subscribe((change: any) => subscriber.next(change));
+      this.devToolConnection.init();
 
-      return connection.unsubscribe;
+      this.devToolConnection.subscribe((change: any) =>
+        subscriber.next(change)
+      );
+
+      return this.devToolConnection.unsubscribe;
     });
   }
 

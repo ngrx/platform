@@ -6,8 +6,9 @@ export class StoreDevtoolsConfig {
   monitor: ActionReducer<any, any>;
   actionSanitizer?: <A extends Action>(action: A, id: number) => A;
   stateSanitizer?: <S>(state: S, index: number) => S;
+  instanceId: string;
   name?: string;
-  serialize?: boolean;
+  serialize: boolean | object;
   logOnly?: boolean;
   features?: any;
 }
