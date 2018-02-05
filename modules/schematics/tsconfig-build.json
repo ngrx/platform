@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../../dist/packages/schematics",
+    "paths": { },
+    "rootDir": ".",
+    "sourceMap": true,
+    "inlineSources": true,
+    "target": "es5",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "files": [
+    "src/action/index.ts",
+    "src/container/index.ts",
+    "src/effect/index.ts",
+    "src/entity/index.ts",
+    "src/feature/index.ts",
+    "src/reducer/index.ts",
+    "src/store/index.ts"
+  ],
+  "exclude": [
+    "src/*/files/**/*"
+  ],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true,
+    "enableSummariesForJit": false
+  }
+}

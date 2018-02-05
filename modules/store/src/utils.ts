@@ -96,3 +96,14 @@ export function createReducerFactory<T, V extends Action = Action>(
 
   return reducerFactory;
 }
+
+export function createFeatureReducer<T, V extends Action = Action>(
+  reducer: ActionReducer<T, V>,
+  metaReducers?: MetaReducer<T, V>[]
+): ActionReducer<T, V> {
+  if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+    return compose<ActionReducer<T, V>>(...metaReducers)(reducer);
+  }
+
+  return reducer;
+}

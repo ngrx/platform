@@ -1,4 +1,5 @@
-import { InjectionToken, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { filter } from 'rxjs/operator/filter';
@@ -6,10 +7,10 @@ import { map } from 'rxjs/operator/map';
 import { share } from 'rxjs/operator/share';
 import { switchMap } from 'rxjs/operator/switchMap';
 import { takeUntil } from 'rxjs/operator/takeUntil';
-import { Action } from '@ngrx/store';
+
+import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { LiftedState } from './reducer';
 import { applyOperators } from './utils';
-import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 
 export const ExtensionActionTypes = {
   START: 'START',
@@ -26,6 +27,21 @@ export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;
   unsubscribe(): void;
   send(action: any, state: any): void;
+  init(state?: any): void;
+}
+
+/*
+ Hi Brandon please suggest: 
+ I think ReduxDevtoolsExtensionConfig interface we may not need. 
+ Because already all of these properties are there in our StoreDevToolsConfig interface. 
+ Therefore, I just did not use it. If you agree then we can delete this interface. 
+ Or we can inherit StoreDevToolsConfig from  ReduxDevtoolsExtensionConfig. 
+ Please advice.
+ */
+export interface ReduxDevtoolsExtensionConfig {
+  features?: object | boolean;
+  name: string | undefined;
+  instanceId: string;
 }
 
 export interface ReduxDevtoolsExtension {
@@ -80,6 +96,9 @@ export class DevtoolsExtension {
       this.devToolConnection = this.devtoolsExtension.connect(
         this.storeDevtoolsConfig
       );
+
+      this.devToolConnection.init();
+
       this.devToolConnection.subscribe((change: any) =>
         subscriber.next(change)
       );

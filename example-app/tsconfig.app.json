@@ -6,9 +6,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [
-      "es2016",
+      "es2017",
       "dom"
-      ],
+    ],
     "outDir": "../out-tsc/app",
     "target": "es5",
     "module": "es2015",
@@ -16,12 +16,21 @@
     "baseUrl": ".",
     "rootDir": "../",
     "paths": {
-      "@ngrx/effects": ["../dist/effects"],
-      "@ngrx/effects/testing": ["../dist/effects/testing"],
-      "@ngrx/store": ["../dist/store"],
-      "@ngrx/router-store": ["../dist/router-store"],
-      "@ngrx/store-devtools": ["../dist/store-devtools"],
-      "@ngrx/entity": ["../dist/entity"]
+      "@ngrx/effects": [
+        "../modules/effects"
+      ],
+      "@ngrx/store": [
+        "../modules/store"
+      ],
+      "@ngrx/store-devtools": [
+        "../modules/store-devtools"
+      ],
+      "@ngrx/router-store": [
+        "../modules/router-store"
+      ],
+      "@ngrx/entity": [
+        "../modules/entity"
+      ]
     }
   },
   "exclude": [

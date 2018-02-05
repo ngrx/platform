@@ -9,7 +9,10 @@ import {
   ScannedActionsSubject,
   ActionsSubject,
 } from '@ngrx/store';
-import { Actions } from '../';
+import { Actions, ofType } from '../';
+import { map, toArray, switchMap } from 'rxjs/operators';
+import { hot, cold } from 'jasmine-marbles';
+import { of } from 'rxjs/observable/of';
 
 describe('Actions', function() {
   let actions$: Actions;
@@ -63,13 +66,28 @@ describe('Actions', function() {
     const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
     const expected = actions.filter(type => type === ADD);
 
-    actions$.ofType(ADD).map(update => update.type).toArray().subscribe({
-      next(actual) {
-        expect(actual).toEqual(expected);
-      },
-    });
+    actions$
+      .pipe(ofType(ADD), map(update => update.type), toArray())
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
 
     actions.forEach(action => dispatcher.next({ type: action }));
     dispatcher.complete();
+  });
+
+  it('should support using the ofType instance operator', () => {
+    const action = { type: ADD };
+
+    const response = cold('-b', { b: true });
+    const expected = cold('--c', { c: true });
+
+    const effect$ = new Actions(hot('-a', { a: action }))
+      .ofType(ADD)
+      .pipe(switchMap(() => response));
+
+    expect(effect$).toBeObservable(expected);
   });
 });

@@ -14,31 +14,31 @@ export function mergeEffects(
 ): Observable<EffectNotification> {
   const sourceName = getSourceForInstance(sourceInstance).constructor.name;
 
-  const observables: Observable<any>[] = getSourceMetadata(
-    sourceInstance
-  ).map(({ propertyName, dispatch }): Observable<EffectNotification> => {
-    const observable: Observable<any> =
-      typeof sourceInstance[propertyName] === 'function'
-        ? sourceInstance[propertyName]()
-        : sourceInstance[propertyName];
+  const observables: Observable<any>[] = getSourceMetadata(sourceInstance).map(
+    ({ propertyName, dispatch }): Observable<EffectNotification> => {
+      const observable: Observable<any> =
+        typeof sourceInstance[propertyName] === 'function'
+          ? sourceInstance[propertyName]()
+          : sourceInstance[propertyName];
 
-    if (dispatch === false) {
-      return ignoreElements.call(observable);
+      if (dispatch === false) {
+        return ignoreElements.call(observable);
+      }
+
+      const materialized$ = materialize.call(observable);
+
+      return map.call(
+        materialized$,
+        (notification: Notification<Action>): EffectNotification => ({
+          effect: sourceInstance[propertyName],
+          notification,
+          propertyName,
+          sourceName,
+          sourceInstance,
+        })
+      );
     }
-
-    const materialized$ = materialize.call(observable);
-
-    return map.call(
-      materialized$,
-      (notification: Notification<Action>): EffectNotification => ({
-        effect: sourceInstance[propertyName],
-        notification,
-        propertyName,
-        sourceName,
-        sourceInstance,
-      })
-    );
-  });
+  );
 
   return merge(...observables);
 }

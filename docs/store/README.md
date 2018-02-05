@@ -13,11 +13,11 @@ These core principles enable building components that can use the `OnPush` chang
 giving you [intelligent, performant change detection](http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html#smarter-change-detection)
 throughout your application.
 
+
 ### Installation
 Install @ngrx/store from npm:
 
 `npm install @ngrx/store --save` OR `yarn add @ngrx/store`
-
 
 ### Nightly builds
 
@@ -37,19 +37,19 @@ export const DECREMENT = 'DECREMENT';
 export const RESET = 'RESET';
 
 export function counterReducer(state: number = 0, action: Action) {
-	switch (action.type) {
-		case INCREMENT:
-			return state + 1;
+  switch (action.type) {
+    case INCREMENT:
+      return state + 1;
 
-		case DECREMENT:
-			return state - 1;
+    case DECREMENT:
+      return state - 1;
 
-		case RESET:
-			return 0;
+    case RESET:
+      return 0;
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 }
 ```
 
@@ -64,52 +64,52 @@ import { counterReducer } from './counter';
 @NgModule({
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ counter: counterReducer })
+    StoreModule.forRoot({ count: counterReducer })
   ]
 })
 export class AppModule {}
 ```
 
 
-You can then inject the `Store` service into your components and services. Use `store.select` to _select_ slice(s) of state:
+You can then inject the `Store` service into your components and services. Use `select` operator to _select_ slice(s) of state:
 
 ```ts
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { INCREMENT, DECREMENT, RESET } from './counter';
 
 interface AppState {
-  counter: number;
+  count: number;
 }
 
 @Component({
-	selector: 'my-app',
-	template: `
-		<button (click)="increment()">Increment</button>
-		<div>Current Count: {{ counter | async }}</div>
-		<button (click)="decrement()">Decrement</button>
+  selector: 'my-app',
+  template: `
+    <button (click)="increment()">Increment</button>
+    <div>Current Count: {{ count$ | async }}</div>
+    <button (click)="decrement()">Decrement</button>
 
-		<button (click)="reset()">Reset Counter</button>
-	`
+    <button (click)="reset()">Reset Counter</button>
+  `
 })
 export class MyAppComponent {
-	counter: Observable<number>;
+  count$: Observable<number>;
 
-	constructor(private store: Store<AppState>) {
-		this.counter = store.select('counter');
-	}
+  constructor(private store: Store<AppState>) {
+    this.count$ = store.pipe(select('count'));
+  }
 
-	increment(){
-		this.store.dispatch({ type: INCREMENT });
-	}
+  increment(){
+    this.store.dispatch({ type: INCREMENT });
+  }
 
-	decrement(){
-		this.store.dispatch({ type: DECREMENT });
-	}
+  decrement(){
+    this.store.dispatch({ type: DECREMENT });
+  }
 
-	reset(){
-		this.store.dispatch({ type: RESET });
-	}
+  reset(){
+    this.store.dispatch({ type: RESET });
+  }
 }
 ```
 

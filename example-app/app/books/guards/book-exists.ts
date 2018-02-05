@@ -1,14 +1,8 @@
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/let';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { filter, take, map, tap, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import { GoogleBooksService } from '../../core/services/google-books';
@@ -34,10 +28,11 @@ export class BookExistsGuard implements CanActivate {
    * has finished.
    */
   waitForCollectionToLoad(): Observable<boolean> {
-    return this.store
-      .select(fromBooks.getCollectionLoaded)
-      .filter(loaded => loaded)
-      .take(1);
+    return this.store.pipe(
+      select(fromBooks.getCollectionLoaded),
+      filter(loaded => loaded),
+      take(1)
+    );
   }
 
   /**
@@ -45,10 +40,11 @@ export class BookExistsGuard implements CanActivate {
    * in the Store
    */
   hasBookInStore(id: string): Observable<boolean> {
-    return this.store
-      .select(fromBooks.getBookEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    return this.store.pipe(
+      select(fromBooks.getBookEntities),
+      map(entities => !!entities[id]),
+      take(1)
+    );
   }
 
   /**
@@ -56,15 +52,15 @@ export class BookExistsGuard implements CanActivate {
    * it in the store, returning `true` or `false` if it was found.
    */
   hasBookInApi(id: string): Observable<boolean> {
-    return this.googleBooks
-      .retrieveBook(id)
-      .map(bookEntity => new book.Load(bookEntity))
-      .do((action: book.Load) => this.store.dispatch(action))
-      .map(book => !!book)
-      .catch(() => {
+    return this.googleBooks.retrieveBook(id).pipe(
+      map(bookEntity => new book.Load(bookEntity)),
+      tap((action: book.Load) => this.store.dispatch(action)),
+      map(book => !!book),
+      catchError(() => {
         this.router.navigate(['/404']);
         return of(false);
-      });
+      })
+    );
   }
 
   /**
@@ -73,13 +69,15 @@ export class BookExistsGuard implements CanActivate {
    * API.
    */
   hasBook(id: string): Observable<boolean> {
-    return this.hasBookInStore(id).switchMap(inStore => {
-      if (inStore) {
-        return of(inStore);
-      }
+    return this.hasBookInStore(id).pipe(
+      switchMap(inStore => {
+        if (inStore) {
+          return of(inStore);
+        }
 
-      return this.hasBookInApi(id);
-    });
+        return this.hasBookInApi(id);
+      })
+    );
   }
 
   /**
@@ -96,8 +94,8 @@ export class BookExistsGuard implements CanActivate {
    * to the 404 page.
    */
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.waitForCollectionToLoad().switchMap(() =>
-      this.hasBook(route.params['id'])
+    return this.waitForCollectionToLoad().pipe(
+      switchMap(() => this.hasBook(route.params['id']))
     );
   }
 }

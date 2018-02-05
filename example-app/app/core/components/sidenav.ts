@@ -3,15 +3,15 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'bc-sidenav',
   template: `
-    <md-sidenav [opened]="open">
-      <md-nav-list>
+    <mat-sidenav [opened]="open">
+      <mat-nav-list>
         <ng-content></ng-content>
-      </md-nav-list>
-    </md-sidenav>
+      </mat-nav-list>
+    </mat-sidenav>
   `,
   styles: [
     `
-    md-sidenav {
+    mat-sidenav {
       width: 300px;
     }
   `,

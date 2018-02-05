@@ -1,9 +1,8 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/pluck';
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
+import { map } from 'rxjs/operators';
 
 import * as fromBooks from '../reducers';
 import * as book from '../actions/book';
@@ -30,7 +29,7 @@ export class ViewBookPageComponent implements OnDestroy {
 
   constructor(store: Store<fromBooks.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
-      .map(params => new book.Select(params.id))
+      .pipe(map(params => new book.Select(params.id)))
       .subscribe(store);
   }
 

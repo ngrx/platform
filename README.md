@@ -14,12 +14,17 @@ Reactive libraries for Angular
 - [@ngrx/router-store](./docs/router-store/README.md) - Bindings to connect the Angular Router to @ngrx/store  
 - [@ngrx/store-devtools](./docs/store-devtools/README.md) - Store instrumentation that enables a
 [powerful time-travelling debugger](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en).
+- [@ngrx/entity](./docs/entity/README.md) - Entity State adapter for managing record collections.
+- [@ngrx/schematics](./docs/schematics/README.md) - Scaffolding library for Angular applications using NgRx.
 
 ## Examples
 - [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
 
 ## Migration
 - [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
+
+## Events
+Join us at ngATL in Atlanta, Georgia on January 30 - February 2. [Read here to learn more](http://ng-atl.org/) or [use this special offer to buy one ticket and get another free](https://t.co/2071F6VvbV)
 
 ## News
 - [Official editor on Medium](https://medium.com/ngrx)

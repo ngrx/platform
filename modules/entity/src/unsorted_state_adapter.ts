@@ -1,5 +1,5 @@
 import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
-import { createStateOperator } from './state_adapter';
+import { createStateOperator, DidMutate } from './state_adapter';
 
 export function createUnsortedStateAdapter<T>(
   selectId: IdSelector<T>
@@ -7,48 +7,49 @@ export function createUnsortedStateAdapter<T>(
 export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   type R = EntityState<T>;
 
-  function addOneMutably(entity: T, state: R): boolean;
-  function addOneMutably(entity: any, state: any): boolean {
+  function addOneMutably(entity: T, state: R): DidMutate;
+  function addOneMutably(entity: any, state: any): DidMutate {
     const key = selectId(entity);
 
     if (key in state.entities) {
-      return false;
+      return DidMutate.None;
     }
 
     state.ids.push(key);
     state.entities[key] = entity;
 
-    return true;
+    return DidMutate.Both;
   }
 
-  function addManyMutably(entities: T[], state: R): boolean;
-  function addManyMutably(entities: any[], state: any): boolean {
+  function addManyMutably(entities: T[], state: R): DidMutate;
+  function addManyMutably(entities: any[], state: any): DidMutate {
     let didMutate = false;
 
     for (let index in entities) {
-      didMutate = addOneMutably(entities[index], state) || didMutate;
+      didMutate =
+        addOneMutably(entities[index], state) !== DidMutate.None || didMutate;
     }
 
-    return didMutate;
+    return didMutate ? DidMutate.Both : DidMutate.None;
   }
 
-  function addAllMutably(entities: T[], state: R): boolean;
-  function addAllMutably(entities: any[], state: any): boolean {
+  function addAllMutably(entities: T[], state: R): DidMutate;
+  function addAllMutably(entities: any[], state: any): DidMutate {
     state.ids = [];
     state.entities = {};
 
     addManyMutably(entities, state);
 
-    return true;
+    return DidMutate.Both;
   }
 
-  function removeOneMutably(key: T, state: R): boolean;
-  function removeOneMutably(key: any, state: any): boolean {
+  function removeOneMutably(key: T, state: R): DidMutate;
+  function removeOneMutably(key: any, state: any): DidMutate {
     return removeManyMutably([key], state);
   }
 
-  function removeManyMutably(keys: T[], state: R): boolean;
-  function removeManyMutably(keys: any[], state: any): boolean {
+  function removeManyMutably(keys: T[], state: R): DidMutate;
+  function removeManyMutably(keys: any[], state: any): DidMutate {
     const didMutate =
       keys
         .filter(key => key in state.entities)
@@ -58,7 +59,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
       state.ids = state.ids.filter((id: any) => id in state.entities);
     }
 
-    return didMutate;
+    return didMutate ? DidMutate.Both : DidMutate.None;
   }
 
   function removeAll<S extends R>(state: S): S;
@@ -78,38 +79,48 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     keys: { [id: string]: any },
     update: Update<T>,
     state: any
-  ): void {
+  ): boolean {
     const original = state.entities[update.id];
     const updated: T = Object.assign({}, original, update.changes);
     const newKey = selectId(updated);
+    const hasNewKey = newKey !== update.id;
 
-    if (newKey !== update.id) {
+    if (hasNewKey) {
       keys[update.id] = newKey;
       delete state.entities[update.id];
     }
 
     state.entities[newKey] = updated;
+
+    return hasNewKey;
   }
 
-  function updateOneMutably(update: Update<T>, state: R): boolean;
-  function updateOneMutably(update: any, state: any): boolean {
+  function updateOneMutably(update: Update<T>, state: R): DidMutate;
+  function updateOneMutably(update: any, state: any): DidMutate {
     return updateManyMutably([update], state);
   }
 
-  function updateManyMutably(updates: Update<T>[], state: R): boolean;
-  function updateManyMutably(updates: any[], state: any): boolean {
+  function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
+  function updateManyMutably(updates: any[], state: any): DidMutate {
     const newKeys: { [id: string]: string } = {};
 
-    const didMutate =
-      updates
-        .filter(update => update.id in state.entities)
-        .map(update => takeNewKey(newKeys, update, state)).length > 0;
+    updates = updates.filter(update => update.id in state.entities);
 
-    if (didMutate) {
-      state.ids = state.ids.map((id: any) => newKeys[id] || id);
+    const didMutateEntities = updates.length > 0;
+
+    if (didMutateEntities) {
+      const didMutateIds =
+        updates.filter(update => takeNewKey(newKeys, update, state)).length > 0;
+
+      if (didMutateIds) {
+        state.ids = state.ids.map((id: any) => newKeys[id] || id);
+        return DidMutate.Both;
+      } else {
+        return DidMutate.EntitiesOnly;
+      }
     }
 
-    return didMutate;
+    return DidMutate.None;
   }
 
   return {

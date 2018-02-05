@@ -1,6 +1,5 @@
-import 'rxjs/add/operator/let';
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import * as fromBooks from '../reducers';
@@ -11,9 +10,9 @@ import { Book } from '../models/book';
   selector: 'bc-collection-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <md-card>
-      <md-card-title>My Collection</md-card-title>
-    </md-card>
+    <mat-card>
+      <mat-card-title>My Collection</mat-card-title>
+    </mat-card>
 
     <bc-book-preview-list [books]="books$ | async"></bc-book-preview-list>
   `,
@@ -25,7 +24,7 @@ import { Book } from '../models/book';
    */
   styles: [
     `
-    md-card-title {
+    mat-card-title {
       display: flex;
       justify-content: center;
     }
@@ -36,7 +35,7 @@ export class CollectionPageComponent implements OnInit {
   books$: Observable<Book[]>;
 
   constructor(private store: Store<fromBooks.State>) {
-    this.books$ = store.select(fromBooks.getBookCollection);
+    this.books$ = store.pipe(select(fromBooks.getBookCollection));
   }
 
   ngOnInit() {

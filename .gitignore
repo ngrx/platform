@@ -51,6 +51,7 @@ __build__/**
 
 # IDE #
 .idea/
+*.iml
 *.swp
 !/typings/custom.d.ts
 .vscode/

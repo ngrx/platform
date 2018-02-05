@@ -9,6 +9,7 @@ import {
   combineReducers,
   ActionReducer,
   ActionReducerMap,
+  select,
 } from '../';
 import { ReducerManager, INITIAL_STATE, State } from '../src/private_export';
 import {
@@ -142,8 +143,8 @@ describe('ngRx Integration spec', () => {
       let currentlyVisibleTodos: Todo[] = [];
 
       Observable.combineLatest(
-        store.select('visibilityFilter'),
-        store.select('todos'),
+        store.pipe(select('visibilityFilter')),
+        store.pipe(select('todos')),
         filterVisibleTodos
       ).subscribe(visibleTodos => {
         currentlyVisibleTodos = visibleTodos;
@@ -221,7 +222,7 @@ describe('ngRx Integration spec', () => {
         },
       ];
 
-      store.select(state => state).subscribe(state => {
+      store.pipe(select(state => state)).subscribe(state => {
         expect(state).toEqual(expected.shift());
       });
     });

@@ -8,6 +8,9 @@ export class StoreDevtoolsConfig {
   stateSanitizer?: <S>(state: S, index: number) => S;
   serialize: boolean | object;
   instanceId: string;
+  name?: string;
+  logOnly?: boolean;
+  features?: any;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(

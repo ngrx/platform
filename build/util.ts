@@ -12,7 +12,7 @@ export type BaseFn = (command: string) => string;
 
 export function copy(target: string, destination: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    fsExtra.copy(target, destination, err => {
+    fsExtra.copy(target, path.resolve(destination), err => {
       if (err) return reject(err);
       resolve();
     });
@@ -39,7 +39,7 @@ export function writeFile(target: string, contents: string) {
 
 export function getListOfFiles(
   globPath: string,
-  exclude?: string
+  exclude?: string | string[]
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const options = exclude ? { ignore: exclude } : {};
@@ -134,9 +134,12 @@ export function createBuilder(tasks: TaskDef[]) {
 }
 
 export function flatMap<K, J>(list: K[], mapFn: (item: K) => J[]): J[] {
-  return list.reduce(function(newList, nextItem) {
-    return [...newList, ...mapFn(nextItem)];
-  }, [] as J[]);
+  return list.reduce(
+    function(newList, nextItem) {
+      return [...newList, ...mapFn(nextItem)];
+    },
+    [] as J[]
+  );
 }
 
 export function getTopLevelPackages(config: Config) {
@@ -177,4 +180,10 @@ export function getBottomLevelName(packageName: string) {
 
 export function baseDir(...dirs: string[]): string {
   return `"${path.resolve(__dirname, '../', ...dirs)}"`;
+}
+
+export function shouldBundle(config: Config, packageName: string) {
+  const pkg = config.packages.find(pkg => pkg.name === packageName);
+
+  return pkg ? pkg.bundle : false;
 }

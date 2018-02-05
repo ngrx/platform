@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MdInputModule, MdCardModule } from '@angular/material';
+import { MatInputModule, MatCardModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
@@ -20,8 +20,8 @@ describe('Login Page', () => {
         StoreModule.forRoot({
           auth: combineReducers(fromAuth.reducers),
         }),
-        MdInputModule,
-        MdCardModule,
+        MatInputModule,
+        MatCardModule,
         ReactiveFormsModule,
       ],
       declarations: [LoginPageComponent, LoginFormComponent],
@@ -44,7 +44,7 @@ describe('Login Page', () => {
    * If pure components are functions of their inputs, containers are functions of state
    *
    * Traditionally you would query the components rendered template
-   * to validate its state. Since the components are analagous to
+   * to validate its state. Since the components are analogous to
    * pure functions, we take snapshots of these components for a given state
    * to validate the rendered output and verify the component's output
    * against changes in state.

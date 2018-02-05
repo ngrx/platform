@@ -11,7 +11,7 @@ export interface BooksState {
 }
 
 export interface State extends fromRoot.State {
-  'books': BooksState;
+  books: BooksState;
 }
 
 export const reducers = {
@@ -29,9 +29,9 @@ export const reducers = {
  *
  * ```ts
  * class MyComponent {
- * 	constructor(state$: Observable<State>) {
- * 	  this.booksState$ = state$.select(getBooksState);
- * 	}
+ *   constructor(state$: Observable<State>) {
+ *     this.booksState$ = state$.pipe(select(getBooksState));
+ *   }
  * }
  * ```
  */
@@ -39,12 +39,12 @@ export const reducers = {
 /**
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
-*/
+ */
 export const getBooksState = createFeatureSelector<BooksState>('books');
 
 /**
  * Every reducer module exports selector functions, however child reducers
- * have no knowledge of the overall state tree. To make them useable, we
+ * have no knowledge of the overall state tree. To make them usable, we
  * need to make new selectors that wrap them.
  *
  * The createSelector function creates very efficient selectors that are memoized and
@@ -104,6 +104,10 @@ export const getSearchQuery = createSelector(
 export const getSearchLoading = createSelector(
   getSearchState,
   fromSearch.getLoading
+);
+export const getSearchError = createSelector(
+  getSearchState,
+  fromSearch.getError
 );
 
 /**

@@ -72,20 +72,27 @@ export function noStateSanitizer(): null {
   return null;
 }
 
+export const DEFAULT_NAME = 'NgRx Store DevTools';
+
 export function createConfig(
   _options: StoreDevtoolsOptions
 ): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
     monitor: noMonitor,
-    actionSanitizer: noActionSanitizer,
-    stateSanitizer: noStateSanitizer,
     serialize: false,
     instanceId: `ngrx-store-${Date.now()}`,
+    name: DEFAULT_NAME,
+    logOnly: false,
+    features: false,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
-  const config = Object.assign({}, DEFAULT_OPTIONS, options);
+  const logOnly = options.logOnly
+    ? { pause: true, export: true, test: true }
+    : false;
+  const features = options.features || logOnly;
+  const config = Object.assign({}, DEFAULT_OPTIONS, { features }, options);
 
   if (config.maxAge && config.maxAge < 2) {
     throw new Error(

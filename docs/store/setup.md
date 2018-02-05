@@ -13,19 +13,19 @@ export const DECREMENT = 'DECREMENT';
 export const RESET = 'RESET';
 
 export function counter(state: number = 0, action: Action) {
-	switch (action.type) {
-		case INCREMENT:
-			return state + 1;
+  switch (action.type) {
+    case INCREMENT:
+      return state + 1;
 
-		case DECREMENT:
-			return state - 1;
+    case DECREMENT:
+      return state - 1;
 
-		case RESET:
-			return 0;
+    case RESET:
+      return 0;
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 }
 ```
 
@@ -51,7 +51,7 @@ You can then inject the `Store` service into your components and services. Use `
 _select_ slice(s) of state:
 
 ```ts
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { INCREMENT, DECREMENT, RESET } from './counter';
 
@@ -60,32 +60,32 @@ interface AppState {
 }
 
 @Component({
-	selector: 'my-app',
-	template: `
-		<button (click)="increment()">Increment</button>
-		<div>Current Count: {{ counter | async }}</div>
-		<button (click)="decrement()">Decrement</button>
+  selector: 'my-app',
+  template: `
+    <button (click)="increment()">Increment</button>
+    <div>Current Count: {{ counter | async }}</div>
+    <button (click)="decrement()">Decrement</button>
 
-		<button (click)="reset()">Reset Counter</button>
-	`
+    <button (click)="reset()">Reset Counter</button>
+  `
 })
 class MyAppComponent {
-	counter: Observable<number>;
+  counter: Observable<number>;
 
-	constructor(private store: Store<AppState>){
-		this.counter = store.select('counter');
-	}
+  constructor(private store: Store<AppState>){
+    this.counter = store.pipe(select('counter'));
+  }
 
-	increment(){
-		this.store.dispatch({ type: INCREMENT });
-	}
+  increment(){
+    this.store.dispatch({ type: INCREMENT });
+  }
 
-	decrement(){
-		this.store.dispatch({ type: DECREMENT });
-	}
+  decrement(){
+    this.store.dispatch({ type: DECREMENT });
+  }
 
-	reset(){
-		this.store.dispatch({ type: RESET });
-	}
+  reset(){
+    this.store.dispatch({ type: RESET });
+  }
 }
 ```

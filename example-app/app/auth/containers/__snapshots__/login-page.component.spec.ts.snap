@@ -13,21 +13,21 @@ exports[`Login Page should compile 1`] = `
   >
     
       
-    <md-card
+    <mat-card
       _ngcontent-c0=""
       class="mat-card"
     >
       
         
-      <md-card-title
+      <mat-card-title
         _ngcontent-c0=""
-        class="mat-card-title "
+        class="mat-card-title"
       >
         Login
-      </md-card-title>
+      </mat-card-title>
       
         
-      <md-card-content
+      <mat-card-content
         _ngcontent-c0=""
         class="mat-card-content"
       >
@@ -46,29 +46,29 @@ exports[`Login Page should compile 1`] = `
           >
             
               
-            <md-input-container
+            <mat-input-container
               _ngcontent-c0=""
-              class="mat-input-container ng-tns-c2-0 ng-untouched ng-pristine ng-valid"
+              class="mat-input-container mat-form-field ng-tns-c2-0 mat-form-field-type-mat-input mat-form-field-can-float mat-primary ng-untouched ng-pristine ng-valid"
             >
               <div
-                class="mat-input-wrapper"
+                class="mat-input-wrapper mat-form-field-wrapper"
               >
                 <div
-                  class="mat-input-flex"
+                  class="mat-input-flex mat-form-field-flex"
                 >
                   
                   <div
-                    class="mat-input-infix"
+                    class="mat-input-infix mat-form-field-infix"
                   >
                     
                 
                     <input
                       _ngcontent-c0=""
                       aria-invalid="false"
-                      class="mat-input-element ng-untouched ng-pristine ng-valid"
+                      class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid"
                       formcontrolname="username"
-                      id="md-input-1"
-                      mdinput=""
+                      id="mat-input-0"
+                      matinput=""
                       ng-reflect-name="username"
                       ng-reflect-placeholder="Username"
                       ng-reflect-type="text"
@@ -78,12 +78,13 @@ exports[`Login Page should compile 1`] = `
                     
               
                     <span
-                      class="mat-input-placeholder-wrapper"
+                      class="mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
                     >
                       
                       <label
-                        class="mat-input-placeholder ng-tns-c2-0 mat-empty mat-float"
-                        for="md-input-1"
+                        aria-owns="mat-input-0"
+                        class="mat-input-placeholder mat-form-field-placeholder ng-tns-c2-0 mat-empty mat-form-field-empty"
+                        for="mat-input-0"
                       >
                         Username 
                         
@@ -93,30 +94,30 @@ exports[`Login Page should compile 1`] = `
                   
                 </div>
                 <div
-                  class="mat-input-underline"
+                  class="mat-input-underline mat-form-field-underline"
                 >
                   <span
-                    class="mat-input-ripple"
+                    class="mat-input-ripple mat-form-field-ripple"
                   />
                 </div>
                 <div
-                  class="mat-input-subscript-wrapper"
+                  class="mat-input-subscript-wrapper mat-form-field-subscript-wrapper"
                   ng-reflect-ng-switch="hint"
                 >
                   
                   
                   <div
-                    class="mat-input-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages"
+                    class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages"
                     style="opacity: 1;"
                   >
                     
                     <div
-                      class="mat-input-hint-spacer"
+                      class="mat-input-hint-spacer mat-form-field-hint-spacer"
                     />
                   </div>
                 </div>
               </div>
-            </md-input-container>
+            </mat-input-container>
             
             
           </p>
@@ -128,29 +129,29 @@ exports[`Login Page should compile 1`] = `
           >
             
               
-            <md-input-container
+            <mat-input-container
               _ngcontent-c0=""
-              class="mat-input-container ng-tns-c2-1 ng-untouched ng-pristine ng-valid"
+              class="mat-input-container mat-form-field ng-tns-c2-1 mat-form-field-type-mat-input mat-form-field-can-float mat-primary ng-untouched ng-pristine ng-valid"
             >
               <div
-                class="mat-input-wrapper"
+                class="mat-input-wrapper mat-form-field-wrapper"
               >
                 <div
-                  class="mat-input-flex"
+                  class="mat-input-flex mat-form-field-flex"
                 >
                   
                   <div
-                    class="mat-input-infix"
+                    class="mat-input-infix mat-form-field-infix"
                   >
                     
                 
                     <input
                       _ngcontent-c0=""
                       aria-invalid="false"
-                      class="mat-input-element ng-untouched ng-pristine ng-valid"
+                      class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid"
                       formcontrolname="password"
-                      id="md-input-3"
-                      mdinput=""
+                      id="mat-input-1"
+                      matinput=""
                       ng-reflect-name="password"
                       ng-reflect-placeholder="Password"
                       ng-reflect-type="password"
@@ -160,12 +161,13 @@ exports[`Login Page should compile 1`] = `
                     
               
                     <span
-                      class="mat-input-placeholder-wrapper"
+                      class="mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
                     >
                       
                       <label
-                        class="mat-input-placeholder ng-tns-c2-1 mat-empty mat-float"
-                        for="md-input-3"
+                        aria-owns="mat-input-1"
+                        class="mat-input-placeholder mat-form-field-placeholder ng-tns-c2-1 mat-empty mat-form-field-empty"
+                        for="mat-input-1"
                       >
                         Password 
                         
@@ -175,30 +177,30 @@ exports[`Login Page should compile 1`] = `
                   
                 </div>
                 <div
-                  class="mat-input-underline"
+                  class="mat-input-underline mat-form-field-underline"
                 >
                   <span
-                    class="mat-input-ripple"
+                    class="mat-input-ripple mat-form-field-ripple"
                   />
                 </div>
                 <div
-                  class="mat-input-subscript-wrapper"
+                  class="mat-input-subscript-wrapper mat-form-field-subscript-wrapper"
                   ng-reflect-ng-switch="hint"
                 >
                   
                   
                   <div
-                    class="mat-input-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages"
+                    class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages"
                     style="opacity: 1;"
                   >
                     
                     <div
-                      class="mat-input-hint-spacer"
+                      class="mat-input-hint-spacer mat-form-field-hint-spacer"
                     />
                   </div>
                 </div>
               </div>
-            </md-input-container>
+            </mat-input-container>
             
             
           </p>
@@ -206,8 +208,8 @@ exports[`Login Page should compile 1`] = `
   
             
           
-                    
           
+  
             
           <p
             _ngcontent-c0=""
@@ -217,7 +219,7 @@ exports[`Login Page should compile 1`] = `
               
             <button
               _ngcontent-c0=""
-              md-button=""
+              mat-button=""
               type="submit"
             >
               Login
@@ -231,10 +233,10 @@ exports[`Login Page should compile 1`] = `
         </form>
         
         
-      </md-card-content>
+      </mat-card-content>
       
       
-    </md-card>
+    </mat-card>
     
     
   </bc-login-form>
