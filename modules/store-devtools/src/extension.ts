@@ -57,7 +57,7 @@ export interface ReduxDevtoolsExtension {
 @Injectable()
 export class DevtoolsExtension {
   private devtoolsExtension: ReduxDevtoolsExtension;
-  private devToolConnection: ReduxDevtoolsExtensionConnection;
+  devToolConnection: ReduxDevtoolsExtensionConnection;
 
   liftedActions$: Observable<any>;
   actions$: Observable<any>;
@@ -94,7 +94,7 @@ export class DevtoolsExtension {
 
     return new Observable(subscriber => {
       this.devToolConnection = this.devtoolsExtension.connect(
-        this.storeDevtoolsConfig
+        this.storeDevtoolsConfig // passing entire config for future properties which enduser can pass.
       );
 
       this.devToolConnection.init();
