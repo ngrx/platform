@@ -24,12 +24,7 @@ import { CustomRouterStateSerializer } from './shared/utils';
 
 import { AppComponent } from './core/containers/app';
 import { environment } from '../environments/environment';
-export function actionSanitizer(action: any) {
-  return { ...action, payload: { ...action.payload, extend: 'rupesh-action' } };
-}
-export function stateSanitizer(state: any) {
-  return { ...state, extend: 'rupesh-state' };
-}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -71,8 +66,6 @@ export function stateSanitizer(state: any) {
     StoreDevtoolsModule.instrument({
       name: 'NgRx Book Store DevTools',
       logOnly: environment.production,
-      stateSanitizer,
-      actionSanitizer,
     }),
 
     /**
