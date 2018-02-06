@@ -4,6 +4,7 @@ import {
   createFeatureSelector,
   ActionReducer,
   MetaReducer,
+  Action,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { RouterStateUrl } from '../shared/utils';
@@ -39,14 +40,14 @@ export interface State {
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<State, any> = {
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
 };
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-  return function(state: State, action: any): State {
+  return function(state: State | undefined, action: any): State {
     console.log('state', state);
     console.log('action', action);
 

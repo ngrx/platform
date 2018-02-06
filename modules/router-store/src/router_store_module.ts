@@ -11,7 +11,7 @@ import {
   RouterStateSnapshot,
   RoutesRecognized,
 } from '@angular/router';
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 import {
   DefaultRouterStateSerializer,
@@ -33,11 +33,11 @@ export type RouterNavigationPayload<T> = {
 /**
  * An action dispatched when the router navigates.
  */
-export type RouterNavigationAction<T = RouterStateSnapshot> = {
-  type: typeof ROUTER_NAVIGATION;
-  payload: RouterNavigationPayload<T>;
-};
 
+export class RouterNavigationAction<T = RouterStateSnapshot> implements Action {
+  readonly type = ROUTER_NAVIGATION;
+  constructor(public payload: RouterNavigationPayload<T>) {}
+}
 /**
  * An action dispatched when the router cancels navigation.
  */
@@ -55,10 +55,10 @@ export type RouterCancelPayload<T, V> = {
 /**
  * An action dispatched when the router cancel navigation.
  */
-export type RouterCancelAction<T, V = RouterStateSnapshot> = {
-  type: typeof ROUTER_CANCEL;
-  payload: RouterCancelPayload<T, V>;
-};
+export class RouterCancelAction<T, V = RouterStateSnapshot> implements Action {
+  readonly type = ROUTER_CANCEL;
+  constructor(public payload: RouterCancelPayload<T, V>) {}
+}
 
 /**
  * An action dispatched when the router errors.
@@ -77,10 +77,10 @@ export type RouterErrorPayload<T, V> = {
 /**
  * An action dispatched when the router errors.
  */
-export type RouterErrorAction<T, V = RouterStateSnapshot> = {
-  type: typeof ROUTER_ERROR;
-  payload: RouterErrorPayload<T, V>;
-};
+export class RouterErrorAction<T, V = RouterStateSnapshot> implements Action {
+  readonly type = ROUTER_ERROR;
+  constructor(public payload: RouterErrorPayload<T, V>) {}
+}
 
 /**
  * An union type of router actions.
@@ -96,7 +96,7 @@ export type RouterReducerState<T = RouterStateSnapshot> = {
 };
 
 export function routerReducer<T = RouterStateSnapshot>(
-  state: RouterReducerState<T>,
+  state: RouterReducerState<T> | undefined,
   action: RouterAction<any, T>
 ): RouterReducerState<T> {
   switch (action.type) {
@@ -108,7 +108,7 @@ export function routerReducer<T = RouterStateSnapshot>(
         navigationId: action.payload.event.id,
       };
     default:
-      return state;
+      return state as RouterReducerState<T>;
   }
 }
 
