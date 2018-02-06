@@ -1,4 +1,4 @@
-import { reducer, initialState } from './<%= dasherize(name) %>.reducer';
+import { reducer, initialState } from '<%= featurePath(group, flat, "reducers", dasherize(name)) %><%= dasherize(name) %>.reducer';
 
 describe('<%= classify(name) %> Reducer', () => {
   describe('unknown action', () => {

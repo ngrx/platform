@@ -10,4 +10,5 @@ export interface Schema {
   module?: string;
   reducers?: string;
   flat?: boolean;
+  group?: boolean;
 }

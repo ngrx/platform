@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
+import { <%= classify(name) %> } from '<%= featurePath(group, flat, "models", dasherize(name)) %><%= dasherize(name) %>.model';
 
 export enum <%= classify(name) %>ActionTypes {
   Load<%= classify(name) %>s = '[<%= classify(name) %>] Load <%= classify(name) %>s',

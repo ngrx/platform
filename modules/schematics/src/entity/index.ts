@@ -39,6 +39,12 @@ export default function(options: EntityOptions): Rule {
       template({
         ...stringUtils,
         'if-flat': (s: string) => (options.flat ? '' : s),
+        'group-actions': (name: string) =>
+          stringUtils.group(name, options.group ? 'actions' : ''),
+        'group-models': (name: string) =>
+          stringUtils.group(name, options.group ? 'models' : ''),
+        'group-reducers': (s: string) =>
+          stringUtils.group(s, options.group ? 'reducers' : ''),
         ...(options as object),
         dot: () => '.',
       }),
