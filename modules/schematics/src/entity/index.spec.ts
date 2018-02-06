@@ -60,6 +60,45 @@ describe('Entity Schematic', () => {
 
     const tree = schematicRunner.runSchematic('entity', options, appTree);
     const content = getFileContent(tree, '/src/app/app.module.ts');
+
     expect(content).toMatch(/import \* as fromFoo from '\.\/foo.reducer';/);
+  });
+
+  it('should create all files of an entity within grouped and nested folders', () => {
+    const options = { ...defaultOptions, flat: false, group: true, spec: true };
+
+    const tree = schematicRunner.runSchematic('entity', options);
+    const files = tree.files;
+    expect(
+      files.indexOf('/src/app/foo/actions/foo.actions.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/foo/models/foo.model.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/foo/reducers/foo.reducer.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/foo/reducers/foo.reducer.spec.ts')
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create all files of an entity within grouped folders if group is set', () => {
+    const options = { ...defaultOptions, group: true, spec: true };
+
+    const tree = schematicRunner.runSchematic('entity', options);
+    const files = tree.files;
+    expect(
+      files.indexOf('/src/app/actions/foo.actions.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/models/foo.model.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/reducers/foo.reducer.ts')
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/src/app/reducers/foo.reducer.spec.ts')
+    ).toBeGreaterThanOrEqual(0);
   });
 });
