@@ -63,7 +63,7 @@ Generate a `UserEffects` file within a `user` folder and register it with the `u
 
 ```sh
 ng generate module User --flat false
-ng generate effect user/User -m user.module.ts --group
+ng generate effect user/User -m user.module.ts
 ```
 
 Generate a `UserEffects` file within a nested `effects` folder
