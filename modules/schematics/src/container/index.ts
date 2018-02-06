@@ -96,7 +96,7 @@ function addStateToComponent(options: FeatureOptions) {
     const constructorUpdate = new ReplaceChange(
       componentPath,
       pos,
-      `  ${constructorText}`,
+      `  ${constructorText}\n\n`,
       `\n\n  ${storeConstructor}`
     );
 
