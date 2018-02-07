@@ -8,7 +8,7 @@ import {
 } from '@ngrx/store';
 import { difference, liftAction } from './utils';
 import * as Actions from './actions';
-import { StoreDevtoolsConfig } from './config';
+import { StoreDevtoolsConfig, StateSanitizer } from './config';
 import { PerformAction } from './actions';
 
 export type InitAction = {
@@ -24,15 +24,22 @@ export type Actions = Actions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
+export interface ComputedState {
+  state: any;
+  sanitizedState?: any;
+  error: any;
+}
+
 export interface LiftedState {
   monitorState: any;
   nextActionId: number;
   actionsById: { [id: number]: { action: Action } };
+  sanitizedActionsById: { [id: number]: { action: Action } };
   stagedActionIds: number[];
   skippedActionIds: number[];
   committedState: any;
   currentStateIndex: number;
-  computedStates: { state: any; error: any }[];
+  computedStates: ComputedState[];
 }
 
 /**
@@ -41,7 +48,7 @@ export interface LiftedState {
 function computeNextEntry(
   reducer: ActionReducer<any, any>,
   action: Action,
-  state: LiftedState,
+  state: any,
   error: any
 ) {
   if (error) {
@@ -70,13 +77,14 @@ function computeNextEntry(
  * Runs the reducer on invalidated actions to get a fresh computation log.
  */
 function recomputeStates(
-  computedStates: { state: any; error: any }[],
+  computedStates: ComputedState[],
   minInvalidatedStateIndex: number,
   reducer: ActionReducer<any, any>,
   committedState: any,
   actionsById: { [id: number]: { action: Action } },
   stagedActionIds: number[],
-  skippedActionIds: number[]
+  skippedActionIds: number[],
+  stateSanitizer?: StateSanitizer
 ) {
   // Optimization: exit early and return the same reference
   // if we know nothing could have changed.
@@ -97,11 +105,19 @@ function recomputeStates(
     const previousError = previousEntry ? previousEntry.error : undefined;
 
     const shouldSkip = skippedActionIds.indexOf(actionId) > -1;
-    const entry = shouldSkip
+    const entry: ComputedState = shouldSkip
       ? previousEntry
       : computeNextEntry(reducer, action, previousState, previousError);
 
-    nextComputedStates.push(entry);
+    if (stateSanitizer) {
+      const sanitizedEntry = {
+        ...entry,
+        sanitizedState: stateSanitizer(entry.state, actionId),
+      };
+      nextComputedStates.push(sanitizedEntry);
+    } else {
+      nextComputedStates.push(entry);
+    }
   }
 
   return nextComputedStates;
@@ -115,6 +131,7 @@ export function liftInitialState(
     monitorState: monitorReducer(undefined, {}),
     nextActionId: 1,
     actionsById: { 0: liftAction(INIT_ACTION) },
+    sanitizedActionsById: { 0: liftAction(INIT_ACTION) },
     stagedActionIds: [0],
     skippedActionIds: [],
     committedState: initialCommittedState,
@@ -141,6 +158,7 @@ export function liftReducerWith(
     let {
       monitorState,
       actionsById,
+      sanitizedActionsById,
       nextActionId,
       stagedActionIds,
       skippedActionIds,
@@ -153,6 +171,7 @@ export function liftReducerWith(
     if (!liftedState) {
       // Prevent mutating initialLiftedState
       actionsById = Object.create(actionsById);
+      sanitizedActionsById = Object.create(sanitizedActionsById);
     }
 
     function commitExcessActions(n: number) {
@@ -168,6 +187,7 @@ export function liftReducerWith(
           break;
         } else {
           delete actionsById[idsToDelete[i]];
+          delete sanitizedActionsById[idsToDelete[i]];
         }
       }
 
@@ -181,7 +201,7 @@ export function liftReducerWith(
         currentStateIndex > excess ? currentStateIndex - excess : 0;
     }
 
-    // By default, agressively recompute every state whatever happens.
+    // By default, aggressively recompute every state whatever happens.
     // This has O(n) performance, so we'll override this to a sensible
     // value whenever we feel like we don't have to recompute the states.
     let minInvalidatedStateIndex = 0;
@@ -190,6 +210,7 @@ export function liftReducerWith(
       case Actions.RESET: {
         // Get back to the state the store was created with.
         actionsById = { 0: liftAction(INIT_ACTION) };
+        sanitizedActionsById = { 0: liftAction(INIT_ACTION) };
         nextActionId = 1;
         stagedActionIds = [0];
         skippedActionIds = [];
@@ -202,6 +223,7 @@ export function liftReducerWith(
         // Consider the last committed state the new starting point.
         // Squash any staged actions into a single committed state.
         actionsById = { 0: liftAction(INIT_ACTION) };
+        sanitizedActionsById = { 0: liftAction(INIT_ACTION) };
         nextActionId = 1;
         stagedActionIds = [0];
         skippedActionIds = [];
@@ -214,6 +236,7 @@ export function liftReducerWith(
         // Forget about any staged actions.
         // Start again from the last committed state.
         actionsById = { 0: liftAction(INIT_ACTION) };
+        sanitizedActionsById = { 0: liftAction(INIT_ACTION) };
         nextActionId = 1;
         stagedActionIds = [0];
         skippedActionIds = [];
@@ -290,6 +313,10 @@ export function liftReducerWith(
         // Mutation! This is the hottest path, and we optimize on purpose.
         // It is safe because we set a new key in a cache dictionary.
         actionsById[actionId] = liftedAction;
+        sanitizedActionsById[actionId] = options.actionSanitizer
+          ? liftAction(options.actionSanitizer(liftedAction.action, actionId))
+          : liftedAction;
+
         stagedActionIds = [...stagedActionIds, actionId];
         // Optimization: we know that only the new action needs computing.
         minInvalidatedStateIndex = stagedActionIds.length - 1;
@@ -300,6 +327,7 @@ export function liftReducerWith(
         ({
           monitorState,
           actionsById,
+          sanitizedActionsById,
           nextActionId,
           stagedActionIds,
           skippedActionIds,
@@ -322,7 +350,8 @@ export function liftReducerWith(
             committedState,
             actionsById,
             stagedActionIds,
-            skippedActionIds
+            skippedActionIds,
+            options.stateSanitizer
           );
 
           commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -350,7 +379,8 @@ export function liftReducerWith(
               committedState,
               actionsById,
               stagedActionIds,
-              skippedActionIds
+              skippedActionIds,
+              options.stateSanitizer
             );
 
             commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -366,6 +396,7 @@ export function liftReducerWith(
           // Add a new action to only recompute state
           const actionId = nextActionId++;
           actionsById[actionId] = new PerformAction(liftedAction);
+          sanitizedActionsById[actionId] = new PerformAction(liftedAction);
           stagedActionIds = [...stagedActionIds, actionId];
 
           minInvalidatedStateIndex = stagedActionIds.length - 1;
@@ -378,7 +409,8 @@ export function liftReducerWith(
             committedState,
             actionsById,
             stagedActionIds,
-            skippedActionIds
+            skippedActionIds,
+            options.stateSanitizer
           );
 
           currentStateIndex = minInvalidatedStateIndex;
@@ -408,13 +440,15 @@ export function liftReducerWith(
       committedState,
       actionsById,
       stagedActionIds,
-      skippedActionIds
+      skippedActionIds,
+      options.stateSanitizer
     );
     monitorState = monitorReducer(monitorState, liftedAction);
 
     return {
       monitorState,
       actionsById,
+      sanitizedActionsById,
       nextActionId,
       stagedActionIds,
       skippedActionIds,

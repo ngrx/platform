@@ -21,7 +21,12 @@ import { queue } from 'rxjs/scheduler/queue';
 
 import { DevtoolsExtension } from './extension';
 import { liftAction, unliftAction, unliftState, applyOperators } from './utils';
-import { liftReducerWith, liftInitialState, LiftedState } from './reducer';
+import {
+  liftReducerWith,
+  liftInitialState,
+  LiftedState,
+  ComputedState,
+} from './reducer';
 import * as Actions from './actions';
 import { StoreDevtoolsConfig, STORE_DEVTOOLS_CONFIG } from './config';
 
@@ -68,11 +73,15 @@ export class StoreDevtools implements Observer<any> {
       [
         scan,
         ({ state: liftedState }: any, [action, reducer]: any) => {
-          const state = reducer(liftedState, action);
+          const reducedLiftedState = reducer(liftedState, action);
 
-          extension.notify(action, state);
+          // Extension should be sent the sanitized lifted state
+          extension.notify(
+            action,
+            this.getSanitizedState(reducedLiftedState, config)
+          );
 
-          return { state, action };
+          return { state: reducedLiftedState, action };
         },
         { state: liftedInitialState, action: null },
       ],
@@ -95,6 +104,26 @@ export class StoreDevtools implements Observer<any> {
     this.dispatcher = dispatcher;
     this.liftedState = liftedState$;
     this.state = state$;
+  }
+
+  /**
+   * Restructures the lifted state passed in to prepare for sending to the
+   * Redux Devtools Extension
+   */
+  getSanitizedState(state: LiftedState, config: Partial<StoreDevtoolsConfig>) {
+    const sanitizedComputedStates = config.stateSanitizer
+      ? state.computedStates.map((entry: ComputedState) => ({
+          state: entry.sanitizedState,
+          error: entry.error,
+        }))
+      : state.computedStates;
+
+    // Replace action and state logs with their sanitized versions
+    return {
+      ...state,
+      actionsById: state.sanitizedActionsById,
+      computedStates: sanitizedComputedStates,
+    };
   }
 
   dispatch(action: Action) {
