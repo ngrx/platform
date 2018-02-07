@@ -95,10 +95,10 @@ export type RouterReducerState<T = RouterStateSnapshot> = {
   navigationId: number;
 };
 
-export function routerReducer<T = RouterStateSnapshot>(
-  state: RouterReducerState<T> | undefined,
-  action: RouterAction<any, T>
-): RouterReducerState<T> {
+export function routerReducer<
+  V extends RouterAction<any, T>,
+  T = RouterStateSnapshot
+>(state: RouterReducerState<T> | undefined, action: V): RouterReducerState<T> {
   switch (action.type) {
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:

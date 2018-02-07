@@ -8,9 +8,9 @@ const initialState: State = {
   showSidenav: false,
 };
 
-export function reducer(
+export function reducer<T extends LayoutActions>(
   state: State = initialState,
-  action: LayoutActions
+  action: T
 ): State {
   switch (action.type) {
     case LayoutActionTypes.CloseSidenav:

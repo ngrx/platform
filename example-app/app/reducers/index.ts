@@ -40,7 +40,7 @@ export interface State {
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export const reducers: ActionReducerMap<State, any> = {
+export const reducers: ActionReducerMap<State> = {
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
 };
