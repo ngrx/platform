@@ -66,7 +66,7 @@ export const getSelectedBookId = createSelector(
  * commonly used selector functions including
  * getting all ids in the record set, a dictionary
  * of the records by id, an array of records and
- * the total number of records. This reducers boilerplate
+ * the total number of records. This reduces boilerplate
  * in selecting records from the entity state.
  */
 export const {
