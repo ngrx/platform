@@ -99,14 +99,15 @@ You can execute some code that will be executed directly after the effect class 
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { defer } from 'rxjs/observable/defer';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class SomeEffectsClass {
   constructor(private actions$: Actions) { }
 
-  @Effect({ dispatch: false }) init$: Observable<any> = defer(() => {
-    return of(console.log('init$'));
-  });
+  @Effect({ dispatch: false }) init$: Observable<any> = defer(() => of(null)).pipe(
+    tap(() => console.log('init$')),
+  );
 }
 ```
 
@@ -120,14 +121,9 @@ import { LoginAction, LogoutAction } from './auth';
 @Injectable()
 export class SomeEffectsClass {
   constructor(private actions$: Actions) { }
-  
-  @Effect() authActions$ = this.action$.pipe(
-      ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
-      tap(action => console.log(action))
-    );
 
-  @Effect() otherAction$ = this.action$.pipe(
-      ofType<OtherAction>('OTHER'),
+  @Effect({ dispatch: false }) authActions$ = this.action$.pipe(
+    ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
       tap(action => console.log(action))
     );
 
