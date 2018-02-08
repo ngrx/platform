@@ -11,6 +11,20 @@ describe('Unsorted State Adapter', () => {
   let adapter: EntityStateAdapter<BookModel>;
   let state: EntityState<BookModel>;
 
+  beforeAll(() => {
+    Object.defineProperty(Array.prototype, 'unwantedField', {
+      enumerable: true,
+      configurable: true,
+      value: 'This should not appear anywhere',
+    });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(Array.prototype, 'unwantedField', {
+      value: undefined,
+    });
+  });
+
   beforeEach(() => {
     adapter = createEntityAdapter({
       selectId: (book: BookModel) => book.id,
