@@ -34,7 +34,8 @@ export type RouterNavigationPayload<T> = {
  * An action dispatched when the router navigates.
  */
 
-export class RouterNavigationAction<T = RouterStateSnapshot> implements Action {
+export abstract class RouterNavigationAction<T = RouterStateSnapshot>
+  implements Action {
   readonly type = ROUTER_NAVIGATION;
   constructor(public payload: RouterNavigationPayload<T>) {}
 }
@@ -55,7 +56,8 @@ export type RouterCancelPayload<T, V> = {
 /**
  * An action dispatched when the router cancel navigation.
  */
-export class RouterCancelAction<T, V = RouterStateSnapshot> implements Action {
+export abstract class RouterCancelAction<T, V = RouterStateSnapshot>
+  implements Action {
   readonly type = ROUTER_CANCEL;
   constructor(public payload: RouterCancelPayload<T, V>) {}
 }
@@ -77,7 +79,8 @@ export type RouterErrorPayload<T, V> = {
 /**
  * An action dispatched when the router errors.
  */
-export class RouterErrorAction<T, V = RouterStateSnapshot> implements Action {
+export abstract class RouterErrorAction<T, V = RouterStateSnapshot>
+  implements Action {
   readonly type = ROUTER_ERROR;
   constructor(public payload: RouterErrorPayload<T, V>) {}
 }
