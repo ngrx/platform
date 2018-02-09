@@ -93,6 +93,47 @@ export class SomeEffectsClass {
 }
 ```
 
+### Initializing effect
+You can execute some code that will be executed directly after the effect class is loaded.
+```ts
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { defer } from 'rxjs/observable/defer';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) { }
+
+  @Effect({ dispatch: false }) init$: Observable<any> = defer(() => of(null)).pipe(
+    tap(() => console.log('init$')),
+  );
+}
+```
+
+If you want to trigger another action, be careful to add this effect at the end.
+```ts
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { defer } from 'rxjs/observable/defer';
+import { LoginAction, LogoutAction } from './auth';
+
+@Injectable()
+export class SomeEffectsClass {
+  constructor(private actions$: Actions) { }
+
+  @Effect({ dispatch: false }) authActions$ = this.action$.pipe(
+    ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+      tap(action => console.log(action))
+    );
+
+  // Should be your last effect
+  @Effect() init$: Observable<action> = defer(() => {
+    return of(new LogoutAction());
+  });
+}
+```
+
 ## Controlling Effects
 
 ### OnRunEffects
