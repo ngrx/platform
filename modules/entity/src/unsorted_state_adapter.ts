@@ -132,8 +132,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     const added: T[] = [];
     const updated: any[] = [];
 
-    for (let index in updates) {
-      const update = updates[index];
+    for (const update of updates) {
       if (update.id in state.entities) {
         updated.push(update);
       } else {
