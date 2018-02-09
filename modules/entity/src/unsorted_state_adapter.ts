@@ -25,9 +25,8 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   function addManyMutably(entities: any[], state: any): DidMutate {
     let didMutate = false;
 
-    for (let index in entities) {
-      didMutate =
-        addOneMutably(entities[index], state) !== DidMutate.None || didMutate;
+    for (const entity of entities) {
+      didMutate = addOneMutably(entity, state) !== DidMutate.None || didMutate;
     }
 
     return didMutate ? DidMutate.Both : DidMutate.None;
