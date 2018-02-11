@@ -116,8 +116,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     const added: T[] = [];
     const updated: Update<T>[] = [];
 
-    for (let index in updates) {
-      const update = updates[index];
+    for (const update of updates) {
       if (update.id in state.entities) {
         updated.push(update);
       } else {
