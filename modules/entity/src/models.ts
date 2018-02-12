@@ -27,12 +27,12 @@ export abstract class Dictionary<T> implements DictionaryNum<T> {
 }
 
 export type UpdateStr<T> = {
-  id: string;
+  [id: string]: string;
   changes: Partial<T>;
 };
 
 export type UpdateNum<T> = {
-  id: number;
+  [id: number]: number;
   changes: Partial<T>;
 };
 

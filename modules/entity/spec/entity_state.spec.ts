@@ -6,7 +6,7 @@ describe('Entity State', () => {
 
   beforeEach(() => {
     adapter = createEntityAdapter({
-      selectId: (book: BookModel) => book.id,
+      selectId: (book: BookModel) => book._id,
     });
   });
 
