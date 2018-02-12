@@ -28,6 +28,7 @@ describe('Sorted State Adapter', () => {
   beforeEach(() => {
     adapter = createEntityAdapter({
       selectId: (book: BookModel) => book._id,
+      setId: (id: string, book: BookModel) => ({ ...book, _id: id }),
       sortComparer: (a, b) => a.title.localeCompare(b.title),
     });
 
@@ -191,7 +192,7 @@ describe('Sorted State Adapter', () => {
 
     const withUpdates = adapter.updateOne(
       {
-        __id: TheGreatGatsby._id,
+        _id: TheGreatGatsby._id,
         changes,
       },
       withOne

@@ -1,10 +1,20 @@
-import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
+import {
+  EntityState,
+  EntityStateAdapter,
+  IdSelector,
+  IdSetter,
+  Update,
+} from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 
 export function createUnsortedStateAdapter<T>(
-  selectId: IdSelector<T>
+  selectId: IdSelector<T | Update<T>>,
+  setId: IdSetter<T>
 ): EntityStateAdapter<T>;
-export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
+export function createUnsortedStateAdapter<T>(
+  selectId: IdSelector<T | Update<T>>,
+  setId: IdSetter<T>
+): any {
   type R = EntityState<T>;
 
   function addOneMutably(entity: T, state: R): DidMutate;
@@ -79,14 +89,15 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     update: Update<T>,
     state: any
   ): boolean {
-    const original = state.entities[update.id];
+    const id = selectId(update);
+    const original = state.entities[id];
     const updated: T = Object.assign({}, original, update.changes);
     const newKey = selectId(updated);
-    const hasNewKey = newKey !== update.id;
+    const hasNewKey = newKey !== id;
 
     if (hasNewKey) {
-      keys[update.id] = newKey;
-      delete state.entities[update.id];
+      keys[id] = newKey;
+      delete state.entities[id];
     }
 
     state.entities[newKey] = updated;
@@ -103,7 +114,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   function updateManyMutably(updates: any[], state: any): DidMutate {
     const newKeys: { [id: string]: string } = {};
 
-    updates = updates.filter(update => update.id in state.entities);
+    updates = updates.filter(update => selectId(update) in state.entities);
 
     const didMutateEntities = updates.length > 0;
 
@@ -133,13 +144,12 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     const updated: any[] = [];
 
     for (const update of updates) {
-      if (update.id in state.entities) {
+      const id = selectId(update);
+
+      if (id in state.entities) {
         updated.push(update);
       } else {
-        added.push({
-          ...update.changes,
-          id: update.id,
-        });
+        added.push(setId(id, update.changes));
       }
     }
 

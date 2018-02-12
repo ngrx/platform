@@ -28,6 +28,7 @@ describe('Unsorted State Adapter', () => {
   beforeEach(() => {
     adapter = createEntityAdapter({
       selectId: (book: BookModel) => book._id,
+      setId: (id: string, book: BookModel) => ({ ...book, _id: id }),
     });
 
     state = { ids: [], entities: {} };

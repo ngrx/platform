@@ -5,19 +5,26 @@ import {
   Dictionary,
   EntityStateAdapter,
   Update,
+  IdSetter,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
 
 export function createSortedStateAdapter<T>(
   selectId: IdSelector<T>,
-  sort: Comparer<T>
+  setId: IdSetter<T>,
+  sort: false | Comparer<T>
 ): EntityStateAdapter<T>;
-export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
+export function createSortedStateAdapter<T>(
+  selectId: any,
+  setId: any,
+  sort: any
+): any {
   type R = EntityState<T>;
 
   const { removeOne, removeMany, removeAll } = createUnsortedStateAdapter(
-    selectId
+    selectId,
+    setId
   );
 
   function addOneMutably(entity: T, state: R): DidMutate;
@@ -56,19 +63,21 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
 
   function takeUpdatedModel(models: T[], update: Update<T>, state: R): boolean;
   function takeUpdatedModel(models: any[], update: any, state: any): boolean {
-    if (!(update.id in state.entities)) {
+    const id = selectId(update);
+
+    if (!(id in state.entities)) {
       return false;
     }
 
-    const original = state.entities[update.id];
+    const original = state.entities[id];
     const updated = Object.assign({}, original, update.changes);
     const newKey = selectId(updated);
 
-    delete state.entities[update.id];
+    delete state.entities[id];
 
     models.push(updated);
 
-    return newKey !== update.id;
+    return newKey !== id;
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
@@ -117,13 +126,12 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     const updated: Update<T>[] = [];
 
     for (const update of updates) {
-      if (update.id in state.entities) {
+      const id = selectId(update);
+
+      if (id in state.entities) {
         updated.push(update);
       } else {
-        added.push({
-          ...update.changes,
-          id: update.id,
-        });
+        added.push(setId(id, update.changes));
       }
     }
 
