@@ -3,12 +3,7 @@ import { of } from 'rxjs/observable/of';
 
 import { LiftedState } from '../';
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
-import {
-  createConfig,
-  noActionSanitizer,
-  noMonitor,
-  noStateSanitizer,
-} from '../src/instrument';
+import { createConfig, noMonitor } from '../src/instrument';
 
 describe('DevtoolsExtension', () => {
   let reduxDevtoolsExtension: ReduxDevtoolsExtension;
@@ -32,8 +27,8 @@ describe('DevtoolsExtension', () => {
       const defaultOptions = {
         maxAge: false,
         monitor: noMonitor,
-        actionSanitizer: noActionSanitizer,
-        stateSanitizer: noStateSanitizer,
+        actionSanitizer: undefined,
+        stateSanitizer: undefined,
         name: 'NgRx Store DevTools',
         serialize: false,
         logOnly: false,

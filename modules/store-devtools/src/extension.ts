@@ -11,7 +11,7 @@ import { takeUntil } from 'rxjs/operator/takeUntil';
 import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { LiftedState } from './reducer';
 import { PerformAction } from './actions';
-import { applyOperators } from './utils';
+import { applyOperators, unliftState } from './utils';
 
 export const ExtensionActionTypes = {
   START: 'START',
@@ -36,6 +36,7 @@ export interface ReduxDevtoolsExtensionConfig {
   name: string | undefined;
   instanceId: string;
   maxAge?: number;
+  actionSanitizer?: (action: Action, id: number) => Action;
 }
 
 export interface ReduxDevtoolsExtension {
@@ -86,7 +87,7 @@ export class DevtoolsExtension {
     //   d) any action that is not a PerformAction to err on the side of
     //      caution.
     if (action instanceof PerformAction) {
-      const currentState = state.computedStates[state.currentStateIndex].state;
+      const currentState = unliftState(state);
       this.extensionConnection.send(action.action, currentState);
     } else {
       // Requires full state update;
@@ -104,6 +105,7 @@ export class DevtoolsExtension {
         instanceId: this.instanceId,
         name: this.config.name,
         features: this.config.features,
+        actionSanitizer: this.config.actionSanitizer,
       };
       if (this.config.maxAge !== false /* support === 0 */) {
         extensionOptions.maxAge = this.config.maxAge;
