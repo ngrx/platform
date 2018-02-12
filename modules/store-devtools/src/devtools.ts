@@ -28,7 +28,11 @@ import {
   ComputedState,
 } from './reducer';
 import * as Actions from './actions';
-import { StoreDevtoolsConfig, STORE_DEVTOOLS_CONFIG } from './config';
+import {
+  StoreDevtoolsConfig,
+  STORE_DEVTOOLS_CONFIG,
+  StateSanitizer,
+} from './config';
 
 @Injectable()
 export class DevtoolsDispatcher extends ActionsSubject {}
@@ -78,7 +82,7 @@ export class StoreDevtools implements Observer<any> {
           // Extension should be sent the sanitized lifted state
           extension.notify(
             action,
-            this.getSanitizedState(reducedLiftedState, config)
+            this.getSanitizedState(reducedLiftedState, config.stateSanitizer)
           );
 
           return { state: reducedLiftedState, action };
@@ -110,8 +114,8 @@ export class StoreDevtools implements Observer<any> {
    * Restructures the lifted state passed in to prepare for sending to the
    * Redux Devtools Extension
    */
-  getSanitizedState(state: LiftedState, config: Partial<StoreDevtoolsConfig>) {
-    const sanitizedComputedStates = config.stateSanitizer
+  getSanitizedState(state: LiftedState, stateSanitizer?: StateSanitizer) {
+    const sanitizedComputedStates = stateSanitizer
       ? state.computedStates.map((entry: ComputedState) => ({
           state: entry.sanitizedState,
           error: entry.error,

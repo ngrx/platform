@@ -710,7 +710,7 @@ describe('Store Devtools', () => {
       const liftedState = fixture.getLiftedState();
       const sanitizedLiftedState = fixture.devtools.getSanitizedState(
         liftedState,
-        devtoolsOptions
+        devtoolsOptions.stateSanitizer
       );
       const originalAction =
         liftedState.actionsById[liftedState.nextActionId - 1];

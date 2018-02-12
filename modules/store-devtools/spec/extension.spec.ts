@@ -2,11 +2,7 @@ import { Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 
 import { LiftedState } from '../';
-import {
-  DevtoolsExtension,
-  ReduxDevtoolsExtension,
-  ReduxDevtoolsExtensionConnection,
-} from '../src/extension';
+import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
 import { createConfig, noMonitor } from '../src/instrument';
 
 describe('DevtoolsExtension', () => {
