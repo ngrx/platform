@@ -5,7 +5,9 @@ import { <%= classify(name) %> } from '<%= featurePath(group, flat, "models", da
 export enum <%= classify(name) %>ActionTypes {
   Load<%= classify(name) %>s = '[<%= classify(name) %>] Load <%= classify(name) %>s',
   Add<%= classify(name) %> = '[<%= classify(name) %>] Add <%= classify(name) %>',
+  Upsert<%= classify(name) %> = '[<%= classify(name) %>] Upsert <%= classify(name) %>',
   Add<%= classify(name) %>s = '[<%= classify(name) %>] Add <%= classify(name) %>s',
+  Upsert<%= classify(name) %>s = '[<%= classify(name) %>] Upsert <%= classify(name) %>s',
   Update<%= classify(name) %> = '[<%= classify(name) %>] Update <%= classify(name) %>',
   Update<%= classify(name) %>s = '[<%= classify(name) %>] Update <%= classify(name) %>s',
   Delete<%= classify(name) %> = '[<%= classify(name) %>] Delete <%= classify(name) %>',
@@ -25,8 +27,20 @@ export class Add<%= classify(name) %> implements Action {
   constructor(public payload: { <%= camelize(name) %>: <%= classify(name) %> }) {}
 }
 
+export class Upsert<%= classify(name) %> implements Action {
+  readonly type = <%= classify(name) %>ActionTypes.Upsert<%= classify(name) %>;
+
+  constructor(public payload: { <%= camelize(name) %>: <%= classify(name) %> }) {}
+}
+
 export class Add<%= classify(name) %>s implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Add<%= classify(name) %>s;
+
+  constructor(public payload: { <%= camelize(name) %>s: <%= classify(name) %>[] }) {}
+}
+
+export class Upsert<%= classify(name) %>s implements Action {
+  readonly type = <%= classify(name) %>ActionTypes.Upsert<%= classify(name) %>s;
 
   constructor(public payload: { <%= camelize(name) %>s: <%= classify(name) %>[] }) {}
 }
@@ -62,7 +76,9 @@ export class Clear<%= classify(name) %>s implements Action {
 export type <%= classify(name) %>Actions =
  Load<%= classify(name) %>s
  | Add<%= classify(name) %>
+ | Upsert<%= classify(name) %>
  | Add<%= classify(name) %>s
+ | Upsert<%= classify(name) %>s
  | Update<%= classify(name) %>
  | Update<%= classify(name) %>s
  | Delete<%= classify(name) %>

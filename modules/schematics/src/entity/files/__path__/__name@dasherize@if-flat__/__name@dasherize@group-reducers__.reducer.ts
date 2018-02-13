@@ -21,8 +21,16 @@ export function reducer(
       return adapter.addOne(action.payload.<%= camelize(name) %>, state);
     }
 
+    case <%= classify(name) %>ActionTypes.Upsert<%= classify(name) %>: {
+      return adapter.upsertOne(action.payload.<%= camelize(name) %>, state);
+    }
+
     case <%= classify(name) %>ActionTypes.Add<%= classify(name) %>s: {
       return adapter.addMany(action.payload.<%= camelize(name) %>s, state);
+    }
+
+    case <%= classify(name) %>ActionTypes.Upsert<%= classify(name) %>s: {
+      return adapter.upsertMany(action.payload.<%= camelize(name) %>s, state);
     }
 
     case <%= classify(name) %>ActionTypes.Update<%= classify(name) %>: {
