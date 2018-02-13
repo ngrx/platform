@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store-devtools",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Developer tools for @ngrx/store",
   "module": "@ngrx/store-devtools.es5.js",
   "es2015": "@ngrx/store-devtools.js",
