@@ -67,7 +67,7 @@ import { tap } from 'rxjs/operators';
 export class SomeEffectsClass {
   constructor(private actions$: Actions) {}
 
-  @Effect() authActions$ = this.action$.pipe(
+  @Effect() authActions$ = this.actions$.pipe(
     ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
     tap(action => console.log(action))
   );
@@ -122,7 +122,7 @@ import { LoginAction, LogoutAction } from './auth';
 export class SomeEffectsClass {
   constructor(private actions$: Actions) { }
 
-  @Effect({ dispatch: false }) authActions$ = this.action$.pipe(
+  @Effect({ dispatch: false }) authActions$ = this.actions$.pipe(
     ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
       tap(action => console.log(action))
     );
