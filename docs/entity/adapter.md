@@ -86,6 +86,8 @@ state if no changes were made.
 * `removeAll`: Clear entity collection
 * `updateOne`: Update one entity in the collection
 * `updateMany`: Update multiple entities in the collection
+* `upsertOne`: Add or Update one entity in the collection
+* `upsertMany`: Add or Update multiple entities in the collection
 
 Usage:
 
@@ -109,7 +111,9 @@ import { User } from './user.model';
 export enum UserActionTypes {
   LOAD_USERS = '[User] Load Users',
   ADD_USER = '[User] Add User',
+  UPSERT_USER = '[User] Upsert User',
   ADD_USERS = '[User] Add Users',
+  UPSERT_USERS = '[User] Upsert Users',
   UPDATE_USER = '[User] Update User',
   UPDATE_USERS = '[User] Update Users',
   DELETE_USER = '[User] Delete User',
@@ -129,8 +133,20 @@ export class AddUser implements Action {
   constructor(public payload: { user: User }) {}
 }
 
+export class UpsertUser implements Action {
+  readonly type = UserActionTypes.UPSERT_USER;
+
+  constructor(public payload: { user: User }) {}
+}
+
 export class AddUsers implements Action {
   readonly type = UserActionTypes.ADD_USERS;
+
+  constructor(public payload: { users: User[] }) {}
+}
+
+export class UpsertUsers implements Action {
+  readonly type = UserActionTypes.UPSERT_USERS;
 
   constructor(public payload: { users: User[] }) {}
 }
@@ -166,7 +182,9 @@ export class ClearUsers implements Action {
 export type UserActions =
  LoadUsers
  | AddUser
+ | UpsertUser
  | AddUsers
+ | UpsertUsers
  | UpdateUser
  | UpdateUsers
  | DeleteUser
@@ -201,9 +219,17 @@ export function reducer(
       return adapter.addOne(action.payload.user, state);
     }
 
+    case UserActionTypes.UPSERT_USER: {
+      return adapter.upsertOne(action.payload.user, state);
+    }
+
     case UserActionTypes.ADD_USERS: {
       return adapter.addMany(action.payload.users, state);
     }
+
+    case UserActionTypes.UPSERT_USERS: {
+      return adapter.upsertMany(action.payload.users, state);
+    }    
 
     case UserActionTypes.UPDATE_USER: {
       return adapter.updateOne(action.payload.user, state);
