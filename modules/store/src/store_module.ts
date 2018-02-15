@@ -64,7 +64,7 @@ export class StoreFeatureModule implements OnDestroy {
     features
       .map((feature, index) => {
         const featureReducerCollection = featureReducers.shift();
-        const reducers = featureReducerCollection[index];
+        const reducers = featureReducerCollection /*TODO(#823)*/![index];
 
         return {
           ...feature,

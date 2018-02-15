@@ -29,7 +29,7 @@ export function Effect({ dispatch } = { dispatch: true }): PropertyDecorator {
   return function(target: any, propertyName: string) {
     const metadata: EffectMetadata = { propertyName, dispatch };
     setEffectMetadataEntries(target, [metadata]);
-  };
+  } /*TODO(#823)*/ as any;
 }
 
 export function getSourceForInstance(instance: Object): any {
@@ -53,7 +53,7 @@ export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   const metadata: EffectsMetadata<T> = {};
 
   getSourceMetadata(instance).forEach(({ propertyName, dispatch }) => {
-    metadata[propertyName] = { dispatch };
+    (metadata /*TODO(#823)*/ as any)[propertyName] = { dispatch };
   });
 
   return metadata;

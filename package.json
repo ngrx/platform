@@ -20,10 +20,12 @@
     "ci": "yarn run build && yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --single-quote --trailing-comma es5 --write \"**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
-    "postinstall": "opencollective postinstall",
+    "postinstall": "node tools/rxjs-patch-pr3322.js && opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "lerna publish --skip-npm --conventional-commits && npm run build",
-    "codegen": "ts-node modules/codegen/src/index.ts"
+    "codegen": "ts-node modules/codegen/src/index.ts",
+    "prebuildifier": "bazel build --noshow_progress @com_github_bazelbuild_buildtools//buildifier",
+    "buildifier": "find . -type f \\( -name BUILD -or -name BUILD.bazel \\) ! -path \"*/node_modules/*\" | xargs $(bazel info bazel-bin)/external/com_github_bazelbuild_buildtools/buildifier/*/buildifier"
   },
   "engines": {
     "node": ">=8.6.0",
@@ -117,13 +119,15 @@
     "prettier": "^1.8.2",
     "protractor": "~5.1.0",
     "reflect-metadata": "^0.1.9",
+    "replace-in-file": "^3.1.1",
     "rimraf": "^2.5.4",
     "rollup": "^0.50.0",
-    "rxjs": "^5.5.2",
+    "rxjs": "^5.5.6",
     "sorcery": "^0.10.0",
     "ts-node": "^3.1.0",
     "tslib": "1.6.0",
     "tslint": "^4.4.2",
+    "tsutils": "2.20.0",
     "typescript": "~2.4.0",
     "uglify-js": "^3.1.9",
     "zone.js": "^0.8.12"
