@@ -65,7 +65,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   }
 
   removeReducer(key: string) {
-    this.reducers = omit(this.reducers, key);
+    this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
 
     this.updateReducers();
   }

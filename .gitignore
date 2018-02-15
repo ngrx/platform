@@ -59,6 +59,7 @@ __build__/**
 # Build Artifacts #
 release
 dist
+bazel-out
 /node_modules/
 lerna-debug.log
 /lib/

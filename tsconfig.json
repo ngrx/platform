@@ -35,6 +35,8 @@
     }
   },
   "exclude": [
+    "bazel-out",
+    "dist",
     "node_modules",
     "**/*/node_modules",
     "modules/schematics/src/*/files/**/*"
@@ -43,5 +45,8 @@
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
+  },
+  "bazelOptions": {
+    "suppressTsconfigOverrideWarnings": true
   }
 }
