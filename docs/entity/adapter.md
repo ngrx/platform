@@ -136,7 +136,7 @@ export class AddUser implements Action {
 export class UpsertUser implements Action {
   readonly type = UserActionTypes.UPSERT_USER;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: Update<User> }) {}
 }
 
 export class AddUsers implements Action {
@@ -148,7 +148,7 @@ export class AddUsers implements Action {
 export class UpsertUsers implements Action {
   readonly type = UserActionTypes.UPSERT_USERS;
 
-  constructor(public payload: { users: User[] }) {}
+  constructor(public payload: { users: Update<User>[] }) {}
 }
 
 export class UpdateUser implements Action {
