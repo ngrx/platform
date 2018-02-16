@@ -84,4 +84,45 @@ describe('Store Schematic', () => {
     const content = getFileContent(tree, '/src/app/app.module.ts');
     expect(content).toMatch(/import \* as fromFoo from '\.\/reducers';/);
   });
+
+  it('should support a default root state interface name', () => {
+    const options = { ...defaultOptions, name: 'State' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    expect(content).toMatch(/export interface State {/);
+  });
+
+  it('should support a custom root state interface name', () => {
+    const options = {
+      ...defaultOptions,
+      name: 'State',
+      stateInterface: 'AppState',
+    };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    expect(content).toMatch(/export interface AppState {/);
+  });
+
+  it('should support a default feature state interface name', () => {
+    const options = { ...defaultOptions, root: false, name: 'Feature' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    expect(content).toMatch(/export interface State {/);
+  });
+
+  it('should support a custom feature state interface name', () => {
+    const options = {
+      ...defaultOptions,
+      root: false,
+      name: 'Feature',
+      stateInterface: 'FeatureState',
+    };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    expect(content).toMatch(/export interface FeatureState {/);
+  });
 });
