@@ -16,7 +16,7 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
  - [@ngrx/store](../docs/store/README.md) - RxJS powered state management for Angular apps, inspired by Redux
  - [@ngrx/effects](../docs/effects/README.md) - Side effect model for @ngrx/store
  - [@ngrx/router-store](../docs/router-store/README.md) - Bindings to connect the Angular Router to @ngrx/store
- - [@ngrx/entity](../docs/entity/README.md) - RxJS powered IndexedDB for Angular apps
+ - [@ngrx/entity](../docs/entity/README.md) - Entity State adapter for managing record collections.
  - [@ngrx/store-devtools](../docs/store-devtools/README.md) - Instrumentation for @ngrx/store enabling time-travel debugging
  - [@ngrx/db](https://github.com/ngrx/db) - RxJS powered IndexedDB for Angular apps
  - [@angular/router](https://github.com/angular/angular) - Angular Router
