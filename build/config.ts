@@ -36,11 +36,6 @@ export const packages: PackageDescription[] = [
     bundle: true,
   },
   {
-    name: 'codegen',
-    hasTestingModule: false,
-    bundle: true,
-  },
-  {
     name: 'schematics',
     hasTestingModule: false,
     bundle: false,
