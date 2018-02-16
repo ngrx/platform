@@ -20,6 +20,11 @@ jobs:
     docker:
       - image: circleci/node:latest-browsers
     steps:
+      - checkout
+      - restore_cache:
+          key: yarn-cache
+      - run: yarn
+      - run: yarn run build
       - run: yarn run deploy:builds
 workflows:
   version: 2
