@@ -43,6 +43,12 @@
       "type": "boolean",
       "default": false,
       "description": "Flag to setup the root state or feature state."
+    },
+    "stateInterface": {
+      "type": "string",
+      "default": "State",
+      "description": "Specifies the interface for the state.",
+      "alias": "si"
     }
   },
   "required": [

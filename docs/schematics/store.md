@@ -35,7 +35,13 @@ Provide the folder where the state files will be created.
 
 - `--statePath`
   - Type: `string`
-  - Default: `reducers` 
+  - Default: `reducers`
+
+Provide the name of the interface exported for your state. When defining with the `--root` option, the name of the store will be used to define the interface name.
+
+- `--stateInterface`
+  - Type: `string`
+  - Default: `State`
 
 #### Examples
 

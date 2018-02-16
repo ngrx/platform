@@ -145,6 +145,14 @@ export default function(options: StoreOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
+    if (
+      options.root &&
+      options.stateInterface &&
+      options.stateInterface !== 'State'
+    ) {
+      options.stateInterface = stringUtils.classify(options.stateInterface);
+    }
+
     const templateSource = apply(url('./files'), [
       template({
         ...stringUtils,
