@@ -7,13 +7,13 @@ import {
 } from '@ngrx/store';
 import { environment } from '<%= environmentsPath %>';
 
-export interface State {
+export interface <%= classify(stateInterface) %> {
 
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<<%= classify(stateInterface) %>> = {
 
 };
 
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<<%= classify(stateInterface) %>>[] = !environment.production ? [] : [];

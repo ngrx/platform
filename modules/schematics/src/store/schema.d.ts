@@ -17,4 +17,8 @@ export interface Schema {
   module?: string;
   statePath?: string;
   root?: boolean;
+  /**
+   * Specifies the interface for the state
+   */
+  stateInterface?: string;
 }
