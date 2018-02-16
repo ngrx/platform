@@ -80,6 +80,9 @@ jobs:
     docker:
       - image: circleci/node:latest-browsers
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
       - restore_cache:
           key: *cache_key
