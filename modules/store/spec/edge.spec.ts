@@ -1,7 +1,7 @@
+import { TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { todos, todoCount } from './fixtures/edge_todos';
-import { createInjector } from './helpers/injector';
-import { Store, StoreModule, select } from '../';
+import { Store, StoreModule, select } from '@ngrx/store';
 
 interface TestAppSchema {
   counter1: number;
@@ -21,11 +21,13 @@ describe('ngRx Store', () => {
     let store: Store<TodoAppSchema>;
 
     beforeEach(() => {
-      const injector = createInjector(
-        StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any)
-      );
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any),
+        ],
+      });
 
-      store = injector.get(Store);
+      store = TestBed.get(Store);
     });
 
     it('should provide an Observable Store', () => {

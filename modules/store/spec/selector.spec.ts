@@ -6,7 +6,7 @@ import {
   createFeatureSelector,
   defaultMemoize,
   createSelectorFactory,
-} from '../';
+} from '@ngrx/store';
 
 describe('Selectors', () => {
   let countOne: number;
