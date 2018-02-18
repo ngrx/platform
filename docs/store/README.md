@@ -96,7 +96,7 @@ export class MyAppComponent {
   count$: Observable<number>;
 
   constructor(private store: Store<AppState>) {
-    this.count$ = store.pipe(select('count'));
+    this.count$ = this.store.pipe(select('count'));
   }
 
   increment(){
