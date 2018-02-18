@@ -35,11 +35,10 @@ node_repositories(package_json = ["//:package.json"])
 
 ####################################
 # Fetch and install the TypeScript rules
-http_archive(
+git_repository(
     name = "build_bazel_rules_typescript",
-    url = "https://github.com/bazelbuild/rules_typescript/archive/0.10.1.zip",
-    strip_prefix = "rules_typescript-0.10.1",
-    sha256 = "a2c81776a4a492ff9f878f9705639f5647bef345f7f3e1da09c9eeb8dec80485",
+    remote = "git@github.com:alexeagle/rules_typescript.git",
+    commit = "623565514d6bad77d9310f2658bf8457eb4979bb",
 )
 
 load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
@@ -68,11 +67,20 @@ local_repository(
     path = "node_modules/@angular/bazel",
 )
 
+git_repository(
+    name = "angular_devkit",
+    remote = "git@github.com:alexeagle/devkit.git",
+    commit = "2a2bcb7650394fd4d6c5c999e744b9fbf78e5719",
+)
+
 local_repository(
     name = "rxjs",
     path = "node_modules/rxjs/src",
 )
 
+load("@angular//:index.bzl", "ng_setup_workspace")
+
+ng_setup_workspace()
 
 ####################################
 # Bazel will fetch its own dependencies from npm.

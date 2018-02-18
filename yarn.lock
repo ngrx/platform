@@ -32,6 +32,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/bazel@alexeagle/bazel-builds#a208b5a8b555ecae0a4b5496a00b45aa181d12de":
+  version "6.0.0-beta.4-f693be3"
+  resolved "https://codeload.github.com/alexeagle/bazel-builds/tar.gz/a208b5a8b555ecae0a4b5496a00b45aa181d12de"
+  dependencies:
+    "@types/node" "6.0.84"
+
 "@angular/cdk@^2.0.0-beta.12":
   version "2.0.0-beta.12"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-2.0.0-beta.12.tgz#3a243cb62b93f4e039120ba70f900dc9e235622e"
@@ -236,6 +242,10 @@
 "@types/node@*", "@types/node@^7.0.5":
   version "7.0.34"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.34.tgz#eed5c95291a9dddff6b9f5a72ca342b1e72f0ba2"
+
+"@types/node@6.0.84":
+  version "6.0.84"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.84.tgz#193ffe5a9f42864d425ffd9739d95b753c6a1eab"
 
 "@types/node@^6.0.46":
   version "6.0.68"

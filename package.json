@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "@angular/animations": "^5.0.0",
+    "@angular/bazel": "alexeagle/bazel-builds#510158e7992f91276f2c147552c9492b32fc85ce",
     "@angular/cli": "^1.5.0",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
