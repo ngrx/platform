@@ -39,7 +39,7 @@ exports[`Find Book Page should compile 1`] = `
           
         <mat-input-container
           _ngcontent-c0=""
-          class="mat-input-container mat-form-field ng-tns-c3-0 mat-form-field-type-mat-input mat-form-field-can-float mat-primary"
+          class="mat-input-container mat-form-field ng-tns-c3-0 mat-primary mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-hide-placeholder"
         >
           <div
             class="mat-input-wrapper mat-form-field-wrapper"
@@ -56,6 +56,7 @@ exports[`Find Book Page should compile 1`] = `
                 <input
                   _ngcontent-c0=""
                   aria-invalid="false"
+                  aria-required="false"
                   class="mat-input-element mat-form-field-autofill-control"
                   id="mat-input-0"
                   matinput=""
@@ -66,15 +67,19 @@ exports[`Find Book Page should compile 1`] = `
                 
           
                 <span
-                  class="mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
+                  class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
                 >
                   
                   <label
                     aria-owns="mat-input-0"
-                    class="mat-input-placeholder mat-form-field-placeholder ng-tns-c3-0 mat-empty mat-form-field-empty"
+                    class="mat-form-field-label mat-input-placeholder mat-form-field-placeholder ng-tns-c3-0 mat-empty mat-form-field-empty ng-star-inserted"
                     for="mat-input-0"
+                    ng-reflect-ng-switch="false"
                   >
-                    Search for a book 
+                    
+                    
+                    Search for a book
+                    
                     
                   </label>
                 </span>
@@ -95,7 +100,7 @@ exports[`Find Book Page should compile 1`] = `
               
               
               <div
-                class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c3-0 ng-trigger ng-trigger-transitionMessages"
+                class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c3-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
                 style="opacity: 1;"
               >
                 
@@ -121,13 +126,13 @@ exports[`Find Book Page should compile 1`] = `
             focusable="false"
             preserveAspectRatio="xMidYMid meet"
             style="width: 30px; height: 30px;"
-            viewBox="0 0 30 30"
+            viewBox="0 0 23 23"
           >
             <circle
               cx="50%"
               cy="50%"
               r="10"
-              style="stroke-dasharray: 62.83185307179586px; stroke-width: 3px;"
+              style="stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
             />
           </svg>
         </mat-spinner>
