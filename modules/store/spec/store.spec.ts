@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/take';
 import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { hot } from 'jasmine-marbles';
-import { createInjector } from './helpers/injector';
 import {
   ActionsSubject,
   ReducerManager,
@@ -26,7 +26,6 @@ interface TestAppSchema {
 }
 
 describe('ngRx Store', () => {
-  let injector: ReflectiveInjector;
   let store: Store<TestAppSchema>;
   let dispatcher: ActionsSubject;
 
@@ -37,9 +36,12 @@ describe('ngRx Store', () => {
       counter3: counterReducer,
     };
 
-    injector = createInjector(StoreModule.forRoot(reducers, { initialState }));
-    store = injector.get(Store);
-    dispatcher = injector.get(ActionsSubject);
+    TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot(reducers, { initialState })],
+    });
+
+    store = TestBed.get(Store);
+    dispatcher = TestBed.get(ActionsSubject);
   }
 
   describe('initial state', () => {
@@ -199,7 +201,7 @@ describe('ngRx Store', () => {
 
     beforeEach(() => {
       setup();
-      const reducerManager = injector.get(ReducerManager);
+      const reducerManager = TestBed.get(ReducerManager);
       addReducerSpy = spyOn(reducerManager, 'addReducer').and.callThrough();
       removeReducerSpy = spyOn(
         reducerManager,

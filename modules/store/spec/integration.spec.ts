@@ -10,7 +10,7 @@ import {
   ActionReducer,
   ActionReducerMap,
   select,
-} from '../';
+} from '@ngrx/store';
 import { ReducerManager, INITIAL_STATE, State } from '../src/private_export';
 import {
   counterReducer,

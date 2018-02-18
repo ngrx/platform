@@ -7,8 +7,7 @@ import {
   ActionReducer,
   ActionReducerMap,
   combineReducers,
-} from '../';
-import createSpy = jasmine.createSpy;
+} from '@ngrx/store';
 
 describe(`Store Modules`, () => {
   type RootState = { fruit: string };
@@ -48,14 +47,14 @@ describe(`Store Modules`, () => {
     const rootInitial = { fruit: 'orange' };
 
     beforeEach(() => {
-      featureAReducerFactory = createSpy('featureAReducerFactory').and.callFake(
-        (rm: any, initialState?: any) => {
+      featureAReducerFactory = jasmine
+        .createSpy('featureAReducerFactory')
+        .and.callFake((rm: any, initialState?: any) => {
           return (state: any, action: any) => 4;
-        }
-      );
-      rootReducerFactory = createSpy('rootReducerFactory').and.callFake(
-        combineReducers
-      );
+        });
+      rootReducerFactory = jasmine
+        .createSpy('rootReducerFactory')
+        .and.callFake(combineReducers);
 
       @NgModule({
         imports: [

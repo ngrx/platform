@@ -1,17 +1,26 @@
-# Marker file indicating this folder is a Bazel package.
-# Needed so that tsconfig.json can be referenced from BUILD rules.
+package(default_visibility = ["//visibility:public"])
 
+# Needed so that tsconfig.json can be referenced from BUILD rules.
 exports_files(["tsconfig.json"])
 
-# Temporary target to allow `bazel test ...`
-# TODO(alexeagle): remove as soon as there is any other test in the repo
-genrule(
-    name = "true",
-    outs = ["true.sh"],
-    cmd = "echo true > $@",
-)
-
-sh_test(
-    name = "tautology_test",
-    srcs = [":true.sh"],
+filegroup(
+    name = "ngrx_test_dependencies",
+    # NB: rxjs is not in this list, because we build it from sources using the
+    # label @rxjs//:rxjs
+    srcs = glob(["/".join([
+        "node_modules",
+        pkg,
+        "**",
+        ext,
+    ]) for pkg in [
+        "@angular",
+        "jasmine",
+        "jasmine-marbles",
+        "typescript",
+        "@types",
+    ] for ext in [
+        "*.js",
+        "*.json",
+        "*.d.ts",
+    ]]),
 )
