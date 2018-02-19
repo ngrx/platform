@@ -85,7 +85,7 @@ export function insertImport(
 
   // no such import declaration exists
   const useStrict = findNodes(rootNode, ts.SyntaxKind.StringLiteral).filter(
-    (n: ts.StringLiteral) => n.text === 'use strict'
+    n => n.getText() === 'use strict'
   );
   let fallbackPos = 0;
   if (useStrict.length > 0) {

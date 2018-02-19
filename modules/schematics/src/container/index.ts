@@ -126,9 +126,12 @@ export default function(options: FeatureOptions): Rule {
       throw new SchematicsException(`sourceDir option is required.`);
     }
 
-    const opts = ['state', 'stateInterface'].reduce((current, key) => {
-      return omit(current, key as any);
-    }, options);
+    const opts = ['state', 'stateInterface'].reduce(
+      (current: Partial<FeatureOptions>, key) => {
+        return omit(current, key as any);
+      },
+      options
+    );
 
     const templateSource = apply(url('./files'), [
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
