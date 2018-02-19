@@ -194,7 +194,7 @@ export function getDecoratorMetadata(
     source,
     ts.SyntaxKind.ImportDeclaration
   )
-    .map((node: ts.ImportDeclaration) => _angularImportsFromNode(node, source))
+    .map(node => _angularImportsFromNode(node as ts.ImportDeclaration, source))
     .reduce(
       (
         acc: { [name: string]: string },
@@ -271,7 +271,7 @@ function _addSymbolToNgModuleMetadata(
     .filter(prop => prop.kind == ts.SyntaxKind.PropertyAssignment)
     // Filter out every fields that's not "metadataField". Also handles string literals
     // (but not expressions).
-    .filter((prop: ts.PropertyAssignment) => {
+    .filter((prop: any) => {
       const name = prop.name;
       switch (name.kind) {
         case ts.SyntaxKind.Identifier:
@@ -361,7 +361,7 @@ function _addSymbolToNgModuleMetadata(
     );
 
     if (effectsModule && symbolName.includes('EffectsModule')) {
-      const effectsArgs = (effectsModule as ts.CallExpression).arguments.shift();
+      const effectsArgs = (effectsModule as any).arguments.shift();
 
       if (
         effectsArgs &&
