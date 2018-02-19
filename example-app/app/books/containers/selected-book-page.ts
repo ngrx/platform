@@ -19,7 +19,7 @@ import { Book } from '../models/book';
   `,
 })
 export class SelectedBookPageComponent {
-  book$: Observable<Book>;
+  book$: Observable<'' | Book | null>;
   isSelectedBookInCollection$: Observable<boolean>;
 
   constructor(private store: Store<fromBooks.State>) {

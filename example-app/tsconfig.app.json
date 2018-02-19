@@ -15,6 +15,8 @@
     "types": [],
     "baseUrl": ".",
     "rootDir": "../",
+    "skipLibCheck": true,
+    "strict": true,
     "paths": {
       "@ngrx/effects": [
         "../modules/effects"

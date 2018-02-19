@@ -17,8 +17,8 @@ import { User, Authenticate } from '../models/user';
 export class AuthEffects {
   @Effect()
   login$ = this.actions$.pipe(
-    ofType(AuthActionTypes.Login),
-    map((action: Login) => action.payload),
+    ofType<Login>(AuthActionTypes.Login),
+    map(action => action.payload),
     exhaustMap((auth: Authenticate) =>
       this.authService
         .login(auth)

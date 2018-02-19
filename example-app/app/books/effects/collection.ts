@@ -55,8 +55,8 @@ export class CollectionEffects {
 
   @Effect()
   addBookToCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(CollectionActionTypes.AddBook),
-    map((action: AddBook) => action.payload),
+    ofType<AddBook>(CollectionActionTypes.AddBook),
+    map(action => action.payload),
     mergeMap(book =>
       this.db
         .insert('books', [book])
@@ -69,8 +69,8 @@ export class CollectionEffects {
 
   @Effect()
   removeBookFromCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(CollectionActionTypes.RemoveBook),
-    map((action: RemoveBook) => action.payload),
+    ofType<RemoveBook>(CollectionActionTypes.RemoveBook),
+    map(action => action.payload),
     mergeMap(book =>
       this.db
         .executeWrite('books', 'delete', [book.id])
