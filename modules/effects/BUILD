@@ -7,6 +7,7 @@ ts_library(
         "src/**/*.ts",
     ]),
     module_name = "@ngrx/effects",
+    visibility = ["//visibility:public"],
     deps = [
         "//modules/store",
         "@rxjs",
