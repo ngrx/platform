@@ -1,4 +1,8 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import {
+  createSelector,
+  createFeatureSelector,
+  ActionReducerMap,
+} from '@ngrx/store';
 import * as fromSearch from './search';
 import * as fromBooks from './books';
 import * as fromCollection from './collection';
@@ -14,7 +18,7 @@ export interface State extends fromRoot.State {
   books: BooksState;
 }
 
-export const reducers = {
+export const reducers: ActionReducerMap<BooksState> = {
   search: fromSearch.reducer,
   books: fromBooks.reducer,
   collection: fromCollection.reducer,
