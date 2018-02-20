@@ -111,7 +111,7 @@ describe('EffectSources', () => {
 
     function toActions(source: any): Observable<any> {
       source['errorHandler'] = mockErrorReporter;
-      return effectSources.toActions.call(source);
+      return (effectSources as any)['toActions'].call(source);
     }
   });
 

@@ -1,14 +1,15 @@
 load("//tools:defaults.bzl", "ts_library")
 
 ts_library(
-    name = "entity",
+    name = "testing",
     srcs = glob([
         "*.ts",
         "src/**/*.ts",
     ]),
-    module_name = "@ngrx/entity",
+    module_name = "@ngrx/effects/testing",
     visibility = ["//visibility:public"],
     deps = [
-        "//modules/store",
+        "//modules/effects",
+        "@rxjs",
     ],
 )
