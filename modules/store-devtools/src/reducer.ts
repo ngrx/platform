@@ -413,6 +413,12 @@ export function liftReducerWith(
             options.stateSanitizer
           );
 
+          // Recompute state history with latest reducer and update action
+          computedStates = computedStates.map(cmp => ({
+            ...cmp,
+            state: reducer(cmp.state, liftedAction),
+          }));
+
           currentStateIndex = minInvalidatedStateIndex;
 
           if (options.maxAge && stagedActionIds.length > options.maxAge) {
