@@ -45,6 +45,7 @@ export interface ReduxDevtoolsExtensionConfig {
   name: string | undefined;
   instanceId: string;
   maxAge?: number;
+  serialize?: boolean;
 }
 
 export interface ReduxDevtoolsExtension {
@@ -54,7 +55,7 @@ export interface ReduxDevtoolsExtension {
   send(
     action: any,
     state: any,
-    options: StoreDevtoolsConfig,
+    options: ReduxDevtoolsExtensionConfig,
     instanceId?: string
   ): void;
 }
@@ -112,7 +113,7 @@ export class DevtoolsExtension {
       this.devtoolsExtension.send(
         null,
         sanitizedLiftedState,
-        this.config,
+        this.getExtensionConfig(),
         this.instanceId
       );
     }
@@ -124,22 +125,9 @@ export class DevtoolsExtension {
     }
 
     return new Observable(subscriber => {
-      let extensionOptions: ReduxDevtoolsExtensionConfig = {
-        instanceId: this.instanceId,
-        name: this.config.name,
-        features: this.config.features,
-        // The action/state sanitizers are not added to the config
-        // because sanitation is done in this class already.
-        // It is done before sending it to the devtools extension for consistency:
-        // - If we call extensionConnection.send(...),
-        //   the extension would call the sanitizers.
-        // - If we call devtoolsExtension.send(...) (aka full state update),
-        //   the extension would NOT call the sanitizers, so we have to do it ourselves.
-      };
-      if (this.config.maxAge !== false /* support === 0 */) {
-        extensionOptions.maxAge = this.config.maxAge;
-      }
-      const connection = this.devtoolsExtension.connect(extensionOptions);
+      const connection = this.devtoolsExtension.connect(
+        this.getExtensionConfig()
+      );
       this.extensionConnection = connection;
       connection.init();
 
@@ -227,5 +215,25 @@ export class DevtoolsExtension {
     return this.config.stateSanitizer
       ? this.config.stateSanitizer(state, stateIdx)
       : state;
+  }
+
+  private getExtensionConfig() {
+    const extensionOptions: ReduxDevtoolsExtensionConfig = {
+      instanceId: this.instanceId,
+      name: this.config.name,
+      features: this.config.features,
+      serialize: this.config.serialize,
+      // The action/state sanitizers are not added to the config
+      // because sanitation is done in this class already.
+      // It is done before sending it to the devtools extension for consistency:
+      // - If we call extensionConnection.send(...),
+      //   the extension would call the sanitizers.
+      // - If we call devtoolsExtension.send(...) (aka full state update),
+      //   the extension would NOT call the sanitizers, so we have to do it ourselves.
+    };
+    if (this.config.maxAge !== false /* support === 0 */) {
+      extensionOptions.maxAge = this.config.maxAge;
+    }
+    return extensionOptions;
   }
 }

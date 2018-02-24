@@ -1,7 +1,10 @@
 import { LiftedActions, ComputedState, LiftedAction } from './../src/reducer';
 import { PerformAction, PERFORM_ACTION } from './../src/actions';
 import { ActionSanitizer, StateSanitizer } from './../src/config';
-import { ReduxDevtoolsExtensionConnection } from './../src/extension';
+import {
+  ReduxDevtoolsExtensionConnection,
+  ReduxDevtoolsExtensionConfig,
+} from './../src/extension';
 import { Action } from '@ngrx/store';
 
 import { LiftedState } from '../';
@@ -11,19 +14,20 @@ import { unliftState } from '../src/utils';
 
 function createOptions(
   name: string = 'NgRx Store DevTools',
-  actionSanitizer?: ActionSanitizer,
-  stateSanitizer?: StateSanitizer
+  features: any = false,
+  serialize: boolean = false,
+  maxAge: false | number = false
 ) {
-  return {
-    maxAge: false,
-    monitor: noMonitor,
-    actionSanitizer,
-    stateSanitizer,
+  const options: ReduxDevtoolsExtensionConfig = {
+    instanceId: 'ngrx-store-1509655064369',
     name,
-    serialize: false,
-    logOnly: false,
-    features: false,
+    features,
+    serialize,
   };
+  if (maxAge !== false /* support === 0 */) {
+    options.maxAge = maxAge;
+  }
+  return options;
 }
 
 function createState(
@@ -69,6 +73,49 @@ describe('DevtoolsExtension', () => {
     spyOn(Date, 'now').and.returnValue('1509655064369');
   });
 
+  function myActionSanitizer(action: Action, idx: number) {
+    return action;
+  }
+
+  function myStateSanitizer(state: any, idx: number) {
+    return state;
+  }
+
+  it('should connect with default options', () => {
+    devtoolsExtension = new DevtoolsExtension(
+      reduxDevtoolsExtension,
+      createConfig({})
+    );
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    const defaultOptions = createOptions();
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(defaultOptions);
+  });
+
+  it('should connect with given options', () => {
+    devtoolsExtension = new DevtoolsExtension(
+      reduxDevtoolsExtension,
+      createConfig({
+        name: 'ngrx-store-devtool-todolist',
+        features: 'some features',
+        maxAge: 10,
+        serialize: true,
+        // these two should not be added
+        actionSanitizer: myActionSanitizer,
+        stateSanitizer: myStateSanitizer,
+      })
+    );
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    const options = createOptions(
+      'ngrx-store-devtool-todolist',
+      'some features',
+      true,
+      10
+    );
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
+  });
+
   describe('notify', () => {
     it('should send notification with default options', () => {
       devtoolsExtension = new DevtoolsExtension(
@@ -87,26 +134,24 @@ describe('DevtoolsExtension', () => {
       );
     });
 
-    function myActionSanitizer(action: Action, idx: number) {
-      return action;
-    }
-    function myStateSanitizer(state: any, idx: number) {
-      return state;
-    }
-
     it('should send notification with given options', () => {
       devtoolsExtension = new DevtoolsExtension(
         reduxDevtoolsExtension,
         createConfig({
+          name: 'ngrx-store-devtool-todolist',
+          features: 'some features',
+          maxAge: 10,
+          serialize: true,
+          // these two should not be added
           actionSanitizer: myActionSanitizer,
           stateSanitizer: myStateSanitizer,
-          name: 'ngrx-store-devtool-todolist',
         })
       );
-      const defaultOptions = createOptions(
+      const options = createOptions(
         'ngrx-store-devtool-todolist',
-        myActionSanitizer,
-        myStateSanitizer
+        'some features',
+        true,
+        10
       );
       const action = {} as LiftedAction;
       const state = createState();
@@ -114,7 +159,7 @@ describe('DevtoolsExtension', () => {
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         state,
-        defaultOptions,
+        options,
         'ngrx-store-1509655064369'
       );
     });
@@ -185,7 +230,7 @@ describe('DevtoolsExtension', () => {
         });
 
         it('for normal action', () => {
-          const options = createOptions(undefined, testActionSanitizer);
+          const options = createOptions();
           const action = createPerformAction();
           const state = createState();
           const sanitizedAction = {
@@ -201,7 +246,7 @@ describe('DevtoolsExtension', () => {
         });
 
         it('for action that requires full state update', () => {
-          const options = createOptions(undefined, testActionSanitizer);
+          const options = createOptions();
           const action = {} as LiftedAction;
           const state = createState();
           const sanitizedState = createState({
@@ -245,11 +290,7 @@ describe('DevtoolsExtension', () => {
         });
 
         it('for action that requires full state update', () => {
-          const options = createOptions(
-            undefined,
-            undefined,
-            testStateSanitizer
-          );
+          const options = createOptions();
           const action = {} as LiftedAction;
           const state = createState();
           const sanitizedState = createState(undefined, [
