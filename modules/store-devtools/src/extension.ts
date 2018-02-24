@@ -8,9 +8,18 @@ import { share } from 'rxjs/operator/share';
 import { switchMap } from 'rxjs/operator/switchMap';
 import { takeUntil } from 'rxjs/operator/takeUntil';
 
-import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
-import { LiftedState } from './reducer';
-import { PerformAction } from './actions';
+import {
+  STORE_DEVTOOLS_CONFIG,
+  StoreDevtoolsConfig,
+  StateSanitizer,
+} from './config';
+import {
+  LiftedState,
+  LiftedActions,
+  ComputedState,
+  LiftedAction,
+} from './reducer';
+import { PerformAction, PERFORM_ACTION } from './actions';
 import { applyOperators, unliftState } from './utils';
 
 export const ExtensionActionTypes = {
@@ -36,7 +45,6 @@ export interface ReduxDevtoolsExtensionConfig {
   name: string | undefined;
   instanceId: string;
   maxAge?: number;
-  actionSanitizer?: (action: Action, id: number) => Action;
 }
 
 export interface ReduxDevtoolsExtension {
@@ -68,7 +76,7 @@ export class DevtoolsExtension {
     this.createActionStreams();
   }
 
-  notify(action: Action, state: LiftedState) {
+  notify(action: LiftedAction, state: LiftedState) {
     if (!this.devtoolsExtension) {
       return;
     }
@@ -86,12 +94,27 @@ export class DevtoolsExtension {
     //   c) the state has been recomputed due to time-traveling
     //   d) any action that is not a PerformAction to err on the side of
     //      caution.
-    if (action instanceof PerformAction) {
+    if (action.type === PERFORM_ACTION) {
       const currentState = unliftState(state);
-      this.extensionConnection.send(action.action, currentState);
+      const sanitizedState = this.sanitizeState(
+        currentState,
+        state.currentStateIndex
+      );
+      const sanitizedAction = this.sanitizeAction(action, state.nextActionId);
+      this.extensionConnection.send(sanitizedAction, sanitizedState);
     } else {
-      // Requires full state update;
-      this.devtoolsExtension.send(null, state, this.config, this.instanceId);
+      // Requires full state update
+      const sanitizedLiftedState = {
+        ...state,
+        actionsById: this.sanitizeActions(state.actionsById),
+        computedStates: this.sanitizeStates(state.computedStates),
+      };
+      this.devtoolsExtension.send(
+        null,
+        sanitizedLiftedState,
+        this.config,
+        this.instanceId
+      );
     }
   }
 
@@ -105,7 +128,13 @@ export class DevtoolsExtension {
         instanceId: this.instanceId,
         name: this.config.name,
         features: this.config.features,
-        actionSanitizer: this.config.actionSanitizer,
+        // The action/state sanitizers are not added to the config
+        // because sanitation is done in this class already.
+        // It is done before sending it to the devtools extension for consistency:
+        // - If we call extensionConnection.send(...),
+        //   the extension would call the sanitizers.
+        // - If we call devtoolsExtension.send(...) (aka full state update),
+        //   the extension would NOT call the sanitizers, so we have to do it ourselves.
       };
       if (this.config.maxAge !== false /* support === 0 */) {
         extensionOptions.maxAge = this.config.maxAge;
@@ -157,5 +186,46 @@ export class DevtoolsExtension {
 
   private unwrapAction(action: Action) {
     return typeof action === 'string' ? eval(`(${action})`) : action;
+  }
+
+  private sanitizeActions(actions: LiftedActions) {
+    if (this.config.actionSanitizer) {
+      return Object.keys(actions).reduce(
+        (sanitizedActions, actionIdx) => {
+          const idx = Number(actionIdx);
+          sanitizedActions[idx] = this.sanitizeAction(actions[idx], idx);
+          return sanitizedActions;
+        },
+        <LiftedActions>{}
+      );
+    } else {
+      return actions;
+    }
+  }
+
+  private sanitizeAction(action: LiftedAction, actionIdx: number) {
+    return this.config.actionSanitizer
+      ? {
+          ...action,
+          action: this.config.actionSanitizer(action.action, actionIdx),
+        }
+      : action;
+  }
+
+  private sanitizeStates(states: ComputedState[]) {
+    if (this.config.stateSanitizer) {
+      return states.map((computedState, idx) => ({
+        state: this.sanitizeState(computedState.state, idx),
+        error: computedState.error,
+      }));
+    } else {
+      return states;
+    }
+  }
+
+  private sanitizeState(state: any, stateIdx: number) {
+    return this.config.stateSanitizer
+      ? this.config.stateSanitizer(state, stateIdx)
+      : state;
   }
 }
