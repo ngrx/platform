@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { LiftedState } from './reducer';
+import { LiftedState, LiftedAction } from './reducer';
 import * as Actions from './actions';
 
 export function difference(first: any[], second: any[]) {
@@ -17,7 +17,7 @@ export function unliftState(liftedState: LiftedState) {
   return state;
 }
 
-export function unliftAction(liftedState: LiftedState) {
+export function unliftAction(liftedState: LiftedState): LiftedAction {
   return liftedState.actionsById[liftedState.nextActionId - 1];
 }
 
