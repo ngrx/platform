@@ -1,4 +1,11 @@
-import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
+import {
+  EntityState,
+  EntityStateAdapter,
+  IdSelector,
+  SelectedId,
+  SelectedIds,
+  Update,
+} from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import 'core-js/es6/object';
 
@@ -83,7 +90,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return <S>Object.assign({}, state, {
       ids: [],
       entities: {},
-      selectedIds: new Set<string | number>(),
+      selectedIds: new Set<SelectedId>(),
     });
   }
 
@@ -178,21 +185,23 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
 
   function unSelectAll(state: R): R;
   function unSelectAll(state: any): R {
-    return { ...state, selectedIds: new Set<string | number>() };
+    return { ...state, selectedIds: new Set<SelectedId>() };
   }
 
   function selectAll(state: R): R;
   function selectAll(state: any): R {
     const didMutate = state.ids.length > 0;
     if (didMutate) {
-      return { ...state, selectedIds: new Set<string | number>(state.ids) };
+      return { ...state, selectedIds: new Set<SelectedId>(state.ids) };
     }
     return state;
   }
 
-  function selectManyMutably(keys: string[], state: R): DidMutate;
-  function selectManyMutably(keys: string[], state: any): DidMutate {
-    const filteredKeys = keys.filter(key => key in state.entities);
+  function selectManyMutably(keys: SelectedIds, state: R): DidMutate;
+  function selectManyMutably(keys: SelectedIds, state: any): DidMutate {
+    const filteredKeys: SelectedIds = (<any>keys).filter(
+      (key: SelectedId) => key in state.entities
+    );
     const didMutate = filteredKeys.length > 0;
     if (didMutate) {
       const values = [...Array.from(state.selectedIds.values()), ...keys];
@@ -202,29 +211,33 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return DidMutate.None;
   }
 
-  function selectOneMutably(key: string, state: R): DidMutate;
-  function selectOneMutably(key: string, state: any): DidMutate {
+  function selectOneMutably(key: SelectedId, state: R): DidMutate;
+  function selectOneMutably(key: SelectedId, state: any): DidMutate {
     return selectManyMutably([key], state);
   }
 
-  function unSelectManyMutably(keys: string[], state: R): DidMutate;
-  function unSelectManyMutably(keys: string[], state: any): DidMutate {
-    const filteredKeys: string[] = keys.filter(key => key in state.entities);
+  function unSelectManyMutably(keys: SelectedIds, state: R): DidMutate;
+  function unSelectManyMutably(keys: SelectedIds, state: any): DidMutate {
+    const filteredKeys: SelectedIds = (<any>keys).filter(
+      (key: SelectedId) => key in state.entities
+    );
     const someKey = filteredKeys.length > 0;
-    const someIncludes = filteredKeys.some(key => state.selectedIds.has(key));
+    const someIncludes = filteredKeys.some((key: SelectedId) =>
+      state.selectedIds.has(key)
+    );
     const didMutate = someKey && someIncludes;
     if (didMutate) {
-      const filteredValues: string[] = (<string[]>Array.from(
+      const filteredValues: SelectedIds = (<SelectedIds>Array.from(
         state.selectedIds.values()
-      )).filter((key: string) => !filteredKeys.includes(key));
-      state.selectedIds = new Set<string | number>(filteredValues);
+      )).filter((key: SelectedId) => !filteredKeys.includes(key));
+      state.selectedIds = new Set<SelectedId>(filteredValues);
       return DidMutate.SelectedIdsOnly;
     }
     return DidMutate.None;
   }
 
-  function unSelectOneMutably(key: string, state: R): DidMutate;
-  function unSelectOneMutably(key: string, state: any): DidMutate {
+  function unSelectOneMutably(key: SelectedId, state: R): DidMutate;
+  function unSelectOneMutably(key: SelectedId, state: any): DidMutate {
     return unSelectManyMutably([key], state);
   }
 
