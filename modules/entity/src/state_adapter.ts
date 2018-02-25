@@ -23,24 +23,24 @@ export function createStateOperator<V, R>(
     const didMutate = mutator(arg, clonedEntityState);
     switch (didMutate) {
       case DidMutate.EntitiesOnly:
-        return <S>{
+        return {
           ...state,
           entities: clonedEntityState.entities,
         };
       case DidMutate.SelectedIdsOnly:
-        return <S>{
+        return {
           ...state,
           selectedIds: clonedEntityState.selectedIds,
         };
 
       case DidMutate.EntitiesAndIds:
-        return <S>{
+        return {
           ...state,
           entities: clonedEntityState.entities,
           ids: clonedEntityState.ids,
         };
       case DidMutate.All:
-        return <S>Object.assign({}, state, clonedEntityState);
+        return Object.assign({}, state, clonedEntityState);
     }
 
     return state;

@@ -11,7 +11,7 @@ import { createUnsortedStateAdapter } from './unsorted_state_adapter';
 
 export function createSortedStateAdapter<T>(
   selectId: IdSelector<T>,
-  sort: Comparer<T> | false
+  sort: Comparer<T>
 ): EntityStateAdapter<T>;
 export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   type R = EntityState<T>;

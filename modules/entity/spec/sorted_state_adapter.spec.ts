@@ -61,7 +61,6 @@ describe('Sorted State Adapter', () => {
 
   it('should let you add many entities to the state', () => {
     const withOneEntity = adapter.addOne(TheGreatGatsby, state);
-
     const withManyMore = adapter.addMany(
       [AClockworkOrange, AnimalFarm],
       withOneEntity

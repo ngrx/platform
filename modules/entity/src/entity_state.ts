@@ -14,7 +14,7 @@ export function createInitialStateFactory<V>() {
     additionalState: S
   ): EntityState<V> & S;
   function getInitialState(additionalState: any = {}): any {
-    return { ...getInitialEntityState(), ...additionalState };
+    return Object.assign(getInitialEntityState(), additionalState);
   }
 
   return { getInitialState };

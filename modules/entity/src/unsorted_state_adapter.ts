@@ -7,7 +7,6 @@ import {
   Update,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
-import 'core-js/es6/object';
 
 export function createUnsortedStateAdapter<T>(
   selectId: IdSelector<T>
@@ -78,7 +77,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
       return DidMutate.All;
     }
 
-    if (didMutate && !didSelectedIdsMutate) {
+    if (didMutate) {
       return DidMutate.EntitiesAndIds;
     }
 
@@ -87,7 +86,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
 
   function removeAll<S extends R>(state: S): S;
   function removeAll<S extends R>(state: any): S {
-    return <S>Object.assign({}, state, {
+    return Object.assign({}, state, {
       ids: [],
       entities: {},
       selectedIds: new Set<SelectedId>(),
