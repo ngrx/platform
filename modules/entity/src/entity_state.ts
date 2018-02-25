@@ -4,6 +4,7 @@ export function getInitialEntityState<V>(): EntityState<V> {
   return {
     ids: [],
     entities: {},
+    selectedIds: new Set(),
   };
 }
 
@@ -13,7 +14,7 @@ export function createInitialStateFactory<V>() {
     additionalState: S
   ): EntityState<V> & S;
   function getInitialState(additionalState: any = {}): any {
-    return Object.assign(getInitialEntityState(), additionalState);
+    return { ...getInitialEntityState(), ...additionalState };
   }
 
   return { getInitialState };

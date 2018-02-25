@@ -41,6 +41,7 @@ export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 export interface EntityState<T> {
   ids: string[] | number[];
   entities: Dictionary<T>;
+  selectedIds: Set<string | number>;
 }
 
 export interface EntityDefinition<T> {
@@ -66,14 +67,24 @@ export interface EntityStateAdapter<T> {
 
   upsertOne<S extends EntityState<T>>(update: Update<T>, state: S): S;
   upsertMany<S extends EntityState<T>>(updates: Update<T>[], state: S): S;
+
+  selectAll<S extends EntityState<T>>(state: S): S;
+  selectOne<S extends EntityState<T>>(key: string, state: S): S;
+  selectMany<S extends EntityState<T>>(keys: string[], state: S): S;
+  selectOnly<S extends EntityState<T>>(keys: string[], state: S): S;
+
+  unSelectAll<S extends EntityState<T>>(state: S): S;
+  unSelectOne<S extends EntityState<T>>(key: string, state: S): S;
+  unSelectMany<S extends EntityState<T>>(keys: string[], state: S): S;
 }
 
-export type EntitySelectors<T, V> = {
+export interface EntitySelectors<T, V> {
   selectIds: (state: V) => string[] | number[];
   selectEntities: (state: V) => Dictionary<T>;
   selectAll: (state: V) => T[];
   selectTotal: (state: V) => number;
-};
+  selectSelectedIds: (state: V) => string[];
+}
 
 export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   getInitialState(): EntityState<T>;
