@@ -228,7 +228,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     if (didMutate) {
       const filteredValues: SelectedIds = (<SelectedIds>Array.from(
         state.selectedIds.values()
-      )).filter((key: SelectedId) => filteredKeys.indexOf(key) !== -1);
+      )).filter((key: SelectedId) => filteredKeys.indexOf(key) === -1);
       state.selectedIds = new Set<SelectedId>(filteredValues);
       return DidMutate.SelectedIdsOnly;
     }
