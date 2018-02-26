@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatCardModule } from '@angular/material';
 
 import { ViewBookPageComponent } from './view-book-page';
-import * as book from '../actions/book';
+import * as BookActions from '../actions/book';
 import * as fromBooks from '../reducers';
 import { SelectedBookPageComponent } from './selected-book-page';
 import { BookDetailComponent } from '../components/book-detail';
@@ -56,7 +56,7 @@ describe('View Book Page', () => {
   });
 
   it('should dispatch a book.Select action on init', () => {
-    const action = new book.Select('2');
+    const action = new BookActions.Select('2');
     params.next({ id: '2' });
 
     fixture.detectChanges();

@@ -4,8 +4,8 @@ import { Store, select } from '@ngrx/store';
 
 import * as fromRoot from '../../reducers';
 import * as fromAuth from '../../auth/reducers';
-import * as layout from '../actions/layout';
-import * as Auth from '../../auth/actions/auth';
+import * as LayoutActions from '../actions/layout';
+import * as AuthActions from '../../auth/actions/auth';
 
 @Component({
   selector: 'bc-app',
@@ -54,16 +54,16 @@ export class AppComponent {
      * updates and user interaction through the life of our
      * application.
      */
-    this.store.dispatch(new layout.CloseSidenav());
+    this.store.dispatch(new LayoutActions.CloseSidenav());
   }
 
   openSidenav() {
-    this.store.dispatch(new layout.OpenSidenav());
+    this.store.dispatch(new LayoutActions.OpenSidenav());
   }
 
   logout() {
     this.closeSidenav();
 
-    this.store.dispatch(new Auth.Logout());
+    this.store.dispatch(new AuthActions.Logout());
   }
 }

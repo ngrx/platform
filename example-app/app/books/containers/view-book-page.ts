@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
 
 import * as fromBooks from '../reducers';
-import * as book from '../actions/book';
+import * as BookActions from '../actions/book';
 
 /**
  * Note: Container components are also reusable. Whether or not
@@ -29,7 +29,7 @@ export class ViewBookPageComponent implements OnDestroy {
 
   constructor(store: Store<fromBooks.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
-      .pipe(map(params => new book.Select(params.id)))
+      .pipe(map(params => new BookActions.Select(params.id)))
       .subscribe(store);
   }
 
