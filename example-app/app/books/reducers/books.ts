@@ -19,7 +19,7 @@ export interface State extends EntityState<Book> {
 }
 
 /**
- * createEntityAdapter creates many an object of helper
+ * createEntityAdapter creates an object of many helper
  * functions for single or multiple operations
  * against the dictionary of records. The configuration
  * object takes a record id selector function and
