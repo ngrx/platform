@@ -43,6 +43,11 @@ add the following to the `defaults` section in your `.angular-cli.json`.
     }
 ```
 
+Alternatively, you can run:
+```sh
+ng set defaults.schematics.collection=@ngrx/schematics
+```
+
 The [collection schema](../../modules/schematics/collection.json) also has aliases to the most common blueprints used to generate files.
 
 ## Initial State Setup
