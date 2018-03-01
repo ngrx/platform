@@ -26,7 +26,7 @@ Object {
   "ids": Array [
     "1",
   ],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;
 
@@ -56,7 +56,7 @@ Object {
   "ids": Array [
     "1",
   ],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;
 
@@ -106,7 +106,7 @@ Object {
     "1",
     "222",
   ],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;
 
@@ -156,7 +156,7 @@ Object {
     "1",
     "222",
   ],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;
 
@@ -226,7 +226,7 @@ Object {
     "222",
     "333",
   ],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;
 
@@ -296,7 +296,7 @@ Object {
     "222",
     "333",
   ],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;
 
@@ -346,7 +346,9 @@ Object {
     "1",
     "222",
   ],
-  "selectedBookId": "1",
+  "selectedIds": Set {
+    "1",
+  },
 }
 `;
 
@@ -356,6 +358,6 @@ exports[`BooksReducer undefined action should return the default state 1`] = `
 Object {
   "entities": Object {},
   "ids": Array [],
-  "selectedBookId": null,
+  "selectedIds": Set {},
 }
 `;

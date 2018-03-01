@@ -1,5 +1,6 @@
 import { createEntityAdapter, EntityAdapter } from '../src';
 import { BookModel } from './fixtures/book';
+import { SelectedId } from '../src/models';
 
 describe('Entity State', () => {
   let adapter: EntityAdapter<BookModel>;
@@ -16,6 +17,7 @@ describe('Entity State', () => {
     expect(initialState).toEqual({
       ids: [],
       entities: {},
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -28,6 +30,7 @@ describe('Entity State', () => {
       ...additionalProperties,
       ids: [],
       entities: {},
+      selectedIds: new Set<SelectedId>(),
     });
   });
 });

@@ -14,9 +14,7 @@ import {
  * model type by id. This interface is extended to include
  * any additional interface properties.
  */
-export interface State extends EntityState<Book> {
-  selectedBookId: string | null;
-}
+export interface State extends EntityState<Book> {}
 
 /**
  * createEntityAdapter creates an object of many helper
@@ -36,9 +34,7 @@ export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
  * for the generated entity state. Initial state
  * additional properties can also be defined.
  */
-export const initialState: State = adapter.getInitialState({
-  selectedBookId: null,
-});
+export const initialState: State = adapter.getInitialState();
 
 export function reducer(
   state = initialState,
@@ -56,7 +52,6 @@ export function reducer(
        */
       return adapter.addMany(action.payload, {
         ...state,
-        selectedBookId: state.selectedBookId,
       });
     }
 
@@ -70,15 +65,11 @@ export function reducer(
        */
       return adapter.addOne(action.payload, {
         ...state,
-        selectedBookId: state.selectedBookId,
       });
     }
 
     case BookActionTypes.Select: {
-      return {
-        ...state,
-        selectedBookId: action.payload,
-      };
+      return adapter.selectOnly([action.payload], state);
     }
 
     default: {
@@ -96,4 +87,7 @@ export function reducer(
  * use-case.
  */
 
-export const getSelectedId = (state: State) => state.selectedBookId;
+export const getSelectedId = (state: State) => {
+  const [selectedId] = Array.from(state.selectedIds.values());
+  return selectedId;
+};

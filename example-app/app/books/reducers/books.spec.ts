@@ -3,6 +3,8 @@ import * as fromBooks from './books';
 import { SearchComplete, Load, Select } from '../actions/book';
 import { Book, generateMockBook } from '../models/book';
 import { LoadSuccess } from '../actions/collection';
+import { SelectedId } from '../../../../modules/entity/src/models';
+import { getSelectedBookId } from './index';
 
 describe('BooksReducer', () => {
   const book1 = generateMockBook();
@@ -14,7 +16,7 @@ describe('BooksReducer', () => {
       [book1.id]: book1,
       [book2.id]: book2,
     },
-    selectedBookId: null,
+    selectedIds: new Set<SelectedId>(),
   };
 
   describe('undefined action', () => {
@@ -50,7 +52,7 @@ describe('BooksReducer', () => {
           ...initialState.entities,
           [books[1].id]: books[1],
         },
-        selectedBookId: null,
+        selectedIds: new Set<SelectedId>(),
       };
 
       const result = reducer(initialState, createAction);
@@ -83,7 +85,7 @@ describe('BooksReducer', () => {
       entities: {
         [book1.id]: book1,
       },
-      selectedBookId: null,
+      selectedIds: new Set<SelectedId>(),
     };
 
     it('should add a single book, if the book does not exist', () => {
@@ -118,7 +120,7 @@ describe('BooksReducer', () => {
       it('should return the selected id', () => {
         const result = fromBooks.getSelectedId({
           ...initialState,
-          selectedBookId: book1.id,
+          selectedIds: new Set<SelectedId>([book1.id]),
         });
 
         expect(result).toMatchSnapshot();

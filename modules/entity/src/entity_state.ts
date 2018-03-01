@@ -4,6 +4,7 @@ export function getInitialEntityState<V>(): EntityState<V> {
   return {
     ids: [],
     entities: {},
+    selectedIds: new Set(),
   };
 }
 

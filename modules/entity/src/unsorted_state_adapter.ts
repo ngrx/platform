@@ -1,4 +1,11 @@
-import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
+import {
+  EntityState,
+  EntityStateAdapter,
+  IdSelector,
+  SelectedId,
+  SelectedIds,
+  Update,
+} from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 
 export function createUnsortedStateAdapter<T>(
@@ -18,7 +25,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     state.ids.push(key);
     state.entities[key] = entity;
 
-    return DidMutate.Both;
+    return DidMutate.EntitiesAndIds;
   }
 
   function addManyMutably(entities: T[], state: R): DidMutate;
@@ -29,7 +36,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
       didMutate = addOneMutably(entity, state) !== DidMutate.None || didMutate;
     }
 
-    return didMutate ? DidMutate.Both : DidMutate.None;
+    return didMutate ? DidMutate.EntitiesAndIds : DidMutate.None;
   }
 
   function addAllMutably(entities: T[], state: R): DidMutate;
@@ -39,7 +46,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
 
     addManyMutably(entities, state);
 
-    return DidMutate.Both;
+    return DidMutate.EntitiesAndIds;
   }
 
   function removeOneMutably(key: T, state: R): DidMutate;
@@ -58,7 +65,23 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
       state.ids = state.ids.filter((id: any) => id in state.entities);
     }
 
-    return didMutate ? DidMutate.Both : DidMutate.None;
+    const didSelectedIdsMutate =
+      didMutate && keys.some(key => state.selectedIds.has(key));
+
+    if (didSelectedIdsMutate) {
+      state.selectedIds = new Set(
+        Array.from(state.selectedIds.values()).filter(
+          (id: any) => keys.indexOf(id) !== -1
+        )
+      );
+      return DidMutate.All;
+    }
+
+    if (didMutate) {
+      return DidMutate.EntitiesAndIds;
+    }
+
+    return DidMutate.None;
   }
 
   function removeAll<S extends R>(state: S): S;
@@ -66,6 +89,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return Object.assign({}, state, {
       ids: [],
       entities: {},
+      selectedIds: new Set<SelectedId>(),
     });
   }
 
@@ -113,7 +137,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
 
       if (didMutateIds) {
         state.ids = state.ids.map((id: any) => newKeys[id] || id);
-        return DidMutate.Both;
+        return DidMutate.EntitiesAndIds;
       } else {
         return DidMutate.EntitiesOnly;
       }
@@ -150,16 +174,92 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
       case didMutateByAdded === DidMutate.None &&
         didMutateByUpdated === DidMutate.None:
         return DidMutate.None;
-      case didMutateByAdded === DidMutate.Both ||
-        didMutateByUpdated === DidMutate.Both:
-        return DidMutate.Both;
+      case didMutateByAdded === DidMutate.EntitiesAndIds ||
+        didMutateByUpdated === DidMutate.EntitiesAndIds:
+        return DidMutate.EntitiesAndIds;
       default:
         return DidMutate.EntitiesOnly;
     }
   }
 
+  function unSelectAll(state: R): R;
+  function unSelectAll(state: any): R {
+    return { ...state, selectedIds: new Set<SelectedId>() };
+  }
+
+  function selectAll(state: R): R;
+  function selectAll(state: any): R {
+    const didMutate = state.ids.length > 0;
+    if (didMutate) {
+      return { ...state, selectedIds: new Set<SelectedId>(state.ids) };
+    }
+    return state;
+  }
+
+  function selectManyMutably(keys: SelectedIds, state: R): DidMutate;
+  function selectManyMutably(keys: SelectedIds, state: any): DidMutate {
+    const filteredKeys: SelectedIds = (<any>keys).filter(
+      (key: SelectedId) => key in state.entities
+    );
+    const didMutate = filteredKeys.length > 0;
+    if (didMutate) {
+      const values = [...Array.from(state.selectedIds.values()), ...keys];
+      state.selectedIds = new Set(values);
+      return DidMutate.SelectedIdsOnly;
+    }
+    return DidMutate.None;
+  }
+
+  function selectOneMutably(key: SelectedId, state: R): DidMutate;
+  function selectOneMutably(key: SelectedId, state: any): DidMutate {
+    return selectManyMutably([key], state);
+  }
+
+  function unSelectManyMutably(keys: SelectedIds, state: R): DidMutate;
+  function unSelectManyMutably(keys: SelectedIds, state: any): DidMutate {
+    const filteredKeys: SelectedIds = (<any>keys).filter(
+      (key: SelectedId) => key in state.entities
+    );
+    const someKey = filteredKeys.length > 0;
+    const someIncludes = filteredKeys.some((key: SelectedId) =>
+      state.selectedIds.has(key)
+    );
+    const didMutate = someKey && someIncludes;
+    if (didMutate) {
+      const filteredValues: SelectedIds = (<SelectedIds>Array.from(
+        state.selectedIds.values()
+      )).filter((key: SelectedId) => filteredKeys.indexOf(key) === -1);
+      state.selectedIds = new Set<SelectedId>(filteredValues);
+      return DidMutate.SelectedIdsOnly;
+    }
+    return DidMutate.None;
+  }
+
+  function unSelectOneMutably(key: SelectedId, state: R): DidMutate;
+  function unSelectOneMutably(key: SelectedId, state: any): DidMutate {
+    return unSelectManyMutably([key], state);
+  }
+
+  function selectOnlyMutably(keys: string[], state: R): DidMutate;
+  function selectOnlyMutably(keys: string[], state: any): DidMutate {
+    const filteredKeys = keys.filter(key => key in state.entities);
+    const didMutate = filteredKeys.length > 0;
+    if (didMutate) {
+      state.selectedIds = new Set(filteredKeys);
+      return DidMutate.SelectedIdsOnly;
+    }
+    return DidMutate.None;
+  }
+
   return {
     removeAll,
+    selectAll,
+    unSelectAll,
+    selectOne: createStateOperator(selectOneMutably),
+    selectMany: createStateOperator(selectManyMutably),
+    unSelectOne: createStateOperator(unSelectOneMutably),
+    unSelectMany: createStateOperator(unSelectManyMutably),
+    selectOnly: createStateOperator(selectOnlyMutably),
     addOne: createStateOperator(addOneMutably),
     addMany: createStateOperator(addManyMutably),
     addAll: createStateOperator(addAllMutably),

@@ -1,4 +1,10 @@
-import { EntityStateAdapter, EntityState, Update } from '../src/models';
+import {
+  EntityStateAdapter,
+  EntityState,
+  Update,
+  SelectedId,
+  SelectedIds,
+} from '../src/models';
 import { createEntityAdapter } from '../src/create_adapter';
 import {
   BookModel,
@@ -31,7 +37,7 @@ describe('Sorted State Adapter', () => {
       sortComparer: (a, b) => a.title.localeCompare(b.title),
     });
 
-    state = { ids: [], entities: {} };
+    state = { ids: [], entities: {}, selectedIds: new Set<SelectedId>() };
   });
 
   it('should let you add one entity to the state', () => {
@@ -42,6 +48,7 @@ describe('Sorted State Adapter', () => {
       entities: {
         [TheGreatGatsby.id]: TheGreatGatsby,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -55,7 +62,6 @@ describe('Sorted State Adapter', () => {
 
   it('should let you add many entities to the state', () => {
     const withOneEntity = adapter.addOne(TheGreatGatsby, state);
-
     const withManyMore = adapter.addMany(
       [AClockworkOrange, AnimalFarm],
       withOneEntity
@@ -68,6 +74,7 @@ describe('Sorted State Adapter', () => {
         [AClockworkOrange.id]: AClockworkOrange,
         [AnimalFarm.id]: AnimalFarm,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -85,6 +92,7 @@ describe('Sorted State Adapter', () => {
         [AClockworkOrange.id]: AClockworkOrange,
         [AnimalFarm.id]: AnimalFarm,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -96,6 +104,7 @@ describe('Sorted State Adapter', () => {
     expect(withoutOne).toEqual({
       ids: [],
       entities: {},
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -115,6 +124,7 @@ describe('Sorted State Adapter', () => {
       entities: {
         [AnimalFarm.id]: AnimalFarm,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -129,6 +139,7 @@ describe('Sorted State Adapter', () => {
     expect(withoutAll).toEqual({
       ids: [],
       entities: {},
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -152,6 +163,7 @@ describe('Sorted State Adapter', () => {
           ...changes,
         },
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -205,6 +217,7 @@ describe('Sorted State Adapter', () => {
           ...changes,
         },
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -233,6 +246,7 @@ describe('Sorted State Adapter', () => {
         },
         [AnimalFarm.id]: AnimalFarm,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -261,6 +275,7 @@ describe('Sorted State Adapter', () => {
         },
         [AnimalFarm.id]: AnimalFarm,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -289,6 +304,7 @@ describe('Sorted State Adapter', () => {
           ...secondChange,
         },
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -306,6 +322,7 @@ describe('Sorted State Adapter', () => {
       entities: {
         [TheGreatGatsby.id]: TheGreatGatsby,
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -329,6 +346,7 @@ describe('Sorted State Adapter', () => {
           ...changes,
         },
       },
+      selectedIds: new Set<SelectedId>(),
     });
   });
 
@@ -357,6 +375,74 @@ describe('Sorted State Adapter', () => {
           ...secondChange,
         },
       },
+      selectedIds: new Set<SelectedId>(),
     });
+  });
+
+  it('should let you select all entities in the state', () => {
+    const withAddAll = adapter.addAll([TheGreatGatsby], state);
+    const withSelectAll = adapter.selectAll(withAddAll);
+
+    expect(withSelectAll).toEqual({
+      ...withAddAll,
+      selectedIds: new Set<SelectedId>(<string[]>withAddAll.ids),
+    });
+  });
+
+  it('should let you unSelect all entities in the state', () => {
+    const withAddAll = adapter.addAll([TheGreatGatsby], state);
+    const withSelectAll = adapter.unSelectAll(withAddAll);
+
+    expect(withSelectAll).toEqual({
+      ...withAddAll,
+      selectedIds: new Set<SelectedId>(),
+    });
+  });
+
+  it('should let you select one entity in the state', () => {
+    const withAddAll = adapter.addAll([TheGreatGatsby], state);
+    const selectedId: SelectedId = withAddAll.ids[0];
+    const withSelectOne = adapter.selectOne(selectedId, withAddAll);
+    expect(withSelectOne.selectedIds.has(selectedId)).toBeTruthy();
+  });
+
+  it('should let you unSelect one entity in the state', () => {
+    const withAddAll = adapter.addAll([AnimalFarm, TheGreatGatsby], state);
+    const withSelectAll = adapter.selectAll(withAddAll);
+    const selectedId: SelectedId = withSelectAll.ids[0];
+    const withUnSelectOne = adapter.unSelectOne(selectedId, withAddAll);
+    expect(withUnSelectOne.selectedIds.has(selectedId)).toBeFalsy();
+  });
+
+  it('should let you select many entities in the state', () => {
+    const withAddAll = adapter.addAll(
+      [AnimalFarm, TheGreatGatsby, AClockworkOrange],
+      state
+    );
+    const [id1, id2]: SelectedIds = withAddAll.ids;
+    const withSelectMany = adapter.selectMany([id1, id2], withAddAll);
+    expect(
+      withSelectMany.selectedIds.has(id1) && withSelectMany.selectedIds.has(id2)
+    ).toBeTruthy();
+  });
+
+  it('should let you unSelect many entities in the state', () => {
+    const withAddAll = adapter.addAll([AnimalFarm, TheGreatGatsby], state);
+    const withSelectAll = adapter.selectAll(withAddAll);
+    const [id1, id2]: SelectedIds = withSelectAll.ids;
+    const withUnSelectMany = adapter.unSelectMany([id1, id2], withAddAll);
+    expect(withUnSelectMany.selectedIds.has(id1)).toBeFalsy();
+    expect(withUnSelectMany.selectedIds.has(id2)).toBeFalsy();
+  });
+
+  it('should let you SelectOnly entities in the state', () => {
+    const withAddAll = adapter.addAll(
+      [AnimalFarm, TheGreatGatsby, AClockworkOrange],
+      state
+    );
+    const withSelectAll = adapter.selectAll(withAddAll);
+    const [id1, id2]: SelectedIds = withSelectAll.ids;
+    const withUnSelectMany = adapter.selectOnly([id2], withSelectAll);
+    expect(Array.from(withUnSelectMany.selectedIds.values())).toEqual([id2]);
   });
 });

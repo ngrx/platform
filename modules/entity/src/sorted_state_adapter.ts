@@ -16,9 +16,18 @@ export function createSortedStateAdapter<T>(
 export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   type R = EntityState<T>;
 
-  const { removeOne, removeMany, removeAll } = createUnsortedStateAdapter(
-    selectId
-  );
+  const {
+    removeOne,
+    removeMany,
+    removeAll,
+    selectAll,
+    unSelectAll,
+    selectOne,
+    unSelectOne,
+    selectMany,
+    unSelectMany,
+    selectOnly,
+  } = createUnsortedStateAdapter(selectId);
 
   function addOneMutably(entity: T, state: R): DidMutate;
   function addOneMutably(entity: any, state: any): DidMutate {
@@ -35,7 +44,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
       return DidMutate.None;
     } else {
       merge(models, state);
-      return DidMutate.Both;
+      return DidMutate.EntitiesAndIds;
     }
   }
 
@@ -46,7 +55,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
 
     addManyMutably(models, state);
 
-    return DidMutate.Both;
+    return DidMutate.EntitiesAndIds;
   }
 
   function updateOneMutably(update: Update<T>, state: R): DidMutate;
@@ -101,7 +110,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
       ) {
         return DidMutate.EntitiesOnly;
       } else {
-        return DidMutate.Both;
+        return DidMutate.EntitiesAndIds;
       }
     }
   }
@@ -134,9 +143,9 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
       case didMutateByAdded === DidMutate.None &&
         didMutateByUpdated === DidMutate.None:
         return DidMutate.None;
-      case didMutateByAdded === DidMutate.Both ||
-        didMutateByUpdated === DidMutate.Both:
-        return DidMutate.Both;
+      case didMutateByAdded === DidMutate.EntitiesAndIds ||
+        didMutateByUpdated === DidMutate.EntitiesAndIds:
+        return DidMutate.EntitiesAndIds;
       default:
         return DidMutate.EntitiesOnly;
     }
@@ -181,6 +190,13 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     removeOne,
     removeMany,
     removeAll,
+    selectAll,
+    unSelectAll,
+    selectOne,
+    unSelectOne,
+    selectMany,
+    unSelectMany,
+    selectOnly,
     addOne: createStateOperator(addOneMutably),
     updateOne: createStateOperator(updateOneMutably),
     upsertOne: createStateOperator(upsertOneMutably),

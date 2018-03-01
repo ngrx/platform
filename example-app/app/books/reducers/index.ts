@@ -78,6 +78,7 @@ export const {
   selectEntities: getBookEntities,
   selectAll: getAllBooks,
   selectTotal: getTotalBooks,
+  selectSelectedIds: getSelectedIds,
 } = fromBooks.adapter.getSelectors(getBookEntitiesState);
 
 export const getSelectedBook = createSelector(
