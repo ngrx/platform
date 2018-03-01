@@ -55,7 +55,7 @@ ng generate entity User --reducers reducers/index.ts
 Generate a set of `User` entity files within a nested folder
 
 ```sh
-ng generate action User --flat false
+ng generate entity User --flat false
 ```
 
 Generate a set of `User` entity files and register it within the `Angular Module` in `app.module.ts` as a feature state.
