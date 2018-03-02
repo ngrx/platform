@@ -35,12 +35,10 @@ After installing `@ngrx/schematics`, install the NgRx dependencies.
 ## Default Schematics Collection
 
 To use `@ngrx/schematics` as the default collection in your Angular CLI project,
-add the following to the `defaults` section in your `.angular-cli.json`.
+add it to your `.angular-cli.json`:
 
-```json
-    "schematics": {
-      "collection": "@ngrx/schematics"
-    }
+```sh
+ng set defaults.schematics.collection=@ngrx/schematics
 ```
 
 The [collection schema](../../modules/schematics/collection.json) also has aliases to the most common blueprints used to generate files.
