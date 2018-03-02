@@ -19,7 +19,7 @@ Install @ngrx/schematics from npm:
 
 ##### OR
 
-`yarn add github:ngrx/entity-builds --dev`
+`yarn add github:ngrx/schematics-builds --dev`
 
 ## Dependencies
 
