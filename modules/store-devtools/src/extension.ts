@@ -20,7 +20,14 @@ import {
   LiftedAction,
 } from './reducer';
 import { PerformAction, PERFORM_ACTION } from './actions';
-import { applyOperators, unliftState } from './utils';
+import {
+  applyOperators,
+  unliftState,
+  sanitizeState,
+  sanitizeAction,
+  sanitizeActions,
+  sanitizeStates,
+} from './utils';
 
 export const ExtensionActionTypes = {
   START: 'START',
@@ -97,23 +104,36 @@ export class DevtoolsExtension {
     //      caution.
     if (action.type === PERFORM_ACTION) {
       const currentState = unliftState(state);
-      const sanitizedState = this.sanitizeState(
-        currentState,
-        state.currentStateIndex
-      );
-      const sanitizedAction = this.sanitizeAction(action, state.nextActionId);
+      const sanitizedState = this.config.stateSanitizer
+        ? sanitizeState(
+            this.config.stateSanitizer,
+            currentState,
+            state.currentStateIndex
+          )
+        : currentState;
+      const sanitizedAction = this.config.actionSanitizer
+        ? sanitizeAction(
+            this.config.actionSanitizer,
+            action,
+            state.nextActionId
+          )
+        : action;
       this.extensionConnection.send(sanitizedAction, sanitizedState);
     } else {
       // Requires full state update
       const sanitizedLiftedState = {
         ...state,
-        actionsById: this.sanitizeActions(state.actionsById),
-        computedStates: this.sanitizeStates(state.computedStates),
+        actionsById: this.config.actionSanitizer
+          ? sanitizeActions(this.config.actionSanitizer, state.actionsById)
+          : state.actionsById,
+        computedStates: this.config.stateSanitizer
+          ? sanitizeStates(this.config.stateSanitizer, state.computedStates)
+          : state.computedStates,
       };
       this.devtoolsExtension.send(
         null,
         sanitizedLiftedState,
-        this.getExtensionConfig(),
+        this.getExtensionConfig(this.instanceId, this.config),
         this.instanceId
       );
     }
@@ -126,7 +146,7 @@ export class DevtoolsExtension {
 
     return new Observable(subscriber => {
       const connection = this.devtoolsExtension.connect(
-        this.getExtensionConfig()
+        this.getExtensionConfig(this.instanceId, this.config)
       );
       this.extensionConnection = connection;
       connection.init();
@@ -176,53 +196,12 @@ export class DevtoolsExtension {
     return typeof action === 'string' ? eval(`(${action})`) : action;
   }
 
-  private sanitizeActions(actions: LiftedActions) {
-    if (this.config.actionSanitizer) {
-      return Object.keys(actions).reduce(
-        (sanitizedActions, actionIdx) => {
-          const idx = Number(actionIdx);
-          sanitizedActions[idx] = this.sanitizeAction(actions[idx], idx);
-          return sanitizedActions;
-        },
-        <LiftedActions>{}
-      );
-    } else {
-      return actions;
-    }
-  }
-
-  private sanitizeAction(action: LiftedAction, actionIdx: number) {
-    return this.config.actionSanitizer
-      ? {
-          ...action,
-          action: this.config.actionSanitizer(action.action, actionIdx),
-        }
-      : action;
-  }
-
-  private sanitizeStates(states: ComputedState[]) {
-    if (this.config.stateSanitizer) {
-      return states.map((computedState, idx) => ({
-        state: this.sanitizeState(computedState.state, idx),
-        error: computedState.error,
-      }));
-    } else {
-      return states;
-    }
-  }
-
-  private sanitizeState(state: any, stateIdx: number) {
-    return this.config.stateSanitizer
-      ? this.config.stateSanitizer(state, stateIdx)
-      : state;
-  }
-
-  private getExtensionConfig() {
+  private getExtensionConfig(instanceId: string, config: StoreDevtoolsConfig) {
     const extensionOptions: ReduxDevtoolsExtensionConfig = {
-      instanceId: this.instanceId,
-      name: this.config.name,
-      features: this.config.features,
-      serialize: this.config.serialize,
+      instanceId: instanceId,
+      name: config.name,
+      features: config.features,
+      serialize: config.serialize,
       // The action/state sanitizers are not added to the config
       // because sanitation is done in this class already.
       // It is done before sending it to the devtools extension for consistency:
@@ -231,8 +210,8 @@ export class DevtoolsExtension {
       // - If we call devtoolsExtension.send(...) (aka full state update),
       //   the extension would NOT call the sanitizers, so we have to do it ourselves.
     };
-    if (this.config.maxAge !== false /* support === 0 */) {
-      extensionOptions.maxAge = this.config.maxAge;
+    if (config.maxAge !== false /* support === 0 */) {
+      extensionOptions.maxAge = config.maxAge;
     }
     return extensionOptions;
   }
