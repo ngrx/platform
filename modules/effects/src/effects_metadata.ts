@@ -11,8 +11,22 @@ export interface EffectMetadata {
   dispatch: boolean;
 }
 
-function getEffectMetadataEntries(sourceProto: any): EffectMetadata[] {
-  return sourceProto.constructor[METADATA_KEY] || [];
+function getEffectMetadataEntries(
+  sourceProto: any,
+  entries: EffectMetadata[] = []
+): EffectMetadata[] {
+  if (!sourceProto) return entries;
+
+  const parent = Object.getPrototypeOf(sourceProto);
+
+  if (!sourceProto.constructor.hasOwnProperty(METADATA_KEY)) {
+    return getEffectMetadataEntries(parent, entries);
+  }
+
+  return getEffectMetadataEntries(
+    parent,
+    sourceProto.constructor[METADATA_KEY].concat(entries)
+  );
 }
 
 function setEffectMetadataEntries(sourceProto: any, entries: EffectMetadata[]) {
