@@ -97,13 +97,20 @@ export function createReducerFactory<T, V extends Action = Action>(
   return reducerFactory;
 }
 
-export function createFeatureReducer<T, V extends Action = Action>(
-  reducer: ActionReducer<T, V>,
+export function createFeatureReducerFactory<T, V extends Action = Action>(
   metaReducers?: MetaReducer<T, V>[]
-): ActionReducer<T, V> {
-  if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-    return compose<ActionReducer<T, V>>(...metaReducers)(reducer);
-  }
+): (reducer: ActionReducer<T, V>, initialState?: T) => ActionReducer<T, V> {
+  const reducerFactory =
+    Array.isArray(metaReducers) && metaReducers.length > 0
+      ? compose<ActionReducer<T, V>>(...metaReducers)
+      : (r: ActionReducer<T, V>) => r;
 
-  return reducer;
+  return (reducer: ActionReducer<T, V>, initialState?: T) => {
+    reducer = reducerFactory(reducer);
+
+    return (state: T | undefined, action: V) => {
+      state = state === undefined ? initialState : state;
+      return reducer(state, action);
+    };
+  };
 }
