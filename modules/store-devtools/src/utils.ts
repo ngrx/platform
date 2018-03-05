@@ -1,6 +1,12 @@
+import { ActionSanitizer, StateSanitizer } from './config';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { LiftedState } from './reducer';
+import {
+  LiftedState,
+  LiftedAction,
+  LiftedActions,
+  ComputedState,
+} from './reducer';
 import * as Actions from './actions';
 
 export function difference(first: any[], second: any[]) {
@@ -17,7 +23,7 @@ export function unliftState(liftedState: LiftedState) {
   return state;
 }
 
-export function unliftAction(liftedState: LiftedState) {
+export function unliftAction(liftedState: LiftedState): LiftedAction {
   return liftedState.actionsById[liftedState.nextActionId - 1];
 }
 
@@ -35,4 +41,63 @@ export function applyOperators(
   return operators.reduce((source$, [operator, ...args]) => {
     return operator.apply(source$, args);
   }, input$);
+}
+
+/**
+ * Sanitizes given actions with given function.
+ */
+export function sanitizeActions(
+  actionSanitizer: ActionSanitizer,
+  actions: LiftedActions
+): LiftedActions {
+  return Object.keys(actions).reduce(
+    (sanitizedActions, actionIdx) => {
+      const idx = Number(actionIdx);
+      sanitizedActions[idx] = sanitizeAction(
+        actionSanitizer,
+        actions[idx],
+        idx
+      );
+      return sanitizedActions;
+    },
+    <LiftedActions>{}
+  );
+}
+
+/**
+ * Sanitizes given action with given function.
+ */
+export function sanitizeAction(
+  actionSanitizer: ActionSanitizer,
+  action: LiftedAction,
+  actionIdx: number
+): LiftedAction {
+  return {
+    ...action,
+    action: actionSanitizer(action.action, actionIdx),
+  };
+}
+
+/**
+ * Sanitizes given states with given function.
+ */
+export function sanitizeStates(
+  stateSanitizer: StateSanitizer,
+  states: ComputedState[]
+): ComputedState[] {
+  return states.map((computedState, idx) => ({
+    state: sanitizeState(stateSanitizer, computedState.state, idx),
+    error: computedState.error,
+  }));
+}
+
+/**
+ * Sanitizes given state with given function.
+ */
+export function sanitizeState(
+  stateSanitizer: StateSanitizer,
+  state: any,
+  stateIdx: number
+) {
+  return stateSanitizer(state, stateIdx);
 }
