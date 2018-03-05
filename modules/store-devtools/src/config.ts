@@ -32,3 +32,39 @@ export const INITIAL_OPTIONS = new InjectionToken<StoreDevtoolsConfig>(
 export type StoreDevtoolsOptions =
   | Partial<StoreDevtoolsConfig>
   | (() => Partial<StoreDevtoolsConfig>);
+
+export function noMonitor(): null {
+  return null;
+}
+
+export const DEFAULT_NAME = 'NgRx Store DevTools';
+
+export function createConfig(
+  _options: StoreDevtoolsOptions
+): StoreDevtoolsConfig {
+  const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
+    maxAge: false,
+    monitor: noMonitor,
+    actionSanitizer: undefined,
+    stateSanitizer: undefined,
+    name: DEFAULT_NAME,
+    serialize: false,
+    logOnly: false,
+    features: false,
+  };
+
+  let options = typeof _options === 'function' ? _options() : _options;
+  const logOnly = options.logOnly
+    ? { pause: true, export: true, test: true }
+    : false;
+  const features = options.features || logOnly;
+  const config = Object.assign({}, DEFAULT_OPTIONS, { features }, options);
+
+  if (config.maxAge && config.maxAge < 2) {
+    throw new Error(
+      `Devtools 'maxAge' cannot be less than 2, got ${config.maxAge}`
+    );
+  }
+
+  return config;
+}

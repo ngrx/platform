@@ -7,6 +7,8 @@ import {
   STORE_DEVTOOLS_CONFIG,
   StoreDevtoolsConfig,
   StoreDevtoolsOptions,
+  noMonitor,
+  createConfig,
 } from './config';
 import { DevtoolsDispatcher, StoreDevtools } from './devtools';
 import {
@@ -43,42 +45,6 @@ export function createStateObservable(
   devtools: StoreDevtools
 ): Observable<any> {
   return devtools.state;
-}
-
-export function noMonitor(): null {
-  return null;
-}
-
-export const DEFAULT_NAME = 'NgRx Store DevTools';
-
-export function createConfig(
-  _options: StoreDevtoolsOptions
-): StoreDevtoolsConfig {
-  const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
-    maxAge: false,
-    monitor: noMonitor,
-    actionSanitizer: undefined,
-    stateSanitizer: undefined,
-    name: DEFAULT_NAME,
-    serialize: false,
-    logOnly: false,
-    features: false,
-  };
-
-  let options = typeof _options === 'function' ? _options() : _options;
-  const logOnly = options.logOnly
-    ? { pause: true, export: true, test: true }
-    : false;
-  const features = options.features || logOnly;
-  const config = Object.assign({}, DEFAULT_OPTIONS, { features }, options);
-
-  if (config.maxAge && config.maxAge < 2) {
-    throw new Error(
-      `Devtools 'maxAge' cannot be less than 2, got ${config.maxAge}`
-    );
-  }
-
-  return config;
 }
 
 @NgModule({})

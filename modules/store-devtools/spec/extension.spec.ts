@@ -9,7 +9,7 @@ import { Action } from '@ngrx/store';
 
 import { LiftedState } from '../';
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
-import { createConfig, noMonitor } from '../src/instrument';
+import { createConfig, noMonitor } from '../src/config';
 import { unliftState } from '../src/utils';
 
 function createOptions(
