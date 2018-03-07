@@ -61,18 +61,18 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   addReducer(key: string, reducer: ActionReducer<any, any>) {
     this.reducers = { ...this.reducers, [key]: reducer };
 
-    this.updateReducers();
+    this.updateReducers(key);
   }
 
   removeReducer(key: string) {
     this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
 
-    this.updateReducers();
+    this.updateReducers(key);
   }
 
-  private updateReducers() {
+  private updateReducers(key: string) {
     this.next(this.reducerFactory(this.reducers, this.initialState));
-    this.dispatcher.next({ type: UPDATE });
+    this.dispatcher.next(<Action & {feature: string}>{ type: UPDATE, feature: key });
   }
 
   ngOnDestroy() {
