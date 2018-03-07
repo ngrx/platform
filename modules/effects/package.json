@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/effects",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Side effect model for @ngrx/store",
   "module": "@ngrx/effects.es5.js",
   "es2015": "@ngrx/effects.js",
