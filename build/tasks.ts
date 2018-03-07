@@ -116,7 +116,11 @@ export async function createUmdBundles(config: Config) {
 
     const destinationName = util.getDestinationName(pkg);
 
-    const rollupArgs = [`-c ./modules/${pkg}/rollup.config.js`, `--sourcemap`];
+    const rollupArgs = [
+      `-c ./modules/${pkg}/rollup.config.js`,
+      `--sourcemap`,
+      `--amd.id ${config.scope}/${pkg}`,
+    ];
 
     await util.exec('rollup', rollupArgs);
     await util.mapSources(
