@@ -18,7 +18,7 @@ Reactive libraries for Angular
 - [@ngrx/schematics](./docs/schematics/README.md) - Scaffolding library for Angular applications using NgRx.
 
 ## Examples
-- [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.
+- [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices.  Try it on [StackBlitz](https://stackblitz.com/github/ngrx/platform/).
 
 ## Migration
 - [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
