@@ -108,3 +108,40 @@ describe('My Component', () => {
   });
 });
 ```
+### Testing selectors
+If you have selectors composed of many other selectors it may be useful to test them independent from the selectors they are composed of. Therefor selectors contain a reference to the projector function as `.projector`.
+
+my-reducer.ts
+```ts
+export interface State {
+  evenNums: number[];
+  oddNums: number[];
+}
+
+export const selectSumEvenNums = createSelector(
+  (state: State) => state.evenNums,
+  (evenNums) => evenNums.reduce((prev, curr) => prev + curr)
+);
+export const selectSumOddNums = createSelector(
+  (state: State) => state.oddNums,
+  (oddNums) => oddNums.reduce((prev, curr) => prev + curr)
+);
+export const selectTotal = createSelector(
+  selectSumEvenNums,
+  selectSumOddNums,
+  (evenSum, oddSum) => evenSum + oddSum
+);
+```
+
+my-reducer.spec.ts
+```ts
+import * as fromMyReducers from './my-reducers';
+
+describe('My Selectors', () => {
+
+  it('should calc selectTotal', () => {
+    expect(fromMyReducers.selectTotal.projector(2, 3)).toBe(5);
+  });
+
+});
+```
