@@ -39,7 +39,6 @@ export interface ReduxDevtoolsExtensionConnection {
 export interface ReduxDevtoolsExtensionConfig {
   features?: object | boolean;
   name: string | undefined;
-  instanceId: string;
   maxAge?: number;
   serialize?: boolean | SerializationOptions;
 }
@@ -48,17 +47,11 @@ export interface ReduxDevtoolsExtension {
   connect(
     options: ReduxDevtoolsExtensionConfig
   ): ReduxDevtoolsExtensionConnection;
-  send(
-    action: any,
-    state: any,
-    options: ReduxDevtoolsExtensionConfig,
-    instanceId?: string
-  ): void;
+  send(action: any, state: any, options: ReduxDevtoolsExtensionConfig): void;
 }
 
 @Injectable()
 export class DevtoolsExtension {
-  private instanceId = `ngrx-store-${Date.now()}`;
   private devtoolsExtension: ReduxDevtoolsExtension;
   private extensionConnection: ReduxDevtoolsExtensionConnection;
 
@@ -123,8 +116,7 @@ export class DevtoolsExtension {
       this.devtoolsExtension.send(
         null,
         sanitizedLiftedState,
-        this.getExtensionConfig(this.instanceId, this.config),
-        this.instanceId
+        this.getExtensionConfig(this.config)
       );
     }
   }
@@ -136,7 +128,7 @@ export class DevtoolsExtension {
 
     return new Observable(subscriber => {
       const connection = this.devtoolsExtension.connect(
-        this.getExtensionConfig(this.instanceId, this.config)
+        this.getExtensionConfig(this.config)
       );
       this.extensionConnection = connection;
       connection.init();
@@ -147,7 +139,7 @@ export class DevtoolsExtension {
   }
 
   private createActionStreams() {
-    // Listens to all changes based on our instanceId
+    // Listens to all changes
     const changes$ = this.createChangesObservable().pipe(share());
 
     // Listen for the start action
@@ -185,9 +177,8 @@ export class DevtoolsExtension {
     return typeof action === 'string' ? eval(`(${action})`) : action;
   }
 
-  private getExtensionConfig(instanceId: string, config: StoreDevtoolsConfig) {
+  private getExtensionConfig(config: StoreDevtoolsConfig) {
     const extensionOptions: ReduxDevtoolsExtensionConfig = {
-      instanceId: instanceId,
       name: config.name,
       features: config.features,
       serialize: config.serialize,

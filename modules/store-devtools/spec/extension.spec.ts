@@ -19,7 +19,6 @@ function createOptions(
   maxAge: false | number = false
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
-    instanceId: 'ngrx-store-1509655064369',
     name,
     features,
     serialize,
@@ -70,7 +69,6 @@ describe('DevtoolsExtension', () => {
     (reduxDevtoolsExtension.connect as jasmine.Spy).and.returnValue(
       extensionConnection
     );
-    spyOn(Date, 'now').and.returnValue('1509655064369');
   });
 
   function myActionSanitizer(action: Action, idx: number) {
@@ -148,8 +146,7 @@ describe('DevtoolsExtension', () => {
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         state,
-        defaultOptions,
-        'ngrx-store-1509655064369'
+        defaultOptions
       );
     });
 
@@ -178,8 +175,7 @@ describe('DevtoolsExtension', () => {
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         state,
-        options,
-        'ngrx-store-1509655064369'
+        options
       );
     });
 
@@ -230,8 +226,7 @@ describe('DevtoolsExtension', () => {
           expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
             null,
             state,
-            options,
-            'ngrx-store-1509655064369'
+            options
           );
         });
       });
@@ -276,8 +271,7 @@ describe('DevtoolsExtension', () => {
           expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
             null,
             sanitizedState,
-            options,
-            'ngrx-store-1509655064369'
+            options
           );
         });
       });
@@ -320,8 +314,7 @@ describe('DevtoolsExtension', () => {
           expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
             null,
             sanitizedState,
-            options,
-            'ngrx-store-1509655064369'
+            options
           );
         });
       });
