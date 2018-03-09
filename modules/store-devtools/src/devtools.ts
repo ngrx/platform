@@ -163,4 +163,8 @@ export class StoreDevtools implements Observer<any> {
   importState(nextLiftedState: any) {
     this.dispatch(new Actions.ImportState(nextLiftedState));
   }
+
+  lockChanges(status: boolean) {
+    this.dispatch(new Actions.LockChanges(status));
+  }
 }

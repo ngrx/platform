@@ -48,6 +48,7 @@ export interface LiftedState {
   committedState: any;
   currentStateIndex: number;
   computedStates: ComputedState[];
+  isLocked: boolean;
 }
 
 /**
@@ -143,6 +144,7 @@ export function liftInitialState(
     committedState: initialCommittedState,
     currentStateIndex: 0,
     computedStates: [],
+    isLocked: false,
   };
 }
 
@@ -171,6 +173,7 @@ export function liftReducerWith(
       committedState,
       currentStateIndex,
       computedStates,
+      isLocked,
     } =
       liftedState || initialLiftedState;
 
@@ -211,6 +214,11 @@ export function liftReducerWith(
     let minInvalidatedStateIndex = 0;
 
     switch (liftedAction.type) {
+      case DevtoolsActions.LOCK_CHANGES: {
+        isLocked = liftedAction.status;
+        minInvalidatedStateIndex = Infinity;
+        break;
+      }
       case DevtoolsActions.RESET: {
         // Get back to the state the store was created with.
         actionsById = { 0: liftAction(INIT_ACTION) };
@@ -302,6 +310,11 @@ export function liftReducerWith(
         break;
       }
       case DevtoolsActions.PERFORM_ACTION: {
+        // Ignore action and return state as is if recording is locked
+        if (isLocked) {
+          return liftedState || initialLiftedState;
+        }
+
         // Auto-commit as new actions come in.
         if (options.maxAge && stagedActionIds.length === options.maxAge) {
           commitExcessActions(1);
@@ -330,8 +343,9 @@ export function liftReducerWith(
           skippedActionIds,
           committedState,
           currentStateIndex,
+          computedStates,
           // prettier-ignore
-          computedStates
+          isLocked
         } = liftedAction.nextLiftedState);
         break;
       }
@@ -457,6 +471,7 @@ export function liftReducerWith(
       committedState,
       currentStateIndex,
       computedStates,
+      isLocked,
     };
   };
 }
