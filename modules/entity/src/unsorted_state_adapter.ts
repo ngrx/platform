@@ -49,11 +49,23 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   }
 
   function removeManyMutably(keys: T[], state: R): DidMutate;
-  function removeManyMutably(keys: any[], state: any): DidMutate {
+  function removeManyMutably(
+    predicate: (value: T) => boolean,
+    state: R
+  ): DidMutate;
+  function removeManyMutably(
+    keysOrPredicate: any[] | ((value: any) => boolean),
+    state: any
+  ): DidMutate {
+    const keys =
+      keysOrPredicate instanceof Array
+        ? keysOrPredicate
+        : state.ids.filter((key: any) => keysOrPredicate(state.entities[key]));
+
     const didMutate =
       keys
-        .filter(key => key in state.entities)
-        .map(key => delete state.entities[key]).length > 0;
+        .filter((key: any) => key in state.entities)
+        .map((key: any) => delete state.entities[key]).length > 0;
 
     if (didMutate) {
       state.ids = state.ids.filter((id: any) => id in state.entities);

@@ -48,6 +48,10 @@ export interface EntityStateAdapter<T> {
 
   removeMany<S extends EntityState<T>>(keys: string[], state: S): S;
   removeMany<S extends EntityState<T>>(keys: number[], state: S): S;
+  removeMany<S extends EntityState<T>>(
+    predicate: (value: T) => boolean,
+    state: S
+  ): S;
 
   removeAll<S extends EntityState<T>>(state: S): S;
 
