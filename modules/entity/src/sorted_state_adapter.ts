@@ -86,10 +86,10 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
       return updatesOrPredicate;
     } else {
       const { predicate, changes } = updatesOrPredicate;
-      const idsdToChange = state.ids.filter((key: string | number) =>
-        predicate(state.entities[key])
+      const idsToChange = state.ids.filter((id: string | number) =>
+        predicate(state.entities[id])
       );
-      return idsdToChange.map((id: string | number) => ({ id, changes }));
+      return idsToChange.map((id: string | number) => ({ id, changes }));
     }
   }
 
