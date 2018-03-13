@@ -6,6 +6,19 @@ import {
   DEFAULT_NAME,
 } from '../src/config';
 
+const defaultFeatures = {
+  pause: true,
+  lock: true,
+  persist: true,
+  export: true,
+  import: 'custom',
+  jump: true,
+  skip: true,
+  reorder: true,
+  dispatch: true,
+  test: true,
+};
+
 describe('StoreDevtoolsOptions', () => {
   it('creates default options with empty object given', () => {
     const config = createConfig({});
@@ -17,7 +30,7 @@ describe('StoreDevtoolsOptions', () => {
       name: DEFAULT_NAME,
       serialize: false,
       logOnly: false,
-      features: false,
+      features: defaultFeatures,
     });
   });
 
@@ -62,7 +75,7 @@ describe('StoreDevtoolsOptions', () => {
       name: DEFAULT_NAME,
       serialize: false,
       logOnly: false,
-      features: false,
+      features: defaultFeatures,
     });
   });
 

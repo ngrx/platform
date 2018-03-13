@@ -14,7 +14,18 @@ import { unliftState } from '../src/utils';
 
 function createOptions(
   name: string = 'NgRx Store DevTools',
-  features: any = false,
+  features: any = {
+    pause: true,
+    lock: true,
+    persist: true,
+    export: true,
+    import: 'custom',
+    jump: true,
+    skip: true,
+    reorder: true,
+    dispatch: true,
+    test: true,
+  },
   serialize: boolean | undefined = false,
   maxAge: false | number = false
 ) {
