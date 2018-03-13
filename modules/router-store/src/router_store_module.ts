@@ -96,7 +96,7 @@ export type RouterReducerState<T = RouterStateSnapshot> = {
 };
 
 export function routerReducer<T = RouterStateSnapshot>(
-  state: RouterReducerState<T>,
+  state: RouterReducerState<T> | undefined,
   action: RouterAction<any, T>
 ): RouterReducerState<T> {
   switch (action.type) {
@@ -108,7 +108,7 @@ export function routerReducer<T = RouterStateSnapshot>(
         navigationId: action.payload.event.id,
       };
     default:
-      return state;
+      return state as RouterReducerState<T>;
   }
 }
 
