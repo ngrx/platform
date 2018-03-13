@@ -42,7 +42,9 @@ function createOptions(
 
 function createState(
   actionsById?: LiftedActions,
-  computedStates?: ComputedState[]
+  computedStates?: ComputedState[],
+  isLocked = false,
+  isPaused = false
 ) {
   return {
     monitorState: null,
@@ -60,6 +62,8 @@ function createState(
         error: null,
       },
     ],
+    isLocked,
+    isPaused,
   };
 }
 
@@ -361,6 +365,74 @@ describe('DevtoolsExtension', () => {
           expect(action).toEqual({} as LiftedAction);
         });
       });
+    });
+  });
+
+  describe('with locked recording', () => {
+    beforeEach(() => {
+      devtoolsExtension = new DevtoolsExtension(
+        reduxDevtoolsExtension,
+        createConfig({})
+      );
+      // Subscription needed or else extension connection will not be established.
+      devtoolsExtension.actions$.subscribe(() => null);
+    });
+
+    it('should not notify extension of PERFORM_ACTIONs', () => {
+      const action = new PerformAction({ type: 'ACTION' });
+      const state = createState(undefined, undefined, true);
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).not.toHaveBeenCalled();
+    });
+
+    it('should notify extension of actions that require full state update', () => {
+      const action = {} as LiftedAction;
+      const state = createState(undefined, undefined, true);
+      const options = createOptions();
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
+        null,
+        state,
+        options
+      );
+    });
+  });
+
+  describe('with paused recording', () => {
+    beforeEach(() => {
+      devtoolsExtension = new DevtoolsExtension(
+        reduxDevtoolsExtension,
+        createConfig({})
+      );
+      // Subscription needed or else extension connection will not be established.
+      devtoolsExtension.actions$.subscribe(() => null);
+    });
+
+    it('should not notify extension of PERFORM_ACTIONs', () => {
+      const action = new PerformAction({ type: 'ACTION' });
+      const state = createState(undefined, undefined, undefined, true);
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).not.toHaveBeenCalled();
+    });
+
+    it('should notify extension of actions that require full state update', () => {
+      const action = {} as LiftedAction;
+      const state = createState(undefined, undefined, undefined, true);
+      const options = createOptions();
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
+        null,
+        state,
+        options
+      );
     });
   });
 });
