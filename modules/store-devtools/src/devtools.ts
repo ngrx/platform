@@ -167,4 +167,8 @@ export class StoreDevtools implements Observer<any> {
   lockChanges(status: boolean) {
     this.dispatch(new Actions.LockChanges(status));
   }
+
+  pauseRecording(status: boolean) {
+    this.dispatch(new Actions.PauseRecording(status));
+  }
 }
