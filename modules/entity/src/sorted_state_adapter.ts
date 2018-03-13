@@ -5,6 +5,7 @@ import {
   Dictionary,
   EntityStateAdapter,
   Update,
+  UpdatePredicate,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
@@ -72,9 +73,34 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     return newKey !== update.id;
   }
 
+  function decideIdsToUpdate(updates: Update<T>[], state: R): Update<T>[];
+  function decideIdsToUpdate(
+    updates: UpdatePredicate<T>,
+    state: R
+  ): Update<T>[];
+  function decideIdsToUpdate(
+    updatesOrPredicate: any[] | any,
+    state: any
+  ): any[] {
+    if (updatesOrPredicate instanceof Array) {
+      return updatesOrPredicate;
+    } else {
+      const { predicate, changes } = updatesOrPredicate;
+      const idsdToChange = state.ids.filter((key: string | number) =>
+        predicate(state.entities[key])
+      );
+      return idsdToChange.map((id: string | number) => ({ id, changes }));
+    }
+  }
+
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(updates: any[], state: any): DidMutate {
+  function updateManyMutably(update: UpdatePredicate<T>, state: R): DidMutate;
+  function updateManyMutably(
+    updatesOrPredicate: any[] | any,
+    state: any
+  ): DidMutate {
     const models: T[] = [];
+    const updates = decideIdsToUpdate(updatesOrPredicate, state);
 
     const didMutateIds =
       updates.filter(update => takeUpdatedModel(models, update, state)).length >

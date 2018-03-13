@@ -280,7 +280,7 @@ describe('Sorted State Adapter', () => {
     });
   });
 
-  it('should let you update many entities in the state', () => {
+  it('should let you update many entities by id in the state', () => {
     const firstChange = { title: 'Zack' };
     const secondChange = { title: 'Aaron' };
     const withMany = adapter.addAll([TheGreatGatsby, AClockworkOrange], state);
@@ -304,6 +304,34 @@ describe('Sorted State Adapter', () => {
           ...AClockworkOrange,
           ...secondChange,
         },
+      },
+    });
+  });
+
+  it('should let you update many entities by predicate in the state', () => {
+    const change = { title: 'Changed titled' };
+    const withMany = adapter.addAll(
+      [TheGreatGatsby, AClockworkOrange, AnimalFarm],
+      state
+    );
+
+    const withUpdates = adapter.updateMany(
+      { predicate: p => p.id.startsWith('a'), changes: change },
+      withMany
+    );
+
+    expect(withUpdates).toEqual({
+      ids: [AClockworkOrange.id, AnimalFarm.id, TheGreatGatsby.id],
+      entities: {
+        [AClockworkOrange.id]: {
+          ...AClockworkOrange,
+          ...change,
+        },
+        [AnimalFarm.id]: {
+          ...AnimalFarm,
+          ...change,
+        },
+        [TheGreatGatsby.id]: TheGreatGatsby,
       },
     });
   });

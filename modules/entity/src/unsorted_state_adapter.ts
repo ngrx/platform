@@ -4,6 +4,7 @@ import {
   IdSelector,
   Update,
   Predicate,
+  UpdatePredicate,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { selectIdValue } from './utils';
@@ -110,16 +111,41 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return hasNewKey;
   }
 
+  function decideIdsToUpdate(updates: Update<T>[], state: R): Update<T>[];
+  function decideIdsToUpdate(
+    updates: UpdatePredicate<T>,
+    state: R
+  ): Update<T>[];
+  function decideIdsToUpdate(
+    updatesOrPredicate: any[] | any,
+    state: any
+  ): any[] {
+    if (updatesOrPredicate instanceof Array) {
+      return updatesOrPredicate;
+    } else {
+      const { predicate, changes } = updatesOrPredicate;
+      const idsdToChange = state.ids.filter((key: string | number) =>
+        predicate(state.entities[key])
+      );
+      return idsdToChange.map((id: string | number) => ({ id, changes }));
+    }
+  }
+
   function updateOneMutably(update: Update<T>, state: R): DidMutate;
   function updateOneMutably(update: any, state: any): DidMutate {
     return updateManyMutably([update], state);
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(updates: any[], state: any): DidMutate {
+  function updateManyMutably(update: UpdatePredicate<T>, state: R): DidMutate;
+  function updateManyMutably(
+    updatesOrPredicate: any[] | any,
+    state: any
+  ): DidMutate {
     const newKeys: { [id: string]: string } = {};
-
-    updates = updates.filter(update => update.id in state.entities);
+    const updates = decideIdsToUpdate(updatesOrPredicate, state).filter(
+      ({ id }: { id: number | string }) => id in state.entities
+    );
 
     const didMutateEntities = updates.length > 0;
 
