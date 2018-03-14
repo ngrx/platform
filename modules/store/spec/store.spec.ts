@@ -296,7 +296,7 @@ describe('ngRx Store', () => {
       store.removeReducer(key);
       store.dispatch({ type: INCREMENT });
       store.take(1).subscribe(val => {
-        expect(val.counter4).toBeUndefined();
+        expect(val.counter4).toBe(0);
       });
     });
   });

@@ -39,7 +39,7 @@ export function combineReducers(
       nextState[key] = nextStateForKey;
       hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
     }
-    return hasChanged ? nextState : state;
+    return hasChanged ? { ...state, ...nextState } : state;
   };
 }
 
