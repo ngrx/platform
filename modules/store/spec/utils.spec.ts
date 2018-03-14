@@ -41,7 +41,7 @@ describe(`Store utils`, () => {
     it(`should return full initial state of the root when action '@ngrx/store/update-reducers' is running with no initial state`, () => {
       const initialStateForReducer2Only = { reducer2: { y: 'bar' } };
       const combinationForReducer1 = combineReducers(
-        { reducer1 } as any,
+        { reducer1 },
         initialStateForReducer2Only as any
       );
       const updateAction1 = { type: 'state1', payload: 'foo' };
