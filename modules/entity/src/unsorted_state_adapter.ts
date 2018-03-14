@@ -1,4 +1,10 @@
-import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
+import {
+  EntityState,
+  EntityStateAdapter,
+  IdSelector,
+  Update,
+  Upsert,
+} from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 
 export function createUnsortedStateAdapter<T>(
@@ -122,24 +128,21 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return DidMutate.None;
   }
 
-  function upsertOneMutably(update: Update<T>, state: R): DidMutate;
-  function upsertOneMutably(update: any, state: any): DidMutate {
-    return upsertManyMutably([update], state);
+  function upsertOneMutably(upsert: Upsert<T>, state: R): DidMutate;
+  function upsertOneMutably(upsert: any, state: any): DidMutate {
+    return upsertManyMutably([upsert], state);
   }
 
-  function upsertManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function upsertManyMutably(updates: any[], state: any): DidMutate {
+  function upsertManyMutably(upserts: Upsert<T>[], state: R): DidMutate;
+  function upsertManyMutably(upserts: any[], state: any): DidMutate {
     const added: T[] = [];
-    const updated: any[] = [];
+    const updated: Update<T>[] = [];
 
-    for (const update of updates) {
-      if (update.id in state.entities) {
-        updated.push(update);
+    for (const { id, entity } of upserts) {
+      if (id in state.entities) {
+        updated.push({ id, changes: entity });
       } else {
-        added.push({
-          ...update.changes,
-          id: update.id,
-        });
+        added.push(entity);
       }
     }
 

@@ -236,7 +236,7 @@ describe('Unsorted State Adapter', () => {
     const withOneEntity = adapter.upsertOne(
       {
         id: TheGreatGatsby.id,
-        changes: TheGreatGatsby,
+        entity: TheGreatGatsby,
       },
       state
     );
@@ -256,7 +256,7 @@ describe('Unsorted State Adapter', () => {
     const withUpdates = adapter.upsertOne(
       {
         id: TheGreatGatsby.id,
-        changes,
+        entity: { ...TheGreatGatsby, ...changes },
       },
       withOne
     );
@@ -279,8 +279,14 @@ describe('Unsorted State Adapter', () => {
 
     const withUpserts = adapter.upsertMany(
       [
-        { id: TheGreatGatsby.id, changes: firstChange },
-        { id: AClockworkOrange.id, changes: secondChange },
+        {
+          id: TheGreatGatsby.id,
+          entity: { ...TheGreatGatsby, ...firstChange },
+        },
+        {
+          id: AClockworkOrange.id,
+          entity: { ...AClockworkOrange, ...secondChange },
+        },
       ],
       withMany
     );
