@@ -20,5 +20,9 @@
     "url": "https://github.com/ngrx/platform/issues"
   },
   "homepage": "https://github.com/ngrx/platform#readme",
-  "schematics": "./collection.json"
+  "schematics": "./collection.json",
+  "peerDependencies": {
+    "@angular-devkit/core": "^0.4.0",
+    "@angular-devkit/schematics": "^0.4.0"
+  }
 }

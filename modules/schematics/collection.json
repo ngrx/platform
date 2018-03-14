@@ -1,4 +1,5 @@
 {
+  "extends": ["@schematics/angular"],
   "schematics": {
     "action": {
       "aliases": [ "a" ],
@@ -7,26 +8,11 @@
       "description": "Add store actions"
     },
 
-    "class": {
-      "aliases": [ "cl" ],
-      "extends": "@schematics/angular:class"
-    },
-
-    "component": {
-      "aliases": [ "c" ],
-      "extends": "@schematics/angular:component"
-    },
-
     "container": {
       "aliases": [ "co" ],
       "factory": "./src/container",
       "schema": "./src/container/schema.json",
       "description": "Add store container component"
-    },
-
-    "directive": {
-      "aliases": [ "d" ],
-      "extends": "@schematics/angular:directive"
     },
 
     "effect": {
@@ -43,11 +29,6 @@
       "description": "Add entity state"
     },
 
-    "enum": {
-      "aliases": [ "e" ],
-      "extends": "@schematics/angular:enum"
-    },
-
     "feature": {
       "aliases": [ "f" ],
       "factory": "./src/feature",
@@ -55,36 +36,11 @@
       "description": "Add feature state"
     },
 
-    "guard": {
-      "aliases": [ "g" ],
-      "extends": "@schematics/angular:guard"
-    },
-
-    "interface": {
-      "aliases": [ "i" ],
-      "extends": "@schematics/angular:interface"
-    },
-
-    "module": {
-      "aliases": [ "m" ],
-      "extends": "@schematics/angular:module"
-    },
-
-    "pipe": {
-      "aliases": [ "p" ],
-      "extends": "@schematics/angular:pipe"
-    },
-
     "reducer": {
       "aliases": [ "r" ],
       "factory": "./src/reducer",
       "schema": "./src/reducer/schema.json",
       "description": "Add state reducer"
-    },
-
-    "service": {
-      "aliases": [ "s" ],
-      "extends": "@schematics/angular:service"
     },
 
     "store": {
