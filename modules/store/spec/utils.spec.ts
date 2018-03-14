@@ -45,10 +45,9 @@ describe(`Store utils`, () => {
         initialStateForReducer2Only as any
       );
       const updateAction1 = { type: 'state1', payload: 'foo' };
-      expect(combinationForReducer1(undefined, updateAction1)).toEqual({
-        ...initialState,
-        ...{ reducer2: { y: 'bar' } },
-      });
+      expect(combinationForReducer1(undefined, updateAction1)).toEqual(
+        initialState
+      );
     });
   });
 
