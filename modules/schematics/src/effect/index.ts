@@ -14,10 +14,9 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import 'rxjs/add/operator/merge';
 import * as ts from 'typescript';
 import * as stringUtils from '../strings';
-import { addProviderToModule, addImportToModule } from '../utility/ast-utils';
+import { addImportToModule } from '../utility/ast-utils';
 import { InsertChange } from '../utility/change';
 import {
   buildRelativePath,
@@ -28,12 +27,13 @@ import { insertImport } from '../utility/route-utils';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
-    if (!options.module) {
+    const modulePath = options.module;
+
+    if (!modulePath) {
       return host;
     }
 
-    const modulePath = options.module;
-    if (!host.exists(options.module)) {
+    if (!host.exists(modulePath)) {
       throw new Error('Specified module does not exist');
     }
 
@@ -75,9 +75,7 @@ function addImportToNgModule(options: EffectOptions): Rule {
     const [effectsNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      options.root
-        ? `EffectsModule.forRoot([${effectsName}])`
-        : `EffectsModule.forFeature([${effectsName}])`,
+      `EffectsModule.for${options.root ? 'Root' : 'Feature'}([${effectsName}])`,
       relativePath
     );
     const changes = [effectsModuleImport, effectsImport, effectsNgModuleImport];
