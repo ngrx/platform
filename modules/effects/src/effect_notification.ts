@@ -36,9 +36,9 @@ function reportInvalidActions(
     if (isInvalidAction) {
       reporter.handleError(
         new Error(
-          `Effect ${getEffectName(output)} dispatched an invalid action: ${
-            action
-          }`
+          `Effect ${getEffectName(
+            output
+          )} dispatched an invalid action: ${action}`
         )
       );
     }
