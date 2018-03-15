@@ -112,20 +112,6 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return hasNewKey;
   }
 
-  function decideIdsToUpdate(updates: Update<T>[], state: R): Update<T>[];
-  function decideIdsToUpdate(change: Change<T>, state: R): Update<T>[];
-  function decideIdsToUpdate(updatesOrChange: any[] | any, state: any): any[] {
-    if (updatesOrChange instanceof Array) {
-      return updatesOrChange;
-    } else {
-      const changes = state.ids.map((id: string | number) => ({
-        id,
-        changes: updatesOrChange(state.entities[id]),
-      }));
-      return changes;
-    }
-  }
-
   function updateOneMutably(update: Update<T>, state: R): DidMutate;
   function updateOneMutably(update: any, state: any): DidMutate {
     return updateManyMutably([update], state);
@@ -138,9 +124,15 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     state: any
   ): DidMutate {
     const newKeys: { [id: string]: string } = {};
-    const updates = decideIdsToUpdate(updatesOrChange, state).filter(
-      ({ id }: { id: number | string }) => id in state.entities
-    );
+    const changes: Update<T>[] =
+      updatesOrChange instanceof Array
+        ? updatesOrChange
+        : state.ids.map((id: string | number) => ({
+            id,
+            changes: updatesOrChange(state.entities[id]),
+          }));
+
+    const updates = changes.filter(({ id }) => id in state.entities);
 
     const didMutateEntities = updates.length > 0;
 

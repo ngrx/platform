@@ -73,20 +73,6 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     return newKey !== update.id;
   }
 
-  function decideIdsToUpdate(updates: Update<T>[], state: R): Update<T>[];
-  function decideIdsToUpdate(change: Change<T>, state: R): Update<T>[];
-  function decideIdsToUpdate(updatesOrChange: any[] | any, state: any): any[] {
-    if (updatesOrChange instanceof Array) {
-      return updatesOrChange;
-    } else {
-      const changes = state.ids.map((id: string | number) => ({
-        id,
-        changes: updatesOrChange(state.entities[id]),
-      }));
-      return changes;
-    }
-  }
-
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
   function updateManyMutably(change: Change<T>, state: R): DidMutate;
   function updateManyMutably(
@@ -94,7 +80,13 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     state: any
   ): DidMutate {
     const models: T[] = [];
-    const updates = decideIdsToUpdate(updatesOrChange, state);
+    const updates: Update<T>[] =
+      updatesOrChange instanceof Array
+        ? updatesOrChange
+        : state.ids.map((id: string | number) => ({
+            id,
+            changes: updatesOrChange(state.entities[id]),
+          }));
 
     const didMutateIds =
       updates.filter(update => takeUpdatedModel(models, update, state)).length >
