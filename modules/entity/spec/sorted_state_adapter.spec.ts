@@ -316,7 +316,7 @@ describe('Sorted State Adapter', () => {
     );
 
     const withUpdates = adapter.updateMany(
-      { predicate: p => p.id.startsWith('a'), changes: change },
+      book => (book.id.startsWith('a') ? change : {}),
       withMany
     );
 

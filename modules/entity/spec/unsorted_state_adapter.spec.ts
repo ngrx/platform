@@ -249,28 +249,33 @@ describe('Unsorted State Adapter', () => {
   });
 
   it('should let you update many entities by predicate in the state', () => {
-    const change = { title: 'Changed titled' };
+    const firstChange = { title: 'First change' };
+    const secondChange = { title: 'Second change' };
+
     const withMany = adapter.addAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
 
     const withUpdates = adapter.updateMany(
-      { predicate: p => p.id.startsWith('a'), changes: change },
+      book => (book.id.startsWith('a') ? firstChange : secondChange),
       withMany
     );
 
     expect(withUpdates).toEqual({
       ids: [TheGreatGatsby.id, AClockworkOrange.id, AnimalFarm.id],
       entities: {
-        [TheGreatGatsby.id]: TheGreatGatsby,
+        [TheGreatGatsby.id]: {
+          ...TheGreatGatsby,
+          ...secondChange,
+        },
         [AClockworkOrange.id]: {
           ...AClockworkOrange,
-          ...change,
+          ...firstChange,
         },
         [AnimalFarm.id]: {
           ...AnimalFarm,
-          ...change,
+          ...firstChange,
         },
       },
     });

@@ -5,7 +5,7 @@ import {
   Dictionary,
   EntityStateAdapter,
   Update,
-  UpdatePredicate,
+  Change,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
@@ -74,33 +74,27 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   }
 
   function decideIdsToUpdate(updates: Update<T>[], state: R): Update<T>[];
-  function decideIdsToUpdate(
-    updates: UpdatePredicate<T>,
-    state: R
-  ): Update<T>[];
-  function decideIdsToUpdate(
-    updatesOrPredicate: any[] | any,
-    state: any
-  ): any[] {
-    if (updatesOrPredicate instanceof Array) {
-      return updatesOrPredicate;
+  function decideIdsToUpdate(change: Change<T>, state: R): Update<T>[];
+  function decideIdsToUpdate(updatesOrChange: any[] | any, state: any): any[] {
+    if (updatesOrChange instanceof Array) {
+      return updatesOrChange;
     } else {
-      const { predicate, changes } = updatesOrPredicate;
-      const idsToChange = state.ids.filter((id: string | number) =>
-        predicate(state.entities[id])
-      );
-      return idsToChange.map((id: string | number) => ({ id, changes }));
+      const changes = state.ids.map((id: string | number) => ({
+        id,
+        changes: updatesOrChange(state.entities[id]),
+      }));
+      return changes;
     }
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(update: UpdatePredicate<T>, state: R): DidMutate;
+  function updateManyMutably(change: Change<T>, state: R): DidMutate;
   function updateManyMutably(
-    updatesOrPredicate: any[] | any,
+    updatesOrChange: any[] | any,
     state: any
   ): DidMutate {
     const models: T[] = [];
-    const updates = decideIdsToUpdate(updatesOrPredicate, state);
+    const updates = decideIdsToUpdate(updatesOrChange, state);
 
     const didMutateIds =
       updates.filter(update => takeUpdatedModel(models, update, state)).length >

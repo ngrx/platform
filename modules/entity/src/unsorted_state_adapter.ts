@@ -5,6 +5,7 @@ import {
   Update,
   Predicate,
   UpdatePredicate,
+  Change,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { selectIdValue } from './utils';
@@ -112,22 +113,16 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   }
 
   function decideIdsToUpdate(updates: Update<T>[], state: R): Update<T>[];
-  function decideIdsToUpdate(
-    updates: UpdatePredicate<T>,
-    state: R
-  ): Update<T>[];
-  function decideIdsToUpdate(
-    updatesOrPredicate: any[] | any,
-    state: any
-  ): any[] {
-    if (updatesOrPredicate instanceof Array) {
-      return updatesOrPredicate;
+  function decideIdsToUpdate(change: Change<T>, state: R): Update<T>[];
+  function decideIdsToUpdate(updatesOrChange: any[] | any, state: any): any[] {
+    if (updatesOrChange instanceof Array) {
+      return updatesOrChange;
     } else {
-      const { predicate, changes } = updatesOrPredicate;
-      const idsToChange = state.ids.filter((id: string | number) =>
-        predicate(state.entities[id])
-      );
-      return idsToChange.map((id: string | number) => ({ id, changes }));
+      const changes = state.ids.map((id: string | number) => ({
+        id,
+        changes: updatesOrChange(state.entities[id]),
+      }));
+      return changes;
     }
   }
 
@@ -137,13 +132,13 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(update: UpdatePredicate<T>, state: R): DidMutate;
+  function updateManyMutably(change: Change<T>, state: R): DidMutate;
   function updateManyMutably(
-    updatesOrPredicate: any[] | any,
+    updatesOrChange: any[] | any,
     state: any
   ): DidMutate {
     const newKeys: { [id: string]: string } = {};
-    const updates = decideIdsToUpdate(updatesOrPredicate, state).filter(
+    const updates = decideIdsToUpdate(updatesOrChange, state).filter(
       ({ id }: { id: number | string }) => id in state.entities
     );
 
