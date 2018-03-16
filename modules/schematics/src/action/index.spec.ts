@@ -1,6 +1,5 @@
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { getFileContent } from '../utility/test';
 import { Schema as ActionOptions } from './schema';
 
 describe('Action Schematic', () => {

@@ -1,9 +1,5 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { getFileContent } from '../utility/test';
 import { Schema as FeatureOptions } from './schema';
 
 describe('Feature Schematic', () => {

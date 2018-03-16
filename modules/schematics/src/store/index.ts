@@ -10,30 +10,29 @@ import {
   filter,
   mergeWith,
   move,
-  noop,
   template,
   url,
 } from '@angular-devkit/schematics';
-import 'rxjs/add/operator/merge';
 import * as ts from 'typescript';
 import * as stringUtils from '../strings';
-import { addProviderToModule, addImportToModule } from '../utility/ast-utils';
+import { addImportToModule } from '../utility/ast-utils';
 import { InsertChange, Change } from '../utility/change';
 import {
   buildRelativePath,
   findModuleFromOptions,
 } from '../utility/find-module';
-import { Schema as ServiceOptions } from './schema';
+import { Schema as StoreOptions } from './schema';
 import { insertImport } from '../utility/route-utils';
 
-function addImportToNgModule(options: ServiceOptions): Rule {
+function addImportToNgModule(options: StoreOptions): Rule {
   return (host: Tree) => {
-    if (!options.module) {
+    const modulePath = options.module;
+
+    if (!modulePath) {
       return host;
     }
 
-    const modulePath = options.module;
-    if (!host.exists(options.module)) {
+    if (!host.exists(modulePath)) {
       throw new Error('Specified module does not exist');
     }
 
@@ -127,7 +126,7 @@ function addImportToNgModule(options: ServiceOptions): Rule {
   };
 }
 
-export default function(options: ServiceOptions): Rule {
+export default function(options: StoreOptions): Rule {
   options.path = options.path ? normalize(options.path) : options.path;
   const sourceDir = options.sourceDir;
   const statePath = `/${options.sourceDir}/${options.path}/${

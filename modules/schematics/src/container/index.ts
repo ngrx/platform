@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -12,20 +11,17 @@ import {
   filter,
   template,
   move,
-  branchAndMerge,
   mergeWith,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as fs from 'fs';
-import * as path from 'path';
 import * as stringUtils from '../strings';
-import { Schema as FeatureOptions } from './schema';
+import { Schema as ContainerOptions } from './schema';
 import { buildRelativePath } from '../utility/find-module';
 import { NoopChange, InsertChange, ReplaceChange } from '../utility/change';
 import { insertImport } from '../utility/route-utils';
 import { omit } from '../utility/ngrx-utils';
 
-function addStateToComponent(options: FeatureOptions) {
+function addStateToComponent(options: ContainerOptions) {
   return (host: Tree) => {
     if (!options.state && !options.stateInterface) {
       return host;
@@ -118,7 +114,7 @@ function addStateToComponent(options: FeatureOptions) {
   };
 }
 
-export default function(options: FeatureOptions): Rule {
+export default function(options: ContainerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     const sourceDir = options.sourceDir;
 
@@ -127,7 +123,7 @@ export default function(options: FeatureOptions): Rule {
     }
 
     const opts = ['state', 'stateInterface'].reduce(
-      (current: Partial<FeatureOptions>, key) => {
+      (current: Partial<ContainerOptions>, key) => {
         return omit(current, key as any);
       },
       options
