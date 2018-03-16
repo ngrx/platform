@@ -258,7 +258,10 @@ describe('Unsorted State Adapter', () => {
     );
 
     const withUpdates = adapter.updateMany(
-      book => (book.id.startsWith('a') ? firstChange : secondChange),
+      book =>
+        book.title === TheGreatGatsby.title
+          ? firstChange
+          : book.title === AClockworkOrange.title ? secondChange : false,
       withMany
     );
 
@@ -267,16 +270,13 @@ describe('Unsorted State Adapter', () => {
       entities: {
         [TheGreatGatsby.id]: {
           ...TheGreatGatsby,
-          ...secondChange,
+          ...firstChange,
         },
         [AClockworkOrange.id]: {
           ...AClockworkOrange,
-          ...firstChange,
+          ...secondChange,
         },
-        [AnimalFarm.id]: {
-          ...AnimalFarm,
-          ...firstChange,
-        },
+        [AnimalFarm.id]: AnimalFarm,
       },
     });
   });

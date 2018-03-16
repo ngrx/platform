@@ -309,29 +309,34 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should let you update many entities by predicate in the state', () => {
-    const change = { title: 'Changed titled' };
+    const firstChange = { title: 'First change' };
+    const secondChange = { title: 'Second change' };
+
     const withMany = adapter.addAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
 
     const withUpdates = adapter.updateMany(
-      book => (book.id.startsWith('a') ? change : {}),
+      book =>
+        book.title === TheGreatGatsby.title
+          ? firstChange
+          : book.title === AClockworkOrange.title ? secondChange : false,
       withMany
     );
 
     expect(withUpdates).toEqual({
-      ids: [AClockworkOrange.id, AnimalFarm.id, TheGreatGatsby.id],
+      ids: [AnimalFarm.id, TheGreatGatsby.id, AClockworkOrange.id],
       entities: {
+        [AnimalFarm.id]: AnimalFarm,
+        [TheGreatGatsby.id]: {
+          ...TheGreatGatsby,
+          ...firstChange,
+        },
         [AClockworkOrange.id]: {
           ...AClockworkOrange,
-          ...change,
+          ...secondChange,
         },
-        [AnimalFarm.id]: {
-          ...AnimalFarm,
-          ...change,
-        },
-        [TheGreatGatsby.id]: TheGreatGatsby,
       },
     });
   });

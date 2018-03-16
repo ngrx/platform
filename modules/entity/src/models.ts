@@ -35,9 +35,7 @@ export type UpdatePredicate<T> = {
   changes: Partial<T>;
 };
 
-export type Change<T> = {
-  (entity: T): Partial<T>;
-};
+export type Map<T> = (entity: T) => T;
 
 export interface EntityState<T> {
   ids: string[] | number[];
@@ -65,7 +63,7 @@ export interface EntityStateAdapter<T> {
 
   updateOne<S extends EntityState<T>>(update: Update<T>, state: S): S;
   updateMany<S extends EntityState<T>>(updates: Update<T>[], state: S): S;
-  updateMany<S extends EntityState<T>>(change: Change<T>, state: S): S;
+  updateMany<S extends EntityState<T>>(map: Map<T>, state: S): S;
 
   upsertOne<S extends EntityState<T>>(entity: T, state: S): S;
   upsertMany<S extends EntityState<T>>(entities: T[], state: S): S;
