@@ -73,7 +73,7 @@ npm install --save-dev @angular/cli@latest
 
 * Install `@ngrx/schematics` and its dependencies following the steps in the sections above.
 
-* Create a `.angular-cli.json` file in your root directory, besides your `ionic.config.json` file. Angular CLI (`ng`) will use it to know where to generate files. The only contents it needs to have are:
+* Create a `.angular-cli.json` file in your root directory, beside your `ionic.config.json` file. Angular CLI (`ng`) will use it to know where to generate new files. The only contents it needs to have are:
 
 ```json
 {
@@ -92,15 +92,13 @@ npm install --save-dev @angular/cli@latest
 ng set defaults.schematics.collection=@ngrx/schematics
 ```
 
+that command will modify the file `.angular-cli.json` so that you don't have to type `--collection @ngrx/schematics` with every command.
+
 * Make SCSS the default style format (the default for Ionic):
 
 ```bash
 ng set defaults.styleExt scss
 ```
-
-**Note**: when you generate components (like containers) they are generated with a `styleUrls` pointing to the `.scss` file. But by default, Ionic doesn't include styles directly in each component, so, you will probably need to remove that line from the components you create with `ng`.
-
-that command will modify the file `.angular-cli.json` so that you don't have to type `--collection @ngrx/schematics` with every command.
 
 * After that, you can use `ng` with the same instructions as above, e.g.:
 
@@ -108,9 +106,15 @@ that command will modify the file `.angular-cli.json` so that you don't have to 
 ng generate store State --root --module app.module.ts
 ```
 
+**Note**: when you generate components (like containers) they are generated with a `styleUrls` pointing to the `.scss` file. But by default, Ionic doesn't include styles directly in each component, so, you will probably need to remove that line from the components you create with `ng`. You would remove a line similar to this:
+
+```TypeScript
+  styleUrls: ['./login.component.css']
+```
+
 ---
 
-**Note**: as Ionic currently doesn't support Angular's `environment.ts` files, you will have to remove them from the imports and adjust the changed files manually, but apart from that, you can use the generated files normally. You will probably will have to remove from `app.module.ts` the line with:
+**Note**: as Ionic currently doesn't support Angular's `environment.ts` files, you will have to remove them from the imports and adjust the changed files manually, but apart from that, you can use the generated files normally. You will probably have to remove from `app.module.ts` the line with:
 
 ```TypeScript
 import { environment } from '../environments/environment';
@@ -128,7 +132,7 @@ to:
     StoreDevtoolsModule.instrument(),
 ```
 
-during development and probably remove that line in production.
+during development, and probably remove that line in production.
 
 And in the file in `reducers/index.ts` remove the line:
 
@@ -148,7 +152,7 @@ to:
 export const metaReducers: MetaReducer<State>[] = [];
 ```
 
-during development and probably remove that line in production.
+during development, and probably remove that line in production.
 
 ## Blueprints
 
