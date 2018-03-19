@@ -5,7 +5,7 @@ import {
   Dictionary,
   EntityStateAdapter,
   Update,
-  Map,
+  UpdateMap,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
@@ -74,16 +74,25 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(map: Map<T>, state: R): DidMutate;
+  function updateManyMutably(map: UpdateMap<T>, state: R): DidMutate;
   function updateManyMutably(updatesOrMap: any[] | any, state: any): DidMutate {
     const models: T[] = [];
     const updates: Update<T>[] =
       updatesOrMap instanceof Array
         ? updatesOrMap
-        : state.ids.map((id: string | number) => ({
-            id,
-            changes: updatesOrMap(state.entities[id]),
-          }));
+        : state.ids.reduce((changes: Update<T>[], id: string | number) => {
+            const change = updatesOrMap(state.entities[id]);
+            if (change) {
+              return [
+                ...changes,
+                {
+                  id,
+                  changes: change,
+                },
+              ];
+            }
+            return changes;
+          }, []);
 
     const didMutateIds =
       updates.filter(update => takeUpdatedModel(models, update, state)).length >

@@ -4,7 +4,7 @@ import {
   IdSelector,
   Update,
   Predicate,
-  UpdatePredicate,
+  UpdateMap,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { selectIdValue } from './utils';
@@ -117,16 +117,25 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(map: Map<T>, state: R): DidMutate;
+  function updateManyMutably(map: UpdateMap<T>, state: R): DidMutate;
   function updateManyMutably(updatesOrMap: any[] | any, state: any): DidMutate {
     const newKeys: { [id: string]: string } = {};
     const changes: Update<T>[] =
       updatesOrMap instanceof Array
         ? updatesOrMap
-        : state.ids.map((id: string | number) => ({
-            id,
-            changes: updatesOrMap(state.entities[id]),
-          }));
+        : state.ids.reduce((changes: Update<T>[], id: string | number) => {
+            const change = updatesOrMap(state.entities[id]);
+            if (change) {
+              return [
+                ...changes,
+                {
+                  id,
+                  changes: change,
+                },
+              ];
+            }
+            return changes;
+          }, []);
 
     const updates = changes.filter(({ id }) => id in state.entities);
 
