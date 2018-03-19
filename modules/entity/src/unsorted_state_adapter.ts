@@ -125,7 +125,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
         ? updatesOrMap
         : state.ids.reduce((changes: Update<T>[], id: string | number) => {
             const change = updatesOrMap(state.entities[id]);
-            if (change) {
+            if (change && Object.keys(change).length > 0) {
               return [
                 ...changes,
                 {
