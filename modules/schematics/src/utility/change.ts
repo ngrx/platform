@@ -112,9 +112,7 @@ export class ReplaceChange implements Change {
     if (pos < 0) {
       throw new Error('Negative positions are invalid');
     }
-    this.description = `Replaced ${oldText} into position ${pos} of ${
-      path
-    } with ${newText}`;
+    this.description = `Replaced ${oldText} into position ${pos} of ${path} with ${newText}`;
     this.order = pos;
   }
 

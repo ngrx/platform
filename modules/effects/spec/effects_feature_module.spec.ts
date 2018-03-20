@@ -68,9 +68,7 @@ describe('Effects Feature Module', () => {
       store = TestBed.get(Store);
     });
 
-    it('should have the feature state defined to select from the effect', (
-      done: any
-    ) => {
+    it('should have the feature state defined to select from the effect', (done: any) => {
       const action = { type: 'INCREMENT' };
       const result = { type: 'INCREASE' };
 

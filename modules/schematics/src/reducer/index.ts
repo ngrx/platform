@@ -14,18 +14,10 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import 'rxjs/add/operator/merge';
 import * as ts from 'typescript';
 import * as stringUtils from '../strings';
-import { addProviderToModule, addImportToModule } from '../utility/ast-utils';
-import { InsertChange, Change } from '../utility/change';
-import {
-  buildRelativePath,
-  findModuleFromOptions,
-} from '../utility/find-module';
+import { findModuleFromOptions } from '../utility/find-module';
 import { Schema as ReducerOptions } from './schema';
-import { insertImport } from '../utility/route-utils';
-import * as path from 'path';
 import {
   addReducerToStateInferface,
   addReducerToActionReducerMap,
