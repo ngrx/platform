@@ -392,7 +392,7 @@ export function liftReducerWith(
 
           // Add a new action to only recompute state
           const actionId = nextActionId++;
-          actionsById[actionId] = new PerformAction(liftedAction);
+          actionsById[actionId] = new PerformAction(liftedAction, +Date.now());
           stagedActionIds = [...stagedActionIds, actionId];
 
           minInvalidatedStateIndex = stagedActionIds.length - 1;

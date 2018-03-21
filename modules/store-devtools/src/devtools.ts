@@ -119,19 +119,19 @@ export class StoreDevtools implements Observer<any> {
   complete() {}
 
   performAction(action: any) {
-    this.dispatch(new Actions.PerformAction(action));
+    this.dispatch(new Actions.PerformAction(action, +Date.now()));
   }
 
   reset() {
-    this.dispatch(new Actions.Reset());
+    this.dispatch(new Actions.Reset(+Date.now()));
   }
 
   rollback() {
-    this.dispatch(new Actions.Rollback());
+    this.dispatch(new Actions.Rollback(+Date.now()));
   }
 
   commit() {
-    this.dispatch(new Actions.Commit());
+    this.dispatch(new Actions.Commit(+Date.now()));
   }
 
   sweep() {
