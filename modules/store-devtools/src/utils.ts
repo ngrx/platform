@@ -31,7 +31,7 @@ export function unliftAction(liftedState: LiftedState): LiftedAction {
  * Lifts an app's action into an action on the lifted store.
  */
 export function liftAction(action: Action) {
-  return new Actions.PerformAction(action);
+  return new Actions.PerformAction(action, +Date.now());
 }
 
 export function applyOperators(
