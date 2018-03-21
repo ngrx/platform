@@ -62,12 +62,8 @@
   },
   "dependencies": {
     "@angular/animations": "^5.2.0",
-<<<<<<< HEAD
     "@angular/cdk": "^5.2.0",
-    "@angular/cli": "^1.5.0",
-=======
     "@angular/cli": "^1.7.0",
->>>>>>> RFC: Schematics: Extend from @schematics/angular #882
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
     "@angular/compiler-cli": "^5.2.0",
@@ -85,10 +81,6 @@
     "@ngrx/router-store": "^5.0.1",
     "@ngrx/store": "^5.1.0",
     "@ngrx/store-devtools": "^5.1.0",
-<<<<<<< HEAD
-=======
-    "@angular/cdk": "^5.2.0",
->>>>>>> RFC: Schematics: Extend from @schematics/angular #882
     "core-js": "^2.4.1",
     "hammerjs": "^2.0.8",
     "ngrx-store-freeze": "^0.2.1",
