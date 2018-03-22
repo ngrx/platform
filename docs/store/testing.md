@@ -109,7 +109,7 @@ describe('My Component', () => {
 });
 ```
 ### Testing selectors
-If you have selectors composed of many other selectors it may be useful to test them independent from the selectors they are composed of. Therefor selectors contain a reference to the projector function as `.projector`.
+You can use the projector function used by the selector by accessing the `.projector` property.
 
 my-reducer.ts
 ```ts
