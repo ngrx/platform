@@ -1,3 +1,4 @@
+import { ErrorHandler } from '@angular/core';
 import {
   Action,
   ActionReducer,
@@ -56,7 +57,8 @@ function computeNextEntry(
   reducer: ActionReducer<any, any>,
   action: Action,
   state: any,
-  error: any
+  error: any,
+  errorHandler: ErrorHandler
 ) {
   if (error) {
     return {
@@ -71,7 +73,7 @@ function computeNextEntry(
     nextState = reducer(state, action);
   } catch (err) {
     nextError = err.toString();
-    console.error(err.stack || err);
+    errorHandler.handleError(err.stack || err);
   }
 
   return {
@@ -90,7 +92,8 @@ function recomputeStates(
   committedState: any,
   actionsById: LiftedActions,
   stagedActionIds: number[],
-  skippedActionIds: number[]
+  skippedActionIds: number[],
+  errorHandler: ErrorHandler
 ) {
   // Optimization: exit early and return the same reference
   // if we know nothing could have changed.
@@ -113,7 +116,13 @@ function recomputeStates(
     const shouldSkip = skippedActionIds.indexOf(actionId) > -1;
     const entry: ComputedState = shouldSkip
       ? previousEntry
-      : computeNextEntry(reducer, action, previousState, previousError);
+      : computeNextEntry(
+          reducer,
+          action,
+          previousState,
+          previousError,
+          errorHandler
+        );
 
     nextComputedStates.push(entry);
   }
@@ -143,6 +152,7 @@ export function liftInitialState(
 export function liftReducerWith(
   initialCommittedState: any,
   initialLiftedState: LiftedState,
+  errorHandler: ErrorHandler,
   monitorReducer?: any,
   options: Partial<StoreDevtoolsConfig> = {}
 ) {
@@ -337,7 +347,8 @@ export function liftReducerWith(
             committedState,
             actionsById,
             stagedActionIds,
-            skippedActionIds
+            skippedActionIds,
+            errorHandler
           );
 
           commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -365,7 +376,8 @@ export function liftReducerWith(
               committedState,
               actionsById,
               stagedActionIds,
-              skippedActionIds
+              skippedActionIds,
+              errorHandler
             );
 
             commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -393,7 +405,8 @@ export function liftReducerWith(
             committedState,
             actionsById,
             stagedActionIds,
-            skippedActionIds
+            skippedActionIds,
+            errorHandler
           );
 
           // Recompute state history with latest reducer and update action
@@ -429,7 +442,8 @@ export function liftReducerWith(
       committedState,
       actionsById,
       stagedActionIds,
-      skippedActionIds
+      skippedActionIds,
+      errorHandler
     );
     monitorState = monitorReducer(monitorState, liftedAction);
 

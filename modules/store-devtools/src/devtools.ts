@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, Inject, OnDestroy, ErrorHandler } from '@angular/core';
 import {
   Action,
   ActionReducer,
@@ -39,6 +39,7 @@ export class StoreDevtools implements Observer<any> {
     reducers$: ReducerObservable,
     extension: DevtoolsExtension,
     scannedActions: ScannedActionsSubject,
+    errorHandler: ErrorHandler,
     @Inject(INITIAL_STATE) initialState: any,
     @Inject(STORE_DEVTOOLS_CONFIG) config: StoreDevtoolsConfig
   ) {
@@ -46,6 +47,7 @@ export class StoreDevtools implements Observer<any> {
     const liftReducer = liftReducerWith(
       initialState,
       liftedInitialState,
+      errorHandler,
       config.monitor,
       config
     );
