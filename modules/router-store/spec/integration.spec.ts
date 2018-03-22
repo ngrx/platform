@@ -3,7 +3,7 @@ import { Component, Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, RuntimeChecks } from '@ngrx/store';
 import {
   ROUTER_CANCEL,
   ROUTER_ERROR,
@@ -534,7 +534,12 @@ function createTestModule(
   TestBed.configureTestingModule({
     declarations: [AppCmp, SimpleCmp],
     imports: [
-      StoreModule.forRoot(opts.reducers),
+      StoreModule.forRoot(opts.reducers, {
+        dangerouslyDisableRuntimeChecks: [
+          RuntimeChecks.Immutability,
+          RuntimeChecks.Serializability,
+        ],
+      }),
       RouterTestingModule.withRoutes([
         { path: '', component: SimpleCmp },
         {

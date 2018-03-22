@@ -74,7 +74,7 @@ export function compose<A, B, C, D, E, F>(
   b: (i: A) => B
 ): (i: A) => F;
 export function compose(...functions: any[]) {
-  return function(arg: any) {
+  return function(arg: any, ...remainingArgs: any[]) {
     if (functions.length === 0) {
       return arg;
     }
@@ -82,19 +82,18 @@ export function compose(...functions: any[]) {
     const last = functions[functions.length - 1];
     const rest = functions.slice(0, -1);
 
-    return rest.reduceRight((composed, fn) => fn(composed), last(arg));
+    return rest.reduceRight(
+      (composed, fn) => fn(composed, ...remainingArgs),
+      last(arg, ...remainingArgs)
+    );
   };
 }
 
 export function createReducerFactory<T, V extends Action = Action>(
   reducerFactory: ActionReducerFactory<T, V>,
-  metaReducers?: MetaReducer<T, V>[]
+  metaReducer: MetaReducer<T, V>
 ): ActionReducerFactory<T, V> {
-  if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-    return compose.apply(null, [...metaReducers, reducerFactory]);
-  }
-
-  return reducerFactory;
+  return compose(metaReducer, reducerFactory);
 }
 
 export function createFeatureReducerFactory<T, V extends Action = Action>(
@@ -102,7 +101,7 @@ export function createFeatureReducerFactory<T, V extends Action = Action>(
 ): (reducer: ActionReducer<T, V>, initialState?: T) => ActionReducer<T, V> {
   const reducerFactory =
     Array.isArray(metaReducers) && metaReducers.length > 0
-      ? compose<ActionReducer<T, V>>(...metaReducers)
+      ? compose.apply(null, metaReducers)
       : (r: ActionReducer<T, V>) => r;
 
   return (reducer: ActionReducer<T, V>, initialState?: T) => {

@@ -5,8 +5,8 @@ export type ActionSanitizer = (action: Action, id: number) => Action;
 export type StateSanitizer = (state: any, index: number) => any;
 
 export class StoreDevtoolsConfig {
-  maxAge: number | false;
-  monitor: ActionReducer<any, any>;
+  maxAge!: number | false;
+  monitor!: ActionReducer<any, any>;
   actionSanitizer?: ActionSanitizer;
   stateSanitizer?: StateSanitizer;
   name?: string;

@@ -49,3 +49,4 @@ export {
   _createStoreReducers,
   _createFeatureReducers,
 } from './store_module';
+export { RuntimeChecks } from './runtime_checks';

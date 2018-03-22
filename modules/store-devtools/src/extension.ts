@@ -71,10 +71,10 @@ export interface ReduxDevtoolsExtension {
 export class DevtoolsExtension {
   private instanceId = `ngrx-store-${Date.now()}`;
   private devtoolsExtension: ReduxDevtoolsExtension;
-  private extensionConnection: ReduxDevtoolsExtensionConnection;
+  private extensionConnection!: ReduxDevtoolsExtensionConnection;
 
-  liftedActions$: Observable<any>;
-  actions$: Observable<any>;
+  liftedActions$!: Observable<any>;
+  actions$!: Observable<any>;
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,

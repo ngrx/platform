@@ -7,6 +7,13 @@ import {
   Injector,
 } from '@angular/core';
 import {
+  identityMetaReducer,
+  USER_PROVIDED_META_REDUCERS,
+  META_REDUCERS,
+  RESOLVED_META_REDUCER,
+  resolveMetaReduers,
+} from './meta_reducers';
+import {
   Action,
   ActionReducer,
   ActionReducerMap,
@@ -24,7 +31,6 @@ import {
   _REDUCER_FACTORY,
   STORE_FEATURES,
   _INITIAL_STATE,
-  META_REDUCERS,
   _STORE_REDUCERS,
   FEATURE_REDUCERS,
   _FEATURE_REDUCERS,
@@ -42,6 +48,7 @@ import {
 } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS, Store } from './store';
+import { RuntimeChecks, provideRuntimeChecks } from './runtime_checks';
 
 @NgModule({})
 export class StoreRootModule {
@@ -88,17 +95,24 @@ export type StoreConfig<T, V extends Action = Action> = {
   metaReducers?: MetaReducer<T, V>[];
 };
 
+export type RootStoreConfig<T, V extends Action = Action> = StoreConfig<
+  T,
+  V
+> & {
+  dangerouslyDisableRuntimeChecks?: RuntimeChecks[];
+};
+
 @NgModule({})
 export class StoreModule {
   static forRoot<T, V extends Action = Action>(
     reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-    config?: StoreConfig<T, V>
+    config?: RootStoreConfig<T, V>
   ): ModuleWithProviders;
   static forRoot(
     reducers:
       | ActionReducerMap<any, any>
       | InjectionToken<ActionReducerMap<any, any>>,
-    config: StoreConfig<any, any> = {}
+    config: RootStoreConfig<any, any> = {}
   ): ModuleWithProviders {
     return {
       ngModule: StoreRootModule,
@@ -121,8 +135,18 @@ export class StoreModule {
           useFactory: _createStoreReducers,
         },
         {
-          provide: META_REDUCERS,
+          provide: USER_PROVIDED_META_REDUCERS,
           useValue: config.metaReducers ? config.metaReducers : [],
+        },
+        {
+          provide: META_REDUCERS,
+          multi: true,
+          useValue: identityMetaReducer,
+        },
+        {
+          provide: RESOLVED_META_REDUCER,
+          deps: [USER_PROVIDED_META_REDUCERS, META_REDUCERS],
+          useFactory: resolveMetaReduers,
         },
         {
           provide: _REDUCER_FACTORY,
@@ -132,7 +156,7 @@ export class StoreModule {
         },
         {
           provide: REDUCER_FACTORY,
-          deps: [_REDUCER_FACTORY, META_REDUCERS],
+          deps: [_REDUCER_FACTORY, RESOLVED_META_REDUCER],
           useFactory: createReducerFactory,
         },
         ACTIONS_SUBJECT_PROVIDERS,
@@ -140,6 +164,11 @@ export class StoreModule {
         SCANNED_ACTIONS_SUBJECT_PROVIDERS,
         STATE_PROVIDERS,
         STORE_PROVIDERS,
+        provideRuntimeChecks(
+          config.dangerouslyDisableRuntimeChecks
+            ? config.dangerouslyDisableRuntimeChecks
+            : []
+        ),
       ],
     };
   }

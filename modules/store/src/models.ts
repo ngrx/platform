@@ -36,3 +36,9 @@ export interface StoreFeature<T, V extends Action = Action> {
 export interface Selector<T, V> {
   (state: T): V;
 }
+
+export interface ImmutableArray<T> extends ReadonlyArray<Immutable<T>> {}
+export type ImmutableObject<T> = { readonly [P in keyof T]: Immutable<T[P]> };
+export type Immutable<T> = T extends Array<infer R>
+  ? ImmutableArray<R>
+  : T extends object ? ImmutableObject<T> : T;

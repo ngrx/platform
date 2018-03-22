@@ -219,9 +219,9 @@ export class StoreRouterConnectingModule {
     };
   }
 
-  private routerState: RouterStateSnapshot;
+  private routerState!: RouterStateSnapshot;
   private storeState: any;
-  private lastRoutesRecognized: RoutesRecognized;
+  private lastRoutesRecognized!: RoutesRecognized;
 
   private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer

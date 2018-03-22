@@ -138,7 +138,7 @@
     "tslib": "1.6.0",
     "tslint": "^5.0.0",
     "tsutils": "2.20.0",
-    "typescript": "~2.6.0",
+    "typescript": "^2.8.0-rc",
     "uglify-js": "^3.1.9"
   },
   "collective": {

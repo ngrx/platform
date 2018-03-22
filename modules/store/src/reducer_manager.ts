@@ -12,6 +12,7 @@ import {
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from './tokens';
 import {
   omit,
+  compose,
   createReducerFactory,
   createFeatureReducerFactory,
 } from './utils';
@@ -46,10 +47,10 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
     const reducer =
       typeof reducers === 'function'
         ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
-        : createReducerFactory(reducerFactory, metaReducers)(
-            reducers,
-            initialState
-          );
+        : createReducerFactory(
+            reducerFactory,
+            compose.apply(null, metaReducers)
+          )(reducers, initialState);
 
     this.addReducer(key, reducer);
   }

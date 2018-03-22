@@ -65,7 +65,7 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     pathOrMapFn: ((state: T) => any) | string,
     ...paths: string[]
   ): Store<any> {
-    return select(pathOrMapFn, ...paths)(this);
+    return select.call(null, pathOrMapFn, ...paths)(this);
   }
 
   lift<R>(operator: Operator<T, R>): Store<R> {
