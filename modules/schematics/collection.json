@@ -1,97 +1,103 @@
 {
   "schematics": {
     "action": {
-      "aliases": [ "a" ],
+      "aliases": ["a"],
       "factory": "./src/action",
       "schema": "./src/action/schema.json",
       "description": "Add store actions"
     },
 
     "class": {
-      "aliases": [ "cl" ],
+      "aliases": ["cl"],
       "extends": "@schematics/angular:class"
     },
 
     "component": {
-      "aliases": [ "c" ],
+      "aliases": ["c"],
       "extends": "@schematics/angular:component"
     },
 
     "container": {
-      "aliases": [ "co" ],
+      "aliases": ["co"],
       "factory": "./src/container",
       "schema": "./src/container/schema.json",
       "description": "Add store container component"
     },
 
     "directive": {
-      "aliases": [ "d" ],
+      "aliases": ["d"],
       "extends": "@schematics/angular:directive"
     },
 
     "effect": {
-      "aliases": [ "ef" ],
+      "aliases": ["ef"],
       "factory": "./src/effect",
       "schema": "./src/effect/schema.json",
       "description": "Add side effect class"
     },
 
     "entity": {
-      "aliases": [ "en" ],
+      "aliases": ["en"],
       "factory": "./src/entity",
       "schema": "./src/entity/schema.json",
       "description": "Add entity state"
     },
 
     "enum": {
-      "aliases": [ "e" ],
+      "aliases": ["e"],
       "extends": "@schematics/angular:enum"
     },
 
     "feature": {
-      "aliases": [ "f" ],
+      "aliases": ["f"],
       "factory": "./src/feature",
       "schema": "./src/feature/schema.json",
       "description": "Add feature state"
     },
 
     "guard": {
-      "aliases": [ "g" ],
+      "aliases": ["g"],
       "extends": "@schematics/angular:guard"
     },
 
     "interface": {
-      "aliases": [ "i" ],
+      "aliases": ["i"],
       "extends": "@schematics/angular:interface"
     },
 
     "module": {
-      "aliases": [ "m" ],
+      "aliases": ["m"],
       "extends": "@schematics/angular:module"
     },
 
     "pipe": {
-      "aliases": [ "p" ],
+      "aliases": ["p"],
       "extends": "@schematics/angular:pipe"
     },
 
     "reducer": {
-      "aliases": [ "r" ],
+      "aliases": ["r"],
       "factory": "./src/reducer",
       "schema": "./src/reducer/schema.json",
       "description": "Add state reducer"
     },
 
     "service": {
-      "aliases": [ "s" ],
+      "aliases": ["s"],
       "extends": "@schematics/angular:service"
     },
 
     "store": {
-      "aliases": [ "st" ],
+      "aliases": ["st"],
       "factory": "./src/store",
       "schema": "./src/store/schema.json",
       "description": "Adds initial setup for state managment"
+    },
+
+    "ng-add": {
+      "factory": "./src/ng-add",
+      "schema": "./src/ng-add/schema.json",
+      "description": "Adds initial root setup for state managment"
     }
   }
 }
