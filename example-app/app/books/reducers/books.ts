@@ -1,9 +1,9 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '../models/book';
-import { BookActions, BookActionTypes } from '../actions/book';
+import { BookActionsUnion, BookActionTypes } from '../actions/book';
 import {
-  CollectionActions,
+  CollectionActionsUnion,
   CollectionActionTypes,
 } from '../actions/collection';
 
@@ -42,7 +42,7 @@ export const initialState: State = adapter.getInitialState({
 
 export function reducer(
   state = initialState,
-  action: BookActions | CollectionActions
+  action: BookActionsUnion | CollectionActionsUnion
 ): State {
   switch (action.type) {
     case BookActionTypes.SearchComplete:

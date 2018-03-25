@@ -1,4 +1,4 @@
-import { BookActionTypes, BookActions } from '../actions/book';
+import { BookActionTypes, BookActionsUnion } from '../actions/book';
 
 export interface State {
   ids: string[];
@@ -14,7 +14,7 @@ const initialState: State = {
   query: '',
 };
 
-export function reducer(state = initialState, action: BookActions): State {
+export function reducer(state = initialState, action: BookActionsUnion): State {
   switch (action.type) {
     case BookActionTypes.Search: {
       const query = action.payload;

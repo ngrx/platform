@@ -8,7 +8,6 @@ import { of } from 'rxjs/observable/of';
 import { Load } from './../actions/book';
 
 import {
-  CollectionActions,
   LoadFail,
   LoadSuccess,
   AddBookSuccess,

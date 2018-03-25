@@ -13,4 +13,4 @@ export class CloseSidenav implements Action {
   readonly type = LayoutActionTypes.CloseSidenav;
 }
 
-export type LayoutActions = OpenSidenav | CloseSidenav;
+export type LayoutActionsUnion = OpenSidenav | CloseSidenav;
