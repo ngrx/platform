@@ -106,24 +106,22 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     }
   }
 
-  function upsertOneMutably(update: Update<T>, state: R): DidMutate;
-  function upsertOneMutably(update: any, state: any): DidMutate {
-    return upsertManyMutably([update], state);
+  function upsertOneMutably(entity: T, state: R): DidMutate;
+  function upsertOneMutably(entity: any, state: any): DidMutate {
+    return upsertManyMutably([entity], state);
   }
 
-  function upsertManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function upsertManyMutably(updates: any[], state: any): DidMutate {
-    const added: T[] = [];
-    const updated: Update<T>[] = [];
+  function upsertManyMutably(entities: T[], state: R): DidMutate;
+  function upsertManyMutably(entities: any[], state: any): DidMutate {
+    const added: any[] = [];
+    const updated: any[] = [];
 
-    for (const update of updates) {
-      if (update.id in state.entities) {
-        updated.push(update);
+    for (const entity of entities) {
+      const id = selectId(entity);
+      if (id in state.entities) {
+        updated.push({ id, changes: entity });
       } else {
-        added.push({
-          ...update.changes,
-          id: update.id,
-        });
+        added.push(entity);
       }
     }
 
