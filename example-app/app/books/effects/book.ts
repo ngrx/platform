@@ -10,7 +10,6 @@ import { of } from 'rxjs/observable/of';
 import { GoogleBooksService } from '../../core/services/google-books';
 import {
   BookActionTypes,
-  BookActions,
   SearchComplete,
   SearchError,
   Search,

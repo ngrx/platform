@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthActions } from './../actions/auth';
+import { AuthActionTypes, AuthActionsUnion } from './../actions/auth';
 
 export interface State {
   error: string | null;
@@ -10,7 +10,7 @@ export const initialState: State = {
   pending: false,
 };
 
-export function reducer(state = initialState, action: AuthActions): State {
+export function reducer(state = initialState, action: AuthActionsUnion): State {
   switch (action.type) {
     case AuthActionTypes.Login: {
       return {

@@ -1,6 +1,6 @@
 import {
   CollectionActionTypes,
-  CollectionActions,
+  CollectionActionsUnion,
 } from './../actions/collection';
 
 export interface State {
@@ -17,7 +17,7 @@ const initialState: State = {
 
 export function reducer(
   state = initialState,
-  action: CollectionActions
+  action: CollectionActionsUnion
 ): State {
   switch (action.type) {
     case CollectionActionTypes.Load: {

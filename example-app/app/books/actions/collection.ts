@@ -74,7 +74,7 @@ export class LoadFail implements Action {
   constructor(public payload: any) {}
 }
 
-export type CollectionActions =
+export type CollectionActionsUnion =
   | AddBook
   | AddBookSuccess
   | AddBookFail

@@ -7,7 +7,7 @@ import { of } from 'rxjs/observable/of';
 
 import { GoogleBooksService } from '../../core/services/google-books';
 import * as fromBooks from '../reducers';
-import * as book from '../actions/book';
+import * as BookActions from '../actions/book';
 
 /**
  * Guards are hooks into the route resolution process, providing an opportunity
@@ -53,8 +53,8 @@ export class BookExistsGuard implements CanActivate {
    */
   hasBookInApi(id: string): Observable<boolean> {
     return this.googleBooks.retrieveBook(id).pipe(
-      map(bookEntity => new book.Load(bookEntity)),
-      tap((action: book.Load) => this.store.dispatch(action)),
+      map(bookEntity => new BookActions.Load(bookEntity)),
+      tap((action: BookActions.Load) => this.store.dispatch(action)),
       map(book => !!book),
       catchError(() => {
         this.router.navigate(['/404']);

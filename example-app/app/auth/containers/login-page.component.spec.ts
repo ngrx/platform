@@ -5,7 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { LoginPageComponent } from './login-page.component';
 import { LoginFormComponent } from '../components/login-form.component';
-import * as Auth from '../actions/auth';
+import * as AuthActions from '../actions/auth';
 import * as fromAuth from '../reducers';
 
 describe('Login Page', () => {
@@ -57,7 +57,7 @@ describe('Login Page', () => {
 
   it('should dispatch a login event on submit', () => {
     const $event: any = {};
-    const action = new Auth.Login($event);
+    const action = new AuthActions.Login($event);
 
     instance.onSubmit($event);
 

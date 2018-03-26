@@ -5,7 +5,7 @@ import { cold, hot } from 'jasmine-marbles';
 import { CollectionEffects } from './collection';
 import { Database } from '@ngrx/db';
 import { Book } from '../models/book';
-import * as collection from '../actions/collection';
+import * as CollectionActions from '../actions/collection';
 import { Observable } from 'rxjs/Observable';
 
 export class TestActions extends Actions {
@@ -61,8 +61,8 @@ describe('CollectionEffects', () => {
 
   describe('loadCollection$', () => {
     it('should return a collection.LoadSuccess, with the books, on success', () => {
-      const action = new collection.Load();
-      const completion = new collection.LoadSuccess([book1, book2]);
+      const action = new CollectionActions.Load();
+      const completion = new CollectionActions.LoadSuccess([book1, book2]);
 
       actions$.stream = hot('-a', { a: action });
       const response = cold('-a-b|', { a: book1, b: book2 });
@@ -73,9 +73,9 @@ describe('CollectionEffects', () => {
     });
 
     it('should return a collection.LoadFail, if the query throws', () => {
-      const action = new collection.Load();
+      const action = new CollectionActions.Load();
       const error = 'Error!';
-      const completion = new collection.LoadFail(error);
+      const completion = new CollectionActions.LoadFail(error);
 
       actions$.stream = hot('-a', { a: action });
       const response = cold('-#', {}, error);
@@ -88,8 +88,8 @@ describe('CollectionEffects', () => {
 
   describe('addBookToCollection$', () => {
     it('should return a collection.AddBookSuccess, with the book, on success', () => {
-      const action = new collection.AddBook(book1);
-      const completion = new collection.AddBookSuccess(book1);
+      const action = new CollectionActions.AddBook(book1);
+      const completion = new CollectionActions.AddBookSuccess(book1);
 
       actions$.stream = hot('-a', { a: action });
       const response = cold('-b', { b: true });
@@ -101,8 +101,8 @@ describe('CollectionEffects', () => {
     });
 
     it('should return a collection.AddBookFail, with the book, when the db insert throws', () => {
-      const action = new collection.AddBook(book1);
-      const completion = new collection.AddBookFail(book1);
+      const action = new CollectionActions.AddBook(book1);
+      const completion = new CollectionActions.AddBookFail(book1);
       const error = 'Error!';
 
       actions$.stream = hot('-a', { a: action });
@@ -115,8 +115,8 @@ describe('CollectionEffects', () => {
 
     describe('removeBookFromCollection$', () => {
       it('should return a collection.RemoveBookSuccess, with the book, on success', () => {
-        const action = new collection.RemoveBook(book1);
-        const completion = new collection.RemoveBookSuccess(book1);
+        const action = new CollectionActions.RemoveBook(book1);
+        const completion = new CollectionActions.RemoveBookSuccess(book1);
 
         actions$.stream = hot('-a', { a: action });
         const response = cold('-b', { b: true });
@@ -130,8 +130,8 @@ describe('CollectionEffects', () => {
       });
 
       it('should return a collection.RemoveBookFail, with the book, when the db insert throws', () => {
-        const action = new collection.RemoveBook(book1);
-        const completion = new collection.RemoveBookFail(book1);
+        const action = new CollectionActions.RemoveBook(book1);
+        const completion = new CollectionActions.RemoveBookFail(book1);
         const error = 'Error!';
 
         actions$.stream = hot('-a', { a: action });
