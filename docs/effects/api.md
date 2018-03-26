@@ -163,7 +163,7 @@ export class UserEffects implements OnRunEffects {
       ofType('LOGGED_IN'),
       exhaustMap(() => resolvedEffects$.pipe(
         takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))
-      )
+      ))
     );
   }
 }
