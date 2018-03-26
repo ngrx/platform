@@ -13,6 +13,7 @@ import { Actions, ofType } from '../';
 import { map, toArray, switchMap } from 'rxjs/operators';
 import { hot, cold } from 'jasmine-marbles';
 import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs';
 
 describe('Actions', function() {
   let actions$: Actions;
@@ -83,10 +84,10 @@ describe('Actions', function() {
 
     const response = cold('-b', { b: true });
     const expected = cold('--c', { c: true });
-
-    const effect$ = new Actions(hot('-a', { a: action }))
+    //TODO(robwormald): fix after jasmine-marbles release
+    const effect$ = new Actions(hot('-a', { a: action }) as any)
       .ofType(ADD)
-      .pipe(switchMap(() => response));
+      .pipe(switchMap(() => response as any));
 
     expect(effect$).toBeObservable(expected);
   });

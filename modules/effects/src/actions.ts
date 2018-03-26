@@ -1,9 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Action, ScannedActionsSubject } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Operator } from 'rxjs/Operator';
+import { Observable, Operator, OperatorFunction } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { OperatorFunction } from 'rxjs/interfaces';
 
 @Injectable()
 export class Actions<V = Action> extends Observable<V> {

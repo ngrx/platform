@@ -11,14 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observer } from 'rxjs/Observer';
 import { Subscription } from 'rxjs/Subscription';
-import { map } from 'rxjs/operator/map';
-import { merge } from 'rxjs/operator/merge';
-import { observeOn } from 'rxjs/operator/observeOn';
-import { scan } from 'rxjs/operator/scan';
-import { skip } from 'rxjs/operator/skip';
-import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
+import { map, observeOn, scan, skip, withLatestFrom } from 'rxjs/operators';
 import { queue } from 'rxjs/scheduler/queue';
-
+import { merge } from 'rxjs/observable/merge';
 import { DevtoolsExtension } from './extension';
 import { liftAction, unliftAction, unliftState, applyOperators } from './utils';
 import {
@@ -62,45 +57,47 @@ export class StoreDevtools implements Observer<any> {
       config
     );
 
-    const liftedAction$ = applyOperators(actions$.asObservable(), [
-      [skip, 1],
-      [merge, extension.actions$],
-      [map, liftAction],
-      [merge, dispatcher, extension.liftedActions$],
-      [observeOn, queue],
-    ]);
+    const liftedAction$ = merge(
+      extension.actions$,
+      actions$
+        .asObservable()
+        .pipe(skip(1))
+        .pipe(map(liftAction), observeOn(queue))
+    );
 
-    const liftedReducer$ = map.call(reducers$, liftReducer);
+    const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
-    const liftedStateSubscription = applyOperators(liftedAction$, [
-      [withLatestFrom, liftedReducer$],
-      [
-        scan,
-        ({ state: liftedState }: any, [action, reducer]: any) => {
-          const reducedLiftedState = reducer(liftedState, action);
+    const liftedStateSubscription = liftedAction$
+      .pipe(
+        withLatestFrom(liftedReducer$),
+        scan(
+          ({ state: liftedState }: any, [action, reducer]: any) => {
+            const reducedLiftedState = reducer(liftedState, action);
 
-          // Extension should be sent the sanitized lifted state
-          extension.notify(action, reducedLiftedState);
+            // Extension should be sent the sanitized lifted state
+            extension.notify(action, reducedLiftedState);
 
-          return { state: reducedLiftedState, action };
-        },
-        { state: liftedInitialState, action: null },
-      ],
-    ]).subscribe(({ state, action }) => {
-      liftedStateSubject.next(state);
+            //TODO(robwormald): rework this any
+            return { state: reducedLiftedState, action } as any;
+          },
+          { state: liftedInitialState, action: null }
+        )
+      )
+      .subscribe(({ state, action }) => {
+        liftedStateSubject.next(state);
 
-      if (action.type === Actions.PERFORM_ACTION) {
-        const unliftedAction = (action as Actions.PerformAction).action;
+        if (action.type === Actions.PERFORM_ACTION) {
+          const unliftedAction = (action as Actions.PerformAction).action;
 
-        scannedActions.next(unliftedAction);
-      }
-    });
+          scannedActions.next(unliftedAction);
+        }
+      });
 
     const liftedState$ = liftedStateSubject.asObservable() as Observable<
       LiftedState
     >;
-    const state$ = map.call(liftedState$, unliftState);
+    const state$ = liftedState$.pipe(map(unliftState));
 
     this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;

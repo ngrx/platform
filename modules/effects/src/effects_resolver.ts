@@ -1,7 +1,5 @@
 import { merge } from 'rxjs/observable/merge';
-import { ignoreElements } from 'rxjs/operator/ignoreElements';
-import { materialize } from 'rxjs/operator/materialize';
-import { map } from 'rxjs/operator/map';
+import { ignoreElements, materialize, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Notification } from 'rxjs/Notification';
 import { Action } from '@ngrx/store';
@@ -22,20 +20,18 @@ export function mergeEffects(
           : sourceInstance[propertyName];
 
       if (dispatch === false) {
-        return ignoreElements.call(observable);
+        return observable.pipe(ignoreElements());
       }
 
-      const materialized$ = materialize.call(observable);
-
-      return map.call(
-        materialized$,
-        (notification: Notification<Action>): EffectNotification => ({
+      return observable.pipe(
+        materialize(),
+        map((notification: Notification<Action>): EffectNotification => ({
           effect: sourceInstance[propertyName],
           notification,
           propertyName,
           sourceName,
           sourceInstance,
-        })
+        }))
       );
     }
   );

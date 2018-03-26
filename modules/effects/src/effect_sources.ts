@@ -1,9 +1,11 @@
-import { groupBy, GroupedObservable } from 'rxjs/operator/groupBy';
-import { mergeMap } from 'rxjs/operator/mergeMap';
-import { exhaustMap } from 'rxjs/operator/exhaustMap';
-import { map } from 'rxjs/operator/map';
-import { dematerialize } from 'rxjs/operator/dematerialize';
-import { filter } from 'rxjs/operator/filter';
+import {
+  groupBy,
+  mergeMap,
+  exhaustMap,
+  map,
+  dematerialize,
+  filter,
+} from 'rxjs/operators';
 import { concat } from 'rxjs/observable/concat';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -28,22 +30,22 @@ export class EffectSources extends Subject<any> {
    * @internal
    */
   toActions(): Observable<Action> {
-    return mergeMap.call(
-      groupBy.call(this, getSourceForInstance),
-      (source$: GroupedObservable<any, any>) =>
-        dematerialize.call(
-          filter.call(
-            map.call(
-              exhaustMap.call(source$, resolveEffectSource),
-              (output: EffectNotification) => {
-                verifyOutput(output, this.errorHandler);
+    return this.pipe(
+      groupBy(getSourceForInstance),
+      mergeMap(source$ =>
+        source$.pipe(
+          exhaustMap(resolveEffectSource),
+          map((output: EffectNotification) => {
+            verifyOutput(output, this.errorHandler);
 
-                return output.notification;
-              }
-            ),
+            return output.notification;
+          }),
+          filter(
             (notification: Notification<any>) => notification.kind === 'N'
-          )
+          ),
+          dematerialize()
         )
+      )
     );
   }
 }

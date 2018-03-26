@@ -3,9 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { queue } from 'rxjs/scheduler/queue';
-import { observeOn } from 'rxjs/operator/observeOn';
-import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
-import { scan } from 'rxjs/operator/scan';
+import { observeOn, withLatestFrom, scan } from 'rxjs/operators';
 import { ActionsSubject, INIT } from './actions_subject';
 import { Action, ActionReducer } from './models';
 import { INITIAL_STATE } from './tokens';
@@ -28,14 +26,14 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   ) {
     super(initialState);
 
-    const actionsOnQueue$: Observable<Action> = observeOn.call(actions$, queue);
+    const actionsOnQueue$: Observable<Action> = actions$.pipe(observeOn(queue));
     const withLatestReducer$: Observable<
       [Action, ActionReducer<any, Action>]
-    > = withLatestFrom.call(actionsOnQueue$, reducer$);
-    const stateAndAction$: Observable<{
-      state: any;
-      action: Action;
-    }> = scan.call(withLatestReducer$, reduceState, { state: initialState });
+    > = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+    //TODO(robwormald): is this StateActionPair correct?
+    const stateAndAction$: Observable<
+      StateActionPair<any, Action>
+    > = withLatestReducer$.pipe(scan(reduceState, { state: initialState }));
 
     this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
       this.next(state);
