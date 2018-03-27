@@ -4,10 +4,11 @@
     "declaration": true,
     "stripInternal": true,
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "../../dist/packages/schematics",
-    "paths": { },
+    "paths": {},
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
@@ -25,9 +26,7 @@
     "src/reducer/index.ts",
     "src/store/index.ts"
   ],
-  "exclude": [
-    "src/*/files/**/*"
-  ],
+  "exclude": ["src/*/files/**/*"],
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
     "enableSummariesForJit": false

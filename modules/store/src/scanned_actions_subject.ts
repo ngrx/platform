@@ -1,5 +1,6 @@
-import { Injectable, Provider, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Injectable, OnDestroy, Provider } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { Action } from './models';
 
 @Injectable()

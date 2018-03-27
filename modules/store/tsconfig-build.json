@@ -4,10 +4,11 @@
     "declaration": true,
     "stripInternal": true,
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "module": "es2015",
     "moduleResolution": "node",
     "outDir": "../../dist/packages/store",
-    "paths": { },
+    "paths": {},
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
@@ -16,9 +17,7 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "files": [
-    "public_api.ts"
-  ],
+  "files": ["public_api.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,

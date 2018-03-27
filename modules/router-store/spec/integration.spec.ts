@@ -1,24 +1,20 @@
-import { StoreRouterConfig } from '../src/router_store_module';
 import { Component, Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
+import { filter, first, mapTo, take } from 'rxjs/operators';
+
 import {
   ROUTER_CANCEL,
   ROUTER_ERROR,
   ROUTER_NAVIGATION,
   RouterAction,
   routerReducer,
-  StoreRouterConnectingModule,
   RouterStateSerializer,
-} from '../src/index';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/first';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/toPromise';
-import { of } from 'rxjs/observable/of';
+  StoreRouterConnectingModule,
+} from '../src';
+import { StoreRouterConfig } from '../src/router_store_module';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
@@ -424,7 +420,7 @@ describe('integration spec', () => {
       reducers: { routerReducer },
       canActivate: () => {
         store.dispatch({ type: 'USER_EVENT' });
-        return store.take(1).mapTo(true);
+        return store.pipe(take(1), mapTo(true));
       },
     });
 
@@ -566,10 +562,12 @@ function createTestModule(
   TestBed.createComponent(AppCmp);
 }
 
-function waitForNavigation(router: Router): Promise<any> {
+function waitForNavigation(router: Router) {
   return router.events
-    .filter(e => e instanceof NavigationEnd)
-    .first()
+    .pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      first()
+    )
     .toPromise();
 }
 

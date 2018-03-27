@@ -1,15 +1,15 @@
-import { NgModule, Component, InjectionToken } from '@angular/core';
-import { platformDynamicServer } from '@angular/platform-server';
+import { Component, InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Store, StoreModule, combineReducers, select } from '../../';
-import { counterReducer, INCREMENT, DECREMENT } from '../fixtures/counter';
+import { Observable } from 'rxjs';
+
+import { combineReducers, select, Store, StoreModule } from '../../';
+import { counterReducer, DECREMENT, INCREMENT } from '../fixtures/counter';
 import { todos } from '../fixtures/todos';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'ngc-spec-child-component',
   template: `
-  
+
   `,
 })
 export class NgcSpecChildComponent {}

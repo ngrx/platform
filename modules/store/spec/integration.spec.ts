@@ -1,31 +1,23 @@
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/first';
-import { Observable } from 'rxjs/Observable';
 import { TestBed } from '@angular/core/testing';
 import {
-  Store,
-  StoreModule,
-  Action,
-  combineReducers,
   ActionReducer,
   ActionReducerMap,
   select,
+  Store,
+  StoreModule,
 } from '@ngrx/store';
-import { ReducerManager, INITIAL_STATE, State } from '../src/private_export';
+import { combineLatest } from 'rxjs';
+import { first } from 'rxjs/operators';
+
+import { INITIAL_STATE, ReducerManager, State } from '../src/private_export';
 import {
-  counterReducer,
-  INCREMENT,
-  DECREMENT,
-  RESET,
-} from './fixtures/counter';
-import {
+  ADD_TODO,
+  COMPLETE_ALL_TODOS,
+  COMPLETE_TODO,
+  SET_VISIBILITY_FILTER,
   todos,
   visibilityFilter,
   VisibilityFilters,
-  SET_VISIBILITY_FILTER,
-  ADD_TODO,
-  COMPLETE_TODO,
-  COMPLETE_ALL_TODOS,
 } from './fixtures/todos';
 
 interface Todo {
@@ -72,7 +64,7 @@ describe('ngRx Integration spec', () => {
       const action = { type: 'Test Action' };
       const reducer$: ReducerManager = TestBed.get(ReducerManager);
 
-      reducer$.first().subscribe((reducer: ActionReducer<any, any>) => {
+      reducer$.pipe(first()).subscribe((reducer: ActionReducer<any, any>) => {
         expect(reducer).toBeDefined();
         expect(typeof reducer === 'function').toBe(true);
 
@@ -142,7 +134,7 @@ describe('ngRx Integration spec', () => {
 
       let currentlyVisibleTodos: Todo[] = [];
 
-      Observable.combineLatest(
+      combineLatest(
         store.pipe(select('visibilityFilter')),
         store.pipe(select('todos')),
         filterVisibleTodos

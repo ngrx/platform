@@ -136,7 +136,7 @@ export default function(options: ContainerOptions): Rule {
         ...stringUtils,
         ...(options as object),
         dot: () => '.',
-      }),
+      } as any),
       move(sourceDir),
     ]);
 

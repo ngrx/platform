@@ -1,8 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { ReflectiveInjector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { StoreModule, Store, INIT } from '@ngrx/store';
+import { INIT, Store, StoreModule } from '@ngrx/store';
 
 describe('ngRx State', () => {
   const initialState = 123;

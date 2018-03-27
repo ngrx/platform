@@ -1,12 +1,12 @@
-import { Actions } from '@ngrx/effects';
 import { TestBed } from '@angular/core/testing';
-import { empty } from 'rxjs/observable/empty';
-import { cold, hot } from 'jasmine-marbles';
-import { CollectionEffects } from './collection';
 import { Database } from '@ngrx/db';
-import { Book } from '../models/book';
+import { Actions } from '@ngrx/effects';
+import { cold, hot } from 'jasmine-marbles';
+import { empty, Observable } from 'rxjs';
+
 import * as CollectionActions from '../actions/collection';
-import { Observable } from 'rxjs/Observable';
+import { Book } from '../models/book';
+import { CollectionEffects } from './collection';
 
 export class TestActions extends Actions {
   constructor() {

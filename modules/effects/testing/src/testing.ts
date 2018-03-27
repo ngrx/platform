@@ -1,7 +1,6 @@
 import { Provider } from '@angular/core';
 import { Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
-import { defer } from 'rxjs/observable/defer';
+import { defer, Observable } from 'rxjs';
 
 export function provideMockActions(source: Observable<any>): Provider;
 export function provideMockActions(factory: () => Observable<any>): Provider;

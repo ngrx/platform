@@ -1,12 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { cold, hot } from 'jasmine-marbles';
-import { Observable } from 'rxjs/Observable';
-import { empty } from 'rxjs/observable/empty';
-import { Router } from '@angular/router';
+import { empty, Observable } from 'rxjs';
 
-import { AuthEffects } from './auth.effects';
-import { AuthService } from '../services/auth.service';
 import {
   Login,
   LoginFailure,
@@ -15,6 +12,8 @@ import {
   Logout,
 } from '../actions/auth';
 import { Authenticate, User } from '../models/user';
+import { AuthService } from '../services/auth.service';
+import { AuthEffects } from './auth.effects';
 
 export class TestActions extends Actions {
   constructor() {

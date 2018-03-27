@@ -47,7 +47,7 @@ export default function(options: EntityOptions): Rule {
           stringUtils.group(s, options.group ? 'reducers' : ''),
         ...(options as object),
         dot: () => '.',
-      }),
+      } as any),
       move(sourceDir),
     ]);
 

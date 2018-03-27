@@ -7,7 +7,16 @@ require('zone.js/dist/sync-test.js');
 require('zone.js/dist/async-test.js');
 require('zone.js/dist/fake-async-test.js');
 const Jasmine = require('jasmine');
-const moduleAlias = require('module-alias');
+
+const tsConfig = require("./tsconfig.json");
+const tsConfigPaths = require("tsconfig-paths");
+ 
+const baseUrl = "./";
+
+tsConfigPaths.register({
+    baseUrl,
+    paths: tsConfig.compilerOptions.paths
+});
 
 const runner = new Jasmine();
 
@@ -20,7 +29,6 @@ const { ServerTestingModule, platformServerTesting } = require('@angular/platfor
 
 getTestBed().initTestEnvironment(ServerTestingModule, platformServerTesting());
 
-moduleAlias.addAlias('@ngrx', __dirname + '/modules');
 
 runner.loadConfig({
   spec_dir: 'modules',

@@ -8,7 +8,6 @@ When using the `createSelector` and `createFeatureSelector`functions @ngrx/store
 
 The `createSelector` method returns a callback function for selecting a slice of state.
 
-
 ### Example
 
 ```ts
@@ -20,13 +19,15 @@ export interface FeatureState {
 }
 
 export interface AppState {
-  feature: FeatureState
+  feature: FeatureState;
 }
 
 export const selectFeature = (state: AppState) => state.feature;
-export const selectFeatureCount = createSelector(selectFeature, (state: FeatureState) => state.counter);
+export const selectFeatureCount = createSelector(
+  selectFeature,
+  (state: FeatureState) => state.counter
+);
 ```
-
 
 ### Using selectors for multiple pieces of state
 
@@ -65,13 +66,17 @@ export interface AppState {
 export const selectUser = (state: AppState) => state.selectedUser;
 export const selectAllBooks = (state: AppState) => state.allBooks;
 
-export const selectVisibleBooks = createSelector(selectUser, selectAllBooks, (selectedUser: User, allBooks: Books[]) => {
-  if (selectedUser && allBooks) {
-    return allBooks.filter((book: Book) => book.userId === selectedUser.id);
-  } else {
-    return allBooks;
+export const selectVisibleBooks = createSelector(
+  selectUser,
+  selectAllBooks,
+  (selectedUser: User, allBooks: Books[]) => {
+    if (selectedUser && allBooks) {
+      return allBooks.filter((book: Book) => book.userId === selectedUser.id);
+    } else {
+      return allBooks;
+    }
   }
-});
+);
 ```
 
 ## createFeatureSelector
@@ -89,12 +94,14 @@ export interface FeatureState {
 }
 
 export interface AppState {
-  feature: FeatureState
+  feature: FeatureState;
 }
 
 export const selectFeature = createFeatureSelector<FeatureState>('feature');
-export const selectFeatureCount = createSelector(selectFeature, (state: FeatureState) => state.counter);
-
+export const selectFeatureCount = createSelector(
+  selectFeature,
+  (state: FeatureState) => state.counter
+);
 ```
 
 ## Reset Memoized Selector
@@ -125,14 +132,17 @@ selectTotal(state); // does not compute the sum of 3 & 4. selectTotal instead re
 state = { ...state, counter2: 5 };
 
 selectTotal(state); // computes the sum of 3 & 5, returning 8. selectTotal now has a memoized value of 8
-
 ```
+
 A selector's memoized value stays in memory indefinitely. If the memoized value is, for example, a large dataset that is no longer needed it's possible to reset the memoized value to null so that the large dataset can be removed from memory. This can be accomplished by invoking the `release` method on the selector.
+
 ```ts
 selectTotal(state); // returns the memoized value of 8
-selectTotal.release() // memoized value of selectTotal is now null
+selectTotal.release(); // memoized value of selectTotal is now null
 ```
+
 Releasing a selector also recursively releases any ancestor selectors. Consider the following:
+
 ```ts
 export interface State {
   evenNums: number[];
@@ -141,11 +151,11 @@ export interface State {
 
 export const selectSumEvenNums = createSelector(
   (state: State) => state.evenNums,
-  (evenNums) => evenNums.reduce((prev, curr) => prev + curr)
+  evenNums => evenNums.reduce((prev, curr) => prev + curr)
 );
 export const selectSumOddNums = createSelector(
   (state: State) => state.oddNums,
-  (oddNums) => oddNums.reduce((prev, curr) => prev + curr)
+  oddNums => oddNums.reduce((prev, curr) => prev + curr)
 );
 export const selectTotal = createSelector(
   selectSumEvenNums,
@@ -155,7 +165,7 @@ export const selectTotal = createSelector(
 
 selectTotal({
   evenNums: [2, 4],
-  oddNums: [1, 3]
+  oddNums: [1, 3],
 });
 
 /**
@@ -184,7 +194,7 @@ The functions returned by the `createSelector` and `createFeatureSelector` metho
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import * as fromRoot from './reducers';
@@ -193,12 +203,12 @@ import * as fromRoot from './reducers';
   selector: 'my-app',
   template: `
     <div>Current Count: {{ counter | async }}</div>
-  `
+  `,
 })
 class MyAppComponent {
   counter: Observable<number>;
 
-  constructor(private store: Store<fromRoot.AppState>){
+  constructor(private store: Store<fromRoot.AppState>) {
     this.counter = store.pipe(select(fromRoot.selectFeatureCount));
   }
 }

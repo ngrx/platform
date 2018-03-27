@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import * as fromBooks from '../reducers';
 import * as CollectionActions from '../actions/collection';
 import { Book } from '../models/book';
+import * as fromBooks from '../reducers';
 
 @Component({
   selector: 'bc-collection-page',

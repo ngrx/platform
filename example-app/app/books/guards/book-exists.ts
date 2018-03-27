@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { filter, take, map, tap, catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { GoogleBooksService } from '../../core/services/google-books';
-import * as fromBooks from '../reducers';
 import * as BookActions from '../actions/book';
+import * as fromBooks from '../reducers';
 
 /**
  * Guards are hooks into the route resolution process, providing an opportunity

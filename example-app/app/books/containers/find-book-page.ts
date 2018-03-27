@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import * as fromBooks from '../reducers';
 import * as BookActions from '../actions/book';
 import { Book } from '../models/book';
+import * as fromBooks from '../reducers';
 
 @Component({
   selector: 'bc-find-book-page',

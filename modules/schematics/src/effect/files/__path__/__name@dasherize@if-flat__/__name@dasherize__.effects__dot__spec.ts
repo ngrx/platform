@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { <%= classify(name) %>Effects } from './<%= dasherize(name) %>.effects';
 

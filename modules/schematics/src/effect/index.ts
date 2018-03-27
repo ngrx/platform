@@ -114,7 +114,7 @@ export default function(options: EffectOptions): Rule {
           ),
         ...(options as object),
         dot: () => '.',
-      }),
+      } as any),
       move(sourceDir),
     ]);
 

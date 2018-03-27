@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
-import { todos, todoCount } from './fixtures/edge_todos';
-import { Store, StoreModule, select } from '@ngrx/store';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { todoCount, todos } from './fixtures/edge_todos';
 
 interface TestAppSchema {
   counter1: number;

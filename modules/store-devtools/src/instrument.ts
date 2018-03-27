@@ -1,31 +1,14 @@
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import { ReducerManagerDispatcher, StateObservable } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import {
-  NgModule,
-  InjectionToken,
-  Injector,
-  ModuleWithProviders,
-} from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import {
-  StoreModule,
-  State,
-  StateObservable,
-  ActionsSubject,
-  ScannedActionsSubject,
-  ReducerObservable,
-  ReducerManagerDispatcher,
-  ActionReducerMap,
-  ActionReducerFactory,
-  INITIAL_STATE,
-  INITIAL_REDUCERS,
-  REDUCER_FACTORY,
-} from '@ngrx/store';
-import { StoreDevtools, DevtoolsDispatcher } from './devtools';
-import {
+  INITIAL_OPTIONS,
+  STORE_DEVTOOLS_CONFIG,
   StoreDevtoolsConfig,
   StoreDevtoolsOptions,
-  STORE_DEVTOOLS_CONFIG,
-  INITIAL_OPTIONS,
 } from './config';
+import { DevtoolsDispatcher, StoreDevtools } from './devtools';
 import {
   DevtoolsExtension,
   REDUX_DEVTOOLS_EXTENSION,
@@ -56,7 +39,9 @@ export function createReduxDevtoolsExtension() {
   }
 }
 
-export function createStateObservable(devtools: StoreDevtools) {
+export function createStateObservable(
+  devtools: StoreDevtools
+): Observable<any> {
   return devtools.state;
 }
 

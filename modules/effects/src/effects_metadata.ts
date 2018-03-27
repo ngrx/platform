@@ -1,6 +1,3 @@
-import { merge } from 'rxjs/observable/merge';
-import { ignoreElements } from 'rxjs/operator/ignoreElements';
-import { Observable } from 'rxjs/Observable';
 import { compose } from '@ngrx/store';
 
 const METADATA_KEY = '__@ngrx/effects__';

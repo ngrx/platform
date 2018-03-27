@@ -1,7 +1,7 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import * as fromBooks from '../reducers';

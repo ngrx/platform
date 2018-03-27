@@ -1,11 +1,11 @@
-import { Observable } from 'rxjs/Observable';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import * as fromRoot from '../../reducers';
-import * as fromAuth from '../../auth/reducers';
-import * as LayoutActions from '../actions/layout';
 import * as AuthActions from '../../auth/actions/auth';
+import * as fromAuth from '../../auth/reducers';
+import * as fromRoot from '../../reducers';
+import * as LayoutActions from '../actions/layout';
 
 @Component({
   selector: 'bc-app',

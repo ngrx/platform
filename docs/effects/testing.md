@@ -3,18 +3,20 @@
 ## @ngrx/effects/testing
 
 ### provideMockActions
+
 Provides a mock test provider of the `Actions` Observable for testing effects. This works well with writing
 marble tests and tests using the `subscribe` method on an Observable. The mock Actions will deliver a new Observable to subscribe to for each test.
 
 Details on marble tests and their syntax, as shown in the `hot` and `cold` methods, can be found in [Writing Marble Tests](https://github.com/ReactiveX/rxjs/blob/master/doc/writing-marble-tests.md).
 
 Usage:
+
 ```ts
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { hot, cold } from 'jasmine-marbles';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { MyEffects } from './my-effects';
 import * as MyActions from '../actions/my-actions';
@@ -62,10 +64,12 @@ describe('My Effects', () => {
 ```
 
 ### getEffectsMetadata
+
 Returns decorator configuration for all effects in a class instance.
 Use this function to ensure that effects have been properly decorated.
 
 Usage:
+
 ```ts
 import { TestBed } from '@angular/core/testing';
 import { EffectsMetadata, getEffectsMetadata } from '@ngrx/effects';
