@@ -65,7 +65,7 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     pathOrMapFn: ((state: T) => any) | string,
     ...paths: string[]
   ): Store<any> {
-    return select(pathOrMapFn, ...paths)(this);
+    return select.call(null, pathOrMapFn, ...paths)(this);
   }
 
   lift<R>(operator: Operator<T, R>): Store<R> {
@@ -106,21 +106,21 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
 export const STORE_PROVIDERS: Provider[] = [Store];
 
 export function select<T, K>(
-  mapFn: ((state: T) => K) | string
+  mapFn: (state: T) => K
 ): (source$: Observable<T>) => Store<K>;
 export function select<T, a extends keyof T>(
   key: a
-): (source$: Store<a>) => Store<T[a]>;
+): (source$: Observable<T>) => Store<T[a]>;
 export function select<T, a extends keyof T, b extends keyof T[a]>(
   key1: a,
   key2: b
-): (source$: Store<T>) => Store<T[a][b]>;
+): (source$: Observable<T>) => Store<T[a][b]>;
 export function select<
   T,
   a extends keyof T,
   b extends keyof T[a],
   c extends keyof T[a][b]
->(key1: a, key2: b, key3: c): (source$: Store<a>) => Store<T[a][b][c]>;
+>(key1: a, key2: b, key3: c): (source$: Observable<T>) => Store<T[a][b][c]>;
 export function select<
   T,
   a extends keyof T,
@@ -132,7 +132,7 @@ export function select<
   key2: b,
   key3: c,
   key4: d
-): (source$: Store<a>) => Store<T[a][b][c][d]>;
+): (source$: Observable<T>) => Store<T[a][b][c][d]>;
 export function select<
   T,
   a extends keyof T,
@@ -146,7 +146,7 @@ export function select<
   key3: c,
   key4: d,
   key5: e
-): (source$: Store<a>) => Store<T[a][b][c][d][e]>;
+): (source$: Observable<T>) => Store<T[a][b][c][d][e]>;
 export function select<
   T,
   a extends keyof T,
@@ -162,7 +162,7 @@ export function select<
   key4: d,
   key5: e,
   key6: f
-): (source$: Store<a>) => Store<T[a][b][c][d][e][f]>;
+): (source$: Observable<T>) => Store<T[a][b][c][d][e][f]>;
 export function select<T, K>(
   pathOrMapFn: ((state: T) => any) | string,
   ...paths: string[]
