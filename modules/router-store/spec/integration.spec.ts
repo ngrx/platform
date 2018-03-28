@@ -72,7 +72,7 @@ describe('integration spec', () => {
       });
   });
 
-  xit('should support preventing navigation', (done: any) => {
+  it('should support preventing navigation', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>) => {
       if (
         action.type === ROUTER_NAVIGATION &&
