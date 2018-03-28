@@ -28,7 +28,7 @@ export class EffectSources extends Subject<any> {
    * @internal
    */
   toActions(): Observable<Action> {
-    return this.asObservable().pipe(
+    return this.pipe(
       groupBy(getSourceForInstance),
       mergeMap(source$ =>
         source$.pipe(
