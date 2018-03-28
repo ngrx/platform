@@ -63,7 +63,7 @@
   "dependencies": {
     "@angular/animations": "^6.0.0-rc.0",
     "@angular/cdk": "^6.0.0-beta.5",
-    "@angular/cli": "^6.0.0-beta.7",
+    "@angular/cli": "^1.7.0",
     "@angular/common": "^6.0.0-rc.0",
     "@angular/compiler": "^6.0.0-rc.0",
     "@angular/compiler-cli": "^6.0.0-rc.0",
