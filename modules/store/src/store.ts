@@ -65,7 +65,7 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     pathOrMapFn: ((state: T) => any) | string,
     ...paths: string[]
   ): Store<any> {
-    return select(pathOrMapFn, ...paths)(this);
+    return select.call(null, pathOrMapFn, ...paths)(this);
   }
 
   lift<R>(operator: Operator<T, R>): Store<R> {
@@ -106,11 +106,11 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
 export const STORE_PROVIDERS: Provider[] = [Store];
 
 export function select<T, K>(
-  mapFn: ((state: T) => K) | string
+  mapFn: (state: T) => K
 ): (source$: Observable<T>) => Store<K>;
 export function select<T, a extends keyof T>(
   key: a
-): (source$: Store<a>) => Store<T[a]>;
+): (source$: Store<T>) => Store<T[a]>;
 export function select<T, a extends keyof T, b extends keyof T[a]>(
   key1: a,
   key2: b
