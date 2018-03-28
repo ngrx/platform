@@ -110,17 +110,17 @@ export function select<T, K>(
 ): (source$: Observable<T>) => Store<K>;
 export function select<T, a extends keyof T>(
   key: a
-): (source$: Store<T>) => Store<T[a]>;
+): (source$: Observable<T>) => Store<T[a]>;
 export function select<T, a extends keyof T, b extends keyof T[a]>(
   key1: a,
   key2: b
-): (source$: Store<T>) => Store<T[a][b]>;
+): (source$: Observable<T>) => Store<T[a][b]>;
 export function select<
   T,
   a extends keyof T,
   b extends keyof T[a],
   c extends keyof T[a][b]
->(key1: a, key2: b, key3: c): (source$: Store<T>) => Store<T[a][b][c]>;
+>(key1: a, key2: b, key3: c): (source$: Observable<T>) => Store<T[a][b][c]>;
 export function select<
   T,
   a extends keyof T,
@@ -132,7 +132,7 @@ export function select<
   key2: b,
   key3: c,
   key4: d
-): (source$: Store<T>) => Store<T[a][b][c][d]>;
+): (source$: Observable<T>) => Store<T[a][b][c][d]>;
 export function select<
   T,
   a extends keyof T,
@@ -146,7 +146,7 @@ export function select<
   key3: c,
   key4: d,
   key5: e
-): (source$: Store<T>) => Store<T[a][b][c][d][e]>;
+): (source$: Observable<T>) => Store<T[a][b][c][d][e]>;
 export function select<
   T,
   a extends keyof T,
@@ -162,7 +162,7 @@ export function select<
   key4: d,
   key5: e,
   key6: f
-): (source$: Store<T>) => Store<T[a][b][c][d][e][f]>;
+): (source$: Observable<T>) => Store<T[a][b][c][d][e][f]>;
 export function select<T, K>(
   pathOrMapFn: ((state: T) => any) | string,
   ...paths: string[]
