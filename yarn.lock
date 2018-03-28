@@ -116,7 +116,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@^6.0.0-beta.6":
+"@angular/cli@^6.0.0-beta.7":
   version "6.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.0.0-beta.7.tgz#5147de5e10fec6c31f113e7e0f0cc761a56c10da"
   dependencies:
@@ -215,10 +215,6 @@
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-6.0.0-rc.0.tgz#a2e39c6626713b3dbb3f45bb4547f971835784c6"
   dependencies:
     tslib "^1.9.0"
-
-"@ngrx/db@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/db/-/db-2.1.0.tgz#dad736c86ea8f849a8fa0df3e506d7e7b9e2e930"
 
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
@@ -1899,11 +1895,11 @@ copy-webpack-plugin@^4.5.0:
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
 
-core-js@^2.2.0, core-js@^2.4.1:
+core-js@^2.2.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
 
-core-js@^2.4.0:
+core-js@^2.4.0, core-js@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
 
@@ -8618,6 +8614,6 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-zone.js@^0.8.12:
-  version "0.8.12"
-  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.12.tgz#86ff5053c98aec291a0bf4bbac501d694a05cfbb"
+zone.js@^0.8.20:
+  version "0.8.20"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.20.tgz#a218c48db09464b19ff6fc8f0d4bb5b1046e185d"
