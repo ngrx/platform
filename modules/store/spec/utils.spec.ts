@@ -37,6 +37,18 @@ describe(`Store utils`, () => {
     it(`should return original state if nothing changed`, () => {
       expect(combination(initialState, { type: '' })).toBe(initialState);
     });
+
+    it(`should return full initial state of the root when action '@ngrx/store/update-reducers' is running with no initial state`, () => {
+      const initialStateForReducer2Only = { reducer2: { y: 'bar' } };
+      const combinationForReducer1 = combineReducers(
+        { reducer1 },
+        initialStateForReducer2Only as any
+      );
+      const updateAction1 = { type: 'state1', payload: 'foo' };
+      expect(combinationForReducer1(undefined, updateAction1)).toEqual(
+        initialState
+      );
+    });
   });
 
   describe(`omit()`, () => {
