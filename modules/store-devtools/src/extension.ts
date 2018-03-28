@@ -7,7 +7,6 @@ import { PERFORM_ACTION } from './actions';
 import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { LiftedAction, LiftedState } from './reducer';
 import {
-  applyOperators,
   sanitizeAction,
   sanitizeActions,
   sanitizeState,
@@ -157,16 +156,16 @@ export class DevtoolsExtension {
     );
 
     // Listen for lifted actions
-    const liftedActions$ = applyOperators(changes$, [
-      [filter, (change: any) => change.type === ExtensionActionTypes.DISPATCH],
-      [map, (change: any) => this.unwrapAction(change.payload)],
-    ]);
+    const liftedActions$ = changes$.pipe(
+      filter(change => change.type === ExtensionActionTypes.DISPATCH),
+      map(change => this.unwrapAction(change.payload))
+    );
 
     // Listen for unlifted actions
-    const actions$ = applyOperators(changes$, [
-      [filter, (change: any) => change.type === ExtensionActionTypes.ACTION],
-      [map, (change: any) => this.unwrapAction(change.payload)],
-    ]);
+    const actions$ = changes$.pipe(
+      filter(change => change.type === ExtensionActionTypes.ACTION),
+      map(change => this.unwrapAction(change.payload))
+    );
 
     const actionsUntilStop$ = actions$.pipe(takeUntil(stop$));
     const liftedUntilStop$ = liftedActions$.pipe(takeUntil(stop$));

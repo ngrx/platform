@@ -35,15 +35,6 @@ export function liftAction(action: Action) {
   return new Actions.PerformAction(action);
 }
 
-export function applyOperators(
-  input$: Observable<any>,
-  operators: any[][]
-): Observable<any> {
-  return operators.reduce((source$, [operator, ...args]) => {
-    return operator.apply(source$, args);
-  }, input$);
-}
-
 /**
  * Sanitizes given actions with given function.
  */
