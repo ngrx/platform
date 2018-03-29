@@ -58,6 +58,10 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     key5: e,
     key6: f
   ): Observable<T[a][b][c][d][e][f]>;
+  /**
+   * This overload is used to support spread operator with
+   * fixed length tuples type in typescript 2.7
+   */
   select(
     pathOrMapFn: ((state: T) => any) | string,
     ...paths: string[]
@@ -164,6 +168,10 @@ export function select<
   key5: e,
   key6: f
 ): (source$: Store<a>) => Observable<T[a][b][c][d][e][f]>;
+/**
+ * This overload is used to support spread operator with
+ * fixed length tuples type in typescript 2.7
+ */
 export function select<T, K>(
   pathOrMapFn: ((state: T) => any) | string,
   ...paths: string[]
