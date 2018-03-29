@@ -2,7 +2,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { asyncScheduler, empty, Observable, of } from 'rxjs';
-import { Scheduler } from 'rxjs/internal/Scheduler';
+import { Scheduler } from 'rxjs/Scheduler';
 import {
   catchError,
   debounceTime,

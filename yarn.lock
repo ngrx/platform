@@ -175,9 +175,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@ngrx/db@^2.1.0":
+"@ngrx/db@github:brandonroberts/ngrx-db-builds":
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/db/-/db-2.1.0.tgz#dad736c86ea8f849a8fa0df3e506d7e7b9e2e930"
+  resolved "https://codeload.github.com/brandonroberts/ngrx-db-builds/tar.gz/f82cf46e699ba9ac46cec2f586caa392a814814f"
 
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
