@@ -8,35 +8,26 @@ exports[`Find Book Page should compile 1`] = `
   searchQuery$={[Function Store]}
   store={[Function Store]}
 >
-  
-      <bc-book-search
+  <bc-book-search
     _nghost-c0=""
     ng-reflect-error=""
     ng-reflect-query=""
     ng-reflect-searching="false"
   >
-    
-      
     <mat-card
       _ngcontent-c0=""
       class="mat-card"
     >
-      
-        
       <mat-card-title
         _ngcontent-c0=""
         class="mat-card-title"
       >
         Find a Book
       </mat-card-title>
-      
-        
       <mat-card-content
         _ngcontent-c0=""
         class="mat-card-content"
       >
-        
-          
         <mat-input-container
           _ngcontent-c0=""
           class="mat-input-container mat-form-field ng-tns-c3-0 mat-primary mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-hide-placeholder"
@@ -51,8 +42,6 @@ exports[`Find Book Page should compile 1`] = `
               <div
                 class="mat-input-infix mat-form-field-infix"
               >
-                
-            
                 <input
                   _ngcontent-c0=""
                   aria-invalid="false"
@@ -64,8 +53,6 @@ exports[`Find Book Page should compile 1`] = `
                   ng-reflect-value=""
                   placeholder="Search for a book"
                 />
-                
-          
                 <span
                   class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
                 >
@@ -111,8 +98,6 @@ exports[`Find Book Page should compile 1`] = `
             </div>
           </div>
         </mat-input-container>
-        
-          
         <mat-spinner
           _ngcontent-c0=""
           class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation"
@@ -136,13 +121,7 @@ exports[`Find Book Page should compile 1`] = `
             />
           </svg>
         </mat-spinner>
-        
-        
       </mat-card-content>
-      
-        
-      
-      
       <mat-card-footer
         _ngcontent-c0=""
         class="mat-card-footer"
@@ -150,19 +129,11 @@ exports[`Find Book Page should compile 1`] = `
         
       </mat-card-footer>
     </mat-card>
-    
-    
-  </bc-book-search>
-      <bc-book-preview-list
+  </bc-book-search><bc-book-preview-list
     _nghost-c1=""
     ng-reflect-books=""
   >
     
-      
-    
-    
-    
   </bc-book-preview-list>
-    
 </bc-find-book-page>
 `;
