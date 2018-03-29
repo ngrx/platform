@@ -20,25 +20,9 @@
     rxjs "^5.5.6"
     source-map "^0.5.6"
 
-"@angular-devkit/core@^0.4.5":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.4.6.tgz#8a0e43f918a933f230d039945dc53612a89c666a"
-  dependencies:
-    ajv "~5.5.1"
-    chokidar "^1.7.0"
-    rxjs "^5.5.6"
-    source-map "^0.5.6"
-
 "@angular-devkit/schematics@0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.3.2.tgz#09a2268fad61f4f956f42db87913b8748c512a78"
-  dependencies:
-    "@ngtools/json-schema" "^1.1.0"
-    rxjs "^5.5.6"
-
-"@angular-devkit/schematics@^0.4.5":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.4.6.tgz#700ebe2887ae7e9823509461174cb8100abed8da"
   dependencies:
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
@@ -49,9 +33,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/cdk@^6.0.0-beta.5":
-  version "6.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-6.0.0-beta.5.tgz#c7070045da4476df5ade6210f99ffab5a48f595f"
+"@angular/cdk@^5.2.0":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.4.tgz#c0a429a8710d8fedb157f546e21cb49d4335f7f7"
   dependencies:
     tslib "^1.7.1"
 
@@ -159,13 +143,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/material@^6.0.0-beta.5":
-  version "6.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-6.0.0-beta.5.tgz#cc10a4a01f219b3092c5950f5ccd79eee7bee46c"
+"@angular/material@^5.2.0":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.4.tgz#9e823798324283d23ea839156fac5bcb73443d55"
   dependencies:
-    "@angular-devkit/core" "^0.4.5"
-    "@angular-devkit/schematics" "^0.4.5"
-    "@schematics/angular" "^0.4.5"
     tslib "^1.7.1"
 
 "@angular/platform-browser-dynamic@^6.0.0-rc.0":
@@ -194,6 +175,10 @@
   dependencies:
     tslib "^1.9.0"
 
+"@ngrx/db@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/db/-/db-2.1.0.tgz#dad736c86ea8f849a8fa0df3e506d7e7b9e2e930"
+
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.2.0.tgz#06e5ecd29e9a37d260a447dd873ea2becd228c4f"
@@ -218,12 +203,6 @@
 "@schematics/angular@0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.3.2.tgz#be209a032a3e4577992d94fbaa14bd4bfde485e2"
-  dependencies:
-    typescript "~2.6.2"
-
-"@schematics/angular@^0.4.5":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.4.6.tgz#a0dc2768b623fab1bf074d5193cce1a2686d719d"
   dependencies:
     typescript "~2.6.2"
 
@@ -6760,6 +6739,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
 rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
+
+rxjs-compat@^6.0.0-beta.1:
+  version "6.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.0.0-beta.1.tgz#ef7289354600f139253f719cbb2f0a6b2d572108"
 
 rxjs@^5.0.0-beta.11:
   version "5.4.2"
