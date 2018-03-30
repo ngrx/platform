@@ -98,7 +98,7 @@ You can execute some code that will be executed directly after the effect class 
 ```ts
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { defer } from 'rxjs/observable/defer';
+import { defer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
@@ -117,7 +117,7 @@ If you want to trigger another action, be careful to add this effect at the end.
 ```ts
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { defer } from 'rxjs/observable/defer';
+import { defer } from 'rxjs';
 import { LoginAction, LogoutAction } from './auth';
 
 @Injectable()
@@ -148,7 +148,13 @@ Usage:
 
 ```ts
 import { Injectable } from '@angular/core';
-import { Actions, Effect, OnRunEffects, EffectNotification, ofType } from '@ngrx/effects';
+import {
+  Actions,
+  Effect,
+  OnRunEffects,
+  EffectNotification,
+  ofType,
+} from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { exhaustMap, takeUntil, tap } from 'rxjs/operators';
@@ -157,7 +163,8 @@ import { exhaustMap, takeUntil, tap } from 'rxjs/operators';
 export class UserEffects implements OnRunEffects {
   constructor(private actions$: Actions) {}
 
-  @Effect() updateUser$: Observable<Action> = this.actions$.pipe(
+  @Effect()
+  updateUser$: Observable<Action> = this.actions$.pipe(
     ofType('UPDATE_USER'),
     tap(action => {
       console.log(action);
@@ -167,9 +174,11 @@ export class UserEffects implements OnRunEffects {
   ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
     return this.actions$.pipe(
       ofType('LOGGED_IN'),
-      exhaustMap(() => resolvedEffects$.pipe(
-        takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))
-      ))
+      exhaustMap(() =>
+        resolvedEffects$.pipe(
+          takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))
+        )
+      )
     );
   }
 }

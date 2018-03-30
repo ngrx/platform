@@ -257,7 +257,7 @@ AFTER:
 ```ts
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import { defer } from 'rxjs/observable/defer';
+import { defer } from 'rxjs';
 
 import * as auth from '../actions/auth.actions';
 
