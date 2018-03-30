@@ -360,59 +360,65 @@ describe('integration spec', () => {
       ]);
       done();
     });
+  });
 
-    it('should support a custom RouterStateSnapshot serializer ', (done: any) => {
-      const reducer = (state: any, action: RouterAction<any>) => {
-        const r = routerReducer(state, action);
-        return r && r.state
-          ? { url: r.state.url, navigationId: r.navigationId }
-          : null;
-      };
+  it('should support a custom RouterStateSnapshot serializer ', (done: any) => {
+    const reducer = (state: any, action: RouterAction<any>) => {
+      const r = routerReducer(state, action);
+      return r && r.state
+        ? { url: r.state.url, navigationId: r.navigationId }
+        : null;
+    };
 
-      class CustomSerializer
-        implements RouterStateSerializer<{ url: string; params: any }> {
-        serialize(routerState: RouterStateSnapshot) {
-          const url = `${routerState.url}-custom`;
-          const params = { test: 1 };
+    class CustomSerializer
+      implements RouterStateSerializer<{ url: string; params: any }> {
+      serialize(routerState: RouterStateSnapshot) {
+        const url = `${routerState.url}-custom`;
+        const params = { test: 1 };
 
-          return { url, params };
-        }
+        return { url, params };
       }
+    }
 
-      const providers = [
-        { provide: RouterStateSerializer, useClass: CustomSerializer },
-      ];
+    const providers = [
+      { provide: RouterStateSerializer, useClass: CustomSerializer },
+    ];
 
-      createTestModule({ reducers: { routerReducer, reducer }, providers });
+    createTestModule({ reducers: { routerReducer, reducer }, providers });
 
-      const router = TestBed.get(Router);
-      const store = TestBed.get(Store);
-      const log = logOfRouterAndStore(router, store);
+    const router = TestBed.get(Router);
+    const store = TestBed.get(Store);
+    const log = logOfRouterAndStore(router, store);
 
-      router
-        .navigateByUrl('/')
-        .then(() => {
-          log.splice(0);
-          return router.navigateByUrl('next');
-        })
-        .then(() => {
-          expect(log).toEqual([
-            { type: 'router', event: 'NavigationStart', url: '/next' },
-            { type: 'router', event: 'RoutesRecognized', url: '/next' },
-            {
-              type: 'store',
-              state: {
-                url: '/next-custom',
-                navigationId: 2,
-                params: { test: 1 },
-              },
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        log.splice(0);
+        return router.navigateByUrl('next');
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          {
+            type: 'store',
+            state: {
+              url: '/next-custom',
+              navigationId: 2,
+              params: { test: 1 },
             },
-            { type: 'router', event: 'NavigationEnd', url: '/next' },
-          ]);
-          log.splice(0);
-          done();
-        });
-    });
+          },
+          /* new Router Lifecycle in Angular 4.3 */
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
+
+          { type: 'router', event: 'NavigationEnd', url: '/next' },
+        ]);
+        log.splice(0);
+        done();
+      });
   });
 
   it('should support event during an async canActivate guard', (done: any) => {
