@@ -1,11 +1,7 @@
 {
   "name": "@ngrx/store",
-  "version": "5.2.0",
+  "version": "0.0.0-PLACEHOLDER",
   "description": "RxJS powered Redux for Angular apps",
-  "module": "@ngrx/store.es5.js",
-  "es2015": "@ngrx/store.js",
-  "main": "bundles/store.umd.js",
-  "typings": "store.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
@@ -15,7 +11,7 @@
     "Angular",
     "Redux"
   ],
-  "author": "Rob Wormald <robwormald@gmail.com>",
+  "author": "NgRx",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ngrx/platform/issues"
@@ -24,5 +20,9 @@
   "peerDependencies": {
     "@angular/core": "^5.0.0",
     "rxjs": "^5.6.0-forward-compat.0 || ^6.0.0-beta.0"
-  }
+  },
+  "ng-update": {
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
+  },
+  "sideEffects": false
 }

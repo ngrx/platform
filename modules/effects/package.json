@@ -1,22 +1,24 @@
 {
   "name": "@ngrx/effects",
-  "version": "5.2.0",
+  "version": "0.0.0-PLACEHOLDER",
   "description": "Side effect model for @ngrx/store",
-  "module": "@ngrx/effects.es5.js",
-  "es2015": "@ngrx/effects.js",
-  "main": "bundles/effects.umd.js",
-  "typings": "effects.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
   },
-  "authors": [
-    "Mike Ryan"
-  ],
+  "author": "NgRx",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "^5.0.0",
-    "@ngrx/store": "^5.0.0",
+    "@ngrx/store": "0.0.0-PLACEHOLDER",
     "rxjs": "^5.5.0"
-  }
+  },
+  "ng-update": {
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
+  },
+  "sideEffects": false
 }

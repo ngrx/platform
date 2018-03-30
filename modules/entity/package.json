@@ -1,22 +1,24 @@
 {
   "name": "@ngrx/entity",
-  "version": "5.2.0",
+  "version": "0.0.0-PLACEHOLDER",
   "description": "Common utilities for entity reducers",
-  "module": "@ngrx/entity.es5.js",
-  "es2015": "@ngrx/entity.js",
-  "main": "bundles/entity.umd.js",
-  "typings": "entity.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
   },
-  "authors": [
-    "Mike Ryan"
-  ],
+  "author": "NgRx",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "^5.0.0",
-    "@ngrx/store": "^5.0.0",
+    "@ngrx/store": "0.0.0-PLACEHOLDER",
     "rxjs": "^5.5.0"
-  }
+  },
+  "ng-update": {
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
+  },
+  "sideEffects": false
 }

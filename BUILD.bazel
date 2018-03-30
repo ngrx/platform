@@ -21,6 +21,7 @@ filegroup(
         "jasmine-marbles",
         "typescript",
         "@types",
+        "tsickle",
     ] for ext in [
         "*.js",
         "*.json",
