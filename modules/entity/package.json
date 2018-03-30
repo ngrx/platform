@@ -13,9 +13,9 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^5.0.0",
+    "@angular/core": "NG_VERSION",
     "@ngrx/store": "0.0.0-PLACEHOLDER",
-    "rxjs": "^5.5.0"
+    "rxjs": "RXJS_VERSION"
   },
   "ng-update": {
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP"

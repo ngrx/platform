@@ -5,6 +5,8 @@ load("@build_bazel_rules_nodejs//:defs.bzl",
      _jasmine_node_test="jasmine_node_test")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
+NG_VERSION = "^6.0.0 || ^6.0.0-rc.0"
+RXJS_VERSION = "^5.6.0-forward-compat.0 || ^6.0.0-beta.0"
 
 NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
     "effects",
@@ -16,6 +18,8 @@ NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
 ]]
 
 PKG_GROUP_REPLACEMENTS = {
+    "NG_VERSION": NG_VERSION,
+    "RXJS_VERSION": RXJS_VERSION,
     "\"NG_UPDATE_PACKAGE_GROUP\"": """[
       %s
     ]""" % ",\n      ".join(["\"%s\"" % s for s in NGRX_SCOPED_PACKAGES])
