@@ -363,16 +363,27 @@ describe('integration spec', () => {
   });
 
   it('should support a custom RouterStateSnapshot serializer ', (done: any) => {
-    const reducer = (state: any, action: RouterAction<any>) => {
-      const r = routerReducer(state, action);
+    interface SerializedState {
+      url: string;
+      params: any;
+    }
+
+    const reducer = (
+      state: any,
+      action: RouterAction<any, SerializedState>
+    ) => {
+      const r = routerReducer<SerializedState>(state, action);
       return r && r.state
-        ? { url: r.state.url, navigationId: r.navigationId }
+        ? {
+            url: r.state.url,
+            navigationId: r.navigationId,
+            params: r.state.params,
+          }
         : null;
     };
 
-    class CustomSerializer
-      implements RouterStateSerializer<{ url: string; params: any }> {
-      serialize(routerState: RouterStateSnapshot) {
+    class CustomSerializer implements RouterStateSerializer<SerializedState> {
+      serialize(routerState: RouterStateSnapshot): SerializedState {
         const url = `${routerState.url}-custom`;
         const params = { test: 1 };
 
