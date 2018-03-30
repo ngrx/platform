@@ -307,7 +307,7 @@ describe('DevtoolsExtension', () => {
         });
       });
 
-      it('sanitizers should not modify original state or actions', () => {
+      describe('sanitizers should not modify original state or actions', () => {
         beforeEach(() => {
           devtoolsExtension = new DevtoolsExtension(
             reduxDevtoolsExtension,
