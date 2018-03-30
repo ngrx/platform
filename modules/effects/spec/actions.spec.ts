@@ -1,7 +1,3 @@
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/toArray';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
 import { ReflectiveInjector } from '@angular/core';
 import {
   Action,
@@ -12,7 +8,7 @@ import {
 import { Actions, ofType } from '../';
 import { map, toArray, switchMap } from 'rxjs/operators';
 import { hot, cold } from 'jasmine-marbles';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 describe('Actions', function() {
   let actions$: Actions;

@@ -1,20 +1,17 @@
-import 'rxjs/add/operator/take';
-import { Subscription } from 'rxjs/Subscription';
-import { ReflectiveInjector } from '@angular/core';
-import { TestBed, getTestBed } from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import {
-  StoreModule,
-  Store,
-  StateObservable,
-  ActionReducer,
   Action,
+  ActionReducer,
   ReducerManager,
+  StateObservable,
+  Store,
+  StoreModule,
 } from '@ngrx/store';
+
 import {
+  LiftedState,
   StoreDevtools,
   StoreDevtoolsModule,
-  LiftedState,
-  StoreDevtoolsConfig,
   StoreDevtoolsOptions,
 } from '../';
 import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/instrument';
@@ -146,7 +143,7 @@ describe('Store Devtools', () => {
       fixture.cleanup();
     });
 
-    it("should alias devtools unlifted state to Store's state", () => {
+    it(`should alias devtools unlifted state to Store's state`, () => {
       expect(devtools.state).toBe(fixture.state as any);
     });
 

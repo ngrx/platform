@@ -1,16 +1,17 @@
-import { Injectable, Inject, OnDestroy, Provider } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { queue } from 'rxjs/scheduler/queue';
-import { observeOn } from 'rxjs/operator/observeOn';
-import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
-import { scan } from 'rxjs/operator/scan';
+import { Inject, Injectable, OnDestroy, Provider } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  queueScheduler,
+  Subscription,
+} from 'rxjs';
+import { observeOn, scan, withLatestFrom } from 'rxjs/operators';
+
 import { ActionsSubject, INIT } from './actions_subject';
 import { Action, ActionReducer } from './models';
-import { INITIAL_STATE } from './tokens';
 import { ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
+import { INITIAL_STATE } from './tokens';
 
 export abstract class StateObservable extends Observable<any> {}
 
@@ -28,14 +29,23 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   ) {
     super(initialState);
 
-    const actionsOnQueue$: Observable<Action> = observeOn.call(actions$, queue);
+    const actionsOnQueue$: Observable<Action> = actions$.pipe(
+      observeOn(queueScheduler)
+    );
     const withLatestReducer$: Observable<
       [Action, ActionReducer<any, Action>]
-    > = withLatestFrom.call(actionsOnQueue$, reducer$);
+    > = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+
+    const seed: StateActionPair<T> = { state: initialState };
     const stateAndAction$: Observable<{
       state: any;
-      action: Action;
-    }> = scan.call(withLatestReducer$, reduceState, { state: initialState });
+      action?: Action;
+    }> = withLatestReducer$.pipe(
+      scan<[Action, ActionReducer<T, Action>], StateActionPair<T>>(
+        reduceState,
+        seed
+      )
+    );
 
     this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
       this.next(state);

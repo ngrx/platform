@@ -6,46 +6,33 @@ exports[`Login Page should compile 1`] = `
   pending$={[Function Store]}
   store={[Function Store]}
 >
-  
-      <bc-login-form
+  <bc-login-form
     _nghost-c0=""
     ng-reflect-pending="false"
   >
-    
-      
     <mat-card
       _ngcontent-c0=""
       class="mat-card"
     >
-      
-        
       <mat-card-title
         _ngcontent-c0=""
         class="mat-card-title"
       >
         Login
       </mat-card-title>
-      
-        
       <mat-card-content
         _ngcontent-c0=""
         class="mat-card-content"
       >
-        
-          
         <form
           _ngcontent-c0=""
           class="ng-untouched ng-pristine ng-valid"
           ng-reflect-form="[object Object]"
           novalidate=""
         >
-          
-            
           <p
             _ngcontent-c0=""
           >
-            
-              
             <mat-input-container
               _ngcontent-c0=""
               class="mat-input-container mat-form-field ng-tns-c2-0 mat-primary mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid"
@@ -60,8 +47,6 @@ exports[`Login Page should compile 1`] = `
                   <div
                     class="mat-input-infix mat-form-field-infix"
                   >
-                    
-                
                     <input
                       _ngcontent-c0=""
                       aria-invalid="false"
@@ -76,8 +61,6 @@ exports[`Login Page should compile 1`] = `
                       placeholder="Username"
                       type="text"
                     />
-                    
-              
                     <span
                       class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
                     >
@@ -123,17 +106,10 @@ exports[`Login Page should compile 1`] = `
                 </div>
               </div>
             </mat-input-container>
-            
-            
           </p>
-          
-  
-            
           <p
             _ngcontent-c0=""
           >
-            
-              
             <mat-input-container
               _ngcontent-c0=""
               class="mat-input-container mat-form-field ng-tns-c2-1 mat-primary mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid"
@@ -148,8 +124,6 @@ exports[`Login Page should compile 1`] = `
                   <div
                     class="mat-input-infix mat-form-field-infix"
                   >
-                    
-                
                     <input
                       _ngcontent-c0=""
                       aria-invalid="false"
@@ -164,8 +138,6 @@ exports[`Login Page should compile 1`] = `
                       placeholder="Password"
                       type="password"
                     />
-                    
-              
                     <span
                       class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
                     >
@@ -211,22 +183,12 @@ exports[`Login Page should compile 1`] = `
                 </div>
               </div>
             </mat-input-container>
-            
-            
           </p>
           
-  
-            
-          
-          
-  
-            
           <p
             _ngcontent-c0=""
             class="loginButtons"
           >
-            
-              
             <button
               _ngcontent-c0=""
               mat-button=""
@@ -234,22 +196,10 @@ exports[`Login Page should compile 1`] = `
             >
               Login
             </button>
-            
-            
           </p>
-          
-  
-          
         </form>
-        
-        
       </mat-card-content>
-      
-      
     </mat-card>
-    
-    
   </bc-login-form>
-    
 </bc-login-page>
 `;

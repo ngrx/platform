@@ -33,7 +33,7 @@ export default function(options: ActionOptions): Rule {
       ...stringUtils,
       ...(options as object),
       dot: () => '.',
-    }),
+    } as any),
     move(sourceDir),
   ]);
 

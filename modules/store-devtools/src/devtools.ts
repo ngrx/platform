@@ -1,39 +1,27 @@
-import { Injectable, Inject, OnDestroy } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
-  State,
   Action,
+  ActionReducer,
+  ActionsSubject,
   INITIAL_STATE,
   ReducerObservable,
-  ActionsSubject,
   ScannedActionsSubject,
 } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Observer } from 'rxjs/Observer';
-import { Subscription } from 'rxjs/Subscription';
-import { map } from 'rxjs/operator/map';
-import { merge } from 'rxjs/operator/merge';
-import { observeOn } from 'rxjs/operator/observeOn';
-import { scan } from 'rxjs/operator/scan';
-import { skip } from 'rxjs/operator/skip';
-import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
-import { queue } from 'rxjs/scheduler/queue';
+import {
+  merge,
+  Observable,
+  Observer,
+  queueScheduler,
+  ReplaySubject,
+  Subscription,
+} from 'rxjs';
+import { map, observeOn, scan, skip, withLatestFrom } from 'rxjs/operators';
 
-import { DevtoolsExtension } from './extension';
-import { liftAction, unliftAction, unliftState, applyOperators } from './utils';
-import {
-  liftReducerWith,
-  liftInitialState,
-  LiftedState,
-  ComputedState,
-} from './reducer';
 import * as Actions from './actions';
-import {
-  StoreDevtoolsConfig,
-  STORE_DEVTOOLS_CONFIG,
-  StateSanitizer,
-  ActionSanitizer,
-} from './config';
+import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
+import { DevtoolsExtension } from './extension';
+import { LiftedState, liftInitialState, liftReducerWith } from './reducer';
+import { liftAction, unliftState } from './utils';
 
 @Injectable()
 export class DevtoolsDispatcher extends ActionsSubject {}
@@ -62,45 +50,53 @@ export class StoreDevtools implements Observer<any> {
       config
     );
 
-    const liftedAction$ = applyOperators(actions$.asObservable(), [
-      [skip, 1],
-      [merge, extension.actions$],
-      [map, liftAction],
-      [merge, dispatcher, extension.liftedActions$],
-      [observeOn, queue],
-    ]);
+    const liftedAction$ = merge(
+      merge(actions$.asObservable().pipe(skip(1)), extension.actions$).pipe(
+        map(liftAction)
+      ),
+      dispatcher,
+      extension.liftedActions$
+    ).pipe(observeOn(queueScheduler));
 
-    const liftedReducer$ = map.call(reducers$, liftReducer);
+    const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
-    const liftedStateSubscription = applyOperators(liftedAction$, [
-      [withLatestFrom, liftedReducer$],
-      [
-        scan,
-        ({ state: liftedState }: any, [action, reducer]: any) => {
-          const reducedLiftedState = reducer(liftedState, action);
 
-          // Extension should be sent the sanitized lifted state
-          extension.notify(action, reducedLiftedState);
+    const liftedStateSubscription = liftedAction$
+      .pipe(
+        withLatestFrom(liftedReducer$),
+        scan<
+          [any, ActionReducer<LiftedState, Actions.All>],
+          {
+            state: LiftedState;
+            action: any;
+          }
+        >(
+          ({ state: liftedState }, [action, reducer]) => {
+            const reducedLiftedState = reducer(liftedState, action);
 
-          return { state: reducedLiftedState, action };
-        },
-        { state: liftedInitialState, action: null },
-      ],
-    ]).subscribe(({ state, action }) => {
-      liftedStateSubject.next(state);
+            // // Extension should be sent the sanitized lifted state
+            extension.notify(action, reducedLiftedState);
 
-      if (action.type === Actions.PERFORM_ACTION) {
-        const unliftedAction = (action as Actions.PerformAction).action;
+            return { state: reducedLiftedState, action };
+          },
+          { state: liftedInitialState, action: null as any }
+        )
+      )
+      .subscribe(({ state, action }) => {
+        liftedStateSubject.next(state);
 
-        scannedActions.next(unliftedAction);
-      }
-    });
+        if (action.type === Actions.PERFORM_ACTION) {
+          const unliftedAction = (action as Actions.PerformAction).action;
+
+          scannedActions.next(unliftedAction);
+        }
+      });
 
     const liftedState$ = liftedStateSubject.asObservable() as Observable<
       LiftedState
     >;
-    const state$ = map.call(liftedState$, unliftState);
+    const state$ = liftedState$.pipe(map(unliftState));
 
     this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;

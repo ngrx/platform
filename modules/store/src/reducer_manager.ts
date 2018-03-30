@@ -1,21 +1,20 @@
-import { Injectable, Inject, OnDestroy, Provider } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Inject, Injectable, OnDestroy, Provider } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { ActionsSubject } from './actions_subject';
 import {
   Action,
   ActionReducer,
-  ActionReducerMap,
   ActionReducerFactory,
-  MetaReducer,
+  ActionReducerMap,
   StoreFeature,
 } from './models';
-import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from './tokens';
+import { INITIAL_REDUCERS, INITIAL_STATE, REDUCER_FACTORY } from './tokens';
 import {
-  omit,
-  createReducerFactory,
   createFeatureReducerFactory,
+  createReducerFactory,
+  omit,
 } from './utils';
-import { ActionsSubject } from './actions_subject';
 
 export abstract class ReducerObservable extends Observable<
   ActionReducer<any, any>

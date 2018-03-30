@@ -1,8 +1,8 @@
 import {
   Action,
   ActionReducer,
-  ActionReducerMap,
   ActionReducerFactory,
+  ActionReducerMap,
   MetaReducer,
 } from './models';
 
@@ -73,6 +73,7 @@ export function compose<A, B, C, D, E, F>(
   c: (i: B) => C,
   b: (i: A) => B
 ): (i: A) => F;
+export function compose<A = any, F = any>(...functions: any[]): (i: A) => F;
 export function compose(...functions: any[]) {
   return function(arg: any) {
     if (functions.length === 0) {

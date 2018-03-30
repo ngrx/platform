@@ -1,7 +1,6 @@
-import { Observable } from 'rxjs/Observable';
-import { Notification } from 'rxjs/Notification';
-import { Action } from '@ngrx/store';
 import { ErrorHandler } from '@angular/core';
+import { Action } from '@ngrx/store';
+import { Notification, Observable } from 'rxjs';
 
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);

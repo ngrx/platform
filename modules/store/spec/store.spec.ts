@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/take';
 import { ReflectiveInjector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { hot } from 'jasmine-marbles';
@@ -17,6 +16,7 @@ import {
 } from './fixtures/counter';
 import Spy = jasmine.Spy;
 import any = jasmine.any;
+import { take } from 'rxjs/operators';
 
 interface TestAppSchema {
   counter1: number;
@@ -48,7 +48,7 @@ describe('ngRx Store', () => {
     it('should handle an initial state object', (done: any) => {
       setup();
 
-      store.take(1).subscribe({
+      store.pipe(take(1)).subscribe({
         next(val) {
           expect(val).toEqual({ counter1: 0, counter2: 1, counter3: 0 });
         },
@@ -60,7 +60,7 @@ describe('ngRx Store', () => {
     it('should handle an initial state function', (done: any) => {
       setup(() => ({ counter1: 0, counter2: 5 }));
 
-      store.take(1).subscribe({
+      store.pipe(take(1)).subscribe({
         next(val) {
           expect(val).toEqual({ counter1: 0, counter2: 5, counter3: 0 });
         },
@@ -79,7 +79,7 @@ describe('ngRx Store', () => {
         a: { type: INCREMENT },
         b: { type: 'OTHER' },
         c: { type: RESET },
-        d: { type: 'OTHER' }, //reproduces https://github.com/ngrx/platform/issues/880 because state is falsey
+        d: { type: 'OTHER' }, // reproduces https://github.com/ngrx/platform/issues/880 because state is falsey
         e: { type: INCREMENT },
         f: { type: INCREMENT },
         g: { type: 'OTHER' },
@@ -289,13 +289,13 @@ describe('ngRx Store', () => {
 
     it(`should work with added / removed reducers`, () => {
       store.addReducer(key, counterReducer);
-      store.take(1).subscribe(val => {
+      store.pipe(take(1)).subscribe(val => {
         expect(val.counter4).toBe(0);
       });
 
       store.removeReducer(key);
       store.dispatch({ type: INCREMENT });
-      store.take(1).subscribe(val => {
+      store.pipe(take(1)).subscribe(val => {
         expect(val.counter4).toBeUndefined();
       });
     });

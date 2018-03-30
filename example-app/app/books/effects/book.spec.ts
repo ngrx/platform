@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Actions } from '@ngrx/effects';
-import { cold, hot, getTestScheduler } from 'jasmine-marbles';
-import { empty } from 'rxjs/observable/empty';
-import { BookEffects, SEARCH_SCHEDULER, SEARCH_DEBOUNCE } from './book';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
+import { empty, Observable } from 'rxjs';
+
 import { GoogleBooksService } from '../../core/services/google-books';
-import { Observable } from 'rxjs/Observable';
 import { Search, SearchComplete, SearchError } from '../actions/book';
 import { Book } from '../models/book';
+import { BookEffects, SEARCH_DEBOUNCE, SEARCH_SCHEDULER } from './book';
 
 export class TestActions extends Actions {
   constructor() {

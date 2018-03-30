@@ -1,8 +1,8 @@
 import {
-  NgModule,
-  ModuleWithProviders,
-  InjectionToken,
   Inject,
+  InjectionToken,
+  ModuleWithProviders,
+  NgModule,
 } from '@angular/core';
 import {
   NavigationCancel,
@@ -11,12 +11,14 @@ import {
   RouterStateSnapshot,
   RoutesRecognized,
 } from '@angular/router';
-import { Store, select } from '@ngrx/store';
-import { of } from 'rxjs/observable/of';
+import { select, Store } from '@ngrx/store';
+import { of } from 'rxjs';
+
 import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
 } from './serializer';
+
 /**
  * An action dispatched when the router navigates.
  */

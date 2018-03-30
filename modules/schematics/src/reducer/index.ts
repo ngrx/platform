@@ -48,7 +48,7 @@ export default function(options: ReducerOptions): Rule {
           ),
         ...(options as object),
         dot: () => '.',
-      }),
+      } as any),
       move(sourceDir),
     ]);
 

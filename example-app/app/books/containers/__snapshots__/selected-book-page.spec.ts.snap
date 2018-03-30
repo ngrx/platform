@@ -6,18 +6,11 @@ exports[`Selected Book Page should compile 1`] = `
   isSelectedBookInCollection$={[Function Store]}
   store={[Function Store]}
 >
-  
-      <bc-book-detail
+  <bc-book-detail
     _nghost-c0=""
     ng-reflect-in-collection="false"
   >
     
-      
-    
-    
-  
-    
   </bc-book-detail>
-    
 </bc-selected-book-page>
 `;

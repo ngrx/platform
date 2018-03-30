@@ -13,7 +13,7 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  auth: fromAuth.reducer
+  auth: fromAuth.reducer,
 };
 ```
 
@@ -28,7 +28,7 @@ import { Action } from '@ngrx/store';
 export enum CounterActionTypes {
   INCREMENT = '[Counter] Increment',
   DECREMENT = '[Counter] Decrement',
-  RESET = '[Counter] Reset'
+  RESET = '[Counter] Reset',
 }
 
 export class Increment implements Action {
@@ -45,10 +45,7 @@ export class Reset implements Action {
   constructor(public payload: number) {}
 }
 
-export type CounterActions
-  = Increment
-  | Decrement
-  | Reset;
+export type CounterActions = Increment | Decrement | Reset;
 ```
 
 This provides typed actions for your reducer functions.
@@ -58,7 +55,7 @@ This provides typed actions for your reducer functions.
 import { CounterActionTypes, CounterActions } from './counter.actions';
 
 export function reducer(state: number = 0, action: CounterActions): State {
-  switch(action.type) {
+  switch (action.type) {
     case CounterActionTypes.INCREMENT: {
       return state + 1;
     }
@@ -82,7 +79,7 @@ Instantiate actions and use `store.dispatch()` to dispatch them:
 
 ```ts
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as Counter from './counter.actions';
 
 interface AppState {
@@ -97,7 +94,7 @@ interface AppState {
     <button (click)="reset()">Reset Counter</button>
     
     <div>Current Count: {{ counter | async }}</div>
-  `
+  `,
 })
 export class MyAppComponent {
   counter: Observable<number>;
@@ -106,15 +103,15 @@ export class MyAppComponent {
     this.counter = store.pipe(select('counter'));
   }
 
-  increment(){
+  increment() {
     this.store.dispatch(new Counter.Increment());
   }
 
-  decrement(){
+  decrement() {
     this.store.dispatch(new Counter.Decrement());
   }
 
-  reset(){
+  reset() {
     this.store.dispatch(new Counter.Reset(3));
   }
 }

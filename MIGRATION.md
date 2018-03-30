@@ -4,10 +4,10 @@
 
 Links to the current documentation for ngrx 4.x
 
-- [@ngrx/store](./docs/store/README.md)  
-- [@ngrx/effects](./docs/effects/README.md)  
-- [@ngrx/router-store](./docs/router-store/README.md)  
-- [@ngrx/store-devtools](./docs/store-devtools/README.md)
+* [@ngrx/store](./docs/store/README.md)
+* [@ngrx/effects](./docs/effects/README.md)
+* [@ngrx/router-store](./docs/router-store/README.md)
+* [@ngrx/store-devtools](./docs/store-devtools/README.md)
 
 The sections below cover the changes between the ngrx projects migrating from V1.x/2.x to V4.
 
@@ -15,7 +15,7 @@ The sections below cover the changes between the ngrx projects migrating from V1
 [@ngrx/store](#ngrxstore)  
 [@ngrx/effects](#ngrxeffects)  
 [@ngrx/router-store](#ngrxrouter-store)  
-[@ngrx/store-devtools](#ngrxstore-devtools)  
+[@ngrx/store-devtools](#ngrxstore-devtools)
 
 ## Dependencies
 
@@ -25,6 +25,7 @@ TypeScript 2.4.x
 RxJS 5.4.x
 
 ## @ngrx/core
+
 @ngrx/core is no longer needed, and can conflict with @ngrx/store. You should remove it from your project.
 
 BEFORE:
@@ -48,34 +49,38 @@ issues, especially when used with `@ngrx/effects`. If your interface/class has a
 the type.
 
 BEFORE:
+
 ```ts
-import 'rxjs/add/operator/map';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Effect, Actions } from '@ngrx/effects';
 
 @Injectable()
 export class MyEffects {
-  @Effect() someEffect$: Observable<Action> = this.actions$.ofType(UserActions.LOGIN)
-    .map(action => action.payload)
-    .map(() => new AnotherAction())
+  @Effect()
+  someEffect$: Observable<Action> = this.actions$
+    .ofType(UserActions.LOGIN)
+    .pipe(map(action => action.payload), map(() => new AnotherAction()));
 
   constructor(private actions$: Actions) {}
 }
 ```
 
 AFTER:
+
 ```ts
-import 'rxjs/add/operator/map';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Effect, Actions } from '@ngrx/effects';
 
 @Injectable()
 export class MyEffects {
-  @Effect() someEffect$: Observable<Action> = this.actions$.ofType(UserActions.LOGIN)
-    .map((action: UserActions.Login) => action.payload)
-    .map(() => new AnotherAction())
+  @Effect()
+  someEffect$: Observable<Action> = this.actions$
+    .ofType(UserActions.LOGIN)
+    .pipe(map(action => action.payload), map(() => new AnotherAction()));
 
   constructor(private actions$: Actions) {}
 }
@@ -103,12 +108,12 @@ Previously to be AOT compatible, it was required to pass a function to the `prov
 
 BEFORE:
 
-
 `reducers/index.ts`
+
 ```ts
 const reducers = {
   auth: fromAuth.reducer,
-  layout: fromLayout.reducer
+  layout: fromLayout.reducer,
 };
 
 const rootReducer = combineReducers(reducers);
@@ -119,6 +124,7 @@ export function reducer(state: any, action: any) {
 ```
 
 `app.module.ts`
+
 ```ts
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './reducers';
@@ -127,10 +133,10 @@ import { reducer } from './reducers';
   imports: [
     StoreModule.provideStore(reducer, {
       auth: {
-        loggedIn: true
-      }
-    })
-  ]
+        loggedIn: true,
+      },
+    }),
+  ],
 })
 export class AppModule {}
 ```
@@ -151,11 +157,12 @@ export interface State {
 
 export const reducers: ActionReducerMap<State> = {
   auth: fromAuth.reducer,
-  layout: fromLayout.reducer
+  layout: fromLayout.reducer,
 };
 ```
 
 `app.module.ts`
+
 ```ts
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './reducers';
@@ -165,11 +172,11 @@ import { reducers } from './reducers';
     StoreModule.forRoot(reducers, {
       initialState: {
         auth: {
-          loggedIn: true
-        }
-      }
-    })
-  ]
+          loggedIn: true,
+        },
+      },
+    }),
+  ],
 })
 export class AppModule {}
 ```
@@ -181,57 +188,49 @@ export class AppModule {}
 BEFORE:
 
 `app.module.ts`
+
 ```ts
 @NgModule({
-  imports: [
-    EffectsModule.run(SourceA),
-    EffectsModule.run(SourceB),
-  ]
+  imports: [EffectsModule.run(SourceA), EffectsModule.run(SourceB)],
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 AFTER:
 
-The `EffectsModule.forRoot` method is *required* in your root `AppModule`. Provide an empty array
+The `EffectsModule.forRoot` method is _required_ in your root `AppModule`. Provide an empty array
 if you don't need to register any root-level effects.
 
 `app.module.ts`
+
 ```ts
 @NgModule({
-  imports: [
-    EffectsModule.forRoot([
-      SourceA,
-      SourceB,
-      SourceC,
-    ])
-  ]
+  imports: [EffectsModule.forRoot([SourceA, SourceB, SourceC])],
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 Import `EffectsModule.forFeature` in any NgModule, whether be the `AppModule`, or a feature module.
 
 `feature.module.ts`
+
 ```ts
 @NgModule({
   imports: [
-    EffectsModule.forFeature([
-      FeatureSourceA,
-      FeatureSourceB,
-      FeatureSourceC,
-    ])
-  ]
+    EffectsModule.forFeature([FeatureSourceA, FeatureSourceB, FeatureSourceC]),
+  ],
 })
-export class FeatureModule { }
+export class FeatureModule {}
 ```
 
 ### Init Action
+
 The `@ngrx/store/init` action now fires prior to effects starting. Use defer() for the same behaviour.
 
 BEFORE:
 
 `app.effects.ts`
+
 ```ts
 import { Dispatcher, Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
@@ -240,49 +239,43 @@ import * as auth from '../actions/auth.actions';
 
 @Injectable()
 export class AppEffects {
+  @Effect()
+  init$: Observable<Action> = this.actions$
+    .ofType(Dispatcher.INIT)
+    .switchMap(action => {
+      return of(new auth.LoginAction());
+    });
 
-    @Effect()
-    init$: Observable<Action> = this.actions$
-        .ofType(Dispatcher.INIT)
-        .switchMap(action => {
-
-            return of(new auth.LoginAction());
-
-        });
-
-    constructor(private actions$: Actions) { }
+  constructor(private actions$: Actions) {}
 }
 ```
 
 AFTER:
 
 `app.effects.ts`
-```ts
 
+```ts
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import { defer } from 'rxjs/observable/defer';
+import { defer } from 'rxjs';
 
 import * as auth from '../actions/auth.actions';
 
 @Injectable()
 export class AppEffects {
+  @Effect()
+  init$: Observable<Action> = defer(() => {
+    return of(new auth.LoginAction());
+  });
 
-    @Effect()
-    init$: Observable<Action> = defer(() => {
-
-      return of(new auth.LoginAction());
-
-    });
-
-    constructor(private actions$: Actions) { }
+  constructor(private actions$: Actions) {}
 }
-
 ```
 
 ### Testing Effects
 
 BEFORE:
+
 ```ts
 import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 import { MyEffects } from './my-effects';
@@ -292,9 +285,7 @@ describe('My Effects', () => {
   let runner: EffectsRunner;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        EffectsTestingModule
-      ],
+      imports: [EffectsTestingModule],
       providers: [
         MyEffects,
         // other providers
@@ -316,6 +307,7 @@ describe('My Effects', () => {
 ```
 
 AFTER:
+
 ```ts
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -366,6 +358,7 @@ describe('My Effects', () => {
 BEFORE:
 
 `reducers/index.ts`
+
 ```ts
 import * as fromRouter from '@ngrx/router-store';
 
@@ -374,7 +367,7 @@ export interface State {
 }
 
 const reducers = {
-  router: fromRouter.routerReducer
+  router: fromRouter.routerReducer,
 };
 
 const rootReducer = combineReducers(reducers);
@@ -385,6 +378,7 @@ export function reducer(state: any, action: any) {
 ```
 
 `app.module.ts`
+
 ```ts
 import { RouterModule } from '@angular/router';
 import { RouterStoreModule } from '@ngrx/router-store';
@@ -405,6 +399,7 @@ export class AppModule {}
 AFTER:
 
 `reducers/index.ts`
+
 ```ts
 import * as fromRouter from '@ngrx/router-store';
 
@@ -413,11 +408,12 @@ export interface State {
 }
 
 export const reducers = {
-  routerReducer: fromRouter.routerReducer
+  routerReducer: fromRouter.routerReducer,
 };
 ```
 
 `app.module.ts`
+
 ```ts
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers } from './reducers';
@@ -428,8 +424,8 @@ import { reducers } from './reducers';
     RouterModule.forRoot([
       // some routes
     ]),
-    StoreRouterConnectingModule
-  ]
+    StoreRouterConnectingModule,
+  ],
 })
 export class AppModule {}
 ```
@@ -444,7 +440,9 @@ BEFORE:
 ```ts
 import { go, back, forward } from '@ngrx/router-store';
 
-store.dispatch(go(['/path', { routeParam: 1 }], { page: 1 }, { replaceUrl: false }));
+store.dispatch(
+  go(['/path', { routeParam: 1 }], { page: 1 }, { replaceUrl: false })
+);
 
 store.dispatch(back());
 
@@ -464,11 +462,13 @@ export const FORWARD = '[Router] Forward';
 export class Go implements Action {
   readonly type = GO;
 
-  constructor(public payload: {
-    path: any[];
-    query?: object;
-    extras?: NavigationExtras;
-  }) {}
+  constructor(
+    public payload: {
+      path: any[];
+      query?: object;
+      extras?: NavigationExtras;
+    }
+  ) {}
 }
 
 export class Back implements Action {
@@ -479,10 +479,7 @@ export class Forward implements Action {
   readonly type = FORWARD;
 }
 
-export type Actions
-  = Go
-  | Back
-  | Forward;
+export type Actions = Go | Back | Forward;
 ```
 
 ```ts
@@ -500,29 +497,34 @@ store.dispatch(new RouterActions.Forward());
 ```
 
 ```ts
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Effect, Actions } from '@ngrx/effects';
+import { map, tap } from 'rxjs/operators';
 import * as RouterActions from './actions/router';
 
 @Injectable()
 export class RouterEffects {
   @Effect({ dispatch: false })
-  navigate$ = this.actions$.ofType(RouterActions.GO)
-    .map((action: RouterActions.Go) => action.payload)
-    .do(({ path, query: queryParams, extras})
-      => this.router.navigate(path, { queryParams, ...extras }));
+  navigate$ = this.actions$
+    .ofType(RouterActions.GO)
+    .pipe(
+      map((action: RouterActions.Go) => action.payload),
+      tap(({ path, query: queryParams, extras }) =>
+        this.router.navigate(path, { queryParams, ...extras })
+      )
+    );
 
   @Effect({ dispatch: false })
-  navigateBack$ = this.actions$.ofType(RouterActions.BACK)
+  navigateBack$ = this.actions$
+    .ofType(RouterActions.BACK)
     .do(() => this.location.back());
 
   @Effect({ dispatch: false })
-  navigateForward$ = this.actions$.ofType(RouterActions.FORWARD)
-    .do(() => this.location.forward());    
+  navigateForward$ = this.actions$
+    .ofType(RouterActions.FORWARD)
+    .do(() => this.location.forward());
 
   constructor(
     private actions$: Actions,
@@ -542,6 +544,7 @@ using them together.
 BEFORE:
 
 `app.module.ts`
+
 ```ts
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -550,9 +553,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     StoreDevtoolsModule.instrumentStore({ maxAge: 50 }),
     // OR
     StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 50
-    })
-  ]
+      maxAge: 50,
+    }),
+  ],
 })
 export class AppModule {}
 ```
@@ -560,14 +563,17 @@ export class AppModule {}
 AFTER:
 
 `app.module.ts`
+
 ```ts
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'; // Angular CLI environment
 
 @NgModule({
   imports: [
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
-  ]
+    !environment.production
+      ? StoreDevtoolsModule.instrument({ maxAge: 50 })
+      : [],
+  ],
 })
 export class AppModule {}
 ```

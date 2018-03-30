@@ -158,7 +158,7 @@ export default function(options: StoreOptions): Rule {
         ...stringUtils,
         ...(options as object),
         environmentsPath,
-      }),
+      } as any),
       move(sourceDir),
     ]);
 
