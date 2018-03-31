@@ -1,3 +1,88 @@
+<a name="6.0.0-beta.0"></a>
+
+# [6.0.0-beta.0](https://github.com/ngrx/platform/compare/v5.2.0...v6.0.0-beta.0) (2018-03-31)
+
+### Bug Fixes
+
+* Add support for Angular 6 and RxJS 6 ([d1286d2](https://github.com/ngrx/platform/commit/d1286d2))
+* **Entity:** Change EntityAdapter upsertOne/upsertMany to accept an entity ([a0f45ff](https://github.com/ngrx/platform/commit/a0f45ff))
+* **RouterStore:** Allow strict mode with router reducer (#903) ([f17a032](https://github.com/ngrx/platform/commit/f17a032)), closes [#903](https://github.com/ngrx/platform/issues/903)
+* **RouterStore:** change the default serializer to work around cycles in RouterStateSnapshot ([7917a27](https://github.com/ngrx/platform/commit/7917a27))
+* **RouterStore:** Replace RouterStateSnapshot with SerializedRouterStateSnapshot ([bd415a1](https://github.com/ngrx/platform/commit/bd415a1))
+* **StoreDevtools:** pass timestamp to actions ([df2411f](https://github.com/ngrx/platform/commit/df2411f))
+* **StoreDevtools:** report errors to ErrorHandler instead of console ([32df3f0](https://github.com/ngrx/platform/commit/32df3f0))
+
+### Features
+
+* **Schematics:** Extend from [@schematics](https://github.com/schematics)/angular ([0e17aad](https://github.com/ngrx/platform/commit/0e17aad))
+* **Schematics:** Add support for custom store interface name (#810) ([1352d83](https://github.com/ngrx/platform/commit/1352d83)), closes [#810](https://github.com/ngrx/platform/issues/810)
+
+### BREAKING CHANGES
+
+#### StoreDevtools:
+
+Errors in reducers are no longer hidden from ErrorHandler by
+StoreDevtools
+
+BEFORE:
+
+Errors in reducers are caught by StoreDevtools and logged to the console
+
+AFTER:
+
+Errors in reducers are reported to ErrorHandler
+
+#### Schematics
+
+NgRx Schematics now has a minimum version dependency on @angular-devkit/core
+and @angular-devkit/schematics of v0.4.0.
+
+#### Router Store
+
+Default router state is serialized to a shape that removes cycles
+
+BEFORE:
+
+Full RouterStateSnapshot is returned
+
+AFTER:
+
+Router state snapshot is returned as a SerializedRouterStateSnapshot with cyclical dependencies removed
+
+#### Entity
+
+The signature of the upsertOne/upsertMany functions in the EntityAdapter
+has been changed to accept a fully qualified entity instead of an update
+object that implements the Update<T> interface.
+
+Before:
+
+```ts
+entityAdapter.upsertOne(
+  {
+    id: 'Entity ID',
+    changes: { id: 'Entity ID', name: 'Entity Name' },
+  },
+  state
+);
+```
+
+After:
+
+```ts
+entityAdapter.upsertOne(
+  {
+    id: 'Entity ID',
+    name: 'Entity Name',
+  },
+  state
+);
+```
+
+#### NgRx
+
+NgRx now has a minimum version requirement on Angular 6 and RxJS 6.
+
 <a name="5.2.0"></a>
 
 # [5.2.0](https://github.com/ngrx/platform/compare/v5.1.0...v5.2.0) (2018-03-07)
