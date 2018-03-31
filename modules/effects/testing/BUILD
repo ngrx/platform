@@ -1,6 +1,10 @@
-load("//tools:defaults.bzl", "ts_library")
+package(default_visibility = ["//visibility:public"])
 
-ts_library(
+exports_files(["package.json"])
+
+load("//tools:defaults.bzl", "ng_module")
+
+ng_module(
     name = "testing",
     srcs = glob([
         "*.ts",

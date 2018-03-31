@@ -20,9 +20,11 @@ ng_package(
     name = "npm_package",
     srcs = glob(["**/*.externs.js"]) + [
         "package.json",
+        "//modules/effects/testing:package.json",
     ],
     entry_point = "modules/effects/index.js",
     deps = [
         ":effects",
+        "//modules/effects/testing",
     ],
 )
