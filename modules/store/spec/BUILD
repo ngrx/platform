@@ -11,6 +11,7 @@ ts_test_library(
     deps = [
         "//modules/store",
         "@rxjs",
+        "@rxjs//operators",
     ],
 )
 
@@ -19,6 +20,5 @@ jasmine_node_test(
     deps = [
         ":test_lib",
         "//modules/store",
-        "@rxjs",
     ],
 )

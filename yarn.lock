@@ -27,15 +27,15 @@
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
 
-"@angular/animations@github:angular/animations-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/animations-builds/tar.gz/be3afed75c45e5aa10fabb9039ceaee2133e6404"
+"@angular/animations@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-6.0.0-rc.1.tgz#fefd83733d4ffcf93eff137e5460412ed88dcd0e"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/bazel@github:angular/bazel-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/bazel-builds/tar.gz/7ac5285c7bbad384b7a5736afb18a68c599524ea"
+"@angular/bazel@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/bazel/-/bazel-6.0.0-rc.1.tgz#8adcd16be933e368d2012eb741f28cf7c7476df7"
   dependencies:
     "@bazel/typescript" "^0.11.1"
     "@types/node" "6.0.84"
@@ -114,42 +114,42 @@
   optionalDependencies:
     node-sass "^4.7.2"
 
-"@angular/common@github:angular/common-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/common-builds/tar.gz/a9c492cc0583e80d929de71aed08350ab4475af1"
+"@angular/common@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-6.0.0-rc.1.tgz#dc45ad017fe0eb2d3c4325580f5428b51dbc71f8"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/compiler-cli@github:angular/compiler-cli-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/compiler-cli-builds/tar.gz/2221d58a867a1171e9a4fc66beec7e20eb722d79"
+"@angular/compiler-cli@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-6.0.0-rc.1.tgz#3803501e19f70ba9337293ea756e87087c2aded7"
   dependencies:
     chokidar "^1.4.2"
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
     tsickle "^0.27.2"
 
-"@angular/compiler@github:angular/compiler-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/compiler-builds/tar.gz/48d2fa9bfd56498e44370b5ca741dd52e767963e"
+"@angular/compiler@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-6.0.0-rc.1.tgz#cb3451b25e4c77ad3b4a55bff29d65833ac1dbab"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/core@github:angular/core-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/core-builds/tar.gz/ff6e651cdc5f7b3af2baf5a2d51dff9c2fd5cc44"
+"@angular/core@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.0.0-rc.1.tgz#1c57db9aa46991a8f75dcef38dc4ca63bd1b7fec"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/forms@github:angular/forms-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/forms-builds/tar.gz/268f30d99e1d704f1ca8f342d5d3540f2f3c58c1"
+"@angular/forms@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-6.0.0-rc.1.tgz#6604f1b5d4ef78261769641922700d995d2fdce5"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/http@github:angular/http-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/http-builds/tar.gz/3f05ad7f1cf8792d6bfa0615bc2b8e607537bc1e"
+"@angular/http@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-6.0.0-rc.1.tgz#4294be3edaa28a26655d7c298ffd36b0796b9455"
   dependencies:
     tslib "^1.9.0"
 
@@ -159,29 +159,29 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser-dynamic@github:angular/platform-browser-dynamic-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/platform-browser-dynamic-builds/tar.gz/8ae9c3c6bd8583fa8fa921c702758da63ce2852b"
+"@angular/platform-browser-dynamic@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-6.0.0-rc.1.tgz#94de105d372edeca8345b2f1987cde526536ec70"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser@github:angular/platform-browser-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/platform-browser-builds/tar.gz/c45bbaa09d730aba380a17fb2b5a7be221fe67d5"
+"@angular/platform-browser@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-6.0.0-rc.1.tgz#d67f14f3bc4236b3a5a763cf447834f03ed2d5e9"
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-server@github:angular/platform-server-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/platform-server-builds/tar.gz/dfc0796580a9bf879a7390b56e24510e74d32357"
+"@angular/platform-server@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-6.0.0-rc.1.tgz#a626e455d35c3218c3930494b160eefbc20d6f1a"
   dependencies:
     domino "^2.0.1"
     tslib "^1.9.0"
     xhr2 "^0.1.4"
 
-"@angular/router@github:angular/router-builds":
-  version "6.0.0-rc.0-a5f0939"
-  resolved "https://codeload.github.com/angular/router-builds/tar.gz/335884d8325e202a3f3e0a070c9f9c5ccaf47061"
+"@angular/router@6.0.0-rc.1":
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-6.0.0-rc.1.tgz#6cb7bd64b94e93047e529e4c04f5dde8a552dbf9"
   dependencies:
     tslib "^1.9.0"
 
@@ -7064,9 +7064,15 @@ rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
 
-rxjs-compat@^6.0.0-beta.1:
+rxjs-compat@6.0.0-beta.1:
   version "6.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.0.0-beta.1.tgz#ef7289354600f139253f719cbb2f0a6b2d572108"
+
+rxjs@6.0.0-beta.4:
+  version "6.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-beta.4.tgz#6506fde30f0f0ca1c94eb948629ac4aa73c0b0c8"
+  dependencies:
+    tslib "^1.9.0"
 
 rxjs@^5.0.0-beta.11:
   version "5.4.2"
@@ -7079,12 +7085,6 @@ rxjs@^5.5.6:
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.8.tgz#b2b0809a57614ad6254c03d7446dea0d83ca3791"
   dependencies:
     symbol-observable "1.0.1"
-
-rxjs@^6.0.0-beta.3:
-  version "6.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0-beta.3.tgz#09a241a69287311873be32613c836a007cf3db5e"
-  dependencies:
-    tslib "^1.9.0"
 
 safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"

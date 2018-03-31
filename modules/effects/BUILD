@@ -12,6 +12,7 @@ ng_module(
     deps = [
         "//modules/store",
         "@rxjs",
+        "@rxjs//operators",
     ],
 )
 
