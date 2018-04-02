@@ -17,6 +17,10 @@ NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
     "store-devtools",
 ]]
 
+NGRX_GLOBALS = dict({
+    "tslib": "tslib",
+}, **{p: p for p in NGRX_SCOPED_PACKAGES})
+
 PKG_GROUP_REPLACEMENTS = {
     "NG_VERSION": NG_VERSION,
     "RXJS_VERSION": RXJS_VERSION,
@@ -65,8 +69,6 @@ def ng_package(name, readme_md=None, license_banner=None, globals={}, **kwargs):
         name=name,
         readme_md=readme_md,
         license_banner=license_banner,
-        globals=dict(globals, **{
-            "tslib": "tslib"
-        }),
+        globals=dict(globals, **NGRX_GLOBALS),
         replacements=PKG_GROUP_REPLACEMENTS,
         **kwargs)
