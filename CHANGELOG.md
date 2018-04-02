@@ -1,3 +1,11 @@
+<a name="6.0.0-beta.1"></a>
+
+# [6.0.0-beta.1](https://github.com/ngrx/platform/compare/v6.0.0-beta.0...v6.0.0-beta.1) (2018-04-02)
+
+### Bug Fixes
+
+* Declare global NgRx packages for UMD bundles ([ba2139d](https://github.com/ngrx/platform/commit/ba2139d))
+
 <a name="6.0.0-beta.0"></a>
 
 # [6.0.0-beta.0](https://github.com/ngrx/platform/compare/v5.2.0...v6.0.0-beta.0) (2018-03-31)
