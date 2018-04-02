@@ -29,7 +29,7 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     key1: a,
     key2: b,
     key3: c
-  ): Store<T[a][b][c]>;
+  ): Observable<T[a][b][c]>;
   select<
     a extends keyof T,
     b extends keyof T[a],
