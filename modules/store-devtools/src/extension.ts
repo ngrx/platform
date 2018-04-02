@@ -1,9 +1,9 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { empty, Observable } from 'rxjs';
-import { filter, map, share, switchMap, takeUntil } from 'rxjs/operators';
+import { empty, timer, of, Observable } from 'rxjs';
+import { filter, map, share, switchMap, takeUntil, concatMap } from 'rxjs/operators';
 
-import { PERFORM_ACTION } from './actions';
+import { PERFORM_ACTION, IMPORT_STATE } from './actions';
 import {
   SerializationOptions,
   STORE_DEVTOOLS_CONFIG,
@@ -27,7 +27,7 @@ export const ExtensionActionTypes = {
 
 export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<
   ReduxDevtoolsExtension
->('Redux Devtools Extension');
+  >('Redux Devtools Extension');
 
 export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;
@@ -93,17 +93,17 @@ export class DevtoolsExtension {
       const currentState = unliftState(state);
       const sanitizedState = this.config.stateSanitizer
         ? sanitizeState(
-            this.config.stateSanitizer,
-            currentState,
-            state.currentStateIndex
-          )
+          this.config.stateSanitizer,
+          currentState,
+          state.currentStateIndex
+        )
         : currentState;
       const sanitizedAction = this.config.actionSanitizer
         ? sanitizeAction(
-            this.config.actionSanitizer,
-            action,
-            state.nextActionId
-          )
+          this.config.actionSanitizer,
+          action,
+          state.nextActionId
+        )
         : action;
       this.extensionConnection.send(sanitizedAction, sanitizedState);
     } else {
@@ -159,7 +159,22 @@ export class DevtoolsExtension {
     // Listen for lifted actions
     const liftedActions$ = changes$.pipe(
       filter(change => change.type === ExtensionActionTypes.DISPATCH),
-      map(change => this.unwrapAction(change.payload))
+      map(change => this.unwrapAction(change.payload)),
+      concatMap((action: any) => {
+        if (action.type === IMPORT_STATE) {
+          // State imports may happen in two situations:
+          // 1. Explicitly by user
+          // 2. User activated the "persist state accross reloads" option
+          //    and now the state is imported during reload.
+          // Because of option 2, we wait for 1 second before continueing to give possible
+          // lazy loaded reducers time to instantiate.
+          // Unfortunately, there is no way to know which lazy loaded reducers
+          // are not loaded yet and if they are needed, so we just wait a little.
+          return timer(1000).pipe(map((t: number) => action));
+        } else {
+          return of(action);
+        }
+      })
     );
 
     // Listen for unlifted actions
