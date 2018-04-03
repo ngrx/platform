@@ -29,7 +29,7 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     key1: a,
     key2: b,
     key3: c
-  ): Store<T[a][b][c]>;
+  ): Observable<T[a][b][c]>;
   select<
     a extends keyof T,
     b extends keyof T[a],
@@ -62,15 +62,12 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
    * This overload is used to support spread operator with
    * fixed length tuples type in typescript 2.7
    */
-  select(
-    pathOrMapFn: ((state: T) => any) | string,
-    ...paths: string[]
-  ): Observable<any>;
+  select<K = any>(...paths: string[]): Observable<K>;
   select(
     pathOrMapFn: ((state: T) => any) | string,
     ...paths: string[]
   ): Observable<any> {
-    return select(pathOrMapFn, ...paths)(this);
+    return select.call(null, pathOrMapFn, ...paths)(this);
   }
 
   lift<R>(operator: Operator<T, R>): Store<R> {
@@ -111,21 +108,25 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
 export const STORE_PROVIDERS: Provider[] = [Store];
 
 export function select<T, K>(
-  mapFn: ((state: T) => K) | string
+  mapFn: (state: T) => K
 ): (source$: Observable<T>) => Observable<K>;
 export function select<T, a extends keyof T>(
   key: a
-): (source$: Store<a>) => Observable<T[a]>;
+): (source$: Observable<T>) => Observable<T[a]>;
 export function select<T, a extends keyof T, b extends keyof T[a]>(
   key1: a,
   key2: b
-): (source$: Store<T>) => Observable<T[a][b]>;
+): (source$: Observable<T>) => Observable<T[a][b]>;
 export function select<
   T,
   a extends keyof T,
   b extends keyof T[a],
   c extends keyof T[a][b]
->(key1: a, key2: b, key3: c): (source$: Store<a>) => Observable<T[a][b][c]>;
+>(
+  key1: a,
+  key2: b,
+  key3: c
+): (source$: Observable<T>) => Observable<T[a][b][c]>;
 export function select<
   T,
   a extends keyof T,
@@ -137,7 +138,7 @@ export function select<
   key2: b,
   key3: c,
   key4: d
-): (source$: Store<a>) => Observable<T[a][b][c][d]>;
+): (source$: Observable<T>) => Observable<T[a][b][c][d]>;
 export function select<
   T,
   a extends keyof T,
@@ -151,7 +152,7 @@ export function select<
   key3: c,
   key4: d,
   key5: e
-): (source$: Store<a>) => Observable<T[a][b][c][d][e]>;
+): (source$: Observable<T>) => Observable<T[a][b][c][d][e]>;
 export function select<
   T,
   a extends keyof T,
@@ -167,20 +168,19 @@ export function select<
   key4: d,
   key5: e,
   key6: f
-): (source$: Store<a>) => Observable<T[a][b][c][d][e][f]>;
+): (source$: Observable<T>) => Observable<T[a][b][c][d][e][f]>;
 /**
  * This overload is used to support spread operator with
  * fixed length tuples type in typescript 2.7
  */
-export function select<T, K>(
-  pathOrMapFn: ((state: T) => any) | string,
+export function select<T, K = any>(
   ...paths: string[]
-): (source$: Store<T>) => Observable<K>;
+): (source$: Observable<T>) => Observable<K>;
 export function select<T, K>(
   pathOrMapFn: ((state: T) => any) | string,
   ...paths: string[]
 ) {
-  return function selectOperator(source$: Store<T>): Observable<K> {
+  return function selectOperator(source$: Observable<T>): Observable<K> {
     let mapped$: Observable<any>;
 
     if (typeof pathOrMapFn === 'string') {
