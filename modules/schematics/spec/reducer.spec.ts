@@ -1,14 +1,13 @@
 import { Tree, VirtualTree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { createAppModule, getFileContent } from '../utility/test';
-import { Schema as ReducerOptions } from './schema';
-import { createReducers } from '../utility/test/create-reducers';
+import { createAppModule, getFileContent, createReducers } from './utils';
+import { ReducerOptions } from '../src/reducer';
 
 describe('Reducer Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(__dirname, '../collection.json')
   );
   const defaultOptions: ReducerOptions = {
     name: 'foo',

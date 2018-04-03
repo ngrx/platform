@@ -1,13 +1,13 @@
 import { Tree, VirtualTree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { createAppModule, getFileContent } from '../utility/test';
-import { Schema as StoreOptions } from './schema';
+import { createAppModule, getFileContent } from './utils';
+import { StoreOptions } from '../src/store';
 
 describe('Store Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(__dirname, '../collection.json')
   );
   const defaultOptions: StoreOptions = {
     name: 'foo',

@@ -1,4 +1,5 @@
-package(default_visibility = ["//visibility:public"])
+package(default_visibility=["//visibility:public"])
+load("@build_bazel_rules_nodejs//:defs.bzl", "node_modules_filegroup")
 
 # Needed so that tsconfig.json can be referenced from BUILD rules.
 exports_files([
@@ -6,25 +7,17 @@ exports_files([
     "LICENSE",
 ])
 
-filegroup(
-    name = "node_modules",
+node_modules_filegroup(
+    name="node_modules",
     # NB: rxjs is not in this list, because we build it from sources using the
     # label @rxjs//:rxjs
-    srcs = glob(["/".join([
-        "node_modules",
-        pkg,
-        "**",
-        ext,
-    ]) for pkg in [
+    packages=[
         "@angular",
+        "@angular-devkit",
         "jasmine",
         "jasmine-marbles",
         "typescript",
         "@types",
         "tsickle",
-    ] for ext in [
-        "*.js",
-        "*.json",
-        "*.d.ts",
-    ]]),
+    ],
 )

@@ -5,13 +5,13 @@ import {
   createAppModule,
   getFileContent,
   createAppModuleWithEffects,
-} from '../utility/test';
-import { Schema as EffectOptions } from './schema';
+} from './utils';
+import { EffectOptions } from '../src/effect';
 
 describe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(__dirname, '../collection.json')
   );
   const defaultOptions: EffectOptions = {
     name: 'foo',

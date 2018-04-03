@@ -15,15 +15,37 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
+import * as stringUtils from '../utility/strings';
 import { addImportToModule } from '../utility/ast-utils';
 import { InsertChange } from '../utility/change';
 import {
   buildRelativePath,
   findModuleFromOptions,
 } from '../utility/find-module';
-import { Schema as EffectOptions } from './schema';
 import { insertImport } from '../utility/route-utils';
+
+export const EffectOptions = require('./schema.json');
+export type EffectOptions = {
+  name: string;
+  path?: string;
+  appRoot?: string;
+  sourceDir?: string;
+  /**
+   * Flag to indicate if a dir is created.
+   */
+  flat?: boolean;
+  /**
+   * Specifies if a spec file is generated.
+   */
+  spec?: boolean;
+  /**
+   * Allows specification of the declaring module.
+   */
+  module?: string;
+  root?: boolean;
+  feature?: boolean;
+  group?: boolean;
+};
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {

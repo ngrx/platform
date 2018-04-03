@@ -5,7 +5,18 @@ import {
   chain,
   schematic,
 } from '@angular-devkit/schematics';
-import { Schema as FeatureOptions } from './schema';
+
+export const FeatureOptions = require('./schema.json');
+export type FeatureOptions = {
+  path?: string;
+  sourceDir?: string;
+  name: string;
+  module?: string;
+  flat?: boolean;
+  spec?: boolean;
+  reducers?: string;
+  group?: boolean;
+};
 
 export default function(options: FeatureOptions): Rule {
   return (host: Tree, context: SchematicContext) => {

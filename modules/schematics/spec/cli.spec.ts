@@ -1,7 +1,7 @@
 import { Tree, VirtualTree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { createAppModule, getFileContent } from './utility/test';
+import { createAppModule, getFileContent } from './utils';
 
 describe('CLI Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

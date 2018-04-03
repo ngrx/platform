@@ -1,13 +1,13 @@
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { getFileContent, createAppModule } from '../utility/test';
-import { Schema as EntityOptions } from './schema';
+import { getFileContent, createAppModule } from './utils';
+import { EntityOptions } from '../src/entity';
 import { Tree, VirtualTree } from '@angular-devkit/schematics';
 
 describe('Entity Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(__dirname, '../collection.json')
   );
   const defaultOptions: EntityOptions = {
     name: 'foo',

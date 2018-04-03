@@ -15,15 +15,34 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
+import * as stringUtils from '../utility/strings';
 import { findModuleFromOptions } from '../utility/find-module';
-import { Schema as ReducerOptions } from './schema';
 import {
   addReducerToStateInferface,
   addReducerToActionReducerMap,
   addReducerToState,
   addReducerImportToNgModule,
 } from '../utility/ngrx-utils';
+
+export const ReducerOptions = require('./schema.json');
+export type ReducerOptions = {
+  name: string;
+  appRoot?: string;
+  path?: string;
+  sourceDir?: string;
+  /**
+   * Specifies if a spec file is generated.
+   */
+  spec?: boolean;
+  /**
+   * Flag to indicate if a dir is created.
+   */
+  flat?: boolean;
+  module?: string;
+  feature?: boolean;
+  reducers?: string;
+  group?: boolean;
+};
 
 export default function(options: ReducerOptions): Rule {
   options.path = options.path ? normalize(options.path) : options.path;

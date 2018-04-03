@@ -14,13 +14,28 @@ import {
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
-import { Schema as EntityOptions } from './schema';
+import * as stringUtils from '../utility/strings';
 import {
   addReducerToState,
   addReducerImportToNgModule,
 } from '../utility/ngrx-utils';
 import { findModuleFromOptions } from '../utility/find-module';
+
+export const EntityOptions = require('./schema.json');
+export type EntityOptions = {
+  name: string;
+  appRoot?: string;
+  path?: string;
+  sourceDir?: string;
+  /**
+   * Specifies if a spec file is generated.
+   */
+  spec?: boolean;
+  module?: string;
+  reducers?: string;
+  flat?: boolean;
+  group?: boolean;
+};
 
 export default function(options: EntityOptions): Rule {
   options.path = options.path ? normalize(options.path) : options.path;

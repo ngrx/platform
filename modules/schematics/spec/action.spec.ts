@@ -1,11 +1,11 @@
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as ActionOptions } from './schema';
+import { ActionOptions } from '../src/action';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(__dirname, '../collection.json')
   );
   const defaultOptions: ActionOptions = {
     name: 'foo',
