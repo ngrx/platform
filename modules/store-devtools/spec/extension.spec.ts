@@ -379,7 +379,7 @@ describe('DevtoolsExtension', () => {
     });
 
     it('should not notify extension of PERFORM_ACTIONs', () => {
-      const action = new PerformAction({ type: 'ACTION' });
+      const action = new PerformAction({ type: 'ACTION' }, +Date.now());
       const state = createState(undefined, undefined, true);
 
       devtoolsExtension.notify(action, state);
@@ -413,7 +413,7 @@ describe('DevtoolsExtension', () => {
     });
 
     it('should not notify extension of PERFORM_ACTIONs', () => {
-      const action = new PerformAction({ type: 'ACTION' });
+      const action = new PerformAction({ type: 'ACTION' }, +Date.now());
       const state = createState(undefined, undefined, undefined, true);
 
       devtoolsExtension.notify(action, state);
