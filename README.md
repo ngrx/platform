@@ -18,7 +18,7 @@ Reactive libraries for Angular
 
 ## Examples
 
-* [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://stackblitz.com/github/ngrx/platform/).
+* [example-app](./example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://stackblitz.com/github/ngrx/platform/tree/61cbfe537f9df8cef3dd4a6ee0b8f483e49653f4).
 
 ## Migration
 

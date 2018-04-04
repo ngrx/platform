@@ -49,4 +49,4 @@ If this is not the case you will need to install the Angular CLI globally.
 
 ### Try it on StackBlitz
 
-Try the example-app on [StackBlitz](https://stackblitz.com/github/ngrx/platform/).
+Try the example-app on [StackBlitz](https://stackblitz.com/github/ngrx/platform/tree/61cbfe537f9df8cef3dd4a6ee0b8f483e49653f4).
