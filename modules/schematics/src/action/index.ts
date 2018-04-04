@@ -12,8 +12,21 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
-import { Schema as ActionOptions } from './schema';
+import * as stringUtils from '../utility/strings';
+
+export const ActionOptions = require('./schema.json');
+export type ActionOptions = {
+  name: string;
+  appRoot?: string;
+  path?: string;
+  sourceDir?: string;
+  /**
+   * Specifies if a spec file is generated.
+   */
+  spec?: boolean;
+  flat?: boolean;
+  group?: boolean;
+};
 
 export default function(options: ActionOptions): Rule {
   options.path = options.path ? normalize(options.path) : options.path;

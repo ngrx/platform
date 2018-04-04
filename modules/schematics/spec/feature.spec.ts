@@ -1,11 +1,11 @@
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as FeatureOptions } from './schema';
+import { FeatureOptions } from '../src/feature';
 
 describe('Feature Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(__dirname, '../collection.json')
   );
   const defaultOptions: FeatureOptions = {
     name: 'foo',

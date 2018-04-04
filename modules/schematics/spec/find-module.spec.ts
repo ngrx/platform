@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { EmptyTree, Tree } from '@angular-devkit/schematics';
-import { findModule } from './find-module';
+import { findModule } from '../src/utility/find-module';
 
 describe('find-module', () => {
   describe('findModule', () => {

@@ -8,9 +8,9 @@
 import { tags } from '@angular-devkit/core';
 import { VirtualTree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { Change, InsertChange } from '../utility/change';
-import { getFileContent } from '../utility/test';
-import { addExportToModule } from './ast-utils';
+import { getFileContent } from './utils';
+import { Change, InsertChange } from '../src/utility/change';
+import { addExportToModule } from '../src/utility/ast-utils';
 
 function getTsSource(path: string, content: string): ts.SourceFile {
   return ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);

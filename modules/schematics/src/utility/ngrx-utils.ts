@@ -1,11 +1,11 @@
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
+import * as stringUtils from './strings';
 import { InsertChange, Change, NoopChange } from './change';
 import { Tree, SchematicsException, Rule } from '@angular-devkit/schematics';
 import { normalize } from '@angular-devkit/core';
 import { buildRelativePath } from './find-module';
 import { insertImport } from './route-utils';
-import { Schema as ReducerOptions } from '../reducer/schema';
+import { ReducerOptions } from '../reducer';
 import { addImportToModule } from './ast-utils';
 
 export function addReducerToState(options: ReducerOptions): Rule {

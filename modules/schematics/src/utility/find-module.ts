@@ -7,7 +7,7 @@
  */
 import { Path, join, normalize, relative } from '@angular-devkit/core';
 import { DirEntry, Tree } from '@angular-devkit/schematics';
-import { dasherize } from '../strings';
+import { dasherize } from './strings';
 
 export interface ModuleOptions {
   module?: string;
