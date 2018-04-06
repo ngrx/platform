@@ -1,8 +1,13 @@
-import { Tree, VirtualTree } from '@angular-devkit/schematics';
-import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import {
+  SchematicTestRunner,
+  UnitTestTree,
+} from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { createAppModule, getFileContent } from '../utility/test';
 import { Schema as StoreOptions } from './schema';
+import {
+  getProjectPath,
+  createWorkspace,
+} from '../utility/test/create-workspace';
 
 describe('Store Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -11,19 +16,20 @@ describe('Store Schematic', () => {
   );
   const defaultOptions: StoreOptions = {
     name: 'foo',
-    path: 'app',
-    sourceDir: 'src',
+    // path: 'app',
+    project: 'bar',
     spec: true,
     module: undefined,
     flat: false,
     root: true,
   };
 
-  let appTree: Tree;
+  const projectPath = getProjectPath();
+
+  let appTree: UnitTestTree;
 
   beforeEach(() => {
-    appTree = new VirtualTree();
-    appTree = createAppModule(appTree);
+    appTree = createWorkspace(schematicRunner, appTree);
   });
 
   it('should create the initial store setup', () => {
@@ -31,16 +37,16 @@ describe('Store Schematic', () => {
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
     const files = tree.files;
-    expect(files.indexOf('/src/app/reducers/index.ts')).toBeGreaterThanOrEqual(
-      0
-    );
+    expect(
+      files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 
   it('should not be provided by default', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/app.module.ts');
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).not.toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
     );
@@ -50,7 +56,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/app.module.ts');
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
     );
@@ -71,7 +77,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, root: false, module: 'app.module.ts' };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/app.module.ts');
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
       /StoreModule\.forFeature\('foo', fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
     );
@@ -81,7 +87,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, root: false, module: 'app.module.ts' };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/app.module.ts');
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/import \* as fromFoo from '\.\/reducers';/);
   });
 
@@ -89,7 +95,9 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, name: 'State' };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
     expect(content).toMatch(/export interface State {/);
   });
 
@@ -101,7 +109,9 @@ describe('Store Schematic', () => {
     };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
     expect(content).toMatch(/export interface AppState {/);
   });
 
@@ -109,7 +119,9 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, root: false, name: 'Feature' };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
     expect(content).toMatch(/export interface State {/);
   });
 
@@ -122,7 +134,9 @@ describe('Store Schematic', () => {
     };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = getFileContent(tree, '/src/app/reducers/index.ts');
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
     expect(content).toMatch(/export interface FeatureState {/);
   });
 });

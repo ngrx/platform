@@ -5,18 +5,14 @@
   "type": "object",
   "properties": {
     "name": {
+      "description": "The name of the state.",
       "type": "string"
     },
     "path": {
       "type": "string",
-      "default": "app"
-    },
-    "appRoot": {
-      "type": "string"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
+      "format": "path",
+      "description": "The path to create the component.",
+      "visible": false
     },
     "flat": {
       "type": "boolean",
@@ -51,7 +47,5 @@
       "alias": "si"
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

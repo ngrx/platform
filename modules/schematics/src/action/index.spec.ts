@@ -1,6 +1,13 @@
-import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import {
+  SchematicTestRunner,
+  UnitTestTree,
+} from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as ActionOptions } from './schema';
+import {
+  getProjectPath,
+  createWorkspace,
+} from '../utility/test/create-workspace';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -9,17 +16,30 @@ describe('Action Schematic', () => {
   );
   const defaultOptions: ActionOptions = {
     name: 'foo',
-    path: 'app',
-    sourceDir: 'src',
+    // path: 'app',
+    project: 'bar',
     spec: false,
     group: false,
     flat: true,
   };
 
+  const projectPath = getProjectPath();
+
+  let appTree: UnitTestTree;
+
+  beforeEach(() => {
+    appTree = createWorkspace(schematicRunner, appTree);
+  });
+
   it('should create one file', () => {
-    const tree = schematicRunner.runSchematic('action', defaultOptions);
-    expect(tree.files.length).toEqual(1);
-    expect(tree.files[0]).toEqual('/src/app/foo.actions.ts');
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    expect(
+      tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 
   it('should create two files if spec is true', () => {
@@ -27,31 +47,39 @@ describe('Action Schematic', () => {
       ...defaultOptions,
       spec: true,
     };
-    const tree = schematicRunner.runSchematic('action', options);
-    expect(tree.files.length).toEqual(2);
+    const tree = schematicRunner.runSchematic('action', options, appTree);
     expect(
-      tree.files.indexOf('/src/app/foo.actions.spec.ts')
+      tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
     expect(
-      tree.files.indexOf('/src/app/foo.actions.ts')
+      tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 
   it('should create an enum named "Foo"', () => {
-    const tree = schematicRunner.runSchematic('action', defaultOptions);
-    const fileEntry = tree.get(tree.files[0]);
-    if (fileEntry) {
-      const fileContent = fileEntry.content.toString();
-      expect(fileContent).toMatch(/export enum FooActionTypes/);
-    }
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(/export enum FooActionTypes/);
   });
 
   it('should group within an "actions" folder if group is set', () => {
-    const tree = schematicRunner.runSchematic('action', {
-      ...defaultOptions,
-      group: true,
-    });
-    expect(tree.files.length).toEqual(1);
-    expect(tree.files[0]).toEqual('/src/app/actions/foo.actions.ts');
+    const tree = schematicRunner.runSchematic(
+      'action',
+      {
+        ...defaultOptions,
+        group: true,
+      },
+      appTree
+    );
+    expect(
+      tree.files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 });

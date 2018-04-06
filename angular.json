@@ -1,9 +1,11 @@
 {
+  "$schema":
+    "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "example-app": {
-      "root": "",
+      "root": "example-app",
       "projectType": "application",
       "architect": {
         "build": {

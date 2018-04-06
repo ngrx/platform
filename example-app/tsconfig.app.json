@@ -5,10 +5,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "outDir": "../out-tsc/app",
     "target": "es5",
     "module": "es2015",
@@ -16,26 +13,13 @@
     "baseUrl": ".",
     "rootDir": "../",
     "paths": {
-      "@ngrx/effects": [
-        "../modules/effects"
-      ],
-      "@ngrx/store": [
-        "../modules/store"
-      ],
-      "@ngrx/store-devtools": [
-        "../modules/store-devtools"
-      ],
-      "@ngrx/router-store": [
-        "../modules/router-store"
-      ],
-      "@ngrx/entity": [
-        "../modules/entity"
-      ]
+      "@ngrx/effects": ["../modules/effects"],
+      "@ngrx/store": ["../modules/store"],
+      "@ngrx/store-devtools": ["../modules/store-devtools"],
+      "@ngrx/router-store": ["../modules/router-store"],
+      "@ngrx/entity": ["../modules/entity"],
+      "@ngrx/schematics": ["../modules/schematics"]
     }
   },
-  "exclude": [
-    "../node_modules",
-    "test.ts",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["../node_modules", "test.ts", "**/*.spec.ts"]
 }

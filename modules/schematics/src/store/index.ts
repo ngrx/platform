@@ -23,6 +23,7 @@ import {
 } from '../utility/find-module';
 import { Schema as StoreOptions } from './schema';
 import { insertImport } from '../utility/route-utils';
+import { getProjectPath } from '../utility/project';
 
 function addImportToNgModule(options: StoreOptions): Rule {
   return (host: Tree) => {
@@ -49,13 +50,11 @@ function addImportToNgModule(options: StoreOptions): Rule {
       true
     );
 
-    const statePath = `/${options.sourceDir}/${options.path}/${
-      options.statePath
-    }`;
+    const statePath = `${options.path}/${options.statePath}`;
     const relativePath = buildRelativePath(modulePath, statePath);
     const environmentsPath = buildRelativePath(
       statePath,
-      `/${options.sourceDir}/environments/environment`
+      `/${options.path}/environments/environment`
     );
 
     const storeNgModuleImport = addImportToModule(
@@ -127,20 +126,15 @@ function addImportToNgModule(options: StoreOptions): Rule {
 }
 
 export default function(options: StoreOptions): Rule {
-  options.path = options.path ? normalize(options.path) : options.path;
-  const sourceDir = options.sourceDir;
-  const statePath = `/${options.sourceDir}/${options.path}/${
-    options.statePath
-  }/index.ts`;
-  const environmentsPath = buildRelativePath(
-    statePath,
-    `/${options.sourceDir}/environments/environment`
-  );
-  if (!sourceDir) {
-    throw new SchematicsException(`sourceDir option is required.`);
-  }
-
   return (host: Tree, context: SchematicContext) => {
+    options.path = getProjectPath(host, options);
+
+    const statePath = `/${options.path}/${options.statePath}/index.ts`;
+    const environmentsPath = buildRelativePath(
+      statePath,
+      `/${options.path}/environments/environment`
+    );
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
@@ -159,7 +153,6 @@ export default function(options: StoreOptions): Rule {
         ...(options as object),
         environmentsPath,
       } as any),
-      move(sourceDir),
     ]);
 
     return chain([
