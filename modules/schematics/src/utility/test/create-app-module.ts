@@ -1,6 +1,9 @@
-import { Tree } from '@angular-devkit/schematics';
+import { UnitTestTree } from '@angular-devkit/schematics/testing';
 
-export function createAppModule(tree: Tree, path?: string): Tree {
+export function createAppModule(
+  tree: UnitTestTree,
+  path?: string
+): UnitTestTree {
   tree.create(
     path || '/src/app/app.module.ts',
     `
@@ -26,10 +29,10 @@ export function createAppModule(tree: Tree, path?: string): Tree {
 }
 
 export function createAppModuleWithEffects(
-  tree: Tree,
+  tree: UnitTestTree,
   path: string,
   effects?: string
-): Tree {
+): UnitTestTree {
   tree.create(
     path || '/src/app/app.module.ts',
     `

@@ -24,6 +24,7 @@ import {
 } from '../utility/find-module';
 import { Schema as EffectOptions } from './schema';
 import { insertImport } from '../utility/route-utils';
+import { getProjectPath } from '../utility/project';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
@@ -60,7 +61,7 @@ function addImportToNgModule(options: EffectOptions): Rule {
     );
 
     const effectsPath =
-      `/${options.sourceDir}/${options.path}/` +
+      `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       (options.group ? 'effects/' : '') +
       stringUtils.dasherize(options.name) +
@@ -92,13 +93,9 @@ function addImportToNgModule(options: EffectOptions): Rule {
 }
 
 export default function(options: EffectOptions): Rule {
-  options.path = options.path ? normalize(options.path) : options.path;
-  const sourceDir = options.sourceDir;
-  if (!sourceDir) {
-    throw new SchematicsException(`sourceDir option is required.`);
-  }
-
   return (host: Tree, context: SchematicContext) => {
+    options.path = getProjectPath(host, options);
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
@@ -115,7 +112,6 @@ export default function(options: EffectOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
-      move(sourceDir),
     ]);
 
     return chain([

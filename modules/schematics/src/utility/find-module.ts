@@ -5,18 +5,15 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Path, join, normalize, relative } from '@angular-devkit/core';
+import { Path, join, normalize, relative, strings } from '@angular-devkit/core';
 import { DirEntry, Tree } from '@angular-devkit/schematics';
-import { dasherize } from '../strings';
 
 export interface ModuleOptions {
   module?: string;
-  name?: string;
+  name: string;
   flat?: boolean;
-  sourceDir?: string;
   path?: string;
   skipImport?: boolean;
-  appRoot?: string;
 }
 
 /**
@@ -32,21 +29,12 @@ export function findModuleFromOptions(
 
   if (!options.module) {
     const pathToCheck =
-      (options.sourceDir || '') +
-      '/' +
       (options.path || '') +
-      (options.flat ? '' : '/' + dasherize(options.name));
+      (options.flat ? '' : '/' + strings.dasherize(options.name));
 
     return normalize(findModule(host, pathToCheck));
   } else {
-    const modulePath = normalize(
-      '/' +
-        options.sourceDir +
-        '/' +
-        (options.appRoot || options.path) +
-        '/' +
-        options.module
-    );
+    const modulePath = normalize('/' + options.path + '/' + options.module);
     const moduleBaseName = normalize(modulePath)
       .split('/')
       .pop();
@@ -92,8 +80,8 @@ export function findModule(host: Tree, generateDir: string): Path {
   }
 
   throw new Error(
-    'Could not find an NgModule for the new component. Use the skip-import ' +
-      'option to skip importing components in NgModule.'
+    'Could not find an NgModule. Use the skip-import ' +
+      'option to skip importing in NgModule.'
   );
 }
 

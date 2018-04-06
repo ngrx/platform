@@ -14,9 +14,7 @@ export function addReducerToState(options: ReducerOptions): Rule {
       return host;
     }
 
-    const reducersPath = normalize(
-      `/${options.sourceDir}/${options.path}/${options.reducers}`
-    );
+    const reducersPath = normalize(`/${options.path}/${options.reducers}`);
 
     if (!host.exists(reducersPath)) {
       throw new Error('Specified reducers path does not exist');
@@ -37,7 +35,7 @@ export function addReducerToState(options: ReducerOptions): Rule {
     );
 
     const reducerPath =
-      `/${options.sourceDir}/${options.path}/` +
+      `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       (options.group ? 'reducers/' : '') +
       stringUtils.dasherize(options.name) +
@@ -216,7 +214,7 @@ export function addReducerImportToNgModule(options: ReducerOptions): Rule {
     ];
 
     const reducerPath =
-      `/${options.sourceDir}/${options.path}/` +
+      `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       (options.group ? 'reducers/' : '') +
       stringUtils.dasherize(options.name) +
