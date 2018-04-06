@@ -25,7 +25,7 @@ exports[`Login Page should compile 1`] = `
         <p
           _ngcontent-c0=""
         >
-          <mat-input-container
+          <mat-form-field
             _ngcontent-c0=""
           >
             <input
@@ -37,12 +37,12 @@ exports[`Login Page should compile 1`] = `
               placeholder="Username"
               type="text"
             />
-          </mat-input-container>
+          </mat-form-field>
         </p>
         <p
           _ngcontent-c0=""
         >
-          <mat-input-container
+          <mat-form-field
             _ngcontent-c0=""
           >
             <input
@@ -54,7 +54,7 @@ exports[`Login Page should compile 1`] = `
               placeholder="Password"
               type="password"
             />
-          </mat-input-container>
+          </mat-form-field>
         </p>
         
         <p
@@ -100,7 +100,7 @@ exports[`Login Page should disable the form if pending 1`] = `
         <p
           _ngcontent-c1=""
         >
-          <mat-input-container
+          <mat-form-field
             _ngcontent-c1=""
           >
             <input
@@ -113,12 +113,12 @@ exports[`Login Page should disable the form if pending 1`] = `
               placeholder="Username"
               type="text"
             />
-          </mat-input-container>
+          </mat-form-field>
         </p>
         <p
           _ngcontent-c1=""
         >
-          <mat-input-container
+          <mat-form-field
             _ngcontent-c1=""
           >
             <input
@@ -131,7 +131,7 @@ exports[`Login Page should disable the form if pending 1`] = `
               placeholder="Password"
               type="password"
             />
-          </mat-input-container>
+          </mat-form-field>
         </p>
         
         <p
@@ -178,7 +178,7 @@ exports[`Login Page should display an error message if provided 1`] = `
         <p
           _ngcontent-c2=""
         >
-          <mat-input-container
+          <mat-form-field
             _ngcontent-c2=""
           >
             <input
@@ -190,12 +190,12 @@ exports[`Login Page should display an error message if provided 1`] = `
               placeholder="Username"
               type="text"
             />
-          </mat-input-container>
+          </mat-form-field>
         </p>
         <p
           _ngcontent-c2=""
         >
-          <mat-input-container
+          <mat-form-field
             _ngcontent-c2=""
           >
             <input
@@ -207,7 +207,7 @@ exports[`Login Page should display an error message if provided 1`] = `
               placeholder="Password"
               type="password"
             />
-          </mat-input-container>
+          </mat-form-field>
         </p>
         
         <p
