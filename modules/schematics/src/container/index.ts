@@ -27,16 +27,16 @@ function addStateToComponent(options: ContainerOptions) {
       return host;
     }
 
-    const statePath = `/${options.sourceDir}/${options.path}/${options.state}`;
+    const statePath = `/${options.path}/${options.state}`;
 
     if (options.state) {
       if (!host.exists(statePath)) {
-        throw new Error('Specified state path does not exist');
+        throw new Error(`The Specified state path ${statePath} does not exist`);
       }
     }
 
     const componentPath =
-      `/${options.sourceDir}/${options.path}/` +
+      `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.component.ts';
@@ -137,7 +137,7 @@ export default function(options: ContainerOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
-      move(sourceDir),
+      //move(options.path as string),
     ]);
 
     return chain([

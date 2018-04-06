@@ -2,7 +2,6 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { asyncScheduler, empty, Observable, of } from 'rxjs';
-import { Scheduler } from 'rxjs/Scheduler';
 import {
   catchError,
   debounceTime,
@@ -20,6 +19,7 @@ import {
   SearchError,
 } from '../actions/book';
 import { Book } from '../models/book';
+import { Scheduler } from 'rxjs/internal/Scheduler';
 
 export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
 export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(

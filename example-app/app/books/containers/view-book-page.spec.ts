@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 
 import { ViewBookPageComponent } from './view-book-page';
