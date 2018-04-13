@@ -170,7 +170,7 @@ describe('DevtoolsExtension', () => {
       const SANITIZED_COUNTER = 42;
 
       function createPerformAction() {
-        return new PerformAction({ type: UNSANITIZED_TOKEN }, +Date.now());
+        return new PerformAction({ type: UNSANITIZED_TOKEN }, 1234567);
       }
 
       function testActionSanitizer(action: Action, id: number) {
