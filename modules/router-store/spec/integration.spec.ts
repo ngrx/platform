@@ -521,6 +521,55 @@ describe('integration spec', () => {
         done();
       });
   });
+
+  it('should continue to react to navigation after state initiates router change', (done: Function) => {
+    const reducer = (state: any = { state: { url: '/' } }, action: any) => {
+      if (action.type === ROUTER_NAVIGATION) {
+        return { state: { url: action.payload.routerState.url.toString() } };
+      } else {
+        return state;
+      }
+    };
+
+    createTestModule({
+      reducers: { reducer },
+      config: { stateKey: 'reducer' },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const store = TestBed.get(Store);
+    const log = logOfRouterAndStore(router, store);
+
+    store.dispatch({ type: ROUTER_NAVIGATION, payload: {routerState: {url: '/next'}} });
+    waitForNavigation(router)
+      .then(() => {
+        router.navigate(['/']);
+        return waitForNavigation(router);
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'store', state: { state: { url: '/' } } },
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          { type: 'store', state: { state: { url: '/next' } } },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
+          { type: 'router', event: 'NavigationEnd', url: '/next' },
+          { type: 'router', event: 'NavigationStart', url: '/' },
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
+          { type: 'store', state: { state: { url: '/' } } },
+          { type: 'router', event: 'GuardsCheckStart', url: '/' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+          { type: 'router', event: 'ResolveStart', url: '/' },
+          { type: 'router', event: 'ResolveEnd', url: '/' },
+          { type: 'router', event: 'NavigationEnd', url: '/' }
+        ]);
+        done();
+      });
+
+  });
 });
 
 function createTestModule(

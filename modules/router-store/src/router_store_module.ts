@@ -7,6 +7,7 @@ import {
 import {
   NavigationCancel,
   NavigationError,
+  NavigationEnd,
   Router,
   RouterStateSnapshot,
   RoutesRecognized,
@@ -248,8 +249,9 @@ export class StoreRouterConnectingModule {
       routerState: RouterStateSnapshot
     ) => {
       this.routerState = this.serializer.serialize(routerState);
-      if (this.shouldDispatchRouterNavigation())
+      if (this.shouldDispatchRouterNavigation()) {
         this.dispatchRouterNavigation();
+      }
       return of(true);
     };
   }
@@ -291,6 +293,9 @@ export class StoreRouterConnectingModule {
         this.dispatchRouterCancel(e);
       } else if (e instanceof NavigationError) {
         this.dispatchRouterError(e);
+      } else if (e instanceof NavigationEnd) {
+        this.dispatchTriggeredByRouter = false;
+        this.navigationTriggeredByDispatch = false;
       }
     });
   }
