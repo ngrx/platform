@@ -11,8 +11,6 @@ export const STATE_SANITIZER = new InjectionToken<StateSanitizer>(
 );
 
 export type Sanitizer<I> = (instance: I, id: number) => I;
-export type ActionSanitizerFunction = () => ActionSanitizer | ActionSanitizer[];
-export type StateSanitizerFunction = () => StateSanitizer | StateSanitizer[];
 
 export enum LOGGER_TYPE {
   RegisterActionSanitizer = 'registerActionSanitizer',
@@ -23,14 +21,16 @@ export enum LOGGER_TYPE {
   SanitizeState = 'sanitizeState',
 }
 
+export type LoggerFunction = <I>(
+  type: LOGGER_TYPE,
+  name: string,
+  input?: I,
+  output?: I,
+  id?: number
+) => void;
+
 export class DevToolsSanitizerServiceConfig {
-  logger?: <I>(
-    type: LOGGER_TYPE,
-    name: string,
-    input?: I,
-    output?: I,
-    id?: number
-  ) => void;
+  logger?: LoggerFunction;
   loggingEnabled?: boolean;
 }
 
@@ -43,25 +43,22 @@ export class DevToolsSanitizerService {
   constructor(
     @Optional()
     @Inject(ACTION_SANITIZER)
-    _actionSanitizers:
-      | ActionSanitizer
-      | ActionSanitizer[]
-      | ActionSanitizerFunction,
+    _actionSanitizers?: ActionSanitizer | ActionSanitizer[],
     @Optional()
     @Inject(STATE_SANITIZER)
-    _stateSanitiziers:
-      | StateSanitizer
-      | StateSanitizer[]
-      | StateSanitizerFunction,
-    @Optional() _config: DevToolsSanitizerServiceConfig
+    _stateSanitiziers?: StateSanitizer | StateSanitizer[],
+    @Optional() _config?: DevToolsSanitizerServiceConfig
   ) {
     this.config = {
-      loggingEnabled: true,
-      logger: (type, name, input, output, id) => {
-        console.log(type, name, input, output, id);
-      },
-      ..._config,
+      loggingEnabled: false,
     };
+
+    if (_config) {
+      this.config = {
+        ...this.config,
+        ..._config,
+      };
+    }
 
     if (this.config.loggingEnabled && !this.config.logger) {
       throw new Error(
@@ -125,11 +122,10 @@ export class DevToolsSanitizerService {
 
   private register(fn: Function, instance: any, index: number = 0) {
     if (instance) {
-      let _santiziers = typeof instance === 'function' ? instance() : instance;
-      if (isArray(_santiziers)) {
-        _santiziers.forEach(e => this.register(fn, instance, index++));
+      if (isArray(instance)) {
+        instance.forEach(e => this.register(fn, e, index++));
       } else {
-        fn(`INIT_${index}`, instance);
+        fn.call(this, `INIT_${index}`, instance);
       }
     }
   }
