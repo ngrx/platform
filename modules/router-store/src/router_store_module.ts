@@ -231,8 +231,6 @@ export class StoreRouterConnectingModule {
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
   private stateKey: string;
 
-  private stateKey: string;
-
   constructor(
     private store: Store<any>,
     private router: Router,
@@ -262,11 +260,7 @@ export class StoreRouterConnectingModule {
     this.store.subscribe(s => {
       this.storeState = s;
     });
-<<<<<<< HEAD
-    this.store.select(this.stateKey).subscribe(() => {
-=======
     this.store.pipe(select(this.stateKey)).subscribe(() => {
->>>>>>> upstream/master
       this.navigateIfNeeded();
     });
   }
