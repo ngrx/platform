@@ -1,4 +1,3 @@
-import { StoreRouterConfig } from '../src/router_store_module';
 import { Component, Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
