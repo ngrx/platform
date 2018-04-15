@@ -1,4 +1,4 @@
-import { omit } from '../src/utils';
+import { omit, createFeatureReducerFactory } from '../src/utils';
 import { combineReducers, compose } from '@ngrx/store';
 
 describe(`Store utils`, () => {
@@ -60,7 +60,7 @@ describe(`Store utils`, () => {
     const precision = (n: number) => parseFloat(n.toPrecision(12));
     const addPtTwo = (n: number) => n + 0.2;
 
-    it(`should should compose functions`, () => {
+    it(`should compose functions`, () => {
       const addPrecision = compose(precision, addPtTwo);
       const addPrecisionCubed = compose(cube, addPrecision);
 
@@ -71,6 +71,24 @@ describe(`Store utils`, () => {
     it(`should act as identity if no functions passed`, () => {
       const id = compose();
       expect(id(1)).toBe(1);
+    });
+  });
+
+  describe('createFeatureReducerFactory()', () => {
+    it('should compose a reducer factory from the provided meta reducers', () => {
+      const metaReducer = jasmine
+        .createSpy('metaReducer')
+        .and.callFake(red => (s: any, a: any) => red(s, a));
+      const reducer = (state: any, action: any) => state;
+
+      const featureReducerFactory = createFeatureReducerFactory([metaReducer]);
+      const initialState = 1;
+      const featureReducer = featureReducerFactory(reducer, initialState);
+
+      const state = featureReducer(undefined, <any>undefined);
+
+      expect(metaReducer).toHaveBeenCalled();
+      expect(state).toBe(initialState);
     });
   });
 });

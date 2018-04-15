@@ -1,38 +1,24 @@
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import { cold, getTestScheduler } from 'jasmine-marbles';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { timer } from 'rxjs/observable/timer';
-import { _throw } from 'rxjs/observable/throw';
-import { never } from 'rxjs/observable/never';
-import { empty } from 'rxjs/observable/empty';
+import { ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ErrorReporter } from '../src/error_reporter';
-import { CONSOLE } from '../src/tokens';
+import { cold, getTestScheduler } from 'jasmine-marbles';
+import { concat, empty, NEVER, Observable, of, throwError, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { Effect, EffectSources } from '../';
 
 describe('EffectSources', () => {
-  let mockErrorReporter: ErrorReporter;
+  let mockErrorReporter: ErrorHandler;
   let effectSources: EffectSources;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        EffectSources,
-        ErrorReporter,
-        {
-          provide: CONSOLE,
-          useValue: console,
-        },
-      ],
+      providers: [EffectSources],
     });
 
-    mockErrorReporter = TestBed.get(ErrorReporter);
+    mockErrorReporter = TestBed.get(ErrorHandler);
     effectSources = TestBed.get(EffectSources);
 
-    spyOn(mockErrorReporter, 'report');
+    spyOn(mockErrorReporter, 'handleError');
   });
 
   it('should have an "addEffects" method to push new source instances', () => {
@@ -68,12 +54,13 @@ describe('EffectSources', () => {
     }
 
     class SourceE {
-      @Effect() e$ = _throw(error);
+      @Effect() e$ = throwError(error);
     }
 
     class SourceG {
       @Effect() empty = of('value');
-      @Effect() never = timer(50, getTestScheduler()).map(() => 'update');
+      @Effect()
+      never = timer(50, getTestScheduler() as any).pipe(map(() => 'update'));
     }
 
     it('should resolve effects from instances', () => {
@@ -103,7 +90,7 @@ describe('EffectSources', () => {
 
       toActions(sources$).subscribe();
 
-      expect(mockErrorReporter.report).toHaveBeenCalled();
+      expect(mockErrorReporter.handleError).toHaveBeenCalled();
     });
 
     it('should not complete the group if just one effect completes', () => {
@@ -118,12 +105,12 @@ describe('EffectSources', () => {
     });
 
     function toActions(source: any): Observable<any> {
-      source['errorReporter'] = mockErrorReporter;
-      return effectSources.toActions.call(source);
+      source['errorHandler'] = mockErrorReporter;
+      return (effectSources as any)['toActions'].call(source);
     }
   });
 
   function alwaysOf<T>(value: T) {
-    return of(value).concat(never<T>());
+    return concat(of(value), NEVER);
   }
 });

@@ -1,40 +1,47 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/exhaustMap';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
+import {
+  AuthActionTypes,
+  Login,
+  LoginFailure,
+  LoginSuccess,
+} from '../actions/auth';
+import { Authenticate } from '../models/user';
 import { AuthService } from '../services/auth.service';
-import * as Auth from '../actions/auth';
 
 @Injectable()
 export class AuthEffects {
   @Effect()
-  login$ = this.actions$
-    .ofType(Auth.LOGIN)
-    .map((action: Auth.Login) => action.payload)
-    .exhaustMap(auth =>
+  login$ = this.actions$.pipe(
+    ofType<Login>(AuthActionTypes.Login),
+    map(action => action.payload),
+    exhaustMap((auth: Authenticate) =>
       this.authService
         .login(auth)
-        .map(user => new Auth.LoginSuccess({ user }))
-        .catch(error => of(new Auth.LoginFailure(error)))
-    );
+        .pipe(
+          map(user => new LoginSuccess({ user })),
+          catchError(error => of(new LoginFailure(error)))
+        )
+    )
+  );
 
   @Effect({ dispatch: false })
-  loginSuccess$ = this.actions$
-    .ofType(Auth.LOGIN_SUCCESS)
-    .do(() => this.router.navigate(['/']));
+  loginSuccess$ = this.actions$.pipe(
+    ofType(AuthActionTypes.LoginSuccess),
+    tap(() => this.router.navigate(['/']))
+  );
 
   @Effect({ dispatch: false })
-  loginRedirect$ = this.actions$
-    .ofType(Auth.LOGIN_REDIRECT, Auth.LOGOUT)
-    .do(authed => {
+  loginRedirect$ = this.actions$.pipe(
+    ofType(AuthActionTypes.LoginRedirect, AuthActionTypes.Logout),
+    tap(authed => {
       this.router.navigate(['/login']);
-    });
+    })
+  );
 
   constructor(
     private actions$: Actions,

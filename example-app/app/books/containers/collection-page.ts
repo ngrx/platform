@@ -1,19 +1,18 @@
-import 'rxjs/add/operator/let';
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import * as fromBooks from '../reducers';
-import * as collection from '../actions/collection';
+import * as CollectionActions from '../actions/collection';
 import { Book } from '../models/book';
+import * as fromBooks from '../reducers';
 
 @Component({
   selector: 'bc-collection-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <md-card>
-      <md-card-title>My Collection</md-card-title>
-    </md-card>
+    <mat-card>
+      <mat-card-title>My Collection</mat-card-title>
+    </mat-card>
 
     <bc-book-preview-list [books]="books$ | async"></bc-book-preview-list>
   `,
@@ -25,7 +24,7 @@ import { Book } from '../models/book';
    */
   styles: [
     `
-    md-card-title {
+    mat-card-title {
       display: flex;
       justify-content: center;
     }
@@ -36,10 +35,10 @@ export class CollectionPageComponent implements OnInit {
   books$: Observable<Book[]>;
 
   constructor(private store: Store<fromBooks.State>) {
-    this.books$ = store.select(fromBooks.getBookCollection);
+    this.books$ = store.pipe(select(fromBooks.getBookCollection));
   }
 
   ngOnInit() {
-    this.store.dispatch(new collection.Load());
+    this.store.dispatch(new CollectionActions.Load());
   }
 }

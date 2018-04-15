@@ -1,10 +1,9 @@
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { NgModule, Component, Injectable } from '@angular/core';
-import { platformDynamicServer } from '@angular/platform-server';
+import { Component, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Store, StoreModule, combineReducers } from '../../../store';
-import { EffectsModule, Effect, Actions } from '../../';
+import { of } from 'rxjs';
+
+import { Actions, Effect, EffectsModule } from '../../';
+import { StoreModule } from '../../../store';
 
 @Injectable()
 export class NgcSpecFeatureEffects {

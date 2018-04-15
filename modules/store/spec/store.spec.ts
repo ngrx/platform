@@ -1,8 +1,13 @@
-import 'rxjs/add/operator/take';
 import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { hot } from 'jasmine-marbles';
-import { createInjector } from './helpers/injector';
-import { ActionsSubject, ReducerManager, Store, StoreModule } from '../';
+import {
+  ActionsSubject,
+  ReducerManager,
+  Store,
+  StoreModule,
+  select,
+} from '../';
 import {
   counterReducer,
   INCREMENT,
@@ -11,6 +16,7 @@ import {
 } from './fixtures/counter';
 import Spy = jasmine.Spy;
 import any = jasmine.any;
+import { take } from 'rxjs/operators';
 
 interface TestAppSchema {
   counter1: number;
@@ -20,7 +26,6 @@ interface TestAppSchema {
 }
 
 describe('ngRx Store', () => {
-  let injector: ReflectiveInjector;
   let store: Store<TestAppSchema>;
   let dispatcher: ActionsSubject;
 
@@ -31,16 +36,19 @@ describe('ngRx Store', () => {
       counter3: counterReducer,
     };
 
-    injector = createInjector(StoreModule.forRoot(reducers, { initialState }));
-    store = injector.get(Store);
-    dispatcher = injector.get(ActionsSubject);
+    TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot(reducers, { initialState })],
+    });
+
+    store = TestBed.get(Store);
+    dispatcher = TestBed.get(ActionsSubject);
   }
 
   describe('initial state', () => {
     it('should handle an initial state object', (done: any) => {
       setup();
 
-      store.take(1).subscribe({
+      store.pipe(take(1)).subscribe({
         next(val) {
           expect(val).toEqual({ counter1: 0, counter2: 1, counter3: 0 });
         },
@@ -52,13 +60,83 @@ describe('ngRx Store', () => {
     it('should handle an initial state function', (done: any) => {
       setup(() => ({ counter1: 0, counter2: 5 }));
 
-      store.take(1).subscribe({
+      store.pipe(take(1)).subscribe({
         next(val) {
           expect(val).toEqual({ counter1: 0, counter2: 5, counter3: 0 });
         },
         error: done,
         complete: done,
       });
+    });
+
+    function testInitialState(feature?: string) {
+      store = TestBed.get(Store);
+      dispatcher = TestBed.get(ActionsSubject);
+
+      const actionSequence = '--a--b--c--d--e--f--g';
+      const stateSequence = 'i-w-----x-----y--z---';
+      const actionValues = {
+        a: { type: INCREMENT },
+        b: { type: 'OTHER' },
+        c: { type: RESET },
+        d: { type: 'OTHER' }, // reproduces https://github.com/ngrx/platform/issues/880 because state is falsey
+        e: { type: INCREMENT },
+        f: { type: INCREMENT },
+        g: { type: 'OTHER' },
+      };
+      const counterSteps = hot(actionSequence, actionValues);
+      counterSteps.subscribe(action => store.dispatch(action));
+
+      const counterStateWithString = feature
+        ? (store as any).select(feature, 'counter1')
+        : store.select('counter1');
+
+      const counter1Values = { i: 1, w: 2, x: 0, y: 1, z: 2 };
+
+      expect(counterStateWithString).toBeObservable(
+        hot(stateSequence, counter1Values)
+      );
+    }
+
+    it('should reset to initial state when undefined (root ActionReducerMap)', () => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot(
+            { counter1: counterReducer },
+            { initialState: { counter1: 1 } }
+          ),
+        ],
+      });
+
+      testInitialState();
+    });
+
+    it('should reset to initial state when undefined (feature ActionReducer)', () => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature('counter1', counterReducer, {
+            initialState: 1,
+          }),
+        ],
+      });
+
+      testInitialState();
+    });
+
+    it('should reset to initial state when undefined (feature ActionReducerMap)', () => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature(
+            'feature1',
+            { counter1: counterReducer },
+            { initialState: { counter1: 1 } }
+          ),
+        ],
+      });
+
+      testInitialState('feature1');
     });
   });
 
@@ -83,7 +161,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counterStateWithString = store.select('counter1');
+      const counterStateWithString = store.pipe(select('counter1'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -98,7 +176,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counterStateWithFunc = store.select(s => s.counter1);
+      const counterStateWithFunc = store.pipe(select(s => s.counter1));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -109,7 +187,7 @@ describe('ngRx Store', () => {
     });
 
     it('should correctly lift itself', () => {
-      const result = store.select('counter1');
+      const result = store.pipe(select('counter1'));
 
       expect(result instanceof Store).toBe(true);
     });
@@ -119,7 +197,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counterState = store.select('counter1');
+      const counterState = store.pipe(select('counter1'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -132,7 +210,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => dispatcher.next(action));
 
-      const counterState = store.select('counter1');
+      const counterState = store.pipe(select('counter1'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -145,8 +223,8 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe(action => store.dispatch(action));
 
-      const counter1State = store.select('counter1');
-      const counter2State = store.select('counter2');
+      const counter1State = store.pipe(select('counter1'));
+      const counter2State = store.pipe(select('counter2'));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter2Values = { i: 1, v: 2, w: 3, x: 2, y: 0, z: 1 };
@@ -176,8 +254,7 @@ describe('ngRx Store', () => {
       expect(dispatcherSubscription.closed).toBe(false);
     });
 
-    // TODO: Investigate why this is no longer working
-    xit('should complete if the dispatcher is destroyed', () => {
+    it('should complete if the dispatcher is destroyed', () => {
       const storeSubscription = store.subscribe();
       const dispatcherSubscription = dispatcher.subscribe();
 
@@ -194,7 +271,7 @@ describe('ngRx Store', () => {
 
     beforeEach(() => {
       setup();
-      const reducerManager = injector.get(ReducerManager);
+      const reducerManager = TestBed.get(ReducerManager);
       addReducerSpy = spyOn(reducerManager, 'addReducer').and.callThrough();
       removeReducerSpy = spyOn(
         reducerManager,
@@ -212,13 +289,13 @@ describe('ngRx Store', () => {
 
     it(`should work with added / removed reducers`, () => {
       store.addReducer(key, counterReducer);
-      store.take(1).subscribe(val => {
+      store.pipe(take(1)).subscribe(val => {
         expect(val.counter4).toBe(0);
       });
 
       store.removeReducer(key);
       store.dispatch({ type: INCREMENT });
-      store.take(1).subscribe(val => {
+      store.pipe(take(1)).subscribe(val => {
         expect(val.counter4).toBeUndefined();
       });
     });

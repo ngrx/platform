@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy, Provider } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { BehaviorSubject } from 'rxjs';
+
 import { Action } from './models';
 
 export const INIT = '@ngrx/store/init' as '@ngrx/store/init';

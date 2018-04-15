@@ -1,7 +1,6 @@
-import { Observable } from 'rxjs/Observable';
-import { Notification } from 'rxjs/Notification';
+import { ErrorHandler } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { ErrorReporter } from './error_reporter';
+import { Notification, Observable } from 'rxjs';
 
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);
@@ -13,47 +12,34 @@ export interface EffectNotification {
 
 export function verifyOutput(
   output: EffectNotification,
-  reporter: ErrorReporter
+  reporter: ErrorHandler
 ) {
   reportErrorThrown(output, reporter);
   reportInvalidActions(output, reporter);
 }
 
-function reportErrorThrown(
-  output: EffectNotification,
-  reporter: ErrorReporter
-) {
+function reportErrorThrown(output: EffectNotification, reporter: ErrorHandler) {
   if (output.notification.kind === 'E') {
-    const errorReason = `Effect ${getEffectName(output)} threw an error`;
-
-    reporter.report(errorReason, {
-      Source: output.sourceInstance,
-      Effect: output.effect,
-      Error: output.notification.error,
-      Notification: output.notification,
-    });
+    reporter.handleError(output.notification.error);
   }
 }
 
 function reportInvalidActions(
   output: EffectNotification,
-  reporter: ErrorReporter
+  reporter: ErrorHandler
 ) {
   if (output.notification.kind === 'N') {
     const action = output.notification.value;
     const isInvalidAction = !isAction(action);
 
     if (isInvalidAction) {
-      const errorReason = `Effect ${getEffectName(
-        output
-      )} dispatched an invalid action`;
-
-      reporter.report(errorReason, {
-        Source: output.sourceInstance,
-        Effect: output.effect,
-        Dispatched: action,
-        Notification: output.notification,
-      });
+      reporter.handleError(
+        new Error(
+          `Effect ${getEffectName(
+            output
+          )} dispatched an invalid action: ${action}`
+        )
+      );
     }
   }
 }

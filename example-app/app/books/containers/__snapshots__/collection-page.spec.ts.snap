@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collection Page should compile 1`] = `
+<bc-collection-page
+  books$={[Function Store]}
+  store={[Function Store]}
+>
+  <mat-card
+    _ngcontent-c0=""
+    class="mat-card"
+  >
+    <mat-card-title
+      _ngcontent-c0=""
+      class="mat-card-title"
+    >
+      My Collection
+    </mat-card-title>
+  </mat-card><bc-book-preview-list
+    _ngcontent-c0=""
+    _nghost-c2=""
+    ng-reflect-books=""
+  >
+    
+  </bc-book-preview-list>
+</bc-collection-page>
+`;

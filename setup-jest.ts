@@ -1,6 +1,15 @@
 import 'jest-preset-angular';
-import { MdCommonModule } from '@angular/material';
-
 global['CSS'] = null;
-MdCommonModule.prototype['_checkDoctype'] = function() {};
-MdCommonModule.prototype['_checkTheme'] = function() {};
+
+/**
+ * ISSUE: https://github.com/angular/material2/issues/7101
+ * Workaround for JSDOM missing transform property
+ */
+Object.defineProperty(document.body.style, 'transform', {
+  value: () => {
+    return {
+      enumerable: true,
+      configurable: true,
+    };
+  },
+});

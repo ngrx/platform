@@ -1,4 +1,8 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import {
+  createSelector,
+  createFeatureSelector,
+  ActionReducerMap,
+} from '@ngrx/store';
 import * as fromSearch from './search';
 import * as fromBooks from './books';
 import * as fromCollection from './collection';
@@ -11,10 +15,10 @@ export interface BooksState {
 }
 
 export interface State extends fromRoot.State {
-  'books': BooksState;
+  books: BooksState;
 }
 
-export const reducers = {
+export const reducers: ActionReducerMap<BooksState> = {
   search: fromSearch.reducer,
   books: fromBooks.reducer,
   collection: fromCollection.reducer,
@@ -29,9 +33,9 @@ export const reducers = {
  *
  * ```ts
  * class MyComponent {
- * 	constructor(state$: Observable<State>) {
- * 	  this.booksState$ = state$.select(getBooksState);
- * 	}
+ *   constructor(state$: Observable<State>) {
+ *     this.booksState$ = state$.pipe(select(getBooksState));
+ *   }
  * }
  * ```
  */
@@ -39,12 +43,12 @@ export const reducers = {
 /**
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
-*/
+ */
 export const getBooksState = createFeatureSelector<BooksState>('books');
 
 /**
  * Every reducer module exports selector functions, however child reducers
- * have no knowledge of the overall state tree. To make them useable, we
+ * have no knowledge of the overall state tree. To make them usable, we
  * need to make new selectors that wrap them.
  *
  * The createSelector function creates very efficient selectors that are memoized and
@@ -66,7 +70,7 @@ export const getSelectedBookId = createSelector(
  * commonly used selector functions including
  * getting all ids in the record set, a dictionary
  * of the records by id, an array of records and
- * the total number of records. This reducers boilerplate
+ * the total number of records. This reduces boilerplate
  * in selecting records from the entity state.
  */
 export const {

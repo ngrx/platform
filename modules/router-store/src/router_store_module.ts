@@ -1,22 +1,26 @@
 import {
-  NgModule,
-  ModuleWithProviders,
-  InjectionToken,
   Inject,
+  InjectionToken,
+  ModuleWithProviders,
+  NgModule,
 } from '@angular/core';
 import {
   NavigationCancel,
   NavigationError,
+  NavigationEnd,
   Router,
   RouterStateSnapshot,
   RoutesRecognized,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { of } from 'rxjs/observable/of';
+import { select, Store } from '@ngrx/store';
+import { of } from 'rxjs';
+
 import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
+  SerializedRouterStateSnapshot,
 } from './serializer';
+
 /**
  * An action dispatched when the router navigates.
  */
@@ -33,7 +37,7 @@ export type RouterNavigationPayload<T> = {
 /**
  * An action dispatched when the router navigates.
  */
-export type RouterNavigationAction<T = RouterStateSnapshot> = {
+export type RouterNavigationAction<T = SerializedRouterStateSnapshot> = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
 };
@@ -55,7 +59,7 @@ export type RouterCancelPayload<T, V> = {
 /**
  * An action dispatched when the router cancel navigation.
  */
-export type RouterCancelAction<T, V = RouterStateSnapshot> = {
+export type RouterCancelAction<T, V = SerializedRouterStateSnapshot> = {
   type: typeof ROUTER_CANCEL;
   payload: RouterCancelPayload<T, V>;
 };
@@ -77,7 +81,7 @@ export type RouterErrorPayload<T, V> = {
 /**
  * An action dispatched when the router errors.
  */
-export type RouterErrorAction<T, V = RouterStateSnapshot> = {
+export type RouterErrorAction<T, V = SerializedRouterStateSnapshot> = {
   type: typeof ROUTER_ERROR;
   payload: RouterErrorPayload<T, V>;
 };
@@ -85,19 +89,19 @@ export type RouterErrorAction<T, V = RouterStateSnapshot> = {
 /**
  * An union type of router actions.
  */
-export type RouterAction<T, V = RouterStateSnapshot> =
-  | RouterNavigationAction<T>
+export type RouterAction<T, V = SerializedRouterStateSnapshot> =
+  | RouterNavigationAction<V>
   | RouterCancelAction<T, V>
   | RouterErrorAction<T, V>;
 
-export type RouterReducerState<T = RouterStateSnapshot> = {
+export type RouterReducerState<T = SerializedRouterStateSnapshot> = {
   state: T;
   navigationId: number;
 };
 
-export function routerReducer<T = RouterStateSnapshot>(
-  state: RouterReducerState<T>,
-  action: RouterAction<any>
+export function routerReducer<T = SerializedRouterStateSnapshot>(
+  state: RouterReducerState<T> | undefined,
+  action: RouterAction<any, T>
 ): RouterReducerState<T> {
   switch (action.type) {
     case ROUTER_NAVIGATION:
@@ -108,13 +112,13 @@ export function routerReducer<T = RouterStateSnapshot>(
         navigationId: action.payload.event.id,
       };
     default:
-      return state;
+      return state as RouterReducerState<T>;
   }
 }
 
-export type StoreRouterConfig = {
+export interface StoreRouterConfig {
   stateKey?: string;
-};
+}
 
 export const _ROUTER_CONFIG = new InjectionToken(
   '@ngrx/router-store Internal Configuration'
@@ -124,11 +128,15 @@ export const ROUTER_CONFIG = new InjectionToken(
 );
 export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
 
-export function _createDefaultRouterConfig(config: any): StoreRouterConfig {
-  let _config = {};
+export function _createDefaultRouterConfig(
+  config: StoreRouterConfig | StoreRouterConfigFunction
+): StoreRouterConfig {
+  let _config: StoreRouterConfig;
 
   if (typeof config === 'function') {
     _config = config();
+  } else {
+    _config = config || {};
   }
 
   return {
@@ -147,7 +155,7 @@ export type StoreRouterConfigFunction = () => StoreRouterConfig;
  *
  * ```
  * export type RouterNavigationPayload = {
- *   routerState: RouterStateSnapshot,
+ *   routerState: SerializedRouterStateSnapshot,
  *   event: RoutesRecognized
  * }
  * ```
@@ -215,19 +223,20 @@ export class StoreRouterConnectingModule {
     };
   }
 
-  private routerState: RouterStateSnapshot;
+  private routerState: SerializedRouterStateSnapshot;
   private storeState: any;
   private lastRoutesRecognized: RoutesRecognized;
 
   private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
   private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
+  private stateKey: string;
 
   private stateKey: string;
 
   constructor(
     private store: Store<any>,
     private router: Router,
-    private serializer: RouterStateSerializer<RouterStateSnapshot>,
+    private serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
     @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
     this.stateKey = this.config.stateKey as string;
@@ -242,8 +251,9 @@ export class StoreRouterConnectingModule {
       routerState: RouterStateSnapshot
     ) => {
       this.routerState = this.serializer.serialize(routerState);
-      if (this.shouldDispatchRouterNavigation())
+      if (this.shouldDispatchRouterNavigation()) {
         this.dispatchRouterNavigation();
+      }
       return of(true);
     };
   }
@@ -252,7 +262,11 @@ export class StoreRouterConnectingModule {
     this.store.subscribe(s => {
       this.storeState = s;
     });
+<<<<<<< HEAD
     this.store.select(this.stateKey).subscribe(() => {
+=======
+    this.store.pipe(select(this.stateKey)).subscribe(() => {
+>>>>>>> upstream/master
       this.navigateIfNeeded();
     });
   }
@@ -285,6 +299,9 @@ export class StoreRouterConnectingModule {
         this.dispatchRouterCancel(e);
       } else if (e instanceof NavigationError) {
         this.dispatchRouterError(e);
+      } else if (e instanceof NavigationEnd) {
+        this.dispatchTriggeredByRouter = false;
+        this.navigationTriggeredByDispatch = false;
       }
     });
   }

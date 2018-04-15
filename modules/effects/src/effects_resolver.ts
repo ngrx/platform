@@ -1,12 +1,9 @@
-import { merge } from 'rxjs/observable/merge';
-import { ignoreElements } from 'rxjs/operator/ignoreElements';
-import { materialize } from 'rxjs/operator/materialize';
-import { map } from 'rxjs/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Notification } from 'rxjs/Notification';
 import { Action } from '@ngrx/store';
+import { merge, Notification, Observable } from 'rxjs';
+import { ignoreElements, map, materialize } from 'rxjs/operators';
+
 import { EffectNotification } from './effect_notification';
-import { getSourceMetadata, getSourceForInstance } from './effects_metadata';
+import { getSourceForInstance, getSourceMetadata } from './effects_metadata';
 import { isOnRunEffects } from './on_run_effects';
 
 export function mergeEffects(
@@ -14,31 +11,30 @@ export function mergeEffects(
 ): Observable<EffectNotification> {
   const sourceName = getSourceForInstance(sourceInstance).constructor.name;
 
-  const observables: Observable<any>[] = getSourceMetadata(
-    sourceInstance
-  ).map(({ propertyName, dispatch }): Observable<EffectNotification> => {
-    const observable: Observable<any> =
-      typeof sourceInstance[propertyName] === 'function'
-        ? sourceInstance[propertyName]()
-        : sourceInstance[propertyName];
+  const observables: Observable<any>[] = getSourceMetadata(sourceInstance).map(
+    ({ propertyName, dispatch }): Observable<EffectNotification> => {
+      const observable: Observable<any> =
+        typeof sourceInstance[propertyName] === 'function'
+          ? sourceInstance[propertyName]()
+          : sourceInstance[propertyName];
 
-    if (dispatch === false) {
-      return ignoreElements.call(observable);
+      if (dispatch === false) {
+        return observable.pipe(ignoreElements());
+      }
+
+      const materialized$ = observable.pipe(materialize());
+
+      return materialized$.pipe(
+        map((notification: Notification<Action>): EffectNotification => ({
+          effect: sourceInstance[propertyName],
+          notification,
+          propertyName,
+          sourceName,
+          sourceInstance,
+        }))
+      );
     }
-
-    const materialized$ = materialize.call(observable);
-
-    return map.call(
-      materialized$,
-      (notification: Notification<Action>): EffectNotification => ({
-        effect: sourceInstance[propertyName],
-        notification,
-        propertyName,
-        sourceName,
-        sourceInstance,
-      })
-    );
-  });
+  );
 
   return merge(...observables);
 }

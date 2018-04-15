@@ -22,23 +22,23 @@ export class AppModule {}
 
 ### Initial State and Ahead of Time (AoT) Compilation
 
-Angular AoT requires all symbols referenced in the construction of its types (think `@NgModule`, `@Component`, `@Injectable`, etc.) to be statically defined. For this reason, we cannot dynamically inject state at runtime with AoT unless we provide `initialState` as a function. Thus the above `NgModule` definition simply changes to:
+Angular AoT requires all symbols referenced in the decorator metadata to be statically analyzable. For this reason, we cannot dynamically inject state at runtime with AoT unless we provide `initialState` as a function. Thus the above `NgModule` definition simply changes to:
 
 ```ts
-/// Pretend this is dynamically injected at runtime
+// Pretend this is dynamically injected at runtime
 const initialStateFromSomewhere = { counter: 3 };
 
-/// Static state
+// Static state
 const initialState = { counter: 2 };
 
-/// In this function dynamic state slices, if they exist, will overwrite static state at runtime.
+// In this function dynamic state slices, if they exist, will overwrite static state at runtime.
 export function getInitialState() {
-  return {...initialState, ...initialStateFromSomewhere};
+  return { ...initialState, ...initialStateFromSomewhere };
 }
 
 @NgModule({
   imports: [
-    StoreModule.forRoot(reducers, {initialState: getInitialState})
+    StoreModule.forRoot(reducers, { initialState: getInitialState })
   ]
 })
 ```
@@ -96,11 +96,11 @@ export const reducers: ActionReducerMap<any> = {
 export class FeatureModule {}
 ```
 
-The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [./selectors.md#createFeatureSelector](createFeatureSelector) convenience method.
+The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [createFeatureSelector](./selectors.md#createFeatureSelector) convenience method.
 
 ## Injecting Reducers
 
-To inject the root reducers into your application, use an `InjectionToken` and a `Provider` to register the reducers through dependency injection.
+To inject the root reducers into your application, use an `InjectionToken` and a `Provider` to register the reducers through dependency injection. 
 
 ```ts
 import { NgModule, InjectionToken } from '@angular/core';
@@ -143,7 +143,7 @@ export const FEATURE_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<fromFea
 export function getReducers(): ActionReducerMap<fromFeature.State> {
   // map of reducers
   return {
-  
+
   };
 }
 

@@ -1,5 +1,10 @@
 import { NgModule, Inject, Optional } from '@angular/core';
-import { StoreModule, Store } from '@ngrx/store';
+import {
+  StoreModule,
+  Store,
+  StoreRootModule,
+  StoreFeatureModule,
+} from '@ngrx/store';
 import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
 import { ROOT_EFFECTS } from './tokens';
@@ -13,7 +18,8 @@ export class EffectsRootModule {
     runner: EffectsRunner,
     store: Store<any>,
     @Inject(ROOT_EFFECTS) rootEffects: any[],
-    @Optional() storeModule: StoreModule
+    @Optional() storeRootModule: StoreRootModule,
+    @Optional() storeFeatureModule: StoreFeatureModule
   ) {
     runner.start();
 

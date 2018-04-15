@@ -41,14 +41,15 @@ import {
   ScannedActionsSubject,
 } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
-import { STORE_PROVIDERS } from './store';
+import { STORE_PROVIDERS, Store } from './store';
 
 @NgModule({})
 export class StoreRootModule {
   constructor(
     actions$: ActionsSubject,
     reducer$: ReducerObservable,
-    scannedActions$: ScannedActionsSubject
+    scannedActions$: ScannedActionsSubject,
+    store: Store<any>
   ) {}
 }
 
@@ -57,12 +58,13 @@ export class StoreFeatureModule implements OnDestroy {
   constructor(
     @Inject(STORE_FEATURES) private features: StoreFeature<any, any>[],
     @Inject(FEATURE_REDUCERS) private featureReducers: ActionReducerMap<any>[],
-    private reducerManager: ReducerManager
+    private reducerManager: ReducerManager,
+    root: StoreRootModule
   ) {
     features
       .map((feature, index) => {
         const featureReducerCollection = featureReducers.shift();
-        const reducers = featureReducerCollection[index];
+        const reducers = featureReducerCollection /*TODO(#823)*/![index];
 
         return {
           ...feature,
@@ -211,9 +213,11 @@ export function _createFeatureReducers(
   reducerCollection: ActionReducerMap<any, any>[],
   tokenReducerCollection: ActionReducerMap<any, any>[]
 ) {
-  return reducerCollection.map((reducer, index) => {
+  const reducers = reducerCollection.map((reducer, index) => {
     return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
+
+  return reducers;
 }
 
 export function _initialStateFactory(initialState: any): any {

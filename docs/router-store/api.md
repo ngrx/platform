@@ -1,4 +1,5 @@
 # API
+
 ## Navigation actions
 
 Navigation actions are not provided as part of the router package. You provide your own
@@ -30,8 +31,8 @@ export class Forward implements Action {
   readonly type = FORWARD;
 }
 
-export type Actions
-  = Go
+export type RouterActionsUnion =
+  | Go
   | Back
   | Forward;
 ```
@@ -49,32 +50,38 @@ store.dispatch(new RouterActions.Back());
 
 store.dispatch(new RouterActions.Forward());
 ```
+
 ## Effects
 
 ```ts
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
+import { map, tap } from 'rxjs/operators';
 import * as RouterActions from './actions/router';
 
 @Injectable()
 export class RouterEffects {
   @Effect({ dispatch: false })
-  navigate$ = this.actions$.ofType(RouterActions.GO)
-    .map((action: RouterActions.Go) => action.payload)
-    .do(({ path, query: queryParams, extras})
-      => this.router.navigate(path, { queryParams, ...extras }));
+  navigate$ = this.actions$.pipe(
+    ofType(RouterActions.GO),
+    map((action: RouterActions.Go) => action.payload),
+    tap(({ path, query: queryParams, extras})
+      => this.router.navigate(path, { queryParams, ...extras }))
+  )
 
   @Effect({ dispatch: false })
-  navigateBack$ = this.actions$.ofType(RouterActions.BACK)
-    .do(() => this.location.back());
+  navigateBack$ = this.actions$.pipe(
+    ofType(RouterActions.BACK),
+    tap(() => this.location.back())
+  );
 
   @Effect({ dispatch: false })
-  navigateForward$ = this.actions$.ofType(RouterActions.FORWARD)
-    .do(() => this.location.forward());    
+  navigateForward$ = this.actions$.pipe(
+    ofType(RouterActions.FORWARD),
+    tap(() => this.location.forward())
+  );
 
   constructor(
     private actions$: Actions,
@@ -83,6 +90,7 @@ export class RouterEffects {
   ) {}
 }
 ```
+
 ## Custom Router State Serializer
 
 During each navigation cycle, a `RouterNavigationAction` is dispatched with a snapshot of the state in its payload, the `RouterStateSnapshot`. The `RouterStateSnapshot` is a large complex structure, containing many pieces of information about the current state and what's rendered by the router. This can cause performance
@@ -90,7 +98,7 @@ issues when used with the Store Devtools. In most cases, you may only need a pie
 
 Additionally, the router state snapshot is a mutable object, which can cause issues when developing with [store freeze](https://github.com/brandonroberts/ngrx-store-freeze) to prevent direct state mutations. This can be avoided by using a custom serializer.
 
-To use the time-traveling debugging in the Devtools, you must return an object containing the `url` when using the `routerReducer`.
+**NOTE**: To use the time-traveling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
 
 ```ts
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
@@ -104,26 +112,33 @@ import {
 
 export interface RouterStateUrl {
   url: string;
+  params: Params;
   queryParams: Params;
 }
 
 export interface State {
-  routerReducer: RouterReducerState<RouterStateUrl>;
+  router: RouterReducerState<RouterStateUrl>;
 }
 
 export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
-    const { url } = routerState;
-    const queryParams = routerState.root.queryParams;
+    let route = routerState.root;
 
-    // Only return an object including the URL and query params
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    const { url, root: { queryParams } } = routerState;
+    const { params } = route;
+
+    // Only return an object including the URL, params and query params
     // instead of the entire snapshot
-    return { url, queryParams };
+    return { url, params, queryParams };
   }
 }
 
 export const reducers: ActionReducerMap<State> = {
-  routerReducer: routerReducer
+  router: routerReducer
 };
 
 @NgModule({
@@ -132,7 +147,9 @@ export const reducers: ActionReducerMap<State> = {
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router'
+    })
   ],
   providers: [
     { provide: RouterStateSerializer, useClass: CustomSerializer }

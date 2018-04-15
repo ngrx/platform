@@ -6,8 +6,7 @@ export {
   MetaReducer,
   Selector,
 } from './models';
-export { StoreModule } from './store_module';
-export { Store } from './store';
+export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
 export {
@@ -19,7 +18,12 @@ export {
 export { ScannedActionsSubject } from './scanned_actions_subject';
 export {
   createSelector,
+  createSelectorFactory,
   createFeatureSelector,
+  defaultMemoize,
+  defaultStateFn,
+  MemoizeFn,
+  MemoizedProjection,
   MemoizedSelector,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';
@@ -38,6 +42,7 @@ export {
   _FEATURE_REDUCERS_TOKEN,
 } from './tokens';
 export {
+  StoreModule,
   StoreRootModule,
   StoreFeatureModule,
   _initialStateFactory,

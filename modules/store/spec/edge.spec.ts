@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs/Observable';
-import { todos, todoCount } from './fixtures/edge_todos';
-import { createInjector } from './helpers/injector';
-import { Store, StoreModule } from '../';
+import { TestBed } from '@angular/core/testing';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { todoCount, todos } from './fixtures/edge_todos';
 
 interface TestAppSchema {
   counter1: number;
@@ -21,11 +21,13 @@ describe('ngRx Store', () => {
     let store: Store<TodoAppSchema>;
 
     beforeEach(() => {
-      const injector = createInjector(
-        StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any)
-      );
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot<TodoAppSchema>({ todos, todoCount } as any),
+        ],
+      });
 
-      store = injector.get(Store);
+      store = TestBed.get(Store);
     });
 
     it('should provide an Observable Store', () => {
@@ -36,12 +38,12 @@ describe('ngRx Store', () => {
       let todosNextCount = 0;
       let todosCountNextCount = 0;
 
-      store.select('todos').subscribe((todos: any[]) => {
+      store.pipe(select('todos')).subscribe(todos => {
         todosNextCount++;
         store.dispatch({ type: 'SET_COUNT', payload: todos.length });
       });
 
-      store.select('todoCount').subscribe(count => {
+      store.pipe(select('todoCount')).subscribe(count => {
         todosCountNextCount++;
       });
 

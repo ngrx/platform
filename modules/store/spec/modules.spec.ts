@@ -1,14 +1,13 @@
-import 'rxjs/add/operator/take';
+import { InjectionToken, NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { NgModule, InjectionToken } from '@angular/core';
 import {
-  StoreModule,
-  Store,
   ActionReducer,
   ActionReducerMap,
   combineReducers,
-} from '../';
-import createSpy = jasmine.createSpy;
+  Store,
+  StoreModule,
+} from '@ngrx/store';
+import { take } from 'rxjs/operators';
 
 describe(`Store Modules`, () => {
   type RootState = { fruit: string };
@@ -48,14 +47,14 @@ describe(`Store Modules`, () => {
     const rootInitial = { fruit: 'orange' };
 
     beforeEach(() => {
-      featureAReducerFactory = createSpy(
-        'featureAReducerFactory'
-      ).and.callFake((rm: any, initialState?: any) => {
-        return (state: any, action: any) => 4;
-      });
-      rootReducerFactory = createSpy('rootReducerFactory').and.callFake(
-        combineReducers
-      );
+      featureAReducerFactory = jasmine
+        .createSpy('featureAReducerFactory')
+        .and.callFake((rm: any, initialState?: any) => {
+          return (state: any, action: any) => 4;
+        });
+      rootReducerFactory = jasmine
+        .createSpy('rootReducerFactory')
+        .and.callFake(combineReducers);
 
       @NgModule({
         imports: [
@@ -110,7 +109,7 @@ describe(`Store Modules`, () => {
       store.dispatch({ type: 'fruit', payload: 'banana' });
       store.dispatch({ type: 'a', payload: 42 });
 
-      store.take(1).subscribe((s: any) => {
+      store.pipe(take(1)).subscribe((s: any) => {
         expect(s).toEqual({
           fruit: 'banana',
           a: 4,
@@ -138,7 +137,7 @@ describe(`Store Modules`, () => {
       });
 
       it('should have initial state', () => {
-        store.take(1).subscribe((s: any) => {
+        store.pipe(take(1)).subscribe((s: any) => {
           expect(s).toEqual(initialState);
         });
       });
@@ -202,7 +201,7 @@ describe(`Store Modules`, () => {
     });
 
     it('should nest the child module in the root store object', () => {
-      store.take(1).subscribe((state: State) => {
+      store.pipe(take(1)).subscribe((state: State) => {
         expect(state).toEqual({
           fruit: 'apple',
           a: 5,

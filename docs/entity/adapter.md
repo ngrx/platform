@@ -86,6 +86,8 @@ state if no changes were made.
 * `removeAll`: Clear entity collection
 * `updateOne`: Update one entity in the collection
 * `updateMany`: Update multiple entities in the collection
+* `upsertOne`: Add or Update one entity in the collection
+* `upsertMany`: Add or Update multiple entities in the collection
 
 Usage:
 
@@ -101,68 +103,88 @@ export interface User {
 `user.actions.ts`
 
 ```ts
-import { Action } from '@ngrx/action';
+import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
 import { User } from './user.model';
 
-export const LOAD_USERS = '[User] Load Users';
-export const ADD_USER = '[User] Add User';
-export const ADD_USERS = '[User] Add Users';
-export const UPDATE_USER = '[User] Update User';
-export const UPDATE_USERS = '[User] Update Users';
-export const DELETE_USER = '[User] Delete User';
-export const DELETE_USERS = '[User] Delete Users';
-export const CLEAR_USERS = '[User] Clear Users';
+export enum UserActionTypes {
+  LOAD_USERS = '[User] Load Users',
+  ADD_USER = '[User] Add User',
+  UPSERT_USER = '[User] Upsert User',
+  ADD_USERS = '[User] Add Users',
+  UPSERT_USERS = '[User] Upsert Users',
+  UPDATE_USER = '[User] Update User',
+  UPDATE_USERS = '[User] Update Users',
+  DELETE_USER = '[User] Delete User',
+  DELETE_USERS = '[User] Delete Users',
+  CLEAR_USERS = '[User] Clear Users'
+}
 
 export class LoadUsers implements Action {
-  readonly type = LOAD_USERS;
+  readonly type = UserActionTypes.LOAD_USERS;
 
   constructor(public payload: { users: User[] }) {}
 }
 
 export class AddUser implements Action {
-  readonly type = ADD_USER;
+  readonly type = UserActionTypes.ADD_USER;
 
   constructor(public payload: { user: User }) {}
 }
 
+export class UpsertUser implements Action {
+  readonly type = UserActionTypes.UPSERT_USER;
+
+  constructor(public payload: { user: Update<User> }) {}
+}
+
 export class AddUsers implements Action {
-  readonly type = ADD_USERS;
+  readonly type = UserActionTypes.ADD_USERS;
 
   constructor(public payload: { users: User[] }) {}
 }
 
-export class UpdateUser implements Action {
-  readonly type = UPDATE_USER;
+export class UpsertUsers implements Action {
+  readonly type = UserActionTypes.UPSERT_USERS;
 
-  constructor(public payload: { user: { id: string, changes: User } }) {}
+  constructor(public payload: { users: Update<User>[] }) {}
+}
+
+export class UpdateUser implements Action {
+  readonly type = UserActionTypes.UPDATE_USER;
+
+  constructor(public payload: { user: Update<User> }) {}
 }
 
 export class UpdateUsers implements Action {
-  readonly type = UPDATE_USERS;
+  readonly type = UserActionTypes.UPDATE_USERS;
 
-  constructor(public payload: { users: { id: string, changes: User }[] }) {}
+  constructor(public payload: { users: Update<User>[] }) {}
 }
 
 export class DeleteUser implements Action {
-  readonly type = DELETE_USER;
+  readonly type = UserActionTypes.DELETE_USER;
 
   constructor(public payload: { id: string }) {}
 }
 
 export class DeleteUsers implements Action {
-  readonly type = DELETE_USERS;
+  readonly type = UserActionTypes.DELETE_USERS;
 
   constructor(public payload: { ids: string[] }) {}
 }
 
 export class ClearUsers implements Action {
-  readonly type = CLEAR_USERS;
+  readonly type = UserActionTypes.CLEAR_USERS;
 }
 
-export type All =
- LoadUsers
+export type UserActionsUnion =
+ | LoadUsers
  | AddUser
+ | UpsertUser
  | AddUsers
+ | UpsertUsers
  | UpdateUser
  | UpdateUsers
  | DeleteUser
@@ -174,7 +196,7 @@ export type All =
 ```ts
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from './user.model';
-import * as UserActions from './user.actions';
+import { UserActionsUnion, UserActionTypes } from './user.actions';
 
 export interface State extends EntityState<User> {
   // additional entities state properties
@@ -190,48 +212,70 @@ export const initialState: State = adapter.getInitialState({
 
 export function reducer(
   state = initialState,
-  action: UserActions.All
+  action: UserActionsUnion
 ): State {
-  switch (action.type) {        
-    case UserActions.ADD_USER: {
+  switch (action.type) {
+    case UserActionTypes.ADD_USER: {
       return adapter.addOne(action.payload.user, state);
     }
 
-    case UserActions.ADD_USERS: {
+    case UserActionTypes.UPSERT_USER: {
+      return adapter.upsertOne(action.payload.user, state);
+    }
+
+    case UserActionTypes.ADD_USERS: {
       return adapter.addMany(action.payload.users, state);
     }
 
-    case UserActions.UPDATE_USER: {
+    case UserActionTypes.UPSERT_USERS: {
+      return adapter.upsertMany(action.payload.users, state);
+    }    
+
+    case UserActionTypes.UPDATE_USER: {
       return adapter.updateOne(action.payload.user, state);
     }
 
-    case UserActions.UPDATE_USERS: {
+    case UserActionTypes.UPDATE_USERS: {
       return adapter.updateMany(action.payload.users, state);
     }
 
-    case UserActions.DELETE_USER: {
+    case UserActionTypes.DELETE_USER: {
       return adapter.removeOne(action.payload.id, state);
     }
 
-    case UserActions.DELETE_USERS: {
+    case UserActionTypes.DELETE_USERS: {
       return adapter.removeMany(action.payload.ids, state);
-    }    
+    }
 
-    case UserActions.LOAD_USERS: {
+    case UserActionTypes.LOAD_USERS: {
       return adapter.addAll(action.payload.users, state);
     }
 
-    case UserActions.CLEAR_USERS: {
+    case UserActionTypes.CLEAR_USERS: {
       return adapter.removeAll({ ...state, selectedUserId: null });
-    }        
+    }
 
     default: {
       return state;
-    }    
+    }
   }
 }
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
+
+export const {
+  // select the array of user ids
+  selectIds: selectUserIds,
+
+  // select the dictionary of user entities
+  selectEntities: selectUserEntities,
+
+  // select the array of users
+  selectAll: selectAllUsers,
+
+  // select the total user count
+  selectTotal: selectUserTotal
+} = adapter.getSelectors();
 ```
 
 ### Entity Selectors
@@ -258,21 +302,12 @@ export const reducers: ActionReducerMap<State> = {
 
 export const selectUserState = createFeatureSelector<fromUser.State>('users');
 
-export const {
-  // select the array of user ids
-  selectIds: selectUserIds,
-
-  // select the dictionary of user entities
-  selectEntities: selectUserEntities,
-
-  // select the array of users
-  selectAll: selectAllUsers,
-
-  // select the total user count
-  selectTotal: selectUserTotal
-} = fromUser.adapter.getSelectors(selectUserState);
-
+export const selectUserIds = createSelector(selectUserState, fromUser.selectUserIds);
+export const selectUserEntities = createSelector(selectUserState, fromUser.selectUserEntities);
+export const selectAllUsers = createSelector(selectUserState, fromUser.selectAllUsers);
+export const selectUserTotal = createSelector(selectUserState, fromUser.selectUserTotal);
 export const selectCurrentUserId = createSelector(selectUserState, fromUser.getSelectedUserId);
+
 export const selectCurrentUser = createSelector(
   selectUserEntities,
   selectCurrentUserId,

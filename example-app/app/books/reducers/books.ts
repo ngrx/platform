@@ -1,8 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '../models/book';
-import * as book from '../actions/book';
-import * as collection from '../actions/collection';
+import { BookActionsUnion, BookActionTypes } from '../actions/book';
+import {
+  CollectionActionsUnion,
+  CollectionActionTypes,
+} from '../actions/collection';
 
 /**
  * @ngrx/entity provides a predefined interface for handling
@@ -16,7 +19,7 @@ export interface State extends EntityState<Book> {
 }
 
 /**
- * createEntityAdapter creates many an object of helper
+ * createEntityAdapter creates an object of many helper
  * functions for single or multiple operations
  * against the dictionary of records. The configuration
  * object takes a record id selector function and
@@ -28,49 +31,50 @@ export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
   sortComparer: false,
 });
 
-/** getInitialState returns the default initial state
+/**
+ * getInitialState returns the default initial state
  * for the generated entity state. Initial state
  * additional properties can also be defined.
-*/
+ */
 export const initialState: State = adapter.getInitialState({
   selectedBookId: null,
 });
 
 export function reducer(
   state = initialState,
-  action: book.Actions | collection.Actions
+  action: BookActionsUnion | CollectionActionsUnion
 ): State {
   switch (action.type) {
-    case book.SEARCH_COMPLETE:
-    case collection.LOAD_SUCCESS: {
-      return {
-        /**
-         * The addMany function provided by the created adapter
-         * adds many records to the entity dictionary
-         * and returns a new state including those records. If
-         * the collection is to be sorted, the adapter will
-         * sort each record upon entry into the sorted array.
-         */
-        ...adapter.addMany(action.payload, state),
+    case BookActionTypes.SearchComplete:
+    case CollectionActionTypes.LoadSuccess: {
+      /**
+       * The addMany function provided by the created adapter
+       * adds many records to the entity dictionary
+       * and returns a new state including those records. If
+       * the collection is to be sorted, the adapter will
+       * sort each record upon entry into the sorted array.
+       */
+      return adapter.addMany(action.payload, {
+        ...state,
         selectedBookId: state.selectedBookId,
-      };
+      });
     }
 
-    case book.LOAD: {
-      return {
-        /**
-         * The addOne function provided by the created adapter
-         * adds one record to the entity dictionary
-         * and returns a new state including that records if it doesn't
-         * exist already. If the collection is to be sorted, the adapter will
-         * insert the new record into the sorted array.
-         */
-        ...adapter.addOne(action.payload, state),
+    case BookActionTypes.Load: {
+      /**
+       * The addOne function provided by the created adapter
+       * adds one record to the entity dictionary
+       * and returns a new state including that records if it doesn't
+       * exist already. If the collection is to be sorted, the adapter will
+       * insert the new record into the sorted array.
+       */
+      return adapter.addOne(action.payload, {
+        ...state,
         selectedBookId: state.selectedBookId,
-      };
+      });
     }
 
-    case book.SELECT: {
+    case BookActionTypes.Select: {
       return {
         ...state,
         selectedBookId: action.payload,

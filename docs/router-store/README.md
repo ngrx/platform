@@ -7,29 +7,29 @@ Install @ngrx/router-store from npm:
 
 `npm install @ngrx/router-store --save` OR `yarn add @ngrx/router-store`
 
-
 ### Nightly builds
 
 `npm install github:ngrx/router-store-builds` OR `yarn add github:ngrx/router-store-builds`
 
 ## Usage
 
-During the navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the signature `RouterNavigationAction`:
+During the navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the signature `RouterNavigationAction<T>`:
 
 ```ts
 /**
  * Payload of ROUTER_NAVIGATION.
  */
 export declare type RouterNavigationPayload<T> = {
-    routerState: T;
-    event: RoutesRecognized;
+  routerState: T;
+  event: RoutesRecognized;
 };
+
 /**
  * An action dispatched when the router navigates.
  */
 export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
-    type: typeof ROUTER_NAVIGATION;
-    payload: RouterNavigationPayload<T>;
+  type: typeof ROUTER_NAVIGATION;
+  payload: RouterNavigationPayload<T>;
 };
 ```
 
@@ -43,21 +43,26 @@ export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
 
 ```ts
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import { App } from './app.component';
+import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ routerReducer: routerReducer }),
+    StoreModule.forRoot({
+      router: routerReducer
+    }),
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router' // name of reducer key
+    })
   ],
-  bootstrap: [App]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```
+
 ## API Documentation
 - [Navigation actions](./api.md#navigation-actions)
 - [Effects](./api.md#effects)
