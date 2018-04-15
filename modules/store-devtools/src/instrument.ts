@@ -1,4 +1,9 @@
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import {
+  InjectionToken,
+  ModuleWithProviders,
+  NgModule,
+  Optional,
+} from '@angular/core';
 import { ReducerManagerDispatcher, StateObservable } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -7,6 +12,7 @@ import {
   STORE_DEVTOOLS_CONFIG,
   StoreDevtoolsConfig,
   StoreDevtoolsOptions,
+  STORE_DEVTOOLS_OPTIONS,
 } from './config';
 import { DevtoolsDispatcher, StoreDevtools } from './devtools';
 import {
@@ -14,6 +20,7 @@ import {
   REDUX_DEVTOOLS_EXTENSION,
   ReduxDevtoolsExtension,
 } from './extension';
+import { DevToolsSanitizerService } from './sanitizer-service';
 
 export const IS_EXTENSION_OR_MONITOR_PRESENT = new InjectionToken<boolean>(
   'Is Devtools Extension or Monitor Present'
@@ -52,7 +59,9 @@ export function noMonitor(): null {
 export const DEFAULT_NAME = 'NgRx Store DevTools';
 
 export function createConfig(
-  _options: StoreDevtoolsOptions
+  _options: StoreDevtoolsOptions,
+  _injectedOptions: StoreDevtoolsOptions,
+  sanitizerService: DevToolsSanitizerService
 ): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
@@ -63,9 +72,22 @@ export function createConfig(
     serialize: false,
     logOnly: false,
     features: false,
+    sanitizerService: false,
   };
 
   let options = typeof _options === 'function' ? _options() : _options;
+
+  if (_injectedOptions) {
+    let injectedOptions =
+      typeof _injectedOptions === 'function'
+        ? _injectedOptions()
+        : _injectedOptions;
+    options = {
+      ...options,
+      ...injectedOptions,
+    };
+  }
+
   const logOnly = options.logOnly
     ? { pause: true, export: true, test: true }
     : false;
@@ -76,6 +98,11 @@ export function createConfig(
     throw new Error(
       `Devtools 'maxAge' cannot be less than 2, got ${config.maxAge}`
     );
+  }
+
+  if (config.sanitizerService === true) {
+    config.actionSanitizer = sanitizerService.sanitizeAction;
+    config.stateSanitizer = sanitizerService.sanitizeState;
   }
 
   return config;
@@ -105,7 +132,11 @@ export class StoreDevtoolsModule {
         },
         {
           provide: STORE_DEVTOOLS_CONFIG,
-          deps: [INITIAL_OPTIONS],
+          deps: [
+            INITIAL_OPTIONS,
+            [new Optional(), STORE_DEVTOOLS_OPTIONS],
+            DevToolsSanitizerService,
+          ],
           useFactory: createConfig,
         },
         {
@@ -116,6 +147,10 @@ export class StoreDevtoolsModule {
         {
           provide: ReducerManagerDispatcher,
           useExisting: DevtoolsDispatcher,
+        },
+        {
+          provide: DevToolsSanitizerService,
+          useClass: DevToolsSanitizerService,
         },
       ],
     };

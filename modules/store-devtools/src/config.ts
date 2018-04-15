@@ -13,13 +13,19 @@ export class StoreDevtoolsConfig {
   serialize?: boolean;
   logOnly?: boolean;
   features?: any;
+  sanitizerService?: boolean;
 }
 
-export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
+export const STORE_DEVTOOLS_OPTIONS = new InjectionToken<StoreDevtoolsConfig>(
   '@ngrx/devtools Options'
 );
+
+export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
+  '@ngrx/devtools Config'
+);
+
 export const INITIAL_OPTIONS = new InjectionToken<StoreDevtoolsConfig>(
-  '@ngrx/devtools Initial Config'
+  '@ngrx/devtools Initial Options'
 );
 
 export type StoreDevtoolsOptions =
