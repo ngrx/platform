@@ -60,8 +60,8 @@ export const DEFAULT_NAME = 'NgRx Store DevTools';
 
 export function createConfig(
   _options: StoreDevtoolsOptions,
-  _injectedOptions: StoreDevtoolsOptions,
-  sanitizerService: DevToolsSanitizerService
+  sanitizerService?: DevToolsSanitizerService,
+  _injectedOptions?: StoreDevtoolsOptions
 ): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
@@ -100,7 +100,7 @@ export function createConfig(
     );
   }
 
-  if (config.sanitizerService === true) {
+  if (config.sanitizerService === true && sanitizerService) {
     config.actionSanitizer = sanitizerService.sanitizeAction;
     config.stateSanitizer = sanitizerService.sanitizeState;
   }
@@ -134,8 +134,8 @@ export class StoreDevtoolsModule {
           provide: STORE_DEVTOOLS_CONFIG,
           deps: [
             INITIAL_OPTIONS,
-            [new Optional(), STORE_DEVTOOLS_OPTIONS],
             DevToolsSanitizerService,
+            [new Optional(), STORE_DEVTOOLS_OPTIONS],
           ],
           useFactory: createConfig,
         },
