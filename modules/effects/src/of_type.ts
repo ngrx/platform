@@ -220,7 +220,7 @@ export function ofType<T extends Action>(
   }
 }
 
-class OfTypeMetadata {
+export class OfTypeMetadata {
   constructor(private _source: Observable<any>) {}
 
   get watchedActions() {
