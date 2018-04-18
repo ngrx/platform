@@ -9,7 +9,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { filter, share } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
+import { merge } from 'rxjs';
 
 let supportsMapAndSet = false;
 
