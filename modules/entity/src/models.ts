@@ -79,6 +79,7 @@ export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   selectId: IdSelector<T>;
   sortComparer: false | Comparer<T>;
   getInitialState(): EntityState<T>;
+  getInitialState<S extends EntityState<T>>(state: Partial<S>): S;
   getInitialState<S extends object>(state: S): EntityState<T> & S;
   getSelectors(): EntitySelectors<T, EntityState<T>>;
   getSelectors<V>(
