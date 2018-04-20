@@ -1,5 +1,0 @@
-/dist
-/modules/schematics/src/*/files/*
-package-lock.json
-package.json
-yarn.lock

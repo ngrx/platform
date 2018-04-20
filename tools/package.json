@@ -1,9 +1,0 @@
-{
-    "description": "compile-time dependencies under Bazel",
-    "devDependencies": {
-        "@angular/core": "6.0.0-beta.4",
-        "@angular/router": "6.0.0-beta.4",
-        "tsutils": "2.20.0",
-        "typescript": "~2.6.0"
-    }
-}
