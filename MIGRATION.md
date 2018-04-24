@@ -74,12 +74,13 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Effect, Actions } from '@ngrx/effects';
+import { Login } from '../actions/auth';
 
 @Injectable()
 export class MyEffects {
   @Effect()
   someEffect$: Observable<Action> = this.actions$
-    .ofType(UserActions.LOGIN)
+    .ofType<Login>(UserActions.LOGIN)
     .pipe(map(action => action.payload), map(() => new AnotherAction()));
 
   constructor(private actions$: Actions) {}
