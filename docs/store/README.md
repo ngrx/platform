@@ -5,10 +5,10 @@ RxJS powered state management for Angular applications, inspired by Redux
 @ngrx/store is a controlled state container designed to help write performant, consistent applications
 on top of Angular. Core tenets:
 
-* State is a single immutable data structure
-* Actions describe state changes
-* Pure functions called reducers take the previous state and the next action to compute the new state
-* State accessed with the `Store`, an observable of state and an observer of actions
+* State is a single, immutable data structure.
+* Actions describe state changes.
+* Pure functions called reducers take the previous state and the next action to compute the new state.
+* State accessed with the `Store`, an observable of state and an observer of actions.
 
 These core principles enable building components that can use the `OnPush` change detection strategy
 giving you [intelligent, performant change detection](http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html#smarter-change-detection)
