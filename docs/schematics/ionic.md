@@ -10,7 +10,7 @@ But you can integrate Angular CLI and `@ngrx/schematics` with these simple steps
 npm install --save-dev @angular/cli@latest
 ```
 
-* Install `@ngrx/schematics` and its dependencies following the steps in the sections above.
+* Install `@ngrx/schematics` and its dependencies following the steps in the [documentation](./README.md#installation).
 
 * Create a `.angular-cli.json` file in your root directory, beside your `ionic.config.json` file. Angular CLI (`ng`) will use it to know where to generate new files. The only contents it needs to have are:
 
@@ -25,13 +25,13 @@ npm install --save-dev @angular/cli@latest
 }
 ```
 
-* Make `@ngrx/schematics` the default collection as described above, e.g.:
+* Make `@ngrx/schematics` the default collection as described in the [documentation](README.md#default-schematics-collection), e.g.:
 
 ```bash
 ng set defaults.schematics.collection=@ngrx/schematics
 ```
 
-that command will modify the file `.angular-cli.json` so that you don't have to type `--collection @ngrx/schematics` with every command.
+That command will modify the file `.angular-cli.json` so that you don't have to type `--collection @ngrx/schematics` with every command.
 
 * Make SCSS the default style format (the default for Ionic):
 
@@ -45,7 +45,7 @@ ng set defaults.styleExt scss
 ng generate store State --root --module app.module.ts
 ```
 
-**Note**: when you generate components (like containers) they are generated with a `styleUrls` pointing to the `.scss` file. But by default, Ionic doesn't include styles directly in each component, so, you will probably need to remove that line from the components you create with `ng`. You would remove a line similar to this:
+**Note**: When you generate components (like containers) they are generated with a `styleUrls` pointing to the `.scss` file, but by default Ionic doesn't include styles directly in each component. So, you will probably need to remove that line from the components you create with `ng`. You will remove a line similar to this:
 
 ```TypeScript
   styleUrls: ['./login.component.css']
@@ -53,7 +53,7 @@ ng generate store State --root --module app.module.ts
 
 ---
 
-**Note**: as Ionic currently doesn't support Angular's `environment.ts` files, you will have to remove them from the imports and adjust the changed files manually, but apart from that, you can use the generated files normally. You will probably have to remove from `app.module.ts` the line with:
+**Note**: As Ionic currently doesn't support Angular's `environment.ts` files, you will have to remove them from the imports and adjust the changed files manually, but apart from that, you can use the generated files normally. You will probably have to remove from `app.module.ts` the line with:
 
 ```TypeScript
 import { environment } from '../environments/environment';
@@ -71,7 +71,7 @@ to:
     StoreDevtoolsModule.instrument(),
 ```
 
-during development, and probably remove that line in production.
+during development and probably remove that line in production.
 
 And in the file in `reducers/index.ts` remove the line:
 
@@ -91,4 +91,4 @@ to:
 export const metaReducers: MetaReducer<State>[] = [];
 ```
 
-during development, and probably remove that line in production.
+during development and probably remove that line in production.
