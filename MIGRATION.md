@@ -26,7 +26,7 @@ RxJS 5.4.x
 
 ## @ngrx/core
 
-@ngrx/core is no longer needed, and can conflict with @ngrx/store. You should remove it from your project.
+@ngrx/core is no longer needed and can conflict with @ngrx/store. You should remove it from your project.
 
 BEFORE:
 
@@ -142,7 +142,7 @@ import { reducer } from './reducers';
 export class AppModule {}
 ```
 
-This has been simplified to only require a map of reducers that will be composed together by the library. The second argument is a configuration object where you provide the `initialState`.
+This has been simplified to only require a map of reducers that will be composed together by the library. A second argument is a configuration object where you provide the `initialState`.
 
 AFTER:
 
@@ -211,7 +211,7 @@ if you don't need to register any root-level effects.
 export class AppModule {}
 ```
 
-Import `EffectsModule.forFeature` in any NgModule, whether be the `AppModule`, or a feature module.
+Import `EffectsModule.forFeature` in any NgModule, whether be the `AppModule` or a feature module.
 
 `feature.module.ts`
 

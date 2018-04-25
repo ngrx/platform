@@ -14,13 +14,13 @@ yarn test
 
 ## Submitting Pull Requests
 
-**Please follow these basic steps to simplify pull request reviews - if you don't you'll probably just be asked to anyway.**
+**Please follow these basic steps to simplify pull request reviews. If you don't you'll probably just be asked to anyway.**
 
-* Please rebase your branch against the current master
-* Run the `Setup` command to make sure your development dependencies are up-to-date
-* Please ensure the test suite passes before submitting a PR
-* If you've added new functionality, **please** include tests which validate its behavior
-* Make reference to possible [issues](https://github.com/ngrx/platform/issues) on PR comment
+* Please rebase your branch against the current master.
+* Run the `Setup` command to make sure your development dependencies are up-to-date.
+* Please ensure the test suite passes before submitting a PR.
+* If you've added new functionality, **please** include tests which validate its behavior.
+* Make reference to possible [issues](https://github.com/ngrx/platform/issues) on PR comment.
 
 ## Submitting bug reports
 
@@ -29,35 +29,30 @@ yarn test
 * Please detail the affected browser(s) and operating system(s).
 * Please be sure to state which version of Angular, node and npm you're using.
 
-## Submitting New features
+## Submitting new features
 
 * We value keeping the API surface small and concise, which factors into whether new features are accepted.
-* Submit an issue with the prefix `RFC: ` with your feature request.
+* Submit an issue with the prefix `RFC:` with your feature request.
 * The feature will be discussed and considered.
 * Once the PR is submitted, it will be reviewed and merged once approved.
-
 
 ## Financial contributions
 
 We also welcome financial contributions in full transparency on our [open collective](https://opencollective.com/ngrx).
 Anyone can file an expense. If the expense makes sense for the development of the community, it will be "merged" in the ledger of our open collective by the core contributors and the person who filed the expense will be reimbursed.
 
-
 ## Credits
-
 
 ### Contributors
 
-Thank you to all the people who have already contributed to ngrx!
+Thank you to all the people who have already contributed to NgRx!
 <a href="https://github.com/ngrx/platform/graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
-
 
 ### Backers
 
 Thank you to all our backers! [[Become a backer](https://opencollective.com/ngrx#backer)]
 
 <a href="https://opencollective.com/ngrx#backers" target="_blank"><img src="https://opencollective.com/ngrx/backers.svg?width=890"></a>
-
 
 ### Sponsors
 
