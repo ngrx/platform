@@ -31,7 +31,7 @@ export function counter(state: number = 0, action: Action) {
 ```
 
 To register the global state container within your application, import those reducers and use the `StoreModule.forRoot`
-function in the `imports` array them in the `AppModule`.
+function in the `imports` array them in the `AppModule`:
 
 ```ts
 import { NgModule } from '@angular/core';
