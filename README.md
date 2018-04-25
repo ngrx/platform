@@ -22,7 +22,7 @@ Reactive libraries for Angular
 
 ## Migration
 
-* [Migration guide](./MIGRATION.md) for users of ngrx packages prior to 4.x.
+* [Migration guide](./MIGRATION.md) for users of NgRx packages prior to 4.x.
 
 ## Events
 
