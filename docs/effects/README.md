@@ -4,8 +4,8 @@ RxJS powered side effect model for @ngrx/store
 
 @ngrx/effects provides an API to model event sources as actions. Effects:
 
-* Listen for actions dispatched from @ngrx/store
-* Isolate side effects from components, allowing for more _pure_ components that select state and dispatch actions
+* Listen for actions dispatched from @ngrx/store.
+* Isolate side effects from components, allowing for more _pure_ components that select state and dispatch actions.
 * Provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html) of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events.
 
 ### Installation
