@@ -39,7 +39,7 @@ For example, imagine you have a `selectedUser` object in the state. You also hav
 
 And you want to show all books for the current user.
 
-You can use the `createSelector` to achieve just that. Your visible books will always be up to date even if you update them in `allBooks` and they will always show the books that belong to your user if there is one selected, and will show all the books when there is no user selected.
+You can use `createSelector` to achieve just that. Your visible books will always be up to date even if you update them in `allBooks`. They will always show the books that belong to your user if there is one selected and will show all the books when there is no user selected.
 
 The result will be just some of your state filtered by another section of the state. And it will be always up to date.
 
@@ -106,7 +106,7 @@ export const selectFeatureCount = createSelector(
 
 ## Reset Memoized Selector
 
-The selector function returned by calling `createSelector` or `createFeatureSelector` initially has a memoized value of `null`. After a selector is invoked the first time its memoized value is stored in memory. If the selector is subsequently invoked with the same arguments it will return the memoized value. If the selector is then invoked with different arguments it will recompute, and update its memoized value. Consider the following:
+The selector function returned by calling `createSelector` or `createFeatureSelector` initially has a memoized value of `null`. After a selector is invoked the first time its memoized value is stored in memory. If the selector is subsequently invoked with the same arguments it will return the memoized value. If the selector is then invoked with different arguments it will recompute and update its memoized value. Consider the following:
 
 ```ts
 import { createSelector } from '@ngrx/store';
