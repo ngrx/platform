@@ -16,11 +16,13 @@ export const FORWARD = '[Router] Forward';
 export class Go implements Action {
   readonly type = GO;
 
-  constructor(public payload: {
-    path: any[];
-    query?: object;
-    extras?: NavigationExtras;
-  }) {}
+  constructor(
+    public payload: {
+      path: any[];
+      query?: object;
+      extras?: NavigationExtras;
+    }
+  ) {}
 }
 
 export class Back implements Action {
@@ -31,10 +33,7 @@ export class Forward implements Action {
   readonly type = FORWARD;
 }
 
-export type RouterActionsUnion =
-  | Go
-  | Back
-  | Forward;
+export type RouterActionsUnion = Go | Back | Forward;
 ```
 
 ```ts
@@ -67,9 +66,10 @@ export class RouterEffects {
   navigate$ = this.actions$.pipe(
     ofType(RouterActions.GO),
     map((action: RouterActions.Go) => action.payload),
-    tap(({ path, query: queryParams, extras})
-      => this.router.navigate(path, { queryParams, ...extras }))
-  )
+    tap(({ path, query: queryParams, extras }) =>
+      this.router.navigate(path, { queryParams, ...extras })
+    )
+  );
 
   @Effect({ dispatch: false })
   navigateBack$ = this.actions$.pipe(
@@ -98,7 +98,7 @@ issues when used with the Store Devtools. In most cases, you may only need a pie
 
 Additionally, the router state snapshot is a mutable object, which can cause issues when developing with [store freeze](https://github.com/brandonroberts/ngrx-store-freeze) to prevent direct state mutations. This can be avoided by using a custom serializer.
 
-**NOTE**: To use the time-traveling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
+**NOTE**: To use the time-travelling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
 
 ```ts
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
@@ -107,7 +107,7 @@ import {
   StoreRouterConnectingModule,
   routerReducer,
   RouterReducerState,
-  RouterStateSerializer
+  RouterStateSerializer,
 } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
@@ -138,7 +138,7 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  router: routerReducer
+  router: routerReducer,
 };
 
 @NgModule({
@@ -148,12 +148,10 @@ export const reducers: ActionReducerMap<State> = {
       // routes
     ]),
     StoreRouterConnectingModule.forRoot({
-      stateKey: 'router'
-    })
+      stateKey: 'router',
+    }),
   ],
-  providers: [
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
-  ]
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
 })
-export class AppModule { }
+export class AppModule {}
 ```
