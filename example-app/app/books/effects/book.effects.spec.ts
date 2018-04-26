@@ -3,10 +3,10 @@ import { Actions } from '@ngrx/effects';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
-import { GoogleBooksService } from '../../core/services/google-books';
-import { Search, SearchComplete, SearchError } from '../actions/book';
+import { GoogleBooksService } from '../../core/services/google-books.service';
+import { Search, SearchComplete, SearchError } from '../actions/book.actions';
 import { Book } from '../models/book';
-import { BookEffects, SEARCH_DEBOUNCE, SEARCH_SCHEDULER } from './book';
+import { BookEffects, SEARCH_DEBOUNCE, SEARCH_SCHEDULER } from './book.effects';
 
 export class TestActions extends Actions {
   constructor() {

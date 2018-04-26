@@ -4,8 +4,8 @@ import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
-import { GoogleBooksService } from '../../core/services/google-books';
-import * as BookActions from '../actions/book';
+import { GoogleBooksService } from '../../core/services/google-books.service';
+import * as BookActions from '../actions/book.actions';
 import * as fromBooks from '../reducers';
 
 /**

@@ -8,15 +8,15 @@ import {
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { BookSearchComponent } from '../components/book-search';
-import { BookPreviewComponent } from '../components/book-preview';
-import { BookPreviewListComponent } from '../components/book-preview-list';
+import { BookSearchComponent } from '../components/book-search.component';
+import { BookPreviewComponent } from '../components/book-preview.component';
+import { BookPreviewListComponent } from '../components/book-preview-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EllipsisPipe } from '../../shared/pipes/ellipsis';
-import { BookAuthorsComponent } from '../components/book-authors';
-import { AddCommasPipe } from '../../shared/pipes/add-commas';
-import { FindBookPageComponent } from './find-book-page';
-import * as BookActions from '../actions/book';
+import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
+import { BookAuthorsComponent } from '../components/book-authors.component';
+import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
+import { FindBookPageComponent } from './find-book-page.component';
+import * as BookActions from '../actions/book.actions';
 import * as fromBooks from '../reducers';
 
 describe('Find Book Page', () => {

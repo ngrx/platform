@@ -118,7 +118,7 @@ If you want to trigger another action, be careful to add this effect at the end.
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { defer } from 'rxjs';
-import { LoginAction, LogoutAction } from './auth';
+import { LoginAction, LogoutAction } from './auth.actions';
 
 @Injectable()
 export class SomeEffectsClass {

@@ -1,8 +1,8 @@
-import { reducer } from './books';
-import * as fromBooks from './books';
-import { SearchComplete, Load, Select } from '../actions/book';
+import { reducer } from './books.reducer';
+import * as fromBooks from './books.reducer';
+import { SearchComplete, Load, Select } from '../actions/book.actions';
 import { Book, generateMockBook } from '../models/book';
-import { LoadSuccess } from '../actions/collection';
+import { LoadSuccess } from '../actions/collection.actions';
 
 describe('BooksReducer', () => {
   const book1 = generateMockBook();

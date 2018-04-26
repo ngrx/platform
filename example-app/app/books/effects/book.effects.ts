@@ -11,13 +11,13 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import { GoogleBooksService } from '../../core/services/google-books';
+import { GoogleBooksService } from '../../core/services/google-books.service';
 import {
   BookActionTypes,
   Search,
   SearchComplete,
   SearchError,
-} from '../actions/book';
+} from '../actions/book.actions';
 import { Book } from '../models/book';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 

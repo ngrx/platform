@@ -4,9 +4,9 @@ import { Actions } from '@ngrx/effects';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
-import * as CollectionActions from '../actions/collection';
+import * as CollectionActions from '../actions/collection.actions';
 import { Book } from '../models/book';
-import { CollectionEffects } from './collection';
+import { CollectionEffects } from './collection.effects';
 
 export class TestActions extends Actions {
   constructor() {

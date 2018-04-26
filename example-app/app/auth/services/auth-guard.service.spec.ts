@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { cold } from 'jasmine-marbles';
 import { AuthGuard } from './auth-guard.service';
-import * as AuthActions from '../actions/auth';
+import * as AuthActions from '../actions/auth.actions';
 import * as fromRoot from '../../reducers';
 import * as fromAuth from '../reducers';
 

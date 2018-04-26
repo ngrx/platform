@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import * as BookActions from '../actions/book';
+import * as BookActions from '../actions/book.actions';
 import { Book } from '../models/book';
 import * as fromBooks from '../reducers';
 

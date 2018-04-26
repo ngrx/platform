@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as AuthActions from '../../auth/actions/auth';
+import * as AuthActions from '../../auth/actions/auth.actions';
 import * as fromAuth from '../../auth/reducers';
 import * as fromRoot from '../../reducers';
-import * as LayoutActions from '../actions/layout';
+import * as LayoutActions from '../actions/layout.actions';
 
 @Component({
   selector: 'bc-app',

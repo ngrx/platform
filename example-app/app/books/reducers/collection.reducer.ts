@@ -1,7 +1,7 @@
 import {
   CollectionActionTypes,
   CollectionActionsUnion,
-} from './../actions/collection';
+} from './../actions/collection.actions';
 
 export interface State {
   loaded: boolean;

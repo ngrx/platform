@@ -22,7 +22,7 @@ import { reducers, metaReducers } from './reducers';
 import { schema } from './db';
 import { CustomRouterStateSerializer } from './shared/utils';
 
-import { AppComponent } from './core/containers/app';
+import { AppComponent } from './core/containers/app.component';
 import { environment } from '../environments/environment';
 
 @NgModule({

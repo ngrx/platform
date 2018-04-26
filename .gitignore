@@ -68,3 +68,5 @@ output
 *.ngsummary.json
 *.ngfactory.ts
 tmp
+
+example-dist/
