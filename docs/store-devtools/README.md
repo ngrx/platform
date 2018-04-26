@@ -35,6 +35,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
 export class AppModule { }
 ```
 
+***NOTE:*** Once some component injects the `Store` service, Devtools will be enabled.
+
 ### Instrumentation options
 When you call the instrumentation, you can give an optional configuration object:
 
