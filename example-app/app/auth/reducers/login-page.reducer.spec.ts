@@ -1,6 +1,11 @@
-import { reducer } from './login-page';
-import * as fromLoginPage from './login-page';
-import { Login, LoginSuccess, LoginFailure, Logout } from '../actions/auth';
+import { reducer } from './login-page.reducer';
+import * as fromLoginPage from './login-page.reducer';
+import {
+  Login,
+  LoginSuccess,
+  LoginFailure,
+  Logout,
+} from '../actions/auth.actions';
 import { Authenticate, User } from '../models/user';
 
 describe('LoginPageReducer', () => {

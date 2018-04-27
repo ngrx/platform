@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './auth/services/auth-guard.service';
-import { NotFoundPageComponent } from './core/containers/not-found-page';
+import { NotFoundPageComponent } from './core/containers/not-found-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/books', pathMatch: 'full' },

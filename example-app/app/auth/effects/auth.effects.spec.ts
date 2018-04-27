@@ -10,7 +10,7 @@ import {
   LoginRedirect,
   LoginSuccess,
   Logout,
-} from '../actions/auth';
+} from '../actions/auth.actions';
 import { Authenticate, User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { AuthEffects } from './auth.effects';

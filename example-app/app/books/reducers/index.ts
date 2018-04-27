@@ -3,9 +3,9 @@ import {
   createFeatureSelector,
   ActionReducerMap,
 } from '@ngrx/store';
-import * as fromSearch from './search';
-import * as fromBooks from './books';
-import * as fromCollection from './collection';
+import * as fromSearch from './search.reducer';
+import * as fromBooks from './books.reducer';
+import * as fromCollection from './collection.reducer';
 import * as fromRoot from '../../reducers';
 
 export interface BooksState {

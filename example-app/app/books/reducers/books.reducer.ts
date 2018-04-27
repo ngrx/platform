@@ -1,11 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '../models/book';
-import { BookActionsUnion, BookActionTypes } from '../actions/book';
+import { BookActionsUnion, BookActionTypes } from '../actions/book.actions';
 import {
   CollectionActionsUnion,
   CollectionActionTypes,
-} from '../actions/collection';
+} from '../actions/collection.actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling

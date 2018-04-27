@@ -9,7 +9,7 @@ import {
   Login,
   LoginFailure,
   LoginSuccess,
-} from '../actions/auth';
+} from '../actions/auth.actions';
 import { Authenticate } from '../models/user';
 import { AuthService } from '../services/auth.service';
 

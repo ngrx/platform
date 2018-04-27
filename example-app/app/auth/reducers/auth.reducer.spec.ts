@@ -1,6 +1,6 @@
-import { reducer } from './auth';
-import * as fromAuth from './auth';
-import { Login, LoginSuccess, Logout } from '../actions/auth';
+import { reducer } from './auth.reducer';
+import * as fromAuth from './auth.reducer';
+import { Login, LoginSuccess, Logout } from '../actions/auth.actions';
 import { Authenticate, User } from '../models/user';
 
 describe('AuthReducer', () => {

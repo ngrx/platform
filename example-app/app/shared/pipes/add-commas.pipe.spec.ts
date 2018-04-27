@@ -1,4 +1,4 @@
-import { AddCommasPipe } from './add-commas';
+import { AddCommasPipe } from './add-commas.pipe';
 
 describe('Pipe: Add Commas', () => {
   let pipe: AddCommasPipe;

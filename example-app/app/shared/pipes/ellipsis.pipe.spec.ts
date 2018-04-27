@@ -1,4 +1,4 @@
-import { EllipsisPipe } from './ellipsis';
+import { EllipsisPipe } from './ellipsis.pipe';
 
 describe('Pipe: Ellipsis', () => {
   let pipe: EllipsisPipe;

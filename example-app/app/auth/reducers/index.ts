@@ -4,8 +4,8 @@ import {
   ActionReducerMap,
 } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import * as fromAuth from './auth';
-import * as fromLoginPage from './login-page';
+import * as fromAuth from './auth.reducer';
+import * as fromLoginPage from './login-page.reducer';
 
 export interface AuthState {
   status: fromAuth.State;

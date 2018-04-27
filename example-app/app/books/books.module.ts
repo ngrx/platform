@@ -5,14 +5,14 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { ComponentsModule } from './components';
-import { BookEffects } from './effects/book';
-import { CollectionEffects } from './effects/collection';
-import { BookExistsGuard } from './guards/book-exists';
+import { BookEffects } from './effects/book.effects';
+import { CollectionEffects } from './effects/collection.effects';
+import { BookExistsGuard } from './guards/book-exists.guard';
 
-import { FindBookPageComponent } from './containers/find-book-page';
-import { ViewBookPageComponent } from './containers/view-book-page';
-import { SelectedBookPageComponent } from './containers/selected-book-page';
-import { CollectionPageComponent } from './containers/collection-page';
+import { FindBookPageComponent } from './containers/find-book-page.component';
+import { ViewBookPageComponent } from './containers/view-book-page.component';
+import { SelectedBookPageComponent } from './containers/selected-book-page.component';
+import { CollectionPageComponent } from './containers/collection-page.component';
 import { MaterialModule } from '../material';
 
 import { reducers } from './reducers';

@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { BookAuthorsComponent } from './book-authors';
-import { BookDetailComponent } from './book-detail';
-import { BookPreviewComponent } from './book-preview';
-import { BookPreviewListComponent } from './book-preview-list';
-import { BookSearchComponent } from './book-search';
+import { BookAuthorsComponent } from './book-authors.component';
+import { BookDetailComponent } from './book-detail.component';
+import { BookPreviewComponent } from './book-preview.component';
+import { BookPreviewListComponent } from './book-preview-list.component';
+import { BookSearchComponent } from './book-search.component';
 
 import { PipesModule } from '../../shared/pipes';
 import { MaterialModule } from '../../material';

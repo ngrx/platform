@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SelectedBookPageComponent } from './selected-book-page';
+import { SelectedBookPageComponent } from './selected-book-page.component';
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
 
-import * as CollectionActions from '../actions/collection';
+import * as CollectionActions from '../actions/collection.actions';
 import * as fromBooks from '../reducers';
-import { BookDetailComponent } from '../components/book-detail';
+import { BookDetailComponent } from '../components/book-detail.component';
 import { Book, generateMockBook } from '../models/book';
-import { BookAuthorsComponent } from '../components/book-authors';
-import { AddCommasPipe } from '../../shared/pipes/add-commas';
+import { BookAuthorsComponent } from '../components/book-authors.component';
+import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
 
 describe('Selected Book Page', () => {
   let fixture: ComponentFixture<SelectedBookPageComponent>;

@@ -16,7 +16,7 @@ import {
   RemoveBook,
   RemoveBookFail,
   RemoveBookSuccess,
-} from './../actions/collection';
+} from './../actions/collection.actions';
 
 @Injectable()
 export class CollectionEffects {

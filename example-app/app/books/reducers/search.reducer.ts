@@ -1,4 +1,4 @@
-import { BookActionTypes, BookActionsUnion } from '../actions/book';
+import { BookActionTypes, BookActionsUnion } from '../actions/book.actions';
 
 export interface State {
   ids: string[];
