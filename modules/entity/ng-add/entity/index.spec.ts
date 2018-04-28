@@ -7,7 +7,7 @@ import { Schema as EntityOptions } from './schema';
 import {
   getProjectPath,
   createWorkspace,
-} from '../../../schematics/src/utility/test/create-workspace';
+} from '../../../../utility/test/create-workspace';
 
 describe('Entity Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

@@ -1,13 +1,17 @@
 {
   "extends": ["@schematics/angular"],
   "schematics": {
+    "ng-add": {
+      "description": "Initialize Library",
+      "factory": "./ng-add/index#ngAdd"
+    },
+
     "action": {
       "aliases": ["a"],
       "factory": "./ng-add/action",
       "schema": "./ng-add/action/schema.json",
       "description": "Add store actions"
     },
-
     "container": {
       "aliases": ["co"],
       "factory": "./ng-add/container",

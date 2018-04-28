@@ -7,7 +7,7 @@ import { Schema as StoreOptions } from './schema';
 import {
   getProjectPath,
   createWorkspace,
-} from '../../../schematics/src/utility/test/create-workspace';
+} from '../../../../utility/test/create-workspace';
 
 describe('Store Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

@@ -1,6 +1,10 @@
 {
   "extends": ["@schematics/angular"],
   "schematics": {
+    "ng-add": {
+      "description": "Initialize Library",
+      "factory": "./ng-add/index#ngAdd"
+    },
     "entity": {
       "aliases": ["en"],
       "factory": "./ng-add/entity",

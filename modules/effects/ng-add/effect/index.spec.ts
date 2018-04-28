@@ -7,12 +7,12 @@ import {
   createAppModule,
   getFileContent,
   createAppModuleWithEffects,
-} from '../../../schematics/src/utility/test';
+} from '../../../../utility/test';
 import { Schema as EffectOptions } from './schema';
 import {
   getProjectPath,
   createWorkspace,
-} from '../../../schematics/src/utility/test/create-workspace';
+} from '../../../../utility/test/create-workspace';
 
 describe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

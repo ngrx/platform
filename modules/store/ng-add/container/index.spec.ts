@@ -7,7 +7,7 @@ import { Schema as ContainerOptions } from './schema';
 import {
   createWorkspace,
   getProjectPath,
-} from '../../../schematics/src/utility/test/create-workspace';
+} from '../../../../utility/test/create-workspace';
 
 describe('Container Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

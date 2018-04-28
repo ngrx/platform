@@ -1,6 +1,11 @@
 {
   "extends": ["@ngrx/store"],
   "schematics": {
+    "ng-add": {
+      "description": "Initialize Library",
+      "factory": "./ng-add/index#ngAdd"
+    },
+
     "effect": {
       "aliases": ["ef"],
       "factory": "./ng-add/effect",

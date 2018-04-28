@@ -7,7 +7,7 @@ import { Schema as ActionOptions } from './schema';
 import {
   getProjectPath,
   createWorkspace,
-} from '../../../schematics/src/utility/test/create-workspace';
+} from '../../../../utility/test/create-workspace';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
