@@ -1,0 +1,11 @@
+{
+  "extends": ["@schematics/angular"],
+  "schematics": {
+    "entity": {
+      "aliases": ["en"],
+      "factory": "./ng-add/entity",
+      "schema": "./ng-add/entity/schema.json",
+      "description": "Add entity state"
+    }
+  }
+}

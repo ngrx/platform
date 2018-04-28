@@ -4,13 +4,14 @@ import {
   Tree,
   chain,
   schematic,
+  externalSchematic,
 } from '@angular-devkit/schematics';
 import { Schema as FeatureOptions } from './schema';
 
 export default function(options: FeatureOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     return chain([
-      schematic('action', {
+      externalSchematic('@ngrx/store', 'action', {
         flat: options.flat,
         group: options.group,
         name: options.name,
@@ -18,7 +19,7 @@ export default function(options: FeatureOptions): Rule {
         project: options.project,
         spec: false,
       }),
-      schematic('reducer', {
+      externalSchematic('@ngrx/store', 'reducer', {
         flat: options.flat,
         group: options.group,
         module: options.module,

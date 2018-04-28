@@ -1,0 +1,30 @@
+{
+  "extends": ["@schematics/angular"],
+  "schematics": {
+    "action": {
+      "aliases": ["a"],
+      "factory": "./ng-add/action",
+      "schema": "./ng-add/action/schema.json",
+      "description": "Add store actions"
+    },
+
+    "container": {
+      "aliases": ["co"],
+      "factory": "./ng-add/container",
+      "schema": "./ng-add/container/schema.json",
+      "description": "Add store container component"
+    },
+    "reducer": {
+      "aliases": ["r"],
+      "factory": "./ng-add/reducer",
+      "schema": "./ng-add/reducer/schema.json",
+      "description": "Add state reducer"
+    },
+    "store": {
+      "aliases": ["st"],
+      "factory": "./ng-add/store",
+      "schema": "./ng-add/store/schema.json",
+      "description": "Adds initial setup for state managment"
+    }
+  }
+}

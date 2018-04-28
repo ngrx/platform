@@ -1,5 +1,8 @@
 /dist
 /modules/schematics/src/*/files/*
+/modules/entity/ng-add/*/files/*
+/modules/effects/ng-add/*/files/*
+/modules/store/ng-add/*/files/*
 package-lock.json
 package.json
 yarn.lock

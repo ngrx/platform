@@ -14,14 +14,14 @@ import {
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
+import * as stringUtils from '../../../schematics/src/strings';
 import { Schema as EntityOptions } from './schema';
 import {
   addReducerToState,
   addReducerImportToNgModule,
-} from '../utility/ngrx-utils';
-import { findModuleFromOptions } from '../utility/find-module';
-import { getProjectPath } from '../utility/project';
+} from '../../../schematics/src/utility/ngrx-utils';
+import { findModuleFromOptions } from '../../../schematics/src/utility/find-module';
+import { getProjectPath } from '../../../schematics/src/utility/project';
 
 export default function(options: EntityOptions): Rule {
   return (host: Tree, context: SchematicContext) => {

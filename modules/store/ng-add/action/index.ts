@@ -14,9 +14,9 @@ import {
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
+import * as stringUtils from '../../../schematics/src/strings';
 import { Schema as ActionOptions } from './schema';
-import { getProjectPath } from '../utility/project';
+import { getProjectPath } from '../../../schematics/src/utility/project';
 
 export default function(options: ActionOptions): Rule {
   return (host: Tree, context: SchematicContext) => {

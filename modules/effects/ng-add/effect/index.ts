@@ -15,16 +15,16 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
-import { addImportToModule } from '../utility/ast-utils';
-import { InsertChange } from '../utility/change';
+import * as stringUtils from '../../../schematics/src/strings';
+import { addImportToModule } from '../../../schematics/src/utility/ast-utils';
+import { InsertChange } from '../../../schematics/src/utility/change';
 import {
   buildRelativePath,
   findModuleFromOptions,
-} from '../utility/find-module';
+} from '../../../schematics/src/utility/find-module';
 import { Schema as EffectOptions } from './schema';
-import { insertImport } from '../utility/route-utils';
-import { getProjectPath } from '../utility/project';
+import { insertImport } from '../../../schematics/src/utility/route-utils';
+import { getProjectPath } from '../../../schematics/src/utility/project';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {

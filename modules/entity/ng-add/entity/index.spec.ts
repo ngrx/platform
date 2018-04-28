@@ -7,11 +7,11 @@ import { Schema as EntityOptions } from './schema';
 import {
   getProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics/src/utility/test/create-workspace';
 
 describe('Entity Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
-    '@ngrx/schematics',
+    '@ngrx/entity',
     path.join(__dirname, '../../collection.json')
   );
   const defaultOptions: EntityOptions = {

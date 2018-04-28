@@ -4,15 +4,15 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as ReducerOptions } from './schema';
-import { createReducers } from '../utility/test/create-reducers';
+import { createReducers } from '../../../schematics/src/utility/test/create-reducers';
 import {
   getProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics/src/utility/test/create-workspace';
 
 describe('Reducer Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
-    '@ngrx/schematics',
+    '@ngrx/store',
     path.join(__dirname, '../../collection.json')
   );
   const defaultOptions: ReducerOptions = {
