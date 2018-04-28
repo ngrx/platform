@@ -24,5 +24,6 @@
   "ng-update": {
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
   },
+  "schematics": "./collection.json",
   "sideEffects": false
 }

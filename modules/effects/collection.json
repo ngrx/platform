@@ -1,0 +1,22 @@
+{
+  "extends": ["@ngrx/store"],
+  "schematics": {
+    "ng-add": {
+      "description": "Initialize Library",
+      "factory": "./ng-add/index#ngAdd"
+    },
+
+    "effect": {
+      "aliases": ["ef"],
+      "factory": "./ng-add/effect",
+      "schema": "./ng-add/effect/schema.json",
+      "description": "Add side effect class"
+    },
+    "feature": {
+      "aliases": ["f"],
+      "factory": "./ng-add/feature",
+      "schema": "./ng-add/feature/schema.json",
+      "description": "Add feature state"
+    }
+  }
+}

@@ -28,7 +28,10 @@
     "dist",
     "node_modules",
     "**/*/node_modules",
-    "modules/schematics/src/*/files/**/*"
+    "modules/schematics/src/*/files/**/*",
+    "modules/effects/ng-add/*/files/**/*",
+    "modules/entity/ng-add/*/files/**/*",
+    "modules/store/ng-add/*/files/**/*"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

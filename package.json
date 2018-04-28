@@ -54,7 +54,7 @@
       "**/*.spec",
       "**/spec/**/*",
       "/modules/schematics/src/*/files/**/*",
-      "**/schematics/src/utility/*"
+      "**/../utility/*"
     ],
     "include": [
       "**/*.ts"
@@ -168,8 +168,9 @@
     ],
     "mapCoverage": true,
     "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/modules/*.*/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/modules/*.*/",
+      "<rootDir>/utility/"
     ],
     "moduleNameMapper": {
       "^@ngrx/(?!db)(.*)": "<rootDir>/modules/$1"
@@ -178,7 +179,6 @@
       "node_modules/(?!@ngrx)"
     ],
     "modulePathIgnorePatterns": [
-      "dist"
-    ]
+      "dist"    ]
   }
 }
