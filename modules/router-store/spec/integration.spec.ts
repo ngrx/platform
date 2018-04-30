@@ -540,7 +540,10 @@ describe('integration spec', () => {
     const store = TestBed.get(Store);
     const log = logOfRouterAndStore(router, store);
 
-    store.dispatch({ type: ROUTER_NAVIGATION, payload: {routerState: {url: '/next'}} });
+    store.dispatch({
+      type: ROUTER_NAVIGATION,
+      payload: { routerState: { url: '/next' } },
+    });
     waitForNavigation(router)
       .then(() => {
         router.navigate(['/']);
@@ -564,11 +567,10 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
           { type: 'router', event: 'ResolveEnd', url: '/' },
-          { type: 'router', event: 'NavigationEnd', url: '/' }
+          { type: 'router', event: 'NavigationEnd', url: '/' },
         ]);
         done();
       });
-
   });
 });
 
