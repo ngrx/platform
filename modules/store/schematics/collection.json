@@ -1,0 +1,10 @@
+{
+  "schematics": {
+    "ng-add": {
+      "aliases": ["init"],
+      "factory": "./ng-add",
+      "schema": "./ng-add/schema.json",
+      "description": "Adds initial setup for state managment"
+    }
+  }
+}

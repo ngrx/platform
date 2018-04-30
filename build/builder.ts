@@ -4,6 +4,7 @@ import { createBuilder } from './util';
 export default createBuilder([
   ['Removing "./dist" Folder', tasks.removeDistFolder],
   ['Compiling packages with NGC', tasks.compilePackagesWithNgc],
+  ['Compiling schematics with TSC', tasks.compileModuleSchematicsWithTsc],
   ['Bundling FESMs', tasks.bundleFesms],
   ['Down-leveling FESMs to ES5', tasks.downLevelFesmsToES5],
   ['Creating UMD Bundles', tasks.createUmdBundles],

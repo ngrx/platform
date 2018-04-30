@@ -49,6 +49,20 @@ async function _compilePackagesWithNgc(pkg: string) {
   ]);
 }
 
+export async function compileModuleSchematicsWithTsc(config: Config) {
+  const pkgs = util
+    .getTopLevelPackages(config)
+    .filter(pkg => util.hasSchematics(config, pkg));
+
+  await mapAsync(pkgs, _compileSchematicsWithTsc);
+}
+
+async function _compileSchematicsWithTsc(pkg: string) {
+  await util.exec('tsc', [
+    `-p ./modules/${pkg}/schematics/tsconfig-schematic.json`,
+  ]);
+}
+
 /**
  * Uses Rollup to bundle the JavaScript into a single flat file called
  * a FESM (Flat Ecma Script Module)
@@ -338,6 +352,11 @@ export function mapAsync<T>(
  * Copy schematics files
  */
 export async function copySchematicFiles(config: Config) {
+  await _copyPlatformSchematicsFiles(config);
+  await _copyModulesSchematicFiles(config);
+}
+
+async function _copyPlatformSchematicsFiles(config: Config) {
   const packages = util
     .getTopLevelPackages(config)
     .filter(pkg => !util.shouldBundle(config, pkg));
@@ -350,6 +369,28 @@ export async function copySchematicFiles(config: Config) {
   );
   const templateFiles = await util.getListOfFiles(
     `./modules/?(${packages.join('|')})/src/*/files/*`
+  );
+  const files = [...collectionFiles, ...schemaFiles, ...templateFiles];
+
+  await mapAsync(files, async file => {
+    const target = file.replace('modules/', 'dist/');
+    await util.copy(file, target);
+  });
+}
+
+async function _copyModulesSchematicFiles(config: Config) {
+  const packages = util
+    .getTopLevelPackages(config)
+    .filter(pkg => util.hasSchematics(config, pkg));
+
+  const collectionFiles = await util.getListOfFiles(
+    `./modules/?(${packages.join('|')})/schematics/collection.json`
+  );
+  const schemaFiles = await util.getListOfFiles(
+    `./modules/?(${packages.join('|')})/schematics/**/schema.*`
+  );
+  const templateFiles = await util.getListOfFiles(
+    `./modules/?(${packages.join('|')})/schematics/**/files/*`
   );
   const files = [...collectionFiles, ...schemaFiles, ...templateFiles];
 
