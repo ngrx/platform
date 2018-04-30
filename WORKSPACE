@@ -12,9 +12,9 @@ workspace(name = "ngrx")
 # Fetch and install the NodeJS rules
 http_archive(
     name = "build_bazel_rules_nodejs",
-    url = "https://github.com/bazelbuild/rules_nodejs/archive/0.6.0.zip",
-    strip_prefix = "rules_nodejs-0.6.0",
-    sha256 = "e8a2bb5ca51fbafb244bc507bcebcae33a63d969f47413b319a8dcce032845bf",
+    url = "https://github.com/bazelbuild/rules_nodejs/archive/0.7.0.zip",
+    strip_prefix = "rules_nodejs-0.7.0",
+    sha256 = "d0cecf6b149d431ee8349f683d1db6a2a881ee81d8066a66c1b112a4b02748de",
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_repositories", "yarn_install")
@@ -26,9 +26,9 @@ node_repositories(package_json = ["//:package.json"])
 # Fetch and install the TypeScript rules
 http_archive(
     name = "build_bazel_rules_typescript",
-    url = "https://github.com/bazelbuild/rules_typescript/archive/0.11.1.zip",
-    strip_prefix = "rules_typescript-0.11.1",
-    sha256 = "7406bea7954e1c906f075115dfa176551a881119f6820b126ea1eacb09f34a1a",
+    url = "https://github.com/bazelbuild/rules_typescript/archive/0.12.2.zip",
+    strip_prefix = "rules_typescript-0.12.2",
+    sha256 = "5ccbbca4f8ad2da5b4e04aadedaad3383342df0e25954e151aa51e10c353d1c2",
 )
 
 load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
