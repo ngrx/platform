@@ -213,3 +213,61 @@ class MyAppComponent {
   }
 }
 ```
+
+## Composing Selectors with RxJS Operators
+
+https://github.com/ngrx/platform/commit/77eed24
+
+
+Breaking down the basics:
+
+```ts
+import { filter } from 'rxjs/operators';
+
+store
+  .select(selectProjectedValues)
+  .pipe(
+    filter(val => val !== undefined)
+  )
+  .subscribe(/* .. */);
+```
+
+Refactoring to use only pipeable operators:
+
+```ts
+import { map, filter } from 'rxjs/operators';
+
+store.pipe(
+  map(state => selectProjectedValues(state)),
+  filter(val => val !== undefined)
+)
+```
+
+Refactoring to leverage the `select()` utility function:
+
+```ts
+import { select } from '@ngrx/store';
+import { map, filter } from 'rxjs/operators';
+
+store.pipe(
+  select(selectProjectedValues(state),
+  filter(val => val !== undefined)
+)
+```
+
+Refactoring to compose a custom pipeable operator:
+
+```ts
+import { select } from '@ngrx/store';
+import { pipe } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+
+export const selectProjectedValuesFiltered = pipe(
+  select(selectProjectedValues),
+  filter(val => val !== undefined)
+)
+
+store.pipe(selectProjectedValuesFiltered)
+     .subcribe(/* .. */);
+```
+
