@@ -18,7 +18,10 @@ export function getProjectPath(
   }
 
   if (options.path === undefined) {
-    return `/${project.root}/src/app`;
+    const projectDirName =
+      project.projectType === 'application' ? 'app' : 'lib';
+
+    return `${project.root ? `/${project.root}` : ''}/src/${projectDirName}`;
   }
 
   return options.path;
