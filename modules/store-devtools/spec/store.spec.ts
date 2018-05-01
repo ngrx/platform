@@ -177,6 +177,24 @@ describe('Store Devtools', () => {
       expect(getState()).toBe(2);
     });
 
+    it('should refresh to show current state as is', () => {
+      // actionId 0 = @@INIT
+      store.dispatch({ type: 'INCREMENT' });
+      store.dispatch({ type: 'INCREMENT' });
+      store.dispatch({ type: 'INCREMENT' });
+      store.dispatch({ type: 'INCREMENT' });
+
+      expect(getState()).toBe(4);
+      expect(getLiftedState().stagedActionIds).toEqual([0, 1, 2, 3, 4]);
+      expect(getLiftedState().skippedActionIds).toEqual([]);
+
+      devtools.refresh();
+
+      expect(getState()).toBe(4);
+      expect(getLiftedState().stagedActionIds).toEqual([0, 1, 2, 3, 4]);
+      expect(getLiftedState().skippedActionIds).toEqual([]);
+    });
+
     it('should reset to initial state', () => {
       store.dispatch({ type: 'INCREMENT' });
       expect(getState()).toBe(1);

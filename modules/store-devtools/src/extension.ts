@@ -60,6 +60,7 @@ export class DevtoolsExtension {
 
   liftedActions$: Observable<any>;
   actions$: Observable<any>;
+  start$: Observable<any>;
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
@@ -169,10 +170,11 @@ export class DevtoolsExtension {
 
     const actionsUntilStop$ = actions$.pipe(takeUntil(stop$));
     const liftedUntilStop$ = liftedActions$.pipe(takeUntil(stop$));
+    this.start$ = start$.pipe(takeUntil(stop$));
 
     // Only take the action sources between the start/stop events
-    this.actions$ = start$.pipe(switchMap(() => actionsUntilStop$));
-    this.liftedActions$ = start$.pipe(switchMap(() => liftedUntilStop$));
+    this.actions$ = this.start$.pipe(switchMap(() => actionsUntilStop$));
+    this.liftedActions$ = this.start$.pipe(switchMap(() => liftedUntilStop$));
   }
 
   private unwrapAction(action: Action) {
