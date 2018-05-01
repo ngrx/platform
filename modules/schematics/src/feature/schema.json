@@ -12,7 +12,11 @@
     },
     "name": {
       "description": "The name of the feature.",
-      "type": "string"
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
     "flat": {
       "type": "boolean",
@@ -42,5 +46,5 @@
       "aliases": ["g"]
     }
   },
-  "required": ["name"]
+  "required": []
 }
