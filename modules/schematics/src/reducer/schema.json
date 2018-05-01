@@ -6,7 +6,11 @@
   "properties": {
     "name": {
       "description": "The name of the reducer.",
-      "type": "string"
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
     "path": {
       "type": "string",
@@ -46,5 +50,5 @@
       "aliases": ["g"]
     }
   },
-  "required": ["name"]
+  "required": []
 }

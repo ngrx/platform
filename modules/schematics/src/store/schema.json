@@ -6,7 +6,11 @@
   "properties": {
     "name": {
       "description": "The name of the state.",
-      "type": "string"
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
     "path": {
       "type": "string",
@@ -47,5 +51,5 @@
       "alias": "si"
     }
   },
-  "required": ["name"]
+  "required": []
 }
