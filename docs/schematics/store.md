@@ -56,7 +56,7 @@ Generate an `Admin` feature state within the `admin` folder and register it with
 
 ```sh
 ng generate module admin --flat false
-ng generate store Admin -m admin/admin.module.ts
+ng generate store admin/Admin -m admin/admin.module.ts
 ```
 
 Generate the initial state management files within a `store` folder and register it within the `app.module.ts`.
