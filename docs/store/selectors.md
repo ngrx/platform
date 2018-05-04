@@ -214,60 +214,119 @@ class MyAppComponent {
 }
 ```
 
-## Composing Selectors with RxJS Operators
+### Composing Selectors with RxJS Operators
 
-https://github.com/ngrx/platform/commit/77eed24
+Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
+An advanced technique is to combine ngrx selectors with rxjs operators.
 
+#### Step 1: Breaking down the basics
 
-Breaking down the basics:
+Let's pretend we have a selector called `selectValues` and the component for displaying the data is only interested in defined values, i.e., it should not display empty states.
+The straight-forward solution is to apply the rjxs `filter` operator to the Observable returned by the store:
 
 ```ts
 import { filter } from 'rxjs/operators';
 
 store
-  .select(selectProjectedValues)
+  .select(selectValues)
   .pipe(
     filter(val => val !== undefined)
   )
   .subscribe(/* .. */);
 ```
 
-Refactoring to use only pipeable operators:
+#### Step 2: Refactoring to pipeable operators
+
+The same behaviour can be achieved by re-writing the above piece of code to use only rxjs pipeable operators instead of the `store.select()` function:
 
 ```ts
 import { map, filter } from 'rxjs/operators';
 
 store.pipe(
-  map(state => selectProjectedValues(state)),
+  map(state => selectValues(state)),
   filter(val => val !== undefined)
-)
+).subscribe(/* .. */);
 ```
 
-Refactoring to leverage the `select()` utility function:
+The above can be further re-written to use the `select()` utility function from ngrx:
 
 ```ts
 import { select } from '@ngrx/store';
 import { map, filter } from 'rxjs/operators';
 
 store.pipe(
-  select(selectProjectedValues(state),
+  select(selectValues(state)),
   filter(val => val !== undefined)
-)
+).subscribe(/* .. */);
 ```
 
-Refactoring to compose a custom pipeable operator:
+#### Solution: Extracting a pipeable operator
+
+To make the `select()` and `filter()` behaviour a re-usable piece of code, we extract a [pipeable operator](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) using the rxjs `pipe()` utility function:
 
 ```ts
 import { select } from '@ngrx/store';
 import { pipe } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
-export const selectProjectedValuesFiltered = pipe(
+export const selectFilteredValues = pipe(
   select(selectProjectedValues),
   filter(val => val !== undefined)
-)
+);
 
-store.pipe(selectProjectedValuesFiltered)
+store.pipe(selectFilteredValues)
      .subcribe(/* .. */);
 ```
+
+#### Advanced Example: Select the last {n} state transitions
+
+Let's examine the technique of combining ngrx selectors and rxjs operators in an advanced example.
+
+In this example, we will write a ngrx selector function that projects values from two different slices of the application state.
+The projected state will emit a value when both slieces of state have a value.
+Otherwise, the selector will emit an `undefined` value.
+
+```ts
+// Compose a selector that projects two different pieces of state
+export const selectProjectedValues = createSelector(
+  selectFoo,
+  selectBar,
+  (foo, bar) => {
+    if (foo && bar) {
+      return { foo, bar };
+    }
+
+    return undefined;
+  }
+);
+```
+
+Then, the component should visualize the history of state transitions.
+We are not only interested in the current state but rather like to display the last `n` pieces of state.
+Meaning that we will map a stream of state values (`1`, `2`, `3`)  to an array of state values (`[1, 2, 3]`).
+
+```ts
+
+// Compose a pipeable operators that combines the last `count` state values in an array
+export const selectLastStateTransitions = (count: number) => {
+
+  return pipe(
+    select(selectProjectedValues),
+    scan((acc, curr) => {
+      return [ curr, acc[0], acc[1] ].filter(val => val !== undefined);
+    }, [] as {foo: number; bar: string}[])
+  );
+}
+```
+
+Finally, we will subscribe to the store.
+
+```ts
+// Subscribe to the store using the custom pipeable operator
+store.pipe(selectLastStateTransitions(3))
+     .subscribe(/* .. */);
+```
+
+See the [advanced example live in action in a Stackblitz](https://stackblitz.com/edit/angular-ngrx-effects-1rj88y?file=app%2Fstore%2Ffoo.ts)
+
 
