@@ -270,7 +270,7 @@ import { pipe } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 export const selectFilteredValues = pipe(
-  select(selectProjectedValues),
+  select(selectValues),
   filter(val => val !== undefined)
 );
 
@@ -306,7 +306,6 @@ We are not only interested in the current state but rather like to display the l
 Meaning that we will map a stream of state values (`1`, `2`, `3`)  to an array of state values (`[1, 2, 3]`).
 
 ```ts
-
 // Compose a pipeable operators that combines the last `count` state values in an array
 export const selectLastStateTransitions = (count: number) => {
 
