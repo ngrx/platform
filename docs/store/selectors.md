@@ -214,7 +214,7 @@ class MyAppComponent {
 }
 ```
 
-### Composing Selectors with RxJS Operators
+### Combining Selectors with RxJS Operators
 
 Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
 An advanced technique is to combine ngrx selectors with rxjs operators.
