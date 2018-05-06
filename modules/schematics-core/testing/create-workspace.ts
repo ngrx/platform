@@ -26,7 +26,7 @@ const defaultModuleOptions = {
   flat: false,
 };
 
-export function getProjectPath(
+export function getTestProjectPath(
   workspaceOptions: any = defaultWorkspaceOptions,
   appOptions: any = defaultAppOptions
 ) {

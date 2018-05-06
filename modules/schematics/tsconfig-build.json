@@ -8,7 +8,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "../../dist/packages/schematics",
-    "paths": {},
+    "paths": {
+      "@ngrx/schematics-core": ["../schematics-core"]
+    },
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,

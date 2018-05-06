@@ -79,11 +79,11 @@
     "@ngrx/db": "^2.2.0-beta.0",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
-    "ngrx-store-freeze": "^0.2.1",
+    "ngrx-store-freeze": "^0.2.2",
     "opencollective": "^1.0.3",
     "rxjs": "6.0.0-rc.0",
     "rxjs-compat": "6.0.0-rc.0",
-    "zone.js": "^0.8.20"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.5.0",
