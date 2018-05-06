@@ -38,7 +38,7 @@ To use `@ngrx/schematics` as the default collection in your Angular CLI project,
 add it to your `.angular-cli.json`:
 
 ```sh
-ng set defaults.schematics.collection=@ngrx/schematics
+ng config cli.defaultCollection @ngrx/schematics
 ```
 
 The [collection schema](../../modules/schematics/collection.json) also has aliases to the most common blueprints used to generate files.
@@ -70,4 +70,5 @@ ng generate effect App --root --module app.module.ts --collection @ngrx/schemati
 * [Store](store.md)
 
 ## API Documentation
- * [Integration with Ionic](ionic.md)
+
+* [Integration with Ionic](ionic.md)
