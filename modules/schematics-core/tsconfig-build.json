@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../../dist/packages/schematics-core",
+    "rootDir": ".",
+    "sourceMap": true,
+    "inlineSources": true,
+    "target": "es5",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "files": ["index.ts"],
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true,
+    "enableSummariesForJit": false
+  }
+}

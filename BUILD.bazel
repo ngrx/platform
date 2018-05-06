@@ -17,6 +17,7 @@ filegroup(
         ext,
     ]) for pkg in [
         "@angular",
+        "@angular-devkit",
         "jasmine",
         "jasmine-marbles",
         "typescript",
