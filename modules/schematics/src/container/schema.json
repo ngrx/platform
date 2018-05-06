@@ -91,14 +91,12 @@
     },
     "state": {
       "type": "string",
-      "description": "Specifies the path to the state exports.",
-      "alias": "s"
+      "description": "Specifies the path to the state exports."
     },
     "stateInterface": {
       "type": "string",
       "default": "State",
-      "description": "Specifies the interface for the state.",
-      "alias": "si"
+      "description": "Specifies the interface for the state."
     }
   },
   "required": []
