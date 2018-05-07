@@ -19,10 +19,13 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "NG_VERSION",
-    "rxjs": "RXJS_VERSION"
+    "rxjs": "RXJS_VERSION",
+    "@angular-devkit/core": "NG_DEVKIT_VERSION",
+    "@angular-devkit/schematics": "NG_DEVKIT_VERSION"
   },
   "ng-update": {
-    "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
+    "migrations": "NG_UPDATE_MIGRATIONS"
   },
   "sideEffects": false
 }
