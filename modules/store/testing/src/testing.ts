@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import {
   StateObservable,
   Store,
@@ -6,6 +7,7 @@ import {
 } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 
+@Injectable()
 export class MockStore<T> extends Store<T> {
   private stateSubject = new BehaviorSubject<T>({} as T);
 
