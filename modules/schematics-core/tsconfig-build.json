@@ -7,10 +7,7 @@
     "strictPropertyInitialization": false,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../../dist/packages/schematics",
-    "paths": {
-      "@ngrx/schematics-core": ["../schematics-core"]
-    },
+    "outDir": "../../dist/packages/schematics-core",
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
@@ -19,16 +16,8 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "files": [
-    "src/action/index.ts",
-    "src/container/index.ts",
-    "src/effect/index.ts",
-    "src/entity/index.ts",
-    "src/feature/index.ts",
-    "src/reducer/index.ts",
-    "src/store/index.ts"
-  ],
-  "exclude": ["src/*/files/**/*"],
+  "files": ["index.ts"],
+  "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
     "enableSummariesForJit": false

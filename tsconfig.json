@@ -17,6 +17,8 @@
     "paths": {
       "@ngrx/effects": ["./modules/effects"],
       "@ngrx/store": ["./modules/store"],
+      "@ngrx/schematics-core": ["./modules/schematics-core"],
+      "@ngrx/schematics-core/testing": ["./modules/schematics-core/testing"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
       "@ngrx/router-store": ["./modules/router-store"],
       "@ngrx/entity": ["./modules/entity"],
