@@ -55,6 +55,7 @@ import { AppComponent } from './app.component';
     RouterModule.forRoot([
       // routes
     ]),
+    // Connects RouterModule with StoreModule
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router', // name of reducer key
     }),
