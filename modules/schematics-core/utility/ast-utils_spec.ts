@@ -8,8 +8,8 @@
 import { tags } from '@angular-devkit/core';
 import { VirtualTree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { Change, InsertChange } from '../utility/change';
-import { getFileContent } from '../utility/test';
+import { Change, InsertChange } from './change';
+import { getFileContent } from '../testing';
 import { addExportToModule } from './ast-utils';
 
 function getTsSource(path: string, content: string): ts.SourceFile {

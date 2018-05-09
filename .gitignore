@@ -70,3 +70,7 @@ output
 tmp
 
 example-dist/
+
+schematics-core
+!modules/schematics-core
+*.tgz

@@ -35,9 +35,4 @@ export const packages: PackageDescription[] = [
     hasTestingModule: false,
     bundle: true,
   },
-  {
-    name: 'schematics',
-    hasTestingModule: false,
-    bundle: false,
-  },
 ];

@@ -4,11 +4,12 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as ReducerOptions } from './schema';
-import { createReducers } from '../utility/test/create-reducers';
+import {} from '../../schematics-core';
 import {
-  getProjectPath,
+  getTestProjectPath,
+  createReducers,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics-core/testing';
 
 describe('Reducer Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -22,7 +23,7 @@ describe('Reducer Schematic', () => {
     spec: false,
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

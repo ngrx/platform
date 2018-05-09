@@ -5,9 +5,9 @@ import {
 import * as path from 'path';
 import { Schema as ActionOptions } from './schema';
 import {
-  getProjectPath,
+  getTestProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics-core/testing';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -23,7 +23,7 @@ describe('Action Schematic', () => {
     flat: true,
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

@@ -4,10 +4,7 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import {
-  createWorkspace,
-  getProjectPath,
-} from './utility/test/create-workspace';
+import { getTestProjectPath, createWorkspace } from './schematics-core/testing';
 
 describe('CLI Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -20,7 +17,7 @@ describe('CLI Schematic', () => {
     project: 'bar',
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

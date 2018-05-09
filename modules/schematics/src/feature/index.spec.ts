@@ -4,10 +4,11 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as FeatureOptions } from './schema';
+import {} from '../../schematics-core';
 import {
-  getProjectPath,
+  getTestProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics-core/testing';
 
 describe('Feature Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -23,7 +24,7 @@ describe('Feature Schematic', () => {
     group: false,
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

@@ -4,10 +4,11 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as EntityOptions } from './schema';
+import {} from '../../schematics-core';
 import {
-  getProjectPath,
+  getTestProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics-core/testing';
 
 describe('Entity Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -21,7 +22,7 @@ describe('Entity Schematic', () => {
     spec: false,
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

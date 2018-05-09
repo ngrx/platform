@@ -4,10 +4,11 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as ContainerOptions } from './schema';
+import {} from '../../schematics-core';
 import {
+  getTestProjectPath,
   createWorkspace,
-  getProjectPath,
-} from '../utility/test/create-workspace';
+} from '../../../schematics-core/testing';
 
 describe('Container Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -29,7 +30,7 @@ describe('Container Schematic', () => {
     prefix: 'app',
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

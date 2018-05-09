@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -15,16 +14,16 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
-import { addImportToModule } from '../utility/ast-utils';
-import { InsertChange } from '../utility/change';
 import {
+  stringUtils,
+  insertImport,
   buildRelativePath,
+  addImportToModule,
+  InsertChange,
+  getProjectPath,
   findModuleFromOptions,
-} from '../utility/find-module';
+} from '../schematics-core';
 import { Schema as EffectOptions } from './schema';
-import { insertImport } from '../utility/route-utils';
-import { getProjectPath } from '../utility/project';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
