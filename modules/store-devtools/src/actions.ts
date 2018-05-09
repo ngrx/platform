@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 
 export const PERFORM_ACTION = 'PERFORM_ACTION';
+export const REFRESH = 'REFRESH';
 export const RESET = 'RESET';
 export const ROLLBACK = 'ROLLBACK';
 export const COMMIT = 'COMMIT';
@@ -22,6 +23,10 @@ export class PerformAction implements Action {
       );
     }
   }
+}
+
+export class Refresh implements Action {
+  readonly type = REFRESH;
 }
 
 export class Reset implements Action {
@@ -82,6 +87,7 @@ export class ImportState implements Action {
 
 export type All =
   | PerformAction
+  | Refresh
   | Reset
   | Rollback
   | Commit

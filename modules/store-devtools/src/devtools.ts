@@ -29,6 +29,7 @@ export class DevtoolsDispatcher extends ActionsSubject {}
 @Injectable()
 export class StoreDevtools implements Observer<any> {
   private stateSubscription: Subscription;
+  private extensionStartSubscription: Subscription;
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
   public state: Observable<any>;
@@ -95,11 +96,16 @@ export class StoreDevtools implements Observer<any> {
         }
       });
 
+    const extensionStartSubscription = extension.start$.subscribe(() => {
+      this.refresh();
+    });
+
     const liftedState$ = liftedStateSubject.asObservable() as Observable<
       LiftedState
     >;
     const state$ = liftedState$.pipe(map(unliftState));
 
+    this.extensionStartSubscription = extensionStartSubscription;
     this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;
     this.liftedState = liftedState$;
@@ -120,6 +126,10 @@ export class StoreDevtools implements Observer<any> {
 
   performAction(action: any) {
     this.dispatch(new Actions.PerformAction(action, +Date.now()));
+  }
+
+  refresh() {
+    this.dispatch(new Actions.Refresh());
   }
 
   reset() {
