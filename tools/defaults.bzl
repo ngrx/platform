@@ -5,8 +5,8 @@ load("@build_bazel_rules_nodejs//:defs.bzl",
      _jasmine_node_test="jasmine_node_test")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
-NG_VERSION = "^6.0.0 || ^6.0.0-rc.0"
-RXJS_VERSION = "^5.6.0-forward-compat.0 || ^6.0.0-beta.0"
+NG_VERSION = "^6.0.0"
+RXJS_VERSION = "^5.6.0-forward-compat.0 || ^6.0.0"
 
 NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
     "effects",
