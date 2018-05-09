@@ -4,7 +4,10 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { getTestProjectPath, createWorkspace } from './schematics-core/testing';
+import {
+  getTestProjectPath,
+  createWorkspace,
+} from '../../schematics-core/testing';
 
 describe('CLI Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
