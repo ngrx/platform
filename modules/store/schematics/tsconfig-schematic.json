@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../../../dist/packages/store/schematics",
+    "paths": {},
+    "rootDir": ".",
+    "sourceMap": true,
+    "inlineSources": true,
+    "target": "es5",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "files": ["ng-add/index.ts"],
+  "exclude": ["./*/files/**/*"],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true,
+    "enableSummariesForJit": false
+  }
+}

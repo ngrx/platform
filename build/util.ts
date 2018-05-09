@@ -182,8 +182,14 @@ export function baseDir(...dirs: string[]): string {
   return `"${path.resolve(__dirname, '../', ...dirs)}"`;
 }
 
-export function shouldBundle(config: Config, packageName: string) {
+export function shouldBundle(config: Config, packageName: string): boolean {
   const pkg = config.packages.find(pkg => pkg.name === packageName);
 
   return pkg ? pkg.bundle : false;
+}
+
+export function hasSchematics(config: Config, packageName: string): boolean {
+  const pkg = config.packages.find(pkg => pkg.name === packageName);
+
+  return pkg ? pkg.hasSchematics : false;
 }
