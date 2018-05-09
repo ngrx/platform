@@ -7,7 +7,7 @@ ts_library(
     name = "schematics",
     srcs = glob(
         [
-            "**/src/**/*.ts"
+            "**/src/**/*.ts",
         ],
         exclude = [
             "**/src/**/*.spec.ts",
@@ -15,7 +15,7 @@ ts_library(
         ],
     ),
     module_name = "@ngrx/schematics",
-    tsconfig = ":tsconfig-build.json"
+    tsconfig = ":tsconfig-build.json",
 )
 
 npm_package(
@@ -23,7 +23,7 @@ npm_package(
     srcs = [
         ":collection.json",
         ":package.json",
-        ":README.md"
+        ":README.md",
     ] + glob([
         "**/src/*/files/**/*",
         "**/schema.json",
@@ -31,5 +31,5 @@ npm_package(
     ]),
     deps = [
         ":schematics",
-    ]
+    ],
 )
