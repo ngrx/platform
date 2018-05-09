@@ -146,44 +146,6 @@ export function getTopLevelPackages(config: Config) {
   return config.packages.map(packageDescription => packageDescription.name);
 }
 
-export function getTestingPackages(config: Config) {
-  return flatMap(config.packages, ({ name, hasTestingModule }) => {
-    if (hasTestingModule) {
-      return [`${name}/testing`];
-    }
-
-    return [];
-  });
-}
-
-export function getAllPackages(config: Config) {
-  return flatMap(config.packages, ({ name, hasTestingModule }) => {
-    if (hasTestingModule) {
-      return [name, `${name}/testing`];
-    }
-
-    return [name];
-  });
-}
-
-export function getDestinationName(packageName: string) {
-  return packageName.replace('/testing', '-testing');
-}
-
-export function getTopLevelName(packageName: string) {
-  return packageName.replace('/testing', '');
-}
-
-export function getBottomLevelName(packageName: string) {
-  return packageName.includes('/testing') ? 'testing' : packageName;
-}
-
 export function baseDir(...dirs: string[]): string {
   return `"${path.resolve(__dirname, '../', ...dirs)}"`;
-}
-
-export function shouldBundle(config: Config, packageName: string) {
-  const pkg = config.packages.find(pkg => pkg.name === packageName);
-
-  return pkg ? pkg.bundle : false;
 }

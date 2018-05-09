@@ -1,5 +1,6 @@
 /dist
 /modules/schematics/src/*/files/*
+/tmp
 package-lock.json
 package.json
 yarn.lock
