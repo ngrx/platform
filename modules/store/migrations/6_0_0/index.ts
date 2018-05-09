@@ -30,7 +30,7 @@ export default function(): Rule {
       const suffix = match(firstChar, '^') || match(firstChar, '~');
 
       // TODO: remove beta
-      pkg.dependencies['@ngrx/store'] = `${suffix}6.0.0@beta.1`;
+      pkg.dependencies['@ngrx/store'] = `${suffix}6.0.0-beta.2`;
       tree.overwrite(pkgPath, JSON.stringify(pkg, null, 2));
       context.addTask(new NodePackageInstallTask());
     }

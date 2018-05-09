@@ -32,7 +32,7 @@ describe('Migration 6_0_0', () => {
       const { runner, tree } = setup(prefix);
       const newTree = runner.runSchematic('ngrx-store-migration-01', {}, tree);
       const pkg = JSON.parse(newTree.readContent(packagePath));
-      expect(pkg.dependencies['@ngrx/store']).toBe(`${prefix}6.0.0@beta.1`);
+      expect(pkg.dependencies['@ngrx/store']).toBe(`${prefix}6.0.0-beta.2`);
     });
   });
 });
