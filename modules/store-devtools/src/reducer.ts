@@ -427,7 +427,6 @@ export function liftReducerWith(
 
         break;
       }
-      case Actions.REFRESH:
       default: {
         // If the action is not recognized, it's a monitor action.
         // Optimization: a monitor action can't change history.
