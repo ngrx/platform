@@ -7,7 +7,7 @@ load("@build_bazel_rules_nodejs//:defs.bzl",
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^6.0.0"
 RXJS_VERSION = "^5.6.0-forward-compat.0 || ^6.0.0"
-NG_DEVKIT_VERSION = "^0.5.0"
+NG_DEVKIT_VERSION = "^0.6.0"
 
 NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
     "effects",
