@@ -12,7 +12,7 @@ export const initialState: State = {
 export function reducer(state = initialState, action: <% if(feature) { %><%= classify(name) %>Actions<% } else { %>Action<% } %>): State {
   switch (action.type) {
 <% if(feature) { %>
-    case <%= classify(name) %>ActionTypes.<%= classify(name) %>Action:
+    case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>s:
       return state;
 
 <% } %>
