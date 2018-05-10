@@ -75,7 +75,7 @@ export class SomeEffectsClass {
 
 Pass `{ dispatch: false }` to the decorator to prevent dispatching. 
 
-When an effect not dispatch an another action, the browser will crash because the effect is both 'subscribing' and 'dispatching'. This will causing an infinite loop. Common use case for `{ dispatch: false }` is logging and router navigation.
+Sometimes you don't want effects to dispatch an action, for example when you only want to log or navigate. But when an effect does not dispatch another action, the browser will crash because the effect is both 'subscribing' to and 'dispatching' the exact same action, causing an infinite loop. To prevent this, add { dispatch: false } to the decorator.
 
 Usage:
 
