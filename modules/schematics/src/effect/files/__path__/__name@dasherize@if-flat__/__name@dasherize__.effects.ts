@@ -6,7 +6,7 @@ import { Actions, Effect } from '@ngrx/effects';
 export class <%= classify(name) %>Effects {
 <% if(feature) { %>
   @Effect()
-  effect$ = this.actions$.ofType(<%= classify(name) %>ActionTypes.<%= classify(name) %>Action);
+  effect$ = this.actions$.ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s);
 <% } %>
   constructor(private actions$: Actions) {}
 }
