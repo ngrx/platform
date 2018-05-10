@@ -1,7 +1,7 @@
+import * as fs from 'fs';
+
 export interface PackageDescription {
   name: string;
-  hasTestingModule: boolean;
-  bundle: boolean;
 }
 
 export interface Config {
@@ -9,30 +9,19 @@ export interface Config {
   scope: string;
 }
 
-export const packages: PackageDescription[] = [
-  {
-    name: 'store',
-    hasTestingModule: false,
-    bundle: true,
-  },
-  {
-    name: 'effects',
-    hasTestingModule: true,
-    bundle: true,
-  },
-  {
-    name: 'router-store',
-    hasTestingModule: false,
-    bundle: true,
-  },
-  {
-    name: 'store-devtools',
-    hasTestingModule: false,
-    bundle: true,
-  },
-  {
-    name: 'entity',
-    hasTestingModule: false,
-    bundle: true,
-  },
-];
+const modulesDir = './modules/';
+export const packages: PackageDescription[] = fs
+  .readdirSync(modulesDir)
+  .filter(path => {
+    const stat = fs.statSync(`${modulesDir}${path}`);
+    const isDir = stat.isDirectory();
+
+    if (!isDir) {
+      return false;
+    }
+
+    const hasBuild = fs.existsSync(`${modulesDir}${path}/BUILD`);
+
+    return hasBuild;
+  })
+  .map(pkg => ({ name: pkg }));
