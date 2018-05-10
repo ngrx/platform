@@ -30,7 +30,7 @@ export class Add<%= classify(name) %> implements Action {
 export class Upsert<%= classify(name) %> implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Upsert<%= classify(name) %>;
 
-  constructor(public payload: { <%= camelize(name) %>: Update<<%= classify(name) %>> }) {}
+  constructor(public payload: { <%= camelize(name) %>: <%= classify(name) %> }) {}
 }
 
 export class Add<%= classify(name) %>s implements Action {
@@ -42,7 +42,7 @@ export class Add<%= classify(name) %>s implements Action {
 export class Upsert<%= classify(name) %>s implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Upsert<%= classify(name) %>s;
 
-  constructor(public payload: { <%= camelize(name) %>s: Update<<%= classify(name) %>>[] }) {}
+  constructor(public payload: { <%= camelize(name) %>s: <%= classify(name) %>[] }) {}
 }
 
 export class Update<%= classify(name) %> implements Action {
