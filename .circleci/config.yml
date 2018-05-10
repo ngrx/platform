@@ -54,6 +54,9 @@ jobs:
       # Install the dependencies from NPM, using the node and yarn binaries managed by Bazel
       - run: bazel run @yarn//:yarn
 
+      # Copy shared schematics-core into schematics/src directory
+      - run: yarn copy:schematics
+
       # Build and Test
       # Use bazel query so that we explicitly ask for all buildable targets to
       # be built even though we run `bazel test`

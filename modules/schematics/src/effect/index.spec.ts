@@ -3,16 +3,13 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import {
-  createAppModule,
-  getFileContent,
-  createAppModuleWithEffects,
-} from '../utility/test';
+import {} from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 import {
-  getProjectPath,
+  getTestProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+  createAppModuleWithEffects,
+} from '../../../schematics-core/testing';
 
 describe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -32,7 +29,7 @@ describe('Effect Schematic', () => {
     group: false,
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 

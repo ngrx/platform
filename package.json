@@ -8,7 +8,7 @@
     "build": "ts-node ./build/index.ts",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",
-    "test": "nyc yarn run test:unit",
+    "test": "yarn copy:schematics && nyc yarn run test:unit",
     "clean": "git clean -xdf && yarn && yarn run bootstrap",
     "cli": "ng",
     "coverage:html": "nyc report --reporter=html",
@@ -25,7 +25,8 @@
     "release": "lerna publish --skip-npm --conventional-commits && npm run build",
     "codegen": "ts-node modules/codegen/src/index.ts",
     "prebuildifier": "bazel build --noshow_progress @com_github_bazelbuild_buildtools//buildifier",
-    "buildifier": "find . -type f \\( -name BUILD -or -name BUILD.bazel \\) ! -path \"*/node_modules/*\" | xargs $(bazel info bazel-bin)/external/com_github_bazelbuild_buildtools/buildifier/*/buildifier"
+    "buildifier": "find . -type f \\( -name BUILD -or -name BUILD.bazel \\) ! -path \"*/node_modules/*\" | xargs $(bazel info bazel-bin)/external/com_github_bazelbuild_buildtools/buildifier/buildifier",
+    "copy:schematics": "ncp modules/schematics-core/ modules/schematics/src/schematics-core/"
   },
   "engines": {
     "node": ">=8.9.0",

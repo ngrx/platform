@@ -1,4 +1,4 @@
-import { getWorkspace } from '../utility/config';
+import { getWorkspace } from './config';
 import { Tree } from '@angular-devkit/schematics';
 
 export function getProjectPath(

@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicsException,
@@ -14,9 +13,8 @@ import {
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
 import { Schema as ActionOptions } from './schema';
-import { getProjectPath } from '../utility/project';
+import { getProjectPath, stringUtils } from '../schematics-core';
 
 export default function(options: ActionOptions): Rule {
   return (host: Tree, context: SchematicContext) => {

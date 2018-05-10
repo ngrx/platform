@@ -1,14 +1,13 @@
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
+import * as stringUtils from './strings';
 import { InsertChange, Change, NoopChange } from './change';
 import { Tree, SchematicsException, Rule } from '@angular-devkit/schematics';
 import { normalize } from '@angular-devkit/core';
 import { buildRelativePath } from './find-module';
 import { insertImport } from './route-utils';
-import { Schema as ReducerOptions } from '../reducer/schema';
 import { addImportToModule } from './ast-utils';
 
-export function addReducerToState(options: ReducerOptions): Rule {
+export function addReducerToState(options: any): Rule {
   return (host: Tree) => {
     if (!options.reducers) {
       return host;
@@ -185,7 +184,7 @@ export function addReducerToActionReducerMap(
 /**
  * Add reducer feature to NgModule
  */
-export function addReducerImportToNgModule(options: ReducerOptions): Rule {
+export function addReducerImportToNgModule(options: any): Rule {
   return (host: Tree) => {
     if (!options.module) {
       return host;

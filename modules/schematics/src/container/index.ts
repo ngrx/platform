@@ -14,13 +14,17 @@ import {
   mergeWith,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
+import {
+  stringUtils,
+  buildRelativePath,
+  insertImport,
+  NoopChange,
+  ReplaceChange,
+  InsertChange,
+  getProjectPath,
+  omit,
+} from '../schematics-core';
 import { Schema as ContainerOptions } from './schema';
-import { buildRelativePath } from '../utility/find-module';
-import { NoopChange, InsertChange, ReplaceChange } from '../utility/change';
-import { insertImport } from '../utility/route-utils';
-import { omit } from '../utility/ngrx-utils';
-import { getProjectPath } from '../utility/project';
 
 function addStateToComponent(options: ContainerOptions) {
   return (host: Tree) => {

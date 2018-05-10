@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -15,16 +14,14 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
-import { findModuleFromOptions } from '../utility/find-module';
-import { Schema as ReducerOptions } from './schema';
 import {
-  addReducerToStateInferface,
-  addReducerToActionReducerMap,
+  getProjectPath,
+  findModuleFromOptions,
+  stringUtils,
   addReducerToState,
   addReducerImportToNgModule,
-} from '../utility/ngrx-utils';
-import { getProjectPath } from '../utility/project';
+} from '../schematics-core';
+import { Schema as ReducerOptions } from './schema';
 
 export default function(options: ReducerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {

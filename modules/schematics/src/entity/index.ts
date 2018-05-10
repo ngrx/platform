@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicsException,
@@ -14,14 +13,14 @@ import {
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
-import { Schema as EntityOptions } from './schema';
 import {
+  stringUtils,
   addReducerToState,
   addReducerImportToNgModule,
-} from '../utility/ngrx-utils';
-import { findModuleFromOptions } from '../utility/find-module';
-import { getProjectPath } from '../utility/project';
+  getProjectPath,
+  findModuleFromOptions,
+} from '../schematics-core';
+import { Schema as EntityOptions } from './schema';
 
 export default function(options: EntityOptions): Rule {
   return (host: Tree, context: SchematicContext) => {

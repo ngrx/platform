@@ -4,10 +4,11 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as StoreOptions } from './schema';
+import {} from '../../schematics-core';
 import {
-  getProjectPath,
+  getTestProjectPath,
   createWorkspace,
-} from '../utility/test/create-workspace';
+} from '../../../schematics-core/testing';
 
 describe('Store Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -24,7 +25,7 @@ describe('Store Schematic', () => {
     root: true,
   };
 
-  const projectPath = getProjectPath();
+  const projectPath = getTestProjectPath();
 
   let appTree: UnitTestTree;
 
