@@ -9,17 +9,18 @@ export interface Config {
   scope: string;
 }
 
+const modulesDir = './modules/';
 export const packages: PackageDescription[] = fs
-  .readdirSync('./modules/')
+  .readdirSync(modulesDir)
   .filter(path => {
-    const stat = fs.statSync(`./modules/${path}`);
+    const stat = fs.statSync(`${modulesDir}${path}`);
     const isDir = stat.isDirectory();
 
     if (!isDir) {
       return false;
     }
 
-    const hasBuild = fs.existsSync(`./modules/${path}/BUILD`);
+    const hasBuild = fs.existsSync(`${modulesDir}${path}/BUILD`);
 
     return hasBuild;
   })
