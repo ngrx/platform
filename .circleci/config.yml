@@ -64,8 +64,7 @@ jobs:
       - run: bazel query --output=label //... | xargs bazel test
 
   test:
-    docker:
-      - image: circleci/node:latest-browsers
+    <<: *run_in_ngcontainer
     steps:
       - checkout
       - restore_cache:
@@ -80,8 +79,7 @@ jobs:
             - ~/.cache/yarn
             - node_modules
   deploy:
-    docker:
-      - image: circleci/node:latest-browsers
+    <<: *run_in_ngcontainer
     steps:
       - add_ssh_keys:
           fingerprints:
