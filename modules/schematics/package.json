@@ -25,7 +25,7 @@
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
   },  
   "peerDependencies": {
-    "@angular-devkit/core": "^0.5.0",
-    "@angular-devkit/schematics": "^0.5.0"
+    "@angular-devkit/core": "NG_DEVKIT_VERSION",
+    "@angular-devkit/schematics": "NG_DEVKIT_VERSION"
   }
 }
