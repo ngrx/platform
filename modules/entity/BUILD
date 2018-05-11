@@ -23,4 +23,8 @@ ng_package(
     deps = [
         ":entity",
     ],
+    packages = [
+        "//modules/entity/migrations:npm_package",
+        "//modules/entity/schematics-core:npm_package",
+    ],
 )

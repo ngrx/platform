@@ -16,6 +16,9 @@ ts_library(
     ),
     module_name = "@ngrx/schematics",
     tsconfig = ":tsconfig-build.json",
+    deps = [
+        "//modules/schematics/schematics-core"
+    ]
 )
 
 npm_package(
@@ -31,5 +34,9 @@ npm_package(
     ]),
     deps = [
         ":schematics",
+    ],
+    packages = [
+        "//modules/schematics/migrations:npm_package",
+        "//modules/schematics/schematics-core:npm_package",
     ],
 )

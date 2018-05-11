@@ -2,7 +2,7 @@
 load("@build_bazel_rules_typescript//:defs.bzl", _ts_library="ts_library")
 load("@angular//:index.bzl", _ng_module="ng_module", _ng_package="ng_package")
 load("@build_bazel_rules_nodejs//:defs.bzl",
-     _jasmine_node_test="jasmine_node_test")
+     _jasmine_node_test="jasmine_node_test", _npm_package="npm_package")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^6.0.0"
@@ -76,3 +76,9 @@ def ng_package(name, readme_md=None, license_banner=None, globals={}, **kwargs):
         globals=dict(globals, **NGRX_GLOBALS),
         replacements=PKG_GROUP_REPLACEMENTS,
         **kwargs)
+
+def npm_package(name, replacements = {}, **kwargs):
+  _npm_package(
+      name = name,
+      replacements = dict(replacements, **PKG_GROUP_REPLACEMENTS),
+      **kwargs)

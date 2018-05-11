@@ -27,4 +27,8 @@ ng_package(
         ":effects",
         "//modules/effects/testing",
     ],
+    packages = [
+        "//modules/effects/migrations:npm_package",
+        "//modules/effects/schematics-core:npm_package",
+    ],
 )

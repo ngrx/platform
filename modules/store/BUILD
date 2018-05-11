@@ -21,4 +21,8 @@ ng_package(
     deps = [
         ":store",
     ],
+    packages = [
+        "//modules/store/migrations:npm_package",
+        "//modules/store/schematics-core:npm_package"
+    ]
 )

@@ -23,7 +23,7 @@ import {
   InsertChange,
   getProjectPath,
   omit,
-} from '../schematics-core';
+} from '@ngrx/schematics/schematics-core';
 import { Schema as ContainerOptions } from './schema';
 
 function addStateToComponent(options: ContainerOptions) {

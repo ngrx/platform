@@ -19,7 +19,7 @@ import {
   addReducerImportToNgModule,
   getProjectPath,
   findModuleFromOptions,
-} from '../schematics-core';
+} from '@ngrx/schematics/schematics-core';
 import { Schema as EntityOptions } from './schema';
 
 export default function(options: EntityOptions): Rule {

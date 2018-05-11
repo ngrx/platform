@@ -22,7 +22,7 @@ import {
   InsertChange,
   getProjectPath,
   findModuleFromOptions,
-} from '../schematics-core';
+} from '@ngrx/schematics/schematics-core';
 import { Schema as EffectOptions } from './schema';
 
 function addImportToNgModule(options: EffectOptions): Rule {
