@@ -11,10 +11,10 @@ ts_library(
         ],
         exclude = [
             "**/testing/**/*.ts",
-            "**/*spec.ts"
+            "**/*spec.ts",
         ],
     ),
-    module_name = "@ngrx/effects/schematics-core"
+    module_name = "@ngrx/effects/schematics-core",
 )
 
 npm_package(

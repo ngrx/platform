@@ -20,11 +20,11 @@ ng_package(
         "package.json",
     ],
     entry_point = "modules/entity/index.js",
-    deps = [
-        ":entity",
-    ],
     packages = [
         "//modules/entity/migrations:npm_package",
         "//modules/entity/schematics-core:npm_package",
+    ],
+    deps = [
+        ":entity",
     ],
 )

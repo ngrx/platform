@@ -11,21 +11,21 @@ ts_library(
         ],
         exclude = [
             "**/testing/*.ts",
-            "**/*.spec.ts"
+            "**/*.spec.ts",
         ],
     ),
     module_name = "@ngrx/effects/migrations",
     deps = [
-        "//modules/effects/schematics-core"
-    ]
+        "//modules/effects/schematics-core",
+    ],
 )
 
 npm_package(
     name = "npm_package",
     srcs = [
-        ":migration.json"
+        ":migration.json",
     ],
     deps = [
-        ":migrations"
-    ]
+        ":migrations",
+    ],
 )

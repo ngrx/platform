@@ -18,11 +18,11 @@ ng_package(
         "package.json",
     ],
     entry_point = "modules/store/index.js",
+    packages = [
+        "//modules/store/migrations:npm_package",
+        "//modules/store/schematics-core:npm_package",
+    ],
     deps = [
         ":store",
     ],
-    packages = [
-        "//modules/store/migrations:npm_package",
-        "//modules/store/schematics-core:npm_package"
-    ]
 )
