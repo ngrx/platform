@@ -1,5 +1,34 @@
-import { Config } from './config';
+import { Config, modulesDir } from './config';
 import * as util from './util';
+import * as fs from 'fs';
+import { ncp } from 'ncp';
+
+/**
+ *
+ * Copies the schematics-core package into any package that provides
+ * schematics or migrations
+ */
+export async function copySchematicsCore(config: Config) {
+  (ncp as any).limit = 1;
+  for (let pkg of util.getTopLevelPackages(config)) {
+    const packageJson = fs
+      .readFileSync(`${modulesDir}${pkg}/package.json`)
+      .toString('utf-8');
+    const pkgConfig = JSON.parse(packageJson);
+
+    if (pkgConfig.schematics || pkgConfig['ng-update'].migrations) {
+      ncp(
+        `${modulesDir}/schematics-core`,
+        `${modulesDir}/${pkg}/src/schematics-core`,
+        function(err: any) {
+          if (err) {
+            return console.error(err);
+          }
+        }
+      );
+    }
+  }
+}
 
 /**
  * Deploy build artifacts to repos
