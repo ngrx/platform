@@ -71,6 +71,6 @@ tmp
 
 example-dist/
 
-schematics-core
-!modules/schematics-core
 *.tgz
+modules/*/schematics-core/testing
+!modules/schematics-core/testing

@@ -16,11 +16,23 @@
     "strict": true,
     "paths": {
       "@ngrx/effects": ["./modules/effects"],
+      "@ngrx/effects/schematics-core": ["./modules/effects/schematics-core"],
       "@ngrx/store": ["./modules/store"],
+      "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
+      "@ngrx/store-devtools/schematics-core": [
+        "./modules/store-devtools/schematics-core"
+      ],
       "@ngrx/router-store": ["./modules/router-store"],
+      "@ngrx/router-store/schematics-core": [
+        "./modules/router-store/schematics-core"
+      ],
       "@ngrx/entity": ["./modules/entity"],
-      "@ngrx/schematics": ["./modules/schematics"]
+      "@ngrx/entity/schematics-core": ["./modules/entity/schematics-core"],
+      "@ngrx/schematics": ["./modules/schematics"],
+      "@ngrx/schematics/schematics-core": [
+        "./modules/schematics/schematics-core"
+      ]
     }
   },
   "exclude": [

@@ -22,8 +22,9 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "schematics": "./collection.json",
   "ng-update": {
-    "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
-  },  
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
+    "migrations": "NG_UPDATE_MIGRATIONS"
+  },
   "peerDependencies": {
     "@angular-devkit/core": "NG_DEVKIT_VERSION",
     "@angular-devkit/schematics": "NG_DEVKIT_VERSION"

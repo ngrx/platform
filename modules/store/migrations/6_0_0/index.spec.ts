@@ -4,35 +4,36 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
+import {
+  createPackageJson,
+  packagePath,
+} from '../../../schematics-core/testing/create-package';
+import {
+  upgradeVersion,
+  versionPrefixes,
+} from '../../../schematics-core/testing/update';
 
-const packagePath = '/package.json';
 const collectionPath = path.join(__dirname, '../migration.json');
 
-describe('Migration 6_0_0', () => {
-  function setup(prefix: string) {
-    const tree = Tree.empty() as UnitTestTree;
-    tree.create(
-      packagePath,
-      `{
-        "dependencies": {
-          "@ngrx/store": "${prefix}5.2.0"
-        }
-      }`
-    );
+describe('Store Migration 6_0_0', () => {
+  let appTree;
+  const pkgName = 'store';
 
-    return {
-      tree,
-      runner: new SchematicTestRunner('schematics', collectionPath),
-    };
-  }
-
-  const prefixes = ['~', '^', ''];
-  prefixes.forEach(prefix => {
+  versionPrefixes.forEach(prefix => {
     it(`should install version ${prefix}6.0.0`, () => {
-      const { runner, tree } = setup(prefix);
-      const newTree = runner.runSchematic('ngrx-store-migration-01', {}, tree);
+      appTree = new UnitTestTree(Tree.empty());
+      const runner = new SchematicTestRunner('schematics', collectionPath);
+      const tree = createPackageJson(prefix, pkgName, appTree);
+
+      const newTree = runner.runSchematic(
+        `ngrx-${pkgName}-migration-01`,
+        {},
+        tree
+      );
       const pkg = JSON.parse(newTree.readContent(packagePath));
-      expect(pkg.dependencies['@ngrx/store']).toBe(`${prefix}6.0.0-beta.2`);
+      expect(pkg.dependencies[`@ngrx/${pkgName}`]).toBe(
+        `${prefix}${upgradeVersion}`
+      );
     });
   });
 });

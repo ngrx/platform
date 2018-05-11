@@ -25,7 +25,8 @@
     "rxjs": "RXJS_VERSION"
   },
   "ng-update": {
-    "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
+    "migrations": "NG_UPDATE_MIGRATIONS"
   },
   "sideEffects": false
 }

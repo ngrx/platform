@@ -20,7 +20,7 @@ import {
   stringUtils,
   addReducerToState,
   addReducerImportToNgModule,
-} from '../schematics-core';
+} from '@ngrx/schematics/schematics-core';
 import { Schema as ReducerOptions } from './schema';
 
 export default function(options: ReducerOptions): Rule {

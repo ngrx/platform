@@ -54,9 +54,6 @@ jobs:
       # Install the dependencies from NPM, using the node and yarn binaries managed by Bazel
       - run: bazel run @yarn//:yarn
 
-      # Copy shared schematics-core into schematics/src directory
-      - run: yarn copy:schematics
-
       # Build and Test
       # Use bazel query so that we explicitly ask for all buildable targets to
       # be built even though we run `bazel test`
@@ -64,13 +61,13 @@ jobs:
       - run: bazel query --output=label //... | xargs bazel test
 
   test:
-    <<: *run_in_ngcontainer
+    docker:
+      - image: circleci/node:latest-browsers
     steps:
       - checkout
       - restore_cache:
           key: *cache_key
       - run: yarn
-      - run: yarn copy:schematics
       - run: yarn run ci
       - run: yarn run example:build:prod
       - run: yarn run example:test --watch=false
@@ -89,7 +86,6 @@ jobs:
       - restore_cache:
           key: *cache_key
       - run: yarn
-      - run: yarn copy:schematics
       - run: yarn run build
       - run: yarn run deploy:builds
 

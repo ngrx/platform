@@ -21,6 +21,10 @@ ng_package(
         "package.json",
     ],
     entry_point = "modules/router-store/index.js",
+    packages = [
+        "//modules/router-store/migrations:npm_package",
+        "//modules/router-store/schematics-core:npm_package",
+    ],
     deps = [
         ":router-store",
     ],
