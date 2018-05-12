@@ -1,3 +1,11 @@
+<a name="6.0.0-beta.3"></a>
+
+# [6.0.0-beta.3](https://github.com/ngrx/platform/compare/v6.0.0-beta.2...v6.0.0-beta.3) (2018-05-12)
+
+### Bug Fixes
+
+* **build:** Use default build for schematics ([#1057](https://github.com/ngrx/platform/issues/1057)) ([355b12f](https://github.com/ngrx/platform/commit/355b12f))
+
 <a name="6.0.0-beta.2"></a>
 
 # [6.0.0-beta.2](https://github.com/ngrx/platform/compare/v6.0.0-beta.1...v6.0.0-beta.2) (2018-05-11)
