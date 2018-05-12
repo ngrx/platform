@@ -1,7 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
-load("@build_bazel_rules_nodejs//:defs.bzl", "npm_package")
+load("//tools:defaults.bzl", "ts_library", "npm_package")
 
 ts_library(
     name = "schematics",

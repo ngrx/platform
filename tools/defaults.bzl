@@ -11,11 +11,11 @@ NG_DEVKIT_VERSION = "^0.6.0"
 NG_UPDATE_MIGRATIONS = "./migrations/migration.json"
 
 NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
+    "store",
     "effects",
     "entity",
     "router-store",
     "schematics",
-    "store",
     "store-devtools",
 ]]
 
