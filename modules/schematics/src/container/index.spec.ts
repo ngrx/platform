@@ -57,6 +57,26 @@ describe('Container Schematic', () => {
     expect(content).toMatch(/import \* as fromStore from '..\/reducers';/);
   });
 
+  it('should remove .ts from the state path if provided', () => {
+    const options = { ...defaultOptions, state: 'reducers/foo.ts' };
+    appTree.create(`${projectPath}/src/app/reducers/foo.ts`, '');
+    const tree = schematicRunner.runSchematic('container', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.component.ts`
+    );
+    expect(content).toMatch(/import \* as fromStore from '..\/reducers\/foo';/);
+  });
+
+  it('should remove index.ts from the state path if provided', () => {
+    const options = { ...defaultOptions, state: 'reducers/index.ts' };
+    appTree.create(`${projectPath}/src/app/reducers/index.ts`, '');
+    const tree = schematicRunner.runSchematic('container', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.component.ts`
+    );
+    expect(content).toMatch(/import \* as fromStore from '..\/reducers';/);
+  });
+
   it('should import Store into the component', () => {
     const options = { ...defaultOptions, state: 'reducers' };
     appTree.create(`${projectPath}/src/app/reducers`, '');

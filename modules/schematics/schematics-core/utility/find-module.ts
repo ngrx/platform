@@ -98,7 +98,7 @@ export function buildRelativePath(from: string, to: string): string {
 
   // Remove file names (preserving destination)
   fromParts.pop();
-  const toFileName = toParts.pop();
+  const toFileName = convertToTypeScriptFileName(toParts.pop());
 
   const relativePath = relative(
     normalize(fromParts.join('/')),
@@ -116,5 +116,16 @@ export function buildRelativePath(from: string, to: string): string {
     pathPrefix += '/';
   }
 
-  return pathPrefix + (relativePath ? relativePath + '/' : '') + toFileName;
+  return toFileName
+    ? pathPrefix + (relativePath ? relativePath + '/' : '') + toFileName
+    : pathPrefix + relativePath;
+}
+
+/**
+ * Strips the typescript extension and clears index filenames
+ * foo.ts -> foo
+ * index.ts -> empty
+ */
+function convertToTypeScriptFileName(filename: string | undefined) {
+  return filename ? filename.replace(/(\.ts)|(index\.ts)$/, '') : '';
 }
