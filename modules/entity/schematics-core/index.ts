@@ -70,3 +70,7 @@ export const stringUtils = {
 };
 
 export { updatePackage } from './utility/update';
+
+export { addPackageToPackageJson } from './utility/package';
+
+export { platformVersion } from './utility/libs-version';

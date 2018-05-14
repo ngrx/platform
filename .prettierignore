@@ -1,5 +1,7 @@
 /dist
 /modules/schematics/src/*/files/*
+/modules/schematics-core/templates/*
+/modules/**/schematics-core/templates/*
 /tmp
 package-lock.json
 package.json

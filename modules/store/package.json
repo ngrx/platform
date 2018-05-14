@@ -9,7 +9,10 @@
   "keywords": [
     "RxJS",
     "Angular",
-    "Redux"
+    "Redux",
+    "NgRx",
+    "Schematics",
+    "Angular CLI"
   ],
   "author": "NgRx",
   "license": "MIT",
@@ -19,8 +22,11 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "NG_VERSION",
+    "@angular-devkit/core": "NG_DEVKIT_VERSION",
+    "@angular-devkit/schematics": "NG_DEVKIT_VERSION",
     "rxjs": "RXJS_VERSION"
   },
+  "schematics": "./schematics/collection.json",
   "ng-update": {
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
     "migrations": "NG_UPDATE_MIGRATIONS"

@@ -8,24 +8,26 @@ import {
   chain,
   filter,
   mergeWith,
-  move,
   template,
   url,
+  noop,
 } from '@angular-devkit/schematics';
-import * as ts from 'typescript';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
-  stringUtils,
-  buildRelativePath,
-  insertImport,
-  Change,
   InsertChange,
-  getProjectPath,
-  findModuleFromOptions,
   addImportToModule,
-} from '@ngrx/schematics/schematics-core';
-import { Schema as StoreOptions } from './schema';
+  buildRelativePath,
+  findModuleFromOptions,
+  getProjectPath,
+  insertImport,
+  stringUtils,
+  addPackageToPackageJson,
+  platformVersion,
+} from '../../schematics-core';
+import * as ts from 'typescript';
+import { Schema as RootStoreOptions } from './schema';
 
-function addImportToNgModule(options: StoreOptions): Rule {
+function addImportToNgModule(options: RootStoreOptions): Rule {
   return (host: Tree) => {
     const modulePath = options.module;
 
@@ -57,63 +59,18 @@ function addImportToNgModule(options: StoreOptions): Rule {
       `/${options.path}/environments/environment`
     );
 
-    const storeNgModuleImport = addImportToModule(
-      source,
-      modulePath,
-      options.root
-        ? `StoreModule.forRoot(reducers, { metaReducers })`
-        : `StoreModule.forFeature('${stringUtils.camelize(
-            options.name
-          )}', from${stringUtils.classify(
-            options.name
-          )}.reducers, { metaReducers: from${stringUtils.classify(
-            options.name
-          )}.metaReducers })`,
-      relativePath
-    ).shift();
-
-    let commonImports = [
+    const changes = [
       insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
-      options.root
-        ? insertImport(
-            source,
-            modulePath,
-            'reducers, metaReducers',
-            relativePath
-          )
-        : insertImport(
-            source,
-            modulePath,
-            `* as from${stringUtils.classify(options.name)}`,
-            relativePath,
-            true
-          ),
-      storeNgModuleImport,
-    ];
-    let rootImports: (Change | undefined)[] = [];
-
-    if (options.root) {
-      const storeDevtoolsNgModuleImport = addImportToModule(
+      insertImport(source, modulePath, 'reducers, metaReducers', relativePath),
+      addImportToModule(
         source,
         modulePath,
-        `!environment.production ? StoreDevtoolsModule.instrument() : []`,
+        'StoreModule.forRoot(reducers, { metaReducers })',
         relativePath
-      ).shift();
-
-      rootImports = rootImports.concat([
-        insertImport(
-          source,
-          modulePath,
-          'StoreDevtoolsModule',
-          '@ngrx/store-devtools'
-        ),
-        insertImport(source, modulePath, 'environment', environmentsPath),
-        storeDevtoolsNgModuleImport,
-      ]);
-    }
-
-    const changes = [...commonImports, ...rootImports];
+      ),
+    ];
     const recorder = host.beginUpdate(modulePath);
+
     for (const change of changes) {
       if (change instanceof InsertChange) {
         recorder.insertLeft(change.pos, change.toAdd);
@@ -125,7 +82,20 @@ function addImportToNgModule(options: StoreOptions): Rule {
   };
 }
 
-export default function(options: StoreOptions): Rule {
+function addNgRxStoreToPackageJson() {
+  return (host: Tree, context: SchematicContext) => {
+    addPackageToPackageJson(
+      host,
+      'dependencies',
+      '@ngrx/store',
+      platformVersion
+    );
+    context.addTask(new NodePackageInstallTask());
+    return host;
+  };
+}
+
+export default function(options: RootStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -139,11 +109,7 @@ export default function(options: StoreOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
-    if (
-      options.root &&
-      options.stateInterface &&
-      options.stateInterface !== 'State'
-    ) {
+    if (options.stateInterface && options.stateInterface !== 'State') {
       options.stateInterface = stringUtils.classify(options.stateInterface);
     }
 
@@ -156,6 +122,7 @@ export default function(options: StoreOptions): Rule {
     ]);
 
     return chain([
+      options && options.skipPackageJson ? noop() : addNgRxStoreToPackageJson(),
       branchAndMerge(
         chain([
           filter(
