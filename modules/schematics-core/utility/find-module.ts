@@ -5,7 +5,16 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Path, join, normalize, relative, strings } from '@angular-devkit/core';
+import {
+  Path,
+  join,
+  normalize,
+  relative,
+  strings,
+  basename,
+  extname,
+  dirname,
+} from '@angular-devkit/core';
 import { DirEntry, Tree } from '@angular-devkit/schematics';
 
 export interface ModuleOptions {
@@ -89,38 +98,40 @@ export function findModule(host: Tree, generateDir: string): Path {
  * Build a relative path from one file path to another file path.
  */
 export function buildRelativePath(from: string, to: string): string {
-  from = normalize(from);
-  to = normalize(to);
+  const {
+    path: fromPath,
+    filename: fromFileName,
+    directory: fromDirectory,
+  } = parsePath(from);
+  const {
+    path: toPath,
+    filename: toFileName,
+    directory: toDirectory,
+  } = parsePath(to);
+  const relativePath = relative(fromDirectory, toDirectory);
+  const fixedRelativePath = relativePath.startsWith('.')
+    ? relativePath
+    : `./${relativePath}`;
 
-  // Convert to arrays.
-  const fromParts = from.split('/');
-  const toParts = to.split('/');
-
-  // Remove file names (preserving destination)
-  fromParts.pop();
-  const toFileName = convertToTypeScriptFileName(toParts.pop());
-
-  const relativePath = relative(
-    normalize(fromParts.join('/')),
-    normalize(toParts.join('/'))
-  );
-  let pathPrefix = '';
-
-  // Set the path prefix for same dir or child dir, parent dir starts with `..`
-  if (!relativePath) {
-    pathPrefix = '.';
-  } else if (!relativePath.startsWith('.')) {
-    pathPrefix = `./`;
-  }
-  if (pathPrefix && !pathPrefix.endsWith('/')) {
-    pathPrefix += '/';
-  }
-
-  return toFileName
-    ? pathPrefix + (relativePath ? relativePath + '/' : '') + toFileName
-    : pathPrefix + relativePath;
+  return !toFileName || toFileName === 'index.ts'
+    ? fixedRelativePath
+    : `${
+        fixedRelativePath.endsWith('/')
+          ? fixedRelativePath
+          : fixedRelativePath + '/'
+      }${convertToTypeScriptFileName(toFileName)}`;
 }
 
+function parsePath(path: string) {
+  const pathNormalized = normalize(path) as Path;
+  const filename = extname(pathNormalized) ? basename(pathNormalized) : '';
+  const directory = filename ? dirname(pathNormalized) : pathNormalized;
+  return {
+    path: pathNormalized,
+    filename,
+    directory,
+  };
+}
 /**
  * Strips the typescript extension and clears index filenames
  * foo.ts -> foo

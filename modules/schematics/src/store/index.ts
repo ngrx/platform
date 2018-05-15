@@ -12,6 +12,7 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
+import { Path, dirname } from '@angular-devkit/core';
 import * as ts from 'typescript';
 import {
   stringUtils,
@@ -53,9 +54,10 @@ function addImportToNgModule(options: StoreOptions): Rule {
 
     const statePath = `${options.path}/${options.statePath}`;
     const relativePath = buildRelativePath(modulePath, statePath);
+    const srcPath = dirname(options.path as Path);
     const environmentsPath = buildRelativePath(
       statePath,
-      `/${options.path}/environments/environment`
+      `${srcPath}/environments/environment`
     );
 
     const storeNgModuleImport = addImportToModule(
@@ -135,9 +137,10 @@ export default function(options: StoreOptions): Rule {
     options.path = parsedPath.path;
 
     const statePath = `/${options.path}/${options.statePath}/index.ts`;
+    const srcPath = dirname(options.path as Path);
     const environmentsPath = buildRelativePath(
       statePath,
-      `/${options.path}/environments/environment`
+      `${srcPath}/environments/environment`
     );
 
     if (options.module) {
