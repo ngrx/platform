@@ -39,6 +39,15 @@ describe('Store ng-add Schematic', () => {
     expect(packageJson.dependencies['@ngrx/store']).toBeDefined();
   });
 
+  it('should skip package.json update', () => {
+    const options = { ...defaultOptions, skipPackageJson: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const packageJson = JSON.parse(getFileContent(tree, '/package.json'));
+
+    expect(packageJson.dependencies['@ngrx/store']).toBeUndefined();
+  });
+
   it('should create the initial store setup', () => {
     const options = { ...defaultOptions };
 

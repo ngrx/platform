@@ -24,7 +24,7 @@ import {
   addPackageToPackageJson,
   platformVersion,
   parseName,
-} from '../../schematics-core';
+} from '@ngrx/schematics/schematics-core';
 import * as ts from 'typescript';
 import { Schema as RootStoreOptions } from './schema';
 
@@ -118,7 +118,7 @@ export default function(options: RootStoreOptions): Rule {
       options.stateInterface = stringUtils.classify(options.stateInterface);
     }
 
-    const templateSource = apply(url('../../schematics-core/templates/store'), [
+    const templateSource = apply(url('./files'), [
       template({
         ...stringUtils,
         ...(options as object),

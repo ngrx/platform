@@ -14,9 +14,8 @@ ts_library(
         ],
     ),
     module_name = "@ngrx/store/schematics",
-    tsconfig = ":tsconfig-build.json",
     deps = [
-        "//modules/store/schematics-core",
+        "//modules/schematics/schematics-core",
     ],
 )
 

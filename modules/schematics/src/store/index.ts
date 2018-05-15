@@ -151,7 +151,7 @@ export default function(options: StoreOptions): Rule {
       options.stateInterface = stringUtils.classify(options.stateInterface);
     }
 
-    const templateSource = apply(url('../../schematics-core/templates/store'), [
+    const templateSource = apply(url('./files'), [
       template({
         ...stringUtils,
         ...(options as object),
