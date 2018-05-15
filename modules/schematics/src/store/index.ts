@@ -22,6 +22,7 @@ import {
   getProjectPath,
   findModuleFromOptions,
   addImportToModule,
+  parseName,
 } from '@ngrx/schematics/schematics-core';
 import { Schema as StoreOptions } from './schema';
 
@@ -129,6 +130,10 @@ export default function(options: StoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
+
     const statePath = `/${options.path}/${options.statePath}/index.ts`;
     const environmentsPath = buildRelativePath(
       statePath,
@@ -153,6 +158,7 @@ export default function(options: StoreOptions): Rule {
         ...(options as object),
         environmentsPath,
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([

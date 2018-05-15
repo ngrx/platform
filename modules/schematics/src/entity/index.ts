@@ -19,12 +19,17 @@ import {
   addReducerImportToNgModule,
   getProjectPath,
   findModuleFromOptions,
+  parseName,
 } from '@ngrx/schematics/schematics-core';
 import { Schema as EntityOptions } from './schema';
 
 export default function(options: EntityOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
+
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
 
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
@@ -44,6 +49,7 @@ export default function(options: EntityOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([

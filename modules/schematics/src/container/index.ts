@@ -23,6 +23,7 @@ import {
   InsertChange,
   getProjectPath,
   omit,
+  parseName,
 } from '@ngrx/schematics/schematics-core';
 import { Schema as ContainerOptions } from './schema';
 
@@ -123,6 +124,10 @@ export default function(options: ContainerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
+
     const opts = ['state', 'stateInterface'].reduce(
       (current: Partial<ContainerOptions>, key) => {
         return omit(current, key as any);
@@ -138,6 +143,7 @@ export default function(options: ContainerOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([

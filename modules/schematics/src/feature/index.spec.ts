@@ -75,4 +75,31 @@ describe('Feature Schematic', () => {
       files.indexOf(`${projectPath}/src/app/effects/foo.effects.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
+
+  it('should respect the path provided for the feature name', () => {
+    const options = {
+      ...defaultOptions,
+      name: 'foo/Foo',
+      group: true,
+      module: 'app',
+    };
+
+    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const effectsFileContent = tree.readContent(
+      `${projectPath}/src/app/foo/effects/foo.effects.ts`
+    );
+    const reducerFileContent = tree.readContent(
+      `${projectPath}/src/app/foo/reducers/foo.reducer.ts`
+    );
+    const moduleFileContent = tree.readContent(
+      `${projectPath}/src/app/app.module.ts`
+    );
+
+    expect(moduleFileContent).toMatch(
+      /import { FooEffects } from '\.\/foo\/effects\/foo.effects';/
+    );
+    expect(moduleFileContent).toMatch(
+      /import \* as fromFoo from '\.\/foo\/reducers\/foo.reducer';/
+    );
+  });
 });

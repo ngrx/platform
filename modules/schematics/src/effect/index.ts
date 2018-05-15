@@ -24,6 +24,7 @@ import {
   findModuleFromOptions,
 } from '@ngrx/schematics/schematics-core';
 import { Schema as EffectOptions } from './schema';
+import { parseName } from '@ngrx/schematics/schematics-core';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
@@ -99,6 +100,10 @@ export default function(options: EffectOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
+
     const templateSource = apply(url('./files'), [
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
       template({
@@ -111,6 +116,7 @@ export default function(options: EffectOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([
