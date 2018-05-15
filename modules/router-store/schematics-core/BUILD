@@ -13,7 +13,7 @@ ts_library(
             "**/*spec.ts",
         ],
     ),
-    module_name = "@ngrx/schematics/schematics-core",
+    module_name = "@ngrx/router-store/schematics-core",
 )
 
 npm_package(
