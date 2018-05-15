@@ -9,6 +9,7 @@ ts_library(
             "**/*.ts",
         ],
         exclude = [
+            "**/templates/**/*.ts",
             "**/testing/**/*.ts",
             "**/*spec.ts",
         ],
