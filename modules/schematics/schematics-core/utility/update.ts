@@ -31,7 +31,7 @@ export function updatePackage(name: string): Rule {
         const suffix = match(firstChar, '^') || match(firstChar, '~');
 
         // TODO: remove beta
-        pkg[category][packageName] = `${suffix}6.0.0-beta.3`;
+        pkg[category][packageName] = `${suffix}6.0.0`;
       }
     });
 
