@@ -43,6 +43,16 @@ ng config cli.defaultCollection @ngrx/schematics
 
 The [collection schema](../../modules/schematics/collection.json) also has aliases to the most common blueprints used to generate files.
 
+The `@ngrx/schematics` extend the default `@schematics/angular` collection. If you want to set defaults for schematics such as generating components with scss file, you must change the schematics package name from `@schematics/angular` to `@ngrx/schematics` in `angular.json`:
+
+```json
+"schematics": {
+  "@ngrx/schematics:component": {
+    "styleext": "scss"
+  }
+}
+```
+
 ## Initial State Setup
 
 Generate the initial state management and register it within the `app.module.ts`
