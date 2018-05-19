@@ -31,14 +31,7 @@ export {
   ReplaceChange,
 } from './utility/change';
 
-export {
-  AppConfig,
-  CliConfig,
-  getAppFromConfig,
-  getConfig,
-  getWorkspace,
-  getWorkspacePath,
-} from './utility/config';
+export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
 
 export {
   findModule,
