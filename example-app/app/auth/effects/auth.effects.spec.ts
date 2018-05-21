@@ -84,7 +84,7 @@ describe('AuthEffects', () => {
       const error = 'Invalid username or password';
 
       actions$.stream = hot('-a---', { a: action });
-      const response = cold('-#|', {}, error);
+      const response = cold('-#', {}, error);
       const expected = cold('--b', { b: completion });
       authService.login = jest.fn(() => response);
 
