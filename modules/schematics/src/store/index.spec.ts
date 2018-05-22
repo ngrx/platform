@@ -63,6 +63,18 @@ describe('Store Schematic', () => {
     );
   });
 
+  it('should import the environments correctly', () => {
+    const options = { ...defaultOptions, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
+    expect(content).toMatch(
+      /import { environment } from '..\/..\/environments\/environment';/
+    );
+  });
+
   it('should fail if specified module does not exist', () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
     let thrownError: Error | null = null;
