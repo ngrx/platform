@@ -24,7 +24,7 @@
     "@angular/core": "NG_VERSION",
     "rxjs": "RXJS_VERSION"
   },
-  "schematics": "./schematics/collection.json",
+  "schematics": "MODULE_SCHEMATICS_COLLECTION",
   "ng-update": {
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
     "migrations": "NG_UPDATE_MIGRATIONS"

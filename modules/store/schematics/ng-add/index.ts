@@ -24,7 +24,8 @@ import {
   addPackageToPackageJson,
   platformVersion,
   parseName,
-} from '@ngrx/schematics/schematics-core';
+} from '@ngrx/store/schematics-core';
+import { Path, dirname } from '@angular-devkit/core';
 import * as ts from 'typescript';
 import { Schema as RootStoreOptions } from './schema';
 
@@ -105,6 +106,7 @@ export default function(options: RootStoreOptions): Rule {
     options.path = parsedPath.path;
 
     const statePath = `/${options.path}/${options.statePath}/index.ts`;
+    const srcPath = dirname(options.path as Path);
     const environmentsPath = buildRelativePath(
       statePath,
       `/${options.path}/environments/environment`
