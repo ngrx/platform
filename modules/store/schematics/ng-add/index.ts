@@ -110,7 +110,7 @@ export default function(options: RootStoreOptions): Rule {
     const srcPath = dirname(options.path as Path);
     const environmentsPath = buildRelativePath(
       statePath,
-      `/${options.path}/environments/environment`
+      `/${srcPath}/environments/environment`
     );
 
     if (options.module) {
