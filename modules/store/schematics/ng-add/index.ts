@@ -56,9 +56,10 @@ function addImportToNgModule(options: RootStoreOptions): Rule {
 
     const statePath = `${options.path}/${options.statePath}`;
     const relativePath = buildRelativePath(modulePath, statePath);
+    const srcPath = dirname(options.path as Path);
     const environmentsPath = buildRelativePath(
       statePath,
-      `/${options.path}/environments/environment`
+      `/${srcPath}/environments/environment`
     );
 
     const changes = [
