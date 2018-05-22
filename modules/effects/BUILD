@@ -25,6 +25,7 @@ ng_package(
     entry_point = "modules/effects/index.js",
     packages = [
         "//modules/effects/migrations:npm_package",
+        "//modules/effects/schematics:npm_package",
         "//modules/effects/schematics-core:npm_package",
     ],
     deps = [
