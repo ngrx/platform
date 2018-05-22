@@ -13,18 +13,18 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import * as ts from 'typescript';
 import {
-  stringUtils,
-  insertImport,
-  buildRelativePath,
-  addImportToModule,
   InsertChange,
-  getProjectPath,
+  addImportToModule,
+  buildRelativePath,
   findModuleFromOptions,
+  getProjectPath,
+  insertImport,
+  parseName,
+  stringUtils,
 } from '@ngrx/schematics/schematics-core';
+import * as ts from 'typescript';
 import { Schema as EffectOptions } from './schema';
-import { parseName } from '@ngrx/schematics/schematics-core';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {

@@ -16,7 +16,7 @@
       "type": "boolean",
       "default": false,
       "description":
-        "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)"
+        "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
     },
     "path": {
       "type": "string",
