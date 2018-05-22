@@ -15,7 +15,7 @@ ts_library(
     ),
     module_name = "@ngrx/store/schematics",
     deps = [
-        "//modules/schematics/schematics-core",
+        "//modules/store/schematics-core",
     ],
 )
 
