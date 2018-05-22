@@ -26,7 +26,7 @@ import {
   addPackageToPackageJson,
   platformVersion,
   parseName,
-} from '@ngrx/schematics/schematics-core';
+} from '@ngrx/effects/schematics-core';
 import { Schema as RootEffectOptions } from './schema';
 
 function addImportToNgModule(options: RootEffectOptions): Rule {
