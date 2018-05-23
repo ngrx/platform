@@ -4,14 +4,6 @@
   "title": "NgRx Root State Management Options Schema",
   "type": "object",
   "properties": {
-    "name": {
-      "description": "The name of the state.",
-      "type": "string",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      }
-    },
     "skipPackageJson": {
       "type": "boolean",
       "default": false,
@@ -21,12 +13,12 @@
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the component.",
+      "description": "The path to create the state.",
       "visible": false
     },
     "module": {
       "type": "string",
-      "default": "",
+      "default": "app",
       "description": "Allows specification of the declaring module.",
       "alias": "m",
       "subtype": "filepath"
