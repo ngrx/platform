@@ -10,6 +10,7 @@ import {
   mergeWith,
   template,
   url,
+  move,
 } from '@angular-devkit/schematics';
 import { Path, dirname } from '@angular-devkit/core';
 import * as ts from 'typescript';
@@ -160,6 +161,7 @@ export default function(options: StoreOptions): Rule {
         ...(options as object),
         environmentsPath,
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([
