@@ -1,6 +1,10 @@
+<a name="6.0.1"></a>
+
+## [6.0.1](https://github.com/ngrx/platform/compare/6.0.0...6.0.1) (2018-05-23)
+
 <a name="6.0.0"></a>
 
-# [6.0.0](https://github.com/ngrx/platform/compare/v6.0.0-beta.3...v6.0.0) (2018-05-23)
+# [6.0.0](https://github.com/ngrx/platform/compare/v6.0.0-beta.3...6.0.0) (2018-05-23)
 
 ### Bug Fixes
 
