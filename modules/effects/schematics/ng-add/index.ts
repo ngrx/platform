@@ -136,9 +136,6 @@ export default function(options: RootEffectOptions): Rule {
     ]);
 
     return chain([
-      options && options.skipPackageJson
-        ? noop()
-        : addNgRxEffectsToPackageJson(),
       branchAndMerge(
         chain([
           filter(
@@ -150,6 +147,9 @@ export default function(options: RootEffectOptions): Rule {
           mergeWith(templateSource),
         ])
       ),
+      options && options.skipPackageJson
+        ? noop()
+        : addNgRxEffectsToPackageJson(),
     ])(host, context);
   };
 }
