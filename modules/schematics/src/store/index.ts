@@ -8,6 +8,7 @@ import {
   chain,
   filter,
   mergeWith,
+  move,
   template,
   url,
 } from '@angular-devkit/schematics';
@@ -160,6 +161,7 @@ export default function(options: StoreOptions): Rule {
         ...(options as object),
         environmentsPath,
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([
