@@ -6,6 +6,14 @@
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
   },
+  "keywords": [
+    "RxJS",
+    "Angular",
+    "Redux",
+    "NgRx",
+    "Schematics",
+    "Angular CLI"
+  ],
   "author": "NgRx",
   "license": "MIT",
   "bugs": {
@@ -17,6 +25,7 @@
     "@ngrx/store": "0.0.0-PLACEHOLDER",
     "rxjs": "RXJS_VERSION"
   },
+  "schematics": "MODULE_SCHEMATICS_COLLECTION",
   "ng-update": {
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
     "migrations": "NG_UPDATE_MIGRATIONS"

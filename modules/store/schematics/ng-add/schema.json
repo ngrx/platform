@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxRootState",
+  "title": "NgRx Root State Management Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the state.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the component.",
+      "visible": false
+    },
+    "module": {
+      "type": "string",
+      "default": "",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "subtype": "filepath"
+    },
+    "statePath": {
+      "type": "string",
+      "default": "reducers"
+    },
+    "stateInterface": {
+      "type": "string",
+      "default": "State",
+      "description": "Specifies the interface for the state.",
+      "alias": "si"
+    }
+  },
+  "required": []
+}

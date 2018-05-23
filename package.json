@@ -56,6 +56,7 @@
       "**/*.spec",
       "**/spec/**/*",
       "/modules/schematics/src/*/files/**/*",
+      "/modules/**/schematics/**/files/**/*",
       "**/schematics/src/utility/*"
     ],
     "include": [

@@ -1,5 +1,6 @@
 /dist
 /modules/schematics/src/*/files/*
+/modules/**/schematics/**/files/*
 /tmp
 package-lock.json
 package.json

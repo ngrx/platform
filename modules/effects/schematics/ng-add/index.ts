@@ -13,20 +13,23 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import {
-  InsertChange,
-  addImportToModule,
-  buildRelativePath,
-  findModuleFromOptions,
-  getProjectPath,
-  insertImport,
-  parseName,
-  stringUtils,
-} from '@ngrx/schematics/schematics-core';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as ts from 'typescript';
-import { Schema as EffectOptions } from './schema';
+import {
+  stringUtils,
+  insertImport,
+  buildRelativePath,
+  addImportToModule,
+  InsertChange,
+  getProjectPath,
+  findModuleFromOptions,
+  addPackageToPackageJson,
+  platformVersion,
+  parseName,
+} from '@ngrx/effects/schematics-core';
+import { Schema as RootEffectOptions } from './schema';
 
-function addImportToNgModule(options: EffectOptions): Rule {
+function addImportToNgModule(options: RootEffectOptions): Rule {
   return (host: Tree) => {
     const modulePath = options.module;
 
@@ -76,7 +79,7 @@ function addImportToNgModule(options: EffectOptions): Rule {
     const [effectsNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `EffectsModule.for${options.root ? 'Root' : 'Feature'}([${effectsName}])`,
+      `EffectsModule.forRoot([${effectsName}])`,
       relativePath
     );
     const changes = [effectsModuleImport, effectsImport, effectsNgModuleImport];
@@ -92,7 +95,20 @@ function addImportToNgModule(options: EffectOptions): Rule {
   };
 }
 
-export default function(options: EffectOptions): Rule {
+function addNgRxEffectsToPackageJson() {
+  return (host: Tree, context: SchematicContext) => {
+    addPackageToPackageJson(
+      host,
+      'dependencies',
+      '@ngrx/effects',
+      platformVersion
+    );
+    context.addTask(new NodePackageInstallTask());
+    return host;
+  };
+}
+
+export default function(options: RootEffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -120,6 +136,9 @@ export default function(options: EffectOptions): Rule {
     ]);
 
     return chain([
+      options && options.skipPackageJson
+        ? noop()
+        : addNgRxEffectsToPackageJson(),
       branchAndMerge(
         chain([
           filter(
