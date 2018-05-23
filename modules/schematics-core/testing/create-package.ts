@@ -17,7 +17,7 @@ export function createPackageJson(
     packagePath,
     `{
       "dependencies": {
-        "@ngrx/${pkg}": "${prefix}5.2.0"
+        "@ngrx/${pkg}": "${prefix}${version}"
       }
     }`
   );
