@@ -55,23 +55,19 @@ function addImportToNgModule(options: RootStoreOptions): Rule {
       true
     );
 
-    const statePath = `${options.path}/${options.statePath}`;
+    const statePath = `/${options.path}/${options.statePath}`;
     const relativePath = buildRelativePath(modulePath, statePath);
-    const srcPath = dirname(options.path as Path);
-    const environmentsPath = buildRelativePath(
-      statePath,
-      `/${srcPath}/environments/environment`
+    const [storeNgModuleImport] = addImportToModule(
+      source,
+      modulePath,
+      'StoreModule.forRoot(reducers, { metaReducers })',
+      relativePath
     );
 
     const changes = [
       insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
       insertImport(source, modulePath, 'reducers, metaReducers', relativePath),
-      addImportToModule(
-        source,
-        modulePath,
-        'StoreModule.forRoot(reducers, { metaReducers })',
-        relativePath
-      ),
+      storeNgModuleImport,
     ];
     const recorder = host.beginUpdate(modulePath);
 
@@ -103,8 +99,7 @@ export default function(options: RootStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
-    const parsedPath = parseName(options.path, options.name);
-    options.name = parsedPath.name;
+    const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
 
     const statePath = `/${options.path}/${options.statePath}/index.ts`;
@@ -115,7 +110,11 @@ export default function(options: RootStoreOptions): Rule {
     );
 
     if (options.module) {
-      options.module = findModuleFromOptions(host, options);
+      options.module = findModuleFromOptions(host, {
+        name: '',
+        module: options.module,
+        path: options.path,
+      });
     }
 
     if (options.stateInterface && options.stateInterface !== 'State') {
@@ -132,7 +131,6 @@ export default function(options: RootStoreOptions): Rule {
     ]);
 
     return chain([
-      options && options.skipPackageJson ? noop() : addNgRxStoreToPackageJson(),
       branchAndMerge(
         chain([
           filter(
@@ -144,6 +142,7 @@ export default function(options: RootStoreOptions): Rule {
           mergeWith(templateSource),
         ])
       ),
+      options && options.skipPackageJson ? noop() : addNgRxStoreToPackageJson(),
     ])(host, context);
   };
 }

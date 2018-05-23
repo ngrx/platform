@@ -16,10 +16,9 @@ describe('Store ng-add Schematic', () => {
     path.join(__dirname, '../collection.json')
   );
   const defaultOptions: RootStoreOptions = {
-    name: 'foo',
     skipPackageJson: false,
     project: 'bar',
-    module: undefined,
+    module: 'app',
   };
 
   const projectPath = getTestProjectPath();
@@ -58,18 +57,21 @@ describe('Store ng-add Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not be provided by default', () => {
+  it('should be provided by default', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).not.toMatch(
+    expect(content).toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
+    );
+    expect(content).toMatch(
+      /StoreModule.forRoot\(reducers, { metaReducers }\)/
     );
   });
 
   it('should import into a specified module', () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
