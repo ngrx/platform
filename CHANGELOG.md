@@ -1,3 +1,17 @@
+<a name="6.0.0"></a>
+
+# [6.0.0](https://github.com/ngrx/platform/compare/v6.0.0-beta.3...v6.0.0) (2018-05-23)
+
+### Bug Fixes
+
+* **Schematics:** remove ts extension when importing reducer in container ([#1061](https://github.com/ngrx/platform/issues/1061)) ([d1ed9e5](https://github.com/ngrx/platform/commit/d1ed9e5)), closes [#1056](https://github.com/ngrx/platform/issues/1056)
+* **Schematics:** Update parsed path logic to split path and name ([a1e9530](https://github.com/ngrx/platform/commit/a1e9530)), closes [#1064](https://github.com/ngrx/platform/issues/1064)
+* **Store:** Resolve environment path when generating a new store ([#1071](https://github.com/ngrx/platform/issues/1071)) ([599cfb6](https://github.com/ngrx/platform/commit/599cfb6))
+
+### Features
+
+* implement ng add for store and effects packages ([db94db7](https://github.com/ngrx/platform/commit/db94db7))
+
 <a name="6.0.0-beta.3"></a>
 
 # [6.0.0-beta.3](https://github.com/ngrx/platform/compare/v6.0.0-beta.2...v6.0.0-beta.3) (2018-05-12)

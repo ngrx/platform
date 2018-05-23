@@ -5,7 +5,6 @@
   "scripts": {
     "precommit": "lint-staged",
     "bootstrap": "lerna bootstrap",
-    "prebuild": "yarn copy:schematics",
     "build": "bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",
