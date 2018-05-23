@@ -7,10 +7,7 @@
     "name": {
       "description": "The name of the effect.",
       "type": "string",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      }
+      "default": "App"
     },
     "skipPackageJson": {
       "type": "boolean",
@@ -21,7 +18,7 @@
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the component.",
+      "description": "The path to create the effect.",
       "visible": false
     },
     "flat": {
@@ -36,7 +33,7 @@
     },
     "module": {
       "type": "string",
-      "default": "",
+      "default": "app",
       "description": "Allows specification of the declaring module.",
       "alias": "m",
       "subtype": "filepath"

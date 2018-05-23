@@ -22,7 +22,7 @@ describe('Effect ng-add Schematic', () => {
     skipPackageJson: false,
     project: 'bar',
     spec: true,
-    module: undefined,
+    module: 'app',
     flat: false,
     group: false,
   };
@@ -66,14 +66,12 @@ describe('Effect ng-add Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not be provided by default', () => {
+  it('should be provided by default', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).not.toMatch(
-      /import { FooEffects } from '.\/foo\/foo.effects'/
-    );
+    expect(content).toMatch(/import { FooEffects } from '.\/foo\/foo.effects'/);
   });
 
   it('should import into a specified module', () => {
@@ -112,7 +110,7 @@ describe('Effect ng-add Schematic', () => {
   });
 
   it('should register the root effect in the provided module', () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
