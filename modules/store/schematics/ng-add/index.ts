@@ -11,6 +11,7 @@ import {
   template,
   url,
   noop,
+  move,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
@@ -127,6 +128,7 @@ export default function(options: RootStoreOptions): Rule {
         ...(options as object),
         environmentsPath,
       } as any),
+      move(parsedPath.path),
     ]);
 
     return chain([
