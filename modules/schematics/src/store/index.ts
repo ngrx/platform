@@ -54,10 +54,10 @@ function addImportToNgModule(options: StoreOptions): Rule {
 
     const statePath = `${options.path}/${options.statePath}`;
     const relativePath = buildRelativePath(modulePath, statePath);
-    const srcPath = dirname(options.path as Path);
+
     const environmentsPath = buildRelativePath(
       statePath,
-      `${srcPath}/environments/environment`
+      `${options.path}/environments/environment`
     );
 
     const storeNgModuleImport = addImportToModule(
