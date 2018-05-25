@@ -17,7 +17,6 @@ describe('Store Schematic', () => {
   );
   const defaultOptions: StoreOptions = {
     name: 'foo',
-    // path: 'app',
     project: 'bar',
     spec: true,
     module: undefined,
@@ -63,7 +62,17 @@ describe('Store Schematic', () => {
     );
   });
 
-  it('should import the environments correctly', () => {
+  it('should import the environments correctly in the app module', () => {
+    const options = { ...defaultOptions, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(
+      /import { environment } from '..\/environments\/environment';/
+    );
+  });
+
+  it('should import the environments correctly in the reducers', () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
