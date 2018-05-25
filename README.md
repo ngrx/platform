@@ -26,8 +26,8 @@ Reactive libraries for Angular
 
 ## Events
 
-* [ng-conf](https://ng-conf.org/) in Salt Lake City, Utah on April 18 - April 20th.
 * [We RISE Tech](https://werise.tech/) in Atlanta, Georgia on June 21 - 22nd.
+* [NgColombia](https://www.ngcolombia.com/) in Medellín, Colombia on September 6 - 7th.
 * [Framework Summit](https://frameworksummit.com/) in Park City, Utah on October 2 - 3rd.
 * [AngularMix](https://www.angularmix.com/) in Orlando, Florida on October 10 - 12th. Use the discount code "ryan" or "roberts" to receive $50 off your registration!
 * [AngularConnect](https://www.angularconnect.com/) in Excel, London on November 6 - 7th.
