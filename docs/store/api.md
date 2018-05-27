@@ -48,6 +48,8 @@ export function getInitialState() {
 @ngrx/store composes your map of reducers into a single reducer. Use the `metaReducers`
 configuration option to provide an array of meta-reducers that are composed from right to left.
 
+Note: Meta-reducers in NgRx are similar to middleware used in Redux.
+
 ```ts
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { reducers } from './reducers';
