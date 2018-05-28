@@ -14,7 +14,7 @@ export function combineReducers(
   reducers: any,
   initialState: any = {}
 ): ActionReducer<any, Action> {
-  const reducerKeys = Object.keys(reducers);
+  const reducerKeys = reducers ? Object.keys(reducers) : [];
   const finalReducers: any = {};
 
   for (let i = 0; i < reducerKeys.length; i++) {
