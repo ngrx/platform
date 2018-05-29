@@ -96,7 +96,7 @@ export class BookPreviewComponent {
 
   get thumbnail(): string | boolean {
     if (this.book.volumeInfo.imageLinks) {
-      return this.book.volumeInfo.imageLinks.smallThumbnail;
+      return this.book.volumeInfo.imageLinks.smallThumbnail.replace('http:', '');
     }
 
     return false;
