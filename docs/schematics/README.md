@@ -58,16 +58,20 @@ The `@ngrx/schematics` extend the default `@schematics/angular` collection. If y
 Generate the initial state management and register it within the `app.module.ts`
 
 ```sh
-ng generate store State --root --module app.module.ts --collection @ngrx/schematics
+ng generate @ngrx/schematics:store State --root --module app.module.ts
 ```
+
+> Note that `@ngrx/schematics:store` is only needed when the default collection isn't set to `@ngrx/schematics`
 
 ## Initial Effects Setup
 
 Generate the root effects and register it within the `app.module.ts`
 
 ```sh
-ng generate effect App --root --module app.module.ts --collection @ngrx/schematics
+ng generate @ngrx/schematics:effect App --root --module app.module.ts
 ```
+
+> Note that `@ngrx/schematics:effect` is only needed when the default collection isn't set to `@ngrx/schematics`
 
 ## Schematics
 
