@@ -5,9 +5,9 @@ The _ngrx team_ has put efforts to made it possible, you can start using the
 
 ## Downgrading Store service
 
-If you want to **dispatch** action or **select** some slice of your store state,
-you will need to downgrade the Store service to use it in the AngularJS parts of
-you application.
+If you want to **dispatch** an action or **select** some slice of your store
+state, you will need to downgrade the Store service to use it in the AngularJS
+parts of your application.
 
 ```ts
 import { Store } from '@ngrx/store';
