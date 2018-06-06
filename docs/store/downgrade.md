@@ -13,7 +13,6 @@ you application.
 import { Store } from '@ngrx/store';
 import { downgradeInjectable } from '@angular/upgrade/static';
 import { module as ngModule } from 'angular';
-
 // app
 import { MyActionClass } from 'path/to.my/file.action';
 import { mySelectorFunction } from 'path/to.my/file.selector';
