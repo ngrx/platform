@@ -1,7 +1,7 @@
 # Using ngrx/store in AngularJS
 
-The _ngrx team_ has put efforts to made it possible, you can start using the
-@ngrx/store during your AngularJS to Angular conversion.
+If you are working on an AngularJS to Angular conversion, you can use
+`@ngrx/store` to provide global state to your hybrid application.
 
 ## Downgrading Store service
 
