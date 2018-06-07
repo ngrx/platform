@@ -47,7 +47,7 @@ export function getInitialState() {
 
 @ngrx/store composes your map of reducers into a single reducer. 
 
->  Developers can think of metaReducers as hooks into the action->reducer pipeline. MetaReducer allow develoeprs to pre-process actions or post-process actions before *normal* reducers are invoked.
+>  Developers can think of metaReducers as hooks into the action->reducer pipeline. MetaReducers allow develoeprs to pre-process actions actions before *normal* reducers are invoked.
 
 Use the `metaReducers` configuration option to provide an array of meta-reducers that are composed from right to left.
 
