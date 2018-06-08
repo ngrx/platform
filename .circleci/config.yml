@@ -7,9 +7,9 @@ version: 2
 # Note: YAML anchors allow an object to be re-used, reducing duplication.
 # The ampersand declares an alias for an object, then later the `<<: *name`
 # syntax dereferences it.
-# See http://blog.daemonl.com/2016/02/yaml.html
+# See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
-# http://yaml-online-parser.appspot.com/
+# https://yaml-online-parser.appspot.com/
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}
 var_2: &run_in_ngcontainer
   docker:

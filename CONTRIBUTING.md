@@ -25,7 +25,7 @@ yarn test
 ## Submitting bug reports
 
 * Search through issues to see if a previous issue has already been reported and/or fixed.
-* Provide a _small_ reproduction using a [plunker template](http://plnkr.co/edit/tpl:757r6L?p=preview) or github repo.
+* Provide a _small_ reproduction using a [plunker template](https://plnkr.co/edit/tpl:757r6L?p=preview) or github repo.
 * Please detail the affected browser(s) and operating system(s).
 * Please be sure to state which version of Angular, node and npm you're using.
 
