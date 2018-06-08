@@ -17,17 +17,17 @@ change detection strategy giving you
 [intelligent, performant change detection](http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html#smarter-change-detection)
 throughout your application.
 
-### Installation
+## Installation
 
 Install @ngrx/store from npm:
 
-`npm install @ngrx/store --save` OR `yarn add @ngrx/store`
+`npm install @ngrx/store` or `yarn add @ngrx/store`
 
 ### Nightly builds
 
-`npm install github:ngrx/store-builds` OR `yarn add github:ngrx/store-builds`
+`npm install github:ngrx/store-builds` or `yarn add github:ngrx/store-builds`
 
-### Setup
+## Setup
 
 Create a reducer function for each data type you have in your application. The
 combination of these reducers will make up your application state:
@@ -36,19 +36,21 @@ combination of these reducers will make up your application state:
 // counter.ts
 import { Action } from '@ngrx/store';
 
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-export const RESET = 'RESET';
+export const increment = 'INCREMENT';
+export const decrement = 'DECREMENT';
+export const reset = 'RESET';
 
-export function counterReducer(state: number = 0, action: Action) {
+const initialState = 0;
+
+export function counterReducer(state: number = initialState, action: Action) {
   switch (action.type) {
-    case INCREMENT:
+    case increment:
       return state + 1;
 
-    case DECREMENT:
+    case decrement:
       return state - 1;
 
-    case RESET:
+    case reset:
       return 0;
 
     default:
@@ -67,7 +69,7 @@ import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './counter';
 
 @NgModule({
-  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
+  imports: [StoreModule.forRoot({ count: counterReducer })],
 })
 export class AppModule {}
 ```
@@ -76,16 +78,17 @@ You can then inject the `Store` service into your components and services. Use
 `select` operator to _select_ slice(s) of state:
 
 ```ts
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { INCREMENT, DECREMENT, RESET } from './counter';
+import { increment, decrement, reset } from './counter';
 
 interface AppState {
   count: number;
 }
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-my-counter',
   template: `
     <button (click)="increment()">Increment</button>
     <div>Current Count: {{ count$ | async }}</div>
@@ -94,7 +97,7 @@ interface AppState {
     <button (click)="reset()">Reset Counter</button>
   `,
 })
-export class MyAppComponent {
+export class MyCounterComponent {
   count$: Observable<number>;
 
   constructor(private store: Store<AppState>) {
@@ -102,15 +105,15 @@ export class MyAppComponent {
   }
 
   increment() {
-    this.store.dispatch({ type: INCREMENT });
+    this.store.dispatch({ type: increment });
   }
 
   decrement() {
-    this.store.dispatch({ type: DECREMENT });
+    this.store.dispatch({ type: decrement });
   }
 
   reset() {
-    this.store.dispatch({ type: RESET });
+    this.store.dispatch({ type: reset });
   }
 }
 ```
@@ -128,10 +131,10 @@ export class MyAppComponent {
 * [Typed Actions](./actions.md#typed-actions)
 * [Use Store service with AngularJS](./downgrade.md)
 
-### Additional Material
+## Additional Material
 
-* [From Inactive to Reactive with ngrx](https://www.youtube.com/watch?v=cyaAhXHhxgk)
+* [From Inactive to Reactive with ngrx (video)](https://www.youtube.com/watch?v=cyaAhXHhxgk)
 * [Reactive Angular 2 with ngrx (video)](https://youtu.be/mhA7zZ23Odw)
 * [Comprehensive Introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510)
-* [@ngrx/store in 10 minutes (video)](https://egghead.io/lessons/angular-2-ngrx-store-in-10-minutes)
-* [Build Redux Style Applications with Angular, RxJS, and @ngrx/store (video)](https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs)
+* [@ngrx/store in 10 minutes (course)](https://egghead.io/lessons/angular-2-ngrx-store-in-10-minutes)
+* [Build Redux Style Applications with Angular, RxJS, and @ngrx/store (course)](https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs)
