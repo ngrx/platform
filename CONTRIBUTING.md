@@ -1,14 +1,14 @@
-## Developing
+# Developing
 
-### Setup
+## Setup
 
-```bash
+```shell
 yarn
 ```
 
-### Testing
+## Testing
 
-```bash
+```shell
 yarn test
 ```
 
@@ -25,7 +25,7 @@ yarn test
 ## Submitting bug reports
 
 * Search through issues to see if a previous issue has already been reported and/or fixed.
-* Provide a _small_ reproduction using a [plunker template](https://plnkr.co/edit/tpl:757r6L?p=preview) or github repo.
+* Provide a _small_ reproduction using an [online template](https://stackblitz.com/edit/ngrx-seed) or a GitHub repository.
 * Please detail the affected browser(s) and operating system(s).
 * Please be sure to state which version of Angular, node and npm you're using.
 
@@ -45,7 +45,7 @@ Anyone can file an expense. If the expense makes sense for the development of th
 
 ### Contributors
 
-Thank you to all the people who have already contributed to NgRx!
+Thank you to all the people who have already contributed to ngrx!
 <a href="https://github.com/ngrx/platform/graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
 
 ### Backers
