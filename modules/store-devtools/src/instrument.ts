@@ -60,7 +60,7 @@ export function createConfig(
     actionSanitizer: undefined,
     stateSanitizer: undefined,
     name: DEFAULT_NAME,
-    serialize: false,
+    serialize: undefined,
     logOnly: false,
     features: false,
   };
