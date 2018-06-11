@@ -14,7 +14,7 @@ consistent applications on top of Angular. Core tenets:
 
 These core principles enable building components that can use the `OnPush`
 change detection strategy giving you
-[intelligent, performant change detection](http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html#smarter-change-detection)
+[intelligent, performant change detection](https://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html#smarter-change-detection)
 throughout your application.
 
 ### Installation
