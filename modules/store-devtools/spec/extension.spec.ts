@@ -15,7 +15,7 @@ import { unliftState } from '../src/utils';
 function createOptions(
   name: string = 'NgRx Store DevTools',
   features: any = false,
-  serialize: boolean = false,
+  serialize: boolean | undefined = false,
   maxAge: false | number = false
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
@@ -114,6 +114,25 @@ describe('DevtoolsExtension', () => {
       10
     );
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
+  });
+
+  it('should connect with custom serializer', () => {
+    const customSerializer = {
+      replacer: (key: {}, value: any) => value,
+    };
+
+    devtoolsExtension = new DevtoolsExtension(
+      reduxDevtoolsExtension,
+      createConfig({
+        name: 'ngrx-store-devtool-todolist',
+        serialize: customSerializer,
+      })
+    );
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(
+      jasmine.objectContaining({ serialize: customSerializer })
+    );
   });
 
   describe('notify', () => {

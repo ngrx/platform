@@ -4,7 +4,11 @@ import { empty, Observable } from 'rxjs';
 import { filter, map, share, switchMap, takeUntil } from 'rxjs/operators';
 
 import { PERFORM_ACTION } from './actions';
-import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
+import {
+  SerializationOptions,
+  STORE_DEVTOOLS_CONFIG,
+  StoreDevtoolsConfig,
+} from './config';
 import { LiftedAction, LiftedState } from './reducer';
 import {
   sanitizeAction,
@@ -37,7 +41,7 @@ export interface ReduxDevtoolsExtensionConfig {
   name: string | undefined;
   instanceId: string;
   maxAge?: number;
-  serialize?: boolean;
+  serialize?: boolean | SerializationOptions;
 }
 
 export interface ReduxDevtoolsExtension {
