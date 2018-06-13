@@ -43,10 +43,13 @@ export function getInitialState() {
 })
 ```
 
-## Meta Reducers
+## Meta-reducers
 
-@ngrx/store composes your map of reducers into a single reducer. Use the `metaReducers`
-configuration option to provide an array of meta-reducers that are composed from right to left.
+@ngrx/store composes your map of reducers into a single reducer. 
+
+>  Developers can think of meta-reducers as hooks into the action->reducer pipeline. Meta-reducers allow developers to pre-process actions before *normal* reducers are invoked.
+
+Use the `metaReducers` configuration option to provide an array of meta-reducers that are composed from right to left.
 
 Note: Meta-reducers in NgRx are similar to middleware used in Redux.
 
@@ -95,6 +98,56 @@ export class FeatureModule {}
 ```
 
 The feature state is added to the global application state once the feature is loaded. The feature state can then be selected using the [createFeatureSelector](./selectors.md#createFeatureSelector) convenience method.
+
+## Feature Module Reducers and AOT
+
+Developers can use: 
+* `StoreModule.forFeature(<name>, <reducers map>, { initialState : <reducers initial state map>})`. 
+*  `StoreModule.forFeature(<name>, <reducers map> )`.
+
+Due to AOT constraints, however, the following is not allowed:
+
+```console
+StoreModule.forFeature(<name>, combineReducers(<reducers map>, <reducers initial state map>))
+```
+
+Since the compiler needs to be able to statically analyze your code, you can’t call functions when defining metadata in the NgModule. In such cases, InjectionTokens are needed (see below):
+
+Fortunately - with Feature modules - we can avoid injection tokens using the following approach:
+
+```ts
+const initialStateA: Permissions = {
+  list: A[],
+  editMode: false
+};
+const _reducerA: ActionReducerMap<Permissions> = {
+  list: A[],
+  editMode: editModeReducer
+};
+
+/**
+ * Create `metaReducer` 1x... 
+ * while `reducerA()` is called for every action.
+ */
+const metaReducer = combineReducers(_reducerA, initialStateA);
+
+export function reducerA(state, action) {
+	return metaReducer(state, action);
+}
+```
+
+and then the following will work with AOT:
+
+```ts
+import { reducerA } from './state/a.reducer';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    StoreModule.forFeature('a', reducerA),
+  ],
+})
+```
 
 ## Injecting Reducers
 
@@ -159,7 +212,8 @@ export class FeatureModule {}
 
 ## Injecting Meta-Reducers
 
-To inject meta reducers, use the `META_REDUCERS` injection token exported in
+
+To inject 'middleware' meta reducers, use the `META_REDUCERS` injection token exported in
 the Store API and a `Provider` to register the meta reducers through dependency
 injection.
 
