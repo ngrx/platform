@@ -43,11 +43,11 @@ export function getInitialState() {
 })
 ```
 
-## Meta Reducers
+## Meta-reducers
 
 @ngrx/store composes your map of reducers into a single reducer. 
 
->  Developers can think of metaReducers as hooks into the action->reducer pipeline. MetaReducers allow develoeprs to pre-process actions actions before *normal* reducers are invoked.
+>  Developers can think of metaReducers as hooks into the action->reducer pipeline. MetaReducers allow developers to pre-process actions before *normal* reducers are invoked.
 
 Use the `metaReducers` configuration option to provide an array of meta-reducers that are composed from right to left.
 
@@ -139,7 +139,7 @@ export function reducerA(state, action) {
 and then the following will work with AOT:
 
 ```ts
-import { reducerA } from './+state/a.reducer';
+import { reducerA } from './state/a.reducer';
 
 @NgModule({
   imports: [
