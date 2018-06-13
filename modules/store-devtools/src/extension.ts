@@ -5,7 +5,7 @@ import { filter, map, share, switchMap, takeUntil } from 'rxjs/operators';
 
 import { PERFORM_ACTION } from './actions';
 import {
-  SerializeOptions,
+  SerializationOptions,
   STORE_DEVTOOLS_CONFIG,
   StoreDevtoolsConfig,
 } from './config';
@@ -41,7 +41,7 @@ export interface ReduxDevtoolsExtensionConfig {
   name: string | undefined;
   instanceId: string;
   maxAge?: number;
-  serialize?: boolean | SerializeOptions;
+  serialize?: boolean | SerializationOptions;
 }
 
 export interface ReduxDevtoolsExtension {
