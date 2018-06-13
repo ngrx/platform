@@ -15,7 +15,7 @@ import { unliftState } from '../src/utils';
 function createOptions(
   name: string = 'NgRx Store DevTools',
   features: any = false,
-  serialize: boolean | undefined = undefined,
+  serialize: boolean | undefined = false,
   maxAge: false | number = false
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
