@@ -96,8 +96,6 @@ export class RouterEffects {
 During each navigation cycle, a `RouterNavigationAction` is dispatched with a snapshot of the state in its payload, the `RouterStateSnapshot`. The `RouterStateSnapshot` is a large complex structure, containing many pieces of information about the current state and what's rendered by the router. This can cause performance
 issues when used with the Store Devtools. In most cases, you may only need a piece of information from the `RouterStateSnapshot`. In order to pare down the `RouterStateSnapshot` provided during navigation, you provide a custom serializer for the snapshot to only return what you need to be added to the payload and store.
 
-Additionally, the router state snapshot is a mutable object, which can cause issues when developing with [store freeze](https://github.com/brandonroberts/ngrx-store-freeze) to prevent direct state mutations. This can be avoided by using a custom serializer.
-
 **NOTE**: To use the time-travelling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
 
 ```ts
@@ -128,7 +126,10 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
       route = route.firstChild;
     }
 
-    const { url, root: { queryParams } } = routerState;
+    const {
+      url,
+      root: { queryParams },
+    } = routerState;
     const { params } = route;
 
     // Only return an object including the URL, params and query params
