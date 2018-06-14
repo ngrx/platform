@@ -1,20 +1,26 @@
 import { compose } from '@ngrx/store';
 
 const METADATA_KEY = '__@ngrx/effects__';
-const r: any = Reflect;
 
-export interface EffectMetadata {
-  propertyName: string;
+export interface EffectMetadata<T> {
+  propertyName: keyof T;
   dispatch: boolean;
 }
 
-function getEffectMetadataEntries(sourceProto: any): EffectMetadata[] {
-  return sourceProto.constructor[METADATA_KEY] || [];
+function getEffectMetadataEntries<T>(sourceProto: T): Array<EffectMetadata<T>> {
+  return sourceProto.constructor.hasOwnProperty(METADATA_KEY)
+    ? (sourceProto.constructor as any)[METADATA_KEY]
+    : [];
 }
 
-function setEffectMetadataEntries(sourceProto: any, entries: EffectMetadata[]) {
+function setEffectMetadataEntries<T>(
+  sourceProto: T,
+  entries: Array<EffectMetadata<T>>
+) {
   const constructor = sourceProto.constructor;
-  const meta: EffectMetadata[] = constructor.hasOwnProperty(METADATA_KEY)
+  const meta: Array<EffectMetadata<T>> = constructor.hasOwnProperty(
+    METADATA_KEY
+  )
     ? (constructor as any)[METADATA_KEY]
     : Object.defineProperty(constructor, METADATA_KEY, { value: [] })[
         METADATA_KEY
@@ -22,36 +28,32 @@ function setEffectMetadataEntries(sourceProto: any, entries: EffectMetadata[]) {
   Array.prototype.push.apply(meta, entries);
 }
 
-export function Effect({ dispatch } = { dispatch: true }): PropertyDecorator {
-  return function(target: any, propertyName: string) {
-    const metadata: EffectMetadata = { propertyName, dispatch };
-    setEffectMetadataEntries(target, [metadata]);
-  } /*TODO(#823)*/ as any;
+export function Effect<T>({ dispatch = true } = {}): PropertyDecorator {
+  return function(target: T, propertyName: keyof T) {
+    const metadata: EffectMetadata<T> = { propertyName, dispatch };
+    setEffectMetadataEntries<T>(target, [metadata]);
+  } as (target: {}, propertyName: string | symbol) => void;
 }
 
-export function getSourceForInstance(instance: Object): any {
+export function getSourceForInstance<T>(instance: T): T {
   return Object.getPrototypeOf(instance);
 }
 
-export const getSourceMetadata = compose(
-  getEffectMetadataEntries,
-  getSourceForInstance
-);
+export function getSourceMetadata<T>(instance: T): Array<EffectMetadata<T>> {
+  return compose(
+    getEffectMetadataEntries,
+    getSourceForInstance
+  )(instance);
+}
 
-export type EffectsMetadata<T> = {
-  [key in keyof T]?:
-    | undefined
-    | {
-        dispatch: boolean;
-      }
-};
+export type EffectsMetadata<T> = { [key in keyof T]?: { dispatch: boolean } };
 
 export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   const metadata: EffectsMetadata<T> = {};
 
-  getSourceMetadata(instance).forEach(({ propertyName, dispatch }) => {
-    (metadata /*TODO(#823)*/ as any)[propertyName] = { dispatch };
-  });
+  for (const { propertyName, dispatch } of getSourceMetadata(instance)) {
+    metadata[propertyName] = { dispatch };
+  }
 
   return metadata;
 }
