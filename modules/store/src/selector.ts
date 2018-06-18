@@ -268,7 +268,7 @@ export function createSelectorFactory(
 }
 
 export function createFeatureSelector<T>(
-  featureName: string
+  featureName: keyof T
 ): MemoizedSelector<object, T> {
   return createSelector(
     (state: any) => state[featureName],
