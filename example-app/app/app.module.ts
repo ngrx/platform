@@ -16,7 +16,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 
-import { routes } from './routes';
 import { reducers, metaReducers } from './reducers';
 import { schema } from './db';
 import { CustomRouterStateSerializer } from './shared/utils';
@@ -31,6 +30,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AuthModule.forRoot(),
     AppRoutingModule,
 
     /**
@@ -84,8 +84,6 @@ import { AppRoutingModule } from './app-routing.module';
     DBModule.provideDB(schema),
 
     CoreModule.forRoot(),
-
-    AuthModule.forRoot(),
   ],
   providers: [
     /**
