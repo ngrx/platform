@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -16,21 +15,14 @@ import { CollectionPageComponent } from './containers/collection-page.component'
 import { MaterialModule } from '../material';
 
 import { reducers } from './reducers';
+import { BooksRoutingModule } from './books-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     ComponentsModule,
-    RouterModule.forChild([
-      { path: 'find', component: FindBookPageComponent },
-      {
-        path: ':id',
-        component: ViewBookPageComponent,
-        canActivate: [BookExistsGuard],
-      },
-      { path: '', component: CollectionPageComponent },
-    ]),
+    BooksRoutingModule,
 
     /**
      * StoreModule.forFeature is used for composing state
