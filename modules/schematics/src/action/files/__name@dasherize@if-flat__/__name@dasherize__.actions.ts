@@ -8,4 +8,4 @@ export class <%= classify(name) %> implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>s;
 }
 
-export type <%= classify(name) %>Actions = Load<%= classify(name) %>s;
+export type <%= classify(name) %>Actions = <%= classify(name) %>;
