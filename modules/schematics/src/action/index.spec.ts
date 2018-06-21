@@ -69,7 +69,7 @@ describe('Action Schematic', () => {
     expect(fileContent).toMatch(/export enum FooActionTypes/);
   });
 
-  it('should create an type named "FooActions"', () => {
+  it('should create a class named "LoadFoos"', () => {
     const tree = schematicRunner.runSchematic(
       'action',
       defaultOptions,
@@ -79,7 +79,20 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(/export type FooActions = Foo/);
+    expect(fileContent).toMatch(/export class LoadFoos implements Action/);
+  });
+
+  it('should create a type named "FooActions"', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
   });
 
   it('should group within an "actions" folder if group is set', () => {
