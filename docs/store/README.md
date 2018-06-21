@@ -36,21 +36,21 @@ combination of these reducers will make up your application state:
 // counter.ts
 import { Action } from '@ngrx/store';
 
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-export const RESET = 'RESET';
+export const increment = 'INCREMENT';
+export const decrement = 'DECREMENT';
+export const reset = 'RESET';
 
 const initialState = 0;
 
 export function counterReducer(state: number = initialState, action: Action) {
   switch (action.type) {
-    case INCREMENT:
+    case increment:
       return state + 1;
 
-    case DECREMENT:
+    case decrement:
       return state - 1;
 
-    case RESET:
+    case reset:
       return 0;
 
     default:
@@ -81,7 +81,7 @@ You can then inject the `Store` service into your components and services. Use
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { INCREMENT, DECREMENT, RESET } from './counter';
+import { increment, decrement, reset } from './counter';
 
 interface AppState {
   count: number;
@@ -105,15 +105,15 @@ export class MyCounterComponent {
   }
 
   increment() {
-    this.store.dispatch({ type: INCREMENT });
+    this.store.dispatch({ type: increment });
   }
 
   decrement() {
-    this.store.dispatch({ type: DECREMENT });
+    this.store.dispatch({ type: decrement });
   }
 
   reset() {
-    this.store.dispatch({ type: RESET });
+    this.store.dispatch({ type: reset });
   }
 }
 ```
