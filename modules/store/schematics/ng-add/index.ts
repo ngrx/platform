@@ -99,6 +99,14 @@ export default function(options: RootStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    if (options.module) {
+      options.module = findModuleFromOptions(host, {
+        name: '',
+        module: options.module,
+        path: options.path,
+      });
+    }
+
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
 
@@ -108,14 +116,6 @@ export default function(options: RootStoreOptions): Rule {
       statePath,
       `/${srcPath}/environments/environment`
     );
-
-    if (options.module) {
-      options.module = findModuleFromOptions(host, {
-        name: '',
-        module: options.module,
-        path: options.path,
-      });
-    }
 
     if (options.stateInterface && options.stateInterface !== 'State') {
       options.stateInterface = stringUtils.classify(options.stateInterface);
