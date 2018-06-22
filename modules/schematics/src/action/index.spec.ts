@@ -69,7 +69,7 @@ describe('Action Schematic', () => {
     expect(fileContent).toMatch(/export enum FooActionTypes/);
   });
 
-  it('should create a class named "LoadFoos"', () => {
+  it('should create a class based on the provided name', () => {
     const tree = schematicRunner.runSchematic(
       'action',
       defaultOptions,
@@ -82,7 +82,7 @@ describe('Action Schematic', () => {
     expect(fileContent).toMatch(/export class LoadFoos implements Action/);
   });
 
-  it('should create a type named "FooActions"', () => {
+  it('should create the union type based on the provided name', () => {
     const tree = schematicRunner.runSchematic(
       'action',
       defaultOptions,
