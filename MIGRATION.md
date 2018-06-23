@@ -11,30 +11,30 @@ Links to the current documentation for ngrx 4.x
 
 The sections below cover the changes between the ngrx projects migrating from V1.x/2.x to V4.
 
-[@ngrx/core](#ngrxcore)  
-[@ngrx/store](#ngrxstore)  
-[@ngrx/effects](#ngrxeffects)  
-[@ngrx/router-store](#ngrxrouter-store)  
+[@ngrx/core](#ngrxcore)
+[@ngrx/store](#ngrxstore)
+[@ngrx/effects](#ngrxeffects)
+[@ngrx/router-store](#ngrxrouter-store)
 [@ngrx/store-devtools](#ngrxstore-devtools)
 
 ## Dependencies
 
 You need to have the latest versions of TypeScript and RxJS to use ngrx V4 libraries.
 
-TypeScript 2.4.x  
-RxJS 5.4.x
+* TypeScript 2.4.x
+* RxJS 5.4.x
 
 ## @ngrx/core
 
 @ngrx/core is no longer needed and can conflict with @ngrx/store. You should remove it from your project.
 
-BEFORE:
+Before:
 
 ```ts
 import { compose } from '@ngrx/core/compose';
 ```
 
-AFTER:
+After:
 
 ```ts
 import { compose } from '@ngrx/store';
@@ -48,7 +48,7 @@ The `payload` property has been removed from the `Action` interface. It was a so
 issues, especially when used with `@ngrx/effects`. If your interface/class has a payload, you need to provide
 the type.
 
-BEFORE:
+Before:
 
 ```ts
 import { Action } from '@ngrx/store';
@@ -67,7 +67,7 @@ export class MyEffects {
 }
 ```
 
-AFTER:
+After:
 
 ```ts
 import { Action } from '@ngrx/store';
@@ -79,9 +79,11 @@ import { Login } from '../actions/auth';
 @Injectable()
 export class MyEffects {
   @Effect()
-  someEffect$: Observable<Action> = this.actions$
-    .ofType<Login>(UserActions.LOGIN)
-    .pipe(map(action => action.payload), map(() => new AnotherAction()));
+  someEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<Login>(UserActions.LOGIN),
+    map(action => action.payload),
+    map(() => new AnotherAction())
+  );
 
   constructor(private actions$: Actions) {}
 }
@@ -107,9 +109,7 @@ export interface UnsafeAction extends Action {
 
 Previously to be AOT compatible, it was required to pass a function to the `provideStore` method to compose the reducers into one root reducer. The `initialState` was also provided to the method as an object in the second argument.
 
-BEFORE:
-
-`reducers/index.ts`
+Before:
 
 ```ts
 const reducers = {
@@ -123,8 +123,6 @@ export function reducer(state: any, action: any) {
   return rootReducer(state, action);
 }
 ```
-
-`app.module.ts`
 
 ```ts
 import { StoreModule } from '@ngrx/store';
@@ -144,9 +142,7 @@ export class AppModule {}
 
 This has been simplified to only require a map of reducers that will be composed together by the library. A second argument is a configuration object where you provide the `initialState`.
 
-AFTER:
-
-`reducers/index.ts`
+After:
 
 ```ts
 import { ActionReducerMap } from '@ngrx/store';
@@ -161,8 +157,6 @@ export const reducers: ActionReducerMap<State> = {
   layout: fromLayout.reducer,
 };
 ```
-
-`app.module.ts`
 
 ```ts
 import { StoreModule } from '@ngrx/store';
@@ -186,9 +180,7 @@ export class AppModule {}
 
 ### Registering Effects
 
-BEFORE:
-
-`app.module.ts`
+Before:
 
 ```ts
 @NgModule({
@@ -197,12 +189,10 @@ BEFORE:
 export class AppModule {}
 ```
 
-AFTER:
+After:
 
 The `EffectsModule.forRoot` method is _required_ in your root `AppModule`. Provide an empty array
 if you don't need to register any root-level effects.
-
-`app.module.ts`
 
 ```ts
 @NgModule({
@@ -226,11 +216,9 @@ export class FeatureModule {}
 
 ### Init Action
 
-The `@ngrx/store/init` action now fires prior to effects starting. Use defer() for the same behaviour.
+The `@ngrx/store/init` action now fires prior to effects starting. Use defer() for the same behavior.
 
-BEFORE:
-
-`app.effects.ts`
+Before:
 
 ```ts
 import { Dispatcher, Action } from '@ngrx/store';
@@ -251,9 +239,7 @@ export class AppEffects {
 }
 ```
 
-AFTER:
-
-`app.effects.ts`
+After:
 
 ```ts
 import { Action } from '@ngrx/store';
@@ -275,7 +261,7 @@ export class AppEffects {
 
 ### Testing Effects
 
-BEFORE:
+Before:
 
 ```ts
 import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
@@ -307,7 +293,7 @@ describe('My Effects', () => {
 });
 ```
 
-AFTER:
+After:
 
 ```ts
 import { TestBed } from '@angular/core/testing';
@@ -356,9 +342,7 @@ describe('My Effects', () => {
 
 ### Registering the module
 
-BEFORE:
-
-`reducers/index.ts`
+Before:
 
 ```ts
 import * as fromRouter from '@ngrx/router-store';
@@ -397,9 +381,7 @@ import { reducer } from './reducers';
 export class AppModule {}
 ```
 
-AFTER:
-
-`reducers/index.ts`
+After:
 
 ```ts
 import * as fromRouter from '@ngrx/router-store';
@@ -412,8 +394,6 @@ export const reducers = {
   routerReducer: fromRouter.routerReducer,
 };
 ```
-
-`app.module.ts`
 
 ```ts
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -436,7 +416,7 @@ export class AppModule {}
 Navigation actions are not provided as part of the V4 package. You provide your own
 custom navigation actions that use the `Router` within effects to navigate.
 
-BEFORE:
+Before:
 
 ```ts
 import { go, back, forward } from '@ngrx/router-store';
@@ -450,7 +430,7 @@ store.dispatch(back());
 store.dispatch(forward());
 ```
 
-AFTER:
+After:
 
 ```ts
 import { Action } from '@ngrx/store';
@@ -508,43 +488,41 @@ import * as RouterActions from './actions/router';
 @Injectable()
 export class RouterEffects {
   @Effect({ dispatch: false })
-  navigate$ = this.actions$
-    .ofType(RouterActions.GO)
-    .pipe(
-      map((action: RouterActions.Go) => action.payload),
-      tap(({ path, query: queryParams, extras }) =>
-        this.router.navigate(path, { queryParams, ...extras })
-      )
-    );
+  navigate$ = this.actions$.pipe(
+    ofType<RouterActions.Go>(RouterActions.GO),
+    map((action: RouterActions.Go) => action.payload),
+    tap(({ path, query: queryParams, extras }) =>
+      this.router.navigate(path, { queryParams, ...extras })
+    ),
+  );
 
   @Effect({ dispatch: false })
-  navigateBack$ = this.actions$
-    .ofType(RouterActions.BACK)
-    .do(() => this.location.back());
+  navigateBack$ = this.actions$.pipe(
+    ofType<RouterActions.Back>(RouterActions.BACK),
+    tap(() => this.location.back()),
+  );
 
   @Effect({ dispatch: false })
-  navigateForward$ = this.actions$
-    .ofType(RouterActions.FORWARD)
-    .do(() => this.location.forward());
+  navigateForward$ = this.actions$.pipe(
+    ofType<RouterActions.Forward>(RouterActions.FORWARD),
+    tap(() => this.location.forward()),
+  );
 
   constructor(
     private actions$: Actions,
     private router: Router,
-    private location: Location
+    private location: Location,
   ) {}
 }
 ```
 
 ## @ngrx/store-devtools
 
-**NOTE:** store-devtools currently causes severe performance problems when
-used with router-store. We are working to
-[fix this](https://github.com/ngrx/platform/issues/97), but for now, avoid
-using them together.
+>**Note:** To use store-devtools with
+[router-store](./docs/router-store), implement a
+[custom router state serializer](./docs/router-store/api.md#custom-router-state-serializer).
 
-BEFORE:
-
-`app.module.ts`
+Before:
 
 ```ts
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -552,7 +530,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   imports: [
     StoreDevtoolsModule.instrumentStore({ maxAge: 50 }),
-    // OR
+    // Or
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 50,
     }),
@@ -561,13 +539,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 export class AppModule {}
 ```
 
-AFTER:
-
-`app.module.ts`
+After:
 
 ```ts
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment'; // Angular CLI environment
+
+// Angular CLI environment
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
