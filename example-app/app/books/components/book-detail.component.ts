@@ -95,8 +95,8 @@ export class BookDetailComponent {
   get thumbnail() {
     return (
       this.book.volumeInfo.imageLinks &&
-      this.book.volumeInfo.imageLinks.smallThumbnail && 
-      this.book.volumeInfo.imageLinks.smallThumbnail.replace('http:', '') 
+      this.book.volumeInfo.imageLinks.smallThumbnail &&
+      this.book.volumeInfo.imageLinks.smallThumbnail.replace('http:', '')
     );
   }
 }
