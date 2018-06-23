@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -17,13 +16,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 
-import { routes } from './routes';
 import { reducers, metaReducers } from './reducers';
 import { schema } from './db';
 import { CustomRouterStateSerializer } from './shared/utils';
 
 import { AppComponent } from './core/containers/app.component';
 import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   imports: [
@@ -31,7 +30,8 @@ import { environment } from '../environments/environment';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, { useHash: true }),
+    AuthModule.forRoot(),
+    AppRoutingModule,
 
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
@@ -84,8 +84,6 @@ import { environment } from '../environments/environment';
     DBModule.provideDB(schema),
 
     CoreModule.forRoot(),
-
-    AuthModule.forRoot(),
   ],
   providers: [
     /**
