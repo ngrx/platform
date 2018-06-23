@@ -69,6 +69,32 @@ describe('Action Schematic', () => {
     expect(fileContent).toMatch(/export enum FooActionTypes/);
   });
 
+  it('should create a class based on the provided name', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(/export class LoadFoos implements Action/);
+  });
+
+  it('should create the union type based on the provided name', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
+  });
+
   it('should group within an "actions" folder if group is set', () => {
     const tree = schematicRunner.runSchematic(
       'action',
