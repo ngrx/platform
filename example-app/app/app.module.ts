@@ -18,7 +18,6 @@ import { AuthModule } from './auth/auth.module';
 
 import { reducers, metaReducers } from './reducers';
 import { schema } from './db';
-import { CustomRouterStateSerializer } from './shared/utils';
 
 import { AppComponent } from './core/containers/app.component';
 import { environment } from '../environments/environment';
@@ -84,14 +83,6 @@ import { AppRoutingModule } from './app-routing.module';
     DBModule.provideDB(schema),
 
     CoreModule.forRoot(),
-  ],
-  providers: [
-    /**
-     * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
-     * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
-     * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
-     */
-    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
   ],
   bootstrap: [AppComponent],
 })

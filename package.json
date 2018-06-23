@@ -14,7 +14,7 @@
     "coverage:html": "nyc report --reporter=html",
     "copy:dist": "ncp dist/ ./node_modules/@ngrx/",
     "example:start": "yarn run cli serve",
-    "example:start:aot": "yarn run cli serve -prod",
+    "example:start:aot": "yarn run cli serve --prod",
     "example:test": "jest --watch",
     "example:build:prod": "yarn cli build --prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
     "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
