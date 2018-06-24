@@ -39,7 +39,7 @@ describe('Effect ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const packageJson = JSON.parse(getFileContent(tree, '/package.json'));
+    const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/effects']).toBeDefined();
   });
@@ -48,7 +48,7 @@ describe('Effect ng-add Schematic', () => {
     const options = { ...defaultOptions, skipPackageJson: true };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const packageJson = JSON.parse(getFileContent(tree, '/package.json'));
+    const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/effects']).toBeUndefined();
   });

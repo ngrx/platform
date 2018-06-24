@@ -23,6 +23,7 @@ ng_package(
     entry_point = "modules/store-devtools/index.js",
     packages = [
         "//modules/store-devtools/migrations:npm_package",
+        "//modules/store-devtools/schematics:npm_package",
         "//modules/store-devtools/schematics-core:npm_package",
     ],
     deps = [

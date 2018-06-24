@@ -4,18 +4,18 @@ import {
 } from '@angular-devkit/schematics/testing';
 import { getFileContent } from '@schematics/angular/utility/test';
 import * as path from 'path';
-import { Schema as RootStoreOptions } from './schema';
+import { Schema as StoreDevtoolsOptions } from './schema';
 import {
   getTestProjectPath,
   createWorkspace,
 } from '../../../schematics-core/testing';
 
-describe('Store ng-add Schematic', () => {
+describe('Store-Devtools ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
-    '@ngrx/store',
+    '@ngrx/store-devtools',
     path.join(__dirname, '../collection.json')
   );
-  const defaultOptions: RootStoreOptions = {
+  const defaultOptions: StoreDevtoolsOptions = {
     skipPackageJson: false,
     project: 'bar',
     module: 'app',
@@ -35,7 +35,7 @@ describe('Store ng-add Schematic', () => {
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
-    expect(packageJson.dependencies['@ngrx/store']).toBeDefined();
+    expect(packageJson.dependencies['@ngrx/store-devtools']).toBeDefined();
   });
 
   it('should skip package.json update', () => {
@@ -44,17 +44,7 @@ describe('Store ng-add Schematic', () => {
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
-    expect(packageJson.dependencies['@ngrx/store']).toBeUndefined();
-  });
-
-  it('should create the initial store setup', () => {
-    const options = { ...defaultOptions };
-
-    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const files = tree.files;
-    expect(
-      files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
-    ).toBeGreaterThanOrEqual(0);
+    expect(packageJson.dependencies['@ngrx/store-devtools']).toBeUndefined();
   });
 
   it('should be provided by default', () => {
@@ -63,10 +53,10 @@ describe('Store ng-add Schematic', () => {
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
-      /import { reducers, metaReducers } from '\.\/reducers';/
+      /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
     );
     expect(content).toMatch(
-      /StoreModule.forRoot\(reducers, { metaReducers }\)/
+      /StoreDevtoolsModule.instrument\({ maxAge: 25, logOnly: environment.production }\)/
     );
   });
 
@@ -76,7 +66,7 @@ describe('Store ng-add Schematic', () => {
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
-      /import { reducers, metaReducers } from '\.\/reducers';/
+      /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
     );
   });
 
@@ -84,11 +74,9 @@ describe('Store ng-add Schematic', () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
-      /import { environment } from '..\/..\/environments\/environment';/
+      /import { environment } from '..\/environments\/environment';/
     );
   });
 
@@ -103,27 +91,39 @@ describe('Store ng-add Schematic', () => {
     expect(thrownError).toBeDefined();
   });
 
-  it('should support a default root state interface name', () => {
-    const options = { ...defaultOptions, name: 'State' };
+  it('should fail if negative maxAges', () => {
+    const options = { ...defaultOptions, maxAge: -4 };
 
-    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/export interface State {/);
+    let thrownError: Error | null = null;
+    try {
+      schematicRunner.runSchematic('ng-add', options, appTree);
+    } catch (err) {
+      thrownError = err;
+    }
+    expect(thrownError).toBeDefined();
   });
 
-  it('should support a custom root state interface name', () => {
+  it('should fail if maxAge of 1', () => {
+    const options = { ...defaultOptions, maxAge: -4 };
+
+    let thrownError: Error | null = null;
+    try {
+      schematicRunner.runSchematic('ng-add', options, appTree);
+    } catch (err) {
+      thrownError = err;
+    }
+    expect(thrownError).toBeDefined();
+  });
+
+  it('should support a custom maxAge', () => {
     const options = {
       ...defaultOptions,
       name: 'State',
-      stateInterface: 'AppState',
+      maxAge: 5,
     };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/export interface AppState {/);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(/maxAge: 5/);
   });
 });
