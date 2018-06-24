@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxRootState",
+  "title": "NgRx Root State Management Options Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the state.",
+      "visible": false
+    },
+    "module": {
+      "type": "string",
+      "default": "app",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "subtype": "filepath"
+    },
+    "maxAge": {
+      "type": "number",
+      "default": 25,
+      "description":
+        "number (>1) | 0 - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Default is 25 for performance reasons."
+    }
+  },
+  "required": []
+}
