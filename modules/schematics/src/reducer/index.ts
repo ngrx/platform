@@ -52,22 +52,9 @@ export default function(options: ReducerOptions): Rule {
     ]);
 
     return chain([
+      branchAndMerge(chain([addReducerToState(options)])),
       branchAndMerge(
-        chain([
-          filter(path => !path.includes('node_modules')),
-          addReducerToState(options),
-        ])
-      ),
-      branchAndMerge(
-        chain([
-          filter(
-            path =>
-              path.endsWith('.module.ts') &&
-              !path.endsWith('-routing.module.ts')
-          ),
-          addReducerImportToNgModule(options),
-          mergeWith(templateSource),
-        ])
+        chain([addReducerImportToNgModule(options), mergeWith(templateSource)])
       ),
     ])(host, context);
   };
