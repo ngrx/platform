@@ -5,7 +5,6 @@ import {
   Tree,
   branchAndMerge,
   chain,
-  filter,
   noop,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
@@ -122,16 +121,7 @@ export default function(options: StoreDevtoolsOptions): Rule {
     }
 
     return chain([
-      branchAndMerge(
-        chain([
-          filter(
-            path =>
-              path.endsWith('.module.ts') &&
-              !path.endsWith('-routing.module.ts')
-          ),
-          addImportToNgModule(options),
-        ])
-      ),
+      branchAndMerge(chain([addImportToNgModule(options)])),
       options && options.skipPackageJson
         ? noop()
         : addNgRxStoreDevToolsToPackageJson(),
