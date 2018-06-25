@@ -6,7 +6,6 @@ import {
   apply,
   branchAndMerge,
   chain,
-  filter,
   mergeWith,
   template,
   url,
@@ -132,15 +131,7 @@ export default function(options: RootStoreOptions): Rule {
 
     return chain([
       branchAndMerge(
-        chain([
-          filter(
-            path =>
-              path.endsWith('.module.ts') &&
-              !path.endsWith('-routing.module.ts')
-          ),
-          addImportToNgModule(options),
-          mergeWith(templateSource),
-        ])
+        chain([addImportToNgModule(options), mergeWith(templateSource)])
       ),
       options && options.skipPackageJson ? noop() : addNgRxStoreToPackageJson(),
     ])(host, context);
