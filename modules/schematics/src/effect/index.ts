@@ -121,15 +121,7 @@ export default function(options: EffectOptions): Rule {
 
     return chain([
       branchAndMerge(
-        chain([
-          filter(
-            path =>
-              path.endsWith('.module.ts') &&
-              !path.endsWith('-routing.module.ts')
-          ),
-          addImportToNgModule(options),
-          mergeWith(templateSource),
-        ])
+        chain([addImportToNgModule(options), mergeWith(templateSource)])
       ),
     ])(host, context);
   };
