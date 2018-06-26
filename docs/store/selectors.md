@@ -280,7 +280,7 @@ export const selectFilteredValues = pipe(
 );
 
 store.pipe(selectFilteredValues)
-     .subcribe(/* .. */);
+     .subscribe(/* .. */);
 ```
 
 ### Advanced Example: Select the last {n} state transitions
