@@ -50,7 +50,7 @@ describe('Effect Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create an effect class which has an "effect$" property if feature is set', () => {
+  it('should create an effect class which has a "loadFoos$" property if feature is set', () => {
     const options = { ...defaultOptions, feature: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
@@ -65,11 +65,11 @@ describe('Effect Schematic', () => {
     );
     expect(content).toMatch(/export class FooEffects/);
     expect(content).toMatch(
-      /effect\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
+      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
     );
   });
 
-  it('should create an effect class which does not has an "effect$" property if root is set', () => {
+  it('should create an effect class which does not has a "loadFoos$" property if root is set', () => {
     const options = { ...defaultOptions, root: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
@@ -84,7 +84,7 @@ describe('Effect Schematic', () => {
     );
     expect(content).toMatch(/export class FooEffects/);
     expect(content).not.toMatch(
-      /effect\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
+      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
     );
   });
 
