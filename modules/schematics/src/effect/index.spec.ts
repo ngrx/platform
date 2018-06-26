@@ -69,7 +69,7 @@ describe('Effect Schematic', () => {
     );
   });
 
-  it('should create an effect class which does not has a "loadFoos$" property if root is set', () => {
+  it('should create an effect class which does not have a "loadFoos$" property if root is set', () => {
     const options = { ...defaultOptions, root: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
