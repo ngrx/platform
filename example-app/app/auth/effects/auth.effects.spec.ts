@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
-
 import {
   Login,
   LoginFailure,
@@ -15,24 +15,10 @@ import { Authenticate, User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { AuthEffects } from './auth.effects';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(empty());
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('AuthEffects', () => {
   let effects: AuthEffects;
   let authService: any;
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let routerService: any;
 
   beforeEach(() => {
@@ -43,10 +29,7 @@ describe('AuthEffects', () => {
           provide: AuthService,
           useValue: { login: jest.fn() },
         },
-        {
-          provide: Actions,
-          useFactory: getActions,
-        },
+        provideMockActions(() => actions$),
         {
           provide: Router,
           useValue: { navigate: jest.fn() },
@@ -69,7 +52,7 @@ describe('AuthEffects', () => {
       const action = new Login(credentials);
       const completion = new LoginSuccess({ user });
 
-      actions$.stream = hot('-a---', { a: action });
+      actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: user });
       const expected = cold('--b', { b: completion });
       authService.login = jest.fn(() => response);
@@ -83,7 +66,7 @@ describe('AuthEffects', () => {
       const completion = new LoginFailure('Invalid username or password');
       const error = 'Invalid username or password';
 
-      actions$.stream = hot('-a---', { a: action });
+      actions$ = hot('-a---', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--b', { b: completion });
       authService.login = jest.fn(() => response);
@@ -97,7 +80,7 @@ describe('AuthEffects', () => {
       const user = { name: 'User' } as User;
       const action = new LoginSuccess({ user });
 
-      actions$.stream = hot('-a---', { a: action });
+      actions$ = hot('-a---', { a: action });
 
       effects.loginSuccess$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/']);
@@ -109,7 +92,7 @@ describe('AuthEffects', () => {
     it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', () => {
       const action = new LoginRedirect();
 
-      actions$.stream = hot('-a---', { a: action });
+      actions$ = hot('-a---', { a: action });
 
       effects.loginRedirect$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
@@ -119,7 +102,7 @@ describe('AuthEffects', () => {
     it('should dispatch a RouterNavigation action when auth.Logout is dispatched', () => {
       const action = new Logout();
 
-      actions$.stream = hot('-a---', { a: action });
+      actions$ = hot('-a---', { a: action });
 
       effects.loginRedirect$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);

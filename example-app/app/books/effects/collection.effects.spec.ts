@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Database } from '@ngrx/db';
 import { Actions } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
@@ -8,24 +9,10 @@ import * as CollectionActions from '../actions/collection.actions';
 import { Book } from '../models/book';
 import { CollectionEffects } from './collection.effects';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(empty());
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('CollectionEffects', () => {
   let db: any;
   let effects: CollectionEffects;
-  let actions$: TestActions;
+  let actions$: Observable<any>;
 
   const book1 = { id: '111', volumeInfo: {} } as Book;
   const book2 = { id: '222', volumeInfo: {} } as Book;
@@ -43,7 +30,7 @@ describe('CollectionEffects', () => {
             executeWrite: jest.fn(),
           },
         },
-        { provide: Actions, useFactory: getActions },
+        provideMockActions(() => actions$),
       ],
     });
 
@@ -64,7 +51,7 @@ describe('CollectionEffects', () => {
       const action = new CollectionActions.Load();
       const completion = new CollectionActions.LoadSuccess([book1, book2]);
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
       const response = cold('-a-b|', { a: book1, b: book2 });
       const expected = cold('-----c', { c: completion });
       db.query = jest.fn(() => response);
@@ -77,7 +64,7 @@ describe('CollectionEffects', () => {
       const error = 'Error!';
       const completion = new CollectionActions.LoadFail(error);
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
       db.query = jest.fn(() => response);
@@ -91,7 +78,7 @@ describe('CollectionEffects', () => {
       const action = new CollectionActions.AddBook(book1);
       const completion = new CollectionActions.AddBookSuccess(book1);
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
       const response = cold('-b', { b: true });
       const expected = cold('--c', { c: completion });
       db.insert = jest.fn(() => response);
@@ -105,7 +92,7 @@ describe('CollectionEffects', () => {
       const completion = new CollectionActions.AddBookFail(book1);
       const error = 'Error!';
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
       db.insert = jest.fn(() => response);
@@ -118,7 +105,7 @@ describe('CollectionEffects', () => {
         const action = new CollectionActions.RemoveBook(book1);
         const completion = new CollectionActions.RemoveBookSuccess(book1);
 
-        actions$.stream = hot('-a', { a: action });
+        actions$ = hot('-a', { a: action });
         const response = cold('-b', { b: true });
         const expected = cold('--c', { c: completion });
         db.executeWrite = jest.fn(() => response);
@@ -134,7 +121,7 @@ describe('CollectionEffects', () => {
         const completion = new CollectionActions.RemoveBookFail(book1);
         const error = 'Error!';
 
-        actions$.stream = hot('-a', { a: action });
+        actions$ = hot('-a', { a: action });
         const response = cold('-#', {}, error);
         const expected = cold('--c', { c: completion });
         db.executeWrite = jest.fn(() => response);
