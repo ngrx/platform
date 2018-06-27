@@ -37,7 +37,7 @@ describe('Effect Schematic', () => {
     appTree = createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create an effect file and its spec file', () => {
+  it('should create an effect with a spec file', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
@@ -48,44 +48,6 @@ describe('Effect Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/foo/foo.effects.ts`)
     ).toBeGreaterThanOrEqual(0);
-  });
-
-  it('should create an effect class which has a "loadFoos$" property if feature is set', () => {
-    const options = { ...defaultOptions, feature: true };
-
-    const tree = schematicRunner.runSchematic('effect', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/foo/foo.effects.ts`
-    );
-    expect(content).toMatch(
-      /import { Actions, Effect, ofType } from '@ngrx\/effects';/
-    );
-    expect(content).toMatch(
-      /import { LoadFoos, FooActionTypes } from '\.\/foo.actions';/
-    );
-    expect(content).toMatch(/export class FooEffects/);
-    expect(content).toMatch(
-      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
-    );
-  });
-
-  it('should create an effect class which does not have a "loadFoos$" property if root is set', () => {
-    const options = { ...defaultOptions, root: true };
-
-    const tree = schematicRunner.runSchematic('effect', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/foo/foo.effects.ts`
-    );
-    expect(content).toMatch(
-      /import { Actions, Effect } from '@ngrx\/effects';/
-    );
-    expect(content).not.toMatch(
-      /import { LoadFoos, FooActionTypes } from '\.\/foo.actions';/
-    );
-    expect(content).toMatch(/export class FooEffects/);
-    expect(content).not.toMatch(
-      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
-    );
   });
 
   it('should not be provided by default', () => {
@@ -254,6 +216,44 @@ describe('Effect Schematic', () => {
 
     expect(content).toMatch(
       /import \{ LoadFoos, FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
+    );
+  });
+
+  it('should create an effect that describes a source of actions within a feature', () => {
+    const options = { ...defaultOptions, feature: true };
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+    expect(content).toMatch(
+      /import { Actions, Effect, ofType } from '@ngrx\/effects';/
+    );
+    expect(content).toMatch(
+      /import { LoadFoos, FooActionTypes } from '\.\/foo.actions';/
+    );
+    expect(content).toMatch(/export class FooEffects/);
+    expect(content).toMatch(
+      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
+    );
+  });
+
+  it('should create an effect that does not define a source of actions within the root', () => {
+    const options = { ...defaultOptions, root: true };
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+    expect(content).toMatch(
+      /import { Actions, Effect } from '@ngrx\/effects';/
+    );
+    expect(content).not.toMatch(
+      /import { LoadFoos, FooActionTypes } from '\.\/foo.actions';/
+    );
+    expect(content).toMatch(/export class FooEffects/);
+    expect(content).not.toMatch(
+      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
     );
   });
 });
