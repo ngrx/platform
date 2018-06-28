@@ -35,22 +35,31 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
     super(reducerFactory(reducers, initialState));
   }
 
-  addFeature({
-    reducers,
-    reducerFactory,
-    metaReducers,
-    initialState,
-    key,
-  }: StoreFeature<any, any>) {
-    const reducer =
-      typeof reducers === 'function'
-        ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
-        : createReducerFactory(reducerFactory, metaReducers)(
-            reducers,
-            initialState
-          );
+  addFeature(feature: StoreFeature<any, any>) {
+    this.addFeatures([feature]);
+  }
 
-    this.addReducer(key, reducer);
+  addFeatures(features: StoreFeature<any, any>[]) {
+    const reducers = features.reduce(
+      (
+        reducerDict,
+        { reducers, reducerFactory, metaReducers, initialState, key }
+      ) => {
+        const reducer =
+          typeof reducers === 'function'
+            ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
+            : createReducerFactory(reducerFactory, metaReducers)(
+                reducers,
+                initialState
+              );
+
+        reducerDict[key] = reducer;
+        return reducerDict;
+      },
+      {} as { [key: string]: ActionReducer<any, any> }
+    );
+
+    this.addReducers(reducers);
   }
 
   removeFeature({ key }: StoreFeature<any, any>) {
@@ -59,13 +68,17 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
 
   addReducer(key: string, reducer: ActionReducer<any, any>) {
     this.reducers = { ...this.reducers, [key]: reducer };
-
     this.updateReducers(key);
+  }
+
+  addReducers(reducers: { [key: string]: ActionReducer<any, any> }) {
+    this.reducers = { ...this.reducers, ...reducers };
+    // TODO: find a better "name"
+    this.updateReducers('BATCH');
   }
 
   removeReducer(key: string) {
     this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
-
     this.updateReducers(key);
   }
 
