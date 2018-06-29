@@ -261,19 +261,17 @@ export function reducer(state = initialState, action: UserActionsUnion): State {
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
 
-export const {
-  // select the array of user ids
-  selectIds: selectUserIds,
+// select the array of user ids
+export const selectUserIds = adapter.getSelectors().selectIds;
 
-  // select the dictionary of user entities
-  selectEntities: selectUserEntities,
+// select the dictionary of user entities
+export const selectUserEntities = adapter.getSelectors().selectEntities;
 
-  // select the array of users
-  selectAll: selectAllUsers,
+// select the array of users
+export const selectAllUsers = adapter.getSelectors().selectAll;
 
-  // select the total user count
-  selectTotal: selectUserTotal,
-} = adapter.getSelectors();
+// select the total user count
+export const selectUserTotal = adapter.getSelectors().selectTotal;
 ```
 
 ### Entity Selectors
