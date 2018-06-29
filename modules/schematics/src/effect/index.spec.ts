@@ -215,7 +215,7 @@ describe('Effect Schematic', () => {
     );
 
     expect(content).toMatch(
-      /import \{ LoadFoos, FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
+      /import \{ FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
     );
   });
 
@@ -230,11 +230,11 @@ describe('Effect Schematic', () => {
       /import { Actions, Effect, ofType } from '@ngrx\/effects';/
     );
     expect(content).toMatch(
-      /import { LoadFoos, FooActionTypes } from '\.\/foo.actions';/
+      /import { FooActionTypes } from '\.\/foo.actions';/
     );
     expect(content).toMatch(/export class FooEffects/);
     expect(content).toMatch(
-      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
+      /loadFoos\$ = this\.actions\$.pipe\(ofType\(FooActionTypes\.LoadFoos\)\);/
     );
   });
 
@@ -249,11 +249,11 @@ describe('Effect Schematic', () => {
       /import { Actions, Effect } from '@ngrx\/effects';/
     );
     expect(content).not.toMatch(
-      /import { LoadFoos, FooActionTypes } from '\.\/foo.actions';/
+      /import { FooActionTypes } from '\.\/foo.actions';/
     );
     expect(content).toMatch(/export class FooEffects/);
     expect(content).not.toMatch(
-      /loadFoos\$ = this\.actions\$.pipe\(ofType<LoadFoos>\(FooActionTypes\.LoadFoos\)\);/
+      /loadFoos\$ = this\.actions\$.pipe\(ofType\(FooActionTypes\.LoadFoos\)\);/
     );
   });
 });
