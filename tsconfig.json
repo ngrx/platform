@@ -16,6 +16,7 @@
     "strict": true,
     "paths": {
       "@ngrx/effects": ["./modules/effects"],
+      "@ngrx/effects/testing": ["./modules/effects/testing"],
       "@ngrx/effects/schematics-core": ["./modules/effects/schematics-core"],
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
