@@ -176,25 +176,25 @@ describe('ngRx Integration spec', () => {
   });
 
   describe('feature state', () => {
-    const initialState = {
-      todos: [
-        {
-          id: 1,
-          text: 'do things',
-          completed: false,
-        },
-      ],
-      visibilityFilter: VisibilityFilters.SHOW_ALL,
-    };
-
-    const reducers: ActionReducerMap<TodoAppSchema, any> = {
-      todos: todos,
-      visibilityFilter: visibilityFilter,
-    };
-
-    const featureInitialState = [{ id: 1, completed: false, text: 'Item' }];
-
     it('should initialize properly', () => {
+      const initialState = {
+        todos: [
+          {
+            id: 1,
+            text: 'do things',
+            completed: false,
+          },
+        ],
+        visibilityFilter: VisibilityFilters.SHOW_ALL,
+      };
+
+      const reducers: ActionReducerMap<TodoAppSchema, any> = {
+        todos: todos,
+        visibilityFilter: visibilityFilter,
+      };
+
+      const featureInitialState = [{ id: 1, completed: false, text: 'Item' }];
+
       TestBed.configureTestingModule({
         imports: [
           StoreModule.forRoot(reducers, { initialState }),
@@ -216,6 +216,41 @@ describe('ngRx Integration spec', () => {
 
       store.pipe(select(state => state)).subscribe(state => {
         expect(state).toEqual(expected.shift());
+      });
+    });
+
+    it('should initialize properly with a partial state', () => {
+      const initialState = {
+        items: [{ id: 1, completed: false, text: 'Item' }],
+      };
+
+      const reducers: ActionReducerMap<TodoAppSchema, any> = {
+        todos: todos,
+        visibilityFilter: visibilityFilter,
+      };
+
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({} as any, {
+            initialState,
+          }),
+          StoreModule.forFeature('todos', reducers),
+          StoreModule.forFeature('items', todos),
+        ],
+      });
+
+      const store: Store<any> = TestBed.get(Store);
+
+      const expected = {
+        todos: {
+          todos: [],
+          visibilityFilter: VisibilityFilters.SHOW_ALL,
+        },
+        items: [{ id: 1, completed: false, text: 'Item' }],
+      };
+
+      store.pipe(select(state => state)).subscribe(state => {
+        expect(state).toEqual(expected);
       });
     });
   });
