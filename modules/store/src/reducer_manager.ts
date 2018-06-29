@@ -62,8 +62,12 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
     this.addReducers(reducers);
   }
 
-  removeFeature({ key }: StoreFeature<any, any>) {
-    this.removeReducer(key);
+  removeFeature(feature: StoreFeature<any, any>) {
+    this.removeFeatures([feature]);
+  }
+
+  removeFeatures(features: StoreFeature<any, any>[]) {
+    this.removeReducers(features.map(p => p.key));
   }
 
   addReducer(key: string, reducer: ActionReducer<any, any>) {
@@ -73,13 +77,19 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
 
   addReducers(reducers: { [key: string]: ActionReducer<any, any> }) {
     this.reducers = { ...this.reducers, ...reducers };
-    // TODO: find a better "name"
-    this.updateReducers('BATCH');
+    this.updateReducers(this.concatFeatureKeys(Object.keys(reducers)));
   }
 
-  removeReducer(key: string) {
-    this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
-    this.updateReducers(key);
+  removeReducer(featureKey: string) {
+    this.reducers = omit(this.reducers, featureKey) /*TODO(#823)*/ as any;
+    this.updateReducers(featureKey);
+  }
+
+  removeReducers(featureKeys: string[]) {
+    featureKeys.forEach(key => {
+      this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
+    });
+    this.updateReducers(this.concatFeatureKeys(featureKeys));
   }
 
   private updateReducers(key: string) {
@@ -88,6 +98,10 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
       type: UPDATE,
       feature: key,
     });
+  }
+
+  private concatFeatureKeys(keys: string[]) {
+    return keys.join('___');
   }
 
   ngOnDestroy() {

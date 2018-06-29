@@ -76,9 +76,7 @@ export class StoreFeatureModule implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.features.forEach(feature =>
-      this.reducerManager.removeFeature(feature)
-    );
+    this.reducerManager.removeFeatures(this.features);
   }
 }
 
