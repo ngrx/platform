@@ -7,6 +7,8 @@ import {
   Store,
   StoreModule,
   select,
+  ReducerManagerDispatcher,
+  UPDATE,
 } from '../';
 import {
   counterReducer,
@@ -267,16 +269,19 @@ describe('ngRx Store', () => {
   describe(`add/remove reducers`, () => {
     let addReducerSpy: Spy;
     let removeReducerSpy: Spy;
+    let reducerManagerDispatcherSpy: Spy;
     const key = 'counter4';
 
     beforeEach(() => {
       setup();
       const reducerManager = TestBed.get(ReducerManager);
+      const dispatcher = TestBed.get(ReducerManagerDispatcher);
       addReducerSpy = spyOn(reducerManager, 'addReducer').and.callThrough();
       removeReducerSpy = spyOn(
         reducerManager,
         'removeReducer'
       ).and.callThrough();
+      reducerManagerDispatcherSpy = spyOn(dispatcher, 'next').and.callThrough();
     });
 
     it(`should delegate add/remove to ReducerManager`, () => {
@@ -297,6 +302,22 @@ describe('ngRx Store', () => {
       store.dispatch({ type: INCREMENT });
       store.pipe(take(1)).subscribe(val => {
         expect(val.counter4).toBeUndefined();
+      });
+    });
+
+    it('should dispatch an update reducers action when a reducer is added', () => {
+      store.addReducer(key, counterReducer);
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
+        type: UPDATE,
+        feature: key,
+      });
+    });
+
+    it('should dispatch an update reducers action when a reducer is removed', () => {
+      store.removeReducer(key);
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
+        type: UPDATE,
+        feature: key,
       });
     });
   });

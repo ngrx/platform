@@ -71,8 +71,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   }
 
   addReducer(key: string, reducer: ActionReducer<any, any>) {
-    this.reducers = { ...this.reducers, [key]: reducer };
-    this.updateReducers(key);
+    this.addReducers({ [key]: reducer });
   }
 
   addReducers(reducers: { [key: string]: ActionReducer<any, any> }) {
@@ -81,8 +80,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   }
 
   removeReducer(featureKey: string) {
-    this.reducers = omit(this.reducers, featureKey) /*TODO(#823)*/ as any;
-    this.updateReducers(featureKey);
+    this.removeReducers([featureKey]);
   }
 
   removeReducers(featureKeys: string[]) {
