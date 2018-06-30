@@ -16,7 +16,7 @@ export function combineReducers(
 ): ActionReducer<any, Action> {
   const reducerKeys = Object.keys(reducers);
   const finalReducers: any = {};
-  // TODO: take a look at this
+
   for (let i = 0; i < reducerKeys.length; i++) {
     const key = reducerKeys[i];
     if (typeof reducers[key] === 'function') {
