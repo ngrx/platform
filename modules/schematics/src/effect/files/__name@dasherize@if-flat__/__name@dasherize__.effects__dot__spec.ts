@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { <%= classify(name) %>Effects } from './<%= dasherize(name) %>.effects';
 
-describe('<%= classify(name) %>Service', () => {
+describe('<%= classify(name) %>Effects', () => {
   let actions$: Observable<any>;
   let effects: <%= classify(name) %>Effects;
 
