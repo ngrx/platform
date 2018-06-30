@@ -76,7 +76,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
 
   addReducers(reducers: { [key: string]: ActionReducer<any, any> }) {
     this.reducers = { ...this.reducers, ...reducers };
-    this.updateReducers(this.concatFeatureKeys(Object.keys(reducers)));
+    this.updateReducers(Object.keys(reducers));
   }
 
   removeReducer(featureKey: string) {
@@ -87,19 +87,23 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
     featureKeys.forEach(key => {
       this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
     });
-    this.updateReducers(this.concatFeatureKeys(featureKeys));
+    this.updateReducers(featureKeys);
   }
 
-  private updateReducers(key: string) {
+  private updateReducers(keys: string[]) {
     this.next(this.reducerFactory(this.reducers, this.initialState));
-    this.dispatcher.next(<Action & { feature: string }>{
-      type: UPDATE,
-      feature: key,
-    });
-  }
 
-  private concatFeatureKeys(keys: string[]) {
-    return keys.join('___');
+    if (keys.length === 1) {
+      this.dispatcher.next(<Action>{
+        type: UPDATE,
+        feature: keys[0],
+      });
+    } else {
+      this.dispatcher.next(<Action>{
+        type: UPDATE,
+        features: keys,
+      });
+    }
   }
 
   ngOnDestroy() {
