@@ -104,7 +104,7 @@ export const selectFeatureCount = createSelector(
 );
 ```
 
-There is also an overload on the `createFeatureSelector` method which allows a better typechecking.
+There is also an overload on the `createFeatureSelector` method, which allows a better typechecking.
 The example from above would become:
 
 ```ts
