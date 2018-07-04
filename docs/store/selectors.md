@@ -104,6 +104,24 @@ export const selectFeatureCount = createSelector(
 );
 ```
 
+There is also an overload on the `createFeatureSelector` method which allows a better typechecking.
+The example from above would become:
+
+```ts
+export const selectFeature = createFeatureSelector<AppState, FeatureState>(
+  'feature'
+);
+```
+
+Where `AppState` is the type from the top level feature state and `FeatureState` is the type from the feature slice to select.
+Meaning that the following would not compile because `foo` is not a feature slice of `AppState`.
+
+```ts
+export const selectFeature = createFeatureSelector<AppState, FeatureState>(
+  'foo'
+);
+```
+
 ## Reset Memoized Selector
 
 The selector function returned by calling `createSelector` or `createFeatureSelector` initially has a memoized value of `null`. After a selector is invoked the first time its memoized value is stored in memory. If the selector is subsequently invoked with the same arguments it will return the memoized value. If the selector is then invoked with different arguments it will recompute and update its memoized value. Consider the following:
@@ -234,9 +252,7 @@ import { filter } from 'rxjs/operators';
 
 store
   .select(selectValues)
-  .pipe(
-    filter(val => val !== undefined)
-  )
+  .pipe(filter(val => val !== undefined))
   .subscribe(/* .. */);
 ```
 
@@ -247,10 +263,9 @@ The same behaviour can be achieved by re-writing the above piece of code to use 
 ```ts
 import { map, filter } from 'rxjs/operators';
 
-store.pipe(
-  map(state => selectValues(state)),
-  filter(val => val !== undefined)
-).subscribe(/* .. */);
+store
+  .pipe(map(state => selectValues(state)), filter(val => val !== undefined))
+  .subscribe(/* .. */);
 ```
 
 The above can be further re-written to use the `select()` utility function from NgRx:
@@ -259,10 +274,9 @@ The above can be further re-written to use the `select()` utility function from 
 import { select } from '@ngrx/store';
 import { map, filter } from 'rxjs/operators';
 
-store.pipe(
-  select(selectValues(state)),
-  filter(val => val !== undefined)
-).subscribe(/* .. */);
+store
+  .pipe(select(selectValues(state)), filter(val => val !== undefined))
+  .subscribe(/* .. */);
 ```
 
 #### Solution: Extracting a pipeable operator
@@ -279,15 +293,14 @@ export const selectFilteredValues = pipe(
   filter(val => val !== undefined)
 );
 
-store.pipe(selectFilteredValues)
-     .subscribe(/* .. */);
+store.pipe(selectFilteredValues).subscribe(/* .. */);
 ```
 
 ### Advanced Example: Select the last {n} state transitions
 
 Let's examine the technique of combining NgRx selectors and RxJS operators in an advanced example.
 
-In this example, we will write a  selector function that projects values from two different slices of the application state.
+In this example, we will write a selector function that projects values from two different slices of the application state.
 The projected state will emit a value when both slices of state have a value.
 Otherwise, the selector will emit an `undefined` value.
 
@@ -307,7 +320,7 @@ export const selectProjectedValues = createSelector(
 
 Then, the component should visualize the history of state transitions.
 We are not only interested in the current state but rather like to display the last `n` pieces of state.
-Meaning that we will map a stream of state values (`1`, `2`, `3`)  to an array of state values (`[1, 2, 3]`).
+Meaning that we will map a stream of state values (`1`, `2`, `3`) to an array of state values (`[1, 2, 3]`).
 
 ```ts
 // The number of state transitions is given by the user (subscriber)
@@ -329,8 +342,7 @@ Finally, the component will subscribe to the store, telling the number of state 
 
 ```ts
 // Subscribe to the store using the custom pipeable operator
-store.pipe(selectLastStateTransitions(3))
-     .subscribe(/* .. */);
+store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 ```
 
 See the [advanced example live in action in a Stackblitz](https://stackblitz.com/edit/angular-ngrx-effects-1rj88y?file=app%2Fstore%2Ffoo.ts)
