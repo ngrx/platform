@@ -100,8 +100,10 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     this.reducerManager.addReducer(key, reducer);
   }
 
+  // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
   removeReducer<Key extends keyof T>(key: Key) {
-    this.reducerManager.removeReducer(key);
+    // TS2.9: keyof T is string|number|symbol, explicitly cast to string to fix.
+    this.reducerManager.removeReducer(key as string);
   }
 }
 
