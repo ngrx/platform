@@ -330,7 +330,7 @@ export function liftReducerWith(
           skippedActionIds,
           committedState,
           currentStateIndex,
-          computedStates,
+          computedStates
         } = liftedAction.nextLiftedState);
         break;
       }
