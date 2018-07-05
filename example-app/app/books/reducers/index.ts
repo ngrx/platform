@@ -44,7 +44,7 @@ export const reducers: ActionReducerMap<BooksState> = {
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
  */
-export const getBooksState = createFeatureSelector<BooksState>('books');
+export const getBooksState = createFeatureSelector<State, BooksState>('books');
 
 /**
  * Every reducer module exports selector functions, however child reducers

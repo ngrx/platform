@@ -97,10 +97,20 @@ export interface AppState {
   feature: FeatureState;
 }
 
-export const selectFeature = createFeatureSelector<FeatureState>('feature');
+export const selectFeature = createFeatureSelector<AppState, FeatureState>(
+  'feature'
+);
 export const selectFeatureCount = createSelector(
   selectFeature,
   (state: FeatureState) => state.counter
+);
+```
+
+The following selector below would not compile because `foo` is not a feature slice of `AppState`.
+
+```ts
+export const selectFeature = createFeatureSelector<AppState, FeatureState>(
+  'foo'
 );
 ```
 
@@ -234,9 +244,7 @@ import { filter } from 'rxjs/operators';
 
 store
   .select(selectValues)
-  .pipe(
-    filter(val => val !== undefined)
-  )
+  .pipe(filter(val => val !== undefined))
   .subscribe(/* .. */);
 ```
 
@@ -247,10 +255,9 @@ The same behaviour can be achieved by re-writing the above piece of code to use 
 ```ts
 import { map, filter } from 'rxjs/operators';
 
-store.pipe(
-  map(state => selectValues(state)),
-  filter(val => val !== undefined)
-).subscribe(/* .. */);
+store
+  .pipe(map(state => selectValues(state)), filter(val => val !== undefined))
+  .subscribe(/* .. */);
 ```
 
 The above can be further re-written to use the `select()` utility function from NgRx:
@@ -259,10 +266,9 @@ The above can be further re-written to use the `select()` utility function from 
 import { select } from '@ngrx/store';
 import { map, filter } from 'rxjs/operators';
 
-store.pipe(
-  select(selectValues(state)),
-  filter(val => val !== undefined)
-).subscribe(/* .. */);
+store
+  .pipe(select(selectValues(state)), filter(val => val !== undefined))
+  .subscribe(/* .. */);
 ```
 
 #### Solution: Extracting a pipeable operator
@@ -279,15 +285,14 @@ export const selectFilteredValues = pipe(
   filter(val => val !== undefined)
 );
 
-store.pipe(selectFilteredValues)
-     .subscribe(/* .. */);
+store.pipe(selectFilteredValues).subscribe(/* .. */);
 ```
 
 ### Advanced Example: Select the last {n} state transitions
 
 Let's examine the technique of combining NgRx selectors and RxJS operators in an advanced example.
 
-In this example, we will write a  selector function that projects values from two different slices of the application state.
+In this example, we will write a selector function that projects values from two different slices of the application state.
 The projected state will emit a value when both slices of state have a value.
 Otherwise, the selector will emit an `undefined` value.
 
@@ -307,7 +312,7 @@ export const selectProjectedValues = createSelector(
 
 Then, the component should visualize the history of state transitions.
 We are not only interested in the current state but rather like to display the last `n` pieces of state.
-Meaning that we will map a stream of state values (`1`, `2`, `3`)  to an array of state values (`[1, 2, 3]`).
+Meaning that we will map a stream of state values (`1`, `2`, `3`) to an array of state values (`[1, 2, 3]`).
 
 ```ts
 // The number of state transitions is given by the user (subscriber)
@@ -329,8 +334,7 @@ Finally, the component will subscribe to the store, telling the number of state 
 
 ```ts
 // Subscribe to the store using the custom pipeable operator
-store.pipe(selectLastStateTransitions(3))
-     .subscribe(/* .. */);
+store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 ```
 
 See the [advanced example live in action in a Stackblitz](https://stackblitz.com/edit/angular-ngrx-effects-1rj88y?file=app%2Fstore%2Ffoo.ts)

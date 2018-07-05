@@ -21,7 +21,7 @@ export const reducers: ActionReducerMap<AuthState> = {
   loginPage: fromLoginPage.reducer,
 };
 
-export const selectAuthState = createFeatureSelector<AuthState>('auth');
+export const selectAuthState = createFeatureSelector<State, AuthState>('auth');
 
 export const selectAuthStatusState = createSelector(
   selectAuthState,
