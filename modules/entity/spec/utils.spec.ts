@@ -41,7 +41,7 @@ describe('Entity utils', () => {
       expect(spy).not.toHaveBeenCalled();
     });
 
-    it('should not warn when key is undefined in dev mode', () => {
+    it('should not warn when key is undefined in prod mode', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
       const spy = spyOn(console, 'warn');
 
