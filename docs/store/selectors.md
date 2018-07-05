@@ -97,23 +97,15 @@ export interface AppState {
   feature: FeatureState;
 }
 
-export const selectFeature = createFeatureSelector<FeatureState>('feature');
+export const selectFeature = createFeatureSelector<AppState, FeatureState>(
+  'feature'
+);
 export const selectFeatureCount = createSelector(
   selectFeature,
   (state: FeatureState) => state.counter
 );
 ```
 
-There is also an overload on the `createFeatureSelector` method, which allows a better typechecking.
-The example from above would become:
-
-```ts
-export const selectFeature = createFeatureSelector<AppState, FeatureState>(
-  'feature'
-);
-```
-
-Where `AppState` is the type from the top level feature state and `FeatureState` is the type from the feature slice to select.
 Meaning that the following would not compile because `foo` is not a feature slice of `AppState`.
 
 ```ts
