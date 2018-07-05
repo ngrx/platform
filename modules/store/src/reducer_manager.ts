@@ -90,20 +90,15 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
     this.updateReducers(featureKeys);
   }
 
-  private updateReducers(keys: string[]) {
+  private updateReducers(featureKeys: string[]) {
     this.next(this.reducerFactory(this.reducers, this.initialState));
 
-    if (keys.length === 1) {
+    featureKeys.forEach(feature => {
       this.dispatcher.next(<Action>{
         type: UPDATE,
-        feature: keys[0],
+        feature,
       });
-    } else {
-      this.dispatcher.next(<Action>{
-        type: UPDATE,
-        features: keys,
-      });
-    }
+    });
   }
 
   ngOnDestroy() {
