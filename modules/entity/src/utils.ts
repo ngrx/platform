@@ -6,7 +6,8 @@ export function selectIdValue<T>(entity: T, selectId: IdSelector<T>) {
 
   if (isDevMode() && key === undefined) {
     console.warn(
-      '@ngrx/entity: The entity passed to the `selectId` implementation returned undefined. You should probably provide your own `selectId` implementation.',
+      '@ngrx/entity: The entity passed to the `selectId` implementation returned undefined.',
+      'You should probably provide your own `selectId` implementation.',
       'The entity that was passed:',
       entity,
       'The `selectId` implementation:',
