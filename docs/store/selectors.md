@@ -106,7 +106,7 @@ export const selectFeatureCount = createSelector(
 );
 ```
 
-Meaning that the following would not compile because `foo` is not a feature slice of `AppState`.
+The following selector below would not compile because `foo` is not a feature slice of `AppState`.
 
 ```ts
 export const selectFeature = createFeatureSelector<AppState, FeatureState>(
