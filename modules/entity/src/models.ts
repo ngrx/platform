@@ -73,7 +73,7 @@ export type EntitySelectors<T, V> = {
   selectEntities: (state: V) => Dictionary<T>;
   selectAll: (state: V) => T[];
   selectTotal: (state: V) => number;
-  selectById: (state: V) => T;
+  selectById: (id: string | number) => (state: V) => T;
 };
 
 export interface EntityAdapter<T> extends EntityStateAdapter<T> {
