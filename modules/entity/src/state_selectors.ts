@@ -17,6 +17,8 @@ export function createSelectorsFactory<T>() {
       (ids: T[], entities: Dictionary<T>): any =>
         ids.map((id: any) => (entities as any)[id])
     );
+    const selectById = (id: string | number) =>
+      createSelector(selectEntities, (entities: Dictionary<T>) => entities[id]);
 
     const selectTotal = createSelector(selectIds, ids => ids.length);
 
@@ -26,6 +28,7 @@ export function createSelectorsFactory<T>() {
         selectEntities,
         selectAll,
         selectTotal,
+        selectById,
       };
     }
 
@@ -34,6 +37,8 @@ export function createSelectorsFactory<T>() {
       selectEntities: createSelector(selectState, selectEntities),
       selectAll: createSelector(selectState, selectAll),
       selectTotal: createSelector(selectState, selectTotal),
+      selectById: (id: string | number) =>
+        createSelector(selectState, selectById(id)),
     };
   }
 

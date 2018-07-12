@@ -55,6 +55,12 @@ describe('Entity State Selectors', () => {
 
       expect(total).toEqual(3);
     });
+
+    it('should create a selector for selecting an entity by id', () => {
+      const entity = selectors.selectById('tgg')(state);
+
+      expect(entity).toEqual(TheGreatGatsby);
+    });
   });
 
   describe('Uncomposed Selectors', () => {
@@ -99,6 +105,12 @@ describe('Entity State Selectors', () => {
       const total = selectors.selectTotal(state);
 
       expect(total).toEqual(3);
+    });
+
+    it('should create a selector for selecting an entity by id', () => {
+      const entity = selectors.selectById('tgg')(state);
+
+      expect(entity).toEqual(TheGreatGatsby);
     });
   });
 });
