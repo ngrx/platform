@@ -17,6 +17,19 @@ Usage:
 export class AppModule {}
 ```
 
+### ROOT_EFFECTS_INIT
+
+After all the root effects have been added, the root effect dispatches a `ROOT_EFFECTS_INIT` action.
+You can see this action as a lifecycle hook, which you can use in order to execute some code after all your root effects have been added.
+
+```ts
+@Effect()
+init$ = this.actions$.pipe(
+  ofType(ROOT_EFFECTS_INIT),
+  map(_ => ...)
+);
+```
+
 ### forFeature
 
 Registers @ngrx/effects services to run with your feature modules.
@@ -73,7 +86,7 @@ export class SomeEffectsClass {
 
 ### Non-dispatching Effects
 
-Pass `{ dispatch: false }` to the decorator to prevent dispatching. 
+Pass `{ dispatch: false }` to the decorator to prevent dispatching.
 
 Sometimes you don't want effects to dispatch an action, for example when you only want to log or navigate. But when an effect does not dispatch another action, the browser will crash because the effect is both 'subscribing' to and 'dispatching' the exact same action, causing an infinite loop. To prevent this, add { dispatch: false } to the decorator.
 
