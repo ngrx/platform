@@ -61,24 +61,22 @@ export class StoreFeatureModule implements OnDestroy {
     private reducerManager: ReducerManager,
     root: StoreRootModule
   ) {
-    features
-      .map((feature, index) => {
-        const featureReducerCollection = featureReducers.shift();
-        const reducers = featureReducerCollection /*TODO(#823)*/![index];
+    const feats = features.map((feature, index) => {
+      const featureReducerCollection = featureReducers.shift();
+      const reducers = featureReducerCollection /*TODO(#823)*/![index];
 
-        return {
-          ...feature,
-          reducers,
-          initialState: _initialStateFactory(feature.initialState),
-        };
-      })
-      .forEach(feature => reducerManager.addFeature(feature));
+      return {
+        ...feature,
+        reducers,
+        initialState: _initialStateFactory(feature.initialState),
+      };
+    });
+
+    reducerManager.addFeatures(feats);
   }
 
   ngOnDestroy() {
-    this.features.forEach(feature =>
-      this.reducerManager.removeFeature(feature)
-    );
+    this.reducerManager.removeFeatures(this.features);
   }
 }
 

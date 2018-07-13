@@ -7,6 +7,9 @@ import {
   Store,
   StoreModule,
   select,
+  ReducerManagerDispatcher,
+  UPDATE,
+  REDUCER_FACTORY,
 } from '../';
 import {
   counterReducer,
@@ -47,56 +50,42 @@ describe('ngRx Store', () => {
   describe('initial state', () => {
     it('should handle an initial state object', (done: any) => {
       setup();
-
-      store.pipe(take(1)).subscribe({
-        next(val) {
-          expect(val).toEqual({ counter1: 0, counter2: 1, counter3: 0 });
-        },
-        error: done,
-        complete: done,
-      });
+      testStoreValue({ counter1: 0, counter2: 1, counter3: 0 }, done);
     });
 
     it('should handle an initial state function', (done: any) => {
       setup(() => ({ counter1: 0, counter2: 5 }));
-
-      store.pipe(take(1)).subscribe({
-        next(val) {
-          expect(val).toEqual({ counter1: 0, counter2: 5, counter3: 0 });
-        },
-        error: done,
-        complete: done,
-      });
+      testStoreValue({ counter1: 0, counter2: 5, counter3: 0 }, done);
     });
 
-    function testInitialState(feature?: string) {
-      store = TestBed.get(Store);
-      dispatcher = TestBed.get(ActionsSubject);
+    it('should keep initial state values when state is partially initialized', (done: DoneFn) => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({} as any, {
+            initialState: {
+              feature1: {
+                counter1: 1,
+              },
+              feature3: {
+                counter3: 3,
+              },
+            },
+          }),
+          StoreModule.forFeature('feature1', { counter1: counterReducer }),
+          StoreModule.forFeature('feature2', { counter2: counterReducer }),
+          StoreModule.forFeature('feature3', { counter3: counterReducer }),
+        ],
+      });
 
-      const actionSequence = '--a--b--c--d--e--f--g';
-      const stateSequence = 'i-w-----x-----y--z---';
-      const actionValues = {
-        a: { type: INCREMENT },
-        b: { type: 'OTHER' },
-        c: { type: RESET },
-        d: { type: 'OTHER' }, // reproduces https://github.com/ngrx/platform/issues/880 because state is falsey
-        e: { type: INCREMENT },
-        f: { type: INCREMENT },
-        g: { type: 'OTHER' },
-      };
-      const counterSteps = hot(actionSequence, actionValues);
-      counterSteps.subscribe(action => store.dispatch(action));
-
-      const counterStateWithString = feature
-        ? (store as any).select(feature, 'counter1')
-        : store.select('counter1');
-
-      const counter1Values = { i: 1, w: 2, x: 0, y: 1, z: 2 };
-
-      expect(counterStateWithString).toBeObservable(
-        hot(stateSequence, counter1Values)
+      testStoreValue(
+        {
+          feature1: { counter1: 1 },
+          feature2: { counter2: 0 },
+          feature3: { counter3: 3 },
+        },
+        done
       );
-    }
+    });
 
     it('should reset to initial state when undefined (root ActionReducerMap)', () => {
       TestBed.configureTestingModule({
@@ -138,6 +127,47 @@ describe('ngRx Store', () => {
 
       testInitialState('feature1');
     });
+
+    function testInitialState(feature?: string) {
+      store = TestBed.get(Store);
+      dispatcher = TestBed.get(ActionsSubject);
+
+      const actionSequence = '--a--b--c--d--e--f--g';
+      const stateSequence = 'i-w-----x-----y--z---';
+      const actionValues = {
+        a: { type: INCREMENT },
+        b: { type: 'OTHER' },
+        c: { type: RESET },
+        d: { type: 'OTHER' }, // reproduces https://github.com/ngrx/platform/issues/880 because state is falsey
+        e: { type: INCREMENT },
+        f: { type: INCREMENT },
+        g: { type: 'OTHER' },
+      };
+      const counterSteps = hot(actionSequence, actionValues);
+      counterSteps.subscribe(action => store.dispatch(action));
+
+      const counterStateWithString = feature
+        ? (store as any).select(feature, 'counter1')
+        : store.select('counter1');
+
+      const counter1Values = { i: 1, w: 2, x: 0, y: 1, z: 2 };
+
+      expect(counterStateWithString).toBeObservable(
+        hot(stateSequence, counter1Values)
+      );
+    }
+
+    function testStoreValue(expected: any, done: DoneFn) {
+      store = TestBed.get(Store);
+
+      store.pipe(take(1)).subscribe({
+        next(val) {
+          expect(val).toEqual(expected);
+        },
+        error: done,
+        complete: done,
+      });
+    }
   });
 
   describe('basic store actions', () => {
@@ -267,16 +297,19 @@ describe('ngRx Store', () => {
   describe(`add/remove reducers`, () => {
     let addReducerSpy: Spy;
     let removeReducerSpy: Spy;
+    let reducerManagerDispatcherSpy: Spy;
     const key = 'counter4';
 
     beforeEach(() => {
       setup();
       const reducerManager = TestBed.get(ReducerManager);
+      const dispatcher = TestBed.get(ReducerManagerDispatcher);
       addReducerSpy = spyOn(reducerManager, 'addReducer').and.callThrough();
       removeReducerSpy = spyOn(
         reducerManager,
         'removeReducer'
       ).and.callThrough();
+      reducerManagerDispatcherSpy = spyOn(dispatcher, 'next').and.callThrough();
     });
 
     it(`should delegate add/remove to ReducerManager`, () => {
@@ -299,5 +332,118 @@ describe('ngRx Store', () => {
         expect(val.counter4).toBeUndefined();
       });
     });
+
+    it('should dispatch an update reducers action when a reducer is added', () => {
+      store.addReducer(key, counterReducer);
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
+        type: UPDATE,
+        feature: key,
+      });
+    });
+
+    it('should dispatch an update reducers action when a reducer is removed', () => {
+      store.removeReducer(key);
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
+        type: UPDATE,
+        feature: key,
+      });
+    });
+  });
+
+  describe('add/remove features', () => {
+    let reducerManager: ReducerManager;
+    let reducerManagerDispatcherSpy: Spy;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({})],
+      });
+
+      reducerManager = TestBed.get(ReducerManager);
+      const dispatcher = TestBed.get(ReducerManagerDispatcher);
+      reducerManagerDispatcherSpy = spyOn(dispatcher, 'next').and.callThrough();
+    });
+
+    it('should dispatch an update reducers action when a feature is added', () => {
+      reducerManager.addFeature(
+        createFeature({
+          key: 'feature1',
+        })
+      );
+
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
+        type: UPDATE,
+        feature: 'feature1',
+      });
+    });
+
+    it('should dispatch an update reducers action for each feature that is added', () => {
+      reducerManager.addFeatures([
+        createFeature({
+          key: 'feature1',
+        }),
+        createFeature({
+          key: 'feature2',
+        }),
+      ]);
+
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledTimes(2);
+
+      // get the first argument for the first call
+      expect(reducerManagerDispatcherSpy.calls.argsFor(0)[0]).toEqual({
+        type: UPDATE,
+        feature: 'feature1',
+      });
+
+      // get the first argument for the second call
+      expect(reducerManagerDispatcherSpy.calls.argsFor(1)[0]).toEqual({
+        type: UPDATE,
+        feature: 'feature2',
+      });
+    });
+
+    it('should dispatch an update reducers action when a feature is removed', () => {
+      reducerManager.removeFeature(
+        createFeature({
+          key: 'feature1',
+        })
+      );
+
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
+        type: UPDATE,
+        feature: 'feature1',
+      });
+    });
+
+    it('should dispatch an update reducers action for each feature that is removed', () => {
+      reducerManager.removeFeatures([
+        createFeature({
+          key: 'feature1',
+        }),
+        createFeature({
+          key: 'feature2',
+        }),
+      ]);
+
+      // get the first argument for the first call
+      expect(reducerManagerDispatcherSpy.calls.argsFor(0)[0]).toEqual({
+        type: UPDATE,
+        feature: 'feature1',
+      });
+
+      // get the first argument for the second call
+      expect(reducerManagerDispatcherSpy.calls.argsFor(1)[0]).toEqual({
+        type: UPDATE,
+        feature: 'feature2',
+      });
+    });
+
+    function createFeature({ key }: { key: string }) {
+      return {
+        key,
+        reducers: {},
+        reducerFactory: jasmine.createSpy(`reducerFactory_${key}`),
+      };
+    }
   });
 });
