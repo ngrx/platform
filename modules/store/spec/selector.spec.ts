@@ -4,6 +4,7 @@ import {
   createFeatureSelector,
   defaultMemoize,
   createSelectorFactory,
+  resultMemoize,
   MemoizedProjection,
 } from '@ngrx/store';
 import { map, distinctUntilChanged } from 'rxjs/operators';
@@ -251,14 +252,16 @@ describe('Selectors', () => {
     it('should allow a custom memoization function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
       const anyFn = jasmine.createSpy('t').and.callFake(() => true);
-      const customMemoizer = (aFn: any = anyFn) => defaultMemoize(anyFn);
+      const equalFn = jasmine.createSpy('isEqual').and.callFake(() => true);
+      const customMemoizer = (aFn: any = anyFn, eFn: any = equalFn) =>
+        defaultMemoize(anyFn, equalFn);
       const customSelector = createSelectorFactory(customMemoizer);
 
       const selector = customSelector(incrementOne, incrementTwo, projectFn);
       selector(1);
       selector(2);
 
-      expect(anyFn.calls.count()).toEqual(2);
+      expect(anyFn.calls.count()).toEqual(1);
     });
 
     it('should allow a custom state memoization function', () => {
@@ -283,73 +286,73 @@ describe('Selectors', () => {
 
       expect(anyFn.calls.count()).toEqual(1);
     });
+  });
 
-    describe('with custom isResultEqual', () => {
-      let projectionFnSpy: jasmine.Spy;
-      const ARRAY = ['a', 'ab', 'b'];
-      const ARRAY_CHANGED = [...ARRAY, 'bc'];
-      const A_FILTER: { by: string } = { by: 'a' };
-      const B_FILTER: { by: string } = { by: 'b' };
+  describe('resultMemoize', () => {
+    let projectionFnSpy: jasmine.Spy;
+    const ARRAY = ['a', 'ab', 'b'];
+    const ARRAY_CHANGED = [...ARRAY, 'bc'];
+    const A_FILTER: { by: string } = { by: 'a' };
+    const B_FILTER: { by: string } = { by: 'b' };
 
-      let arrayMemoizer: MemoizedProjection;
+    let arrayMemoizer: MemoizedProjection;
 
-      // Compare a and b on equality. If a and b are Arrays then compare them
-      // on their content.
-      function isResultEqual(a: any, b: any) {
-        if (a instanceof Array) {
-          return a.length === b.length && a.every(fromA => b.includes(fromA));
-        }
-        // Default comparison
-        return a === b;
+    // Compare a and b on equality. If a and b are Arrays then compare them
+    // on their content.
+    function isResultEqual(a: any, b: any) {
+      if (a instanceof Array) {
+        return a.length === b.length && a.every(fromA => b.includes(fromA));
       }
+      // Default comparison
+      return a === b;
+    }
 
-      beforeEach(() => {
-        projectionFnSpy = jasmine
-          .createSpy('projectionFn')
-          .and.callFake((arr: string[], filter: { by: string }) =>
-            arr.filter(item => item.startsWith(filter.by))
-          );
+    beforeEach(() => {
+      projectionFnSpy = jasmine
+        .createSpy('projectionFn')
+        .and.callFake((arr: string[], filter: { by: string }) =>
+          arr.filter(item => item.startsWith(filter.by))
+        );
 
-        arrayMemoizer = defaultMemoize(projectionFnSpy, isResultEqual);
-      });
+      arrayMemoizer = resultMemoize(projectionFnSpy, isResultEqual);
+    });
 
-      it('should not rerun projector function when arguments stayed the same', () => {
-        arrayMemoizer.memoized(ARRAY, A_FILTER);
-        arrayMemoizer.memoized(ARRAY, A_FILTER);
+    it('should not rerun projector function when arguments stayed the same', () => {
+      arrayMemoizer.memoized(ARRAY, A_FILTER);
+      arrayMemoizer.memoized(ARRAY, A_FILTER);
 
-        expect(projectionFnSpy.calls.count()).toBe(1);
-      });
+      expect(projectionFnSpy.calls.count()).toBe(1);
+    });
 
-      it('should rerun projector function when arguments changed', () => {
-        arrayMemoizer.memoized(ARRAY, A_FILTER);
-        arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
+    it('should rerun projector function when arguments changed', () => {
+      arrayMemoizer.memoized(ARRAY, A_FILTER);
+      arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
 
-        expect(projectionFnSpy.calls.count()).toBe(2);
-      });
+      expect(projectionFnSpy.calls.count()).toBe(2);
+    });
 
-      it('should return the same instance of results when projector function produces the same results array', () => {
-        const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
-        const result2 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+    it('should return the same instance of results when projector function produces the same results array', () => {
+      const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+      const result2 = arrayMemoizer.memoized(ARRAY, A_FILTER);
 
-        expect(result1).toBe(result2);
-      });
+      expect(result1).toBe(result2);
+    });
 
-      it('should return the same instance of results when projector function produces similar results array', () => {
-        const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
-        const result2 = arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
+    it('should return the same instance of results when projector function produces similar results array', () => {
+      const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+      const result2 = arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
 
-        expect(result1).toBe(result2);
-      });
+      expect(result1).toBe(result2);
+    });
 
-      it('should return the new instance of results when projector function produces different result', () => {
-        const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
-        const result2 = arrayMemoizer.memoized(ARRAY_CHANGED, B_FILTER);
+    it('should return the new instance of results when projector function produces different result', () => {
+      const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+      const result2 = arrayMemoizer.memoized(ARRAY_CHANGED, B_FILTER);
 
-        expect(result1).toBeDefined();
-        expect(result2).toBeDefined();
-        expect(result1).not.toBe(result2);
-        expect(result1).not.toEqual(result2);
-      });
+      expect(result1).toBeDefined();
+      expect(result2).toBeDefined();
+      expect(result1).not.toBe(result2);
+      expect(result1).not.toEqual(result2);
     });
   });
 });
