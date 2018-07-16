@@ -1,5 +1,6 @@
 import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
+import { selectIdValue } from './utils';
 
 export function createUnsortedStateAdapter<T>(
   selectId: IdSelector<T>
@@ -9,7 +10,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
 
   function addOneMutably(entity: T, state: R): DidMutate;
   function addOneMutably(entity: any, state: any): DidMutate {
-    const key = selectId(entity);
+    const key = selectIdValue(entity, selectId);
 
     if (key in state.entities) {
       return DidMutate.None;
@@ -81,7 +82,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   ): boolean {
     const original = state.entities[update.id];
     const updated: T = Object.assign({}, original, update.changes);
-    const newKey = selectId(updated);
+    const newKey = selectIdValue(updated, selectId);
     const hasNewKey = newKey !== update.id;
 
     if (hasNewKey) {
@@ -133,7 +134,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     const updated: any[] = [];
 
     for (const entity of entities) {
-      const id = selectId(entity);
+      const id = selectIdValue(entity, selectId);
       if (id in state.entities) {
         updated.push({ id, changes: entity });
       } else {
