@@ -18,7 +18,7 @@ import { MyActionClass } from 'path/to.my/file.action';
 import { mySelectorFunction } from 'path/to.my/file.selector';
 
 // Using the `downgradeInjectable` to create the `ngrxStoreService` factory in AngularJS
-ngModule('appName').factory('ngrxStoreService', downgradeInjectable(provider));
+ngModule('appName').factory('ngrxStoreService', downgradeInjectable(Store));
 
 // AngularJS controller
 export default ngModule('appName').controller('AngularJSController', [
