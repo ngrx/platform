@@ -6,6 +6,8 @@ export type MemoizedProjection = { memoized: AnyFn; reset: () => void };
 
 export type MemoizeFn = (t: AnyFn) => MemoizedProjection;
 
+export type ComparatorFn = (a: any, b: any) => boolean;
+
 export interface MemoizedSelector<State, Result>
   extends Selector<State, Result> {
   release(): void;
@@ -16,17 +18,29 @@ export function isEqualCheck(a: any, b: any): boolean {
   return a === b;
 }
 
-function isArgumentsChanged(args: IArguments, lastArguments: IArguments) {
+function isArgumentsChanged(
+  args: IArguments,
+  lastArguments: IArguments,
+  comparator: ComparatorFn
+) {
   for (let i = 0; i < args.length; i++) {
-    if (args[i] !== lastArguments[i]) {
+    if (!comparator(args[i], lastArguments[i])) {
       return true;
     }
   }
   return false;
 }
 
+export function resultMemoize(
+  projectionFn: AnyFn,
+  isResultEqual: ComparatorFn
+) {
+  return defaultMemoize(projectionFn, isEqualCheck, isResultEqual);
+}
+
 export function defaultMemoize(
   projectionFn: AnyFn,
+  isArgumentsEqual = isEqualCheck,
   isResultEqual = isEqualCheck
 ): MemoizedProjection {
   let lastArguments: null | IArguments = null;
@@ -46,7 +60,7 @@ export function defaultMemoize(
       return lastResult;
     }
 
-    if (!isArgumentsChanged(arguments, lastArguments)) {
+    if (!isArgumentsChanged(arguments, lastArguments, isArgumentsEqual)) {
       return lastResult;
     }
 
