@@ -11,10 +11,10 @@ import { Component, Input } from '@angular/core';
   `,
   styles: [
     `
-    mat-sidenav {
-      width: 300px;
-    }
-  `,
+      mat-sidenav {
+        width: 300px;
+      }
+    `,
   ],
 })
 export class SidenavComponent {

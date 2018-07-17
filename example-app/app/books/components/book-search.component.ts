@@ -16,34 +16,34 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
   `,
   styles: [
     `
-    mat-card-title,
-    mat-card-content,
-    mat-card-footer {
-      display: flex;
-      justify-content: center;
-    }
+      mat-card-title,
+      mat-card-content,
+      mat-card-footer {
+        display: flex;
+        justify-content: center;
+      }
 
-    mat-card-footer {
-      color: #FF0000;
-      padding: 5px 0;
-    }
+      mat-card-footer {
+        color: #ff0000;
+        padding: 5px 0;
+      }
 
-    .mat-form-field {
-      min-width: 300px;
-    }
+      .mat-form-field {
+        min-width: 300px;
+      }
 
-    .mat-spinner {
-      position: relative;
-      top: 10px;
-      left: 10px;
-      opacity: 0.0;
-      padding-left: 60px; // Make room for the spinner
-    }
+      .mat-spinner {
+        position: relative;
+        top: 10px;
+        left: 10px;
+        opacity: 0;
+        padding-left: 60px; // Make room for the spinner
+      }
 
-    .mat-spinner.show {
-      opacity: 1.0;
-    }
-  `,
+      .mat-spinner.show {
+        opacity: 1;
+      }
+    `,
   ],
 })
 export class BookSearchComponent {

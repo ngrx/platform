@@ -12,10 +12,10 @@ import { Book } from '../models/book';
   `,
   styles: [
     `
-    h5 {
-      margin-bottom: 5px;
-    }
-  `,
+      h5 {
+        margin-bottom: 5px;
+      }
+    `,
   ],
 })
 export class BookAuthorsComponent {

@@ -40,7 +40,10 @@ export function getSourceForInstance<T>(instance: T): T {
 }
 
 export function getSourceMetadata<T>(instance: T): Array<EffectMetadata<T>> {
-  return compose(getEffectMetadataEntries, getSourceForInstance)(instance);
+  return compose(
+    getEffectMetadataEntries,
+    getSourceForInstance
+  )(instance);
 }
 
 export type EffectsMetadata<T> = { [key in keyof T]?: { dispatch: boolean } };

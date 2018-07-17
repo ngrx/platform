@@ -28,7 +28,8 @@ export class Actions<V = Action> extends Observable<V> {
 export function ofType<T extends Action>(
   ...allowedTypes: string[]
 ): OperatorFunction<Action, T> {
-  return filter((action: Action): action is T =>
-    allowedTypes.some(type => type === action.type)
+  return filter(
+    (action: Action): action is T =>
+      allowedTypes.some(type => type === action.type)
   );
 }

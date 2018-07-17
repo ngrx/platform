@@ -16,10 +16,10 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   `,
   styles: [
     `
-    :host {
-      text-align: center;
-    }
-  `,
+      :host {
+        text-align: center;
+      }
+    `,
   ],
 })
 export class NotFoundPageComponent {}

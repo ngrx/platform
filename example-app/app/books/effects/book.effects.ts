@@ -54,13 +54,11 @@ export class BookEffects {
         skip(1)
       );
 
-      return this.googleBooks
-        .searchBooks(query)
-        .pipe(
-          takeUntil(nextSearch$),
-          map((books: Book[]) => new SearchComplete(books)),
-          catchError(err => of(new SearchError(err)))
-        );
+      return this.googleBooks.searchBooks(query).pipe(
+        takeUntil(nextSearch$),
+        map((books: Book[]) => new SearchComplete(books)),
+        catchError(err => of(new SearchError(err)))
+      );
     })
   );
 

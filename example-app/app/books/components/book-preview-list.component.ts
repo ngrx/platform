@@ -8,12 +8,12 @@ import { Book } from '../models/book';
   `,
   styles: [
     `
-    :host {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  `,
+      :host {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    `,
   ],
 })
 export class BookPreviewListComponent {

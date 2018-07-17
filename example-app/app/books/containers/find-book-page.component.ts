@@ -22,7 +22,10 @@ export class FindBookPageComponent {
   error$: Observable<string>;
 
   constructor(private store: Store<fromBooks.State>) {
-    this.searchQuery$ = store.pipe(select(fromBooks.getSearchQuery), take(1));
+    this.searchQuery$ = store.pipe(
+      select(fromBooks.getSearchQuery),
+      take(1)
+    );
     this.books$ = store.pipe(select(fromBooks.getSearchResults));
     this.loading$ = store.pipe(select(fromBooks.getSearchLoading));
     this.error$ = store.pipe(select(fromBooks.getSearchError));

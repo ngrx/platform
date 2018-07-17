@@ -11,10 +11,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   `,
   styles: [
     `
-    .secondary {
-      color: rgba(0, 0, 0, 0.54);
-    }
-  `,
+      .secondary {
+        color: rgba(0, 0, 0, 0.54);
+      }
+    `,
   ],
 })
 export class NavItemComponent {
