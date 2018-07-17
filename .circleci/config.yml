@@ -13,7 +13,7 @@ version: 2
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}
 var_2: &run_in_ngcontainer
   docker:
-    - image: angular/ngcontainer:0.1.0
+    - image: angular/ngcontainer:0.3.2
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
