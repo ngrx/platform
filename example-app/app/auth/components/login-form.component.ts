@@ -35,36 +35,36 @@ import { Authenticate } from '../models/user';
   `,
   styles: [
     `
-    :host {
-      display: flex;
-      justify-content: center;
-      margin: 72px 0;
-    }
+      :host {
+        display: flex;
+        justify-content: center;
+        margin: 72px 0;
+      }
 
-    .mat-form-field {
-      width: 100%;
-      min-width: 300px;
-    }
+      .mat-form-field {
+        width: 100%;
+        min-width: 300px;
+      }
 
-    mat-card-title,
-    mat-card-content {
-      display: flex;
-      justify-content: center;
-    }
+      mat-card-title,
+      mat-card-content {
+        display: flex;
+        justify-content: center;
+      }
 
-    .loginError {
-      padding: 16px;
-      width: 300px;
-      color: white;
-      background-color: red;
-    }
+      .loginError {
+        padding: 16px;
+        width: 300px;
+        color: white;
+        background-color: red;
+      }
 
-    .loginButtons {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-    }
-  `,
+      .loginButtons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+    `,
   ],
 })
 export class LoginFormComponent implements OnInit {

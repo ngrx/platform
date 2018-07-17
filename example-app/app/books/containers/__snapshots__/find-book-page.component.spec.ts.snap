@@ -30,7 +30,7 @@ exports[`Find Book Page should compile 1`] = `
       >
         <mat-form-field
           _ngcontent-c0=""
-          class="mat-form-field ng-tns-c3-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder"
+          class="mat-form-field ng-tns-c3-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
         >
           <div
             class="mat-form-field-wrapper"
@@ -38,6 +38,7 @@ exports[`Find Book Page should compile 1`] = `
             <div
               class="mat-form-field-flex"
             >
+              
               
               <div
                 class="mat-form-field-infix"
@@ -61,6 +62,7 @@ exports[`Find Book Page should compile 1`] = `
                     aria-owns="mat-input-0"
                     class="mat-form-field-label ng-tns-c3-0 mat-empty mat-form-field-empty ng-star-inserted"
                     for="mat-input-0"
+                    id="mat-form-field-label-1"
                     ng-reflect-ng-switch="false"
                   >
                     
@@ -81,7 +83,6 @@ exports[`Find Book Page should compile 1`] = `
                 class="mat-form-field-ripple"
               />
             </div>
-            
             <div
               class="mat-form-field-subscript-wrapper"
               ng-reflect-ng-switch="hint"
@@ -90,7 +91,7 @@ exports[`Find Book Page should compile 1`] = `
               
               <div
                 class="mat-form-field-hint-wrapper ng-tns-c3-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                style="opacity: 1;"
+                style="opacity:1;0:opacity;transform:translateY(0%);"
               >
                 
                 <div
@@ -102,7 +103,7 @@ exports[`Find Book Page should compile 1`] = `
         </mat-form-field>
         <mat-spinner
           _ngcontent-c0=""
-          class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation"
+          class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation _mat-animation-noopable"
           mode="indeterminate"
           ng-reflect-diameter="30"
           ng-reflect-stroke-width="3"

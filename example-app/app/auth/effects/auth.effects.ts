@@ -20,12 +20,10 @@ export class AuthEffects {
     ofType<Login>(AuthActionTypes.Login),
     map(action => action.payload),
     exhaustMap((auth: Authenticate) =>
-      this.authService
-        .login(auth)
-        .pipe(
-          map(user => new LoginSuccess({ user })),
-          catchError(error => of(new LoginFailure(error)))
-        )
+      this.authService.login(auth).pipe(
+        map(user => new LoginSuccess({ user })),
+        catchError(error => of(new LoginFailure(error)))
+      )
     )
   );
 

@@ -30,33 +30,33 @@ import { Book } from '../models/book';
   `,
   styles: [
     `
-    :host {
-      display: flex;
-      justify-content: center;
-      margin: 75px 0;
-    }
-    mat-card {
-      max-width: 600px;
-    }
-    mat-card-title-group {
-      margin-left: 0;
-    }
-    img {
-      width: 60px;
-      min-width: 60px;
-      margin-left: 5px;
-    }
-    mat-card-content {
-      margin: 15px 0 50px;
-    }
-    mat-card-actions {
-      margin: 25px 0 0 !important;
-    }
-    mat-card-footer {
-      padding: 0 25px 25px;
-      position: relative;
-    }
-  `,
+      :host {
+        display: flex;
+        justify-content: center;
+        margin: 75px 0;
+      }
+      mat-card {
+        max-width: 600px;
+      }
+      mat-card-title-group {
+        margin-left: 0;
+      }
+      img {
+        width: 60px;
+        min-width: 60px;
+        margin-left: 5px;
+      }
+      mat-card-content {
+        margin: 15px 0 50px;
+      }
+      mat-card-actions {
+        margin: 25px 0 0 !important;
+      }
+      mat-card-footer {
+        padding: 0 25px 25px;
+        position: relative;
+      }
+    `,
   ],
 })
 export class BookDetailComponent {

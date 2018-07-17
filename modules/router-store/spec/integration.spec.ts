@@ -437,7 +437,10 @@ describe('integration spec', () => {
       reducers: { routerReducer },
       canActivate: () => {
         store.dispatch({ type: 'USER_EVENT' });
-        return store.pipe(take(1), mapTo(true));
+        return store.pipe(
+          take(1),
+          mapTo(true)
+        );
       },
     });
 

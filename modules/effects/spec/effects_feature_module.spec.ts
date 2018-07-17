@@ -118,12 +118,10 @@ class FeatureEffects {
   constructor(private actions: Actions, private store: Store<State>) {}
 
   @Effect()
-  effectWithStore = this.actions
-    .ofType('INCREMENT')
-    .pipe(
-      withLatestFrom(this.store.select(getDataState)),
-      map(([action, state]) => ({ type: 'INCREASE' }))
-    );
+  effectWithStore = this.actions.ofType('INCREMENT').pipe(
+    withLatestFrom(this.store.select(getDataState)),
+    map(([action, state]) => ({ type: 'INCREASE' }))
+  );
 }
 
 @NgModule({
