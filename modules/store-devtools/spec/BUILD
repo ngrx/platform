@@ -1,4 +1,4 @@
-load("//tools:defaults.bzl", "ts_test_library", "jasmine_node_test")
+load("//tools:defaults.bzl", "jasmine_node_test", "ts_test_library")
 
 ts_test_library(
     name = "test_lib",
