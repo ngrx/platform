@@ -5,6 +5,8 @@ import {
   select,
   Store,
   StoreModule,
+  createFeatureSelector,
+  createSelector,
 } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -172,6 +174,42 @@ describe('ngRx Integration spec', () => {
       });
 
       expect(currentlyVisibleTodos.length).toBe(0);
+    });
+
+    it('should use props to get a todo', () => {
+      const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+        'todos'
+      );
+      const getTodos = createSelector(getTodosState, todos => todos);
+      const getTodosById = createSelector(
+        getTodos,
+        (state: TodoAppSchema, id: number) => id,
+        (todos, id) => todos.find(todo => todo.id === id)
+      );
+
+      let testCase = 1;
+      const todo$ = store.pipe(select(getTodosById, 2));
+      todo$.subscribe(todo => {
+        if (testCase === 1) {
+          expect(todo).toEqual(undefined);
+        } else if (testCase === 2) {
+          expect(todo).toEqual({
+            id: 2,
+            text: 'second todo',
+            completed: false,
+          });
+        } else if (testCase === 3) {
+          expect(todo).toEqual({ id: 2, text: 'second todo', completed: true });
+        }
+        testCase++;
+      });
+
+      store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+      store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+      store.dispatch({
+        type: COMPLETE_TODO,
+        payload: { id: 2 },
+      });
     });
   });
 

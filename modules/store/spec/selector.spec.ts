@@ -125,6 +125,105 @@ describe('Selectors', () => {
     });
   });
 
+  describe('createSelector with props', () => {
+    it('should deliver the value of selectors to the projection function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        (state: any, props: any) => props.value,
+        projectFn
+      );
+
+      selector({}, { value: 47 });
+      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo, 47);
+    });
+
+    it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        (state: any, props: any) => {
+          fail(`Shouldn't be called`);
+          return props.value;
+        },
+        projectFn
+      );
+      selector.projector('', '', 47);
+
+      expect(incrementOne).not.toHaveBeenCalled();
+      expect(incrementTwo).not.toHaveBeenCalled();
+      expect(projectFn).toHaveBeenCalledWith('', '', 47);
+    });
+
+    it('should call the projector function when the state changes', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        incrementOne,
+        (state: any, props: any) => props.value,
+        projectFn
+      );
+
+      const firstSate = { first: 'state' };
+      const props = { foo: 'props' };
+      selector(firstSate, props);
+      selector(firstSate, props);
+      expect(projectFn).toHaveBeenCalledTimes(1);
+
+      const secondState = { second: 'state' };
+      selector(secondState, props);
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should memoize the function', () => {
+      let counter = 0;
+
+      const firstState = { first: 'state' };
+      const secondState = { second: 'state' };
+      const props = { foo: 'props' };
+
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        (state: any, props: any) => {
+          counter++;
+          return props;
+        },
+        projectFn
+      );
+
+      selector(firstState, props);
+      selector(firstState, props);
+      selector(firstState, props);
+      selector(secondState, props);
+
+      expect(counter).toBe(2);
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should allow you to release memoized arguments', () => {
+      const state = { first: 'state' };
+      const props = { foo: 'props' };
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        incrementOne,
+        (state: any, props: any) => props,
+        projectFn
+      );
+
+      selector(state, props);
+      selector(state, props);
+      selector.release();
+      selector(state, props);
+      selector(state, props);
+
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
@@ -208,6 +307,104 @@ describe('Selectors', () => {
 
       expect(grandparent.release).toHaveBeenCalled();
       expect(parent.release).toHaveBeenCalled();
+    });
+  });
+
+  describe('createSelector with arrays and props', () => {
+    it('should deliver the value of selectors to the projection function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        [incrementOne, incrementTwo, (state: any, props: any) => props.value],
+        projectFn
+      )({}, { value: 47 });
+
+      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo, 47);
+    });
+
+    it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        [
+          incrementOne,
+          incrementTwo,
+          (state: any, props: any) => {
+            fail(`Shouldn't be called`);
+            return props.value;
+          },
+        ],
+        projectFn
+      );
+
+      selector.projector('', '', 47);
+
+      expect(incrementOne).not.toHaveBeenCalled();
+      expect(incrementTwo).not.toHaveBeenCalled();
+      expect(projectFn).toHaveBeenCalledWith('', '', 47);
+    });
+
+    it('should call the projector function when the state changes', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        [incrementOne, (state: any, props: any) => props.value],
+        projectFn
+      );
+
+      const firstSate = { first: 'state' };
+      const props = { foo: 'props' };
+      selector(firstSate, props);
+      selector(firstSate, props);
+      expect(projectFn).toHaveBeenCalledTimes(1);
+
+      const secondState = { second: 'state' };
+      selector(secondState, props);
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should memoize the function', () => {
+      let counter = 0;
+
+      const firstState = { first: 'state' };
+      const secondState = { second: 'state' };
+      const props = { foo: 'props' };
+
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        [
+          incrementOne,
+          incrementTwo,
+          (state: any, props: any) => {
+            counter++;
+            return props;
+          },
+        ],
+        projectFn
+      );
+
+      selector(firstState, props);
+      selector(firstState, props);
+      selector(firstState, props);
+      selector(secondState, props);
+
+      expect(counter).toBe(2);
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should allow you to release memoized arguments', () => {
+      const state = { first: 'state' };
+      const props = { foo: 'props' };
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(
+        [incrementOne, (state: any, props: any) => props],
+        projectFn
+      );
+
+      selector(state, props);
+      selector(state, props);
+      selector.release();
+      selector(state, props);
+      selector(state, props);
+
+      expect(projectFn).toHaveBeenCalledTimes(2);
     });
   });
 
