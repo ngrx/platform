@@ -1,4 +1,3 @@
-import { createSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '../models/book';
 import { BookActionsUnion, BookActionTypes } from '../actions/book.actions';
