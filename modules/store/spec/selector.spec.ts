@@ -4,6 +4,8 @@ import {
   createFeatureSelector,
   defaultMemoize,
   createSelectorFactory,
+  resultMemoize,
+  MemoizedProjection,
 } from '@ngrx/store';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -283,6 +285,74 @@ describe('Selectors', () => {
       memoizer.memoized(1, 2);
 
       expect(anyFn.calls.count()).toEqual(1);
+    });
+  });
+
+  describe('resultMemoize', () => {
+    let projectionFnSpy: jasmine.Spy;
+    const ARRAY = ['a', 'ab', 'b'];
+    const ARRAY_CHANGED = [...ARRAY, 'bc'];
+    const A_FILTER: { by: string } = { by: 'a' };
+    const B_FILTER: { by: string } = { by: 'b' };
+
+    let arrayMemoizer: MemoizedProjection;
+
+    // Compare a and b on equality. If a and b are Arrays then compare them
+    // on their content.
+    function isResultEqual(a: any, b: any) {
+      if (a instanceof Array) {
+        return a.length === b.length && a.every(fromA => b.includes(fromA));
+      }
+      // Default comparison
+      return a === b;
+    }
+
+    beforeEach(() => {
+      projectionFnSpy = jasmine
+        .createSpy('projectionFn')
+        .and.callFake((arr: string[], filter: { by: string }) =>
+          arr.filter(item => item.startsWith(filter.by))
+        );
+
+      arrayMemoizer = resultMemoize(projectionFnSpy, isResultEqual);
+    });
+
+    it('should not rerun projector function when arguments stayed the same', () => {
+      arrayMemoizer.memoized(ARRAY, A_FILTER);
+      arrayMemoizer.memoized(ARRAY, A_FILTER);
+
+      expect(projectionFnSpy.calls.count()).toBe(1);
+    });
+
+    it('should rerun projector function when arguments changed', () => {
+      arrayMemoizer.memoized(ARRAY, A_FILTER);
+      arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
+
+      expect(projectionFnSpy.calls.count()).toBe(2);
+    });
+
+    it('should return the same instance of results when projector function produces the same results array', () => {
+      const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+      const result2 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+
+      expect(result1).toBe(result2);
+    });
+
+    it('should return the same instance of results when projector function produces similar results array', () => {
+      const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+      const result2 = arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
+
+      expect(result1).toBe(result2);
+    });
+
+    it('should return the new instance of results when projector function produces different result', () => {
+      const result1 = arrayMemoizer.memoized(ARRAY, A_FILTER);
+      const result2 = arrayMemoizer.memoized(ARRAY_CHANGED, B_FILTER);
+
+      expect(result1).toBeDefined();
+      expect(result2).toBeDefined();
+      expect(result1).not.toBe(result2);
+      expect(result1).not.toEqual(result2);
     });
   });
 });
