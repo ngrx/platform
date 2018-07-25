@@ -3,7 +3,8 @@ import { compose } from '@ngrx/store';
 const METADATA_KEY = '__@ngrx/effects__';
 
 export interface EffectMetadata<T> {
-  propertyName: keyof T;
+  // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
+  propertyName: string;
   dispatch: boolean;
 }
 
@@ -29,7 +30,9 @@ function setEffectMetadataEntries<T>(
 }
 
 export function Effect<T>({ dispatch = true } = {}): PropertyDecorator {
-  return function(target: T, propertyName: keyof T) {
+  // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
+  // for propertyName.
+  return function(target: T, propertyName: string) {
     const metadata: EffectMetadata<T> = { propertyName, dispatch };
     setEffectMetadataEntries<T>(target, [metadata]);
   } as (target: {}, propertyName: string | symbol) => void;
@@ -46,7 +49,9 @@ export function getSourceMetadata<T>(instance: T): Array<EffectMetadata<T>> {
   )(instance);
 }
 
-export type EffectsMetadata<T> = { [key in keyof T]?: { dispatch: boolean } };
+// Once TS is >= 2.8 replace with
+// {[key in <Key extends Extract<keyof T, string>>]?:  { dispatch: boolean } };
+export type EffectsMetadata<T> = { [key: string]: { dispatch: boolean } };
 
 export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   const metadata: EffectsMetadata<T> = {};
