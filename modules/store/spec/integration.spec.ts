@@ -177,6 +177,38 @@ describe('ngRx Integration spec', () => {
     });
 
     it('should use props to get a todo', () => {
+      const getTodosById = createSelector(
+        (state: TodoAppSchema, id: number) => {
+          return state.todos.find(p => p.id === id);
+        }
+      );
+
+      let testCase = 1;
+      const todo$ = store.pipe(select(getTodosById, 2));
+      todo$.subscribe(todo => {
+        if (testCase === 1) {
+          expect(todo).toEqual(undefined);
+        } else if (testCase === 2) {
+          expect(todo).toEqual({
+            id: 2,
+            text: 'second todo',
+            completed: false,
+          });
+        } else if (testCase === 3) {
+          expect(todo).toEqual({ id: 2, text: 'second todo', completed: true });
+        }
+        testCase++;
+      });
+
+      store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+      store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+      store.dispatch({
+        type: COMPLETE_TODO,
+        payload: { id: 2 },
+      });
+    });
+
+    it('should use the selector and props to get a todo', () => {
       const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
         'todos'
       );

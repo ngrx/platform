@@ -224,6 +224,51 @@ describe('Selectors', () => {
     });
   });
 
+  describe('createSelector with only a props selector', () => {
+    it('should deliver the state and the props to the projection function', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const state = { counter: {} };
+      const props = { value: 47 };
+      const selector = createSelector(projectFn)(state, props);
+      expect(projectFn).toHaveBeenCalledWith(state, props);
+    });
+
+    it('should be possible to use a projector fn', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(projectFn);
+      selector.projector('foo', 'bar');
+      expect(projectFn).toHaveBeenCalledWith('foo', 'bar');
+    });
+
+    it('should call the projector function when the state changes', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(projectFn);
+
+      const firstState = { first: 'state' };
+      const secondState = { second: 'state' };
+      const props = { foo: 'props' };
+      selector(firstState, props);
+      selector(firstState, props);
+      selector(secondState, props);
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should allow you to release memoized arguments', () => {
+      const state = { first: 'state' };
+      const props = { first: 'props' };
+      const projectFn = jasmine.createSpy('projectionFn');
+      const selector = createSelector(projectFn);
+
+      selector(state, props);
+      selector(state, props);
+      selector.release();
+      selector(state, props);
+      selector(state, props);
+
+      expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
