@@ -171,7 +171,6 @@
       "html",
       "json"
     ],
-    "mapCoverage": true,
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/modules/*.*/"
