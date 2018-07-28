@@ -137,7 +137,9 @@ describe('Selectors', () => {
       );
 
       selector({}, { value: 47 });
-      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo, 47);
+      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo, 47, {
+        value: 47,
+      });
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
@@ -363,7 +365,9 @@ describe('Selectors', () => {
         projectFn
       )({}, { value: 47 });
 
-      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo, 47);
+      expect(projectFn).toHaveBeenCalledWith(countOne, countTwo, 47, {
+        value: 47,
+      });
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
