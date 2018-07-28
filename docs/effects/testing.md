@@ -104,3 +104,43 @@ describe('My Effects', () => {
   });
 });
 ```
+
+### Effects as functions
+
+Effects can be defined as functions as well as variables. Defining an effect as a function allows you to define default values while having the option to override these variables during tests. This without breaking the functionality in the application.
+
+The following example effect debounces the user input into from a search action.
+
+```ts
+@Effect()
+search$ = this.actions$.pipe(
+  ofType<Search>(BookActionTypes.Search),
+  debounceTime(300, asyncScheduler),
+  switchMap(...)
+```
+
+The same effect but now defined as a function, would look as follows:
+
+```ts
+@Effect()
+// refactor as input properties and provide default values
+search$ = ({
+  debounce = 300,
+  scheduler = asyncScheduler
+} = {}) => this.actions$.pipe(
+  ofType<Search>(BookActionTypes.Search),
+  debounceTime(debounce, scheduler),
+  switchMap(...)
+```
+
+Within our tests we can now override the default properties:
+
+```ts
+const actual = effects.search$({
+  debounce: 30,
+  scheduler: getTestScheduler(),
+});
+expect(actual).toBeObservable(expected);
+```
+
+Doing this has the extra benefit of hiding implementation details, making your tests less prone to break due to implementation details changes. Meaning that if you would change the `debounceTime` inside the effect your tests wouldn't have to be changed,these tests would still pass.

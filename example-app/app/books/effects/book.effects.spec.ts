@@ -7,7 +7,7 @@ import { empty, Observable } from 'rxjs';
 import { GoogleBooksService } from '../../core/services/google-books.service';
 import { Search, SearchComplete, SearchError } from '../actions/book.actions';
 import { Book } from '../models/book';
-import { BookEffects, SEARCH_DEBOUNCE, SEARCH_SCHEDULER } from './book.effects';
+import { BookEffects } from './book.effects';
 
 describe('BookEffects', () => {
   let effects: BookEffects;
@@ -23,8 +23,6 @@ describe('BookEffects', () => {
           useValue: { searchBooks: jest.fn() },
         },
         provideMockActions(() => actions$),
-        { provide: SEARCH_SCHEDULER, useFactory: getTestScheduler },
-        { provide: SEARCH_DEBOUNCE, useValue: 30 },
       ],
     });
 
@@ -46,7 +44,12 @@ describe('BookEffects', () => {
       const expected = cold('-----b', { b: completion });
       googleBooksService.searchBooks = jest.fn(() => response);
 
-      expect(effects.search$).toBeObservable(expected);
+      expect(
+        effects.search$({
+          debounce: 30,
+          scheduler: getTestScheduler(),
+        })
+      ).toBeObservable(expected);
     });
 
     it('should return a new book.SearchError if the books service throws', () => {
@@ -59,7 +62,12 @@ describe('BookEffects', () => {
       const expected = cold('-----b', { b: completion });
       googleBooksService.searchBooks = jest.fn(() => response);
 
-      expect(effects.search$).toBeObservable(expected);
+      expect(
+        effects.search$({
+          debounce: 30,
+          scheduler: getTestScheduler(),
+        })
+      ).toBeObservable(expected);
     });
 
     it(`should not do anything if the query is an empty string`, () => {
@@ -68,7 +76,12 @@ describe('BookEffects', () => {
       actions$ = hot('-a---', { a: action });
       const expected = cold('---');
 
-      expect(effects.search$).toBeObservable(expected);
+      expect(
+        effects.search$({
+          debounce: 30,
+          scheduler: getTestScheduler(),
+        })
+      ).toBeObservable(expected);
     });
   });
 });
