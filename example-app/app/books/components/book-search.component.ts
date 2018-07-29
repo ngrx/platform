@@ -30,18 +30,18 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 
       .mat-form-field {
         min-width: 300px;
+        margin-right: 10px; // Make room for the spinner
       }
 
       .mat-spinner {
         position: relative;
         top: 10px;
         left: 10px;
-        opacity: 0;
-        padding-left: 60px; // Make room for the spinner
+        visibility: hidden;
       }
 
       .mat-spinner.show {
-        opacity: 1;
+        visibility: visible;
       }
     `,
   ],
