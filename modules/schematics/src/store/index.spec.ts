@@ -9,6 +9,7 @@ import {
   getTestProjectPath,
   createWorkspace,
 } from '../../../schematics-core/testing';
+import { getProject } from '../../../schematics-core';
 
 describe('Store Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -82,6 +83,18 @@ describe('Store Schematic', () => {
     expect(content).toMatch(
       /import { environment } from '..\/..\/environments\/environment';/
     );
+  });
+
+  it('should not import the environments in the reducers for a library', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+      module: 'baz.module.ts',
+    };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(`/projects/baz/src/lib/reducers/index.ts`);
+    expect(content).not.toMatch(/import { environment }/);
   });
 
   it('should fail if specified module does not exist', () => {

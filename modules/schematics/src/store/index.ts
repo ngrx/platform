@@ -20,6 +20,7 @@ import {
   Change,
   InsertChange,
   getProjectPath,
+  isLib,
   findModuleFromOptions,
   addImportToModule,
   parseName,
@@ -158,6 +159,7 @@ export default function(options: StoreOptions): Rule {
       template({
         ...stringUtils,
         ...(options as object),
+        isLib: isLib(host, options),
         environmentsPath,
       } as any),
       move(parsedPath.path),

@@ -26,6 +26,10 @@ const defaultModuleOptions = {
   flat: false,
 };
 
+const defaultLibOptions = {
+  name: 'baz',
+};
+
 export function getTestProjectPath(
   workspaceOptions: any = defaultWorkspaceOptions,
   appOptions: any = defaultAppOptions
@@ -37,7 +41,8 @@ export function createWorkspace(
   schematicRunner: SchematicTestRunner,
   appTree: UnitTestTree,
   workspaceOptions = defaultWorkspaceOptions,
-  appOptions = defaultAppOptions
+  appOptions = defaultAppOptions,
+  libOptions = defaultLibOptions
 ) {
   appTree = schematicRunner.runExternalSchematic(
     '@schematics/angular',
@@ -48,6 +53,12 @@ export function createWorkspace(
     '@schematics/angular',
     'application',
     appOptions,
+    appTree
+  );
+  appTree = schematicRunner.runExternalSchematic(
+    '@schematics/angular',
+    'library',
+    libOptions,
     appTree
   );
 
