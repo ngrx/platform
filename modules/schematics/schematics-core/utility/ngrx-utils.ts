@@ -16,7 +16,7 @@ export function addReducerToState(options: any): Rule {
     const reducersPath = normalize(`/${options.path}/${options.reducers}`);
 
     if (!host.exists(reducersPath)) {
-      throw new Error('Specified reducers path does not exist');
+      throw new Error(`Specified reducers path ${reducersPath} does not exist`);
     }
 
     const text = host.read(reducersPath);
@@ -192,7 +192,7 @@ export function addReducerImportToNgModule(options: any): Rule {
 
     const modulePath = options.module;
     if (!host.exists(options.module)) {
-      throw new Error('Specified module does not exist');
+      throw new Error(`Specified module path ${modulePath} does not exist`);
     }
 
     const text = host.read(modulePath);

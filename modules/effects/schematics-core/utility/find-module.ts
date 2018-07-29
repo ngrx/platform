@@ -57,7 +57,7 @@ export function findModuleFromOptions(
     } else if (host.exists(modulePath + '/' + moduleBaseName + '.module.ts')) {
       return normalize(modulePath + '/' + moduleBaseName + '.module.ts');
     } else {
-      throw new Error('Specified module does not exist');
+      throw new Error(`Specified module path ${modulePath} does not exist`);
     }
   }
 }
