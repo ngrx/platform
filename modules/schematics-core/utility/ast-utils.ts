@@ -352,6 +352,8 @@ function _addSymbolToNgModuleMetadata(
       return [];
     }
 
+    node = node[node.length - 1];
+
     const effectsModule = nodeArray.find(
       node =>
         (node.getText().includes('EffectsModule.forRoot') &&
@@ -397,8 +399,6 @@ function _addSymbolToNgModuleMetadata(
       }
     }
   }
-
-  node = node[node.length - 1];
 
   let toInsert: string;
   let position = node.getEnd();
