@@ -1,15 +1,13 @@
 import { LiftedActions, ComputedState, LiftedAction } from './../src/reducer';
 import { PerformAction, PERFORM_ACTION } from './../src/actions';
-import { ActionSanitizer, StateSanitizer } from './../src/config';
 import {
   ReduxDevtoolsExtensionConnection,
   ReduxDevtoolsExtensionConfig,
 } from './../src/extension';
 import { Action } from '@ngrx/store';
 
-import { LiftedState } from '../';
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
-import { createConfig, noMonitor } from '../src/config';
+import { createConfig } from '../src/config';
 import { unliftState } from '../src/utils';
 
 function createOptions(
@@ -97,7 +95,8 @@ describe('DevtoolsExtension', () => {
   it('should connect with default options', () => {
     devtoolsExtension = new DevtoolsExtension(
       reduxDevtoolsExtension,
-      createConfig({})
+      createConfig({}),
+      <any>null
     );
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
@@ -116,7 +115,8 @@ describe('DevtoolsExtension', () => {
         // these two should not be added
         actionSanitizer: myActionSanitizer,
         stateSanitizer: myStateSanitizer,
-      })
+      }),
+      <any>null
     );
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
@@ -139,7 +139,8 @@ describe('DevtoolsExtension', () => {
       createConfig({
         name: 'ngrx-store-devtool-todolist',
         serialize: customSerializer,
-      })
+      }),
+      <any>null
     );
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
@@ -152,7 +153,8 @@ describe('DevtoolsExtension', () => {
     it('should send notification with default options', () => {
       devtoolsExtension = new DevtoolsExtension(
         reduxDevtoolsExtension,
-        createConfig({})
+        createConfig({}),
+        <any>null
       );
       const defaultOptions = createOptions();
       const action = {} as LiftedAction;
@@ -176,7 +178,8 @@ describe('DevtoolsExtension', () => {
           // these two should not be added
           actionSanitizer: myActionSanitizer,
           stateSanitizer: myStateSanitizer,
-        })
+        }),
+        <any>null
       );
       const options = createOptions(
         'ngrx-store-devtool-todolist',
@@ -215,7 +218,8 @@ describe('DevtoolsExtension', () => {
         beforeEach(() => {
           devtoolsExtension = new DevtoolsExtension(
             reduxDevtoolsExtension,
-            createConfig({})
+            createConfig({}),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -252,7 +256,8 @@ describe('DevtoolsExtension', () => {
             reduxDevtoolsExtension,
             createConfig({
               actionSanitizer: testActionSanitizer,
-            })
+            }),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -297,7 +302,8 @@ describe('DevtoolsExtension', () => {
             reduxDevtoolsExtension,
             createConfig({
               stateSanitizer: testStateSanitizer,
-            })
+            }),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -341,7 +347,8 @@ describe('DevtoolsExtension', () => {
             createConfig({
               actionSanitizer: testActionSanitizer,
               stateSanitizer: testStateSanitizer,
-            })
+            }),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -372,7 +379,8 @@ describe('DevtoolsExtension', () => {
     beforeEach(() => {
       devtoolsExtension = new DevtoolsExtension(
         reduxDevtoolsExtension,
-        createConfig({})
+        createConfig({}),
+        <any>null
       );
       // Subscription needed or else extension connection will not be established.
       devtoolsExtension.actions$.subscribe(() => null);
@@ -406,7 +414,8 @@ describe('DevtoolsExtension', () => {
     beforeEach(() => {
       devtoolsExtension = new DevtoolsExtension(
         reduxDevtoolsExtension,
-        createConfig({})
+        createConfig({}),
+        <any>null
       );
       // Subscription needed or else extension connection will not be established.
       devtoolsExtension.actions$.subscribe(() => null);
