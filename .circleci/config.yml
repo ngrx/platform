@@ -17,6 +17,9 @@ var_2: &run_in_ngcontainer
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
+var_4: &run_in_node_latest_browsers
+  docker:
+  - image: circleci/node:latest-browsers
 
 jobs:
 
@@ -61,8 +64,7 @@ jobs:
       - run: bazel query --output=label //... | xargs bazel test
 
   test:
-    docker:
-      - image: circleci/node:latest-browsers
+    <<: *run_in_node_latest_browsers
     steps:
       - checkout
       - restore_cache:
@@ -76,6 +78,22 @@ jobs:
           paths:
             - ~/.cache/yarn
             - node_modules
+
+  schematics-core-copy:
+    <<: *run_in_node_latest_browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: yarn
+      - run: yarn copy:schematics
+      - run: git diff --name-only --exit-code ./modules
+      - save_cache:
+          key: *cache_key
+          paths:
+            - ~/.cache/yarn
+            - node_modules
+
   deploy:
     <<: *run_in_ngcontainer
     steps:
@@ -95,9 +113,11 @@ workflows:
     jobs:
       - lint
       - bazel
+      - schematics-core-copy
       - test
       - deploy:
           requires:
+            - schematics-core-copy
             - test
           filters:
             branches:
