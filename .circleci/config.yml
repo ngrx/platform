@@ -79,7 +79,7 @@ jobs:
             - ~/.cache/yarn
             - node_modules
 
-  schematics-core-copy:
+  check-schematics-core-copied:
     <<: *run_in_node_latest_browsers
     steps:
       - checkout
@@ -88,11 +88,6 @@ jobs:
       - run: yarn
       - run: yarn copy:schematics
       - run: git diff --name-only --exit-code ./modules
-      - save_cache:
-          key: *cache_key
-          paths:
-            - ~/.cache/yarn
-            - node_modules
 
   deploy:
     <<: *run_in_ngcontainer
@@ -113,11 +108,11 @@ workflows:
     jobs:
       - lint
       - bazel
-      - schematics-core-copy
+      - check-schematics-core-copied
       - test
       - deploy:
           requires:
-            - schematics-core-copy
+            - check-schematics-core-copied
             - test
           filters:
             branches:
