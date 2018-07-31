@@ -42,7 +42,7 @@ export {
 
 export {
   addReducerToState,
-  addReducerToStateInferface,
+  addReducerToStateInterface,
   addReducerImportToNgModule,
   addReducerToActionReducerMap,
   omit,
