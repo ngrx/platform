@@ -49,7 +49,7 @@ export function addReducerToState(options: any): Rule {
       true
     );
 
-    const stateInferfaceInsert = addReducerToStateInferface(
+    const stateInterfaceInsert = addReducerToStateInterface(
       source,
       reducersPath,
       options
@@ -60,7 +60,7 @@ export function addReducerToState(options: any): Rule {
       options
     );
 
-    const changes = [reducerImport, stateInferfaceInsert, reducerMapInsert];
+    const changes = [reducerImport, stateInterfaceInsert, reducerMapInsert];
     const recorder = host.beginUpdate(reducersPath);
     for (const change of changes) {
       if (change instanceof InsertChange) {
@@ -76,7 +76,7 @@ export function addReducerToState(options: any): Rule {
 /**
  * Insert the reducer into the first defined top level interface
  */
-export function addReducerToStateInferface(
+export function addReducerToStateInterface(
   source: ts.SourceFile,
   reducersPath: string,
   options: { name: string }
