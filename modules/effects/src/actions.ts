@@ -20,6 +20,9 @@ export class Actions<V = Action> extends Observable<V> {
     return observable;
   }
 
+  /**
+   * @deprecated from 6.1.0. Use the pipeable `ofType` operator instead.
+   */
   ofType<V2 extends V = V>(...allowedTypes: string[]): Actions<V2> {
     return ofType<any>(...allowedTypes)(this as Actions<any>) as Actions<V2>;
   }
