@@ -19,6 +19,9 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     this.source = state$;
   }
 
+  /**
+   * @deprecated from 6.1.0. Use the pipeable `select` operator instead.
+   */
   select<K>(mapFn: (state: T) => K): Observable<K>;
   select<a extends keyof T>(key: a): Observable<T[a]>;
   select<a extends keyof T, b extends keyof T[a]>(
