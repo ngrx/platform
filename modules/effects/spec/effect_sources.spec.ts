@@ -35,6 +35,13 @@ describe('EffectSources', () => {
     const b = { type: 'From Source B' };
     const c = { type: 'From Source C that completes' };
     const d = { not: 'a valid action' };
+    const e = undefined;
+    const f = null;
+
+    let circularRef = {} as any;
+    circularRef.circularRef = circularRef;
+    const g = { circularRef };
+
     const error = new Error('An Error');
 
     class SourceA {
@@ -54,10 +61,22 @@ describe('EffectSources', () => {
     }
 
     class SourceE {
-      @Effect() e$ = throwError(error);
+      @Effect() e$ = alwaysOf(e);
+    }
+
+    class SourceF {
+      @Effect() f$ = alwaysOf(f);
     }
 
     class SourceG {
+      @Effect() g$ = alwaysOf(g);
+    }
+
+    class SourceError {
+      @Effect() e$ = throwError(error);
+    }
+
+    class SourceH {
       @Effect() empty = of('value');
       @Effect()
       never = timer(50, getTestScheduler() as any).pipe(map(() => 'update'));
@@ -90,12 +109,48 @@ describe('EffectSources', () => {
 
       toActions(sources$).subscribe();
 
-      expect(mockErrorReporter.handleError).toHaveBeenCalled();
+      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+        new Error(
+          'Effect "SourceD.d$" dispatched an invalid action: {"not":"a valid action"}'
+        )
+      );
+    });
+
+    it('should report an error if an effect dispatches an `undefined`', () => {
+      const sources$ = of(new SourceE());
+
+      toActions(sources$).subscribe();
+
+      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+        new Error('Effect "SourceE.e$" dispatched an invalid action: undefined')
+      );
+    });
+
+    it('should report an error if an effect dispatches a `null`', () => {
+      const sources$ = of(new SourceF());
+
+      toActions(sources$).subscribe();
+
+      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+        new Error('Effect "SourceF.f$" dispatched an invalid action: null')
+      );
+    });
+
+    it(`should not break when the action in the error message can't be stringified`, () => {
+      const sources$ = of(new SourceG());
+
+      toActions(sources$).subscribe();
+
+      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+        new Error(
+          'Effect "SourceG.g$" dispatched an invalid action: [object Object]'
+        )
+      );
     });
 
     it('should not complete the group if just one effect completes', () => {
       const sources$ = cold('g', {
-        g: new SourceG(),
+        g: new SourceH(),
       });
       const expected = cold('a----b-----', { a: 'value', b: 'update' });
 
