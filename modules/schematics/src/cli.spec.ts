@@ -29,7 +29,7 @@ describe('CLI Schematic', () => {
   });
 
   it('should create a class by the angular/cli', () => {
-    const options = { ...defaultOptions, state: undefined };
+    const options = { ...defaultOptions };
     const tree = schematicRunner.runSchematic('class', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/foo.ts`);
 

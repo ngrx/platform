@@ -27,7 +27,10 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_reposi
 
 check_bazel_version("0.14.0")
 
-node_repositories(package_json = ["//:package.json"])
+node_repositories(
+    package_json = ["//:package.json"],
+    preserve_symlinks = True,
+)
 
 ####################################
 # Fetch and install the TypeScript rules
@@ -105,6 +108,10 @@ local_repository(
     name = "rxjs",
     path = "node_modules/rxjs/src",
 )
+
+load("@angular//:index.bzl", "ng_setup_workspace")
+
+ng_setup_workspace()
 
 ####################################
 # Bazel will fetch its own dependencies from npm.

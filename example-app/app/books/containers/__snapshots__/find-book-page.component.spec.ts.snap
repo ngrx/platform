@@ -112,16 +112,20 @@ exports[`Find Book Page should compile 1`] = `
         >
           <svg
             focusable="false"
+            ng-reflect-ng-switch="true"
             preserveAspectRatio="xMidYMid meet"
             style="width: 30px; height: 30px;"
             viewBox="0 0 23 23"
           >
+            
             <circle
+              class="ng-star-inserted"
               cx="50%"
               cy="50%"
               r="10"
               style="stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
             />
+            
           </svg>
         </mat-spinner>
       </mat-card-content>
