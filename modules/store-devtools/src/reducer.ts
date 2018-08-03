@@ -8,7 +8,7 @@ import {
   INIT,
 } from '@ngrx/store';
 import { difference, liftAction } from './utils';
-import * as Actions from './actions';
+import * as DevtoolsActions from './actions';
 import { StoreDevtoolsConfig, StateSanitizer } from './config';
 import { PerformAction } from './actions';
 
@@ -21,7 +21,7 @@ export type UpdateReducerAction = {
 };
 
 export type CoreActions = InitAction | UpdateReducerAction;
-export type Actions = Actions.All | CoreActions;
+export type Actions = DevtoolsActions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
@@ -211,7 +211,7 @@ export function liftReducerWith(
     let minInvalidatedStateIndex = 0;
 
     switch (liftedAction.type) {
-      case Actions.RESET: {
+      case DevtoolsActions.RESET: {
         // Get back to the state the store was created with.
         actionsById = { 0: liftAction(INIT_ACTION) };
         nextActionId = 1;
@@ -222,7 +222,7 @@ export function liftReducerWith(
         computedStates = [];
         break;
       }
-      case Actions.COMMIT: {
+      case DevtoolsActions.COMMIT: {
         // Consider the last committed state the new starting point.
         // Squash any staged actions into a single committed state.
         actionsById = { 0: liftAction(INIT_ACTION) };
@@ -234,7 +234,7 @@ export function liftReducerWith(
         computedStates = [];
         break;
       }
-      case Actions.ROLLBACK: {
+      case DevtoolsActions.ROLLBACK: {
         // Forget about any staged actions.
         // Start again from the last committed state.
         actionsById = { 0: liftAction(INIT_ACTION) };
@@ -245,7 +245,7 @@ export function liftReducerWith(
         computedStates = [];
         break;
       }
-      case Actions.TOGGLE_ACTION: {
+      case DevtoolsActions.TOGGLE_ACTION: {
         // Toggle whether an action with given ID is skipped.
         // Being skipped means it is a no-op during the computation.
         const { id: actionId } = liftedAction;
@@ -259,7 +259,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = stagedActionIds.indexOf(actionId);
         break;
       }
-      case Actions.SET_ACTIONS_ACTIVE: {
+      case DevtoolsActions.SET_ACTIONS_ACTIVE: {
         // Toggle whether an action with given ID is skipped.
         // Being skipped means it is a no-op during the computation.
         const { start, end, active } = liftedAction;
@@ -275,7 +275,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = stagedActionIds.indexOf(start);
         break;
       }
-      case Actions.JUMP_TO_STATE: {
+      case DevtoolsActions.JUMP_TO_STATE: {
         // Without recomputing anything, move the pointer that tell us
         // which state is considered the current one. Useful for sliders.
         currentStateIndex = liftedAction.index;
@@ -283,7 +283,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = Infinity;
         break;
       }
-      case Actions.JUMP_TO_ACTION: {
+      case DevtoolsActions.JUMP_TO_ACTION: {
         // Jumps to a corresponding state to a specific action.
         // Useful when filtering actions.
         const index = stagedActionIds.indexOf(liftedAction.actionId);
@@ -291,7 +291,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = Infinity;
         break;
       }
-      case Actions.SWEEP: {
+      case DevtoolsActions.SWEEP: {
         // Forget any actions that are currently being skipped.
         stagedActionIds = difference(stagedActionIds, skippedActionIds);
         skippedActionIds = [];
@@ -301,7 +301,7 @@ export function liftReducerWith(
         );
         break;
       }
-      case Actions.PERFORM_ACTION: {
+      case DevtoolsActions.PERFORM_ACTION: {
         // Auto-commit as new actions come in.
         if (options.maxAge && stagedActionIds.length === options.maxAge) {
           commitExcessActions(1);
@@ -320,7 +320,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = stagedActionIds.length - 1;
         break;
       }
-      case Actions.IMPORT_STATE: {
+      case DevtoolsActions.IMPORT_STATE: {
         // Completely replace everything.
         ({
           monitorState,
