@@ -68,6 +68,8 @@ jobs:
       - restore_cache:
           key: *cache_key
       - run: yarn
+      - run: yarn copy:schematics
+      - run: git diff --name-only --exit-code ./modules
       - run: yarn run ci
       - run: yarn run example:build:prod
       - run: yarn run example:test --watch=false
