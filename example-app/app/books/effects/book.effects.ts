@@ -19,12 +19,6 @@ import {
   SearchError,
 } from '../actions/book.actions';
 import { Book } from '../models/book';
-import { Scheduler } from 'rxjs/internal/Scheduler';
-
-export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
-export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
-  'Search Scheduler'
-);
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -40,41 +34,33 @@ export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
 @Injectable()
 export class BookEffects {
   @Effect()
-  search$: Observable<Action> = this.actions$.pipe(
-    ofType<Search>(BookActionTypes.Search),
-    debounceTime(this.debounce || 300, this.scheduler || asyncScheduler),
-    map(action => action.payload),
-    switchMap(query => {
-      if (query === '') {
-        return empty();
-      }
+  search$ = ({ debounce = 300, scheduler = asyncScheduler } = {}): Observable<
+    Action
+  > =>
+    this.actions$.pipe(
+      ofType<Search>(BookActionTypes.Search),
+      debounceTime(debounce, scheduler),
+      map(action => action.payload),
+      switchMap(query => {
+        if (query === '') {
+          return empty();
+        }
 
-      const nextSearch$ = this.actions$.pipe(
-        ofType(BookActionTypes.Search),
-        skip(1)
-      );
+        const nextSearch$ = this.actions$.pipe(
+          ofType(BookActionTypes.Search),
+          skip(1)
+        );
 
-      return this.googleBooks.searchBooks(query).pipe(
-        takeUntil(nextSearch$),
-        map((books: Book[]) => new SearchComplete(books)),
-        catchError(err => of(new SearchError(err)))
-      );
-    })
-  );
+        return this.googleBooks.searchBooks(query).pipe(
+          takeUntil(nextSearch$),
+          map((books: Book[]) => new SearchComplete(books)),
+          catchError(err => of(new SearchError(err)))
+        );
+      })
+    );
 
   constructor(
     private actions$: Actions,
-    private googleBooks: GoogleBooksService,
-    @Optional()
-    @Inject(SEARCH_DEBOUNCE)
-    private debounce: number,
-    /**
-     * You inject an optional Scheduler that will be undefined
-     * in normal application usage, but its injected here so that you can mock out
-     * during testing using the RxJS TestScheduler for simulating passages of time.
-     */
-    @Optional()
-    @Inject(SEARCH_SCHEDULER)
-    private scheduler: Scheduler
+    private googleBooks: GoogleBooksService
   ) {}
 }
