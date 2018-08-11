@@ -4,26 +4,23 @@
   "description": "monorepo for ngrx development",
   "scripts": {
     "precommit": "lint-staged",
-    "bootstrap": "lerna bootstrap",
     "build": "bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc yarn run test:unit",
-    "clean": "git clean -xdf && yarn && yarn run bootstrap",
+    "clean": "git clean -xdf",
     "cli": "ng",
     "coverage:html": "nyc report --reporter=html",
     "copy:dist": "ncp dist/ ./node_modules/@ngrx/",
     "example:start": "yarn run cli serve",
     "example:start:aot": "yarn run cli serve --prod",
-    "example:test": "jest --watch",
-    "example:build:prod": "yarn cli build --prod --base-href \"/platform/example-app/\" --output-path \"./example-dist/example-app\"",
+    "example:test": "jest -c projects/example-app/jest.config.js --watch",
+    "example:build:prod": "yarn cli build --prod --base-href \"/platform/example-app/\"",
     "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write \"**/*.ts\"",
-    "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'nyc --reporter=text --reporter=html yarn run test:unit'",
-    "postinstall": "node tools/rxjs-patch-pr3322.js && opencollective postinstall",
+    "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'yarn run test:unit'",
+    "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "release": "lerna publish --skip-npm --conventional-commits && npm run build",
-    "codegen": "ts-node modules/codegen/src/index.ts",
     "preskylint": "bazel build --noshow_progress @io_bazel//src/tools/skylark/java/com/google/devtools/skylark/skylint:Skylint",
     "skylint": "find . -type f -name \"*.bzl\" ! -path \"*/node_modules/*\" ! -path \"./dist/*\" | xargs $(bazel info bazel-bin)/external/io_bazel/src/tools/skylark/java/com/google/devtools/skylark/skylint/Skylint --disable-checks=deprecated-api",
     "prebuildifier": "bazel build --noshow_progress @com_github_bazelbuild_buildtools//buildifier",
@@ -125,7 +122,6 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "lerna": "^2.0.0",
     "lint-staged": "^4.0.3",
     "ncp": "^2.0.0",
     "nyc": "^10.1.2",
@@ -150,40 +146,5 @@
     "type": "opencollective",
     "url": "https://opencollective.com/ngrx",
     "logo": "https://opencollective.com/opencollective/logo.txt"
-  },
-  "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/setup-jest.ts",
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "example-app/tsconfig.spec.json"
-      },
-      "__TRANSFORM_HTML__": true
-    },
-    "transform": {
-      "^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
-    },
-    "testMatch": [
-      "<rootDir>/example-app/**/*.spec.ts"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "html",
-      "json"
-    ],
-    "mapCoverage": true,
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/modules/*.*/"
-    ],
-    "moduleNameMapper": {
-      "^@ngrx/(?!db)(.*)": "<rootDir>/modules/$1"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!@ngrx)"
-    ],
-    "modulePathIgnorePatterns": [
-      "dist"
-    ]
   }
 }

@@ -1,5 +1,5 @@
 import 'jest-preset-angular';
-global['CSS'] = null;
+(global as any)['CSS'] = null;
 
 /**
  * ISSUE: https://github.com/angular/material2/issues/7101
