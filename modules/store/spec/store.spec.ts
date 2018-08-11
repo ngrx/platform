@@ -337,7 +337,7 @@ describe('ngRx Store', () => {
       store.addReducer(key, counterReducer);
       expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
-        feature: key,
+        features: [key],
       });
     });
 
@@ -345,7 +345,7 @@ describe('ngRx Store', () => {
       store.removeReducer(key);
       expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
-        feature: key,
+        features: [key],
       });
     });
   });
@@ -373,11 +373,11 @@ describe('ngRx Store', () => {
 
       expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
-        feature: 'feature1',
+        features: ['feature1'],
       });
     });
 
-    it('should dispatch an update reducers action for each feature that is added', () => {
+    it('should dispatch an update reducers action when multiple features are added', () => {
       reducerManager.addFeatures([
         createFeature({
           key: 'feature1',
@@ -387,18 +387,10 @@ describe('ngRx Store', () => {
         }),
       ]);
 
-      expect(reducerManagerDispatcherSpy).toHaveBeenCalledTimes(2);
-
-      // get the first argument for the first call
-      expect(reducerManagerDispatcherSpy.calls.argsFor(0)[0]).toEqual({
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledTimes(1);
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
-        feature: 'feature1',
-      });
-
-      // get the first argument for the second call
-      expect(reducerManagerDispatcherSpy.calls.argsFor(1)[0]).toEqual({
-        type: UPDATE,
-        feature: 'feature2',
+        features: ['feature1', 'feature2'],
       });
     });
 
@@ -411,11 +403,11 @@ describe('ngRx Store', () => {
 
       expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
-        feature: 'feature1',
+        features: ['feature1'],
       });
     });
 
-    it('should dispatch an update reducers action for each feature that is removed', () => {
+    it('should dispatch an update reducers action when multiple features are removed', () => {
       reducerManager.removeFeatures([
         createFeature({
           key: 'feature1',
@@ -425,16 +417,10 @@ describe('ngRx Store', () => {
         }),
       ]);
 
-      // get the first argument for the first call
-      expect(reducerManagerDispatcherSpy.calls.argsFor(0)[0]).toEqual({
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledTimes(1);
+      expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
-        feature: 'feature1',
-      });
-
-      // get the first argument for the second call
-      expect(reducerManagerDispatcherSpy.calls.argsFor(1)[0]).toEqual({
-        type: UPDATE,
-        feature: 'feature2',
+        features: ['feature1', 'feature2'],
       });
     });
 
