@@ -21,7 +21,7 @@ throughout your application.
 
 Install @ngrx/store from npm:
 
-`npm install @ngrx/store` or `yarn add @ngrx/store`
+`npm install @ngrx/store` or `yarn add @ngrx/store` or `ng add @ngrx/store`
 
 ### Nightly builds
 
