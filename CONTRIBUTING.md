@@ -126,7 +126,49 @@ reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
-A detailed explanation can be found in this [document][commit-message-format].
+Example:
+
+````
+refactor(Effects): Simplified AP, added better error reporting and effects stream control
+
+BREAKING CHANGES: Effects API for registering effects has been updated to allow for multiple classes to be provided.
+
+BEFORE:
+```ts
+@NgModule({
+  imports: [
+    EffectsModule.run(SourceA),
+    EffectsModule.run(SourceB)
+  ]
+})
+export class AppModule { }
+```
+
+AFTER:
+```ts
+@NgModule({
+  imports: [
+    EffectsModule.forRoot([
+      SourceA,
+      SourceB,
+      SourceC,
+    ])
+  ]
+})
+export class AppModule { }
+
+@NgModule({
+  imports: [
+    EffectsModule.forFeature([
+      FeatureSourceA,
+      FeatureSourceB,
+      FeatureSourceC,
+    ])
+  ]
+})
+export class SomeFeatureModule { }
+```
+````
 
 ## Financial contributions
 
