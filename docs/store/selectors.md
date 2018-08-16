@@ -79,6 +79,52 @@ export const selectVisibleBooks = createSelector(
 );
 ```
 
+### createSelector with props
+
+To select a piece of state based on data that isn't available in the store you can pass `props` to the selector function. These `props` gets passed through every selector and the projector function.
+To do so we must specify these `props` when we use the selector inside our component.
+
+For example if we have a counter and we want to multiply its value, we can add the multiply factor as a `prop`:
+
+The last argument of a selector or a projector is the `props` argument, for our example it looks as follows:
+
+```ts
+export const getCount = createSelector(
+  getCounterValue,
+  (counter, props) => counter * props.multiply
+);
+```
+
+Inside the component we can define the `props`:
+
+```ts
+ngOnInit() {
+  this.counter = this.store.pipe(select(fromRoot.getCount, { multiply: 2 }))
+}
+```
+
+Keep in mind that a selector only keeps the previous input arguments in its cache. If you re-use this selector with another another multiply factor, the selector would always have to re-evaluate its value. This is because it's receiving both of the multiply factors (e.g. one time `2`, the other time `4`). In order to correctly memoize the selector, wrap the selector inside a factory function to create different instances of the selector.
+
+The following is an example of using multiple counters differentiated by `id`.
+
+```ts
+export const getCount = () =>
+  createSelector(
+    (state, props) => state.counter[props.id],
+    (counter, props) => counter * props.multiply
+  );
+```
+
+The component's selectors are now calling the factory function to create different selector instances:
+
+```ts
+ngOnInit() {
+  this.counter2 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter2', multiply: 2 }))
+  this.counter4 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter4', multiply: 4 }))
+  this.counter6 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter6', multiply: 6 }))
+}
+```
+
 ## createFeatureSelector
 
 The `createFeatureSelector` is a convenience method for returning a top level feature state. It returns a typed selector function for a feature slice of state.
@@ -256,7 +302,10 @@ The same behaviour can be achieved by re-writing the above piece of code to use 
 import { map, filter } from 'rxjs/operators';
 
 store
-  .pipe(map(state => selectValues(state)), filter(val => val !== undefined))
+  .pipe(
+    map(state => selectValues(state)),
+    filter(val => val !== undefined)
+  )
   .subscribe(/* .. */);
 ```
 
@@ -267,7 +316,10 @@ import { select } from '@ngrx/store';
 import { map, filter } from 'rxjs/operators';
 
 store
-  .pipe(select(selectValues(state)), filter(val => val !== undefined))
+  .pipe(
+    select(selectValues(state)),
+    filter(val => val !== undefined)
+  )
   .subscribe(/* .. */);
 ```
 
