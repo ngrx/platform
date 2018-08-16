@@ -128,47 +128,21 @@ reference GitHub issues that this commit **Closes**.
 
 Example:
 
-````
-refactor(Effects): Simplified AP, added better error reporting and effects stream control
+```
+feat(scope): commit message
 
-BREAKING CHANGES: Effects API for registering effects has been updated to allow for multiple classes to be provided.
+BREAKING CHANGES:
+
+Describe breaking changes here
 
 BEFORE:
-```ts
-@NgModule({
-  imports: [
-    EffectsModule.run(SourceA),
-    EffectsModule.run(SourceB)
-  ]
-})
-export class AppModule { }
-```
+
+Previous code example here
 
 AFTER:
-```ts
-@NgModule({
-  imports: [
-    EffectsModule.forRoot([
-      SourceA,
-      SourceB,
-      SourceC,
-    ])
-  ]
-})
-export class AppModule { }
 
-@NgModule({
-  imports: [
-    EffectsModule.forFeature([
-      FeatureSourceA,
-      FeatureSourceB,
-      FeatureSourceC,
-    ])
-  ]
-})
-export class SomeFeatureModule { }
+New code example here
 ```
-````
 
 ## Financial contributions
 
