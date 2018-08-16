@@ -92,12 +92,9 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
 
   private updateReducers(featureKeys: string[]) {
     this.next(this.reducerFactory(this.reducers, this.initialState));
-
-    featureKeys.forEach(feature => {
-      this.dispatcher.next(<Action>{
-        type: UPDATE,
-        feature,
-      });
+    this.dispatcher.next(<Action>{
+      type: UPDATE,
+      features: featureKeys,
     });
   }
 
