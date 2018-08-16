@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'bc-sidenav',
   template: `
-    <mat-sidenav [opened]="open">
+    <mat-sidenav #sidenav [opened]="open" (keydown.escape)="sidenav.close()" (closedStart)="closeMenu.emit()" disableClose>
       <mat-nav-list>
         <ng-content></ng-content>
       </mat-nav-list>
@@ -19,4 +19,5 @@ import { Component, Input } from '@angular/core';
 })
 export class SidenavComponent {
   @Input() open = false;
+  @Output() closeMenu = new EventEmitter();
 }

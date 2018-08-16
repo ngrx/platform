@@ -12,7 +12,7 @@ import * as LayoutActions from '../actions/layout.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <bc-layout>
-      <bc-sidenav [open]="showSidenav$ | async">
+      <bc-sidenav [open]="showSidenav$ | async" (closeMenu)="closeSidenav()">
         <bc-nav-item (navigate)="closeSidenav()" *ngIf="loggedIn$ | async" routerLink="/" icon="book" hint="View your book collection">
           My Collection
         </bc-nav-item>
