@@ -3,7 +3,9 @@ import { Observable, of, throwError } from 'rxjs';
 
 import { Authenticate, User } from '../models/user';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   constructor() {}
 

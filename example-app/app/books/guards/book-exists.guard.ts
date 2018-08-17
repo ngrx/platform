@@ -13,7 +13,9 @@ import * as fromBooks from '../reducers';
  * to inform the router's navigation process whether the route should continue
  * to activate this route. Guards must return an observable of true or false.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class BookExistsGuard implements CanActivate {
   constructor(
     private store: Store<fromBooks.State>,

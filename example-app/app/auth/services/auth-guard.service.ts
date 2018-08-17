@@ -6,7 +6,9 @@ import { map, take } from 'rxjs/operators';
 import * as AuthActions from '../actions/auth.actions';
 import * as fromAuth from '../reducers';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthGuard implements CanActivate {
   constructor(private store: Store<fromAuth.State>) {}
 
