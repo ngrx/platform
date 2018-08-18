@@ -92,12 +92,23 @@ describe('EffectSources', () => {
     });
 
     it('should ignore duplicate sources', () => {
+      const sources$ = cold('--a--a--a--', {
+        a: new SourceA(),
+      });
+      const expected = cold('--a--------', { a });
+
+      const output = toActions(sources$);
+
+      expect(output).toBeObservable(expected);
+    });
+
+    it('should resolve effects from same class but different instances', () => {
       const sources$ = cold('--a--b--c--', {
         a: new SourceA(),
         b: new SourceA(),
         c: new SourceA(),
       });
-      const expected = cold('--a--------', { a });
+      const expected = cold('--a--a--a--', { a });
 
       const output = toActions(sources$);
 
