@@ -10,6 +10,7 @@ import {
   NavigationEnd,
   Router,
   RoutesRecognized,
+  NavigationStart,
 } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 
@@ -18,6 +19,26 @@ import {
   RouterStateSerializer,
   SerializedRouterStateSnapshot,
 } from './serializer';
+
+/**
+ * An action dispatched when a router navigation request is fired.
+ */
+export const ROUTER_REQUEST = 'ROUTER_REQUEST';
+
+/**
+ * Payload of ROUTER_REQUEST
+ */
+export type RouterRequestPayload = {
+  event: NavigationStart;
+};
+
+/**
+ * An action dispatched when a router navigation request is fired.
+ */
+export type RouterRequestAction = {
+  type: typeof ROUTER_REQUEST;
+  payload: RouterRequestPayload;
+};
 
 /**
  * An action dispatched when the router navigates.
@@ -93,15 +114,37 @@ export type RouterErrorAction<
 };
 
 /**
+ * An action dispatched after navigation has ended and new route is active.
+ */
+export const ROUTER_NAVIGATED = 'ROUTER_NAVIGATED';
+
+/**
+ * Payload of ROUTER_NAVIGATED.
+ */
+export type RouterNavigatedPayload = {
+  event: NavigationEnd;
+};
+
+/**
+ * An action dispatched after navigation has ended and new route is active.
+ */
+export type RouterNavigatedAction = {
+  type: typeof ROUTER_NAVIGATED;
+  payload: RouterNavigatedPayload;
+};
+
+/**
  * An union type of router actions.
  */
 export type RouterAction<
   T,
   V extends RouterState = SerializedRouterStateSnapshot
 > =
+  | RouterRequestAction
   | RouterNavigationAction<V>
   | RouterCancelAction<T, V>
-  | RouterErrorAction<T, V>;
+  | RouterErrorAction<T, V>
+  | RouterNavigatedAction;
 
 /**
  * Simple router state.
@@ -297,7 +340,11 @@ export class StoreRouterConnectingModule {
 
   private setUpRouterEventsListener(): void {
     this.router.events.subscribe(event => {
-      if (event instanceof RoutesRecognized) {
+      if (event instanceof NavigationStart) {
+        if (this.trigger !== RouterTrigger.STORE) {
+          this.dispatchRouterRequest(event);
+        }
+      } else if (event instanceof RoutesRecognized) {
         this.routerState = this.serializer.serialize(event.state);
 
         if (this.trigger !== RouterTrigger.STORE) {
@@ -308,9 +355,16 @@ export class StoreRouterConnectingModule {
       } else if (event instanceof NavigationError) {
         this.dispatchRouterError(event);
       } else if (event instanceof NavigationEnd) {
+        if (this.trigger !== RouterTrigger.STORE) {
+          this.dispatchRouterNavigated(event);
+        }
         this.trigger = RouterTrigger.NONE;
       }
     });
+  }
+
+  private dispatchRouterRequest(event: NavigationStart): void {
+    this.dispatchRouterAction(ROUTER_REQUEST, { event });
   }
 
   private dispatchRouterNavigation(
@@ -341,6 +395,10 @@ export class StoreRouterConnectingModule {
       storeState: this.storeState,
       event: new NavigationError(event.id, event.url, `${event}`),
     });
+  }
+
+  private dispatchRouterNavigated(event: NavigationEnd): void {
+    this.dispatchRouterAction(ROUTER_NAVIGATED, { event });
   }
 
   private dispatchRouterAction(type: string, payload: any): void {
