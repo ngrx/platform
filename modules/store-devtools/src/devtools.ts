@@ -1,4 +1,4 @@
-import { Injectable, Inject, OnDestroy, ErrorHandler } from '@angular/core';
+import { Injectable, Inject, ErrorHandler } from '@angular/core';
 import {
   Action,
   ActionReducer,
@@ -22,9 +22,7 @@ import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { DevtoolsExtension } from './extension';
 import { LiftedState, liftInitialState, liftReducerWith } from './reducer';
 import { liftAction, unliftState } from './utils';
-
-@Injectable()
-export class DevtoolsDispatcher extends ActionsSubject {}
+import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 @Injectable()
 export class StoreDevtools implements Observer<any> {

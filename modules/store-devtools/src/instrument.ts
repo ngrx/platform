@@ -10,12 +10,13 @@ import {
   noMonitor,
   createConfig,
 } from './config';
-import { DevtoolsDispatcher, StoreDevtools } from './devtools';
+import { StoreDevtools } from './devtools';
 import {
   DevtoolsExtension,
   REDUX_DEVTOOLS_EXTENSION,
   ReduxDevtoolsExtension,
 } from './extension';
+import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 export const IS_EXTENSION_OR_MONITOR_PRESENT = new InjectionToken<boolean>(
   'Is Devtools Extension or Monitor Present'

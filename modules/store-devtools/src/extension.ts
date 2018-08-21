@@ -1,6 +1,6 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { empty, timer, of, Observable } from 'rxjs';
+import { empty, of, Observable } from 'rxjs';
 import {
   filter,
   map,
@@ -8,6 +8,9 @@ import {
   switchMap,
   takeUntil,
   concatMap,
+  debounceTime,
+  timeout,
+  catchError,
   take,
 } from 'rxjs/operators';
 
@@ -25,7 +28,8 @@ import {
   sanitizeStates,
   unliftState,
 } from './utils';
-import { NavigationEnd, Router } from '@angular/router';
+import { UPDATE } from '../../store/src';
+import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 export const ExtensionActionTypes = {
   START: 'START',
@@ -71,7 +75,7 @@ export class DevtoolsExtension {
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
     @Inject(STORE_DEVTOOLS_CONFIG) private config: StoreDevtoolsConfig,
-    @Optional() private router: Router
+    private dispatcher: DevtoolsDispatcher
   ) {
     this.devtoolsExtension = devtoolsExtension;
     this.createActionStreams();
@@ -172,24 +176,22 @@ export class DevtoolsExtension {
       map(change => this.unwrapAction(change.payload)),
       concatMap((action: any) => {
         if (action.type === IMPORT_STATE) {
-          if (this.router) {
-            if (!this.router.navigated) {
-              // If router exists and import happens straight at app start,
-              // wait until the first navigation happened to make sure every
-              // possibly lazy loaded reducer exists
-              return this.router.events.pipe(
-                filter(event => event instanceof NavigationEnd),
-                take(1),
-                map(() => action)
-              );
-            } else {
-              return of(action);
-            }
-          } else {
-            // If no router exists, conservatively wait 1 second, maybe user uses
-            // a different router implementation
-            return timer(1000).pipe(map((t: number) => action));
-          }
+          // State imports may happen in two situations:
+          // 1. Explicitly by user
+          // 2. User activated the "persist state accross reloads" option
+          //    and now the state is imported during reload.
+          // Because of option 2, we need to give possible
+          // lazy loaded reducers time to instantiate.
+          // As soon as there is no UPDATE action within 1 second,
+          // it is assumed that all reducers are loaded.
+          return this.dispatcher.pipe(
+            filter(action => action.type === UPDATE),
+            timeout(1000),
+            debounceTime(1000),
+            map(() => action),
+            catchError(() => of(action)),
+            take(1)
+          );
         } else {
           return of(action);
         }
