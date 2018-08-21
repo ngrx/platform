@@ -393,7 +393,10 @@ describe('integration spec', () => {
     });
   });
 
-  it('should support a custom RouterStateSnapshot serializer ', (done: any) => {
+  function shouldSupportCustomSerializer(
+    serializerThroughConfig: boolean,
+    done: Function
+  ) {
     interface SerializedState {
       url: string;
       params: any;
@@ -422,11 +425,17 @@ describe('integration spec', () => {
       }
     }
 
-    const providers = [
-      { provide: RouterStateSerializer, useClass: CustomSerializer },
-    ];
-
-    createTestModule({ reducers: { routerReducer, reducer }, providers });
+    if (serializerThroughConfig) {
+      createTestModule({
+        reducers: { routerReducer, reducer },
+        config: { serializer: CustomSerializer },
+      });
+    } else {
+      const providers = [
+        { provide: RouterStateSerializer, useClass: CustomSerializer },
+      ];
+      createTestModule({ reducers: { routerReducer, reducer }, providers });
+    }
 
     const router = TestBed.get(Router);
     const log = logOfRouterAndActionsAndStore();
@@ -464,6 +473,14 @@ describe('integration spec', () => {
         log.splice(0);
         done();
       });
+  }
+
+  it('should support a custom RouterStateSnapshot serializer via provider', (done: any) => {
+    shouldSupportCustomSerializer(false, done);
+  });
+
+  it('should support a custom RouterStateSnapshot serializer via config', (done: any) => {
+    shouldSupportCustomSerializer(true, done);
   });
 
   it('should support event during an async canActivate guard', (done: any) => {

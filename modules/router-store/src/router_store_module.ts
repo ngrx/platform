@@ -18,6 +18,7 @@ import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
   SerializedRouterStateSnapshot,
+  RouterState,
 } from './serializer';
 
 /**
@@ -146,14 +147,6 @@ export type RouterAction<
   | RouterErrorAction<T, V>
   | RouterNavigatedAction;
 
-/**
- * Simple router state.
- * All custom router states should have at least this property.
- */
-export type RouterState = {
-  url: string;
-};
-
 export type RouterReducerState<
   T extends RouterState = SerializedRouterStateSnapshot
 > = {
@@ -182,6 +175,7 @@ export function routerReducer<
 
 export interface StoreRouterConfig {
   stateKey?: string;
+  serializer?: new () => RouterStateSerializer;
 }
 
 export const _ROUTER_CONFIG = new InjectionToken(
@@ -192,7 +186,7 @@ export const ROUTER_CONFIG = new InjectionToken(
 );
 export const DEFAULT_ROUTER_FEATURENAME = 'router';
 
-export function _createDefaultRouterConfig(
+export function _createRouterConfig(
   config: StoreRouterConfig | StoreRouterConfigFunction
 ): StoreRouterConfig {
   let _config: StoreRouterConfig;
@@ -205,8 +199,17 @@ export function _createDefaultRouterConfig(
 
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
+    serializer: DefaultRouterStateSerializer,
     ..._config,
   };
+}
+
+export function _createSerializer(
+  config: StoreRouterConfig
+): RouterStateSerializer {
+  // This function gets handed a complete config-object from _createRouterConfig,
+  // so we know the serializer property exists
+  return new config.serializer!();
 }
 
 export type StoreRouterConfigFunction = () => StoreRouterConfig;
@@ -261,15 +264,22 @@ enum RouterTrigger {
  */
 @NgModule({
   providers: [
-    { provide: RouterStateSerializer, useClass: DefaultRouterStateSerializer },
     {
       provide: _ROUTER_CONFIG,
-      useValue: { stateKey: DEFAULT_ROUTER_FEATURENAME },
+      useValue: {
+        stateKey: DEFAULT_ROUTER_FEATURENAME,
+        serializer: DefaultRouterStateSerializer,
+      },
     },
     {
       provide: ROUTER_CONFIG,
-      useFactory: _createDefaultRouterConfig,
+      useFactory: _createRouterConfig,
       deps: [_ROUTER_CONFIG],
+    },
+    {
+      provide: RouterStateSerializer,
+      deps: [ROUTER_CONFIG],
+      useFactory: _createSerializer,
     },
   ],
 })
@@ -282,14 +292,7 @@ export class StoreRouterConnectingModule {
   ): ModuleWithProviders {
     return {
       ngModule: StoreRouterConnectingModule,
-      providers: [
-        { provide: _ROUTER_CONFIG, useValue: config },
-        {
-          provide: ROUTER_CONFIG,
-          useFactory: _createDefaultRouterConfig,
-          deps: [_ROUTER_CONFIG],
-        },
-      ],
+      providers: [{ provide: _ROUTER_CONFIG, useValue: config }],
     };
   }
 
