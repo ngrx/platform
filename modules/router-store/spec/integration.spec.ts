@@ -2,7 +2,7 @@ import { Component, Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, ScannedActionsSubject } from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
 
 import {
@@ -19,7 +19,6 @@ import {
   ROUTER_REQUEST,
   ROUTER_NAVIGATED,
 } from '../src/router_store_module';
-import { EffectsModule, Actions } from '@ngrx/effects';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
@@ -709,7 +708,6 @@ function createTestModule(
     declarations: [AppCmp, SimpleCmp],
     imports: [
       StoreModule.forRoot(opts.reducers),
-      EffectsModule.forRoot([]),
       RouterTestingModule.withRoutes([
         { path: '', component: SimpleCmp },
         {
@@ -760,7 +758,8 @@ function waitForNavigation(router: Router) {
 function logOfRouterAndActionsAndStore(): any[] {
   const router: Router = TestBed.get(Router);
   const store: Store<any> = TestBed.get(Store);
-  const actions$: Actions = TestBed.get(Actions);
+  // Not using effects' Actions to avoid @ngrx/effects dependency
+  const actions$: ScannedActionsSubject = TestBed.get(ScannedActionsSubject);
   const log: any[] = [];
   router.events.subscribe(e => {
     if (e.hasOwnProperty('url')) {
