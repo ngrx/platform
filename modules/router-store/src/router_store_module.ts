@@ -176,6 +176,13 @@ export function routerReducer<
 export interface StoreRouterConfig {
   stateKey?: string;
   serializer?: new () => RouterStateSerializer;
+  /**
+   * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
+   * Therefore, the action could run too soon, for example
+   * there may be a navigation cancel due to a guard saying the navigation is not allowed.
+   * To run ROUTER_NAVIGATION after guards and resolvers, set this property to true.
+   */
+  dispatchNavActionOnEnd?: boolean;
 }
 
 export const _ROUTER_CONFIG = new InjectionToken(
@@ -200,6 +207,7 @@ export function _createRouterConfig(
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
     serializer: DefaultRouterStateSerializer,
+    dispatchNavActionOnEnd: false,
     ..._config,
   };
 }
@@ -342,15 +350,19 @@ export class StoreRouterConnectingModule {
   }
 
   private setUpRouterEventsListener(): void {
+    const dispatchNavLate = this.config.dispatchNavActionOnEnd;
+    let routesRecognized: RoutesRecognized;
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         if (this.trigger !== RouterTrigger.STORE) {
           this.dispatchRouterRequest(event);
         }
       } else if (event instanceof RoutesRecognized) {
+        routesRecognized = event;
         this.routerState = this.serializer.serialize(event.state);
 
-        if (this.trigger !== RouterTrigger.STORE) {
+        if (!dispatchNavLate && this.trigger !== RouterTrigger.STORE) {
           this.dispatchRouterNavigation(event);
         }
       } else if (event instanceof NavigationCancel) {
@@ -359,6 +371,9 @@ export class StoreRouterConnectingModule {
         this.dispatchRouterError(event);
       } else if (event instanceof NavigationEnd) {
         if (this.trigger !== RouterTrigger.STORE) {
+          if (dispatchNavLate) {
+            this.dispatchRouterNavigation(routesRecognized);
+          }
           this.dispatchRouterNavigated(event);
         }
         this.trigger = RouterTrigger.NONE;

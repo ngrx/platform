@@ -644,6 +644,44 @@ describe('integration spec', () => {
         done();
       });
   });
+
+  it('should dispatch ROUTER_NAVIGATION later when config options set to true', () => {
+    const reducer = (state: string = '', action: RouterAction<any>) => {
+      if (action.type === ROUTER_NAVIGATION) {
+        return action.payload.routerState.url.toString();
+      } else {
+        return state;
+      }
+    };
+
+    createTestModule({
+      reducers: { reducer },
+      config: { dispatchNavActionOnEnd: true },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const log = logOfRouterAndActionsAndStore();
+
+    router.navigateByUrl('/').then(() => {
+      expect(log).toEqual([
+        { type: 'store', state: '' }, // init event. has nothing to do with the router
+        { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
+        { type: 'action', action: ROUTER_REQUEST },
+        { type: 'router', event: 'NavigationStart', url: '/' },
+        { type: 'router', event: 'RoutesRecognized', url: '/' },
+        /* new Router Lifecycle in Angular 4.3 */
+        { type: 'router', event: 'GuardsCheckStart', url: '/' },
+        { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+        { type: 'router', event: 'ResolveStart', url: '/' },
+        { type: 'router', event: 'ResolveEnd', url: '/' },
+        { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+        { type: 'action', action: ROUTER_NAVIGATION },
+        { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
+        { type: 'action', action: ROUTER_NAVIGATED },
+        { type: 'router', event: 'NavigationEnd', url: '/' },
+      ]);
+    });
+  });
 });
 
 function createTestModule(
