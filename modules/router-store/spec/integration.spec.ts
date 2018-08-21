@@ -38,8 +38,8 @@ describe('integration spec', () => {
         expect(log).toEqual([
           { type: 'store', state: '' }, // init event. has nothing to do with the router
           { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
           /* new Router Lifecycle in Angular 4.3 */
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
@@ -56,8 +56,8 @@ describe('integration spec', () => {
       .then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: '/next' },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
           /* new Router Lifecycle in Angular 4.3 */
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
@@ -146,11 +146,11 @@ describe('integration spec', () => {
 
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           {
             type: 'store',
             state: { url: '/next', lastAction: ROUTER_NAVIGATION },
           },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
           /* new Router Lifecycle in Angular 4.3 - m */
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
@@ -212,11 +212,11 @@ describe('integration spec', () => {
 
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           {
             type: 'store',
             state: { url: '/next', lastAction: ROUTER_NAVIGATION },
           },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
           /* new Router Lifecycle in Angular 4.3 */
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
@@ -266,8 +266,8 @@ describe('integration spec', () => {
       .then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: { url: '/next', navigationId: 2 } },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
           /* new Router Lifecycle in Angular 4.3 */
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
@@ -410,7 +410,6 @@ describe('integration spec', () => {
       .then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           {
             type: 'store',
             state: {
@@ -419,6 +418,7 @@ describe('integration spec', () => {
               params: { test: 1 },
             },
           },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           /* new Router Lifecycle in Angular 4.3 */
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
@@ -457,8 +457,8 @@ describe('integration spec', () => {
       .then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: undefined }, // after ROUTER_NAVIGATION
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           /* new Router Lifecycle in Angular 4.3 */
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'store', state: undefined }, // after USER_EVENT
@@ -496,8 +496,8 @@ describe('integration spec', () => {
         expect(log).toEqual([
           { type: 'store', state: '' }, // init event. has nothing to do with the router
           { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
@@ -512,8 +512,8 @@ describe('integration spec', () => {
       .then(() => {
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'store', state: '/next' },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
           { type: 'router', event: 'GuardsCheckStart', url: '/next' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
@@ -564,8 +564,8 @@ describe('integration spec', () => {
           { type: 'router', event: 'ResolveEnd', url: '/next' },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
           { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'store', state: { state: { url: '/' } } },
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
