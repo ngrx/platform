@@ -244,7 +244,7 @@ describe('integration spec', () => {
         : null;
     };
 
-    createTestModule({ reducers: { routerReducer, reducer } });
+    createTestModule({ reducers: { router: routerReducer, reducer } });
 
     const router = TestBed.get(Router);
     const store = TestBed.get(Store);
@@ -252,8 +252,8 @@ describe('integration spec', () => {
 
     const routerReducerStates: any[] = [];
     store.subscribe((state: any) => {
-      if (state.routerReducer) {
-        routerReducerStates.push(state.routerReducer);
+      if (state.router) {
+        routerReducerStates.push(state.router);
       }
     });
 

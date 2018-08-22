@@ -126,7 +126,7 @@ export const _ROUTER_CONFIG = new InjectionToken(
 export const ROUTER_CONFIG = new InjectionToken(
   '@ngrx/router-store Configuration'
 );
-export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
+export const DEFAULT_ROUTER_FEATURENAME = 'router';
 
 export function _createDefaultRouterConfig(
   config: StoreRouterConfig | StoreRouterConfigFunction

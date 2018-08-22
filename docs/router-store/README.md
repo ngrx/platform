@@ -34,11 +34,11 @@ export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
 };
 ```
 
-* Reducers receive this action, throwing an error in the reducer cancels navigation.
-* Effects can listen for this action.
-* The `ROUTER_CANCEL` action represents a guard canceling navigation.
-* A `ROUTER_ERROR` action represents a navigation error .
-* `ROUTER_CANCEL` and `ROUTER_ERROR` contain the store state before the navigation. Use the previous state to restore the consistency of the store.
+- Reducers receive this action, throwing an error in the reducer cancels navigation.
+- Effects can listen for this action.
+- The `ROUTER_CANCEL` action represents a guard canceling navigation.
+- A `ROUTER_ERROR` action represents a navigation error .
+- `ROUTER_CANCEL` and `ROUTER_ERROR` contain the store state before the navigation. Use the previous state to restore the consistency of the store.
 
 ## Setup
 
@@ -56,9 +56,7 @@ import { AppComponent } from './app.component';
       // routes
     ]),
     // Connects RouterModule with StoreModule
-    StoreRouterConnectingModule.forRoot({
-      stateKey: 'router', // name of reducer key
-    }),
+    StoreRouterConnectingModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })
@@ -67,6 +65,7 @@ export class AppModule {}
 
 ## API Documentation
 
-* [Navigation actions](./api.md#navigation-actions)
-* [Effects](./api.md#effects)
-* [Custom Router State Serializer](./api.md#custom-router-state-serializer)
+- [Configuration Options](./api.md#configuration-options)
+- [Navigation actions](./api.md#navigation-actions)
+- [Effects](./api.md#effects)
+- [Custom Router State Serializer](./api.md#custom-router-state-serializer)

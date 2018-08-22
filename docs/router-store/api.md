@@ -1,5 +1,18 @@
 # API
 
+## Configuration Options
+
+To connect the Angular router module with the NgRx store module, import the store module via
+`StoreRouterConnectingModule.forRoot()`.
+
+```ts
+interface StoreRouterConfig {
+  stateKey?: string;
+}
+```
+
+- `stateKey`: The name of reducer key, defaults to `router`
+
 ## Navigation actions
 
 Navigation actions are not provided as part of the router package. You provide your own
@@ -150,9 +163,7 @@ export const reducers: ActionReducerMap<State> = {
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule.forRoot({
-      stateKey: 'router',
-    }),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
 })
