@@ -53,10 +53,7 @@ export function reducer(
        * the collection is to be sorted, the adapter will
        * sort each record upon entry into the sorted array.
        */
-      return adapter.addMany(action.payload, {
-        ...state,
-        selectedBookId: state.selectedBookId,
-      });
+      return adapter.addMany(action.payload, state);
     }
 
     case BookActionTypes.Load: {
@@ -67,10 +64,7 @@ export function reducer(
        * exist already. If the collection is to be sorted, the adapter will
        * insert the new record into the sorted array.
        */
-      return adapter.addOne(action.payload, {
-        ...state,
-        selectedBookId: state.selectedBookId,
-      });
+      return adapter.addOne(action.payload, state);
     }
 
     case BookActionTypes.Select: {
