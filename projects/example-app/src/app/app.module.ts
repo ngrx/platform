@@ -63,7 +63,7 @@ import { AppRoutingModule } from './app-routing.module';
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
     StoreDevtoolsModule.instrument({
-      name: 'NgRx Book Store DevTools',
+      name: 'NgRx Book Store App',
       logOnly: environment.production,
     }),
 
