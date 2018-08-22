@@ -19,7 +19,6 @@ export {
   RouterNavigatedPayload,
   StoreRouterConnectingModule,
   StoreRouterConfig,
-  StoreRouterConfigFunction,
   NavigationActionTiming,
   ROUTER_CONFIG,
   DEFAULT_ROUTER_FEATURENAME,

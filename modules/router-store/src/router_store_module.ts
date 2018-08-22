@@ -175,7 +175,7 @@ export function routerReducer<
 
 export interface StoreRouterConfig {
   stateKey?: string;
-  serializer?: new () => RouterStateSerializer;
+  serializer?: new (...args: any[]) => RouterStateSerializer;
   /**
    * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
    * Therefore, the action could run too soon, for example
@@ -200,33 +200,15 @@ export const ROUTER_CONFIG = new InjectionToken(
 export const DEFAULT_ROUTER_FEATURENAME = 'router';
 
 export function _createRouterConfig(
-  config: StoreRouterConfig | StoreRouterConfigFunction
+  config: StoreRouterConfig
 ): StoreRouterConfig {
-  let _config: StoreRouterConfig;
-
-  if (typeof config === 'function') {
-    _config = config();
-  } else {
-    _config = config || {};
-  }
-
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
     serializer: DefaultRouterStateSerializer,
     navigationActionTiming: NavigationActionTiming.PreActivation,
-    ..._config,
+    ...config,
   };
 }
-
-export function _createSerializer(
-  config: StoreRouterConfig
-): RouterStateSerializer {
-  // This function gets handed a complete config-object from _createRouterConfig,
-  // so we know the serializer property exists
-  return new config.serializer!();
-}
-
-export type StoreRouterConfigFunction = () => StoreRouterConfig;
 
 enum RouterTrigger {
   NONE = 1,
@@ -280,10 +262,7 @@ enum RouterTrigger {
   providers: [
     {
       provide: _ROUTER_CONFIG,
-      useValue: {
-        stateKey: DEFAULT_ROUTER_FEATURENAME,
-        serializer: DefaultRouterStateSerializer,
-      },
+      useValue: {},
     },
     {
       provide: ROUTER_CONFIG,
@@ -292,21 +271,23 @@ enum RouterTrigger {
     },
     {
       provide: RouterStateSerializer,
-      deps: [ROUTER_CONFIG],
-      useFactory: _createSerializer,
+      useClass: DefaultRouterStateSerializer,
     },
   ],
 })
 export class StoreRouterConnectingModule {
-  static forRoot(
-    config?: StoreRouterConfig | StoreRouterConfigFunction
-  ): ModuleWithProviders;
-  static forRoot(
-    config: StoreRouterConfig | StoreRouterConfigFunction = {}
-  ): ModuleWithProviders {
+  static forRoot(config: StoreRouterConfig = {}): ModuleWithProviders {
     return {
       ngModule: StoreRouterConnectingModule,
-      providers: [{ provide: _ROUTER_CONFIG, useValue: config }],
+      providers: [
+        { provide: _ROUTER_CONFIG, useValue: config },
+        {
+          provide: RouterStateSerializer,
+          useClass: config.serializer
+            ? config.serializer
+            : DefaultRouterStateSerializer,
+        },
+      ],
     };
   }
 
