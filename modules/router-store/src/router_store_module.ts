@@ -18,7 +18,7 @@ import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
   SerializedRouterStateSnapshot,
-  SimpleRouterState,
+  BaseRouterStoreState,
 } from './serializer';
 
 /**
@@ -49,7 +49,7 @@ export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
 /**
  * Payload of ROUTER_NAVIGATION.
  */
-export type RouterNavigationPayload<T extends SimpleRouterState> = {
+export type RouterNavigationPayload<T extends BaseRouterStoreState> = {
   routerState: T;
   event: RoutesRecognized;
 };
@@ -58,7 +58,7 @@ export type RouterNavigationPayload<T extends SimpleRouterState> = {
  * An action dispatched when the router navigates.
  */
 export type RouterNavigationAction<
-  T extends SimpleRouterState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
@@ -72,7 +72,7 @@ export const ROUTER_CANCEL = 'ROUTER_CANCEL';
 /**
  * Payload of ROUTER_CANCEL.
  */
-export type RouterCancelPayload<T, V extends SimpleRouterState> = {
+export type RouterCancelPayload<T, V extends BaseRouterStoreState> = {
   routerState: V;
   storeState: T;
   event: NavigationCancel;
@@ -83,7 +83,7 @@ export type RouterCancelPayload<T, V extends SimpleRouterState> = {
  */
 export type RouterCancelAction<
   T,
-  V extends SimpleRouterState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = {
   type: typeof ROUTER_CANCEL;
   payload: RouterCancelPayload<T, V>;
@@ -97,7 +97,7 @@ export const ROUTER_ERROR = 'ROUTE_ERROR';
 /**
  * Payload of ROUTER_ERROR.
  */
-export type RouterErrorPayload<T, V extends SimpleRouterState> = {
+export type RouterErrorPayload<T, V extends BaseRouterStoreState> = {
   routerState: V;
   storeState: T;
   event: NavigationError;
@@ -108,7 +108,7 @@ export type RouterErrorPayload<T, V extends SimpleRouterState> = {
  */
 export type RouterErrorAction<
   T,
-  V extends SimpleRouterState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = {
   type: typeof ROUTER_ERROR;
   payload: RouterErrorPayload<T, V>;
@@ -139,7 +139,7 @@ export type RouterNavigatedAction = {
  */
 export type RouterAction<
   T,
-  V extends SimpleRouterState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > =
   | RouterRequestAction
   | RouterNavigationAction<V>
@@ -148,14 +148,14 @@ export type RouterAction<
   | RouterNavigatedAction;
 
 export type RouterReducerState<
-  T extends SimpleRouterState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = {
   state: T;
   navigationId: number;
 };
 
 export function routerReducer<
-  T extends SimpleRouterState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 >(
   state: RouterReducerState<T> | undefined,
   action: RouterAction<any, T>
