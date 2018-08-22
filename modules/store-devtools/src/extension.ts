@@ -28,7 +28,7 @@ import {
   sanitizeStates,
   unliftState,
 } from './utils';
-import { UPDATE } from '../../store/src';
+import { UPDATE } from '@ngrx/store';
 import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 export const ExtensionActionTypes = {
