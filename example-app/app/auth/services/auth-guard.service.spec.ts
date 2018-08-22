@@ -18,7 +18,6 @@ describe('Auth Guard', () => {
           auth: combineReducers(fromAuth.reducers),
         }),
       ],
-      providers: [AuthGuard],
     });
 
     store = TestBed.get(Store);

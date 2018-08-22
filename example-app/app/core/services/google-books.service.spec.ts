@@ -9,10 +9,7 @@ describe('Service: GoogleBooks', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: HttpClient, useValue: { get: jest.fn() } },
-        GoogleBooksService,
-      ],
+      providers: [{ provide: HttpClient, useValue: { get: jest.fn() } }],
     });
 
     service = TestBed.get(GoogleBooksService);

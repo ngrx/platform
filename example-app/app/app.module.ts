@@ -29,7 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AuthModule.forRoot(),
+    AuthModule,
     AppRoutingModule,
 
     /**
@@ -82,7 +82,7 @@ import { AppRoutingModule } from './app-routing.module';
      */
     DBModule.provideDB(schema),
 
-    CoreModule.forRoot(),
+    CoreModule,
   ],
   bootstrap: [AppComponent],
 })

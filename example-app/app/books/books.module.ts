@@ -6,7 +6,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from './components';
 import { BookEffects } from './effects/book.effects';
 import { CollectionEffects } from './effects/collection.effects';
-import { BookExistsGuard } from './guards/book-exists.guard';
 
 import { FindBookPageComponent } from './containers/find-book-page.component';
 import { ViewBookPageComponent } from './containers/view-book-page.component';
@@ -48,6 +47,5 @@ import { BooksRoutingModule } from './books-routing.module';
     SelectedBookPageComponent,
     CollectionPageComponent,
   ],
-  providers: [BookExistsGuard],
 })
 export class BooksModule {}

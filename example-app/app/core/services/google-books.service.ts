@@ -5,7 +5,9 @@ import { map } from 'rxjs/operators';
 
 import { Book } from '../../books/models/book';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GoogleBooksService {
   private API_PATH = 'https://www.googleapis.com/books/v1/volumes';
 
