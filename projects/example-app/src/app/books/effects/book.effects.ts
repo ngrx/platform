@@ -1,7 +1,7 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { asyncScheduler, empty, Observable, of } from 'rxjs';
+import { asyncScheduler, EMPTY as empty, Observable, of } from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -43,7 +43,7 @@ export class BookEffects {
       map(action => action.payload),
       switchMap(query => {
         if (query === '') {
-          return empty();
+          return empty;
         }
 
         const nextSearch$ = this.actions$.pipe(

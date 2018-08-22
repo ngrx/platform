@@ -13,7 +13,7 @@ import { BookAuthorsComponent } from '../components/book-authors.component';
 import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
 
 describe('View Book Page', () => {
-  let params = new BehaviorSubject({});
+  const params = new BehaviorSubject({});
   let fixture: ComponentFixture<ViewBookPageComponent>;
   let store: Store<fromBooks.State>;
   let instance: ViewBookPageComponent;

@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "class-name": true,
+    "no-duplicate-variable": true,
+    "no-eval": false,
+    "no-internal-module": true,
+    "no-var-keyword": true,
+    "triple-equals": [false, "allow-null-check"],
+    "variable-name": [true, "ban-keywords", "allow-leading-underscore"]
+  }
+}

@@ -6,6 +6,6 @@ export class ExampleAppPage {
   }
 
   getAppDescription() {
-    return element(by.css('mat-toolbar-row')).getText();
+    return element(by.css('mat-toolbar')).getText();
   }
 }

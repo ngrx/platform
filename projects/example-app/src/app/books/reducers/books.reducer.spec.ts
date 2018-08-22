@@ -29,7 +29,6 @@ describe('BooksReducer', () => {
     function noExistingBooks(
       action: any,
       booksInitialState: any,
-      initialState: any,
       books: Book[]
     ) {
       const createAction = new action(books);
@@ -39,35 +38,29 @@ describe('BooksReducer', () => {
       expect(result).toMatchSnapshot();
     }
 
-    function existingBooks(action: any, initialState: any, books: Book[]) {
+    function existingBooks(action: any, booksInitialState: any, books: Book[]) {
       // should not replace existing books
       const differentBook2 = { ...books[0], foo: 'bar' };
       const createAction = new action([books[1], differentBook2]);
 
       const expectedResult = {
-        ids: [...initialState.ids, books[1].id],
+        ids: [...booksInitialState.ids, books[1].id],
         entities: {
-          ...initialState.entities,
+          ...booksInitialState.entities,
           [books[1].id]: books[1],
         },
         selectedBookId: null,
       };
 
-      const result = reducer(initialState, createAction);
+      const result = reducer(booksInitialState, createAction);
 
       expect(result).toMatchSnapshot();
     }
 
     it('should add all books in the payload when none exist', () => {
-      noExistingBooks(SearchComplete, fromBooks.initialState, initialState, [
-        book1,
-        book2,
-      ]);
+      noExistingBooks(SearchComplete, initialState, [book1, book2]);
 
-      noExistingBooks(LoadSuccess, fromBooks.initialState, initialState, [
-        book1,
-        book2,
-      ]);
+      noExistingBooks(LoadSuccess, initialState, [book1, book2]);
     });
 
     it('should add only new books when books already exist', () => {
