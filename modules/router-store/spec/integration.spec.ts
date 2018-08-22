@@ -18,6 +18,7 @@ import {
   StoreRouterConfig,
   ROUTER_REQUEST,
   ROUTER_NAVIGATED,
+  NavigationActionTiming,
 } from '../src/router_store_module';
 
 describe('integration spec', () => {
@@ -655,7 +656,7 @@ describe('integration spec', () => {
 
     createTestModule({
       reducers: { reducer },
-      config: { dispatchNavActionOnEnd: true },
+      config: { navigationActionTiming: NavigationActionTiming.PostActivation },
     });
 
     const router: Router = TestBed.get(Router);
