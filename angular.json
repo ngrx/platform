@@ -6,7 +6,7 @@
   "defaultProject": "example-app",
   "projects": {
     "example-app": {
-      "root": "projects/example-app/",
+      "root": "",
       "sourceRoot": "projects/example-app/src",
       "projectType": "application",
       "prefix": "bc",

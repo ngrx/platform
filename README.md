@@ -44,7 +44,7 @@ No Silver sponsors yet. [[Become a Silver sponsor](https://opencollective.com/ng
 
 ## Examples
 
-- [example-app](./projects/example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://stackblitz.com/github/ngrx/platform/tree/61cbfe537f9df8cef3dd4a6ee0b8f483e49653f4).
+- [example-app](./projects/example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://ngrx.github.io/platform/stackblitz.html).
 
 ## Migration
 
