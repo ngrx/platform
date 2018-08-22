@@ -1,6 +1,6 @@
 # @ngrx example application
 
-Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://stackblitz.com/github/ngrx/platform/tree/61cbfe537f9df8cef3dd4a6ee0b8f483e49653f4).
+Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://ngrx.github.io/platform/stackblitz.html).
 
 This app is a book collection manager. The user can authenticate, use the Google Books API to search for
 books and add them to their collection. This application utilizes [@ngrx/db](https://github.com/ngrx/db)
@@ -48,4 +48,4 @@ If this is not the case you will need to install the Angular CLI globally.
 
 ### Try it on StackBlitz
 
-Try the example-app on [StackBlitz](https://stackblitz.com/github/ngrx/platform/tree/61cbfe537f9df8cef3dd4a6ee0b8f483e49653f4).
+Try the example-app on [StackBlitz](https://ngrx.github.io/platform/stackblitz.html).
