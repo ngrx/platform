@@ -2,19 +2,20 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 /**
  * Simple router state.
- * All custom router states / state serializers should have at least this property.
+ * All custom router states / state serializers should have at least
+ * the properties of this interface.
  */
-export interface SimpleRouterState {
+export interface BaseRouterStoreState {
   url: string;
 }
 
 export abstract class RouterStateSerializer<
-  T extends SimpleRouterState = SimpleRouterState
+  T extends BaseRouterStoreState = BaseRouterStoreState
 > {
   abstract serialize(routerState: RouterStateSnapshot): T;
 }
 
-export interface SerializedRouterStateSnapshot extends SimpleRouterState {
+export interface SerializedRouterStateSnapshot extends BaseRouterStoreState {
   root: ActivatedRouteSnapshot;
   url: string;
 }

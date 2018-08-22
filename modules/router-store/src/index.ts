@@ -28,5 +28,5 @@ export {
   RouterStateSerializer,
   DefaultRouterStateSerializer,
   SerializedRouterStateSnapshot,
-  SimpleRouterState,
+  BaseRouterStoreState,
 } from './serializer';
