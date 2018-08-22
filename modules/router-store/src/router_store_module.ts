@@ -18,7 +18,7 @@ import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
   SerializedRouterStateSnapshot,
-  RouterState,
+  SimpleRouterState,
 } from './serializer';
 
 /**
@@ -49,7 +49,7 @@ export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
 /**
  * Payload of ROUTER_NAVIGATION.
  */
-export type RouterNavigationPayload<T extends RouterState> = {
+export type RouterNavigationPayload<T extends SimpleRouterState> = {
   routerState: T;
   event: RoutesRecognized;
 };
@@ -58,7 +58,7 @@ export type RouterNavigationPayload<T extends RouterState> = {
  * An action dispatched when the router navigates.
  */
 export type RouterNavigationAction<
-  T extends RouterState = SerializedRouterStateSnapshot
+  T extends SimpleRouterState = SerializedRouterStateSnapshot
 > = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
@@ -72,7 +72,7 @@ export const ROUTER_CANCEL = 'ROUTER_CANCEL';
 /**
  * Payload of ROUTER_CANCEL.
  */
-export type RouterCancelPayload<T, V extends RouterState> = {
+export type RouterCancelPayload<T, V extends SimpleRouterState> = {
   routerState: V;
   storeState: T;
   event: NavigationCancel;
@@ -83,7 +83,7 @@ export type RouterCancelPayload<T, V extends RouterState> = {
  */
 export type RouterCancelAction<
   T,
-  V extends RouterState = SerializedRouterStateSnapshot
+  V extends SimpleRouterState = SerializedRouterStateSnapshot
 > = {
   type: typeof ROUTER_CANCEL;
   payload: RouterCancelPayload<T, V>;
@@ -97,7 +97,7 @@ export const ROUTER_ERROR = 'ROUTE_ERROR';
 /**
  * Payload of ROUTER_ERROR.
  */
-export type RouterErrorPayload<T, V extends RouterState> = {
+export type RouterErrorPayload<T, V extends SimpleRouterState> = {
   routerState: V;
   storeState: T;
   event: NavigationError;
@@ -108,7 +108,7 @@ export type RouterErrorPayload<T, V extends RouterState> = {
  */
 export type RouterErrorAction<
   T,
-  V extends RouterState = SerializedRouterStateSnapshot
+  V extends SimpleRouterState = SerializedRouterStateSnapshot
 > = {
   type: typeof ROUTER_ERROR;
   payload: RouterErrorPayload<T, V>;
@@ -139,7 +139,7 @@ export type RouterNavigatedAction = {
  */
 export type RouterAction<
   T,
-  V extends RouterState = SerializedRouterStateSnapshot
+  V extends SimpleRouterState = SerializedRouterStateSnapshot
 > =
   | RouterRequestAction
   | RouterNavigationAction<V>
@@ -148,14 +148,14 @@ export type RouterAction<
   | RouterNavigatedAction;
 
 export type RouterReducerState<
-  T extends RouterState = SerializedRouterStateSnapshot
+  T extends SimpleRouterState = SerializedRouterStateSnapshot
 > = {
   state: T;
   navigationId: number;
 };
 
 export function routerReducer<
-  T extends RouterState = SerializedRouterStateSnapshot
+  T extends SimpleRouterState = SerializedRouterStateSnapshot
 >(
   state: RouterReducerState<T> | undefined,
   action: RouterAction<any, T>
@@ -180,9 +180,15 @@ export interface StoreRouterConfig {
    * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
    * Therefore, the action could run too soon, for example
    * there may be a navigation cancel due to a guard saying the navigation is not allowed.
-   * To run ROUTER_NAVIGATION after guards and resolvers, set this property to true.
+   * To run ROUTER_NAVIGATION after guards and resolvers,
+   * set this property to NavigationActionTiming.PostActivation.
    */
-  dispatchNavActionOnEnd?: boolean;
+  navigationActionTiming?: NavigationActionTiming;
+}
+
+export enum NavigationActionTiming {
+  PreActivation = 1,
+  PostActivation = 2,
 }
 
 export const _ROUTER_CONFIG = new InjectionToken(
@@ -207,7 +213,7 @@ export function _createRouterConfig(
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
     serializer: DefaultRouterStateSerializer,
-    dispatchNavActionOnEnd: false,
+    navigationActionTiming: NavigationActionTiming.PreActivation,
     ..._config,
   };
 }
@@ -223,9 +229,9 @@ export function _createSerializer(
 export type StoreRouterConfigFunction = () => StoreRouterConfig;
 
 enum RouterTrigger {
-  NONE,
-  ROUTER,
-  STORE,
+  NONE = 1,
+  ROUTER = 2,
+  STORE = 3,
 }
 
 /**
@@ -350,7 +356,9 @@ export class StoreRouterConnectingModule {
   }
 
   private setUpRouterEventsListener(): void {
-    const dispatchNavLate = this.config.dispatchNavActionOnEnd;
+    const dispatchNavLate =
+      this.config.navigationActionTiming ===
+      NavigationActionTiming.PostActivation;
     let routesRecognized: RoutesRecognized;
 
     this.router.events.subscribe(event => {
