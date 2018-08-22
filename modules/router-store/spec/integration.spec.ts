@@ -1,4 +1,4 @@
-import { Component, Provider } from '@angular/core';
+import { Component, Provider, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -416,7 +416,11 @@ describe('integration spec', () => {
         : null;
     };
 
+    @Injectable()
     class CustomSerializer implements RouterStateSerializer<SerializedState> {
+      constructor(store: Store<any>) {
+        // Requiring store to test Serializer with injected arguments works.
+      }
       serialize(routerState: RouterStateSnapshot): SerializedState {
         const url = `${routerState.url}-custom`;
         const params = { test: 1 };
