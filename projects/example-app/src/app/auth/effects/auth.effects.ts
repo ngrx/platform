@@ -4,6 +4,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
+import * as LoginPageActions from '../actions/login-page.actions';
+
 import {
   AuthActionTypes,
   Login,
@@ -15,6 +17,26 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
+  @Effect()
+  loginPageLogin$ = this.actions$.pipe(
+    ofType<LoginPageActions.Login>(LoginPageActions.LoginPageActionTypes.Login),
+    map(({ payload }) => new Login(payload.credentials))
+  );
+
+  @Effect()
+  loginPageLoginFailure$ = this.actions$.pipe(
+    ofType<LoginFailure>(AuthActionTypes.LoginFailure),
+    map(({ payload }) => new LoginPageActions.LoginFailure({ error: payload }))
+  );
+
+  @Effect()
+  loginPageLoginSuccess$ = this.actions$.pipe(
+    ofType<LoginSuccess>(AuthActionTypes.LoginSuccess),
+    map(
+      ({ payload }) => new LoginPageActions.LoginSuccess({ user: payload.user })
+    )
+  );
+
   @Effect()
   login$ = this.actions$.pipe(
     ofType<Login>(AuthActionTypes.Login),

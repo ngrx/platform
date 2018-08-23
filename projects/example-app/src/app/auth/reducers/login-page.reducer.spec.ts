@@ -4,8 +4,7 @@ import {
   Login,
   LoginSuccess,
   LoginFailure,
-  Logout,
-} from '../actions/auth.actions';
+} from '../actions/login-page.actions';
 import { Authenticate, User } from '../models/user';
 
 describe('LoginPageReducer', () => {
@@ -22,7 +21,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN', () => {
     it('should make pending to true', () => {
       const user = { username: 'test' } as Authenticate;
-      const createAction = new Login(user);
+      const createAction = new Login({ credentials: user });
 
       const expectedResult = {
         error: null,
@@ -54,7 +53,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_FAILURE', () => {
     it('should have an error and no pending state', () => {
       const error = 'login failed';
-      const createAction = new LoginFailure(error);
+      const createAction = new LoginFailure({ error });
 
       const expectedResult = {
         error: error,

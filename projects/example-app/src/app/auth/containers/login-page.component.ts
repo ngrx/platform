@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Authenticate } from '../models/user';
 import * as fromAuth from '../reducers';
-import * as AuthActions from '../actions/auth.actions';
+import * as LoginPageActions from '../actions/login-page.actions';
 
 @Component({
   selector: 'bc-login-page',
@@ -24,6 +24,6 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit($event: Authenticate) {
-    this.store.dispatch(new AuthActions.Login($event));
+    this.store.dispatch(new LoginPageActions.Login({ credentials: $event }));
   }
 }

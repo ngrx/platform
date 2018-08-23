@@ -2,10 +2,10 @@ import { Action } from '@ngrx/store';
 import { User, Authenticate } from '../models/user';
 
 export enum AuthActionTypes {
-  Login = '[Auth] Login',
+  Login = '[Auth API] Login',
   Logout = '[Auth] Logout',
-  LoginSuccess = '[Auth] Login Success',
-  LoginFailure = '[Auth] Login Failure',
+  LoginSuccess = '[Auth API] Login - Success',
+  LoginFailure = '[Auth API] Login -  Failure',
   LoginRedirect = '[Auth] Login Redirect',
 }
 
