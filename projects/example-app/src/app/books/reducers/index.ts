@@ -18,7 +18,7 @@ export interface State extends fromRoot.State {
   books: BooksState;
 }
 
-export const reducers: ActionReducerMap<BooksState> = {
+export const reducers: ActionReducerMap<BooksState, any> = {
   search: fromSearch.reducer,
   books: fromBooks.reducer,
   collection: fromCollection.reducer,
