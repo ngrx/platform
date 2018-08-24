@@ -11,6 +11,8 @@ export const SET_ACTIONS_ACTIVE = 'SET_ACTIONS_ACTIVE';
 export const JUMP_TO_STATE = 'JUMP_TO_STATE';
 export const JUMP_TO_ACTION = 'JUMP_TO_ACTION';
 export const IMPORT_STATE = 'IMPORT_STATE';
+export const LOCK_CHANGES = 'LOCK_CHANGES';
+export const PAUSE_RECORDING = 'PAUSE_RECORDING';
 
 export class PerformAction implements Action {
   readonly type = PERFORM_ACTION;
@@ -85,6 +87,18 @@ export class ImportState implements Action {
   constructor(public nextLiftedState: any) {}
 }
 
+export class LockChanges implements Action {
+  readonly type = LOCK_CHANGES;
+
+  constructor(public status: boolean) {}
+}
+
+export class PauseRecording implements Action {
+  readonly type = PAUSE_RECORDING;
+
+  constructor(public status: boolean) {}
+}
+
 export type All =
   | PerformAction
   | Refresh
@@ -96,4 +110,6 @@ export type All =
   | SetActionsActive
   | JumpToState
   | JumpToAction
-  | ImportState;
+  | ImportState
+  | LockChanges
+  | PauseRecording;

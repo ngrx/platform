@@ -6,6 +6,7 @@ import {
   StateObservable,
   Store,
   StoreModule,
+  UPDATE,
 } from '@ngrx/store';
 
 import {
@@ -15,6 +16,7 @@ import {
   StoreDevtoolsOptions,
 } from '../';
 import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/instrument';
+import { PerformAction } from '../src/actions';
 
 const counter = jasmine
   .createSpy('counter')
@@ -623,6 +625,122 @@ describe('Store Devtools', () => {
 
       fixture.devtools.importState(exportedState);
       expect(fixture.getLiftedState()).toEqual(exportedState);
+    });
+  });
+
+  describe('Lock Changes', () => {
+    let fixture: Fixture<number>;
+    beforeEach(() => {
+      fixture = createStore(counter);
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.devtools.lockChanges(true);
+    });
+
+    afterEach(() => {
+      fixture.cleanup();
+    });
+
+    it('should update state correctly', () => {
+      expect(fixture.getLiftedState().isLocked).toBe(true);
+      expect(fixture.getLiftedState().nextActionId).toBe(3);
+      expect(fixture.getState()).toBe(2);
+    });
+
+    it('should not accept changes during lock', () => {
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      expect(fixture.getLiftedState().nextActionId).toBe(3);
+      expect(fixture.getState()).toBe(2);
+    });
+
+    it('should be able to skip / time travel during lock', () => {
+      fixture.devtools.toggleAction(1);
+      expect(fixture.getState()).toBe(1);
+      fixture.devtools.toggleAction(1);
+      expect(fixture.getState()).toBe(2);
+      fixture.devtools.jumpToAction(1);
+      expect(fixture.getState()).toBe(1);
+      fixture.devtools.jumpToAction(2);
+      expect(fixture.getState()).toBe(2);
+    });
+
+    it('should work correctly after unlock', () => {
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.devtools.jumpToAction(1);
+      fixture.devtools.jumpToAction(2);
+      fixture.devtools.lockChanges(false);
+      expect(fixture.getLiftedState().isLocked).toBe(false);
+      expect(fixture.getLiftedState().nextActionId).toBe(3);
+      expect(fixture.getState()).toBe(2);
+
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      expect(fixture.getLiftedState().nextActionId).toBe(4);
+      expect(fixture.getState()).toBe(3);
+    });
+  });
+
+  describe('pause recording', () => {
+    let fixture: Fixture<number>;
+    beforeEach(() => {
+      fixture = createStore(counter);
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.devtools.pauseRecording(true);
+    });
+
+    afterEach(() => {
+      fixture.cleanup();
+    });
+
+    it('should update pause correctly', () => {
+      expect(fixture.getLiftedState().isPaused).toBe(true);
+      fixture.devtools.pauseRecording(false);
+      expect(fixture.getLiftedState().isPaused).toBe(false);
+    });
+
+    it('should create a copy of the last state before pausing', () => {
+      const computedStates = fixture.getLiftedState().computedStates;
+      expect(computedStates.length).toBe(4);
+      expect(computedStates[3]).toEqual(computedStates[2]);
+      expect(fixture.getLiftedState().currentStateIndex).toBe(3);
+      expect(fixture.getState()).toBe(2);
+    });
+
+    it('should add pause action', () => {
+      const liftedState = fixture.getLiftedState();
+      expect(liftedState.nextActionId).toBe(4);
+      expect(liftedState.actionsById[3].action.type).toEqual('@ngrx/devtools/pause');
+    });
+
+    it('should overwrite last state during pause but keep action', () => {
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      const liftedState = fixture.getLiftedState();
+      expect(liftedState.currentStateIndex).toBe(3);
+      expect(liftedState.computedStates.length).toBe(4);
+      expect(fixture.getState()).toEqual(1);
+      expect(liftedState.nextActionId).toBe(4);
+      expect(liftedState.actionsById[3].action.type).toEqual('@ngrx/devtools/pause');
+    });
+
+    it('recomputation of states should preserve last state', () => {
+      fixture.devtools.jumpToState(1);
+      expect(fixture.getState()).toBe(1);
+      fixture.devtools.jumpToState(3);
+      expect(fixture.getState()).toBe(2);
+      fixture.devtools.toggleAction(1);
+      expect(fixture.getState()).toBe(2);
+      fixture.devtools.jumpToState(2);
+      expect(fixture.getState()).toBe(1);
+    });
+
+    it('reducer update should not be recorded but should still be applied', () => {
+      const oldComputedStates = fixture.getLiftedState().computedStates;
+      fixture.store.dispatch({ type: UPDATE });
+      expect(fixture.getState()).toBe(2);
+      const liftedState = fixture.getLiftedState();
+      expect(liftedState.nextActionId).toBe(4);
+      expect(liftedState.actionsById[3].action.type).toEqual('@ngrx/devtools/pause');
+      expect(oldComputedStates).not.toBe(liftedState.computedStates);
     });
   });
 });
