@@ -11,7 +11,7 @@ import {
   LoginFailure,
   LoginSuccess,
 } from '../actions/auth-api.actions';
-import { Authenticate } from '../models/user';
+import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class AuthEffects {
   login$ = this.actions$.pipe(
     ofType<LoginPageActions.Login>(LoginPageActions.LoginPageActionTypes.Login),
     map(action => action.payload.credentials),
-    exhaustMap((auth: Authenticate) =>
+    exhaustMap((auth: Credentials) =>
       this.authService.login(auth).pipe(
         map(user => new LoginSuccess({ user })),
         catchError(error => of(new LoginFailure({ error })))

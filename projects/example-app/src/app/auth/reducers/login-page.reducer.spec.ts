@@ -4,7 +4,7 @@ import * as fromLoginPage from './login-page.reducer';
 import * as authApiActions from '../actions/auth-api.actions';
 import { Login } from '../actions/login-page.actions';
 
-import { Authenticate, User } from '../models/user';
+import { Credentials, User } from '../models/user';
 
 describe('LoginPageReducer', () => {
   describe('undefined action', () => {
@@ -19,7 +19,7 @@ describe('LoginPageReducer', () => {
 
   describe('LOGIN', () => {
     it('should make pending to true', () => {
-      const user = { username: 'test' } as Authenticate;
+      const user = { username: 'test' } as Credentials;
       const createAction = new Login({ credentials: user });
 
       const expectedResult = {

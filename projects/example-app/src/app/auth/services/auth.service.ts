@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 
-import { Authenticate, User } from '../models/user';
+import { Credentials, User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { Authenticate, User } from '../models/user';
 export class AuthService {
   constructor() {}
 
-  login({ username, password }: Authenticate): Observable<User> {
+  login({ username, password }: Credentials): Observable<User> {
     /**
      * Simulate a failed login to display the error
      * message for the login form.

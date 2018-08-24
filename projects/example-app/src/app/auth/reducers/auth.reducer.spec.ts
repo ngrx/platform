@@ -1,9 +1,8 @@
 import { reducer } from './auth.reducer';
 import * as fromAuth from './auth.reducer';
 import { LoginSuccess, Logout } from '../actions/auth-api.actions';
-import * as loginPageActions from '../actions/login-page.actions';
 
-import { Authenticate, User } from '../models/user';
+import { User } from '../models/user';
 
 describe('AuthReducer', () => {
   describe('undefined action', () => {

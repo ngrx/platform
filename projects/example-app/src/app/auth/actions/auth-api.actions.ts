@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, Authenticate } from '../models/user';
+import { User, Credentials } from '../models/user';
 
 export enum AuthApiActionTypes {
   Logout = '[Auth/API] Logout',

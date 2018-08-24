@@ -56,10 +56,10 @@ describe('Login Page', () => {
   });
 
   it('should dispatch a login event on submit', () => {
-    const $event: any = {};
-    const action = new LoginPageActions.Login({ credentials: $event });
+    const credentials: any = {};
+    const action = new LoginPageActions.Login({ credentials });
 
-    instance.onSubmit($event);
+    instance.onSubmit(credentials);
 
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });

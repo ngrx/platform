@@ -12,7 +12,7 @@ import {
 } from '../actions/auth-api.actions';
 import * as loginPageActions from '../actions/login-page.actions';
 
-import { Authenticate, User } from '../models/user';
+import { Credentials, User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { AuthEffects } from './auth.effects';
 
@@ -48,7 +48,7 @@ describe('AuthEffects', () => {
 
   describe('login$', () => {
     it('should return an auth.LoginSuccess action, with user information if login succeeds', () => {
-      const credentials: Authenticate = { username: 'test', password: '' };
+      const credentials: Credentials = { username: 'test', password: '' };
       const user = { name: 'User' } as User;
       const action = new loginPageActions.Login({ credentials });
       const completion = new LoginSuccess({ user });
@@ -62,7 +62,7 @@ describe('AuthEffects', () => {
     });
 
     it('should return a new auth.LoginFailure if the login service throws', () => {
-      const credentials: Authenticate = { username: 'someOne', password: '' };
+      const credentials: Credentials = { username: 'someOne', password: '' };
       const action = new loginPageActions.Login({ credentials });
       const completion = new LoginFailure({
         error: 'Invalid username or password',
