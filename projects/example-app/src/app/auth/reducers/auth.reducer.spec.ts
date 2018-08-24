@@ -23,21 +23,6 @@ describe('AuthReducer', () => {
     });
   });
 
-  /*
-  describe('wrong login payload', () => {
-    it('should NOT authenticate a user', () => {
-      const user = { username: 'someUserName' } as Authenticate;
-      const createAction = new loginPageActions.Login({ credentials: user });
-
-      const expectedResult = fromAuth.initialState;
-
-      const result = reducer(fromAuth.initialState, createAction);
-
-      expect(result).toMatchSnapshot();
-    });
-  });
-  */
-
   describe('LOGIN_SUCCESS', () => {
     it('should add a user set loggedIn to true in auth state', () => {
       const user = { name: 'test' } as User;
