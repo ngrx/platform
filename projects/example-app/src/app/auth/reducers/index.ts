@@ -30,10 +30,7 @@ export const selectAuthStatusState = createSelector(
   (state: AuthState) => state.status
 );
 export const getUser = createSelector(selectAuthStatusState, fromAuth.getUser);
-export const getLoggedIn = createSelector(
-  getUser,
-  (user: User | null) => !!user
-);
+export const getLoggedIn = createSelector(getUser, user => !!user);
 
 export const selectLoginPageState = createSelector(
   selectAuthState,
