@@ -35,97 +35,29 @@ Error / Cancel case (with late [Navigation Action Timing](./api.md#navigation-ac
 - `ROUTER_REQUEST`
 - `ROUTER_CANCEL` / `ROUTER_ERROR`
 
-#### ROUTER_REQUEST
+##### ROUTER_REQUEST
 
-At the start of each navigation, the router will dispatch a `ROUTER_REQUEST` action, which has the following signature:
+At the start of each navigation, the router will dispatch a `ROUTER_REQUEST` action.
 
-```ts
-export type RouterRequestPayload = {
-  event: NavigationStart;
-};
+##### ROUTER_NAVIGATION
 
-export type RouterRequestAction = {
-  type: typeof ROUTER_REQUEST;
-  payload: RouterRequestPayload;
-};
-```
-
-#### ROUTER_NAVIGATION
-
-During navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the following signature:
-
-```ts
-export type RouterNavigationPayload<T extends BaseRouterStoreState> = {
-  routerState: T;
-  event: RoutesRecognized;
-};
-
-export type RouterNavigationAction<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
-> = {
-  type: typeof ROUTER_NAVIGATION;
-  payload: RouterNavigationPayload<T>;
-};
-```
+During navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action.
 
 If you want the `ROUTER_NAVIGATION` to be dispatched after guards or resolvers run, change the [Navigation Action Timing](./api.md#navigation-action-timing).
 
-#### ROUTER_NAVIGATED
+##### ROUTER_NAVIGATED
 
-After a successful navigation, the router will dispatch a `ROUTER_NAVIGATED` action, which has the following signature:
+After a successful navigation, the router will dispatch a `ROUTER_NAVIGATED` action.
 
-```ts
-export type RouterNavigatedPayload = {
-  event: NavigationEnd;
-};
+##### ROUTER_CANCEL
 
-export type RouterNavigatedAction = {
-  type: typeof ROUTER_NAVIGATED;
-  payload: RouterNavigatedPayload;
-};
-```
-
-#### ROUTER_CANCEL
-
-When the navigation is cancelled, for example due to a guard saying that the user cannot access the requested page, the router will dispatch a `ROUTER_CANCEL` action, which has the following signature:
-
-```ts
-export type RouterCancelPayload<T, V extends BaseRouterStoreState> = {
-  routerState: V;
-  storeState: T;
-  event: NavigationCancel;
-};
-
-export type RouterCancelAction<
-  T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
-> = {
-  type: typeof ROUTER_CANCEL;
-  payload: RouterCancelPayload<T, V>;
-};
-```
+When the navigation is cancelled, for example due to a guard saying that the user cannot access the requested page, the router will dispatch a `ROUTER_CANCEL` action. 
 
 The action contains the store state before the navigation. You can use it to restore the consistency of the store.
 
-#### ROUTER_ERROR
+##### ROUTER_ERROR
 
-When there is an error during navigation, the router will dispatch a `ROUTER_ERROR` action, which has the following signature:
-
-```ts
-export type RouterErrorPayload<T, V extends BaseRouterStoreState> = {
-  routerState: V;
-  storeState: T;
-  event: NavigationError;
-};
-
-export type RouterErrorAction<
-  T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
-> = {
-  type: typeof ROUTER_ERROR;
-  payload: RouterErrorPayload<T, V>;
-};
-```
+When there is an error during navigation, the router will dispatch a `ROUTER_ERROR` action.
 
 The action contains the store state before the navigation. You can use it to restore the consistency of the store.
 
