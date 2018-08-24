@@ -19,7 +19,6 @@ var_3: &set_bazel_options
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
 
 jobs:
-
   # Enforce some static analysis invariants.
   # Note that generally, these should be checked only on the delta in each change,
   # otherwise any change to the static analysis config requires updating all the
@@ -35,8 +34,9 @@ jobs:
       # Note that this uses the version of buildifier from the docker image -
       # take care that you use the same version when you run
       # buildifier locally on your change.
-      - run: 'buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
-              (echo "BUILD files not formatted. Please run ''yarn buildifier''" ; exit 1)'
+      - run:
+          'buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
+          (echo "BUILD files not formatted. Please run ''yarn buildifier''" ; exit 1)'
 
   bazel:
     <<: *run_in_ngcontainer
@@ -70,6 +70,7 @@ jobs:
           key: *cache_key
       - run: yarn
       - run: yarn copy:schematics
+      - run: yarn build:stackblitz
       - run: git diff --name-only --exit-code ./modules stackblitz.html
       - run: yarn run ci
       - run: yarn run example:build:prod
@@ -84,7 +85,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout
       - restore_cache:
           key: *cache_key
