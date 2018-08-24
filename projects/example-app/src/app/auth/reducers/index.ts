@@ -7,7 +7,6 @@ import * as fromRoot from '../../reducers';
 import * as fromAuth from './auth.reducer';
 import * as fromLoginPage from './login-page.reducer';
 import { AuthActionsUnion } from '../actions/auth.actions';
-import { User } from '../models/user';
 
 export interface AuthState {
   status: fromAuth.State;
