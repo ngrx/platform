@@ -7,6 +7,7 @@ import * as fromRoot from '../../reducers';
 import * as fromAuth from './auth.reducer';
 import * as fromLoginPage from './login-page.reducer';
 import { AuthActionsUnion } from '../actions/auth.actions';
+import { User } from '../models/user';
 
 export interface AuthState {
   status: fromAuth.State;
@@ -28,11 +29,11 @@ export const selectAuthStatusState = createSelector(
   selectAuthState,
   (state: AuthState) => state.status
 );
-export const getLoggedIn = createSelector(
-  selectAuthStatusState,
-  fromAuth.getLoggedIn
-);
 export const getUser = createSelector(selectAuthStatusState, fromAuth.getUser);
+export const getLoggedIn = createSelector(
+  getUser,
+  (user: User | null) => !!user
+);
 
 export const selectLoginPageState = createSelector(
   selectAuthState,
