@@ -16,6 +16,25 @@ Install @ngrx/router-store from npm:
 
 @ngrx/router-store provides four navigation actions which are dispatched in a specific order. Effects can listen to these actions. The `routerReducer` provided by @ngrx/router-store updates its state with the latest router state given by the actions.
 
+#### Order of actions
+
+Success case:
+
+- `ROUTER_REQUEST`
+- `ROUTER_NAVIGATION`
+- `ROUTER_NAVIGATED`
+
+Error / Cancel case (with early [Navigation Action Timing](./api.md#navigation-action-timing)):
+
+- `ROUTER_REQUEST`
+- `ROUTER_NAVIGATION`
+- `ROUTER_CANCEL` / `ROUTER_ERROR`
+
+Error / Cancel case (with late [Navigation Action Timing](./api.md#navigation-action-timing))
+
+- `ROUTER_REQUEST`
+- `ROUTER_CANCEL` / `ROUTER_ERROR`
+
 #### ROUTER_REQUEST
 
 At the start of each navigation, the router will dispatch a `ROUTER_REQUEST` action, which has the following signature:
@@ -110,25 +129,6 @@ export type RouterErrorAction<
 
 The action contains the store state before the navigation. You can use it to restore the consistency of the store.
 
-#### Order of actions
-
-Success case:
-
-- `ROUTER_REQUEST`
-- `ROUTER_NAVIGATION`
-- `ROUTER_NAVIGATED`
-
-Error / Cancel case (with early navigation timing):
-
-- `ROUTER_REQUEST`
-- `ROUTER_NAVIGATION`
-- `ROUTER_CANCEL` / `ROUTER_ERROR`
-
-Error / Cancel case (with late navigation timing)
-
-- `ROUTER_REQUEST`
-- `ROUTER_CANCEL` / `ROUTER_ERROR`
-
 ## Setup
 
 ```ts
@@ -155,7 +155,5 @@ export class AppModule {}
 ## API Documentation
 
 - [Configuration Options](./api.md#configuration-options)
-- [Navigation actions](./api.md#navigation-actions)
-- [Effects](./api.md#effects)
 - [Custom Router State Serializer](./api.md#custom-router-state-serializer)
 - [Navigation Action Timing](./api.md#navigation-action-timing)
