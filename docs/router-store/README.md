@@ -14,7 +14,7 @@ Install @ngrx/router-store from npm:
 
 ## Usage
 
-@ngrx/router-store provides four navigation actions which are dispatched in a specific order. Effects can listen to these actions. The `routerReducer` provided by @ngrx/router-store updates its state with the latest router state given by the actions.
+@ngrx/router-store provides five navigation actions which are dispatched in a specific order. The `routerReducer` provided by @ngrx/router-store updates its state with the latest router state given by the actions.
 
 #### Order of actions
 
