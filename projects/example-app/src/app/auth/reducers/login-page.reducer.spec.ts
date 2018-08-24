@@ -1,10 +1,9 @@
 import { reducer } from './login-page.reducer';
 import * as fromLoginPage from './login-page.reducer';
-import {
-  Login,
-  LoginSuccess,
-  LoginFailure,
-} from '../actions/login-page.actions';
+
+import * as authApiActions from '../actions/auth-api.actions';
+import { Login } from '../actions/login-page.actions';
+
 import { Authenticate, User } from '../models/user';
 
 describe('LoginPageReducer', () => {
@@ -37,7 +36,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_SUCCESS', () => {
     it('should have no error and no pending state', () => {
       const user = { name: 'test' } as User;
-      const createAction = new LoginSuccess({ user });
+      const createAction = new authApiActions.LoginSuccess({ user });
 
       const expectedResult = {
         error: null,
@@ -53,7 +52,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_FAILURE', () => {
     it('should have an error and no pending state', () => {
       const error = 'login failed';
-      const createAction = new LoginFailure({ error });
+      const createAction = new authApiActions.LoginFailure({ error });
 
       const expectedResult = {
         error: error,

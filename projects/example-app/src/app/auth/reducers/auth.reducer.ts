@@ -1,4 +1,7 @@
-import { AuthActionsUnion, AuthActionTypes } from './../actions/auth.actions';
+import {
+  AuthApiActionsUnion,
+  AuthApiActionTypes,
+} from '../actions/auth-api.actions';
 import { User } from '../models/user';
 
 export interface State {
@@ -11,9 +14,12 @@ export const initialState: State = {
   user: null,
 };
 
-export function reducer(state = initialState, action: AuthActionsUnion): State {
+export function reducer(
+  state = initialState,
+  action: AuthApiActionsUnion
+): State {
   switch (action.type) {
-    case AuthActionTypes.LoginSuccess: {
+    case AuthApiActionTypes.LoginSuccess: {
       return {
         ...state,
         loggedIn: true,
@@ -21,7 +27,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
       };
     }
 
-    case AuthActionTypes.Logout: {
+    case AuthApiActionTypes.Logout: {
       return initialState;
     }
 

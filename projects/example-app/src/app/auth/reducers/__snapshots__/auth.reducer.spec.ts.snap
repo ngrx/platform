@@ -22,10 +22,3 @@ Object {
   "user": null,
 }
 `;
-
-exports[`AuthReducer wrong login payload should NOT authenticate a user 1`] = `
-Object {
-  "loggedIn": false,
-  "user": null,
-}
-`;
