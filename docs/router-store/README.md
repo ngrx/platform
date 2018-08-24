@@ -14,31 +14,120 @@ Install @ngrx/router-store from npm:
 
 ## Usage
 
-During the navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the signature `RouterNavigationAction<T>`:
+@ngrx/router-store provides four navigation actions which are dispatched in a specific order. Effects can listen to these actions. The `routerReducer` provided by @ngrx/router-store updates its state with the latest router state given by the actions.
+
+#### ROUTER_REQUEST
+
+At the start of each navigation, the router will dispatch a `ROUTER_REQUEST` action, which has the following signature:
 
 ```ts
-/**
- * Payload of ROUTER_NAVIGATION.
- */
-export declare type RouterNavigationPayload<T> = {
+export type RouterRequestPayload = {
+  event: NavigationStart;
+};
+
+export type RouterRequestAction = {
+  type: typeof ROUTER_REQUEST;
+  payload: RouterRequestPayload;
+};
+```
+
+#### ROUTER_NAVIGATION
+
+During navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the following signature:
+
+```ts
+export type RouterNavigationPayload<T extends BaseRouterStoreState> = {
   routerState: T;
   event: RoutesRecognized;
 };
 
-/**
- * An action dispatched when the router navigates.
- */
-export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
+export type RouterNavigationAction<
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
 };
 ```
 
-- Reducers receive this action, throwing an error in the reducer cancels navigation.
-- Effects can listen for this action.
-- The `ROUTER_CANCEL` action represents a guard canceling navigation.
-- A `ROUTER_ERROR` action represents a navigation error .
-- `ROUTER_CANCEL` and `ROUTER_ERROR` contain the store state before the navigation. Use the previous state to restore the consistency of the store.
+If you want the `ROUTER_NAVIGATION` to be dispatched after guards or resolvers run, change the [Navigation Action Timing](./api.md#navigation-action-timing).
+
+#### ROUTER_NAVIGATED
+
+After a successful navigation, the router will dispatch a `ROUTER_NAVIGATED` action, which has the following signature:
+
+```ts
+export type RouterNavigatedPayload = {
+  event: NavigationEnd;
+};
+
+export type RouterNavigatedAction = {
+  type: typeof ROUTER_NAVIGATED;
+  payload: RouterNavigatedPayload;
+};
+```
+
+#### ROUTER_CANCEL
+
+When the navigation is cancelled, for example due to a guard saying that the user cannot access the requested page, the router will dispatch a `ROUTER_CANCEL` action, which has the following signature:
+
+```ts
+export type RouterCancelPayload<T, V extends BaseRouterStoreState> = {
+  routerState: V;
+  storeState: T;
+  event: NavigationCancel;
+};
+
+export type RouterCancelAction<
+  T,
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
+  type: typeof ROUTER_CANCEL;
+  payload: RouterCancelPayload<T, V>;
+};
+```
+
+The action contains the store state before the navigation. You can use it to restore the consistency of the store.
+
+#### ROUTER_ERROR
+
+When there is an error during navigation, the router will dispatch a `ROUTER_ERROR` action, which has the following signature:
+
+```ts
+export type RouterErrorPayload<T, V extends BaseRouterStoreState> = {
+  routerState: V;
+  storeState: T;
+  event: NavigationError;
+};
+
+export type RouterErrorAction<
+  T,
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
+  type: typeof ROUTER_ERROR;
+  payload: RouterErrorPayload<T, V>;
+};
+```
+
+The action contains the store state before the navigation. You can use it to restore the consistency of the store.
+
+#### Order of actions
+
+Success case:
+
+- `ROUTER_REQUEST`
+- `ROUTER_NAVIGATION`
+- `ROUTER_NAVIGATED`
+
+Error / Cancel case (with early navigation timing):
+
+- `ROUTER_REQUEST`
+- `ROUTER_NAVIGATION`
+- `ROUTER_CANCEL` / `ROUTER_ERROR`
+
+Error / Cancel case (with late navigation timing)
+
+- `ROUTER_REQUEST`
+- `ROUTER_CANCEL` / `ROUTER_ERROR`
 
 ## Setup
 
@@ -69,3 +158,4 @@ export class AppModule {}
 - [Navigation actions](./api.md#navigation-actions)
 - [Effects](./api.md#effects)
 - [Custom Router State Serializer](./api.md#custom-router-state-serializer)
+- [Navigation Action Timing](./api.md#navigation-action-timing)

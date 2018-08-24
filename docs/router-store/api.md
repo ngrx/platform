@@ -8,10 +8,14 @@ To connect the Angular router module with the NgRx store module, import the stor
 ```ts
 interface StoreRouterConfig {
   stateKey?: string;
+  serializer?: new (...args: any[]) => RouterStateSerializer;
+  navigationActionTiming?: NavigationActionTiming;
 }
 ```
 
 - `stateKey`: The name of reducer key, defaults to `router`
+- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
+- `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
 
 ## Navigation actions
 
@@ -111,7 +115,9 @@ issues when used with the Store Devtools. In most cases, you may only need a pie
 
 Additionally, the router state snapshot is a mutable object, which can cause issues when developing with [store freeze](https://github.com/brandonroberts/ngrx-store-freeze) to prevent direct state mutations. This can be avoided by using a custom serializer.
 
-**NOTE**: To use the time-travelling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
+Your custom serializer should implement the abstract class `RouterStateSerializer` and return a snapshot having at least the properties of `BaseRouterStoreState`.
+
+You can provide the serializer through the config (recommended) or through a provider.
 
 ```ts
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
@@ -133,7 +139,9 @@ export interface State {
   router: RouterReducerState<RouterStateUrl>;
 }
 
+@Injectable()
 export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
+  constructor(/* If you need to, you can inject services, too */) {}
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     let route = routerState.root;
 
@@ -141,10 +149,7 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
       route = route.firstChild;
     }
 
-    const {
-      url,
-      root: { queryParams },
-    } = routerState;
+    const { url, root: { queryParams } } = routerState;
     const { params } = route;
 
     // Only return an object including the URL, params and query params
@@ -163,9 +168,21 @@ export const reducers: ActionReducerMap<State> = {
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({
+      serializer: RouterStateSerializer, // Recommended way
+    }),
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  // providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }], // Alternative way
 })
 export class AppModule {}
+```
+
+## Navigation action timing
+
+`ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the correspondig config:
+
+```ts
+StoreRouterConnectingModule.forRoot({
+  navigationActionTiming: NavigationActionTiming.PostActivation
+})
 ```
