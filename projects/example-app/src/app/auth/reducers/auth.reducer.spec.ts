@@ -27,7 +27,7 @@ describe('AuthReducer', () => {
   describe('wrong login payload', () => {
     it('should NOT authenticate a user', () => {
       const user = { username: 'someUserName' } as Authenticate;
-      const createAction = new loginPageActions.Login({ credentials:user});
+      const createAction = new loginPageActions.Login({ credentials: user });
 
       const expectedResult = fromAuth.initialState;
 
