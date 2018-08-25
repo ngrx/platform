@@ -18,7 +18,7 @@ export interface State extends fromRoot.State {
   books: BooksState;
 }
 
-export const reducers: ActionReducerMap<BooksState> = {
+export const reducers: ActionReducerMap<BooksState, any> = {
   search: fromSearch.reducer,
   books: fromBooks.reducer,
   collection: fromCollection.reducer,
@@ -156,6 +156,6 @@ export const isSelectedBookInCollection = createSelector(
   getCollectionBookIds,
   getSelectedBookId,
   (ids, selected) => {
-    return ids.indexOf(selected) > -1;
+    return selected && ids.indexOf(selected) > -1;
   }
 );

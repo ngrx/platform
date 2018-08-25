@@ -5,12 +5,10 @@ import {
 import { User } from '../models/user';
 
 export interface State {
-  loggedIn: boolean;
   user: User | null;
 }
 
 export const initialState: State = {
-  loggedIn: false,
   user: null,
 };
 
@@ -22,7 +20,6 @@ export function reducer(
     case AuthApiActionTypes.LoginSuccess: {
       return {
         ...state,
-        loggedIn: true,
         user: action.payload.user,
       };
     }
@@ -37,5 +34,4 @@ export function reducer(
   }
 }
 
-export const getLoggedIn = (state: State) => state.loggedIn;
 export const getUser = (state: State) => state.user;

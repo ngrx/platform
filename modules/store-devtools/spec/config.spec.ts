@@ -1,28 +1,101 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { StoreDevtoolsConfig } from '../';
+import {
+  createConfig,
+  StoreDevtoolsConfig,
+  noMonitor,
+  DEFAULT_NAME,
+} from '../src/config';
+
+const defaultFeatures = {
+  pause: true,
+  lock: true,
+  persist: true,
+  export: true,
+  import: 'custom',
+  jump: true,
+  skip: true,
+  reorder: true,
+  dispatch: true,
+  test: true,
+};
 
 describe('StoreDevtoolsOptions', () => {
-  it('can be initialized with name', () => {
-    const options = new StoreDevtoolsConfig();
-    options.name = 'my instance';
-    expect(options.name).toBe('my instance');
+  it('creates default options with empty object given', () => {
+    const config = createConfig({});
+    expect(config).toEqual({
+      maxAge: false,
+      monitor: noMonitor,
+      actionSanitizer: undefined,
+      stateSanitizer: undefined,
+      name: DEFAULT_NAME,
+      serialize: false,
+      logOnly: false,
+      features: defaultFeatures,
+    });
   });
 
-  it('can be initialized with actionSanitizer', () => {
-    const options = new StoreDevtoolsConfig();
-    function sanitizer(action: Action, id: number): Action {
-      return action;
-    }
-    options.actionSanitizer = sanitizer;
-    expect(options.actionSanitizer).toEqual(sanitizer);
-  });
-
-  it('can be initialized with stateSanitizer', () => {
-    const options = new StoreDevtoolsConfig();
+  it('creates options that contain passed in options', () => {
     function stateSanitizer(state: any, index: number): any {
       return state;
     }
-    options.stateSanitizer = stateSanitizer;
-    expect(options.stateSanitizer).toEqual(stateSanitizer);
+    function actionSanitizer(action: Action, id: number): Action {
+      return action;
+    }
+    const config = createConfig({
+      maxAge: 20,
+      actionSanitizer,
+      stateSanitizer,
+      name: 'ABC',
+      serialize: true,
+      features: {
+        test: true,
+      },
+    });
+    expect(config).toEqual({
+      maxAge: 20,
+      monitor: noMonitor,
+      actionSanitizer,
+      stateSanitizer,
+      name: 'ABC',
+      serialize: true,
+      logOnly: false,
+      features: {
+        test: true,
+      },
+    });
+  });
+
+  it('can be initialized with a function returning options', () => {
+    const config = createConfig(() => ({ maxAge: 15 }));
+    expect(config).toEqual({
+      maxAge: 15,
+      monitor: noMonitor,
+      actionSanitizer: undefined,
+      stateSanitizer: undefined,
+      name: DEFAULT_NAME,
+      serialize: false,
+      logOnly: false,
+      features: defaultFeatures,
+    });
+  });
+
+  it('logOnly will set features', () => {
+    const config = createConfig({
+      logOnly: true,
+    });
+    expect(config).toEqual({
+      maxAge: false,
+      monitor: noMonitor,
+      actionSanitizer: undefined,
+      stateSanitizer: undefined,
+      name: DEFAULT_NAME,
+      serialize: false,
+      logOnly: true,
+      features: {
+        pause: true,
+        export: true,
+        test: true,
+      },
+    });
   });
 });
