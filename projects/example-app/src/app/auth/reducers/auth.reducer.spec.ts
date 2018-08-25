@@ -40,7 +40,6 @@ describe('AuthReducer', () => {
       const createAction = new LoginSuccess({ user });
 
       const expectedResult = {
-        loggedIn: true,
         user: { name: 'test' },
       };
 
@@ -53,7 +52,6 @@ describe('AuthReducer', () => {
   describe('LOGOUT', () => {
     it('should logout a user', () => {
       const initialState = {
-        loggedIn: true,
         user: { name: 'test' },
       } as fromAuth.State;
       const createAction = new Logout();

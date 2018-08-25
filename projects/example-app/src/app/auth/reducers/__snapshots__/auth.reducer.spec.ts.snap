@@ -2,7 +2,6 @@
 
 exports[`AuthReducer LOGIN_SUCCESS should add a user set loggedIn to true in auth state 1`] = `
 Object {
-  "loggedIn": true,
   "user": Object {
     "name": "test",
   },
@@ -11,21 +10,18 @@ Object {
 
 exports[`AuthReducer LOGOUT should logout a user 1`] = `
 Object {
-  "loggedIn": false,
   "user": null,
 }
 `;
 
 exports[`AuthReducer undefined action should return the default state 1`] = `
 Object {
-  "loggedIn": false,
   "user": null,
 }
 `;
 
 exports[`AuthReducer wrong login payload should NOT authenticate a user 1`] = `
 Object {
-  "loggedIn": false,
   "user": null,
 }
 `;
