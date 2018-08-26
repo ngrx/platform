@@ -8,15 +8,18 @@ import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 import { Book } from '../models/book';
 import {
   AddBook,
-  AddBookFail,
-  AddBookSuccess,
-  CollectionActionTypes,
-  LoadFail,
-  LoadSuccess,
   RemoveBook,
-  RemoveBookFail,
+  SelectedBookPageActionTypes,
+} from '../actions/selected-book-page.actions';
+import { CollectionPageActionTypes } from './../actions/collection-page.actions';
+import {
+  AddBookFailure,
+  AddBookSuccess,
+  LoadBooksFailure,
+  LoadBooksSuccess,
+  RemoveBookFailure,
   RemoveBookSuccess,
-} from './../actions/collection.actions';
+} from './../actions/collection-api.actions';
 
 @Injectable()
 export class CollectionEffects {
@@ -37,36 +40,36 @@ export class CollectionEffects {
 
   @Effect()
   loadCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(CollectionActionTypes.Load),
+    ofType(CollectionPageActionTypes.LoadCollection),
     switchMap(() =>
       this.db.query('books').pipe(
         toArray(),
-        map((books: Book[]) => new LoadSuccess(books)),
-        catchError(error => of(new LoadFail(error)))
+        map((books: Book[]) => new LoadBooksSuccess(books)),
+        catchError(error => of(new LoadBooksFailure(error)))
       )
     )
   );
 
   @Effect()
   addBookToCollection$: Observable<Action> = this.actions$.pipe(
-    ofType<AddBook>(CollectionActionTypes.AddBook),
+    ofType<AddBook>(SelectedBookPageActionTypes.AddBook),
     map(action => action.payload),
     mergeMap(book =>
       this.db.insert('books', [book]).pipe(
         map(() => new AddBookSuccess(book)),
-        catchError(() => of(new AddBookFail(book)))
+        catchError(() => of(new AddBookFailure(book)))
       )
     )
   );
 
   @Effect()
   removeBookFromCollection$: Observable<Action> = this.actions$.pipe(
-    ofType<RemoveBook>(CollectionActionTypes.RemoveBook),
+    ofType<RemoveBook>(SelectedBookPageActionTypes.RemoveBook),
     map(action => action.payload),
     mergeMap(book =>
       this.db.executeWrite('books', 'delete', [book.id]).pipe(
         map(() => new RemoveBookSuccess(book)),
-        catchError(() => of(new RemoveBookFail(book)))
+        catchError(() => of(new RemoveBookFailure(book)))
       )
     )
   );

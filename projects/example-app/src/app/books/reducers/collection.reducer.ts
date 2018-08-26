@@ -1,7 +1,12 @@
+import { SelectedBookPageActionsUnion } from '../actions/selected-book-page.actions';
 import {
-  CollectionActionTypes,
-  CollectionActionsUnion,
-} from './../actions/collection.actions';
+  CollectionPageActionTypes,
+  CollectionPageActionsUnion,
+} from './../actions/collection-page.actions';
+import {
+  CollectionApiActionTypes,
+  CollectionApiActionsUnion,
+} from './../actions/collection-api.actions';
 
 export interface State {
   loaded: boolean;
@@ -17,17 +22,20 @@ const initialState: State = {
 
 export function reducer(
   state = initialState,
-  action: CollectionActionsUnion
+  action:
+    | SelectedBookPageActionsUnion
+    | CollectionPageActionsUnion
+    | CollectionApiActionsUnion
 ): State {
   switch (action.type) {
-    case CollectionActionTypes.Load: {
+    case CollectionPageActionTypes.LoadCollection: {
       return {
         ...state,
         loading: true,
       };
     }
 
-    case CollectionActionTypes.LoadSuccess: {
+    case CollectionApiActionTypes.LoadBooksSuccess: {
       return {
         loaded: true,
         loading: false,
@@ -35,8 +43,8 @@ export function reducer(
       };
     }
 
-    case CollectionActionTypes.AddBookSuccess:
-    case CollectionActionTypes.RemoveBookFail: {
+    case CollectionApiActionTypes.AddBookSuccess:
+    case CollectionApiActionTypes.RemoveBookFailure: {
       if (state.ids.indexOf(action.payload.id) > -1) {
         return state;
       }
@@ -47,8 +55,8 @@ export function reducer(
       };
     }
 
-    case CollectionActionTypes.RemoveBookSuccess:
-    case CollectionActionTypes.AddBookFail: {
+    case CollectionApiActionTypes.RemoveBookSuccess:
+    case CollectionApiActionTypes.AddBookFailure: {
       return {
         ...state,
         ids: state.ids.filter(id => id !== action.payload.id),

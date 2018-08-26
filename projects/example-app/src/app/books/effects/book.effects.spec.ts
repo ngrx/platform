@@ -5,7 +5,8 @@ import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
 import { GoogleBooksService } from '../../core/services/google-books.service';
-import { Search, SearchComplete, SearchError } from '../actions/book.actions';
+import { SearchSuccess, SearchFailure } from '../actions/books-api.actions';
+import { SearchBooks } from '../actions/find-book-page.actions';
 import { Book } from '../models/book';
 import { BookEffects } from './book.effects';
 
@@ -36,8 +37,8 @@ describe('BookEffects', () => {
       const book1 = { id: '111', volumeInfo: {} } as Book;
       const book2 = { id: '222', volumeInfo: {} } as Book;
       const books = [book1, book2];
-      const action = new Search('query');
-      const completion = new SearchComplete(books);
+      const action = new SearchBooks('query');
+      const completion = new SearchSuccess(books);
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
@@ -53,8 +54,10 @@ describe('BookEffects', () => {
     });
 
     it('should return a new book.SearchError if the books service throws', () => {
-      const action = new Search('query');
-      const completion = new SearchError('Unexpected Error. Try again later.');
+      const action = new SearchBooks('query');
+      const completion = new SearchFailure(
+        'Unexpected Error. Try again later.'
+      );
       const error = 'Unexpected Error. Try again later.';
 
       actions$ = hot('-a---', { a: action });
@@ -71,7 +74,7 @@ describe('BookEffects', () => {
     });
 
     it(`should not do anything if the query is an empty string`, () => {
-      const action = new Search('');
+      const action = new SearchBooks('');
 
       actions$ = hot('-a---', { a: action });
       const expected = cold('---');
