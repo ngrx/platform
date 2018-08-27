@@ -5,7 +5,9 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
-import * as CollectionActions from '../actions/collection.actions';
+import * as CollectionApiActions from '../actions/collection-api.actions';
+import * as SelectedBookPageActions from '../actions/selected-book-page.actions';
+import * as CollectionPageActions from '../actions/collection-page.actions';
 import { Book } from '../models/book';
 import { CollectionEffects } from './collection.effects';
 
@@ -48,8 +50,11 @@ describe('CollectionEffects', () => {
 
   describe('loadCollection$', () => {
     it('should return a collection.LoadSuccess, with the books, on success', () => {
-      const action = new CollectionActions.Load();
-      const completion = new CollectionActions.LoadSuccess([book1, book2]);
+      const action = new CollectionPageActions.LoadCollection();
+      const completion = new CollectionApiActions.LoadBooksSuccess([
+        book1,
+        book2,
+      ]);
 
       actions$ = hot('-a', { a: action });
       const response = cold('-a-b|', { a: book1, b: book2 });
@@ -60,9 +65,9 @@ describe('CollectionEffects', () => {
     });
 
     it('should return a collection.LoadFail, if the query throws', () => {
-      const action = new CollectionActions.Load();
+      const action = new CollectionPageActions.LoadCollection();
       const error = 'Error!';
-      const completion = new CollectionActions.LoadFail(error);
+      const completion = new CollectionApiActions.LoadBooksFailure(error);
 
       actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
@@ -75,8 +80,8 @@ describe('CollectionEffects', () => {
 
   describe('addBookToCollection$', () => {
     it('should return a collection.AddBookSuccess, with the book, on success', () => {
-      const action = new CollectionActions.AddBook(book1);
-      const completion = new CollectionActions.AddBookSuccess(book1);
+      const action = new SelectedBookPageActions.AddBook(book1);
+      const completion = new CollectionApiActions.AddBookSuccess(book1);
 
       actions$ = hot('-a', { a: action });
       const response = cold('-b', { b: true });
@@ -88,8 +93,8 @@ describe('CollectionEffects', () => {
     });
 
     it('should return a collection.AddBookFail, with the book, when the db insert throws', () => {
-      const action = new CollectionActions.AddBook(book1);
-      const completion = new CollectionActions.AddBookFail(book1);
+      const action = new SelectedBookPageActions.AddBook(book1);
+      const completion = new CollectionApiActions.AddBookFailure(book1);
       const error = 'Error!';
 
       actions$ = hot('-a', { a: action });
@@ -102,8 +107,8 @@ describe('CollectionEffects', () => {
 
     describe('removeBookFromCollection$', () => {
       it('should return a collection.RemoveBookSuccess, with the book, on success', () => {
-        const action = new CollectionActions.RemoveBook(book1);
-        const completion = new CollectionActions.RemoveBookSuccess(book1);
+        const action = new SelectedBookPageActions.RemoveBook(book1);
+        const completion = new CollectionApiActions.RemoveBookSuccess(book1);
 
         actions$ = hot('-a', { a: action });
         const response = cold('-b', { b: true });
@@ -117,8 +122,8 @@ describe('CollectionEffects', () => {
       });
 
       it('should return a collection.RemoveBookFail, with the book, when the db insert throws', () => {
-        const action = new CollectionActions.RemoveBook(book1);
-        const completion = new CollectionActions.RemoveBookFail(book1);
+        const action = new SelectedBookPageActions.RemoveBook(book1);
+        const completion = new CollectionApiActions.RemoveBookFailure(book1);
         const error = 'Error!';
 
         actions$ = hot('-a', { a: action });

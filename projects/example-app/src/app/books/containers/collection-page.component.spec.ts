@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule, MatInputModule } from '@angular/material';
 import { BookPreviewListComponent } from '../components/book-preview-list.component';
 import { BookPreviewComponent } from '../components/book-preview.component';
-import * as CollectionActions from '../actions/collection.actions';
+import * as CollectionActions from '../actions/collection-page.actions';
 import * as fromBooks from '../reducers';
 import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
 import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
@@ -52,7 +52,7 @@ describe('Collection Page', () => {
   });
 
   it('should dispatch a collection.Load on init', () => {
-    const action = new CollectionActions.Load();
+    const action = new CollectionActions.LoadCollection();
 
     fixture.detectChanges();
 
