@@ -1,6 +1,12 @@
-import { Component, Provider, Injectable } from '@angular/core';
+import { Component, Provider, Injectable, ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterStateSnapshot,
+  NavigationCancel,
+  NavigationError,
+} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule, ScannedActionsSubject } from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
@@ -19,6 +25,7 @@ import {
   ROUTER_REQUEST,
   ROUTER_NAVIGATED,
   NavigationActionTiming,
+  RouterReducerState,
 } from '../src/router_store_module';
 
 describe('integration spec', () => {
@@ -119,7 +126,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support rolling back if navigation gets canceled', (done: any) => {
+  it('should support rolling back if navigation gets canceled (navigation initialized through router)', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
@@ -176,9 +183,9 @@ describe('integration spec', () => {
           {
             type: 'store',
             state: {
-              url: '/next',
+              url: '/',
               lastAction: ROUTER_CANCEL,
-              storeState: { url: '/next', lastAction: ROUTER_NAVIGATION },
+              storeState: { url: '/', lastAction: ROUTER_NAVIGATION },
             },
           },
           { type: 'action', action: ROUTER_CANCEL },
@@ -189,7 +196,67 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support rolling back if navigation errors', (done: any) => {
+  it('should support rolling back if navigation gets canceled (navigation initialized through store)', (done: any) => {
+    const CHANGE_ROUTE = 'CHANGE_ROUTE';
+    const reducer = (
+      state: RouterReducerState,
+      action: any
+    ): RouterReducerState => {
+      if (action.type === CHANGE_ROUTE) {
+        return {
+          state: { url: '/next', root: <any>{} },
+          navigationId: 123,
+        };
+      } else {
+        const nextState = routerReducer(state, action);
+        if (nextState && nextState.state) {
+          nextState.state.root = <any>{};
+        }
+        return nextState;
+      }
+    };
+
+    createTestModule({
+      reducers: { reducer },
+      canActivate: () => false,
+      config: { stateKey: 'reducer' },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const store: Store<any> = TestBed.get(Store);
+    const log = logOfRouterAndActionsAndStore();
+
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        log.splice(0);
+        store.dispatch({ type: CHANGE_ROUTE });
+        return waitForNavigation(router, NavigationCancel);
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          {
+            type: 'store',
+            state: { state: { url: '/next', root: {} }, navigationId: 123 },
+          },
+          { type: 'action', action: CHANGE_ROUTE },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          {
+            type: 'store',
+            state: { state: { url: '/', root: {} }, navigationId: 2 },
+          },
+          { type: 'action', action: ROUTER_CANCEL },
+          { type: 'router', event: 'NavigationCancel', url: '/next' },
+        ]);
+
+        done();
+      });
+  });
+
+  it('should support rolling back if navigation errors (navigation initialized through router)', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
@@ -246,10 +313,79 @@ describe('integration spec', () => {
           {
             type: 'store',
             state: {
-              url: '/next',
+              url: '/',
               lastAction: ROUTER_ERROR,
-              storeState: { url: '/next', lastAction: ROUTER_NAVIGATION },
+              storeState: { url: '/', lastAction: ROUTER_NAVIGATION },
             },
+          },
+          { type: 'action', action: ROUTER_ERROR },
+          { type: 'router', event: 'NavigationError', url: '/next' },
+        ]);
+
+        done();
+      });
+  });
+
+  it('should support rolling back if navigation errors and hand error to error handler (navigation initialized through store)', (done: any) => {
+    const CHANGE_ROUTE = 'CHANGE_ROUTE';
+    const reducer = (
+      state: RouterReducerState,
+      action: any
+    ): RouterReducerState => {
+      if (action.type === CHANGE_ROUTE) {
+        return {
+          state: { url: '/next', root: <any>{} },
+          navigationId: 123,
+        };
+      } else {
+        const nextState = routerReducer(state, action);
+        if (nextState && nextState.state) {
+          nextState.state.root = <any>{};
+        }
+        return nextState;
+      }
+    };
+
+    const routerError = new Error('BOOM!');
+    class SilentErrorHandler implements ErrorHandler {
+      handleError(error: any) {
+        expect(error).toBe(routerError);
+      }
+    }
+
+    createTestModule({
+      reducers: { reducer },
+      canActivate: () => {
+        throw routerError;
+      },
+      providers: [{ provide: ErrorHandler, useClass: SilentErrorHandler }],
+      config: { stateKey: 'reducer' },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const store: Store<any> = TestBed.get(Store);
+    const log = logOfRouterAndActionsAndStore();
+
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        log.splice(0);
+        store.dispatch({ type: CHANGE_ROUTE });
+        return waitForNavigation(router, NavigationError);
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          {
+            type: 'store',
+            state: { state: { url: '/next', root: {} }, navigationId: 123 },
+          },
+          { type: 'action', action: CHANGE_ROUTE },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          {
+            type: 'store',
+            state: { state: { url: '/', root: {} }, navigationId: 2 },
           },
           { type: 'action', action: ROUTER_ERROR },
           { type: 'router', event: 'NavigationError', url: '/next' },
@@ -385,7 +521,7 @@ describe('integration spec', () => {
         { type: 'store', state: null }, // ROUTER_REQEST event in the store
         { type: 'action', action: ROUTER_REQUEST },
         { type: 'router', event: 'NavigationStart', url: '/load' },
-        { type: 'store', state: null },
+        { type: 'store', state: { url: '', navigationId: 1 } },
         { type: 'action', action: ROUTER_CANCEL },
         { type: 'router', event: 'NavigationCancel', url: '/load' },
       ]);
@@ -744,12 +880,9 @@ function createTestModule(
   TestBed.createComponent(AppCmp);
 }
 
-function waitForNavigation(router: Router) {
+function waitForNavigation(router: Router, event: any = NavigationEnd) {
   return router.events
-    .pipe(
-      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-      first()
-    )
+    .pipe(filter(e => e instanceof event), first())
     .toPromise();
 }
 

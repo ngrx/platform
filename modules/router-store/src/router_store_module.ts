@@ -3,6 +3,7 @@ import {
   InjectionToken,
   ModuleWithProviders,
   NgModule,
+  ErrorHandler,
 } from '@angular/core';
 import {
   NavigationCancel,
@@ -20,6 +21,7 @@ import {
   SerializedRouterStateSnapshot,
   BaseRouterStoreState,
 } from './serializer';
+import { withLatestFrom } from 'rxjs/operators';
 
 /**
  * An action dispatched when a router navigation request is fired.
@@ -291,7 +293,7 @@ export class StoreRouterConnectingModule {
     };
   }
 
-  private routerState: SerializedRouterStateSnapshot;
+  private routerState: SerializedRouterStateSnapshot | null;
   private storeState: any;
   private trigger = RouterTrigger.NONE;
 
@@ -301,6 +303,7 @@ export class StoreRouterConnectingModule {
     private store: Store<any>,
     private router: Router,
     private serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
+    private errorHandler: ErrorHandler,
     @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
     this.stateKey = this.config.stateKey as string;
@@ -310,29 +313,31 @@ export class StoreRouterConnectingModule {
   }
 
   private setUpStoreStateListener(): void {
-    this.store.subscribe(state => {
-      this.storeState = state;
-    });
-    this.store.pipe(select(this.stateKey)).subscribe(() => {
-      this.navigateIfNeeded();
-    });
+    this.store
+      .pipe(select(this.stateKey), withLatestFrom(this.store))
+      .subscribe(([routerStoreState, storeState]) => {
+        this.navigateIfNeeded(routerStoreState, storeState);
+      });
   }
 
-  private navigateIfNeeded(): void {
-    if (
-      !this.storeState[this.stateKey] ||
-      !this.storeState[this.stateKey].state
-    ) {
+  private navigateIfNeeded(
+    routerStoreState: RouterReducerState,
+    storeState: any
+  ): void {
+    if (!routerStoreState || !routerStoreState.state) {
       return;
     }
     if (this.trigger === RouterTrigger.ROUTER) {
       return;
     }
 
-    const url = this.storeState[this.stateKey].state.url;
+    const url = routerStoreState.state.url;
     if (this.router.url !== url) {
+      this.storeState = storeState;
       this.trigger = RouterTrigger.STORE;
-      this.router.navigateByUrl(url);
+      this.router.navigateByUrl(url).catch(error => {
+        this.errorHandler.handleError(error);
+      });
     }
   }
 
@@ -342,32 +347,39 @@ export class StoreRouterConnectingModule {
       NavigationActionTiming.PostActivation;
     let routesRecognized: RoutesRecognized;
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        if (this.trigger !== RouterTrigger.STORE) {
-          this.dispatchRouterRequest(event);
-        }
-      } else if (event instanceof RoutesRecognized) {
-        routesRecognized = event;
-        this.routerState = this.serializer.serialize(event.state);
-
-        if (!dispatchNavLate && this.trigger !== RouterTrigger.STORE) {
-          this.dispatchRouterNavigation(event);
-        }
-      } else if (event instanceof NavigationCancel) {
-        this.dispatchRouterCancel(event);
-      } else if (event instanceof NavigationError) {
-        this.dispatchRouterError(event);
-      } else if (event instanceof NavigationEnd) {
-        if (this.trigger !== RouterTrigger.STORE) {
-          if (dispatchNavLate) {
-            this.dispatchRouterNavigation(routesRecognized);
+    this.router.events
+      .pipe(withLatestFrom(this.store))
+      .subscribe(([event, storeState]) => {
+        if (event instanceof NavigationStart) {
+          this.routerState = this.serializer.serialize(
+            this.router.routerState.snapshot
+          );
+          if (this.trigger !== RouterTrigger.STORE) {
+            this.storeState = storeState;
+            this.dispatchRouterRequest(event);
           }
-          this.dispatchRouterNavigated(event);
+        } else if (event instanceof RoutesRecognized) {
+          routesRecognized = event;
+
+          if (!dispatchNavLate && this.trigger !== RouterTrigger.STORE) {
+            this.dispatchRouterNavigation(event);
+          }
+        } else if (event instanceof NavigationCancel) {
+          this.dispatchRouterCancel(event);
+          this.reset();
+        } else if (event instanceof NavigationError) {
+          this.dispatchRouterError(event);
+          this.reset();
+        } else if (event instanceof NavigationEnd) {
+          if (this.trigger !== RouterTrigger.STORE) {
+            if (dispatchNavLate) {
+              this.dispatchRouterNavigation(routesRecognized);
+            }
+            this.dispatchRouterNavigated(event);
+          }
+          this.reset();
         }
-        this.trigger = RouterTrigger.NONE;
-      }
-    });
+      });
   }
 
   private dispatchRouterRequest(event: NavigationStart): void {
@@ -377,20 +389,23 @@ export class StoreRouterConnectingModule {
   private dispatchRouterNavigation(
     lastRoutesRecognized: RoutesRecognized
   ): void {
+    const nextRouterState = this.serializer.serialize(
+      lastRoutesRecognized.state
+    );
     this.dispatchRouterAction(ROUTER_NAVIGATION, {
-      routerState: this.routerState,
+      routerState: nextRouterState,
       event: new RoutesRecognized(
         lastRoutesRecognized.id,
         lastRoutesRecognized.url,
         lastRoutesRecognized.urlAfterRedirects,
-        this.routerState
+        nextRouterState
       ),
     });
   }
 
   private dispatchRouterCancel(event: NavigationCancel): void {
     this.dispatchRouterAction(ROUTER_CANCEL, {
-      routerState: this.routerState,
+      routerState: this.routerState!,
       storeState: this.storeState,
       event,
     });
@@ -398,7 +413,7 @@ export class StoreRouterConnectingModule {
 
   private dispatchRouterError(event: NavigationError): void {
     this.dispatchRouterAction(ROUTER_ERROR, {
-      routerState: this.routerState,
+      routerState: this.routerState!,
       storeState: this.storeState,
       event: new NavigationError(event.id, event.url, `${event}`),
     });
@@ -415,5 +430,11 @@ export class StoreRouterConnectingModule {
     } finally {
       this.trigger = RouterTrigger.NONE;
     }
+  }
+
+  private reset() {
+    this.trigger = RouterTrigger.NONE;
+    this.storeState = null;
+    this.routerState = null;
   }
 }
