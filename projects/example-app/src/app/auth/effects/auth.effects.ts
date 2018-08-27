@@ -22,8 +22,9 @@ import {
 import { Authenticate } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import {
-  LogoutConfirmationDialogResult,
   LogoutConfirmationDialogComponent,
+  LogoutConfirmationDialogResults,
+  LogoutConfirmationDialogResultTypes,
 } from '../components/logout-confirmation-dialog.component';
 
 @Injectable()
@@ -61,12 +62,12 @@ export class AuthEffects {
       const dialogRef = this.dialog.open<
         LogoutConfirmationDialogComponent,
         undefined,
-        LogoutConfirmationDialogResult
+        LogoutConfirmationDialogResultTypes
       >(LogoutConfirmationDialogComponent);
 
       return dialogRef.afterClosed();
     }),
-    filter(result => result === 'OK'),
+    filter(result => result === LogoutConfirmationDialogResults.OK),
     mapTo(new Logout())
   );
 

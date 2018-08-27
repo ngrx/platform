@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
 
 /**
- * Dialog will close with 'OK' result if user clicks ok button.
+ * The dialog will close with 'OK' result if user clicks ok button,
+ * otherwise it will close with undefined.
  */
-export type LogoutConfirmationDialogResult = 'OK' | undefined;
+export enum LogoutConfirmationDialogResults {
+  OK = 'OK',
+}
+
+export type LogoutConfirmationDialogResultTypes =
+  | LogoutConfirmationDialogResults
+  | undefined;
 
 @Component({
   template: `
@@ -11,8 +18,10 @@ export type LogoutConfirmationDialogResult = 'OK' | undefined;
     <mat-dialog-content>Do you really want to logout?</mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button mat-dialog-close>Cancel</button>
-      <button mat-button mat-dialog-close="OK">OK</button>
+      <button mat-button [mat-dialog-close]="successValue">OK</button>
     </mat-dialog-actions>
   `,
 })
-export class LogoutConfirmationDialogComponent {}
+export class LogoutConfirmationDialogComponent {
+  successValue = LogoutConfirmationDialogResults.OK;
+}

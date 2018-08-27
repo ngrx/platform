@@ -16,6 +16,7 @@ import {
 import { Authenticate, User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { AuthEffects } from './auth.effects';
+import { LogoutConfirmationDialogResults } from '../components/logout-confirmation-dialog.component';
 
 describe('AuthEffects', () => {
   let effects: AuthEffects;
@@ -130,7 +131,7 @@ describe('AuthEffects', () => {
       const expected = cold('-b', { b: completion });
 
       dialog.open = () => ({
-        afterClosed: jest.fn(() => of('OK')),
+        afterClosed: jest.fn(() => of(LogoutConfirmationDialogResults.OK)),
       });
 
       expect(effects.logoutConfirmation$).toBeObservable(expected);
