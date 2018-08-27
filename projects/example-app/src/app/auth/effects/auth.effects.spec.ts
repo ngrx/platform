@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { MatButtonModule, MatDialog, MatDialogModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -15,7 +16,6 @@ import {
 import { Authenticate, User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { AuthEffects } from './auth.effects';
-import { MatButtonModule, MatDialog, MatDialogModule } from '@angular/material';
 
 describe('AuthEffects', () => {
   let effects: AuthEffects;
