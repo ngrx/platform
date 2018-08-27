@@ -6,6 +6,8 @@ const EXAMPLE_FILES = [
   '!**',
   'angular.json',
   'projects/example-app/**/*.*',
+  '!projects/example-app/coverage/**/*.*',
+  '!projects/example-app/dist/**/*.*',
   '!**/*.spec.ts',
   '!**/*.snap',
   '!**/*.js',
@@ -38,7 +40,9 @@ const EXAMPLE_FILES = [
     <body>
     <script>
       const project = {
-        files: ${JSON.stringify(files)},
+        files: ${JSON.stringify(files)
+          .replace(/\\r\\n/g, '')
+          .replace(/\\n/g, '')},
         title: 'NgRx Example App',
         description: 'NgRx example application with common patterns and best practices',
         template: 'angular-cli',
