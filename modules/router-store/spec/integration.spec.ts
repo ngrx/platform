@@ -126,7 +126,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support rolling back if navigation gets canceled (navigation initialized through roter)', (done: any) => {
+  it('should support rolling back if navigation gets canceled (navigation initialized through router)', (done: any) => {
     const reducer = (state: string = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
@@ -326,7 +326,7 @@ describe('integration spec', () => {
       });
   });
 
-  it('should support rolling back if navigation errors (navigation initialized through store)', (done: any) => {
+  it('should support rolling back if navigation errors and hand error to error handler (navigation initialized through store)', (done: any) => {
     const CHANGE_ROUTE = 'CHANGE_ROUTE';
     const reducer = (
       state: RouterReducerState,
@@ -346,18 +346,19 @@ describe('integration spec', () => {
       }
     };
 
+    const routerError = new Error('BOOM!');
     class SilentErrorHandler implements ErrorHandler {
-      handleError() {
-        // don't log router navigation error to not pollute console output of test
+      handleError(error: any) {
+        expect(error).toBe(routerError);
       }
     }
 
     createTestModule({
       reducers: { reducer },
       canActivate: () => {
-        throw new Error('BOOM!');
+        throw routerError;
       },
-      providers: [{provide: ErrorHandler, useClass: SilentErrorHandler}],
+      providers: [{ provide: ErrorHandler, useClass: SilentErrorHandler }],
       config: { stateKey: 'reducer' },
     });
 
@@ -369,7 +370,7 @@ describe('integration spec', () => {
       .navigateByUrl('/')
       .then(() => {
         log.splice(0);
-          store.dispatch({ type: CHANGE_ROUTE });
+        store.dispatch({ type: CHANGE_ROUTE });
         return waitForNavigation(router, NavigationError);
       })
       .then(() => {

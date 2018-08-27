@@ -303,8 +303,8 @@ export class StoreRouterConnectingModule {
     private store: Store<any>,
     private router: Router,
     private serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
-    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig,
-    private errorHandler: ErrorHandler
+    private errorHandler: ErrorHandler,
+    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
     this.stateKey = this.config.stateKey as string;
 
@@ -335,8 +335,8 @@ export class StoreRouterConnectingModule {
     if (this.router.url !== url) {
       this.storeState = storeState;
       this.trigger = RouterTrigger.STORE;
-      this.router.navigateByUrl(url).catch(e => {
-        this.errorHandler.handleError(e);
+      this.router.navigateByUrl(url).catch(error => {
+        this.errorHandler.handleError(error);
       });
     }
   }
