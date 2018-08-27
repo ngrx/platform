@@ -123,12 +123,12 @@ function recomputeStates(
     const entry: ComputedState = shouldSkip
       ? previousEntry
       : computeNextEntry(
-        reducer,
-        action,
-        previousState,
-        previousError,
-        errorHandler
-      );
+          reducer,
+          action,
+          previousState,
+          previousError,
+          errorHandler
+        );
 
     nextComputedStates.push(entry);
   }
@@ -250,9 +250,12 @@ export function liftReducerWith(
           // The corresponding state will be overwritten on each update to always contain
           // the latest state (see Actions.PERFORM_ACTION).
           stagedActionIds = [...stagedActionIds, nextActionId];
-          actionsById[nextActionId] = new PerformAction({
-            type: '@ngrx/devtools/pause',
-          }, +Date.now());
+          actionsById[nextActionId] = new PerformAction(
+            {
+              type: '@ngrx/devtools/pause',
+            },
+            +Date.now()
+          );
           nextActionId++;
           minInvalidatedStateIndex = stagedActionIds.length - 1;
           computedStates = computedStates.concat(
@@ -474,7 +477,10 @@ export function liftReducerWith(
 
             // Add a new action to only recompute state
             const actionId = nextActionId++;
-            actionsById[actionId] = new PerformAction(liftedAction, +Date.now());
+            actionsById[actionId] = new PerformAction(
+              liftedAction,
+              +Date.now()
+            );
             stagedActionIds = [...stagedActionIds, actionId];
 
             minInvalidatedStateIndex = stagedActionIds.length - 1;

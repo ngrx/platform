@@ -12,21 +12,19 @@ import { Store, StoreModule, ScannedActionsSubject } from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
 
 import {
+  NavigationActionTiming,
   ROUTER_CANCEL,
   ROUTER_ERROR,
+  ROUTER_NAVIGATED,
   ROUTER_NAVIGATION,
+  ROUTER_REQUEST,
   RouterAction,
   routerReducer,
+  RouterReducerState,
   RouterStateSerializer,
+  StoreRouterConfig,
   StoreRouterConnectingModule,
 } from '../src';
-import {
-  StoreRouterConfig,
-  ROUTER_REQUEST,
-  ROUTER_NAVIGATED,
-  NavigationActionTiming,
-  RouterReducerState,
-} from '../src/router_store_module';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
@@ -628,7 +626,10 @@ describe('integration spec', () => {
       reducers: { routerReducer },
       canActivate: () => {
         store.dispatch({ type: 'USER_EVENT' });
-        return store.pipe(take(1), mapTo(true));
+        return store.pipe(
+          take(1),
+          mapTo(true)
+        );
       },
     });
 
@@ -882,7 +883,10 @@ function createTestModule(
 
 function waitForNavigation(router: Router, event: any = NavigationEnd) {
   return router.events
-    .pipe(filter(e => e instanceof event), first())
+    .pipe(
+      filter(e => e instanceof event),
+      first()
+    )
     .toPromise();
 }
 

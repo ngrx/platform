@@ -709,7 +709,9 @@ describe('Store Devtools', () => {
     it('should add pause action', () => {
       const liftedState = fixture.getLiftedState();
       expect(liftedState.nextActionId).toBe(4);
-      expect(liftedState.actionsById[3].action.type).toEqual('@ngrx/devtools/pause');
+      expect(liftedState.actionsById[3].action.type).toEqual(
+        '@ngrx/devtools/pause'
+      );
     });
 
     it('should overwrite last state during pause but keep action', () => {
@@ -719,7 +721,9 @@ describe('Store Devtools', () => {
       expect(liftedState.computedStates.length).toBe(4);
       expect(fixture.getState()).toEqual(1);
       expect(liftedState.nextActionId).toBe(4);
-      expect(liftedState.actionsById[3].action.type).toEqual('@ngrx/devtools/pause');
+      expect(liftedState.actionsById[3].action.type).toEqual(
+        '@ngrx/devtools/pause'
+      );
     });
 
     it('recomputation of states should preserve last state', () => {
@@ -739,7 +743,9 @@ describe('Store Devtools', () => {
       expect(fixture.getState()).toBe(2);
       const liftedState = fixture.getLiftedState();
       expect(liftedState.nextActionId).toBe(4);
-      expect(liftedState.actionsById[3].action.type).toEqual('@ngrx/devtools/pause');
+      expect(liftedState.actionsById[3].action.type).toEqual(
+        '@ngrx/devtools/pause'
+      );
       expect(oldComputedStates).not.toBe(liftedState.computedStates);
     });
   });
