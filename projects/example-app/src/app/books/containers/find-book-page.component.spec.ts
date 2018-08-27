@@ -16,7 +16,7 @@ import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
 import { BookAuthorsComponent } from '../components/book-authors.component';
 import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
 import { FindBookPageComponent } from './find-book-page.component';
-import * as BookActions from '../actions/book.actions';
+import * as BookActions from '../actions/find-book-page.actions';
 import * as fromBooks from '../reducers';
 
 describe('Find Book Page', () => {
@@ -63,7 +63,7 @@ describe('Find Book Page', () => {
 
   it('should dispatch a book.Search action on search', () => {
     const $event = 'book name';
-    const action = new BookActions.Search($event);
+    const action = new BookActions.SearchBooks($event);
 
     instance.search($event);
 

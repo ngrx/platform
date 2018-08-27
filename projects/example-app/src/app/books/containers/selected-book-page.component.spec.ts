@@ -4,7 +4,7 @@ import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
 
-import * as CollectionActions from '../actions/collection.actions';
+import * as CollectionActions from '../actions/selected-book-page.actions';
 import * as fromBooks from '../reducers';
 import { BookDetailComponent } from '../components/book-detail.component';
 import { Book, generateMockBook } from '../models/book';

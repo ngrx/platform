@@ -1,4 +1,11 @@
-import { BookActionTypes, BookActionsUnion } from '../actions/book.actions';
+import {
+  BooksApiActionTypes,
+  BooksApiActionsUnion,
+} from '../actions/books-api.actions';
+import {
+  FindBookPageActionsUnion,
+  FindBookPageActionTypes,
+} from '../actions/find-book-page.actions';
 
 export interface State {
   ids: string[];
@@ -14,9 +21,12 @@ const initialState: State = {
   query: '',
 };
 
-export function reducer(state = initialState, action: BookActionsUnion): State {
+export function reducer(
+  state = initialState,
+  action: BooksApiActionsUnion | FindBookPageActionsUnion
+): State {
   switch (action.type) {
-    case BookActionTypes.Search: {
+    case FindBookPageActionTypes.SearchBooks: {
       const query = action.payload;
 
       if (query === '') {
@@ -36,7 +46,7 @@ export function reducer(state = initialState, action: BookActionsUnion): State {
       };
     }
 
-    case BookActionTypes.SearchComplete: {
+    case BooksApiActionTypes.SearchSuccess: {
       return {
         ids: action.payload.map(book => book.id),
         loading: false,
@@ -45,7 +55,7 @@ export function reducer(state = initialState, action: BookActionsUnion): State {
       };
     }
 
-    case BookActionTypes.SearchError: {
+    case BooksApiActionTypes.SearchFailure: {
       return {
         ...state,
         loading: false,

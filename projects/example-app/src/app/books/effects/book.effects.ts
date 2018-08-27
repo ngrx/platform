@@ -12,12 +12,11 @@ import {
 } from 'rxjs/operators';
 
 import { GoogleBooksService } from '../../core/services/google-books.service';
+import { SearchSuccess, SearchFailure } from '../actions/books-api.actions';
 import {
-  BookActionTypes,
-  Search,
-  SearchComplete,
-  SearchError,
-} from '../actions/book.actions';
+  FindBookPageActionTypes,
+  SearchBooks,
+} from '../actions/find-book-page.actions';
 import { Book } from '../models/book';
 
 /**
@@ -38,7 +37,7 @@ export class BookEffects {
     Action
   > =>
     this.actions$.pipe(
-      ofType<Search>(BookActionTypes.Search),
+      ofType<SearchBooks>(FindBookPageActionTypes.SearchBooks),
       debounceTime(debounce, scheduler),
       map(action => action.payload),
       switchMap(query => {
@@ -47,14 +46,14 @@ export class BookEffects {
         }
 
         const nextSearch$ = this.actions$.pipe(
-          ofType(BookActionTypes.Search),
+          ofType(FindBookPageActionTypes.SearchBooks),
           skip(1)
         );
 
         return this.googleBooks.searchBooks(query).pipe(
           takeUntil(nextSearch$),
-          map((books: Book[]) => new SearchComplete(books)),
-          catchError(err => of(new SearchError(err)))
+          map((books: Book[]) => new SearchSuccess(books)),
+          catchError(err => of(new SearchFailure(err)))
         );
       })
     );

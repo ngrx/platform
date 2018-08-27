@@ -3,7 +3,7 @@
   "version": "6.1.0",
   "description": "monorepo for ngrx development",
   "scripts": {
-    "precommit": "lint-staged && npm run build:stackblitz",
+    "precommit": "lint-staged",
     "build": "bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "test:unit": "node ./tests.js",

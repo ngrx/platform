@@ -1,10 +1,18 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '../models/book';
+import {
+  BooksApiActionsUnion,
+  BooksApiActionTypes,
+} from '../actions/books-api.actions';
 import { BookActionsUnion, BookActionTypes } from '../actions/book.actions';
 import {
-  CollectionActionsUnion,
-  CollectionActionTypes,
-} from '../actions/collection.actions';
+  ViewBookPageActionsUnion,
+  ViewBookPageActionTypes,
+} from '../actions/view-book-page.actions';
+import {
+  CollectionApiActionsUnion,
+  CollectionApiActionTypes,
+} from '../actions/collection-api.actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling
@@ -41,11 +49,15 @@ export const initialState: State = adapter.getInitialState({
 
 export function reducer(
   state = initialState,
-  action: BookActionsUnion | CollectionActionsUnion
+  action:
+    | BooksApiActionsUnion
+    | BookActionsUnion
+    | ViewBookPageActionsUnion
+    | CollectionApiActionsUnion
 ): State {
   switch (action.type) {
-    case BookActionTypes.SearchComplete:
-    case CollectionActionTypes.LoadSuccess: {
+    case BooksApiActionTypes.SearchSuccess:
+    case CollectionApiActionTypes.LoadBooksSuccess: {
       /**
        * The addMany function provided by the created adapter
        * adds many records to the entity dictionary
@@ -56,7 +68,7 @@ export function reducer(
       return adapter.addMany(action.payload, state);
     }
 
-    case BookActionTypes.Load: {
+    case BookActionTypes.LoadBook: {
       /**
        * The addOne function provided by the created adapter
        * adds one record to the entity dictionary
@@ -67,7 +79,7 @@ export function reducer(
       return adapter.addOne(action.payload, state);
     }
 
-    case BookActionTypes.Select: {
+    case ViewBookPageActionTypes.SelectBook: {
       return {
         ...state,
         selectedBookId: action.payload,
