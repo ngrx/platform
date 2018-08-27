@@ -3,14 +3,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import {
-  catchError,
-  exhaustMap,
-  filter,
-  map,
-  mapTo,
-  tap,
-} from 'rxjs/operators';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
 import {
   AuthActionTypes,
@@ -18,14 +11,11 @@ import {
   LoginFailure,
   LoginSuccess,
   Logout,
+  LogoutConfirmationDismiss,
 } from '../actions/auth.actions';
 import { Authenticate } from '../models/user';
 import { AuthService } from '../services/auth.service';
-import {
-  LogoutConfirmationDialogComponent,
-  LogoutConfirmationDialogResults,
-  LogoutConfirmationDialogResultTypes,
-} from '../components/logout-confirmation-dialog.component';
+import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
 
 @Injectable()
 export class AuthEffects {
@@ -62,13 +52,12 @@ export class AuthEffects {
       const dialogRef = this.dialog.open<
         LogoutConfirmationDialogComponent,
         undefined,
-        LogoutConfirmationDialogResultTypes
+        boolean
       >(LogoutConfirmationDialogComponent);
 
       return dialogRef.afterClosed();
     }),
-    filter(result => result === LogoutConfirmationDialogResults.OK),
-    mapTo(new Logout())
+    map(result => (result ? new Logout() : new LogoutConfirmationDismiss()))
   );
 
   constructor(

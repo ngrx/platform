@@ -12,11 +12,11 @@ import {
   LoginSuccess,
   Logout,
   LogoutConfirmation,
+  LogoutConfirmationDismiss,
 } from '../actions/auth.actions';
 import { Authenticate, User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { AuthEffects } from './auth.effects';
-import { LogoutConfirmationDialogResults } from '../components/logout-confirmation-dialog.component';
 
 describe('AuthEffects', () => {
   let effects: AuthEffects;
@@ -123,7 +123,7 @@ describe('AuthEffects', () => {
   });
 
   describe('logoutConfirmation$', () => {
-    it('should dispatch a Logout action if dialog closes with "OK" result', () => {
+    it('should dispatch a Logout action if dialog closes with true result', () => {
       const action = new LogoutConfirmation();
       const completion = new Logout();
 
@@ -131,20 +131,21 @@ describe('AuthEffects', () => {
       const expected = cold('-b', { b: completion });
 
       dialog.open = () => ({
-        afterClosed: jest.fn(() => of(LogoutConfirmationDialogResults.OK)),
+        afterClosed: jest.fn(() => of(true)),
       });
 
       expect(effects.logoutConfirmation$).toBeObservable(expected);
     });
 
-    it('should dispatch no action if dialog closes without "OK" result', () => {
+    it('should dispatch a LogoutConfirmationDismiss action if dialog closes with falsy result', () => {
       const action = new LogoutConfirmation();
+      const completion = new LogoutConfirmationDismiss();
 
       actions$ = hot('-a', { a: action });
-      const expected = cold('--');
+      const expected = cold('-b', { b: completion });
 
       dialog.open = () => ({
-        afterClosed: jest.fn(() => of()),
+        afterClosed: jest.fn(() => of(false)),
       });
 
       expect(effects.logoutConfirmation$).toBeObservable(expected);

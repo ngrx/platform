@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Logout Confirmation Dialog should compile 1`] = `
-<ng-component
-  successValue={[Function String]}
->
+<ng-component>
   <h2
     class="mat-dialog-title"
     id="mat-dialog-title-0"
@@ -21,8 +19,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       aria-label="Close dialog"
       class="mat-button"
       mat-button=""
-      mat-dialog-close=""
-      ng-reflect-dialog-result=""
+      ng-reflect-dialog-result="false"
       type="button"
     >
       <span
@@ -45,7 +42,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       aria-label="Close dialog"
       class="mat-button"
       mat-button=""
-      ng-reflect-dialog-result="OK"
+      ng-reflect-dialog-result="true"
       type="button"
     >
       <span
