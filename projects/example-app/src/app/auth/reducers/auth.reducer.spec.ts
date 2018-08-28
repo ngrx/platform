@@ -1,6 +1,7 @@
 import { reducer } from './auth.reducer';
 import * as fromAuth from './auth.reducer';
-import { LoginSuccess, Logout } from '../actions/auth-api.actions';
+import { LoginSuccess } from '../actions/auth-api.actions';
+import * as AuthActions from '../actions/auth.actions';
 
 import { User } from '../models/user';
 
@@ -42,7 +43,7 @@ describe('AuthReducer', () => {
       const initialState = {
         user: { name: 'test' },
       } as fromAuth.State;
-      const createAction = new Logout();
+      const createAction = new AuthActions.Logout();
 
       const expectedResult = fromAuth.initialState;
 

@@ -6,13 +6,12 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
 import * as LoginPageActions from '../actions/login-page.actions';
+import * as AuthActions from '../actions/auth.actions';
 
 import {
   AuthApiActionTypes,
   LoginFailure,
   LoginSuccess,
-  Logout,
-  LogoutConfirmationDismiss,
 } from '../actions/auth-api.actions';
 import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
@@ -40,7 +39,10 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
-    ofType(AuthApiActionTypes.LoginRedirect, AuthApiActionTypes.Logout),
+    ofType(
+      AuthApiActionTypes.LoginRedirect,
+      AuthActions.AuthActionTypes.Logout
+    ),
     tap(authed => {
       this.router.navigate(['/login']);
     })
@@ -48,7 +50,7 @@ export class AuthEffects {
 
   @Effect()
   logoutConfirmation$ = this.actions$.pipe(
-    ofType(AuthApiActionTypes.LogoutConfirmation),
+    ofType(AuthActions.AuthActionTypes.LogoutConfirmation),
     exhaustMap(() => {
       const dialogRef = this.dialog.open<
         LogoutConfirmationDialogComponent,
@@ -58,7 +60,12 @@ export class AuthEffects {
 
       return dialogRef.afterClosed();
     }),
-    map(result => (result ? new Logout() : new LogoutConfirmationDismiss()))
+    map(
+      result =>
+        result
+          ? new AuthActions.Logout()
+          : new AuthActions.LogoutConfirmationDismiss()
+    )
   );
 
   constructor(
