@@ -1,5 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { combineLatest } from 'rxjs';
 import {
   Action,
   createFeatureSelector,
@@ -8,25 +9,39 @@ import {
   Store,
   StoreModule,
 } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map, withLatestFrom } from 'rxjs/operators';
-
-import { Actions, Effect, EffectsModule } from '../';
-import { EffectsFeatureModule } from '../src/effects_feature_module';
+import { map, withLatestFrom, filter } from 'rxjs/operators';
+import { Actions, Effect, EffectsModule, ofType } from '../';
+import {
+  EffectsFeatureModule,
+  UPDATE_EFFECTS,
+  UpdateEffects,
+} from '../src/effects_feature_module';
 import { EffectsRootModule } from '../src/effects_root_module';
 import { FEATURE_EFFECTS } from '../src/tokens';
 
 describe('Effects Feature Module', () => {
   describe('when registered', () => {
-    const sourceA = 'sourceA';
-    const sourceB = 'sourceB';
-    const sourceC = 'sourceC';
-    const effectSourceGroups = [[sourceA], [sourceB], [sourceC]];
+    class SourceA {}
+    class SourceB {}
+    class SourceC {}
+
+    const sourceA = new SourceA();
+    const sourceB = new SourceB();
+    const sourceC = new SourceC();
+
+    const effectSourceGroups = [[sourceA], [sourceB, sourceC]];
     let mockEffectSources: { addEffects: jasmine.Spy };
+    let mockStore: { dispatch: jasmine.Spy };
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
+          {
+            provide: Store,
+            useValue: {
+              dispatch: jasmine.createSpy('dispatch'),
+            },
+          },
           {
             provide: EffectsRootModule,
             useValue: {
@@ -42,6 +57,7 @@ describe('Effects Feature Module', () => {
       });
 
       mockEffectSources = TestBed.get(EffectsRootModule);
+      mockStore = TestBed.get(Store);
     });
 
     it('should add all effects when instantiated', () => {
@@ -51,11 +67,24 @@ describe('Effects Feature Module', () => {
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceB);
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceC);
     });
+
+    it('should dispatch update-effects actions when instantiated', () => {
+      TestBed.get(EffectsFeatureModule);
+
+      expect(mockStore.dispatch).toHaveBeenCalledWith({
+        type: UPDATE_EFFECTS,
+        effects: ['SourceA'],
+      });
+
+      expect(mockStore.dispatch).toHaveBeenCalledWith({
+        type: UPDATE_EFFECTS,
+        effects: ['SourceB', 'SourceC'],
+      });
+    });
   });
 
   describe('when registered in a different NgModule from the feature state', () => {
     let effects: FeatureEffects;
-    let actions$: Observable<any>;
     let store: Store<any>;
 
     beforeEach(() => {
@@ -77,8 +106,12 @@ describe('Effects Feature Module', () => {
 
       store.dispatch(action);
 
-      store.pipe(select(getDataState)).subscribe(res => {
-        expect(res).toBe(110);
+      combineLatest(
+        store.pipe(select(getDataState)),
+        store.pipe(select(getInitialized))
+      ).subscribe(([data, initialized]) => {
+        expect(data).toBe(110);
+        expect(initialized).toBe(true);
         done();
       });
     });
@@ -93,16 +126,25 @@ interface State {
 
 interface DataState {
   data: number;
+  initialized: boolean;
 }
 
 const initialState: DataState = {
   data: 100,
+  initialized: false,
 };
 
 function reducer(state: DataState = initialState, action: Action) {
   switch (action.type) {
+    case 'INITIALIZE_FEATURE': {
+      return {
+        ...state,
+        initialized: true,
+      };
+    }
     case 'INCREASE':
       return {
+        ...state,
         data: state.data + 10,
       };
   }
@@ -112,10 +154,21 @@ function reducer(state: DataState = initialState, action: Action) {
 const getFeatureState = createFeatureSelector<DataState>(FEATURE_KEY);
 
 const getDataState = createSelector(getFeatureState, state => state.data);
+const getInitialized = createSelector(
+  getFeatureState,
+  state => state.initialized
+);
 
 @Injectable()
 class FeatureEffects {
   constructor(private actions: Actions, private store: Store<State>) {}
+
+  @Effect()
+  init = this.actions.pipe(
+    ofType<UpdateEffects>(UPDATE_EFFECTS),
+    filter(action => action.effects.includes('FeatureEffects')),
+    map(action => ({ type: 'INITIALIZE_FEATURE' }))
+  );
 
   @Effect()
   effectWithStore = this.actions.ofType('INCREMENT').pipe(
