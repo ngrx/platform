@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logout Confirmation Dialog should compile 1`] = `
+<ng-component>
+  <h2
+    _ngcontent-c0=""
+    class="mat-dialog-title"
+    id="mat-dialog-title-0"
+    mat-dialog-title=""
+  >
+    Logout
+  </h2><mat-dialog-content
+    _ngcontent-c0=""
+    class="mat-dialog-content"
+  >
+    Are you sure you want to logout?
+  </mat-dialog-content><mat-dialog-actions
+    _ngcontent-c0=""
+    class="mat-dialog-actions"
+  >
+    <button
+      _ngcontent-c0=""
+      aria-label="Close dialog"
+      class="mat-button"
+      mat-button=""
+      ng-reflect-dialog-result="false"
+      type="button"
+    >
+      <span
+        class="mat-button-wrapper"
+      >
+        Cancel
+      </span>
+      <div
+        class="mat-button-ripple mat-ripple"
+        matripple=""
+        ng-reflect-centered="false"
+        ng-reflect-disabled="false"
+        ng-reflect-trigger="[object HTMLButtonElement]"
+      />
+      <div
+        class="mat-button-focus-overlay"
+      />
+    </button>
+    <button
+      _ngcontent-c0=""
+      aria-label="Close dialog"
+      class="mat-button"
+      mat-button=""
+      ng-reflect-dialog-result="true"
+      type="button"
+    >
+      <span
+        class="mat-button-wrapper"
+      >
+        OK
+      </span>
+      <div
+        class="mat-button-ripple mat-ripple"
+        matripple=""
+        ng-reflect-centered="false"
+        ng-reflect-disabled="false"
+        ng-reflect-trigger="[object HTMLButtonElement]"
+      />
+      <div
+        class="mat-button-focus-overlay"
+      />
+    </button>
+  </mat-dialog-actions>
+</ng-component>
+`;
