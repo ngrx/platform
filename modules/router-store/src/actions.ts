@@ -14,7 +14,7 @@ import {
 /**
  * An action dispatched when a router navigation request is fired.
  */
-export const ROUTER_REQUEST = 'ROUTER_REQUEST';
+export const ROUTER_REQUEST = '@ngrx/router-store/request';
 
 /**
  * Payload of ROUTER_REQUEST
@@ -34,7 +34,7 @@ export type RouterRequestAction = {
 /**
  * An action dispatched when the router navigates.
  */
-export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
+export const ROUTER_NAVIGATION = '@ngrx/router-store/navigation';
 
 /**
  * Payload of ROUTER_NAVIGATION.
@@ -57,7 +57,7 @@ export type RouterNavigationAction<
 /**
  * An action dispatched when the router cancels navigation.
  */
-export const ROUTER_CANCEL = 'ROUTER_CANCEL';
+export const ROUTER_CANCEL = '@ngrx/router-store/cancel';
 
 /**
  * Payload of ROUTER_CANCEL.
@@ -82,7 +82,7 @@ export type RouterCancelAction<
 /**
  * An action dispatched when the router errors.
  */
-export const ROUTER_ERROR = 'ROUTE_ERROR';
+export const ROUTER_ERROR = '@ngrx/router-store/error';
 
 /**
  * Payload of ROUTER_ERROR.
@@ -107,7 +107,7 @@ export type RouterErrorAction<
 /**
  * An action dispatched after navigation has ended and new route is active.
  */
-export const ROUTER_NAVIGATED = 'ROUTER_NAVIGATED';
+export const ROUTER_NAVIGATED = '@ngrx/router-store/navigated';
 
 /**
  * Payload of ROUTER_NAVIGATED.

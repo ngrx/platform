@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -10,9 +11,12 @@ import {
   AuthApiActionTypes,
   LoginFailure,
   LoginSuccess,
+  Logout,
+  LogoutConfirmationDismiss,
 } from '../actions/auth-api.actions';
 import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
+import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
 
 @Injectable()
 export class AuthEffects {
@@ -42,9 +46,25 @@ export class AuthEffects {
     })
   );
 
+  @Effect()
+  logoutConfirmation$ = this.actions$.pipe(
+    ofType(AuthApiActionTypes.LogoutConfirmation),
+    exhaustMap(() => {
+      const dialogRef = this.dialog.open<
+        LogoutConfirmationDialogComponent,
+        undefined,
+        boolean
+      >(LogoutConfirmationDialogComponent);
+
+      return dialogRef.afterClosed();
+    }),
+    map(result => (result ? new Logout() : new LogoutConfirmationDismiss()))
+  );
+
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 }

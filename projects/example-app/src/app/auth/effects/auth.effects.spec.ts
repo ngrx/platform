@@ -1,14 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { empty, Observable } from 'rxjs';
+import { empty, Observable, of } from 'rxjs';
 import {
   LoginFailure,
   LoginRedirect,
   LoginSuccess,
   Logout,
+  LogoutConfirmation,
+  LogoutConfirmationDismiss,
 } from '../actions/auth-api.actions';
 import * as loginPageActions from '../actions/login-page.actions';
 
@@ -21,6 +24,7 @@ describe('AuthEffects', () => {
   let authService: any;
   let actions$: Observable<any>;
   let routerService: any;
+  let dialog: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,6 +39,12 @@ describe('AuthEffects', () => {
           provide: Router,
           useValue: { navigate: jest.fn() },
         },
+        {
+          provide: MatDialog,
+          useValue: {
+            open: jest.fn(),
+          },
+        },
       ],
     });
 
@@ -42,6 +52,7 @@ describe('AuthEffects', () => {
     authService = TestBed.get(AuthService);
     actions$ = TestBed.get(Actions);
     routerService = TestBed.get(Router);
+    dialog = TestBed.get(MatDialog);
 
     spyOn(routerService, 'navigate').and.callThrough();
   });
@@ -110,6 +121,36 @@ describe('AuthEffects', () => {
       effects.loginRedirect$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
       });
+    });
+  });
+
+  describe('logoutConfirmation$', () => {
+    it('should dispatch a Logout action if dialog closes with true result', () => {
+      const action = new LogoutConfirmation();
+      const completion = new Logout();
+
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+
+      dialog.open = () => ({
+        afterClosed: jest.fn(() => of(true)),
+      });
+
+      expect(effects.logoutConfirmation$).toBeObservable(expected);
+    });
+
+    it('should dispatch a LogoutConfirmationDismiss action if dialog closes with falsy result', () => {
+      const action = new LogoutConfirmation();
+      const completion = new LogoutConfirmationDismiss();
+
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+
+      dialog.open = () => ({
+        afterClosed: jest.fn(() => of(false)),
+      });
+
+      expect(effects.logoutConfirmation$).toBeObservable(expected);
     });
   });
 });
