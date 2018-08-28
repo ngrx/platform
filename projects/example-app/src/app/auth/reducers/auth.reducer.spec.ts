@@ -1,7 +1,9 @@
 import { reducer } from './auth.reducer';
 import * as fromAuth from './auth.reducer';
-import { Login, LoginSuccess, Logout } from '../actions/auth.actions';
-import { Authenticate, User } from '../models/user';
+import { LoginSuccess } from '../actions/auth-api.actions';
+import * as AuthActions from '../actions/auth.actions';
+
+import { User } from '../models/user';
 
 describe('AuthReducer', () => {
   describe('undefined action', () => {
@@ -17,19 +19,6 @@ describe('AuthReducer', () => {
        * are used to validate against the current state
        * if the functionality of the reducer ever changes.
        */
-      expect(result).toMatchSnapshot();
-    });
-  });
-
-  describe('wrong login payload', () => {
-    it('should NOT authenticate a user', () => {
-      const user = { username: 'someUserName' } as Authenticate;
-      const createAction = new Login(user);
-
-      const expectedResult = fromAuth.initialState;
-
-      const result = reducer(fromAuth.initialState, createAction);
-
       expect(result).toMatchSnapshot();
     });
   });
@@ -54,7 +43,7 @@ describe('AuthReducer', () => {
       const initialState = {
         user: { name: 'test' },
       } as fromAuth.State;
-      const createAction = new Logout();
+      const createAction = new AuthActions.Logout();
 
       const expectedResult = fromAuth.initialState;
 

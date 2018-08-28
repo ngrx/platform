@@ -51,7 +51,7 @@ After a successful navigation, the router will dispatch a `ROUTER_NAVIGATED` act
 
 ##### ROUTER_CANCEL
 
-When the navigation is cancelled, for example due to a guard saying that the user cannot access the requested page, the router will dispatch a `ROUTER_CANCEL` action. 
+When the navigation is cancelled, for example due to a guard saying that the user cannot access the requested page, the router will dispatch a `ROUTER_CANCEL` action.
 
 The action contains the store state before the navigation. You can use it to restore the consistency of the store.
 

@@ -5,15 +5,15 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
+import * as LoginPageActions from '../actions/login-page.actions';
+import * as AuthActions from '../actions/auth.actions';
+
 import {
-  AuthActionTypes,
-  Login,
+  AuthApiActionTypes,
   LoginFailure,
   LoginSuccess,
-  Logout,
-  LogoutConfirmationDismiss,
-} from '../actions/auth.actions';
-import { Authenticate } from '../models/user';
+} from '../actions/auth-api.actions';
+import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
 
@@ -21,25 +21,28 @@ import { LogoutConfirmationDialogComponent } from '../components/logout-confirma
 export class AuthEffects {
   @Effect()
   login$ = this.actions$.pipe(
-    ofType<Login>(AuthActionTypes.Login),
-    map(action => action.payload),
-    exhaustMap((auth: Authenticate) =>
+    ofType<LoginPageActions.Login>(LoginPageActions.LoginPageActionTypes.Login),
+    map(action => action.payload.credentials),
+    exhaustMap((auth: Credentials) =>
       this.authService.login(auth).pipe(
         map(user => new LoginSuccess({ user })),
-        catchError(error => of(new LoginFailure(error)))
+        catchError(error => of(new LoginFailure({ error })))
       )
     )
   );
 
   @Effect({ dispatch: false })
   loginSuccess$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LoginSuccess),
+    ofType(AuthApiActionTypes.LoginSuccess),
     tap(() => this.router.navigate(['/']))
   );
 
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LoginRedirect, AuthActionTypes.Logout),
+    ofType(
+      AuthApiActionTypes.LoginRedirect,
+      AuthActions.AuthActionTypes.Logout
+    ),
     tap(authed => {
       this.router.navigate(['/login']);
     })
@@ -47,7 +50,7 @@ export class AuthEffects {
 
   @Effect()
   logoutConfirmation$ = this.actions$.pipe(
-    ofType(AuthActionTypes.LogoutConfirmation),
+    ofType(AuthActions.AuthActionTypes.LogoutConfirmation),
     exhaustMap(() => {
       const dialogRef = this.dialog.open<
         LogoutConfirmationDialogComponent,
@@ -57,7 +60,12 @@ export class AuthEffects {
 
       return dialogRef.afterClosed();
     }),
-    map(result => (result ? new Logout() : new LogoutConfirmationDismiss()))
+    map(
+      result =>
+        result
+          ? new AuthActions.Logout()
+          : new AuthActions.LogoutConfirmationDismiss()
+    )
   );
 
   constructor(

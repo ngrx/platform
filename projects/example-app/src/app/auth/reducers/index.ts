@@ -6,7 +6,7 @@ import {
 import * as fromRoot from '../../reducers';
 import * as fromAuth from './auth.reducer';
 import * as fromLoginPage from './login-page.reducer';
-import { AuthActionsUnion } from '../actions/auth.actions';
+import { AuthApiActionsUnion } from '../actions/auth-api.actions';
 
 export interface AuthState {
   status: fromAuth.State;
@@ -17,7 +17,7 @@ export interface State extends fromRoot.State {
   auth: AuthState;
 }
 
-export const reducers: ActionReducerMap<AuthState, AuthActionsUnion> = {
+export const reducers: ActionReducerMap<AuthState, AuthApiActionsUnion> = {
   status: fromAuth.reducer,
   loginPage: fromLoginPage.reducer,
 };

@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { LoginPageComponent } from './login-page.component';
 import { LoginFormComponent } from '../components/login-form.component';
-import * as AuthActions from '../actions/auth.actions';
 import * as fromAuth from '../reducers';
+import * as LoginPageActions from '../actions/login-page.actions';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginPageComponent>;
@@ -56,10 +56,10 @@ describe('Login Page', () => {
   });
 
   it('should dispatch a login event on submit', () => {
-    const $event: any = {};
-    const action = new AuthActions.Login($event);
+    const credentials: any = {};
+    const action = new LoginPageActions.Login({ credentials });
 
-    instance.onSubmit($event);
+    instance.onSubmit(credentials);
 
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
