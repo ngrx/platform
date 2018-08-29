@@ -60,7 +60,11 @@ jobs:
       # be built even though we run `bazel test`
       # See https://github.com/bazelbuild/bazel/issues/4257
       - run: bazel query --output=label //... | xargs bazel test
-
+      # Store artifacts from build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - bin
   test:
     docker:
       - image: circleci/node:latest-browsers
@@ -89,7 +93,8 @@ jobs:
       - restore_cache:
           key: *cache_key
       - run: yarn
-      - run: yarn run build
+      - attach_workspace:
+          at: dist
       - run: yarn run deploy:builds
 
 workflows:
@@ -102,6 +107,7 @@ workflows:
       - deploy:
           requires:
             - test
+            - bazel
           filters:
             branches:
               only: master
