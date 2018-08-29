@@ -20,8 +20,12 @@ export class MockStore<T> extends Store<T> {
     this.source = this.stateSubject.asObservable();
   }
 
-  nextMock(nextState: T) {
+  nextMock(nextState: T): void {
     this.stateSubject.next(nextState);
+  }
+
+  spyOnDispatch(spyFactory: Function): void {
+    this.dispatch = spyFactory(this.dispatch);
   }
 }
 

@@ -20,6 +20,7 @@ import {
 import Spy = jasmine.Spy;
 import any = jasmine.any;
 import { take } from 'rxjs/operators';
+import { MockStore, provideMockStore } from '../testing';
 
 interface TestAppSchema {
   counter1: number;
@@ -431,5 +432,48 @@ describe('ngRx Store', () => {
         reducerFactory: jasmine.createSpy(`reducerFactory_${key}`),
       };
     }
+  });
+
+  describe('State mocking', () => {
+    let mockStore: MockStore<TestAppSchema>;
+    beforeEach(() => {
+      const initialState = { counter1: 0, counter2: 1 };
+      const reducers = {
+        counter1: counterReducer,
+        counter2: counterReducer,
+        counter3: counterReducer,
+      };
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot(reducers, { initialState })],
+        providers: [provideMockStore()],
+      });
+
+      mockStore = TestBed.get(Store);
+    });
+
+    it('should set the initial state to a mocked one', (done: DoneFn) => {
+      const fixedState = {
+        counter1: 17,
+        counter2: 11,
+        counter3: 25,
+      };
+      mockStore.nextMock(fixedState);
+      mockStore.pipe(take(1)).subscribe({
+        next(val) {
+          expect(val).toEqual(fixedState);
+        },
+        error: done.fail,
+        complete: done,
+      });
+    });
+
+    it('should set a spy on dispatcher', () => {
+      const spyFactory = () => jasmine.createSpy('dispatcher');
+      const action = { type: INCREMENT };
+      mockStore.spyOnDispatch(spyFactory);
+      mockStore.dispatch(action);
+      expect(mockStore.dispatch).toHaveBeenCalledWith(action);
+    });
   });
 });
