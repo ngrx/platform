@@ -1,0 +1,9 @@
+{
+  "files":[
+    "!**/*.d.ts",
+    "!**/*.js",
+    "!**/*.[0-9].*",
+    "angular.json",
+    "protractor.conf.js"
+  ]
+}
