@@ -64,7 +64,7 @@ jobs:
       - persist_to_workspace:
           root: dist
           paths:
-            - bin
+            - bin/*
   test:
     docker:
       - image: circleci/node:latest-browsers
