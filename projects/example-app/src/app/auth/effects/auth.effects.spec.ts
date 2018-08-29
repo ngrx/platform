@@ -88,7 +88,7 @@ describe('AuthEffects', () => {
   });
 
   describe('loginSuccess$', () => {
-    it('should dispatch a RouterNavigation action', done => {
+    it('should dispatch a RouterNavigation action', (done: any) => {
       const user = { name: 'User' } as User;
       const action = new LoginSuccess({ user });
 
@@ -102,7 +102,7 @@ describe('AuthEffects', () => {
   });
 
   describe('loginRedirect$', () => {
-    it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', done => {
+    it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', (done: any) => {
       const action = new LoginRedirect();
 
       actions$ = of(action);
@@ -113,7 +113,7 @@ describe('AuthEffects', () => {
       });
     });
 
-    it('should dispatch a RouterNavigation action when auth.Logout is dispatched', done => {
+    it('should dispatch a RouterNavigation action when auth.Logout is dispatched', (done: any) => {
       const action = new AuthActions.Logout();
 
       actions$ = of(action);
