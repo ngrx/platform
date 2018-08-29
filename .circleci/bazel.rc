@@ -19,10 +19,10 @@ build --experimental_strict_action_env
 # Bazel doesn't calculate the memory ceiling correctly when running under Docker.
 # Limit Bazel to consuming resources that fit in CircleCI "medium" class which is the default:
 # https://circleci.com/docs/2.0/configuration-reference/#resource_class
-build --local_resources=2048,2.0,1.0
+build --jobs 10 --local_resources=2506,2.0,1.0
 
 # Also limit Bazel's own JVM heap to stay within our 4G container limit
-startup --host_jvm_args=-Xmx1G
+startup --host_jvm_args=-Xmx1g
 
 # Retry in the event of flakes, eg. https://circleci.com/gh/angular/angular/31309
 test --flaky_test_attempts=2
