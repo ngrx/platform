@@ -13,7 +13,7 @@ const { extname, resolve } = require('canonical-path');
 const { existsSync } = require('fs');
 const { SRC_PATH } = require('../config');
 
-module.exports = new Package('angular.io', [gitPackage, apiPackage, contentPackage])
+module.exports = new Package('ngrx.io', [gitPackage, apiPackage, contentPackage])
 
   // This processor relies upon the versionInfo. See below...
   .processor(require('./processors/processNavigationMap'))

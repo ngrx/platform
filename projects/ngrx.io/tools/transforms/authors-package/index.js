@@ -8,22 +8,22 @@
 /* eslint no-console: "off" */
 
 function createPackage(changedFile) {
-  const marketingMatch = /^aio\/content\/(?:marketing\/|navigation\.json)/.exec(changedFile);
+  const marketingMatch = /^projects\/ngrx\.io\/content\/(?:marketing\/|navigation\.json)/.exec(changedFile);
   if (marketingMatch) {
     console.log('Building marketing docs');
     return require('./marketing-package').createPackage();
   }
 
-  const tutorialMatch = /^aio\/content\/tutorial\/([^.]+)\.md/.exec(changedFile);
-  const tutorialExampleMatch = /^aio\/content\/examples\/(toh-[^\/]+)\//.exec(changedFile);
+  const tutorialMatch = /^projects\/ngrx\.io\/content\/tutorial\/([^.]+)\.md/.exec(changedFile);
+  const tutorialExampleMatch = /^projects\/ngrx\.io\/content\/examples\/(toh-[^\/]+)\//.exec(changedFile);
   if (tutorialMatch || tutorialExampleMatch) {
     const tutorialName = tutorialMatch && tutorialMatch[1] || tutorialExampleMatch[1];
     console.log('Building tutorial docs');
     return require('./tutorial-package').createPackage(tutorialName);
   }
 
-  const guideMatch = /^aio\/content\/guide\/([^.]+)\.md/.exec(changedFile);
-  const exampleMatch = /^aio\/content\/examples\/(?:cb-)?([^\/]+)\//.exec(changedFile);
+  const guideMatch = /^projects\/ngrx\.io\/content\/guide\/([^.]+)\.md/.exec(changedFile);
+  const exampleMatch = /^projects\/ngrx\.io\/content\/examples\/(?:cb-)?([^\/]+)\//.exec(changedFile);
   if (guideMatch || exampleMatch) {
     const guideName = guideMatch && guideMatch[1] || exampleMatch[1];
     console.log(`Building guide doc: ${guideName}.md`);
@@ -43,6 +43,7 @@ module.exports = {
   generateDocs: function(changedFile, options = {}) {
     const {Dgeni} = require('dgeni');
     const package = createPackage(changedFile);
+
     if (options.silent) {
       package.config(function(log) { log.level = 'error'; });
     }

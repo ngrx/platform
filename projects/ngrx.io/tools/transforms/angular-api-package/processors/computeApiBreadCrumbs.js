@@ -15,7 +15,7 @@ module.exports = function computeApiBreadCrumbs(API_DOC_TYPES_TO_RENDER) {
             if (isSecondaryEntryPoint(doc.moduleDoc)) {
               doc.breadCrumbs.push(createPackageBreadcrumb(doc.moduleDoc));
             }
-            doc.breadCrumbs.push({ text: '@angular/' + doc.moduleDoc.id, path: doc.moduleDoc.path });
+            doc.breadCrumbs.push({ text: '@ngrx/' + doc.moduleDoc.id, path: doc.moduleDoc.path });
           }
           doc.breadCrumbs.push({ text: doc.name, path: doc.path });
         }

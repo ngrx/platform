@@ -22,7 +22,7 @@ module.exports = function processPackages() {
           // Convert the doc type from "module" to "package"
           doc.docType = 'package';
           // The name is actually the full id
-          doc.name = `@angular/${doc.id}`;
+          doc.name = `@ngrx/${doc.id}`;
 
           // Partition the exports into groups by type
           if (doc.exports) {

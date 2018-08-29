@@ -65,7 +65,7 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
   .config(function(readTypeScriptModules, readFilesProcessor, collectExamples, tsParser, packageContentFileReader) {
 
     // Tell TypeScript how to load modules that start with with `@angular`
-    tsParser.options.paths = { '@angular/*': [API_SOURCE_PATH + '/*'] };
+    tsParser.options.paths = { '@ngrx/*': [API_SOURCE_PATH + '/*'] };
     tsParser.options.baseUrl = '.';
 
     // API files are typescript
@@ -75,34 +75,12 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
 
     // NOTE: This list shold be in sync with tools/public_api_guard/BUILD.bazel
     readTypeScriptModules.sourceFiles = [
-      'animations/index.ts',
-      'animations/browser/index.ts',
-      'animations/browser/testing/index.ts',
-      'common/http/index.ts',
-      'common/http/testing/index.ts',
-      'common/index.ts',
-      'common/testing/index.ts',
-      'core/index.ts',
-      'core/testing/index.ts',
-      'elements/index.ts',
-      'forms/index.ts',
-      'http/index.ts',
-      'http/testing/index.ts',
-      'platform-browser/index.ts',
-      'platform-browser/animations/index.ts',
-      'platform-browser/testing/index.ts',
-      'platform-browser-dynamic/index.ts',
-      'platform-browser-dynamic/testing/index.ts',
-      'platform-server/index.ts',
-      'platform-server/testing/index.ts',
-      'platform-webworker/index.ts',
-      'platform-webworker-dynamic/index.ts',
-      'router/index.ts',
-      'router/testing/index.ts',
-      'router/upgrade/index.ts',
-      'service-worker/index.ts',
-      'upgrade/index.ts',
-      'upgrade/static/index.ts',
+      'store/index.ts',
+      'effects/index.ts',
+      'entity/index.ts',
+      'router-store/index.ts',
+      'schematics/index.ts',
+      'store-devtools/index.ts'
     ];
 
     readFilesProcessor.fileReaders.push(packageContentFileReader);

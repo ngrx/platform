@@ -2,11 +2,10 @@
   "name": "angular.io",
   "version": "0.0.0",
   "main": "index.js",
-  "repository": "git@github.com:angular/angular.git",
+  "repository": "git@github.com:ngrx/platform.git",
   "author": "Angular",
   "license": "MIT",
   "scripts": {
-    "preinstall": "node ../tools/yarn/check-yarn.js",
     "postinstall": "node tools/cli-patches/patch.js && uglifyjs node_modules/lunr/lunr.js -c -m -o src/assets/js/lunr.min.js --source-map",
     "aio-use-local": "node tools/ng-packages-installer overwrite . --debug",
     "aio-use-npm": "node tools/ng-packages-installer restore .",
