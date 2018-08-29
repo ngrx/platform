@@ -65,6 +65,9 @@ export async function publishToRepo(config: Config) {
     await util.git(['add --all']);
     await util.git([`commit -F commit_message`]);
     await util.cmd('rm', ['commit_message']);
+
+    console.log(`Deploying @ngrx/${pkg} to ${REPO_URL}`);
+
     await util.git(['push origin master --force']);
     await process.chdir('../../');
   }
