@@ -88,36 +88,39 @@ describe('AuthEffects', () => {
   });
 
   describe('loginSuccess$', () => {
-    it('should dispatch a RouterNavigation action', () => {
+    it('should dispatch a RouterNavigation action', (done: any) => {
       const user = { name: 'User' } as User;
       const action = new LoginSuccess({ user });
 
-      actions$ = hot('-a---', { a: action });
+      actions$ = of(action);
 
       effects.loginSuccess$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/']);
+        done();
       });
     });
   });
 
   describe('loginRedirect$', () => {
-    it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', () => {
+    it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', (done: any) => {
       const action = new LoginRedirect();
 
-      actions$ = hot('-a---', { a: action });
+      actions$ = of(action);
 
       effects.loginRedirect$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
+        done();
       });
     });
 
-    it('should dispatch a RouterNavigation action when auth.Logout is dispatched', () => {
+    it('should dispatch a RouterNavigation action when auth.Logout is dispatched', (done: any) => {
       const action = new AuthActions.Logout();
 
-      actions$ = hot('-a---', { a: action });
+      actions$ = of(action);
 
       effects.loginRedirect$.subscribe(() => {
         expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
+        done();
       });
     });
   });
