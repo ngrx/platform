@@ -12,12 +12,15 @@ import {
 } from 'rxjs/operators';
 
 import { GoogleBooksService } from '@example-app/core/services/google-books.service';
-import { SearchSuccess, SearchFailure } from '../actions/books-api.actions';
+import {
+  SearchSuccess,
+  SearchFailure,
+} from '@example-app/books/actions/books-api.actions';
 import {
   FindBookPageActionTypes,
   SearchBooks,
-} from '../actions/find-book-page.actions';
-import { Book } from '../models/book';
+} from '@example-app/books/actions/find-book-page.actions';
+import { Book } from '@example-app/books/models/book';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your

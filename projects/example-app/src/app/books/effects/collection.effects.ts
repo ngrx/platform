@@ -5,13 +5,13 @@ import { Action } from '@ngrx/store';
 import { defer, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 
-import { Book } from '../models/book';
+import { Book } from '@example-app/books/models/book';
 import {
   AddBook,
   RemoveBook,
   SelectedBookPageActionTypes,
-} from '../actions/selected-book-page.actions';
-import { CollectionPageActionTypes } from './../actions/collection-page.actions';
+} from '@example-app/books/actions/selected-book-page.actions';
+import { CollectionPageActionTypes } from '@example-app/books/actions/collection-page.actions';
 import {
   AddBookFailure,
   AddBookSuccess,
@@ -19,7 +19,7 @@ import {
   LoadBooksSuccess,
   RemoveBookFailure,
   RemoveBookSuccess,
-} from './../actions/collection-api.actions';
+} from '@example-app/books/actions/collection-api.actions';
 
 @Injectable()
 export class CollectionEffects {

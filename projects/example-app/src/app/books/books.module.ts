@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { ComponentsModule } from './components';
-import { BookEffects } from './effects/book.effects';
-import { CollectionEffects } from './effects/collection.effects';
+import { ComponentsModule } from '@example-app/books/components';
+import { BookEffects } from '@example-app/books/effects/book.effects';
+import { CollectionEffects } from '@example-app/books/effects/collection.effects';
 
-import { FindBookPageComponent } from './containers/find-book-page.component';
-import { ViewBookPageComponent } from './containers/view-book-page.component';
-import { SelectedBookPageComponent } from './containers/selected-book-page.component';
-import { CollectionPageComponent } from './containers/collection-page.component';
-import { MaterialModule } from '../material';
+import { FindBookPageComponent } from '@example-app/books/containers/find-book-page.component';
+import { ViewBookPageComponent } from '@example-app/books/containers/view-book-page.component';
+import { SelectedBookPageComponent } from '@example-app/books/containers/selected-book-page.component';
+import { CollectionPageComponent } from '@example-app/books/containers/collection-page.component';
+import { MaterialModule } from '@example-app/material';
 
-import { reducers } from './reducers';
-import { BooksRoutingModule } from './books-routing.module';
+import { reducers } from '@example-app/books/reducers';
+import { BooksRoutingModule } from '@example-app/books/books-routing.module';
 
 @NgModule({
   imports: [

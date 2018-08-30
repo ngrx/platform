@@ -2,9 +2,9 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromBooks from '../reducers';
-import * as CollectionActions from '../actions/selected-book-page.actions';
-import { Book } from '../models/book';
+import * as fromBooks from '@example-app/books/reducers';
+import * as CollectionActions from '@example-app/books/actions/selected-book-page.actions';
+import { Book } from '@example-app/books/models/book';
 
 @Component({
   selector: 'bc-selected-book-page',

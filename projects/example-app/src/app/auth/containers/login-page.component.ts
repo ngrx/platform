@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Credentials } from '../models/user';
-import * as fromAuth from '../reducers';
-import * as LoginPageActions from '../actions/login-page.actions';
+import { Credentials } from '@example-app/auth/models/user';
+import * as fromAuth from '@example-app/auth/reducers';
+import * as LoginPageActions from '@example-app/auth/actions/login-page.actions';
 
 @Component({
   selector: 'bc-login-page',

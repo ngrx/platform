@@ -5,11 +5,11 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
-import * as CollectionApiActions from '../actions/collection-api.actions';
-import * as SelectedBookPageActions from '../actions/selected-book-page.actions';
-import * as CollectionPageActions from '../actions/collection-page.actions';
-import { Book } from '../models/book';
-import { CollectionEffects } from './collection.effects';
+import * as CollectionApiActions from '@example-app/books/actions/collection-api.actions';
+import * as SelectedBookPageActions from '@example-app/books/actions/selected-book-page.actions';
+import * as CollectionPageActions from '@example-app/books/actions/collection-page.actions';
+import { Book } from '@example-app/books/models/book';
+import { CollectionEffects } from '@example-app/books/effects/collection.effects';
 
 describe('CollectionEffects', () => {
   let db: any;

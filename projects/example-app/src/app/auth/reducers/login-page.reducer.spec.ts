@@ -1,10 +1,10 @@
-import { reducer } from './login-page.reducer';
-import * as fromLoginPage from './login-page.reducer';
+import { reducer } from '@example-app/auth/reducers/login-page.reducer';
+import * as fromLoginPage from '@example-app/auth/reducers/login-page.reducer';
 
-import * as authApiActions from '../actions/auth-api.actions';
-import { Login } from '../actions/login-page.actions';
+import * as authApiActions from '@example-app/auth/actions/auth-api.actions';
+import { Login } from '@example-app/auth/actions/login-page.actions';
 
-import { Credentials, User } from '../models/user';
+import { Credentials, User } from '@example-app/auth/models/user';
 
 describe('LoginPageReducer', () => {
   describe('undefined action', () => {

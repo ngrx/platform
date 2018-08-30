@@ -1,7 +1,7 @@
 import {
   LayoutActionTypes,
   LayoutActionsUnion,
-} from '../actions/layout.actions';
+} from '@example-app/core/actions/layout.actions';
 
 export interface State {
   showSidenav: boolean;
