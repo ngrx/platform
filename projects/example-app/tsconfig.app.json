@@ -11,7 +11,6 @@
     "module": "es2015",
     "types": [],
     "baseUrl": ".",
-    "rootDir": "./",
     "paths": {
       "@ngrx/effects": ["../../modules/effects"],
       "@ngrx/store": ["../../modules/store"],
@@ -19,7 +18,7 @@
       "@ngrx/router-store": ["../../modules/router-store"],
       "@ngrx/entity": ["../../modules/entity"],
       "@ngrx/schematics": ["../../modules/schematics"],
-      "@example-app/*": ["src/app/*"]
+      "@example-app/*": ["./src/app/*"]
     }
   },
   "exclude": [
