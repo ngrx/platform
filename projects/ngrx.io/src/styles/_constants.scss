@@ -11,6 +11,7 @@ $layer-5: 5;
 
 // COLOR PALETTE
 $blue: #1976D2;
+$purple: #412846;
 $accentblue: #1E88E5;
 $brightred: #DD0031;
 $darkred: #C3002F;
@@ -27,21 +28,21 @@ $anti-pattern: $brightred;
 
 // API & CODE COLORS
 $amber-700: #FFA000;
-$blue-400: #42A5F5;
-$blue-500: #2196F3;
-$blue-600: #1E88E5;
-$blue-800: #1565C0;
-$blue-900: #0D47A1;
-$blue-grey-50: #ECEFF1;
-$blue-grey-100: #CFD8DC;
-$blue-grey-200: #B0BEC5;
-$blue-grey-300: #90A4AE;
-$blue-grey-400: #78909C;
-$blue-grey-500: #607D8B;
-$blue-grey-600: #546E7A;
-$blue-grey-700: #455A64;
-$blue-grey-800: #37474F;
-$blue-grey-900: #263238;
+$purple-400: #42A5F5;
+$purple-500: #2196F3;
+$purple-600: #1E88E5;
+$purple-800: #1565C0;
+$purple-900: #0D47A1;
+$purple-grey-50: #ECEFF1;
+$purple-grey-100: #CFD8DC;
+$purple-grey-200: #B0BEC5;
+$purple-grey-300: #90A4AE;
+$purple-grey-400: #78909C;
+$purple-grey-500: #607D8B;
+$purple-grey-600: #546E7A;
+$purple-grey-700: #455A64;
+$purple-grey-800: #37474F;
+$purple-grey-900: #263238;
 $codegreen: #17ff0b;
 $green-500: #4CAF50;
 $green-800: #2E7D32;
@@ -63,7 +64,7 @@ $api-symbols: (
   ),
   decorator: (
     content: '@',
-    background: $blue-800
+    background: $purple-800
   ),
   directive: (
     content: 'D',
@@ -71,11 +72,11 @@ $api-symbols: (
   ),
   pipe: (
     content: 'P',
-    background: $blue-grey-600
+    background: $purple-grey-600
   ),
   class: (
     content: 'C',
-    background: $blue-500
+    background: $purple-500
   ),
   interface: (
     content: 'I',

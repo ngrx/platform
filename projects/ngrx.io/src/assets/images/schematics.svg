@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="445px" height="112px" viewBox="0 0 445 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Schematics Feature Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-757.000000, -1558.000000)">
+            <g id="Schematics-Callout" transform="translate(250.000000, 1558.000000)">
+                <g id="Schematics-Feature-Icon" transform="translate(507.000000, 0.000000)">
+                    <rect id="Rectangle-4" fill="#2E1D32" x="0" y="0" width="445" height="112" rx="6"></rect>
+                    <text id="$-ng-g-store-State--" font-family=".AppleSystemUIFont" font-size="15" font-weight="normal" line-spacing="24">
+                        <tspan x="20" y="35" fill="#EE88FF">$ </tspan>
+                        <tspan x="33.4912109" y="35" fill="#FFFFFF">ng g store State --root --module app.module.ts</tspan>
+                        <tspan x="20" y="59" fill="#FFFFFF">    </tspan>
+                        <tspan x="35.9960938" y="59" fill="#FFAD29">create</tspan>
+                        <tspan x="79.230957" y="59" fill="#FFFFFF"> src/app/reducers/index.ts</tspan>
+                        <tspan x="20" y="83" fill="#FFFFFF">    </tspan>
+                        <tspan x="35.9960938" y="83" fill="#FFAD29">update</tspan>
+                        <tspan x="83.8891602" y="83" fill="#FFFFFF"> src/app/app.module.ts</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

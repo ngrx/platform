@@ -55,7 +55,7 @@ a.button.mat-button {
   }
 
   &.button-blue {
-    background: $blue;
+    background: $purple;
     color: rgba($white, .87);
 
     &:hover {
@@ -70,14 +70,14 @@ a.button.mat-button {
 
   &.button-shield,
   &.button-shield.mat-button {
-    background-color: $blue;
-    background: $blue url('assets/images/logos/angular/angular_whiteTransparent.svg') 24px 13px no-repeat;
+    background-color: $purple;
+    background: $purple url('assets/images/logos/angular/angular_whiteTransparent.svg') 24px 13px no-repeat;
     color: rgba($white, .87);
     padding-left: 54px;
     background-size: 22px 22px;
 
     @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-      background: $blue url('assets/images/logos/angular/angular_whiteTransparent.svg') 24px 13px no-repeat;
+      background: $purple url('assets/images/logos/angular/angular_whiteTransparent.svg') 24px 13px no-repeat;
       background-size: 22px 22px;
 
     }
@@ -104,11 +104,11 @@ a.filter-button {
   padding: 0px 16px;
   margin: 8px;
   line-height: 48px;
-  border: 2px solid $blue;
+  border: 2px solid $purple;
   border-radius: 4px;
 
   &:hover {
-    background-color: $blue;
+    background-color: $purple;
     color: white;
   }
 }

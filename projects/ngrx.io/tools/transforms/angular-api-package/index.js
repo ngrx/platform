@@ -76,11 +76,12 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
     // NOTE: This list shold be in sync with tools/public_api_guard/BUILD.bazel
     readTypeScriptModules.sourceFiles = [
       'store/index.ts',
+      'store-devtools/index.ts',
       'effects/index.ts',
+      'effects/testing/index.ts',
       'entity/index.ts',
       'router-store/index.ts',
-      'schematics/index.ts',
-      'store-devtools/index.ts'
+      'schematics/index.ts'
     ];
 
     readFilesProcessor.fileReaders.push(packageContentFileReader);

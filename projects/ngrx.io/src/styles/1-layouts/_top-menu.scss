@@ -22,7 +22,7 @@ mat-toolbar.mat-toolbar {
 
 // HOME PAGE OVERRIDE: TOPNAV TOOLBAR
 aio-shell.page-home mat-toolbar.mat-toolbar {
-  background-color: $blue;
+  background-color: $purple;
 
   @media (min-width: 481px) {
     &:not(.transitioning) {

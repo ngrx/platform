@@ -39,11 +39,11 @@
   }
 
   &.is-helpful {
-    border-color: $blue;
-    background: rgba($blue, 0.05);
+    border-color: $purple;
+    background: rgba($purple, 0.05);
 
     header {
-      background: $blue;
+      background: $purple;
     }
   }
 }

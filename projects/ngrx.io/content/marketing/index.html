@@ -1,5 +1,5 @@
 <!-- FULL HEADER BLOCK -->
-<header>
+<header class="homepage-header">
 
   <!-- BACKGROUND IMAGE -->
   <div class="background-sky hero"></div>
@@ -9,13 +9,14 @@
 
     <!-- LOGO -->
     <div class="hero-logo">
-      <img src="assets/images/logos/angular/angular.svg"/>
+      <img src="assets/images/ngrx-badge.png"/>
     </div>
 
     <!-- CONTAINER -->
     <div class="homepage-container">
-      <div class="hero-headline no-toc">One framework.<br>Mobile &amp; desktop.</div>
-      <!-- <a class="button hero-cta" href="guide/quickstart">Get Started</a> -->
+      <div class="hero-headline no-toc">NGRX</div>
+      <div class="hero-sub-headline no-toc">Reactive Libraries for Angular</div>
+      <!-- <a class="button hero-cta" href="guide/quickstart">Get Started</a>  -->
     </div>
 
   </section>
@@ -29,21 +30,21 @@
 
   <div class="home-rows">
 
-    <aio-announcement-bar></aio-announcement-bar>
-
     <!-- Group 1 -->
-    <div layout="row" layout-xs="column" class="home-row homepage-container">
-      <div class="promo-img-container promo-1">
-        <div>
-          <img height="222" width="340" src="generated/images/marketing/home/responsive-framework.svg" alt="responsive framework">
+    <div layout="row" layout-xs="column" class="home-row">
+      <div class="text-container">
+        <div class="text-block">
+          <div class="text-headline">Manage State</div>
+          <p class="text-body">
+            NgRx Store provides Enterprise-class state management for
+            Angular apps inspired by Redux. Unify the events in your
+            application and derive state using RxJS.</p>
         </div>
       </div>
 
-      <div class="text-container">
-        <div class="text-block promo-1-desc l-pad-top-2">
-          <div class="text-headline">Develop Across All Platforms</div>
-          <p class="text-body">Learn one way to build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile web, native mobile and native desktop.
-          </p>
+      <div class="promo-img-container promo-2">
+        <div>
+          <img height="196" width="204" src="assets/images/state.svg" alt="speed and performance">
         </div>
       </div>
     </div>
@@ -51,32 +52,17 @@
 
     <!-- Group 2 -->
     <div layout="row" layout-xs="column" class="home-row">
-      <div class="text-container">
-        <div class="text-block">
-          <div class="text-headline">Speed & Performance</div>
-          <p class="text-body">Achieve the maximum speed possible on the Web Platform today, and take it further, via Web Workers and server-side rendering.</p>
-          <p class="text-body">Angular puts you in control over scalability. Meet huge data requirements by building data models on RxJS, Immutable.js or another push-model.</p>
-        </div>
-      </div>
-
-      <div class="promo-img-container promo-2">
-        <div>
-          <img height="222" width="323" src="generated/images/marketing/home/speed-performance.svg" alt="speed and performance">
-        </div>
-      </div>
-    </div>
-    <hr>
-
-    <!-- Group 3 -->
-    <div layout="row" layout-xs="column" class="home-row">
       <div class="promo-img-container promo-3">
-        <div><img src="generated/images/marketing/home/joyful-development.svg" alt="IDE example"></div>
+        <div><img width="445" height="208" src="assets/images/effects.svg" alt="IDE example"></div>
       </div>
 
       <div class="text-container">
         <div class="text-block promo-3-desc">
-          <div class="text-headline">Incredible Tooling</div>
-          <p class="text-body">Build features quickly with simple, declarative templates. Extend the template language with your own components and use a wide array of existing components. Get immediate Angular-specific help and feedback with nearly every IDE and editor. All this comes together so you can focus on building amazing apps rather than trying to make the code work.
+          <div class="text-headline">Isolate Side Effects</div>
+          <p class="text-body">
+            NgRx Effects gives you a framework for isolating side effects
+            from your components by simply connecting observables of
+            actions to your store.
           </p>
         </div>
       </div>
@@ -84,18 +70,20 @@
     </div>
     <hr>
 
-    <!-- Group 4 -->
+    <!-- Group 3 -->
     <div layout="row" layout-xs="column" class="home-row">
       <div class="text-container">
         <div class="text-block l-pad-top-2">
-          <div class="text-headline">Loved by Millions</div>
-          <p class="text-body">From prototype through global deployment, Angular delivers the productivity and scalable infrastructure that supports Google's largest applications.</p>
+          <div class="text-headline">Unlock Productivity</div>
+          <p class="text-body">
+              NgRx Schematics helps you focus on building your application.
+          </p>
         </div>
       </div>
 
       <div class="promo-img-container promo-4">
         <div>
-          <img src="generated/images/marketing/home/loved-by-millions.svg" alt="angular on the map" width="455" height="228">
+          <img src="assets/images/schematics.svg" alt="angular on the map" width="445" height="112">
         </div>
       </div>
     </div>
@@ -114,5 +102,11 @@
     </div>
 
   </div><!-- end of home rows -->
+
+</article>
+
+<article style="background-color: white;color: purple;">
+  <div class="text-headline">Supported By The Community</div>
+
 
 </article>

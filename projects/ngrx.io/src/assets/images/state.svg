@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="165px" height="190px" viewBox="0 0 165 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Store Feature Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="106" height="223"></rect>
+        <rect id="path-3" x="0" y="0" width="116" height="234"></rect>
+        <circle id="path-5" cx="102" cy="37" r="22"></circle>
+        <filter x="-15.9%" y="-11.4%" width="131.8%" height="131.8%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.14 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <circle id="path-7" cx="102" cy="195" r="22"></circle>
+        <filter x="-15.9%" y="-11.4%" width="131.8%" height="131.8%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.14 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-876.000000, -868.000000)">
+            <g id="Store-Callout" transform="translate(250.000000, 809.000000)">
+                <g id="Store-Feature-Icon" transform="translate(713.000000, 156.000000) rotate(30.000000) translate(-713.000000, -156.000000) translate(605.000000, 39.000000)">
+                    <g id="Oval-2">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <path d="M102,195 C146.18278,195 182,159.18278 182,115 C182,70.81722 146.18278,35 102,35 C57.81722,35 22,70.81722 22,115 C22,159.18278 57.81722,195 102,195 Z" stroke="#BA2BD2" stroke-width="4" stroke-dasharray="10" mask="url(#mask-2)"></path>
+                    </g>
+                    <g id="Oval-2" transform="translate(100.000000, 0.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <path d="M2,195 C46.18278,195 82,159.18278 82,115 C82,70.81722 46.18278,35 2,35 C-42.18278,35 -78,70.81722 -78,115 C-78,159.18278 -42.18278,195 2,195 Z" stroke="#FFAD29" stroke-width="4" stroke-dasharray="10" mask="url(#mask-4)"></path>
+                    </g>
+                    <g id="Oval">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    </g>
+                    <g id="Oval">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-7"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

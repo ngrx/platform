@@ -4,7 +4,7 @@ footer {
   flex: 1;
   padding: 48px;
   z-index: 0;
-  background-color: $blue;
+  background-color: $purple;
   color: $offwhite;
   font-weight: 300;
 
@@ -102,9 +102,4 @@ footer::after {
     bottom: 0;
     left: 0;
     right: 0;
-    background:
-        url('../src/assets/images/logos/angular/angular_whiteTransparent_withMargin.png') top 0 left 0 repeat,
-        url('../src/assets/images/logos/angular/angular_whiteTransparent_withMargin.png') top 80px left 160px repeat;
-    opacity: 0.05;
-    background-size: 320px auto;
 }

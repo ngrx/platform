@@ -69,7 +69,7 @@ aio-api-list {
     box-shadow: 0 2px 2px rgba($black, 0.24), 0 0 2px rgba($black, 0.12);
     box-sizing: border-box;
     border: 1px solid $white;
-    color: $blue-600;
+    color: $purple-600;
     font-size: 16px;
     height: 32px;
     line-height: 32px;
@@ -79,30 +79,30 @@ aio-api-list {
 
     // PLACEHOLDER TEXT
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-      color: $blue-grey-100;
+      color: $purple-grey-100;
       font-size: 14px;
     }
     &::-moz-placeholder { /* Firefox 19+ */
-      color: $blue-grey-100;
+      color: $purple-grey-100;
       font-size: 14px;
     }
     &:-ms-input-placeholder { /* IE 10+ */
-      color: $blue-grey-100;
+      color: $purple-grey-100;
       font-size: 14px;
     }
     &:-moz-placeholder { /* Firefox 18- */
-      color: $blue-grey-100;
+      color: $purple-grey-100;
       font-size: 14px;
     }
 
     &:focus {
-      border: 1px solid $blue-400;
-      box-shadow: 0 2px 2px rgba($blue-400, 0.24), 0 0 2px rgba($blue-400, 0.12);
+      border: 1px solid $purple-400;
+      box-shadow: 0 2px 2px rgba($purple-400, 0.24), 0 0 2px rgba($purple-400, 0.12);
     }
   }
 
   .material-icons {
-    color: $blue-grey-100;
+    color: $purple-grey-100;
     font-size: 20px;
     left: 8px;
     position: absolute;
@@ -185,7 +185,7 @@ aio-api-list {
       margin-right: 8px;
     }
     a {
-      color: $blue-grey-600;
+      color: $purple-grey-600;
       display: inline-block;
       line-height: 16px;
       padding: 0 16px 0;
@@ -195,8 +195,8 @@ aio-api-list {
       text-overflow: ellipsis;
 
       &:hover {
-        background: $blue-grey-50;
-        color: $blue-500;
+        background: $purple-grey-50;
+        color: $purple-500;
       }
     }
   }

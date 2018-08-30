@@ -41,7 +41,7 @@
           color: $mediumgray;
           .material-icons:hover {
             background: none;
-            color: $blue;
+            color: $purple;
           }
         }
       }
@@ -106,6 +106,6 @@
 
   .from-constructor, .read-only-property {
     font-style: italic;
-    color: $blue;
+    color: $purple;
   }
 }

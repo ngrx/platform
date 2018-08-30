@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="445px" height="208px" viewBox="0 0 445 208" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Effects Feature Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-250.000000, -1198.000000)">
+            <g id="Effects-Callout" transform="translate(250.000000, 1198.000000)">
+                <g id="Effects-Feature-Icon">
+                    <rect id="Rectangle-4" fill="#2E1D32" x="0" y="0" width="445" height="208" rx="6"></rect>
+                    <text id="@Effect()-search$-=" font-family="Helvetica" font-size="15" font-weight="normal" line-spacing="24">
+                        <tspan x="20" y="35" fill="#F9D4FF">@Effect</tspan>
+                        <tspan x="73.3129883" y="35" fill="#D3D2D2">() search$</tspan>
+                        <tspan x="140.834961" y="35" fill="#FFFFFF"> = </tspan>
+                        <tspan x="157.929688" y="35" fill="#FFAD29">this</tspan>
+                        <tspan x="181.271973" y="35" fill="#FFFFFF">.actions$.</tspan>
+                        <tspan x="245.476074" y="35" fill="#FFAD29">pipe</tspan>
+                        <tspan x="273.835449" y="35" fill="#FFFFFF">(</tspan>
+                        <tspan x="20" y="59" fill="#FFFFFF">  </tspan>
+                        <tspan x="28.3349609" y="59" fill="#F9D4FF">ofType</tspan>
+                        <tspan x="73.371582" y="59" fill="#BFBFBF">&lt;</tspan>
+                        <tspan x="82.1313477" y="59" fill="#FFFFFF">SearchAction</tspan>
+                        <tspan x="171.347656" y="59" fill="#D3D3D3">&gt;(BookActions.Types.</tspan>
+                        <tspan x="316.843262" y="59" fill="#FFFFFF">Search</tspan>
+                        <tspan x="364.370117" y="59" fill="#BEBEBE">),</tspan>
+                        <tspan x="373.532715" y="59" fill="#FFFFFF"></tspan>
+                        <tspan x="20" y="83" fill="#FFFFFF">  </tspan>
+                        <tspan x="28.3349609" y="83" fill="#F9D4FF">map</tspan>
+                        <tspan x="57.5146484" y="83" fill="#FFFFFF">(action </tspan>
+                        <tspan x="106.704102" y="83" fill="#EE88FF">=&gt;</tspan>
+                        <tspan x="124.223633" y="83" fill="#FFFFFF"> action.query),</tspan>
+                        <tspan x="20" y="107" fill="#FFFFFF">  </tspan>
+                        <tspan x="28.3349609" y="107" fill="#F9D4FF">exhaustMap</tspan>
+                        <tspan x="110.05127" y="107" fill="#FFFFFF">(query </tspan>
+                        <tspan x="156.73584" y="107" fill="#EE88FF">=&gt;</tspan>
+                        <tspan x="174.255371" y="107" fill="#FFFFFF"></tspan>
+                        <tspan x="20" y="131" fill="#FFFFFF">    </tspan>
+                        <tspan x="36.6699219" y="131" fill="#FFAD29">this</tspan>
+                        <tspan x="60.012207" y="131" fill="#FFFFFF">.googleBooksService.</tspan>
+                        <tspan x="205.097656" y="131" fill="#FFAD29">search</tspan>
+                        <tspan x="250.119629" y="131" fill="#FFFFFF">(query)</tspan>
+                        <tspan x="20" y="155" fill="#FFFFFF">  ),</tspan>
+                        <tspan x="20" y="179" fill="#FFFFFF">);</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -68,7 +68,7 @@ mat-sidenav-container div.mat-sidenav-content {
 
   &:hover {
     background-color: $lightgray;
-    color: $blue;
+    color: $purple;
     text-shadow: 0 0 5px #ffffff;
   }
 
@@ -86,7 +86,7 @@ mat-sidenav-container div.mat-sidenav-content {
 }
 
 .vertical-menu-item.selected {
-  color: $blue;
+  color: $purple;
 }
 
 button.vertical-menu-item {

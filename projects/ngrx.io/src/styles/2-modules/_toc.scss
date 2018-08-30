@@ -152,7 +152,7 @@ aio-toc.embedded {
 
       &.active {
         a {
-          color: $blue;
+          color: $purple;
           font-weight: 500;
 
           &:before {
@@ -160,7 +160,7 @@ aio-toc.embedded {
             border-radius: 50%;
             left: -3px;
             top: 12px;
-            background: $blue;
+            background: $purple;
             position: absolute;
             width: 6px;
             height: 6px;
