@@ -26,7 +26,7 @@ You can see this action as a lifecycle hook, which you can use in order to execu
 @Effect()
 init$ = this.actions$.pipe(
   ofType(ROOT_EFFECTS_INIT),
-  map(_ => ...)
+  map(action => ...)
 );
 ```
 
@@ -43,6 +43,32 @@ Usage:
   imports: [EffectsModule.forFeature([SomeEffectsClass, AnotherEffectsClass])],
 })
 export class FeatureModule {}
+```
+
+### UPDATE_EFFECTS
+
+After feature effects have been registered, a `UPDATE_EFFECTS` action will be dispatched.
+This action will have all registered effects as its payload.
+
+```ts
+type UpdateEffects = {
+  type: typeof UPDATE_EFFECTS;
+  effects: string[];
+};
+```
+
+For example, if you register your feature module as `EffectsModule.forFeature([SomeEffectsClass, AnotherEffectsClass])`,
+it will have `SomeEffectsClass` and `AnotherEffectsClass` as its payload.
+
+To dispatch an action when the `SomeEffectsClass` effect has been registered you can listen to the `UPDATE_EFFECTS` action and use the `effects` payload to filter out non-important effects.
+
+```ts
+@Effect()
+init = this.actions.pipe(
+  ofType<UpdateEffects>(UPDATE_EFFECTS)
+  filter(action => action.effects.includes('SomeEffectsClass')),
+  map(action => ...)
+);
 ```
 
 ## Actions
