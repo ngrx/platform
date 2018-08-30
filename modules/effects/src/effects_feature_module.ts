@@ -1,5 +1,5 @@
-import { NgModule, Inject } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { NgModule, Inject, Optional } from '@angular/core';
+import { StoreRootModule, StoreFeatureModule, Store } from '@ngrx/store';
 import { EffectsRootModule } from './effects_root_module';
 import { FEATURE_EFFECTS } from './tokens';
 import { getSourceForInstance } from './effects_metadata';
@@ -15,7 +15,9 @@ export class EffectsFeatureModule {
   constructor(
     root: EffectsRootModule,
     store: Store<any>,
-    @Inject(FEATURE_EFFECTS) effectSourceGroups: any[][]
+    @Inject(FEATURE_EFFECTS) effectSourceGroups: any[][],
+    @Optional() storeRootModule: StoreRootModule,
+    @Optional() storeFeatureModule: StoreFeatureModule
   ) {
     effectSourceGroups.forEach(group => {
       let effectSourceNames: string[] = [];
