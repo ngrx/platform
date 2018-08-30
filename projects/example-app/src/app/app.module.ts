@@ -10,13 +10,13 @@ import { DBModule } from '@ngrx/db';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { CoreModule } from './core/core.module';
-import { AuthModule } from './auth/auth.module';
+import { CoreModule } from '@example-app/core/core.module';
+import { AuthModule } from '@example-app/auth/auth.module';
 
 import { reducers, metaReducers } from './reducers';
 import { schema } from './db';
 
-import { AppComponent } from './core/containers/app.component';
+import { AppComponent } from '@example-app/core/containers/app.component';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 

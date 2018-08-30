@@ -11,7 +11,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import { GoogleBooksService } from '../../core/services/google-books.service';
+import { GoogleBooksService } from '@example-app/core/services/google-books.service';
 import { SearchSuccess, SearchFailure } from '../actions/books-api.actions';
 import {
   FindBookPageActionTypes,

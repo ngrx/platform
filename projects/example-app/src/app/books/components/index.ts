@@ -9,7 +9,7 @@ import { BookPreviewComponent } from './book-preview.component';
 import { BookPreviewListComponent } from './book-preview-list.component';
 import { BookSearchComponent } from './book-search.component';
 
-import { PipesModule } from '../../shared/pipes';
+import { PipesModule } from '@example-app/shared/pipes';
 import { MaterialModule } from '../../material';
 
 export const COMPONENTS = [

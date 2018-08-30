@@ -9,7 +9,7 @@ import * as fromBooks from '../reducers';
 import { BookDetailComponent } from '../components/book-detail.component';
 import { Book, generateMockBook } from '../models/book';
 import { BookAuthorsComponent } from '../components/book-authors.component';
-import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 
 describe('Selected Book Page', () => {
   let fixture: ComponentFixture<SelectedBookPageComponent>;

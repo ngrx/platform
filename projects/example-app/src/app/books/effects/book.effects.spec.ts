@@ -4,7 +4,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
-import { GoogleBooksService } from '../../core/services/google-books.service';
+import { GoogleBooksService } from '@example-app/core/services/google-books.service';
 import { SearchSuccess, SearchFailure } from '../actions/books-api.actions';
 import { SearchBooks } from '../actions/find-book-page.actions';
 import { Book } from '../models/book';

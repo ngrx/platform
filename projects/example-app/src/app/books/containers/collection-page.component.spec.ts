@@ -8,8 +8,8 @@ import { BookPreviewListComponent } from '../components/book-preview-list.compon
 import { BookPreviewComponent } from '../components/book-preview.component';
 import * as CollectionActions from '../actions/collection-page.actions';
 import * as fromBooks from '../reducers';
-import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
-import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
+import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { BookAuthorsComponent } from '../components/book-authors.component';
 
 describe('Collection Page', () => {
