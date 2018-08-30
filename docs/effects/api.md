@@ -47,8 +47,7 @@ export class FeatureModule {}
 
 ### UPDATE_EFFECTS
 
-After feature effects have been registered, a `UPDATE_EFFECTS` action will be dispatched.
-This action will have all registered effects as its payload.
+After feature effects are registered, an `UPDATE_EFFECTS` action is dispatched.
 
 ```ts
 type UpdateEffects = {
@@ -57,10 +56,10 @@ type UpdateEffects = {
 };
 ```
 
-For example, if you register your feature module as `EffectsModule.forFeature([SomeEffectsClass, AnotherEffectsClass])`,
-it will have `SomeEffectsClass` and `AnotherEffectsClass` as its payload.
+For example, when you register your feature module as `EffectsModule.forFeature([SomeEffectsClass, AnotherEffectsClass])`,
+it has `SomeEffectsClass` and `AnotherEffectsClass` in an array as its payload.
 
-To dispatch an action when the `SomeEffectsClass` effect has been registered you can listen to the `UPDATE_EFFECTS` action and use the `effects` payload to filter out non-important effects.
+To dispatch an action when the `SomeEffectsClass` effect has been registered, listen to the `UPDATE_EFFECTS` action and use the `effects` payload to filter out non-important effects.
 
 ```ts
 @Effect()
