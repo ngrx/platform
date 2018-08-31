@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { cold } from 'jasmine-marbles';
 import { AuthGuard } from '@example-app/auth/services/auth-guard.service';
-import * as AuthActions from '@example-app/auth/actions/auth-api.actions';
+import { AuthApiActions } from '@example-app/auth/actions';
 import * as fromRoot from '@example-app/reducers';
 import * as fromAuth from '@example-app/auth/reducers';
 
@@ -33,7 +33,7 @@ describe('Auth Guard', () => {
 
   it('should return true if the user state is logged in', () => {
     const user: any = {};
-    const action = new AuthActions.LoginSuccess({ user });
+    const action = new AuthApiActions.LoginSuccess({ user });
     store.dispatch(action);
 
     const expected = cold('(a|)', { a: true });

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as CollectionActions from '@example-app/books/actions/collection-page.actions';
+import { CollectionPageActions } from '@example-app/books/actions';
 import { Book } from '@example-app/books/models/book';
 import * as fromBooks from '@example-app/books/reducers';
 
@@ -39,6 +39,6 @@ export class CollectionPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new CollectionActions.LoadCollection());
+    this.store.dispatch(new CollectionPageActions.LoadCollection());
   }
 }

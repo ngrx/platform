@@ -1,7 +1,6 @@
 import { reducer } from '@example-app/auth/reducers/auth.reducer';
 import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
-import { LoginSuccess } from '@example-app/auth/actions/auth-api.actions';
-import * as AuthActions from '@example-app/auth/actions/auth.actions';
+import { AuthApiActions, AuthActions } from '@example-app/auth/actions/';
 
 import { User } from '@example-app/auth/models/user';
 
@@ -26,7 +25,7 @@ describe('AuthReducer', () => {
   describe('LOGIN_SUCCESS', () => {
     it('should add a user set loggedIn to true in auth state', () => {
       const user = { name: 'test' } as User;
-      const createAction = new LoginSuccess({ user });
+      const createAction = new AuthApiActions.LoginSuccess({ user });
 
       const expectedResult = {
         user: { name: 'test' },

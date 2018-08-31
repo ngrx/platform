@@ -1,21 +1,11 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Book } from '@example-app/books/models/book';
 import {
-  BooksApiActionsUnion,
-  BooksApiActionTypes,
-} from '@example-app/books/actions/books-api.actions';
-import {
-  BookActionsUnion,
-  BookActionTypes,
-} from '@example-app/books/actions/book.actions';
-import {
-  ViewBookPageActionsUnion,
-  ViewBookPageActionTypes,
-} from '@example-app/books/actions/view-book-page.actions';
-import {
-  CollectionApiActionsUnion,
-  CollectionApiActionTypes,
-} from '@example-app/books/actions/collection-api.actions';
+  BooksApiActions,
+  BookActions,
+  ViewBookPageActions,
+  CollectionApiActions,
+} from '@example-app/books/actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling
@@ -53,14 +43,14 @@ export const initialState: State = adapter.getInitialState({
 export function reducer(
   state = initialState,
   action:
-    | BooksApiActionsUnion
-    | BookActionsUnion
-    | ViewBookPageActionsUnion
-    | CollectionApiActionsUnion
+    | BooksApiActions.BooksApiActionsUnion
+    | BookActions.BookActionsUnion
+    | ViewBookPageActions.ViewBookPageActionsUnion
+    | CollectionApiActions.CollectionApiActionsUnion
 ): State {
   switch (action.type) {
-    case BooksApiActionTypes.SearchSuccess:
-    case CollectionApiActionTypes.LoadBooksSuccess: {
+    case BooksApiActions.BooksApiActionTypes.SearchSuccess:
+    case CollectionApiActions.CollectionApiActionTypes.LoadBooksSuccess: {
       /**
        * The addMany function provided by the created adapter
        * adds many records to the entity dictionary
@@ -71,7 +61,7 @@ export function reducer(
       return adapter.addMany(action.payload, state);
     }
 
-    case BookActionTypes.LoadBook: {
+    case BookActions.BookActionTypes.LoadBook: {
       /**
        * The addOne function provided by the created adapter
        * adds one record to the entity dictionary
@@ -82,7 +72,7 @@ export function reducer(
       return adapter.addOne(action.payload, state);
     }
 
-    case ViewBookPageActionTypes.SelectBook: {
+    case ViewBookPageActions.ViewBookPageActionTypes.SelectBook: {
       return {
         ...state,
         selectedBookId: action.payload,

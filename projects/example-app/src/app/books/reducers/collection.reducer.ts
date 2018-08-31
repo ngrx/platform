@@ -1,12 +1,8 @@
-import { SelectedBookPageActionsUnion } from '@example-app/books/actions/selected-book-page.actions';
 import {
-  CollectionPageActionTypes,
-  CollectionPageActionsUnion,
-} from '@example-app/books/actions/collection-page.actions';
-import {
-  CollectionApiActionTypes,
-  CollectionApiActionsUnion,
-} from '@example-app/books/actions/collection-api.actions';
+  SelectedBookPageActions,
+  CollectionPageActions,
+  CollectionApiActions,
+} from '@example-app/books/actions';
 
 export interface State {
   loaded: boolean;
@@ -23,19 +19,19 @@ const initialState: State = {
 export function reducer(
   state = initialState,
   action:
-    | SelectedBookPageActionsUnion
-    | CollectionPageActionsUnion
-    | CollectionApiActionsUnion
+    | SelectedBookPageActions.SelectedBookPageActionsUnion
+    | CollectionPageActions.CollectionPageActionsUnion
+    | CollectionApiActions.CollectionApiActionsUnion
 ): State {
   switch (action.type) {
-    case CollectionPageActionTypes.LoadCollection: {
+    case CollectionPageActions.CollectionPageActionTypes.LoadCollection: {
       return {
         ...state,
         loading: true,
       };
     }
 
-    case CollectionApiActionTypes.LoadBooksSuccess: {
+    case CollectionApiActions.CollectionApiActionTypes.LoadBooksSuccess: {
       return {
         loaded: true,
         loading: false,
@@ -43,8 +39,8 @@ export function reducer(
       };
     }
 
-    case CollectionApiActionTypes.AddBookSuccess:
-    case CollectionApiActionTypes.RemoveBookFailure: {
+    case CollectionApiActions.CollectionApiActionTypes.AddBookSuccess:
+    case CollectionApiActions.CollectionApiActionTypes.RemoveBookFailure: {
       if (state.ids.indexOf(action.payload.id) > -1) {
         return state;
       }
@@ -55,8 +51,8 @@ export function reducer(
       };
     }
 
-    case CollectionApiActionTypes.RemoveBookSuccess:
-    case CollectionApiActionTypes.AddBookFailure: {
+    case CollectionApiActions.CollectionApiActionTypes.RemoveBookSuccess:
+    case CollectionApiActions.CollectionApiActionTypes.AddBookFailure: {
       return {
         ...state,
         ids: state.ids.filter(id => id !== action.payload.id),

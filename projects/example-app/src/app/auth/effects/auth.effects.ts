@@ -4,15 +4,11 @@ import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
-
-import * as LoginPageActions from '@example-app/auth/actions/login-page.actions';
-import * as AuthActions from '@example-app/auth/actions/auth.actions';
-
 import {
-  AuthApiActionTypes,
-  LoginFailure,
-  LoginSuccess,
-} from '@example-app/auth/actions/auth-api.actions';
+  LoginPageActions,
+  AuthActions,
+  AuthApiActions,
+} from '@example-app/auth/actions';
 import { Credentials } from '@example-app/auth/models/user';
 import { AuthService } from '@example-app/auth/services/auth.service';
 import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/logout-confirmation-dialog.component';
@@ -25,22 +21,22 @@ export class AuthEffects {
     map(action => action.payload.credentials),
     exhaustMap((auth: Credentials) =>
       this.authService.login(auth).pipe(
-        map(user => new LoginSuccess({ user })),
-        catchError(error => of(new LoginFailure({ error })))
+        map(user => new AuthApiActions.LoginSuccess({ user })),
+        catchError(error => of(new AuthApiActions.LoginFailure({ error })))
       )
     )
   );
 
   @Effect({ dispatch: false })
   loginSuccess$ = this.actions$.pipe(
-    ofType(AuthApiActionTypes.LoginSuccess),
+    ofType(AuthApiActions.AuthApiActionTypes.LoginSuccess),
     tap(() => this.router.navigate(['/']))
   );
 
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
     ofType(
-      AuthApiActionTypes.LoginRedirect,
+      AuthApiActions.AuthApiActionTypes.LoginRedirect,
       AuthActions.AuthActionTypes.Logout
     ),
     tap(authed => {
