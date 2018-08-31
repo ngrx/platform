@@ -32,7 +32,7 @@ export interface State extends EntityState<User> {
 
 ## EntityAdapter<T>
 
-Provides a generic type interface for the provided [entity adapter](./adapter.md#createentityadapter). The entity adapter provides many [collection methods](./adapter.md#adapter-collection-methods) for managing the entity state.
+Provides a generic type interface for the provided entity adapter. The entity adapter provides many collection methods for managing the entity state.
 
 Usage:
 

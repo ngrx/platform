@@ -57,13 +57,13 @@ Success case:
 - `ROUTER_NAVIGATION`
 - `ROUTER_NAVIGATED`
 
-Error / Cancel case (with early [Navigation Action Timing](./api.md#navigation-action-timing)):
+Error / Cancel case (with early Navigation Action Timing:
 
 - `ROUTER_REQUEST`
 - `ROUTER_NAVIGATION`
 - `ROUTER_CANCEL` / `ROUTER_ERROR`
 
-Error / Cancel case (with late [Navigation Action Timing](./api.md#navigation-action-timing))
+Error / Cancel case (with late Navigation Action Timing:
 
 - `ROUTER_REQUEST`
 - `ROUTER_CANCEL` / `ROUTER_ERROR`
@@ -76,7 +76,7 @@ At the start of each navigation, the router will dispatch a `ROUTER_REQUEST` act
 
 During navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action.
 
-If you want the `ROUTER_NAVIGATION` to be dispatched after guards or resolvers run, change the [Navigation Action Timing](./api.md#navigation-action-timing).
+If you want the `ROUTER_NAVIGATION` to be dispatched after guards or resolvers run, change the Navigation Action Timing.
 
 ##### ROUTER_NAVIGATED
 

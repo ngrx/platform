@@ -3,7 +3,7 @@
 ## createEntityAdapter<T>
 
 A method for returning a generic entity adapter for a single entity state collection. The
-returned adapter provides many [methods](#adapter-methods) for performing operations
+returned adapter provides many adapter methods for performing operations
 against the collection type. The method takes an object with 2 properties for configuration.
 
 - `selectId`: A `method` for selecting the primary id for the collection.
@@ -36,7 +36,7 @@ export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
 ## Adapter Methods
 
 These methods are provided by the adapter object returned
-when using [createEntityAdapter](#createentityadapter). The methods are used inside your reducer function to manage
+when using createEntityAdapter. The methods are used inside your reducer function to manage
 the entity collection based on your provided actions.
 
 ### getInitialState
