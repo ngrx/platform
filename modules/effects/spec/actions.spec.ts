@@ -63,7 +63,11 @@ describe('Actions', function() {
     const expected = actions.filter(type => type === ADD);
 
     actions$
-      .pipe(ofType(ADD), map(update => update.type), toArray())
+      .pipe(
+        ofType(ADD),
+        map(update => update.type),
+        toArray()
+      )
       .subscribe({
         next(actual) {
           expect(actual).toEqual(expected);

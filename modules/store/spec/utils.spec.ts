@@ -61,8 +61,14 @@ describe(`Store utils`, () => {
     const addPtTwo = (n: number) => n + 0.2;
 
     it(`should compose functions`, () => {
-      const addPrecision = compose(precision, addPtTwo);
-      const addPrecisionCubed = compose(cube, addPrecision);
+      const addPrecision = compose(
+        precision,
+        addPtTwo
+      );
+      const addPrecisionCubed = compose(
+        cube,
+        addPrecision
+      );
 
       expect(addPrecision(0.1)).toBe(0.3);
       expect(addPrecisionCubed(0.1)).toBe(0.027);

@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -15,27 +14,27 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
-import { findModuleFromOptions } from '../utility/find-module';
-import { Schema as ReducerOptions } from './schema';
 import {
-  addReducerToStateInferface,
-  addReducerToActionReducerMap,
+  getProjectPath,
+  findModuleFromOptions,
+  stringUtils,
   addReducerToState,
   addReducerImportToNgModule,
-} from '../utility/ngrx-utils';
+  parseName,
+} from '@ngrx/schematics/schematics-core';
+import { Schema as ReducerOptions } from './schema';
 
 export default function(options: ReducerOptions): Rule {
-  options.path = options.path ? normalize(options.path) : options.path;
-  const sourceDir = options.sourceDir;
-  if (!sourceDir) {
-    throw new SchematicsException(`sourceDir option is required.`);
-  }
-
   return (host: Tree, context: SchematicContext) => {
+    options.path = getProjectPath(host, options);
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
+
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
@@ -49,26 +48,13 @@ export default function(options: ReducerOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
-      move(sourceDir),
+      move(parsedPath.path),
     ]);
 
     return chain([
+      branchAndMerge(chain([addReducerToState(options)])),
       branchAndMerge(
-        chain([
-          filter(path => !path.includes('node_modules')),
-          addReducerToState(options),
-        ])
-      ),
-      branchAndMerge(
-        chain([
-          filter(
-            path =>
-              path.endsWith('.module.ts') &&
-              !path.endsWith('-routing.module.ts')
-          ),
-          addReducerImportToNgModule(options),
-          mergeWith(templateSource),
-        ])
+        chain([addReducerImportToNgModule(options), mergeWith(templateSource)])
       ),
     ])(host, context);
   };

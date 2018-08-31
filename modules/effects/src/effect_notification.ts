@@ -37,7 +37,7 @@ function reportInvalidActions(
         new Error(
           `Effect ${getEffectName(
             output
-          )} dispatched an invalid action: ${action}`
+          )} dispatched an invalid action: ${stringify(action)}`
         )
       );
     }
@@ -56,4 +56,12 @@ function getEffectName({
   const isMethod = typeof sourceInstance[propertyName] === 'function';
 
   return `"${sourceName}.${propertyName}${isMethod ? '()' : ''}"`;
+}
+
+function stringify(action: Action | null | undefined) {
+  try {
+    return JSON.stringify(action);
+  } catch {
+    return action;
+  }
 }

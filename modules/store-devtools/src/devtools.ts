@@ -1,4 +1,4 @@
-import { Injectable, Inject, OnDestroy, ErrorHandler } from '@angular/core';
+import { Injectable, Inject, ErrorHandler } from '@angular/core';
 import {
   Action,
   ActionReducer,
@@ -22,13 +22,12 @@ import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { DevtoolsExtension } from './extension';
 import { LiftedState, liftInitialState, liftReducerWith } from './reducer';
 import { liftAction, unliftState } from './utils';
-
-@Injectable()
-export class DevtoolsDispatcher extends ActionsSubject {}
+import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 @Injectable()
 export class StoreDevtools implements Observer<any> {
   private stateSubscription: Subscription;
+  private extensionStartSubscription: Subscription;
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
   public state: Observable<any>;
@@ -95,11 +94,16 @@ export class StoreDevtools implements Observer<any> {
         }
       });
 
+    const extensionStartSubscription = extension.start$.subscribe(() => {
+      this.refresh();
+    });
+
     const liftedState$ = liftedStateSubject.asObservable() as Observable<
       LiftedState
     >;
     const state$ = liftedState$.pipe(map(unliftState));
 
+    this.extensionStartSubscription = extensionStartSubscription;
     this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;
     this.liftedState = liftedState$;
@@ -120,6 +124,10 @@ export class StoreDevtools implements Observer<any> {
 
   performAction(action: any) {
     this.dispatch(new Actions.PerformAction(action, +Date.now()));
+  }
+
+  refresh() {
+    this.dispatch(new Actions.Refresh());
   }
 
   reset() {
@@ -152,5 +160,13 @@ export class StoreDevtools implements Observer<any> {
 
   importState(nextLiftedState: any) {
     this.dispatch(new Actions.ImportState(nextLiftedState));
+  }
+
+  lockChanges(status: boolean) {
+    this.dispatch(new Actions.LockChanges(status));
+  }
+
+  pauseRecording(status: boolean) {
+    this.dispatch(new Actions.PauseRecording(status));
   }
 }

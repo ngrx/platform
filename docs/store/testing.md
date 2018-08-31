@@ -12,7 +12,7 @@ my-component.ts
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromFeature from '../reducers';
-import * as Data from '../actions/data';
+import * as DataActions from '../actions/data';
 
 @Component({
   selector: 'my-component',
@@ -28,11 +28,11 @@ export class MyComponent implements OnInit {
   constructor(private store: Store<fromFeature.State>) {}
 
   ngOnInit() {
-    this.store.dispatch(new Data.LoadData());
+    this.store.dispatch(new DataActions.LoadData());
   }
 
   onRefresh() {
-    this.store.dispatch(new Data.RefreshItems());
+    this.store.dispatch(new DataActions.RefreshItems());
   }
 }
 ```
@@ -44,7 +44,7 @@ import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { MyComponent } from './my.component';
 import * as fromRoot from '../reducers';
 import * as fromFeature from './reducers';
-import * as Data from '../actions/data';
+import * as DataActions from '../actions/data';
 
 describe('My Component', () => {
   let component: MyComponent;
@@ -83,13 +83,13 @@ describe('My Component', () => {
   });
 
   it('should dispatch an action to load data when created', () => {
-    const action = new Data.LoadData();
+    const action = new DataActions.LoadData();
 
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 
   it('should dispatch an action to refreshing data', () => {
-    const action = new Data.RefreshData();
+    const action = new DataActions.RefreshData();
 
     component.onRefresh();
 
@@ -98,7 +98,7 @@ describe('My Component', () => {
 
   it('should display a list of items after the data is loaded', () => {
     const items = [1, 2, 3];
-    const action = new Data.LoadDataSuccess({ items });
+    const action = new DataActions.LoadDataSuccess({ items });
 
     store.dispatch(action);
 

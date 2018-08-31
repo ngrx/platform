@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -14,16 +13,18 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import * as ts from 'typescript';
-import * as stringUtils from '../strings';
-import { addImportToModule } from '../utility/ast-utils';
-import { InsertChange } from '../utility/change';
 import {
+  InsertChange,
+  addImportToModule,
   buildRelativePath,
   findModuleFromOptions,
-} from '../utility/find-module';
+  getProjectPath,
+  insertImport,
+  parseName,
+  stringUtils,
+} from '@ngrx/schematics/schematics-core';
+import * as ts from 'typescript';
 import { Schema as EffectOptions } from './schema';
-import { insertImport } from '../utility/route-utils';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
@@ -34,7 +35,7 @@ function addImportToNgModule(options: EffectOptions): Rule {
     }
 
     if (!host.exists(modulePath)) {
-      throw new Error('Specified module does not exist');
+      throw new Error(`Specified module path ${modulePath} does not exist`);
     }
 
     const text = host.read(modulePath);
@@ -60,7 +61,7 @@ function addImportToNgModule(options: EffectOptions): Rule {
     );
 
     const effectsPath =
-      `/${options.sourceDir}/${options.path}/` +
+      `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       (options.group ? 'effects/' : '') +
       stringUtils.dasherize(options.name) +
@@ -92,16 +93,16 @@ function addImportToNgModule(options: EffectOptions): Rule {
 }
 
 export default function(options: EffectOptions): Rule {
-  options.path = options.path ? normalize(options.path) : options.path;
-  const sourceDir = options.sourceDir;
-  if (!sourceDir) {
-    throw new SchematicsException(`sourceDir option is required.`);
-  }
-
   return (host: Tree, context: SchematicContext) => {
+    options.path = getProjectPath(host, options);
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
+
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
       options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
@@ -115,20 +116,12 @@ export default function(options: EffectOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
-      move(sourceDir),
+      move(parsedPath.path),
     ]);
 
     return chain([
       branchAndMerge(
-        chain([
-          filter(
-            path =>
-              path.endsWith('.module.ts') &&
-              !path.endsWith('-routing.module.ts')
-          ),
-          addImportToNgModule(options),
-          mergeWith(templateSource),
-        ])
+        chain([addImportToNgModule(options), mergeWith(templateSource)])
       ),
     ])(host, context);
   };

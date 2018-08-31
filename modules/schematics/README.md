@@ -1,6 +1,5 @@
-@ngrx/schematics
-=======
+# @ngrx/schematics
 
-The sources for this package are in the main [ngrx/platform](https://github.com/ngrx/platform) repo. Please file issues and pull requests against that repo.
+The sources for this package are in the main [NgRx](https://github.com/ngrx/platform) repo. Please file issues and pull requests against that repo.
 
 License: MIT

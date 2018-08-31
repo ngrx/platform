@@ -25,13 +25,15 @@ export function mergeEffects(
       const materialized$ = observable.pipe(materialize());
 
       return materialized$.pipe(
-        map((notification: Notification<Action>): EffectNotification => ({
-          effect: sourceInstance[propertyName],
-          notification,
-          propertyName,
-          sourceName,
-          sourceInstance,
-        }))
+        map(
+          (notification: Notification<Action>): EffectNotification => ({
+            effect: sourceInstance[propertyName],
+            notification,
+            propertyName,
+            sourceName,
+            sourceInstance,
+          })
+        )
       );
     }
   );

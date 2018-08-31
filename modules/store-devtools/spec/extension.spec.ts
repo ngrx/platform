@@ -1,25 +1,33 @@
 import { LiftedActions, ComputedState, LiftedAction } from './../src/reducer';
 import { PerformAction, PERFORM_ACTION } from './../src/actions';
-import { ActionSanitizer, StateSanitizer } from './../src/config';
 import {
   ReduxDevtoolsExtensionConnection,
   ReduxDevtoolsExtensionConfig,
 } from './../src/extension';
 import { Action } from '@ngrx/store';
 
-import { LiftedState } from '../';
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
-import { createConfig, noMonitor } from '../src/instrument';
+import { createConfig } from '../src/config';
 import { unliftState } from '../src/utils';
 
 function createOptions(
   name: string = 'NgRx Store DevTools',
-  features: any = false,
-  serialize: boolean = false,
+  features: any = {
+    pause: true,
+    lock: true,
+    persist: true,
+    export: true,
+    import: 'custom',
+    jump: true,
+    skip: true,
+    reorder: true,
+    dispatch: true,
+    test: true,
+  },
+  serialize: boolean | undefined = false,
   maxAge: false | number = false
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
-    instanceId: 'ngrx-store-1509655064369',
     name,
     features,
     serialize,
@@ -32,7 +40,9 @@ function createOptions(
 
 function createState(
   actionsById?: LiftedActions,
-  computedStates?: ComputedState[]
+  computedStates?: ComputedState[],
+  isLocked = false,
+  isPaused = false
 ) {
   return {
     monitorState: null,
@@ -50,6 +60,8 @@ function createState(
         error: null,
       },
     ],
+    isLocked,
+    isPaused,
   };
 }
 
@@ -70,7 +82,6 @@ describe('DevtoolsExtension', () => {
     (reduxDevtoolsExtension.connect as jasmine.Spy).and.returnValue(
       extensionConnection
     );
-    spyOn(Date, 'now').and.returnValue('1509655064369');
   });
 
   function myActionSanitizer(action: Action, idx: number) {
@@ -84,7 +95,8 @@ describe('DevtoolsExtension', () => {
   it('should connect with default options', () => {
     devtoolsExtension = new DevtoolsExtension(
       reduxDevtoolsExtension,
-      createConfig({})
+      createConfig({}),
+      <any>null
     );
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
@@ -103,7 +115,8 @@ describe('DevtoolsExtension', () => {
         // these two should not be added
         actionSanitizer: myActionSanitizer,
         stateSanitizer: myStateSanitizer,
-      })
+      }),
+      <any>null
     );
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
@@ -116,11 +129,32 @@ describe('DevtoolsExtension', () => {
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
   });
 
+  it('should connect with custom serializer', () => {
+    const customSerializer = {
+      replacer: (key: {}, value: any) => value,
+    };
+
+    devtoolsExtension = new DevtoolsExtension(
+      reduxDevtoolsExtension,
+      createConfig({
+        name: 'ngrx-store-devtool-todolist',
+        serialize: customSerializer,
+      }),
+      <any>null
+    );
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(
+      jasmine.objectContaining({ serialize: customSerializer })
+    );
+  });
+
   describe('notify', () => {
     it('should send notification with default options', () => {
       devtoolsExtension = new DevtoolsExtension(
         reduxDevtoolsExtension,
-        createConfig({})
+        createConfig({}),
+        <any>null
       );
       const defaultOptions = createOptions();
       const action = {} as LiftedAction;
@@ -129,8 +163,7 @@ describe('DevtoolsExtension', () => {
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         state,
-        defaultOptions,
-        'ngrx-store-1509655064369'
+        defaultOptions
       );
     });
 
@@ -145,7 +178,8 @@ describe('DevtoolsExtension', () => {
           // these two should not be added
           actionSanitizer: myActionSanitizer,
           stateSanitizer: myStateSanitizer,
-        })
+        }),
+        <any>null
       );
       const options = createOptions(
         'ngrx-store-devtool-todolist',
@@ -159,8 +193,7 @@ describe('DevtoolsExtension', () => {
       expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
         null,
         state,
-        options,
-        'ngrx-store-1509655064369'
+        options
       );
     });
 
@@ -170,7 +203,7 @@ describe('DevtoolsExtension', () => {
       const SANITIZED_COUNTER = 42;
 
       function createPerformAction() {
-        return new PerformAction({ type: UNSANITIZED_TOKEN }, +Date.now());
+        return new PerformAction({ type: UNSANITIZED_TOKEN }, 1234567);
       }
 
       function testActionSanitizer(action: Action, id: number) {
@@ -185,7 +218,8 @@ describe('DevtoolsExtension', () => {
         beforeEach(() => {
           devtoolsExtension = new DevtoolsExtension(
             reduxDevtoolsExtension,
-            createConfig({})
+            createConfig({}),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -211,8 +245,7 @@ describe('DevtoolsExtension', () => {
           expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
             null,
             state,
-            options,
-            'ngrx-store-1509655064369'
+            options
           );
         });
       });
@@ -223,7 +256,8 @@ describe('DevtoolsExtension', () => {
             reduxDevtoolsExtension,
             createConfig({
               actionSanitizer: testActionSanitizer,
-            })
+            }),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -257,8 +291,7 @@ describe('DevtoolsExtension', () => {
           expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
             null,
             sanitizedState,
-            options,
-            'ngrx-store-1509655064369'
+            options
           );
         });
       });
@@ -269,7 +302,8 @@ describe('DevtoolsExtension', () => {
             reduxDevtoolsExtension,
             createConfig({
               stateSanitizer: testStateSanitizer,
-            })
+            }),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -301,8 +335,7 @@ describe('DevtoolsExtension', () => {
           expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
             null,
             sanitizedState,
-            options,
-            'ngrx-store-1509655064369'
+            options
           );
         });
       });
@@ -314,7 +347,8 @@ describe('DevtoolsExtension', () => {
             createConfig({
               actionSanitizer: testActionSanitizer,
               stateSanitizer: testStateSanitizer,
-            })
+            }),
+            <any>null
           );
           // Subscription needed or else extension connection will not be established.
           devtoolsExtension.actions$.subscribe(() => null);
@@ -338,6 +372,76 @@ describe('DevtoolsExtension', () => {
           expect(action).toEqual({} as LiftedAction);
         });
       });
+    });
+  });
+
+  describe('with locked recording', () => {
+    beforeEach(() => {
+      devtoolsExtension = new DevtoolsExtension(
+        reduxDevtoolsExtension,
+        createConfig({}),
+        <any>null
+      );
+      // Subscription needed or else extension connection will not be established.
+      devtoolsExtension.actions$.subscribe(() => null);
+    });
+
+    it('should not notify extension of PERFORM_ACTIONs', () => {
+      const action = new PerformAction({ type: 'ACTION' }, +Date.now());
+      const state = createState(undefined, undefined, true);
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).not.toHaveBeenCalled();
+    });
+
+    it('should notify extension of actions that require full state update', () => {
+      const action = {} as LiftedAction;
+      const state = createState(undefined, undefined, true);
+      const options = createOptions();
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
+        null,
+        state,
+        options
+      );
+    });
+  });
+
+  describe('with paused recording', () => {
+    beforeEach(() => {
+      devtoolsExtension = new DevtoolsExtension(
+        reduxDevtoolsExtension,
+        createConfig({}),
+        <any>null
+      );
+      // Subscription needed or else extension connection will not be established.
+      devtoolsExtension.actions$.subscribe(() => null);
+    });
+
+    it('should not notify extension of PERFORM_ACTIONs', () => {
+      const action = new PerformAction({ type: 'ACTION' }, +Date.now());
+      const state = createState(undefined, undefined, undefined, true);
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).not.toHaveBeenCalled();
+    });
+
+    it('should notify extension of actions that require full state update', () => {
+      const action = {} as LiftedAction;
+      const state = createState(undefined, undefined, undefined, true);
+      const options = createOptions();
+
+      devtoolsExtension.notify(action, state);
+      expect(extensionConnection.send).not.toHaveBeenCalled();
+      expect(reduxDevtoolsExtension.send).toHaveBeenCalledWith(
+        null,
+        state,
+        options
+      );
     });
   });
 });

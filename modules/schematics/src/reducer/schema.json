@@ -5,18 +5,18 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
-    },
-    "appRoot": {
-      "type": "string"
+      "description": "The name of the reducer.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
     "path": {
       "type": "string",
-      "default": "app"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
+      "format": "path",
+      "description": "The path to create the component.",
+      "visible": false
     },
     "spec": {
       "type": "boolean",
@@ -50,7 +50,5 @@
       "aliases": ["g"]
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": []
 }

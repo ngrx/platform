@@ -2,24 +2,31 @@ export {
   ROUTER_ERROR,
   ROUTER_CANCEL,
   ROUTER_NAVIGATION,
-  RouterNavigationAction,
-  RouterCancelAction,
-  RouterErrorAction,
+  ROUTER_NAVIGATED,
+  ROUTER_REQUEST,
   RouterAction,
-  routerReducer,
-  RouterErrorPayload,
-  RouterReducerState,
+  RouterCancelAction,
   RouterCancelPayload,
+  RouterErrorAction,
+  RouterErrorPayload,
+  RouterNavigatedAction,
+  RouterNavigatedPayload,
+  RouterNavigationAction,
   RouterNavigationPayload,
+  RouterRequestAction,
+  RouterRequestPayload,
+} from './actions';
+export { routerReducer, RouterReducerState } from './reducer';
+export {
   StoreRouterConnectingModule,
   StoreRouterConfig,
-  StoreRouterConfigFunction,
+  NavigationActionTiming,
   ROUTER_CONFIG,
   DEFAULT_ROUTER_FEATURENAME,
 } from './router_store_module';
-
 export {
   RouterStateSerializer,
   DefaultRouterStateSerializer,
   SerializedRouterStateSnapshot,
+  BaseRouterStoreState,
 } from './serializer';

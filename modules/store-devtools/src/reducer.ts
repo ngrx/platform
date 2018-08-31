@@ -8,7 +8,7 @@ import {
   INIT,
 } from '@ngrx/store';
 import { difference, liftAction } from './utils';
-import * as Actions from './actions';
+import * as DevtoolsActions from './actions';
 import { StoreDevtoolsConfig, StateSanitizer } from './config';
 import { PerformAction } from './actions';
 
@@ -21,7 +21,7 @@ export type UpdateReducerAction = {
 };
 
 export type CoreActions = InitAction | UpdateReducerAction;
-export type Actions = Actions.All | CoreActions;
+export type Actions = DevtoolsActions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
@@ -48,6 +48,8 @@ export interface LiftedState {
   committedState: any;
   currentStateIndex: number;
   computedStates: ComputedState[];
+  isLocked: boolean;
+  isPaused: boolean;
 }
 
 /**
@@ -93,7 +95,8 @@ function recomputeStates(
   actionsById: LiftedActions,
   stagedActionIds: number[],
   skippedActionIds: number[],
-  errorHandler: ErrorHandler
+  errorHandler: ErrorHandler,
+  isPaused: boolean
 ) {
   // Optimization: exit early and return the same reference
   // if we know nothing could have changed.
@@ -105,7 +108,10 @@ function recomputeStates(
   }
 
   const nextComputedStates = computedStates.slice(0, minInvalidatedStateIndex);
-  for (let i = minInvalidatedStateIndex; i < stagedActionIds.length; i++) {
+  // If the recording is paused, recompute all states up until the pause state,
+  // else recompute all states.
+  const lastIncludedActionId = stagedActionIds.length - (isPaused ? 1 : 0);
+  for (let i = minInvalidatedStateIndex; i < lastIncludedActionId; i++) {
     const actionId = stagedActionIds[i];
     const action = actionsById[actionId].action;
 
@@ -126,6 +132,11 @@ function recomputeStates(
 
     nextComputedStates.push(entry);
   }
+  // If the recording is paused, the last state will not be recomputed,
+  // because it's essentially not part of the state history.
+  if (isPaused) {
+    nextComputedStates.push(computedStates[computedStates.length - 1]);
+  }
 
   return nextComputedStates;
 }
@@ -143,6 +154,8 @@ export function liftInitialState(
     committedState: initialCommittedState,
     currentStateIndex: 0,
     computedStates: [],
+    isLocked: false,
+    isPaused: false,
   };
 }
 
@@ -171,6 +184,8 @@ export function liftReducerWith(
       committedState,
       currentStateIndex,
       computedStates,
+      isLocked,
+      isPaused,
     } =
       liftedState || initialLiftedState;
 
@@ -205,13 +220,58 @@ export function liftReducerWith(
         currentStateIndex > excess ? currentStateIndex - excess : 0;
     }
 
+    function commitChanges() {
+      // Consider the last committed state the new starting point.
+      // Squash any staged actions into a single committed state.
+      actionsById = { 0: liftAction(INIT_ACTION) };
+      nextActionId = 1;
+      stagedActionIds = [0];
+      skippedActionIds = [];
+      committedState = computedStates[currentStateIndex].state;
+      currentStateIndex = 0;
+      computedStates = [];
+    }
+
     // By default, aggressively recompute every state whatever happens.
     // This has O(n) performance, so we'll override this to a sensible
     // value whenever we feel like we don't have to recompute the states.
     let minInvalidatedStateIndex = 0;
 
     switch (liftedAction.type) {
-      case Actions.RESET: {
+      case DevtoolsActions.LOCK_CHANGES: {
+        isLocked = liftedAction.status;
+        minInvalidatedStateIndex = Infinity;
+        break;
+      }
+      case DevtoolsActions.PAUSE_RECORDING: {
+        isPaused = liftedAction.status;
+        if (isPaused) {
+          // Add a pause action to signal the devtools-user the recording is paused.
+          // The corresponding state will be overwritten on each update to always contain
+          // the latest state (see Actions.PERFORM_ACTION).
+          stagedActionIds = [...stagedActionIds, nextActionId];
+          actionsById[nextActionId] = new PerformAction(
+            {
+              type: '@ngrx/devtools/pause',
+            },
+            +Date.now()
+          );
+          nextActionId++;
+          minInvalidatedStateIndex = stagedActionIds.length - 1;
+          computedStates = computedStates.concat(
+            computedStates[computedStates.length - 1]
+          );
+
+          if (currentStateIndex === stagedActionIds.length - 2) {
+            currentStateIndex++;
+          }
+          minInvalidatedStateIndex = Infinity;
+        } else {
+          commitChanges();
+        }
+        break;
+      }
+      case DevtoolsActions.RESET: {
         // Get back to the state the store was created with.
         actionsById = { 0: liftAction(INIT_ACTION) };
         nextActionId = 1;
@@ -222,19 +282,11 @@ export function liftReducerWith(
         computedStates = [];
         break;
       }
-      case Actions.COMMIT: {
-        // Consider the last committed state the new starting point.
-        // Squash any staged actions into a single committed state.
-        actionsById = { 0: liftAction(INIT_ACTION) };
-        nextActionId = 1;
-        stagedActionIds = [0];
-        skippedActionIds = [];
-        committedState = computedStates[currentStateIndex].state;
-        currentStateIndex = 0;
-        computedStates = [];
+      case DevtoolsActions.COMMIT: {
+        commitChanges();
         break;
       }
-      case Actions.ROLLBACK: {
+      case DevtoolsActions.ROLLBACK: {
         // Forget about any staged actions.
         // Start again from the last committed state.
         actionsById = { 0: liftAction(INIT_ACTION) };
@@ -245,7 +297,7 @@ export function liftReducerWith(
         computedStates = [];
         break;
       }
-      case Actions.TOGGLE_ACTION: {
+      case DevtoolsActions.TOGGLE_ACTION: {
         // Toggle whether an action with given ID is skipped.
         // Being skipped means it is a no-op during the computation.
         const { id: actionId } = liftedAction;
@@ -259,7 +311,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = stagedActionIds.indexOf(actionId);
         break;
       }
-      case Actions.SET_ACTIONS_ACTIVE: {
+      case DevtoolsActions.SET_ACTIONS_ACTIVE: {
         // Toggle whether an action with given ID is skipped.
         // Being skipped means it is a no-op during the computation.
         const { start, end, active } = liftedAction;
@@ -275,7 +327,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = stagedActionIds.indexOf(start);
         break;
       }
-      case Actions.JUMP_TO_STATE: {
+      case DevtoolsActions.JUMP_TO_STATE: {
         // Without recomputing anything, move the pointer that tell us
         // which state is considered the current one. Useful for sliders.
         currentStateIndex = liftedAction.index;
@@ -283,7 +335,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = Infinity;
         break;
       }
-      case Actions.JUMP_TO_ACTION: {
+      case DevtoolsActions.JUMP_TO_ACTION: {
         // Jumps to a corresponding state to a specific action.
         // Useful when filtering actions.
         const index = stagedActionIds.indexOf(liftedAction.actionId);
@@ -291,7 +343,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = Infinity;
         break;
       }
-      case Actions.SWEEP: {
+      case DevtoolsActions.SWEEP: {
         // Forget any actions that are currently being skipped.
         stagedActionIds = difference(stagedActionIds, skippedActionIds);
         skippedActionIds = [];
@@ -301,7 +353,32 @@ export function liftReducerWith(
         );
         break;
       }
-      case Actions.PERFORM_ACTION: {
+      case DevtoolsActions.PERFORM_ACTION: {
+        // Ignore action and return state as is if recording is locked
+        if (isLocked) {
+          return liftedState || initialLiftedState;
+        }
+
+        if (isPaused) {
+          // If recording is paused, overwrite the last state
+          // (corresponds to the pause action) and keep everything else as is.
+          // This way, the app gets the new current state while the devtools
+          // do not record another action.
+          const lastState = computedStates[computedStates.length - 1];
+          computedStates = [
+            ...computedStates.slice(0, -1),
+            computeNextEntry(
+              reducer,
+              liftedAction.action,
+              lastState.state,
+              lastState.error,
+              errorHandler
+            ),
+          ];
+          minInvalidatedStateIndex = Infinity;
+          break;
+        }
+
         // Auto-commit as new actions come in.
         if (options.maxAge && stagedActionIds.length === options.maxAge) {
           commitExcessActions(1);
@@ -320,7 +397,7 @@ export function liftReducerWith(
         minInvalidatedStateIndex = stagedActionIds.length - 1;
         break;
       }
-      case Actions.IMPORT_STATE: {
+      case DevtoolsActions.IMPORT_STATE: {
         // Completely replace everything.
         ({
           monitorState,
@@ -331,6 +408,9 @@ export function liftReducerWith(
           committedState,
           currentStateIndex,
           computedStates,
+          isLocked,
+          // prettier-ignore
+          isPaused
         } = liftedAction.nextLiftedState);
         break;
       }
@@ -348,7 +428,8 @@ export function liftReducerWith(
             actionsById,
             stagedActionIds,
             skippedActionIds,
-            errorHandler
+            errorHandler,
+            isPaused
           );
 
           commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -377,7 +458,8 @@ export function liftReducerWith(
               actionsById,
               stagedActionIds,
               skippedActionIds,
-              errorHandler
+              errorHandler,
+              isPaused
             );
 
             commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -386,28 +468,35 @@ export function liftReducerWith(
             minInvalidatedStateIndex = Infinity;
           }
         } else {
-          if (currentStateIndex === stagedActionIds.length - 1) {
-            currentStateIndex++;
+          // If not paused/locked, add a new action to signal devtools-user
+          // that there was a reducer update.
+          if (!isPaused && !isLocked) {
+            if (currentStateIndex === stagedActionIds.length - 1) {
+              currentStateIndex++;
+            }
+
+            // Add a new action to only recompute state
+            const actionId = nextActionId++;
+            actionsById[actionId] = new PerformAction(
+              liftedAction,
+              +Date.now()
+            );
+            stagedActionIds = [...stagedActionIds, actionId];
+
+            minInvalidatedStateIndex = stagedActionIds.length - 1;
+
+            computedStates = recomputeStates(
+              computedStates,
+              minInvalidatedStateIndex,
+              reducer,
+              committedState,
+              actionsById,
+              stagedActionIds,
+              skippedActionIds,
+              errorHandler,
+              isPaused
+            );
           }
-
-          // Add a new action to only recompute state
-          const actionId = nextActionId++;
-          actionsById[actionId] = new PerformAction(liftedAction, +Date.now());
-          stagedActionIds = [...stagedActionIds, actionId];
-
-          minInvalidatedStateIndex = stagedActionIds.length - 1;
-
-          // States must be recomputed before committing excess.
-          computedStates = recomputeStates(
-            computedStates,
-            minInvalidatedStateIndex,
-            reducer,
-            committedState,
-            actionsById,
-            stagedActionIds,
-            skippedActionIds,
-            errorHandler
-          );
 
           // Recompute state history with latest reducer and update action
           computedStates = computedStates.map(cmp => ({
@@ -415,7 +504,7 @@ export function liftReducerWith(
             state: reducer(cmp.state, liftedAction),
           }));
 
-          currentStateIndex = minInvalidatedStateIndex;
+          currentStateIndex = stagedActionIds.length - 1;
 
           if (options.maxAge && stagedActionIds.length > options.maxAge) {
             commitExcessActions(stagedActionIds.length - options.maxAge);
@@ -443,7 +532,8 @@ export function liftReducerWith(
       actionsById,
       stagedActionIds,
       skippedActionIds,
-      errorHandler
+      errorHandler,
+      isPaused
     );
     monitorState = monitorReducer(monitorState, liftedAction);
 
@@ -456,6 +546,8 @@ export function liftReducerWith(
       committedState,
       currentStateIndex,
       computedStates,
+      isLocked,
+      isPaused,
     };
   };
 }

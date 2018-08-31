@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page should compile 1`] = `
+<bc-login-page
+  error$={[Function Store]}
+  pending$={[Function Store]}
+  store={[Function Store]}
+>
+  <bc-login-form
+    _nghost-c0=""
+    ng-reflect-pending="false"
+  >
+    <mat-card
+      _ngcontent-c0=""
+      class="mat-card"
+    >
+      <mat-card-title
+        _ngcontent-c0=""
+        class="mat-card-title"
+      >
+        Login
+      </mat-card-title>
+      <mat-card-content
+        _ngcontent-c0=""
+        class="mat-card-content"
+      >
+        <form
+          _ngcontent-c0=""
+          class="ng-untouched ng-pristine ng-valid"
+          ng-reflect-form="[object Object]"
+          novalidate=""
+        >
+          <p
+            _ngcontent-c0=""
+          >
+            <mat-form-field
+              _ngcontent-c0=""
+              class="mat-form-field ng-tns-c2-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+            >
+              <div
+                class="mat-form-field-wrapper"
+              >
+                <div
+                  class="mat-form-field-flex"
+                >
+                  
+                  
+                  <div
+                    class="mat-form-field-infix"
+                  >
+                    <input
+                      _ngcontent-c0=""
+                      aria-invalid="false"
+                      aria-required="false"
+                      class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
+                      formcontrolname="username"
+                      id="mat-input-0"
+                      matinput=""
+                      ng-reflect-name="username"
+                      ng-reflect-placeholder="Username"
+                      ng-reflect-type="text"
+                      placeholder="Username"
+                      type="text"
+                    />
+                    <span
+                      class="mat-form-field-label-wrapper"
+                    >
+                      
+                      <label
+                        aria-owns="mat-input-0"
+                        class="mat-form-field-label ng-tns-c2-0 mat-empty mat-form-field-empty ng-star-inserted"
+                        for="mat-input-0"
+                        id="mat-form-field-label-1"
+                        ng-reflect-ng-switch="false"
+                      >
+                        
+                        
+                        Username
+                        
+                        
+                      </label>
+                    </span>
+                  </div>
+                  
+                </div>
+                
+                <div
+                  class="mat-form-field-underline ng-tns-c2-0 ng-star-inserted"
+                >
+                  <span
+                    class="mat-form-field-ripple"
+                  />
+                </div>
+                <div
+                  class="mat-form-field-subscript-wrapper"
+                  ng-reflect-ng-switch="hint"
+                >
+                  
+                  
+                  <div
+                    class="mat-form-field-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                    style="opacity:1;0:opacity;transform:translateY(0%);"
+                  >
+                    
+                    <div
+                      class="mat-form-field-hint-spacer"
+                    />
+                  </div>
+                </div>
+              </div>
+            </mat-form-field>
+          </p>
+          <p
+            _ngcontent-c0=""
+          >
+            <mat-form-field
+              _ngcontent-c0=""
+              class="mat-form-field ng-tns-c2-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+            >
+              <div
+                class="mat-form-field-wrapper"
+              >
+                <div
+                  class="mat-form-field-flex"
+                >
+                  
+                  
+                  <div
+                    class="mat-form-field-infix"
+                  >
+                    <input
+                      _ngcontent-c0=""
+                      aria-invalid="false"
+                      aria-required="false"
+                      class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
+                      formcontrolname="password"
+                      id="mat-input-1"
+                      matinput=""
+                      ng-reflect-name="password"
+                      ng-reflect-placeholder="Password"
+                      ng-reflect-type="password"
+                      placeholder="Password"
+                      type="password"
+                    />
+                    <span
+                      class="mat-form-field-label-wrapper"
+                    >
+                      
+                      <label
+                        aria-owns="mat-input-1"
+                        class="mat-form-field-label ng-tns-c2-1 mat-empty mat-form-field-empty ng-star-inserted"
+                        for="mat-input-1"
+                        id="mat-form-field-label-3"
+                        ng-reflect-ng-switch="false"
+                      >
+                        
+                        
+                        Password
+                        
+                        
+                      </label>
+                    </span>
+                  </div>
+                  
+                </div>
+                
+                <div
+                  class="mat-form-field-underline ng-tns-c2-1 ng-star-inserted"
+                >
+                  <span
+                    class="mat-form-field-ripple"
+                  />
+                </div>
+                <div
+                  class="mat-form-field-subscript-wrapper"
+                  ng-reflect-ng-switch="hint"
+                >
+                  
+                  
+                  <div
+                    class="mat-form-field-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                    style="opacity:1;0:opacity;transform:translateY(0%);"
+                  >
+                    
+                    <div
+                      class="mat-form-field-hint-spacer"
+                    />
+                  </div>
+                </div>
+              </div>
+            </mat-form-field>
+          </p>
+          
+          <p
+            _ngcontent-c0=""
+            class="loginButtons"
+          >
+            <button
+              _ngcontent-c0=""
+              mat-button=""
+              type="submit"
+            >
+              Login
+            </button>
+          </p>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </bc-login-form>
+</bc-login-page>
+`;

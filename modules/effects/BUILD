@@ -23,6 +23,11 @@ ng_package(
         "//modules/effects/testing:package.json",
     ],
     entry_point = "modules/effects/index.js",
+    packages = [
+        "//modules/effects/migrations:npm_package",
+        "//modules/effects/schematics:npm_package",
+        "//modules/effects/schematics-core:npm_package",
+    ],
     deps = [
         ":effects",
         "//modules/effects/testing",

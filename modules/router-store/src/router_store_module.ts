@@ -3,120 +3,49 @@ import {
   InjectionToken,
   ModuleWithProviders,
   NgModule,
+  ErrorHandler,
 } from '@angular/core';
 import {
   NavigationCancel,
   NavigationError,
+  NavigationEnd,
   Router,
-  RouterStateSnapshot,
   RoutesRecognized,
+  NavigationStart,
 } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { withLatestFrom } from 'rxjs/operators';
 
+import {
+  ROUTER_CANCEL,
+  ROUTER_ERROR,
+  ROUTER_NAVIGATED,
+  ROUTER_NAVIGATION,
+  ROUTER_REQUEST,
+} from './actions';
+import { RouterReducerState } from './reducer';
 import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
   SerializedRouterStateSnapshot,
 } from './serializer';
 
-/**
- * An action dispatched when the router navigates.
- */
-export const ROUTER_NAVIGATION = 'ROUTER_NAVIGATION';
-
-/**
- * Payload of ROUTER_NAVIGATION.
- */
-export type RouterNavigationPayload<T> = {
-  routerState: T;
-  event: RoutesRecognized;
-};
-
-/**
- * An action dispatched when the router navigates.
- */
-export type RouterNavigationAction<T = SerializedRouterStateSnapshot> = {
-  type: typeof ROUTER_NAVIGATION;
-  payload: RouterNavigationPayload<T>;
-};
-
-/**
- * An action dispatched when the router cancels navigation.
- */
-export const ROUTER_CANCEL = 'ROUTER_CANCEL';
-
-/**
- * Payload of ROUTER_CANCEL.
- */
-export type RouterCancelPayload<T, V> = {
-  routerState: V;
-  storeState: T;
-  event: NavigationCancel;
-};
-
-/**
- * An action dispatched when the router cancel navigation.
- */
-export type RouterCancelAction<T, V = SerializedRouterStateSnapshot> = {
-  type: typeof ROUTER_CANCEL;
-  payload: RouterCancelPayload<T, V>;
-};
-
-/**
- * An action dispatched when the router errors.
- */
-export const ROUTER_ERROR = 'ROUTE_ERROR';
-
-/**
- * Payload of ROUTER_ERROR.
- */
-export type RouterErrorPayload<T, V> = {
-  routerState: V;
-  storeState: T;
-  event: NavigationError;
-};
-
-/**
- * An action dispatched when the router errors.
- */
-export type RouterErrorAction<T, V = SerializedRouterStateSnapshot> = {
-  type: typeof ROUTER_ERROR;
-  payload: RouterErrorPayload<T, V>;
-};
-
-/**
- * An union type of router actions.
- */
-export type RouterAction<T, V = SerializedRouterStateSnapshot> =
-  | RouterNavigationAction<V>
-  | RouterCancelAction<T, V>
-  | RouterErrorAction<T, V>;
-
-export type RouterReducerState<T = SerializedRouterStateSnapshot> = {
-  state: T;
-  navigationId: number;
-};
-
-export function routerReducer<T = SerializedRouterStateSnapshot>(
-  state: RouterReducerState<T> | undefined,
-  action: RouterAction<any, T>
-): RouterReducerState<T> {
-  switch (action.type) {
-    case ROUTER_NAVIGATION:
-    case ROUTER_ERROR:
-    case ROUTER_CANCEL:
-      return {
-        state: action.payload.routerState,
-        navigationId: action.payload.event.id,
-      };
-    default:
-      return state as RouterReducerState<T>;
-  }
-}
-
 export interface StoreRouterConfig {
   stateKey?: string;
+  serializer?: new (...args: any[]) => RouterStateSerializer;
+  /**
+   * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
+   * Therefore, the action could run too soon, for example
+   * there may be a navigation cancel due to a guard saying the navigation is not allowed.
+   * To run ROUTER_NAVIGATION after guards and resolvers,
+   * set this property to NavigationActionTiming.PostActivation.
+   */
+  navigationActionTiming?: NavigationActionTiming;
+}
+
+export enum NavigationActionTiming {
+  PreActivation = 1,
+  PostActivation = 2,
 }
 
 export const _ROUTER_CONFIG = new InjectionToken(
@@ -125,26 +54,24 @@ export const _ROUTER_CONFIG = new InjectionToken(
 export const ROUTER_CONFIG = new InjectionToken(
   '@ngrx/router-store Configuration'
 );
-export const DEFAULT_ROUTER_FEATURENAME = 'routerReducer';
+export const DEFAULT_ROUTER_FEATURENAME = 'router';
 
-export function _createDefaultRouterConfig(
-  config: StoreRouterConfig | StoreRouterConfigFunction
+export function _createRouterConfig(
+  config: StoreRouterConfig
 ): StoreRouterConfig {
-  let _config: StoreRouterConfig;
-
-  if (typeof config === 'function') {
-    _config = config();
-  } else {
-    _config = config || {};
-  }
-
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
-    ..._config,
+    serializer: DefaultRouterStateSerializer,
+    navigationActionTiming: NavigationActionTiming.PreActivation,
+    ...config,
   };
 }
 
-export type StoreRouterConfigFunction = () => StoreRouterConfig;
+enum RouterTrigger {
+  NONE = 1,
+  ROUTER = 2,
+  STORE = 3,
+}
 
 /**
  * Connects RouterModule with StoreModule.
@@ -190,126 +117,153 @@ export type StoreRouterConfigFunction = () => StoreRouterConfig;
  */
 @NgModule({
   providers: [
-    { provide: RouterStateSerializer, useClass: DefaultRouterStateSerializer },
     {
       provide: _ROUTER_CONFIG,
-      useValue: { stateKey: DEFAULT_ROUTER_FEATURENAME },
+      useValue: {},
     },
     {
       provide: ROUTER_CONFIG,
-      useFactory: _createDefaultRouterConfig,
+      useFactory: _createRouterConfig,
       deps: [_ROUTER_CONFIG],
+    },
+    {
+      provide: RouterStateSerializer,
+      useClass: DefaultRouterStateSerializer,
     },
   ],
 })
 export class StoreRouterConnectingModule {
-  static forRoot(
-    config?: StoreRouterConfig | StoreRouterConfigFunction
-  ): ModuleWithProviders;
-  static forRoot(
-    config: StoreRouterConfig | StoreRouterConfigFunction = {}
-  ): ModuleWithProviders {
+  static forRoot(config: StoreRouterConfig = {}): ModuleWithProviders {
     return {
       ngModule: StoreRouterConnectingModule,
       providers: [
         { provide: _ROUTER_CONFIG, useValue: config },
         {
-          provide: ROUTER_CONFIG,
-          useFactory: _createDefaultRouterConfig,
-          deps: [_ROUTER_CONFIG],
+          provide: RouterStateSerializer,
+          useClass: config.serializer
+            ? config.serializer
+            : DefaultRouterStateSerializer,
         },
       ],
     };
   }
 
-  private routerState: SerializedRouterStateSnapshot;
+  private routerState: SerializedRouterStateSnapshot | null;
   private storeState: any;
-  private lastRoutesRecognized: RoutesRecognized;
+  private trigger = RouterTrigger.NONE;
 
-  private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
-  private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
   private stateKey: string;
 
   constructor(
     private store: Store<any>,
     private router: Router,
     private serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
+    private errorHandler: ErrorHandler,
     @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
     this.stateKey = this.config.stateKey as string;
 
-    this.setUpBeforePreactivationHook();
     this.setUpStoreStateListener();
-    this.setUpStateRollbackEvents();
-  }
-
-  private setUpBeforePreactivationHook(): void {
-    (<any>this.router).hooks.beforePreactivation = (
-      routerState: RouterStateSnapshot
-    ) => {
-      this.routerState = this.serializer.serialize(routerState);
-      if (this.shouldDispatchRouterNavigation())
-        this.dispatchRouterNavigation();
-      return of(true);
-    };
+    this.setUpRouterEventsListener();
   }
 
   private setUpStoreStateListener(): void {
-    this.store.subscribe(s => {
-      this.storeState = s;
-    });
-    this.store.pipe(select(this.stateKey)).subscribe(() => {
-      this.navigateIfNeeded();
-    });
+    this.store
+      .pipe(
+        select(this.stateKey),
+        withLatestFrom(this.store)
+      )
+      .subscribe(([routerStoreState, storeState]) => {
+        this.navigateIfNeeded(routerStoreState, storeState);
+      });
   }
 
-  private shouldDispatchRouterNavigation(): boolean {
-    if (!this.storeState[this.stateKey]) return true;
-    return !this.navigationTriggeredByDispatch;
-  }
-
-  private navigateIfNeeded(): void {
-    if (
-      !this.storeState[this.stateKey] ||
-      !this.storeState[this.stateKey].state
-    ) {
+  private navigateIfNeeded(
+    routerStoreState: RouterReducerState,
+    storeState: any
+  ): void {
+    if (!routerStoreState || !routerStoreState.state) {
       return;
     }
-    if (this.dispatchTriggeredByRouter) return;
+    if (this.trigger === RouterTrigger.ROUTER) {
+      return;
+    }
 
-    if (this.router.url !== this.storeState[this.stateKey].state.url) {
-      this.navigationTriggeredByDispatch = true;
-      this.router.navigateByUrl(this.storeState[this.stateKey].state.url);
+    const url = routerStoreState.state.url;
+    if (this.router.url !== url) {
+      this.storeState = storeState;
+      this.trigger = RouterTrigger.STORE;
+      this.router.navigateByUrl(url).catch(error => {
+        this.errorHandler.handleError(error);
+      });
     }
   }
 
-  private setUpStateRollbackEvents(): void {
-    this.router.events.subscribe(e => {
-      if (e instanceof RoutesRecognized) {
-        this.lastRoutesRecognized = e;
-      } else if (e instanceof NavigationCancel) {
-        this.dispatchRouterCancel(e);
-      } else if (e instanceof NavigationError) {
-        this.dispatchRouterError(e);
-      }
-    });
+  private setUpRouterEventsListener(): void {
+    const dispatchNavLate =
+      this.config.navigationActionTiming ===
+      NavigationActionTiming.PostActivation;
+    let routesRecognized: RoutesRecognized;
+
+    this.router.events
+      .pipe(withLatestFrom(this.store))
+      .subscribe(([event, storeState]) => {
+        if (event instanceof NavigationStart) {
+          this.routerState = this.serializer.serialize(
+            this.router.routerState.snapshot
+          );
+          if (this.trigger !== RouterTrigger.STORE) {
+            this.storeState = storeState;
+            this.dispatchRouterRequest(event);
+          }
+        } else if (event instanceof RoutesRecognized) {
+          routesRecognized = event;
+
+          if (!dispatchNavLate && this.trigger !== RouterTrigger.STORE) {
+            this.dispatchRouterNavigation(event);
+          }
+        } else if (event instanceof NavigationCancel) {
+          this.dispatchRouterCancel(event);
+          this.reset();
+        } else if (event instanceof NavigationError) {
+          this.dispatchRouterError(event);
+          this.reset();
+        } else if (event instanceof NavigationEnd) {
+          if (this.trigger !== RouterTrigger.STORE) {
+            if (dispatchNavLate) {
+              this.dispatchRouterNavigation(routesRecognized);
+            }
+            this.dispatchRouterNavigated(event);
+          }
+          this.reset();
+        }
+      });
   }
 
-  private dispatchRouterNavigation(): void {
+  private dispatchRouterRequest(event: NavigationStart): void {
+    this.dispatchRouterAction(ROUTER_REQUEST, { event });
+  }
+
+  private dispatchRouterNavigation(
+    lastRoutesRecognized: RoutesRecognized
+  ): void {
+    const nextRouterState = this.serializer.serialize(
+      lastRoutesRecognized.state
+    );
     this.dispatchRouterAction(ROUTER_NAVIGATION, {
-      routerState: this.routerState,
+      routerState: nextRouterState,
       event: new RoutesRecognized(
-        this.lastRoutesRecognized.id,
-        this.lastRoutesRecognized.url,
-        this.lastRoutesRecognized.urlAfterRedirects,
-        this.routerState
+        lastRoutesRecognized.id,
+        lastRoutesRecognized.url,
+        lastRoutesRecognized.urlAfterRedirects,
+        nextRouterState
       ),
     });
   }
 
   private dispatchRouterCancel(event: NavigationCancel): void {
     this.dispatchRouterAction(ROUTER_CANCEL, {
-      routerState: this.routerState,
+      routerState: this.routerState!,
       storeState: this.storeState,
       event,
     });
@@ -317,19 +271,28 @@ export class StoreRouterConnectingModule {
 
   private dispatchRouterError(event: NavigationError): void {
     this.dispatchRouterAction(ROUTER_ERROR, {
-      routerState: this.routerState,
+      routerState: this.routerState!,
       storeState: this.storeState,
       event: new NavigationError(event.id, event.url, `${event}`),
     });
   }
 
+  private dispatchRouterNavigated(event: NavigationEnd): void {
+    this.dispatchRouterAction(ROUTER_NAVIGATED, { event });
+  }
+
   private dispatchRouterAction(type: string, payload: any): void {
-    this.dispatchTriggeredByRouter = true;
+    this.trigger = RouterTrigger.ROUTER;
     try {
       this.store.dispatch({ type, payload });
     } finally {
-      this.dispatchTriggeredByRouter = false;
-      this.navigationTriggeredByDispatch = false;
+      this.trigger = RouterTrigger.NONE;
     }
+  }
+
+  private reset() {
+    this.trigger = RouterTrigger.NONE;
+    this.storeState = null;
+    this.routerState = null;
   }
 }

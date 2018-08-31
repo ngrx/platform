@@ -17,6 +17,19 @@ Usage:
 export class AppModule {}
 ```
 
+### ROOT_EFFECTS_INIT
+
+After all the root effects have been added, the root effect dispatches a `ROOT_EFFECTS_INIT` action.
+You can see this action as a lifecycle hook, which you can use in order to execute some code after all your root effects have been added.
+
+```ts
+@Effect()
+init$ = this.actions$.pipe(
+  ofType(ROOT_EFFECTS_INIT),
+  map(action => ...)
+);
+```
+
 ### forFeature
 
 Registers @ngrx/effects services to run with your feature modules.
@@ -30,6 +43,31 @@ Usage:
   imports: [EffectsModule.forFeature([SomeEffectsClass, AnotherEffectsClass])],
 })
 export class FeatureModule {}
+```
+
+### UPDATE_EFFECTS
+
+After feature effects are registered, an `UPDATE_EFFECTS` action is dispatched.
+
+```ts
+type UpdateEffects = {
+  type: typeof UPDATE_EFFECTS;
+  effects: string[];
+};
+```
+
+For example, when you register your feature module as `EffectsModule.forFeature([SomeEffectsClass, AnotherEffectsClass])`,
+it has `SomeEffectsClass` and `AnotherEffectsClass` in an array as its payload.
+
+To dispatch an action when the `SomeEffectsClass` effect has been registered, listen to the `UPDATE_EFFECTS` action and use the `effects` payload to filter out non-important effects.
+
+```ts
+@Effect()
+init = this.actions.pipe(
+  ofType<UpdateEffects>(UPDATE_EFFECTS)
+  filter(action => action.effects.includes('SomeEffectsClass')),
+  map(action => ...)
+);
 ```
 
 ## Actions
@@ -75,6 +113,8 @@ export class SomeEffectsClass {
 
 Pass `{ dispatch: false }` to the decorator to prevent dispatching.
 
+Sometimes you don't want effects to dispatch an action, for example when you only want to log or navigate. But when an effect does not dispatch another action, the browser will crash because the effect is both 'subscribing' to and 'dispatching' the exact same action, causing an infinite loop. To prevent this, add { dispatch: false } to the decorator.
+
 Usage:
 
 ```ts
@@ -118,7 +158,7 @@ If you want to trigger another action, be careful to add this effect at the end.
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { defer } from 'rxjs';
-import { LoginAction, LogoutAction } from './auth';
+import { LoginAction, LogoutAction } from './auth.actions';
 
 @Injectable()
 export class SomeEffectsClass {

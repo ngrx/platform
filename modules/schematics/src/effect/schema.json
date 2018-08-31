@@ -5,18 +5,18 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "description": "The name of the effect.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
     "path": {
       "type": "string",
-      "default": "app"
-    },
-    "appRoot": {
-      "type": "string"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
+      "format": "path",
+      "description": "The path to create the component.",
+      "visible": false
     },
     "flat": {
       "type": "boolean",
@@ -38,7 +38,8 @@
     "root": {
       "type": "boolean",
       "default": false,
-      "description": "Flag to indicate whether the effects are registered as root."
+      "description":
+        "Flag to indicate whether the effects are registered as root."
     },
     "feature": {
       "type": "boolean",
@@ -52,7 +53,5 @@
       "aliases": ["g"]
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": []
 }

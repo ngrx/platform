@@ -1,93 +1,21 @@
 # API
-## Navigation actions
 
-Navigation actions are not provided as part of the router package. You provide your own
-custom navigation actions that use the `Router` within effects to navigate.
+## Configuration Options
 
-```ts
-import { Action } from '@ngrx/store';
-import { NavigationExtras } from '@angular/router';
-
-export const GO = '[Router] Go';
-export const BACK = '[Router] Back';
-export const FORWARD = '[Router] Forward';
-
-export class Go implements Action {
-  readonly type = GO;
-
-  constructor(public payload: {
-    path: any[];
-    query?: object;
-    extras?: NavigationExtras;
-  }) {}
-}
-
-export class Back implements Action {
-  readonly type = BACK;
-}
-
-export class Forward implements Action {
-  readonly type = FORWARD;
-}
-
-export type Actions
-  = Go
-  | Back
-  | Forward;
-```
+To connect the Angular router module with the NgRx store module, import the store module via
+`StoreRouterConnectingModule.forRoot()`.
 
 ```ts
-import * as RouterActions from './actions/router';
-
-store.dispatch(new RouterActions.Go({
-  path: ['/path', { routeParam: 1 }],
-  query: { page: 1 },
-  extras: { replaceUrl: false }
-});
-
-store.dispatch(new RouterActions.Back());
-
-store.dispatch(new RouterActions.Forward());
-```
-## Effects
-
-```ts
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, tap } from 'rxjs/operators';
-import * as RouterActions from './actions/router';
-
-@Injectable()
-export class RouterEffects {
-  @Effect({ dispatch: false })
-  navigate$ = this.actions$.pipe(
-    ofType(RouterActions.GO),
-    map((action: RouterActions.Go) => action.payload),
-    tap(({ path, query: queryParams, extras})
-      => this.router.navigate(path, { queryParams, ...extras }))
-  )
-
-  @Effect({ dispatch: false })
-  navigateBack$ = this.actions$.pipe(
-    ofType(RouterActions.BACK),
-    tap(() => this.location.back())
-  );
-
-  @Effect({ dispatch: false })
-  navigateForward$ = this.actions$.pipe(
-    ofType(RouterActions.FORWARD),
-    tap(() => this.location.forward())
-  );
-
-  constructor(
-    private actions$: Actions,
-    private router: Router,
-    private location: Location
-  ) {}
+interface StoreRouterConfig {
+  stateKey?: string;
+  serializer?: new (...args: any[]) => RouterStateSerializer;
+  navigationActionTiming?: NavigationActionTiming;
 }
 ```
+
+- `stateKey`: The name of reducer key, defaults to `router`
+- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
+- `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
 
 ## Custom Router State Serializer
 
@@ -96,7 +24,9 @@ issues when used with the Store Devtools. In most cases, you may only need a pie
 
 Additionally, the router state snapshot is a mutable object, which can cause issues when developing with [store freeze](https://github.com/brandonroberts/ngrx-store-freeze) to prevent direct state mutations. This can be avoided by using a custom serializer.
 
-**NOTE**: To use the time-traveling debugging in the Devtools with router-store, you must return an object containing a `url` property when using the `routerReducer`.
+Your custom serializer should implement the abstract class `RouterStateSerializer` and return a snapshot which should have an interface extending `BaseRouterStoreState`.
+
+You then provide the serializer through the config.
 
 ```ts
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
@@ -105,7 +35,7 @@ import {
   StoreRouterConnectingModule,
   routerReducer,
   RouterReducerState,
-  RouterStateSerializer
+  RouterStateSerializer,
 } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
@@ -118,6 +48,7 @@ export interface State {
   router: RouterReducerState<RouterStateUrl>;
 }
 
+@Injectable()
 export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     let route = routerState.root;
@@ -126,7 +57,10 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
       route = route.firstChild;
     }
 
-    const { url, root: { queryParams } } = routerState;
+    const {
+      url,
+      root: { queryParams },
+    } = routerState;
     const { params } = route;
 
     // Only return an object including the URL, params and query params
@@ -136,7 +70,7 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  router: routerReducer
+  router: routerReducer,
 };
 
 @NgModule({
@@ -146,12 +80,19 @@ export const reducers: ActionReducerMap<State> = {
       // routes
     ]),
     StoreRouterConnectingModule.forRoot({
-      stateKey: 'router'
-    })
+      serializer: RouterStateSerializer,
+    }),
   ],
-  providers: [
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
-  ]
 })
-export class AppModule { }
+export class AppModule {}
+```
+
+## Navigation action timing
+
+`ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the correspondig config:
+
+```ts
+StoreRouterConnectingModule.forRoot({
+  navigationActionTiming: NavigationActionTiming.PostActivation,
+});
 ```

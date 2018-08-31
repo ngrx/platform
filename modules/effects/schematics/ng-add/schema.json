@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxRootEffect",
+  "title": "NgRx Root Effect Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the effect.",
+      "type": "string",
+      "default": "App"
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Do not add @ngrx/effects as dependency to package.json (e.g., --skipPackageJson)."
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the effect.",
+      "visible": false
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Flag to indicate if a dir is created."
+    },
+    "spec": {
+      "type": "boolean",
+      "default": true,
+      "description": "Specifies if a spec file is generated."
+    },
+    "module": {
+      "type": "string",
+      "default": "app",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "subtype": "filepath"
+    },
+    "group": {
+      "type": "boolean",
+      "default": false,
+      "description": "Group effects file within 'effects' folder",
+      "aliases": ["g"]
+    }
+  },
+  "required": []
+}

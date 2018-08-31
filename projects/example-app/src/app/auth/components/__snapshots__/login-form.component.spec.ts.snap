@@ -1,0 +1,235 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page should compile 1`] = `
+<bc-login-form
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  <mat-card
+    _ngcontent-c0=""
+  >
+    <mat-card-title
+      _ngcontent-c0=""
+    >
+      Login
+    </mat-card-title>
+    <mat-card-content
+      _ngcontent-c0=""
+    >
+      <form
+        _ngcontent-c0=""
+        class="ng-untouched ng-pristine ng-valid"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        <p
+          _ngcontent-c0=""
+        >
+          <mat-form-field
+            _ngcontent-c0=""
+          >
+            <input
+              _ngcontent-c0=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="username"
+              matinput=""
+              ng-reflect-name="username"
+              placeholder="Username"
+              type="text"
+            />
+          </mat-form-field>
+        </p>
+        <p
+          _ngcontent-c0=""
+        >
+          <mat-form-field
+            _ngcontent-c0=""
+          >
+            <input
+              _ngcontent-c0=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="password"
+              matinput=""
+              ng-reflect-name="password"
+              placeholder="Password"
+              type="password"
+            />
+          </mat-form-field>
+        </p>
+        
+        <p
+          _ngcontent-c0=""
+          class="loginButtons"
+        >
+          <button
+            _ngcontent-c0=""
+            mat-button=""
+            type="submit"
+          >
+            Login
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</bc-login-form>
+`;
+
+exports[`Login Page should disable the form if pending 1`] = `
+<bc-login-form
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  <mat-card
+    _ngcontent-c1=""
+  >
+    <mat-card-title
+      _ngcontent-c1=""
+    >
+      Login
+    </mat-card-title>
+    <mat-card-content
+      _ngcontent-c1=""
+    >
+      <form
+        _ngcontent-c1=""
+        class="ng-untouched ng-pristine"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        <p
+          _ngcontent-c1=""
+        >
+          <mat-form-field
+            _ngcontent-c1=""
+          >
+            <input
+              _ngcontent-c1=""
+              class="ng-untouched ng-pristine"
+              disabled=""
+              formcontrolname="username"
+              matinput=""
+              ng-reflect-name="username"
+              placeholder="Username"
+              type="text"
+            />
+          </mat-form-field>
+        </p>
+        <p
+          _ngcontent-c1=""
+        >
+          <mat-form-field
+            _ngcontent-c1=""
+          >
+            <input
+              _ngcontent-c1=""
+              class="ng-untouched ng-pristine"
+              disabled=""
+              formcontrolname="password"
+              matinput=""
+              ng-reflect-name="password"
+              placeholder="Password"
+              type="password"
+            />
+          </mat-form-field>
+        </p>
+        
+        <p
+          _ngcontent-c1=""
+          class="loginButtons"
+        >
+          <button
+            _ngcontent-c1=""
+            mat-button=""
+            type="submit"
+          >
+            Login
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</bc-login-form>
+`;
+
+exports[`Login Page should display an error message if provided 1`] = `
+<bc-login-form
+  errorMessage={[Function String]}
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  <mat-card
+    _ngcontent-c2=""
+  >
+    <mat-card-title
+      _ngcontent-c2=""
+    >
+      Login
+    </mat-card-title>
+    <mat-card-content
+      _ngcontent-c2=""
+    >
+      <form
+        _ngcontent-c2=""
+        class="ng-untouched ng-pristine ng-valid"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        <p
+          _ngcontent-c2=""
+        >
+          <mat-form-field
+            _ngcontent-c2=""
+          >
+            <input
+              _ngcontent-c2=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="username"
+              matinput=""
+              ng-reflect-name="username"
+              placeholder="Username"
+              type="text"
+            />
+          </mat-form-field>
+        </p>
+        <p
+          _ngcontent-c2=""
+        >
+          <mat-form-field
+            _ngcontent-c2=""
+          >
+            <input
+              _ngcontent-c2=""
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="password"
+              matinput=""
+              ng-reflect-name="password"
+              placeholder="Password"
+              type="password"
+            />
+          </mat-form-field>
+        </p>
+        
+        <p
+          _ngcontent-c2=""
+          class="loginError"
+        >
+           Invalid credentials 
+        </p>
+        <p
+          _ngcontent-c2=""
+          class="loginButtons"
+        >
+          <button
+            _ngcontent-c2=""
+            mat-button=""
+            type="submit"
+          >
+            Login
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</bc-login-form>
+`;

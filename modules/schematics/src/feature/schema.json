@@ -6,15 +6,17 @@
   "properties": {
     "path": {
       "type": "string",
-      "default": "app"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src",
-      "alias": "sd"
+      "format": "path",
+      "description": "The path to create the component.",
+      "visible": false
     },
     "name": {
-      "type": "string"
+      "description": "The name of the feature.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
     "flat": {
       "type": "boolean",
@@ -39,11 +41,10 @@
     "group": {
       "type": "boolean",
       "default": false,
-      "description": "Group actions, reducers and effects within relative subfolders",
+      "description":
+        "Group actions, reducers and effects within relative subfolders",
       "aliases": ["g"]
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": []
 }

@@ -11,7 +11,6 @@ import {
 } from 'rxjs/operators';
 
 import { verifyOutput } from './effect_notification';
-import { getSourceForInstance } from './effects_metadata';
 import { resolveEffectSource } from './effects_resolver';
 
 @Injectable()
@@ -29,7 +28,7 @@ export class EffectSources extends Subject<any> {
    */
   toActions(): Observable<Action> {
     return this.pipe(
-      groupBy(getSourceForInstance),
+      groupBy(source => source),
       mergeMap(source$ =>
         source$.pipe(
           exhaustMap(resolveEffectSource),

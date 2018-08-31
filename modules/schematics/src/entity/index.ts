@@ -1,4 +1,3 @@
-import { normalize } from '@angular-devkit/core';
 import {
   Rule,
   SchematicsException,
@@ -14,22 +13,24 @@ import {
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
-import * as stringUtils from '../strings';
-import { Schema as EntityOptions } from './schema';
 import {
+  stringUtils,
   addReducerToState,
   addReducerImportToNgModule,
-} from '../utility/ngrx-utils';
-import { findModuleFromOptions } from '../utility/find-module';
+  getProjectPath,
+  findModuleFromOptions,
+  parseName,
+} from '@ngrx/schematics/schematics-core';
+import { Schema as EntityOptions } from './schema';
 
 export default function(options: EntityOptions): Rule {
-  options.path = options.path ? normalize(options.path) : options.path;
-  const sourceDir = options.sourceDir;
-  if (!sourceDir) {
-    throw new SchematicsException(`sourceDir option is required.`);
-  }
-
   return (host: Tree, context: SchematicContext) => {
+    options.path = getProjectPath(host, options);
+
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
@@ -48,7 +49,7 @@ export default function(options: EntityOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
-      move(sourceDir),
+      move(parsedPath.path),
     ]);
 
     return chain([

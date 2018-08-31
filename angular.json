@@ -1,0 +1,135 @@
+{
+  "$schema":
+    "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "defaultProject": "example-app",
+  "projects": {
+    "example-app": {
+      "root": "",
+      "sourceRoot": "projects/example-app/src",
+      "projectType": "application",
+      "prefix": "bc",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "projects/example-app/dist",
+            "index": "projects/example-app/src/index.html",
+            "main": "projects/example-app/src/main.ts",
+            "polyfills": "projects/example-app/src/polyfills.ts",
+            "tsConfig": "projects/example-app/tsconfig.app.json",
+            "assets": [
+              "projects/example-app/src/favicon.ico",
+              "projects/example-app/src/assets"
+            ],
+            "styles": ["projects/example-app/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace":
+                    "projects/example-app/src/environments/environment.ts",
+                  "with":
+                    "projects/example-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "example-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "example-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "example-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/example-app/src/test.ts",
+            "polyfills": "projects/example-app/src/polyfills.ts",
+            "tsConfig": "projects/example-app/tsconfig.spec.json",
+            "karmaConfig": "projects/example-app/karma.conf.js",
+            "styles": ["projects/example-app/src/styles.css"],
+            "scripts": [],
+            "assets": [
+              "projects/example-app/src/favicon.ico",
+              "projects/example-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/example-app/tsconfig.app.json",
+              "projects/example-app/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "example-app-e2e": {
+      "root": "projects/example-app-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/example-app-e2e/protractor.conf.js",
+            "devServerTarget": "example-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "example-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "flat": true,
+      "spec": false,
+      "prefix": "bc",
+      "styleext": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "bc"
+    }
+  }
+}

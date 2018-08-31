@@ -14,12 +14,18 @@ import {
   mergeWith,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import * as stringUtils from '../strings';
+import {
+  stringUtils,
+  buildRelativePath,
+  insertImport,
+  NoopChange,
+  ReplaceChange,
+  InsertChange,
+  getProjectPath,
+  omit,
+  parseName,
+} from '@ngrx/schematics/schematics-core';
 import { Schema as ContainerOptions } from './schema';
-import { buildRelativePath } from '../utility/find-module';
-import { NoopChange, InsertChange, ReplaceChange } from '../utility/change';
-import { insertImport } from '../utility/route-utils';
-import { omit } from '../utility/ngrx-utils';
 
 function addStateToComponent(options: ContainerOptions) {
   return (host: Tree) => {
@@ -27,16 +33,16 @@ function addStateToComponent(options: ContainerOptions) {
       return host;
     }
 
-    const statePath = `/${options.sourceDir}/${options.path}/${options.state}`;
+    const statePath = `/${options.path}/${options.state}`;
 
     if (options.state) {
       if (!host.exists(statePath)) {
-        throw new Error('Specified state path does not exist');
+        throw new Error(`The Specified state path ${statePath} does not exist`);
       }
     }
 
     const componentPath =
-      `/${options.sourceDir}/${options.path}/` +
+      `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.component.ts';
@@ -116,11 +122,11 @@ function addStateToComponent(options: ContainerOptions) {
 
 export default function(options: ContainerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const sourceDir = options.sourceDir;
+    options.path = getProjectPath(host, options);
 
-    if (!sourceDir) {
-      throw new SchematicsException(`sourceDir option is required.`);
-    }
+    const parsedPath = parseName(options.path, options.name);
+    options.name = parsedPath.name;
+    options.path = parsedPath.path;
 
     const opts = ['state', 'stateInterface'].reduce(
       (current: Partial<ContainerOptions>, key) => {
@@ -137,7 +143,7 @@ export default function(options: ContainerOptions): Rule {
         ...(options as object),
         dot: () => '.',
       } as any),
-      move(sourceDir),
+      move(parsedPath.path),
     ]);
 
     return chain([

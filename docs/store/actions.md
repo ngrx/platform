@@ -6,7 +6,7 @@ Provide the `ActionReducerMap<T>` with your reducer map for added type checking.
 
 ```ts
 import { ActionReducerMap } from '@ngrx/store';
-import * as fromAuth from './auth';
+import * as fromAuth from './auth.actions';
 
 export interface State {
   auth: fromAuth.State;
@@ -45,16 +45,16 @@ export class Reset implements Action {
   constructor(public payload: number) {}
 }
 
-export type CounterActions = Increment | Decrement | Reset;
+export type CounterActionsUnion = Increment | Decrement | Reset;
 ```
 
 This provides typed actions for your reducer functions.
 
 ```ts
 // counter.reducer.ts
-import { CounterActionTypes, CounterActions } from './counter.actions';
+import { CounterActionTypes, CounterActionsUnion } from './counter.actions';
 
-export function reducer(state: number = 0, action: CounterActions): State {
+export function reducer(state: number = 0, action: CounterActionsUnion): State {
   switch (action.type) {
     case CounterActionTypes.INCREMENT: {
       return state + 1;
@@ -80,7 +80,7 @@ Instantiate actions and use `store.dispatch()` to dispatch them:
 ```ts
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as Counter from './counter.actions';
+import * as CounterActions from './counter.actions';
 
 interface AppState {
   counter: number;
@@ -92,7 +92,7 @@ interface AppState {
     <button (click)="increment()">Increment</button>
     <button (click)="decrement()">Decrement</button>
     <button (click)="reset()">Reset Counter</button>
-    
+
     <div>Current Count: {{ counter | async }}</div>
   `,
 })
@@ -104,15 +104,15 @@ export class MyAppComponent {
   }
 
   increment() {
-    this.store.dispatch(new Counter.Increment());
+    this.store.dispatch(new CounterActions.Increment());
   }
 
   decrement() {
-    this.store.dispatch(new Counter.Decrement());
+    this.store.dispatch(new CounterActions.Decrement());
   }
 
   reset() {
-    this.store.dispatch(new Counter.Reset(3));
+    this.store.dispatch(new CounterActions.Reset(3));
   }
 }
 ```

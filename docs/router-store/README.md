@@ -3,6 +3,7 @@
 Bindings to connect the Angular Router with @ngrx/store
 
 ### Installation
+
 Install @ngrx/router-store from npm:
 
 `npm install @ngrx/router-store --save` OR `yarn add @ngrx/router-store`
@@ -13,31 +14,52 @@ Install @ngrx/router-store from npm:
 
 ## Usage
 
-During the navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action, which has the signature `RouterNavigationAction<T>`:
+@ngrx/router-store provides five navigation actions which are dispatched in a specific order. The `routerReducer` provided by @ngrx/router-store updates its state with the latest router state given by the actions.
 
-```ts
-/**
- * Payload of ROUTER_NAVIGATION.
- */
-export declare type RouterNavigationPayload<T> = {
-  routerState: T;
-  event: RoutesRecognized;
-};
+#### Order of actions
 
-/**
- * An action dispatched when the router navigates.
- */
-export declare type RouterNavigationAction<T = RouterStateSnapshot> = {
-  type: typeof ROUTER_NAVIGATION;
-  payload: RouterNavigationPayload<T>;
-};
-```
+Success case:
 
-- Reducers receive this action. Throwing an error in the reducer cancels navigation.
-- Effects can listen for this action.
-- The `ROUTER_CANCEL` action represents a guard canceling navigation.
-- A `ROUTER_ERROR` action represents a navigation error .
-- `ROUTER_CANCEL` and `ROUTER_ERROR` contain the store state before the navigation. Use the previous state to restore the consistency of the store.
+- `ROUTER_REQUEST`
+- `ROUTER_NAVIGATION`
+- `ROUTER_NAVIGATED`
+
+Error / Cancel case (with early [Navigation Action Timing](./api.md#navigation-action-timing)):
+
+- `ROUTER_REQUEST`
+- `ROUTER_NAVIGATION`
+- `ROUTER_CANCEL` / `ROUTER_ERROR`
+
+Error / Cancel case (with late [Navigation Action Timing](./api.md#navigation-action-timing))
+
+- `ROUTER_REQUEST`
+- `ROUTER_CANCEL` / `ROUTER_ERROR`
+
+##### ROUTER_REQUEST
+
+At the start of each navigation, the router will dispatch a `ROUTER_REQUEST` action.
+
+##### ROUTER_NAVIGATION
+
+During navigation, before any guards or resolvers run, the router will dispatch a `ROUTER_NAVIGATION` action.
+
+If you want the `ROUTER_NAVIGATION` to be dispatched after guards or resolvers run, change the [Navigation Action Timing](./api.md#navigation-action-timing).
+
+##### ROUTER_NAVIGATED
+
+After a successful navigation, the router will dispatch a `ROUTER_NAVIGATED` action.
+
+##### ROUTER_CANCEL
+
+When the navigation is cancelled, for example due to a guard saying that the user cannot access the requested page, the router will dispatch a `ROUTER_CANCEL` action.
+
+The action contains the store state before the navigation. You can use it to restore the consistency of the store.
+
+##### ROUTER_ERROR
+
+When there is an error during navigation, the router will dispatch a `ROUTER_ERROR` action.
+
+The action contains the store state before the navigation. You can use it to restore the consistency of the store.
 
 ## Setup
 
@@ -49,21 +71,21 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     StoreModule.forRoot({
-      router: routerReducer
+      router: routerReducer,
     }),
     RouterModule.forRoot([
       // routes
     ]),
-    StoreRouterConnectingModule.forRoot({
-      stateKey: 'router' // name of reducer key
-    })
+    // Connects RouterModule with StoreModule
+    StoreRouterConnectingModule.forRoot(),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 ## API Documentation
-- [Navigation actions](./api.md#navigation-actions)
-- [Effects](./api.md#effects)
+
+- [Configuration Options](./api.md#configuration-options)
 - [Custom Router State Serializer](./api.md#custom-router-state-serializer)
+- [Navigation Action Timing](./api.md#navigation-action-timing)
