@@ -1,30 +1,26 @@
 {
   "TopBar": [
     {
-      "url": "features",
-      "title": "Features"
+      "url": "guide/store",
+      "title": "Getting Started"
     },
     {
       "url": "docs",
       "title": "Docs"
     },
     {
-      "url": "resources",
-      "title": "Resources"
+      "url": "https://github.com/ngrx/platform",
+      "title": "GitHub"
     },
     {
-      "url": "events",
-      "title": "Events"
-    },
-    {
-      "url": "https://blog.angular.io/",
-      "title": "Blog"
+      "url": "https://opencollective.com/ngrx",
+      "title": "Donate"
     }
   ],
 
   "TopBarNarrow": [
     {
-      "title": "About Angular",
+      "title": "About NgRx",
       "children": [
         {
           "url": "features",
@@ -35,12 +31,12 @@
           "title": "Resources"
         },
         {
-          "url": "events",
-          "title": "Events"
+          "url": "https://github.com/ngrx/platform",
+          "title": "GitHub"
         },
         {
-          "url": "https://blog.angular.io/",
-          "title": "Blog"
+          "url": "https://opencollective.com/ngrx",
+          "title": "Donate"
         }
       ]
     }
@@ -48,9 +44,128 @@
 
   "SideNav": [
     {
+      "title": "Store",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/store"
+        },
+        {
+          "title": "Actions",
+          "url": "guide/store-actions"
+        },
+        {
+          "title": "Reducers",
+          "url": "guide/store-reducers"
+        },
+        {
+          "title": "Selectors",
+          "url": "guide/store-selectors"
+        },
+        {
+          "title": "Testing",
+          "url": "guide/store-testing"
+        }
+      ]
+    },
+    {
+      "title": "Store Devtools",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/store-devtools"
+        },
+        {
+          "title": "Instrumentation",
+          "url": "guide/store-devtools-config"
+        }
+      ]
+    },
+    {
+      "title": "Effects",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/effects"
+        },
+        {
+          "title": "Testing",
+          "url": "guide/effects-testing"
+        }
+      ]
+    },
+    {
+      "title": "Router Store",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/router-store"
+        }
+      ]
+    },
+    {
+      "title": "Entity",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/entity"
+        },
+        {
+          "title": "Entity Adapter",
+          "url": "guide/entity-adapter"
+        }
+      ]
+    },
+    {
+      "title": "Schematics",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/schematics"
+        },
+        {
+          "title": "Schematics",
+          "children": [
+            {
+              "title": "Store",
+              "url": "guide/schematics-store"
+            },
+            {
+              "title": "Action",
+              "url": "guide/schematics-action"
+            },
+            {
+              "title": "Reducer",
+              "url": "guide/schematics-reducer"
+            },
+            {
+              "title": "Container",
+              "url": "guide/schematics-container"
+            },
+            {
+              "title": "Effect",
+              "url": "guide/schematics-effect"
+            },
+            {
+              "title": "Entity",
+              "url": "guide/schematics-entity"
+            },
+            {
+              "title": "Feature",
+              "url": "guide/schematics-feature"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Style Guide",
+      "url": "guide/style-guide"
+    },
+    {
       "url": "api",
-      "title": "Reference",
-      "tooltip": "RxJS Reference"
+      "title": "API",
+      "tooltip": "API Reference"
     }
   ],
 
