@@ -280,23 +280,11 @@ This section covers some basics of how selectors compare to pipeable operators a
 
 ### Breaking Down the Basics
 
-#### Step 1: Select a non-empty state
+#### Select a non-empty state using pipeable operators
 
 Let's pretend we have a selector called `selectValues` and the component for displaying the data is only interested in defined values, i.e., it should not display empty states.
-The straight-forward solution is to apply the RxJS `filter` operator to the `Observable` returned by `store.select()`:
 
-```ts
-import { filter } from 'rxjs/operators';
-
-store
-  .select(selectValues)
-  .pipe(filter(val => val !== undefined))
-  .subscribe(/* .. */);
-```
-
-#### Step 2: Refactoring to pipeable operators
-
-The same behaviour can be achieved by re-writing the above piece of code to use only RxJS pipeable operators instead of the `store.select()` function:
+We can achieve this behaviour by using only RxJS pipeable operators:
 
 ```ts
 import { map, filter } from 'rxjs/operators';
