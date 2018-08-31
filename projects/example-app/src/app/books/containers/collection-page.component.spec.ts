@@ -1,16 +1,16 @@
-import { CollectionPageComponent } from './collection-page.component';
+import { CollectionPageComponent } from '@example-app/books/containers/collection-page.component';
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule, MatInputModule } from '@angular/material';
-import { BookPreviewListComponent } from '../components/book-preview-list.component';
-import { BookPreviewComponent } from '../components/book-preview.component';
-import * as CollectionActions from '../actions/collection-page.actions';
-import * as fromBooks from '../reducers';
-import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
-import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
-import { BookAuthorsComponent } from '../components/book-authors.component';
+import { BookPreviewListComponent } from '@example-app/books/components/book-preview-list.component';
+import { BookPreviewComponent } from '@example-app/books/components/book-preview.component';
+import * as CollectionActions from '@example-app/books/actions/collection-page.actions';
+import * as fromBooks from '@example-app/books/reducers';
+import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
+import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;

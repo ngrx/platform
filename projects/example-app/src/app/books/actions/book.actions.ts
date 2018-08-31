@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Book } from '../models/book';
+import { Book } from '@example-app/books/models/book';
 
 export enum BookActionTypes {
   LoadBook = '[Book Exists Guard] Load Book',

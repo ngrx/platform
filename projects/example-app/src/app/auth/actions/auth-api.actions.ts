@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User } from '../models/user';
+import { User } from '@example-app/auth/models/user';
 
 export enum AuthApiActionTypes {
   LoginSuccess = '[Auth/API] Login Success',

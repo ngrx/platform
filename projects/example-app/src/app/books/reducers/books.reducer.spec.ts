@@ -1,10 +1,10 @@
-import { reducer } from './books.reducer';
-import * as fromBooks from './books.reducer';
-import { SearchSuccess } from '../actions/books-api.actions';
-import { LoadBook } from '../actions/book.actions';
-import { SelectBook } from '../actions/view-book-page.actions';
-import { Book, generateMockBook } from '../models/book';
-import { LoadBooksSuccess } from '../actions/collection-api.actions';
+import { reducer } from '@example-app/books/reducers/books.reducer';
+import * as fromBooks from '@example-app/books/reducers/books.reducer';
+import { SearchSuccess } from '@example-app/books/actions/books-api.actions';
+import { LoadBook } from '@example-app/books/actions/book.actions';
+import { SelectBook } from '@example-app/books/actions/view-book-page.actions';
+import { Book, generateMockBook } from '@example-app/books/models/book';
+import { LoadBooksSuccess } from '@example-app/books/actions/collection-api.actions';
 
 describe('BooksReducer', () => {
   const book1 = generateMockBook();

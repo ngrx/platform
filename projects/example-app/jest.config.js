@@ -25,7 +25,8 @@ module.exports = {
     "/modules/*.*/"
   ],
   "moduleNameMapper": {
-    "^@ngrx/(?!db)(.*)": "<rootDir>/../../modules/$1"
+    "^@ngrx/(?!db)(.*)": "<rootDir>/../../modules/$1",
+    "^@example-app/(.*)": "<rootDir>/src/app/$1"
   },
   "transformIgnorePatterns": [
     "node_modules/(?!@ngrx)"

@@ -1,18 +1,21 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Book } from '../models/book';
+import { Book } from '@example-app/books/models/book';
 import {
   BooksApiActionsUnion,
   BooksApiActionTypes,
-} from '../actions/books-api.actions';
-import { BookActionsUnion, BookActionTypes } from '../actions/book.actions';
+} from '@example-app/books/actions/books-api.actions';
+import {
+  BookActionsUnion,
+  BookActionTypes,
+} from '@example-app/books/actions/book.actions';
 import {
   ViewBookPageActionsUnion,
   ViewBookPageActionTypes,
-} from '../actions/view-book-page.actions';
+} from '@example-app/books/actions/view-book-page.actions';
 import {
   CollectionApiActionsUnion,
   CollectionApiActionTypes,
-} from '../actions/collection-api.actions';
+} from '@example-app/books/actions/collection-api.actions';
 
 /**
  * @ngrx/entity provides a predefined interface for handling

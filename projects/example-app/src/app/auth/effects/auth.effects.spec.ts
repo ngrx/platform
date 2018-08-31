@@ -9,13 +9,13 @@ import {
   LoginFailure,
   LoginRedirect,
   LoginSuccess,
-} from '../actions/auth-api.actions';
-import * as loginPageActions from '../actions/login-page.actions';
-import * as AuthActions from '../actions/auth.actions';
+} from '@example-app/auth/actions/auth-api.actions';
+import * as loginPageActions from '@example-app/auth/actions/login-page.actions';
+import * as AuthActions from '@example-app/auth/actions/auth.actions';
 
-import { Credentials, User } from '../models/user';
-import { AuthService } from '../services/auth.service';
-import { AuthEffects } from './auth.effects';
+import { Credentials, User } from '@example-app/auth/models/user';
+import { AuthService } from '@example-app/auth/services/auth.service';
+import { AuthEffects } from '@example-app/auth/effects/auth.effects';
 
 describe('AuthEffects', () => {
   let effects: AuthEffects;

@@ -5,17 +5,17 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
-import * as LoginPageActions from '../actions/login-page.actions';
-import * as AuthActions from '../actions/auth.actions';
+import * as LoginPageActions from '@example-app/auth/actions/login-page.actions';
+import * as AuthActions from '@example-app/auth/actions/auth.actions';
 
 import {
   AuthApiActionTypes,
   LoginFailure,
   LoginSuccess,
-} from '../actions/auth-api.actions';
-import { Credentials } from '../models/user';
-import { AuthService } from '../services/auth.service';
-import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
+} from '@example-app/auth/actions/auth-api.actions';
+import { Credentials } from '@example-app/auth/models/user';
+import { AuthService } from '@example-app/auth/services/auth.service';
+import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/logout-confirmation-dialog.component';
 
 @Injectable()
 export class AuthEffects {

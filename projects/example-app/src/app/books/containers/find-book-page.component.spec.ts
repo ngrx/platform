@@ -8,16 +8,16 @@ import {
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { BookSearchComponent } from '../components/book-search.component';
-import { BookPreviewComponent } from '../components/book-preview.component';
-import { BookPreviewListComponent } from '../components/book-preview-list.component';
+import { BookSearchComponent } from '@example-app/books/components/book-search.component';
+import { BookPreviewComponent } from '@example-app/books/components/book-preview.component';
+import { BookPreviewListComponent } from '@example-app/books/components/book-preview-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
-import { BookAuthorsComponent } from '../components/book-authors.component';
-import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
-import { FindBookPageComponent } from './find-book-page.component';
-import * as BookActions from '../actions/find-book-page.actions';
-import * as fromBooks from '../reducers';
+import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
+import { FindBookPageComponent } from '@example-app/books/containers/find-book-page.component';
+import * as BookActions from '@example-app/books/actions/find-book-page.actions';
+import * as fromBooks from '@example-app/books/reducers';
 
 describe('Find Book Page', () => {
   let fixture: ComponentFixture<FindBookPageComponent>;

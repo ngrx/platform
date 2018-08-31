@@ -4,13 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 
-import { ViewBookPageComponent } from './view-book-page.component';
-import * as BookActions from '../actions/view-book-page.actions';
-import * as fromBooks from '../reducers';
-import { SelectedBookPageComponent } from './selected-book-page.component';
-import { BookDetailComponent } from '../components/book-detail.component';
-import { BookAuthorsComponent } from '../components/book-authors.component';
-import { AddCommasPipe } from '../../shared/pipes/add-commas.pipe';
+import { ViewBookPageComponent } from '@example-app/books/containers/view-book-page.component';
+import * as BookActions from '@example-app/books/actions/view-book-page.actions';
+import * as fromBooks from '@example-app/books/reducers';
+import { SelectedBookPageComponent } from '@example-app/books/containers/selected-book-page.component';
+import { BookDetailComponent } from '@example-app/books/components/book-detail.component';
+import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 
 describe('View Book Page', () => {
   const params = new BehaviorSubject({});

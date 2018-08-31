@@ -1,9 +1,9 @@
-import { reducer } from './auth.reducer';
-import * as fromAuth from './auth.reducer';
-import { LoginSuccess } from '../actions/auth-api.actions';
-import * as AuthActions from '../actions/auth.actions';
+import { reducer } from '@example-app/auth/reducers/auth.reducer';
+import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
+import { LoginSuccess } from '@example-app/auth/actions/auth-api.actions';
+import * as AuthActions from '@example-app/auth/actions/auth.actions';
 
-import { User } from '../models/user';
+import { User } from '@example-app/auth/models/user';
 
 describe('AuthReducer', () => {
   describe('undefined action', () => {

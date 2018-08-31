@@ -1,9 +1,9 @@
 import {
   AuthApiActionsUnion,
   AuthApiActionTypes,
-} from '../actions/auth-api.actions';
-import * as AuthActions from '../actions/auth.actions';
-import { User } from '../models/user';
+} from '@example-app/auth/actions/auth-api.actions';
+import * as AuthActions from '@example-app/auth/actions/auth.actions';
+import { User } from '@example-app/auth/models/user';
 
 export interface State {
   user: User | null;

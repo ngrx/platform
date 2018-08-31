@@ -1,11 +1,11 @@
 import {
   AuthApiActionTypes,
   AuthApiActionsUnion,
-} from '../actions/auth-api.actions';
+} from '@example-app/auth/actions/auth-api.actions';
 import {
   LoginPageActionTypes,
   LoginPageActionsUnion,
-} from './../actions/login-page.actions';
+} from '@example-app/auth/actions/login-page.actions';
 
 export interface State {
   error: string | null;

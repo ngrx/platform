@@ -1,11 +1,11 @@
 import {
   BooksApiActionTypes,
   BooksApiActionsUnion,
-} from '../actions/books-api.actions';
+} from '@example-app/books/actions/books-api.actions';
 import {
   FindBookPageActionsUnion,
   FindBookPageActionTypes,
-} from '../actions/find-book-page.actions';
+} from '@example-app/books/actions/find-book-page.actions';
 
 export interface State {
   ids: string[];

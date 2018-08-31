@@ -3,10 +3,10 @@ import {
   createFeatureSelector,
   ActionReducerMap,
 } from '@ngrx/store';
-import * as fromSearch from './search.reducer';
-import * as fromBooks from './books.reducer';
-import * as fromCollection from './collection.reducer';
-import * as fromRoot from '../../reducers';
+import * as fromSearch from '@example-app/books/reducers/search.reducer';
+import * as fromBooks from '@example-app/books/reducers/books.reducer';
+import * as fromCollection from '@example-app/books/reducers/collection.reducer';
+import * as fromRoot from '@example-app/reducers';
 
 export interface BooksState {
   search: fromSearch.State;

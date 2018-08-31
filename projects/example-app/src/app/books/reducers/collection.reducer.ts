@@ -1,12 +1,12 @@
-import { SelectedBookPageActionsUnion } from '../actions/selected-book-page.actions';
+import { SelectedBookPageActionsUnion } from '@example-app/books/actions/selected-book-page.actions';
 import {
   CollectionPageActionTypes,
   CollectionPageActionsUnion,
-} from './../actions/collection-page.actions';
+} from '@example-app/books/actions/collection-page.actions';
 import {
   CollectionApiActionTypes,
   CollectionApiActionsUnion,
-} from './../actions/collection-api.actions';
+} from '@example-app/books/actions/collection-api.actions';
 
 export interface State {
   loaded: boolean;
