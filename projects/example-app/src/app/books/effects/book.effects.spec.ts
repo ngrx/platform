@@ -6,10 +6,9 @@ import { empty, Observable } from 'rxjs';
 
 import { GoogleBooksService } from '@example-app/core/services/google-books.service';
 import {
-  SearchSuccess,
-  SearchFailure,
-} from '@example-app/books/actions/books-api.actions';
-import { SearchBooks } from '@example-app/books/actions/find-book-page.actions';
+  BooksApiActions,
+  FindBookPageActions,
+} from '@example-app/books/actions';
 import { Book } from '@example-app/books/models/book';
 import { BookEffects } from '@example-app/books/effects/book.effects';
 
@@ -40,8 +39,8 @@ describe('BookEffects', () => {
       const book1 = { id: '111', volumeInfo: {} } as Book;
       const book2 = { id: '222', volumeInfo: {} } as Book;
       const books = [book1, book2];
-      const action = new SearchBooks('query');
-      const completion = new SearchSuccess(books);
+      const action = new FindBookPageActions.SearchBooks('query');
+      const completion = new BooksApiActions.SearchSuccess(books);
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
@@ -57,8 +56,8 @@ describe('BookEffects', () => {
     });
 
     it('should return a new book.SearchError if the books service throws', () => {
-      const action = new SearchBooks('query');
-      const completion = new SearchFailure(
+      const action = new FindBookPageActions.SearchBooks('query');
+      const completion = new BooksApiActions.SearchFailure(
         'Unexpected Error. Try again later.'
       );
       const error = 'Unexpected Error. Try again later.';
@@ -77,7 +76,7 @@ describe('BookEffects', () => {
     });
 
     it(`should not do anything if the query is an empty string`, () => {
-      const action = new SearchBooks('');
+      const action = new FindBookPageActions.SearchBooks('');
 
       actions$ = hot('-a---', { a: action });
       const expected = cold('---');

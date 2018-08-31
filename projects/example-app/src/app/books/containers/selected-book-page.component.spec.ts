@@ -4,7 +4,7 @@ import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
 
-import * as CollectionActions from '@example-app/books/actions/selected-book-page.actions';
+import { SelectedBookPageActions } from '@example-app/books/actions';
 import * as fromBooks from '@example-app/books/reducers';
 import { BookDetailComponent } from '@example-app/books/components/book-detail.component';
 import { Book, generateMockBook } from '@example-app/books/models/book';
@@ -48,7 +48,7 @@ describe('Selected Book Page', () => {
 
   it('should dispatch a collection.AddBook action when addToCollection is called', () => {
     const $event: Book = generateMockBook();
-    const action = new CollectionActions.AddBook($event);
+    const action = new SelectedBookPageActions.AddBook($event);
 
     instance.addToCollection($event);
 
@@ -57,7 +57,7 @@ describe('Selected Book Page', () => {
 
   it('should dispatch a collection.RemoveBook action on removeFromCollection', () => {
     const $event: Book = generateMockBook();
-    const action = new CollectionActions.RemoveBook($event);
+    const action = new SelectedBookPageActions.RemoveBook($event);
 
     instance.removeFromCollection($event);
 

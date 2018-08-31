@@ -6,12 +6,10 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable, of } from 'rxjs';
 import {
-  LoginFailure,
-  LoginRedirect,
-  LoginSuccess,
-} from '@example-app/auth/actions/auth-api.actions';
-import * as loginPageActions from '@example-app/auth/actions/login-page.actions';
-import * as AuthActions from '@example-app/auth/actions/auth.actions';
+  LoginPageActions,
+  AuthActions,
+  AuthApiActions,
+} from '@example-app/auth/actions';
 
 import { Credentials, User } from '@example-app/auth/models/user';
 import { AuthService } from '@example-app/auth/services/auth.service';
@@ -59,8 +57,8 @@ describe('AuthEffects', () => {
     it('should return an auth.LoginSuccess action, with user information if login succeeds', () => {
       const credentials: Credentials = { username: 'test', password: '' };
       const user = { name: 'User' } as User;
-      const action = new loginPageActions.Login({ credentials });
-      const completion = new LoginSuccess({ user });
+      const action = new LoginPageActions.Login({ credentials });
+      const completion = new AuthApiActions.LoginSuccess({ user });
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: user });
@@ -72,8 +70,8 @@ describe('AuthEffects', () => {
 
     it('should return a new auth.LoginFailure if the login service throws', () => {
       const credentials: Credentials = { username: 'someOne', password: '' };
-      const action = new loginPageActions.Login({ credentials });
-      const completion = new LoginFailure({
+      const action = new LoginPageActions.Login({ credentials });
+      const completion = new AuthApiActions.LoginFailure({
         error: 'Invalid username or password',
       });
       const error = 'Invalid username or password';
@@ -90,7 +88,7 @@ describe('AuthEffects', () => {
   describe('loginSuccess$', () => {
     it('should dispatch a RouterNavigation action', (done: any) => {
       const user = { name: 'User' } as User;
-      const action = new LoginSuccess({ user });
+      const action = new AuthApiActions.LoginSuccess({ user });
 
       actions$ = of(action);
 
@@ -103,7 +101,7 @@ describe('AuthEffects', () => {
 
   describe('loginRedirect$', () => {
     it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', (done: any) => {
-      const action = new LoginRedirect();
+      const action = new AuthApiActions.LoginRedirect();
 
       actions$ = of(action);
 

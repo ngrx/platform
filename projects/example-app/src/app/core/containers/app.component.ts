@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import * as AuthActions from '@example-app/auth/actions/auth.actions';
 import * as fromAuth from '@example-app/auth/reducers';
 import * as fromRoot from '@example-app/reducers';
-import * as LayoutActions from '@example-app/core/actions/layout.actions';
+import { LayoutActions } from '@example-app/core/actions';
 
 @Component({
   selector: 'bc-app',

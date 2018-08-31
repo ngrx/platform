@@ -5,9 +5,11 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { empty, Observable } from 'rxjs';
 
-import * as CollectionApiActions from '@example-app/books/actions/collection-api.actions';
-import * as SelectedBookPageActions from '@example-app/books/actions/selected-book-page.actions';
-import * as CollectionPageActions from '@example-app/books/actions/collection-page.actions';
+import {
+  CollectionApiActions,
+  SelectedBookPageActions,
+  CollectionPageActions,
+} from '@example-app/books/actions';
 import { Book } from '@example-app/books/models/book';
 import { CollectionEffects } from '@example-app/books/effects/collection.effects';
 

@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { GoogleBooksService } from '@example-app/core/services/google-books.service';
-import * as BookActions from '@example-app/books/actions/book.actions';
+import { BookActions } from '@example-app/books/actions';
 import * as fromBooks from '@example-app/books/reducers';
 
 /**
