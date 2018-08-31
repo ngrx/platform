@@ -44,7 +44,7 @@ import { counter } from './counter';
 export class AppModule {}
 ```
 
-You can then inject the `Store` service into your components and services. Use `store.select` to
+You can then inject the `Store` service into your components and services. Use `select` to
 _select_ slice(s) of state:
 
 ```ts
