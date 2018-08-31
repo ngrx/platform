@@ -95,10 +95,14 @@ a {
 .app-toolbar a {
   font-size: 16px;
   font-weight: 400;
-  color: white;
+  color: $white;
   font-family: $main-font;
   text-transform: uppercase;
   padding: 21px 0;
+}
+
+aio-shell.page-home .app-toolbar a {
+  color: $purple;
 }
 
 strong {
@@ -135,7 +139,7 @@ th {
   text-align: left;
 }
 
-p > code, li > code, td > code, th > code {
+p > code, li > code, td > code, th > c ode {
   font-family: $code-font;
   font-size: 85%;
   color: $darkgray;

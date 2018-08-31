@@ -119,7 +119,8 @@ aio-top-menu {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 80%;
+  justify-content: flex-end;
+  width: 100%;
 
   ul {
     display: flex;
