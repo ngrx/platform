@@ -677,12 +677,12 @@ describe('integration spec', () => {
     };
 
     createTestModule({
-      reducers: { reducer },
+      reducers: { 'router-reducer': reducer },
       config: { stateKey: 'router-reducer' },
     });
 
     const router: Router = TestBed.get(Router);
-    const log = logOfRouterAndActionsAndStore();
+    const log = logOfRouterAndActionsAndStore({ stateKey: 'router-reducer' });
 
     router
       .navigateByUrl('/')
@@ -897,7 +897,9 @@ function waitForNavigation(router: Router, event: any = NavigationEnd) {
  * Example: router event is fired -> store is updated -> store log appears before router log
  * Also, actions$ always fires the next action AFTER the store is updated
  */
-function logOfRouterAndActionsAndStore(): any[] {
+function logOfRouterAndActionsAndStore(
+  options: { stateKey: string } = { stateKey: 'reducer' }
+): any[] {
   const router: Router = TestBed.get(Router);
   const store: Store<any> = TestBed.get(Store);
   // Not using effects' Actions to avoid @ngrx/effects dependency
@@ -915,6 +917,8 @@ function logOfRouterAndActionsAndStore(): any[] {
   actions$.subscribe(action =>
     log.push({ type: 'action', action: action.type })
   );
-  store.subscribe(store => log.push({ type: 'store', state: store.reducer }));
+  store.subscribe(store => {
+    log.push({ type: 'store', state: store[options.stateKey] });
+  });
   return log;
 }
