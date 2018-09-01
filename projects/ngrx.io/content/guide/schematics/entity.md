@@ -46,7 +46,7 @@ Generate spec files associated with the entity files.
 
 ## Examples
 
-Generate a set of `User` entity files and add it to a defined map of reducers generated from a [feature state](guide/schematics-store#examples).
+Generate a set of `User` entity files and add it to a defined map of reducers generated from a [feature state](guide/schematics/store#examples).
 
 ```sh
 ng generate entity User --reducers reducers/index.ts

@@ -54,7 +54,7 @@ Generate a spec file alongside the reducer file.
 
 ## Examples
 
-Generate a `User` reducer file add it to a defined map of reducers generated from a [feature state](guide/schematics-store#examples).
+Generate a `User` reducer file add it to a defined map of reducers generated from a [feature state](guide/schematics/store#examples).
 
 ```sh
 ng generate reducer User --reducers reducers/index.ts
