@@ -20,25 +20,7 @@
 
   "TopBarNarrow": [
     {
-      "title": "About NgRx",
-      "children": [
-        {
-          "url": "features",
-          "title": "Features"
-        },
-        {
-          "url": "resources",
-          "title": "Resources"
-        },
-        {
-          "url": "https://github.com/ngrx/platform",
-          "title": "GitHub"
-        },
-        {
-          "url": "https://opencollective.com/ngrx",
-          "title": "Donate"
-        }
-      ]
+      "title": "About NgRx"
     }
   ],
 
@@ -183,6 +165,75 @@
       "url": "api",
       "title": "API",
       "tooltip": "API Reference"
+    }
+  ],
+
+  "Footer": [
+    {
+      "title": "Resources",
+      "children": [
+        {
+          "url": "events",
+          "title": "Events",
+          "tooltip": "Events where we'll be presenting."
+        },
+        {
+          "url": "about",
+          "title": "About",
+          "tooltip": "NgRx contributors."
+        },
+        {
+          "url": "https://opencollective.com/ngrx",
+          "title": "Sponsor",
+          "tooltip": "Sponsor NgRx Development"
+        },
+        {
+          "url": "https://medium.com/@ngrx",
+          "title": "Blog",
+          "tooltip": "NgRx Blog"
+        }
+      ]
+    },
+    {
+      "title": "Help",
+      "children": [
+        {
+          "url": "https://stackoverflow.com/questions/tagged/ngrx",
+          "title": "Stack Overflow",
+          "tooltip":
+            "Stack Overflow: where the community answers your technical NgRx questions."
+        },
+        {
+          "url": "https://gitter.im/ngrx/platform",
+          "title": "Gitter",
+          "tooltip": "Chat about NgRx with other members of the community."
+        },
+        {
+          "url": "https://github.com/ngrx/platform/issues",
+          "title": "Report Issues",
+          "tooltip": "Post issues and suggestions on GitHub."
+        }
+      ]
+    },
+    {
+      "title": "Community",
+      "children": [
+        {
+          "url": "https://twitter.com/ngrx_io",
+          "title": "Twitter",
+          "tooltip": "Twitter"
+        },
+        {
+          "url": "https://github.com/ngrx/platform",
+          "title": "GitHub",
+          "tooltip": "GitHub"
+        },
+        {
+          "url": "https://github.com/ngrx/platform/tree/master/CONTRIBUTING.md",
+          "title": "Contribute",
+          "tooltip": "Contribute to NgRx"
+        }
+      ]
     }
   ],
 

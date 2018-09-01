@@ -31,7 +31,7 @@ function createPackage(changedFile) {
   }
 
   const apiExamplesMatch = /^packages\/examples\/([^\/]+)\//.exec(changedFile);
-  const apiMatch = /^packages\/([^\/]+)\//.exec(changedFile);
+  const apiMatch = /^modules\/([^\/]+)\//.exec(changedFile);
   if (apiExamplesMatch || apiMatch) {
     const packageName = apiExamplesMatch && apiExamplesMatch[1] || apiMatch[1];
     console.log('Building API docs for', packageName);
