@@ -47,24 +47,41 @@
       "title": "Store",
       "children": [
         {
-          "title": "Overview",
-          "url": "guide/store"
+          "title": "Basics",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/store"
+            },
+            {
+              "title": "Actions",
+              "url": "guide/store/actions"
+            },
+            {
+              "title": "Reducers",
+              "url": "guide/store/reducers"
+            },
+            {
+              "title": "Selectors",
+              "url": "guide/store/selectors"
+            }
+          ]
         },
         {
-          "title": "Actions",
-          "url": "guide/store-actions"
+          "title": "Advanced",
+          "children": [
+            {
+              "title": "Meta-Reducers",
+              "url": "guide/store/metareducers"
+            }
+          ]
         },
         {
-          "title": "Reducers",
-          "url": "guide/store-reducers"
-        },
-        {
-          "title": "Selectors",
-          "url": "guide/store-selectors"
+          "title": "Recipes"
         },
         {
           "title": "Testing",
-          "url": "guide/store-testing"
+          "url": "guide/store/testing"
         }
       ]
     },
@@ -77,7 +94,7 @@
         },
         {
           "title": "Instrumentation",
-          "url": "guide/store-devtools-config"
+          "url": "guide/store-devtools/config"
         }
       ]
     },
@@ -90,7 +107,7 @@
         },
         {
           "title": "Testing",
-          "url": "guide/effects-testing"
+          "url": "guide/effects/testing"
         }
       ]
     },
@@ -112,7 +129,7 @@
         },
         {
           "title": "Entity Adapter",
-          "url": "guide/entity-adapter"
+          "url": "guide/entity/adapter"
         }
       ]
     },
@@ -128,31 +145,31 @@
           "children": [
             {
               "title": "Store",
-              "url": "guide/schematics-store"
+              "url": "guide/schematics/store"
             },
             {
               "title": "Action",
-              "url": "guide/schematics-action"
+              "url": "guide/schematics/action"
             },
             {
               "title": "Reducer",
-              "url": "guide/schematics-reducer"
+              "url": "guide/schematics/reducer"
             },
             {
               "title": "Container",
-              "url": "guide/schematics-container"
+              "url": "guide/schematics/container"
             },
             {
               "title": "Effect",
-              "url": "guide/schematics-effect"
+              "url": "guide/schematics/effect"
             },
             {
               "title": "Entity",
-              "url": "guide/schematics-entity"
+              "url": "guide/schematics/entity"
             },
             {
               "title": "Feature",
-              "url": "guide/schematics-feature"
+              "url": "guide/schematics/feature"
             }
           ]
         }
