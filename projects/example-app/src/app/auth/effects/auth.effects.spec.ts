@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { empty, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   LoginPageActions,
   AuthActions,
