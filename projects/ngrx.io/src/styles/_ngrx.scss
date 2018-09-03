@@ -1,65 +1,167 @@
-$ngrx-primary: (
-    50 : #e8e5e9,
-    100 : #c6bfc8,
-    200 : #a094a3,
-    300 : #7a697e,
-    400 : #5e4862,
-    500 : #412846,
-    600 : #3b243f,
-    700 : #321e37,
-    800 : #2a182f,
-    900 : #1c0f20,
-    A100 : #db62ff,
-    A200 : #cf2fff,
-    A400 : #c100fb,
-    A700 : #ad00e1,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #ffffff,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
+$dull-magenta: (
+  50: #f6e7f9,
+  100: #eac3f1,
+  200: #dc9be7,
+  300: #cd72dd,
+  400: #c354d6,
+  500: #b836cf,
+  600: #b130ca,
+  700: #a829c3,
+  800: #a022bd,
+  900: #9116b2,
+  A100: #f9e5ff,
+  A200: #edb2ff,
+  A400: #e27fff,
+  A700: #dc65ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
 );
 
-$ngrx-accent: (
-    50 : #f7e6fa,
-    100 : #eabff2,
-    200 : #dd95e9,
-    300 : #cf6be0,
-    400 : #c44bd9,
-    500 : #ba2bd2,
-    600 : #b326cd,
-    700 : #ab20c7,
-    800 : #a31ac1,
-    900 : #9410b6,
-    A100 : #f9e5ff,
-    A200 : #eeb2ff,
-    A400 : #e27fff,
-    A700 : #dc65ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+$gold: (
+  50: #fff5e7,
+  100: #fee6c4,
+  200: #fed69d,
+  300: #fec576,
+  400: #fdb858,
+  500: #fdac3b,
+  600: #fda535,
+  700: #fc9b2d,
+  800: #fc9226,
+  900: #fc8219,
+  A100: #ffffff,
+  A200: #fffcfa,
+  A400: #ffdfc7,
+  A700: #ffd1ad,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
 );
+
+aio-shell.page-home {
+  pre.prettyprint {
+    border: none;
+    padding: 16px;
+    margin: 0;
+    border-radius: 3px;
+    font-family: 'PT Mono', monospace;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 1.6em;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  pre .nocode {
+    background-color: none;
+    color: #000;
+  }
+  pre .str {
+    color: mat-color($dull-magenta, 100);
+  } /* string  - pink */
+  pre .kwd {
+    color: #f0e68c;
+    font-weight: bold;
+  }
+  pre .com {
+    color: #87ceeb;
+  } /* comment - skyblue */
+  pre .typ {
+    color: mat-color($gold, 300);
+  } /* type    - lightgreen */
+  pre .lit {
+    color: mat-color($dull-magenta, 300);
+  } /* literal - darkred */
+  pre .pun {
+    color: #fff;
+  } /* punctuation */
+  pre .pln {
+    color: #fff;
+  } /* plaintext */
+  pre .tag {
+    color: #f0e68c;
+    font-weight: bold;
+  } /* html/xml tag    - lightyellow */
+  pre .atn {
+    color: #bdb76b;
+    font-weight: bold;
+  } /* attribute name  - khaki */
+  pre .atv {
+    color: mat-color($dull-magenta, 100);
+  } /* attribute value - pink */
+  pre .dec {
+    color: mat-color($gold, 300);
+  } /* decimal         - lightgreen */
+
+  /* Specify class=linenums on a pre to get line numbering */
+  ol.linenums {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #aeaeae;
+  } /* IE indents via margin-left */
+    li.L0,
+    li.L1,
+    li.L2,
+    li.L3,
+    li.L5,
+    li.L6,
+    li.L7,
+    li.L8 {
+      list-style-type: none;
+    }
+    /* Alternate shading for lines */
+    li.L1,
+    li.L3,
+    li.L5,
+    li.L7,
+    li.L9 {
+  }
+}
+
+ngrx-circles circle {
+  fill: white;
+}
+
+ngrx-circles[color='primary'] circle {
+  fill: mat-color($dull-magenta, 500);
+}
+
+ngrx-circles[color='accent'] circle {
+  fill: mat-color($gold, 500);
+}
+
+ngrx-circles {
+  @for $i from 1 to 10 {
+    g:nth-of-type(#{$i}) {
+      transform: translate(100px, 100px)
+        rotate(#{20deg * ($i - 1)})
+        translate(-100px, -100px)
+        translate(95px, 5px);
+    }
+  }
+}

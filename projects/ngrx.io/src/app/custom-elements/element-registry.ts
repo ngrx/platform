@@ -6,47 +6,59 @@ import { InjectionToken, Type } from '@angular/core';
 export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
   {
     selector: 'aio-announcement-bar',
-    loadChildren: './announcement-bar/announcement-bar.module#AnnouncementBarModule'
+    loadChildren:
+      './announcement-bar/announcement-bar.module#AnnouncementBarModule',
   },
   {
     selector: 'aio-api-list',
-    loadChildren: './api/api-list.module#ApiListModule'
+    loadChildren: './api/api-list.module#ApiListModule',
   },
   {
     selector: 'aio-contributor-list',
-    loadChildren: './contributor/contributor-list.module#ContributorListModule'
+    loadChildren: './contributor/contributor-list.module#ContributorListModule',
   },
   {
     selector: 'aio-file-not-found-search',
-    loadChildren: './search/file-not-found-search.module#FileNotFoundSearchModule'
+    loadChildren:
+      './search/file-not-found-search.module#FileNotFoundSearchModule',
   },
   {
     selector: 'aio-resource-list',
-    loadChildren: './resource/resource-list.module#ResourceListModule'
+    loadChildren: './resource/resource-list.module#ResourceListModule',
   },
   {
     selector: 'aio-toc',
-    loadChildren: './toc/toc.module#TocModule'
+    loadChildren: './toc/toc.module#TocModule',
   },
   {
     selector: 'code-example',
-    loadChildren: './code/code-example.module#CodeExampleModule'
+    loadChildren: './code/code-example.module#CodeExampleModule',
   },
   {
     selector: 'code-tabs',
-    loadChildren: './code/code-tabs.module#CodeTabsModule'
+    loadChildren: './code/code-tabs.module#CodeTabsModule',
   },
   {
     selector: 'current-location',
-    loadChildren: './current-location/current-location.module#CurrentLocationModule'
+    loadChildren:
+      './current-location/current-location.module#CurrentLocationModule',
   },
   {
     selector: 'expandable-section',
-    loadChildren: './expandable-section/expandable-section.module#ExpandableSectionModule'
+    loadChildren:
+      './expandable-section/expandable-section.module#ExpandableSectionModule',
   },
   {
-    selector: 'live-example',
-    loadChildren: './live-example/live-example.module#LiveExampleModule'
+    selector: 'ngrx-circles',
+    loadChildren: './ngrx/circles.module#CirclesModule',
+  },
+  {
+    selector: 'ngrx-code-block',
+    loadChildren: './ngrx/code-block.module#CodeBlockModule',
+  },
+  {
+    selector: 'ngrx-store-animation',
+    loadChildren: './ngrx/store-animation.module#StoreAnimationModule',
   },
 ];
 
@@ -59,7 +71,9 @@ export interface WithCustomElementComponent {
 }
 
 /** Injection token to provide the element path modules. */
-export const ELEMENT_MODULE_PATHS_TOKEN = new InjectionToken('aio/elements-map');
+export const ELEMENT_MODULE_PATHS_TOKEN = new InjectionToken(
+  'aio/elements-map'
+);
 
 /** Map of possible custom element selectors to their lazy-loadable module paths. */
 export const ELEMENT_MODULE_PATHS = new Map<string, string>();
