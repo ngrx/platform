@@ -9,16 +9,17 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$ngrx-primary: mat-palette($mat-blue, 700, 600, 800);
-$ngrx-accent:  mat-palette($mat-red, 700, 600, 800);
+$ngrx-io-primary: mat-palette($dull-magenta, 700, 600, 800);
+$ngrx-io-accent:  mat-palette($gold, 700, 600, 800);
 
 // The warn palette is optional (defaults to red).
-$ngrx-warn:    mat-palette($mat-red);
+$ngrx-io-warn:    mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$ngrx-theme: mat-dark-theme($ngrx-primary, $ngrx-accent, $ngrx-warn);
+$ngrx-io-theme: mat-light-theme($ngrx-io-primary, $ngrx-io-accent, $ngrx-io-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($ngrx-theme);
+@include angular-material-theme($ngrx-io-theme);
+
