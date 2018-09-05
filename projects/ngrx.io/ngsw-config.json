@@ -20,7 +20,8 @@
           "https://maxcdn.bootstrapcdn.com/**"
         ]
       }
-    }, {
+    },
+    {
       "name": "assets-eager",
       "installMode": "prefetch",
       "updateMode": "prefetch",
@@ -32,7 +33,8 @@
           "!/**/_unused/**"
         ]
       }
-    }, {
+    },
+    {
       "name": "assets-lazy",
       "installMode": "lazy",
       "updateMode": "prefetch",
@@ -43,7 +45,8 @@
           "!/**/_unused/**"
         ]
       }
-    }, {
+    },
+    {
       "name": "docs-index",
       "installMode": "prefetch",
       "updateMode": "prefetch",
@@ -55,7 +58,8 @@
           "/generated/docs/app/search-data.json"
         ]
       }
-    }, {
+    },
+    {
       "name": "docs-lazy",
       "installMode": "lazy",
       "updateMode": "lazy",
@@ -76,52 +80,9 @@
     "!/**/stackblitz",
     "!/**/stackblitz.html",
     "!/api/*/**/*-*",
-    "!/api/**/AnimationStateDeclarationMetadata*",
-    "!/api/**/CORE_DIRECTIVES*",
-    "!/api/**/DirectiveMetadata*",
-    "!/api/**/HTTP_PROVIDERS*",
-    "!/api/**/NgFor",
-    "!/api/**/NgFor-*",
-    "!/api/**/PLATFORM_PIPES*",
-    "!/api/animate/**",
-    "!/api/api/**",
-    "!/api/common/Control*",
-    "!/api/common/MaxLengthValidator*",
-    "!/api/common/NgModel*",
-    "!/api/platform-browser/AnimationDriver*",
-    "!/api/testing/**",
     "!/docs/?*",
     "!/docs/*/**",
-    "!/guide/cli-quickstart",
-    "!/guide/cli-quickstart.html",
-    "!/guide/cli-quickstart/",
-    "!/guide/learning-angular",
-    "!/guide/learning-angular.html",
-    "!/guide/learning-angular/",
-    "!/guide/metadata",
-    "!/guide/metadata.html",
-    "!/guide/metadata/",
-    "!/guide/ngmodule",
-    "!/guide/ngmodule.html",
-    "!/guide/ngmodule/",
-    "!/guide/service-worker-getstart",
-    "!/guide/service-worker-getstart.html",
-    "!/guide/service-worker-getstart/",
-    "!/guide/service-worker-comm",
-    "!/guide/service-worker-comm.html",
-    "!/guide/service-worker-comm/",
-    "!/guide/service-worker-configref",
-    "!/guide/service-worker-configref.html",
-    "!/guide/service-worker-configref/",
-    "!/guide/webpack",
-    "!/guide/webpack.html",
-    "!/guide/webpack/",
-    "!/news",
-    "!/news.html",
-    "!/news/",
     "!/styleguide",
-    "!/styleguide/**",
-    "!/testing",
-    "!/testing/**"
+    "!/styleguide/**"
   ]
 }
