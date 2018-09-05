@@ -7,6 +7,10 @@ aio-shell.page-home {
     color: white;
   }
 
+  .mat-drawer-content {
+    overflow-x: hidden;
+  }  
+
   header {
     background-image: url('/assets/images/header.svg');
     background-size: cover;
