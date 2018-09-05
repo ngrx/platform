@@ -1,6 +1,6 @@
 # Router Store
 
-Bindings to connect the Angular Router with [Store](guide/store). During each router navigation cycle, multiple [actions](guide/router/actions) are dispatched that allow you to listen for changes in the router's state. You can then select data from the state of the router to provide additional information to your application.
+Bindings to connect the Angular Router with [Store](guide/store). During each router navigation cycle, multiple [actions](guide/router-store/actions) are dispatched that allow you to listen for changes in the router's state. You can then select data from the state of the router to provide additional information to your application.
 
 ### Installation
 
