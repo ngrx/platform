@@ -59,7 +59,17 @@
           ]
         },
         {
-          "title": "Recipes"
+          "title": "Recipes",
+          "children": [
+            {
+              "title": "Injecting Reducers",
+              "url": "guide/store/recipes/injecting"
+            },
+            {
+              "title": "Downgrade for AngularJS",
+              "url": "guide/store/recipes/downgrade"
+            }
+          ]
         },
         {
           "title": "Testing",
@@ -99,6 +109,10 @@
         {
           "title": "Overview",
           "url": "guide/router-store"
+        },
+        {
+          "title": "Actions",
+          "url": "guide/router-store/actions"
         }
       ]
     },
@@ -108,6 +122,10 @@
         {
           "title": "Overview",
           "url": "guide/entity"
+        },
+        {
+          "title": "Entity Interfaces",
+          "url": "guide/entity/interfaces"
         },
         {
           "title": "Entity Adapter",
@@ -154,6 +172,15 @@
               "url": "guide/schematics/feature"
             }
           ]
+        }
+      ]
+    },
+    {
+      "title": "Recipes",
+      "children": [
+        {
+          "title": "Nightly Builds",
+          "url": "guide/nightlies"
         }
       ]
     },

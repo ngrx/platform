@@ -18,16 +18,6 @@ npm install @ngrx/effects --save
 yarn add @ngrx/effects
 ```
 
-### Nightly builds
-
-```sh
-npm install github:ngrx/effects-builds
-```
-
-```sh
-yarn add github:ngrx/effects-builds
-```
-
 ## APIs
 
 Effects are injectable service classes that use two main APIs.

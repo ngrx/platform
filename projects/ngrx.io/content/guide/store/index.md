@@ -20,17 +20,7 @@ npm install @ngrx/store
 yarn add @ngrx/store
 ```
 
-### Nightly builds
-
-```sh
-npm install github:ngrx/store-builds
-```
-
-```sh
-yarn add github:ngrx/store-builds
-```
-
-## Setup
+## Example
 
 Create a reducer function for each data type you have in your application. The
 combination of these reducers will make up your application state:

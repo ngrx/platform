@@ -12,16 +12,6 @@ npm install @ngrx/store-devtools --save
 yarn add @ngrx/store-devtools
 ```
 
-## Nightly builds
-
-```sh
-npm install github:ngrx/store-devtools-builds
-```
-
-```sh
-yarn add github:ngrx/store-devtools-builds
-```
-
 ## Setup
 
 Instrumentation with the Chrome / Firefox Extension

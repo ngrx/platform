@@ -16,16 +16,6 @@ npm install @ngrx/schematics --save-dev
 yarn add @ngrx/schematics --dev
 ```
 
-## Nightly builds
-
-```sh
-npm install github:ngrx/schematics-builds --save-dev
-```
-
-```sh
-yarn add github:ngrx/schematics-builds --dev
-```
-
 ## Dependencies
 
 After installing `@ngrx/schematics`, install the NgRx dependencies.
