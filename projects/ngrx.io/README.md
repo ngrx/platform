@@ -14,10 +14,8 @@ Here are the most important tasks you might need to use:
 
 - `yarn` - install all the dependencies.
 - `yarn setup` - install all the dependencies, boilerplate, stackblitz, zips and run dgeni on the docs.
-- `yarn setup-local` - same as `setup`, but use the locally built Angular packages for aio and docs examples boilerplate.
 
 - `yarn build` - create a production build of the application (after installing dependencies, boilerplate, etc).
-- `yarn build-local` - same as `build`, but use `setup-local` instead of `setup`.
 
 - `yarn start` - run a development web server that watches the files; then builds the doc-viewer and reloads the page, as necessary.
 - `yarn serve-and-sync` - run both the `docs-watch` and `start` in the same console.
@@ -31,7 +29,7 @@ Here are the most important tasks you might need to use:
 - `yarn docs-lint` - check that the doc gen code follows our style rules.
 - `yarn docs-test` - run the unit tests for the doc generation code.
 
-- `yarn boilerplate:add` - generate all the boilerplate code for the examples, so that they can be run locally. Add the option `--local` to use your local version of Angular contained in the "dist" folder.
+- `yarn boilerplate:add` - generate all the boilerplate code for the examples, so that they can be run locally. Add the option
 - `yarn boilerplate:remove` - remove all the boilerplate code that was added via `yarn boilerplate:add`.
 - `yarn generate-stackblitz` - generate the stackblitz files that are used by the `live-example` tags in the docs.
 - `yarn generate-zips` - generate the zip files from the examples. Zip available via the `live-example` tags in the docs.
@@ -43,18 +41,6 @@ Here are the most important tasks you might need to use:
   - `yarn example-e2e --setup --local` - run e2e tests with the local version of Angular contained in the "dist" folder
 
 - `yarn build-ie-polyfills` - generates a js file of polyfills that can be loaded in Internet Explorer.
-
-## Developing on Windows
-
-The `packages/` directory may contain Linux-specific symlinks, which are not recognized by Windows.
-These unresolved links cause the docs generation process to fail because it cannot locate certain files.
-
-> Hint: The following steps require administration rights or [Windows Developer Mode](https://docs.microsoft.com/en-us/windows/uwp/get-started/enable-your-device-for-development) enabled!
-
-To fix this problem, run `scripts/windows/create-symlinks.sh`. This command creates temporary files where the symlinks used to be. Make sure not to commit those files with your documentation changes.
-When you are done making and testing your documentation changes, you can restore the original symlinks and delete the temporary files by running `scripts/windows/remove-symlinks.sh`.
-
-It's necessary to remove the temporary files, because otherwise they're displayed as local changes in your git working copy and certain operations are blocked.
 
 ## Using ServiceWorker locally
 
@@ -74,17 +60,14 @@ There are two types of content in the documentation:
 
 - **Other content**: guides, tutorials, and other marketing material.
   All other content is written using markdown in text files, located in the `projects/ngrx.io/content` folder.
-  More specifically, there are sub-folders that contain particular types of content: guides, tutorial and marketing.
+  More specifically, there are sub-folders that contain particular types of content: guides, and marketing.
 
 - **Code examples**: code examples need to be testable to ensure their accuracy.
   Also, our examples have a specific look and feel and allow the user to copy the source code. For larger
   examples they are rendered in a tabbed interface (e.g. template, HTML, and TypeScript on separate
-  tabs). Additionally, some are live examples, which provide links where the code can be edited, executed, and/or downloaded. For details on working with code examples, please read the [Code snippets](https://angular.io/guide/docs-style-guide#code-snippets), [Source code markup](https://angular.io/guide/docs-style-guide#source-code-markup), and [Live examples](https://angular.io/guide/docs-style-guide#live-examples) pages of the [Authors Style Guide](https://angular.io/guide/docs-style-guide).
+  tabs).
 
 We use the [dgeni](https://github.com/angular/dgeni) tool to convert these files into docs that can be viewed in the doc-viewer.
-
-The [Authors Style Guide](https://angular.io/guide/docs-style-guide) prescribes guidelines for
-writing guide pages, explains how to use the documentation classes and components, and how to markup sample source code to produce code snippets.
 
 ### Generating the complete docs
 
@@ -135,6 +118,3 @@ yarn serve-and-sync
 
 - Make changes to the page's associated doc or example files. Every time a file is saved, the doc will
   be regenerated, the app will rebuild and the page will reload.
-
-- If you get a build error complaining about examples or any other odd behavior, be sure to consult
-  the [Authors Style Guide](https://angular.io/guide/docs-style-guide).
