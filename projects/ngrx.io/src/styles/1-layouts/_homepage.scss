@@ -33,10 +33,16 @@ aio-shell.page-home {
     max-height: 30vh;
   }
   
-  header h1 {
+  div.title {
     font-size: 60px;
     margin-top: 20px;
+    text-transform: uppercase;
   }
+
+  div.subtitle {
+    font-size: 30px;
+    margin-top: 20px;
+  }  
   
   header h2 {
     font-size: 20px;
@@ -79,6 +85,10 @@ aio-shell.page-home {
   
     &:last-of-type {
       border-bottom: none;
+    }
+
+    h3 {
+      font-weight: bold;
     }
   }
   
