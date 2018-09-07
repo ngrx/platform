@@ -165,10 +165,10 @@ ol.linenums {
 
 @media screen {
   .str { color: #800 }  /* string content */
-  .kwd { color: #00f }  /* a keyword */
+  .kwd { color: orange }  /* a keyword */
   .com { color: #060 }  /* a comment */
-  .typ { color: red }  /* a type name */
-  .lit { color: #08c }  /* a literal value */
+  .typ { color: purple }  /* a type name */
+  .lit { color: orange }  /* a literal value */
   /* punctuation, lisp open bracket, lisp close bracket */
   .pun, .opn, .clo { color: #660 }
   .tag { color: #008 }  /* a markup tag name */
