@@ -40,7 +40,7 @@ export class LocationService {
     if (!url) {
       return;
     }
-    url = this.stripSlashes(url);
+    url = this.location.normalize(this.stripSlashes(url));
     if (/^http/.test(url) || this.swUpdateActivated) {
       // Has http protocol so leave the site
       // (or do a "full page navigation" if a ServiceWorker update has been activated)
@@ -147,7 +147,7 @@ export class LocationService {
     }
 
     const { pathname, search, hash } = anchor;
-    const relativeUrl = pathname + search + hash;
+    const relativeUrl = this.location + search + hash;
     this.urlParser.href = relativeUrl;
 
     // don't navigate if external link or has extension
@@ -160,3 +160,7 @@ export class LocationService {
     return false;
   }
 }
+
+// function _stripBaseHref(baseHref: string, url: string): string {
+//   return baseHref && url.startsWith(baseHref) ? url.substring(baseHref.length) : url;
+// }
