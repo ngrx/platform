@@ -383,7 +383,8 @@ describe('DevtoolsExtension', () => {
           reduxDevtoolsExtension,
           createConfig({
             actionsBlacklist: [BLACKLISTED_ACTION],
-          })
+          }),
+          <any>null
         );
         // Subscription needed or else extension connection will not be established.
         devtoolsExtension.actions$.subscribe(() => null);
@@ -418,7 +419,8 @@ describe('DevtoolsExtension', () => {
           reduxDevtoolsExtension,
           createConfig({
             actionsWhitelist: [WHITELISTED_ACTION],
-          })
+          }),
+          <any>null
         );
         // Subscription needed or else extension connection will not be established.
         devtoolsExtension.actions$.subscribe(() => null);
@@ -462,7 +464,8 @@ describe('DevtoolsExtension', () => {
           reduxDevtoolsExtension,
           createConfig({
             predicate,
-          })
+          }),
+          <any>null
         );
         // Subscription needed or else extension connection will not be established.
         devtoolsExtension.actions$.subscribe(() => null);
