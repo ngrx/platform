@@ -1,4 +1,10 @@
-import { EntityState, EntityStateAdapter, IdSelector, Update } from './models';
+import {
+  EntityState,
+  EntityStateAdapter,
+  IdSelector,
+  Update,
+  Predicate,
+} from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { selectIdValue } from './utils';
 
@@ -49,12 +55,9 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   }
 
   function removeManyMutably(keys: T[], state: R): DidMutate;
+  function removeManyMutably(predicate: Predicate<T>, state: R): DidMutate;
   function removeManyMutably(
-    predicate: (value: T) => boolean,
-    state: R
-  ): DidMutate;
-  function removeManyMutably(
-    keysOrPredicate: any[] | ((value: any) => boolean),
+    keysOrPredicate: any[] | Predicate<T>,
     state: any
   ): DidMutate {
     const keys =
