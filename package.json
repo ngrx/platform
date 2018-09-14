@@ -46,7 +46,10 @@
   ],
   "author": "Rob Wormald <robwormald@gmail.com>",
   "license": "MIT",
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/platform.git"
+  },
   "nyc": {
     "extension": [
       ".ts"

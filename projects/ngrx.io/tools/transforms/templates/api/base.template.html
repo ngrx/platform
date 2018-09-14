@@ -1,0 +1,29 @@
+{% import "../lib/githubLinks.html" as github -%}
+{% set comma = joiner(',') %}
+{% set breadcrumbDelimiter = joiner('&gt;') %}
+<article>
+  {$ github.githubLinks(doc, versionInfo) $}
+  <div class="breadcrumb">
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {%- for crumb in doc.breadCrumbs %}{$ comma() $}
+          { "@type": "ListItem", "position": {$ loop.index $}, "item": { "@id": "https://angular.io/{$ crumb.path $}", "name": "{$ crumb.text $}" } }{% endfor %}
+        ]
+      }
+    </script>
+    {% for crumb in doc.breadCrumbs %}{% if not loop.last %} {$ breadcrumbDelimiter() $} {% if crumb.path %}<a href="{$ crumb.path $}">{$ crumb.text $}</a>{% else %}{$ crumb.text $}{% endif %}{% endif %}{% endfor %}
+  </div>
+  <header class="api-header">
+    <h1>{$ doc.name $}</h1>
+    <label class="api-type-label {$ doc.docType $}">{$ doc.docType $}</label>
+    {% if doc.pipeOptions.pure === 'false' %}<label class="api-status-label impure-pipe">impure</label>{% endif %}
+  </header>
+  <aio-toc class="embedded"></aio-toc>
+
+  <div class="api-body">
+    {% block body %}{% endblock %}
+  </div>
+</article>

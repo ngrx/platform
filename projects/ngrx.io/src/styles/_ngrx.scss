@@ -1,0 +1,167 @@
+$dull-magenta: (
+  50: #f6e7f9,
+  100: #eac3f1,
+  200: #dc9be7,
+  300: #cd72dd,
+  400: #c354d6,
+  500: #b836cf,
+  600: #b130ca,
+  700: #a829c3,
+  800: #a022bd,
+  900: #9116b2,
+  A100: #f9e5ff,
+  A200: #edb2ff,
+  A400: #e27fff,
+  A700: #dc65ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$gold: (
+  50: #fff5e7,
+  100: #fee6c4,
+  200: #fed69d,
+  300: #fec576,
+  400: #fdb858,
+  500: #fdac3b,
+  600: #fda535,
+  700: #fc9b2d,
+  800: #fc9226,
+  900: #fc8219,
+  A100: #ffffff,
+  A200: #fffcfa,
+  A400: #ffdfc7,
+  A700: #ffd1ad,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+aio-shell.page-home {
+  pre.prettyprint {
+    border: none;
+    padding: 16px;
+    margin: 0;
+    border-radius: 3px;
+    font-family: 'PT Mono', monospace;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 1.6em;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  pre .nocode {
+    background-color: none;
+    color: #000;
+  }
+  pre .str {
+    color: mat-color($dull-magenta, 100);
+  } /* string  - pink */
+  pre .kwd {
+    color: #f0e68c;
+    font-weight: bold;
+  }
+  pre .com {
+    color: #87ceeb;
+  } /* comment - skyblue */
+  pre .typ {
+    color: mat-color($gold, 300);
+  } /* type    - lightgreen */
+  pre .lit {
+    color: mat-color($dull-magenta, 300);
+  } /* literal - darkred */
+  pre .pun {
+    color: #fff;
+  } /* punctuation */
+  pre .pln {
+    color: #fff;
+  } /* plaintext */
+  pre .tag {
+    color: #f0e68c;
+    font-weight: bold;
+  } /* html/xml tag    - lightyellow */
+  pre .atn {
+    color: #bdb76b;
+    font-weight: bold;
+  } /* attribute name  - khaki */
+  pre .atv {
+    color: mat-color($dull-magenta, 100);
+  } /* attribute value - pink */
+  pre .dec {
+    color: mat-color($gold, 300);
+  } /* decimal         - lightgreen */
+
+  /* Specify class=linenums on a pre to get line numbering */
+  ol.linenums {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #aeaeae;
+  } /* IE indents via margin-left */
+    li.L0,
+    li.L1,
+    li.L2,
+    li.L3,
+    li.L5,
+    li.L6,
+    li.L7,
+    li.L8 {
+      list-style-type: none;
+    }
+    /* Alternate shading for lines */
+    li.L1,
+    li.L3,
+    li.L5,
+    li.L7,
+    li.L9 {
+  }
+}
+
+ngrx-circles circle {
+  fill: white;
+}
+
+ngrx-circles[color='primary'] circle {
+  fill: mat-color($dull-magenta, 500);
+}
+
+ngrx-circles[color='accent'] circle {
+  fill: mat-color($gold, 500);
+}
+
+ngrx-circles {
+  @for $i from 1 to 10 {
+    g:nth-of-type(#{$i}) {
+      transform: translate(100px, 100px)
+        rotate(#{20deg * ($i - 1)})
+        translate(-100px, -100px)
+        translate(95px, 5px);
+    }
+  }
+}

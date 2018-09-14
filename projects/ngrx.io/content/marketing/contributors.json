@@ -1,0 +1,70 @@
+{
+  "robwormald": {
+    "name": "Rob Wormald",
+    "picture": "rob-wormald.jpg",
+    "twitter": "robwormald",
+    "website": "http://github.com/robwormald",
+    "bio":
+      "Rob is a Developer Programs Engineer for Angular at Google. He's the Angular team's resident reactive programming geek and founder of NgRx.",
+    "group": "Core"
+  },
+
+  "brandon": {
+    "name": "Brandon Roberts",
+    "picture": "brandonroberts.jpg",
+    "twitter": "brandontroberts",
+    "website": "http://github.com/brandonroberts",
+    "bio":
+      "Brandon is member of the Angular Team working on documentation and development. He is also a former GDE",
+    "group": "Core"
+  },
+
+  "mike": {
+    "name": "Mike Ryan",
+    "picture": "mikeryan.jpg",
+    "twitter": "mikeryandev",
+    "website": "http://github.com/mikeryandev",
+    "bio":
+      "Software engineer at Synapse building user interfaces for industrial Internet of Things applications. He is a Google Developer Expert and a core team member of NgRx, an open source organization building high quality reactive libraries for Angular. ",
+    "group": "Core"
+  },
+
+  "victor": {
+    "name": "Victor Savkin",
+    "picture": "victor.png",
+    "twitter": "vsavkin",
+    "website": "http://blog.nrwl.io",
+    "bio":
+      "Victor is co-founder of Nrwl. Victor developed Angular dependency injection, change detection, forms, and the router.",
+    "group": "Core"
+  },
+
+  "wardbell": {
+    "name": "Ward Bell",
+    "picture": "wardbell.jpg",
+    "website": "https://github.com/wardbell",
+    "twitter": "wardbell",
+    "bio":
+      "Ward is an all-around developer with JavaScript, Node.js®, and .net chops. He's a frequent conference speaker and podcaster, trainer, Google Developer Expert for Angular, Microsoft MVP, and PluralSight author. He is also president of IdeaBlade, an enterprise software consulting firm and the makers of breeze.js. He would like to get more sleep and spend more time in the mountains.",
+    "group": "Core"
+  },
+
+  "johnpapa": {
+    "name": "John Papa",
+    "picture": "john-papa.jpg",
+    "website": "https://github.com/johnpapa",
+    "twitter": "johnpapa",
+    "bio":
+      "John Papa is a dedicated father and husband, a Principal Developer Advocate with Microsoft, and an alumnus of the Google Developer Expert, Microsoft RD, and MVP programs.",
+    "group": "Core"
+  },
+
+  "tim": {
+    "name": "Tim Deschryver",
+    "picture": "timd.jpg",
+    "twitter": "tim_deschryver",
+    "website": "https://github.com/timdeschryver",
+    "bio": "Tim is an NgRx team member, and a writer for Angular in Depth.",
+    "group": "Contributor"
+  }
+}

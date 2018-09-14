@@ -1,0 +1,42 @@
+{% extends 'base.template.html' -%}
+
+{% macro listItems(items, title, overridePath) %}
+  {% set filteredItems = items | filterByPropertyValue('internal', undefined) %}
+  {% if filteredItems.length %}
+  <section class="export-list">
+    <h3>{$ title $}</h3>
+    <table class="is-full-width list-table">
+      {% for item in filteredItems %}
+      <tr>
+        <td><code class="code-anchor">
+          <a href="{$ overridePath or item.path $}">{$ item.name $}</a></code></td>
+        <td>{% if item.shortDescription %}{$ item.shortDescription | marked $}{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </section>
+  {% endif %}
+{% endmacro %}
+
+{% block body -%}
+  {% include "includes/deprecation.html" %}
+  {$ doc.shortDescription | marked $}
+  {% if doc.description %}{$ doc.description | marked $}{% endif %}
+
+  {% include "includes/see-also.html" %}
+
+  {% if doc.isPrimaryPackage %}
+  <h2>Entry points</h2>
+  {$ listItems([doc.packageInfo.primary], 'Primary', '#primary-entry-point-exports') $}
+  {$ listItems(doc.packageInfo.secondary, 'Secondary') $}
+  {% endif %}
+
+  <h2>{% if doc.isPrimaryPackage %}Primary entry{% else %}Entry{% endif %} point exports</h2>
+  {$ listItems(doc.classes, 'Classes') $}
+  {$ listItems(doc.decorators, 'Decorators') $}
+  {$ listItems(doc.functions, 'Functions') $}
+  {$ listItems(doc.structures, 'Structures') $}
+  {$ listItems(doc.directives, 'Directives') $}
+  {$ listItems(doc.pipes, 'Pipes') $}
+  {$ listItems(doc.types, 'Types') $}
+{%- endblock %}

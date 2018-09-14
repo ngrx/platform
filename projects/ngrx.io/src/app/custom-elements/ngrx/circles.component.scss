@@ -1,0 +1,23 @@
+@import '~@angular/material/theming';
+@import 'src/theme';
+
+circle {
+  fill: white;
+}
+
+:host([color='primary']) circle {
+  fill: mat-color($ngrx-primary, 500);
+}
+
+:host([color='accent']) circle {
+  fill: mat-color($ngrx-accent, 500);
+}
+
+@for $i from 1 to 10 {
+  g:nth-of-type(#{$i}) {
+    transform: translate(100px, 100px)
+      rotate(#{20deg * ($i - 1)})
+      translate(-100px, -100px)
+      translate(95px, 5px);
+  }
+}
