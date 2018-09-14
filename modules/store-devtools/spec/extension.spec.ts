@@ -373,6 +373,127 @@ describe('DevtoolsExtension', () => {
         });
       });
     });
+
+    describe('with Action and actionsBlacklist', () => {
+      const NORMAL_ACTION = 'NORMAL_ACTION';
+      const BLACKLISTED_ACTION = 'BLACKLISTED_ACTION';
+
+      beforeEach(() => {
+        devtoolsExtension = new DevtoolsExtension(
+          reduxDevtoolsExtension,
+          createConfig({
+            actionsBlacklist: [BLACKLISTED_ACTION],
+          }),
+          <any>null
+        );
+        // Subscription needed or else extension connection will not be established.
+        devtoolsExtension.actions$.subscribe(() => null);
+      });
+
+      it('should ignore blacklisted action', () => {
+        const options = createOptions();
+        const state = createState();
+
+        devtoolsExtension.notify(
+          new PerformAction({ type: NORMAL_ACTION }, 1234567),
+          state
+        );
+        devtoolsExtension.notify(
+          new PerformAction({ type: NORMAL_ACTION }, 1234567),
+          state
+        );
+        devtoolsExtension.notify(
+          new PerformAction({ type: BLACKLISTED_ACTION }, 1234567),
+          state
+        );
+        expect(extensionConnection.send).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    describe('with Action and actionsWhitelist', () => {
+      const NORMAL_ACTION = 'NORMAL_ACTION';
+      const WHITELISTED_ACTION = 'WHITELISTED_ACTION';
+
+      beforeEach(() => {
+        devtoolsExtension = new DevtoolsExtension(
+          reduxDevtoolsExtension,
+          createConfig({
+            actionsWhitelist: [WHITELISTED_ACTION],
+          }),
+          <any>null
+        );
+        // Subscription needed or else extension connection will not be established.
+        devtoolsExtension.actions$.subscribe(() => null);
+      });
+
+      it('should only keep whitelisted action', () => {
+        const options = createOptions();
+        const state = createState();
+
+        devtoolsExtension.notify(
+          new PerformAction({ type: NORMAL_ACTION }, 1234567),
+          state
+        );
+        devtoolsExtension.notify(
+          new PerformAction({ type: NORMAL_ACTION }, 1234567),
+          state
+        );
+        devtoolsExtension.notify(
+          new PerformAction({ type: WHITELISTED_ACTION }, 1234567),
+          state
+        );
+        expect(extensionConnection.send).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('with Action and predicate', () => {
+      const NORMAL_ACTION = 'NORMAL_ACTION';
+      const RANDOM_ACTION = 'RANDOM_ACTION';
+
+      const predicate = jasmine
+        .createSpy('predicate', (state: any, action: Action) => {
+          if (action.type === RANDOM_ACTION) {
+            return false;
+          }
+          return true;
+        })
+        .and.callThrough();
+
+      beforeEach(() => {
+        devtoolsExtension = new DevtoolsExtension(
+          reduxDevtoolsExtension,
+          createConfig({
+            predicate,
+          }),
+          <any>null
+        );
+        // Subscription needed or else extension connection will not be established.
+        devtoolsExtension.actions$.subscribe(() => null);
+      });
+
+      it('should ignore action according to predicate', () => {
+        const options = createOptions();
+        const state = createState();
+
+        devtoolsExtension.notify(
+          new PerformAction({ type: NORMAL_ACTION }, 1234567),
+          state
+        );
+        expect(predicate).toHaveBeenCalledWith(unliftState(state), {
+          type: NORMAL_ACTION,
+        });
+        devtoolsExtension.notify(
+          new PerformAction({ type: NORMAL_ACTION }, 1234567),
+          state
+        );
+        devtoolsExtension.notify(
+          new PerformAction({ type: RANDOM_ACTION }, 1234567),
+          state
+        );
+        expect(predicate).toHaveBeenCalledTimes(3);
+        expect(extensionConnection.send).toHaveBeenCalledTimes(2);
+      });
+    });
   });
 
   describe('with locked recording', () => {

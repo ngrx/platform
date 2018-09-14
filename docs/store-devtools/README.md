@@ -37,7 +37,7 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
 export class AppModule {}
 ```
 
-***NOTE:*** Once some component injects the `Store` service, Devtools will be enabled.
+**_NOTE:_** Once some component injects the `Store` service, Devtools will be enabled.
 
 ### Instrumentation options
 
@@ -70,3 +70,11 @@ function = takes `state` object and index as arguments, and should return `state
 #### `serialize`
 
 false | configuration object - Handle the way you want to serialize your state, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#serialize).
+
+#### `actionsBlacklist / actionsWhitelist`
+
+array of strings as regex - actions types to be hidden / shown in the monitors (while passed to the reducers), [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#actionsblacklist--actionswhitelist).
+
+#### `predicate`
+
+function - called for every action before sending, takes state and action object, and returns true in case it allows sending the current data to the monitor, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#predicate).

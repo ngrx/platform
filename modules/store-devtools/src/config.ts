@@ -10,6 +10,7 @@ export type SerializationOptions = {
   immutable?: any;
   refs?: Array<any>;
 };
+export type Predicate = (state: any, action: Action) => boolean;
 
 export class StoreDevtoolsConfig {
   maxAge: number | false;
@@ -20,6 +21,9 @@ export class StoreDevtoolsConfig {
   serialize?: boolean | SerializationOptions;
   logOnly?: boolean;
   features?: any;
+  actionsBlacklist?: string[];
+  actionsWhitelist?: string[];
+  predicate?: Predicate;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
