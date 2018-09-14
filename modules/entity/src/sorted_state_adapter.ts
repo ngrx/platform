@@ -80,16 +80,10 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     const updates: Update<T>[] =
       updatesOrMap instanceof Array
         ? updatesOrMap
-        : state.ids.reduce((changes: Update<T>[], id: string | number) => {
+        : state.ids.reduce((changes: any[], id: string | number) => {
             const change = updatesOrMap(state.entities[id]);
             if (change && Object.keys(change).length > 0) {
-              return [
-                ...changes,
-                {
-                  id,
-                  changes: change,
-                },
-              ];
+              changes.push({ id, changes: change });
             }
             return changes;
           }, []);
