@@ -8,7 +8,7 @@ $notificationHeight: 56px;
 }
 
 aio-notification {
-  background: $darkgray;
+  background: $purple;
   display: flex;
   position: relative;
   align-items: center;
@@ -50,10 +50,12 @@ aio-notification {
       overflow: hidden;
       text-overflow: ellipsis;
       margin-right: 10px;
+      color: $offwhite;
     }
 
     .action-button {
-      background: $brightred;
+      background: mat-color($dull-magenta, 700);
+      color: $offwhite;
       border-radius: 15px;
       text-transform: uppercase;
       padding: 0 10px;
