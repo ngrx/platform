@@ -23,7 +23,7 @@ class AppCmp {}
 class SimpleCmp {}
 
 describe('Router Store Module', () => {
-  describe('with defining state-key', () => {
+  describe('with defining state key', () => {
     const customStateKey = 'router-reducer';
     let storeRouterConnectingModule: StoreRouterConnectingModule;
     let store: Store<State>;
@@ -75,6 +75,85 @@ describe('Router Store Module', () => {
       store
         .pipe(
           select(customStateKey),
+          withLatestFrom(store)
+        )
+        .subscribe(([routerStoreState, storeState]) => {
+          logs.push([routerStoreState, storeState]);
+        });
+
+      spyOn(storeRouterConnectingModule, 'navigateIfNeeded').and.callThrough();
+      logs = [];
+
+      // this dispatches `@ngrx/router-store/navigation` action
+      // and store emits its payload.
+      router.navigateByUrl('/').then(() => {
+        const actual = (<any>(
+          storeRouterConnectingModule
+        )).navigateIfNeeded.calls.allArgs();
+
+        expect(actual.length).toBe(1);
+        expect(actual[0]).toEqual(logs[0]);
+        done();
+      });
+    });
+  });
+
+  describe('with defining state selector', () => {
+    const customStateKey = 'routerReducer';
+    const customStateSelector = (state: State) => state.routerReducer;
+
+    let storeRouterConnectingModule: StoreRouterConnectingModule;
+    let store: Store<State>;
+    let router: Router;
+
+    interface State {
+      [customStateKey]: RouterReducerState;
+    }
+
+    beforeEach(() => {
+      const reducers: any = {
+        [customStateKey]: routerReducer,
+      };
+
+      TestBed.configureTestingModule({
+        declarations: [AppCmp, SimpleCmp],
+        imports: [
+          StoreModule.forRoot(reducers),
+          RouterTestingModule.withRoutes([
+            { path: '', component: SimpleCmp },
+            {
+              path: 'next',
+              component: SimpleCmp,
+              canActivate: ['CanActivateNext'],
+            },
+            {
+              path: 'load',
+              loadChildren: 'test',
+              canLoad: ['CanLoadNext'],
+            },
+          ]),
+          StoreRouterConnectingModule.forRoot({
+            stateKey: customStateSelector,
+          }),
+        ],
+      });
+
+      store = TestBed.get(Store);
+      router = TestBed.get(Router);
+      storeRouterConnectingModule = TestBed.get(StoreRouterConnectingModule);
+    });
+
+    it('should have same state selector as own property', () => {
+      expect((<any>storeRouterConnectingModule).stateKey).toBe(
+        customStateSelector
+      );
+    });
+
+    it('should call navigateIfNeeded with args selected by custom state selector', (done: any) => {
+      let logs: any[] = [];
+      store
+        .pipe(
+          select(customStateSelector),
           withLatestFrom(store)
         )
         .subscribe(([routerStoreState, storeState]) => {

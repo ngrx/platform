@@ -8,7 +8,12 @@ import {
   NavigationError,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule, ScannedActionsSubject } from '@ngrx/store';
+import {
+  Store,
+  StoreModule,
+  ScannedActionsSubject,
+  Selector,
+} from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
 
 import {
@@ -729,6 +734,70 @@ describe('integration spec', () => {
       });
   });
 
+  it('should work when defining state selector', (done: any) => {
+    const reducer = (state: string = '', action: RouterAction<any>) => {
+      if (action.type === ROUTER_NAVIGATION) {
+        return action.payload.routerState.url.toString();
+      } else {
+        return state;
+      }
+    };
+
+    createTestModule({
+      reducers: { routerReducer: reducer },
+      config: { stateKey: (state: any) => state.routerReducer },
+    });
+
+    const router: Router = TestBed.get(Router);
+    const log = logOfRouterAndActionsAndStore({
+      stateKey: (state: any) => state.routerReducer,
+    });
+
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'store', state: '' }, // init event. has nothing to do with the router
+          { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
+          { type: 'action', action: ROUTER_REQUEST },
+          { type: 'router', event: 'NavigationStart', url: '/' },
+          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+          { type: 'action', action: ROUTER_NAVIGATION },
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+          { type: 'router', event: 'ResolveStart', url: '/' },
+          { type: 'router', event: 'ResolveEnd', url: '/' },
+          { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
+          { type: 'action', action: ROUTER_NAVIGATED },
+          { type: 'router', event: 'NavigationEnd', url: '/' },
+        ]);
+      })
+      .then(() => {
+        log.splice(0);
+        return router.navigateByUrl('next');
+      })
+      .then(() => {
+        expect(log).toEqual([
+          { type: 'store', state: '/' },
+          { type: 'action', action: ROUTER_REQUEST },
+          { type: 'router', event: 'NavigationStart', url: '/next' },
+          { type: 'store', state: '/next' },
+          { type: 'action', action: ROUTER_NAVIGATION },
+          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+          { type: 'router', event: 'ResolveStart', url: '/next' },
+          { type: 'router', event: 'ResolveEnd', url: '/next' },
+          { type: 'store', state: '/next' },
+          { type: 'action', action: ROUTER_NAVIGATED },
+          { type: 'router', event: 'NavigationEnd', url: '/next' },
+        ]);
+
+        done();
+      });
+  });
+
   it('should continue to react to navigation after state initiates router change', (done: Function) => {
     const reducer = (state: any = { state: { url: '/' } }, action: any) => {
       if (action.type === ROUTER_NAVIGATION) {
@@ -898,7 +967,9 @@ function waitForNavigation(router: Router, event: any = NavigationEnd) {
  * Also, actions$ always fires the next action AFTER the store is updated
  */
 function logOfRouterAndActionsAndStore(
-  options: { stateKey: string } = { stateKey: 'reducer' }
+  options: { stateKey: string | Selector<any, RouterReducerState> } = {
+    stateKey: 'reducer',
+  }
 ): any[] {
   const router: Router = TestBed.get(Router);
   const store: Store<any> = TestBed.get(Store);
@@ -918,7 +989,11 @@ function logOfRouterAndActionsAndStore(
     log.push({ type: 'action', action: action.type })
   );
   store.subscribe(store => {
-    log.push({ type: 'store', state: store[options.stateKey] });
+    if (typeof options.stateKey === 'function') {
+      log.push({ type: 'store', state: options.stateKey(store) });
+    } else {
+      log.push({ type: 'store', state: store[options.stateKey] });
+    }
   });
   return log;
 }
