@@ -18,6 +18,7 @@ export {
 } from './actions';
 export { routerReducer, RouterReducerState } from './reducer';
 export {
+  StateKeyOrSelector,
   StoreRouterConnectingModule,
   StoreRouterConfig,
   NavigationActionTiming,

@@ -8,12 +8,7 @@ import {
   NavigationError,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  Store,
-  StoreModule,
-  ScannedActionsSubject,
-  Selector,
-} from '@ngrx/store';
+import { Store, StoreModule, ScannedActionsSubject } from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
 
 import {
@@ -27,6 +22,7 @@ import {
   routerReducer,
   RouterReducerState,
   RouterStateSerializer,
+  StateKeyOrSelector,
   StoreRouterConfig,
   StoreRouterConnectingModule,
 } from '../src';
@@ -967,7 +963,7 @@ function waitForNavigation(router: Router, event: any = NavigationEnd) {
  * Also, actions$ always fires the next action AFTER the store is updated
  */
 function logOfRouterAndActionsAndStore(
-  options: { stateKey: string | Selector<any, RouterReducerState> } = {
+  options: { stateKey: StateKeyOrSelector } = {
     stateKey: 'reducer',
   }
 ): any[] {
