@@ -69,7 +69,7 @@ export type RouterCancelPayload<T, V extends BaseRouterStoreState> = {
 };
 
 /**
- * An action dispatched when the router cancel navigation.
+ * An action dispatched when the router cancels navigation.
  */
 export type RouterCancelAction<
   T,
@@ -125,7 +125,7 @@ export type RouterNavigatedAction = {
 };
 
 /**
- * An union type of router actions.
+ * A union type of router actions.
  */
 export type RouterAction<
   T,
