@@ -2,10 +2,9 @@ import {
   EntityState,
   IdSelector,
   Comparer,
-  Dictionary,
   EntityStateAdapter,
   Update,
-  UpdateMap,
+  EntityMap,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
@@ -74,19 +73,8 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(map: UpdateMap<T>, state: R): DidMutate;
-  function updateManyMutably(updatesOrMap: any[] | any, state: any): DidMutate {
+  function updateManyMutably(updates: any[], state: any): DidMutate {
     const models: T[] = [];
-    const updates: Update<T>[] =
-      updatesOrMap instanceof Array
-        ? updatesOrMap
-        : state.ids.reduce((changes: any[], id: string | number) => {
-            const change = updatesOrMap(state.entities[id]);
-            if (change && Object.keys(change).length > 0) {
-              changes.push({ id, changes: change });
-            }
-            return changes;
-          }, []);
 
     const didMutateIds =
       updates.filter(update => takeUpdatedModel(models, update, state)).length >
@@ -117,6 +105,22 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
         return DidMutate.Both;
       }
     }
+  }
+
+  function mapMutably(map: EntityMap<T>, state: R): DidMutate;
+  function mapMutably(updatesOrMap: any, state: any): DidMutate {
+    const updates: Update<T>[] = state.ids.reduce(
+      (changes: any[], id: string | number) => {
+        const change = updatesOrMap(state.entities[id]);
+        if (change !== state.entities[id]) {
+          changes.push({ id, changes: change });
+        }
+        return changes;
+      },
+      []
+    );
+
+    return updateManyMutably(updates, state);
   }
 
   function upsertOneMutably(entity: T, state: R): DidMutate;
@@ -199,5 +203,6 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     addMany: createStateOperator(addManyMutably),
     updateMany: createStateOperator(updateManyMutably),
     upsertMany: createStateOperator(upsertManyMutably),
+    map: createStateOperator(mapMutably),
   };
 }

@@ -248,20 +248,22 @@ describe('Unsorted State Adapter', () => {
     });
   });
 
-  it('should let you update many entities by predicate in the state', () => {
-    const firstChange = { title: 'First change' };
-    const secondChange = { title: 'Second change' };
+  it('should let you map over entities in the state', () => {
+    const firstChange = { ...TheGreatGatsby, title: 'First change' };
+    const secondChange = { ...AClockworkOrange, title: 'Second change' };
 
     const withMany = adapter.addAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
 
-    const withUpdates = adapter.updateMany(
+    const withUpdates = adapter.map(
       book =>
         book.title === TheGreatGatsby.title
           ? firstChange
-          : book.title === AClockworkOrange.title ? secondChange : false,
+          : book.title === AClockworkOrange.title
+            ? secondChange
+            : book,
       withMany
     );
 

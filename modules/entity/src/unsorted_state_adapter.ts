@@ -4,7 +4,7 @@ import {
   IdSelector,
   Update,
   Predicate,
-  UpdateMap,
+  EntityMap,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { selectIdValue } from './utils';
@@ -117,21 +117,10 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   }
 
   function updateManyMutably(updates: Update<T>[], state: R): DidMutate;
-  function updateManyMutably(map: UpdateMap<T>, state: R): DidMutate;
-  function updateManyMutably(updatesOrMap: any[] | any, state: any): DidMutate {
+  function updateManyMutably(updates: any[], state: any): DidMutate {
     const newKeys: { [id: string]: string } = {};
-    const changes: Update<T>[] =
-      updatesOrMap instanceof Array
-        ? updatesOrMap
-        : state.ids.reduce((changes: any[], id: string | number) => {
-            const change = updatesOrMap(state.entities[id]);
-            if (change && Object.keys(change).length > 0) {
-              changes.push({ id, changes: change });
-            }
-            return changes;
-          }, []);
 
-    const updates = changes.filter(({ id }) => id in state.entities);
+    updates = updates.filter(update => update.id in state.entities);
 
     const didMutateEntities = updates.length > 0;
 
@@ -148,6 +137,23 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     }
 
     return DidMutate.None;
+  }
+
+  function mapMutably(map: EntityMap<T>, state: R): DidMutate;
+  function mapMutably(map: any, state: any): DidMutate {
+    const changes: Update<T>[] = state.ids.reduce(
+      (changes: any[], id: string | number) => {
+        const change = map(state.entities[id]);
+        if (change !== state.entities[id]) {
+          changes.push({ id, changes: change });
+        }
+        return changes;
+      },
+      []
+    );
+    const updates = changes.filter(({ id }) => id in state.entities);
+
+    return updateManyMutably(updates, state);
   }
 
   function upsertOneMutably(entity: T, state: R): DidMutate;
@@ -195,5 +201,6 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     upsertMany: createStateOperator(upsertManyMutably),
     removeOne: createStateOperator(removeOneMutably),
     removeMany: createStateOperator(removeManyMutably),
+    map: createStateOperator(mapMutably),
   };
 }
