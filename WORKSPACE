@@ -30,6 +30,8 @@ check_bazel_version("0.14.0")
 node_repositories(
     package_json = ["//:package.json"],
     preserve_symlinks = True,
+    node_version = "10.9.0",
+    yarn_version = "1.9.2",
 )
 
 ####################################
