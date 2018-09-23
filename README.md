@@ -48,6 +48,7 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 ## Examples
 
 - [example-app](./projects/example-app/README.md) - Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://ngrx.github.io/platform/stackblitz.html).
+- [example-login-app](./projects/example-login/README.md) - Example login application using Angular 6 with CLI.
 
 ## Migration
 

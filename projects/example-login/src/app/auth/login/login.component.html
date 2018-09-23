@@ -1,0 +1,38 @@
+<div class="modal-dialog" id="login-form">
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h4 class="modal-title w-100 font-bold"><img src="/assets/img/octocat.gif"></h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body mx-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="well login-box">
+              <form [formGroup]="loginForm" novalidate (ngSubmit)="login(loginForm.value)">
+                <div class="form-group">
+                  <label for="loginForm-account">Account</label>
+                  <input formControlName="account" type="text" id="loginForm-account" class="form-control" required>
+                  <label class="text-danger" *ngIf="loginForm.get('account').touched && loginForm.get('account').hasError('required')">Account
+                    is required</label>
+                </div>
+                <div class="form-group">
+                  <label for="loginForm-pass">Password</label>
+                  <input formControlName="password" type="password" id="loginForm-pass" class="form-control" required>
+                  <label class="text-danger" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">Password
+                    is required</label>
+                </div>
+                <div class="form-group text-center">
+                  <button type="submit" class="btn btn-primary btn-block" *ngIf="!isLogging$" [disabled]="loginForm.invalid">Login</button>
+                  <img src="/assets/img/loader.svg" class="loading-img" *ngIf="isLogging$">
+                  <p *ngIf="error$ && !isLogging$">{{error$}}</p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
