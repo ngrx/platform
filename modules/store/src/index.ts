@@ -25,6 +25,7 @@ export {
   MemoizeFn,
   MemoizedProjection,
   MemoizedSelector,
+  MemoizedSelectorWithProps,
   resultMemoize,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';
