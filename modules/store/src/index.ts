@@ -5,6 +5,7 @@ export {
   ActionReducerFactory,
   MetaReducer,
   Selector,
+  SelectorWithProps,
 } from './models';
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
