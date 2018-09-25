@@ -1,4 +1,4 @@
-import { Component, Provider, Injectable, ErrorHandler } from '@angular/core';
+import { Injectable, ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   NavigationEnd,
@@ -7,8 +7,7 @@ import {
   NavigationCancel,
   NavigationError,
 } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule, ScannedActionsSubject } from '@ngrx/store';
+import { Store, ScannedActionsSubject } from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
 
 import {
@@ -23,9 +22,8 @@ import {
   RouterReducerState,
   RouterStateSerializer,
   StateKeyOrSelector,
-  StoreRouterConfig,
-  StoreRouterConnectingModule,
 } from '../src';
+import { createTestModule } from './helpers';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
@@ -889,62 +887,6 @@ describe('integration spec', () => {
     });
   });
 });
-
-function createTestModule(
-  opts: {
-    reducers?: any;
-    canActivate?: Function;
-    canLoad?: Function;
-    providers?: Provider[];
-    config?: StoreRouterConfig;
-  } = {}
-) {
-  @Component({
-    selector: 'test-app',
-    template: '<router-outlet></router-outlet>',
-  })
-  class AppCmp {}
-
-  @Component({
-    selector: 'pagea-cmp',
-    template: 'pagea-cmp',
-  })
-  class SimpleCmp {}
-
-  TestBed.configureTestingModule({
-    declarations: [AppCmp, SimpleCmp],
-    imports: [
-      StoreModule.forRoot(opts.reducers),
-      RouterTestingModule.withRoutes([
-        { path: '', component: SimpleCmp },
-        {
-          path: 'next',
-          component: SimpleCmp,
-          canActivate: ['CanActivateNext'],
-        },
-        {
-          path: 'load',
-          loadChildren: 'test',
-          canLoad: ['CanLoadNext'],
-        },
-      ]),
-      StoreRouterConnectingModule.forRoot(opts.config),
-    ],
-    providers: [
-      {
-        provide: 'CanActivateNext',
-        useValue: opts.canActivate || (() => true),
-      },
-      {
-        provide: 'CanLoadNext',
-        useValue: opts.canLoad || (() => true),
-      },
-      opts.providers || [],
-    ],
-  });
-
-  TestBed.createComponent(AppCmp);
-}
 
 function waitForNavigation(router: Router, event: any = NavigationEnd) {
   return router.events

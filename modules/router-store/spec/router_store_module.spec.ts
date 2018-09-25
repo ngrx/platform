@@ -1,26 +1,14 @@
-import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import {
   routerReducer,
   RouterReducerState,
   StoreRouterConnectingModule,
 } from '@ngrx/router-store';
-import { select, Store, StoreModule } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
 
-@Component({
-  selector: 'test-app',
-  template: '<router-outlet></router-outlet>',
-})
-class AppCmp {}
-
-@Component({
-  selector: 'page-cmp',
-  template: 'page-cmp',
-})
-class SimpleCmp {}
+import { createTestModule } from './helpers';
 
 describe('Router Store Module', () => {
   describe('with defining state key', () => {
@@ -34,31 +22,13 @@ describe('Router Store Module', () => {
     }
 
     beforeEach(() => {
-      const reducers: any = {
-        [customStateKey]: routerReducer,
-      };
-
-      TestBed.configureTestingModule({
-        declarations: [AppCmp, SimpleCmp],
-        imports: [
-          StoreModule.forRoot(reducers),
-          RouterTestingModule.withRoutes([
-            { path: '', component: SimpleCmp },
-            {
-              path: 'next',
-              component: SimpleCmp,
-              canActivate: ['CanActivateNext'],
-            },
-            {
-              path: 'load',
-              loadChildren: 'test',
-              canLoad: ['CanLoadNext'],
-            },
-          ]),
-          StoreRouterConnectingModule.forRoot({
-            stateKey: customStateKey,
-          }),
-        ],
+      createTestModule({
+        reducers: {
+          [customStateKey]: routerReducer,
+        },
+        config: {
+          stateKey: customStateKey,
+        },
       });
 
       store = TestBed.get(Store);
@@ -111,31 +81,13 @@ describe('Router Store Module', () => {
     }
 
     beforeEach(() => {
-      const reducers: any = {
-        [customStateKey]: routerReducer,
-      };
-
-      TestBed.configureTestingModule({
-        declarations: [AppCmp, SimpleCmp],
-        imports: [
-          StoreModule.forRoot(reducers),
-          RouterTestingModule.withRoutes([
-            { path: '', component: SimpleCmp },
-            {
-              path: 'next',
-              component: SimpleCmp,
-              canActivate: ['CanActivateNext'],
-            },
-            {
-              path: 'load',
-              loadChildren: 'test',
-              canLoad: ['CanLoadNext'],
-            },
-          ]),
-          StoreRouterConnectingModule.forRoot({
-            stateKey: customStateSelector,
-          }),
-        ],
+      createTestModule({
+        reducers: {
+          [customStateKey]: routerReducer,
+        },
+        config: {
+          stateKey: customStateSelector,
+        },
       });
 
       store = TestBed.get(Store);
