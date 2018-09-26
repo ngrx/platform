@@ -8,7 +8,7 @@ import {
 import { select, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
 
-import { createTestModule } from './helpers';
+import { createTestModule } from './utils';
 
 describe('Router Store Module', () => {
   describe('with defining state key', () => {

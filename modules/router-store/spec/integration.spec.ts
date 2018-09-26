@@ -23,7 +23,7 @@ import {
   RouterStateSerializer,
   StateKeyOrSelector,
 } from '../src';
-import { createTestModule } from './helpers';
+import { createTestModule } from './utils';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
