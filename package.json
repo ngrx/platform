@@ -6,6 +6,7 @@
     "precommit": "lint-staged",
     "build": "bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
+    "deploy:gh-pages": "ts-node ./build/deploy-gh-pages.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc yarn run test:unit",
     "clean": "git clean -xdf",
@@ -26,7 +27,7 @@
     "prebuildifier": "bazel build --noshow_progress @com_github_bazelbuild_buildtools//buildifier",
     "buildifier": "find . -type f \\( -name BUILD -or -name BUILD.bazel \\) ! -path \"*/node_modules/*\" | xargs $(bazel info bazel-bin)/external/com_github_bazelbuild_buildtools/buildifier/*/buildifier",
     "copy:schematics": "ts-node ./build/copy-schematics-core.ts",
-    "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html"
+    "build:stackblitz": "ts-node ./build/stackblitz.ts"
   },
   "engines": {
     "node": ">=8.9.0",

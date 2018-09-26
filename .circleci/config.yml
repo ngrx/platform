@@ -78,11 +78,17 @@ jobs:
       - run: yarn run ci
       - run: yarn run example:build:prod
       - run: yarn run example:test --watch=false
+      - run: yarn run build:stackblitz
       - save_cache:
           key: *cache_key
           paths:
             - ~/.cache/yarn
             - node_modules
+      - persist_to_workspace:
+          root: dist-gh-pages
+          paths:
+            - projects/example-app/dist/*
+            - stackblitz.html
   deploy:
     <<: *run_in_ngcontainer
     steps:
@@ -96,6 +102,7 @@ jobs:
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
+      - run: yarn run deploy:gh-pages
 
 workflows:
   version: 2
