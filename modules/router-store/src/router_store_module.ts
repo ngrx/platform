@@ -13,7 +13,7 @@ import {
   RoutesRecognized,
   NavigationStart,
 } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { select, Selector, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
 
 import {
@@ -30,8 +30,10 @@ import {
   SerializedRouterStateSnapshot,
 } from './serializer';
 
+export type StateKeyOrSelector = string | Selector<any, RouterReducerState>;
+
 export interface StoreRouterConfig {
-  stateKey?: string;
+  stateKey?: StateKeyOrSelector;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   /**
    * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
@@ -152,7 +154,7 @@ export class StoreRouterConnectingModule {
   private storeState: any;
   private trigger = RouterTrigger.NONE;
 
-  private stateKey: string;
+  private stateKey: StateKeyOrSelector;
 
   constructor(
     private store: Store<any>,
@@ -161,7 +163,7 @@ export class StoreRouterConnectingModule {
     private errorHandler: ErrorHandler,
     @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
   ) {
-    this.stateKey = this.config.stateKey as string;
+    this.stateKey = this.config.stateKey as StateKeyOrSelector;
 
     this.setUpStoreStateListener();
     this.setUpRouterEventsListener();
