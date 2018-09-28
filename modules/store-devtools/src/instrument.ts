@@ -50,7 +50,9 @@ export function createStateObservable(
 
 @NgModule({})
 export class StoreDevtoolsModule {
-  static instrument(options: StoreDevtoolsOptions = {}): ModuleWithProviders {
+  static instrument(
+    options: StoreDevtoolsOptions = {}
+  ): ModuleWithProviders<StoreDevtoolsModule> {
     return {
       ngModule: StoreDevtoolsModule,
       providers: [
