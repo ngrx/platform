@@ -8,7 +8,9 @@ import { EffectsRunner } from './effects_runner';
 
 @NgModule({})
 export class EffectsModule {
-  static forFeature(featureEffects: Type<any>[]): ModuleWithProviders {
+  static forFeature(
+    featureEffects: Type<any>[]
+  ): ModuleWithProviders<EffectsFeatureModule> {
     return {
       ngModule: EffectsFeatureModule,
       providers: [
@@ -23,7 +25,9 @@ export class EffectsModule {
     };
   }
 
-  static forRoot(rootEffects: Type<any>[]): ModuleWithProviders {
+  static forRoot(
+    rootEffects: Type<any>[]
+  ): ModuleWithProviders<EffectsRootModule> {
     return {
       ngModule: EffectsRootModule,
       providers: [

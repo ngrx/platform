@@ -135,7 +135,9 @@ enum RouterTrigger {
   ],
 })
 export class StoreRouterConnectingModule {
-  static forRoot(config: StoreRouterConfig = {}): ModuleWithProviders {
+  static forRoot(
+    config: StoreRouterConfig = {}
+  ): ModuleWithProviders<StoreRouterConnectingModule> {
     return {
       ngModule: StoreRouterConnectingModule,
       providers: [

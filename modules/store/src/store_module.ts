@@ -91,13 +91,13 @@ export class StoreModule {
   static forRoot<T, V extends Action = Action>(
     reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
     config?: StoreConfig<T, V>
-  ): ModuleWithProviders;
+  ): ModuleWithProviders<StoreRootModule>;
   static forRoot(
     reducers:
       | ActionReducerMap<any, any>
       | InjectionToken<ActionReducerMap<any, any>>,
     config: StoreConfig<any, any> = {}
-  ): ModuleWithProviders {
+  ): ModuleWithProviders<StoreRootModule> {
     return {
       ngModule: StoreRootModule,
       providers: [
@@ -146,12 +146,12 @@ export class StoreModule {
     featureName: string,
     reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
     config?: StoreConfig<T, V>
-  ): ModuleWithProviders;
+  ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature<T, V extends Action = Action>(
     featureName: string,
     reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
     config?: StoreConfig<T, V>
-  ): ModuleWithProviders;
+  ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature(
     featureName: string,
     reducers:
@@ -160,7 +160,7 @@ export class StoreModule {
       | ActionReducer<any, any>
       | InjectionToken<ActionReducer<any, any>>,
     config: StoreConfig<any, any> = {}
-  ): ModuleWithProviders {
+  ): ModuleWithProviders<StoreFeatureModule> {
     return {
       ngModule: StoreFeatureModule,
       providers: [
