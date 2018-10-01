@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@angular/animations": "^6.1.0",
-    "@angular/bazel": "^6.1.0",
+    "@angular/bazel": "^6.1.9",
     "@angular/cdk": "^6.4.2",
     "@angular/cli": "^6.1.2",
     "@angular/common": "^6.1.0",
