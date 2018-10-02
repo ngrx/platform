@@ -146,7 +146,7 @@ export class SomeEffectsClass {
   constructor(private actions$: Actions) {}
 
   @Effect({ dispatch: false })
-  init$: Observable<any> = defer(() => of(null)).pipe(
+  init$: Observable<any> = of(null).pipe(
     tap(() => console.log('init$'))
   );
 }
