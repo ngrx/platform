@@ -25,7 +25,7 @@ export type Actions = DevtoolsActions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
-export const RECOMPUTE_STATE = '@ngrx/devtools/recomput-state' as '@ngrx/devtools/recomput-state';
+export const RECOMPUTE_STATE = '@ngrx/devtools/recompute-state' as '@ngrx/devtools/recompute-state';
 export const RECOMPUTE_STATE_ACTION = { type: RECOMPUTE_STATE };
 
 export interface ComputedState {
