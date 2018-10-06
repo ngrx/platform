@@ -13,7 +13,7 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 // fixes typing errors in Atom editor
-import {} from 'jasmine';
+import 'jasmine';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;

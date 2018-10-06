@@ -477,9 +477,9 @@ describe('integration spec', () => {
       })
       .then(() => {
         expect(log).toEqual([
+          { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'store', state: { url: '/next', navigationId: 2 } }, // restored
           { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
           { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
           /* new Router Lifecycle in Angular 4.3 */
@@ -524,6 +524,44 @@ describe('integration spec', () => {
       ]);
       done();
     });
+  });
+
+  it('should support cancellation of initial navigation when canLoad guard rejects', (done: any) => {
+    const reducer = (state: any, action: RouterAction<any>) => {
+      const r = routerReducer(state, action);
+      return r && r.state
+        ? { url: r.state.url, navigationId: r.navigationId }
+        : null;
+    };
+
+    createTestModule({
+      reducers: { routerReducer, reducer },
+      canLoad: () => Promise.reject('boom'),
+    });
+
+    const router: Router = TestBed.get(Router);
+    const log = logOfRouterAndActionsAndStore();
+
+    router
+      .navigateByUrl('/load')
+      .then(() => {
+        fail(`Shouldn't be called`);
+      })
+      .catch(err => {
+        expect(err).toBe('boom');
+
+        expect(log).toEqual([
+          { type: 'store', state: null }, // initial state
+          { type: 'store', state: null }, // ROUTER_REQEST event in the store
+          { type: 'action', action: ROUTER_REQUEST },
+          { type: 'router', event: 'NavigationStart', url: '/load' },
+          { type: 'store', state: { url: '', navigationId: 1 } },
+          { type: 'action', action: ROUTER_ERROR },
+          { type: 'router', event: 'NavigationError', url: '/load' },
+        ]);
+
+        done();
+      });
   });
 
   function shouldSupportCustomSerializer(
