@@ -5,8 +5,8 @@ load("@build_bazel_rules_nodejs//:defs.bzl",
      _jasmine_node_test="jasmine_node_test", _npm_package="npm_package")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
-NG_VERSION = "^6.0.0"
-RXJS_VERSION = "^5.6.0-forward-compat.0 || ^6.0.0"
+NG_VERSION = "^7.0.0"
+RXJS_VERSION = "^6.3.0"
 NG_UPDATE_MIGRATIONS = "./migrations/migration.json"
 MODULE_SCHEMATICS_COLLECTION = "./schematics/collection.json"
 

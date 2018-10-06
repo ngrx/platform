@@ -20,9 +20,7 @@ describe('Sorted State Adapter', () => {
   });
 
   afterAll(() => {
-    Object.defineProperty(Array.prototype, 'unwantedField', {
-      value: undefined,
-    });
+    delete (Array.prototype as any).unwantedField;
   });
 
   beforeEach(() => {
