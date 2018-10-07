@@ -37,6 +37,12 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 ## Packages
 
+***Note:** The links below will take you to the master branch version of the docs.
+To view the docs corresponding to a specific release (which is probably what you want),
+you need to look up the commit ID for a release and browse the snapshot of this repo at that point
+in time. One way to do this is to view the ["releases"](https://github.com/ngrx/platform/releases)
+tab in github, click the commit hash link, and then click "browse files".*
+
 - [@ngrx/store](./docs/store/README.md) - RxJS powered state management for Angular applications, inspired by Redux
 - [@ngrx/effects](./docs/effects/README.md) - Side Effect model for @ngrx/store to model event sources as actions.
 - [@ngrx/router-store](./docs/router-store/README.md) - Bindings to connect the Angular Router to @ngrx/store
