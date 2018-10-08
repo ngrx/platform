@@ -113,9 +113,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/bazel@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@angular/bazel/-/bazel-6.1.0.tgz#a875e7c263bcc164c8a81d413053e444e4197f2c"
+"@angular/bazel@^6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@angular/bazel/-/bazel-6.1.9.tgz#71a236809c8e059e09489a2f82bf7cfb51df54e8"
   dependencies:
     "@bazel/typescript" "^0.15.0"
     "@types/node" "6.0.84"
@@ -332,13 +332,13 @@
   version "6.0.84"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.84.tgz#193ffe5a9f42864d425ffd9739d95b753c6a1eab"
 
+"@types/node@^10.9.0":
+  version "10.11.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.4.tgz#e8bd933c3f78795d580ae41d86590bfc1f4f389d"
+
 "@types/node@^6.0.46":
   version "6.0.109"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.109.tgz#addc070c5b0a528c286ff4188d7dcafdafbfdcce"
-
-"@types/node@^7.0.5":
-  version "7.0.64"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.64.tgz#8d5fc50e0944437e48e8aef4ab09910ec8661eee"
 
 "@types/ora@^1.3.1":
   version "1.3.4"
