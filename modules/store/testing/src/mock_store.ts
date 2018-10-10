@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 import {
   Action,
   ActionsSubject,
@@ -7,8 +8,6 @@ import {
   StateObservable,
   Store,
 } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
