@@ -1,37 +1,26 @@
-import { Injectable } from '@angular/core';
+export * from './mock_store';
+
+import { MockState } from './mock_state';
 import {
+  ActionsSubject,
+  INITIAL_STATE,
+  ReducerManager,
   StateObservable,
   Store,
-  ReducerManager,
-  ActionsSubject,
 } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
+import { MockStore } from './mock_store';
+import { MockReducerManager } from './mock_reducer_manager';
 
-@Injectable()
-export class MockStore<T> extends Store<T> {
-  private stateSubject = new BehaviorSubject<T>({} as T);
-
-  constructor(
-    state$: StateObservable,
-    actionsObserver: ActionsSubject,
-    reducerManager: ReducerManager
-  ) {
-    super(state$, actionsObserver, reducerManager);
-    this.source = this.stateSubject.asObservable();
-  }
-
-  nextMock(nextState: T): void {
-    this.stateSubject.next(nextState);
-  }
-
-  spyOnDispatch(spyFactory: Function): void {
-    this.dispatch = spyFactory(this.dispatch);
-  }
+interface MockStoreConfig<T> {
+  initialState?: T;
 }
 
-export function provideMockStore() {
-  return {
-    provide: Store,
-    useClass: MockStore,
-  };
+export function provideMockStore<T = any>(config: MockStoreConfig<T> = {}) {
+  return [
+    ActionsSubject,
+    { provide: INITIAL_STATE, useValue: config.initialState },
+    { provide: StateObservable, useClass: MockState },
+    { provide: ReducerManager, useClass: MockReducerManager },
+    { provide: Store, useClass: MockStore },
+  ];
 }

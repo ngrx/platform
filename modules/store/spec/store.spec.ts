@@ -19,7 +19,7 @@ import {
 } from './fixtures/counter';
 import Spy = jasmine.Spy;
 import any = jasmine.any;
-import { take } from 'rxjs/operators';
+import { skip, take } from 'rxjs/operators';
 import { MockStore, provideMockStore } from '../testing';
 
 interface TestAppSchema {
@@ -438,17 +438,9 @@ describe('ngRx Store', () => {
     let mockStore: MockStore<TestAppSchema>;
     beforeEach(() => {
       const initialState = { counter1: 0, counter2: 1 };
-      const reducers = {
-        counter1: counterReducer,
-        counter2: counterReducer,
-        counter3: counterReducer,
-      };
-
       TestBed.configureTestingModule({
-        imports: [StoreModule.forRoot(reducers, { initialState })],
-        providers: [provideMockStore()],
+        providers: [provideMockStore({ initialState })],
       });
-
       mockStore = TestBed.get(Store);
     });
 
@@ -458,7 +450,7 @@ describe('ngRx Store', () => {
         counter2: 11,
         counter3: 25,
       };
-      mockStore.nextMock(fixedState);
+      mockStore.setState(fixedState);
       mockStore.pipe(take(1)).subscribe({
         next(val) {
           expect(val).toEqual(fixedState);
@@ -468,10 +460,17 @@ describe('ngRx Store', () => {
       });
     });
 
-    it('should set a spy on dispatcher', () => {
-      const spyFactory = () => jasmine.createSpy('dispatcher');
+    it('should allow tracing dispatched actions', () => {
       const action = { type: INCREMENT };
-      mockStore.spyOnDispatch(spyFactory);
+      mockStore.scannedActions$
+        .pipe(skip(1))
+        .subscribe(scannedAction => expect(scannedAction).toEqual(action));
+      mockStore.dispatch(action);
+    });
+
+    it('should allow setting a spy on dispatch method', () => {
+      const action = { type: INCREMENT };
+      spyOn(mockStore, 'dispatch').and.callThrough();
       mockStore.dispatch(action);
       expect(mockStore.dispatch).toHaveBeenCalledWith(action);
     });
