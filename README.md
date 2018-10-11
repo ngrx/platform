@@ -39,9 +39,10 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 ***Note:** The links below will take you to the master branch version of the docs.
 To view the docs corresponding to a specific release (which is probably what you want),
-you need to look up the commit ID for a release and browse the snapshot of this repo at that point
-in time. One way to do this is to view the ["releases"](https://github.com/ngrx/platform/releases)
-tab in github, click the commit hash link, and then click "browse files".*
+the easiest way is to use git tags to browse a snapshot of the repo as it was for a release.
+One way to do this is to use github's branches toggle (which is by default labeled
+"Branches: Master" and is located on the far left of the green "clone or download" button, above).
+Click the toggle, click the "tags" tab in the overlay pane, and select the tag for a release.*
 
 - [@ngrx/store](./docs/store/README.md) - RxJS powered state management for Angular applications, inspired by Redux
 - [@ngrx/effects](./docs/effects/README.md) - Side Effect model for @ngrx/store to model event sources as actions.
