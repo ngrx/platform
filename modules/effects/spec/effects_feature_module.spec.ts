@@ -172,7 +172,7 @@ class FeatureEffects {
 
   @Effect()
   effectWithStore = this.actions.ofType('INCREMENT').pipe(
-    withLatestFrom(this.store.select(getDataState)),
+    withLatestFrom(this.store.pipe(select(getDataState))),
     map(([action, state]) => ({ type: 'INCREASE' }))
   );
 }

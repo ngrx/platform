@@ -147,8 +147,8 @@ describe('ngRx Store', () => {
       counterSteps.subscribe(action => store.dispatch(action));
 
       const counterStateWithString = feature
-        ? (store as any).select(feature, 'counter1')
-        : store.select('counter1');
+        ? (store as any).pipe(select(feature, 'counter1'))
+        : store.pipe(select('counter1'));
 
       const counter1Values = { i: 1, w: 2, x: 0, y: 1, z: 2 };
 

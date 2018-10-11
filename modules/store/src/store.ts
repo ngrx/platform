@@ -19,60 +19,6 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     this.source = state$;
   }
 
-  /**
-   * @deprecated from 6.1.0. Use the pipeable `select` operator instead.
-   */
-  select<K>(mapFn: (state: T) => K): Observable<K>;
-  select<a extends keyof T>(key: a): Observable<T[a]>;
-  select<a extends keyof T, b extends keyof T[a]>(
-    key1: a,
-    key2: b
-  ): Observable<T[a][b]>;
-  select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(
-    key1: a,
-    key2: b,
-    key3: c
-  ): Observable<T[a][b][c]>;
-  select<
-    a extends keyof T,
-    b extends keyof T[a],
-    c extends keyof T[a][b],
-    d extends keyof T[a][b][c]
-  >(key1: a, key2: b, key3: c, key4: d): Observable<T[a][b][c][d]>;
-  select<
-    a extends keyof T,
-    b extends keyof T[a],
-    c extends keyof T[a][b],
-    d extends keyof T[a][b][c],
-    e extends keyof T[a][b][c][d]
-  >(key1: a, key2: b, key3: c, key4: d, key5: e): Observable<T[a][b][c][d][e]>;
-  select<
-    a extends keyof T,
-    b extends keyof T[a],
-    c extends keyof T[a][b],
-    d extends keyof T[a][b][c],
-    e extends keyof T[a][b][c][d],
-    f extends keyof T[a][b][c][d][e]
-  >(
-    key1: a,
-    key2: b,
-    key3: c,
-    key4: d,
-    key5: e,
-    key6: f
-  ): Observable<T[a][b][c][d][e][f]>;
-  /**
-   * This overload is used to support spread operator with
-   * fixed length tuples type in typescript 2.7
-   */
-  select<K = any>(...paths: string[]): Observable<K>;
-  select(
-    pathOrMapFn: ((state: T) => any) | string,
-    ...paths: string[]
-  ): Observable<any> {
-    return select.call(null, pathOrMapFn, ...paths)(this);
-  }
-
   lift<R>(operator: Operator<T, R>): Store<R> {
     const store = new Store<R>(this, this.actionsObserver, this.reducerManager);
     store.operator = operator;
