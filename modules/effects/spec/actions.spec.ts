@@ -11,11 +11,19 @@ import { hot, cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 
 describe('Actions', function() {
-  let actions$: Actions;
+  let actions$: Actions<AddAction | SubtractAction>;
   let dispatcher: ScannedActionsSubject;
 
   const ADD = 'ADD';
   const SUBTRACT = 'SUBTRACT';
+
+  interface AddAction extends Action {
+    type: 'ADD';
+  }
+
+  interface SubtractAction extends Action {
+    type: 'SUBTRACT';
+  }
 
   function reducer(state: number = 0, action: Action) {
     switch (action.type) {
@@ -58,10 +66,10 @@ describe('Actions', function() {
     actions.forEach(action => dispatcher.next(action));
   });
 
-  it('should let you filter out actions', function() {
-    const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
-    const expected = actions.filter(type => type === ADD);
+  const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
+  const expected = actions.filter(type => type === ADD);
 
+  it('should let you filter out actions', function() {
     actions$
       .pipe(
         ofType(ADD),
@@ -78,16 +86,20 @@ describe('Actions', function() {
     dispatcher.complete();
   });
 
-  it('should support using the ofType instance operator', () => {
-    const action = { type: ADD };
+  it('should let you filter out actions and ofType can take an explicit type argument', function() {
+    actions$
+      .pipe(
+        ofType<AddAction>(ADD),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
 
-    const response = cold('-b', { b: true });
-    const expected = cold('--c', { c: true });
-
-    const effect$ = new Actions(hot('-a', { a: action }))
-      .ofType(ADD)
-      .pipe(switchMap(() => response));
-
-    expect(effect$).toBeObservable(expected);
+    actions.forEach(action => dispatcher.next({ type: action }));
+    dispatcher.complete();
   });
 });
