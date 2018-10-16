@@ -6,7 +6,7 @@ import { Actions, Effect<% if (feature) { %>, ofType<% } %> } from '@ngrx/effect
 export class <%= classify(name) %>Effects {
 <% if (feature) { %>
   @Effect()
-  loadFoos$ = this.actions$.pipe(ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s));
+  load<%= classify(name) %>s$ = this.actions$.pipe(ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s));
 <% } %>
   constructor(private actions$: Actions) {}
 }
