@@ -9,6 +9,10 @@
       "title": "Docs"
     },
     {
+      "url": "guide/migration/v7",
+      "title": "Migration"
+    },
+    {
       "url": "https://github.com/ngrx/platform",
       "title": "GitHub"
     },
