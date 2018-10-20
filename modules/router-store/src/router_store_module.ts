@@ -12,6 +12,7 @@ import {
   Router,
   RoutesRecognized,
   NavigationStart,
+  Event,
 } from '@angular/router';
 import { select, Selector, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
@@ -152,6 +153,7 @@ export class StoreRouterConnectingModule {
     };
   }
 
+  private lastEvent: Event | null = null;
   private routerState: SerializedRouterStateSnapshot | null;
   private storeState: any;
   private trigger = RouterTrigger.NONE;
@@ -192,6 +194,9 @@ export class StoreRouterConnectingModule {
     if (this.trigger === RouterTrigger.ROUTER) {
       return;
     }
+    if (this.lastEvent instanceof NavigationStart) {
+      return;
+    }
 
     const url = routerStoreState.state.url;
     if (this.router.url !== url) {
@@ -212,6 +217,8 @@ export class StoreRouterConnectingModule {
     this.router.events
       .pipe(withLatestFrom(this.store))
       .subscribe(([event, storeState]) => {
+        this.lastEvent = event;
+
         if (event instanceof NavigationStart) {
           this.routerState = this.serializer.serialize(
             this.router.routerState.snapshot
