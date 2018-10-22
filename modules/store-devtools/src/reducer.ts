@@ -25,8 +25,8 @@ export type Actions = DevtoolsActions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
-export const RECOMPUTE_STATE = '@ngrx/devtools/recompute-state' as '@ngrx/devtools/recompute-state';
-export const RECOMPUTE_STATE_ACTION = { type: RECOMPUTE_STATE };
+export const RECOMPUTE = '@ngrx/store-devtools/recompute' as '@ngrx/store-devtools/recompute';
+export const RECOMPUTE_ACTION = { type: RECOMPUTE };
 
 export interface ComputedState {
   state: any;
@@ -504,7 +504,7 @@ export function liftReducerWith(
           // Recompute state history with latest reducer and update action
           computedStates = computedStates.map(cmp => ({
             ...cmp,
-            state: reducer(cmp.state, RECOMPUTE_STATE_ACTION),
+            state: reducer(cmp.state, RECOMPUTE_ACTION),
           }));
 
           currentStateIndex = stagedActionIds.length - 1;

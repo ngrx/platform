@@ -16,8 +16,7 @@ import {
   StoreDevtoolsOptions,
 } from '../';
 import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/instrument';
-import { PerformAction } from '../src/actions';
-import { RECOMPUTE_STATE } from '../src/reducer';
+import { RECOMPUTE } from '../src/reducer';
 
 const counter = jasmine
   .createSpy('counter')
@@ -128,7 +127,7 @@ function createStore<T>(
 
 describe('Store Devtools', () => {
   describe('reducer', () => {
-    it('should call @ngrx/devtools/recompute-state action', () => {
+    it('should call @ngrx/store-devtools/recompute action', () => {
       const fixture = createStore(doubleCounter);
       counter.calls.reset();
       fixture.replaceReducer(counter);
@@ -136,8 +135,8 @@ describe('Store Devtools', () => {
       const allArgs = counter.calls.allArgs();
       expect(allArgs.length).toEqual(3);
       expect(allArgs[0][1].type).toEqual(UPDATE);
-      expect(allArgs[1][1].type).toEqual(RECOMPUTE_STATE);
-      expect(allArgs[2][1].type).toEqual(RECOMPUTE_STATE);
+      expect(allArgs[1][1].type).toEqual(RECOMPUTE);
+      expect(allArgs[2][1].type).toEqual(RECOMPUTE);
     });
   });
 
