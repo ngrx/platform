@@ -434,13 +434,16 @@ describe('ngRx Store', () => {
     }
   });
 
-  describe('State mocking', () => {
+  describe('Mock Store', () => {
     let mockStore: MockStore<TestAppSchema>;
+
     beforeEach(() => {
       const initialState = { counter1: 0, counter2: 1 };
+
       TestBed.configureTestingModule({
         providers: [provideMockStore({ initialState })],
       });
+
       mockStore = TestBed.get(Store);
     });
 
@@ -466,13 +469,6 @@ describe('ngRx Store', () => {
         .pipe(skip(1))
         .subscribe(scannedAction => expect(scannedAction).toEqual(action));
       mockStore.dispatch(action);
-    });
-
-    it('should allow setting a spy on dispatch method', () => {
-      const action = { type: INCREMENT };
-      spyOn(mockStore, 'dispatch').and.callThrough();
-      mockStore.dispatch(action);
-      expect(mockStore.dispatch).toHaveBeenCalledWith(action);
     });
   });
 });

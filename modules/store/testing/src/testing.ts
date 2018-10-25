@@ -1,5 +1,4 @@
-export * from './mock_store';
-
+export { MockStore } from './mock_store';
 import { MockState } from './mock_state';
 import {
   ActionsSubject,
@@ -18,6 +17,7 @@ interface MockStoreConfig<T> {
 export function provideMockStore<T = any>(config: MockStoreConfig<T> = {}) {
   return [
     ActionsSubject,
+    MockState,
     { provide: INITIAL_STATE, useValue: config.initialState },
     { provide: StateObservable, useClass: MockState },
     { provide: ReducerManager, useClass: MockReducerManager },

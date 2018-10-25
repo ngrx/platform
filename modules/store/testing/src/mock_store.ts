@@ -5,28 +5,27 @@ import {
   ActionsSubject,
   INITIAL_STATE,
   ReducerManager,
-  StateObservable,
   Store,
 } from '@ngrx/store';
+import { MockState } from './mock_state';
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
-  private stateSubject = new BehaviorSubject<T>({} as T);
   public scannedActions$: Observable<Action>;
 
   constructor(
-    private state$: StateObservable,
+    private state$: MockState<T>,
     actionsObserver: ActionsSubject,
     reducerManager: ReducerManager,
     @Inject(INITIAL_STATE) private initialState: T
   ) {
     super(state$, actionsObserver, reducerManager);
-    (<BehaviorSubject<T>>this.state$).next(this.initialState);
+    this.state$.next(this.initialState);
     this.scannedActions$ = actionsObserver.asObservable();
   }
 
   setState(nextState: T): void {
-    (<BehaviorSubject<T>>this.state$).next(nextState);
+    this.state$.next(nextState);
   }
 
   addReducer() {
