@@ -17,6 +17,7 @@ var_2: &run_in_ngcontainer
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
+var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.1
 
 jobs:
   # Enforce some static analysis invariants.
@@ -83,6 +84,28 @@ jobs:
           paths:
             - ~/.cache/yarn
             - node_modules
+
+  docs:
+    <<: *run_in_ngcontainer
+    working_directory: ~/docs/projects/ngrx.io
+    steps:
+      - checkout:
+          path: ~/docs
+      - restore_cache:
+          key: *docs_cache_key
+      - run: yarn setup 
+      - run: yarn build
+      # Store artifacts from build
+      - persist_to_workspace:
+          root: ~/docs/projects/ngrx.io
+          paths:
+            - dist/ngrx.io/*
+      - save_cache:
+          key: *docs_cache_key
+          paths:
+            - ~/.cache/yarn
+            - node_modules
+
   deploy:
     <<: *run_in_ngcontainer
     steps:
@@ -101,13 +124,14 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - lint
-      - bazel
-      - test
+      # - lint
+      # - bazel
+      # - test
+      - docs
       - deploy:
           requires:
-            - test
-            - bazel
+            #- test
+            #- bazel
           filters:
             branches:
               only: master

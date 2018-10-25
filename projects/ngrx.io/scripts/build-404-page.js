@@ -6,7 +6,7 @@ const {join, resolve} = require('path');
 
 // Constants
 const SRC_DIR = resolve(__dirname, '../src');
-const DIST_DIR = resolve(__dirname, '../dist');
+const DIST_DIR = resolve(__dirname, '../dist/ngrx.io');
 
 // Run
 _main(process.argv.slice(2));
