@@ -68,6 +68,28 @@ describe('SelectComponent', () => {
       fixture.detectChanges();
       expect(getOptionContainer()).toEqual(null);
     });
+
+    it('should be disabled if the component is disabled', () => {
+      host.options = options;
+      fixture.detectChanges();
+      expect(getButton().disabled).toBe(false);
+      expect(getButton().getAttribute('disabled')).toBe(null);
+
+      host.disabled = true;
+      fixture.detectChanges();
+      expect(getButton().disabled).toBe(true);
+      expect(getButton().getAttribute('disabled')).toBeDefined();
+    });
+
+    it('should not toggle the visibility of the options list if disabled', () => {
+      host.options = options;
+      host.disabled = true;
+
+      fixture.detectChanges();
+      getButton().click();
+      fixture.detectChanges();
+      expect(getOptionContainer()).toEqual(null);
+    });
   });
 
   describe('options list', () => {
@@ -164,7 +186,8 @@ describe('SelectComponent', () => {
               [options]="options"
               [selected]="selected"
               [label]="label"
-              [showSymbol]="showSymbol">
+              [showSymbol]="showSymbol"
+              [disabled]="disabled">
     </aio-select>`,
 })
 class HostComponent {
@@ -173,6 +196,7 @@ class HostComponent {
   selected: Option;
   label: string;
   showSymbol: boolean;
+  disabled: boolean;
 }
 
 function getButton(): HTMLButtonElement {

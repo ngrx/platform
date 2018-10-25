@@ -14,7 +14,15 @@ describe('Api pages', function() {
     expect(page.getDescendants('class')).toEqual([
       'ControlContainer',
       'AbstractFormGroupDirective',
+      'NgModelGroup',
+      'FormGroupName',
+      'NgForm',
+      'FormGroupDirective',
+      'FormArrayName',
       'NgControl',
+      'NgModel',
+      'FormControlDirective',
+      'FormControlName',
     ]);
   });
 
@@ -38,16 +46,9 @@ describe('Api pages', function() {
     );
   });
 
-  it('should show readonly properties as getters', () => {
-    const page = new ApiPage('api/common/http/HttpRequest');
-    expect(page.getOverview('class').getText()).toContain('get body: T | null');
-  });
-
   it('should not show parenthesis for getters', () => {
     const page = new ApiPage('api/core/NgModuleRef');
-    expect(page.getOverview('class').getText()).toContain(
-      'get injector: Injector'
-    );
+    expect(page.getOverview('class').getText()).toContain('injector: Injector');
   });
 
   it('should show both type and initializer if set', () => {

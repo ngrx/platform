@@ -9,6 +9,7 @@ export interface SearchResult {
   type: string;
   titleWords: string;
   keywords: string;
+  deprecated: boolean;
 }
 
 export interface SearchArea {
@@ -16,4 +17,3 @@ export interface SearchArea {
   pages: SearchResult[];
   priorityPages: SearchResult[];
 }
-

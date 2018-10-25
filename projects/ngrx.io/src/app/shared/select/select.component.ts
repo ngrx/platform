@@ -28,6 +28,8 @@ export class SelectComponent implements OnInit {
 
   @Input() label: string;
 
+  @Input() disabled: boolean;
+
   showOptions = false;
 
   constructor(private hostElement: ElementRef) {}

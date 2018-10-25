@@ -16,9 +16,9 @@ import { ApiSection, ApiService } from './api.service';
 import { Option } from 'app/shared/select/select.component';
 
 class SearchCriteria {
-  query ? = '';
-  status ? = 'all';
-  type ? = 'all';
+  query? = '';
+  status? = 'all';
+  type? = 'all';
 }
 
 @Component({
@@ -26,7 +26,6 @@ class SearchCriteria {
   templateUrl: './api-list.component.html',
 })
 export class ApiListComponent implements OnInit {
-
   filteredSections: Observable<ApiSection[]>;
 
   showStatusMenu = false;
@@ -42,38 +41,40 @@ export class ApiListComponent implements OnInit {
   types: Option[] = [
     { value: 'all', title: 'All' },
     { value: 'class', title: 'Class' },
-    { value: 'const', title: 'Const'},
+    { value: 'const', title: 'Const' },
     { value: 'decorator', title: 'Decorator' },
     { value: 'directive', title: 'Directive' },
     { value: 'enum', title: 'Enum' },
     { value: 'function', title: 'Function' },
     { value: 'interface', title: 'Interface' },
-    { value: 'pipe', title: 'Pipe'},
+    { value: 'pipe', title: 'Pipe' },
+    { value: 'ngmodule', title: 'NgModule' },
     { value: 'type-alias', title: 'Type alias' },
-    { value: 'package', title: 'Package'}
+    { value: 'package', title: 'Package' },
   ];
 
   statuses: Option[] = [
     { value: 'all', title: 'All' },
-    { value: 'stable', title: 'Stable' },
     { value: 'deprecated', title: 'Deprecated' },
-    { value: 'experimental', title: 'Experimental' },
-    { value: 'security-risk', title: 'Security Risk' }
+    { value: 'security-risk', title: 'Security Risk' },
   ];
 
   @ViewChild('filter') queryEl: ElementRef;
 
   constructor(
     private apiService: ApiService,
-    private locationService: LocationService) { }
+    private locationService: LocationService
+  ) {}
 
   ngOnInit() {
     this.filteredSections = combineLatest(
       this.apiService.sections,
       this.criteriaSubject,
       (sections, criteria) => {
-        return sections
-          .map(section => ({ ...section, items: this.filterSection(section, criteria) }));
+        return sections.map(section => ({
+          ...section,
+          items: this.filterSection(section, criteria),
+        }));
       }
     );
 
@@ -83,19 +84,19 @@ export class ApiListComponent implements OnInit {
   // TODO: may need to debounce as the original did
   // although there shouldn't be any perf consequences if we don't
   setQuery(query: string) {
-    this.setSearchCriteria({query: (query || '').toLowerCase().trim() });
+    this.setSearchCriteria({ query: (query || '').toLowerCase().trim() });
   }
 
   setStatus(status: Option) {
     this.toggleStatusMenu();
     this.status = status;
-    this.setSearchCriteria({status: status.value});
+    this.setSearchCriteria({ status: status.value });
   }
 
   setType(type: Option) {
     this.toggleTypeMenu();
     this.type = type;
-    this.setSearchCriteria({type: type.value});
+    this.setSearchCriteria({ type: type.value });
   }
 
   toggleStatusMenu() {
@@ -108,21 +109,28 @@ export class ApiListComponent implements OnInit {
 
   //////// Private //////////
 
-  private filterSection(section: ApiSection, { query, status, type }: SearchCriteria) {
+  private filterSection(
+    section: ApiSection,
+    { query, status, type }: SearchCriteria
+  ) {
     const items = section.items!.filter(item => {
       return matchesType() && matchesStatus() && matchesQuery();
 
       function matchesQuery() {
-        return !query ||
+        return (
+          !query ||
           section.name.indexOf(query) !== -1 ||
-          item.name.indexOf(query) !== -1;
+          item.name.indexOf(query) !== -1
+        );
       }
 
       function matchesStatus() {
-        return status === 'all' ||
+        return (
+          status === 'all' ||
           status === item.stability ||
-          (status === 'security-risk' && item.securityRisk);
-      };
+          (status === 'security-risk' && item.securityRisk)
+        );
+      }
 
       function matchesType() {
         return type === 'all' || type === item.docType;
@@ -130,35 +138,40 @@ export class ApiListComponent implements OnInit {
     });
 
     // If there are no items we still return an empty array if the section name matches and the type is 'package'
-    return items.length ? items : (type === 'package' && (!query || section.name.indexOf(query) !== -1)) ? [] : null;
+    return items.length
+      ? items
+      : type === 'package' && (!query || section.name.indexOf(query) !== -1)
+        ? []
+        : null;
   }
 
   // Get initial search criteria from URL search params
   private initializeSearchCriteria() {
-    const {query, status, type} = this.locationService.search();
+    const { query, status, type } = this.locationService.search();
 
     const q = (query || '').toLowerCase();
     // Hack: can't bind to query because input cursor always forced to end-of-line.
     this.queryEl.nativeElement.value = q;
 
-    this.status = this.statuses.find(x => x.value === status) || this.statuses[0];
+    this.status =
+      this.statuses.find(x => x.value === status) || this.statuses[0];
     this.type = this.types.find(x => x.value === type) || this.types[0];
 
     this.searchCriteria = {
       query: q,
       status: this.status.value,
-      type: this.type.value
+      type: this.type.value,
     };
 
     this.criteriaSubject.next(this.searchCriteria);
   }
 
   private setLocationSearch() {
-    const {query, status, type} = this.searchCriteria;
+    const { query, status, type } = this.searchCriteria;
     const params = {
-      query:  query ? query : undefined,
+      query: query ? query : undefined,
       status: status !== 'all' ? status : undefined,
-      type:   type   !== 'all' ? type   : undefined
+      type: type !== 'all' ? type : undefined,
     };
 
     this.locationService.setSearch('API Search', params);
