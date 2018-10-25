@@ -1,4 +1,4 @@
-export { MockStore } from './mock_store';
+import { Provider } from '@angular/core';
 import { MockState } from './mock_state';
 import {
   ActionsSubject,
@@ -10,11 +10,13 @@ import {
 import { MockStore } from './mock_store';
 import { MockReducerManager } from './mock_reducer_manager';
 
-interface MockStoreConfig<T> {
+export interface MockStoreConfig<T> {
   initialState?: T;
 }
 
-export function provideMockStore<T = any>(config: MockStoreConfig<T> = {}) {
+export function provideMockStore<T = any>(
+  config: MockStoreConfig<T> = {}
+): Provider[] {
   return [
     ActionsSubject,
     MockState,
@@ -24,3 +26,7 @@ export function provideMockStore<T = any>(config: MockStoreConfig<T> = {}) {
     { provide: Store, useClass: MockStore },
   ];
 }
+
+export { MockReducerManager } from './mock_reducer_manager';
+export { MockState } from './mock_state';
+export { MockStore } from './mock_store';
