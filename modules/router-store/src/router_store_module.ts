@@ -11,6 +11,8 @@ import {
   Router,
   RouterStateSnapshot,
   RoutesRecognized,
+  Event,
+  NavigationStart,
 } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -223,6 +225,7 @@ export class StoreRouterConnectingModule {
     };
   }
 
+  private lastEvent: Event | null = null;
   private routerState: SerializedRouterStateSnapshot;
   private storeState: any;
   private lastRoutesRecognized: RoutesRecognized;
@@ -266,6 +269,7 @@ export class StoreRouterConnectingModule {
   }
 
   private shouldDispatchRouterNavigation(): boolean {
+    if (this.lastEvent instanceof NavigationStart) return false;
     if (!this.storeState[this.stateKey]) return true;
     return !this.navigationTriggeredByDispatch;
   }
@@ -287,6 +291,8 @@ export class StoreRouterConnectingModule {
 
   private setUpStateRollbackEvents(): void {
     this.router.events.subscribe(e => {
+      this.lastEvent = e;
+
       if (e instanceof RoutesRecognized) {
         this.lastRoutesRecognized = e;
       } else if (e instanceof NavigationCancel) {
