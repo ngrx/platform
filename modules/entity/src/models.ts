@@ -28,9 +28,7 @@ export interface UpdateNum<T> {
 
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
-export type Predicate<T> = {
-  (entity: T): boolean;
-};
+export type Predicate<T> = (entity: T) => boolean;
 
 export interface EntityState<T> {
   ids: string[] | number[];
