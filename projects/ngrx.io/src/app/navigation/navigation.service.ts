@@ -8,10 +8,23 @@ import { LocationService } from 'app/shared/location.service';
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 
 // Import and re-export the Navigation model types
-import { CurrentNodes, NavigationNode, NavigationResponse, NavigationViews, VersionInfo } from './navigation.model';
-export { CurrentNodes, CurrentNode, NavigationNode, NavigationResponse, NavigationViews, VersionInfo } from './navigation.model';
+import {
+  CurrentNodes,
+  NavigationNode,
+  NavigationResponse,
+  NavigationViews,
+  VersionInfo,
+} from './navigation.model';
+export {
+  CurrentNodes,
+  CurrentNode,
+  NavigationNode,
+  NavigationResponse,
+  NavigationViews,
+  VersionInfo,
+} from './navigation.model';
 
-const navigationPath = CONTENT_URL_PREFIX + 'navigation.json';
+export const navigationPath = CONTENT_URL_PREFIX + 'navigation.json';
 
 @Injectable()
 export class NavigationService {
@@ -53,7 +66,8 @@ export class NavigationService {
    * We are not storing the subscription from connecting as we do not expect this service to be destroyed.
    */
   private fetchNavigationInfo(): Observable<NavigationResponse> {
-    const navigationInfo = this.http.get<NavigationResponse>(navigationPath)
+    const navigationInfo = this.http
+      .get<NavigationResponse>(navigationPath)
       .pipe(publishLast());
     (navigationInfo as ConnectableObservable<NavigationResponse>).connect();
     return navigationInfo;
@@ -62,22 +76,26 @@ export class NavigationService {
   private getVersionInfo(navigationInfo: Observable<NavigationResponse>) {
     const versionInfo = navigationInfo.pipe(
       map(response => response.__versionInfo),
-      publishLast(),
+      publishLast()
     );
     (versionInfo as ConnectableObservable<VersionInfo>).connect();
     return versionInfo;
   }
 
-  private getNavigationViews(navigationInfo: Observable<NavigationResponse>): Observable<NavigationViews> {
+  private getNavigationViews(
+    navigationInfo: Observable<NavigationResponse>
+  ): Observable<NavigationViews> {
     const navigationViews = navigationInfo.pipe(
       map(response => {
         const views = Object.assign({}, response);
         Object.keys(views).forEach(key => {
-          if (key[0] === '_') { delete views[key]; }
+          if (key[0] === '_') {
+            delete views[key];
+          }
         });
         return views as NavigationViews;
       }),
-      publishLast(),
+      publishLast()
     );
     (navigationViews as ConnectableObservable<NavigationViews>).connect();
     return navigationViews;
@@ -89,16 +107,21 @@ export class NavigationService {
    * URL change before they receive an emission.
    * See above for discussion of using `connect`.
    */
-  private getCurrentNodes(navigationViews: Observable<NavigationViews>): Observable<CurrentNodes> {
+  private getCurrentNodes(
+    navigationViews: Observable<NavigationViews>
+  ): Observable<CurrentNodes> {
     const currentNodes = combineLatest(
       navigationViews.pipe(map(views => this.computeUrlToNavNodesMap(views))),
       this.location.currentPath,
 
       (navMap, url) => {
-        const urlKey = url.startsWith('api/') ? 'api' : url;
-        return navMap.get(urlKey) || { '' : { view: '', url: urlKey, nodes: [] }};
-      })
-      .pipe(publishReplay(1));
+        const matchSpecialUrls = /^api/.exec(url);
+        if (matchSpecialUrls) {
+          url = matchSpecialUrls[0];
+        }
+        return navMap.get(url) || { '': { view: '', url: url, nodes: [] } };
+      }
+    ).pipe(publishReplay(1));
     (currentNodes as ConnectableObservable<CurrentNodes>).connect();
     return currentNodes;
   }
@@ -111,9 +134,9 @@ export class NavigationService {
    */
   private computeUrlToNavNodesMap(navigation: NavigationViews) {
     const navMap = new Map<string, CurrentNodes>();
-    Object.keys(navigation)
-      .forEach(view => navigation[view]
-        .forEach(node => this.walkNodes(view, navMap, node)));
+    Object.keys(navigation).forEach(view =>
+      navigation[view].forEach(node => this.walkNodes(view, navMap, node))
+    );
     return navMap;
   }
 
@@ -124,7 +147,7 @@ export class NavigationService {
   private ensureHasTooltip(node: NavigationNode) {
     const title = node.title;
     const tooltip = node.tooltip;
-    if (tooltip == null && title ) {
+    if (tooltip == null && title) {
       // add period if no trailing punctuation
       node.tooltip = title + (/[a-zA-Z0-9]$/.test(title) ? '.' : '');
     }
@@ -134,25 +157,30 @@ export class NavigationService {
    * patching them and computing their ancestor nodes
    */
   private walkNodes(
-    view: string, navMap: Map<string, CurrentNodes>,
-    node: NavigationNode, ancestors: NavigationNode[] = []) {
-      const nodes = [node, ...ancestors];
-      const url = node.url;
-      this.ensureHasTooltip(node);
+    view: string,
+    navMap: Map<string, CurrentNodes>,
+    node: NavigationNode,
+    ancestors: NavigationNode[] = []
+  ) {
+    const nodes = [node, ...ancestors];
+    const url = node.url;
+    this.ensureHasTooltip(node);
 
-      // only map to this node if it has a url
-      if (url) {
-        // Strip off trailing slashes from nodes in the navMap - they are not relevant to matching
-        const cleanedUrl = url.replace(/\/$/, '');
-        if (!navMap.has(cleanedUrl)) {
-          navMap.set(cleanedUrl, {});
-        }
-        const navMapItem = navMap.get(cleanedUrl)!;
-        navMapItem[view] = { url, view, nodes };
+    // only map to this node if it has a url
+    if (url) {
+      // Strip off trailing slashes from nodes in the navMap - they are not relevant to matching
+      const cleanedUrl = url.replace(/\/$/, '');
+      if (!navMap.has(cleanedUrl)) {
+        navMap.set(cleanedUrl, {});
       }
-
-      if (node.children) {
-        node.children.forEach(child => this.walkNodes(view, navMap, child, nodes));
-      }
+      const navMapItem = navMap.get(cleanedUrl)!;
+      navMapItem[view] = { url, view, nodes };
     }
+
+    if (node.children) {
+      node.children.forEach(child =>
+        this.walkNodes(view, navMap, child, nodes)
+      );
+    }
+  }
 }

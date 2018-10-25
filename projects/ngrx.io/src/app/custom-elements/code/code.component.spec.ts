@@ -21,7 +21,8 @@ const smallMultiLineCode = `
   &lt;/hero-team&gt;
 &lt;/hero-details&gt;`;
 
-const bigMultiLineCode = smallMultiLineCode + smallMultiLineCode + smallMultiLineCode;
+const bigMultiLineCode =
+  smallMultiLineCode + smallMultiLineCode + smallMultiLineCode;
 
 describe('CodeComponent', () => {
   let hostComponent: HostComponent;
@@ -41,13 +42,13 @@ describe('CodeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ NoopAnimationsModule, CodeModule ],
-      declarations: [ HostComponent ],
+      imports: [NoopAnimationsModule, CodeModule],
+      declarations: [HostComponent],
       providers: [
         PrettyPrinter,
         CopierService,
-        {provide: Logger, useClass: TestLogger }
-     ]
+        { provide: Logger, useClass: TestLogger },
+      ],
     }).compileComponents();
   });
 
@@ -117,9 +118,14 @@ describe('CodeComponent', () => {
       hostComponent.linenums = false;
       fixture.detectChanges();
 
-      hostComponent.setCode('  abc\n   let x = text.split(\'\\n\');\n  ghi\n\n  jkl\n');
-      const codeContent = fixture.nativeElement.querySelector('code').textContent;
-      expect(codeContent).toEqual('abc\n let x = text.split(\'\\n\');\nghi\n\njkl');
+      hostComponent.setCode(
+        "  abc\n   let x = text.split('\\n');\n  ghi\n\n  jkl\n"
+      );
+      const codeContent = fixture.nativeElement.querySelector('code')
+        .textContent;
+      expect(codeContent).toEqual(
+        "abc\n let x = text.split('\\n');\nghi\n\njkl"
+      );
     });
 
     it('should trim whitespace from the code before rendering', () => {
@@ -127,7 +133,8 @@ describe('CodeComponent', () => {
       fixture.detectChanges();
 
       hostComponent.setCode('\n\n\n' + smallMultiLineCode + '\n\n\n');
-      const codeContent = fixture.nativeElement.querySelector('code').textContent;
+      const codeContent = fixture.nativeElement.querySelector('code')
+        .textContent;
       expect(codeContent).toEqual(codeContent.trim());
     });
 
@@ -141,14 +148,17 @@ describe('CodeComponent', () => {
   });
 
   describe('error message', () => {
-
     function getErrorMessage() {
-      const missing: HTMLElement = fixture.nativeElement.querySelector('.code-missing');
+      const missing: HTMLElement = fixture.nativeElement.querySelector(
+        '.code-missing'
+      );
       return missing ? missing.textContent : null;
     }
 
     it('should not display "code-missing" class when there is some code', () => {
-      expect(getErrorMessage()).toBeNull('should not have element with "code-missing" class');
+      expect(getErrorMessage()).toBeNull(
+        'should not have element with "code-missing" class'
+      );
     });
 
     it('should display error message when there is no code (after trimming)', () => {
@@ -162,7 +172,9 @@ describe('CodeComponent', () => {
       fixture.detectChanges();
 
       hostComponent.setCode(' \n ');
-      expect(getErrorMessage()).toMatch(/for[\s\S]fizz\/buzz\/foo\.html#something$/);
+      expect(getErrorMessage()).toMatch(
+        /for[\s\S]fizz\/buzz\/foo\.html#something$/
+      );
     });
 
     it('should show path only in missing-code error message when no region', () => {
@@ -180,7 +192,6 @@ describe('CodeComponent', () => {
   });
 
   describe('copy button', () => {
-
     function getButton() {
       const btnDe = fixture.debugElement.query(By.css('button'));
       return btnDe ? btnDe.nativeElement : null;
@@ -200,10 +211,12 @@ describe('CodeComponent', () => {
       expect(getButton().getAttribute('aria-label')).toBe('');
     });
 
-    it('should have aria-label explaining what is being copied when title passed in', () => {
-      hostComponent.title = 'a/b/c/foo.ts';
+    it('should have aria-label explaining what is being copied when header passed in', () => {
+      hostComponent.header = 'a/b/c/foo.ts';
       fixture.detectChanges();
-      expect(getButton().getAttribute('aria-label')).toContain(hostComponent.title);
+      expect(getButton().getAttribute('aria-label')).toContain(
+        hostComponent.header
+      );
     });
 
     it('should call copier service when clicked', () => {
@@ -224,7 +237,10 @@ describe('CodeComponent', () => {
     it('should preserve newlines in the copied code', () => {
       const copierService: CopierService = TestBed.get(CopierService);
       const spy = spyOn(copierService, 'copyText');
-      const expectedCode = smallMultiLineCode.trim().replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      const expectedCode = smallMultiLineCode
+        .trim()
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>');
       let actualCode;
 
       hostComponent.setCode(smallMultiLineCode);
@@ -248,7 +264,9 @@ describe('CodeComponent', () => {
       spyOn(snackBar, 'open');
       spyOn(copierService, 'copyText').and.returnValue(true);
       getButton().click();
-      expect(snackBar.open).toHaveBeenCalledWith('Code Copied', '', { duration: 800 });
+      expect(snackBar.open).toHaveBeenCalledWith('Code Copied', '', {
+        duration: 800,
+      });
     });
 
     it('should display an error when copy fails', () => {
@@ -258,10 +276,16 @@ describe('CodeComponent', () => {
       spyOn(snackBar, 'open');
       spyOn(copierService, 'copyText').and.returnValue(false);
       getButton().click();
-      expect(snackBar.open).toHaveBeenCalledWith('Copy failed. Please try again!', '', { duration: 800 });
+      expect(snackBar.open).toHaveBeenCalledWith(
+        'Copy failed. Please try again!',
+        '',
+        { duration: 800 }
+      );
       expect(logger.error).toHaveBeenCalledTimes(1);
       expect(logger.error).toHaveBeenCalledWith(jasmine.any(Error));
-      expect(logger.error.calls.mostRecent().args[0].message).toMatch(/^ERROR copying code to clipboard:/);
+      expect(logger.error.calls.mostRecent().args[0].message).toMatch(
+        /^ERROR copying code to clipboard:/
+      );
     });
   });
 });
@@ -273,8 +297,8 @@ describe('CodeComponent', () => {
   template: `
     <aio-code [language]="language"
     [linenums]="linenums" [path]="path" [region]="region"
-    [hideCopy]="hideCopy" [title]="title"></aio-code>
-  `
+    [hideCopy]="hideCopy" [header]="header"></aio-code>
+  `,
 })
 class HostComponent implements AfterViewInit {
   hideCopy: boolean;
@@ -282,7 +306,7 @@ class HostComponent implements AfterViewInit {
   linenums: boolean | number | string;
   path: string;
   region: string;
-  title: string;
+  header: string;
 
   @ViewChild(CodeComponent) codeComponent: CodeComponent;
 

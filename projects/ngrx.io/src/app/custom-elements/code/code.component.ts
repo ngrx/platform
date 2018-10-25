@@ -1,4 +1,12 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Logger } from 'app/shared/logger.service';
 import { PrettyPrinter } from './pretty-printer.service';
 import { CopierService } from 'app/shared/copier.service';
@@ -44,7 +52,7 @@ const DEFAULT_LINE_NUMS_COUNT = 10;
       </button>
       <code class="animated fadeIn" #codeContainer></code>
     </pre>
-    `
+    `,
 })
 export class CodeComponent implements OnChanges {
   ariaLabel = '';
@@ -62,7 +70,9 @@ export class CodeComponent implements OnChanges {
       this.formatDisplayedCode();
     }
   }
-  get code(): string { return this._code; }
+  get code(): string {
+    return this._code;
+  }
   _code: string;
 
   /** Whether the copy button should be shown. */
@@ -85,14 +95,16 @@ export class CodeComponent implements OnChanges {
   /** Region of the source of the code being displayed. */
   @Input() region: string;
 
-  /** Optional title to be displayed above the code. */
+  /** Optional header to be displayed above the code. */
   @Input()
-  set title(title: string) {
-    this._title = title;
-    this.ariaLabel = this.title ? `Copy code snippet from ${this.title}` : '';
+  set header(header: string) {
+    this._header = header;
+    this.ariaLabel = this.header ? `Copy code snippet from ${this.header}` : '';
   }
-  get title(): string { return this._title; }
-  private _title: string;
+  get header(): string {
+    return this._header;
+  }
+  private _header: string;
 
   @Output() codeFormatted = new EventEmitter<void>();
 
@@ -103,7 +115,8 @@ export class CodeComponent implements OnChanges {
     private snackbar: MatSnackBar,
     private pretty: PrettyPrinter,
     private copier: CopierService,
-    private logger: Logger) {}
+    private logger: Logger
+  ) {}
 
   ngOnChanges() {
     // If some inputs have changed and there is code displayed, update the view with the latest
@@ -119,17 +132,29 @@ export class CodeComponent implements OnChanges {
     this.codeText = this.getCodeText(); // store the unformatted code as text (for copying)
 
     this.pretty
-        .formatCode(leftAlignedCode, this.language, this.getLinenums(leftAlignedCode))
-        .pipe(tap(() => this.codeFormatted.emit()))
-        .subscribe(c => this.setCodeHtml(c), err => { /* ignore failure to format */ }
-    );
+      .formatCode(
+        leftAlignedCode,
+        this.language,
+        this.getLinenums(leftAlignedCode)
+      )
+      .pipe(tap(() => this.codeFormatted.emit()))
+      .subscribe(
+        c => this.setCodeHtml(c),
+        err => {
+          /* ignore failure to format */
+        }
+      );
   }
 
   /** Sets the message showing that the code could not be found. */
   private showMissingCodeMessage() {
-    const src = this.path ? this.path + (this.region ? '#' + this.region : '') : '';
+    const src = this.path
+      ? this.path + (this.region ? '#' + this.region : '')
+      : '';
     const srcMsg = src ? ` for\n${src}` : '.';
-    this.setCodeHtml(`<p class="code-missing">The code sample is missing${srcMsg}</p>`);
+    this.setCodeHtml(
+      `<p class="code-missing">The code sample is missing${srcMsg}</p>`
+    );
   }
 
   /** Sets the innerHTML of the code container to the provided code string. */
@@ -156,23 +181,32 @@ export class CodeComponent implements OnChanges {
       this.logger.log('Copied code to clipboard:', code);
       this.snackbar.open('Code Copied', '', { duration: 800 });
     } else {
-      this.logger.error(new Error(`ERROR copying code to clipboard: "${code}"`));
-      this.snackbar.open('Copy failed. Please try again!', '', { duration: 800 });
+      this.logger.error(
+        new Error(`ERROR copying code to clipboard: "${code}"`)
+      );
+      this.snackbar.open('Copy failed. Please try again!', '', {
+        duration: 800,
+      });
     }
   }
 
   /** Gets the calculated value of linenums (boolean/number). */
   getLinenums(code: string) {
     const linenums =
-      typeof this.linenums === 'boolean' ? this.linenums :
-      this.linenums === 'true' ? true :
-      this.linenums === 'false' ? false :
-      typeof this.linenums === 'string' ? parseInt(this.linenums, 10) :
-      this.linenums;
+      typeof this.linenums === 'boolean'
+        ? this.linenums
+        : this.linenums === 'true'
+          ? true
+          : this.linenums === 'false'
+            ? false
+            : typeof this.linenums === 'string'
+              ? parseInt(this.linenums, 10)
+              : this.linenums;
 
     // if no linenums, enable line numbers if more than one line
-    return linenums == null || isNaN(linenums as number) ?
-        (code.match(/\n/g) || []).length > DEFAULT_LINE_NUMS_COUNT : linenums;
+    return linenums == null || isNaN(linenums as number)
+      ? (code.match(/\n/g) || []).length > DEFAULT_LINE_NUMS_COUNT
+      : linenums;
   }
 }
 
@@ -187,5 +221,8 @@ function leftAlign(text: string): string {
     }
   });
 
-  return lines.map(line => line.substr(indent)).join('\n').trim();
+  return lines
+    .map(line => line.substr(indent))
+    .join('\n')
+    .trim();
 }

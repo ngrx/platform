@@ -24,7 +24,9 @@ describe('TocComponent', () => {
     return {
       listItems: tocComponentDe.queryAll(By.css('ul.toc-list>li')),
       tocHeading: tocComponentDe.query(By.css('.toc-heading')),
-      tocHeadingButtonEmbedded: tocComponentDe.query(By.css('button.toc-heading.embedded')),
+      tocHeadingButtonEmbedded: tocComponentDe.query(
+        By.css('button.toc-heading.embedded')
+      ),
       tocH1Heading: tocComponentDe.query(By.css('.h1')),
       tocMoreButton: tocComponentDe.query(By.css('button.toc-more-items')),
     };
@@ -32,12 +34,16 @@ describe('TocComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ HostEmbeddedTocComponent, HostNotEmbeddedTocComponent, TocComponent ],
+      declarations: [
+        HostEmbeddedTocComponent,
+        HostNotEmbeddedTocComponent,
+        TocComponent,
+      ],
       providers: [
         { provide: ScrollService, useClass: TestScrollService },
-        { provide: TocService, useClass: TestTocService }
+        { provide: TocService, useClass: TestTocService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
   });
 
@@ -74,17 +80,27 @@ describe('TocComponent', () => {
       fixture.detectChanges();
       expect(tocComponentDe.queryAll(By.css('li')).length).toBe(1);
 
-      tocService.tocList.next([tocItem('Heading A'), tocItem('Heading B'), tocItem('Heading C')]);
+      tocService.tocList.next([
+        tocItem('Heading A'),
+        tocItem('Heading B'),
+        tocItem('Heading C'),
+      ]);
       fixture.detectChanges();
       expect(tocComponentDe.queryAll(By.css('li')).length).toBe(3);
     });
 
     it('should only display H2 and H3 TocItems', () => {
-      tocService.tocList.next([tocItem('Heading A', 'h1'), tocItem('Heading B'), tocItem('Heading C', 'h3')]);
+      tocService.tocList.next([
+        tocItem('Heading A', 'h1'),
+        tocItem('Heading B'),
+        tocItem('Heading C', 'h3'),
+      ]);
       fixture.detectChanges();
 
       const tocItems = tocComponentDe.queryAll(By.css('li'));
-      const textContents = tocItems.map(item => item.nativeNode.textContent.trim());
+      const textContents = tocItems.map(item =>
+        item.nativeNode.textContent.trim()
+      );
 
       expect(tocItems.length).toBe(2);
       expect(textContents.find(text => text === 'Heading A')).toBeFalsy();
@@ -99,15 +115,23 @@ describe('TocComponent', () => {
       expect(tocComponentDe.queryAll(By.css('li')).length).toBe(1);
 
       tocComponent.ngOnDestroy();
-      tocService.tocList.next([tocItem('Heading A', 'h1'), tocItem('Heading B'), tocItem('Heading C')]);
+      tocService.tocList.next([
+        tocItem('Heading A', 'h1'),
+        tocItem('Heading B'),
+        tocItem('Heading C'),
+      ]);
       fixture.detectChanges();
       expect(tocComponentDe.queryAll(By.css('li')).length).toBe(1);
     });
 
     describe('when fewer than `maxPrimary` TocItems', () => {
-
       beforeEach(() => {
-        tocService.tocList.next([tocItem('Heading A'), tocItem('Heading B'), tocItem('Heading C'), tocItem('Heading D')]);
+        tocService.tocList.next([
+          tocItem('Heading A'),
+          tocItem('Heading B'),
+          tocItem('Heading C'),
+          tocItem('Heading D'),
+        ]);
         fixture.detectChanges();
         page = setPage();
       });
@@ -123,7 +147,9 @@ describe('TocComponent', () => {
       });
 
       it('should not display expando buttons', () => {
-        expect(page.tocHeadingButtonEmbedded).toBeFalsy('top expand/collapse button');
+        expect(page.tocHeadingButtonEmbedded).toBeFalsy(
+          'top expand/collapse button'
+        );
         expect(page.tocMoreButton).toBeFalsy('bottom more button');
       });
     });
@@ -138,14 +164,13 @@ describe('TocComponent', () => {
       });
 
       it('should have more than 4 displayed items', () => {
-        let tocList: TocItem[];
-        tocService.tocList.subscribe(v => tocList = v);
-
         expect(page.listItems.length).toBeGreaterThan(4);
       });
 
       it('should not display the h1 item', () => {
-        expect(page.listItems.find(item => item.classes.h1)).toBeFalsy('should not find h1 item');
+        expect(page.listItems.find(item => item.classes.h1)).toBeFalsy(
+          'should not find h1 item'
+        );
       });
 
       it('should be in "collapsed" (not expanded) state at the start', () => {
@@ -157,7 +182,9 @@ describe('TocComponent', () => {
       });
 
       it('should display expando buttons', () => {
-        expect(page.tocHeadingButtonEmbedded).toBeTruthy('top expand/collapse button');
+        expect(page.tocHeadingButtonEmbedded).toBeTruthy(
+          'top expand/collapse button'
+        );
         expect(page.tocMoreButton).toBeTruthy('bottom more button');
       });
 
@@ -172,7 +199,6 @@ describe('TocComponent', () => {
       });
 
       describe('after click tocHeading button', () => {
-
         beforeEach(() => {
           page.tocHeadingButtonEmbedded.nativeElement.click();
           fixture.detectChanges();
@@ -204,7 +230,6 @@ describe('TocComponent', () => {
       });
 
       describe('after click tocMore button', () => {
-
         beforeEach(() => {
           page.tocMoreButton.nativeElement.click();
           fixture.detectChanges();
@@ -273,7 +298,9 @@ describe('TocComponent', () => {
     });
 
     it('should not display expando buttons', () => {
-      expect(page.tocHeadingButtonEmbedded).toBeFalsy('top expand/collapse button');
+      expect(page.tocHeadingButtonEmbedded).toBeFalsy(
+        'top expand/collapse button'
+      );
       expect(page.tocMoreButton).toBeFalsy('bottom more button');
     });
 
@@ -282,7 +309,7 @@ describe('TocComponent', () => {
     });
 
     describe('#activeIndex', () => {
-      it('should keep track of `TocService`\'s `activeItemIndex`', () => {
+      it("should keep track of `TocService`'s `activeItemIndex`", () => {
         expect(tocComponent.activeIndex).toBeNull();
 
         tocService.setActiveIndex(42);
@@ -331,12 +358,16 @@ describe('TocComponent', () => {
         tocComponent.activeIndex = page.listItems.length - 1;
         fixture.detectChanges();
         expect(page.listItems.filter(By.css('.active')).length).toBe(1);
-        expect(page.listItems.findIndex(By.css('.active'))).toBe(page.listItems.length - 1);
+        expect(page.listItems.findIndex(By.css('.active'))).toBe(
+          page.listItems.length - 1
+        );
       });
 
       it('should re-apply the `active` class when the list elements change', () => {
         const getActiveTextContent = () =>
-            page.listItems.find(By.css('.active'))!.nativeElement.textContent.trim();
+          page.listItems
+            .find(By.css('.active'))!
+            .nativeElement.textContent.trim();
 
         tocComponent.activeIndex = 1;
         fixture.detectChanges();
@@ -377,7 +408,7 @@ describe('TocComponent', () => {
           });
           Object.defineProperty(hostElem, 'scrollTop', {
             get: () => parentScrollTop,
-            set: v => parentScrollTop = v,
+            set: v => (parentScrollTop = v),
           });
 
           parentScrollTop = 0;
@@ -441,19 +472,18 @@ describe('TocComponent', () => {
       });
     });
   });
-
 });
 
 //// helpers ////
 @Component({
   selector: 'aio-embedded-host',
-  template: '<aio-toc class="embedded"></aio-toc>'
+  template: '<aio-toc class="embedded"></aio-toc>',
 })
 class HostEmbeddedTocComponent {}
 
 @Component({
   selector: 'aio-not-embedded-host',
-  template: '<aio-toc></aio-toc>'
+  template: '<aio-toc></aio-toc>',
 })
 class HostNotEmbeddedTocComponent {}
 
@@ -464,7 +494,7 @@ class TestScrollService {
 class TestTocService {
   tocList = new BehaviorSubject<TocItem[]>(getTestTocList());
   activeItemIndex = new BehaviorSubject<number | null>(null);
-  setActiveIndex(index: number|null) {
+  setActiveIndex(index: number | null) {
     this.activeItemIndex.next(index);
     if (asap.scheduled !== undefined) {
       asap.flush();
@@ -478,12 +508,17 @@ function tocItem(title: string, level = 'h2', href = '', content = title) {
 
 function getTestTocList() {
   return [
-    tocItem('Title',       'h1', 'fizz/buzz#title',                  'Title'),
-    tocItem('Heading one', 'h2', 'fizz/buzz#heading-one-special-id', 'Heading one'),
-    tocItem('H2 Two',      'h2', 'fizz/buzz#h2-two',                 'H2 Two'),
-    tocItem('H2 Three',    'h2', 'fizz/buzz#h2-three',               'H2 <b>Three</b>'),
-    tocItem('H3 3a',       'h3', 'fizz/buzz#h3-3a',                  'H3 3a'),
-    tocItem('H3 3b',       'h3', 'fizz/buzz#h3-3b',                  'H3 3b'),
-    tocItem('H2 4',        'h2', 'fizz/buzz#h2-four',                '<i>H2 <b>four</b></i>'),
+    tocItem('Title', 'h1', 'fizz/buzz#title', 'Title'),
+    tocItem(
+      'Heading one',
+      'h2',
+      'fizz/buzz#heading-one-special-id',
+      'Heading one'
+    ),
+    tocItem('H2 Two', 'h2', 'fizz/buzz#h2-two', 'H2 Two'),
+    tocItem('H2 Three', 'h2', 'fizz/buzz#h2-three', 'H2 <b>Three</b>'),
+    tocItem('H3 3a', 'h3', 'fizz/buzz#h3-3a', 'H3 3a'),
+    tocItem('H3 3b', 'h3', 'fizz/buzz#h3-3b', 'H3 3b'),
+    tocItem('H2 4', 'h2', 'fizz/buzz#h2-four', '<i>H2 <b>four</b></i>'),
   ];
 }
