@@ -70,6 +70,9 @@
     "node": ">=8.9.0 <11.0.0",
     "yarn": ">=1.9.2 <2.0.0"
   },
+  "resolutions": {
+    "upath": "1.1.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.0.0",
@@ -156,6 +159,7 @@
     "unist-util-source": "^1.0.1",
     "unist-util-visit": "^1.1.1",
     "unist-util-visit-parents": "^1.1.1",
+    "upath": "^1.1.0",
     "vrsource-tslint-rules": "^5.8.2",
     "watchr": "^3.0.1",
     "webpack-cli": "^3.1.2",
