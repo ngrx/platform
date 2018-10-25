@@ -16,6 +16,7 @@ ng_package(
     name = "npm_package",
     srcs = glob(["**/*.externs.js"]) + [
         "package.json",
+        "//modules/store/testing:package.json",
     ],
     entry_point = "modules/store/index.js",
     packages = [
@@ -25,5 +26,6 @@ ng_package(
     ],
     deps = [
         ":store",
+        "//modules/store/testing",
     ],
 )

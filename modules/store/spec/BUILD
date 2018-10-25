@@ -10,6 +10,7 @@ ts_test_library(
     ),
     deps = [
         "//modules/store",
+        "//modules/store/testing",
         "@rxjs",
         "@rxjs//operators",
     ],

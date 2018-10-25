@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig-build",
+  "compilerOptions": {
+    "paths": {
+      "@ngrx/store": ["../../dist/packages/store"]
+    }
+  },
+  "files": ["index.ts"],
+  "angularCompilerOptions": {
+    // Work around for issue: https://github.com/angular/angular/issues/22210
+    "strictMetadataEmit": false
+  }
+}

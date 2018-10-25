@@ -19,7 +19,8 @@ import {
 } from './fixtures/counter';
 import Spy = jasmine.Spy;
 import any = jasmine.any;
-import { take } from 'rxjs/operators';
+import { skip, take } from 'rxjs/operators';
+import { MockStore, provideMockStore } from '../testing';
 
 interface TestAppSchema {
   counter1: number;
@@ -431,5 +432,43 @@ describe('ngRx Store', () => {
         reducerFactory: jasmine.createSpy(`reducerFactory_${key}`),
       };
     }
+  });
+
+  describe('Mock Store', () => {
+    let mockStore: MockStore<TestAppSchema>;
+
+    beforeEach(() => {
+      const initialState = { counter1: 0, counter2: 1 };
+
+      TestBed.configureTestingModule({
+        providers: [provideMockStore({ initialState })],
+      });
+
+      mockStore = TestBed.get(Store);
+    });
+
+    it('should set the initial state to a mocked one', (done: DoneFn) => {
+      const fixedState = {
+        counter1: 17,
+        counter2: 11,
+        counter3: 25,
+      };
+      mockStore.setState(fixedState);
+      mockStore.pipe(take(1)).subscribe({
+        next(val) {
+          expect(val).toEqual(fixedState);
+        },
+        error: done.fail,
+        complete: done,
+      });
+    });
+
+    it('should allow tracing dispatched actions', () => {
+      const action = { type: INCREMENT };
+      mockStore.scannedActions$
+        .pipe(skip(1))
+        .subscribe(scannedAction => expect(scannedAction).toEqual(action));
+      mockStore.dispatch(action);
+    });
   });
 });
