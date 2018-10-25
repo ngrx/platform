@@ -9,10 +9,6 @@
       "title": "Docs"
     },
     {
-      "url": "guide/migration/v7",
-      "title": "Migration"
-    },
-    {
       "url": "https://github.com/ngrx/platform",
       "title": "GitHub"
     },
@@ -196,6 +192,15 @@
       "url": "api",
       "title": "API",
       "tooltip": "API Reference"
+    },
+    {
+      "title": "Migrations",
+      "children": [
+        {
+          "title": "V7",
+          "url": "guide/migration/v7"
+        }
+      ]
     }
   ],
 
