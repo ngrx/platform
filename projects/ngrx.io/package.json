@@ -62,8 +62,11 @@
     "post~~build": "yarn build-404-page"
   },
   "engines": {
-    "node": ">=8.9.1 <9.0.0",
+    "node": ">=8.9.1",
     "yarn": ">=1.3.2 <2.0.0"
+  },
+  "resolutions": {
+    "upath": "1.1.0"
   },
   "private": true,
   "dependencies": {
@@ -149,6 +152,7 @@
     "unist-util-source": "^1.0.1",
     "unist-util-visit": "^1.1.1",
     "unist-util-visit-parents": "^1.1.1",
+    "upath": "^1.1.0",
     "vrsource-tslint-rules": "^5.8.2",
     "watchr": "^3.0.1",
     "webpack-cli": "^2.0.14",
