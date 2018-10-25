@@ -37,6 +37,13 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 ## Packages
 
+***Note:** The links below will take you to the master branch version of the docs.
+To view the docs corresponding to a specific release (which is probably what you want),
+the easiest way is to use git tags to browse a snapshot of the repo as it was for a release.
+One way to do this, is to use github's branches toggle (which is by default labeled
+"Branch: Master" and is located on the far left of the green "clone or download" button, above).
+Click the toggle, click the "tags" tab in the overlay pane, and select the tag for a release.*
+
 - [@ngrx/store](./docs/store/README.md) - RxJS powered state management for Angular applications, inspired by Redux
 - [@ngrx/effects](./docs/effects/README.md) - Side Effect model for @ngrx/store to model event sources as actions.
 - [@ngrx/router-store](./docs/router-store/README.md) - Bindings to connect the Angular Router to @ngrx/store
