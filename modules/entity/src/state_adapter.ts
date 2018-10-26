@@ -1,4 +1,4 @@
-import { EntityState, EntityStateAdapter } from './models';
+import { EntityState } from './models';
 
 export enum DidMutate {
   EntitiesOnly,

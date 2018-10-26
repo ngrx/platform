@@ -220,7 +220,7 @@ describe('Unsorted State Adapter', () => {
     });
   });
 
-  it('should let you update many entities in the state', () => {
+  it('should let you update many entities by id in the state', () => {
     const firstChange = { title: 'First Change' };
     const secondChange = { title: 'Second Change' };
     const withMany = adapter.addAll([TheGreatGatsby, AClockworkOrange], state);
@@ -244,6 +244,41 @@ describe('Unsorted State Adapter', () => {
           ...AClockworkOrange,
           ...secondChange,
         },
+      },
+    });
+  });
+
+  it('should let you map over entities in the state', () => {
+    const firstChange = { ...TheGreatGatsby, title: 'First change' };
+    const secondChange = { ...AClockworkOrange, title: 'Second change' };
+
+    const withMany = adapter.addAll(
+      [TheGreatGatsby, AClockworkOrange, AnimalFarm],
+      state
+    );
+
+    const withUpdates = adapter.map(
+      book =>
+        book.title === TheGreatGatsby.title
+          ? firstChange
+          : book.title === AClockworkOrange.title
+            ? secondChange
+            : book,
+      withMany
+    );
+
+    expect(withUpdates).toEqual({
+      ids: [TheGreatGatsby.id, AClockworkOrange.id, AnimalFarm.id],
+      entities: {
+        [TheGreatGatsby.id]: {
+          ...TheGreatGatsby,
+          ...firstChange,
+        },
+        [AClockworkOrange.id]: {
+          ...AClockworkOrange,
+          ...secondChange,
+        },
+        [AnimalFarm.id]: AnimalFarm,
       },
     });
   });
