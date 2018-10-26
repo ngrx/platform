@@ -97,14 +97,14 @@ jobs:
       - run: yarn build
       # Store artifacts from build
       - persist_to_workspace:
-          root: ~/docs/projects/ngrx.io
+          root: ~/docs/projects/ngrx.io/dist
           paths:
-            - dist/ngrx.io/*
+            - ngrx.io/*
       - save_cache:
           key: *docs_cache_key
           paths:
             - ~/.cache/yarn
-            - node_modules
+            - ~/docs/projects/ngrx.io/node_modules
 
   deploy:
     <<: *run_in_ngcontainer
@@ -130,8 +130,9 @@ workflows:
       - docs
       - deploy:
           requires:
+            - docs
             #- test
-            #- bazel
-          filters:
-            branches:
-              only: master
+            # - bazel
+          # filters:
+          #   branches:
+          #     only: master
