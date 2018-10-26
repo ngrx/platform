@@ -188,6 +188,15 @@
       "url": "api",
       "title": "API",
       "tooltip": "API Reference"
+    },
+    {
+      "title": "Migrations",
+      "children": [
+        {
+          "title": "V7",
+          "url": "guide/migration/v7"
+        }
+      ]
     }
   ],
 
