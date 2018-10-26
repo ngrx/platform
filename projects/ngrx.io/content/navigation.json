@@ -185,10 +185,6 @@
       ]
     },
     {
-      "title": "Style Guide",
-      "url": "guide/style-guide"
-    },
-    {
       "url": "api",
       "title": "API",
       "tooltip": "API Reference"
@@ -264,5 +260,18 @@
     }
   ],
 
-  "docVersions": []
+  "docVersions": [
+    {
+      "title": "v6",
+      "url": "https://github.com/ngrx/platform/tree/6.1.0/docs"
+    },
+    {
+      "title": "v5",
+      "url": "https://github.com/ngrx/platform/tree/v5.2.0/docs"
+    },
+    {
+      "title": "v4",
+      "url": "https://github.com/ngrx/platform/tree/v4.1.1/docs"
+    }
+  ]
 }
