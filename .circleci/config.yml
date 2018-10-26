@@ -94,7 +94,8 @@ jobs:
       - restore_cache:
           key: *docs_cache_key
       - run: yarn setup 
-      - run: yarn build
+      - run: yarn build-for next
+      - run: cp -rf src/extra-files/next/. dist/ngrx.io/
       # Store artifacts from build
       - persist_to_workspace:
           root: ~/docs/projects/ngrx.io/dist
