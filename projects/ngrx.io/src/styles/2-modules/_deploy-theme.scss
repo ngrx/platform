@@ -26,25 +26,25 @@ aio-shell.mode-archive {
 
 aio-shell.mode-next {
 
-  .mat-toolbar.mat-primary, footer {
-    background: linear-gradient(145deg,#DD0031,#C3002F);
+ footer {
+    background: linear-gradient(145deg,#84438a,#84438a);
   }
 
   .vertical-menu-item {
     &.selected, &:hover {
-      color: #DD0031;
+      color: #84438a;
     }
   }
 
   .toc-inner ul.toc-list li.active a {
-    color: #DD0031;
+    color: #84438a;
 
     &:before {
-      background-color: #DD0031;
+      background-color: #84438a;
     }
   }
 
   .toc-inner ul.toc-list li:hover a {
-    color: #DD0031;
+    color: #84438a;
   }
 }
