@@ -6,7 +6,7 @@ load("@build_bazel_rules_nodejs//:defs.bzl",
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^7.0.0"
-RXJS_VERSION = "^6.3.0"
+RXJS_VERSION = "^6.0.0"
 NG_UPDATE_MIGRATIONS = "./migrations/migration.json"
 MODULE_SCHEMATICS_COLLECTION = "./schematics/collection.json"
 
