@@ -99,7 +99,7 @@ describe('Sorted State Adapter', () => {
     });
   });
 
-  it('should let you remove many entities from the state', () => {
+  it('should let you remove many entities by id from the state', () => {
     const withAll = adapter.addAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
@@ -114,6 +114,22 @@ describe('Sorted State Adapter', () => {
       ids: [AnimalFarm.id],
       entities: {
         [AnimalFarm.id]: AnimalFarm,
+      },
+    });
+  });
+
+  it('should let you remove many entities by a predicate from the state', () => {
+    const withAll = adapter.addAll(
+      [TheGreatGatsby, AClockworkOrange, AnimalFarm],
+      state
+    );
+
+    const withoutMany = adapter.removeMany(p => p.id.startsWith('a'), withAll);
+
+    expect(withoutMany).toEqual({
+      ids: [TheGreatGatsby.id],
+      entities: {
+        [TheGreatGatsby.id]: TheGreatGatsby,
       },
     });
   });

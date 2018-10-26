@@ -28,6 +28,8 @@ export interface UpdateNum<T> {
 
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
+export type Predicate<T> = (entity: T) => boolean;
+
 export interface EntityState<T> {
   ids: string[] | number[];
   entities: Dictionary<T>;
@@ -48,6 +50,7 @@ export interface EntityStateAdapter<T> {
 
   removeMany<S extends EntityState<T>>(keys: string[], state: S): S;
   removeMany<S extends EntityState<T>>(keys: number[], state: S): S;
+  removeMany<S extends EntityState<T>>(predicate: Predicate<T>, state: S): S;
 
   removeAll<S extends EntityState<T>>(state: S): S;
 
