@@ -39,9 +39,15 @@ export class DefaultRouterStateSerializer
       data: route.data,
       url: route.url,
       outlet: route.outlet,
-      routeConfig: {
-        component: route.routeConfig ? route.routeConfig.component : undefined,
-      },
+      routeConfig: route.routeConfig
+        ? {
+            component: route.routeConfig.component,
+            path: route.routeConfig.path,
+            pathMatch: route.routeConfig.pathMatch,
+            redirectTo: route.routeConfig.redirectTo,
+            outlet: route.routeConfig.outlet,
+          }
+        : null,
       queryParams: route.queryParams,
       queryParamMap: route.queryParamMap,
       fragment: route.fragment,
