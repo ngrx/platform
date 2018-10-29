@@ -1,3 +1,4 @@
+import { Action } from '@ngrx/store';
 import {
   ROUTER_CANCEL,
   ROUTER_ERROR,
@@ -20,15 +21,17 @@ export function routerReducer<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 >(
   state: RouterReducerState<T> | undefined,
-  action: RouterAction<any, T>
+  action: Action
 ): RouterReducerState<T> {
-  switch (action.type) {
+  // Allow compilation with strictFunctionTypes - ref: #1344
+  const routerAction = action as RouterAction<any, T>;
+  switch (routerAction.type) {
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:
     case ROUTER_CANCEL:
       return {
-        state: action.payload.routerState,
-        navigationId: action.payload.event.id,
+        state: routerAction.payload.routerState,
+        navigationId: routerAction.payload.event.id,
       };
     default:
       return state as RouterReducerState<T>;
