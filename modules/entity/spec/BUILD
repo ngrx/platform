@@ -9,6 +9,8 @@ ts_test_library(
     ),
     deps = [
         "//modules/entity",
+        "@rxjs",
+        "@rxjs//operators",
     ],
 )
 

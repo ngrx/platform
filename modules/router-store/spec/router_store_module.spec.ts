@@ -51,7 +51,10 @@ describe('Router Store Module', () => {
           logs.push([routerStoreState, storeState]);
         });
 
-      spyOn(storeRouterConnectingModule, 'navigateIfNeeded').and.callThrough();
+      spyOn(
+        storeRouterConnectingModule,
+        'navigateIfNeeded' as never
+      ).and.callThrough();
       logs = [];
 
       // this dispatches `@ngrx/router-store/navigation` action
@@ -112,7 +115,10 @@ describe('Router Store Module', () => {
           logs.push([routerStoreState, storeState]);
         });
 
-      spyOn(storeRouterConnectingModule, 'navigateIfNeeded').and.callThrough();
+      spyOn(
+        storeRouterConnectingModule,
+        'navigateIfNeeded' as never
+      ).and.callThrough();
       logs = [];
 
       // this dispatches `@ngrx/router-store/navigation` action

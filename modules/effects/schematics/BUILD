@@ -16,6 +16,8 @@ ts_library(
     module_name = "@ngrx/effects/schematics",
     deps = [
         "//modules/effects/schematics-core",
+        "@npm//@angular-devkit/schematics",
+        "@npm//typescript",
     ],
 )
 

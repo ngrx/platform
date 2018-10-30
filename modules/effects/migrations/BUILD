@@ -16,6 +16,7 @@ ts_library(
     module_name = "@ngrx/effects/migrations",
     deps = [
         "//modules/effects/schematics-core",
+        "@npm//@angular-devkit/schematics",
     ],
 )
 

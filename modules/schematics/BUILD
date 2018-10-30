@@ -17,6 +17,8 @@ ts_library(
     tsconfig = ":tsconfig-build.json",
     deps = [
         "//modules/schematics/schematics-core",
+        "@npm//@angular-devkit/schematics",
+        "@npm//typescript",
     ],
 )
 

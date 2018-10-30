@@ -11,6 +11,7 @@ ng_module(
     module_name = "@ngrx/entity",
     deps = [
         "//modules/store",
+        "@npm//@angular-devkit/schematics",
     ],
 )
 

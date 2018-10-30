@@ -9,7 +9,10 @@ ng_module(
         "src/**/*.ts",
     ]),
     module_name = "@ngrx/store",
-    deps = ["@rxjs"],
+    deps = [
+        "@angular//packages/core",
+        "@rxjs",
+    ],
 )
 
 ng_package(

@@ -11,8 +11,8 @@ ng_module(
     module_name = "@ngrx/effects",
     deps = [
         "//modules/store",
+        "@angular//packages/core",
         "@rxjs",
-        "@rxjs//operators",
     ],
 )
 

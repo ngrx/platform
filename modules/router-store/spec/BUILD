@@ -10,6 +10,8 @@ ts_test_library(
     deps = [
         "//modules/router-store",
         "//modules/store",
+        "@angular//packages/router",
+        "@angular//packages/router/testing",
         "@rxjs",
         "@rxjs//operators",
     ],
