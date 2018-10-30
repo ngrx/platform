@@ -20,6 +20,10 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
   }
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
+  select<K, Props = any>(
+    mapFn: (state: T, props: Props) => K,
+    props: Props
+  ): Observable<K>;
   select<a extends keyof T>(key: a): Observable<T[a]>;
   select<a extends keyof T, b extends keyof T[a]>(
     key1: a,
@@ -63,8 +67,8 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
    * fixed length tuples type in typescript 2.7
    */
   select<K = any>(...paths: string[]): Observable<K>;
-  select(
-    pathOrMapFn: ((state: T) => any) | string,
+  select<Props = any>(
+    pathOrMapFn: ((state: T, props?: Props) => any) | string,
     ...paths: string[]
   ): Observable<any> {
     return select.call(null, pathOrMapFn, ...paths)(this);
