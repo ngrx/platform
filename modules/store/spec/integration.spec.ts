@@ -114,169 +114,363 @@ describe('ngRx Integration spec', () => {
       expect(state.value.todos[0].completed).toEqual(true);
     });
 
-    it('should use visibilityFilter to filter todos', () => {
-      store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-      store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-      store.dispatch({
-        type: COMPLETE_TODO,
-        payload: { id: state.value.todos[0].id },
+    describe('using the store.select', () => {
+      it('should use visibilityFilter to filter todos', () => {
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: state.value.todos[0].id },
+        });
+
+        const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
+          let predicate;
+          if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
+            predicate = () => true;
+          } else if (visibilityFilter === VisibilityFilters.SHOW_ACTIVE) {
+            predicate = (todo: any) => !todo.completed;
+          } else {
+            predicate = (todo: any) => todo.completed;
+          }
+          return todos.filter(predicate);
+        };
+
+        let currentlyVisibleTodos: Todo[] = [];
+
+        combineLatest(
+          store.select('visibilityFilter'),
+          store.select('todos'),
+          filterVisibleTodos
+        ).subscribe(visibleTodos => {
+          currentlyVisibleTodos = visibleTodos;
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(2);
+
+        store.dispatch({
+          type: SET_VISIBILITY_FILTER,
+          payload: VisibilityFilters.SHOW_ACTIVE,
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(1);
+        expect(currentlyVisibleTodos[0].completed).toBe(false);
+
+        store.dispatch({
+          type: SET_VISIBILITY_FILTER,
+          payload: VisibilityFilters.SHOW_COMPLETED,
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(1);
+        expect(currentlyVisibleTodos[0].completed).toBe(true);
+
+        store.dispatch({ type: COMPLETE_ALL_TODOS });
+
+        expect(currentlyVisibleTodos.length).toBe(2);
+        expect(currentlyVisibleTodos[0].completed).toBe(true);
+        expect(currentlyVisibleTodos[1].completed).toBe(true);
+
+        store.dispatch({
+          type: SET_VISIBILITY_FILTER,
+          payload: VisibilityFilters.SHOW_ACTIVE,
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(0);
       });
 
-      const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
-        let predicate;
-        if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
-          predicate = () => true;
-        } else if (visibilityFilter === VisibilityFilters.SHOW_ACTIVE) {
-          predicate = (todo: any) => !todo.completed;
-        } else {
-          predicate = (todo: any) => todo.completed;
-        }
-        return todos.filter(predicate);
-      };
+      it('should use props to get a todo', () => {
+        const getTodosById = createSelector(
+          (state: TodoAppSchema, id: number) => {
+            return state.todos.find(p => p.id === id);
+          }
+        );
 
-      let currentlyVisibleTodos: Todo[] = [];
+        let testCase = 1;
+        const todo$ = store.select(getTodosById, 2);
+        todo$.subscribe(todo => {
+          if (testCase === 1) {
+            expect(todo).toEqual(undefined);
+          } else if (testCase === 2) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            });
+          } else if (testCase === 3) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            });
+          }
+          testCase++;
+        });
 
-      combineLatest(
-        store.pipe(select('visibilityFilter')),
-        store.pipe(select('todos')),
-        filterVisibleTodos
-      ).subscribe(visibleTodos => {
-        currentlyVisibleTodos = visibleTodos;
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: 2 },
+        });
       });
 
-      expect(currentlyVisibleTodos.length).toBe(2);
+      it('should use the selector and props to get a todo', () => {
+        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+          'todos'
+        );
+        const getTodos = createSelector(getTodosState, todos => todos);
+        const getTodosById = createSelector(
+          getTodos,
+          (state: TodoAppSchema, id: number) => id,
+          (todos, id) => todos.find(todo => todo.id === id)
+        );
 
-      store.dispatch({
-        type: SET_VISIBILITY_FILTER,
-        payload: VisibilityFilters.SHOW_ACTIVE,
+        let testCase = 1;
+        const todo$ = store.select(getTodosById, 2);
+        todo$.subscribe(todo => {
+          if (testCase === 1) {
+            expect(todo).toEqual(undefined);
+          } else if (testCase === 2) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            });
+          } else if (testCase === 3) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            });
+          }
+          testCase++;
+        });
+
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: 2 },
+        });
       });
 
-      expect(currentlyVisibleTodos.length).toBe(1);
-      expect(currentlyVisibleTodos[0].completed).toBe(false);
+      it('should use the props in the projector to get a todo', () => {
+        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+          'todos'
+        );
 
-      store.dispatch({
-        type: SET_VISIBILITY_FILTER,
-        payload: VisibilityFilters.SHOW_COMPLETED,
+        const getTodosById = createSelector(
+          getTodosState,
+          (todos: Todo[], { id }: { id: number }) =>
+            todos.find(todo => todo.id === id)
+        );
+
+        let testCase = 1;
+        const todo$ = store.pipe(select(getTodosById, { id: 2 }));
+        todo$.subscribe(todo => {
+          if (testCase === 1) {
+            expect(todo).toEqual(undefined);
+          } else if (testCase === 2) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            });
+          } else if (testCase === 3) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            });
+          }
+          testCase++;
+        });
+
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: 2 },
+        });
       });
-
-      expect(currentlyVisibleTodos.length).toBe(1);
-      expect(currentlyVisibleTodos[0].completed).toBe(true);
-
-      store.dispatch({ type: COMPLETE_ALL_TODOS });
-
-      expect(currentlyVisibleTodos.length).toBe(2);
-      expect(currentlyVisibleTodos[0].completed).toBe(true);
-      expect(currentlyVisibleTodos[1].completed).toBe(true);
-
-      store.dispatch({
-        type: SET_VISIBILITY_FILTER,
-        payload: VisibilityFilters.SHOW_ACTIVE,
-      });
-
-      expect(currentlyVisibleTodos.length).toBe(0);
     });
 
-    it('should use props to get a todo', () => {
-      const getTodosById = createSelector(
-        (state: TodoAppSchema, id: number) => {
-          return state.todos.find(p => p.id === id);
-        }
-      );
+    describe('using the select operator', () => {
+      it('should use visibilityFilter to filter todos', () => {
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: state.value.todos[0].id },
+        });
 
-      let testCase = 1;
-      const todo$ = store.pipe(select(getTodosById, 2));
-      todo$.subscribe(todo => {
-        if (testCase === 1) {
-          expect(todo).toEqual(undefined);
-        } else if (testCase === 2) {
-          expect(todo).toEqual({
-            id: 2,
-            text: 'second todo',
-            completed: false,
-          });
-        } else if (testCase === 3) {
-          expect(todo).toEqual({ id: 2, text: 'second todo', completed: true });
-        }
-        testCase++;
+        const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
+          let predicate;
+          if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
+            predicate = () => true;
+          } else if (visibilityFilter === VisibilityFilters.SHOW_ACTIVE) {
+            predicate = (todo: any) => !todo.completed;
+          } else {
+            predicate = (todo: any) => todo.completed;
+          }
+          return todos.filter(predicate);
+        };
+
+        let currentlyVisibleTodos: Todo[] = [];
+
+        combineLatest(
+          store.pipe(select('visibilityFilter')),
+          store.pipe(select('todos')),
+          filterVisibleTodos
+        ).subscribe(visibleTodos => {
+          currentlyVisibleTodos = visibleTodos;
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(2);
+
+        store.dispatch({
+          type: SET_VISIBILITY_FILTER,
+          payload: VisibilityFilters.SHOW_ACTIVE,
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(1);
+        expect(currentlyVisibleTodos[0].completed).toBe(false);
+
+        store.dispatch({
+          type: SET_VISIBILITY_FILTER,
+          payload: VisibilityFilters.SHOW_COMPLETED,
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(1);
+        expect(currentlyVisibleTodos[0].completed).toBe(true);
+
+        store.dispatch({ type: COMPLETE_ALL_TODOS });
+
+        expect(currentlyVisibleTodos.length).toBe(2);
+        expect(currentlyVisibleTodos[0].completed).toBe(true);
+        expect(currentlyVisibleTodos[1].completed).toBe(true);
+
+        store.dispatch({
+          type: SET_VISIBILITY_FILTER,
+          payload: VisibilityFilters.SHOW_ACTIVE,
+        });
+
+        expect(currentlyVisibleTodos.length).toBe(0);
       });
 
-      store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-      store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-      store.dispatch({
-        type: COMPLETE_TODO,
-        payload: { id: 2 },
-      });
-    });
+      it('should use props to get a todo', () => {
+        const getTodosById = createSelector(
+          (state: TodoAppSchema, id: number) => {
+            return state.todos.find(p => p.id === id);
+          }
+        );
 
-    it('should use the selector and props to get a todo', () => {
-      const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
-        'todos'
-      );
-      const getTodos = createSelector(getTodosState, todos => todos);
-      const getTodosById = createSelector(
-        getTodos,
-        (state: TodoAppSchema, id: number) => id,
-        (todos, id) => todos.find(todo => todo.id === id)
-      );
+        let testCase = 1;
+        const todo$ = store.pipe(select(getTodosById, 2));
+        todo$.subscribe(todo => {
+          if (testCase === 1) {
+            expect(todo).toEqual(undefined);
+          } else if (testCase === 2) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            });
+          } else if (testCase === 3) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            });
+          }
+          testCase++;
+        });
 
-      let testCase = 1;
-      const todo$ = store.pipe(select(getTodosById, 2));
-      todo$.subscribe(todo => {
-        if (testCase === 1) {
-          expect(todo).toEqual(undefined);
-        } else if (testCase === 2) {
-          expect(todo).toEqual({
-            id: 2,
-            text: 'second todo',
-            completed: false,
-          });
-        } else if (testCase === 3) {
-          expect(todo).toEqual({ id: 2, text: 'second todo', completed: true });
-        }
-        testCase++;
-      });
-
-      store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-      store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-      store.dispatch({
-        type: COMPLETE_TODO,
-        payload: { id: 2 },
-      });
-    });
-
-    it('should use the props in the projector to get a todo', () => {
-      const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
-        'todos'
-      );
-
-      const getTodosById = createSelector(
-        getTodosState,
-        (todos: Todo[], { id }: { id: number }) =>
-          todos.find(todo => todo.id === id)
-      );
-
-      let testCase = 1;
-      const todo$ = store.pipe(select(getTodosById, { id: 2 }));
-      todo$.subscribe(todo => {
-        if (testCase === 1) {
-          expect(todo).toEqual(undefined);
-        } else if (testCase === 2) {
-          expect(todo).toEqual({
-            id: 2,
-            text: 'second todo',
-            completed: false,
-          });
-        } else if (testCase === 3) {
-          expect(todo).toEqual({ id: 2, text: 'second todo', completed: true });
-        }
-        testCase++;
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: 2 },
+        });
       });
 
-      store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-      store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-      store.dispatch({
-        type: COMPLETE_TODO,
-        payload: { id: 2 },
+      it('should use the selector and props to get a todo', () => {
+        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+          'todos'
+        );
+        const getTodos = createSelector(getTodosState, todos => todos);
+        const getTodosById = createSelector(
+          getTodos,
+          (state: TodoAppSchema, id: number) => id,
+          (todos, id) => todos.find(todo => todo.id === id)
+        );
+
+        let testCase = 1;
+        const todo$ = store.pipe(select(getTodosById, 2));
+        todo$.subscribe(todo => {
+          if (testCase === 1) {
+            expect(todo).toEqual(undefined);
+          } else if (testCase === 2) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            });
+          } else if (testCase === 3) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            });
+          }
+          testCase++;
+        });
+
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: 2 },
+        });
+      });
+
+      it('should use the props in the projector to get a todo', () => {
+        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+          'todos'
+        );
+
+        const getTodosById = createSelector(
+          getTodosState,
+          (todos: Todo[], { id }: { id: number }) =>
+            todos.find(todo => todo.id === id)
+        );
+
+        let testCase = 1;
+        const todo$ = store.pipe(select(getTodosById, { id: 2 }));
+        todo$.subscribe(todo => {
+          if (testCase === 1) {
+            expect(todo).toEqual(undefined);
+          } else if (testCase === 2) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            });
+          } else if (testCase === 3) {
+            expect(todo).toEqual({
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            });
+          }
+          testCase++;
+        });
+
+        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+        store.dispatch({
+          type: COMPLETE_TODO,
+          payload: { id: 2 },
+        });
       });
     });
   });
