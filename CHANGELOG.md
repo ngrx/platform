@@ -1,6 +1,14 @@
+<a name="6.1.2"></a>
+
+## [6.1.2](https://github.com/ngrx/platform/compare/6.1.1...6.1.2) (2018-10-31)
+
+### Bug Fixes
+
+- **router-store:** don't navigate on NagivationStart ([#1392](https://github.com/ngrx/platform/issues/1392)) ([19a7d06](https://github.com/ngrx/platform/commit/19a7d06))
+
 <a name="6.1.1"></a>
 
-## [6.1.1](https://github.com/ngrx/platform/compare/6.1.0...v6.1.1) (2018-10-30)
+## [6.1.1](https://github.com/ngrx/platform/compare/6.1.0...6.1.1) (2018-10-30)
 
 ### Bug Fixes
 
