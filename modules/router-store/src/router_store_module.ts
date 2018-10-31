@@ -269,7 +269,6 @@ export class StoreRouterConnectingModule {
   }
 
   private shouldDispatchRouterNavigation(): boolean {
-    if (this.lastEvent instanceof NavigationStart) return false;
     if (!this.storeState[this.stateKey]) return true;
     return !this.navigationTriggeredByDispatch;
   }
@@ -282,6 +281,7 @@ export class StoreRouterConnectingModule {
       return;
     }
     if (this.dispatchTriggeredByRouter) return;
+    if (this.lastEvent instanceof NavigationStart) return;
 
     if (this.router.url !== this.storeState[this.stateKey].state.url) {
       this.navigationTriggeredByDispatch = true;
