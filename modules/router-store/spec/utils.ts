@@ -1,4 +1,4 @@
-import { Component, Provider } from '@angular/core';
+import { Component, Provider, ɵConsole as Console } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
@@ -53,6 +53,13 @@ export function createTestModule(
       {
         provide: 'CanLoadNext',
         useValue: opts.canLoad || (() => true),
+      },
+      {
+        provide: Console,
+        useValue: {
+          log: jasmine.createSpy('Console.log'),
+          warn: jasmine.createSpy('Console.warn'),
+        },
       },
       opts.providers || [],
     ],

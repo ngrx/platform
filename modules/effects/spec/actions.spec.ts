@@ -78,7 +78,7 @@ describe('Actions', function() {
       )
       .subscribe({
         next(actual) {
-          expect(actual).toEqual(expected);
+          expect(actual).toEqual(expected as any[]);
         },
       });
 
@@ -95,7 +95,7 @@ describe('Actions', function() {
       )
       .subscribe({
         next(actual) {
-          expect(actual).toEqual(expected);
+          expect(actual).toEqual(expected as any[]);
         },
       });
 

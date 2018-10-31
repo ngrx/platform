@@ -5,8 +5,8 @@ load("@build_bazel_rules_nodejs//:defs.bzl",
      _jasmine_node_test="jasmine_node_test", _npm_package="npm_package")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
-NG_VERSION = "^6.0.0"
-RXJS_VERSION = "^5.6.0-forward-compat.0 || ^6.0.0"
+NG_VERSION = "^7.0.0"
+RXJS_VERSION = "^6.0.0"
 NG_UPDATE_MIGRATIONS = "./migrations/migration.json"
 MODULE_SCHEMATICS_COLLECTION = "./schematics/collection.json"
 
@@ -34,14 +34,27 @@ PKG_GROUP_REPLACEMENTS = {
 }
 
 
-def ts_library(tsconfig=None, node_modules=None, **kwargs):
+def ts_library(tsconfig=None, node_modules=None, deps=[], **kwargs):
     if not tsconfig:
         tsconfig = DEFAULT_TSCONFIG
-    _ts_library(tsconfig=tsconfig, **kwargs)
+    _ts_library(tsconfig=tsconfig,
+        deps=[
+            "@npm//@types",
+        ] + deps,
+        **kwargs)
 
 
-def ts_test_library(node_modules=None, **kwargs):
-    ts_library(testonly=1, **kwargs)
+def ts_test_library(node_modules=None, deps=[], **kwargs):
+    ts_library(testonly=1,
+        deps=[
+            "@angular//packages/core",
+            "@angular//packages/core/testing",
+            "@angular//packages/platform-server",
+            "@angular//packages/platform-server/testing",
+            "@npm//jasmine-marbles",
+            "@npm//zone.js",
+        ] + deps,
+        **kwargs)
 
 
 def jasmine_node_test(node_modules=None, bootstrap=None, deps=[], **kwargs):
@@ -49,18 +62,37 @@ def jasmine_node_test(node_modules=None, bootstrap=None, deps=[], **kwargs):
         bootstrap = ["ngrx/tools/testing/bootstrap_node_tests.js"]
     _jasmine_node_test(
         bootstrap=bootstrap,
-        deps=["//tools/testing:node"] + deps,
+        deps=[
+            "//tools/testing:node",
+            # Very common dependencies for tests
+            "@npm//chokidar",
+            "@npm//core-js",
+            "@npm//deep-freeze",
+            "@npm//domino",
+            "@npm//jasmine",
+            "@npm//jasmine-core",
+            "@npm//reflect-metadata",
+            "@npm//source-map-support",
+            "@npm//tslib",
+            "@npm//xhr2",
+        ] + deps,
         **kwargs
     )
 
 
-def ng_module(name, tsconfig=None, entry_point=None, **kwargs):
+def ng_module(name, tsconfig=None, entry_point=None, deps=[], **kwargs):
     if not tsconfig:
         tsconfig = DEFAULT_TSCONFIG
     if not entry_point:
         entry_point = "public_api.ts"
-    _ng_module(name=name, flat_module_out_file=name,
-               tsconfig=tsconfig, entry_point=entry_point, **kwargs)
+    _ng_module(name=name,
+        flat_module_out_file=name,
+        tsconfig=tsconfig,
+        entry_point=entry_point,
+        deps=[
+            "@npm//@types",
+        ] + deps,
+        **kwargs)
 
 
 def ng_package(name, readme_md=None, license_banner=None, globals={}, **kwargs):

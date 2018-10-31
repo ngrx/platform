@@ -213,7 +213,7 @@ describe(`Store Modules`, () => {
             list: [1, 2, 3],
             index: 2,
           },
-        });
+        } as State);
       });
     });
   });

@@ -10,10 +10,10 @@ version: 2
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.3.3
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.7.0
 var_2: &run_in_ngcontainer
   docker:
-    - image: angular/ngcontainer:0.3.3
+    - image: angular/ngcontainer:0.7.0
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
@@ -94,6 +94,7 @@ jobs:
       - restore_cache:
           key: *docs_cache_key
       - run: yarn setup 
+      - run: npm rebuild node-sass
       - run: yarn build-for next
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/
       # Store artifacts from build

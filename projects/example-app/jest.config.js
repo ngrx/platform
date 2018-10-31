@@ -26,7 +26,8 @@ module.exports = {
   ],
   "moduleNameMapper": {
     "^@ngrx/(?!db)(.*)": "<rootDir>/../../modules/$1",
-    "^@example-app/(.*)": "<rootDir>/src/app/$1"
+    "^@example-app/(.*)": "<rootDir>/src/app/$1",
+    "ngrx-store-freeze": "<rootDir>/../../projects/ngrx-store-freeze/"
   },
   "transformIgnorePatterns": [
     "node_modules/(?!@ngrx)"
