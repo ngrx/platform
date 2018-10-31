@@ -94,7 +94,7 @@ jobs:
       - restore_cache:
           key: *docs_cache_key
       - run: yarn setup 
-      - run: npm node-sass rebuild
+      - run: npm rebuild node-sass
       - run: yarn build-for next
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/
       # Store artifacts from build
