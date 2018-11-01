@@ -1,6 +1,23 @@
+<a name="6.1.2"></a>
+
+## [6.1.2](https://github.com/ngrx/platform/compare/6.1.1...6.1.2) (2018-10-31)
+
+### Bug Fixes
+
+- **router-store:** don't navigate on NagivationStart ([#1392](https://github.com/ngrx/platform/issues/1392)) ([19a7d06](https://github.com/ngrx/platform/commit/19a7d06))
+
+<a name="6.1.1"></a>
+
+## [6.1.1](https://github.com/ngrx/platform/compare/6.1.0...6.1.1) (2018-10-30)
+
+### Bug Fixes
+
+- **router-store:** don't navigate on NavigationStart router event ([#1379](https://github.com/ngrx/platform/issues/1379)) ([6ea4148](https://github.com/ngrx/platform/commit/6ea4148))
+- **store:** add typing to allow props with store.select ([#1387](https://github.com/ngrx/platform/issues/1387)) ([#1388](https://github.com/ngrx/platform/issues/1388)) ([041c9c0](https://github.com/ngrx/platform/commit/041c9c0))
+
 <a name="6.1.0"></a>
 
-# [6.1.0](https://github.com/ngrx/platform/compare/6.0.1...6.1.0) (2018-08-01)
+# [6.1.0](https://github.com/ngrx/platform/compare/6.0.1...6.1.0) (2018-08-02)
 
 ### Bug Fixes
 
