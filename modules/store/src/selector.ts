@@ -70,13 +70,14 @@ export function defaultMemoize(
       return lastResult;
     }
 
+    lastArguments = arguments;
+
     const newResult = projectionFn.apply(null, arguments);
     if (isResultEqual(lastResult, newResult)) {
       return lastResult;
     }
 
     lastResult = newResult;
-    lastArguments = arguments;
 
     return newResult;
   }

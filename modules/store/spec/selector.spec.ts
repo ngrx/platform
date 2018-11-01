@@ -90,6 +90,7 @@ describe('Selectors', () => {
       selector(firstState);
       selector(firstState);
       selector(secondState);
+      selector(secondState);
 
       expect(incrementOne).toHaveBeenCalledTimes(2);
       expect(incrementTwo).toHaveBeenCalledTimes(2);
@@ -200,6 +201,7 @@ describe('Selectors', () => {
       selector(firstState, props);
       selector(firstState, props);
       selector(firstState, props);
+      selector(secondState, props);
       selector(secondState, props);
 
       expect(counter).toBe(2);
@@ -322,6 +324,7 @@ describe('Selectors', () => {
       selector(firstState);
       selector(firstState);
       selector(secondState);
+      selector(secondState);
 
       expect(incrementOne).toHaveBeenCalledTimes(2);
       expect(incrementTwo).toHaveBeenCalledTimes(2);
@@ -432,6 +435,7 @@ describe('Selectors', () => {
       selector(firstState, props);
       selector(firstState, props);
       selector(firstState, props);
+      selector(secondState, props);
       selector(secondState, props);
 
       expect(counter).toBe(2);
