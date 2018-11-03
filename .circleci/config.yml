@@ -68,7 +68,7 @@ jobs:
             - bin/*
   test:
     docker:
-      - image: circleci/node:latest-browsers
+      - image: circleci/node:10-browsers
     steps:
       - checkout
       - restore_cache:
