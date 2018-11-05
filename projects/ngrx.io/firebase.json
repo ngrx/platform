@@ -2,35 +2,38 @@
   "database": {
     "rules": "database.rules.json"
   },
-  "hosting": {
-    "public": "dist",
-    "cleanUrls": true,
-    "redirects": [
-      //////////////////////////////////////////////////////////////////////////////////////////////
-      // README:
-      //   Redirects must also be handled by the ServiceWorker. If you add a redirect rule here,
-      //   make sure it is compatible with the configuration in `ngsw-config.json`.
-      //////////////////////////////////////////////////////////////////////////////////////////////
-      // Example
-      //{"type": 301, "source": "/docs/*/latest/cli-quickstart.html", "destination": "/guide/quickstart"},
-    ],
-    "rewrites": [
-      {
-        "source": "**/!(*.*)",
-        "destination": "/index.html"
-      }
-    ],
-    "headers": [
-      {
-        "source": "/",
-        "headers": [
-          {
-            "key": "Link",
-            "value":
-              "</generated/navigation.json>;rel=preload;as=fetch,</generated/docs/index.json>;rel=preload;as=fetch"
-          }
-        ]
-      }
-    ]
-  }
+  "hosting": [
+    {
+      "target": "stable",
+      "public": "dist/ngrx.io",
+      "cleanUrls": true,
+      "redirects": [
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        // README:
+        //   Redirects must also be handled by the ServiceWorker. If you add a redirect rule here,
+        //   make sure it is compatible with the configuration in `ngsw-config.json`.
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        // Example
+        //{"type": 301, "source": "/docs/*/latest/cli-quickstart.html", "destination": "/guide/quickstart"},
+      ],
+      "rewrites": [
+        {
+          "source": "**/!(*.*)",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Link",
+              "value":
+                "</generated/navigation.json>;rel=preload;as=fetch,</generated/docs/index.json>;rel=preload;as=fetch"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
