@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ngrx-io-dev": {
+      "hosting": {
+        "stable": [
+          "ngrx-io-stable"
+        ]
+      }
+    }
+  }
+}

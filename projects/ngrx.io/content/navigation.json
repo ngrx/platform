@@ -14,13 +14,31 @@
     },
     {
       "url": "https://opencollective.com/ngrx",
-      "title": "Donate"
+      "title": "Sponsor"
     }
   ],
 
   "TopBarNarrow": [
     {
-      "title": "About NgRx"
+      "title": "About NgRx",
+      "children": [
+        {
+          "url": "guide/store",
+          "title": "Getting Started"
+        },
+        {
+          "url": "docs",
+          "title": "Docs"
+        },
+        {
+          "url": "https://github.com/ngrx/platform",
+          "title": "GitHub"
+        },
+        {
+          "url": "https://opencollective.com/ngrx",
+          "title": "Sponsor"
+        }
+      ]
     }
   ],
 
@@ -185,11 +203,6 @@
       ]
     },
     {
-      "url": "api",
-      "title": "API",
-      "tooltip": "API Reference"
-    },
-    {
       "title": "Migrations",
       "children": [
         {
@@ -197,6 +210,11 @@
           "url": "guide/migration/v7"
         }
       ]
+    },
+    {
+      "url": "api",
+      "title": "API",
+      "tooltip": "API Reference"
     }
   ],
 
@@ -241,7 +259,7 @@
           "tooltip": "Chat about NgRx with other members of the community."
         },
         {
-          "url": "https://github.com/ngrx/platform/issues",
+          "url": "https://github.com/ngrx/platform/issues/new/choose",
           "title": "Report Issues",
           "tooltip": "Post issues and suggestions on GitHub."
         }
@@ -272,7 +290,7 @@
   "docVersions": [
     {
       "title": "v6",
-      "url": "https://github.com/ngrx/platform/tree/6.1.0/docs"
+      "url": "https://github.com/ngrx/platform/tree/6.1.2/docs"
     },
     {
       "title": "v5",
