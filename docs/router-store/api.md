@@ -30,14 +30,8 @@ You then provide the serializer through the config.
 
 ```ts
 // In a custom serializer ts file
-import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { Params, RouterStateSnapshot } from '@angular/router';
-import {
-  StoreRouterConnectingModule,
-  routerReducer,
-  RouterReducerState,
-  RouterStateSerializer,
-} from '@ngrx/router-store';
+import { RouterStateSerializer } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
   url: string;
@@ -45,11 +39,6 @@ export interface RouterStateUrl {
   queryParams: Params;
 }
 
-export interface State {
-  router: RouterReducerState<RouterStateUrl>;
-}
-
-@Injectable()
 export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     let route = routerState.root;
