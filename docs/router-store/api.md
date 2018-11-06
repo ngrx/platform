@@ -29,6 +29,7 @@ Your custom serializer should implement the abstract class `RouterStateSerialize
 You then provide the serializer through the config.
 
 ```ts
+// In a custom serializer ts file
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { Params, RouterStateSnapshot } from '@angular/router';
 import {
@@ -69,10 +70,12 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   }
 }
 
+// In your root reducer
 export const reducers: ActionReducerMap<State> = {
   router: routerReducer,
 };
 
+// In your AppModule
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
@@ -80,7 +83,7 @@ export const reducers: ActionReducerMap<State> = {
       // routes
     ]),
     StoreRouterConnectingModule.forRoot({
-      serializer: RouterStateSerializer,
+      serializer: CustomSerializer
     }),
   ],
 })
