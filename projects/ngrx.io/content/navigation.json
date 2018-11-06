@@ -47,12 +47,12 @@
       "title": "Store",
       "children": [
         {
-          "title": "Basics",
+          "title": "Getting Started",
+          "url": "guide/store"
+        },
+        {
+          "title": "Architecture",
           "children": [
-            {
-              "title": "Overview",
-              "url": "guide/store"
-            },
             {
               "title": "Actions",
               "url": "guide/store/actions"
