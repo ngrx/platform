@@ -16,7 +16,7 @@ interface Action {
 }
 ```
 
-The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event` and is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action. The most common property is the `payload`, which adds any associated data need for the action.
+The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event` and is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action. The most common property is the `payload`, which adds any associated data needed for the action.
 
 Listed below are examples of actions written as plain javascript objects (POJOS):
 
@@ -26,7 +26,7 @@ Listed below are examples of actions written as plain javascript objects (POJOS)
 }
 ```
 
-This action describes an event triggered from a successful authentication after interacting with a backend API.
+This action describes an event triggered by a successful authentication after interacting with a backend API.
 
 ```
 {
@@ -38,7 +38,7 @@ This action describes an event triggered from a successful authentication after 
 }
 ```
 
-This action describes an event triggered from a user clicking a login button from the login page to attempt to authenticate ta user. The `payload` contains the username and password provided from the login page.
+This action describes an event triggered by a user clicking a login button from the login page to attempt to authenticate a user. The `payload` contains the username and password provided from the login page.
 
 ## Writing actions
 
