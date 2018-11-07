@@ -8,7 +8,7 @@ NgRx is a framework for building reactive applications in Angular. NgRx provides
 - Components delegate responsibilities to side effects, which are handled in isolation.
 - Type-safety is promoted throughout the architecture with reliance on TypeScript's compiler for program correctness.
 - Actions and state are serializable to ensure state is predictably stored, rehydrated, and replayed.
-- Promotes use of functional programming when building reactive applications.
+- Promotes the use of functional programming when building reactive applications.
 - Provide straightforward testing strategies for validation of functionality.
 
 ## Packages

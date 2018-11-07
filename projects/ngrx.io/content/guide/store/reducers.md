@@ -1,21 +1,21 @@
 # Reducers
 
-Reducers in NgRx are responsible for handling transitions from one state to the next state in your application. Reducer functions handle these transitions by determininig which [actions](guide/store/actions) to handle based on the type.
+Reducers in NgRx are responsible for handling transitions from one state to the next state in your application. Reducer functions handle these transitions by determining which [actions](guide/store/actions) to handle based on the type.
 
 ## Introduction
 
-Reducer functions are pure functions in that they produce the same output for a given input. They are without side effects, and handle each state transition synchronously. Each reducer function takes the latest `Action` dispatched, the current state, and determines whether to return a newly modified state, or the original state. This guide shows you how to write reducer functions, register them in your `Store`, and compose feature states.
+Reducer functions are pure functions in that they produce the same output for a given input. They are without side effects and handle each state transition synchronously. Each reducer function takes the latest `Action` dispatched, the current state, and determines whether to return a newly modified state or the original state. This guide shows you how to write reducer functions, register them in your `Store`, and compose feature states.
 
 ## The reducer function
 
 There are a few consistent parts of every piece of state managed by a reducer.
 
-- An interface or type that defines that shape of the state.
-- The arguments including the initial state or current state and current action.
+- An interface or type that defines the shape of the state.
+- The arguments including the initial state or current state and the current action.
 - The switch statement
 
 Below is an example of a set of actions to handle the state of a scoreboard,
-and the associate reducer function.
+and the associated reducer function.
 
 First, define some actions for interacting with a piece of state.
 
@@ -23,9 +23,9 @@ First, define some actions for interacting with a piece of state.
 import { Action } from '@ngrx/store';
 
 export enum ActionTypes {
-  IncrementHome = '[Scoreboard] Home Score',
-  IncrementAway = '[Scoreboard] Away Score',
-  Reset = '[Scoreboard] Score Reset',
+  IncrementHome = '[Scoreboard Page] Home Score',
+  IncrementAway = '[Scoreboard Page] Away Score',
+  Reset = '[Scoreboard Page] Score Reset',
 }
 
 export class IncrementHome implements Action {
@@ -50,7 +50,7 @@ a shape for the piece of state.
 
 ### Defining the state shape
 
-Each reducer function is a listener of actions. The counter actions defined above describe the possible transitions handled by the reducer. Import multiple sets of actions to handle additional state transitions within a reducer.
+Each reducer function is a listener of actions. The scoreboard actions defined above describe the possible transitions handled by the reducer. Import multiple sets of actions to handle additional state transitions within a reducer.
 
 ```ts
 import * as Scoreboard from './scoreboard.actions';
@@ -81,7 +81,7 @@ The initial values for the `home` and `away` properties of the state are 0.
 
 ### Creating the reducer function
 
-The reducer function's responsibilty is to handle the state transitions in an immutable way. Define a reducer function that handles the actions for managing the state of the counter.
+The reducer function's responsibility is to handle the state transitions in an immutable way. Define a reducer function that handles the actions for managing the state of the scoreboard.
 
 ```ts
 export function reducer(
@@ -104,8 +104,7 @@ export function reducer(
     }
 
     case Scoreboard.ActionTypes.Reset: {
-      return {
-        ...action.payload, // typed to { home: number, away: number }
+      return action.payload; // typed to { home: number, away: number }
       };
     }
 
@@ -118,13 +117,19 @@ export function reducer(
 
 Reducers use switch statements in combination with TypeScript's discriminated unions defined in your actions to provide type-safe processing of actions in a reducer. Switch statements use type unions to determine the correct shape of the action being consumed in each case. The action types defined with your actions are reused in your reducer functions as case statements. The type union is also provided to your reducer function to constrain the available actions that are handled in that reducer function.
 
-In the example above, the reducer is handling 3 actions: `IncrementHome`, `IncrementAway`, and `Reset`. Each action is strongly-typed based on provided `ActionsUnion`. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+In the example above, the reducer is handling 3 actions: `IncrementHome`, `IncrementAway`, and `Reset`. Each action is strongly-typed based on the provided `ActionsUnion`. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+
+<div class="alert is-important">
+
+**Note:** The spread operator only does shallow copying and does not handle deeply nested objects. You need to copy each level in the object to ensure immutability. There are libraries that handle deep copying including [lodash](https://lodash.com) and [immer](https://github.com/mweststrate/immer).
+
+</div>
 
 When an action is dispatched, _all registered reducers_ receive the action. Whether they handle the action is determined by the switch statement. For this reason, each switch statement _always_ includes a default case that returns the previous state when the reducer function doesn't need to handle the action.
 
 ## Registering root state
 
-The state of your application is defined as one large object. Registering reducer functions to manage parts of your state only defines keys with associated values in the object. To register the global `Store` within your application, use the `StoreModule.forRoot()` method with a map of key/value pairs that define your state. The `StoreModule.forRooot` registers the global providers for your application, including the `Store` service you inject into your components and services to dispatch actions and select pieces of state.
+The state of your application is defined as one large object. Registering reducer functions to manage parts of your state only defines keys with associated values in the object. To register the global `Store` within your application, use the `StoreModule.forRoot()` method with a map of key/value pairs that define your state. The `StoreModule.forRoot()` registers the global providers for your application, including the `Store` service you inject into your components and services to dispatch actions and select pieces of state.
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -132,27 +137,80 @@ import { StoreModule } from '@ngrx/store';
 import { scoreboardReducer } from './scoreboard.reducer';
 
 @NgModule({
-  imports: [StoreModule.forRoot({ game: scoreboardReducer })],
+  imports: [
+    StoreModule.forRoot({ game: scoreboardReducer })
+  ],
 })
 export class AppModule {}
 ```
 
-Registering states with `StoreModule.forRoot` ensures that the states are defined upon application startup. In general, you register root states that are alway need to be available to all areas of your application immediately.
+Registering states with `StoreModule.forRoot()` ensures that the states are defined upon application startup. In general, you register root states that always need to be available to all areas of your application immediately.
 
 ## Register feature state
 
-You define
+Feature states behave in the same way root states do, but allow you to define them with specific feature areas in your application. Your state is one large object, and feature states register additional keys and values in that object.
+
+Looking an at example state object, you see how a feature state allows your state to be built up incrementally. Let's start with an empty state object. 
 
 ```ts
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter';
 
 @NgModule({
-  imports: [StoreModule.forFeature({ count: counterReducer })],
+  imports: [
+    StoreModule.forRoot({})
+  ],
 })
-export class CounterModule {}
+export class AppModule {}
+````
+
+This registers your application with an empty object for the root state.
+
+```ts
+{
+
+}
 ```
+
+Now use the `scoreboard` reducer with a feature `NgModule` named `ScoreboardModule` to register additional state.
+
+```ts
+import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { scoreboardReducer } from './scoreboard.reducer';
+
+@NgModule({
+  imports: [
+    StoreModule.forFeature('game', scoreboardReducer)
+  ],
+})
+export class ScoreboardModule {}
+```
+
+Add the `ScoreboardModule` to the `AppModule` to load the state eagerly.
+
+```ts
+import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+
+@NgModule({
+  imports: [
+    StoreModule.forRoot({}),
+    ScoreboardModule
+  ],
+})
+export class AppModule {}
+```
+
+Once the `ScoreboardModule` is loaded, the `game` key becomes a property in the object and is now managed in the state.
+
+```ts
+{
+  game: { home: 0, away: 0 }
+}
+```
+
+Whether your feature states are loaded eagerly or lazily depends on the needs of your application. You use feature states to build up your state object over time and through different feature areas.
 
 ## Next Steps
 

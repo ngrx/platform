@@ -5,7 +5,7 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 ## Key concepts
 
 - [Actions](guide/store/actions) describe unique events that are dispatched from components and services.
-- State changes are handled by pure functions called [reducers](guide/store/reducers) that take the previous state and the next action to compute a new state.
+- State changes are handled by pure functions called [reducers](guide/store/reducers) that take the current state and the latest action to compute a new state.
 - [Selectors](guide/store/selectors) are pure functions used to select, derive and compose pieces of state.
 - State accessed with the `Store`, an observable of state and an observer of actions.
 
@@ -15,16 +15,16 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 1.  Generate a <a href="https://stackblitz.com/fork/ngrx-start" target="_blank">new project</a> using StackBlitz.
 
-2.  Create an actions file to describe the counter actions to increment, decrement, and reset its value.
+2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter events to increment, decrement, and reset its value.
 
 ```ts
 // counter.actions.ts
 import { Action } from '@ngrx/store';
 
 export enum ActionTypes {
-  Increment = '[Counter] Increment',
-  Decrement = '[Counter] Decrement',
-  Reset = '[Counter] Reset',
+  Increment = '[Counter Component] Increment',
+  Decrement = '[Counter Component] Decrement',
+  Reset = '[Counter Component] Reset',
 }
 
 export class Increment implements Action {
@@ -66,7 +66,7 @@ export function counterReducer(state = initialState, action: Action) {
 }
 ```
 
-4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file,
+4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file.
 
 ```ts
 // app.module.ts
@@ -74,7 +74,7 @@ import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './counter.reducer';
 ```
 
-5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers need to access the `Store` throughout your application.
+5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
 ```ts
 // app.module.ts
@@ -87,7 +87,7 @@ import { counterReducer } from './counter.reducer';
 export class AppModule {}
 ```
 
-6.  Right click on the `app` folder in StackBlitz and create a new `Component` named `my-counter`. Inject the `Store` service into your component to dispatch the counter actions, and use `select` operator to _select_ slice(s) of state.
+6. Create a new _Component_ named `my-counter` in the `app` folder. Inject the `Store` service into your component to dispatch the counter actions, and use the `select` operator to _select_ data from the state.
 
 ```ts
 // my-counter.component.ts
@@ -95,10 +95,6 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Increment, Decrement, Reset } from '../counter.actions';
-
-interface AppState {
-  count: number;
-}
 
 @Component({
   selector: 'app-my-counter',
@@ -115,7 +111,7 @@ interface AppState {
 export class MyCounterComponent {
   count$: Observable<number>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<{ count: number }>) {
     this.count$ = store.pipe(select('count'));
   }
 
