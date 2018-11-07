@@ -15,7 +15,7 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 1.  Generate a <a href="https://stackblitz.com/fork/ngrx-start" target="_blank">new project</a> using StackBlitz.
 
-2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter events to increment, decrement, and reset its value.
+2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 
 ```ts
 // counter.actions.ts
@@ -87,7 +87,7 @@ import { counterReducer } from './counter.reducer';
 export class AppModule {}
 ```
 
-6. Create a new _Component_ named `my-counter` in the `app` folder. Inject the `Store` service into your component to dispatch the counter actions, and use the `select` operator to _select_ data from the state.
+6.  Create a new _Component_ named `my-counter` in the `app` folder. Inject the `Store` service into your component to dispatch the counter actions, and use the `select` operator to _select_ data from the state.
 
 ```ts
 // my-counter.component.ts

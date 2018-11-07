@@ -137,9 +137,7 @@ import { StoreModule } from '@ngrx/store';
 import { scoreboardReducer } from './scoreboard.reducer';
 
 @NgModule({
-  imports: [
-    StoreModule.forRoot({ game: scoreboardReducer })
-  ],
+  imports: [StoreModule.forRoot({ game: scoreboardReducer })],
 })
 export class AppModule {}
 ```
@@ -150,25 +148,22 @@ Registering states with `StoreModule.forRoot()` ensures that the states are defi
 
 Feature states behave in the same way root states do, but allow you to define them with specific feature areas in your application. Your state is one large object, and feature states register additional keys and values in that object.
 
-Looking an at example state object, you see how a feature state allows your state to be built up incrementally. Let's start with an empty state object. 
+Looking at an example state object, you see how a feature state allows your state to be built up incrementally. Let's start with an empty state object.
 
 ```ts
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
-  imports: [
-    StoreModule.forRoot({})
-  ],
+  imports: [StoreModule.forRoot({})],
 })
 export class AppModule {}
-````
+```
 
 This registers your application with an empty object for the root state.
 
 ```ts
 {
-
 }
 ```
 
@@ -180,9 +175,7 @@ import { StoreModule } from '@ngrx/store';
 import { scoreboardReducer } from './scoreboard.reducer';
 
 @NgModule({
-  imports: [
-    StoreModule.forFeature('game', scoreboardReducer)
-  ],
+  imports: [StoreModule.forFeature('game', scoreboardReducer)],
 })
 export class ScoreboardModule {}
 ```
@@ -194,10 +187,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
-  imports: [
-    StoreModule.forRoot({}),
-    ScoreboardModule
-  ],
+  imports: [StoreModule.forRoot({}), ScoreboardModule],
 })
 export class AppModule {}
 ```
