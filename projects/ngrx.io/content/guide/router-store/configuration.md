@@ -1,6 +1,4 @@
-# API
-
-## Configuration Options
+# Configuration Options
 
 ```ts
 interface StoreRouterConfig {
@@ -82,7 +80,7 @@ export class AppModule {}
 
 ## Navigation action timing
 
-`ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the correspondig config:
+`ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:
 
 ```ts
 StoreRouterConnectingModule.forRoot({

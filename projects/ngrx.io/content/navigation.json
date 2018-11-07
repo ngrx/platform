@@ -133,8 +133,8 @@
           "url": "guide/router-store/actions"
         },
         {
-          "title": "API",
-          "url": "guide/router-store/api"
+          "title": "Configuration",
+          "url": "guide/router-store/configuration"
         }
       ]
     },
