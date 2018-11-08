@@ -1,9 +1,4 @@
-# API
-
-## Configuration Options
-
-To connect the Angular router module with the NgRx store module, import the store module via
-`StoreRouterConnectingModule.forRoot()`.
+# Configuration Options
 
 ```ts
 interface StoreRouterConfig {
@@ -28,8 +23,8 @@ Your custom serializer should implement the abstract class `RouterStateSerialize
 
 You then provide the serializer through the config.
 
+**In a custom serializer ts file**
 ```ts
-// In a custom serializer ts file
 import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
@@ -58,13 +53,17 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
     return { url, params, queryParams };
   }
 }
+```
 
-// In your root reducer
+**In your root reducer**
+```ts
 export const reducers: ActionReducerMap<State> = {
-  router: routerReducer,
+  router: routerReducer
 };
+```
 
-// In your AppModule
+**In your AppModule**
+```ts
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
@@ -73,15 +72,15 @@ export const reducers: ActionReducerMap<State> = {
     ]),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer
-    }),
-  ],
+    })
+  ]
 })
 export class AppModule {}
 ```
 
 ## Navigation action timing
 
-`ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the correspondig config:
+`ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:
 
 ```ts
 StoreRouterConnectingModule.forRoot({

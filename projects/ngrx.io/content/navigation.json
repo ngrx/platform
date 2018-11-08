@@ -131,6 +131,10 @@
         {
           "title": "Actions",
           "url": "guide/router-store/actions"
+        },
+        {
+          "title": "Configuration",
+          "url": "guide/router-store/configuration"
         }
       ]
     },
