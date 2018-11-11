@@ -212,6 +212,10 @@
         {
           "title": "V7",
           "url": "guide/migration/v7"
+        },
+        {
+          "title": "V4",
+          "url": "guide/migration/v4"
         }
       ]
     },

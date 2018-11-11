@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # @ngrx/entity
 
 Entity State adapter for managing record collections.
@@ -9,6 +14,7 @@ Entity State adapter for managing record collections.
 - Extensible type-safe adapters for selecting entity information.
 
 ### Installation
+
 Install @ngrx/entity from npm:
 
 `npm install @ngrx/entity --save` OR `yarn add @ngrx/entity`
@@ -18,6 +24,7 @@ Install @ngrx/entity from npm:
 `npm install github:ngrx/entity-builds` OR `yarn add github:ngrx/entity-builds`
 
 ## API Documentation
+
 - [Interfaces](./interfaces.md)
 - [Entity Adapter](./adapter.md)
 - [Selectors](./adapter.md#entity-selectors)

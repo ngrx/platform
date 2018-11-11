@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # API
 
 ## Initial State
@@ -45,9 +50,9 @@ export function getInitialState() {
 
 ## Meta-reducers
 
-@ngrx/store composes your map of reducers into a single reducer. 
+@ngrx/store composes your map of reducers into a single reducer.
 
->  Developers can think of meta-reducers as hooks into the action->reducer pipeline. Meta-reducers allow developers to pre-process actions before *normal* reducers are invoked.
+> Developers can think of meta-reducers as hooks into the action->reducer pipeline. Meta-reducers allow developers to pre-process actions before _normal_ reducers are invoked.
 
 Use the `metaReducers` configuration option to provide an array of meta-reducers that are composed from right to left.
 
@@ -101,9 +106,10 @@ The feature state is added to the global application state once the feature is l
 
 ## Feature Module Reducers and AOT
 
-Developers can use: 
-* `StoreModule.forFeature(<name>, <reducers map>, { initialState : <reducers initial state map>})`. 
-*  `StoreModule.forFeature(<name>, <reducers map> )`.
+Developers can use:
+
+- `StoreModule.forFeature(<name>, <reducers map>, { initialState : <reducers initial state map>})`.
+- `StoreModule.forFeature(<name>, <reducers map> )`.
 
 Due to AOT constraints, however, the following is not allowed:
 
@@ -118,21 +124,21 @@ Fortunately - with Feature modules - we can avoid injection tokens using the fol
 ```ts
 const initialStateA: Permissions = {
   list: A[],
-  editMode: false
+  editMode: false,
 };
 const _reducerA: ActionReducerMap<Permissions> = {
   list: A[],
-  editMode: editModeReducer
+  editMode: editModeReducer,
 };
 
 /**
- * Create `metaReducer` 1x... 
+ * Create `metaReducer` 1x...
  * while `reducerA()` is called for every action.
  */
 const metaReducer = combineReducers(_reducerA, initialStateA);
 
 export function reducerA(state, action) {
-	return metaReducer(state, action);
+  return metaReducer(state, action);
 }
 ```
 
@@ -212,7 +218,6 @@ export class FeatureModule {}
 
 ## Injecting Meta-Reducers
 
-
 To inject 'middleware' meta reducers, use the `META_REDUCERS` injection token exported in
 the Store API and a `Provider` to register the meta reducers through dependency
 injection.
@@ -222,7 +227,9 @@ import { MetaReducer, META_REDUCERS } from '@ngrx/store';
 import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
-export function getMetaReducers(some: SomeService): MetaReducer<fromRoot.State>[] {
+export function getMetaReducers(
+  some: SomeService
+): MetaReducer<fromRoot.State>[] {
   // return array of meta reducers;
 }
 

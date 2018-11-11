@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Entity Interfaces
 
 ## EntityState<T>
@@ -11,15 +16,15 @@ interface EntityState<V> {
 }
 ```
 
-* `ids`: An array of all the primary ids in the collection
-* `entities`: A dictionary of entities in the collection indexed by the primary id
+- `ids`: An array of all the primary ids in the collection
+- `entities`: A dictionary of entities in the collection indexed by the primary id
 
 Extend this interface to provided any additional properties for the entity state.
 
 Usage:
 
 ```ts
- export interface User {
+export interface User {
   id: string;
   name: string;
 }

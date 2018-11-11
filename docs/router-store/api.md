@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # API
 
 ## Configuration Options
@@ -72,7 +77,7 @@ export const reducers: ActionReducerMap<State> = {
       // routes
     ]),
     StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
+      serializer: CustomSerializer,
     }),
   ],
 })

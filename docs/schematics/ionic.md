@@ -1,18 +1,23 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 ## Ionic integration
 
 In an Ionic project, you normally use the Ionic CLI (`ionic`) instead of the Angular CLI (`ng`).
 
 But you can integrate Angular CLI and `@ngrx/schematics` with these simple steps:
 
-* Install Angular CLI in your `devDependencies`:
+- Install Angular CLI in your `devDependencies`:
 
 ```bash
 npm install --save-dev @angular/cli@latest
 ```
 
-* Install `@ngrx/schematics` and its dependencies following the steps in the [documentation](./README.md#installation).
+- Install `@ngrx/schematics` and its dependencies following the steps in the [documentation](./README.md#installation).
 
-* Create a `.angular-cli.json` file in your root directory, beside your `ionic.config.json` file. Angular CLI (`ng`) will use it to know where to generate new files. The only contents it needs to have are:
+- Create a `.angular-cli.json` file in your root directory, beside your `ionic.config.json` file. Angular CLI (`ng`) will use it to know where to generate new files. The only contents it needs to have are:
 
 ```json
 {
@@ -25,7 +30,7 @@ npm install --save-dev @angular/cli@latest
 }
 ```
 
-* Make `@ngrx/schematics` the default collection as described in the [documentation](README.md#default-schematics-collection), e.g.:
+- Make `@ngrx/schematics` the default collection as described in the [documentation](README.md#default-schematics-collection), e.g.:
 
 ```bash
 ng set defaults.schematics.collection=@ngrx/schematics
@@ -33,13 +38,13 @@ ng set defaults.schematics.collection=@ngrx/schematics
 
 That command will modify the file `.angular-cli.json` so that you don't have to type `--collection @ngrx/schematics` with every command.
 
-* Make SCSS the default style format (the default for Ionic):
+- Make SCSS the default style format (the default for Ionic):
 
 ```bash
 ng set defaults.styleExt scss
 ```
 
-* After that, you can use `ng` with the same instructions as above, e.g.:
+- After that, you can use `ng` with the same instructions as above, e.g.:
 
 ```bash
 ng generate store State --root --module app.module.ts

@@ -1,5 +1,11 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Effect
---------
+
+---
 
 ## Overview
 
@@ -30,7 +36,7 @@ Group the effect file within an `effects` folder.
 - `--group`
   - Alias: `-g`
   - Type: `boolean`
-  - Default: `false`     
+  - Default: `false`
 
 Provide the path to a file containing an `Angular Module` and the effect will be added to its `imports` array. If the `--root` option is not included, the effect will be registered using `EffectsModule.forFeature`.
 
@@ -49,7 +55,6 @@ Generate a spec file alongside the action file.
 - `--spec`
   - Type: `boolean`
   - Default: `true`
-
 
 #### Examples
 

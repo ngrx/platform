@@ -1,5 +1,11 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Container
---------
+
+---
 
 ## Overview
 
@@ -32,7 +38,7 @@ Provide the name of the interface exported for your state interface
 
 - `--stateInterface`
   - Type: `string`
-  - Default: `State`  
+  - Default: `State`
 
 #### Examples
 

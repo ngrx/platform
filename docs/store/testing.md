@@ -1,13 +1,20 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Testing
 
 ### Providing Store for testing
+
 Use the `StoreModule.forRoot` in your `TestBed` configuration when testing components or services that inject `Store`.
 
-* Reducing state is synchronous, so mocking out the `Store` isn't required.
-* Use the `combineReducers` method with the map of feature reducers to compose the `State` for the test.
-* Dispatch actions to load data into the `Store`.
+- Reducing state is synchronous, so mocking out the `Store` isn't required.
+- Use the `combineReducers` method with the map of feature reducers to compose the `State` for the test.
+- Dispatch actions to load data into the `Store`.
 
 my-component.ts
+
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
@@ -38,6 +45,7 @@ export class MyComponent implements OnInit {
 ```
 
 my-component.spec.ts
+
 ```ts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
@@ -56,7 +64,7 @@ describe('My Component', () => {
       imports: [
         StoreModule.forRoot({
           ...fromRoot.reducers,
-          'feature': combineReducers(fromFeature.reducers)
+          feature: combineReducers(fromFeature.reducers),
         }),
         // other imports
       ],
@@ -66,7 +74,7 @@ describe('My Component', () => {
       ],
       providers: [
         // other providers
-      ]
+      ],
     });
 
     store = TestBed.get(Store);
@@ -108,10 +116,13 @@ describe('My Component', () => {
   });
 });
 ```
+
 ### Testing selectors
+
 You can use the projector function used by the selector by accessing the `.projector` property.
 
 my-reducer.ts
+
 ```ts
 export interface State {
   evenNums: number[];
@@ -120,11 +131,11 @@ export interface State {
 
 export const selectSumEvenNums = createSelector(
   (state: State) => state.evenNums,
-  (evenNums) => evenNums.reduce((prev, curr) => prev + curr)
+  evenNums => evenNums.reduce((prev, curr) => prev + curr)
 );
 export const selectSumOddNums = createSelector(
   (state: State) => state.oddNums,
-  (oddNums) => oddNums.reduce((prev, curr) => prev + curr)
+  oddNums => oddNums.reduce((prev, curr) => prev + curr)
 );
 export const selectTotal = createSelector(
   selectSumEvenNums,
@@ -134,14 +145,13 @@ export const selectTotal = createSelector(
 ```
 
 my-reducer.spec.ts
+
 ```ts
 import * as fromMyReducers from './my-reducers';
 
 describe('My Selectors', () => {
-
   it('should calc selectTotal', () => {
     expect(fromMyReducers.selectTotal.projector(2, 3)).toBe(5);
   });
-
 });
 ```

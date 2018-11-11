@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Entity
 
 ---
@@ -22,27 +27,27 @@ ng generate en EntityName [options]
 
 Nest the effects file within a folder based on the entity `name`.
 
-* `--flat`
-  * Type: `boolean`
-  * Default: `true`
+- `--flat`
+  - Type: `boolean`
+  - Default: `true`
 
 Provide the path to a file containing an `Angular Module` and the entity reducer will be added to its `imports` array using `StoreModule.forFeature`.
 
-* `--module`
-  * Alias: `-m`
-  * Type: `string`
+- `--module`
+  - Alias: `-m`
+  - Type: `string`
 
 Provide the path to a `reducers` file containing a state interface and a object map of action reducers. The generated entity interface will be imported and added to the first defined interface within the file. The entity reducer will be imported and added to the first defined object with an `ActionReducerMap` type.
 
-* `--reducers`
-  * Alias: `-r`
-  * Type: `string`
+- `--reducers`
+  - Alias: `-r`
+  - Type: `string`
 
 Generate spec files associated with the entity files.
 
-* `--spec`
-  * Type: `boolean`
-  * Default: `true`
+- `--spec`
+  - Type: `boolean`
+  - Default: `true`
 
 #### Examples
 
