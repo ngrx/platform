@@ -95,7 +95,7 @@ jobs:
           key: *docs_cache_key
       - run: yarn setup 
       - run: npm rebuild node-sass
-      - run: yarn build-for next
+      - run: yarn build-for next && yarn copy-404-page
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/
       # Store artifacts from build
       - persist_to_workspace:

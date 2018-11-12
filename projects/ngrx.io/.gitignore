@@ -40,6 +40,7 @@ yarn-error.log
 /e2e/*.js
 /e2e/*.map
 protractor-results*.txt
+!e2e/protractor.conf.js
 
 # System Files
 .DS_Store

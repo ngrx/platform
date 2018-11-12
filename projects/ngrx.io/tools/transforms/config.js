@@ -19,5 +19,9 @@ function requireFolder(dirname, folderPath) {
     .map(p => require(resolve(absolutePath, p)));
 }
 
-module.exports = { PROJECT_ROOT, AIO_PATH, TEMPLATES_PATH, API_TEMPLATES_PATH, CONTENTS_PATH, GUIDE_EXAMPLES_PATH, SRC_PATH, OUTPUT_PATH, DOCS_OUTPUT_PATH, API_SOURCE_PATH, requireFolder };
+const GUIDE_EXAMPLE_MAP = {
+  store: 'store/index'
+};
+
+module.exports = { PROJECT_ROOT, AIO_PATH, TEMPLATES_PATH, API_TEMPLATES_PATH, CONTENTS_PATH, GUIDE_EXAMPLES_PATH, SRC_PATH, OUTPUT_PATH, DOCS_OUTPUT_PATH, API_SOURCE_PATH, requireFolder, GUIDE_EXAMPLE_MAP };
 

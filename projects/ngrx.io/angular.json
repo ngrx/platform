@@ -5,7 +5,7 @@
   "cli": {
     "packageManager": "yarn"
   },
-  "newProjectRoot": "projects",
+  "newProjectRoot": "content/examples",
   "projects": {
     "site": {
       "root": "",

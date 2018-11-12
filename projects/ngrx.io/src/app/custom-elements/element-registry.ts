@@ -49,6 +49,10 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
       './expandable-section/expandable-section.module#ExpandableSectionModule',
   },
   {
+    selector: 'live-example',
+    loadChildren: './live-example/live-example.module#LiveExampleModule',
+  },
+  {
     selector: 'ngrx-circles',
     loadChildren: './ngrx/circles.module#CirclesModule',
   },

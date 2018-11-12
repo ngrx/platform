@@ -26,8 +26,9 @@ function createPackage(changedFile) {
   const exampleMatch = /^projects\/ngrx\.io\/content\/examples\/(?:cb-)?([^\/]+)\//.exec(changedFile);
   if (guideMatch || exampleMatch) {
     const guideName = guideMatch && guideMatch[1] || exampleMatch[1];
-    console.log(`Building guide doc: ${guideName}.md`);
-    return require('./guide-package').createPackage(guideName);
+    const guide = require('../config').GUIDE_EXAMPLE_MAP[guideName] || guideName;
+    console.log(`Building guide doc: ${guide}.md`);
+    return require('./guide-package').createPackage(guide);
   }
 
   const apiExamplesMatch = /^packages\/examples\/([^\/]+)\//.exec(changedFile);
