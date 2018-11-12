@@ -35,6 +35,10 @@
           "title": "Docs"
         },
         {
+          "url": "resources",
+          "title": "Resources"
+        },
+        {
           "url": "https://github.com/ngrx/platform",
           "title": "GitHub"
         },
