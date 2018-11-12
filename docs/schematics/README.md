@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # @ngrx/schematics
 
 Scaffolding library for Angular applications using NgRx libraries.
@@ -75,14 +80,14 @@ ng generate @ngrx/schematics:effect App --root --module app.module.ts
 
 ## Schematics
 
-* [Action](action.md)
-* [Container](container.md)
-* [Effect](effect.md)
-* [Entity](entity.md)
-* [Feature](feature.md)
-* [Reducer](reducer.md)
-* [Store](store.md)
+- [Action](action.md)
+- [Container](container.md)
+- [Effect](effect.md)
+- [Entity](entity.md)
+- [Feature](feature.md)
+- [Reducer](reducer.md)
+- [Store](store.md)
 
 ## API Documentation
 
-* [Integration with Ionic](ionic.md)
+- [Integration with Ionic](ionic.md)

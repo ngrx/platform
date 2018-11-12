@@ -1,5 +1,11 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Action
---------
+
+---
 
 ## Overview
 
@@ -31,14 +37,13 @@ Group the action file within an `actions` folder.
 - `--group`
   - Alias: `-g`
   - Type: `boolean`
-  - Default: `false`   
+  - Default: `false`
 
 Generate a spec file alongside the action file.
 
 - `--spec`
   - Type: `boolean`
   - Default: `false`
-
 
 #### Examples
 

@@ -4,7 +4,7 @@ Please check if your PR fulfills the following requirements:
 
 - [ ] The commit message follows our guidelines: https://github.com/ngrx/platform/blob/master/CONTRIBUTING.md#commit
 - [ ] Tests for the changes have been added (for bug fixes / features)
-- [ ] Docs have been added / updated (for bug fixes / features)
+- [ ] Documentation has been added / updated (for bug fixes / features)
 
 ## PR Type
 
@@ -27,7 +27,7 @@ What kind of change does this PR introduce?
 
 <!-- Please describe the current behavior that you are modifying, or link to a relevant issue. -->
 
-Issue Number: N/A
+Closes #
 
 ## What is the new behavior?
 

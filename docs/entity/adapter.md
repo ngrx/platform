@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Entity Adapter
 
 ## createEntityAdapter<T>
@@ -6,8 +11,8 @@ A method for returning a generic entity adapter for a single entity state collec
 returned adapter provides many [methods](#adapter-methods) for performing operations
 against the collection type. The method takes an object with 2 properties for configuration.
 
-* `selectId`: A `method` for selecting the primary id for the collection.
-* `sortComparer`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to leave the collection unsorted, which is more performant during CRUD operations.
+- `selectId`: A `method` for selecting the primary id for the collection.
+- `sortComparer`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to leave the collection unsorted, which is more performant during CRUD operations.
 
 Usage:
 
@@ -78,16 +83,16 @@ The entity adapter also provides methods for operations against an entity. These
 one to many records at a time. Each method returns the newly modified state if changes were made and the same
 state if no changes were made.
 
-* `addOne`: Add one entity to the collection
-* `addMany`: Add multiple entities to the collection
-* `addAll`: Replace current collection with provided collection
-* `removeOne`: Remove one entity from the collection
-* `removeMany`: Remove multiple entities from the collection
-* `removeAll`: Clear entity collection
-* `updateOne`: Update one entity in the collection
-* `updateMany`: Update multiple entities in the collection
-* `upsertOne`: Add or Update one entity in the collection
-* `upsertMany`: Add or Update multiple entities in the collection
+- `addOne`: Add one entity to the collection
+- `addMany`: Add multiple entities to the collection
+- `addAll`: Replace current collection with provided collection
+- `removeOne`: Remove one entity from the collection
+- `removeMany`: Remove multiple entities from the collection
+- `removeAll`: Clear entity collection
+- `updateOne`: Update one entity in the collection
+- `updateMany`: Update multiple entities in the collection
+- `upsertOne`: Add or Update one entity in the collection
+- `upsertMany`: Add or Update multiple entities in the collection
 
 Usage:
 
@@ -262,7 +267,12 @@ export function reducer(state = initialState, action: UserActionsUnion): State {
 export const getSelectedUserId = (state: State) => state.selectedUserId;
 
 // get the selectors
-const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();
+const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors();
 
 // select the array of user ids
 export const selectUserIds = selectIds;

@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # @ngrx/store
 
 RxJS powered state management for Angular applications, inspired by Redux
@@ -5,11 +10,11 @@ RxJS powered state management for Angular applications, inspired by Redux
 @ngrx/store is a controlled state container designed to help write performant,
 consistent applications on top of Angular. Core tenets:
 
-* State is a single, immutable data structure.
-* Actions describe state changes.
-* Pure functions called reducers take the previous state and the next action to
+- State is a single, immutable data structure.
+- Actions describe state changes.
+- Pure functions called reducers take the previous state and the next action to
   compute the new state.
-* State accessed with the `Store`, an observable of state and an observer of
+- State accessed with the `Store`, an observable of state and an observer of
   actions.
 
 These core principles enable building components that can use the `OnPush`
@@ -120,21 +125,21 @@ export class MyCounterComponent {
 
 ## API Documentation
 
-* [Action Reducers](./actions.md#action-reducers)
-* [Injecting reducers](./api.md#injecting-reducers)
-* [Meta-Reducers/Enhancers](./api.md#meta-reducers)
-* [Injecting Meta-Reducers](./api.md#injecting-meta-reducers)
-* [Providing initial state](./api.md#initial-state)
-* [State composition through feature modules](./api.md#feature-module-state-composition)
-* [State selectors](./selectors.md)
-* [Testing](./testing.md)
-* [Typed Actions](./actions.md#typed-actions)
-* [Use Store service with AngularJS](./downgrade.md)
+- [Action Reducers](./actions.md#action-reducers)
+- [Injecting reducers](./api.md#injecting-reducers)
+- [Meta-Reducers/Enhancers](./api.md#meta-reducers)
+- [Injecting Meta-Reducers](./api.md#injecting-meta-reducers)
+- [Providing initial state](./api.md#initial-state)
+- [State composition through feature modules](./api.md#feature-module-state-composition)
+- [State selectors](./selectors.md)
+- [Testing](./testing.md)
+- [Typed Actions](./actions.md#typed-actions)
+- [Use Store service with AngularJS](./downgrade.md)
 
 ## Additional Material
 
-* [From Inactive to Reactive with ngrx (video)](https://www.youtube.com/watch?v=cyaAhXHhxgk)
-* [Reactive Angular 2 with ngrx (video)](https://youtu.be/mhA7zZ23Odw)
-* [Comprehensive Introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510)
-* [@ngrx/store in 10 minutes (course)](https://egghead.io/lessons/angular-2-ngrx-store-in-10-minutes)
-* [Build Redux Style Applications with Angular, RxJS, and @ngrx/store (course)](https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs)
+- [From Inactive to Reactive with ngrx (video)](https://www.youtube.com/watch?v=cyaAhXHhxgk)
+- [Reactive Angular 2 with ngrx (video)](https://youtu.be/mhA7zZ23Odw)
+- [Comprehensive Introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510)
+- [@ngrx/store in 10 minutes (course)](https://egghead.io/lessons/angular-2-ngrx-store-in-10-minutes)
+- [Build Redux Style Applications with Angular, RxJS, and @ngrx/store (course)](https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs)

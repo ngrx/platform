@@ -1,5 +1,11 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Feature
---------
+
+---
 
 ## Overview
 
@@ -30,14 +36,13 @@ Group the `actions`, `effects` and `reducers` files within their respective fold
 - `--group`
   - Alias: `-g`
   - Type: `boolean`
-  - Default: `false`  
+  - Default: `false`
 
 Provide the path to a file containing an `Angular Module` and the feature reducer will be added to its `imports` array using `StoreModule.forFeature`.
 
 - `--module`
   - Alias: `-m`
   - Type: `string`
-
 
 Provide the path to a `reducers` file containing a state interface and a object map of action reducers. The generated feature interface will be imported added to the first defined interface within the file. The feature reducer will be imported and added to the first defined object with an `ActionReducerMap` type.
 
@@ -50,7 +55,6 @@ Generate spec files associated with the feature files.
 - `--spec`
   - Type: `boolean`
   - Default: `true`
-
 
 #### Examples
 

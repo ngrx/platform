@@ -1,3 +1,8 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # Selectors
 
 Selectors are methods used for obtaining slices of store state. @ngrx/store provides a few helper functions for optimizing this selection.

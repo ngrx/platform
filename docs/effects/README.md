@@ -1,12 +1,17 @@
+---
+# The documentation below is for NgRx versions 6.x and older.
+# Visit https://ngrx.io for the latest documentation.
+---
+
 # @ngrx/effects
 
 RxJS powered side effect model for @ngrx/store
 
 @ngrx/effects provides an API to model event sources as actions. Effects:
 
-* Listen for actions dispatched from @ngrx/store.
-* Isolate side effects from components, allowing for more _pure_ components that select state and dispatch actions.
-* Provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html) of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events.
+- Listen for actions dispatched from @ngrx/store.
+- Isolate side effects from components, allowing for more _pure_ components that select state and dispatch actions.
+- Provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html) of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events.
 
 ### Installation
 
@@ -28,9 +33,9 @@ The `@Effect()` decorator provides metadata to register observable side-effects 
 
 ### Actions Observable
 
-* Represents an observable of all actions dispatched to the store.
-* Emits the latest action _after_ the action has passed through all reducers.
-* The `ofType` operator lets you filter for actions of a certain type in which you want to use to perform a side effect.
+- Represents an observable of all actions dispatched to the store.
+- Emits the latest action _after_ the action has passed through all reducers.
+- The `ofType` operator lets you filter for actions of a certain type in which you want to use to perform a side effect.
 
 ## Example
 
@@ -94,9 +99,9 @@ export class AdminModule {}
 
 ## API Documentation
 
-* [Controlling Effects](./api.md#controlling-effects)
-* [Filtering Actions](./api.md#oftype)
-* [Non-dispatching effects](./api.md#non-dispatching-effects)
-* [Initializing effect](./api.md#initializing-effect)
-* [Utilities](./api.md#utilities)
-* [Testing](./testing.md)
+- [Controlling Effects](./api.md#controlling-effects)
+- [Filtering Actions](./api.md#oftype)
+- [Non-dispatching effects](./api.md#non-dispatching-effects)
+- [Initializing effect](./api.md#initializing-effect)
+- [Utilities](./api.md#utilities)
+- [Testing](./testing.md)
