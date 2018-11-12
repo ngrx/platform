@@ -51,9 +51,9 @@ class StackblitzBuilder {
   }
 
   _buildCopyrightStrings() {
-    var copyright = 'Copyright 2017-2018 Google Inc. All Rights Reserved.\n'
+    var copyright = ''
       + 'Use of this source code is governed by an MIT-style license that\n'
-      + 'can be found in the LICENSE file at http://angular.io/license';
+      + 'can be found in the LICENSE file at https://github.com/ngrx/platform';
     var pad = '\n\n';
     this.copyrights.jsCss = `${pad}/*\n${copyright}\n*/`;
     this.copyrights.html = `${pad}<!-- \n${copyright}\n-->`;
@@ -200,7 +200,7 @@ class StackblitzBuilder {
       postData['tags[' + ix + ']'] = tag;
     });
 
-    postData.description = "Angular Example - " + config.description;
+    postData.description = "NgRx Example - " + config.description;
 
     return postData;
   }

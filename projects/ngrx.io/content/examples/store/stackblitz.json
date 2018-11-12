@@ -1,0 +1,4 @@
+{
+  "description": "Tutorial",
+  "files": ["!**/*.d.ts", "!**/*.js"]
+}

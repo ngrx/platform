@@ -4,7 +4,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular.io-example": {
+    "ngrx.io-example": {
       "root": "",
       "projectType": "application",
       "prefix": "app",
@@ -59,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular.io-example:build"
+            "browserTarget": "ngrx.io-example:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular.io-example:build:production"
+              "browserTarget": "ngrx.io-example:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular.io-example:build"
+            "browserTarget": "ngrx.io-example:build"
           }
         },
         "test": {
@@ -109,7 +109,7 @@
         }
       }
     },
-    "angular.io-example-e2e": {
+    "ngrx.io-example-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -117,7 +117,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular.io-example:serve"
+            "devServerTarget": "ngrx.io-example:serve"
           }
         },
         "lint": {
