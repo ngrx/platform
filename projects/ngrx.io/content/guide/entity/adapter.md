@@ -6,7 +6,7 @@ A method for returning a generic entity adapter for a single entity state collec
 returned adapter provides many adapter methods for performing operations
 against the collection type. The method takes an object with 2 properties for configuration.
 
-- `selectId`: A `method` for selecting the primary id for the collection.
+- `selectId`: A `method` for selecting the primary id for the collection. Optional when the entity has a primary key of `id`
 - `sortComparer`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to leave the collection unsorted, which is more performant during CRUD operations.
 
 Usage:
@@ -24,11 +24,17 @@ export interface State extends EntityState<User> {
   selectedUserId: number;
 }
 
+export function selectUserId(a: User): string {
+  //In this case this would be optional since primary key is id
+  return a.id;
+}
+
 export function sortByName(a: User, b: User): number {
   return a.name.localeCompare(b.name);
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
+  selectId: selectUserId,
   sortComparer: sortByName,
 });
 ```
