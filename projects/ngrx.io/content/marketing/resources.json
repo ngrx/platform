@@ -10,6 +10,12 @@
             "desc": "All articles in Angular in Depth tagged with NgRx",
             "url": "https://blog.angularindepth.com/tagged/ngrx",
             "rev": true
+          },
+          "ngrx-best-practices-for-enterprise-angular-applications": {
+            "title": "NgRx — Best Practices for Enterprise Angular Applications",
+            "desc": "Enterprise NgRx pattern for organizing store into modules and sub modules",
+            "url": "https://itnext.io/ngrx-best-practices-for-enterprise-angular-applications-6f00bcdf36d7",
+            "rev": true
           }
         }
       },
