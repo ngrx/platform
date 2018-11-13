@@ -95,7 +95,7 @@ jobs:
           key: *docs_cache_key
       - run: yarn setup 
       - run: npm rebuild node-sass
-      - run: yarn build-for next && yarn copy-404-page
+      - run: yarn build-for next --progress false && yarn copy-404-page
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/
       # Store artifacts from build
       - persist_to_workspace:
@@ -107,6 +107,32 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/docs/projects/ngrx.io/node_modules
+
+  docs-preview:
+    <<: *run_in_ngcontainer
+    working_directory: ~/docs/projects/ngrx.io
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
+      - checkout:
+          path: ~/docs
+      - restore_cache:
+          keys:
+            - *cache_key
+            - *docs_cache_key
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export CI_PREVIEW=true' >> $BASH_ENV
+            echo 'export SHORT_GIT_HASH=$(git rev-parse --short $CIRCLE_SHA1)' >> $BASH_ENV
+            source $BASH_ENV
+      - run: yarn setup 
+      - run: npm rebuild node-sass
+      - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PR_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PR_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
+      - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PR_NUMBER-$SHORT_GIT_HASH/
+      - run: yarn --cwd ../../ install && yarn --cwd ../../ run deploy:preview
+      
 
   deploy:
     <<: *run_in_ngcontainer
@@ -130,6 +156,7 @@ workflows:
       - bazel
       - test
       - docs
+      - docs-preview
       - deploy:
           requires:
             - docs
