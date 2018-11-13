@@ -34,6 +34,7 @@ export class DocumentService {
   private cache = new Map<string, Observable<DocumentContents>>();
 
   currentDocument: Observable<DocumentContents>;
+  baseHref: string;
 
   constructor(
     private logger: Logger,
@@ -41,6 +42,7 @@ export class DocumentService {
     location: LocationService) {
     // Whenever the URL changes we try to get the appropriate doc
     this.currentDocument = location.currentPath.pipe(switchMap(path => this.getDocument(path)));
+    this.baseHref = location.getBaseHref();
   }
 
   private getDocument(url: string) {
@@ -53,7 +55,7 @@ export class DocumentService {
   }
 
   private fetchDocument(id: string): Observable<DocumentContents> {
-    const requestPath = `${DOC_CONTENT_URL_PREFIX}${id}.json`;
+    const requestPath = `${this.baseHref}${DOC_CONTENT_URL_PREFIX}${id}.json`;
     const subject = new AsyncSubject<DocumentContents>();
 
     this.logger.log('fetching document from', requestPath);

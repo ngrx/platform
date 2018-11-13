@@ -5,8 +5,11 @@ const {readFileSync, writeFileSync} = require('fs');
 const {join, resolve} = require('path');
 
 // Constants
+const CI_PREVIEW = process.env.CI_PREVIEW;
+const PR_NUMBER = process.env.CIRCLE_PR_NUMBER || '';
+const SHORT_SHA = process.env.SHORT_GIT_HASH;
 const SRC_DIR = resolve(__dirname, '../src');
-const DIST_DIR = resolve(__dirname, '../dist/ngrx.io');
+const DIST_DIR = resolve(__dirname, '../dist/ngrx.io', CI_PREVIEW ? `pr${PR_NUMBER}-${SHORT_SHA}` : '');
 
 // Run
 _main(process.argv.slice(2));
