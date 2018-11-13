@@ -6,7 +6,7 @@ Reactive libraries for Angular
 
 ## Documentation
 
-Check out our website: ngrx.io.
+Check out our website: [ngrx.io](https://ngrx.io).
 
 ## Contributing
 
@@ -16,7 +16,7 @@ NgRx is a community-driven project. Read our [contributing guidelines](./CONTRIB
 
 [![Backers on Open Collective](https://opencollective.com/ngrx/tiers/backers/badge.svg)](#backers)
 
-Become a gold sponsor and get your logo on our README on GitHub and the front page of ngrx.io.
+Become a gold sponsor and get your logo on our README on GitHub and the front page of [ngrx.io](https://ngrx.io).
 
 ### Gold Sponsors
 
@@ -26,7 +26,7 @@ Become a gold sponsor and get your logo on our README on GitHub and the front pa
 
 ### Silver Sponsors
 
-Become a silver sponsor and get your logo on our README on GitHub and our website ngrx.io.
+Become a silver sponsor and get your logo on our README on GitHub and our website [ngrx.io](https://ngrx.io).
 
 <a href="https://opencollective.com/ngrx/tiers/silver-sponsors/0/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/silver-sponsors/0/avatar.svg"></a>
 <a href="https://opencollective.com/ngrx/tiers/silver-sponsors/1/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/silver-sponsors/1/avatar.svg"></a>
