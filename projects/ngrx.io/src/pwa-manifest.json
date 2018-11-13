@@ -1,6 +1,6 @@
 {
-  "short_name": "Angular",
-  "name": "Angular",
+  "short_name": "NgRx",
+  "name": "NgRx",
   "icons": [
     {
       "src": "assets/images/favicons/favicon-194x194.png",
@@ -14,7 +14,7 @@
     }
   ],
   "start_url": "/?utm_source=homescreen",
-  "background_color": "#1976d2",
-  "theme_color": "#1976d2",
+  "background_color": "#a829c3",
+  "theme_color": "#a829c3",
   "display": "standalone"
 }
