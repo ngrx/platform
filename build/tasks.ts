@@ -37,9 +37,10 @@ export async function publishToRepo(config: Config) {
   for (let pkg of util.getTopLevelPackages(config)) {
     const SOURCE_DIR = `./dist/bin/modules/${pkg}/npm_package`;
     const REPO_URL = `git@github.com:ngrx/${pkg}-builds.git`;
+    const REPO_DIR = `./tmp/${pkg}`;
 
     console.log(`Preparing and deploying @ngrx/${pkg} to ${REPO_URL}`);
-    await prepareAndPublish(pkg, SOURCE_DIR, REPO_URL);
+    await prepareAndPublish(SOURCE_DIR, REPO_URL, REPO_DIR);
   }
 }
 
@@ -49,19 +50,40 @@ export async function publishToRepo(config: Config) {
 export async function publishDocs() {
   const SOURCE_DIR = `./dist/ngrx.io`;
   const REPO_URL = 'git@github.com:ngrx/ngrx-io-builds.git';
+  const REPO_DIR = `./tmp/docs`;
 
   console.log(`Preparing and deploying docs to ${REPO_URL}`);
-  await prepareAndPublish('docs', SOURCE_DIR, REPO_URL);
+  await prepareAndPublish(SOURCE_DIR, REPO_URL, REPO_DIR);
+}
+
+/**
+ * Deploy docs preview build artifacts
+ */
+export async function publishDocsPreview() {
+  const SOURCE_DIR = './projects/ngrx.io/dist/ngrx.io';
+  const REPO_URL = 'git@github.com:ngrx/ngrx-io-previews.git';
+  const REPO_DIR = `./tmp/docs-preview`;
+  const PR_NUMBER = process.env.CIRCLE_PR_NUMBER || '';
+  const SHORT_SHA = process.env.SHORT_GIT_HASH;
+  const owner = process.env.CIRCLE_PROJECT_USERNAME;
+
+  if (PR_NUMBER && owner === 'ngrx') {
+    console.log(
+      `Preparing and deploying docs preview for pr${PR_NUMBER}-${SHORT_SHA} to ${REPO_URL}`
+    );
+    await prepareAndPublish(SOURCE_DIR, REPO_URL, REPO_DIR, false, 0);
+  } else {
+    console.log('No PR number found, skipping preview deployment');
+  }
 }
 
 export async function prepareAndPublish(
-  pkg: string,
   sourceDir: string,
-  repoUrl: string
+  repoUrl: string,
+  repoDir: string,
+  clean = true,
+  depth = 1
 ) {
-  const REPO_DIR = `./tmp/${pkg}`;
-  const SHA = await util.git([`rev-parse HEAD`]);
-  const SHORT_SHA = await util.git([`rev-parse --short HEAD`]);
   const COMMITTER_USER_NAME = await util.git([
     `--no-pager show -s --format='%cN' HEAD`,
   ]);
@@ -69,19 +91,23 @@ export async function prepareAndPublish(
     `--no-pager show -s --format='%cE' HEAD`,
   ]);
 
-  await util.cmd('rm -rf', [`${REPO_DIR}`]);
-  await util.cmd('mkdir ', [`-p ${REPO_DIR}`]);
-  await process.chdir(`${REPO_DIR}`);
+  await util.cmd('rm -rf', [`${repoDir}`]);
+  await util.cmd('mkdir ', [`-p ${repoDir}`]);
+  await process.chdir(`${repoDir}`);
   await util.git([`init`]);
   await util.git([`remote add origin ${repoUrl}`]);
-  await util.git(['fetch origin master --depth=1']);
+  await util.git([`fetch origin master${depth ? ` --depth=${depth}` : ''}`]);
   await util.git(['checkout origin/master']);
   await util.git(['checkout -b master']);
   await process.chdir('../../');
-  await util.cmd('rm -rf', [`${REPO_DIR}/*`]);
-  await util.git([`log --format="%h %s" -n 1 > ${REPO_DIR}/commit_message`]);
-  await util.cmd('cp', [`-R ${sourceDir}/* ${REPO_DIR}/`]);
-  await process.chdir(`${REPO_DIR}`);
+
+  if (clean) {
+    await util.cmd('rm -rf', [`${repoDir}/*`]);
+  }
+
+  await util.git([`log --format="%h %s" -n 1 > ${repoDir}/commit_message`]);
+  await util.cmd('cp', [`-R ${sourceDir}/* ${repoDir}/`]);
+  await process.chdir(`${repoDir}`);
   await util.git([`config user.name "${COMMITTER_USER_NAME}"`]);
   await util.git([`config user.email "${COMMITTER_USER_EMAIL}"`]);
   await util.git(['add --all']);
@@ -90,4 +116,30 @@ export async function prepareAndPublish(
 
   await util.git(['push origin master --force']);
   await process.chdir('../../');
+}
+
+export async function postGithubComment() {
+  const PR_NUMBER = process.env.CIRCLE_PR_NUMBER || '';
+  const owner = process.env.CIRCLE_PROJECT_USERNAME;
+
+  if (PR_NUMBER && owner === 'ngrx') {
+    const SHORT_SHA = process.env.SHORT_GIT_HASH;
+    const repo = process.env.CIRCLE_PROJECT_REPONAME;
+    const token = process.env.GITHUB_API_KEY;
+    const octokit = require('@octokit/rest')();
+
+    octokit.authenticate({ type: 'token', token });
+
+    const body = `Preview docs changes for ${SHORT_SHA} at https://previews.ngrx.io/pr${PR_NUMBER}-${SHORT_SHA}/`;
+
+    // wait a few seconds for github to settle
+    await util.sleep(5000);
+
+    await octokit.issues.createComment({
+      owner,
+      repo,
+      number: PR_NUMBER,
+      body,
+    });
+  }
 }

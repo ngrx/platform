@@ -12,6 +12,7 @@ export class LocationService {
   private readonly urlParser = document.createElement('a');
   private urlSubject = new ReplaySubject<string>(1);
   private swUpdateActivated = false;
+  private baseHref: string;
 
   currentUrl = this.urlSubject.pipe(map(url => this.stripSlashes(url)));
 
@@ -24,7 +25,7 @@ export class LocationService {
     private gaService: GaService,
     private location: Location,
     private platformLocation: PlatformLocation,
-    swUpdates: SwUpdatesService
+    swUpdates: SwUpdatesService,
   ) {
     this.urlSubject.next(location.path(true));
 
@@ -33,6 +34,7 @@ export class LocationService {
     });
 
     swUpdates.updateActivated.subscribe(() => (this.swUpdateActivated = true));
+    this.baseHref = platformLocation.getBaseHrefFromDOM();
   }
 
   // TODO: ignore if url-without-hash-or-search matches current location?
@@ -40,7 +42,7 @@ export class LocationService {
     if (!url) {
       return;
     }
-    url = this.stripSlashes(url);
+    url = this.stripSlashes(this.location.normalize(url));
     if (/^http/.test(url) || this.swUpdateActivated) {
       // Has http protocol so leave the site
       // (or do a "full page navigation" if a ServiceWorker update has been activated)
@@ -158,5 +160,9 @@ export class LocationService {
     // approved for navigation
     this.go(relativeUrl);
     return false;
+  }
+
+  getBaseHref() {
+    return this.baseHref;
   }
 }

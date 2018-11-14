@@ -6,6 +6,7 @@
     "precommit": "lint-staged",
     "build": "bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
+    "deploy:preview": "ts-node ./build/deploy-preview.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc yarn run test:unit",
     "clean": "git clean -xdf",
@@ -90,6 +91,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.10.0",
+    "@octokit/rest": "^15.17.0",
     "@types/fs-extra": "^2.1.0",
     "@types/glob": "^5.0.33",
     "@types/globby": "^8.0.0",
