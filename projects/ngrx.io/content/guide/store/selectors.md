@@ -338,7 +338,7 @@ export const selectLastStateTransitions = (count: number) => {
     scan((acc, curr) => {
       return [ curr, acc[0], acc[1] ].filter(val => val !== undefined);
     } [] as {foo: number; bar: string}[]) // XX: Explicit type hint for the array.
-                                          // Equivalent to what is emitted by the selelctor
+                                          // Equivalent to what is emitted by the selector
   );
 }
 ```
