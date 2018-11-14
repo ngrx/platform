@@ -130,7 +130,10 @@ export async function postGithubComment() {
 
     octokit.authenticate({ type: 'token', token });
 
-    const body = `Preview docs changes for ${SHORT_SHA} at https://previews.ngrx.io/pr${PR_NUMBER}-${SHORT_SHA}/index`;
+    const body = `Preview docs changes for ${SHORT_SHA} at https://previews.ngrx.io/pr${PR_NUMBER}-${SHORT_SHA}/`;
+
+    // wait a few seconds for github to settle
+    await util.sleep(5000);
 
     await octokit.issues.createComment({
       owner,

@@ -149,3 +149,9 @@ export function getTopLevelPackages(config: Config) {
 export function baseDir(...dirs: string[]): string {
   return `"${path.resolve(__dirname, '../', ...dirs)}"`;
 }
+
+export async function sleep(ms: number) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
