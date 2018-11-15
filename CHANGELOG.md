@@ -82,7 +82,7 @@ this.actions.ofType('INCREMENT')
 AFTER:
 
 ```
-import { ofType } from '@ngrx/store';
+import { ofType } from '@ngrx/effects';
 ...
 this.action.pipe(ofType('INCREMENT'))
 ```
