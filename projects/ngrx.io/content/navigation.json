@@ -52,6 +52,11 @@
 
   "SideNav": [
     {
+      "url": "docs",
+      "title": "Docs",
+      "hidden": true
+    },
+    {
       "title": "Store",
       "children": [
         {
