@@ -80,6 +80,13 @@
             "url":
               "https://github.com/ngohungphuc/Research/tree/master/Angular/Redux/ReduxDemo",
             "rev": true
+          },
+          "pizza-sync": {
+            "title": "Pizza Sync",
+            "desc":
+              "Use a Pizza Provider of your choice and add/edit orders in real time with friends/colleagues",
+            "url": "https://github.com/maxime1992/pizza-sync",
+            "rev": true
           }
         }
       },
