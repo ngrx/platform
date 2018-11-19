@@ -4,7 +4,7 @@
   "description": "monorepo for ngrx development",
   "scripts": {
     "precommit": "lint-staged",
-    "build": "bazel build ...",
+    "build": "yarn bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "deploy:preview": "ts-node ./build/deploy-preview.ts",
     "test:unit": "node ./tests.js",
@@ -22,9 +22,9 @@
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'yarn run test:unit'",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "preskylint": "bazel build --noshow_progress @io_bazel//src/tools/skylark/java/com/google/devtools/skylark/skylint:Skylint",
+    "preskylint": "yarn bazel build --noshow_progress @io_bazel//src/tools/skylark/java/com/google/devtools/skylark/skylint:Skylint",
     "skylint": "find . -type f -name \"*.bzl\" ! -path \"*/node_modules/*\" ! -path \"./dist/*\" | xargs $(bazel info bazel-bin)/external/io_bazel/src/tools/skylark/java/com/google/devtools/skylark/skylint/Skylint --disable-checks=deprecated-api",
-    "prebuildifier": "bazel build --noshow_progress @com_github_bazelbuild_buildtools//buildifier",
+    "prebuildifier": "yarn bazel build --noshow_progress @com_github_bazelbuild_buildtools//buildifier",
     "buildifier": "find . -type f \\( -name BUILD -or -name BUILD.bazel \\) ! -path \"*/node_modules/*\" | xargs $(bazel info bazel-bin)/external/com_github_bazelbuild_buildtools/buildifier/*/buildifier",
     "copy:schematics": "ts-node ./build/copy-schematics-core.ts",
     "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html"
@@ -91,6 +91,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.10.0",
+    "@bazel/bazel": "^0.19.1",
     "@octokit/rest": "^15.17.0",
     "@types/fs-extra": "^2.1.0",
     "@types/glob": "^5.0.33",

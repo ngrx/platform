@@ -10,10 +10,10 @@ version: 2
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.7.0
-var_2: &run_in_ngcontainer
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.8.0
+var_2: &run_in_node
   docker:
-    - image: angular/ngcontainer:0.7.0
+    - image: circleci/node:10.12
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
@@ -26,21 +26,25 @@ jobs:
   # code in the repo.
   # Also analyzing everything makes the lint job slow.
   lint:
-    <<: *run_in_ngcontainer
+    <<: *run_in_node
     steps:
       - checkout
       - *set_bazel_options
+
+      - restore_cache:
+          key: *cache_key
 
       # Enforce that BUILD files are formatted.
       # Note that this uses the version of buildifier from the docker image -
       # take care that you use the same version when you run
       # buildifier locally on your change.
+      - run: yarn
       - run:
-          'buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
+          'yarn buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
           (echo "BUILD files not formatted. Please run ''yarn buildifier''" ; exit 1)'
 
   bazel:
-    <<: *run_in_ngcontainer
+    <<: *run_in_node
     steps:
       - checkout
       - *set_bazel_options
@@ -50,17 +54,17 @@ jobs:
 
       # Helpful for debugging, so you can check you have the same bazel version when you need
       # to reproduce a failure.
-      - run: bazel info release
+      - run: yarn      
+      - run: yarn bazel info release
 
       # Install the dependencies from NPM, using the node and yarn binaries managed by Bazel
-      - run: yarn
-      - run: bazel run @nodejs//:yarn
+      - run: yarn bazel run @nodejs//:yarn
 
       # Build and Test
       # Use bazel query so that we explicitly ask for all buildable targets to
       # be built even though we run `bazel test`
       # See https://github.com/bazelbuild/bazel/issues/4257
-      - run: bazel query --output=label //... | xargs bazel test
+      - run: yarn bazel test //...
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -86,7 +90,7 @@ jobs:
             - node_modules
 
   docs:
-    <<: *run_in_ngcontainer
+    <<: *run_in_node
     working_directory: ~/docs/projects/ngrx.io
     steps:
       - checkout:
@@ -109,7 +113,7 @@ jobs:
             - ~/docs/projects/ngrx.io/node_modules
 
   docs-preview:
-    <<: *run_in_ngcontainer
+    <<: *run_in_node
     working_directory: ~/docs/projects/ngrx.io
     steps:
       - add_ssh_keys:
@@ -135,7 +139,7 @@ jobs:
       
 
   deploy:
-    <<: *run_in_ngcontainer
+    <<: *run_in_node
     steps:
       - add_ssh_keys:
           fingerprints:
