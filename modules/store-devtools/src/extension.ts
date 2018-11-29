@@ -133,7 +133,10 @@ export class DevtoolsExtension {
             state.nextActionId
           )
         : action;
-      this.extensionConnection.send(sanitizedAction, sanitizedState);
+
+      this.sendToReduxDevtools(() =>
+        this.extensionConnection.send(sanitizedAction, sanitizedState)
+      );
     } else {
       // Requires full state update
       const sanitizedLiftedState = {
@@ -146,10 +149,13 @@ export class DevtoolsExtension {
           ? sanitizeStates(this.config.stateSanitizer, state.computedStates)
           : state.computedStates,
       };
-      this.devtoolsExtension.send(
-        null,
-        sanitizedLiftedState,
-        this.getExtensionConfig(this.config)
+
+      this.sendToReduxDevtools(() =>
+        this.devtoolsExtension.send(
+          null,
+          sanitizedLiftedState,
+          this.getExtensionConfig(this.config)
+        )
       );
     }
   }
@@ -249,5 +255,16 @@ export class DevtoolsExtension {
       extensionOptions.maxAge = config.maxAge;
     }
     return extensionOptions;
+  }
+
+  private sendToReduxDevtools(send: Function) {
+    try {
+      send();
+    } catch (err) {
+      console.warn(
+        '@ngrx/store-devtools: something went wrong inside the redux devtools',
+        err
+      );
+    }
   }
 }
