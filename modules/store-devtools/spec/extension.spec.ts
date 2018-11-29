@@ -565,4 +565,43 @@ describe('DevtoolsExtension', () => {
       );
     });
   });
+
+  describe('error handling', () => {
+    let consoleSpy: jasmine.Spy;
+
+    beforeEach(() => {
+      devtoolsExtension = new DevtoolsExtension(
+        reduxDevtoolsExtension,
+        createConfig({}),
+        <any>null
+      );
+      // Subscription needed or else extension connection will not be established.
+      devtoolsExtension.actions$.subscribe();
+      consoleSpy = spyOn(console, 'warn');
+    });
+
+    it('for normal action', () => {
+      (extensionConnection.send as jasmine.Spy).and.callFake(() => {
+        throw new Error('uh-oh something went wrong');
+      });
+
+      const action = new PerformAction({ type: 'FOO' }, 1234567);
+      const state = createState();
+
+      devtoolsExtension.notify(action, state);
+      expect(consoleSpy).toHaveBeenCalled();
+    });
+
+    it('for action that requires full state update', () => {
+      (reduxDevtoolsExtension.send as jasmine.Spy).and.callFake(() => {
+        throw new Error('uh-oh something went wrong');
+      });
+
+      const action = {} as LiftedAction;
+      const state = createState();
+
+      devtoolsExtension.notify(action, state);
+      expect(consoleSpy).toHaveBeenCalled();
+    });
+  });
 });
