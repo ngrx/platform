@@ -105,7 +105,6 @@ export function reducer(
 
     case Scoreboard.ActionTypes.Reset: {
       return action.payload; // typed to { home: number, away: number }
-      };
     }
 
     default: {
