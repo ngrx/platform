@@ -278,7 +278,7 @@ import { map, filter } from 'rxjs/operators';
 
 store
   .pipe(
-    select(selectValues(state)),
+    select(selectValues),
     filter(val => val !== undefined)
   )
   .subscribe(/* .. */);
