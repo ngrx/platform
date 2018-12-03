@@ -11,9 +11,14 @@ import {
 } from 'rxjs/operators';
 
 import { verifyOutput } from './effect_notification';
-import { resolveEffectSource } from './effects_resolver';
+import { mergeEffects } from './effects_resolver';
 import { getSourceForInstance } from './effects_metadata';
-import { onIdentifyEffectsKey } from './lifecycle_hooks';
+import {
+  onIdentifyEffectsKey,
+  onRunEffectsKey,
+  onRunEffectsFn,
+  OnRunEffects,
+} from './lifecycle_hooks';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
@@ -60,4 +65,24 @@ function effectsInstance(sourceInstance: any) {
   }
 
   return '';
+}
+
+function resolveEffectSource(sourceInstance: any) {
+  const mergedEffects$ = mergeEffects(sourceInstance);
+
+  if (isOnRunEffects(sourceInstance)) {
+    return sourceInstance.ngrxOnRunEffects(mergedEffects$);
+  }
+
+  return mergedEffects$;
+}
+
+function isOnRunEffects(sourceInstance: {
+  [onRunEffectsKey]?: onRunEffectsFn;
+}): sourceInstance is OnRunEffects {
+  const source = getSourceForInstance(sourceInstance);
+
+  return (
+    onRunEffectsKey in source && typeof source[onRunEffectsKey] === 'function'
+  );
 }
