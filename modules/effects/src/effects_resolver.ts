@@ -4,7 +4,6 @@ import { ignoreElements, map, materialize } from 'rxjs/operators';
 
 import { EffectNotification } from './effect_notification';
 import { getSourceForInstance, getSourceMetadata } from './effects_metadata';
-import { isOnRunEffects } from './on_run_effects';
 
 export function mergeEffects(
   sourceInstance: any
@@ -39,14 +38,4 @@ export function mergeEffects(
   );
 
   return merge(...observables);
-}
-
-export function resolveEffectSource(sourceInstance: any) {
-  const mergedEffects$ = mergeEffects(sourceInstance);
-
-  if (isOnRunEffects(sourceInstance)) {
-    return sourceInstance.ngrxOnRunEffects(mergedEffects$);
-  }
-
-  return mergedEffects$;
 }
