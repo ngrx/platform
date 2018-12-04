@@ -1,10 +1,18 @@
+<a name="7.0.0-beta.1"></a>
+
+# [7.0.0-beta.1](https://github.com/ngrx/platform/compare/7.0.0-beta.0...7.0.0-beta.1) (2018-12-04)
+
+### Features
+
+- **effects:** add OnIdentifyEffects interface to register multiple effect instances ([#1448](https://github.com/ngrx/platform/issues/1448)) ([b553ce7](https://github.com/ngrx/platform/commit/b553ce7))
+- **store-devtools:** catch and log redux devtools errors ([#1450](https://github.com/ngrx/platform/issues/1450)) ([4ed16cd](https://github.com/ngrx/platform/commit/4ed16cd))
+
 <a name="7.0.0-beta.0"></a>
 
-# [7.0.0-beta.0](https://github.com/ngrx/platform/compare/6.1.2...7.0.0-beta.0) (2018-11-03)
+# [7.0.0-beta.0](https://github.com/ngrx/platform/compare/6.1.0...7.0.0-beta.0) (2018-11-03)
 
 ### Bug Fixes
 
-- **build:** add script to Bazel config for version placeholder replacement ([115eede](https://github.com/ngrx/platform/commit/115eede))
 - **docs-infra:** ARIA roles used must conform to valid values ([8a4b2de](https://github.com/ngrx/platform/commit/8a4b2de))
 - **docs-infra:** elements must have sufficient color contrast ([c5dfaef](https://github.com/ngrx/platform/commit/c5dfaef))
 - **docs-infra:** html element must have a lang attribute ([32256de](https://github.com/ngrx/platform/commit/32256de))
@@ -82,7 +90,7 @@ this.actions.ofType('INCREMENT')
 AFTER:
 
 ```
-import { ofType } from '@ngrx/effects';
+import { ofType } from '@ngrx/store';
 ...
 this.action.pipe(ofType('INCREMENT'))
 ```
@@ -114,9 +122,7 @@ useFactory: \_createRouterConfig // you function
 }
 
 - **routerstore:** The default state key is changed from routerReducer to router
-- **store:** Multiple features are dispatched in a single update action
-
-BEFORE:
+- **store:** BEFORE:
 
 ```ts
 {type: '@ngrx/store/update-reducers', feature: 'feature1'}
@@ -129,23 +135,6 @@ AFTER:
 {type: '@ngrx/store/update-reducers', features: ['feature1',
 'feature2']}
 ```
-
-<a name="6.1.2"></a>
-
-## [6.1.2](https://github.com/ngrx/platform/compare/6.1.1...6.1.2) (2018-10-31)
-
-### Bug Fixes
-
-- **router-store:** don't navigate on NagivationStart ([#1392](https://github.com/ngrx/platform/issues/1392)) ([19a7d06](https://github.com/ngrx/platform/commit/19a7d06))
-
-<a name="6.1.1"></a>
-
-## [6.1.1](https://github.com/ngrx/platform/compare/6.1.0...6.1.1) (2018-10-30)
-
-### Bug Fixes
-
-- **router-store:** don't navigate on NavigationStart router event ([#1379](https://github.com/ngrx/platform/issues/1379)) ([6ea4148](https://github.com/ngrx/platform/commit/6ea4148))
-- **store:** add typing to allow props with store.select ([#1387](https://github.com/ngrx/platform/issues/1387)) ([#1388](https://github.com/ngrx/platform/issues/1388)) ([041c9c0](https://github.com/ngrx/platform/commit/041c9c0))
 
 <a name="6.1.0"></a>
 
