@@ -2,13 +2,13 @@
 
 ```ts
 interface StoreRouterConfig {
-  stateKey?: string;
+  stateKey?: string | Selector<any, RouterReducerState<T>>;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
 }
 ```
 
-- `stateKey`: The name of reducer key, defaults to `router`
+- `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
 - `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
 - `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
 
@@ -24,6 +24,7 @@ Your custom serializer should implement the abstract class `RouterStateSerialize
 You then provide the serializer through the config.
 
 **In a custom serializer ts file**
+
 ```ts
 import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
@@ -56,6 +57,7 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
 ```
 
 **In your root reducer**
+
 ```ts
 export const reducers: ActionReducerMap<State> = {
   router: routerReducer
@@ -63,6 +65,7 @@ export const reducers: ActionReducerMap<State> = {
 ```
 
 **In your AppModule**
+
 ```ts
 @NgModule({
   imports: [
