@@ -17,7 +17,7 @@ import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/
 export class AuthEffects {
   @Effect()
   login$ = this.actions$.pipe(
-    ofType<LoginPageActions.Login>(LoginPageActions.LoginPageActionTypes.Login),
+    ofType(LoginPageActions.LoginPageActionTypes.Login),
     map(action => action.payload.credentials),
     exhaustMap((auth: Credentials) =>
       this.authService.login(auth).pipe(
@@ -65,7 +65,7 @@ export class AuthEffects {
   );
 
   constructor(
-    private actions$: Actions,
+    private actions$: Actions<LoginPageActions.LoginPageActionsUnion>,
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog

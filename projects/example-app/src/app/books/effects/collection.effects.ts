@@ -47,9 +47,7 @@ export class CollectionEffects {
 
   @Effect()
   addBookToCollection$: Observable<Action> = this.actions$.pipe(
-    ofType<SelectedBookPageActions.AddBook>(
-      SelectedBookPageActions.SelectedBookPageActionTypes.AddBook
-    ),
+    ofType(SelectedBookPageActions.SelectedBookPageActionTypes.AddBook),
     map(action => action.payload),
     mergeMap(book =>
       this.db.insert('books', [book]).pipe(
@@ -61,9 +59,7 @@ export class CollectionEffects {
 
   @Effect()
   removeBookFromCollection$: Observable<Action> = this.actions$.pipe(
-    ofType<SelectedBookPageActions.RemoveBook>(
-      SelectedBookPageActions.SelectedBookPageActionTypes.RemoveBook
-    ),
+    ofType(SelectedBookPageActions.SelectedBookPageActionTypes.RemoveBook),
     map(action => action.payload),
     mergeMap(book =>
       this.db.executeWrite('books', 'delete', [book.id]).pipe(
@@ -73,5 +69,10 @@ export class CollectionEffects {
     )
   );
 
-  constructor(private actions$: Actions, private db: Database) {}
+  constructor(
+    private actions$: Actions<
+      SelectedBookPageActions.SelectedBookPageActionsUnion
+    >,
+    private db: Database
+  ) {}
 }
