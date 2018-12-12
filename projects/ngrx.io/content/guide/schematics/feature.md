@@ -20,6 +20,12 @@ ng generate f FeatureName [options]
 
 ## Options
 
+Provide the project name where the feature files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Nest the effects file within a folder based on the feature `name`.
 
 - `--flat`

@@ -3,13 +3,13 @@ import {
   SchematicTestRunner,
 } from '@angular-devkit/schematics/testing';
 
-const defaultWorkspaceOptions = {
+export const defaultWorkspaceOptions = {
   name: 'workspace',
   newProjectRoot: 'projects',
   version: '6.0.0',
 };
 
-const defaultAppOptions = {
+export const defaultAppOptions = {
   name: 'bar',
   inlineStyle: false,
   inlineTemplate: false,

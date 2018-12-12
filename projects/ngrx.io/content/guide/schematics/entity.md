@@ -20,6 +20,12 @@ ng generate en EntityName [options]
 
 ## Options
 
+Provide the project name where the entity files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Nest the effects file within a folder based on the entity `name`.
 
 - `--flat`

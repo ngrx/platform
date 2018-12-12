@@ -4,7 +4,6 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as ContainerOptions } from './schema';
-import {} from '../../schematics-core';
 import {
   getTestProjectPath,
   createWorkspace,
@@ -19,7 +18,6 @@ describe('Container Schematic', () => {
   const defaultOptions: ContainerOptions = {
     name: 'foo',
     project: 'bar',
-    // path: 'src/app',
     inlineStyle: false,
     inlineTemplate: false,
     changeDetection: 'Default',

@@ -20,6 +20,12 @@ ng generate st State [options]
 
 ## Options
 
+Provide the project name where the state files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Provide the path to a file containing an `Angular Module` and the feature state will be added to its `imports` array using `StoreModule.forFeature` or `StoreModule.forRoot`.
 
 - `--module`

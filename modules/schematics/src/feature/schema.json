@@ -7,8 +7,14 @@
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the component.",
+      "description": "The path to create the feature.",
       "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "visible": false,
+      "aliases": ["p"]
     },
     "name": {
       "description": "The name of the feature.",

@@ -7,6 +7,8 @@ import { Schema as ActionOptions } from './schema';
 import {
   getTestProjectPath,
   createWorkspace,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
 } from '../../../schematics-core/testing';
 
 describe('Action Schematic', () => {
@@ -16,7 +18,6 @@ describe('Action Schematic', () => {
   );
   const defaultOptions: ActionOptions = {
     name: 'foo',
-    // path: 'app',
     project: 'bar',
     spec: false,
     group: false,
@@ -29,6 +30,24 @@ describe('Action Schematic', () => {
 
   beforeEach(() => {
     appTree = createWorkspace(schematicRunner, appTree);
+  });
+
+  it('should create an action to specified project if provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: 'baz',
+    });
+
+    const tree = schematicRunner.runSchematic('action', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 
   it('should create one file', () => {
