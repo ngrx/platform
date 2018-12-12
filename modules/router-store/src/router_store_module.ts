@@ -29,12 +29,17 @@ import {
   DefaultRouterStateSerializer,
   RouterStateSerializer,
   SerializedRouterStateSnapshot,
+  BaseRouterStoreState,
 } from './serializer';
 
-export type StateKeyOrSelector = string | Selector<any, RouterReducerState>;
+export type StateKeyOrSelector<
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = string | Selector<any, RouterReducerState<T>>;
 
-export interface StoreRouterConfig {
-  stateKey?: StateKeyOrSelector;
+export interface StoreRouterConfig<
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> {
+  stateKey?: StateKeyOrSelector<T>;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   /**
    * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
@@ -136,8 +141,10 @@ enum RouterTrigger {
   ],
 })
 export class StoreRouterConnectingModule {
-  static forRoot(
-    config: StoreRouterConfig = {}
+  static forRoot<
+    T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  >(
+    config: StoreRouterConfig<T> = {}
   ): ModuleWithProviders<StoreRouterConnectingModule> {
     return {
       ngModule: StoreRouterConnectingModule,
