@@ -12,7 +12,10 @@ import {
 } from 'rxjs/operators';
 
 import { GoogleBooksService } from '@example-app/core/services/google-books.service';
-import { BooksApiActions, FindBookPageActions } from '@example-app/books/actions';
+import {
+  BooksApiActions,
+  FindBookPageActions,
+} from '@example-app/books/actions';
 import { Book } from '@example-app/books/models/book';
 
 /**
@@ -33,9 +36,7 @@ export class BookEffects {
     Action
   > =>
     this.actions$.pipe(
-      ofType<FindBookPageActions.SearchBooks>(
-        FindBookPageActions.FindBookPageActionTypes.SearchBooks
-      ),
+      ofType(FindBookPageActions.FindBookPageActionTypes.SearchBooks),
       debounceTime(debounce, scheduler),
       map(action => action.payload),
       switchMap(query => {
@@ -57,7 +58,7 @@ export class BookEffects {
     );
 
   constructor(
-    private actions$: Actions,
+    private actions$: Actions<FindBookPageActions.FindBookPageActionsUnion>,
     private googleBooks: GoogleBooksService
   ) {}
 }
