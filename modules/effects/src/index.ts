@@ -9,4 +9,8 @@ export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';
 export { EffectNotification } from './effect_notification';
 export { ROOT_EFFECTS_INIT } from './effects_root_module';
-export { OnIdentifyEffects, OnRunEffects } from './lifecycle_hooks';
+export {
+  OnIdentifyEffects,
+  OnRunEffects,
+  OnInitEffects,
+} from './lifecycle_hooks';
