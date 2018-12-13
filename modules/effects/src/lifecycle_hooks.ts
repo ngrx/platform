@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { EffectNotification } from '.';
+import { Action } from '@ngrx/store';
 
 /**
  * @description
@@ -19,13 +20,11 @@ import { EffectNotification } from '.';
  * class EffectWithIdentifier implements OnIdentifyEffects {
  * private effectIdentifier: string;
  *
- * ngrxOnIdentifyEffects  () {
+ * ngrxOnIdentifyEffects() {
  *   return this.effectIdentifier;
  * }
  *
- * constructor(identifier: string) {
- *  this.effectIdentifier = identifier;
- * }
+ * constructor(private effectIdentifier: string) {}
  * ```
  */
 export interface OnIdentifyEffects {
@@ -33,7 +32,7 @@ export interface OnIdentifyEffects {
    * @description
    * String identifier to differentiate effect instances.
    */
-  ngrxOnIdentifyEffects: () => string;
+  ngrxOnIdentifyEffects(): string;
 }
 
 export const onIdentifyEffectsKey: keyof OnIdentifyEffects =
@@ -79,3 +78,34 @@ export interface OnRunEffects {
 }
 
 export const onRunEffectsKey: keyof OnRunEffects = 'ngrxOnRunEffects';
+
+/**
+ * @description
+ * Interface to dispatch an action after effect registration.
+ *
+ * Implement this interface to dispatch a custom action after
+ * the effect has been added. You can listen to this action
+ * in the rest of the application to execute something after
+ * the effect is registered.
+ *
+ * @usageNotes
+ *
+ * ### Set an identifier for an Effects class
+ *
+ * ```ts
+ * class EffectWithInitAction implements OnInitEffects {
+ *
+ * ngrxOnInitEffects() {
+ *   return { type: '[EffectWithInitAction] Init' };
+ * }
+ * ```
+ */
+export interface OnInitEffects {
+  /**
+   * @description
+   * Action to be dispatched after the effect is registered.
+   */
+  ngrxOnInitEffects(): Action;
+}
+
+export const onInitEffects: keyof OnInitEffects = 'ngrxOnInitEffects';

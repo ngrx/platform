@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Notification, Observable, Subject } from 'rxjs';
 import {
   dematerialize,
@@ -18,16 +18,24 @@ import {
   onRunEffectsKey,
   onRunEffectsFn,
   OnRunEffects,
+  onInitEffects,
 } from './lifecycle_hooks';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
-  constructor(private errorHandler: ErrorHandler) {
+  constructor(private errorHandler: ErrorHandler, private store: Store<any>) {
     super();
   }
 
   addEffects(effectSourceInstance: any) {
     this.next(effectSourceInstance);
+
+    if (
+      onInitEffects in effectSourceInstance &&
+      typeof effectSourceInstance[onInitEffects] === 'function'
+    ) {
+      this.store.dispatch(effectSourceInstance[onInitEffects]());
+    }
   }
 
   /**

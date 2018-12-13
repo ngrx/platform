@@ -4,7 +4,8 @@ import { cold, getTestScheduler } from 'jasmine-marbles';
 import { concat, NEVER, Observable, of, throwError, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Effect, EffectSources, OnIdentifyEffects } from '../';
+import { Effect, EffectSources, OnIdentifyEffects, OnInitEffects } from '../';
+import { Store } from '@ngrx/store';
 
 describe('EffectSources', () => {
   let mockErrorReporter: ErrorHandler;
@@ -12,7 +13,15 @@ describe('EffectSources', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [EffectSources],
+      providers: [
+        EffectSources,
+        {
+          provide: Store,
+          useValue: {
+            dispatch: jasmine.createSpy('dispatch'),
+          },
+        },
+      ],
     });
 
     mockErrorReporter = TestBed.get(ErrorHandler);
@@ -28,6 +37,21 @@ describe('EffectSources', () => {
     effectSources.addEffects(effectSource);
 
     expect(effectSources.next).toHaveBeenCalledWith(effectSource);
+  });
+
+  it('should dispatch an action on ngrxOnInitEffects after being registered', () => {
+    class EffectWithInitAction implements OnInitEffects {
+      ngrxOnInitEffects() {
+        return { type: '[EffectWithInitAction] Init' };
+      }
+    }
+
+    effectSources.addEffects(new EffectWithInitAction());
+
+    const store = TestBed.get(Store);
+    expect(store.dispatch).toHaveBeenCalledWith({
+      type: '[EffectWithInitAction] Init',
+    });
   });
 
   describe('toActions() Operator', () => {
