@@ -89,3 +89,8 @@ import { AdminEffects } from './effects/admin.effects';
 })
 export class AdminModule {}
 ```
+<div class="alert is-important">
+
+**Note**: Running an effects class multiple times, either by `forRoot()` or `forFeature()`, (for example via different lazy loaded modules) will not cause Effects to run multiple times. There is no functional difference between effects loaded by `forRoot()` and `forFeature()`; the important difference between the functions is that `forRoot()` sets up the providers required for effects.
+
+</div>
