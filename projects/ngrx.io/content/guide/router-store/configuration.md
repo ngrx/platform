@@ -1,12 +1,12 @@
 # Configuration Options
 
-```ts
+<code-example header="@ngrx/router-store">
 interface StoreRouterConfig {
   stateKey?: string | Selector<any, RouterReducerState<T>>;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
 }
-```
+</code-example>
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
 - `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
@@ -25,7 +25,7 @@ You then provide the serializer through the config.
 
 **In a custom serializer ts file**
 
-```ts
+<code-example header="src/app/utils/custom-route-serializer.ts">
 import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
@@ -54,19 +54,19 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
     return { url, params, queryParams };
   }
 }
-```
+</code-example>
 
 **In your root reducer**
 
-```ts
+<code-example header="src/app/reducers/index.ts">
 export const reducers: ActionReducerMap<State> = {
   router: routerReducer
 };
-```
+</code-example>
 
 **In your AppModule**
 
-```ts
+<code-example header="src/app/app.module.ts">
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
@@ -79,14 +79,14 @@ export const reducers: ActionReducerMap<State> = {
   ]
 })
 export class AppModule {}
-```
+</code-example>
 
 ## Navigation action timing
 
 `ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:
 
-```ts
+<code-example header="src/app/app.module.ts">
 StoreRouterConnectingModule.forRoot({
   navigationActionTiming: NavigationActionTiming.PostActivation,
 });
-```
+</code-example>
