@@ -131,6 +131,10 @@
         {
           "title": "Testing",
           "url": "guide/effects/testing"
+        },
+        {
+          "title": "Lifecycle",
+          "url": "guide/effects/lifecycle"
         }
       ]
     },
