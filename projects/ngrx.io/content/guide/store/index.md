@@ -12,7 +12,7 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 ## Installation
 
 ```sh
-$ npm install --save @ngrx/store
+$ npm install @ngrx/store --save
 ```
 
 ```sh
