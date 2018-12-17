@@ -13,6 +13,10 @@
       "title": "Resources"
     },
     {
+      "url": "events",
+      "title": "Events"
+    },
+    {
       "url": "https://github.com/ngrx/platform",
       "title": "GitHub"
     },
@@ -37,6 +41,10 @@
         {
           "url": "resources",
           "title": "Resources"
+        },
+        {
+          "url": "events",
+          "title": "Events"
         },
         {
           "url": "https://github.com/ngrx/platform",
@@ -247,11 +255,6 @@
     {
       "title": "Resources",
       "children": [
-        {
-          "url": "events",
-          "title": "Events",
-          "tooltip": "Events where we'll be presenting."
-        },
         {
           "url": "about",
           "title": "About",
