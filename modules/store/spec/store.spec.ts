@@ -1,4 +1,4 @@
-import { ReflectiveInjector } from '@angular/core';
+import { ReflectiveInjector, InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { hot } from 'jasmine-marbles';
 import {
@@ -10,12 +10,16 @@ import {
   ReducerManagerDispatcher,
   UPDATE,
   REDUCER_FACTORY,
+  ActionReducer,
+  Action,
 } from '../';
+import { StoreConfig } from '../src/store_module';
 import {
   counterReducer,
   INCREMENT,
   DECREMENT,
   RESET,
+  counterReducer2,
 } from './fixtures/counter';
 import Spy = jasmine.Spy;
 import any = jasmine.any;
@@ -33,7 +37,10 @@ describe('ngRx Store', () => {
   let store: Store<TestAppSchema>;
   let dispatcher: ActionsSubject;
 
-  function setup(initialState: any = { counter1: 0, counter2: 1 }) {
+  function setup(
+    initialState: any = { counter1: 0, counter2: 1 },
+    metaReducers: any = []
+  ) {
     const reducers = {
       counter1: counterReducer,
       counter2: counterReducer,
@@ -41,7 +48,7 @@ describe('ngRx Store', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(reducers, { initialState })],
+      imports: [StoreModule.forRoot(reducers, { initialState, metaReducers })],
     });
 
     store = TestBed.get(Store);
@@ -469,6 +476,237 @@ describe('ngRx Store', () => {
         .pipe(skip(1))
         .subscribe(scannedAction => expect(scannedAction).toEqual(action));
       mockStore.dispatch(action);
+    });
+  });
+
+  describe('Meta Reducers', () => {
+    let metaReducerContainer: any;
+    let metaReducerSpy1: Spy;
+    let metaReducerSpy2: Spy;
+
+    beforeEach(() => {
+      metaReducerContainer = (function() {
+        function metaReducer1(reducer: ActionReducer<any, any>) {
+          return function(state: any, action: Action) {
+            return reducer(state, action);
+          };
+        }
+
+        function metaReducer2(reducer: ActionReducer<any, any>) {
+          return function(state: any, action: Action) {
+            return reducer(state, action);
+          };
+        }
+
+        return {
+          metaReducer1: metaReducer1,
+          metaReducer2: metaReducer2,
+        };
+      })();
+
+      metaReducerSpy1 = spyOn(
+        metaReducerContainer,
+        'metaReducer1'
+      ).and.callThrough();
+
+      metaReducerSpy2 = spyOn(
+        metaReducerContainer,
+        'metaReducer2'
+      ).and.callThrough();
+    });
+
+    it('should create a meta reducer for root and call it through', () => {
+      setup({}, [metaReducerContainer.metaReducer1]);
+      const action = { type: INCREMENT };
+      store.dispatch(action);
+      expect(metaReducerSpy1).toHaveBeenCalled();
+    });
+
+    it('should call two meta reducers', () => {
+      setup({}, [
+        metaReducerContainer.metaReducer1,
+        metaReducerContainer.metaReducer2,
+      ]);
+      const action = { type: INCREMENT };
+      store.dispatch(action);
+
+      expect(metaReducerSpy1).toHaveBeenCalled();
+      expect(metaReducerSpy2).toHaveBeenCalled();
+    });
+
+    it('should create a meta reducer for feature and call it with the expected reducer', () => {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature('counter1', counterReducer, {
+            metaReducers: [metaReducerContainer.metaReducer1],
+          }),
+          StoreModule.forFeature('counter2', counterReducer2, {
+            metaReducers: [metaReducerContainer.metaReducer2],
+          }),
+        ],
+      });
+      const mockStore = TestBed.get(Store);
+      const action = { type: INCREMENT };
+      mockStore.dispatch(action);
+
+      expect(metaReducerSpy1).toHaveBeenCalledWith(counterReducer);
+      expect(metaReducerSpy2).toHaveBeenCalledWith(counterReducer2);
+    });
+  });
+
+  describe('Feature config token', () => {
+    let FEATURE_CONFIG_TOKEN: InjectionToken<StoreConfig<any, any>>;
+    let FEATURE_CONFIG2_TOKEN: InjectionToken<StoreConfig<any, any>>;
+
+    beforeEach(() => {
+      FEATURE_CONFIG_TOKEN = new InjectionToken('Feature Config');
+      FEATURE_CONFIG2_TOKEN = new InjectionToken('Feature Config2');
+    });
+
+    it('should initial state with value', (done: DoneFn) => {
+      const initialState = { counter1: 1 };
+      const featureKey = 'counter';
+
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature(
+            featureKey,
+            counterReducer,
+            FEATURE_CONFIG_TOKEN
+          ),
+        ],
+        providers: [
+          {
+            provide: FEATURE_CONFIG_TOKEN,
+            useValue: { initialState: initialState },
+          },
+        ],
+      });
+
+      const mockStore = TestBed.get(Store);
+
+      mockStore.pipe(take(1)).subscribe({
+        next(val: any) {
+          expect(val[featureKey]).toEqual(initialState);
+        },
+        error: done,
+        complete: done,
+      });
+    });
+
+    it('should initial state with value for multi features', (done: DoneFn) => {
+      const initialState = 1;
+      const initialState2 = 2;
+      const initialState3 = 3;
+      const featureKey = 'counter';
+      const featureKey2 = 'counter2';
+      const featureKey3 = 'counter3';
+
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature(
+            featureKey,
+            counterReducer,
+            FEATURE_CONFIG_TOKEN
+          ),
+          StoreModule.forFeature(
+            featureKey2,
+            counterReducer,
+            FEATURE_CONFIG2_TOKEN
+          ),
+          StoreModule.forFeature(featureKey3, counterReducer, {
+            initialState: initialState3,
+          }),
+        ],
+        providers: [
+          {
+            provide: FEATURE_CONFIG_TOKEN,
+            useValue: { initialState: initialState },
+          },
+          {
+            provide: FEATURE_CONFIG2_TOKEN,
+            useValue: { initialState: initialState2 },
+          },
+        ],
+      });
+
+      const mockStore = TestBed.get(Store);
+
+      mockStore.pipe(take(1)).subscribe({
+        next(val: any) {
+          expect(val[featureKey]).toEqual(initialState);
+          expect(val[featureKey2]).toEqual(initialState2);
+          expect(val[featureKey3]).toEqual(initialState3);
+        },
+        error: done,
+        complete: done,
+      });
+    });
+
+    it('should create a meta reducer with config injection token and call it with the expected reducer', () => {
+      const metaReducerContainer = (function() {
+        function metaReducer1(reducer: ActionReducer<any, any>) {
+          return function(state: any, action: Action) {
+            return reducer(state, action);
+          };
+        }
+
+        function metaReducer2(reducer: ActionReducer<any, any>) {
+          return function(state: any, action: Action) {
+            return reducer(state, action);
+          };
+        }
+
+        return {
+          metaReducer1: metaReducer1,
+          metaReducer2: metaReducer2,
+        };
+      })();
+
+      const metaReducerSpy1 = spyOn(
+        metaReducerContainer,
+        'metaReducer1'
+      ).and.callThrough();
+
+      const metaReducerSpy2 = spyOn(
+        metaReducerContainer,
+        'metaReducer2'
+      ).and.callThrough();
+
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature(
+            'counter1',
+            counterReducer,
+            FEATURE_CONFIG_TOKEN
+          ),
+          StoreModule.forFeature(
+            'counter2',
+            counterReducer2,
+            FEATURE_CONFIG2_TOKEN
+          ),
+        ],
+        providers: [
+          {
+            provide: FEATURE_CONFIG_TOKEN,
+            useValue: { metaReducers: [metaReducerContainer.metaReducer1] },
+          },
+          {
+            provide: FEATURE_CONFIG2_TOKEN,
+            useValue: { metaReducers: [metaReducerContainer.metaReducer2] },
+          },
+        ],
+      });
+      const mockStore = TestBed.get(Store);
+      const action = { type: INCREMENT };
+      mockStore.dispatch(action);
+
+      expect(metaReducerSpy1).toHaveBeenCalledWith(counterReducer);
+      expect(metaReducerSpy2).toHaveBeenCalledWith(counterReducer2);
     });
   });
 });
