@@ -88,12 +88,13 @@ state if no changes were made.
 - `addMany`: Add multiple entities to the collection
 - `addAll`: Replace current collection with provided collection
 - `removeOne`: Remove one entity from the collection
-- `removeMany`: Remove multiple entities from the collection
+- `removeMany`: Remove multiple entities from the collection, by id or by predicate
 - `removeAll`: Clear entity collection
 - `updateOne`: Update one entity in the collection
 - `updateMany`: Update multiple entities in the collection
 - `upsertOne`: Add or Update one entity in the collection
 - `upsertMany`: Add or Update multiple entities in the collection
+- `map`: Update multiple entities in the collection by defining a map function, similar to [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
 Usage:
 
@@ -122,8 +123,10 @@ export enum UserActionTypes {
   UPSERT_USERS = '[User] Upsert Users',
   UPDATE_USER = '[User] Update User',
   UPDATE_USERS = '[User] Update Users',
+  MAP_USERS = '[User] Map Users',
   DELETE_USER = '[User] Delete User',
   DELETE_USERS = '[User] Delete Users',
+  DELETE_USERS_BY_PREDICATE = '[User] Delete Users By Predicate',
   CLEAR_USERS = '[User] Clear Users',
 }
 
@@ -169,6 +172,12 @@ export class UpdateUsers implements Action {
   constructor(public payload: { users: Update<User>[] }) {}
 }
 
+export class MapUsers implements Action {
+  readonly type = UserActionTypes.MAP_USERS;
+
+  constructor(public payload: { entityMap: EntityMap<User> }) {}
+}
+
 export class DeleteUser implements Action {
   readonly type = UserActionTypes.DELETE_USER;
 
@@ -179,6 +188,12 @@ export class DeleteUsers implements Action {
   readonly type = UserActionTypes.DELETE_USERS;
 
   constructor(public payload: { ids: string[] }) {}
+}
+
+export class DeleteUsersByPredicate implements Action {
+  readonly type = UserActionTypes.DELETE_USERS_BY_PREDICATE;
+
+  constructor(public payload: { predicate: Predicate<User> }) {}
 }
 
 export class ClearUsers implements Action {
@@ -193,8 +208,10 @@ export type UserActionsUnion =
   | UpsertUsers
   | UpdateUser
   | UpdateUsers
+  | MapUsers
   | DeleteUser
   | DeleteUsers
+  | DeleteUsersByPredicate
   | ClearUsers;
 ```
 
@@ -243,12 +260,20 @@ export function reducer(state = initialState, action: UserActionsUnion): State {
       return adapter.updateMany(action.payload.users, state);
     }
 
+    case UserActionTypes.MAP_USERS: {
+      return adapter.map(action.payload.entityMap, state);
+    }
+
     case UserActionTypes.DELETE_USER: {
       return adapter.removeOne(action.payload.id, state);
     }
 
     case UserActionTypes.DELETE_USERS: {
       return adapter.removeMany(action.payload.ids, state);
+    }
+
+    case UserActionTypes.DELETE_USERS_BY_PREDICATE: {
+      return adapter.removeMany(action.payload.predicate, state);
     }
 
     case UserActionTypes.LOAD_USERS: {
