@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "7.0.0-beta.1",
+  "version": "7.0.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "precommit": "lint-staged",

@@ -1,3 +1,17 @@
+<a name="7.0.0"></a>
+
+# [7.0.0](https://github.com/ngrx/platform/compare/7.0.0-beta.1...7.0.0) (2018-12-20)
+
+### Features
+
+- **Effects:** add OnInitEffects interface to dispatch an action on initialization ([e921cd9](https://github.com/ngrx/platform/commit/e921cd9))
+- **RouterStore:** make the router store key selector generic ([a30a514](https://github.com/ngrx/platform/commit/a30a514)), closes [#1457](https://github.com/ngrx/platform/issues/1457)
+- **schematics:** add project flag support to specify apps or libs ([#1477](https://github.com/ngrx/platform/issues/1477)) ([af39fd2](https://github.com/ngrx/platform/commit/af39fd2)), closes [#1455](https://github.com/ngrx/platform/issues/1455)
+
+### Reverts
+
+- **Effects:** dispatch init feature effects action on init [#1305](https://github.com/ngrx/platform/issues/1305) ([e9cc9ae](https://github.com/ngrx/platform/commit/e9cc9ae))
+
 <a name="7.0.0-beta.1"></a>
 
 # [7.0.0-beta.1](https://github.com/ngrx/platform/compare/7.0.0-beta.0...7.0.0-beta.1) (2018-12-04)
