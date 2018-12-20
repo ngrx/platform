@@ -9,7 +9,7 @@ Details on marble tests and their syntax, as shown in the `hot` and `cold` metho
 
 Usage:
 
-```ts
+<code-example header="my.effects.spec.ts">
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -21,7 +21,7 @@ import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: Observable<any>;
+  let actions: Observable&lt;any&gt;;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -59,7 +59,7 @@ describe('My Effects', () => {
     });
   });
 });
-```
+</code-example>
 
 ### getEffectsMetadata
 
@@ -68,14 +68,14 @@ Use this function to ensure that effects have been properly decorated.
 
 Usage:
 
-```ts
+<code-example header="my.effects.spec.ts">
 import { TestBed } from '@angular/core/testing';
 import { EffectsMetadata, getEffectsMetadata } from '@ngrx/effects';
 import { MyEffects } from './my-effects';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let metadata: EffectsMetadata<MyEffects>;
+  let metadata: EffectsMetadata&lt;MyEffects&gt;;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -101,7 +101,7 @@ describe('My Effects', () => {
     expect(metadata.undecoratedSource$).toBeUndefined();
   });
 });
-```
+</code-example>
 
 ### Effects as functions
 
@@ -109,36 +109,38 @@ Effects can be defined as functions as well as variables. Defining an effect as 
 
 The following example effect debounces the user input into from a search action.
 
-```ts
+<code-example header="my.effects.spec.ts">
 @Effect()
 search$ = this.actions$.pipe(
-  ofType<Search>(BookActionTypes.Search),
+  ofType(BookActionTypes.Search),
   debounceTime(300, asyncScheduler),
   switchMap(...)
-```
+)
+</code-example>
 
 The same effect but now defined as a function, would look as follows:
 
-```ts
+<code-example header="my.effects.spec.ts">
 @Effect()
 // refactor as input properties and provide default values
 search$ = ({
   debounce = 300,
   scheduler = asyncScheduler
 } = {}) => this.actions$.pipe(
-  ofType<Search>(BookActionTypes.Search),
+  ofType(BookActionTypes.Search),
   debounceTime(debounce, scheduler),
   switchMap(...)
-```
+)
+</code-example>
 
 Within our tests we can now override the default properties:
 
-```ts
+<code-example header="my.effects.spec.ts">
 const actual = effects.search$({
   debounce: 30,
   scheduler: getTestScheduler(),
 });
 expect(actual).toBeObservable(expected);
-```
+</code-example>
 
 Doing this has the extra benefit of hiding implementation details, making your tests less prone to break due to implementation details changes. Meaning that if you would change the `debounceTime` inside the effect your tests wouldn't have to be changed,these tests would still pass.

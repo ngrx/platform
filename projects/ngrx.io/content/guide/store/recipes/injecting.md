@@ -4,7 +4,7 @@
 
 To inject the root reducers into your application, use an `InjectionToken` and a `Provider` to register the reducers through dependency injection.
 
-```ts
+<code-example header="app.module.ts">
 import { NgModule, InjectionToken } from '@angular/core';
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 
@@ -12,7 +12,7 @@ import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
 export const REDUCER_TOKEN = new InjectionToken<
-  ActionReducerMap<fromRoot.State>
+  ActionReducerMap&lt;fromRoot.State&gt;
 >('Registered Reducers');
 
 export function getReducers(someService: SomeService) {
@@ -30,21 +30,21 @@ export function getReducers(someService: SomeService) {
   ],
 })
 export class AppModule {}
-```
+</code-example>
 
 Reducers are also injected when composing state through feature modules.
 
-```ts
+<code-example header="feature.module.ts">
 import { NgModule, InjectionToken } from '@angular/core';
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 
 import * as fromFeature from './reducers';
 
 export const FEATURE_REDUCER_TOKEN = new InjectionToken<
-  ActionReducerMap<fromFeature.State>
+  ActionReducerMap&lt;fromFeature.State&gt;
 >('Feature Reducers');
 
-export function getReducers(): ActionReducerMap<fromFeature.State> {
+export function getReducers(): ActionReducerMap&lt;fromFeature.State&gt; {
   // map of reducers
   return {};
 }
@@ -59,7 +59,7 @@ export function getReducers(): ActionReducerMap<fromFeature.State> {
   ],
 })
 export class FeatureModule {}
-```
+</code-example>
 
 ## Injecting Meta-Reducers
 
@@ -67,14 +67,14 @@ To inject 'middleware' meta reducers, use the `META_REDUCERS` injection token ex
 the Store API and a `Provider` to register the meta reducers through dependency
 injection.
 
-```ts
+<code-example header="app.module.ts">
 import { MetaReducer, META_REDUCERS } from '@ngrx/store';
 import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
 export function getMetaReducers(
   some: SomeService
-): MetaReducer<fromRoot.State>[] {
+): MetaReducer&lt;fromRoot.State&gt;[] {
   // return array of meta reducers;
 }
 
@@ -88,4 +88,4 @@ export function getMetaReducers(
   ],
 })
 export class AppModule {}
-```
+</code-example>

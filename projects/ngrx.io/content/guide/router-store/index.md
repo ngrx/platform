@@ -14,7 +14,7 @@ yarn add @ngrx/router-store
 
 ## Setup
 
-```ts
+<code-example header="app.module.ts">
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
 
@@ -33,4 +33,4 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-```
+</code-example>

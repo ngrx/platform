@@ -10,17 +10,17 @@ Actions are used in many areas of NgRx. Actions are the inputs and outputs of ma
 
 An `Action` in NgRx is made up of a simple interface:
 
-```ts
+<code-example header="Action Interface">
 interface Action {
   type: string;
 }
-```
+</code-example>
 
 The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event` and is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action. The most common property is the `payload`, which adds any associated data needed for the action.
 
 Listed below are examples of actions written as plain javascript objects (POJOS):
 
-```
+```json
 {
   type: '[Auth API] Login Success'
 }
@@ -28,7 +28,7 @@ Listed below are examples of actions written as plain javascript objects (POJOS)
 
 This action describes an event triggered by a successful authentication after interacting with a backend API.
 
-```
+```json
 {
   type: '[Login Page] Login',
   payload: {
@@ -54,7 +54,7 @@ Following these guidelines helps you follow how these actions flow throughout yo
 
 Let's look at an example action of initiating a login request.
 
-```ts
+<code-example header="login-page.actions.ts">
 import { Action } from '@ngrx/store';
 
 export class Login implements Action {
@@ -62,15 +62,17 @@ export class Login implements Action {
 
   constructor(public payload: { username: string; password: string }) {}
 }
-```
+</code-example>
 
 Actions are written as classes to provide a type-safe way to construct an action when it's being dispatched. The `Login` action implements the `Action` interface to adhere to its structure. The `payload` in this example is an object of a username and password, that is additional metadata needed for the handling of the action.
 
 Instantiate a new instance of the action to use when dispatching.
 
-```ts
-store.dispatch(new Login({ username: 'test', password: 'test' }));
-```
+<code-example header="login-page.component.ts">
+click(username: string, password: string) {
+  store.dispatch(new Login({ username: username, password: password }));
+}
+</code-example>
 
 The `Login` action has very specific context about where the action came from and what event happened.
 
@@ -82,7 +84,7 @@ The `Login` action has very specific context about where the action came from an
 
 The consumers of actions, whether it be reducers or effects use the type information from an action to determine whether they need to handle the action. Actions are grouped together by feature area, but also need to expose the action type information. Looking at the previous example of the `Login` action, you'll define some additional type information for the actions.
 
-```ts
+<code-example header="login-page.actions.ts">
 import { Action } from '@ngrx/store';
 
 export enum ActionTypes {
@@ -96,7 +98,7 @@ export class Login implements Action {
 }
 
 export type Union = Login;
-```
+</code-example>
 
 Instead of putting the action type string directly in the class, the `[Login Page] Login` string is now provided in the `ActionTypes` enum. Also, an additional `Union` type is exported with the `Login` class. These additional exports allow you to take advantage of [discriminated unions](https://www.typescriptlang.org/docs/handbook/advanced-types.html) in TypeScript. Why this is important is covered in the [reducers](guide/store/reducers) and [effects](guide/effects) guides.
 

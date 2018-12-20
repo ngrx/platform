@@ -19,7 +19,7 @@ and the associated reducer function.
 
 First, define some actions for interacting with a piece of state.
 
-```ts
+<code-example header="scoreboard-page.actions.ts">
 import { Action } from '@ngrx/store';
 
 export enum ActionTypes {
@@ -43,7 +43,7 @@ export class Reset implements Action {
 }
 
 export type ActionsUnion = IncrementHome | IncrementAway | Reset;
-```
+</code-example>
 
 Next, create a reducer file that imports the actions and define
 a shape for the piece of state.
@@ -52,14 +52,14 @@ a shape for the piece of state.
 
 Each reducer function is a listener of actions. The scoreboard actions defined above describe the possible transitions handled by the reducer. Import multiple sets of actions to handle additional state transitions within a reducer.
 
-```ts
-import * as Scoreboard from './scoreboard.actions';
+<code-example header="scoreboard.reducer.ts">
+import * as Scoreboard from '../actions/scoreboard-page.actions';
 
 export interface State {
   home: number;
   away: number;
 }
-```
+</code-example>
 
 You define the shape of the state according to what you are capturing, whether it be a single type such as a number, or a more complex object with multiple properties.
 
@@ -70,12 +70,12 @@ The initial state gives the state an initial value, or provides a value if the c
 Create and export a variable to capture the initial state with one or
 more default values.
 
-```ts
+<code-example header="scoreboard.reducer.ts">
 export const initialState: State = {
   home: 0,
   away: 0,
 };
-```
+</code-example>
 
 The initial values for the `home` and `away` properties of the state are 0.
 
@@ -83,7 +83,7 @@ The initial values for the `home` and `away` properties of the state are 0.
 
 The reducer function's responsibility is to handle the state transitions in an immutable way. Define a reducer function that handles the actions for managing the state of the scoreboard.
 
-```ts
+<code-example header="scoreboard.reducer.ts">
 export function reducer(
   state = initialState,
   action: Scoreboard.ActionsUnion
@@ -112,7 +112,7 @@ export function reducer(
     }
   }
 }
-```
+</code-example>
 
 Reducers use switch statements in combination with TypeScript's discriminated unions defined in your actions to provide type-safe processing of actions in a reducer. Switch statements use type unions to determine the correct shape of the action being consumed in each case. The action types defined with your actions are reused in your reducer functions as case statements. The type union is also provided to your reducer function to constrain the available actions that are handled in that reducer function.
 
@@ -130,16 +130,16 @@ When an action is dispatched, _all registered reducers_ receive the action. Whet
 
 The state of your application is defined as one large object. Registering reducer functions to manage parts of your state only defines keys with associated values in the object. To register the global `Store` within your application, use the `StoreModule.forRoot()` method with a map of key/value pairs that define your state. The `StoreModule.forRoot()` registers the global providers for your application, including the `Store` service you inject into your components and services to dispatch actions and select pieces of state.
 
-```ts
+<code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { scoreboardReducer } from './scoreboard.reducer';
+import { scoreboardReducer } from './reducers/scoreboard.reducer';
 
 @NgModule({
   imports: [StoreModule.forRoot({ game: scoreboardReducer })],
 })
 export class AppModule {}
-```
+</code-example>
 
 Registering states with `StoreModule.forRoot()` ensures that the states are defined upon application startup. In general, you register root states that always need to be available to all areas of your application immediately.
 
@@ -149,7 +149,7 @@ Feature states behave in the same way root states do, but allow you to define th
 
 Looking at an example state object, you see how a feature state allows your state to be built up incrementally. Let's start with an empty state object.
 
-```ts
+<code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
@@ -157,43 +157,44 @@ import { StoreModule } from '@ngrx/store';
   imports: [StoreModule.forRoot({})],
 })
 export class AppModule {}
-```
+</code-example>
 
 This registers your application with an empty object for the root state.
 
-```ts
+```json
 {
 }
 ```
 
 Now use the `scoreboard` reducer with a feature `NgModule` named `ScoreboardModule` to register additional state.
 
-```ts
+<code-example header="scoreboard.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { scoreboardReducer } from './scoreboard.reducer';
+import { scoreboardReducer } from './reducers/scoreboard.reducer';
 
 @NgModule({
   imports: [StoreModule.forFeature('game', scoreboardReducer)],
 })
 export class ScoreboardModule {}
-```
+</code-example>
 
 Add the `ScoreboardModule` to the `AppModule` to load the state eagerly.
 
-```ts
+<code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { ScoreboardModule } from './scoreboard/scoreboard.module';
 
 @NgModule({
   imports: [StoreModule.forRoot({}), ScoreboardModule],
 })
 export class AppModule {}
-```
+</code-example>
 
 Once the `ScoreboardModule` is loaded, the `game` key becomes a property in the object and is now managed in the state.
 
-```ts
+```json
 {
   game: { home: 0, away: 0 }
 }
@@ -205,4 +206,4 @@ Whether your feature states are loaded eagerly or lazily depends on the needs of
 
 Reducers are only responsible for deciding which state transitions need to occur for a given action.
 
-[Effects](guide/effects)
+In an application there is also a need to handle impure actions, e.g. AJAX requests, in NgRx we call them [Effects](guide/effects).

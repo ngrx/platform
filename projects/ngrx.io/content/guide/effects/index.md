@@ -36,8 +36,7 @@ The `Effect` decorator provides metadata to register observable side-effects in 
 
 1.  Create an AuthEffects service that describes a source of login actions:
 
-```ts
-// ./effects/auth.effects.ts
+<code-example header="auth.effects.ts">
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Action } from '@ngrx/store';
@@ -49,7 +48,7 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 export class AuthEffects {
   // Listen for the 'LOGIN' action
   @Effect()
-  login$: Observable<Action> = this.actions$.pipe(
+  login$: Observable&lt;Action&gt; = this.actions$.pipe(
     ofType('LOGIN'),
     mergeMap(action =>
       this.http.post('/auth', action.payload).pipe(
@@ -63,12 +62,12 @@ export class AuthEffects {
 
   constructor(private http: HttpClient, private actions$: Actions) {}
 }
-```
+</code-example>
 
 2.  Register the EffectsModule in your application root imports. This EffectsModule _must_ be added to
     your root `NgModule` for the effects providers to be registered and start when your application is loaded.
 
-```ts
+<code-example header="app.module.ts">
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './effects/auth.effects';
 
@@ -76,11 +75,11 @@ import { AuthEffects } from './effects/auth.effects';
   imports: [EffectsModule.forRoot([AuthEffects])],
 })
 export class AppModule {}
-```
+</code-example>
 
 For feature modules, register your effects via `EffectsModule.forFeature` method in your module's `imports`:
 
-```ts
+<code-example header="admin.module.ts">
 import { EffectsModule } from '@ngrx/effects';
 import { AdminEffects } from './effects/admin.effects';
 
@@ -88,7 +87,8 @@ import { AdminEffects } from './effects/admin.effects';
   imports: [EffectsModule.forFeature([AdminEffects])],
 })
 export class AdminModule {}
-```
+</code-example>
+
 <div class="alert is-important">
 
 **Note**: Running an effects class multiple times, either by `forRoot()` or `forFeature()`, (for example via different lazy loaded modules) will not cause Effects to run multiple times. There is no functional difference between effects loaded by `forRoot()` and `forFeature()`; the important difference between the functions is that `forRoot()` sets up the providers required for effects.

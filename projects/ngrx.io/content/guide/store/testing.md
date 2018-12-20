@@ -8,9 +8,7 @@ Use the `StoreModule.forRoot` in your `TestBed` configuration when testing compo
 - Use the `combineReducers` method with the map of feature reducers to compose the `State` for the test.
 - Dispatch actions to load data into the `Store`.
 
-my-component.ts
-
-```ts
+<code-example header="my.component.ts">
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromFeature from '../reducers';
@@ -19,15 +17,15 @@ import * as DataActions from '../actions/data';
 @Component({
   selector: 'my-component',
   template: `
-    <div *ngFor="let item of items$ | async">{{ item }}</div>
+    &lt;div *ngFor="let item of items$ | async"&gt;{{ item }}&lt;/div&gt;
 
-    <button (click)="onRefresh()">Refresh Items</button>
+    &lt;button (click)="onRefresh()"&gt;Refresh Items&lt;/button&gt;
   `,
 })
 export class MyComponent implements OnInit {
   items$ = this.store.pipe(select(fromFeature.selectFeatureItems));
 
-  constructor(private store: Store<fromFeature.State>) {}
+  constructor(private store: Store&lt;fromFeature.State&gt;) {}
 
   ngOnInit() {
     this.store.dispatch(new DataActions.LoadData());
@@ -37,22 +35,20 @@ export class MyComponent implements OnInit {
     this.store.dispatch(new DataActions.RefreshItems());
   }
 }
-```
+</code-example>
 
-my-component.spec.ts
-
-```ts
+<code-example header="my.component.spec.ts">
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { MyComponent } from './my.component';
 import * as fromRoot from '../reducers';
-import * as fromFeature from './reducers';
+import * as fromFeature from '../feature/reducers';
 import * as DataActions from '../actions/data';
 
 describe('My Component', () => {
   let component: MyComponent;
-  let fixture: ComponentFixture<MyComponent>;
-  let store: Store<fromFeature.State>;
+  let fixture: ComponentFixture&lt;MyComponent&gt;
+  let store: Store&lt;fromFeature.State&gt;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -110,15 +106,13 @@ describe('My Component', () => {
     });
   });
 });
-```
+</code-example>
 
 ### Testing selectors
 
 You can use the projector function used by the selector by accessing the `.projector` property.
 
-my-reducer.ts
-
-```ts
+<code-example header="my.reducer.ts">
 export interface State {
   evenNums: number[];
   oddNums: number[];
@@ -137,11 +131,9 @@ export const selectTotal = createSelector(
   selectSumOddNums,
   (evenSum, oddSum) => evenSum + oddSum
 );
-```
+</code-example>
 
-my-reducer.spec.ts
-
-```ts
+<code-example header="my.reducer.spec.ts">
 import * as fromMyReducers from './my-reducers';
 
 describe('My Selectors', () => {
@@ -149,4 +141,4 @@ describe('My Selectors', () => {
     expect(fromMyReducers.selectTotal.projector(2, 3)).toBe(5);
   });
 });
-```
+</code-example>
