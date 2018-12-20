@@ -4,12 +4,12 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as StoreOptions } from './schema';
-import {} from '../../schematics-core';
 import {
   getTestProjectPath,
   createWorkspace,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
 } from '../../../schematics-core/testing';
-import { getProject } from '../../../schematics-core';
 
 describe('Store Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -40,6 +40,24 @@ describe('Store Schematic', () => {
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create the initial store to specified project if provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: 'baz',
+    });
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/reducers/index.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 

@@ -21,6 +21,12 @@ ng generate a ActionName [options]
 
 ### Options
 
+Provide the project name where the action files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Nest the actions file within a folder based on the action `name`.
 
 - `--flat`

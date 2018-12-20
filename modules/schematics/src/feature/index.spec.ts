@@ -4,10 +4,11 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as FeatureOptions } from './schema';
-import {} from '../../schematics-core';
 import {
   getTestProjectPath,
   createWorkspace,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
 } from '../../../schematics-core/testing';
 
 describe('Feature Schematic', () => {
@@ -18,7 +19,6 @@ describe('Feature Schematic', () => {
   const defaultOptions: FeatureOptions = {
     name: 'foo',
     project: 'bar',
-    // path: 'app',
     module: '',
     spec: true,
     group: false,
@@ -54,6 +54,36 @@ describe('Feature Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
+  it('should create all files of a feature to specified project if provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: 'baz',
+    });
+
+    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.effects.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.effects.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
   it('should create all files of a feature within grouped folders if group is set', () => {
     const options = { ...defaultOptions, group: true };
 
@@ -85,12 +115,6 @@ describe('Feature Schematic', () => {
     };
 
     const tree = schematicRunner.runSchematic('feature', options, appTree);
-    const effectsFileContent = tree.readContent(
-      `${projectPath}/src/app/foo/effects/foo.effects.ts`
-    );
-    const reducerFileContent = tree.readContent(
-      `${projectPath}/src/app/foo/reducers/foo.reducer.ts`
-    );
     const moduleFileContent = tree.readContent(
       `${projectPath}/src/app/app.module.ts`
     );

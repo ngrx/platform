@@ -4,11 +4,12 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as ReducerOptions } from './schema';
-import {} from '../../schematics-core';
 import {
   getTestProjectPath,
   createReducers,
   createWorkspace,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
 } from '../../../schematics-core/testing';
 
 describe('Reducer Schematic', () => {
@@ -19,7 +20,6 @@ describe('Reducer Schematic', () => {
   const defaultOptions: ReducerOptions = {
     name: 'foo',
     project: 'bar',
-    // path: 'app',
     spec: false,
   };
 
@@ -40,6 +40,24 @@ describe('Reducer Schematic', () => {
 
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create a reducer to specified project if provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: 'baz',
+    });
+
+    const tree = schematicRunner.runSchematic('reducer', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 

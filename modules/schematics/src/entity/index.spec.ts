@@ -4,10 +4,11 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as EntityOptions } from './schema';
-import {} from '../../schematics-core';
 import {
   getTestProjectPath,
   createWorkspace,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
 } from '../../../schematics-core/testing';
 
 describe('Entity Schematic', () => {
@@ -18,7 +19,6 @@ describe('Entity Schematic', () => {
   const defaultOptions: EntityOptions = {
     name: 'foo',
     project: 'bar',
-    // path: 'app',
     spec: false,
   };
 
@@ -45,6 +45,30 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create 3 files of an entity to specified project if provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: 'baz',
+    });
+
+    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.model.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 

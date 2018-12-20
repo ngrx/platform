@@ -13,7 +13,8 @@
     "project": {
       "type": "string",
       "description": "The name of the project.",
-      "visible": false
+      "visible": false,
+      "aliases": ["p"]
     },
     "name": {
       "type": "string",

@@ -18,6 +18,12 @@
       "description": "The path to create the component.",
       "visible": false
     },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "visible": false,
+      "aliases": ["p"]
+    },
     "spec": {
       "type": "boolean",
       "description": "Specifies if a spec file is generated.",

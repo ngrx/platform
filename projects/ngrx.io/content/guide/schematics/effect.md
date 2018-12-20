@@ -20,6 +20,12 @@ ng generate ef EffectName [options]
 
 ## Options
 
+Provide the project name where the effect files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Nest the effects file within a folder based by the effect `name`.
 
 - `--flat`

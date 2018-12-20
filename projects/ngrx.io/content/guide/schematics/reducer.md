@@ -21,6 +21,12 @@ ng generate r ReducerName [options]
 
 ### Options
 
+Provide the project name where the reducer files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Nest the reducer file within a folder based on the reducer `name`.
 
 - `--flat`

@@ -3,12 +3,13 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import {} from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 import {
   getTestProjectPath,
   createWorkspace,
   createAppModuleWithEffects,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
 } from '../../../schematics-core/testing';
 
 describe('Effect Schematic', () => {
@@ -19,7 +20,6 @@ describe('Effect Schematic', () => {
 
   const defaultOptions: EffectOptions = {
     name: 'foo',
-    // path: 'app',
     project: 'bar',
     spec: true,
     module: undefined,
@@ -35,6 +35,27 @@ describe('Effect Schematic', () => {
 
   beforeEach(() => {
     appTree = createWorkspace(schematicRunner, appTree);
+  });
+
+  it('should create an effect to specified project if provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: 'baz',
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: 'baz',
+    });
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo/foo.effects.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo/foo.effects.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 
   it('should create an effect with a spec file', () => {
