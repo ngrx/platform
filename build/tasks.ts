@@ -63,7 +63,10 @@ export async function publishDocsPreview() {
   const SOURCE_DIR = './projects/ngrx.io/dist/ngrx.io';
   const REPO_URL = 'git@github.com:ngrx/ngrx-io-previews.git';
   const REPO_DIR = `./tmp/docs-preview`;
-  const PR_NUMBER = process.env.CIRCLE_PR_NUMBER || '';
+  const PR_NUMBER = util.getPrNumber(
+    process.env.CIRCLE_PR_NUMBER,
+    process.env.CIRCLE_PULL_REQUEST_NUMBER
+  );
   const SHORT_SHA = process.env.SHORT_GIT_HASH;
   const owner = process.env.CIRCLE_PROJECT_USERNAME;
 
@@ -119,7 +122,10 @@ export async function prepareAndPublish(
 }
 
 export async function postGithubComment() {
-  const PR_NUMBER = process.env.CIRCLE_PR_NUMBER || '';
+  const PR_NUMBER = util.getPrNumber(
+    process.env.CIRCLE_PR_NUMBER,
+    process.env.CIRCLE_PULL_REQUEST_NUMBER
+  );
   const owner = process.env.CIRCLE_PROJECT_USERNAME;
 
   if (PR_NUMBER && owner === 'ngrx') {

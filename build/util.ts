@@ -155,3 +155,13 @@ export async function sleep(ms: number) {
     setTimeout(resolve, ms);
   });
 }
+
+export function getPrNumber(prNumber: string, circlePR: string): string {
+  const PR_NUMBER = prNumber;
+
+  if (!PR_NUMBER && circlePR) {
+    return circlePR;
+  }
+
+  return PR_NUMBER;
+}

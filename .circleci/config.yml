@@ -130,11 +130,12 @@ jobs:
           command: |
             echo 'export CI_PREVIEW=true' >> $BASH_ENV
             echo 'export SHORT_GIT_HASH=$(git rev-parse --short $CIRCLE_SHA1)' >> $BASH_ENV
+            echo 'export CIRCLE_PULL_REQUEST_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | cut -d"/" -f7)' >> $BASH_ENV
             source $BASH_ENV
       - run: yarn setup 
       - run: npm rebuild node-sass
-      - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PR_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PR_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
-      - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PR_NUMBER-$SHORT_GIT_HASH/
+      - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
+      - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/
       - run: yarn --cwd ../../ install && yarn --cwd ../../ run deploy:preview
       
 
