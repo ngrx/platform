@@ -4,7 +4,7 @@
 
 The Entity State is a predefined generic interface for a given entity collection with the following interface:
 
-<code-example header="@ngrx/entity">
+<code-example header="EntityState Interface">
 interface EntityState&lt;V&gt; {
   ids: string[] | number[];
   entities: { [id: string | id: number]: V };
@@ -18,7 +18,7 @@ Extend this interface to provided any additional properties for the entity state
 
 Usage:
 
-<code-example header="src/app/reducers/user.reducer.ts">
+<code-example header="user.reducer.ts">
 export interface User {
   id: string;
   name: string;
@@ -36,6 +36,6 @@ Provides a generic type interface for the provided entity adapter. The entity ad
 
 Usage:
 
-<code-example header="src/app/reducers/user.reducer.ts">
+<code-example header="user.reducer.ts">
 export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;();
 </code-example>

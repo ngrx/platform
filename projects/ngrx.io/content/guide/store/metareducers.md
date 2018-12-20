@@ -10,7 +10,7 @@ Use the `metaReducers` configuration option to provide an array of meta-reducers
 
 ### Using a meta-reducer to log all actions
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { reducers } from './reducers';
 

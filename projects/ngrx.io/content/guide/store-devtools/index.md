@@ -20,7 +20,7 @@ Instrumentation with the Chrome / Firefox Extension
 
 2.  In your `AppModule` add instrumentation to the module imports using `StoreDevtoolsModule.instrument`:
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'; // Angular CLI environemnt
 

@@ -4,7 +4,7 @@
 
 To inject the root reducers into your application, use an `InjectionToken` and a `Provider` to register the reducers through dependency injection.
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 import { NgModule, InjectionToken } from '@angular/core';
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 
@@ -34,7 +34,7 @@ export class AppModule {}
 
 Reducers are also injected when composing state through feature modules.
 
-<code-example header="src/app/feature/feature.module.ts">
+<code-example header="feature.module.ts">
 import { NgModule, InjectionToken } from '@angular/core';
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 
@@ -67,14 +67,14 @@ To inject 'middleware' meta reducers, use the `META_REDUCERS` injection token ex
 the Store API and a `Provider` to register the meta reducers through dependency
 injection.
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 import { MetaReducer, META_REDUCERS } from '@ngrx/store';
 import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
 export function getMetaReducers(
   some: SomeService
-): MetaReducer<fromRoot.State>[] {
+): MetaReducer&lt;fromRoot.State&gt;[] {
   // return array of meta reducers;
 }
 

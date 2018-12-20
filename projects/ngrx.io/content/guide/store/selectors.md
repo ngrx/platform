@@ -12,7 +12,7 @@ When using the `createSelector` and `createFeatureSelector` functions @ngrx/stor
 
 ### Using a selector for one piece of state
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 import { createSelector } from '@ngrx/store';
 
 export interface FeatureState {
@@ -45,7 +45,7 @@ You can use `createSelector` to achieve just that. Your visible books will alway
 
 The result will be just some of your state filtered by another section of the state. And it will be always up to date.
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 import { createSelector } from '@ngrx/store';
 
 export interface User {
@@ -89,7 +89,7 @@ For example if we have a counter and we want to multiply its value, we can add t
 
 The last argument of a selector or a projector is the `props` argument, for our example it looks as follows:
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 export const getCount = createSelector(
   getCounterValue,
   (counter, props) => counter * props.multiply
@@ -98,7 +98,7 @@ export const getCount = createSelector(
 
 Inside the component we can define the `props`:
 
-<code-example header="src/app/app.component.ts">
+<code-example header="app.component.ts">
 ngOnInit() {
   this.counter = this.store.pipe(select(fromRoot.getCount, { multiply: 2 }))
 }
@@ -108,7 +108,7 @@ Keep in mind that a selector only keeps the previous input arguments in its cach
 
 The following is an example of using multiple counters differentiated by `id`.
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 export const getCount = () =>
   createSelector(
     (state, props) => state.counter[props.id],
@@ -118,7 +118,7 @@ export const getCount = () =>
 
 The component's selectors are now calling the factory function to create different selector instances:
 
-<code-example header="src/app/app.component.ts">
+<code-example header="app.component.ts">
 ngOnInit() {
   this.counter2 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter2', multiply: 2 }));
   this.counter4 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter4', multiply: 4 }));
@@ -132,7 +132,7 @@ The `createFeatureSelector` is a convenience method for returning a top level fe
 
 ### Example
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface FeatureState {
@@ -153,7 +153,7 @@ export const selectFeatureCount = createSelector(
 
 The following selector below would not compile because `foo` is not a feature slice of `AppState`.
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;('foo');
 </code-example>
 
@@ -196,7 +196,7 @@ selectTotal.release(); // memoized value of selectTotal is now null
 
 Releasing a selector also recursively releases any ancestor selectors. Consider the following:
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 export interface State {
   evenNums: number[];
   oddNums: number[];
@@ -254,7 +254,7 @@ Let's pretend we have a selector called `selectValues` and the component for dis
 
 We can achieve this behaviour by using only RxJS pipeable operators:
 
-<code-example header="src/app/app.component.ts">
+<code-example header="app.component.ts">
 import { map, filter } from 'rxjs/operators';
 
 store
@@ -267,7 +267,7 @@ store
 
 The above can be further re-written to use the `select()` utility function from NgRx:
 
-<code-example header="src/app/app.component.ts">
+<code-example header="app.component.ts">
 import { select } from '@ngrx/store';
 import { map, filter } from 'rxjs/operators';
 
@@ -283,7 +283,7 @@ store
 
 To make the `select()` and `filter()` behaviour a re-usable piece of code, we extract a [pipeable operator](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) using the RxJS `pipe()` utility function:
 
-<code-example header="src/app/app.component.ts">
+<code-example header="app.component.ts">
 import { select } from '@ngrx/store';
 import { pipe } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -304,7 +304,7 @@ In this example, we will write a selector function that projects values from two
 The projected state will emit a value when both slices of state have a value.
 Otherwise, the selector will emit an `undefined` value.
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 export const selectProjectedValues = createSelector(
   selectFoo,
   selectBar,
@@ -322,7 +322,7 @@ Then, the component should visualize the history of state transitions.
 We are not only interested in the current state but rather like to display the last `n` pieces of state.
 Meaning that we will map a stream of state values (`1`, `2`, `3`) to an array of state values (`[1, 2, 3]`).
 
-<code-example header="src/app/operators/select-last-state-transition.ts">
+<code-example header="select-last-state-transition.ts">
 // The number of state transitions is given by the user (subscriber)
 export const selectLastStateTransitions = (count: number) => {
 
@@ -340,7 +340,7 @@ export const selectLastStateTransitions = (count: number) => {
 
 Finally, the component will subscribe to the store, telling the number of state transitions it wishes to display:
 
-<code-example header="src/app/app.component.ts">
+<code-example header="app.component.ts">
 // Subscribe to the store using the custom pipeable operator
 store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 </code-example>

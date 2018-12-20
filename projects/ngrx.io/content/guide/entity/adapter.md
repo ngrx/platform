@@ -1,6 +1,6 @@
 # Entity Adapter
 
-## createEntityAdapter<T>
+## createEntityAdapter&lt;T&gt;
 
 A method for returning a generic entity adapter for a single entity state collection. The
 returned adapter provides many adapter methods for performing operations
@@ -11,7 +11,7 @@ against the collection type. The method takes an object with 2 properties for co
 
 Usage:
 
-<code-example header="src/app/reducers/user.reducer.ts">
+<code-example header="user.reducer.ts">
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
@@ -51,7 +51,7 @@ Returns the `initialState` for entity state based on the provided type. Addition
 
 Usage:
 
-<code-example header="src/app/reducers/user.reducer.ts">
+<code-example header="user.reducer.ts">
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
@@ -98,14 +98,14 @@ state if no changes were made.
 
 Usage:
 
-<code-example header="src/app/models/user.model.ts">
+<code-example header="user.model.ts">
 export interface User {
   id: string;
   name: string;
 }
 </code-example>
 
-<code-example header="src/app/actions/user.actions.ts">
+<code-example header="user.actions.ts">
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
@@ -171,7 +171,7 @@ export class UpdateUsers implements Action {
 export class MapUsers implements Action {
   readonly type = UserActionTypes.MAP_USERS;
 
-  constructor(public payload: { entityMap: EntityMap<User> }) {}
+  constructor(public payload: { entityMap: EntityMap&lt;User&gt; }) {}
 }
 
 export class DeleteUser implements Action {
@@ -189,7 +189,7 @@ export class DeleteUsers implements Action {
 export class DeleteUsersByPredicate implements Action {
   readonly type = UserActionTypes.DELETE_USERS_BY_PREDICATE;
 
-  constructor(public payload: { predicate: Predicate<User> }) {}
+  constructor(public payload: { predicate: Predicate&lt;User&gt; }) {}
 }
 
 export class ClearUsers implements Action {
@@ -211,7 +211,7 @@ export type UserActionsUnion =
   | ClearUsers;
 </code-example>
 
-<code-example header="src/app/reducers/user.reducer.ts">
+<code-example header="user.reducer.ts">
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
 import { UserActionsUnion, UserActionTypes } from '../actions/user.actions';
@@ -315,7 +315,7 @@ The `getSelectors` method takes a selector function as its only argument to sele
 
 Usage:
 
-<code-example header="src/app/reducers/index.ts">
+<code-example header="index.ts">
 import {
   createSelector,
   createFeatureSelector,

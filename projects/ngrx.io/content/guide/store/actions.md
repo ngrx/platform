@@ -10,7 +10,7 @@ Actions are used in many areas of NgRx. Actions are the inputs and outputs of ma
 
 An `Action` in NgRx is made up of a simple interface:
 
-<code-example header="@ngrx/store">
+<code-example header="Action Interface">
 interface Action {
   type: string;
 }
@@ -54,7 +54,7 @@ Following these guidelines helps you follow how these actions flow throughout yo
 
 Let's look at an example action of initiating a login request.
 
-<code-example header="src/app/actions/login-page.actions.ts">
+<code-example header="login-page.actions.ts">
 import { Action } from '@ngrx/store';
 
 export class Login implements Action {
@@ -68,7 +68,7 @@ Actions are written as classes to provide a type-safe way to construct an action
 
 Instantiate a new instance of the action to use when dispatching.
 
-<code-example header="src/app/containers/login-page.component.ts">
+<code-example header="login-page.component.ts">
 click(username: string, password: string) {
   store.dispatch(new Login({ username: username, password: password }));
 }
@@ -84,7 +84,7 @@ The `Login` action has very specific context about where the action came from an
 
 The consumers of actions, whether it be reducers or effects use the type information from an action to determine whether they need to handle the action. Actions are grouped together by feature area, but also need to expose the action type information. Looking at the previous example of the `Login` action, you'll define some additional type information for the actions.
 
-<code-example header="src/app/containers/login-page.actions.ts">
+<code-example header="login-page.actions.ts">
 import { Action } from '@ngrx/store';
 
 export enum ActionTypes {

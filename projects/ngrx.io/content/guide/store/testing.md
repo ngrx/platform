@@ -8,7 +8,7 @@ Use the `StoreModule.forRoot` in your `TestBed` configuration when testing compo
 - Use the `combineReducers` method with the map of feature reducers to compose the `State` for the test.
 - Dispatch actions to load data into the `Store`.
 
-<code-example header="src/app/containers/my.component.ts">
+<code-example header="my.component.ts">
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromFeature from '../reducers';
@@ -37,7 +37,7 @@ export class MyComponent implements OnInit {
 }
 </code-example>
 
-<code-example header="src/app/containers/my.component.spec.ts">
+<code-example header="my.component.spec.ts">
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { MyComponent } from './my.component';
@@ -112,7 +112,7 @@ describe('My Component', () => {
 
 You can use the projector function used by the selector by accessing the `.projector` property.
 
-<code-example header="src/app/reducers/my.reducer.ts">
+<code-example header="my.reducer.ts">
 export interface State {
   evenNums: number[];
   oddNums: number[];
@@ -133,7 +133,7 @@ export const selectTotal = createSelector(
 );
 </code-example>
 
-<code-example header="src/app/reducers/my.reducer.spec.ts">
+<code-example header="my.reducer.spec.ts">
 import * as fromMyReducers from './my-reducers';
 
 describe('My Selectors', () => {

@@ -1,8 +1,8 @@
 # Configuration Options
 
-<code-example header="@ngrx/router-store">
+<code-example header="RouterStore Config">
 interface StoreRouterConfig {
-  stateKey?: string | Selector<any, RouterReducerState<T>>;
+  stateKey?: string | Selector&lt;any, RouterReducerState&lt;T&gt;&gt;;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
 }
@@ -25,7 +25,7 @@ You then provide the serializer through the config.
 
 **In a custom serializer ts file**
 
-<code-example header="src/app/utils/custom-route-serializer.ts">
+<code-example header="custom-route-serializer.ts">
 import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
@@ -35,7 +35,7 @@ export interface RouterStateUrl {
   queryParams: Params;
 }
 
-export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
+export class CustomSerializer implements RouterStateSerializer&lt;RouterStateUrl&gt; {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     let route = routerState.root;
 
@@ -58,15 +58,15 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
 
 **In your root reducer**
 
-<code-example header="src/app/reducers/index.ts">
-export const reducers: ActionReducerMap<State> = {
+<code-example header="index.ts">
+export const reducers: ActionReducerMap&lt;State&gt; = {
   router: routerReducer
 };
 </code-example>
 
 **In your AppModule**
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
@@ -85,7 +85,7 @@ export class AppModule {}
 
 `ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
   navigationActionTiming: NavigationActionTiming.PostActivation,
 });

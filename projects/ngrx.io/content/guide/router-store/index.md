@@ -14,7 +14,7 @@ yarn add @ngrx/router-store
 
 ## Setup
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
 

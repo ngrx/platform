@@ -36,7 +36,7 @@ The `Effect` decorator provides metadata to register observable side-effects in 
 
 1.  Create an AuthEffects service that describes a source of login actions:
 
-<code-example header="src/app/effects/auth.effects.ts">
+<code-example header="auth.effects.ts">
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Action } from '@ngrx/store';
@@ -67,7 +67,7 @@ export class AuthEffects {
 2.  Register the EffectsModule in your application root imports. This EffectsModule _must_ be added to
     your root `NgModule` for the effects providers to be registered and start when your application is loaded.
 
-<code-example header="src/app/app.module.ts">
+<code-example header="app.module.ts">
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './effects/auth.effects';
 
@@ -79,7 +79,7 @@ export class AppModule {}
 
 For feature modules, register your effects via `EffectsModule.forFeature` method in your module's `imports`:
 
-<code-example header="src/app/admin/admin.module.ts">
+<code-example header="admin.module.ts">
 import { EffectsModule } from '@ngrx/effects';
 import { AdminEffects } from './effects/admin.effects';
 
