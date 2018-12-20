@@ -18,7 +18,7 @@
     "example:test": "jest -c projects/example-app/jest.config.js --watch",
     "example:build":"yarn cli build --prod",
     "example:build:prod": "yarn example:build -- --base-href \"/platform/example-app/\"",
-    "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
+    "ci": "yarn run test && nyc report --reporter=text-lcov",
     "prettier": "prettier --write \"**/*.ts\"",
     "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'yarn run test:unit'",
     "postinstall": "opencollective postinstall",
