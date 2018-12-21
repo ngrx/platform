@@ -65,7 +65,7 @@
     "~~build": "ng build",
     "post~~build": "yarn build-404-page",
     "~~http-server": "http-server",
-    "copy-404-page": "node --eval \"require('shelljs').cp('dist/ngrx.io/index.html', 'dist/ngrx.io/404.html')\""
+    "copy-404-page": "node scripts/copy-404-page"
   },
   "engines": {
     "node": ">=10.9.0 <11.2.0",
