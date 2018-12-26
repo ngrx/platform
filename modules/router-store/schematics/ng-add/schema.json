@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxRouterStore",
+  "title": "NgRx Router Store Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add @ngrx/router-store as dependency to package.json (e.g., --skipPackageJson)."
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the router store.",
+      "visible": false
+    },
+    "module": {
+      "type": "string",
+      "default": "app",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "subtype": "filepath"
+    }
+  },
+  "required": []
+}
