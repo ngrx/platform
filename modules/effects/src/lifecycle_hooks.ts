@@ -18,13 +18,12 @@ import { Action } from '@ngrx/store';
  *
  * ```ts
  * class EffectWithIdentifier implements OnIdentifyEffects {
- * private effectIdentifier: string;
+ *  constructor(private effectIdentifier: string) {}
  *
- * ngrxOnIdentifyEffects() {
- *   return this.effectIdentifier;
- * }
+ *  ngrxOnIdentifyEffects() {
+ *    return this.effectIdentifier;
+ *  }
  *
- * constructor(private effectIdentifier: string) {}
  * ```
  */
 export interface OnIdentifyEffects {
@@ -94,10 +93,9 @@ export const onRunEffectsKey: keyof OnRunEffects = 'ngrxOnRunEffects';
  *
  * ```ts
  * class EffectWithInitAction implements OnInitEffects {
- *
- * ngrxOnInitEffects() {
- *   return { type: '[EffectWithInitAction] Init' };
- * }
+ *  ngrxOnInitEffects() {
+ *    return { type: '[EffectWithInitAction] Init' };
+ *  }
  * ```
  */
 export interface OnInitEffects {
