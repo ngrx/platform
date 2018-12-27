@@ -15,6 +15,12 @@
       "description": "The path to create the router store.",
       "visible": false
     },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "visible": false,
+      "aliases": ["p"]
+    },
     "module": {
       "type": "string",
       "default": "app",

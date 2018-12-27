@@ -4,7 +4,7 @@
       "aliases": ["init"],
       "factory": "./ng-add",
       "schema": "./ng-add/schema.json",
-      "description": "Add router store class"
+      "description": "Register @ngrx/router-store within your application"
     }
   }
 }
