@@ -96,7 +96,7 @@ export class UserEffects implements OnRunEffects {
 }
 </code-example>
 
-### EffectWithIdentifier
+### Identify Effects Uniquely
 
 By default, each Effects class is registered once regardless of how many times the Effect class is loaded.
 By implementing this interface, you define a unique identifier to register an Effects class instance multiple times.
