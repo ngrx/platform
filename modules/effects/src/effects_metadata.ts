@@ -1,6 +1,8 @@
-import { compose } from '@ngrx/store';
+import { compose, Action } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 const METADATA_KEY = '__@ngrx/effects__';
+const METADATA_FUNCTION_KEY = '__@ngrx/effects_function__';
 
 export interface EffectMetadata<T> {
   propertyName: Extract<keyof T, string>;
@@ -42,11 +44,26 @@ export function getSourceForInstance<T>(instance: T): T {
   return Object.getPrototypeOf(instance);
 }
 
+export function getEffectsFunctions<T>(instance: T): Array<EffectMetadata<T>> {
+  return (Object.getOwnPropertyNames(instance) as Extract<keyof T, string>[])
+    .filter(propertyName =>
+      instance[propertyName].hasOwnProperty(METADATA_FUNCTION_KEY)
+    )
+    .map(propertyName => ({
+      propertyName,
+      dispatch: (<any>instance[propertyName])[METADATA_FUNCTION_KEY].dispatch,
+    }));
+}
+
 export function getSourceMetadata<T>(instance: T): Array<EffectMetadata<T>> {
-  return compose(
+  const effectsDecorators = compose(
     getEffectMetadataEntries,
     getSourceForInstance
   )(instance);
+
+  const effectsFunctions = getEffectsFunctions(instance);
+
+  return effectsDecorators.concat(effectsFunctions);
 }
 
 export type EffectsMetadata<T> = {
@@ -61,4 +78,25 @@ export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   }
 
   return metadata;
+}
+
+export function effect<T extends Action>(
+  source: () => Observable<T>,
+  options: { dispatch: false }
+): Observable<T>;
+export function effect<T extends Action>(
+  source: () => Observable<T>,
+  options?: { dispatch: true }
+): Observable<T>;
+export function effect<T extends Action>(
+  source: () => Observable<T>,
+  { dispatch = true } = {}
+): Observable<T> {
+  const effect = source();
+  Object.defineProperty(effect, METADATA_FUNCTION_KEY, {
+    value: {
+      dispatch,
+    },
+  })[METADATA_FUNCTION_KEY];
+  return effect;
 }
