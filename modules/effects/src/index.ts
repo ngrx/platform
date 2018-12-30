@@ -1,8 +1,6 @@
-export {
-  Effect,
-  EffectsMetadata,
-  getEffectsMetadata,
-} from './effects_metadata';
+export { createEffect } from './effect_creator';
+export { Effect } from './effect_decorator';
+export { getEffectsMetadata } from './effects_metadata';
 export { mergeEffects } from './effects_resolver';
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';

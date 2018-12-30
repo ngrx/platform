@@ -3,7 +3,8 @@ import { merge, Notification, Observable } from 'rxjs';
 import { ignoreElements, map, materialize } from 'rxjs/operators';
 
 import { EffectNotification } from './effect_notification';
-import { getSourceForInstance, getSourceMetadata } from './effects_metadata';
+import { getSourceMetadata } from './effects_metadata';
+import { getSourceForInstance } from './utils';
 
 export function mergeEffects(
   sourceInstance: any
