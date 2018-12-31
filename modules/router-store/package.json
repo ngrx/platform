@@ -9,7 +9,9 @@
   "keywords": [
     "RxJS",
     "Angular",
-    "Redux"
+    "Redux",
+    "Schematics",
+    "Angular CLI"
   ],
   "author": "NgRx",
   "license": "MIT",
@@ -24,6 +26,7 @@
     "@ngrx/store": "0.0.0-PLACEHOLDER",
     "rxjs": "RXJS_VERSION"
   },
+  "schematics": "MODULE_SCHEMATICS_COLLECTION",
   "ng-update": {
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
     "migrations": "NG_UPDATE_MIGRATIONS"
