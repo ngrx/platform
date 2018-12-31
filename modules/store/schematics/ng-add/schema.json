@@ -7,14 +7,19 @@
     "skipPackageJson": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
+      "description": "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
     },
     "path": {
       "type": "string",
       "format": "path",
       "description": "The path to create the state.",
       "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "visible": false,
+      "aliases": ["p"]
     },
     "module": {
       "type": "string",

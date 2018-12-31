@@ -12,8 +12,7 @@
     "skipPackageJson": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Do not add @ngrx/effects as dependency to package.json (e.g., --skipPackageJson)."
+      "description": "Do not add @ngrx/effects as dependency to package.json (e.g., --skipPackageJson)."
     },
     "path": {
       "type": "string",
@@ -30,6 +29,12 @@
       "type": "boolean",
       "default": true,
       "description": "Specifies if a spec file is generated."
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "visible": false,
+      "aliases": ["p"]
     },
     "module": {
       "type": "string",
