@@ -14,6 +14,7 @@ import {
   Action,
 } from '../';
 import { StoreConfig } from '../src/store_module';
+import { combineReducers } from '../src/utils';
 import {
   counterReducer,
   INCREMENT,
@@ -373,11 +374,11 @@ describe('ngRx Store', () => {
     });
 
     it('should dispatch an update reducers action when a feature is added', () => {
-      reducerManager.addFeature(
-        createFeature({
-          key: 'feature1',
-        })
-      );
+      reducerManager.addFeature({
+        key: 'feature1',
+        reducers: {},
+        reducerFactory: <any>combineReducers,
+      });
 
       expect(reducerManagerDispatcherSpy).toHaveBeenCalledWith({
         type: UPDATE,
@@ -387,12 +388,16 @@ describe('ngRx Store', () => {
 
     it('should dispatch an update reducers action when multiple features are added', () => {
       reducerManager.addFeatures([
-        createFeature({
+        {
           key: 'feature1',
-        }),
-        createFeature({
+          reducers: {},
+          reducerFactory: <any>combineReducers,
+        },
+        {
           key: 'feature2',
-        }),
+          reducers: {},
+          reducerFactory: <any>combineReducers,
+        },
       ]);
 
       expect(reducerManagerDispatcherSpy).toHaveBeenCalledTimes(1);
@@ -546,12 +551,41 @@ describe('ngRx Store', () => {
           }),
         ],
       });
+
       const mockStore = TestBed.get(Store);
       const action = { type: INCREMENT };
+
       mockStore.dispatch(action);
 
       expect(metaReducerSpy1).toHaveBeenCalledWith(counterReducer);
       expect(metaReducerSpy2).toHaveBeenCalledWith(counterReducer2);
+    });
+
+    it('should initial state with value', (done: DoneFn) => {
+      const counterInitialState = 2;
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({}),
+          StoreModule.forFeature(
+            'counterState',
+            { counter: counterReducer },
+            {
+              initialState: { counter: counterInitialState },
+              metaReducers: [metaReducerContainer.metaReducer1],
+            }
+          ),
+        ],
+      });
+
+      const mockStore = TestBed.get(Store);
+
+      mockStore.pipe(take(1)).subscribe({
+        next(val: any) {
+          expect(val['counterState'].counter).toEqual(counterInitialState);
+        },
+        error: done,
+        complete: done,
+      });
     });
   });
 
