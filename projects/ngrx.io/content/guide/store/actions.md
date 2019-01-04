@@ -104,7 +104,7 @@ Instead of putting the action type string directly in the class, the `[Login Pag
 
 ## Next Steps
 
-Actions only responsibility are to express unique events and intents. Learn how they are handled in the guides below.
+Action's only responsibilities are to express unique events and intents. Learn how they are handled in the guides below.
 
 - [Reducers](guide/store/reducers)
 - [Effects](guide/effects)
