@@ -24,6 +24,15 @@ export const _STORE_REDUCERS = new InjectionToken(
 export const _FEATURE_REDUCERS = new InjectionToken(
   '@ngrx/store Internal Feature Reducers'
 );
+
+export const _FEATURE_CONFIGS = new InjectionToken(
+  '@ngrx/store Internal Feature Configs'
+);
+
+export const _STORE_FEATURES = new InjectionToken(
+  '@ngrx/store Internal Store Features'
+);
+
 export const _FEATURE_REDUCERS_TOKEN = new InjectionToken(
   '@ngrx/store Internal Feature Reducers Token'
 );

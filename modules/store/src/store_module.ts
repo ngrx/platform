@@ -29,6 +29,8 @@ import {
   FEATURE_REDUCERS,
   _FEATURE_REDUCERS,
   _FEATURE_REDUCERS_TOKEN,
+  _STORE_FEATURES,
+  _FEATURE_CONFIGS,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -56,7 +58,7 @@ export class StoreRootModule {
 @NgModule({})
 export class StoreFeatureModule implements OnDestroy {
   constructor(
-    @Inject(STORE_FEATURES) private features: StoreFeature<any, any>[],
+    @Inject(_STORE_FEATURES) private features: StoreFeature<any, any>[],
     @Inject(FEATURE_REDUCERS) private featureReducers: ActionReducerMap<any>[],
     private reducerManager: ReducerManager,
     root: StoreRootModule
@@ -145,12 +147,12 @@ export class StoreModule {
   static forFeature<T, V extends Action = Action>(
     featureName: string,
     reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-    config?: StoreConfig<T, V>
+    config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
   ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature<T, V extends Action = Action>(
     featureName: string,
     reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
-    config?: StoreConfig<T, V>
+    config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
   ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature(
     featureName: string,
@@ -159,22 +161,39 @@ export class StoreModule {
       | InjectionToken<ActionReducerMap<any, any>>
       | ActionReducer<any, any>
       | InjectionToken<ActionReducer<any, any>>,
-    config: StoreConfig<any, any> = {}
+    config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
   ): ModuleWithProviders<StoreFeatureModule> {
     return {
       ngModule: StoreFeatureModule,
       providers: [
         {
+          provide: _FEATURE_CONFIGS,
+          multi: true,
+          useValue: config,
+        },
+        {
           provide: STORE_FEATURES,
           multi: true,
-          useValue: <StoreFeature<any, any>>{
+          useValue: {
             key: featureName,
-            reducerFactory: config.reducerFactory
-              ? config.reducerFactory
-              : combineReducers,
-            metaReducers: config.metaReducers ? config.metaReducers : [],
-            initialState: config.initialState,
+            reducerFactory:
+              !(config instanceof InjectionToken) && config.reducerFactory
+                ? config.reducerFactory
+                : combineReducers,
+            metaReducers:
+              !(config instanceof InjectionToken) && config.metaReducers
+                ? config.metaReducers
+                : [],
+            initialState:
+              !(config instanceof InjectionToken) && config.initialState
+                ? config.initialState
+                : undefined,
           },
+        },
+        {
+          provide: _STORE_FEATURES,
+          deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+          useFactory: _createFeatureStore,
         },
         { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
         {
@@ -204,6 +223,27 @@ export function _createStoreReducers(
   tokenReducers: ActionReducerMap<any, any>
 ) {
   return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
+}
+
+export function _createFeatureStore(
+  injector: Injector,
+  configs: StoreConfig<any, any>[] | InjectionToken<StoreConfig<any, any>>[],
+  featureStores: StoreFeature<any, any>[]
+) {
+  return featureStores.map((feat, index) => {
+    if (configs[index] instanceof InjectionToken) {
+      const conf = injector.get(configs[index]);
+      return {
+        key: feat.key,
+        reducerFactory: conf.reducerFactory
+          ? conf.reducerFactory
+          : combineReducers,
+        metaReducers: conf.metaReducers ? conf.metaReducers : [],
+        initialState: conf.initialState,
+      };
+    }
+    return feat;
+  });
 }
 
 export function _createFeatureReducers(
