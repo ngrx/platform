@@ -95,14 +95,13 @@ describe(`Store Modules`, () => {
     });
 
     it(`should accept configurations`, () => {
-      expect(featureAReducerFactory).toHaveBeenCalledWith(
-        { a: featureAReducer },
-        featureAInitial()
-      );
-      expect(rootReducerFactory).toHaveBeenCalledWith(
-        { fruit: rootFruitReducer },
-        rootInitial
-      );
+      expect(featureAReducerFactory).toHaveBeenCalledWith({
+        a: featureAReducer,
+      });
+
+      expect(rootReducerFactory).toHaveBeenCalledWith({
+        fruit: rootFruitReducer,
+      });
     });
 
     it(`should should use config.reducerFactory`, () => {
