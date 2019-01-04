@@ -70,7 +70,7 @@ export const selectAllBooks = (state: AppState) => state.allBooks;
 export const selectVisibleBooks = createSelector(
   selectUser,
   selectAllBooks,
-  (selectedUser: User, allBooks: Books[]) => {
+  (selectedUser: User, allBooks: Book[]) => {
     if (selectedUser && allBooks) {
       return allBooks.filter((book: Book) => book.userId === selectedUser.id);
     } else {
