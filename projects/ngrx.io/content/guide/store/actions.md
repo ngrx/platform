@@ -78,7 +78,7 @@ The `Login` action has very specific context about where the action came from an
 
 - The category of the action is captured within the square brackets `[]`.
 - The category is used to group actions for a particular area, whether it be a component page, backend API, or browser API.
-- The `Login` text after the category is a description about what event occurred from this actions. In this case, the user clicked a login button from the login page to attempt to authenticate with a username and password.
+- The `Login` text after the category is a description about what event occurred from this action. In this case, the user clicked a login button from the login page to attempt to authenticate with a username and password.
 
 ## Creating action unions
 
