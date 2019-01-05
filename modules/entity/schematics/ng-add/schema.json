@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxEntity",
+  "title": "NgRx Entity Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Do not add @ngrx/entity as dependency to package.json (e.g., --skipPackageJson)."
+    }
+  },
+  "required": []
+}
