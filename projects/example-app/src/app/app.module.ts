@@ -17,7 +17,6 @@ import { reducers, metaReducers } from '@example-app/reducers';
 import { schema } from '@example-app/db';
 
 import { AppComponent } from '@example-app/core/containers/app.component';
-import { environment } from '../environments/environment';
 import { AppRoutingModule } from '@example-app/app-routing.module';
 
 @NgModule({
@@ -55,7 +54,9 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
      */
     StoreDevtoolsModule.instrument({
       name: 'NgRx Book Store App',
-      logOnly: environment.production,
+
+      // In a production build you would want to disable the Store Devtools
+      // logOnly: environment.production,
     }),
 
     /**

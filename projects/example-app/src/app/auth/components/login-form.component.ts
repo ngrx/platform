@@ -82,7 +82,7 @@ export class LoginFormComponent implements OnInit {
   @Output() submitted = new EventEmitter<Credentials>();
 
   form: FormGroup = new FormGroup({
-    username: new FormControl(''),
+    username: new FormControl('ngrx'),
     password: new FormControl(''),
   });
 
