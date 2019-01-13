@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot,
   NavigationCancel,
   NavigationError,
+  ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Store, ScannedActionsSubject } from '@ngrx/store';
 import { filter, first, mapTo, take } from 'rxjs/operators';
@@ -84,6 +85,51 @@ describe('integration spec', () => {
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
 
+        done();
+      });
+  });
+
+  it('should have the routerState in the payload', (done: any) => {
+    const actionLog: RouterAction<any>[] = [];
+    const reducer = (state: string = '', action: RouterAction<any>) => {
+      switch (action.type) {
+        case ROUTER_CANCEL:
+        case ROUTER_ERROR:
+        case ROUTER_NAVIGATED:
+        case ROUTER_NAVIGATION:
+        case ROUTER_REQUEST:
+          actionLog.push(action);
+          return state;
+        default:
+          return state;
+      }
+    };
+
+    createTestModule({
+      reducers: { reducer },
+      canActivate: (
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+      ) => state.url !== 'next',
+    });
+
+    const router: Router = TestBed.get(Router);
+    const log = logOfRouterAndActionsAndStore();
+
+    const hasRouterState = (action: RouterAction<any>) =>
+      !!action.payload.routerState;
+
+    router
+      .navigateByUrl('/')
+      .then(() => {
+        expect(actionLog.filter(hasRouterState).length).toBe(actionLog.length);
+      })
+      .then(() => {
+        actionLog.splice(0);
+        return router.navigateByUrl('next');
+      })
+      .then(() => {
+        expect(actionLog.filter(hasRouterState).length).toBe(actionLog.length);
         done();
       });
   });
