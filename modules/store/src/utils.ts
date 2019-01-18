@@ -4,6 +4,7 @@ import {
   ActionReducerFactory,
   ActionReducerMap,
   MetaReducer,
+  InitialState,
 } from './models';
 
 export function combineReducers<T, V extends Action = Action>(
@@ -92,10 +93,16 @@ export function createReducerFactory<T, V extends Action = Action>(
   metaReducers?: MetaReducer<T, V>[]
 ): ActionReducerFactory<T, V> {
   if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-    return compose.apply(null, [...metaReducers, reducerFactory]);
+    reducerFactory = compose.apply(null, [...metaReducers, reducerFactory]);
   }
 
-  return reducerFactory;
+  return (reducers: ActionReducerMap<T, V>, initialState?: InitialState<T>) => {
+    const reducer = reducerFactory(reducers);
+    return (state: T | undefined, action: V) => {
+      state = state === undefined ? (initialState as T) : state;
+      return reducer(state, action);
+    };
+  };
 }
 
 export function createFeatureReducerFactory<T, V extends Action = Action>(
