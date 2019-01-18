@@ -551,7 +551,7 @@ export function createSelectorFactory(
     const memoizedState = defaultMemoize(function(state: any, props: any) {
       // createSelector works directly on state
       // e.g. createSelector((state, props) => ...)
-      if (selectors.length === 0) {
+      if (selectors.length === 0 && props !== undefined) {
         return projector.apply(null, [state, props]);
       }
 

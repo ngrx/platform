@@ -148,7 +148,10 @@ describe('Selectors', () => {
       const state = { counter: {} };
 
       const selector = (createSelector(projectFn) as any)(state);
-      expect(projectFn).toHaveBeenCalledWith({ counter: {} }, undefined);
+
+      // the projector still fires but without arguments,
+      // this because there are no selectors and props
+      expect(projectFn).toHaveBeenCalledWith();
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
