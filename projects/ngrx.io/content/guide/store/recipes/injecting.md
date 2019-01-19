@@ -89,3 +89,36 @@ export function getMetaReducers(
 })
 export class AppModule {}
 </code-example>
+
+
+## Injecting Feature Config
+
+To inject the feature store configuration into your module, use should an `InjectionToken` and a `Provider` to register the feature config object through dependency injection.
+
+<code-example header="feature.module.ts">
+import { NgModule, InjectionToken } from '@angular/core';
+import { StoreModule, StoreConfig } from '@ngrx/store';
+import { SomeService } from './some.service';
+
+import * as fromFeature from './reducers';
+
+export const FEATURE_CONFIG_TOKEN = new InjectionToken&lt;StoreConfig&lt;fromFeature.State&gt;&gt;('Feature Config');
+
+export function getConfig(someService: SomeService): StoreConfig&lt;fromFeature.State&gt; {
+  // return the config synchronously.
+  return {initialState: someService.getInitialState()};
+}
+
+@NgModule({
+  imports: [StoreModule.forFeature('feature', fromFeature.reducers, FEATURE_CONFIG_TOKEN)],
+  providers: [
+    {
+      provide: FEATURE_CONFIG_TOKEN,
+      deps: [SomeService],
+      useFactory: getConfig,
+    },
+  ],
+})
+export class FeatureModule {}
+</code-example>
+
