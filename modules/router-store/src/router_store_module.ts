@@ -301,7 +301,10 @@ export class StoreRouterConnectingModule {
   }
 
   private dispatchRouterNavigated(event: NavigationEnd): void {
-    this.dispatchRouterAction(ROUTER_NAVIGATED, { event });
+    const routerState = this.serializer.serialize(
+      this.router.routerState.snapshot
+    );
+    this.dispatchRouterAction(ROUTER_NAVIGATED, { event, routerState });
   }
 
   private dispatchRouterAction(
