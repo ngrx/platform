@@ -13,6 +13,7 @@ import {
   RoutesRecognized,
   NavigationStart,
   Event,
+  RouterEvent,
 } from '@angular/router';
 import { select, Selector, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
@@ -49,6 +50,12 @@ export interface StoreRouterConfig<
    * set this property to NavigationActionTiming.PostActivation.
    */
   navigationActionTiming?: NavigationActionTiming;
+}
+
+interface StoreRouterActionPayload {
+  event: RouterEvent;
+  routerState?: SerializedRouterStateSnapshot;
+  storeState?: any;
 }
 
 export enum NavigationActionTiming {
@@ -297,7 +304,10 @@ export class StoreRouterConnectingModule {
     this.dispatchRouterAction(ROUTER_NAVIGATED, { event });
   }
 
-  private dispatchRouterAction(type: string, payload: any): void {
+  private dispatchRouterAction(
+    type: string,
+    payload: StoreRouterActionPayload
+  ): void {
     this.trigger = RouterTrigger.ROUTER;
     try {
       this.store.dispatch({
