@@ -143,6 +143,17 @@ describe('Selectors', () => {
       });
     });
 
+    it('should not short circuit to the projector fn if there are no selectors and props', () => {
+      const projectFn = jasmine.createSpy('projectionFn');
+      const state = { counter: {} };
+
+      const selector = (createSelector(projectFn) as any)(state);
+
+      // the projector still fires but without arguments,
+      // this because there are no selectors and props
+      expect(projectFn).toHaveBeenCalledWith();
+    });
+
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
       const selector = createSelector(
