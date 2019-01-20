@@ -66,7 +66,7 @@ export class MoviesService {
 The component has multiple responsibilities:
 
 - Managing the _state_ of the movies.
-- Using the service to perform a _side effect_, in reaching out to an external API to fetch the movies
+- Using the service to perform a _side effect_, reaching out to an external API to fetch the movies
 - Changing the _state_ of the movies within the component.
 
 `Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important as you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
@@ -92,7 +92,7 @@ export class MoviesPageComponent {
 }
 </code-example>
 
-The movies are still fetched through the `MoviesService`, but the component is no longer concerned with how the movies are fetched and loaded. Its only responsible for declaring its _intent_ to load movies, and using selectors to access movie list data. Effects are where the asynchronous activity of fetching movies happens. Your component becomes easier to test, and less responsible for the data it needs.
+The movies are still fetched through the `MoviesService`, but the component is no longer concerned with how the movies are fetched and loaded. It's only responsible for declaring its _intent_ to load movies and using selectors to access movie list data. Effects are where the asynchronous activity of fetching movies happens. Your component becomes easier to test and less responsible for the data it needs.
 
 ## Writing Effects
 
@@ -106,7 +106,7 @@ Effects are injectable service classes with distinct parts:
 - Effects are subscribed to the `Store` observable. 
 - Services are injected into effects to interact with external APIs and handle streams.
 
-To show how you handle loading movies from the example above, lets look at `MovieEffects`.
+To show how you handle loading movies from the example above, let's look at `MovieEffects`.
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
@@ -136,7 +136,7 @@ export class MovieEffects {
 }
 </code-example>
 
-The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `mergeMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. Its also important to [handle errors] when dealing with observable streams so that the effects continue running.
+The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `mergeMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. Its also important to [handle errors](#handling-errors) when dealing with observable streams so that the effects continue running.
 
 <div class="alert is-important">
 
@@ -177,7 +177,7 @@ export class MovieEffects {
 </code-example>
 
 
-The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. You still use the `catchError` operator to handle error events, but the empty observable returns an observable of a new action that is dispatched to the `Store`.
+The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. You still use the `catchError` operator to handle error events, but return an observable of a new action that is dispatched to the `Store`.
 
 ## Registering root effects
 
@@ -194,6 +194,12 @@ import { MovieEffects } from './effects/movie.effects';
 })
 export class AppModule {}
 </code-example>
+
+<div class="alert is-critical">
+
+The `EffectsModule.forRoot()` method must be added to your `AppModule` imports even if you don't register any root-level effects.
+
+</div>
 
 Effects start running immediately after the AppModule is loaded to ensure they are listening for all relevant actions as soon as possible.
 
