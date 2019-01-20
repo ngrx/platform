@@ -21,7 +21,6 @@
     "project": {
       "type": "string",
       "description": "The name of the project.",
-      "visible": false,
       "aliases": ["p"]
     },
     "spec": {
