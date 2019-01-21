@@ -19,7 +19,9 @@ export const ROUTER_REQUEST = '@ngrx/router-store/request';
 /**
  * Payload of ROUTER_REQUEST
  */
-export type RouterRequestPayload<T extends BaseRouterStoreState> = {
+export type RouterRequestPayload<
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
   routerState: T;
   event: NavigationStart;
 };
@@ -42,7 +44,9 @@ export const ROUTER_NAVIGATION = '@ngrx/router-store/navigation';
 /**
  * Payload of ROUTER_NAVIGATION.
  */
-export type RouterNavigationPayload<T extends BaseRouterStoreState> = {
+export type RouterNavigationPayload<
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
   routerState: T;
   event: RoutesRecognized;
 };
@@ -65,7 +69,10 @@ export const ROUTER_CANCEL = '@ngrx/router-store/cancel';
 /**
  * Payload of ROUTER_CANCEL.
  */
-export type RouterCancelPayload<T, V extends BaseRouterStoreState> = {
+export type RouterCancelPayload<
+  T,
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
   routerState: V;
   storeState: T;
   event: NavigationCancel;
@@ -90,7 +97,10 @@ export const ROUTER_ERROR = '@ngrx/router-store/error';
 /**
  * Payload of ROUTER_ERROR.
  */
-export type RouterErrorPayload<T, V extends BaseRouterStoreState> = {
+export type RouterErrorPayload<
+  T,
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
   routerState: V;
   storeState: T;
   event: NavigationError;
@@ -115,7 +125,9 @@ export const ROUTER_NAVIGATED = '@ngrx/router-store/navigated';
 /**
  * Payload of ROUTER_NAVIGATED.
  */
-export type RouterNavigatedPayload<T extends BaseRouterStoreState> = {
+export type RouterNavigatedPayload<
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+> = {
   routerState: T;
   event: NavigationEnd;
 };
