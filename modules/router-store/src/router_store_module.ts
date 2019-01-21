@@ -13,6 +13,7 @@ import {
   RoutesRecognized,
   NavigationStart,
   Event,
+  RouterEvent,
 } from '@angular/router';
 import { select, Selector, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
@@ -49,6 +50,12 @@ export interface StoreRouterConfig<
    * set this property to NavigationActionTiming.PostActivation.
    */
   navigationActionTiming?: NavigationActionTiming;
+}
+
+interface StoreRouterActionPayload {
+  event: RouterEvent;
+  routerState?: SerializedRouterStateSnapshot;
+  storeState?: any;
 }
 
 export enum NavigationActionTiming {
@@ -281,7 +288,6 @@ export class StoreRouterConnectingModule {
 
   private dispatchRouterCancel(event: NavigationCancel): void {
     this.dispatchRouterAction(ROUTER_CANCEL, {
-      routerState: this.routerState!,
       storeState: this.storeState,
       event,
     });
@@ -289,20 +295,31 @@ export class StoreRouterConnectingModule {
 
   private dispatchRouterError(event: NavigationError): void {
     this.dispatchRouterAction(ROUTER_ERROR, {
-      routerState: this.routerState!,
       storeState: this.storeState,
       event: new NavigationError(event.id, event.url, `${event}`),
     });
   }
 
   private dispatchRouterNavigated(event: NavigationEnd): void {
-    this.dispatchRouterAction(ROUTER_NAVIGATED, { event });
+    const routerState = this.serializer.serialize(
+      this.router.routerState.snapshot
+    );
+    this.dispatchRouterAction(ROUTER_NAVIGATED, { event, routerState });
   }
 
-  private dispatchRouterAction(type: string, payload: any): void {
+  private dispatchRouterAction(
+    type: string,
+    payload: StoreRouterActionPayload
+  ): void {
     this.trigger = RouterTrigger.ROUTER;
     try {
-      this.store.dispatch({ type, payload });
+      this.store.dispatch({
+        type,
+        payload: {
+          routerState: this.routerState,
+          ...payload,
+        },
+      });
     } finally {
       this.trigger = RouterTrigger.NONE;
     }
