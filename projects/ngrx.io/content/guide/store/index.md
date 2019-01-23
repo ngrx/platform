@@ -9,47 +9,9 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 - [Selectors](guide/store/selectors) are pure functions used to select, derive and compose pieces of state.
 - State accessed with the `Store`, an observable of state and an observer of actions.
 
-## Installation
+## Installation 
 
-```sh
-npm install @ngrx/store --save
-```
-
-```sh
-yarn add @ngrx/store
-```
-
-## Alternative Install - Adding to your Angular CLI Project(s)
-
-If your project is using the Angular CLI 6+ then you can utilize the following `ng add` commands <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
-
-### Add NgRx Store
-```sh
-ng add @ngrx/store
-```
-
-This can be a real time-saver as running the above command will automate the following steps: 
-
-1. Update `package.json` > `depedencies` with `@ngrx/store`.
-2. Run an `npm install` to install those depedencies. 
-3. Create a `src/app/reducers` folder
-4. Create a shell `src/app/reducers/index.ts` with an empty `State` interface, an empty `reducers` map, and empty `metaReducers` array
-5. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot(reducers, { metaReducers })`
-
-
-### Add NgRx Store DevTools
-
-To add the NgRx Store DevTools to your project run the following:
-
-```sh
-ng add @ngrx/store-devtools
-```
-
-This command will automate the following steps:
-
-1. Update `package.json` > `depedencies` with `@ngrx/store-devtools`.
-2. Run an `npm install` to install those depedencies. 
-3. Update your `src/app.module.ts` > `imports` array with `StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })`
+Detailed installation instructions can be found on the [Installation](guide/store/install) page.
 
 ## Tutorial
 
