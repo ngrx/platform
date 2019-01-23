@@ -13,7 +13,7 @@ version: 2
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.8.0
 var_2: &run_in_node
   docker:
-    - image: circleci/node:11.7
+    - image: circleci/node:10.12
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
@@ -72,7 +72,7 @@ jobs:
             - bin/*
   test:
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:10.12-browsers
     steps:
       - checkout
       - restore_cache:
