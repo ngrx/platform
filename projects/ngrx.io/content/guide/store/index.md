@@ -19,7 +19,7 @@ npm install @ngrx/store --save
 yarn add @ngrx/store
 ```
 
-## Alternative Install using Angular CLI Schematics
+## Alternative Install - Adding to your Angular CLI Project(s)
 
 If your project is using the Angular CLI 6+ then you can utilize the following `ng add` commands <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
