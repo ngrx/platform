@@ -16,3 +16,16 @@ For more information on using `yarn` check out the docs <a href="https://yarnpkg
 yarn add @ngrx/entity
 ```
 
+## Installing with `ng add`
+
+If your project is using the Angular CLI 6+ then you can install the Entity to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+
+```sh
+ng add @ngrx/entity
+```
+
+This command will automate the following steps:
+
+1. Update `package.json` > `depedencies` with `@ngrx/entity`.
+2. Run `npm install` to install those depedencies. 
+

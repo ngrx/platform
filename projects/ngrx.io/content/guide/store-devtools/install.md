@@ -23,8 +23,15 @@ If your project is using the Angular CLI 6+ then you can install the Store Devto
 ng add @ngrx/store-devtools
 ```
 
+### Optional `ng add` flags
+
+* path - path to the module that you wish to add the import for the `StoreDevtoolsModule` to.
+* project - name of the project defined in your `angular.json` to help locating the module to add the `StoreDevtoolsModule` to.
+* module - name of file containing the module that you wish to add the import for the `StoreDevtoolsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`;
+* maxAge - number (>1) | 0 - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Default is 25 for performance reasons.
+
 This command will automate the following steps:
 
 1. Update `package.json` > `depedencies` with `@ngrx/store-devtools`.
 2. Run `npm install` to install those depedencies. 
-3. Update your `src/app.module.ts` > `imports` array with `StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })`
+3. Update your `src/app.module.ts` > `imports` array with `StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })`. The maxAge property will be set to the flag `maxAge` if provided. 

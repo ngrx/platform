@@ -24,10 +24,18 @@ If your project is using the Angular CLI 6+ then you can install the Store to yo
 ng add @ngrx/store
 ```
 
+### Optional `ng add` flags
+
+* path - path to the module that you wish to add the import for the `StoreModule` to.
+* project - name of the project defined in your `angular.json` to help locating the module to add the `StoreModule` to.
+* module - name of file containing the module that you wish to add the import for the `StoreModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`;
+* statePath - The file path to create the state in. By default, this is `reducers`.
+* stateInterface - The type literal of the defined interface for the state. By default, this is `State`.
+
 This command will automate the following steps:
 
 1. Update `package.json` > `depedencies` with `@ngrx/store`.
 2. Run `npm install` to install those depedencies. 
-3. Create a `src/app/reducers` folder
-4. Create a `src/app/reducers/index.ts` file with an empty `State` interface, an empty `reducers` map, and an empty `metaReducers` array
-5. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot(reducers, { metaReducers })`
+3. Create a `src/app/reducers` folder, unless the `statePath` flag is provided, in which case this would be created based on the flag.
+4. Create a `src/app/reducers/index.ts` file with an empty `State` interface, an empty `reducers` map, and an empty `metaReducers` array. This may be created under a different directory if the `statePath` flag is provided.
+5. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot(reducers, { metaReducers })`. If you provided flags then the command will attempt to locate and update module found by the flags.
