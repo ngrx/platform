@@ -1,31 +1,81 @@
 # Instrumentation options
 
-When you call the instrumentation, you can give an optional configuration object:
+When you call the instrumentation, you can give an optional configuration object. As stated, each property in the object provided is optional.
 
-## maxAge
+## Configuration Object Properties
+
+### `maxAge`
 
 number (>1) | false - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. Default is `false` (infinite).
 
-## logOnly
+### `logOnly`
 
 boolean - connect to the Devtools Extension in log-only mode. Default is `false` which enables all extension [features](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#features).
 
-## name
+### `name`
 
 string - the instance name to be showed on the monitor page. Default value is _NgRx Store DevTools_.
 
-## monitor
+### `monitor`
 
 function - the monitor function configuration that you want to hook.
 
-## actionSanitizer
+### `actionSanitizer`
 
 function - takes `action` object and id number as arguments, and should return `action` object back.
 
-## stateSanitizer
+### `stateSanitizer`
 
 function = takes `state` object and index as arguments, and should return `state` object back.
 
-## serialize
+### `serialize`
 
 false | configuration object - Handle the way you want to serialize your state, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#serialize).
+
+### `actionsBlacklist` / `actionsWhitelist`
+
+array of strings as regex - actions types to be hidden / shown in the monitors (while passed to the reducers), [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#actionsblacklist--actionswhitelist).
+
+### `predicate`
+
+function - called for every action before sending, takes state and action object, and returns true in case it allows sending the current data to the monitor, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#predicate).
+
+### `features`
+
+object containing properties for features than can be enabled or disabled in the browser extension Redux DevTools. These options are passed through to the browser extension verbatim. By default, all features are enabled. For more information visit the ReduxDev Tools Docs, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#features)
+
+```typescript
+features: {
+    pause: true, // start/pause recording of dispatched actions
+    lock: true, // lock/unlock dispatching actions and side effects    
+    persist: true, // persist states on page reloading
+    export: true, // export history of actions in a file
+    import: 'custom', // import history of actions from a file
+    jump: true, // jump back and forth (time travelling)
+    skip: true, // skip (cancel) actions
+    reorder: true, // drag and drop actions in the history list 
+    dispatch: true, // dispatch custom actions or action creators
+    test: true // generate tests for the selected actions
+},
+```
+
+## Example Object as provided in module imports
+
+```typescript
+@NgModule({
+  ...
+  imports: [
+    ...
+    StoreDevtoolsModule.instrument({
+          maxAge: 25,
+          logOnly: false,
+          features: {
+            pause: false,
+            lock: true,
+            persist: true,
+          }
+        }),
+    ...
+  ]
+})
+```
