@@ -23,6 +23,7 @@ ng_package(
     entry_point = "modules/entity/index.js",
     packages = [
         "//modules/entity/migrations:npm_package",
+        "//modules/entity/schematics:npm_package",
         "//modules/entity/schematics-core:npm_package",
     ],
     deps = [
