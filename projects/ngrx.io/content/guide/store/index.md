@@ -9,15 +9,9 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 - [Selectors](guide/store/selectors) are pure functions used to select, derive and compose pieces of state.
 - State accessed with the `Store`, an observable of state and an observer of actions.
 
-## Installation
+## Installation 
 
-```sh
-npm install @ngrx/store --save
-```
-
-```sh
-yarn add @ngrx/store
-```
+Detailed installation instructions can be found on the [Installation](guide/store/install) page.
 
 ## Tutorial
 

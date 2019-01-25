@@ -25,7 +25,6 @@
       "title": "Sponsor"
     }
   ],
-
   "TopBarNarrow": [
     {
       "title": "About NgRx",
@@ -57,7 +56,6 @@
       ]
     }
   ],
-
   "SideNav": [
     {
       "url": "docs",
@@ -70,6 +68,10 @@
         {
           "title": "Getting Started",
           "url": "guide/store"
+        },
+        {
+          "title": "Installation",
+          "url": "guide/store/install"
         },
         {
           "title": "Architecture",
@@ -124,6 +126,10 @@
           "url": "guide/store-devtools"
         },
         {
+          "title": "Installation",
+          "url": "guide/store-devtools/install"
+        },
+        {
           "title": "Instrumentation",
           "url": "guide/store-devtools/config"
         }
@@ -135,6 +141,10 @@
         {
           "title": "Overview",
           "url": "guide/effects"
+        },
+        {
+          "title": "Installation",
+          "url": "guide/effects/install"
         },
         {
           "title": "Testing",
@@ -154,6 +164,10 @@
           "url": "guide/router-store"
         },
         {
+          "title": "Installation",
+          "url": "guide/router-store/install"
+        },
+        {
           "title": "Actions",
           "url": "guide/router-store/actions"
         },
@@ -171,6 +185,10 @@
           "url": "guide/entity"
         },
         {
+          "title": "Installation",
+          "url": "guide/entity/install"
+        },
+        {
           "title": "Entity Interfaces",
           "url": "guide/entity/interfaces"
         },
@@ -186,6 +204,10 @@
         {
           "title": "Overview",
           "url": "guide/schematics"
+        },
+        {
+          "title": "Installation",
+          "url": "guide/schematics/install"
         },
         {
           "title": "Schematics",
@@ -250,7 +272,6 @@
       "tooltip": "API Reference"
     }
   ],
-
   "Footer": [
     {
       "title": "Resources",
@@ -278,8 +299,7 @@
         {
           "url": "https://stackoverflow.com/questions/tagged/ngrx",
           "title": "Stack Overflow",
-          "tooltip":
-            "Stack Overflow: where the community answers your technical NgRx questions."
+          "tooltip": "Stack Overflow: where the community answers your technical NgRx questions."
         },
         {
           "url": "https://gitter.im/ngrx/platform",
@@ -314,7 +334,6 @@
       ]
     }
   ],
-
   "docVersions": [
     {
       "title": "v6",

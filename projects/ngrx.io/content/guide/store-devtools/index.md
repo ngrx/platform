@@ -2,15 +2,9 @@
 
 Store Devtools provides developer tools and instrumentation for [Store](guide/store).
 
-## Installation
+## Installation 
 
-```sh
-npm install @ngrx/store-devtools --save
-```
-
-```sh
-yarn add @ngrx/store-devtools
-```
+Detailed installation instructions can be found on the [Installation](guide/store-devtools/install) page.
 
 ## Setup
 

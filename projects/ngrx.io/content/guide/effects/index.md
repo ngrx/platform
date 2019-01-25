@@ -13,15 +13,9 @@ In a service-based Angular application, components are responsible for interacti
 - Effects filter those actions based on the type of action they are interested in. This is done by using an operator.
 - Effects perform tasks, which are synchronous or asynchronous and return a new action.
 
-## Installation
+## Installation 
 
-```sh
-npm install @ngrx/effects --save
-```
-
-```sh
-yarn add @ngrx/effects
-```
+Detailed installation instructions can be found on the [Installation](guide/effects/install) page.
 
 ## Comparison with component-based side effects
 

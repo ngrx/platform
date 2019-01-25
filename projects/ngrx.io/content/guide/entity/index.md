@@ -8,12 +8,6 @@ Entity provides an API to manipulate and query entity collections.
 - Provides performant CRUD operations for managing entity collections.
 - Extensible type-safe adapters for selecting entity information.
 
-### Installation
+## Installation 
 
-```sh
-npm install @ngrx/entity --save
-```
-
-```sh
-yarn add @ngrx/entity
-```
+Detailed installation instructions can be found on the [Installation](guide/entity/install) page.
