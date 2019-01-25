@@ -34,8 +34,8 @@ ng add @ngrx/store
 
 This command will automate the following steps:
 
-1. Update `package.json` > `depedencies` with `@ngrx/store`.
-2. Run `npm install` to install those depedencies. 
+1. Update `package.json` > `dependencies` with `@ngrx/store`.
+2. Run `npm install` to install those dependencies. 
 3. Create a `src/app/reducers` folder, unless the `statePath` flag is provided, in which case this would be created based on the flag.
 4. Create a `src/app/reducers/index.ts` file with an empty `State` interface, an empty `reducers` map, and an empty `metaReducers` array. This may be created under a different directory if the `statePath` flag is provided.
 5. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot(reducers, { metaReducers })`. If you provided flags then the command will attempt to locate and update module found by the flags.

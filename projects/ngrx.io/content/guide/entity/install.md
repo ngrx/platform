@@ -26,6 +26,6 @@ ng add @ngrx/entity
 
 This command will automate the following steps:
 
-1. Update `package.json` > `depedencies` with `@ngrx/entity`.
-2. Run `npm install` to install those depedencies. 
+1. Update `package.json` > `dependencies` with `@ngrx/entity`.
+2. Run `npm install` to install those dependencies. 
 
