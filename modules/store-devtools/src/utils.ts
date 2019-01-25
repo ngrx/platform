@@ -14,6 +14,7 @@ import {
   LiftedActions,
   LiftedState,
 } from './reducer';
+import { black } from '@angular-devkit/core/src/terminal/colors';
 
 export function difference(first: any[], second: any[]) {
   return first.filter(item => second.indexOf(item) < 0);
@@ -25,7 +26,6 @@ export function difference(first: any[], second: any[]) {
 export function unliftState(liftedState: LiftedState) {
   const { computedStates, currentStateIndex } = liftedState;
   const { state } = computedStates[currentStateIndex];
-
   return state;
 }
 
@@ -155,9 +155,10 @@ export function isActionFiltered(
   whitelist?: string[],
   blacklist?: string[]
 ) {
-  return (
-    (predicate && !predicate(state, action.action)) ||
-    (whitelist && !action.action.type.match(whitelist.join('|'))) ||
-    (blacklist && action.action.type.match(blacklist.join('|')))
-  );
+  const predicateMatch = predicate && !predicate(state, action.action);
+  const whitelistMatch =
+    whitelist && !action.action.type.match(whitelist.join('|'));
+  const blacklistMatch =
+    blacklist && action.action.type.match(blacklist.join('|'));
+  return predicateMatch || whitelistMatch || blacklistMatch;
 }
