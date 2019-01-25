@@ -3,13 +3,13 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import {
-  createWorkspace,
-  defaultAppOptions,
-  defaultWorkspaceOptions,
-  getTestProjectPath,
-} from '../../../schematics-core/testing';
 import { Schema as ActionOptions } from './schema';
+import {
+  getTestProjectPath,
+  createWorkspace,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
+} from '../../../schematics-core/testing';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -141,9 +141,7 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(
-      /export type FooActions = LoadFoos | LoadFoosSuccess | LoadFoosFailure;/
-    );
+    expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
   });
 
   it('should group within an "actions" folder if group is set', () => {
