@@ -69,7 +69,7 @@ The component has multiple responsibilities:
 - Using the service to perform a _side effect_, reaching out to an external API to fetch the movies
 - Changing the _state_ of the movies within the component.
 
-`Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important. Because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
+`Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
 
 Effects handle external data and interactions, allowing your services to be less stateful and only performrm tasks related to external interactions. Next we refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
