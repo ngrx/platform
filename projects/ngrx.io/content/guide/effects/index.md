@@ -71,7 +71,7 @@ The component has multiple responsibilities:
 
 `Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
 
-Effects handle external data and interactions, allowing your services to be less stateful and only performrm tasks related to external interactions. Next we refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
+Effects handle external data and interactions, allowing your services to be less stateful and only performrm tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
 <code-example header="movies-page.component.ts">
 @Component({
