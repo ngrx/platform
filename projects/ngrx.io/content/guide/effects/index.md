@@ -10,8 +10,8 @@ In a service-based Angular application, components are responsible for interacti
 
 - Effects isolate side effects from components, allowing for more _pure_ components that select state and dispatch actions.
 - Effects are long-running services that listen to an observable of _every_ action dispatched from the [Store](guide/store).
-- Effects filter those actions based which action they are interested in using an operator.
-- Effects perform tasks, whether synchronous or asynchronous and return a new action.
+- Effects filter those actions based on the type of action they are interested in. This is done by using an operator.
+- Effects perform tasks, which are synchronous or asynchronous and return a new action.
 
 ## Installation
 
@@ -27,7 +27,7 @@ yarn add @ngrx/effects
 
 In a service-based application, your components interact with data through many different services that expose data through properties and methods. These services may depend on other services that manage other sets of data. Your components consume these services to perform tasks, giving your components many responsibilities. 
 
-Imagine you have an application that manages movies with a component that fetches and displays a list of movies.
+Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
 
 <code-example header="movies-page.component.ts">
 @Component({
@@ -69,9 +69,9 @@ The component has multiple responsibilities:
 - Using the service to perform a _side effect_, reaching out to an external API to fetch the movies
 - Changing the _state_ of the movies within the component.
 
-`Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important as you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
+`Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
 
-Effects are where external data and interactions are handled, allowing your services to be less stateful, and simply performers of tasks related to external interactions. Refactoring the component to put the shared movie data in the `Store`, Effects are where the fetching of movie data is handled.
+Effects handle external data and interactions, allowing your services to be less stateful and only perform tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
 <code-example header="movies-page.component.ts">
 @Component({
