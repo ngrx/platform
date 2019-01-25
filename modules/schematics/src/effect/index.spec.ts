@@ -3,14 +3,14 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import {
-  createAppModuleWithEffects,
-  createWorkspace,
-  defaultAppOptions,
-  defaultWorkspaceOptions,
-  getTestProjectPath,
-} from '../../../schematics-core/testing';
 import { Schema as EffectOptions } from './schema';
+import {
+  getTestProjectPath,
+  createWorkspace,
+  createAppModuleWithEffects,
+  defaultWorkspaceOptions,
+  defaultAppOptions,
+} from '../../../schematics-core/testing';
 
 describe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
