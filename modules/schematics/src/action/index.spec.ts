@@ -3,13 +3,13 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as ActionOptions } from './schema';
 import {
-  getTestProjectPath,
   createWorkspace,
-  defaultWorkspaceOptions,
   defaultAppOptions,
+  defaultWorkspaceOptions,
+  getTestProjectPath,
 } from '../../../schematics-core/testing';
+import { Schema as ActionOptions } from './schema';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -101,6 +101,36 @@ describe('Action Schematic', () => {
     expect(fileContent).toMatch(/export class LoadFoos implements Action/);
   });
 
+  it('should create a class based on the provided name for success', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export class LoadFoosSuccess implements Action/
+    );
+  });
+
+  it('should create a class based on the provided name for failure', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export class LoadFoosFailure implements Action/
+    );
+  });
+
   it('should create the union type based on the provided name', () => {
     const tree = schematicRunner.runSchematic(
       'action',
@@ -111,7 +141,9 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
+    expect(fileContent).toMatch(
+      /export type FooActions = LoadFoos | LoadFoosSuccess | LoadFoosFailure;/
+    );
   });
 
   it('should group within an "actions" folder if group is set', () => {

@@ -3,14 +3,14 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as ReducerOptions } from './schema';
 import {
-  getTestProjectPath,
   createReducers,
   createWorkspace,
-  defaultWorkspaceOptions,
   defaultAppOptions,
+  defaultWorkspaceOptions,
+  getTestProjectPath,
 } from '../../../schematics-core/testing';
+import { Schema as ReducerOptions } from './schema';
 
 describe('Reducer Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -87,6 +87,22 @@ describe('Reducer Schematic', () => {
     );
 
     expect(fileContent).toMatch(/export function reducer/);
+  });
+
+  it('should create a state with data, loading and error props', () => {
+    const tree = schematicRunner.runSchematic(
+      'reducer',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/export interface State {/);
+    expect(fileContent).toMatch(/data: any\[\];/);
+    expect(fileContent).toMatch(/loading: boolean;/);
+    expect(fileContent).toMatch(/error: any;/);
   });
 
   it('should import into a specified module', () => {

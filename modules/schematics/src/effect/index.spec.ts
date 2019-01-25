@@ -3,14 +3,14 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as EffectOptions } from './schema';
 import {
-  getTestProjectPath,
-  createWorkspace,
   createAppModuleWithEffects,
-  defaultWorkspaceOptions,
+  createWorkspace,
   defaultAppOptions,
+  defaultWorkspaceOptions,
+  getTestProjectPath,
 } from '../../../schematics-core/testing';
+import { Schema as EffectOptions } from './schema';
 
 describe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -236,7 +236,7 @@ describe('Effect Schematic', () => {
     );
 
     expect(content).toMatch(
-      /import \{ FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
+      /import \{ LoadFoosFailure, LoadFoosSuccess, FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
     );
   });
 
@@ -251,11 +251,16 @@ describe('Effect Schematic', () => {
       /import { Actions, Effect, ofType } from '@ngrx\/effects';/
     );
     expect(content).toMatch(
-      /import { FooActionTypes } from '\.\/foo.actions';/
+      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes } from '\.\/foo.actions';/
     );
     expect(content).toMatch(/export class FooEffects/);
+    expect(content).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
+    expect(content).toMatch(/ofType\(FooActionTypes\.LoadFoo\),/);
+    expect(content).toMatch(/switchMap\(\(\) =>/);
+    expect(content).toMatch(/this\._testObservable\.pipe\(/);
+    expect(content).toMatch(/map\(data => new LoadFoosSuccess\({ data }\)\),/);
     expect(content).toMatch(
-      /loadFoos\$ = this\.actions\$.pipe\(ofType\(FooActionTypes\.LoadFoos\)\);/
+      /catchError\(error => of\(new LoadFoosFailure\({ error }\)\)\)\)/
     );
   });
 
