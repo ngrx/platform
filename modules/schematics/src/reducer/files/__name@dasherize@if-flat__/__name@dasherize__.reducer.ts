@@ -14,14 +14,13 @@ export function reducer(state = initialState, action: <% if(feature) { %><%= cla
 <% if(feature) { %>
     case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>s:
       return state;
-
+<% if(api) { %>
     case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>sSuccess:
       return state;
 
     case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>sFailure:
       return state;
-
-<% } %>
+<% } %><% } %>
     default:
       return state;
   }

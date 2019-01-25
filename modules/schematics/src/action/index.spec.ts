@@ -127,4 +127,58 @@ describe('Action Schematic', () => {
       tree.files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
+
+  it('should create a success class based on the provided name, given api', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      {
+        ...defaultOptions,
+        api: true,
+      },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export class LoadFoosSuccess implements Action/
+    );
+  });
+
+  it('should create a failure class based on the provided name, given api', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      {
+        ...defaultOptions,
+        api: true,
+      },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export class LoadFoosFailure implements Action/
+    );
+  });
+
+  it('should create the union type with success and failure based on the provided name, given api', () => {
+    const tree = schematicRunner.runSchematic(
+      'action',
+      {
+        ...defaultOptions,
+        api: true,
+      },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
+    );
+  });
 });
