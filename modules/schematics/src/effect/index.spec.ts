@@ -236,7 +236,7 @@ describe('Effect Schematic', () => {
     );
 
     expect(content).toMatch(
-      /import \{ LoadFoosFailure, LoadFoosSuccess, FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
+      /import \{ FooActionTypes } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
     );
   });
 
@@ -251,16 +251,11 @@ describe('Effect Schematic', () => {
       /import { Actions, Effect, ofType } from '@ngrx\/effects';/
     );
     expect(content).toMatch(
-      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes } from '\.\/foo.actions';/
+      /import { FooActionTypes } from '\.\/foo.actions';/
     );
     expect(content).toMatch(/export class FooEffects/);
-    expect(content).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
-    expect(content).toMatch(/ofType\(FooActionTypes\.LoadFoo\),/);
-    expect(content).toMatch(/switchMap\(\(\) =>/);
-    expect(content).toMatch(/this\._testObservable\.pipe\(/);
-    expect(content).toMatch(/map\(data => new LoadFoosSuccess\({ data }\)\),/);
     expect(content).toMatch(
-      /catchError\(error => of\(new LoadFoosFailure\({ error }\)\)\)\)/
+      /loadFoos\$ = this\.actions\$.pipe\(ofType\(FooActionTypes\.LoadFoos\)\);/
     );
   });
 

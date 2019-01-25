@@ -38,6 +38,13 @@
       "default": false,
       "description": "Group actions file within 'actions' folder",
       "aliases": ["g"]
+    },
+    "api": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Specifies if api success and failure actions should be generated.",
+      "aliases": ["a"]
     }
   },
   "required": []

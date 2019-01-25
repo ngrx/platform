@@ -101,36 +101,6 @@ describe('Action Schematic', () => {
     expect(fileContent).toMatch(/export class LoadFoos implements Action/);
   });
 
-  it('should create a class based on the provided name for success', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export class LoadFoosSuccess implements Action/
-    );
-  });
-
-  it('should create a class based on the provided name for failure', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export class LoadFoosFailure implements Action/
-    );
-  });
-
   it('should create the union type based on the provided name', () => {
     const tree = schematicRunner.runSchematic(
       'action',

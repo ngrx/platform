@@ -53,6 +53,13 @@
       "default": false,
       "description": "Group reducer file within 'reducers' folder",
       "aliases": ["g"]
+    },
+    "api": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Specifies if api success and failure actions should be added to the reducer",
+      "aliases": ["a"]
     }
   },
   "required": []

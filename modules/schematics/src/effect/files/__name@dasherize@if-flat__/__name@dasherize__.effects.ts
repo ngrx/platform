@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect<% if (feature) { %>, ofType<% } %> } from '@ngrx/effects';
-<% if (feature) { %>import { catchError, map, switchMap } from 'rxjs/operators';<% } %>
-<% if (feature) { %>import { Load<%= classify(name) %>sFailure, Load<%= classify(name) %>sSuccess, <%= classify(name) %>ActionTypes } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+<% if (feature && !api) { %>import { <%= classify(name) %>ActionTypes } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+<% if (feature && api) { %>import { catchError, map, switchMap } from 'rxjs/operators';<% } %>
+<% if (feature && api) { %>import { Load<%= classify(name) %>sFailure, Load<%= classify(name) %>sSuccess, <%= classify(name) %>ActionTypes } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 
 @Injectable()
 export class <%= classify(name) %>Effects {
-<% if (feature) { %>
+<% if (feature && api) { %>
 
   private _testObservable = of([
     { myDataProperty: 1000, myOtherDataProperty: 'some-text' },
@@ -26,6 +27,9 @@ export class <%= classify(name) %>Effects {
     )
   );
 <% } %>
-
+<% if (feature && !api) { %>
+  @Effect()
+  load<%= classify(name) %>s$ = this.actions$.pipe(ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s));
+<% } %>
   constructor(private actions$: Actions) {}
 }
