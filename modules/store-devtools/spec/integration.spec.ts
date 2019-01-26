@@ -82,7 +82,7 @@ describe('Devtools Integration', () => {
 
   it('should not throw if actions are whitelisted', (done: any) => {
     const { store, devtools } = setup({
-      actionsWhitelist: ['@ngrx/store/update-reducers'],
+      actionsWhitelist: ['BAR'],
     });
     store.subscribe();
     devtools.dispatcher.subscribe((action: Action) => {
