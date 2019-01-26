@@ -175,7 +175,7 @@ The `loadMovies$` effect returns a new observable in case an error occurs while 
 
 ## Registering root effects
 
-After you've have written your Effects class, you must register it so the effects start running. To register root-level effects, add the `EffectsModule.forRoot()` method with an array of your effects to your `AppModule`.
+After you've written your Effects class, you must register it so the effects start running. To register root-level effects, add the `EffectsModule.forRoot()` method with an array of your effects to your `AppModule`.
 
 <code-example header="app.module.ts">
 import { EffectsModule } from '@ngrx/effects';
