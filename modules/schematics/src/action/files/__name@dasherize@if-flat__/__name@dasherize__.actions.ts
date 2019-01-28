@@ -12,7 +12,7 @@ export class Load<%= classify(name) %>s implements Action {
 <% if (api) { %>
 export class Load<%= classify(name) %>sSuccess implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>sSuccess;
-  constructor(public payload: { data: any[] }) { }
+  constructor(public payload: { data: any }) { }
 }
 
 export class Load<%= classify(name) %>sFailure implements Action {

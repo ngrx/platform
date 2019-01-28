@@ -158,17 +158,18 @@ describe('Feature Schematic', () => {
       /import { Actions, Effect, ofType } from '@ngrx\/effects';/
     );
     expect(fileContent).toMatch(
-      /import { catchError, map, switchMap } from 'rxjs\/operators';/
+      /import { catchError, map, concatMap } from 'rxjs\/operators';/
     );
+    expect(fileContent).toMatch(/import { EMPTY, of } from 'rxjs';/);
     expect(fileContent).toMatch(
-      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes } from '\.\/foo.actions';/
+      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
     );
 
     expect(fileContent).toMatch(/export class FooEffects/);
     expect(fileContent).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
     expect(fileContent).toMatch(/ofType\(FooActionTypes\.LoadFoo\),/);
-    expect(fileContent).toMatch(/switchMap\(\(\) =>/);
-    expect(fileContent).toMatch(/this\._testObservable\.pipe\(/);
+    expect(fileContent).toMatch(/concatMap\(\(\) =>/);
+    expect(fileContent).toMatch(/EMPTY\.pipe\(/);
     expect(fileContent).toMatch(
       /map\(data => new LoadFoosSuccess\({ data }\)\),/
     );

@@ -186,5 +186,6 @@ describe('Reducer Schematic', () => {
 
     expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosSuccess/);
     expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
+    expect(fileContent).not.toMatch(/import { Action } from '@ngrx\/store'/);
   });
 });

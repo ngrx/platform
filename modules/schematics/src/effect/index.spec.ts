@@ -289,20 +289,25 @@ describe('Effect Schematic', () => {
       /import { Actions, Effect, ofType } from '@ngrx\/effects';/
     );
     expect(content).toMatch(
-      /import { catchError, map, switchMap } from 'rxjs\/operators';/
+      /import { catchError, map, concatMap } from 'rxjs\/operators';/
     );
+    expect(content).toMatch(/import { EMPTY, of } from 'rxjs';/);
     expect(content).toMatch(
-      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes } from '\.\/foo.actions';/
+      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
     );
 
     expect(content).toMatch(/export class FooEffects/);
     expect(content).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
     expect(content).toMatch(/ofType\(FooActionTypes\.LoadFoo\),/);
-    expect(content).toMatch(/switchMap\(\(\) =>/);
-    expect(content).toMatch(/this\._testObservable\.pipe\(/);
+    expect(content).toMatch(/concatMap\(\(\) =>/);
+    expect(content).toMatch(/EMPTY\.pipe\(/);
     expect(content).toMatch(/map\(data => new LoadFoosSuccess\({ data }\)\),/);
     expect(content).toMatch(
       /catchError\(error => of\(new LoadFoosFailure\({ error }\)\)\)\)/
+    );
+
+    expect(content).toMatch(
+      /constructor\(private actions\$: Actions<FooActions>\) {}/
     );
   });
 });
