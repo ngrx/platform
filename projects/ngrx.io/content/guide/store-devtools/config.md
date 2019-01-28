@@ -52,16 +52,16 @@ configuration object - containing properties for features than can be enabled or
 
 ```typescript
 features: {
-    pause: true, // start/pause recording of dispatched actions
-    lock: true, // lock/unlock dispatching actions and side effects    
-    persist: true, // persist states on page reloading
-    export: true, // export history of actions in a file
-    import: 'custom', // import history of actions from a file
-    jump: true, // jump back and forth (time travelling)
-    skip: true, // skip (cancel) actions
-    reorder: true, // drag and drop actions in the history list 
-    dispatch: true, // dispatch custom actions or action creators
-    test: true // generate tests for the selected actions
+  pause: true, // start/pause recording of dispatched actions
+  lock: true, // lock/unlock dispatching actions and side effects    
+  persist: true, // persist states on page reloading
+  export: true, // export history of actions in a file
+  import: 'custom', // import history of actions from a file
+  jump: true, // jump back and forth (time travelling)
+  skip: true, // skip (cancel) actions
+  reorder: true, // drag and drop actions in the history list 
+  dispatch: true, // dispatch custom actions or action creators
+  test: true // generate tests for the selected actions
 },
 ```
 
@@ -73,15 +73,15 @@ features: {
   imports: [
     ...
     StoreDevtoolsModule.instrument({
-          maxAge: 25,
-          logOnly: false,
-          features: {
-            pause: false,
-            lock: true,
-            persist: true,
-          }
-        }),
-    ...
-  ]
+      maxAge: 25,
+      logOnly: false,
+      features: {
+        pause: false,
+        lock: true,
+        persist: true
+      }
+    })
+  ],
+  ...
 })
 </code-example>
