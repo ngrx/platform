@@ -169,4 +169,23 @@ describe('Reducer Schematic', () => {
       /import\ \{\ FooActions,\ FooActionTypes\ }\ from\ \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
     );
   });
+
+  it('should create an reducer function with api success and failure, given feature and api', () => {
+    const tree = schematicRunner.runSchematic(
+      'reducer',
+      {
+        ...defaultOptions,
+        feature: true,
+        api: true,
+      },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosSuccess/);
+    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
+    expect(fileContent).not.toMatch(/import { Action } from '@ngrx\/store'/);
+  });
 });

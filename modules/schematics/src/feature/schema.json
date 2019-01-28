@@ -49,6 +49,13 @@
       "description":
         "Group actions, reducers and effects within relative subfolders",
       "aliases": ["g"]
+    },
+    "api": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Specifies if api success and failure actions, reducer, and effects should be generated as part of this feature.",
+      "aliases": ["a"]
     }
   },
   "required": []

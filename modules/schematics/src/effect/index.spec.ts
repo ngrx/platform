@@ -277,4 +277,37 @@ describe('Effect Schematic', () => {
       /loadFoos\$ = this\.actions\$.pipe\(ofType\(FooActionTypes\.LoadFoos\)\);/
     );
   });
+
+  it('should create an api effect that describes a source of actions within a feature', () => {
+    const options = { ...defaultOptions, feature: true, api: true };
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+    expect(content).toMatch(
+      /import { Actions, Effect, ofType } from '@ngrx\/effects';/
+    );
+    expect(content).toMatch(
+      /import { catchError, map, concatMap } from 'rxjs\/operators';/
+    );
+    expect(content).toMatch(/import { EMPTY, of } from 'rxjs';/);
+    expect(content).toMatch(
+      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
+    );
+
+    expect(content).toMatch(/export class FooEffects/);
+    expect(content).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
+    expect(content).toMatch(/ofType\(FooActionTypes\.LoadFoos\),/);
+    expect(content).toMatch(/concatMap\(\(\) =>/);
+    expect(content).toMatch(/EMPTY\.pipe\(/);
+    expect(content).toMatch(/map\(data => new LoadFoosSuccess\({ data }\)\),/);
+    expect(content).toMatch(
+      /catchError\(error => of\(new LoadFoosFailure\({ error }\)\)\)\)/
+    );
+
+    expect(content).toMatch(
+      /constructor\(private actions\$: Actions<FooActions>\) {}/
+    );
+  });
 });

@@ -56,6 +56,13 @@
       "default": false,
       "description": "Group effects file within 'effects' folder",
       "aliases": ["g"]
+    },
+    "api": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Specifies if effect has api success and failure actions wired up",
+      "aliases": ["a"]
     }
   },
   "required": []

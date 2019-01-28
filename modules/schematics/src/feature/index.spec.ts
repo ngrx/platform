@@ -126,4 +126,70 @@ describe('Feature Schematic', () => {
       /import \* as fromFoo from '\.\/foo\/reducers\/foo.reducer';/
     );
   });
+
+  it('should have all three api actions in actions type union if api flag enabled', () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+    };
+
+    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
+    );
+  });
+
+  it('should have all api effect if api flag enabled', () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+    };
+
+    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.effects.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /import { Actions, Effect, ofType } from '@ngrx\/effects';/
+    );
+    expect(fileContent).toMatch(
+      /import { catchError, map, concatMap } from 'rxjs\/operators';/
+    );
+    expect(fileContent).toMatch(/import { EMPTY, of } from 'rxjs';/);
+    expect(fileContent).toMatch(
+      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
+    );
+
+    expect(fileContent).toMatch(/export class FooEffects/);
+    expect(fileContent).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
+    expect(fileContent).toMatch(/ofType\(FooActionTypes\.LoadFoos\),/);
+    expect(fileContent).toMatch(/concatMap\(\(\) =>/);
+    expect(fileContent).toMatch(/EMPTY\.pipe\(/);
+    expect(fileContent).toMatch(
+      /map\(data => new LoadFoosSuccess\({ data }\)\),/
+    );
+    expect(fileContent).toMatch(
+      /catchError\(error => of\(new LoadFoosFailure\({ error }\)\)\)\)/
+    );
+  });
+
+  it('should have all api actions in reducer if api flag enabled', () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+    };
+
+    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosSuccess/);
+    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
+  });
 });
