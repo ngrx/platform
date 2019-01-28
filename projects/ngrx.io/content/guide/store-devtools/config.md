@@ -14,7 +14,7 @@ boolean - connect to the Devtools Extension in log-only mode. Default is `false`
 
 ### `name`
 
-string - the instance name to be show on the monitor page. Default value is NgRx Store DevTools.
+string - the instance name to show on the monitor page. Default value is NgRx Store DevTools.
 
 ### `monitor`
 
