@@ -167,7 +167,7 @@ describe('Feature Schematic', () => {
 
     expect(fileContent).toMatch(/export class FooEffects/);
     expect(fileContent).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
-    expect(fileContent).toMatch(/ofType\(FooActionTypes\.LoadFoo\),/);
+    expect(fileContent).toMatch(/ofType\(FooActionTypes\.LoadFoos\),/);
     expect(fileContent).toMatch(/concatMap\(\(\) =>/);
     expect(fileContent).toMatch(/EMPTY\.pipe\(/);
     expect(fileContent).toMatch(

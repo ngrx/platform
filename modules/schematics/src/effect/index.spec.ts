@@ -298,7 +298,7 @@ describe('Effect Schematic', () => {
 
     expect(content).toMatch(/export class FooEffects/);
     expect(content).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
-    expect(content).toMatch(/ofType\(FooActionTypes\.LoadFoo\),/);
+    expect(content).toMatch(/ofType\(FooActionTypes\.LoadFoos\),/);
     expect(content).toMatch(/concatMap\(\(\) =>/);
     expect(content).toMatch(/EMPTY\.pipe\(/);
     expect(content).toMatch(/map\(data => new LoadFoosSuccess\({ data }\)\),/);

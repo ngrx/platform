@@ -10,7 +10,7 @@ export class <%= classify(name) %>Effects {
 <% if (feature && api) { %>
   @Effect()
   load<%= classify(name) %>s$ = this.actions$.pipe(
-    ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>),
+    ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s),
     concatMap(() =>
       EMPTY.pipe(
         map(data => new Load<%= classify(name) %>sSuccess({ data })),
