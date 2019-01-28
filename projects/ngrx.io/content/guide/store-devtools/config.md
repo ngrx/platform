@@ -14,7 +14,7 @@ boolean - connect to the Devtools Extension in log-only mode. Default is `false`
 
 ### `name`
 
-string - the instance name to be showed on the monitor page. Default value is NgRx Store DevTools.
+string - the instance name to be show on the monitor page. Default value is NgRx Store DevTools.
 
 ### `monitor`
 
@@ -22,19 +22,19 @@ function - the monitor function configuration that you want to hook.
 
 ### `actionSanitizer`
 
-function - takes `action` object and id number as arguments, and should return `action` object.
+function - takes `action` object and id number as arguments, and should return an `action` object.
 
 ### `stateSanitizer`
 
-function - takes `state` object and index as arguments, and should return `state` object.
+function - takes `state` object and index as arguments, and should return a `state` object.
 
 ### `serialize`
 
 - options
-  - undefined - will use regular JSON.stringify to send data (it's the fast mode).
-  - false - will handle also circular references
-  - true - will handle also date, regex, undefined, primitives, error objects, symbols, maps, sets and functions
-  - object - which contains date, regex, undefined, nan, infinity, error, symbol, map, set and function keys. For each of them you can indicate if to include (by setting as true). For function key you can also specify a custom function which handles serialization
+  - `undefined` - will use regular `JSON.stringify` to send data
+  - `false` - will handle also circular references
+  - `true` - will handle also date, regex, undefined, primitives, error objects, symbols, maps, sets and functions
+  - object - which contains `date`, `regex`, `undefined`, `NaN`, `infinity`, `Error`, `Symbol`, `Map`, `Set` and `function` keys. For each of them, you can indicate if they have to be included by setting them to `true`. For function keys, you can also specify a custom function which handles serialization.
 
 For more detailed information see [Redux DevTools Serialize](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#serialize)
 
