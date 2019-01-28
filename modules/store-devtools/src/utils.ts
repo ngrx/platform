@@ -24,8 +24,17 @@ export function difference(first: any[], second: any[]) {
  */
 export function unliftState(liftedState: LiftedState) {
   const { computedStates, currentStateIndex } = liftedState;
-  const { state } = computedStates[currentStateIndex];
 
+  // At start up NgRx dispatches init actions,
+  // When these init actions are being filtered out by the predicate or black/white list options
+  // we don't have a complete computed states yet.
+  // At this point it could happen that we're out of bounds, when this happens we fall back to the last known state
+  if (currentStateIndex >= computedStates.length) {
+    const { state } = computedStates[computedStates.length - 1];
+    return state;
+  }
+
+  const { state } = computedStates[currentStateIndex];
   return state;
 }
 
@@ -155,9 +164,10 @@ export function isActionFiltered(
   whitelist?: string[],
   blacklist?: string[]
 ) {
-  return (
-    (predicate && !predicate(state, action.action)) ||
-    (whitelist && !action.action.type.match(whitelist.join('|'))) ||
-    (blacklist && action.action.type.match(blacklist.join('|')))
-  );
+  const predicateMatch = predicate && !predicate(state, action.action);
+  const whitelistMatch =
+    whitelist && !action.action.type.match(whitelist.join('|'));
+  const blacklistMatch =
+    blacklist && action.action.type.match(blacklist.join('|'));
+  return predicateMatch || whitelistMatch || blacklistMatch;
 }

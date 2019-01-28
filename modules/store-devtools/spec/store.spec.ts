@@ -438,6 +438,125 @@ describe('Store Devtools', () => {
     });
   });
 
+  describe('Filtered actions', () => {
+    it('should respect the predicate option', () => {
+      const fixture = createStore(counter, {
+        predicate: (s, a) => a.type !== 'INCREMENT',
+      });
+
+      expect(fixture.getState()).toBe(0);
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      expect(fixture.getState()).toBe(5);
+
+      // init, decrement, decrement
+      const {
+        stagedActionIds,
+        actionsById,
+        computedStates,
+        currentStateIndex,
+      } = fixture.getLiftedState();
+      expect(stagedActionIds.length).toBe(3);
+      expect(Object.keys(actionsById).length).toBe(3);
+      expect(computedStates.length).toBe(3);
+      expect(currentStateIndex).toBe(2);
+
+      fixture.devtools.jumpToAction(0);
+      expect(fixture.getState()).toBe(1);
+
+      fixture.devtools.jumpToAction(1);
+      expect(fixture.getState()).toBe(6);
+
+      fixture.devtools.jumpToAction(2);
+      expect(fixture.getState()).toBe(5);
+    });
+
+    it('should respect the blacklist option', () => {
+      const fixture = createStore(counter, {
+        actionsBlacklist: ['INCREMENT'],
+      });
+
+      expect(fixture.getState()).toBe(0);
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      expect(fixture.getState()).toBe(5);
+
+      // init, decrement, decrement
+      const {
+        stagedActionIds,
+        actionsById,
+        computedStates,
+        currentStateIndex,
+      } = fixture.getLiftedState();
+      expect(stagedActionIds.length).toBe(3);
+      expect(Object.keys(actionsById).length).toBe(3);
+      expect(computedStates.length).toBe(3);
+      expect(currentStateIndex).toBe(2);
+
+      fixture.devtools.jumpToAction(0);
+      expect(fixture.getState()).toBe(1);
+
+      fixture.devtools.jumpToAction(1);
+      expect(fixture.getState()).toBe(6);
+
+      fixture.devtools.jumpToAction(2);
+      expect(fixture.getState()).toBe(5);
+    });
+
+    it('should respect the whitelist option', () => {
+      const fixture = createStore(counter, {
+        actionsWhitelist: ['DECREMENT'],
+      });
+
+      expect(fixture.getState()).toBe(0);
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'INCREMENT' });
+      fixture.store.dispatch({ type: 'DECREMENT' });
+      expect(fixture.getState()).toBe(5);
+
+      // init, decrement, decrement
+      const {
+        stagedActionIds,
+        actionsById,
+        computedStates,
+        currentStateIndex,
+      } = fixture.getLiftedState();
+      expect(stagedActionIds.length).toBe(3);
+      expect(Object.keys(actionsById).length).toBe(3);
+      expect(computedStates.length).toBe(3);
+      expect(currentStateIndex).toBe(2);
+
+      fixture.devtools.jumpToAction(0);
+      expect(fixture.getState()).toBe(1);
+
+      fixture.devtools.jumpToAction(1);
+      expect(fixture.getState()).toBe(6);
+
+      fixture.devtools.jumpToAction(2);
+      expect(fixture.getState()).toBe(5);
+    });
+  });
+
   describe('maxAge option', () => {
     it('should auto-commit earliest non-@@INIT action when maxAge is reached', () => {
       const fixture = createStore(counter, { maxAge: 3 });

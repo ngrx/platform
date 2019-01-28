@@ -7,7 +7,7 @@ import {
   UPDATE,
   INIT,
 } from '@ngrx/store';
-import { difference, liftAction } from './utils';
+import { difference, liftAction, isActionFiltered } from './utils';
 import * as DevtoolsActions from './actions';
 import { StoreDevtoolsConfig, StateSanitizer } from './config';
 import { PerformAction } from './actions';
@@ -362,8 +362,18 @@ export function liftReducerWith(
           return liftedState || initialLiftedState;
         }
 
-        if (isPaused) {
-          // If recording is paused, overwrite the last state
+        if (
+          isPaused ||
+          (liftedState &&
+            isActionFiltered(
+              liftedState.computedStates[currentStateIndex],
+              liftedAction,
+              options.predicate,
+              options.actionsWhitelist,
+              options.actionsBlacklist
+            ))
+        ) {
+          // If recording is paused or if the action should be ignored, overwrite the last state
           // (corresponds to the pause action) and keep everything else as is.
           // This way, the app gets the new current state while the devtools
           // do not record another action.
