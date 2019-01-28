@@ -12,6 +12,7 @@ export class <%= classify(name) %>Effects {
   load<%= classify(name) %>s$ = this.actions$.pipe(
     ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s),
     concatMap(() =>
+      /** An EMPTY observable only emits completion. Replace with your own observable API request */
       EMPTY.pipe(
         map(data => new Load<%= classify(name) %>sSuccess({ data })),
         catchError(error => of(new Load<%= classify(name) %>sFailure({ error }))))
