@@ -1,3 +1,21 @@
+<a name="7.2.0"></a>
+# [7.2.0](https://github.com/ngrx/platform/compare/7.1.0...7.2.0) (2019-01-29)
+
+
+### Bug Fixes
+
+* **Entity:** add schematics to bazel build ([88d0ad5](https://github.com/ngrx/platform/commit/88d0ad5))
+* **RouterStore:** add schematics to bazel build ([7465af9](https://github.com/ngrx/platform/commit/7465af9))
+* **StoreDevTools:** out of bounds when actions are filtered ([#1532](https://github.com/ngrx/platform/issues/1532)) ([d532979](https://github.com/ngrx/platform/commit/d532979)), closes [#1522](https://github.com/ngrx/platform/issues/1522)
+
+
+### Features
+
+* **schematics:** add api success/failure effects/actions to ng generate feature ([#1530](https://github.com/ngrx/platform/issues/1530)) ([e17a787](https://github.com/ngrx/platform/commit/e17a787))
+* **schematics:** bump platformVersion to ^7.0.0 per issue [#1489](https://github.com/ngrx/platform/issues/1489) ([#1527](https://github.com/ngrx/platform/issues/1527)) ([a71aa71](https://github.com/ngrx/platform/commit/a71aa71))
+
+
+
 <a name="7.1.0"></a>
 # [7.1.0](https://github.com/ngrx/platform/compare/7.0.0...7.1.0) (2019-01-21)
 
