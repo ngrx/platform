@@ -123,6 +123,7 @@ export class StoreModule {
         {
           provide: META_REDUCERS,
           useValue: config.metaReducers ? config.metaReducers : [],
+          multi: true,
         },
         {
           provide: _REDUCER_FACTORY,

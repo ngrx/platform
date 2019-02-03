@@ -12,6 +12,7 @@ import {
   REDUCER_FACTORY,
   ActionReducer,
   Action,
+  META_REDUCERS,
 } from '../';
 import { StoreConfig } from '../src/store_module';
 import { combineReducers } from '../src/utils';
@@ -585,6 +586,84 @@ describe('ngRx Store', () => {
         },
         error: done,
         complete: done,
+      });
+    });
+
+    describe('Via tokens', () => {
+      const createReducer = ({
+        logText,
+        log,
+      }: {
+        logText: string;
+        log: string[];
+      }) => (reducer: ActionReducer<any, any>) => (
+        state: any,
+        action: Action
+      ) => {
+        log.push(logText);
+        return reducer(state, action);
+      };
+
+      it('should be called when the `metaReducers` option is not defined', () => {
+        const log: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [StoreModule.forRoot({})],
+          providers: [
+            {
+              provide: META_REDUCERS,
+              useValue: createReducer({ logText: 'first', log }),
+              multi: true,
+            },
+            {
+              provide: META_REDUCERS,
+              useValue: createReducer({ logText: 'second', log }),
+              multi: true,
+            },
+          ],
+        });
+
+        store = TestBed.get(Store) as Store<any>;
+
+        expect(log).toEqual(['first', 'second']);
+        store.dispatch({ type: 'FOO' });
+        expect(log).toEqual(['first', 'second', 'first', 'second']);
+      });
+
+      it('should respect the order of reducers', () => {
+        const log: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot(
+              {},
+              { metaReducers: [createReducer({ logText: 'first', log })] }
+            ),
+          ],
+          providers: [
+            {
+              provide: META_REDUCERS,
+              useValue: createReducer({ logText: 'second', log }),
+              multi: true,
+            },
+            {
+              provide: META_REDUCERS,
+              useValue: createReducer({ logText: 'third', log }),
+              multi: true,
+            },
+          ],
+        });
+
+        store = TestBed.get(Store) as Store<any>;
+
+        expect(log).toEqual(['first', 'second', 'third']);
+        store.dispatch({ type: 'FOO' });
+        expect(log).toEqual([
+          'first',
+          'second',
+          'third',
+          'first',
+          'second',
+          'third',
+        ]);
       });
     });
   });

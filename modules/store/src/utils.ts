@@ -90,10 +90,19 @@ export function compose(...functions: any[]) {
 
 export function createReducerFactory<T, V extends Action = Action>(
   reducerFactory: ActionReducerFactory<T, V>,
-  metaReducers?: MetaReducer<T, V>[]
+  metaReducers?: Array<MetaReducer<T, V>[]>
 ): ActionReducerFactory<T, V> {
-  if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-    reducerFactory = compose.apply(null, [...metaReducers, reducerFactory]);
+  const metaReducersFlattened = Array.isArray(metaReducers)
+    ? metaReducers.reduce(
+        (flattened, reducers) => flattened.concat(reducers),
+        []
+      )
+    : [];
+  if (metaReducersFlattened.length > 0) {
+    reducerFactory = compose.apply(null, [
+      ...metaReducersFlattened,
+      reducerFactory,
+    ]);
   }
 
   return (reducers: ActionReducerMap<T, V>, initialState?: InitialState<T>) => {
