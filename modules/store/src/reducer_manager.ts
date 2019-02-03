@@ -48,10 +48,10 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
         const reducer =
           typeof reducers === 'function'
             ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
-            : createReducerFactory(reducerFactory, metaReducers)(
-                reducers,
-                initialState
-              );
+            : createReducerFactory(
+                reducerFactory,
+                metaReducers ? [metaReducers] : []
+              )(reducers, initialState);
 
         reducerDict[key] = reducer;
         return reducerDict;

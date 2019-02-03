@@ -43,6 +43,7 @@ export {
   _FEATURE_REDUCERS,
   FEATURE_REDUCERS,
   _FEATURE_REDUCERS_TOKEN,
+  FEATURE_META_REDUCERS,
 } from './tokens';
 export {
   StoreModule,

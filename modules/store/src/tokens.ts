@@ -39,3 +39,6 @@ export const _FEATURE_REDUCERS_TOKEN = new InjectionToken(
 export const FEATURE_REDUCERS = new InjectionToken(
   '@ngrx/store Feature Reducers'
 );
+export const FEATURE_META_REDUCERS = new InjectionToken(
+  '@ngrx/store Feature Meta Reducers'
+);

@@ -31,6 +31,7 @@ import {
   _FEATURE_REDUCERS_TOKEN,
   _STORE_FEATURES,
   _FEATURE_CONFIGS,
+  FEATURE_META_REDUCERS,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -192,8 +193,18 @@ export class StoreModule {
           },
         },
         {
+          provide: FEATURE_META_REDUCERS,
+          useValue: [],
+          multi: true,
+        },
+        {
           provide: _STORE_FEATURES,
-          deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+          deps: [
+            Injector,
+            _FEATURE_CONFIGS,
+            STORE_FEATURES,
+            FEATURE_META_REDUCERS,
+          ],
           useFactory: _createFeatureStore,
         },
         { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
@@ -229,7 +240,8 @@ export function _createStoreReducers(
 export function _createFeatureStore(
   injector: Injector,
   configs: StoreConfig<any, any>[] | InjectionToken<StoreConfig<any, any>>[],
-  featureStores: StoreFeature<any, any>[]
+  featureStores: StoreFeature<any, any>[],
+  metaReducers: Array<MetaReducer<any, any>[]>
 ) {
   return featureStores.map((feat, index) => {
     if (configs[index] instanceof InjectionToken) {
@@ -239,9 +251,18 @@ export function _createFeatureStore(
         reducerFactory: conf.reducerFactory
           ? conf.reducerFactory
           : combineReducers,
-        metaReducers: conf.metaReducers ? conf.metaReducers : [],
+        metaReducers: (conf.metaReducers ? conf.metaReducers : []).concat(
+          metaReducers.reduce((flattened, reducers) =>
+            flattened.concat(reducers)
+          )
+        ),
         initialState: conf.initialState,
       };
+    }
+    if (Array.isArray(feat.metaReducers)) {
+      feat.metaReducers = feat.metaReducers.concat(
+        metaReducers.reduce((flattened, reducers) => flattened.concat(reducers))
+      );
     }
     return feat;
   });

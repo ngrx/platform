@@ -13,6 +13,7 @@ import {
   ActionReducer,
   Action,
   META_REDUCERS,
+  FEATURE_META_REDUCERS,
 } from '../';
 import { StoreConfig } from '../src/store_module';
 import { combineReducers } from '../src/utils';
@@ -663,6 +664,126 @@ describe('ngRx Store', () => {
           'first',
           'second',
           'third',
+        ]);
+      });
+
+      it('should be called when the `metaReducers` option is not defined in a feature', () => {
+        const log: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({}),
+            StoreModule.forFeature('feat', {}),
+          ],
+          providers: [
+            {
+              provide: FEATURE_META_REDUCERS,
+              useValue: createReducer({ logText: 'first', log }),
+              multi: true,
+            },
+            {
+              provide: FEATURE_META_REDUCERS,
+              useValue: createReducer({ logText: 'second', log }),
+              multi: true,
+            },
+          ],
+        });
+
+        store = TestBed.get(Store) as Store<any>;
+
+        expect(log).toEqual(['first', 'second']);
+        store.dispatch({ type: 'FOO' });
+        expect(log).toEqual(['first', 'second', 'first', 'second']);
+      });
+
+      it('should respect the order of feature reducers', () => {
+        const log: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({}),
+            StoreModule.forFeature(
+              'feat',
+              {},
+              { metaReducers: [createReducer({ logText: 'first', log })] }
+            ),
+          ],
+          providers: [
+            {
+              provide: FEATURE_META_REDUCERS,
+              useValue: createReducer({ logText: 'second', log }),
+              multi: true,
+            },
+            {
+              provide: FEATURE_META_REDUCERS,
+              useValue: createReducer({ logText: 'third', log }),
+              multi: true,
+            },
+          ],
+        });
+
+        store = TestBed.get(Store) as Store<any>;
+
+        expect(log).toEqual(['first', 'second', 'third']);
+        store.dispatch({ type: 'FOO' });
+        expect(log).toEqual([
+          'first',
+          'second',
+          'third',
+          'first',
+          'second',
+          'third',
+        ]);
+      });
+
+      it('should respect the order of root and feature reducers', () => {
+        const log: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot(
+              {},
+              { metaReducers: [createReducer({ logText: 'first', log })] }
+            ),
+            StoreModule.forFeature(
+              'feat',
+              {},
+              { metaReducers: [createReducer({ logText: 'third', log })] }
+            ),
+          ],
+          providers: [
+            {
+              provide: META_REDUCERS,
+              useValue: createReducer({ logText: 'second', log }),
+              multi: true,
+            },
+            {
+              provide: FEATURE_META_REDUCERS,
+              useValue: createReducer({ logText: 'fourth', log }),
+              multi: true,
+            },
+          ],
+        });
+
+        store = TestBed.get(Store) as Store<any>;
+
+        expect(log).toEqual([
+          'first',
+          'second',
+          'first',
+          'second',
+          'third',
+          'fourth',
+        ]);
+        store.dispatch({ type: 'FOO' });
+        expect(log).toEqual([
+          'first',
+          'second',
+          'first',
+          'second',
+          'third',
+          'fourth',
+          'first',
+          'second',
+          'third',
+          'fourth',
         ]);
       });
     });
