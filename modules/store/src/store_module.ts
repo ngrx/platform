@@ -251,11 +251,9 @@ export function _createFeatureStore(
         reducerFactory: conf.reducerFactory
           ? conf.reducerFactory
           : combineReducers,
-        metaReducers: (conf.metaReducers ? conf.metaReducers : []).concat(
-          metaReducers.reduce((flattened, reducers) =>
-            flattened.concat(reducers)
-          )
-        ),
+        metaReducers: metaReducers
+          .concat(conf.metaReducers || [])
+          .reduce((flattened, reducers) => flattened.concat(reducers)),
         initialState: conf.initialState,
       };
     }

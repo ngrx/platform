@@ -93,10 +93,11 @@ export function createReducerFactory<T, V extends Action = Action>(
   metaReducers?: Array<MetaReducer<T, V>[]>
 ): ActionReducerFactory<T, V> {
   const metaReducersFlattened = Array.isArray(metaReducers)
-    ? metaReducers.reduce(
-        (flattened, reducers) => flattened.concat(reducers),
-        []
-      )
+    ? metaReducers
+        // config meta-reducers are defined as an array
+        // we want them last in order to handle them from right-to-left
+        .sort(mr => (Array.isArray(mr) ? 1 : 0))
+        .reduce((flattened, reducers) => flattened.concat(reducers), [])
     : [];
   if (metaReducersFlattened.length > 0) {
     reducerFactory = compose.apply(null, [

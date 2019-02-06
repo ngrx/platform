@@ -1,4 +1,9 @@
-import { ReflectiveInjector, InjectionToken } from '@angular/core';
+import {
+  ReflectiveInjector,
+  InjectionToken,
+  NgModule,
+  ModuleWithProviders,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { hot } from 'jasmine-marbles';
 import {
@@ -591,7 +596,7 @@ describe('ngRx Store', () => {
     });
 
     describe('Via tokens', () => {
-      const createReducer = ({
+      const createMetaReducer = ({
         logText,
         log,
       }: {
@@ -612,12 +617,12 @@ describe('ngRx Store', () => {
           providers: [
             {
               provide: META_REDUCERS,
-              useValue: createReducer({ logText: 'first', log }),
+              useValue: createMetaReducer({ logText: 'token1', log }),
               multi: true,
             },
             {
               provide: META_REDUCERS,
-              useValue: createReducer({ logText: 'second', log }),
+              useValue: createMetaReducer({ logText: 'token2', log }),
               multi: true,
             },
           ],
@@ -625,9 +630,9 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['first', 'second']);
+        expect(log).toEqual(['token1', 'token2']);
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual(['first', 'second', 'first', 'second']);
+        expect(log).toEqual(['token1', 'token2', 'token1', 'token2']);
       });
 
       it('should respect the order of reducers', () => {
@@ -636,18 +641,23 @@ describe('ngRx Store', () => {
           imports: [
             StoreModule.forRoot(
               {},
-              { metaReducers: [createReducer({ logText: 'first', log })] }
+              {
+                metaReducers: [
+                  createMetaReducer({ logText: 'config1', log }),
+                  createMetaReducer({ logText: 'config2', log }),
+                ],
+              }
             ),
           ],
           providers: [
             {
               provide: META_REDUCERS,
-              useValue: createReducer({ logText: 'second', log }),
+              useValue: createMetaReducer({ logText: 'token1', log }),
               multi: true,
             },
             {
               provide: META_REDUCERS,
-              useValue: createReducer({ logText: 'third', log }),
+              useValue: createMetaReducer({ logText: 'token2', log }),
               multi: true,
             },
           ],
@@ -655,15 +665,103 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['first', 'second', 'third']);
+        expect(log).toEqual(['token1', 'token2', 'config1', 'config2']);
         store.dispatch({ type: 'FOO' });
         expect(log).toEqual([
-          'first',
-          'second',
-          'third',
-          'first',
-          'second',
-          'third',
+          'token1',
+          'token2',
+          'config1',
+          'config2',
+          'token1',
+          'token2',
+          'config1',
+          'config2',
+        ]);
+      });
+
+      it('should respect the order of reducers with feature modules', () => {
+        const log: string[] = [];
+        @NgModule({
+          providers: [
+            {
+              provide: META_REDUCERS,
+              useValue: createMetaReducer({ logText: 'feattoken', log }),
+              multi: true,
+            },
+          ],
+        })
+        class FeatureModule {}
+
+        @NgModule({})
+        class WithProviderModule {
+          static forRoot(): ModuleWithProviders<WithProviderModule> {
+            return {
+              ngModule: WithProviderModule,
+              providers: [
+                {
+                  provide: META_REDUCERS,
+                  useValue: createMetaReducer({
+                    logText: 'providertoken',
+                    log,
+                  }),
+                  multi: true,
+                },
+              ],
+            };
+          }
+        }
+
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot(
+              {},
+              {
+                metaReducers: [
+                  createMetaReducer({ logText: 'config', log }),
+                  createMetaReducer({ logText: 'config2', log }),
+                ],
+              }
+            ),
+            FeatureModule,
+            WithProviderModule.forRoot(),
+          ],
+          providers: [
+            {
+              provide: META_REDUCERS,
+              useValue: createMetaReducer({ logText: 'token1', log }),
+              multi: true,
+            },
+            {
+              provide: META_REDUCERS,
+              useValue: createMetaReducer({ logText: 'token2', log }),
+              multi: true,
+            },
+          ],
+        });
+
+        store = TestBed.get(Store) as Store<any>;
+        expect(log).toEqual([
+          'feattoken',
+          'providertoken',
+          'token1',
+          'token2',
+          'config',
+          'config2',
+        ]);
+        store.dispatch({ type: 'FOO' });
+        expect(log).toEqual([
+          'feattoken',
+          'providertoken',
+          'token1',
+          'token2',
+          'config',
+          'config2',
+          'feattoken',
+          'providertoken',
+          'token1',
+          'token2',
+          'config',
+          'config2',
         ]);
       });
 
@@ -677,12 +775,12 @@ describe('ngRx Store', () => {
           providers: [
             {
               provide: FEATURE_META_REDUCERS,
-              useValue: createReducer({ logText: 'first', log }),
+              useValue: createMetaReducer({ logText: 'meta1', log }),
               multi: true,
             },
             {
               provide: FEATURE_META_REDUCERS,
-              useValue: createReducer({ logText: 'second', log }),
+              useValue: createMetaReducer({ logText: 'meta2', log }),
               multi: true,
             },
           ],
@@ -690,9 +788,9 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['first', 'second']);
+        expect(log).toEqual(['meta1', 'meta2']);
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual(['first', 'second', 'first', 'second']);
+        expect(log).toEqual(['meta1', 'meta2', 'meta1', 'meta2']);
       });
 
       it('should respect the order of feature reducers', () => {
@@ -703,18 +801,23 @@ describe('ngRx Store', () => {
             StoreModule.forFeature(
               'feat',
               {},
-              { metaReducers: [createReducer({ logText: 'first', log })] }
+              {
+                metaReducers: [
+                  createMetaReducer({ logText: 'featconfig1', log }),
+                  createMetaReducer({ logText: 'featconfig2', log }),
+                ],
+              }
             ),
           ],
           providers: [
             {
               provide: FEATURE_META_REDUCERS,
-              useValue: createReducer({ logText: 'second', log }),
+              useValue: createMetaReducer({ logText: 'token1', log }),
               multi: true,
             },
             {
               provide: FEATURE_META_REDUCERS,
-              useValue: createReducer({ logText: 'third', log }),
+              useValue: createMetaReducer({ logText: 'token2', log }),
               multi: true,
             },
           ],
@@ -722,68 +825,125 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['first', 'second', 'third']);
+        expect(log).toEqual(['featconfig1', 'featconfig2', 'token1', 'token2']);
         store.dispatch({ type: 'FOO' });
         expect(log).toEqual([
-          'first',
-          'second',
-          'third',
-          'first',
-          'second',
-          'third',
+          'featconfig1',
+          'featconfig2',
+          'token1',
+          'token2',
+          'featconfig1',
+          'featconfig2',
+          'token1',
+          'token2',
         ]);
       });
 
       it('should respect the order of root and feature reducers', () => {
         const log: string[] = [];
+
+        @NgModule({
+          providers: [
+            {
+              provide: META_REDUCERS,
+              useValue: createMetaReducer({ logText: 'feattoken', log }),
+              multi: true,
+            },
+          ],
+        })
+        class FeatureModule {}
+
+        @NgModule({})
+        class WithProviderModule {
+          static forRoot(): ModuleWithProviders<WithProviderModule> {
+            return {
+              ngModule: WithProviderModule,
+              providers: [
+                {
+                  provide: META_REDUCERS,
+                  useValue: createMetaReducer({
+                    logText: 'providertoken',
+                    log,
+                  }),
+                  multi: true,
+                },
+              ],
+            };
+          }
+        }
+
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot(
               {},
-              { metaReducers: [createReducer({ logText: 'first', log })] }
+              {
+                metaReducers: [
+                  createMetaReducer({ logText: 'config1', log }),
+                  createMetaReducer({ logText: 'config2', log }),
+                ],
+              }
             ),
             StoreModule.forFeature(
               'feat',
               {},
-              { metaReducers: [createReducer({ logText: 'third', log })] }
+              {
+                metaReducers: [
+                  createMetaReducer({ logText: 'featconfig1', log }),
+                  createMetaReducer({ logText: 'featconfig2', log }),
+                ],
+              }
             ),
+            FeatureModule,
+            WithProviderModule,
           ],
           providers: [
             {
               provide: META_REDUCERS,
-              useValue: createReducer({ logText: 'second', log }),
+              useValue: createMetaReducer({ logText: 'featmeta1', log }),
               multi: true,
             },
             {
               provide: FEATURE_META_REDUCERS,
-              useValue: createReducer({ logText: 'fourth', log }),
+              useValue: createMetaReducer({ logText: 'featmeta2', log }),
               multi: true,
             },
           ],
         });
 
         store = TestBed.get(Store) as Store<any>;
-
         expect(log).toEqual([
-          'first',
-          'second',
-          'first',
-          'second',
-          'third',
-          'fourth',
+          'feattoken',
+          'featmeta1',
+          'config1',
+          'config2',
+          'feattoken',
+          'featmeta1',
+          'config1',
+          'config2',
+          'featconfig1',
+          'featconfig2',
+          'featmeta2',
         ]);
         store.dispatch({ type: 'FOO' });
         expect(log).toEqual([
-          'first',
-          'second',
-          'first',
-          'second',
-          'third',
-          'fourth',
-          'first',
-          'second',
-          'third',
-          'fourth',
+          'feattoken',
+          'featmeta1',
+          'config1',
+          'config2',
+          'feattoken',
+          'featmeta1',
+          'config1',
+          'config2',
+          'featconfig1',
+          'featconfig2',
+          'featmeta2',
+          'feattoken',
+          'featmeta1',
+          'config1',
+          'config2',
+          'featconfig1',
+          'featconfig2',
+          'featmeta2',
         ]);
       });
     });
