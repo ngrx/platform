@@ -81,17 +81,25 @@ export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
 }
 
 export function effect<T extends Action>(
-  source: () => Observable<T>,
+  source: (() => Observable<T>),
   options: { dispatch: false }
 ): Observable<T>;
 export function effect<T extends Action>(
-  source: () => Observable<T>,
+  source: (() => (...args: any[]) => Observable<T>),
+  options: { dispatch: false }
+): ((...args: any[]) => Observable<T>);
+export function effect<T extends Action>(
+  source: (() => Observable<T>),
   options?: { dispatch: true }
 ): Observable<T>;
 export function effect<T extends Action>(
-  source: () => Observable<T>,
+  source: (() => (...args: any[]) => Observable<T>),
+  options?: { dispatch: true }
+): ((...args: any[]) => Observable<T>);
+export function effect<T extends Action>(
+  source: (() => Observable<T>) | (() => (...args: any[]) => Observable<T>),
   { dispatch = true } = {}
-): Observable<T> {
+): Observable<T> | ((...args: any[]) => Observable<T>) {
   const effect = source();
   Object.defineProperty(effect, METADATA_FUNCTION_KEY, {
     value: {
