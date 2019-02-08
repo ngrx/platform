@@ -3,7 +3,7 @@ import { Database } from '@ngrx/db';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { empty, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import {
   CollectionApiActions,
