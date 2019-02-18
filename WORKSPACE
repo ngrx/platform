@@ -75,11 +75,6 @@ local_repository(
     path = "node_modules/listr/node_modules/rxjs/src",
 )
 
-local_repository(
-    name = "rxjs_ignore_nested_6",
-    path = "node_modules/cypress/node_modules/rxjs/src",
-)
-
 ####################################
 # Load and install our dependencies downloaded above.
 
