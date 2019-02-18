@@ -20,7 +20,7 @@
     "example:build:prod": "yarn example:build -- --base-href \"/platform/example-app/\"",
     "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write \"**/*.ts\"",
-    "watch:tests": "chokidar 'modules/**/*.ts' --initial -c 'yarn run test:unit'",
+    "watch:tests": "chokidar \"modules/**/*.ts\" --initial --command \"yarn run test:unit\"",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "preskylint": "yarn bazel build --noshow_progress @io_bazel//src/tools/skylark/java/com/google/devtools/skylark/skylint:Skylint",
