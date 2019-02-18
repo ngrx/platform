@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 context('Full round trip', () => {
   before(() => {
     window.indexedDB.deleteDatabase('books_app');
