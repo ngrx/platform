@@ -25,7 +25,7 @@ export class Actions<V = Action> extends Observable<V> {
  * 'ofType' filters an Observable of Actions into an observable of the actions
  * whose type strings are passed to it.
  *
- * For example, if `actions` has type `Actions<Addition|Substraction>`, and
+ * For example, if `actions` has type `Actions<AdditionAction|SubstractionAction>`, and
  * the type of the `Addition` action is `add`, then
  * `actions.pipe(ofType('add'))` returns an `Observable<AdditionAction>`.
  *
