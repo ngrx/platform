@@ -14,12 +14,12 @@ Detailed installation instructions can be found on the [Installation](guide/enti
 
 ## Entity and class instances
 
-The Entity State adapter is only compatible with plain javascript objects. This means, for example, you cannot use it to store ES6 class instances. This limitation exists to enforce our desired "best practice" that you only use `@ngrx/store` to store plain javascript objects (as well as potentially reduce user-error bug reports). Some reasons why you should only store plain javascript objects in `@ngrx/store`.
+Entity promotes the use of plain JavaScript objects when managing collections. Type information with ES6 class instances will not be retained when entities are manage in a collection. The provides you with some assurances when managing these entities.
 
 1. Guarantee that the data structures contained in state don't themselves contain logic, reducing the chance that they'll mutate themselves
 2. State will always be serializable allowing you to store and rehydrate from browser storage mechanisms like local storage
 3. State can be inspected via the Redux Devtools.
 
-This will always be a core constraint of NgRx and will not change in the future. The [Redux docs](https://redux.js.org/faq/organizingstate#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state) may offer more insight into this constraint.
+This is one of the [core principle](docs#core-principles) of NgRx. The [Redux docs](https://redux.js.org/faq/organizingstate#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state) also offers more insight into this constraint.
 
 The proper way to interact with @ngrx/entities is to pass it in plain JavaScript objects that are typed with interfaces.
