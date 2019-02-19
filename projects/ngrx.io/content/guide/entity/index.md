@@ -12,7 +12,7 @@ Entity provides an API to manipulate and query entity collections.
 
 Detailed installation instructions can be found on the [Installation](guide/entity/install) page.
 
-## Important! 
+## Entity and class instances
 
 The Entity State adapter is only compatible with plain javascript objects. This means, for example, you cannot use it to store ES6 class instances. This limitation exists to enforce our desired "best practice" that you only use `@ngrx/store` to store plain javascript objects (as well as potentially reduce user-error bug reports). Some reasons why you should only store plain javascript objects in `@ngrx/store`.
 
