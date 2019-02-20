@@ -14,14 +14,14 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { hot, cold } from 'jasmine-marbles';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { MyEffects } from './my-effects';
 import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: Observable&lt;any&gt;;
+  let actions: Subject&lt;any&gt;;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
