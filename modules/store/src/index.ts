@@ -52,3 +52,4 @@ export {
   _createStoreReducers,
   _createFeatureReducers,
 } from './store_module';
+export { ActionsUnion, createAction } from './action_creator';
