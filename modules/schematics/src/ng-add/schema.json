@@ -9,7 +9,7 @@
       "default": true,
       "description": "Use @ngrx/schematics as the default collection",
       "x-prompt":
-        "Would you want to use @ngrx/schematics as the default collection?",
+        "Do you want to use @ngrx/schematics as the default collection?",
       "alias": "d"
     }
   },
