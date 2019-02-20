@@ -14,7 +14,7 @@ Detailed installation instructions can be found on the [Installation](guide/enti
 
 ## Entity and class instances
 
-Entity promotes the use of plain JavaScript objects when managing collections. *ES6 class instances will be transformed into plain javascript objects when entities are managed in a collection*. This provides you with some assurances when managing these entities:
+Entity promotes the use of plain JavaScript objects when managing collections. *ES6 class instances will be transformed into plain JavaScript objects when entities are managed in a collection*. This provides you with some assurances when managing these entities:
 
 1. Guarantee that the data structures contained in state don't themselves contain logic, reducing the chance that they'll mutate themselves.
 2. State will always be serializable allowing you to store and rehydrate from browser storage mechanisms like local storage.
