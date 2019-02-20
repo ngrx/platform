@@ -1,6 +1,9 @@
-export interface Action {
-  type: string;
-}
+export type Action<T extends string = string, P = void> = P extends void
+  ? Readonly<{ type: T }>
+  : Readonly<{
+      type: T;
+    }> &
+      Readonly<P>;
 
 export type TypeId<T> = () => T;
 
