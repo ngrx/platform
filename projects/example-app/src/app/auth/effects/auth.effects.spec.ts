@@ -57,8 +57,8 @@ describe('AuthEffects', () => {
     it('should return an auth.LoginSuccess action, with user information if login succeeds', () => {
       const credentials: Credentials = { username: 'test', password: '' };
       const user = { name: 'User' } as User;
-      const action = new LoginPageActions.Login({ credentials });
-      const completion = new AuthApiActions.LoginSuccess({ user });
+      const action = LoginPageActions.login(credentials);
+      const completion = AuthApiActions.loginSuccess(user);
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: user });
@@ -70,10 +70,10 @@ describe('AuthEffects', () => {
 
     it('should return a new auth.LoginFailure if the login service throws', () => {
       const credentials: Credentials = { username: 'someOne', password: '' };
-      const action = new LoginPageActions.Login({ credentials });
-      const completion = new AuthApiActions.LoginFailure({
-        error: 'Invalid username or password',
-      });
+      const action = LoginPageActions.login(credentials);
+      const completion = AuthApiActions.loginFailure(
+        'Invalid username or password'
+      );
       const error = 'Invalid username or password';
 
       actions$ = hot('-a---', { a: action });
@@ -88,7 +88,7 @@ describe('AuthEffects', () => {
   describe('loginSuccess$', () => {
     it('should dispatch a RouterNavigation action', (done: any) => {
       const user = { name: 'User' } as User;
-      const action = new AuthApiActions.LoginSuccess({ user });
+      const action = AuthApiActions.loginSuccess(user);
 
       actions$ = of(action);
 
@@ -101,7 +101,7 @@ describe('AuthEffects', () => {
 
   describe('loginRedirect$', () => {
     it('should dispatch a RouterNavigation action when auth.LoginRedirect is dispatched', (done: any) => {
-      const action = new AuthApiActions.LoginRedirect();
+      const action = AuthApiActions.loginRedirect();
 
       actions$ = of(action);
 
@@ -112,7 +112,7 @@ describe('AuthEffects', () => {
     });
 
     it('should dispatch a RouterNavigation action when auth.Logout is dispatched', (done: any) => {
-      const action = new AuthActions.Logout();
+      const action = AuthActions.logout();
 
       actions$ = of(action);
 
@@ -125,8 +125,8 @@ describe('AuthEffects', () => {
 
   describe('logoutConfirmation$', () => {
     it('should dispatch a Logout action if dialog closes with true result', () => {
-      const action = new AuthActions.LogoutConfirmation();
-      const completion = new AuthActions.Logout();
+      const action = AuthActions.logoutConfirmation();
+      const completion = AuthActions.logout();
 
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
@@ -139,8 +139,8 @@ describe('AuthEffects', () => {
     });
 
     it('should dispatch a LogoutConfirmationDismiss action if dialog closes with falsy result', () => {
-      const action = new AuthActions.LogoutConfirmation();
-      const completion = new AuthActions.LogoutConfirmationDismiss();
+      const action = AuthActions.logoutConfirmation();
+      const completion = AuthActions.logoutConfirmationDismiss();
 
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });

@@ -17,10 +17,7 @@ export interface State extends fromRoot.State {
   auth: AuthState;
 }
 
-export const reducers: ActionReducerMap<
-  AuthState,
-  AuthApiActions.AuthApiActionsUnion
-> = {
+export const reducers: ActionReducerMap<AuthState, AuthApiActions> = {
   status: fromAuth.reducer,
   loginPage: fromLoginPage.reducer,
 };

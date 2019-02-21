@@ -1,14 +1,13 @@
-import { Action } from '@ngrx/store';
+import { ActionsUnion, createAction } from '@ngrx/store';
 import { Credentials } from '@example-app/auth/models/user';
 
 export enum LoginPageActionTypes {
   Login = '[Login Page] Login',
 }
 
-export class Login implements Action {
-  readonly type = LoginPageActionTypes.Login;
+export const LoginPageActions = {
+  login: (credentials: Credentials) =>
+    createAction(LoginPageActionTypes.Login, { credentials }),
+};
 
-  constructor(public payload: { credentials: Credentials }) {}
-}
-
-export type LoginPageActionsUnion = Login;
+export type LoginPageActions = ActionsUnion<typeof LoginPageActions>;

@@ -1,4 +1,9 @@
-import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
+import {
+  AuthApiActions,
+  AuthApiActionTypes,
+  LoginPageActions,
+  LoginPageActionTypes,
+} from '@example-app/auth/actions';
 
 export interface State {
   error: string | null;
@@ -12,12 +17,10 @@ export const initialState: State = {
 
 export function reducer(
   state = initialState,
-  action:
-    | AuthApiActions.AuthApiActionsUnion
-    | LoginPageActions.LoginPageActionsUnion
+  action: AuthApiActions | LoginPageActions
 ): State {
   switch (action.type) {
-    case LoginPageActions.LoginPageActionTypes.Login: {
+    case LoginPageActionTypes.Login: {
       return {
         ...state,
         error: null,
@@ -25,7 +28,7 @@ export function reducer(
       };
     }
 
-    case AuthApiActions.AuthApiActionTypes.LoginSuccess: {
+    case AuthApiActionTypes.LoginSuccess: {
       return {
         ...state,
         error: null,
@@ -33,10 +36,10 @@ export function reducer(
       };
     }
 
-    case AuthApiActions.AuthApiActionTypes.LoginFailure: {
+    case AuthApiActionTypes.LoginFailure: {
       return {
         ...state,
-        error: action.payload.error,
+        error: action.error,
         pending: false,
       };
     }
