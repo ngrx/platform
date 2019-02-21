@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, ActionsUnion, createAction } from '@ngrx/store';
 
 export enum AuthActionTypes {
   Logout = '[Auth] Logout',
@@ -6,19 +6,11 @@ export enum AuthActionTypes {
   LogoutConfirmationDismiss = '[Auth] Logout Confirmation Dismiss',
 }
 
-export class Logout implements Action {
-  readonly type = AuthActionTypes.Logout;
-}
+export const AuthActions = {
+  logout: () => createAction(AuthActionTypes.Logout),
+  logoutConfirmation: () => createAction(AuthActionTypes.LogoutConfirmation),
+  logoutConfirmationDismiss: () =>
+    createAction(AuthActionTypes.LogoutConfirmationDismiss),
+};
 
-export class LogoutConfirmation implements Action {
-  readonly type = AuthActionTypes.LogoutConfirmation;
-}
-
-export class LogoutConfirmationDismiss implements Action {
-  readonly type = AuthActionTypes.LogoutConfirmationDismiss;
-}
-
-export type AuthActionsUnion =
-  | Logout
-  | LogoutConfirmation
-  | LogoutConfirmationDismiss;
+export type AuthActions = ActionsUnion<typeof AuthActions>;

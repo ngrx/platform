@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       select(fromAuth.getLoggedIn),
       map(authed => {
         if (!authed) {
-          this.store.dispatch(new AuthApiActions.LoginRedirect());
+          this.store.dispatch(AuthApiActions.loginRedirect());
           return false;
         }
 
