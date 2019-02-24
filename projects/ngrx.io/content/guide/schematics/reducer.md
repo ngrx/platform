@@ -52,6 +52,13 @@ Provide the path to a `reducers` file containing a state interface and an object
   - Alias: `-r`
   - Type: `string`
 
+Specifies if api success and failure actions should be added to the reducer.
+
+- `--api`
+  - Alias: `-a`
+  - Type: `boolean`
+  - Default: `false`
+
 Generate a spec file alongside the reducer file.
 
 - `--spec`

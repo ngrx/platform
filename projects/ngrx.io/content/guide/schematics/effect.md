@@ -51,6 +51,13 @@ When used with the `--module` option, it registers an effect within the `Angular
   - Type: `boolean`
   - Default: `false`
 
+Specifies if effect has api success and failure actions wired up.
+
+- `--api`
+  - Alias: `-a`
+  - Type: `boolean`
+  - Default: `false`
+
 Generate a spec file alongside the action file.
 
 - `--spec`
