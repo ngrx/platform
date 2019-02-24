@@ -51,7 +51,7 @@ Provide the path to a `reducers` file containing a state interface and a object 
   - Alias: `-r`
   - Type: `string`
 
-Add flag to specify if API Success and Failure `actions`, `effects` and `reducers` should be added to feature.
+Specifies if api success and failure `actions`, `reducer`, and `effects` should be generated as part of this feature.
 
 - `--api`
   - Alias: `-a`
