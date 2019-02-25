@@ -81,15 +81,27 @@ jobs:
       - run: yarn copy:schematics
       - run: git diff --name-only --exit-code ./modules
       - run: yarn run ci
-      - run: yarn run example:build:prod
       - run: yarn run example:test --watch=false
-      - run: yarn run example:cypress:ci
       - save_cache:
           key: *cache_key
           paths:
             - ~/.cache/yarn
-            - ~/.cache/Cypress
             - node_modules
+
+  e2e_test:
+    docker:
+      - image: circleci/node:10.12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: yarn
+      - run: yarn run example:build:prod
+      - run: yarn run example:cypress:ci
+      - save_cache:
+          key: *cache_key
+          paths:
+            - ~/.cache/Cypress
 
   docs:
     <<: *run_in_node
@@ -120,7 +132,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout:
           path: ~/docs
       - restore_cache:
@@ -145,7 +157,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
       - restore_cache:
           key: *cache_key
@@ -161,12 +173,14 @@ workflows:
       - lint
       - bazel
       - test
+      - e2e_test
       - docs
       - docs-preview
       - deploy:
           requires:
             - docs
             - test
+            - e2e_test
             - bazel
           filters:
             branches:
