@@ -472,6 +472,27 @@ export function createSelector<
   ) => Result
 ): MemoizedSelectorWithProps<State, Props, Result>;
 
+/**
+ * @deprecated
+ * Selectors with only a projector function aren't valid anymore and will be removed in version 8.0.0
+ *
+ * BEFORE:
+ *
+ * ```ts
+ * const getTodosById = createSelector(
+ *   (state: TodoAppSchema, id: number) => state.todos.find(p => p.id === id)
+ * );
+ * ```
+ *
+ * AFTER:
+ *
+ * ```ts
+ * const getTodosById = createSelector(
+ *   (state: TodoAppSchema) => state.todos,
+ *   (todos: Todo[], id: number) => todos.find(p => p.id === id)
+ * );
+ * ```
+ */
 export function createSelector<State, Props, Result>(
   projector: SelectorWithProps<State, Props, Result>
 ): MemoizedSelectorWithProps<State, Props, Result>;
