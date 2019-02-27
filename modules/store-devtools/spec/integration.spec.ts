@@ -66,9 +66,9 @@ describe('Devtools Integration', () => {
     devtools.refresh();
   });
 
-  it('should not throw if actions are blacklisted', (done: any) => {
+  it('should not throw if actions are blocked', (done: any) => {
     const { store, devtools } = setup({
-      actionsBlacklist: ['FOO'],
+      actionsBlocklist: ['FOO'],
     });
     store.subscribe();
     devtools.dispatcher.subscribe((action: Action) => {
@@ -80,9 +80,9 @@ describe('Devtools Integration', () => {
     devtools.refresh();
   });
 
-  it('should not throw if actions are whitelisted', (done: any) => {
+  it('should not throw if actions are safe', (done: any) => {
     const { store, devtools } = setup({
-      actionsWhitelist: ['BAR'],
+      actionsSafelist: ['BAR'],
     });
     store.subscribe();
     devtools.dispatcher.subscribe((action: Action) => {
