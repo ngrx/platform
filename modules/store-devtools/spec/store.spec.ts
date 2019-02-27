@@ -478,9 +478,9 @@ describe('Store Devtools', () => {
       expect(fixture.getState()).toBe(5);
     });
 
-    it('should respect the blacklist option', () => {
+    it('should respect the blocked option', () => {
       const fixture = createStore(counter, {
-        actionsBlacklist: ['INCREMENT'],
+        actionsBlocklist: ['INCREMENT'],
       });
 
       expect(fixture.getState()).toBe(0);
@@ -517,9 +517,9 @@ describe('Store Devtools', () => {
       expect(fixture.getState()).toBe(5);
     });
 
-    it('should respect the whitelist option', () => {
+    it('should respect the safe option', () => {
       const fixture = createStore(counter, {
-        actionsWhitelist: ['DECREMENT'],
+        actionsSafelist: ['DECREMENT'],
       });
 
       expect(fixture.getState()).toBe(0);

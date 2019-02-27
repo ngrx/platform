@@ -38,7 +38,7 @@ function - takes `state` object and index as arguments, and should return a `sta
 
 For more detailed information see [Redux DevTools Serialize](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#serialize)
 
-### `actionsBlacklist` / `actionsWhitelist`
+### `actionsSafelist` / `actionsBlocklist`
 
 array of strings as regex - actions types to be hidden / shown in the monitors, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#actionsblacklist--actionswhitelist).
 

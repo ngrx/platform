@@ -87,8 +87,8 @@ export class StoreDevtools implements Observer<any> {
               reducedLiftedState = filterLiftedState(
                 reducedLiftedState,
                 config.predicate,
-                config.actionsWhitelist,
-                config.actionsBlacklist
+                config.actionsSafelist,
+                config.actionsBlocklist
               );
             }
             // Extension should be sent the sanitized lifted state
