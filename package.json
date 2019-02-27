@@ -72,7 +72,6 @@
     ]
   },
   "dependencies": {
-    "@angular-devkit/schematics": "^7.3.3",
     "@angular/animations": "^7.0.1",
     "@angular/bazel": "^7.0.1",
     "@angular/cdk": "^7.0.1",
@@ -96,6 +95,7 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/schematics": "^7.3.3",
     "@angular-devkit/build-angular": "^0.10.0",
     "@bazel/bazel": "^0.19.1",
     "@cypress/webpack-preprocessor": "^4.0.3",
