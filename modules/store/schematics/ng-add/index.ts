@@ -1,9 +1,11 @@
+import { strings } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
   SchematicsException,
   Tree,
   apply,
+  applyTemplates,
   branchAndMerge,
   chain,
   mergeWith,
@@ -121,11 +123,11 @@ export default function(options: RootStoreOptions): Rule {
     }
 
     const templateSource = apply(url('./files'), [
-      template({
-        ...stringUtils,
-        ...(options as object),
+      applyTemplates({
+        ...strings,
+        ...options,
         environmentsPath,
-      } as any),
+      }),
       move(parsedPath.path),
     ]);
 

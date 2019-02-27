@@ -1,7 +1,9 @@
+import { strings } from '@angular-devkit/core';
 import {
   Rule,
   SchematicsException,
   apply,
+  applyTemplates,
   branchAndMerge,
   chain,
   filter,
@@ -29,17 +31,19 @@ export default function(options: ActionOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
-      template({
+      options.spec
+        ? noop()
+        : filter(path => !path.endsWith('.spec.ts.template')),
+      applyTemplates({
+        ...stringUtils,
         'if-flat': (s: string) =>
           stringUtils.group(
             options.flat ? '' : s,
             options.group ? 'actions' : ''
           ),
-        ...stringUtils,
-        ...(options as object),
-        dot: () => '.',
-      } as any),
+        ...options,
+        dot: '.',
+      }),
       move(parsedPath.path),
     ]);
 

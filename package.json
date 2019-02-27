@@ -72,6 +72,7 @@
     ]
   },
   "dependencies": {
+    "@angular-devkit/schematics": "^7.3.3",
     "@angular/animations": "^7.0.1",
     "@angular/bazel": "^7.0.1",
     "@angular/cdk": "^7.0.1",

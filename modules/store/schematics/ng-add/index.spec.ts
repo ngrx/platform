@@ -22,7 +22,6 @@ describe('Store ng-add Schematic', () => {
   };
 
   const projectPath = getTestProjectPath();
-
   let appTree: UnitTestTree;
 
   beforeEach(() => {
@@ -33,6 +32,7 @@ describe('Store ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/store']).toBeDefined();
@@ -105,11 +105,11 @@ describe('Store ng-add Schematic', () => {
 
   it('should support a default root state interface name', () => {
     const options = { ...defaultOptions, name: 'State' };
-
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
+
     expect(content).toMatch(/export interface State {/);
   });
 
@@ -121,9 +121,11 @@ describe('Store ng-add Schematic', () => {
     };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
+
     expect(content).toMatch(/export interface AppState {/);
   });
 });
