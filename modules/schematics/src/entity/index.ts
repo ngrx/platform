@@ -50,7 +50,6 @@ export default function(options: EntityOptions): Rule {
         'group-reducers': (s: string) =>
           stringUtils.group(s, options.group ? 'reducers' : ''),
         ...(options as object),
-        dot: '.',
       } as any),
       move(parsedPath.path),
     ]);

@@ -49,7 +49,6 @@ export default function(options: ReducerOptions): Rule {
             options.group ? 'reducers' : ''
           ),
         ...(options as object),
-        dot: '.',
       } as any),
       move(parsedPath.path),
     ]);

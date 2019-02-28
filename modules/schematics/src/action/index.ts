@@ -41,7 +41,6 @@ export default function(options: ActionOptions): Rule {
             options.group ? 'actions' : ''
           ),
         ...options,
-        dot: '.',
       }),
       move(parsedPath.path),
     ]);

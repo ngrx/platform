@@ -133,7 +133,6 @@ export default function(options: RootEffectOptions): Rule {
             options.group ? 'effects' : ''
           ),
         ...(options as object),
-        dot: () => '.',
       } as any),
       move(parsedPath.path),
     ]);

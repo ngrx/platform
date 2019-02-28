@@ -117,7 +117,6 @@ export default function(options: EffectOptions): Rule {
             options.group ? 'effects' : ''
           ),
         ...(options as object),
-        dot: '.',
       } as any),
       move(parsedPath.path),
     ]);

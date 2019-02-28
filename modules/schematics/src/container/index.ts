@@ -144,7 +144,6 @@ export default function(options: ContainerOptions): Rule {
         'if-flat': (s: string) => (options.flat ? '' : s),
         ...stringUtils,
         ...(options as object),
-        dot: '.',
       } as any),
       move(parsedPath.path),
     ]);
