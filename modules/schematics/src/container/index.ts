@@ -6,6 +6,7 @@ import {
   chain,
   externalSchematic,
   apply,
+  applyTemplates,
   url,
   noop,
   filter,
@@ -136,12 +137,13 @@ export default function(options: ContainerOptions): Rule {
     );
 
     const templateSource = apply(url('./files'), [
-      options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
-      template({
+      options.spec
+        ? noop()
+        : filter(path => !path.endsWith('.spec.ts.template')),
+      applyTemplates({
         'if-flat': (s: string) => (options.flat ? '' : s),
         ...stringUtils,
         ...(options as object),
-        dot: () => '.',
       } as any),
       move(parsedPath.path),
     ]);

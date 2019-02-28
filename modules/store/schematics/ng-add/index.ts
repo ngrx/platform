@@ -4,6 +4,7 @@ import {
   SchematicsException,
   Tree,
   apply,
+  applyTemplates,
   branchAndMerge,
   chain,
   mergeWith,
@@ -121,11 +122,11 @@ export default function(options: RootStoreOptions): Rule {
     }
 
     const templateSource = apply(url('./files'), [
-      template({
+      applyTemplates({
         ...stringUtils,
-        ...(options as object),
+        ...options,
         environmentsPath,
-      } as any),
+      }),
       move(parsedPath.path),
     ]);
 

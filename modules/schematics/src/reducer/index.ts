@@ -4,6 +4,7 @@ import {
   SchematicsException,
   Tree,
   apply,
+  applyTemplates,
   branchAndMerge,
   chain,
   filter,
@@ -37,8 +38,10 @@ export default function(options: ReducerOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.spec ? noop() : filter(path => !path.endsWith('__spec.ts')),
-      template({
+      options.spec
+        ? noop()
+        : filter(path => !path.endsWith('.spec.ts.template')),
+      applyTemplates({
         ...stringUtils,
         'if-flat': (s: string) =>
           stringUtils.group(
@@ -46,7 +49,6 @@ export default function(options: ReducerOptions): Rule {
             options.group ? 'reducers' : ''
           ),
         ...(options as object),
-        dot: () => '.',
       } as any),
       move(parsedPath.path),
     ]);
