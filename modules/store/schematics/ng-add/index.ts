@@ -1,4 +1,3 @@
-import { strings } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -124,7 +123,7 @@ export default function(options: RootStoreOptions): Rule {
 
     const templateSource = apply(url('./files'), [
       applyTemplates({
-        ...strings,
+        ...stringUtils,
         ...options,
         environmentsPath,
       }),

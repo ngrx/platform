@@ -1,4 +1,3 @@
-import { strings } from '@angular-devkit/core';
 import {
   Rule,
   SchematicsException,

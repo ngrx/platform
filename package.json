@@ -96,7 +96,6 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.10.0",
-    "@angular-devkit/core": "^7.3.3",
     "@angular-devkit/schematics": "^7.3.3",
     "@bazel/bazel": "^0.19.1",
     "@cypress/webpack-preprocessor": "^4.0.3",
