@@ -24,6 +24,7 @@ $mediumgray: #6e6e6e;
 $darkgray: #333;
 $black: #0A1014;
 $orange: #FF9800;
+$darkorange: #940;
 $anti-pattern: $brightred;
 
 // API & CODE COLORS
@@ -101,6 +102,10 @@ $api-symbols: (
   var: (
     content: 'K',
     background: $mediumgray
+  ),
+  ngmodule: (
+    content: 'M',
+    background: $darkorange
   ),
   type-alias: (
     content: 'T',
