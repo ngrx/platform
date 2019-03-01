@@ -158,7 +158,6 @@ Usage:
 
 <code-example header="auth.guard.spec.ts">
 import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
@@ -168,7 +167,7 @@ import * as AuthActions from '../actions/auth-actions';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
-  let store: MockStore<{ loggedIn: boolean } >;
+  let store: MockStore&lt;{ loggedIn: boolean }&gt;;
   const initialState = { loggedIn: false };
 
   beforeEach(() => {
