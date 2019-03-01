@@ -143,7 +143,7 @@ describe('My Selectors', () => {
 });
 </code-example>
 
-### provideMockStore
+### Using a Mock Store
 
 The `provideMockStore()` method registers providers that allow you to mock out the `Store` for testing functionality that has a dependency on `Store` without setting up reducers. 
 You can write tests validating behaviors corresponding to the specific state snapshot easily.
