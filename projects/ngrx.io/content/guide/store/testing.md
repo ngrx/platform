@@ -145,7 +145,7 @@ describe('My Selectors', () => {
 
 ### provideMockStore
 
-Provides a *mock store* for testing effects or something which has a dependency on `Store` without setting up reducers. 
+The `provideMockStore()` method registers providers that allow you to mock out the `Store` for testing functionality that has a dependency on `Store` without setting up reducers. 
 You can write tests validating behaviors corresponding to the specific state snapshot easily.
 
 Note: All dispatched actions don't affect to the state, but you can see them in the `Actions` stream.
