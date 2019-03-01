@@ -148,7 +148,11 @@ describe('My Selectors', () => {
 The `provideMockStore()` method registers providers that allow you to mock out the `Store` for testing functionality that has a dependency on `Store` without setting up reducers. 
 You can write tests validating behaviors corresponding to the specific state snapshot easily.
 
-Note: All dispatched actions don't affect to the state, but you can see them in the `Actions` stream.
+<div class="alert is-helpful">
+
+**Note:** All dispatched actions don't affect to the state, but you can see them in the `Actions` stream.
+
+</div>
 
 Usage: 
 
@@ -164,7 +168,7 @@ import * as AuthActions from '../actions/auth-actions';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
-  let mockStore: MockStore<{ loggedIn: boolean } >;
+  let store: MockStore<{ loggedIn: boolean } >;
   const initialState = { loggedIn: false };
 
   beforeEach(() => {
@@ -180,7 +184,7 @@ describe('Auth Guard', () => {
     });
 
     guard = TestBed.get(AuthGuard);
-    mockStore = TestBed.get(Store);
+    store = TestBed.get(Store);
   });
 
   it('should return false if the user state is not logged in', () => {
@@ -190,7 +194,7 @@ describe('Auth Guard', () => {
   });
 
   it('should return true if the user state is logged in', () => {
-    mockStore.setState({ loggedIn: true });
+    store.setState({ loggedIn: true });
 
     const expected = cold('(a|)', { a: true });
 
