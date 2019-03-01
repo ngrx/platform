@@ -142,3 +142,59 @@ describe('My Selectors', () => {
   });
 });
 </code-example>
+
+### provideMockStore
+
+Provides a *mock store* for testing effects or something which has a dependency on `Store` without setting up reducers. 
+You can write tests validating behaviors corresponding to the specific state snapshot easily.
+
+Note: All dispatched actions don't affect to the state, but you can see them in the `Actions` stream.
+
+Usage: 
+
+<code-example header="auth.guard.spec.ts">
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Store } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { cold } from 'jasmine-marbles';
+
+import { AuthGuard } from '../guards/auth.guard';
+import * as AuthActions from '../actions/auth-actions';
+
+describe('Auth Guard', () => {
+  let guard: AuthGuard;
+  let mockStore: MockStore<{ loggedIn: boolean } >;
+  const initialState = { loggedIn: false };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        // any modules needed
+      ],
+      providers: [
+        AuthGuard,
+        provideMockStore({ initialState }),
+        // other providers
+      ],
+    });
+
+    guard = TestBed.get(AuthGuard);
+    mockStore = TestBed.get(Store);
+  });
+
+  it('should return false if the user state is not logged in', () => {
+    const expected = cold('(a|)', { a: false });
+
+    expect(guard.canActivate()).toBeObservable(expected);
+  });
+
+  it('should return true if the user state is logged in', () => {
+    mockStore.setState({ loggedIn: true });
+
+    const expected = cold('(a|)', { a: true });
+
+    expect(guard.canActivate()).toBeObservable(expected);
+  });
+});
+</code-example>
