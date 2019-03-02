@@ -7,12 +7,7 @@
     "build": "yarn bazel build ...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "deploy:preview": "ts-node ./build/deploy-preview.ts",
-    "test:unit": "node ./tests.js",
-    "test": "nyc yarn run test:unit",
-    "clean": "git clean -xdf",
     "cli": "ng",
-    "coverage:html": "nyc report --reporter=html",
-    "copy:dist": "ncp dist/ ./node_modules/@ngrx/",
     "example:start": "yarn run cli serve",
     "example:start:aot": "yarn run cli serve --prod",
     "example:test": "jest -c projects/example-app/jest.config.js --watch",
@@ -22,9 +17,7 @@
     "example:build": "yarn cli build --prod",
     "example:build:prod": "yarn example:build -- --base-href \"/platform/example-app/\"",
     "example:server": "node build/example-app-server",
-    "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write \"**/*.ts\"",
-    "watch:tests": "chokidar \"modules/**/*.ts\" --initial --command \"yarn run test:unit\"",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "preskylint": "yarn bazel build --noshow_progress @io_bazel//src/tools/skylark/java/com/google/devtools/skylark/skylint:Skylint",
@@ -43,6 +36,9 @@
     "*.{ts,json,md}": [
       "prettier --write",
       "git add"
+    ],
+    "*.{bazel}": [
+      "yarn buildifier"
     ]
   },
   "keywords": [
