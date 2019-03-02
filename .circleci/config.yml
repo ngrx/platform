@@ -24,11 +24,14 @@ jobs:
     <<: *run_in_node
     steps:
       - checkout
+      - restore_cache:
+          key: *cache_key
       - run: yarn --frozen-lockfile --non-interactive
       - save_cache:
           key: *cache_key
           paths:
             - ~/.cache/yarn
+            - ~/.cache/Cypress
             - node_modules
 
   # Enforce some static analysis invariants.
@@ -107,10 +110,6 @@ jobs:
           key: *cache_key
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
-      - save_cache:
-          key: *cache_key
-          paths:
-            - ~/.cache/Cypress
 
   docs:
     <<: *run_in_node
