@@ -91,7 +91,7 @@ export function addReducerToStateInterface(
   }
 
   const keyInsert =
-    stringUtils.camelize(options.name) +
+    stringUtils.pluralize(options.name) +
     ': from' +
     stringUtils.classify(options.name) +
     '.State;';

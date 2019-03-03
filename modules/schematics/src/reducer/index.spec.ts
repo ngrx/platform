@@ -117,7 +117,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/foo\: fromFoo.State/);
+    expect(reducers).toMatch(/foos\: fromFoo.State/);
   });
 
   it('should add the reducer function to the ActionReducerMap', () => {
