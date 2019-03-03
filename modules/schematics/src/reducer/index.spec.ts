@@ -128,7 +128,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/foo\: fromFoo.reducer/);
+    expect(reducers).toMatch(/foos\: fromFoo.reducer/);
   });
 
   it('should group within a "reducers" folder if group is set', () => {

@@ -153,7 +153,7 @@ export function addReducerToActionReducerMap(
   let node = actionReducerMap.initializer;
 
   const keyInsert =
-    stringUtils.camelize(options.name) +
+    stringUtils.pluralize(options.name) +
     ': from' +
     stringUtils.classify(options.name) +
     '.reducer,';
