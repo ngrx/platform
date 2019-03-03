@@ -100,10 +100,10 @@ export function underscore(str: string): string {
  Returns the Capitalized form of a string
 
  ```javascript
- 'regex'.capitalize()         // 'regexes'
+ 'innerHTML'.capitalize()         // 'InnerHTML'
  'action_name'.capitalize()       // 'Action_name'
  'css-class-name'.capitalize()    // 'Css-class-name'
- 'user'.capitalize() // 'users'
+ 'my favorite items'.capitalize() // 'My favorite items'
  ```
  */
 export function capitalize(str: string): string {
@@ -117,7 +117,8 @@ export function capitalize(str: string): string {
  'innerHTML'.pluralize()         // 'InnerHTMLs'
  'action_name'.pluralize()       // 'actionNames'
  'css-class-name'.pluralize()    // 'cssClassNames'
- 'my favorite items'.pluralize() // 'My favorite items'
+ 'regex'.capitalize()            // 'regexes'
+ 'user'.capitalize()             // 'users'
  ```
  */
 export function pluralize(str: string): string {
