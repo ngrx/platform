@@ -55,7 +55,7 @@ jobs:
           'yarn buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
           (echo "BUILD files not formatted. Please run ''yarn buildifier''" ; exit 1)'
 
-  bazel:
+  test:
     <<: *run_in_node
     steps:
       - checkout
@@ -189,7 +189,7 @@ workflows:
       - lint:
           requires:
             - install
-      - bazel:
+      - test:
           requires:
             - install
       - example-tests:
@@ -212,7 +212,7 @@ workflows:
             - docs
             - example-tests
             - example-e2e-tests
-            - bazel
+            - test
           filters:
             branches:
               only: master
