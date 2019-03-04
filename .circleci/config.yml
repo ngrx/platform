@@ -81,6 +81,12 @@ jobs:
           root: dist
           paths:
             - bin/*
+      - save_cache:
+          key: *cache_key
+          paths:
+            - ~/.cache/yarn
+            - ~/.cache/Cypress
+            - node_modules
 
   schematics-core-check:
     docker:
@@ -157,6 +163,10 @@ jobs:
       - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/
       - run: yarn --cwd ../../ install && yarn --cwd ../../ run deploy:preview
+      - save_cache:
+          key: *docs_cache_key
+          paths:
+            - ~/docs/projects/ngrx.io/node_modules
 
   deploy:
     <<: *run_in_node
