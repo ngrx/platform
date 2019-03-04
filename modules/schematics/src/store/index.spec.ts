@@ -40,7 +40,6 @@ describe('Store Schematic', () => {
 
     const files = tree.files;
 
-    console.log(files);
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
     ).toBeGreaterThanOrEqual(0);
