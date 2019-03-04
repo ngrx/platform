@@ -18,7 +18,7 @@ describe('Store Schematic', () => {
   );
   const defaultOptions: StoreOptions = {
     name: 'foo',
-    project: 'bar',
+    project: '',
     spec: true,
     module: undefined,
     flat: false,
@@ -37,7 +37,10 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
+
     const files = tree.files;
+
+    console.log(files);
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
     ).toBeGreaterThanOrEqual(0);

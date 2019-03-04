@@ -14,7 +14,7 @@ export function getProject(
 
   if (!options.project) {
     options.project =
-      workspace.defaultProject != undefined
+      workspace.defaultProject !== undefined
         ? workspace.defaultProject
         : Object.keys(workspace.projects)[0];
   }
