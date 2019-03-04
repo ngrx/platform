@@ -611,7 +611,7 @@ describe('ngRx Store', () => {
       };
 
       it('should be called when the `metaReducers` option is not defined', () => {
-        const log: string[] = [];
+        let log: string[] = [];
         TestBed.configureTestingModule({
           imports: [StoreModule.forRoot({})],
           providers: [
@@ -630,13 +630,16 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['token1', 'token2']);
+        const expected = ['token1', 'token2'];
+
+        expect(log).toEqual(expected);
+        log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual(['token1', 'token2', 'token1', 'token2']);
+        expect(log).toEqual(expected);
       });
 
       it('should respect the order of reducers', () => {
-        const log: string[] = [];
+        let log: string[] = [];
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot(
@@ -665,22 +668,16 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['token1', 'token2', 'config1', 'config2']);
+        const expected = ['token1', 'token2', 'config1', 'config2'];
+
+        expect(log).toEqual(expected);
+        log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual([
-          'token1',
-          'token2',
-          'config1',
-          'config2',
-          'token1',
-          'token2',
-          'config1',
-          'config2',
-        ]);
+        expect(log).toEqual(expected);
       });
 
       it('should respect the order of reducers with feature modules', () => {
-        const log: string[] = [];
+        let log: string[] = [];
         @NgModule({
           providers: [
             {
@@ -740,33 +737,23 @@ describe('ngRx Store', () => {
         });
 
         store = TestBed.get(Store) as Store<any>;
-        expect(log).toEqual([
+        const expected = [
           'feattoken',
           'providertoken',
           'token1',
           'token2',
           'config',
           'config2',
-        ]);
+        ];
+
+        expect(log).toEqual(expected);
+        log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual([
-          'feattoken',
-          'providertoken',
-          'token1',
-          'token2',
-          'config',
-          'config2',
-          'feattoken',
-          'providertoken',
-          'token1',
-          'token2',
-          'config',
-          'config2',
-        ]);
+        expect(log).toEqual(expected);
       });
 
       it('should be called when the `metaReducers` option is not defined in a feature', () => {
-        const log: string[] = [];
+        let log: string[] = [];
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot({}),
@@ -788,13 +775,16 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['meta1', 'meta2']);
+        const expected = ['meta1', 'meta2'];
+
+        expect(log).toEqual(expected);
+        log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual(['meta1', 'meta2', 'meta1', 'meta2']);
+        expect(log).toEqual(expected);
       });
 
       it('should respect the order of feature reducers', () => {
-        const log: string[] = [];
+        let log: string[] = [];
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot({}),
@@ -825,22 +815,16 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        expect(log).toEqual(['featconfig1', 'featconfig2', 'token1', 'token2']);
+        const expected = ['featconfig1', 'featconfig2', 'token1', 'token2'];
+
+        expect(log).toEqual(expected);
+        log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual([
-          'featconfig1',
-          'featconfig2',
-          'token1',
-          'token2',
-          'featconfig1',
-          'featconfig2',
-          'token1',
-          'token2',
-        ]);
+        expect(log).toEqual(expected);
       });
 
       it('should respect the order of root and feature reducers', () => {
-        const log: string[] = [];
+        let log: string[] = [];
 
         @NgModule({
           providers: [
@@ -911,7 +895,8 @@ describe('ngRx Store', () => {
         });
 
         store = TestBed.get(Store) as Store<any>;
-        expect(log).toEqual([
+
+        const expected = [
           'feattoken',
           'featmeta1',
           'config1',
@@ -923,28 +908,12 @@ describe('ngRx Store', () => {
           'featconfig1',
           'featconfig2',
           'featmeta2',
-        ]);
+        ];
+
+        expect(log).toEqual(expected);
+        log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual([
-          'feattoken',
-          'featmeta1',
-          'config1',
-          'config2',
-          'feattoken',
-          'featmeta1',
-          'config1',
-          'config2',
-          'featconfig1',
-          'featconfig2',
-          'featmeta2',
-          'feattoken',
-          'featmeta1',
-          'config1',
-          'config2',
-          'featconfig1',
-          'featconfig2',
-          'featmeta2',
-        ]);
+        expect(log).toEqual(expected);
       });
     });
   });
