@@ -878,7 +878,7 @@ describe('ngRx Store', () => {
               }
             ),
             FeatureModule,
-            WithProviderModule,
+            WithProviderModule.forRoot(),
           ],
           providers: [
             {
@@ -896,24 +896,35 @@ describe('ngRx Store', () => {
 
         store = TestBed.get(Store) as Store<any>;
 
-        const expected = [
+        expect(log).toEqual([
           'feattoken',
+          'providertoken',
           'featmeta1',
           'config1',
           'config2',
+          // the moment the feature module is registered it retriggers the meta-reducers
+          // and will also execute its meta-reducers
           'feattoken',
+          'providertoken',
           'featmeta1',
           'config1',
           'config2',
           'featconfig1',
           'featconfig2',
           'featmeta2',
-        ];
-
-        expect(log).toEqual(expected);
+        ]);
         log.length = 0;
         store.dispatch({ type: 'FOO' });
-        expect(log).toEqual(expected);
+        expect(log).toEqual([
+          'feattoken',
+          'providertoken',
+          'featmeta1',
+          'config1',
+          'config2',
+          'featconfig1',
+          'featconfig2',
+          'featmeta2',
+        ]);
       });
     });
   });
