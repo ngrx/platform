@@ -10,7 +10,7 @@ version: 2
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.9.0
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.9.1
 var_2: &run_in_node
   docker:
     - image: circleci/node:10.12
@@ -20,6 +20,20 @@ var_3: &set_bazel_options
 var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.1
 
 jobs:
+  install:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: yarn --frozen-lockfile --non-interactive
+      - save_cache:
+          key: *cache_key
+          paths:
+            - ~/.cache/yarn
+            - ~/.cache/Cypress
+            - node_modules
+
   # Enforce some static analysis invariants.
   # Note that generally, these should be checked only on the delta in each change,
   # otherwise any change to the static analysis config requires updating all the
@@ -30,7 +44,6 @@ jobs:
     steps:
       - checkout
       - *set_bazel_options
-
       - restore_cache:
           key: *cache_key
 
@@ -38,12 +51,11 @@ jobs:
       # Note that this uses the version of buildifier from the docker image -
       # take care that you use the same version when you run
       # buildifier locally on your change.
-      - run: yarn
       - run:
           'yarn buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
           (echo "BUILD files not formatted. Please run ''yarn buildifier''" ; exit 1)'
 
-  bazel:
+  test:
     <<: *run_in_node
     steps:
       - checkout
@@ -54,7 +66,6 @@ jobs:
 
       # Helpful for debugging, so you can check you have the same bazel version when you need
       # to reproduce a failure.
-      - run: yarn
       - run: yarn bazel info release
 
       # Install the dependencies from NPM, using the node and yarn binaries managed by Bazel
@@ -70,38 +81,41 @@ jobs:
           root: dist
           paths:
             - bin/*
-  test:
-    docker:
-      - image: circleci/node:10.12-browsers
-    steps:
-      - checkout
-      - restore_cache:
-          key: *cache_key
-      - run: yarn
-      - run: yarn copy:schematics
-      - run: git diff --name-only --exit-code ./modules
-      - run: yarn run ci
-      - run: yarn run example:test --watch=false
       - save_cache:
           key: *cache_key
           paths:
             - ~/.cache/yarn
+            - ~/.cache/Cypress
             - node_modules
 
-  e2e_test:
+  schematics-core-check:
     docker:
       - image: circleci/node:10.12-browsers
     steps:
       - checkout
       - restore_cache:
           key: *cache_key
-      - run: yarn
+      - run: yarn copy:schematics
+      - run: git diff --name-only --exit-code ./modules
+
+  example-tests:
+    docker:
+      - image: circleci/node:10.12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: yarn run example:test --watch=false
+
+  example-e2e-tests:
+    docker:
+      - image: circleci/node:10.12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
-      - save_cache:
-          key: *cache_key
-          paths:
-            - ~/.cache/Cypress
 
   docs:
     <<: *run_in_node
@@ -123,7 +137,6 @@ jobs:
       - save_cache:
           key: *docs_cache_key
           paths:
-            - ~/.cache/yarn
             - ~/docs/projects/ngrx.io/node_modules
 
   docs-preview:
@@ -146,11 +159,14 @@ jobs:
             echo 'export SHORT_GIT_HASH=$(git rev-parse --short $CIRCLE_SHA1)' >> $BASH_ENV
             echo 'export CIRCLE_PULL_REQUEST_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | cut -d"/" -f7)' >> $BASH_ENV
             source $BASH_ENV
-      - run: yarn setup
       - run: npm rebuild node-sass
       - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/
       - run: yarn --cwd ../../ install && yarn --cwd ../../ run deploy:preview
+      - save_cache:
+          key: *docs_cache_key
+          paths:
+            - ~/docs/projects/ngrx.io/node_modules
 
   deploy:
     <<: *run_in_node
@@ -161,7 +177,6 @@ jobs:
       - checkout
       - restore_cache:
           key: *cache_key
-      - run: yarn
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
@@ -170,18 +185,34 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - lint
-      - bazel
-      - test
-      - e2e_test
-      - docs
-      - docs-preview
+      - install
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+      - example-tests:
+          requires:
+            - install
+      - example-e2e-tests:
+          requires:
+            - install
+      - docs:
+          requires:
+            - install
+      - docs-preview:
+          requires:
+            - install
+      - schematics-core-check:
+          requires:
+            - install
       - deploy:
           requires:
             - docs
+            - example-tests
+            - example-e2e-tests
             - test
-            - e2e_test
-            - bazel
           filters:
             branches:
               only: master
