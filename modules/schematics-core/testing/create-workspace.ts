@@ -7,6 +7,7 @@ export const defaultWorkspaceOptions = {
   name: 'workspace',
   newProjectRoot: 'projects',
   version: '6.0.0',
+  defaultProject: 'bar',
 };
 
 export const defaultAppOptions = {
