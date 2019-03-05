@@ -156,6 +156,6 @@ export const isSelectedBookInCollection = createSelector(
   getCollectionBookIds,
   getSelectedBookId,
   (ids, selected) => {
-    return selected && ids.indexOf(selected) > -1;
+    return !!selected && ids.indexOf(selected) > -1;
   }
 );
