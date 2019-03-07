@@ -69,6 +69,12 @@
             "url": "https://github.com/avatsaev/angular-contacts-app-example",
             "rev": true
           },
+          "angular-checklist": {
+            "title": "Angular Checklist",
+            "desc": "Curated list of common mistakes made when developing Angular applications",
+            "url": "https://angular-checklist.io",
+            "rev": true
+          },
           "online-training": {
             "title":
               "Online Training website using ASP.Net Core 2.0 & Angular 4",
