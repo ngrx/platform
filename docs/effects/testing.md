@@ -27,7 +27,7 @@ import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: Observable<any>>;
+  let actions: Observable<any>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
