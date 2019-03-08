@@ -45,7 +45,7 @@ export const reducers: ActionReducerMap<State> = {
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-  return (state: State, action: any): any => {
+  return (state, action) => {
     const result = reducer(state, action);
     console.groupCollapsed(action.type);
     console.log('prev state', state);

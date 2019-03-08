@@ -13,7 +13,10 @@ export function getProject(
   const workspace = getWorkspace(host);
 
   if (!options.project) {
-    options.project = Object.keys(workspace.projects)[0];
+    options.project =
+      workspace.defaultProject !== undefined
+        ? workspace.defaultProject
+        : Object.keys(workspace.projects)[0];
   }
 
   return workspace.projects[options.project];
