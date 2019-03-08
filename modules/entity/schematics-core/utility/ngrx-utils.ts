@@ -94,7 +94,7 @@ export function addReducerToStateInterface(
     options.plural === undefined
       ? stringUtils.camelize(options.name)
       : stringUtils.camelize(options.name) + 's';
-  console.log(state);
+
   const keyInsert =
     state + ': from' + stringUtils.classify(options.name) + '.State;';
   const expr = node as any;
@@ -158,7 +158,7 @@ export function addReducerToActionReducerMap(
     options.plural === undefined
       ? stringUtils.camelize(options.name)
       : stringUtils.camelize(options.name) + 's';
-  console.log(state);
+
   const keyInsert =
     state + ': from' + stringUtils.classify(options.name) + '.reducer,';
   const expr = node as any;
