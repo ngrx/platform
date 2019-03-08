@@ -117,7 +117,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/foos\: fromFoo.State/);
+    expect(reducers).toMatch(/foo\: fromFoo.State/);
   });
 
   it('should add the reducer function to the ActionReducerMap', () => {
@@ -128,7 +128,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/foos\: fromFoo.reducer/);
+    expect(reducers).toMatch(/foo\: fromFoo.reducer/);
   });
 
   it('should group within a "reducers" folder if group is set', () => {

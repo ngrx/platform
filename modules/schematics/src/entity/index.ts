@@ -31,6 +31,7 @@ export default function(options: EntityOptions): Rule {
     const parsedPath = parseName(options.path, options.name);
     options.name = parsedPath.name;
     options.path = parsedPath.path;
+    options.plural = true;
 
     if (options.module) {
       options.module = findModuleFromOptions(host, options);

@@ -79,7 +79,7 @@ export function addReducerToState(options: any): Rule {
 export function addReducerToStateInterface(
   source: ts.SourceFile,
   reducersPath: string,
-  options: { name: string }
+  options: { name: string; plural: boolean }
 ): Change {
   const stateInterface = source.statements.find(
     stm => stm.kind === ts.SyntaxKind.InterfaceDeclaration
@@ -90,11 +90,13 @@ export function addReducerToStateInterface(
     return new NoopChange();
   }
 
+  const state =
+    options.plural === undefined
+      ? stringUtils.camelize(options.name)
+      : stringUtils.camelize(options.name) + 's';
+  console.log(state);
   const keyInsert =
-    stringUtils.pluralize(options.name) +
-    ': from' +
-    stringUtils.classify(options.name) +
-    '.State;';
+    state + ': from' + stringUtils.classify(options.name) + '.State;';
   const expr = node as any;
   let position;
   let toInsert;
@@ -125,7 +127,7 @@ export function addReducerToStateInterface(
 export function addReducerToActionReducerMap(
   source: ts.SourceFile,
   reducersPath: string,
-  options: { name: string }
+  options: { name: string; plural: boolean }
 ): Change {
   let initializer: any;
   const actionReducerMap: any = source.statements
@@ -152,11 +154,13 @@ export function addReducerToActionReducerMap(
 
   let node = actionReducerMap.initializer;
 
+  const state =
+    options.plural === undefined
+      ? stringUtils.camelize(options.name)
+      : stringUtils.camelize(options.name) + 's';
+  console.log(state);
   const keyInsert =
-    stringUtils.pluralize(options.name) +
-    ': from' +
-    stringUtils.classify(options.name) +
-    '.reducer,';
+    state + ': from' + stringUtils.classify(options.name) + '.reducer,';
   const expr = node as any;
   let position;
   let toInsert;
