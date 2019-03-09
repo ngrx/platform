@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { StoreRouterConfig, StoreRouterConnectingModule } from '../src';
+import { provideRuntimeChecks } from '@ngrx/store';
 
 export function createTestModule(
   opts: {
@@ -62,6 +63,10 @@ export function createTestModule(
         },
       },
       opts.providers || [],
+      // `paramMap` and `queryParamMap` breaks serializability
+      provideRuntimeChecks({
+        strictStateSerializabilityChecks: false,
+      }),
     ],
   });
 
