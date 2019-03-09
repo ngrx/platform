@@ -39,6 +39,7 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
       metaReducers,
       runtimeChecks: {
         strictStateSerializabilityChecks: false,
+        strictActionSerializabilityChecks: false,
       },
     }),
 

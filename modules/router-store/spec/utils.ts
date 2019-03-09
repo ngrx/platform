@@ -66,6 +66,7 @@ export function createTestModule(
       // `paramMap` and `queryParamMap` breaks serializability
       provideRuntimeChecks({
         strictStateSerializabilityChecks: false,
+        strictActionSerializabilityChecks: false,
       }),
     ],
   });

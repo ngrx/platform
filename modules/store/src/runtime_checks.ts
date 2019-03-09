@@ -1,5 +1,8 @@
 import { isDevMode, Provider } from '@angular/core';
-import { stateSerializationCheckMetaReducer } from './meta-reducers';
+import {
+  stateSerializationCheckMetaReducer,
+  actionSerializationCheckMetaReducer,
+} from './meta-reducers';
 import { RuntimeChecks, MetaReducer } from './models';
 import {
   _USER_RUNTIME_CHECKS,
@@ -8,31 +11,42 @@ import {
 } from './tokens';
 
 export function createActiveRuntimeChecks(
-  runtimeChecks?: RuntimeChecks
+  runtimeChecks?: Partial<RuntimeChecks>
 ): RuntimeChecks {
   if (isDevMode()) {
     return {
       strictStateSerializabilityChecks: true,
+      strictActionSerializabilityChecks: true,
       ...runtimeChecks,
     };
   }
 
   return {
     strictStateSerializabilityChecks: false,
+    strictActionSerializabilityChecks: false,
   };
 }
 
 export function createStateSerializationCheckMetaReducer({
-  strictStateSerializabilityChecks: strictSerializabilityChecks,
+  strictStateSerializabilityChecks,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictSerializabilityChecks
+    strictStateSerializabilityChecks
       ? stateSerializationCheckMetaReducer(reducer)
       : reducer;
 }
 
+export function createActionSerializationCheckMetaReducer({
+  strictActionSerializabilityChecks,
+}: RuntimeChecks): MetaReducer {
+  return reducer =>
+    strictActionSerializabilityChecks
+      ? actionSerializationCheckMetaReducer(reducer)
+      : reducer;
+}
+
 export function provideRuntimeChecks(
-  runtimeChecks?: RuntimeChecks
+  runtimeChecks?: Partial<RuntimeChecks>
 ): Provider[] {
   return [
     {
@@ -49,6 +63,12 @@ export function provideRuntimeChecks(
       multi: true,
       deps: [_ACTIVE_RUNTIME_CHECKS],
       useFactory: createStateSerializationCheckMetaReducer,
+    },
+    {
+      provide: META_REDUCERS,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: createActionSerializationCheckMetaReducer,
     },
   ];
 }

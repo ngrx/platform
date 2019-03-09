@@ -94,7 +94,7 @@ export interface StoreConfig<T, V extends Action = Action> {
 
 export interface RootStoreConfig<T, V extends Action = Action>
   extends StoreConfig<T, V> {
-  runtimeChecks?: RuntimeChecks;
+  runtimeChecks?: Partial<RuntimeChecks>;
 }
 
 @NgModule({})

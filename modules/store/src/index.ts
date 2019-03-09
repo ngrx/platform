@@ -57,7 +57,10 @@ export {
   _createStoreReducers,
   _createFeatureReducers,
 } from './store_module';
-export { stateSerializationCheckMetaReducer } from './meta-reducers';
+export {
+  stateSerializationCheckMetaReducer,
+  actionSerializationCheckMetaReducer,
+} from './meta-reducers';
 export {
   createActiveRuntimeChecks,
   createStateSerializationCheckMetaReducer,
