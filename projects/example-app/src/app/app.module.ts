@@ -35,7 +35,12 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateSerializabilityChecks: false,
+      },
+    }),
 
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
