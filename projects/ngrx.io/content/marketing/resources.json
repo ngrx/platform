@@ -93,6 +93,13 @@
               "Use a Pizza Provider of your choice and add/edit orders in real time with friends/colleagues",
             "url": "https://github.com/maxime1992/pizza-sync",
             "rev": true
+          },
+          "goose-weather": {
+            "title": "Goose Weather",
+            "desc":
+              "Angular App that uses NOAA and the OpenWeatherMapAPI to create a weather forecast",
+            "url": "https://github.com/andrewevans02/goose-weather",
+            "rev": true
           }
         }
       },
