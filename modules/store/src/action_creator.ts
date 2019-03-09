@@ -11,13 +11,13 @@ export function createAction<
   P extends {
     [key: string]: any;
   }
->(type: T, payload: P): Action<T, P>;
+>(type: T, props: P): Action<T, P>;
 export function createAction<
   T extends string,
   P extends {
     [key: string]: any;
   }
->(type: T, payload?: P) {
+>(type: T, props?: P) {
   /*
   The following line requires Typescript 3.2: Generic spread expressions in
   object literals. 
@@ -28,7 +28,7 @@ export function createAction<
   */
   // const action = payload === undefined ?{ type } : { type, ...payload };
   const action =
-    payload === undefined ? { type } : { type, ...(payload as object) };
+    props === undefined ? { type } : { type, ...(props as object) };
   return action;
 }
 
