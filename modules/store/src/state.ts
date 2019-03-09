@@ -47,9 +47,12 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
       )
     );
 
-    this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
-      this.next(state);
-      scannedActions.next(action);
+    this.stateSubscription = stateAndAction$.subscribe({
+      next: ({ state, action }) => {
+        this.next(state);
+        scannedActions.next(action);
+      },
+      error: err => this.error(err),
     });
   }
 
