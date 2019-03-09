@@ -90,10 +90,10 @@ export function addReducerToStateInterface(
     return new NoopChange();
   }
 
-  const state =
-    options.plural === undefined
-      ? stringUtils.camelize(options.name)
-      : stringUtils.camelize(options.name) + 's';
+  let state = stringUtils.camelize(options.name);
+  if (options.plural) {
+    state = stringUtils.camelize(options.name) + 's';
+  }
 
   const keyInsert =
     state + ': from' + stringUtils.classify(options.name) + '.State;';
@@ -154,10 +154,10 @@ export function addReducerToActionReducerMap(
 
   let node = actionReducerMap.initializer;
 
-  const state =
-    options.plural === undefined
-      ? stringUtils.camelize(options.name)
-      : stringUtils.camelize(options.name) + 's';
+  let state = stringUtils.camelize(options.name);
+  if (options.plural) {
+    state = stringUtils.camelize(options.name) + 's';
+  }
 
   const keyInsert =
     state + ': from' + stringUtils.classify(options.name) + '.reducer,';

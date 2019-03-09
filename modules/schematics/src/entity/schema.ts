@@ -36,9 +36,4 @@ export interface Schema {
    */
 
   group?: boolean;
-  /**
-   * Specifies if this is state and reducer variable will be plural
-   */
-
-  plural?: boolean;
 }

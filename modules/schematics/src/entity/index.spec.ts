@@ -162,7 +162,7 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create all files of an entity within grouped and nested folders', () => {
+  it('should update the state to plural', () => {
     const options = {
       ...defaultOptions,
       name: 'user',

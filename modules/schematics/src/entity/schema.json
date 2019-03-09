@@ -49,11 +49,6 @@
       "description":
         "Group actions, reducers and effects within relative subfolders",
       "aliases": ["g"]
-    },
-    "plural": {
-      "type": "boolean",
-      "default": true,
-      "description": "Update state with plural."
     }
   },
   "required": []
