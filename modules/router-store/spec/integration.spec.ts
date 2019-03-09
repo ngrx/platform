@@ -253,7 +253,13 @@ describe('integration spec', () => {
       } else {
         const nextState = routerReducer(state, action);
         if (nextState && nextState.state) {
-          nextState.state.root = <any>{};
+          return {
+            ...nextState,
+            state: {
+              ...nextState.state,
+              root: {} as any,
+            },
+          };
         }
         return nextState;
       }
@@ -383,7 +389,13 @@ describe('integration spec', () => {
       } else {
         const nextState = routerReducer(state, action);
         if (nextState && nextState.state) {
-          nextState.state.root = <any>{};
+          return {
+            ...nextState,
+            state: {
+              ...nextState.state,
+              root: {} as any,
+            },
+          };
         }
         return nextState;
       }

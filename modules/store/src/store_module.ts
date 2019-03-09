@@ -14,6 +14,7 @@ import {
   StoreFeature,
   InitialState,
   MetaReducer,
+  RuntimeChecks,
 } from './models';
 import { compose, combineReducers, createReducerFactory } from './utils';
 import {
@@ -31,6 +32,8 @@ import {
   _FEATURE_REDUCERS_TOKEN,
   _STORE_FEATURES,
   _FEATURE_CONFIGS,
+  USER_PROVIDED_META_REDUCERS,
+  _RESOLVED_META_REDUCERS,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -44,6 +47,7 @@ import {
 } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS, Store } from './store';
+import { provideRuntimeChecks } from './runtime_checks';
 
 @NgModule({})
 export class StoreRootModule {
@@ -82,23 +86,28 @@ export class StoreFeatureModule implements OnDestroy {
   }
 }
 
-export type StoreConfig<T, V extends Action = Action> = {
+export interface StoreConfig<T, V extends Action = Action> {
   initialState?: InitialState<T>;
   reducerFactory?: ActionReducerFactory<T, V>;
   metaReducers?: MetaReducer<T, V>[];
-};
+}
+
+export interface RootStoreConfig<T, V extends Action = Action>
+  extends StoreConfig<T, V> {
+  runtimeChecks?: Partial<RuntimeChecks>;
+}
 
 @NgModule({})
 export class StoreModule {
   static forRoot<T, V extends Action = Action>(
     reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-    config?: StoreConfig<T, V>
+    config?: RootStoreConfig<T, V>
   ): ModuleWithProviders<StoreRootModule>;
   static forRoot(
     reducers:
       | ActionReducerMap<any, any>
       | InjectionToken<ActionReducerMap<any, any>>,
-    config: StoreConfig<any, any> = {}
+    config: RootStoreConfig<any, any> = {}
   ): ModuleWithProviders<StoreRootModule> {
     return {
       ngModule: StoreRootModule,
@@ -121,8 +130,13 @@ export class StoreModule {
           useFactory: _createStoreReducers,
         },
         {
-          provide: META_REDUCERS,
+          provide: USER_PROVIDED_META_REDUCERS,
           useValue: config.metaReducers ? config.metaReducers : [],
+        },
+        {
+          provide: _RESOLVED_META_REDUCERS,
+          deps: [META_REDUCERS, USER_PROVIDED_META_REDUCERS],
+          useFactory: _concatMetaReducers,
         },
         {
           provide: _REDUCER_FACTORY,
@@ -132,7 +146,7 @@ export class StoreModule {
         },
         {
           provide: REDUCER_FACTORY,
-          deps: [_REDUCER_FACTORY, META_REDUCERS],
+          deps: [_REDUCER_FACTORY, _RESOLVED_META_REDUCERS],
           useFactory: createReducerFactory,
         },
         ACTIONS_SUBJECT_PROVIDERS,
@@ -140,6 +154,7 @@ export class StoreModule {
         SCANNED_ACTIONS_SUBJECT_PROVIDERS,
         STATE_PROVIDERS,
         STORE_PROVIDERS,
+        provideRuntimeChecks(config.runtimeChecks),
       ],
     };
   }
@@ -219,8 +234,7 @@ export class StoreModule {
 
 export function _createStoreReducers(
   injector: Injector,
-  reducers: ActionReducerMap<any, any>,
-  tokenReducers: ActionReducerMap<any, any>
+  reducers: ActionReducerMap<any, any>
 ) {
   return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
@@ -248,10 +262,9 @@ export function _createFeatureStore(
 
 export function _createFeatureReducers(
   injector: Injector,
-  reducerCollection: ActionReducerMap<any, any>[],
-  tokenReducerCollection: ActionReducerMap<any, any>[]
+  reducerCollection: ActionReducerMap<any, any>[]
 ) {
-  const reducers = reducerCollection.map((reducer, index) => {
+  const reducers = reducerCollection.map(reducer => {
     return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
 
@@ -264,4 +277,11 @@ export function _initialStateFactory(initialState: any): any {
   }
 
   return initialState;
+}
+
+export function _concatMetaReducers(
+  metaReducers: MetaReducer[],
+  userProvidedMetaReducers: MetaReducer[]
+): MetaReducer[] {
+  return metaReducers.concat(userProvidedMetaReducers);
 }
