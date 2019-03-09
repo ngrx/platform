@@ -5,6 +5,8 @@ export type Action<T extends string = string, P = void> = P extends void
     }> &
       Readonly<P>;
 
+export type AnyFn = (...args: any[]) => any;
+
 export type TypeId<T> = () => T;
 
 export type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;

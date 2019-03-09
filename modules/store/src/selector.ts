@@ -1,6 +1,4 @@
-import { Selector, SelectorWithProps } from './models';
-
-export type AnyFn = (...args: any[]) => any;
+import { AnyFn, Selector, SelectorWithProps } from './models';
 
 export type MemoizedProjection = { memoized: AnyFn; reset: () => void };
 

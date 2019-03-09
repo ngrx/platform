@@ -3,7 +3,7 @@
 // = https://github.com/Hotell/rex-tils
 // ==========
 
-import { Action } from './models';
+import { Action, AnyFn } from './models';
 
 export function createAction<T extends string>(type: T): Action<T>;
 export function createAction<
@@ -33,14 +33,7 @@ export function createAction<
 }
 
 /**
- * Use this type definition instead of `Function` type constructor
- */
-type AnyFunction = (...args: any[]) => any;
-
-/**
  * Simple alias to save keystrokes when defining JS typed object maps
  */
 type StringMap<T> = { [key: string]: T };
-export type ActionsUnion<A extends StringMap<AnyFunction>> = ReturnType<
-  A[keyof A]
->;
+export type ActionsUnion<A extends StringMap<AnyFn>> = ReturnType<A[keyof A]>;
