@@ -111,14 +111,14 @@ export function capitalize(str: string): string {
 }
 
 /**
- Returns the Pluralize form of a string
+ Returns the plural form of a string
 
  ```javascript
  'innerHTML'.pluralize()         // 'InnerHTMLs'
  'action_name'.pluralize()       // 'actionNames'
  'css-class-name'.pluralize()    // 'cssClassNames'
- 'regex'.capitalize()            // 'regexes'
- 'user'.capitalize()             // 'users'
+ 'regex'.pluralize()            // 'regexes'
+ 'user'.pluralize()             // 'users'
  ```
  */
 export function pluralize(str: string): string {
