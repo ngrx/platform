@@ -63,10 +63,13 @@ export function createTestModule(
         },
       },
       opts.providers || [],
-      // `paramMap` and `queryParamMap` breaks serializability
       provideRuntimeChecks({
+        // `paramMap` and `queryParamMap` breaks serializability
         strictStateSerializabilityChecks: false,
+        // `paramMap` and `queryParamMap` breaks serializability
         strictActionSerializabilityChecks: false,
+        // in some tests we mutate state
+        strictImmutabilityChecks: false,
       }),
     ],
   });

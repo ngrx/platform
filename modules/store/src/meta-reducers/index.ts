@@ -4,3 +4,4 @@ export {
 export {
   actionSerializationCheckMetaReducer,
 } from './action_serialization_reducer';
+export { immutabilityCheckMetaReducer } from './immutability_reducer';

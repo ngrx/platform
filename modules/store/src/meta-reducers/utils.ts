@@ -2,7 +2,7 @@ export function getUnserializable(
   target?: any,
   path: string[] = []
 ): false | { path: string[]; value: any } {
-  // Catch reducers returning undefined as next state
+  // Guard against undefined and null, e.g. a reducer that returns undefined
   if ((isUndefined(target) || isNull(target)) && path.length === 0) {
     return {
       path: ['root'],
@@ -61,39 +61,51 @@ export function throwIfUnserializable(
  * Object Utilities
  */
 
-function isUndefined(target: any): target is undefined {
+export function isUndefined(target: any): target is undefined {
   return target === undefined;
 }
 
-function isNull(target: any): target is null {
+export function isNull(target: any): target is null {
   return target === null;
 }
 
-function isArray(target: any): target is Array<any> {
+export function isArray(target: any): target is Array<any> {
   return Array.isArray(target);
 }
 
-function isString(target: any): target is string {
+export function isString(target: any): target is string {
   return typeof target === 'string';
 }
 
-function isBoolean(target: any): target is boolean {
+export function isBoolean(target: any): target is boolean {
   return typeof target === 'boolean';
 }
 
-function isNumber(target: any): target is number {
+export function isNumber(target: any): target is number {
   return typeof target === 'number';
 }
 
-function isObject(target: any): target is object {
-  return typeof target === 'object' && target !== null && !isArray(target);
+export function isObjectLike(target: any): target is object {
+  return typeof target === 'object' && target !== null;
 }
 
-function isPlainObject(target: any): target is object {
+export function isObject(target: any): target is object {
+  return isObjectLike(target) && !isArray(target);
+}
+
+export function isPlainObject(target: any): target is object {
   if (!isObject(target)) {
     return false;
   }
 
   const targetPrototype = Object.getPrototypeOf(target);
   return targetPrototype === Object.prototype || targetPrototype === null;
+}
+
+export function isFunction(target: any): target is Function {
+  return typeof target === 'function';
+}
+
+export function hasOwnProperty(target: object, propertyName: string): boolean {
+  return Object.prototype.hasOwnProperty.call(target, propertyName);
 }

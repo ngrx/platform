@@ -1,12 +1,11 @@
 import * as ngCore from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import {
   createActiveRuntimeChecks,
   RuntimeChecks,
   Store,
   StoreModule,
-  Action,
 } from '..';
-import { TestBed } from '@angular/core/testing';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
@@ -14,15 +13,21 @@ describe('Runtime checks:', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializabilityChecks: true,
         strictActionSerializabilityChecks: true,
+        strictImmutabilityChecks: true,
       });
     });
 
     it('should allow the user to override the config', () => {
       expect(
-        createActiveRuntimeChecks({ strictStateSerializabilityChecks: false })
+        createActiveRuntimeChecks({
+          strictStateSerializabilityChecks: false,
+          strictActionSerializabilityChecks: false,
+          strictImmutabilityChecks: false,
+        })
       ).toEqual({
         strictStateSerializabilityChecks: false,
-        strictActionSerializabilityChecks: true,
+        strictActionSerializabilityChecks: false,
+        strictImmutabilityChecks: false,
       });
     });
 
@@ -32,11 +37,12 @@ describe('Runtime checks:', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializabilityChecks: false,
         strictActionSerializabilityChecks: false,
+        strictImmutabilityChecks: false,
       });
     });
   });
 
-  describe('stateSerializationCheckMetaReducer:', () => {
+  describe('State Serialization:', () => {
     const invalidAction = () => ({ type: ErrorTypes.UnserializableState });
 
     it('should throw when enabled', (done: DoneFn) => {
@@ -57,7 +63,7 @@ describe('Runtime checks:', () => {
 
       store.subscribe({
         next: ({ state }) => {
-          if (state.invalidState) {
+          if (state.invalidSerializationState) {
             done();
           }
         },
@@ -67,7 +73,7 @@ describe('Runtime checks:', () => {
     });
   });
 
-  describe('actionSerializationCheckMetaReducer:', () => {
+  describe('Action Serialization:', () => {
     const invalidAction = () => ({
       type: ErrorTypes.UnserializableAction,
       invalid: new Date(),
@@ -90,7 +96,72 @@ describe('Runtime checks:', () => {
 
       store.subscribe({
         next: ({ state }) => {
-          if (state.invalidAction) {
+          if (state.invalidSerializationAction) {
+            done();
+          }
+        },
+      });
+
+      store.dispatch(invalidAction());
+    });
+  });
+
+  describe('State Mutations', () => {
+    const invalidAction = () => ({
+      type: ErrorTypes.MutateState,
+    });
+
+    it('should throw when enabled', (done: DoneFn) => {
+      const store = setupStore();
+
+      store.subscribe({
+        error: _ => {
+          done();
+        },
+      });
+
+      store.dispatch(invalidAction());
+    });
+
+    it('should not throw when disabled', (done: DoneFn) => {
+      const store = setupStore({ strictImmutabilityChecks: false });
+
+      store.subscribe({
+        next: ({ state }) => {
+          if (state.invalidMutationState) {
+            done();
+          }
+        },
+      });
+
+      store.dispatch(invalidAction());
+    });
+  });
+
+  describe('Action Mutations', () => {
+    const invalidAction = () => ({
+      type: ErrorTypes.MutateAction,
+      foo: 'foo',
+    });
+
+    it('should throw when enabled', (done: DoneFn) => {
+      const store = setupStore();
+
+      store.subscribe({
+        error: _ => {
+          done();
+        },
+      });
+
+      store.dispatch(invalidAction());
+    });
+
+    it('should not throw when disabled', (done: DoneFn) => {
+      const store = setupStore({ strictImmutabilityChecks: false });
+
+      store.subscribe({
+        next: ({ state }) => {
+          if (state.invalidMutationAction) {
             done();
           }
         },
@@ -119,20 +190,34 @@ function setupStore(runtimeChecks?: Partial<RuntimeChecks>): Store<any> {
 enum ErrorTypes {
   UnserializableState = 'Action type producing unserializable state',
   UnserializableAction = 'Action type producing unserializable action',
+  MutateAction = 'Action type producing action mutation',
+  MutateState = 'Action type producing state mutation',
 }
 
-function reducerWithBugs(state: any = {}, action: Action) {
+function reducerWithBugs(state: any = {}, action: any) {
   switch (action.type) {
     case ErrorTypes.UnserializableState:
       return {
-        invalidState: true,
+        invalidSerializationState: true,
         invalid: new Date(),
       };
 
     case ErrorTypes.UnserializableAction: {
       return {
-        invalidAction: true,
+        invalidSerializationAction: true,
       };
+    }
+
+    case ErrorTypes.MutateAction: {
+      action.foo = 'foo';
+      return {
+        invalidMutationAction: true,
+      };
+    }
+
+    case ErrorTypes.MutateState: {
+      state.invalidMutationState = true;
+      return state;
     }
 
     default:

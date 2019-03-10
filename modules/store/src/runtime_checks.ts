@@ -2,6 +2,7 @@ import { isDevMode, Provider } from '@angular/core';
 import {
   stateSerializationCheckMetaReducer,
   actionSerializationCheckMetaReducer,
+  immutabilityCheckMetaReducer,
 } from './meta-reducers';
 import { RuntimeChecks, MetaReducer } from './models';
 import {
@@ -17,6 +18,7 @@ export function createActiveRuntimeChecks(
     return {
       strictStateSerializabilityChecks: true,
       strictActionSerializabilityChecks: true,
+      strictImmutabilityChecks: true,
       ...runtimeChecks,
     };
   }
@@ -24,6 +26,7 @@ export function createActiveRuntimeChecks(
   return {
     strictStateSerializabilityChecks: false,
     strictActionSerializabilityChecks: false,
+    strictImmutabilityChecks: false,
   };
 }
 
@@ -43,6 +46,13 @@ export function createActionSerializationCheckMetaReducer({
     strictActionSerializabilityChecks
       ? actionSerializationCheckMetaReducer(reducer)
       : reducer;
+}
+
+export function createImmutabilityCheckMetaReducer({
+  strictImmutabilityChecks,
+}: RuntimeChecks): MetaReducer {
+  return reducer =>
+    strictImmutabilityChecks ? immutabilityCheckMetaReducer(reducer) : reducer;
 }
 
 export function provideRuntimeChecks(
@@ -69,6 +79,12 @@ export function provideRuntimeChecks(
       multi: true,
       deps: [_ACTIVE_RUNTIME_CHECKS],
       useFactory: createActionSerializationCheckMetaReducer,
+    },
+    {
+      provide: META_REDUCERS,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: createImmutabilityCheckMetaReducer,
     },
   ];
 }

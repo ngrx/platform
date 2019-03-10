@@ -45,9 +45,9 @@ export {
   FEATURE_REDUCERS,
   _FEATURE_REDUCERS_TOKEN,
   USER_PROVIDED_META_REDUCERS,
-  _RESOLVED_META_REDUCERS as RESOLVED_META_REDUCER,
-  _USER_RUNTIME_CHECKS as USER_RUNTIME_CHECKS,
-  _ACTIVE_RUNTIME_CHECKS as ACTIVE_RUNTIME_CHECKS,
+  _RESOLVED_META_REDUCERS,
+  _USER_RUNTIME_CHECKS,
+  _ACTIVE_RUNTIME_CHECKS,
 } from './tokens';
 export {
   StoreModule,
@@ -60,6 +60,7 @@ export {
 export {
   stateSerializationCheckMetaReducer,
   actionSerializationCheckMetaReducer,
+  immutabilityCheckMetaReducer,
 } from './meta-reducers';
 export {
   createActiveRuntimeChecks,
