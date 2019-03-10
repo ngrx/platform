@@ -5,6 +5,7 @@ import {
   RuntimeChecks,
   Store,
   StoreModule,
+  META_REDUCERS,
 } from '..';
 
 describe('Runtime checks:', () => {
@@ -39,6 +40,47 @@ describe('Runtime checks:', () => {
         strictActionSerializabilityChecks: false,
         strictImmutabilityChecks: false,
       });
+    });
+  });
+
+  describe('Order of meta reducers:', () => {
+    it('should invoke meta reducers before user defined meta reducers', () => {
+      let logs: string[] = [];
+      function metaReducerFactory(logMessage: string) {
+        return function metaReducer(reducer: any) {
+          return function(state: any, action: any) {
+            logs.push(logMessage);
+            return reducer(state, action);
+          };
+        };
+      }
+
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot(
+            {},
+            {
+              metaReducers: [metaReducerFactory('user')],
+            }
+          ),
+        ],
+        providers: [
+          {
+            provide: META_REDUCERS,
+            useValue: metaReducerFactory('ngrx'),
+            multi: true,
+          },
+        ],
+      });
+
+      const store: Store<any> = TestBed.get(Store);
+      const expected = ['ngrx', 'user'];
+
+      expect(logs).toEqual(expected);
+      logs = [];
+
+      store.dispatch({ type: 'foo' });
+      expect(logs).toEqual(expected);
     });
   });
 

@@ -135,7 +135,7 @@ export class StoreModule {
         },
         {
           provide: _RESOLVED_META_REDUCERS,
-          deps: [USER_PROVIDED_META_REDUCERS, META_REDUCERS],
+          deps: [META_REDUCERS, USER_PROVIDED_META_REDUCERS],
           useFactory: _concatMetaReducers,
         },
         {
@@ -234,8 +234,7 @@ export class StoreModule {
 
 export function _createStoreReducers(
   injector: Injector,
-  reducers: ActionReducerMap<any, any>,
-  tokenReducers: ActionReducerMap<any, any>
+  reducers: ActionReducerMap<any, any>
 ) {
   return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
@@ -263,10 +262,9 @@ export function _createFeatureStore(
 
 export function _createFeatureReducers(
   injector: Injector,
-  reducerCollection: ActionReducerMap<any, any>[],
-  tokenReducerCollection: ActionReducerMap<any, any>[]
+  reducerCollection: ActionReducerMap<any, any>[]
 ) {
-  const reducers = reducerCollection.map((reducer, index) => {
+  const reducers = reducerCollection.map(reducer => {
     return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
 
@@ -282,8 +280,8 @@ export function _initialStateFactory(initialState: any): any {
 }
 
 export function _concatMetaReducers(
-  userProvidedMetaReducers: MetaReducer[],
-  metaReducers: MetaReducer[]
+  metaReducers: MetaReducer[],
+  userProvidedMetaReducers: MetaReducer[]
 ): MetaReducer[] {
-  return userProvidedMetaReducers.concat(metaReducers);
+  return metaReducers.concat(userProvidedMetaReducers);
 }
