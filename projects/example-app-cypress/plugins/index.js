@@ -4,4 +4,4 @@ module.exports = on =>
   on('file:preprocessor', cypressTypeScriptPreprocessor);
 
 
-  require('@applitools/eyes.cypress')(module);
+require('@applitools/eyes-cypress')(module);
