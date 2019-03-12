@@ -10,15 +10,13 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 describe('Auth Guard', () => {
   let guard: AuthGuard;
   let store: MockStore<fromAuth.State>;
-  const initialState: fromAuth.State = {
-    ...({} as fromRoot.State),
+  const initialState = {
     auth: {
-      loginPage: {} as fromLoginPage.State,
       status: {
         user: null,
       },
     },
-  };
+  } as fromAuth.State;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
