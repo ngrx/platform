@@ -8,6 +8,7 @@ context('Full round trip', () => {
     window.indexedDB.deleteDatabase('books_app');
     cy.visit('/');
   });
+
   after(() => {
     (cy as any).eyesClose();
   });
