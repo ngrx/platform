@@ -43,8 +43,8 @@ describe('Runtime checks:', () => {
     });
   });
 
-  describe('Order of meta reducers:', () => {
-    it('should invoke meta reducers before user defined meta reducers', () => {
+  describe('Registering custom meta-reducers:', () => {
+    it('should invoke internal meta reducers before user defined meta reducers', () => {
       let logs: string[] = [];
       function metaReducerFactory(logMessage: string) {
         return function metaReducer(reducer: any) {
@@ -67,14 +67,27 @@ describe('Runtime checks:', () => {
         providers: [
           {
             provide: META_REDUCERS,
-            useValue: metaReducerFactory('ngrx'),
+            useValue: [
+              metaReducerFactory('internal-multi-1'),
+              metaReducerFactory('internal-multi-2'),
+            ],
+            multi: true,
+          },
+          {
+            provide: META_REDUCERS,
+            useValue: metaReducerFactory('internal-single'),
             multi: true,
           },
         ],
       });
 
       const store: Store<any> = TestBed.get(Store);
-      const expected = ['ngrx', 'user'];
+      const expected = [
+        'internal-multi-1',
+        'internal-multi-2',
+        'internal-single',
+        'user',
+      ];
 
       expect(logs).toEqual(expected);
       logs = [];
