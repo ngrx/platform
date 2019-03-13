@@ -18,6 +18,10 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
     loadChildren: './contributor/contributor-list.module#ContributorListModule',
   },
   {
+    selector: 'aio-event-list',
+    loadChildren: './events/event-list.module#EventListModule',
+  },
+  {
     selector: 'aio-file-not-found-search',
     loadChildren:
       './search/file-not-found-search.module#FileNotFoundSearchModule',
