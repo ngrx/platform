@@ -43,6 +43,7 @@ import { Event, DisplayEvent } from './event.model';
 export class EventListComponent {
   upcomingEvents: DisplayEvent[];
   pastEvents: DisplayEvent[];
+  currentDate = new Date();
 
   @Input() set events(value: Event[]) {
     const displayEvents: DisplayEvent[] = value.map(event => {
@@ -55,9 +56,8 @@ export class EventListComponent {
         dateRangeString: EventListComponent.getDateRange(startDate, endDate)
       };
     });
-    const currentDate = new Date();
-    this.upcomingEvents = displayEvents.filter(event => event.endDate >= currentDate);
-    this.pastEvents = displayEvents.filter(event => event.endDate < currentDate);
+    this.upcomingEvents = displayEvents.filter(event => event.endDate >= this.currentDate);
+    this.pastEvents = displayEvents.filter(event => event.endDate < this.currentDate);
   }
 
   private static getDateRange(startDate: Date | undefined, endDate: Date): string {
