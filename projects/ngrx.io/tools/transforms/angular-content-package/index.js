@@ -115,7 +115,8 @@ module.exports = new Package('angular-content', [basePackage, contentPackage])
       {docTypes: ['navigation-json'], pathTemplate: '${id}', outputPathTemplate: '../${id}.json'},
       {docTypes: ['contributors-json'], pathTemplate: '${id}', outputPathTemplate: '../${id}.json'},
       {docTypes: ['announcements-json'], pathTemplate: '${id}', outputPathTemplate: '../${id}.json'},
-      {docTypes: ['resources-json'], pathTemplate: '${id}', outputPathTemplate: '../${id}.json'}
+      {docTypes: ['resources-json'], pathTemplate: '${id}', outputPathTemplate: '../${id}.json'},
+      {docTypes: ['events-json'], pathTemplate: '${id}', outputPathTemplate: '../${id}.json'}
     ]);
   })
 
