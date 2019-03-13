@@ -6,5 +6,6 @@
   "supportFile": "support/index.js",
   "screenshotsFolder": "screenshots",
   "videosFolder": "videos",
-  "video": false
+  "video": false,
+  "projectId": "w65h7e"
 }
