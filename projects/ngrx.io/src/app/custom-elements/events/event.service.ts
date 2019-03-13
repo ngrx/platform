@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ConnectableObservable, Observable } from 'rxjs';
-import { tap, publishLast } from 'rxjs/operators';
+import { tap, publishLast, map } from 'rxjs/operators';
 
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 import { Event } from './event.model';
@@ -18,8 +18,10 @@ export class EventService {
   }
 
   private getEvents(): Observable<Event[]> {
-
-    const events = this.http.get<Event[]>(resourcesPath).pipe(
+    console.log('getEvents')
+    const events = this.http.get<any>(resourcesPath).pipe(
+      tap(() => console.log('serviceok')),
+      map(event => event as Event[]),
       tap(event => console.log('service: ' + event)),
       publishLast(),
     );

@@ -77,7 +77,9 @@ export class EventListComponent {
   }
 
   constructor(private eventService: EventService) {
+    console.log('hello2');
     this.eventService.events.subscribe(value => {
+      console.log('hello3' + value);
       const displayEvents: DisplayEvent[] = value.map(event => {
         const startDate = event.startDate ? new Date(event.startDate) : undefined;
         const endDate = new Date(event.endDate);
