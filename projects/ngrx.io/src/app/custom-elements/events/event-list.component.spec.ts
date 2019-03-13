@@ -8,7 +8,6 @@ describe('EventListComponent', () => {
 
   let component: EventListComponent;
   let injector: ReflectiveInjector;
-  let events: Event[];
 
   beforeEach(() => {
     injector = ReflectiveInjector.resolveAndCreate([
@@ -56,8 +55,8 @@ describe('EventListComponent', () => {
       },
     ];
     component.events = mockEvents;
-    expect(component.pastEvents).toBe(mockEvents[0], mockEvents[1]);
-    expect(component.upcomingEvents).toBe(mockEvents[2], mockEvents[3], mockEvents[4]);
+    expect(component.pastEvents.length).toEqual(2);
+    expect(component.upcomingEvents.length).toEqual(3);
     expect(component.pastEvents[0].dateRangeString).toEqual('June 28 - July 1, 2018');
     expect(component.pastEvents[1].dateRangeString).toEqual('December 25, 2018 - January 1, 2019');
     expect(component.upcomingEvents[0].dateRangeString).toEqual('January 1 - 3, 2019');
@@ -69,7 +68,6 @@ describe('EventListComponent', () => {
   //// Test Helpers ////
   function  getComponent(): EventListComponent {
     const comp = injector.get(EventListComponent);
-    comp.ngOnInit();
     return comp;
   }
 });

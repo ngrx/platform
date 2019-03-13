@@ -60,8 +60,17 @@ export class EventListComponent {
     this.pastEvents = displayEvents.filter(event => event.endDate < this.currentDate);
   }
 
+  /**
+   * The date range string for the two given dates
+   * '01-01-2019' until '01-01-2019' -> 'January 1, 2019'
+   * '01-01-2019' until '01-02-2019' -> 'January 1 - 2, 2019'
+   * '01-28-2019' until '02-01-2019' -> 'January 28 - February 1, 2019'
+   * '12-31-2018' until '01-01-2019' -> 'December 31, 2018 - January 1, 2019'
+   * @param startDate
+   * @param endDate
+   */
   private static getDateRange(startDate: Date | undefined, endDate: Date): string {
-    if (!startDate || startDate === endDate) {
+    if (!startDate || startDate.getTime() === endDate.getTime()) {
       return endDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
     } else {
       if (startDate.getMonth() === endDate.getMonth()) {
@@ -75,7 +84,8 @@ export class EventListComponent {
           + ' ' + endDate.getUTCDate()
           + ', ' + startDate.getUTCFullYear();
       } else {
-        return startDate.toDateString() + ' - ' + endDate.toDateString();
+        return startDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
+          + ' - ' + endDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
       }
     }
   }
