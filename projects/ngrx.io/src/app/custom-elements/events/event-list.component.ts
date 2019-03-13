@@ -65,9 +65,15 @@ export class EventListComponent {
       return endDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
     } else {
       if (startDate.getMonth() === endDate.getMonth()) {
-        return startDate.toLocaleString('en-us', { month: 'long' }) + ' ' + startDate.getUTCDate() + ' - ' + endDate.getUTCDate() + ', ' + startDate.getUTCFullYear();
+        return startDate.toLocaleString('en-us', { month: 'long' })
+          + ' ' + startDate.getUTCDate() + ' - ' + endDate.getUTCDate()
+          + ', ' + startDate.getUTCFullYear();
       } else if (startDate.getUTCFullYear() === endDate.getUTCFullYear()) {
-        return startDate.toLocaleString('en-us', { month: 'long' }) + ' ' + startDate.getUTCDate() + ' - ' + endDate.toLocaleString('en-us', { month: 'long' }) + ' ' + endDate.getUTCDate() + ', ' + startDate.getUTCFullYear();
+        return startDate.toLocaleString('en-us', { month: 'long' })
+          + ' ' + startDate.getUTCDate()
+          + ' - ' + endDate.toLocaleString('en-us', { month: 'long' })
+          + ' ' + endDate.getUTCDate()
+          + ', ' + startDate.getUTCFullYear();
       } else {
         return startDate.toDateString() + ' - ' + endDate.toDateString();
       }
