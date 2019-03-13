@@ -280,10 +280,8 @@ export function _initialStateFactory(initialState: any): any {
 }
 
 export function _concatMetaReducers(
-  metaReducers: MetaReducer[] | MetaReducer[][],
+  metaReducers: MetaReducer[],
   userProvidedMetaReducers: MetaReducer[]
 ): MetaReducer[] {
-  return ([] as MetaReducer[])
-    .concat(...metaReducers)
-    .concat(userProvidedMetaReducers);
+  return metaReducers.concat(userProvidedMetaReducers);
 }

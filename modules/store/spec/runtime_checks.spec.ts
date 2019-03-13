@@ -67,27 +67,19 @@ describe('Runtime checks:', () => {
         providers: [
           {
             provide: META_REDUCERS,
-            useValue: [
-              metaReducerFactory('internal-multi-1'),
-              metaReducerFactory('internal-multi-2'),
-            ],
+            useValue: metaReducerFactory('internal-single-one'),
             multi: true,
           },
           {
             provide: META_REDUCERS,
-            useValue: metaReducerFactory('internal-single'),
+            useValue: metaReducerFactory('internal-single-two'),
             multi: true,
           },
         ],
       });
 
       const store: Store<any> = TestBed.get(Store);
-      const expected = [
-        'internal-multi-1',
-        'internal-multi-2',
-        'internal-single',
-        'user',
-      ];
+      const expected = ['internal-single-one', 'internal-single-two', 'user'];
 
       expect(logs).toEqual(expected);
       logs = [];
