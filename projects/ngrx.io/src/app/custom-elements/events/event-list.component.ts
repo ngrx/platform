@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Event, DisplayEvent } from './event.model';
+import { Component } from '@angular/core';
+import { DisplayEvent } from './event.model';
+import { EventService } from './event.service';
 
 @Component({
   selector: `aio-event-list`,
@@ -41,24 +42,9 @@ import { Event, DisplayEvent } from './event.model';
 `
 })
 export class EventListComponent {
-  upcomingEvents: DisplayEvent[];
-  pastEvents: DisplayEvent[];
+  upcomingEvents: DisplayEvent[] = [];
+  pastEvents: DisplayEvent[] = [];
   currentDate = new Date();
-
-  @Input() set events(value: Event[]) {
-    const displayEvents: DisplayEvent[] = value.map(event => {
-      const startDate = event.startDate ? new Date(event.startDate) : undefined;
-      const endDate = new Date(event.endDate);
-      return {
-        ...event,
-        startDate,
-        endDate,
-        dateRangeString: EventListComponent.getDateRange(startDate, endDate)
-      };
-    });
-    this.upcomingEvents = displayEvents.filter(event => event.endDate >= this.currentDate);
-    this.pastEvents = displayEvents.filter(event => event.endDate < this.currentDate);
-  }
 
   /**
    * The date range string for the two given dates
@@ -88,5 +74,22 @@ export class EventListComponent {
           + ' - ' + endDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
       }
     }
+  }
+
+  constructor(private eventService: EventService) {
+    this.eventService.events.subscribe(value => {
+      const displayEvents: DisplayEvent[] = value.map(event => {
+        const startDate = event.startDate ? new Date(event.startDate) : undefined;
+        const endDate = new Date(event.endDate);
+        return {
+          ...event,
+          startDate,
+          endDate,
+          dateRangeString: EventListComponent.getDateRange(startDate, endDate)
+        };
+      });
+      this.upcomingEvents = displayEvents.filter(event => event.endDate >= this.currentDate);
+      this.pastEvents = displayEvents.filter(event => event.endDate < this.currentDate);
+    });
   }
 }
