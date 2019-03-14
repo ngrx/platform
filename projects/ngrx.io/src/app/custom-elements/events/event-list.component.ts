@@ -43,8 +43,8 @@ import { Observable } from 'rxjs';
 `
 })
 export class EventListComponent {
-  upcomingEvents$: Observable<Event[]> = this.eventService.upcomingEvents;
-  pastEvents$: Observable<Event[]> = this.eventService.pastEvents;
+  upcomingEvents$: Observable<Event[]> = this.eventService.upcomingEvents$;
+  pastEvents$: Observable<Event[]> = this.eventService.pastEvents$;
 
   constructor(private eventService: EventService) { }
 }

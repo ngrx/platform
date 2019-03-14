@@ -11,22 +11,24 @@ const resourcesPath = CONTENT_URL_PREFIX + 'events.json';
 export class EventService {
   private currentDate: Date;
   private events$: Observable<Event[]>;
-  upcomingEvents = this.events$.pipe(
-    map(events =>
-      events.filter(event => event.endDate >= this.currentDate)
-    )
-  );
-  pastEvents = this.events$.pipe(
-    map(events =>
-      events.filter(event => event.endDate < this.currentDate)
-    )
-  );
+  upcomingEvents$: Observable<Event[]>;
+  pastEvents$: Observable<Event[]>;
 
   constructor(private http: HttpClient) {
     this.currentDate = new Date();
     // Compare soley on date, without factoring in time.
     this.currentDate.setHours(0, 0, 0, 0);
     this.events$ = this.getEvents();
+    this.upcomingEvents$ = this.events$.pipe(
+      map(events =>
+        events.filter(event => event.endDate >= this.currentDate)
+      )
+    );
+    this.pastEvents$ = this.events$.pipe(
+      map(events =>
+        events.filter(event => event.endDate < this.currentDate)
+      )
+    );
   }
 
   /**
