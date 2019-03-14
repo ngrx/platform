@@ -9,7 +9,7 @@ const resourcesPath = CONTENT_URL_PREFIX + 'events.json';
 
 @Injectable()
 export class EventService {
-  private currentDate: Date;
+  currentDate: Date;
   private events$: Observable<Event[]>;
   upcomingEvents$: Observable<Event[]>;
   pastEvents$: Observable<Event[]>;

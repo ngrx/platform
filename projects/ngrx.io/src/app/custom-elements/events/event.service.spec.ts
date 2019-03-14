@@ -19,6 +19,7 @@ describe('EventService', () => {
     });
 
     eventService = injector.get<EventService>(EventService);
+    eventService.currentDate = new Date('01-02-2019');
     httpMock = injector.get(HttpTestingController);
   });
 
@@ -30,19 +31,20 @@ describe('EventService', () => {
   });
 
   describe('#events', () => {
-    let events: Event[];
+    let upcomingEvents: Event[];
+    let pastEvents: Event[];
     let testData: EventResponse[];
 
     beforeEach(() => {
       testData = getTestEventResponse();
       httpMock.expectOne({}).flush(testData);
-      eventService.upcomingEvents.subscribe(results => (events = results));
-      eventService.pastEvents.subscribe(results => (events = results));
+      eventService.upcomingEvents$.subscribe(results => (upcomingEvents = results));
+      eventService.pastEvents$.subscribe(results => (pastEvents = results));
     });
 
     it('upcomingEvents observable should complete', () => {
       let completed = false;
-      eventService.upcomingEvents.subscribe(
+      eventService.upcomingEvents$.subscribe(
         undefined,
         undefined,
         () => (completed = true)
@@ -52,12 +54,35 @@ describe('EventService', () => {
 
     it('pastEvents observable should complete', () => {
       let completed = false;
-      eventService.pastEvents.subscribe(
+      eventService.pastEvents$.subscribe(
         undefined,
         undefined,
         () => (completed = true)
       );
       expect(completed).toBe(true, 'observable completed');
+    });
+
+    describe('upcoming events', () => {
+      it('should emit', () => {
+        expect(upcomingEvents.length).toEqual(3)
+      });
+
+      it('should correct set the date range', () => {
+        expect(upcomingEvents[0].dateRangeString).toEqual('January 1 - 3, 2019');
+        expect(upcomingEvents[1].dateRangeString).toEqual('April 1, 2019');
+        expect(upcomingEvents[2].dateRangeString).toEqual('April 2, 2019');
+      });
+    });
+
+    describe('past events', () => {
+      it('should emit', () => {
+        expect(pastEvents.length).toEqual(2)
+      });
+
+      it('should correct set the date range', () => {
+        expect(pastEvents[0].dateRangeString).toEqual('June 28 - July 1, 2018');
+        expect(pastEvents[1].dateRangeString).toEqual('December 25, 2018 - January 1, 2019');
+      });
     });
 
     // it('should reshape the contributor json to expected result', () => {
