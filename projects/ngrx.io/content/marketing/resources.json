@@ -100,6 +100,13 @@
               "Angular App that uses NOAA and the OpenWeatherMapAPI to create a weather forecast",
             "url": "https://github.com/andrewevans02/goose-weather",
             "rev": true
+          },
+          "mdb-angular-boilerplate": {
+            "title": "MDB Angular Boilerplate",
+            "desc":
+              "Angular CRUD application starter with NgRx state management and Firebase backend",
+            "url": "https://github.com/mdbootstrap/Angular-Bootstrap-Boilerplate",
+            "rev": true
           }
         }
       },
