@@ -68,7 +68,7 @@ describe('EventService', () => {
       });
 
       it('should correct set the date range', () => {
-        expect(upcomingEvents[0].dateRangeString).toEqual('January 1 - 3, 2019');
+        expect(upcomingEvents[0].dateRangeString).toEqual('January 1 - 2, 2019');
         expect(upcomingEvents[1].dateRangeString).toEqual('April 1, 2019');
         expect(upcomingEvents[2].dateRangeString).toEqual('April 2, 2019');
       });
@@ -84,23 +84,7 @@ describe('EventService', () => {
         expect(pastEvents[1].dateRangeString).toEqual('December 25, 2018 - January 1, 2019');
       });
     });
-
-    // it('should reshape the contributor json to expected result', () => {
-    //   const groupNames = contribs.map(g => g.name).join(',');
-    //   expect(groupNames).toEqual('Angular,GDE');
-    // });
-
-    // it('should have expected "GDE" contribs in order', () => {
-    //   const gde = contribs[1];
-    //   const actualAngularNames = gde.contributors.map(l => l.name).join(',');
-    //   const expectedAngularNames = [testData.jeffcross, testData.kapunahelewong]
-    //     .map(l => l.name)
-    //     .join(',');
-    //   expect(actualAngularNames).toEqual(expectedAngularNames);
-    // });
   });
-
-  it('should do WHAT(?) if the request fails');
 });
 
 function getTestEventResponse(): EventResponse[] {
@@ -124,7 +108,7 @@ function getTestEventResponse(): EventResponse[] {
       url: '',
       location: '',
       startDate: '01-01-2019',
-      endDate: '01-03-2019'
+      endDate: '01-02-2019'
     },
     {
       name: 'conf4',
