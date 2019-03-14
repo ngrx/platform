@@ -1,4 +1,4 @@
-export interface Event {
+export interface EventResponse {
   name: string;
   url: string;
   location: string;
@@ -6,7 +6,7 @@ export interface Event {
   endDate: string;
 }
 
-export interface DisplayEvent {
+export interface Event {
   name: string;
   url: string;
   location: string;

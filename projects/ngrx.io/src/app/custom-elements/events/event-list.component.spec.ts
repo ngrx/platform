@@ -1,6 +1,6 @@
 import { ReflectiveInjector } from '@angular/core';
 import { EventListComponent } from './event-list.component';
-import { Event } from './event.model';
+import { EventResponse } from './event.model';
 
 // Testing the component class behaviors, independent of its template
 // Let e2e tests verify how it displays.
@@ -18,7 +18,7 @@ describe('EventListComponent', () => {
   it('should put each event into the correct bucket and correctly format the date range string', () => {
     component = getComponent();
     component.currentDate = new Date('01-02-2019');
-    const mockEvents: Event[] = [
+    const mockEvents: EventResponse[] = [
       {
         name: 'conf1',
         url: '',
