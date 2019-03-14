@@ -5,7 +5,7 @@ import { publishLast, map } from 'rxjs/operators';
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 import { EventResponse, Event } from './event.model';
 
-const resourcesPath = CONTENT_URL_PREFIX + 'events.json';
+const eventsPath = CONTENT_URL_PREFIX + 'events.json';
 
 @Injectable()
 export class EventService {
@@ -35,7 +35,7 @@ export class EventService {
    * Fetch Event JSON from file and return an Observable that emits an Event array.
    */
   private getEvents(): Observable<Event[]> {
-    const events = this.http.get<EventResponse[]>(resourcesPath).pipe(
+    const events = this.http.get<EventResponse[]>(eventsPath).pipe(
       map(eventResponses =>
         eventResponses.map(eventResponse => {
           const startDate = eventResponse.startDate ? new Date(eventResponse.startDate) : undefined;
