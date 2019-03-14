@@ -29,7 +29,7 @@ class TestEventService {
   pastEvents$ = of(mockPastEvents);
 }
 
-describe('EventListComponent', () => {
+describe('Event List Component', () => {
 
   let fixture: ComponentFixture<EventListComponent>;
   let component: EventListComponent;

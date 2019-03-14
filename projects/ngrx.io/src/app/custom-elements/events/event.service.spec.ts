@@ -7,7 +7,7 @@ import { TestBed } from '@angular/core/testing';
 import { EventService } from './event.service';
 import { Event, EventResponse } from './event.model';
 
-describe('EventService', () => {
+describe('Event Service', () => {
   let injector: Injector;
   let eventService: EventService;
   let httpMock: HttpTestingController;
@@ -30,7 +30,7 @@ describe('EventService', () => {
     expect(req.request.url).toBe('generated/events.json');
   });
 
-  describe('#events', () => {
+  describe('events', () => {
     let upcomingEvents: Event[];
     let pastEvents: Event[];
     let testData: EventResponse[];
@@ -42,7 +42,7 @@ describe('EventService', () => {
       eventService.pastEvents$.subscribe(results => (pastEvents = results));
     });
 
-    it('upcomingEvents observable should complete', () => {
+    it('upcomingEvents$ observable should complete', () => {
       let completed = false;
       eventService.upcomingEvents$.subscribe(
         undefined,
@@ -52,7 +52,7 @@ describe('EventService', () => {
       expect(completed).toBe(true, 'observable completed');
     });
 
-    it('pastEvents observable should complete', () => {
+    it('pastEvents$ observable should complete', () => {
       let completed = false;
       eventService.pastEvents$.subscribe(
         undefined,
