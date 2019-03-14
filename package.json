@@ -172,6 +172,7 @@
   "resolutions": {
     "listr": "^0.14.2",
     "listr-update-renderer": "^0.5.0",
-    "listr-verbose-renderer": "^0.5.0"
+    "listr-verbose-renderer": "^0.5.0",
+    "lodash": "^4.17.11"
   }
 }
