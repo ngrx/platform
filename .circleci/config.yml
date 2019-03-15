@@ -125,6 +125,7 @@ jobs:
       - checkout
       - restore_cache:
           key: *cache_key
+      - run: yarn setup
       - run: yarn test --watch=false
 
   docs:
