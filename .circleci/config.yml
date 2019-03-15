@@ -118,15 +118,14 @@ jobs:
       - run: yarn run example:cypress:ci
 
   docs-tests:
-    working_directory: ~/docs/projects/ngrx.io
     docker:
       - image: circleci/node:10.12-browsers
     steps:
       - checkout
       - restore_cache:
           key: *cache_key
-      - run: yarn setup
-      - run: yarn test --watch=false
+      - run: yarn --cwd projects/ngrx.io/ setup
+      - run: yarn --cwd projects/ngrx.io/ test --watch=false
 
   docs:
     <<: *run_in_node
