@@ -18,6 +18,7 @@ export class MockLocationService {
   handleAnchorClick = jasmine
     .createSpy('Location.handleAnchorClick')
     .and.returnValue(false); // prevent click from causing a browser navigation
+  getBaseHref = jasmine.createSpy('getBaseHref').and.returnValue('');
 
   constructor(private initialUrl: string) {}
 
