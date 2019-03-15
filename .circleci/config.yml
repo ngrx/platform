@@ -117,6 +117,15 @@ jobs:
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
 
+  docs-tests:
+    docker:
+      - image: circleci/node:10.12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: yarn --cwd projects/ngrx.io/ test --watch=false
+
   docs:
     <<: *run_in_node
     working_directory: ~/docs/projects/ngrx.io
@@ -198,6 +207,9 @@ workflows:
       - example-e2e-tests:
           requires:
             - install
+      - docs-tests:
+          requires:
+            - install
       - docs:
           requires:
             - install
@@ -212,6 +224,7 @@ workflows:
             - docs
             - example-tests
             - example-e2e-tests
+            - docs-tests
             - test
           filters:
             branches:
