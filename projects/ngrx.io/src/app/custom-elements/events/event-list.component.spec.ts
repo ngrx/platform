@@ -3,14 +3,14 @@ import { EventListComponent } from './event-list.component';
 import { of } from 'rxjs';
 import { EventService } from './event.service';
 import { Event } from './event.model';
+import { EventDateRangePipe } from './event-date-range.pipe';
 
 const mockUpcomingEvents: Event[] = [
   {
     name: 'NG-Rome',
     url: 'https://ngrome.io/',
     location: 'Rome, Italy',
-    endDate: new Date('10-07-2019'),
-    dateRangeString: 'October 7, 2019'
+    endDate: new Date('2019-10-07')
   }
 ];
 
@@ -19,8 +19,7 @@ const mockPastEvents: Event[] = [
     name: 'DevFestATL',
     url: 'http://devfestatl.com',
     location: 'Atlanta, Georgia',
-    endDate: new Date('09-22-2018'),
-    dateRangeString: 'September 22, 2018'
+    endDate: new Date('2018-09-22')
   }
 ];
 
@@ -36,7 +35,7 @@ describe('Event List Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventListComponent ],
+      declarations: [ EventListComponent, EventDateRangePipe ],
       providers: [{ provide: EventService, useClass: TestEventService }]
     });
 

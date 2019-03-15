@@ -19,7 +19,7 @@ describe('Event Service', () => {
     });
 
     eventService = injector.get<EventService>(EventService);
-    eventService.currentDate = new Date('01-02-2019');
+    eventService.currentDate = new Date('2019-01-02');
     httpMock = injector.get(HttpTestingController);
   });
 
@@ -66,22 +66,11 @@ describe('Event Service', () => {
       it('should emit', () => {
         expect(upcomingEvents.length).toEqual(3)
       });
-
-      it('should correct set the date range', () => {
-        expect(upcomingEvents[0].dateRangeString).toEqual('January 1 - 2, 2019');
-        expect(upcomingEvents[1].dateRangeString).toEqual('April 1, 2019');
-        expect(upcomingEvents[2].dateRangeString).toEqual('April 2, 2019');
-      });
     });
 
     describe('past events', () => {
       it('should emit', () => {
         expect(pastEvents.length).toEqual(2)
-      });
-
-      it('should correct set the date range', () => {
-        expect(pastEvents[0].dateRangeString).toEqual('June 28 - July 1, 2018');
-        expect(pastEvents[1].dateRangeString).toEqual('December 25, 2018 - January 1, 2019');
       });
     });
   });
@@ -93,35 +82,35 @@ function getTestEventResponse(): EventResponse[] {
       name: 'conf1',
       url: '',
       location: '',
-      startDate: '06-28-2018',
-      endDate: '07-01-2018'
+      startDate: '2018-06-28',
+      endDate: '2018-07-01'
     },
     {
       name: 'conf2',
       url: '',
       location: '',
-      startDate: '12-25-2018',
-      endDate: '01-01-2019'
+      startDate: '2018-12-25',
+      endDate: '2019-01-01'
     },
     {
       name: 'conf3',
       url: '',
       location: '',
-      startDate: '01-01-2019',
-      endDate: '01-02-2019'
+      startDate: '2019-01-01',
+      endDate: '2019-01-02'
     },
     {
       name: 'conf4',
       url: '',
       location: '',
-      endDate: '04-01-2019'
+      endDate: '2019-04-01'
     },
     {
       name: 'conf5',
       url: '',
       location: '',
-      startDate: '04-02-2019',
-      endDate: '04-02-2019'
+      startDate: '2019-04-02',
+      endDate: '2019-04-02'
     },
   ];
 }

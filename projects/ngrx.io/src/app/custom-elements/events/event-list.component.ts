@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
         <tr *ngFor="let upcomingEvent of upcomingEvents$ | async">
           <th><a [href]="upcomingEvent.url" [title]="upcomingEvent.name">{{upcomingEvent.name}}</a></th>
           <td>{{upcomingEvent.location}}</td>
-          <td>{{upcomingEvent.dateRangeString}}</td>
+          <td>{{upcomingEvent | eventDateRange}}</td>
         </tr>
       </tbody>
     </table>
@@ -36,7 +36,7 @@ import { Observable } from 'rxjs';
         <tr *ngFor="let pastEvent of pastEvents$ | async">
           <th><a [href]="pastEvent.url" [title]="pastEvent.name">{{pastEvent.name}}</a></th>
           <td>{{pastEvent.location}}</td>
-          <td>{{pastEvent.dateRangeString}}</td>
+          <td>{{pastEvent | eventDateRange}}</td>
         </tr>
       </tbody>
     </table>

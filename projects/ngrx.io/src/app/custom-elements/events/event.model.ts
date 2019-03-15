@@ -12,5 +12,4 @@ export interface Event {
   location: string;
   startDate?: Date;
   endDate: Date;
-  dateRangeString: string;
 }
