@@ -1,4 +1,4 @@
-import { actionSerializationCheckMetaReducer } from '../..';
+import { actionSerializationCheckMetaReducer } from '../../src/meta-reducers';
 
 describe('actionSerializationCheckMetaReducer:', () => {
   describe('valid action:', () => {

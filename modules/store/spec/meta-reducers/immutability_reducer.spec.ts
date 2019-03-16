@@ -1,4 +1,4 @@
-import { immutabilityCheckMetaReducer, Action } from '../..';
+import { immutabilityCheckMetaReducer } from '../../src/meta-reducers';
 
 describe('immutabilityCheckMetaReducer:', () => {
   describe('actions:', () => {

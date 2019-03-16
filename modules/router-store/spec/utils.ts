@@ -4,7 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { StoreRouterConfig, StoreRouterConnectingModule } from '../src';
-import { provideRuntimeChecks } from '@ngrx/store';
 
 export function createTestModule(
   opts: {
@@ -30,7 +29,16 @@ export function createTestModule(
   TestBed.configureTestingModule({
     declarations: [AppCmp, SimpleCmp],
     imports: [
-      StoreModule.forRoot(opts.reducers),
+      StoreModule.forRoot(opts.reducers, {
+        runtimeChecks: {
+          // `paramMap` and `queryParamMap` breaks serializability
+          strictStateSerializabilityChecks: false,
+          // `paramMap` and `queryParamMap` breaks serializability
+          strictActionSerializabilityChecks: false,
+          // in some tests we mutate state
+          strictImmutabilityChecks: false,
+        },
+      }),
       RouterTestingModule.withRoutes([
         { path: '', component: SimpleCmp },
         {
@@ -63,14 +71,6 @@ export function createTestModule(
         },
       },
       opts.providers || [],
-      provideRuntimeChecks({
-        // `paramMap` and `queryParamMap` breaks serializability
-        strictStateSerializabilityChecks: false,
-        // `paramMap` and `queryParamMap` breaks serializability
-        strictActionSerializabilityChecks: false,
-        // in some tests we mutate state
-        strictImmutabilityChecks: false,
-      }),
     ],
   });
 

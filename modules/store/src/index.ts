@@ -6,7 +6,6 @@ export {
   MetaReducer,
   Selector,
   SelectorWithProps,
-  RuntimeChecks,
 } from './models';
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
@@ -45,9 +44,6 @@ export {
   FEATURE_REDUCERS,
   _FEATURE_REDUCERS_TOKEN,
   USER_PROVIDED_META_REDUCERS,
-  _RESOLVED_META_REDUCERS,
-  _USER_RUNTIME_CHECKS,
-  _ACTIVE_RUNTIME_CHECKS,
 } from './tokens';
 export {
   StoreModule,
@@ -57,13 +53,3 @@ export {
   _createStoreReducers,
   _createFeatureReducers,
 } from './store_module';
-export {
-  stateSerializationCheckMetaReducer,
-  actionSerializationCheckMetaReducer,
-  immutabilityCheckMetaReducer,
-} from './meta-reducers';
-export {
-  createActiveRuntimeChecks,
-  createStateSerializationCheckMetaReducer,
-  provideRuntimeChecks,
-} from './runtime_checks';

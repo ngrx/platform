@@ -1,4 +1,4 @@
-import { stateSerializationCheckMetaReducer } from '../..';
+import { stateSerializationCheckMetaReducer } from '../../src/meta-reducers';
 
 describe('stateSerializationCheckMetaReducer:', () => {
   describe('valid next state:', () => {

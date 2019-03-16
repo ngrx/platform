@@ -1,12 +1,8 @@
 import * as ngCore from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import {
-  createActiveRuntimeChecks,
-  RuntimeChecks,
-  Store,
-  StoreModule,
-  META_REDUCERS,
-} from '..';
+import { Store, StoreModule, META_REDUCERS } from '..';
+import { createActiveRuntimeChecks } from '../src/runtime_checks';
+import { RuntimeChecks } from '../src/models';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
