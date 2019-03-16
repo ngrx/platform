@@ -35,8 +35,6 @@ export function createTestModule(
           strictStateSerializabilityChecks: false,
           // `paramMap` and `queryParamMap` breaks serializability
           strictActionSerializabilityChecks: false,
-          // in some tests we mutate state
-          strictImmutabilityChecks: false,
         },
       }),
       RouterTestingModule.withRoutes([
