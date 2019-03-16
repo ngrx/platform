@@ -318,6 +318,9 @@ export class StoreRouterConnectingModule {
         payload: {
           routerState: this.routerState,
           ...payload,
+          // Make the router event serializable
+          // Creates a POJO from a class instance
+          event: { ...payload.event },
         },
       });
     } finally {

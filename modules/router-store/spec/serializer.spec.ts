@@ -89,13 +89,20 @@ describe('serializer', () => {
   }
 
   function createExpectedSnapshot(prefix = 'root') {
+    const snapshot = createSnapshot(prefix);
     return {
-      ...createSnapshot(prefix),
-      component: `${prefix}-route.routeConfig.component`,
+      ...snapshot,
+      paramMap: undefined,
+      queryParamMap: undefined,
+      component: undefined,
       root: undefined,
       parent: undefined,
       firstChild: undefined,
       pathFromRoot: undefined,
+      routeConfig: {
+        ...snapshot.routeConfig,
+        component: undefined,
+      },
     };
   }
 });

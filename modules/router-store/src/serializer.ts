@@ -35,13 +35,13 @@ export class DefaultRouterStateSerializer
     const children = route.children.map(c => this.serializeRoute(c));
     return {
       params: route.params,
-      paramMap: route.paramMap,
+      paramMap: undefined as any,
       data: route.data,
       url: route.url,
       outlet: route.outlet,
       routeConfig: route.routeConfig
         ? {
-            component: route.routeConfig.component,
+            component: undefined as any,
             path: route.routeConfig.path,
             pathMatch: route.routeConfig.pathMatch,
             redirectTo: route.routeConfig.redirectTo,
@@ -49,11 +49,9 @@ export class DefaultRouterStateSerializer
           }
         : null,
       queryParams: route.queryParams,
-      queryParamMap: route.queryParamMap,
+      queryParamMap: undefined as any,
       fragment: route.fragment,
-      component: (route.routeConfig
-        ? route.routeConfig.component
-        : undefined) as any,
+      component: undefined as any,
       root: undefined as any,
       parent: undefined as any,
       firstChild: children[0],
