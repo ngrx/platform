@@ -20,8 +20,7 @@
       "@ngrx/router-store": ["../../modules/router-store"],
       "@ngrx/entity": ["../../modules/entity"],
       "@ngrx/schematics": ["../../modules/schematics"],
-      "@example-app/*": ["./src/app/*"],
-      "ngrx-store-freeze": ["../../projects/ngrx-store-freeze"]
+      "@example-app/*": ["./src/app/*"]
     }
   },
   "exclude": [
