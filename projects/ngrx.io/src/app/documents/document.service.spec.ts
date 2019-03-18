@@ -1,3 +1,4 @@
+
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -31,7 +32,7 @@ describe('DocumentService', () => {
           provide: LocationService,
           useFactory: () => new MockLocationService(initialUrl),
         },
-        { provide: Logger, useClass: MockLogger }
+        { provide: Logger, useClass: MockLogger },
       ],
     });
   }
