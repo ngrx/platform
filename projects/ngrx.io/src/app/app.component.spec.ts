@@ -9,14 +9,16 @@ import { NavigationService, CurrentNodes, VersionInfo, NavigationViews } from '.
 import { ScrollService } from './shared/scroll.service';
 import { SearchService } from './search/search.service';
 import { TocService, TocItem } from './shared/toc.service';
-import { MatProgressBarModule, MatIconModule, MatToolbarModule, MatSidenavModule } from '@angular/material';
+import { MatProgressBarModule, MatIconModule, MatToolbarModule, MatSidenavModule, MatSidenav } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockSearchService } from 'testing/search.service';
 import { NotificationComponent } from './layout/notification/notification.component';
+import { By } from '@angular/platform-browser';
+import { SearchResultsComponent } from './shared/search-results/search-results.component';
 
 const hideToCBreakPoint = 800;
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let searchService: SearchService;
@@ -32,7 +34,7 @@ fdescribe('AppComponent', () => {
         AppComponent,
         MockAioNotificationComponent,
         MockAioTopMenuComponent,
-        MockAioSearchResultsComponent,
+        SearchResultsComponent,
         MockAioNavMenuComponent,
         MockAioSelectComponent,
         MockAioModeBannerComponent,
@@ -83,6 +85,7 @@ fdescribe('AppComponent', () => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     component.notification = { showNotification: 'show' } as NotificationComponent;
+    component.sidenav = { opened: true, toggle: () => {}} as MatSidenav;
     spyOn(component, 'onResize').and.callThrough();
     searchService = TestBed.get(SearchService);
     deployment = TestBed.get(Deployment);
@@ -263,6 +266,226 @@ fdescribe('AppComponent', () => {
       component.onDocVersionChange(1);
       expect(locationService.go).toHaveBeenCalledTimes(1);
     });
+    it('should not navigate to new version if it does not define a Url', () => {
+      component.docVersions = [
+        { title: 'next', url: 'https://next.ngrx.io'},
+        { title: 'stable (v6.3)', url: 'https://ngrx.io' },
+        { title: 'v1'}
+      ];
+      spyOn(locationService, 'go');
+      component.onDocVersionChange(2);
+      expect(locationService.go).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onResize', () => {
+    it('should set isSideBySide to true if the window width is greater than 992 pixels', () => {
+      component.isSideBySide = false;
+      component.onResize(993);
+      expect(component.isSideBySide).toBeTruthy();
+    });
+
+    it('should set isSideBySide to false if the window width is less than or equal to 992 pixels', () => {
+      component.isSideBySide = true;
+      component.onResize(992);
+      expect(component.isSideBySide).toBeFalsy();
+    });
+
+    it('should set hasFloatingToc to true if the window width is greater than 800 and the toc list is greater than zero', () => {
+      tocService.tocList.next([{}] as TocItem[]);
+      component.onResize(801);
+      expect(component.hasFloatingToc).toBeTruthy();
+    });
+
+    it('should set hasFloatingToc to false if the window width is less than or equal to 800 and the toc list is greater than zero', () => {
+      tocService.tocList.next([{}] as TocItem[]);
+      component.onResize(800);
+      expect(component.hasFloatingToc).toBeFalsy();
+    });
+
+    it('should toggle the sidenav closed if it is not a doc page and the screen is wide enough to display menu items '
+    + 'in the top-bar', () => {
+      const sideNavToggleSpy = spyOn(component.sidenav, 'toggle');
+      sideNavToggleSpy.calls.reset();
+      component.updateSideNav();
+      component.onResize(993);
+      expect(component.sidenav.toggle).toHaveBeenCalledWith(false);
+    });
+  });
+
+  // describe('click handler', () => {
+  //   it('should hide the search results if we clicked outside both the "search box" and the "search results"', () => {
+  //     component.searchElements = new QueryList();
+  //     component.searchElements.
+  //     console.log(component.searchElements.length);
+  //   });
+  // });
+
+  describe('search', () => {
+
+    let docViewer: HTMLElement;
+
+    beforeEach(() => {
+      const documentViewerDebugElement = fixture.debugElement.query(By.css('aio-doc-viewer'));
+      docViewer = documentViewerDebugElement.nativeElement;
+    });
+
+    describe('click handling', () => {
+      it('should intercept clicks not on the search elements and hide the search results', () => {
+        component.showSearchResults = true;
+        fixture.detectChanges();
+        // docViewer is a commonly-clicked, non-search element
+        docViewer.click();
+        expect(component.showSearchResults).toBe(false);
+      });
+
+      it('should clear "only" the search query param from the URL', () => {
+        // Mock out the current state of the URL query params
+        spyOn(locationService, 'search').and.returnValue({
+          a: 'some-A',
+          b: 'some-B',
+          search: 'some-C',
+        });
+        spyOn(locationService, 'setSearch');
+        // docViewer is a commonly-clicked, non-search element
+        docViewer.click();
+        // Check that the query params were updated correctly
+        expect(locationService.setSearch).toHaveBeenCalledWith('', {
+          a: 'some-A',
+          b: 'some-B',
+          search: undefined,
+        });
+      });
+
+      it('should not intercept clicks on the searchResults', () => {
+        component.showSearchResults = true;
+        fixture.detectChanges();
+
+        const searchResults = fixture.debugElement.query(
+          By.directive(SearchResultsComponent)
+        );
+        searchResults.nativeElement.click();
+        fixture.detectChanges();
+
+        expect(component.showSearchResults).toBe(true);
+      });
+
+      it('should show developer source view if the footer is clicked while holding the meta and alt keys', () => {
+        component.dtOn = false;
+        expect(component.onClick({ tagName: 'FOOTER'} as HTMLElement, 0, false, true, true)).toBeFalsy();
+        expect(component.dtOn).toBeTruthy();
+      });
+
+      it('should return the result of handleAnchorClick when anchor is clicked', () => {
+        const anchorElement: HTMLAnchorElement = document.createElement('a');
+        spyOn(locationService, 'handleAnchorClick').and.returnValue(true);
+        expect(component.onClick(anchorElement, 1, false, false, true)).toBeTruthy();
+        expect(locationService.handleAnchorClick).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
+  it('updateHostClasses', () => {
+    component.notificationAnimating = true;
+    component.hostClasses = '';
+    component.updateHostClasses();
+    expect(component.hostClasses)
+      .toBe('mode-stable sidenav-open page-1 folder-1 view-view aio-notification-show aio-notification-animating');
+  });
+
+  describe('updateSideNav', () => {
+    it('should preserve the current sidenav open state if view type does not change', () => {
+      component.isSideBySide = true;
+      component.sidenav.opened = true;
+      const toggleSpy = spyOn(component.sidenav, 'toggle');
+
+      component.updateSideNav();
+      expect(component.sidenav.toggle).toHaveBeenCalledWith(true);
+      expect(component.sidenav.toggle).toHaveBeenCalledTimes(1);
+
+      component.isSideBySide = false;
+      toggleSpy.calls.reset();
+      component.updateSideNav();
+      expect(component.sidenav.toggle).toHaveBeenCalledWith(false);
+      expect(component.sidenav.toggle).toHaveBeenCalledTimes(1);
+    });
+
+    it('should open if changed from a non sidenav doc to a sidenav doc and close if changed from sidenav doc to non sidenav doc', () => {
+      const toggleSpy = spyOn(component.sidenav, 'toggle');
+      component.isSideBySide = true;
+      component.currentNodes = {
+        'SideNav': { url: '', view: '', nodes: [] }
+      };
+      component.updateSideNav();
+      expect(component.sidenav.toggle).toHaveBeenCalledWith(true);
+      expect(component.sidenav.toggle).toHaveBeenCalledTimes(1);
+
+      component.currentNodes = {};
+      toggleSpy.calls.reset();
+      component.updateSideNav();
+      expect(component.sidenav.toggle).toHaveBeenCalledWith(false);
+      expect(component.sidenav.toggle).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('restrain scrolling inside an element when the cursor is over it', () => {
+    it('should prevent scrolling up when already at the top', () => {
+      const scrollUpEvent = {
+        deltaY: -1,
+        currentTarget: { scrollTop: 0 },
+        preventDefault: () => {}
+      } as any;
+      spyOn(scrollUpEvent, 'preventDefault');
+      component.restrainScrolling(scrollUpEvent);
+      expect(scrollUpEvent.preventDefault).toHaveBeenCalledTimes(1);
+    });
+
+    it('should prevent scrolling down when already at the bottom', () => {
+      const scrollUpEvent = {
+        deltaY: 1,
+        currentTarget: {
+          scrollTop: 10,
+          scrollHeight: 20,
+          clientHeight: 10
+        },
+        preventDefault: () => {}
+      } as any;
+      spyOn(scrollUpEvent, 'preventDefault');
+      component.restrainScrolling(scrollUpEvent);
+      expect(scrollUpEvent.preventDefault).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('key handling', () => {
+
+    beforeEach(() => {
+      spyOn(component, 'focusSearchBox');
+      spyOn(component, 'hideSearchResults');
+    });
+
+    it('should focus search box on forward slash key "/"', () => {
+      component.onKeyUp('/', 190);
+      expect(component.focusSearchBox).toHaveBeenCalledTimes(1);
+    });
+
+    it('should focus search box on forward slash keycode', () => {
+      component.onKeyUp('', 191);
+      expect(component.focusSearchBox).toHaveBeenCalledTimes(1);
+    });
+
+    it('should hide the search results and focus search box if results are being shown on escape key', () => {
+      component.showSearchResults = true;
+      component.onKeyUp('Escape', 28);
+      expect(component.focusSearchBox).toHaveBeenCalledTimes(1);
+      expect(component.hideSearchResults).toHaveBeenCalledTimes(1);
+    });
+
+    it('should hide the search results and focus search box if results are being shown on escape keycode', () => {
+      component.showSearchResults = true;
+      component.onKeyUp('', 27);
+      expect(component.focusSearchBox).toHaveBeenCalledTimes(1);
+      expect(component.hideSearchResults).toHaveBeenCalledTimes(1);
+    });
   });
 });
 
@@ -324,14 +547,6 @@ class MockAioNotificationComponent {
 })
 class MockAioTopMenuComponent {
   @Input() nodes;
-}
-
-@Component({
-  selector: 'aio-search-results',
-  template: ''
-})
-class MockAioSearchResultsComponent {
-  @Input() searchResults;
 }
 
 @Component({
