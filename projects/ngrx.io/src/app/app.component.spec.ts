@@ -9,7 +9,7 @@ import { NavigationService, CurrentNodes, VersionInfo, NavigationViews } from '.
 import { ScrollService } from './shared/scroll.service';
 import { SearchService } from './search/search.service';
 import { TocService, TocItem } from './shared/toc.service';
-import { MatProgressBarModule, MatIconModule, MatToolbarModule, MatSidenavModule, MatSidenav } from '@angular/material';
+import { MatProgressBarModule, MatToolbarModule, MatSidenavModule, MatSidenav } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockSearchService } from 'testing/search.service';
 import { NotificationComponent } from './layout/notification/notification.component';
@@ -32,6 +32,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
+        MockMatIconComponent,
         MockAioNotificationComponent,
         MockAioTopMenuComponent,
         SearchResultsComponent,
@@ -45,7 +46,6 @@ describe('AppComponent', () => {
       ],
       imports: [
         MatProgressBarModule,
-        MatIconModule,
         MatToolbarModule,
         MatSidenavModule,
         BrowserAnimationsModule
@@ -531,6 +531,16 @@ class MockScrollService {
 }
 
 // Mock Child Components
+
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'mat-icon',
+  template: ''
+})
+class MockMatIconComponent {
+  @Input() svgIcon;
+}
 
 @Component({
   selector: 'aio-notification',
