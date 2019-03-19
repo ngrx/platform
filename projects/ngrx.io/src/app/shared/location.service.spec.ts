@@ -617,6 +617,7 @@ describe('LocationService', () => {
 class MockPlatformLocation {
   pathname = 'a/b/c';
   replaceState = jasmine.createSpy('PlatformLocation.replaceState');
+  getBaseHrefFromDOM = jasmine.createSpy('getBaseHref').and.returnValue('');
 }
 
 class MockSwUpdatesService {

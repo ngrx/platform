@@ -18,6 +18,9 @@ var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
 var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.1
+var_5: &run_in_browser
+  docker:
+    - image: circleci/node:10.12-browsers
 
 jobs:
   install:
@@ -89,8 +92,7 @@ jobs:
             - node_modules
 
   schematics-core-check:
-    docker:
-      - image: circleci/node:10.12-browsers
+    <<: *run_in_browser
     steps:
       - checkout
       - restore_cache:
@@ -99,8 +101,7 @@ jobs:
       - run: git diff --name-only --exit-code ./modules
 
   example-tests:
-    docker:
-      - image: circleci/node:10.12-browsers
+    <<: *run_in_browser
     steps:
       - checkout
       - restore_cache:
@@ -108,14 +109,23 @@ jobs:
       - run: yarn run example:test --watch=false
 
   example-e2e-tests:
-    docker:
-      - image: circleci/node:10.12-browsers
+    <<: *run_in_browser
     steps:
       - checkout
       - restore_cache:
           key: *cache_key
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
+
+  docs-tests:
+    <<: *run_in_browser
+    working_directory: ~/docs/projects/ngrx.io
+    steps:
+      - checkout:
+          path: ~/docs
+      - restore_cache:
+          key: *docs_cache_key
+      - run: yarn test --watch=false
 
   docs:
     <<: *run_in_node
@@ -198,6 +208,9 @@ workflows:
       - example-e2e-tests:
           requires:
             - install
+      - docs-tests:
+          requires:
+            - install
       - docs:
           requires:
             - install
@@ -212,6 +225,7 @@ workflows:
             - docs
             - example-tests
             - example-e2e-tests
+            - docs-tests
             - test
           filters:
             branches:
