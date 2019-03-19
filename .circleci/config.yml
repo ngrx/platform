@@ -125,7 +125,7 @@ jobs:
           path: ~/docs
       - restore_cache:
           key: *docs_cache_key
-      - run: yarn --cwd projects/ngrx.io/ test --watch=false
+      - run: yarn test --watch=false
 
   docs:
     <<: *run_in_node
