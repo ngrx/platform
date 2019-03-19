@@ -119,11 +119,12 @@ jobs:
 
   docs-tests:
     <<: *run_in_browser
+    working_directory: ~/docs/projects/ngrx.io
     steps:
-      - checkout
+      - checkout:
+          path: ~/docs
       - restore_cache:
-          key: *cache_key
-      - run: yarn --cwd projects/ngrx.io/ setup
+          key: *docs_cache_key
       - run: yarn --cwd projects/ngrx.io/ test --watch=false
 
   docs:
