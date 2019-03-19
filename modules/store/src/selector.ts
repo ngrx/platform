@@ -472,6 +472,16 @@ export function createSelector<
   ) => Result
 ): MemoizedSelectorWithProps<State, Props, Result>;
 
+export function createSelector<State, S, Result>(
+  ...selectors: Selector<State, S>[],
+   projector: (...s: S[]) => Result
+): MemoizedSelector<State, Result>;
+export function createSelector<State, Props, S, Result>(
+  ...selectors: SelectorWithProps<State, Props, S>[],
+  projector: (...s: S[], props: Props) => Result
+): MemoizedSelectorWithProps<State, Props, Result>;
+
+
 /**
  * @deprecated
  * Selectors with only a projector function aren't valid anymore and will be removed in version 8.0.0
