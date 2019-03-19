@@ -122,7 +122,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: *docs_cache_key
+          key: *cache_key
+      - run: yarn --cwd projects/ngrx.io/ setup
       - run: yarn --cwd projects/ngrx.io/ test --watch=false
 
   docs:
