@@ -6,6 +6,23 @@ Actions are one of the main building blocks in NgRx. Actions express _unique eve
 
 Actions are used in many areas of NgRx. Actions are the inputs and outputs of many systems in NgRx. Actions help you to understand how events are handled in your application. This guide provides general rules and examples for writing actions in your application.
 
+## An action is an object
+
+We've talked above what an action is on a conceptual level, that is `inputs` and `outputs` of our system. On a more tangible level though it is an object with the fields `type` and with the optional field `payload`, like so:
+
+<code-example header="Action">
+const action = { type: 'INCREMENT' };
+
+const actionWithPayload = { 
+  type: '[Products] add', 
+  payload: { id: 1, name: 'Movie' }  
+};
+</code-example>
+
+Above we are demonstrating two types of actions in the form of `action`, which is a simple action that only contains the field `type`. In our second action `actionWithPayload` we show an action that utilizes both fields `type` and `payload`. This is really as complicated as an action usually gets. 
+
+Because we are using Typescript in Angular lets look at if we can be using constructs such as `Interfaces` and `Classes` to our advantage and make actions even more type safe.
+
 ## The Action interface
 
 An `Action` in NgRx is made up of a simple interface:
