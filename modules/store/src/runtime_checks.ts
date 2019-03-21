@@ -22,51 +22,51 @@ export function createActiveRuntimeChecks(
           'To enable these checks, add the following config while registering the store module.\n\n' +
           'StoreModule.forRoot(reducers, {\n' +
           ' runtimeChecks: {\n' +
-          '   strictStateSerializabilityChecks: true,\n' +
-          '   strictActionSerializabilityChecks: true,\n' +
-          '   strictImmutabilityChecks: true,\n' +
+          '   strictStateSerializability: true,\n' +
+          '   strictActionSerializability: true,\n' +
+          '   strictImmutability: true,\n' +
           ' }\n' +
           '})'
       );
     }
     return {
-      strictStateSerializabilityChecks: false,
-      strictActionSerializabilityChecks: false,
-      strictImmutabilityChecks: false,
+      strictStateSerializability: false,
+      strictActionSerializability: false,
+      strictImmutability: false,
       ...runtimeChecks,
     };
   }
 
   return {
-    strictStateSerializabilityChecks: false,
-    strictActionSerializabilityChecks: false,
-    strictImmutabilityChecks: false,
+    strictStateSerializability: false,
+    strictActionSerializability: false,
+    strictImmutability: false,
   };
 }
 
 export function createStateSerializationCheckMetaReducer({
-  strictStateSerializabilityChecks,
+  strictStateSerializability,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictStateSerializabilityChecks
+    strictStateSerializability
       ? stateSerializationCheckMetaReducer(reducer)
       : reducer;
 }
 
 export function createActionSerializationCheckMetaReducer({
-  strictActionSerializabilityChecks,
+  strictActionSerializability,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictActionSerializabilityChecks
+    strictActionSerializability
       ? actionSerializationCheckMetaReducer(reducer)
       : reducer;
 }
 
 export function createImmutabilityCheckMetaReducer({
-  strictImmutabilityChecks,
+  strictImmutability,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictImmutabilityChecks ? immutabilityCheckMetaReducer(reducer) : reducer;
+    strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer;
 }
 
 export function provideRuntimeChecks(

@@ -8,9 +8,9 @@ describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
     it('should disable all checks by default', () => {
       expect(createActiveRuntimeChecks()).toEqual({
-        strictStateSerializabilityChecks: false,
-        strictActionSerializabilityChecks: false,
-        strictImmutabilityChecks: false,
+        strictStateSerializability: false,
+        strictActionSerializability: false,
+        strictImmutability: false,
       });
     });
 
@@ -42,14 +42,14 @@ describe('Runtime checks:', () => {
     it('should allow the user to override the config', () => {
       expect(
         createActiveRuntimeChecks({
-          strictStateSerializabilityChecks: true,
-          strictActionSerializabilityChecks: true,
-          strictImmutabilityChecks: true,
+          strictStateSerializability: true,
+          strictActionSerializability: true,
+          strictImmutability: true,
         })
       ).toEqual({
-        strictStateSerializabilityChecks: true,
-        strictActionSerializabilityChecks: true,
-        strictImmutabilityChecks: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true,
+        strictImmutability: true,
       });
     });
 
@@ -57,9 +57,9 @@ describe('Runtime checks:', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
 
       expect(createActiveRuntimeChecks()).toEqual({
-        strictStateSerializabilityChecks: false,
-        strictActionSerializabilityChecks: false,
-        strictImmutabilityChecks: false,
+        strictStateSerializability: false,
+        strictActionSerializability: false,
+        strictImmutability: false,
       });
     });
   });
@@ -114,7 +114,7 @@ describe('Runtime checks:', () => {
     const invalidAction = () => ({ type: ErrorTypes.UnserializableState });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictStateSerializabilityChecks: true });
+      const store = setupStore({ strictStateSerializability: true });
 
       store.subscribe({
         error: err => {
@@ -127,7 +127,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictStateSerializabilityChecks: false });
+      const store = setupStore({ strictStateSerializability: false });
 
       store.subscribe({
         next: ({ state }) => {
@@ -148,7 +148,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictActionSerializabilityChecks: true });
+      const store = setupStore({ strictActionSerializability: true });
 
       store.subscribe({
         error: err => {
@@ -160,7 +160,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictActionSerializabilityChecks: false });
+      const store = setupStore({ strictActionSerializability: false });
 
       store.subscribe({
         next: ({ state }) => {
@@ -180,7 +180,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutabilityChecks: true });
+      const store = setupStore({ strictImmutability: true });
 
       store.subscribe({
         error: _ => {
@@ -192,7 +192,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutabilityChecks: false });
+      const store = setupStore({ strictImmutability: false });
 
       store.subscribe({
         next: ({ state }) => {
@@ -213,7 +213,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutabilityChecks: true });
+      const store = setupStore({ strictImmutability: true });
 
       store.subscribe({
         error: _ => {
@@ -225,7 +225,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutabilityChecks: false });
+      const store = setupStore({ strictImmutability: false });
 
       store.subscribe({
         next: ({ state }) => {

@@ -41,7 +41,7 @@ export type SelectorWithProps<State, Props, Result> = (
 ) => Result;
 
 export interface RuntimeChecks {
-  strictStateSerializabilityChecks: boolean;
-  strictActionSerializabilityChecks: boolean;
-  strictImmutabilityChecks: boolean;
+  strictStateSerializability: boolean;
+  strictActionSerializability: boolean;
+  strictImmutability: boolean;
 }

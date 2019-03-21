@@ -29,14 +29,7 @@ export function createTestModule(
   TestBed.configureTestingModule({
     declarations: [AppCmp, SimpleCmp],
     imports: [
-      StoreModule.forRoot(opts.reducers, {
-        runtimeChecks: {
-          // `paramMap` and `queryParamMap` breaks serializability
-          strictStateSerializabilityChecks: false,
-          // `paramMap` and `queryParamMap` breaks serializability
-          strictActionSerializabilityChecks: false,
-        },
-      }),
+      StoreModule.forRoot(opts.reducers),
       RouterTestingModule.withRoutes([
         { path: '', component: SimpleCmp },
         {
