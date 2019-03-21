@@ -77,6 +77,10 @@
           "title": "Architecture",
           "children": [
             {
+              "title": "Overview",
+              "url": "guide/store/architecture"
+            },
+            {
               "title": "Actions",
               "url": "guide/store/actions"
             },
