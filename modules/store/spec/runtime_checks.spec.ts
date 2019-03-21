@@ -6,25 +6,50 @@ import { RuntimeChecks } from '../src/models';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
-    it('should enable all checks by default', () => {
+    it('should disable all checks by default', () => {
       expect(createActiveRuntimeChecks()).toEqual({
-        strictStateSerializabilityChecks: true,
-        strictActionSerializabilityChecks: true,
-        strictImmutabilityChecks: true,
+        strictStateSerializabilityChecks: false,
+        strictActionSerializabilityChecks: false,
+        strictImmutabilityChecks: false,
       });
+    });
+
+    it('should log a warning in dev mode when no configuration is provided', () => {
+      const spy = spyOn(console, 'warn');
+
+      createActiveRuntimeChecks();
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should not log a warning in dev mode when configuration is provided', () => {
+      const spy = spyOn(console, 'warn');
+
+      createActiveRuntimeChecks({});
+
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('should not log a warning when not dev mode when no configuration is provided', () => {
+      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+      const spy = spyOn(console, 'warn');
+
+      createActiveRuntimeChecks();
+
+      expect(spy).not.toHaveBeenCalled();
     });
 
     it('should allow the user to override the config', () => {
       expect(
         createActiveRuntimeChecks({
-          strictStateSerializabilityChecks: false,
-          strictActionSerializabilityChecks: false,
-          strictImmutabilityChecks: false,
+          strictStateSerializabilityChecks: true,
+          strictActionSerializabilityChecks: true,
+          strictImmutabilityChecks: true,
         })
       ).toEqual({
-        strictStateSerializabilityChecks: false,
-        strictActionSerializabilityChecks: false,
-        strictImmutabilityChecks: false,
+        strictStateSerializabilityChecks: true,
+        strictActionSerializabilityChecks: true,
+        strictImmutabilityChecks: true,
       });
     });
 
@@ -89,7 +114,7 @@ describe('Runtime checks:', () => {
     const invalidAction = () => ({ type: ErrorTypes.UnserializableState });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore();
+      const store = setupStore({ strictStateSerializabilityChecks: true });
 
       store.subscribe({
         error: err => {
@@ -123,7 +148,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore();
+      const store = setupStore({ strictActionSerializabilityChecks: true });
 
       store.subscribe({
         error: err => {
@@ -155,7 +180,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore();
+      const store = setupStore({ strictImmutabilityChecks: true });
 
       store.subscribe({
         error: _ => {
@@ -188,7 +213,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore();
+      const store = setupStore({ strictImmutabilityChecks: true });
 
       store.subscribe({
         error: _ => {

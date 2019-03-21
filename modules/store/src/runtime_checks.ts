@@ -15,10 +15,24 @@ export function createActiveRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
 ): RuntimeChecks {
   if (isDevMode()) {
+    if (runtimeChecks === undefined) {
+      console.warn(
+        '@ngrx/store: we added immutability and serializability runtime checks in @ngrx/store.\n' +
+          'These checks are currently opt-in but will be the default in the next major version.\n' +
+          'To enable these checks, add the following config while registering the store module.\n\n' +
+          'StoreModule.forRoot(reducers, {\n' +
+          ' runtimeChecks: {\n' +
+          '   strictStateSerializabilityChecks: true,\n' +
+          '   strictActionSerializabilityChecks: true,\n' +
+          '   strictImmutabilityChecks: true,\n' +
+          ' }\n' +
+          '})'
+      );
+    }
     return {
-      strictStateSerializabilityChecks: true,
-      strictActionSerializabilityChecks: true,
-      strictImmutabilityChecks: true,
+      strictStateSerializabilityChecks: false,
+      strictActionSerializabilityChecks: false,
+      strictImmutabilityChecks: false,
       ...runtimeChecks,
     };
   }

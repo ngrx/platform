@@ -13,7 +13,6 @@ import * as fromRouter from '@ngrx/router-store';
  * exception will be thrown. This is useful during development mode to
  * ensure that none of the reducers accidentally mutates the state.
  */
-import { storeFreeze } from 'ngrx-store-freeze';
 
 /**
  * Every reducer module's default export is the reducer function itself. In
@@ -63,7 +62,7 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, storeFreeze]
+  ? [logger]
   : [];
 
 /**
