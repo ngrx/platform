@@ -191,6 +191,17 @@ jobs:
           at: dist
       - run: yarn run deploy:builds
 
+  cleanup-previews:
+    <<: *run_in_node
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run: yarn run cleanup:previews
+
 workflows:
   version: 2
   build-test-deploy:
@@ -227,6 +238,12 @@ workflows:
             - example-e2e-tests
             - docs-tests
             - test
+          filters:
+            branches:
+              only: master
+      - cleanup-previews:
+          requires:
+            - install
           filters:
             branches:
               only: master

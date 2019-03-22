@@ -7,6 +7,7 @@
     "build": "yarn bazel build //modules/...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "deploy:preview": "ts-node ./build/deploy-preview.ts",
+    "cleanup:previews": "ts-node ./build/cleanup-previews.ts",
     "test:unit": "node ./tests.js",
     "test": "nyc yarn run test:unit",
     "test:bazel": "yarn bazel test //modules/...",
