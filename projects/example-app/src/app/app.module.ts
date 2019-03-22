@@ -64,7 +64,7 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
      * sets up the effects class to be initialized immediately when the
      * application starts.
      *
-     * See: https://github.com/ngrx/platform/blob/master/docs/effects/api.md#forroot
+     * See: https://ngrx.io/guide/effects#registering-root-effects
      */
     EffectsModule.forRoot([]),
 
