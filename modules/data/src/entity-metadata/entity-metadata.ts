@@ -4,7 +4,7 @@ import { EntityFilterFn } from './entity-filters';
 import { IdSelector, Comparer } from '../utils/ngrx-entity-models';
 
 export const ENTITY_METADATA_TOKEN = new InjectionToken<EntityMetadataMap>(
-  'ngrx-data/entity-metadata'
+  '@ngrx/data/entity-metadata'
 );
 
 /** Metadata that describe an entity type and its collection to ngrx-data */

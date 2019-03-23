@@ -18,7 +18,7 @@ import {
 
 export const ENTITY_CACHE_SELECTOR_TOKEN = new InjectionToken<
   MemoizedSelector<Object, EntityCache>
->('ngrx-data/entity-cache-selector');
+>('@ngrx/data/entity-cache-selector');
 
 export const entityCacheSelectorProvider: FactoryProvider = {
   provide: ENTITY_CACHE_SELECTOR_TOKEN,
