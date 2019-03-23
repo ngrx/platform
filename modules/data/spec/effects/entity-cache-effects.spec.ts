@@ -30,7 +30,7 @@ import {
   ChangeSetOperation,
   Logger,
   MergeStrategy,
-} from 'modules/data';
+} from '../..';
 
 describe('EntityCacheEffects (normal testing)', () => {
   let actions$: ReplaySubject<Action>;
@@ -38,8 +38,11 @@ describe('EntityCacheEffects (normal testing)', () => {
   let dataService: TestEntityCacheDataService;
   let effects: EntityCacheEffects;
   let logger: Logger;
-  let mergeStrategy: MergeStrategy;
-  let options = { correlationId, mergeStrategy };
+  let mergeStrategy: MergeStrategy | undefined;
+  let options: {
+    correlationId: typeof correlationId;
+    mergeStrategy: typeof mergeStrategy;
+  };
 
   function expectCompletion(completion: any, done: DoneFn) {
     effects.saveEntities$.subscribe(result => {

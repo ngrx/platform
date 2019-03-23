@@ -50,7 +50,7 @@ class TestEntityEffects {
     };
   }
 
-  constructor(private actions: Actions) {}
+  constructor(private actions: Actions<EntityAction>) {}
 }
 
 class Hero {
@@ -137,9 +137,9 @@ describe('NgrxDataModule', () => {
     let store: Store<{ entityCache: EntityCache }>;
 
     function loggingEntityCacheMetaReducer(
-      reducer: ActionReducer<EntityCache, Action>
-    ): ActionReducer<EntityCache, Action> {
-      return (state: EntityCache, action: Action) => {
+      reducer: ActionReducer<EntityCache>
+    ): ActionReducer<EntityCache> {
+      return (state, action) => {
         metaReducerLog.push(`MetaReducer saw "${action.type}"`);
         return reducer(state, action);
       };

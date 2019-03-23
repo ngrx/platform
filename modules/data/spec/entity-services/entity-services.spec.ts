@@ -192,7 +192,7 @@ class Villain {
 
 const entityMetadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: (villain: Villain) => villain.key },
+  Villain: { selectId: (villain: Partial<Villain>) => villain.key! },
 };
 
 function entityServicesSetup() {

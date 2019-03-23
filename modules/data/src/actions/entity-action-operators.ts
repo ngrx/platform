@@ -89,7 +89,7 @@ export function ofEntityType<T extends EntityAction>(
       return filter(
         (action: EntityAction): action is T => {
           const entityName = action.payload && action.payload.entityName;
-          return entityName && names.some(n => n === entityName);
+          return !!entityName && names.some(n => n === entityName);
         }
       );
   }

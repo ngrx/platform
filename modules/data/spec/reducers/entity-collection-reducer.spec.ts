@@ -43,7 +43,7 @@ class Villain {
 
 const metadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: (villain: Villain) => villain.key },
+  Villain: { selectId: (villain: Partial<Villain>) => villain.key! },
 };
 
 describe('EntityCollectionReducer', () => {
@@ -100,7 +100,7 @@ describe('EntityCollectionReducer', () => {
       type: 'does-not-matter',
       payload: {
         entityName: 'Hero',
-        entityOp: undefined as EntityOp,
+        entityOp: undefined,
       },
     };
     const newCache = entityReducer(initialCache, action);
@@ -666,7 +666,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -733,7 +733,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -773,7 +773,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -833,12 +833,12 @@ describe('EntityCollectionReducer', () => {
     it('should error if one of new heroes lacks its pkey', () => {
       const heroes: Hero[] = [
         { id: 13, name: 'New A', power: 'Strong' },
-        { id: undefined, name: 'New B', power: 'Swift' }, // missing its id
+        { id: undefined as any, name: 'New B', power: 'Swift' }, // missing its id
       ];
       const action = createTestAction(heroes);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /does not have a valid entity key/
       );
     });
@@ -895,13 +895,13 @@ describe('EntityCollectionReducer', () => {
 
     it('should error if new hero lacks its pkey', () => {
       const heroes: Hero[] = [
-        { id: undefined, name: 'New A', power: 'Strong' }, // missing its id
+        { id: undefined as any, name: 'New A', power: 'Strong' }, // missing its id
         { id: 14, name: 'New B', power: 'Swift' },
       ];
       const action = createTestAction(heroes);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /does not have a valid entity key/
       );
     });
@@ -947,13 +947,13 @@ describe('EntityCollectionReducer', () => {
 
     it('should error if new hero lacks its pkey', () => {
       const heroes: Hero[] = [
-        { id: undefined, name: 'New A', power: 'Strong' }, // missing id
+        { id: undefined as any, name: 'New A', power: 'Strong' }, // missing id
         { id: 14, name: 'New B', power: 'Swift' },
       ];
       const action = createTestAction(heroes);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload!.error!.message).toMatch(
         /does not have a valid entity key/
       );
     });
@@ -1941,7 +1941,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -1994,7 +1994,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -2048,11 +2048,15 @@ describe('EntityCollectionReducer', () => {
     });
 
     it('should error if new hero lacks its pkey', () => {
-      const hero: Hero = { id: undefined, name: 'New A', power: 'Strong' }; // missing id
+      const hero: Hero = {
+        id: undefined as any,
+        name: 'New A',
+        power: 'Strong',
+      }; // missing id
       const action = createTestAction(hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -2119,12 +2123,12 @@ describe('EntityCollectionReducer', () => {
     it('should error if one of new heroes lacks its pkey', () => {
       const heroes: Hero[] = [
         { id: 13, name: 'New A', power: 'Strong' },
-        { id: undefined, name: 'New B', power: 'Swift' }, // missing its id
+        { id: undefined as any, name: 'New B', power: 'Swift' }, // missing its id
       ];
       const action = createTestAction(heroes);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /does not have a valid entity key/
       );
     });
@@ -2200,13 +2204,13 @@ describe('EntityCollectionReducer', () => {
 
     it('should error if new hero lacks its pkey', () => {
       const heroes: Hero[] = [
-        { id: undefined, name: 'New A', power: 'Strong' }, // missing its id
+        { id: undefined as any, name: 'New A', power: 'Strong' }, // missing its id
         { id: 14, name: 'New B', power: 'Swift' },
       ];
       const action = createTestAction(heroes);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /does not have a valid entity key/
       );
     });
@@ -2249,13 +2253,13 @@ describe('EntityCollectionReducer', () => {
 
     it('should error if new hero lacks its pkey', () => {
       const heroes: Hero[] = [
-        { id: undefined, name: 'New A', power: 'Strong' }, // missing id
+        { id: undefined as any, name: 'New A', power: 'Strong' }, // missing id
         { id: 14, name: 'New B', power: 'Swift' },
       ];
       const action = createTestAction(heroes);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /does not have a valid entity key/
       );
     });
@@ -2326,7 +2330,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -2425,7 +2429,7 @@ describe('EntityCollectionReducer', () => {
       const action = createTestAction(<any>hero);
       const state = entityReducer(initialCache, action);
       expect(state).toBe(initialCache);
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /missing or invalid entity key/
       );
     });
@@ -2652,7 +2656,7 @@ describe('EntityCollectionReducer', () => {
 
       // Expect override reducer to throw error and for
       // EntityReducer to catch it and set the `EntityAction.payload.error`
-      expect(action.payload.error.message).toMatch(
+      expect(action.payload.error!.message).toMatch(
         /illegal operation for the "Hero" collection/
       );
       expect(state).toBe(initialState);

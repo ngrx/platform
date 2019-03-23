@@ -106,11 +106,14 @@ export interface EntitySelectors<T> {
 /** Creates EntitySelector functions for entity collections. */
 @Injectable()
 export class EntitySelectorsFactory {
+  private entityCollectionCreator: EntityCollectionCreator;
+  private selectEntityCache: EntityCacheSelector;
+
   constructor(
-    @Optional() private entityCollectionCreator?: EntityCollectionCreator,
+    @Optional() entityCollectionCreator?: EntityCollectionCreator,
     @Optional()
     @Inject(ENTITY_CACHE_SELECTOR_TOKEN)
-    private selectEntityCache?: EntityCacheSelector
+    selectEntityCache?: EntityCacheSelector
   ) {
     this.entityCollectionCreator =
       entityCollectionCreator || new EntityCollectionCreator();

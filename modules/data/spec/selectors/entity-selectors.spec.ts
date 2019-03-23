@@ -21,7 +21,7 @@ describe('EntitySelectors', () => {
 
   const villainMetadata: EntityMetadata<Villain> = {
     entityName: 'Villain',
-    selectId: (entity: Villain) => entity.key,
+    selectId: entity => entity.key!,
   };
 
   let collectionCreator: any;
