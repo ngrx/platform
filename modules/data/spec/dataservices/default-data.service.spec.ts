@@ -42,7 +42,7 @@ describe('DefaultDataService', () => {
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
 
-    httpUrlGenerator = new DefaultHttpUrlGenerator(null);
+    httpUrlGenerator = new DefaultHttpUrlGenerator(null as any);
     httpUrlGenerator.registerHttpResourceUrls({
       Hero: {
         entityResourceUrl: heroUrl,
@@ -227,7 +227,7 @@ describe('DefaultDataService', () => {
     });
 
     it('should throw when no id given', () => {
-      service.getById(undefined).subscribe(
+      service.getById(undefined as any).subscribe(
         heroes => fail('getById succeeded when expected it to fail'),
         err => {
           expect(err.error).toMatch(/No "Hero" key/);
@@ -330,7 +330,7 @@ describe('DefaultDataService', () => {
 
     it('should return expected hero with id', () => {
       expectedHero = { id: 42, name: 'A' };
-      const heroData: Hero = { id: undefined, name: 'A' };
+      const heroData: Hero = { id: undefined, name: 'A' } as any;
 
       service
         .add(heroData)
@@ -352,7 +352,7 @@ describe('DefaultDataService', () => {
     });
 
     it('should throw when no entity given', () => {
-      service.add(undefined).subscribe(
+      service.add(undefined as any).subscribe(
         heroes => fail('add succeeded when expected it to fail'),
         err => {
           expect(err.error).toMatch(/No "Hero" entity/);
@@ -419,7 +419,7 @@ describe('DefaultDataService', () => {
     });
 
     it('should throw when no id given', () => {
-      service.delete(undefined).subscribe(
+      service.delete(undefined as any).subscribe(
         heroes => fail('delete succeeded when expected it to fail'),
         err => {
           expect(err.error).toMatch(/No "Hero" key/);
@@ -480,7 +480,7 @@ describe('DefaultDataService', () => {
     });
 
     it('should throw when no update given', () => {
-      service.update(undefined).subscribe(
+      service.update(undefined as any).subscribe(
         heroes => fail('update succeeded when expected it to fail'),
         err => {
           expect(err.error).toMatch(/No "Hero" update data/);
@@ -494,7 +494,7 @@ describe('DefaultDataService', () => {
 
     it('should return expected hero with id', () => {
       expectedHero = { id: 42, name: 'A' };
-      const heroData: Hero = { id: undefined, name: 'A' };
+      const heroData: Hero = { id: undefined, name: 'A' } as any;
 
       service
         .upsert(heroData)
@@ -516,7 +516,7 @@ describe('DefaultDataService', () => {
     });
 
     it('should throw when no entity given', () => {
-      service.upsert(undefined).subscribe(
+      service.upsert(undefined as any).subscribe(
         heroes => fail('add succeeded when expected it to fail'),
         err => {
           expect(err.error).toMatch(/No "Hero" entity/);
@@ -534,7 +534,7 @@ describe('DefaultDataServiceFactory', () => {
   let httpUrlGenerator: HttpUrlGenerator;
 
   beforeEach(() => {
-    httpUrlGenerator = new DefaultHttpUrlGenerator(null);
+    httpUrlGenerator = new DefaultHttpUrlGenerator(null as any);
     httpUrlGenerator.registerHttpResourceUrls({
       Hero: {
         entityResourceUrl: heroUrl,

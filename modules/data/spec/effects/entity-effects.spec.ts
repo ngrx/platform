@@ -20,7 +20,7 @@ import {
   EntityActionDataServiceError,
   Logger,
   Update,
-} from 'modules/data';
+} from '../..';
 
 describe('EntityEffects (normal testing)', () => {
   // factory never changes in these tests
@@ -74,7 +74,7 @@ describe('EntityEffects (normal testing)', () => {
       undefined,
       { correlationId: 42 }
     );
-    effects.cancel$.subscribe(crid => {
+    effects.cancel$.subscribe((crid: any) => {
       expect(crid).toBe(42);
       done();
     });

@@ -54,7 +54,7 @@ export abstract class HttpUrlGenerator {
    * @param entityHttpResourceUrls {EntityHttpResourceUrls} resource urls for specific entity type names
    */
   abstract registerHttpResourceUrls(
-    entityHttpResourceUrls: EntityHttpResourceUrls
+    entityHttpResourceUrls?: EntityHttpResourceUrls
   ): void;
 }
 

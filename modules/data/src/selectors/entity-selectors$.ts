@@ -85,7 +85,7 @@ export class EntitySelectors$Factory {
 
   constructor(
     private store: Store<any>,
-    private actions: Actions,
+    private actions: Actions<EntityAction>,
     @Inject(ENTITY_CACHE_SELECTOR_TOKEN)
     private selectEntityCache: EntityCacheSelector
   ) {
@@ -110,7 +110,7 @@ export class EntitySelectors$Factory {
    **/
   create<T, S$ extends EntitySelectors$<T> = EntitySelectors$<T>>(
     entityName: string,
-    selectors?: EntitySelectors<T>
+    selectors: EntitySelectors<T>
   ): S$ {
     const selectors$: { [prop: string]: any } = {
       entityName,

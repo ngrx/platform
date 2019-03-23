@@ -209,10 +209,7 @@ export class EntityCacheDispatcher {
           act.type === EntityCacheAction.SAVE_ENTITIES_ERROR ||
           act.type === EntityCacheAction.SAVE_ENTITIES_CANCEL
       ),
-      filter(
-        (act: { type: string; payload: any }) =>
-          crid === (act as any).payload.correlationId
-      ),
+      filter((act: Action) => crid === (act as any).payload.correlationId),
       take(1),
       mergeMap(act => {
         return act.type === EntityCacheAction.SAVE_ENTITIES_CANCEL

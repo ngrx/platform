@@ -20,7 +20,7 @@ describe('EntityCollectionCreator', () => {
   let eds: EntityDefinitionService;
 
   beforeEach(() => {
-    eds = new EntityDefinitionService(null);
+    eds = new EntityDefinitionService(null as any);
     const hdef = createEntityDefinition(heroMetadata);
     hdef.initialState.filter = 'super';
     eds.registerDefinition(hdef);
@@ -36,7 +36,7 @@ describe('EntityCollectionCreator', () => {
 
   it('should create empty collection even when no initial state', () => {
     const hdef = eds.getDefinition('Hero');
-    hdef.initialState = undefined; // ZAP!
+    hdef.initialState = undefined as any; // ZAP!
     const collection = creator.create<Hero, HeroCollection>('Hero');
     expect(collection.foo).toBeUndefined('foo');
     expect(collection.ids).toBeDefined('ids');

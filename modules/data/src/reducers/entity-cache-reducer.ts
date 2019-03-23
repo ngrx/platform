@@ -357,9 +357,9 @@ export class EntityCacheReducerFactory {
       action.payload.error = error;
     }
 
-    return action.payload.error || collection === newCollection
+    return action.payload.error || collection === newCollection!
       ? cache
-      : { ...cache, [entityName]: newCollection };
+      : { ...cache, [entityName]: newCollection! };
   }
 
   /** Ensure loading is false for every collection in entityNames */

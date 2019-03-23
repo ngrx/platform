@@ -22,7 +22,7 @@ describe('EntityAction Operators', () => {
   const entityActionFactory = new EntityActionFactory();
 
   let results: any[];
-  let actions: Subject<Action>;
+  let actions: Subject<EntityAction>;
 
   const testActions = {
     foo: <Action>{ type: 'Foo' },
@@ -44,7 +44,7 @@ describe('EntityAction Operators', () => {
   }
 
   beforeEach(() => {
-    actions = new Subject<Action>();
+    actions = new Subject<EntityAction>();
     results = [];
   });
 

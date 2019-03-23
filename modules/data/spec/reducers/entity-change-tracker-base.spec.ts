@@ -8,7 +8,7 @@ import {
   ChangeType,
   ChangeState,
   MergeStrategy,
-} from 'modules/data';
+} from '../..';
 
 interface Hero {
   id: number;
@@ -136,7 +136,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should return same collection if called with null entity', () => {
-      const collection = tracker.trackAddOne(null, origCollection);
+      const collection = tracker.trackAddOne(null as any, origCollection);
       expect(collection).toBe(origCollection);
     });
 
@@ -290,7 +290,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should return same collection if called with null entity', () => {
-      const collection = tracker.trackDeleteOne(null, origCollection);
+      const collection = tracker.trackDeleteOne(null as any, origCollection);
       expect(collection).toBe(origCollection);
     });
 
@@ -404,7 +404,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should return same collection if called with null entity', () => {
-      const collection = tracker.trackUpdateOne(null, origCollection);
+      const collection = tracker.trackUpdateOne(null as any, origCollection);
       expect(collection).toBe(origCollection);
     });
 
@@ -522,7 +522,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should return same collection if called with null entity', () => {
-      const collection = tracker.trackUpsertOne(null, origCollection);
+      const collection = tracker.trackUpsertOne(null as any, origCollection);
       expect(collection).toBe(origCollection);
     });
 
@@ -671,7 +671,7 @@ describe('EntityChangeTrackerBase', () => {
         updatedEntity,
       } = createTestTrackedEntities();
 
-      collection = tracker.undoOne(null, collection);
+      collection = tracker.undoOne(null as any, collection);
       expect(collection.entities[addedEntity.id]).toBeDefined(
         'added entity should be present'
       );

@@ -36,7 +36,7 @@ import {
   HttpMethods,
   DataServiceError,
   Logger,
-} from 'modules/data';
+} from '../..';
 
 describe('EntityCollectionService', () => {
   describe('Command dispatching', () => {
@@ -437,16 +437,13 @@ describe('EntityCollectionService', () => {
     });
 
     it('can get collection from collection$', () => {
-      let collection: EntityCollection<Hero>;
       const action = entityActionFactory.create('Hero', EntityOp.ADD_ALL, [
         { id: 1, name: 'A' },
       ]);
       store.dispatch(action);
-      heroCollectionService.collection$.subscribe(c => {
-        collection = c;
+      heroCollectionService.collection$.subscribe(collection => {
+        expect(collection.ids).toEqual([1]);
       });
-
-      expect(collection.ids).toEqual([1]);
     });
   });
 });
@@ -464,7 +461,7 @@ class Villain {
 
 const entityMetadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: (villain: Villain) => villain.key },
+  Villain: { selectId: (villain: Partial<Villain>) => villain.key! },
 };
 
 function entityServicesSetup() {

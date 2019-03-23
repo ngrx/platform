@@ -40,7 +40,12 @@ export class EntityActionFactory {
   ): EntityAction<P> {
     const payload: EntityActionPayload<P> =
       typeof nameOrPayload === 'string'
-        ? { ...(options || {}), entityName: nameOrPayload, entityOp, data }
+        ? ({
+            ...(options || {}),
+            entityName: nameOrPayload,
+            entityOp,
+            data,
+          } as EntityActionPayload<P>)
         : nameOrPayload;
     return this.createCore(payload);
   }

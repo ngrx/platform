@@ -35,7 +35,7 @@ export class EntityCollectionReducerRegistry {
     this.entityCollectionMetaReducer = compose.apply(
       null,
       entityCollectionMetaReducers || []
-    );
+    ) as any;
   }
 
   /**
@@ -67,8 +67,8 @@ export class EntityCollectionReducerRegistry {
   registerReducer<T>(
     entityName: string,
     reducer: EntityCollectionReducer<T>
-  ): ActionReducer<EntityCollection<T>, EntityAction<T>> {
-    reducer = this.entityCollectionMetaReducer(reducer);
+  ): EntityCollectionReducer<T> {
+    reducer = this.entityCollectionMetaReducer(reducer as any);
     return (this.entityCollectionReducers[entityName.trim()] = reducer);
   }
 
