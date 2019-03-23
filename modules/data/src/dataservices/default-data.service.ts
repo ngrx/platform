@@ -69,7 +69,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
   }
 
   delete(key: number | string): Observable<number | string> {
-    let err: Error;
+    let err: Error | undefined;
     if (key == null) {
       err = new Error(`No "${this.entityName}" key to delete`);
     }
@@ -84,7 +84,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
   }
 
   getById(key: number | string): Observable<T> {
-    let err: Error;
+    let err: Error | undefined;
     if (key == null) {
       err = new Error(`No "${this.entityName}" key to get`);
     }

@@ -87,7 +87,7 @@ describe('Related-entity Selectors', () => {
         selectHero,
         selectSidekickMap,
         (hero, sidekicks) => {
-          const sidekickId = hero && hero.sidekickFk;
+          const sidekickId = hero && hero.sidekickFk!;
           return sidekicks[sidekickId];
         }
       );

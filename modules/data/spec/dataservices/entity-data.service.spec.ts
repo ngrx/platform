@@ -49,7 +49,7 @@ export class BazingaDataService
   add(entity: Bazinga): Observable<Bazinga> {
     return this.bazinga();
   }
-  delete(id: any): Observable<null> {
+  delete(id: any): Observable<number | string> {
     return this.bazinga();
   }
   getAll(): Observable<Bazinga[]> {

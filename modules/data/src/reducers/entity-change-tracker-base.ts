@@ -56,7 +56,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
     let didMutate = false;
     const changeState = entityOrIdList.reduce((chgState, entityOrId) => {
       const id =
-        typeof entityOrId === 'object' ? this.selectId(entityOrId) : entityOrId;
+        typeof entityOrId === 'object'
+          ? this.selectId(entityOrId)
+          : (entityOrId as string | number);
       if (chgState[id]) {
         if (!didMutate) {
           chgState = { ...chgState };
@@ -644,7 +646,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
             }
             break;
           case ChangeType.Updated:
-            acc.upsert.push(changeState.originalValue);
+            acc.upsert.push(changeState.originalValue!);
             break;
         }
         return acc;
@@ -684,7 +686,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
         const id =
           typeof entityOrId === 'object'
             ? this.selectId(entityOrId)
-            : entityOrId;
+            : (entityOrId as string | number);
         if (chgState[id]) {
           if (!didMutate) {
             chgState = { ...chgState };
@@ -704,7 +706,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               }
               break;
             case ChangeType.Updated:
-              acc.upsert.push(change.originalValue);
+              acc.upsert.push(change.originalValue!);
               break;
           }
         }

@@ -47,6 +47,6 @@ describe('EntityFilterFn - PropsFilter', () => {
 
   it('returns empty array for null input entities array', () => {
     const filter = PropsFilterFnFactory<Hero>(['name']);
-    expect(filter(null, 'Foo')).toEqual([]);
+    expect(filter(null as any, 'Foo')).toEqual([]);
   });
 });

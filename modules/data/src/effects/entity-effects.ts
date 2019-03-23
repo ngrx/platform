@@ -58,7 +58,7 @@ export class EntityEffects {
   );
 
   constructor(
-    private actions: Actions,
+    private actions: Actions<EntityAction>,
     private dataService: EntityDataService,
     private entityActionFactory: EntityActionFactory,
     private resultHandler: PersistenceResultHandler,

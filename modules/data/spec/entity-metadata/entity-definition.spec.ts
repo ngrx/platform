@@ -14,7 +14,7 @@ const sorter = <T>(a: T, b: T) => 'foo';
 
 const filter = <T>(entities: T[], pattern?: any) => entities;
 
-const selectIdForNonId = (entity: Partial<NonIdClass>) => entity.key;
+const selectIdForNonId = (entity: any) => entity.key;
 
 const HERO_METADATA: EntityMetadata<Hero> = {
   entityName: 'Hero',

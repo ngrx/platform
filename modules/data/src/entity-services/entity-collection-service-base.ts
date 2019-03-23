@@ -123,7 +123,7 @@ export class EntityCollectionServiceBase<
   /**
    * Utility class with methods to validate EntityAction payloads.
    */
-  guard: EntityActionGuard;
+  guard: EntityActionGuard<T>;
 
   /** Returns the primary key (id) of this entity */
   selectId: IdSelector<T>;

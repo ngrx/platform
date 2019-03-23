@@ -38,7 +38,7 @@ export interface EntityCollection<T = any> extends EntityState<T> {
   /** A map of ChangeStates, keyed by id, for entities with unsaved changes */
   changeState: ChangeStateMap<T>;
   /** The user's current collection filter pattern */
-  filter: string;
+  filter?: string;
   /** true if collection was ever filled by QueryAll; forced false if cleared */
   loaded: boolean;
   /** true when a query or save operation is in progress */

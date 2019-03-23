@@ -13,7 +13,7 @@ import {
   EntityOp,
   Update,
   MergeStrategy,
-} from 'modules/data';
+} from '../..';
 
 class Hero {
   id: number;

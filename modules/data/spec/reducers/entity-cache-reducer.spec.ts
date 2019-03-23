@@ -28,7 +28,8 @@ import {
   ChangeSetOperation,
   IdSelector,
   Logger,
-} from 'modules/data';
+  EntityMetadata,
+} from '../..';
 
 class Hero {
   id: number;
@@ -44,7 +45,7 @@ const metadata: EntityMetadataMap = {
   Fool: {},
   Hero: {},
   Knave: {},
-  Villain: { selectId: (villain: Villain) => villain.key },
+  Villain: { selectId: (villain: Partial<Villain>) => villain.key! },
 };
 
 describe('EntityCacheReducer', () => {

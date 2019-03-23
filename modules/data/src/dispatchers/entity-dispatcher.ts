@@ -18,7 +18,7 @@ export interface EntityDispatcher<T> extends EntityCommands<T> {
   /**
    * Utility class with methods to validate EntityAction payloads.
    */
-  readonly guard: EntityActionGuard;
+  readonly guard: EntityActionGuard<T>;
 
   /** Returns the primary key (id) of this entity */
   readonly selectId: IdSelector<T>;

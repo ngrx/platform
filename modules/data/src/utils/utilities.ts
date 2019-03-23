@@ -46,7 +46,7 @@ export function toUpdateFactory<T>(selectId?: IdSelector<T>) {
    * @param selectId function that returns the entity's primary key (id)
    */
   return function toUpdate(entity: Partial<T>): Update<T> {
-    const id: any = selectId(entity);
+    const id: any = selectId!(entity);
     if (id == null) {
       throw new Error('Primary key may not be null/undefined.');
     }

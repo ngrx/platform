@@ -33,7 +33,7 @@ describe('EntitySelectors$', () => {
 
   const villainMetadata: EntityMetadata<Villain> = {
     entityName: 'Villain',
-    selectId: (entity: Villain) => entity.key,
+    selectId: entity => entity.key!,
   };
 
   // Hero has a super-set of EntitySelectors$
@@ -74,7 +74,11 @@ describe('EntitySelectors$', () => {
     beforeEach(() => {
       actions$ = new Subject<Action>();
       state$ = new BehaviorSubject({ entityCache: emptyCache });
-      store = new Store<{ entityCache: EntityCache }>(state$, null, null);
+      store = new Store<{ entityCache: EntityCache }>(
+        state$,
+        null as any,
+        null as any
+      );
 
       // EntitySelectors
       collectionCreator = jasmine.createSpyObj('entityCollectionCreator', [
@@ -98,7 +102,7 @@ describe('EntitySelectors$', () => {
 
       // listen for changes to the hero collection
       store
-        .select(ENTITY_CACHE_NAME, 'Hero')
+        .select<HeroCollection>(ENTITY_CACHE_NAME, 'Hero')
         .subscribe((c: HeroCollection) => (collection = c));
     });
 
@@ -117,8 +121,8 @@ describe('EntitySelectors$', () => {
       );
       let selectorCollection: EntityCollection<HeroCollection>;
       selectors$.collection$.subscribe(c => (selectorCollection = c));
-      expect(selectorCollection).toBeDefined('selector collection');
-      expect(selectorCollection.entities).toEqual({}, 'entities');
+      expect(selectorCollection!).toBeDefined('selector collection');
+      expect(selectorCollection!.entities).toEqual({}, 'entities');
 
       // Important: the selector is returning these values;
       // They are not actually in the store's entity cache collection!

@@ -30,7 +30,7 @@ import { UpdateResponseData } from '../actions/update-response-data';
 export interface EntityCollectionReducerMethodMap<T> {
   [method: string]: (
     collection: EntityCollection<T>,
-    action?: EntityAction
+    action: EntityAction
   ) => EntityCollection<T>;
 }
 
@@ -39,12 +39,18 @@ export interface EntityCollectionReducerMethodMap<T> {
  */
 export class EntityCollectionReducerMethods<T> {
   protected adapter: EntityAdapter<T>;
-  protected guard: EntityActionGuard;
+  protected guard: EntityActionGuard<T>;
   /** True if this collection tracks unsaved changes */
   protected isChangeTracking: boolean;
 
   /** Extract the primary key (id); default to `id` */
   selectId: IdSelector<T>;
+
+  /**
+   * Track changes to entities since the last query or save
+   * Can revert some or all of those changes
+   */
+  entityChangeTracker: EntityChangeTracker<T>;
 
   /**
    * Convert an entity (or partial entity) into the `Update<T>` object
@@ -149,7 +155,7 @@ export class EntityCollectionReducerMethods<T> {
      * Track changes to entities since the last query or save
      * Can revert some or all of those changes
      */
-    public entityChangeTracker?: EntityChangeTracker<T>
+    entityChangeTracker?: EntityChangeTracker<T>
   ) {
     this.adapter = definition.entityAdapter;
     this.isChangeTracking = definition.noChangeTracking !== true;
@@ -158,12 +164,9 @@ export class EntityCollectionReducerMethods<T> {
     this.guard = new EntityActionGuard(entityName, this.selectId);
     this.toUpdate = toUpdateFactory(this.selectId);
 
-    if (!entityChangeTracker) {
-      this.entityChangeTracker = new EntityChangeTrackerBase<T>(
-        this.adapter,
-        this.selectId
-      );
-    }
+    this.entityChangeTracker =
+      entityChangeTracker ||
+      new EntityChangeTrackerBase<T>(this.adapter, this.selectId);
   }
 
   /** Cancel a persistence operation */
@@ -315,7 +318,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T[]>
   ): EntityCollection<T> {
     if (this.isOptimistic(action)) {
-      const entities = this.guard.mustBeEntities<T>(action); // ensure the entity has a PK
+      const entities = this.guard.mustBeEntities(action); // ensure the entity has a PK
       const mergeStrategy = this.extractMergeStrategy(action);
       collection = this.entityChangeTracker.trackAddMany(
         entities,
@@ -363,7 +366,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T[]>
   ) {
     // For pessimistic save, ensure the server generated the primary key if the client didn't send one.
-    const entities = this.guard.mustBeEntities<T>(action);
+    const entities = this.guard.mustBeEntities(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     if (this.isOptimistic(action)) {
       collection = this.entityChangeTracker.mergeSaveUpserts(
@@ -397,7 +400,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T>
   ): EntityCollection<T> {
     if (this.isOptimistic(action)) {
-      const entity = this.guard.mustBeEntity<T>(action); // ensure the entity has a PK
+      const entity = this.guard.mustBeEntity(action); // ensure the entity has a PK
       const mergeStrategy = this.extractMergeStrategy(action);
       collection = this.entityChangeTracker.trackAddOne(
         entity,
@@ -438,7 +441,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T>
   ) {
     // For pessimistic save, ensure the server generated the primary key if the client didn't send one.
-    const entity = this.guard.mustBeEntity<T>(action);
+    const entity = this.guard.mustBeEntity(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     if (this.isOptimistic(action)) {
       const update: UpdateResponseData<T> = this.toUpdate(entity);
@@ -482,7 +485,9 @@ export class EntityCollectionReducerMethods<T> {
   ): EntityCollection<T> {
     const toDelete = this.extractData(action);
     const deleteId =
-      typeof toDelete === 'object' ? this.selectId(toDelete) : toDelete;
+      typeof toDelete === 'object'
+        ? this.selectId(toDelete)
+        : (toDelete as string | number);
     const change = collection.changeState[deleteId];
     // If entity is already tracked ...
     if (change) {
@@ -574,7 +579,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<(number | string | T)[]>
   ): EntityCollection<T> {
     const deleteIds = this.extractData(action).map(
-      d => (typeof d === 'object' ? this.selectId(d) : d)
+      d => (typeof d === 'object' ? this.selectId(d) : (d as string | number))
     );
     deleteIds.forEach(deleteId => {
       const change = collection.changeState[deleteId];
@@ -662,7 +667,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<Update<T>>
   ): EntityCollection<T> {
-    const update = this.guard.mustBeUpdate<T>(action);
+    const update = this.guard.mustBeUpdate(action);
     if (this.isOptimistic(action)) {
       const mergeStrategy = this.extractMergeStrategy(action);
       collection = this.entityChangeTracker.trackUpdateOne(
@@ -708,7 +713,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<UpdateResponseData<T>>
   ): EntityCollection<T> {
-    const update = this.guard.mustBeUpdateResponse<T>(action);
+    const update = this.guard.mustBeUpdateResponse(action);
     const isOptimistic = this.isOptimistic(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.mergeSaveUpdates(
@@ -734,7 +739,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<Update<T>[]>
   ): EntityCollection<T> {
-    const updates = this.guard.mustBeUpdates<T>(action);
+    const updates = this.guard.mustBeUpdates(action);
     if (this.isOptimistic(action)) {
       const mergeStrategy = this.extractMergeStrategy(action);
       collection = this.entityChangeTracker.trackUpdateMany(
@@ -780,7 +785,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<UpdateResponseData<T>[]>
   ): EntityCollection<T> {
-    const updates = this.guard.mustBeUpdateResponses<T>(action);
+    const updates = this.guard.mustBeUpdateResponses(action);
     const isOptimistic = this.isOptimistic(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.mergeSaveUpdates(
@@ -808,7 +813,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T>
   ): EntityCollection<T> {
     if (this.isOptimistic(action)) {
-      const entity = this.guard.mustBeEntity<T>(action); // ensure the entity has a PK
+      const entity = this.guard.mustBeEntity(action); // ensure the entity has a PK
       const mergeStrategy = this.extractMergeStrategy(action);
       collection = this.entityChangeTracker.trackUpsertOne(
         entity,
@@ -849,7 +854,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T>
   ) {
     // For pessimistic save, ensure the server generated the primary key if the client didn't send one.
-    const entity = this.guard.mustBeEntity<T>(action);
+    const entity = this.guard.mustBeEntity(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     // Always update the cache with upserted entities returned from server
     collection = this.entityChangeTracker.mergeSaveUpserts(
@@ -876,7 +881,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T[]>
   ): EntityCollection<T> {
     if (this.isOptimistic(action)) {
-      const entities = this.guard.mustBeEntities<T>(action); // ensure the entity has a PK
+      const entities = this.guard.mustBeEntities(action); // ensure the entity has a PK
       const mergeStrategy = this.extractMergeStrategy(action);
       collection = this.entityChangeTracker.trackUpsertMany(
         entities,
@@ -917,7 +922,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<T[]>
   ) {
     // For pessimistic save, ensure the server generated the primary key if the client didn't send one.
-    const entities = this.guard.mustBeEntities<T>(action);
+    const entities = this.guard.mustBeEntities(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     // Always update the cache with upserted entities returned from server
     collection = this.entityChangeTracker.mergeSaveUpserts(
@@ -942,7 +947,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<T[]>
   ): EntityCollection<T> {
-    const entities = this.guard.mustBeEntities<T>(action);
+    const entities = this.guard.mustBeEntities(action);
     return {
       ...this.adapter.addAll(entities, collection),
       loading: false,
@@ -955,7 +960,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<T[]>
   ): EntityCollection<T> {
-    const entities = this.guard.mustBeEntities<T>(action);
+    const entities = this.guard.mustBeEntities(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.trackAddMany(
       entities,
@@ -969,7 +974,7 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<T>
   ): EntityCollection<T> {
-    const entity = this.guard.mustBeEntity<T>(action);
+    const entity = this.guard.mustBeEntity(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.trackAddOne(
       entity,
@@ -1026,7 +1031,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<Update<T>[]>
   ): EntityCollection<T> {
     // payload must be an array of `Updates<T>`, not entities
-    const updates = this.guard.mustBeUpdates<T>(action);
+    const updates = this.guard.mustBeUpdates(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.trackUpdateMany(
       updates,
@@ -1041,7 +1046,7 @@ export class EntityCollectionReducerMethods<T> {
     action: EntityAction<Update<T>>
   ): EntityCollection<T> {
     // payload must be an `Update<T>`, not an entity
-    const update = this.guard.mustBeUpdate<T>(action);
+    const update = this.guard.mustBeUpdate(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.trackUpdateOne(
       update,
@@ -1057,7 +1062,7 @@ export class EntityCollectionReducerMethods<T> {
   ): EntityCollection<T> {
     // <v6: payload must be an array of `Updates<T>`, not entities
     // v6+: payload must be an array of T
-    const entities = this.guard.mustBeEntities<T>(action);
+    const entities = this.guard.mustBeEntities(action);
     const mergeStrategy = this.extractMergeStrategy(action);
     collection = this.entityChangeTracker.trackUpsertMany(
       entities,
@@ -1203,7 +1208,7 @@ export class EntityCollectionReducerMethods<T> {
   // #region helpers
   /** Safely extract data from the EntityAction payload */
   protected extractData<D = any>(action: EntityAction<D>): D {
-    return action.payload && action.payload.data;
+    return (action.payload && action.payload.data) as D;
   }
 
   /** Safely extract MergeStrategy from EntityAction. Set to IgnoreChanges if collection itself is not tracked. */

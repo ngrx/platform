@@ -103,7 +103,7 @@ describe('EntityActionFactory', () => {
 
   it('#createFromAction should create EntityAction from another EntityAction', () => {
     // pessimistic save
-    const hero1: Hero = { id: undefined, name: 'Francis' };
+    const hero1: Hero = { id: undefined as any, name: 'Francis' };
     const action1 = factory.create('Hero', EntityOp.SAVE_ADD_ONE, hero1);
 
     // after save succeeds
@@ -201,12 +201,12 @@ describe('EntityActionFactory', () => {
   });
 
   it('should throw if do not specify entityName', () => {
-    expect(() => factory.create(null)).toThrow();
+    expect(() => factory.create(null as any)).toThrow();
   });
 
   it('should throw if do not specify EntityOp', () => {
     expect(() =>
-      factory.create({ entityName: 'Hero', entityOp: null })
+      factory.create({ entityName: 'Hero', entityOp: null as any })
     ).toThrow();
   });
 });

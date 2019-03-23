@@ -33,7 +33,7 @@ import { UpdateResponseData } from '../actions/update-response-data';
  */
 export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   /** Utility class with methods to validate EntityAction payloads.*/
-  guard: EntityActionGuard;
+  guard: EntityActionGuard<T>;
 
   private entityCollection$: Observable<EntityCollection<T>>;
 
@@ -331,7 +331,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   update(entity: Partial<T>, options?: EntityActionOptions): Observable<T> {
     // update entity might be a partial of T but must at least have its key.
     // pass the Update<T> structure as the payload
-    const update: Update<T> = this.toUpdate(entity);
+    const update = this.toUpdate(entity);
     options = this.setSaveEntityActionOptions(
       options,
       this.defaultDispatcherOptions.optimisticUpdate
@@ -342,7 +342,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       options
     );
     if (options.isOptimistic) {
-      this.guard.mustBeEntity(action);
+      this.guard.mustBeEntity(action as EntityAction);
     }
     this.dispatch(action);
     return this.getResponseData$<UpdateResponseData<T>>(
@@ -559,7 +559,9 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
 
   /** Get key from entity (unless arg is already a key) */
   private getKey(arg: number | string | T) {
-    return typeof arg === 'object' ? this.selectId(arg) : arg;
+    return typeof arg === 'object'
+      ? this.selectId(arg)
+      : (arg as number | string);
   }
 
   /**
@@ -599,7 +601,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   }
 
   private setQueryEntityActionOptions(
-    options: EntityActionOptions
+    options?: EntityActionOptions
   ): EntityActionOptions {
     options = options || {};
     const correlationId =
@@ -610,8 +612,8 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   }
 
   private setSaveEntityActionOptions(
-    options: EntityActionOptions,
-    defaultOptimism: boolean
+    options?: EntityActionOptions,
+    defaultOptimism?: boolean
   ): EntityActionOptions {
     options = options || {};
     const correlationId =
