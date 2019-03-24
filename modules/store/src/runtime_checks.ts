@@ -17,16 +17,7 @@ export function createActiveRuntimeChecks(
   if (isDevMode()) {
     if (runtimeChecks === undefined) {
       console.warn(
-        '@ngrx/store: we added immutability and serializability runtime checks in @ngrx/store.\n' +
-          'These checks are currently opt-in but will be the default in the next major version.\n' +
-          'To enable these checks, add the following config while registering the store module.\n\n' +
-          'StoreModule.forRoot(reducers, {\n' +
-          ' runtimeChecks: {\n' +
-          '   strictStateSerializability: true,\n' +
-          '   strictActionSerializability: true,\n' +
-          '   strictImmutability: true,\n' +
-          ' }\n' +
-          '})'
+        '@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version, see https://ngrx.io/guide/migration/v8 for more information.'
       );
     }
     return {
