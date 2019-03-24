@@ -10,11 +10,11 @@ ng_module(
     ]),
     module_name = "@ngrx/data",
     deps = [
-        "//modules/store",
         "//modules/effects",
         "//modules/entity",
-        "@angular//packages/core",
+        "//modules/store",
         "@angular//packages/common/http",
+        "@angular//packages/core",
         "@rxjs",
     ],
 )
