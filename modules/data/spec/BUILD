@@ -9,14 +9,14 @@ ts_test_library(
     ),
     deps = [
         "//modules/data",
-        "//modules/store",
         "//modules/effects",
         "//modules/effects/testing",
         "//modules/entity",
-        "@rxjs",
-        "@rxjs//operators",
+        "//modules/store",
         "@angular//packages/common/http",
         "@angular//packages/common/http/testing",
+        "@rxjs",
+        "@rxjs//operators",
     ],
 )
 
@@ -25,8 +25,8 @@ jasmine_node_test(
     deps = [
         ":test_lib",
         "//modules/data",
-        "//modules/store",
         "//modules/effects",
         "//modules/entity",
+        "//modules/store",
     ],
 )
