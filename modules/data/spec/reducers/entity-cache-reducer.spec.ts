@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Action, ActionReducer } from '@ngrx/store';
+import { IdSelector } from '@ngrx/entity';
 
 import {
   EntityMetadataMap,
@@ -26,7 +27,6 @@ import {
   EntityCollection,
   ChangeSet,
   ChangeSetOperation,
-  IdSelector,
   Logger,
   EntityMetadata,
 } from '../..';

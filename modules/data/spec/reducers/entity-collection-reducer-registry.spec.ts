@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Action, ActionReducer, MetaReducer } from '@ngrx/store';
+import { IdSelector } from '@ngrx/entity';
 
 import {
   EntityMetadataMap,
@@ -18,7 +19,6 @@ import {
   EntityAction,
   ENTITY_COLLECTION_META_REDUCERS,
   Logger,
-  IdSelector,
 } from '../..';
 
 class Bar {

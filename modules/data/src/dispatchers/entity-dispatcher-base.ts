@@ -1,4 +1,5 @@
 import { Action, createSelector, select, Store } from '@ngrx/store';
+import { IdSelector, Update } from '@ngrx/entity';
 
 import { Observable, of, throwError } from 'rxjs';
 import {
@@ -22,7 +23,6 @@ import { EntityCommands } from './entity-commands';
 import { EntityDispatcher, PersistanceCanceled } from './entity-dispatcher';
 import { EntityDispatcherDefaultOptions } from './entity-dispatcher-default-options';
 import { EntityOp, OP_ERROR, OP_SUCCESS } from '../actions/entity-op';
-import { IdSelector, Update } from '../utils/ngrx-entity-models';
 import { MergeStrategy } from '../actions/merge-strategy';
 import { QueryParams } from '../dataservices/interfaces';
 import { UpdateResponseData } from '../actions/update-response-data';
@@ -353,7 +353,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // because the id changed or there are unsaved changes.
       map(updateData => updateData.changes),
       withLatestFrom(this.entityCollection$),
-      map(([e, collection]) => collection.entities[this.selectId(e)]),
+      map(([e, collection]) => collection.entities[this.selectId(e as T)]),
       shareReplay(1)
     );
   }

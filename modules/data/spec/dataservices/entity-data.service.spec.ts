@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import { Update } from '@ngrx/entity';
+
 import {
   createEntityDefinition,
   EntityDefinition,
@@ -17,8 +19,8 @@ import {
   EntityDataService,
   EntityCollectionDataService,
   QueryParams,
-  Update,
 } from '../../';
+
 // region Test Helpers
 ///// Test Helpers /////
 

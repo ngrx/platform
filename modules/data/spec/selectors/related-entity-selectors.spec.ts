@@ -7,6 +7,7 @@ import {
   Store,
 } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
+import { Update } from '@ngrx/entity';
 
 import { Observable, Subject } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -20,7 +21,6 @@ import {
   ENTITY_METADATA_TOKEN,
   EntityOp,
   EntityAction,
-  Update,
 } from '../../';
 
 const entityMetadataMap: EntityMetadataMap = {

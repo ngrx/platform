@@ -66,7 +66,7 @@ describe('EntityDefinition', () => {
 
     it('creates default `selectId` on the definition when no metadata.selectId', () => {
       const def = createEntityDefinition(heroMetadata);
-      expect(def.selectId({ id: 42 })).toBe(42);
+      expect(def.selectId({ id: 42 } as Hero)).toBe(42);
     });
 
     it('creates expected `selectId` on the definition when  metadata.selectId exists', () => {
