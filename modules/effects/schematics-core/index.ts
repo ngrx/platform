@@ -15,6 +15,7 @@ export {
   getDecoratorMetadata,
   getContentOfKeyLiteral,
   insertAfterLastOccurrence,
+  insertImport,
   addBootstrapToModule,
   addDeclarationToModule,
   addExportToModule,
@@ -49,7 +50,6 @@ export {
 } from './utility/ngrx-utils';
 
 export { getProjectPath, getProject, isLib } from './utility/project';
-export { insertImport } from './utility/route-utils';
 
 export const stringUtils = {
   dasherize,
