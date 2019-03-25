@@ -1,11 +1,11 @@
 import { Action, Store } from '@ngrx/store';
+import { IdSelector, Update } from '@ngrx/entity';
 
 import { EntityAction, EntityActionOptions } from '../actions/entity-action';
 import { EntityActionGuard } from '../actions/entity-action-guard';
 import { EntityCommands } from './entity-commands';
 import { EntityCache } from '../reducers/entity-cache';
 import { EntityOp } from '../actions/entity-op';
-import { IdSelector, Update } from '../utils/ngrx-entity-models';
 
 /**
  * Dispatches EntityCollection actions to their reducers and effects.

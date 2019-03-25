@@ -1,4 +1,10 @@
-import { EntityAdapter, EntityState } from '@ngrx/entity';
+import {
+  EntityAdapter,
+  EntityState,
+  Dictionary,
+  IdSelector,
+  Update,
+} from '@ngrx/entity';
 
 import {
   ChangeState,
@@ -7,7 +13,6 @@ import {
   EntityCollection,
 } from './entity-collection';
 import { defaultSelectId } from '../utils/utilities';
-import { Dictionary, IdSelector, Update } from '../utils/ngrx-entity-models';
 import { EntityAction, EntityActionOptions } from '../actions/entity-action';
 import { EntityChangeTracker } from './entity-change-tracker';
 import { MergeStrategy } from '../actions/merge-strategy';
@@ -223,7 +228,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               chgState = { ...chgState };
               didMutate = true;
             }
-            const newId = this.selectId(update.changes);
+            const newId = this.selectId(update.changes as T);
             const oldChangeState = chgState[oldId];
             // If the server changed the id, register the new "originalValue" under the new id
             // and remove the change tracked under the old id.

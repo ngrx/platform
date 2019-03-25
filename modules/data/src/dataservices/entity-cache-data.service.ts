@@ -8,6 +8,8 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError, delay, map, timeout } from 'rxjs/operators';
 
+import { IdSelector } from '@ngrx/entity';
+
 import {
   ChangeSetOperation,
   ChangeSet,
@@ -18,7 +20,6 @@ import {
 import { DataServiceError } from './data-service-error';
 import { DefaultDataServiceConfig } from './default-data-service-config';
 import { EntityDefinitionService } from '../entity-metadata/entity-definition.service';
-import { IdSelector } from '../utils/ngrx-entity-models';
 import { RequestData } from './interfaces';
 
 const updateOp = ChangeSetOperation.Update;

@@ -1,7 +1,7 @@
 // EntityCollectionReducer tests - tests of reducers for entity collections in the entity cache
 // Tests for EntityCache-level reducers (e.g., SET_ENTITY_CACHE) are in `entity-cache-reducer.spec.ts`
 import { Action } from '@ngrx/store';
-import { EntityAdapter, Update } from '@ngrx/entity';
+import { EntityAdapter, Update, IdSelector } from '@ngrx/entity';
 
 import {
   EntityMetadataMap,
@@ -23,7 +23,6 @@ import {
   DataServiceError,
   ChangeType,
   ChangeState,
-  IdSelector,
   Logger,
 } from '../../';
 

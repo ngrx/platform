@@ -8,6 +8,8 @@ import {
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, delay, map, tap, timeout } from 'rxjs/operators';
 
+import { Update } from '@ngrx/entity';
+
 import { DataServiceError } from './data-service-error';
 import { DefaultDataServiceConfig } from './default-data-service-config';
 import {
@@ -17,7 +19,6 @@ import {
   RequestData,
 } from './interfaces';
 import { HttpUrlGenerator } from './http-url-generator';
-import { Update } from '../utils/ngrx-entity-models';
 
 /**
  * A basic, generic entity data service

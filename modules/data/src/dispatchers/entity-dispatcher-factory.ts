@@ -1,5 +1,6 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Action, Store, ScannedActionsSubject } from '@ngrx/store';
+import { IdSelector, Update } from '@ngrx/entity';
 import { Observable, Subscription } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
@@ -17,7 +18,6 @@ import {
 import { EntityDispatcher } from './entity-dispatcher';
 import { EntityDispatcherBase } from './entity-dispatcher-base';
 import { EntityOp } from '../actions/entity-op';
-import { IdSelector, Update } from '../utils/ngrx-entity-models';
 import { QueryParams } from '../dataservices/interfaces';
 
 /** Creates EntityDispatchers for entity collections */

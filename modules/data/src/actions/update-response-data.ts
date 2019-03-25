@@ -1,4 +1,3 @@
-// import { Update } from '../utils/ngrx-entity-models'; // sorry ... interface cannot extend a type
 /**
  * Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS.
  * Effectively extends Update<T> with a 'changed' flag.

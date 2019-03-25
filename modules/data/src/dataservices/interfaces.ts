@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Update } from '../utils/ngrx-entity-models';
+import { Update } from '@ngrx/entity';
 
 /** A service that performs REST-like HTTP data operations for an entity collection */
 export interface EntityCollectionDataService<T> {
