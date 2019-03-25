@@ -7,11 +7,11 @@ import {
   Store,
 } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
+import { Dictionary } from '@ngrx/entity';
 
 import { Observable } from 'rxjs';
 import { filter, shareReplay } from 'rxjs/operators';
 
-import { Dictionary } from '../utils/ngrx-entity-models';
 import { EntityAction } from '../actions/entity-action';
 import { OP_ERROR } from '../actions/entity-op';
 import { ofEntityType } from '../actions/entity-action-operators';

@@ -5,6 +5,7 @@ import { cold, hot, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of, Subject } from 'rxjs';
 
 import { Actions } from '@ngrx/effects';
+import { Update } from '@ngrx/entity';
 import { provideMockActions } from '@ngrx/effects/testing';
 import {
   EntityEffects,
@@ -19,7 +20,6 @@ import {
   makeErrorOp,
   EntityActionDataServiceError,
   Logger,
-  Update,
 } from '../..';
 import { ENTITY_EFFECTS_SCHEDULER } from '../../src/effects/entity-effects-scheduler';
 

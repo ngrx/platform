@@ -8,6 +8,8 @@ import {
 
 import { of } from 'rxjs';
 
+import { Update } from '@ngrx/entity';
+
 import {
   DefaultDataService,
   DefaultDataServiceFactory,
@@ -16,7 +18,6 @@ import {
   HttpUrlGenerator,
   DefaultDataServiceConfig,
   DataServiceError,
-  Update,
 } from '../../';
 
 class Hero {

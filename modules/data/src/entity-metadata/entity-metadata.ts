@@ -1,7 +1,9 @@
 import { InjectionToken } from '@angular/core';
+
+import { IdSelector, Comparer } from '@ngrx/entity';
+
 import { EntityDispatcherDefaultOptions } from '../dispatchers/entity-dispatcher-default-options';
 import { EntityFilterFn } from './entity-filters';
-import { IdSelector, Comparer } from '../utils/ngrx-entity-models';
 
 export const ENTITY_METADATA_TOKEN = new InjectionToken<EntityMetadataMap>(
   '@ngrx/data/entity-metadata'

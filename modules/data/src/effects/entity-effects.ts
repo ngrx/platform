@@ -1,6 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
+import { Update } from '@ngrx/entity';
 
 import { asyncScheduler, Observable, of, race, SchedulerLike } from 'rxjs';
 import {
@@ -17,7 +18,6 @@ import { EntityActionFactory } from '../actions/entity-action-factory';
 import { ENTITY_EFFECTS_SCHEDULER } from './entity-effects-scheduler';
 import { EntityOp, makeSuccessOp } from '../actions/entity-op';
 import { ofEntityOp } from '../actions/entity-action-operators';
-import { Update } from '../utils/ngrx-entity-models';
 import { UpdateResponseData } from '../actions/update-response-data';
 
 import { EntityDataService } from '../dataservices/entity-data.service';

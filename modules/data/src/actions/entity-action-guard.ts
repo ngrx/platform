@@ -1,5 +1,6 @@
+import { IdSelector, Update } from '@ngrx/entity';
+
 import { EntityAction } from './entity-action';
-import { IdSelector, Update } from '../utils/ngrx-entity-models';
 import { UpdateResponseData } from '../actions/update-response-data';
 
 /**
@@ -74,7 +75,7 @@ export class EntityActionGuard<T> {
       return this.throwError(action, `should be a single entity update`);
     }
     const { id, changes } = data;
-    const id2 = this.selectId(changes);
+    const id2 = this.selectId(changes as T);
     if (this.isNotKeyType(id) || this.isNotKeyType(id2)) {
       this.throwError(action, `has a missing or invalid entity key (id)`);
     }
@@ -89,7 +90,7 @@ export class EntityActionGuard<T> {
     }
     data.forEach((item, i) => {
       const { id, changes } = item;
-      const id2 = this.selectId(changes);
+      const id2 = this.selectId(changes as T);
       if (this.isNotKeyType(id) || this.isNotKeyType(id2)) {
         this.throwError(
           action,
@@ -109,7 +110,7 @@ export class EntityActionGuard<T> {
       return this.throwError(action, `should be a single entity update`);
     }
     const { id, changes } = data;
-    const id2 = this.selectId(changes);
+    const id2 = this.selectId(changes as T);
     if (this.isNotKeyType(id) || this.isNotKeyType(id2)) {
       this.throwError(action, `has a missing or invalid entity key (id)`);
     }
@@ -126,7 +127,7 @@ export class EntityActionGuard<T> {
     }
     data.forEach((item, i) => {
       const { id, changes } = item;
-      const id2 = this.selectId(changes);
+      const id2 = this.selectId(changes as T);
       if (this.isNotKeyType(id) || this.isNotKeyType(id2)) {
         this.throwError(
           action,

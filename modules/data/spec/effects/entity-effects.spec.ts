@@ -2,6 +2,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
+import { Update } from '@ngrx/entity';
 
 import { Observable, of, merge, ReplaySubject, throwError, timer } from 'rxjs';
 import { delay, first, mergeMap } from 'rxjs/operators';
@@ -19,7 +20,6 @@ import {
   makeErrorOp,
   EntityActionDataServiceError,
   Logger,
-  Update,
 } from '../..';
 
 describe('EntityEffects (normal testing)', () => {

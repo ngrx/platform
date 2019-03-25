@@ -1,5 +1,4 @@
-import { EntityState } from '@ngrx/entity';
-import { Dictionary } from '../utils/ngrx-entity-models';
+import { EntityState, Dictionary } from '@ngrx/entity';
 
 /** Types of change in a ChangeState instance */
 export enum ChangeType {

@@ -71,7 +71,6 @@ export * from './utils/default-logger';
 export * from './utils/default-pluralizer';
 export * from './utils/guid-fns';
 export * from './utils/interfaces';
-export * from './utils/ngrx-entity-models'; // should be exported by @ngrx/entity
 export * from './utils/utilities';
 
 // NgrxDataModule

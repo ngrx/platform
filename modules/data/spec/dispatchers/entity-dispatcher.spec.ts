@@ -1,4 +1,6 @@
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
 import { Subject } from 'rxjs';
 
 import {
@@ -11,7 +13,6 @@ import {
   EntityDispatcher,
   EntityAction,
   EntityOp,
-  Update,
   MergeStrategy,
 } from '../..';
 
