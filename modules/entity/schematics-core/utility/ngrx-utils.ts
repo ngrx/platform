@@ -4,8 +4,7 @@ import { InsertChange, Change, NoopChange } from './change';
 import { Tree, SchematicsException, Rule } from '@angular-devkit/schematics';
 import { normalize } from '@angular-devkit/core';
 import { buildRelativePath } from './find-module';
-import { insertImport } from './route-utils';
-import { addImportToModule } from './ast-utils';
+import { addImportToModule, insertImport } from './ast-utils';
 
 export function addReducerToState(options: any): Rule {
   return (host: Tree) => {
