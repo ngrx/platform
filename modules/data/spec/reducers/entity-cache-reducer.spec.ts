@@ -45,7 +45,7 @@ const metadata: EntityMetadataMap = {
   Fool: {},
   Hero: {},
   Knave: {},
-  Villain: { selectId: (villain: Partial<Villain>) => villain.key! },
+  Villain: { selectId: villain => villain.key },
 };
 
 describe('EntityCacheReducer', () => {

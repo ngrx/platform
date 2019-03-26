@@ -42,7 +42,7 @@ class Villain {
 
 const metadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: (villain: Partial<Villain>) => villain.key! },
+  Villain: { selectId: villain => villain.key },
 };
 
 describe('EntityCollectionReducer', () => {
