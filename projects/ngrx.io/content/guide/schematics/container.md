@@ -42,3 +42,13 @@ Generate a `UsersPage` container component with your reducers imported and the `
 ```sh
 ng generate container UsersPage --state reducers/index.ts --stateInterface MyState
 ```
+
+If you want to generate a container with an scss file, add `@ngrx/schematics:container` to the `schematics` in your `angular.json`.
+
+```json
+"schematics": {
+  "@ngrx/schematics:container": {
+    "styleext": "scss"
+  }
+}
+```
