@@ -46,8 +46,10 @@ export function getSourceForInstance<T>(instance: T): T {
 
 export function getEffectsFunctions<T>(instance: T): Array<EffectMetadata<T>> {
   return (Object.getOwnPropertyNames(instance) as Extract<keyof T, string>[])
-    .filter(propertyName =>
-      instance[propertyName].hasOwnProperty(METADATA_FUNCTION_KEY)
+    .filter(
+      propertyName =>
+        instance[propertyName] &&
+        instance[propertyName].hasOwnProperty(METADATA_FUNCTION_KEY)
     )
     .map(propertyName => ({
       propertyName,
