@@ -7,7 +7,7 @@ import {
 } from '../src/effects_metadata';
 import { of } from 'rxjs';
 
-describe('Effect Metadata', () => {
+describe('@Effect() Metadata', () => {
   describe('getSourceProto', () => {
     it('should get the prototype for an instance of a source', () => {
       class Fixture {}
@@ -83,7 +83,7 @@ describe('Effect Metadata', () => {
   });
 });
 
-describe('Effect Function Metadata', () => {
+describe('createEffect() Metadata', () => {
   describe('getSourceMetadata', () => {
     it('should get the effects metadata for a class instance', () => {
       class Fixture {
