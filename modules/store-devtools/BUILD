@@ -11,7 +11,8 @@ ng_module(
     module_name = "@ngrx/store-devtools",
     deps = [
         "//modules/store",
-        "@rxjs",
+        "@npm//@angular/core",
+        "@npm//rxjs",
     ],
 )
 

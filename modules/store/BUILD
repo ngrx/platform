@@ -10,8 +10,8 @@ ng_module(
     ]),
     module_name = "@ngrx/store",
     deps = [
-        "@angular//packages/core",
-        "@rxjs",
+        "@npm//@angular/core",
+        "@npm//rxjs",
     ],
 )
 

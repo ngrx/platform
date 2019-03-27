@@ -11,8 +11,8 @@ ng_module(
     module_name = "@ngrx/router-store",
     deps = [
         "//modules/store",
-        "@angular//packages/router",
-        "@rxjs",
+        "@npm//@angular/router",
+        "@npm//rxjs",
     ],
 )
 
