@@ -67,6 +67,8 @@ def jasmine_node_test(node_modules = None, bootstrap = None, deps = [], **kwargs
         bootstrap = bootstrap,
         deps = [
             "//tools/testing:node",
+            # Needed since our bootstrap script above loads platform-server which deps on http
+            "@npm//@angular/http",
             # Very common dependencies for tests
             "@npm//chokidar",
             "@npm//core-js",
