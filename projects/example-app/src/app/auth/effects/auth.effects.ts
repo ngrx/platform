@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { Actions, ofType, effect } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import {
@@ -15,7 +15,7 @@ import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/
 
 @Injectable()
 export class AuthEffects {
-  login$ = effect(() =>
+  login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.LoginPageActionTypes.Login),
       map(action => action.payload.credentials),
@@ -28,7 +28,7 @@ export class AuthEffects {
     )
   );
 
-  loginSuccess$ = effect(
+  loginSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthApiActions.AuthApiActionTypes.LoginSuccess),
@@ -37,7 +37,7 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  loginRedirect$ = effect(
+  loginRedirect$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(
@@ -51,7 +51,7 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  logoutConfirmation$ = effect(() =>
+  logoutConfirmation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.AuthActionTypes.LogoutConfirmation),
       exhaustMap(() => {

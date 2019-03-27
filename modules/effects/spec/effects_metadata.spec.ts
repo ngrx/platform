@@ -3,7 +3,7 @@ import {
   getEffectsMetadata,
   getSourceMetadata,
   getSourceForInstance,
-  effect,
+  createEffect,
 } from '../src/effects_metadata';
 import { of } from 'rxjs';
 
@@ -87,9 +87,9 @@ describe('Effect Function Metadata', () => {
   describe('getSourceMetadata', () => {
     it('should get the effects metadata for a class instance', () => {
       class Fixture {
-        a = effect(() => of({ type: 'a' }));
-        b = effect(() => of({ type: 'b' }));
-        c = effect(() => of({ type: 'c' }), { dispatch: false });
+        a = createEffect(() => of({ type: 'a' }));
+        b = createEffect(() => of({ type: 'b' }));
+        c = createEffect(() => of({ type: 'c' }), { dispatch: false });
       }
 
       const mock = new Fixture();
@@ -101,12 +101,12 @@ describe('Effect Function Metadata', () => {
       ]);
     });
 
-    it('should return an empty array if the class has not been created with effect()', () => {
-      const mockEffect: any = () => {};
+    it('should return an empty array if the class has not been created with createEffect()', () => {
+      const fakeCreateEffect: any = () => {};
       class Fixture {
-        a = mockEffect(() => of({ type: 'A' }));
-        b = mockEffect(() => of({ type: 'B' }));
-        c = mockEffect(() => {}, { dispatch: false });
+        a = fakeCreateEffect(() => of({ type: 'A' }));
+        b = fakeCreateEffect(() => of({ type: 'B' }));
+        c = fakeCreateEffect(() => {}, { dispatch: false });
       }
 
       const mock = new Fixture();
@@ -118,9 +118,9 @@ describe('Effect Function Metadata', () => {
   describe('getEffectsMetadata', () => {
     it('should get map of metadata for all decorated effects in a class instance', () => {
       class Fixture {
-        a = effect(() => of({ type: 'a' }));
-        b = effect(() => of({ type: 'b' }), { dispatch: true });
-        c = effect(() => of({ type: 'c' }), { dispatch: false });
+        a = createEffect(() => of({ type: 'a' }));
+        b = createEffect(() => of({ type: 'b' }), { dispatch: true });
+        c = createEffect(() => of({ type: 'c' }), { dispatch: false });
       }
 
       const mock = new Fixture();
@@ -132,12 +132,12 @@ describe('Effect Function Metadata', () => {
       });
     });
 
-    it('should return an empty map if the class has not been created with effect()', () => {
-      const mockEffect: any = () => {};
+    it('should return an empty map if the class has not been created with createEffect()', () => {
+      const fakeCreateEffect: any = () => {};
       class Fixture {
-        a = mockEffect(() => of({ type: 'A' }));
-        b = mockEffect(() => of({ type: 'B' }));
-        c = mockEffect(() => {}, { dispatch: false });
+        a = fakeCreateEffect(() => of({ type: 'A' }));
+        b = fakeCreateEffect(() => of({ type: 'B' }));
+        c = fakeCreateEffect(() => {}, { dispatch: false });
       }
 
       const mock = new Fixture();

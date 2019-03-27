@@ -2,7 +2,7 @@ export {
   Effect,
   EffectsMetadata,
   getEffectsMetadata,
-  effect,
+  createEffect,
 } from './effects_metadata';
 export { mergeEffects } from './effects_resolver';
 export { Actions, ofType } from './actions';

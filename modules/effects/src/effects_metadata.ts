@@ -82,23 +82,23 @@ export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   return metadata;
 }
 
-export function effect<T extends Action>(
+export function createEffect<T extends Action>(
   source: (() => Observable<T>),
   options: { dispatch: false }
 ): Observable<T>;
-export function effect<T extends Action>(
+export function createEffect<T extends Action>(
   source: (() => (...args: any[]) => Observable<T>),
   options: { dispatch: false }
 ): ((...args: any[]) => Observable<T>);
-export function effect<T extends Action>(
+export function createEffect<T extends Action>(
   source: (() => Observable<T>),
   options?: { dispatch: true }
 ): Observable<T>;
-export function effect<T extends Action>(
+export function createEffect<T extends Action>(
   source: (() => (...args: any[]) => Observable<T>),
   options?: { dispatch: true }
 ): ((...args: any[]) => Observable<T>);
-export function effect<T extends Action>(
+export function createEffect<T extends Action>(
   source: (() => Observable<T>) | (() => (...args: any[]) => Observable<T>),
   { dispatch = true } = {}
 ): Observable<T> | ((...args: any[]) => Observable<T>) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, ofType, effect } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { asyncScheduler, EMPTY as empty, of } from 'rxjs';
 import {
   catchError,
@@ -30,7 +30,7 @@ import { Book } from '@example-app/books/models/book';
 
 @Injectable()
 export class BookEffects {
-  search$ = effect(
+  search$ = createEffect(
     () => ({ debounce = 300, scheduler = asyncScheduler } = {}) =>
       this.actions$.pipe(
         ofType(FindBookPageActions.FindBookPageActionTypes.SearchBooks),

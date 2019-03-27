@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Database } from '@ngrx/db';
-import { Actions, Effect, ofType, effect } from '@ngrx/effects';
+import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
 import { defer, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class CollectionEffects {
     return this.db.open('books_app');
   });
 
-  loadCollection$ = effect(() =>
+  loadCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CollectionPageActions.CollectionPageActionTypes.LoadCollection),
       switchMap(() =>
@@ -45,7 +45,7 @@ export class CollectionEffects {
     )
   );
 
-  addBookToCollection$ = effect(() =>
+  addBookToCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SelectedBookPageActions.SelectedBookPageActionTypes.AddBook),
       map(action => action.payload),
@@ -58,7 +58,7 @@ export class CollectionEffects {
     )
   );
 
-  removeBookFromCollection$ = effect(() =>
+  removeBookFromCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SelectedBookPageActions.SelectedBookPageActionTypes.RemoveBook),
       map(action => action.payload),
