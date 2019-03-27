@@ -34,7 +34,7 @@ http_archive(
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_repositories", "yarn_install")
 
-check_bazel_version("0.24.0")
+check_bazel_version(minimum_bazel_version = "0.24.0")
 
 node_repositories(
     node_version = "10.9.0",
@@ -61,7 +61,7 @@ browser_repositories(
     firefox = True,
 )
 
-load("@npm_bazel_typescript//:defs.bzl", "check_rules_typescript_version", "ts_setup_workspace")
+load("@npm_bazel_typescript//:defs.bzl", "ts_setup_workspace")
 
 ts_setup_workspace()
 

@@ -1,12 +1,12 @@
 """Re-export of some bazel rules with repository-wide defaults."""
 
-load("@npm_bazel_typescript//:defs.bzl", _ts_library = "ts_library")
-load("@npm_angular_bazel//:index.bzl", _ng_module = "ng_module", _ng_package = "ng_package")
 load(
     "@build_bazel_rules_nodejs//:defs.bzl",
     _jasmine_node_test = "jasmine_node_test",
     _npm_package = "npm_package",
 )
+load("@npm_angular_bazel//:index.bzl", _ng_module = "ng_module", _ng_package = "ng_package")
+load("@npm_bazel_typescript//:defs.bzl", _ts_library = "ts_library")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^7.0.0"
@@ -28,13 +28,13 @@ NGRX_GLOBALS = dict({
 }, **{p: p for p in NGRX_SCOPED_PACKAGES})
 
 PKG_GROUP_REPLACEMENTS = {
-    "NG_VERSION": NG_VERSION,
-    "RXJS_VERSION": RXJS_VERSION,
     "\"NG_UPDATE_PACKAGE_GROUP\"": """[
       %s
     ]""" % ",\n      ".join(["\"%s\"" % s for s in NGRX_SCOPED_PACKAGES]),
-    "NG_UPDATE_MIGRATIONS": NG_UPDATE_MIGRATIONS,
     "MODULE_SCHEMATICS_COLLECTION": MODULE_SCHEMATICS_COLLECTION,
+    "NG_UPDATE_MIGRATIONS": NG_UPDATE_MIGRATIONS,
+    "NG_VERSION": NG_VERSION,
+    "RXJS_VERSION": RXJS_VERSION,
 }
 
 def ts_library(tsconfig = None, node_modules = None, deps = [], **kwargs):
