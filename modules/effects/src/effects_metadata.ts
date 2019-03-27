@@ -58,7 +58,7 @@ export function getEffectsFunctions<T>(instance: T): Array<EffectMetadata<T>> {
 }
 
 export function getSourceMetadata<T>(instance: T): Array<EffectMetadata<T>> {
-  const effectsDecorators = compose(
+  const effectsDecorators: Array<EffectMetadata<T>> = compose(
     getEffectMetadataEntries,
     getSourceForInstance
   )(instance);
