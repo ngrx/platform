@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Database } from '@ngrx/db';
+import {
+  CollectionApiActions,
+  CollectionPageActions,
+  SelectedBookPageActions,
+} from '@example-app/books/actions';
+import { Book } from '@example-app/books/models/book';
+import { BookStorageService } from '@example-app/core/services/book-storage.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { defer, Observable, of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
-
-import { Book } from '@example-app/books/models/book';
-import {
-  SelectedBookPageActions,
-  CollectionPageActions,
-  CollectionApiActions,
-} from '@example-app/books/actions';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class CollectionEffects {
@@ -25,16 +24,15 @@ export class CollectionEffects {
    * effect easier to test.
    */
   @Effect({ dispatch: false })
-  openDB$: Observable<any> = defer(() => {
-    return this.db.open('books_app');
-  });
+  checkStorageSupport$: Observable<any> = defer(() =>
+    this.storageService.supported()
+  );
 
   @Effect()
   loadCollection$: Observable<Action> = this.actions$.pipe(
     ofType(CollectionPageActions.CollectionPageActionTypes.LoadCollection),
     switchMap(() =>
-      this.db.query('books').pipe(
-        toArray(),
+      this.storageService.getCollection().pipe(
         map(
           (books: Book[]) => new CollectionApiActions.LoadBooksSuccess(books)
         ),
@@ -50,7 +48,7 @@ export class CollectionEffects {
     ofType(SelectedBookPageActions.SelectedBookPageActionTypes.AddBook),
     map(action => action.payload),
     mergeMap(book =>
-      this.db.insert('books', [book]).pipe(
+      this.storageService.addToCollection([book]).pipe(
         map(() => new CollectionApiActions.AddBookSuccess(book)),
         catchError(() => of(new CollectionApiActions.AddBookFailure(book)))
       )
@@ -62,7 +60,7 @@ export class CollectionEffects {
     ofType(SelectedBookPageActions.SelectedBookPageActionTypes.RemoveBook),
     map(action => action.payload),
     mergeMap(book =>
-      this.db.executeWrite('books', 'delete', [book.id]).pipe(
+      this.storageService.removeFromCollection([book.id]).pipe(
         map(() => new CollectionApiActions.RemoveBookSuccess(book)),
         catchError(() => of(new CollectionApiActions.RemoveBookFailure(book)))
       )
@@ -73,6 +71,6 @@ export class CollectionEffects {
     private actions$: Actions<
       SelectedBookPageActions.SelectedBookPageActionsUnion
     >,
-    private db: Database
+    private storageService: BookStorageService
   ) {}
 }
