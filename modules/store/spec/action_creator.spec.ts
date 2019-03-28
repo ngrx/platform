@@ -28,6 +28,7 @@ describe('Action Creators', () => {
     it('should create an action', () => {
       const foo = createAction('FOO', (foo: number) => ({ foo }));
       const fooAction = foo(42);
+
       expect(fooAction).toEqual({ type: 'FOO', foo: 42 });
     });
 
@@ -42,6 +43,7 @@ describe('Action Creators', () => {
           throw new Error('Should not get here.');
         }
       };
+
       narrow(foo(42));
     });
 
@@ -49,6 +51,7 @@ describe('Action Creators', () => {
       const foo = createAction('FOO', (foo: number) => ({ foo }));
       const fooAction = foo(42);
       const text = JSON.stringify(fooAction);
+
       expect(JSON.parse(text)).toEqual({ type: 'FOO', foo: 42 });
     });
 
@@ -80,6 +83,7 @@ describe('Action Creators', () => {
     it('should allow empty action', () => {
       const foo = createAction('FOO');
       const fooAction = foo();
+
       expect(fooAction).toEqual({ type: 'FOO' });
     });
   });
@@ -88,6 +92,7 @@ describe('Action Creators', () => {
     it('should create an action', () => {
       const foo = createAction('FOO', props<{ foo: number }>());
       const fooAction = foo({ foo: 42 });
+
       expect(fooAction).toEqual({ type: 'FOO', foo: 42 });
     });
 
@@ -102,6 +107,7 @@ describe('Action Creators', () => {
           throw new Error('Should not get here.');
         }
       };
+
       narrow(foo({ foo: 42 }));
     });
 
@@ -109,6 +115,7 @@ describe('Action Creators', () => {
       const foo = createAction('FOO', props<{ foo: number }>());
       const fooAction = foo({ foo: 42 });
       const text = JSON.stringify(fooAction);
+
       expect(JSON.parse(text)).toEqual({ foo: 42, type: 'FOO' });
     });
 

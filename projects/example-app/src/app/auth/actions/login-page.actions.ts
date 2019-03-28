@@ -6,5 +6,4 @@ export const login = createAction(
   props<{ credentials: Credentials }>()
 );
 
-const all = union({ login });
-export type LoginPageActionsUnion = typeof all;
+export type LoginPageActionsUnion = ReturnType<typeof login>;

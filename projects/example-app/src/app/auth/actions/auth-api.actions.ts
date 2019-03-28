@@ -13,7 +13,8 @@ export const loginFailure = createAction(
 
 export const loginRedirect = createAction('[Auth/API] Login Redirect');
 
-// This is an alternative to union() type export.
+// This is an alternative to union() type export. Work great when you need
+// to export only a single Action type.
 export type AuthApiActionsUnion = ReturnType<
   typeof loginSuccess | typeof loginFailure | typeof loginRedirect
 >;
