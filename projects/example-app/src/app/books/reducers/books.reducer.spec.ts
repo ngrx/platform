@@ -1,5 +1,4 @@
 import { reducer } from '@example-app/books/reducers/books.reducer';
-import { union } from '@ngrx/store';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
 import {
   BooksApiActions,

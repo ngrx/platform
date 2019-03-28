@@ -3,6 +3,7 @@ import { expecter } from 'ts-snippet';
 
 describe('Action Creators', () => {
   let originalTimeout: number;
+
   beforeEach(() => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
@@ -74,6 +75,7 @@ describe('Action Creators', () => {
       `).toFail(/'bar' does not exist on type/);
     });
   });
+
   describe('empty', () => {
     it('should allow empty action', () => {
       const foo = createAction('FOO');

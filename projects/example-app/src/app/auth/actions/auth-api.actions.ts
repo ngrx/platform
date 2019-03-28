@@ -1,4 +1,4 @@
-import { union, props, createAction } from '@ngrx/store';
+import { props, createAction } from '@ngrx/store';
 import { User } from '@example-app/auth/models/user';
 
 export const loginSuccess = createAction(
@@ -13,5 +13,7 @@ export const loginFailure = createAction(
 
 export const loginRedirect = createAction('[Auth/API] Login Redirect');
 
-const all = union({ loginSuccess, loginFailure, loginRedirect });
-export type AuthApiActionsUnion = typeof all;
+// This is an alternative to union() type export.
+export type AuthApiActionsUnion = ReturnType<
+  typeof loginSuccess | typeof loginFailure | typeof loginRedirect
+>;
