@@ -9768,6 +9768,13 @@ ts-node@^5.0.1:
     source-map-support "^0.5.3"
     yn "^2.0.0"
 
+ts-snippet@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-4.1.0.tgz#45228ae151a61dbbf8b8f79e8b9fbfedb4483f23"
+  integrity sha512-agEI/dema3VNMPFmnLGMJZDBD0DOuWvllSD0szbx5NKdTBqpMomshjdzhGZratVUyiLIE0/kaK9zmBKLnFXilw==
+  dependencies:
+    tsutils "^3.0.0"
+
 tsconfig-paths@^3.1.3:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.3.2.tgz#bb48b845e221a44387be0f9968ee6c37c2a37c4d"
@@ -9826,6 +9833,13 @@ tsutils@2.27.2:
 tsutils@^2.27.2:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
+  dependencies:
+    tslib "^1.8.1"
+
+tsutils@^3.0.0:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.9.1.tgz#2a40dc742943c71eca6d5c1994fcf999956be387"
+  integrity sha512-hrxVtLtPqQr//p8/msPT1X1UYXUjizqSit5d9AQ5k38TcV38NyecL5xODNxa73cLe/5sdiJ+w1FqzDhRBA/anA==
   dependencies:
     tslib "^1.8.1"
 

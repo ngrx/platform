@@ -57,7 +57,7 @@ describe('Login Page', () => {
 
   it('should dispatch a login event on submit', () => {
     const credentials: any = {};
-    const action = new LoginPageActions.Login({ credentials });
+    const action = LoginPageActions.login({ credentials });
 
     instance.onSubmit(credentials);
 

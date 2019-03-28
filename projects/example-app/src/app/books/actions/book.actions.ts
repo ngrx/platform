@@ -1,14 +1,10 @@
-import { Action } from '@ngrx/store';
+import { createAction, props, union } from '@ngrx/store';
 import { Book } from '@example-app/books/models/book';
 
-export enum BookActionTypes {
-  LoadBook = '[Book Exists Guard] Load Book',
-}
+export const loadBook = createAction(
+  '[Book Exists Guard] Load Book',
+  props<{ book: Book }>()
+);
 
-export class LoadBook implements Action {
-  readonly type = BookActionTypes.LoadBook;
-
-  constructor(public payload: Book) {}
-}
-
-export type BookActionsUnion = LoadBook;
+const all = union({ loadBook });
+export type BookActionsUnion = typeof all;

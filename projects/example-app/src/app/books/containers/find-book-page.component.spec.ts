@@ -63,7 +63,7 @@ describe('Find Book Page', () => {
 
   it('should dispatch a book.Search action on search', () => {
     const $event = 'book name';
-    const action = new FindBookPageActions.SearchBooks($event);
+    const action = FindBookPageActions.searchBooks({ query: $event });
 
     instance.search($event);
 

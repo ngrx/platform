@@ -21,7 +21,12 @@ import * as Actions from './actions';
 import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
 import { DevtoolsExtension } from './extension';
 import { LiftedState, liftInitialState, liftReducerWith } from './reducer';
-import { liftAction, unliftState, shouldFilterActions, filterLiftedState } from './utils';
+import {
+  liftAction,
+  unliftState,
+  shouldFilterActions,
+  filterLiftedState,
+} from './utils';
 import { DevtoolsDispatcher } from './devtools-dispatcher';
 import { PERFORM_ACTION } from './actions';
 
@@ -73,25 +78,25 @@ export class StoreDevtools implements Observer<any> {
             state: LiftedState;
             action: any;
           }
-          >(
-            ({ state: liftedState }, [action, reducer]) => {
-              let reducedLiftedState = reducer(liftedState, action);
-              // On full state update
-              // If we have actions filters, we must filter completly our lifted state to be sync with the extension
-              if (action.type !== PERFORM_ACTION && shouldFilterActions(config)) {
-                reducedLiftedState = filterLiftedState(
-                  reducedLiftedState,
-                  config.predicate,
-                  config.actionsWhitelist,
-                  config.actionsBlacklist
-                );
-              }
-              // Extension should be sent the sanitized lifted state
-              extension.notify(action, reducedLiftedState);
-              return { state: reducedLiftedState, action };
-            },
-            { state: liftedInitialState, action: null as any }
-          )
+        >(
+          ({ state: liftedState }, [action, reducer]) => {
+            let reducedLiftedState = reducer(liftedState, action);
+            // On full state update
+            // If we have actions filters, we must filter completly our lifted state to be sync with the extension
+            if (action.type !== PERFORM_ACTION && shouldFilterActions(config)) {
+              reducedLiftedState = filterLiftedState(
+                reducedLiftedState,
+                config.predicate,
+                config.actionsWhitelist,
+                config.actionsBlacklist
+              );
+            }
+            // Extension should be sent the sanitized lifted state
+            extension.notify(action, reducedLiftedState);
+            return { state: reducedLiftedState, action };
+          },
+          { state: liftedInitialState, action: null as any }
+        )
       )
       .subscribe(({ state, action }) => {
         liftedStateSubject.next(state);
@@ -109,7 +114,7 @@ export class StoreDevtools implements Observer<any> {
 
     const liftedState$ = liftedStateSubject.asObservable() as Observable<
       LiftedState
-      >;
+    >;
     const state$ = liftedState$.pipe(map(unliftState));
 
     this.extensionStartSubscription = extensionStartSubscription;
@@ -127,9 +132,9 @@ export class StoreDevtools implements Observer<any> {
     this.dispatcher.next(action);
   }
 
-  error(error: any) { }
+  error(error: any) {}
 
-  complete() { }
+  complete() {}
 
   performAction(action: any) {
     this.dispatch(new Actions.PerformAction(action, +Date.now()));

@@ -24,8 +24,8 @@ export function reducer(
     | FindBookPageActions.FindBookPageActionsUnion
 ): State {
   switch (action.type) {
-    case FindBookPageActions.FindBookPageActionTypes.SearchBooks: {
-      const query = action.payload;
+    case FindBookPageActions.searchBooks.type: {
+      const query = action.query;
 
       if (query === '') {
         return {
@@ -44,20 +44,20 @@ export function reducer(
       };
     }
 
-    case BooksApiActions.BooksApiActionTypes.SearchSuccess: {
+    case BooksApiActions.searchSuccess.type: {
       return {
-        ids: action.payload.map(book => book.id),
+        ids: action.books.map(book => book.id),
         loading: false,
         error: '',
         query: state.query,
       };
     }
 
-    case BooksApiActions.BooksApiActionTypes.SearchFailure: {
+    case BooksApiActions.searchFailure.type: {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.errorMsg,
       };
     }
 

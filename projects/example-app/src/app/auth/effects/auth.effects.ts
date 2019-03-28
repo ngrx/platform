@@ -17,28 +17,25 @@ import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/
 export class AuthEffects {
   @Effect()
   login$ = this.actions$.pipe(
-    ofType(LoginPageActions.LoginPageActionTypes.Login),
-    map(action => action.payload.credentials),
+    ofType(LoginPageActions.login.type),
+    map(action => action.credentials),
     exhaustMap((auth: Credentials) =>
       this.authService.login(auth).pipe(
-        map(user => new AuthApiActions.LoginSuccess({ user })),
-        catchError(error => of(new AuthApiActions.LoginFailure({ error })))
+        map(user => AuthApiActions.loginSuccess({ user })),
+        catchError(error => of(AuthApiActions.loginFailure({ error })))
       )
     )
   );
 
   @Effect({ dispatch: false })
   loginSuccess$ = this.actions$.pipe(
-    ofType(AuthApiActions.AuthApiActionTypes.LoginSuccess),
+    ofType(AuthApiActions.loginSuccess.type),
     tap(() => this.router.navigate(['/']))
   );
 
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
-    ofType(
-      AuthApiActions.AuthApiActionTypes.LoginRedirect,
-      AuthActions.AuthActionTypes.Logout
-    ),
+    ofType(AuthApiActions.loginRedirect.type, AuthActions.logout.type),
     tap(authed => {
       this.router.navigate(['/login']);
     })
@@ -46,7 +43,7 @@ export class AuthEffects {
 
   @Effect()
   logoutConfirmation$ = this.actions$.pipe(
-    ofType(AuthActions.AuthActionTypes.LogoutConfirmation),
+    ofType(AuthActions.logoutConfirmation.type),
     exhaustMap(() => {
       const dialogRef = this.dialog.open<
         LogoutConfirmationDialogComponent,
@@ -58,9 +55,7 @@ export class AuthEffects {
     }),
     map(
       result =>
-        result
-          ? new AuthActions.Logout()
-          : new AuthActions.LogoutConfirmationDismiss()
+        result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
     )
   );
 
