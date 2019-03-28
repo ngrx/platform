@@ -50,13 +50,14 @@ jobs:
       - restore_cache:
           key: *cache_key
 
-      # Enforce that BUILD files are formatted.
-      # Note that this uses the version of buildifier from the docker image -
-      # take care that you use the same version when you run
-      # buildifier locally on your change.
-      - run:
-          'yarn buildifier -mode=check $(find . -type f \( -name BUILD.bazel -or -name BUILD \)) ||
-          (echo "BUILD files not formatted. Please run ''yarn buildifier''" ; exit 1)'
+      # Run the Buildifier to check our Bazel rules for format issues.
+      - run: 'yarn bazel:format --mode=check ||
+              (echo "BUILD files not formatted. Please run ''yarn bazel:format --mode=fix''" ; exit 1)'
+
+      # Run the Buildifier to check our Bazel rules for lint issues.
+      # Note: The `--lint=warn` will auto fixe (re-write) the affected files.
+      - run: 'yarn bazel:format --lint=warn ||
+              (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
   test:
     <<: *run_in_node
@@ -67,17 +68,7 @@ jobs:
       - restore_cache:
           key: *cache_key
 
-      # Helpful for debugging, so you can check you have the same bazel version when you need
-      # to reproduce a failure.
-      - run: yarn bazel info release
-
-      # Install the dependencies from NPM, using the node and yarn binaries managed by Bazel
-      - run: yarn bazel run @nodejs//:yarn
-
       # Build and Test
-      # Use bazel query so that we explicitly ask for all buildable targets to
-      # be built even though we run `bazel test`
-      # See https://github.com/bazelbuild/bazel/issues/4257
       - run: yarn bazel test //...
       # Store artifacts from build
       - persist_to_workspace:

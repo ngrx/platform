@@ -14,7 +14,7 @@ ng_module(
     visibility = ["//visibility:public"],
     deps = [
         "//modules/store",
-        "@angular//packages/core",
-        "@rxjs",
+        "@npm//@angular/core",
+        "@npm//rxjs",
     ],
 )

@@ -12,6 +12,7 @@ ng_module(
     deps = [
         "//modules/store",
         "@npm//@angular-devkit/schematics",
+        "@npm//@angular/core",
     ],
 )
 
