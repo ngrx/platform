@@ -7,5 +7,6 @@
   "screenshotsFolder": "screenshots",
   "videosFolder": "videos",
   "video": false,
-  "projectId": "w65h7e"
+  "projectId": "w65h7e",
+  "eyesTimeout": 180000
 }
