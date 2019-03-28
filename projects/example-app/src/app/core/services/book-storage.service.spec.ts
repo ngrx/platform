@@ -3,7 +3,7 @@ import {
   BookStorageService,
   IBookStorageService,
   LOCAL_STORAGE_TOKEN,
-} from './book-storage.service';
+} from '@example-app/core/services/book-storage.service';
 import { cold } from 'jasmine-marbles';
 import { Book } from '@example-app/books/models/book';
 

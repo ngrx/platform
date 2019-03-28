@@ -10,7 +10,7 @@ import {
   CollectionPageActions,
 } from '@example-app/books/actions';
 import { Book } from '@example-app/books/models/book';
-import { CollectionEffects } from './collection.effects';
+import { CollectionEffects } from '@example-app/books/effects/collection.effects';
 import {
   IBookStorageService,
   BookStorageService,
@@ -33,11 +33,11 @@ describe('CollectionEffects', () => {
           provide: BookStorageService,
           useValue: {
             supported: jest.fn(),
-            deleteStoredCollection: jest.fn(),
+            deleteCollection: jest.fn(),
             addToCollection: jest.fn(),
             getCollection: jest.fn(),
             removeFromCollection: jest.fn(),
-          },
+          } as IBookStorageService,
         },
         {
           provide: LOCAL_STORAGE_TOKEN,
