@@ -1,15 +1,33 @@
-<a name="7.3.0"></a>
+<a name="7.4.0"></a>
 
-# [7.3.0](https://github.com/ngrx/platform/compare/7.2.0...7.3.0) (2019-02-27)
+# [7.4.0](https://github.com/ngrx/platform/compare/7.3.0...7.4.0) (2019-03-29)
 
 ### Bug Fixes
 
+- **Example:** linter problems ([#1597](https://github.com/ngrx/platform/issues/1597)) ([4cfcc08](https://github.com/ngrx/platform/commit/4cfcc08))
+
+### Features
+
+- **example-app:** add visual testing with Applitools ([#1605](https://github.com/ngrx/platform/issues/1605)) ([8856210](https://github.com/ngrx/platform/commit/8856210))
+- **schematics:** use plural for entity schematics reducer key ([#1596](https://github.com/ngrx/platform/issues/1596)) ([1e49530](https://github.com/ngrx/platform/commit/1e49530)), closes [#1412](https://github.com/ngrx/platform/issues/1412)
+- **store:** add action creator functions ([#1654](https://github.com/ngrx/platform/issues/1654)) ([e7fe28b](https://github.com/ngrx/platform/commit/e7fe28b)), closes [#1480](https://github.com/ngrx/platform/issues/1480) [#1634](https://github.com/ngrx/platform/issues/1634)
+
+<a name="7.3.0"></a>
+
+# [7.3.0](https://github.com/ngrx/platform/compare/7.2.0...7.3.0) (2019-03-29)
+
+### Bug Fixes
+
+- **Example:** linter problems ([#1597](https://github.com/ngrx/platform/issues/1597)) ([4cfcc08](https://github.com/ngrx/platform/commit/4cfcc08))
 - **schematics:** type actions and avoid endless loop in effect schematic ([#1576](https://github.com/ngrx/platform/issues/1576)) ([5fbcb3c](https://github.com/ngrx/platform/commit/5fbcb3c)), closes [#1573](https://github.com/ngrx/platform/issues/1573)
 - **store:** deprecate signature for selector with only a projector ([#1580](https://github.com/ngrx/platform/issues/1580)) ([e86c5f6](https://github.com/ngrx/platform/commit/e86c5f6))
 
 ### Features
 
+- **example-app:** add visual testing with Applitools ([#1605](https://github.com/ngrx/platform/issues/1605)) ([8856210](https://github.com/ngrx/platform/commit/8856210))
 - **schematics:** Add ng-add support with prompt for making our schematics default ([#1552](https://github.com/ngrx/platform/issues/1552)) ([01ff157](https://github.com/ngrx/platform/commit/01ff157))
+- **schematics:** use plural for entity schematics reducer key ([#1596](https://github.com/ngrx/platform/issues/1596)) ([1e49530](https://github.com/ngrx/platform/commit/1e49530)), closes [#1412](https://github.com/ngrx/platform/issues/1412)
+- **store:** add action creator functions ([#1654](https://github.com/ngrx/platform/issues/1654)) ([e7fe28b](https://github.com/ngrx/platform/commit/e7fe28b)), closes [#1480](https://github.com/ngrx/platform/issues/1480) [#1634](https://github.com/ngrx/platform/issues/1634)
 
 <a name="7.2.0"></a>
 
