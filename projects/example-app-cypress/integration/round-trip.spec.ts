@@ -1,3 +1,17 @@
+let LOCAL_STORAGE_MEMORY = {};
+
+Cypress.Commands.add('saveLocalStorage', () => {
+  Object.keys(localStorage).forEach(key => {
+    LOCAL_STORAGE_MEMORY[key] = localStorage[key];
+  });
+});
+
+Cypress.Commands.add('restoreLocalStorage', () => {
+  Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
+    localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
+  });
+});
+
 context('Full round trip', () => {
   before(() => {
     (cy as any).eyesOpen({
@@ -5,10 +19,16 @@ context('Full round trip', () => {
       testName: 'round-trip',
       browser: { width: 800, height: 600 },
     });
-    window.indexedDB.deleteDatabase('books_app');
+    window.localStorage.removeItem('books_app');
     cy.visit('/');
   });
+  beforeEach(() => {
+    (cy as any).restoreLocalStorage();
+  });
 
+  afterEach(() => {
+    (cy as any).saveLocalStorage();
+  });
   after(() => {
     (cy as any).eyesClose();
   });
