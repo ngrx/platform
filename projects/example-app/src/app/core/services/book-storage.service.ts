@@ -76,5 +76,5 @@ export const LOCAL_STORAGE_PROVIDERS: FactoryProvider = {
 export function storageFactory() {
   return typeof window === undefined || typeof localStorage === undefined
     ? null
-    : localStorage;
+    : window.localStorage;
 }
