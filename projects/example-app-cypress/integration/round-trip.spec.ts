@@ -5,9 +5,7 @@ context('Full round trip', () => {
       testName: 'round-trip',
       browser: { width: 800, height: 600 },
     });
-    (cy as any).on('window:before:load', w => {
-      w.localStorage.removeItem('books_app');
-    });
+    window.localStorage.removeItem('books_app');
     cy.visit('/');
   });
 

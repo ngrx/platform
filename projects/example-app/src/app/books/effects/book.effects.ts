@@ -36,23 +36,24 @@ export class BookEffects {
     Action
   > =>
     this.actions$.pipe(
-      ofType(FindBookPageActions.FindBookPageActionTypes.SearchBooks),
+      ofType(FindBookPageActions.searchBooks.type),
       debounceTime(debounce, scheduler),
-      map(action => action.payload),
-      switchMap(query => {
+      switchMap(({ query }) => {
         if (query === '') {
           return empty;
         }
 
         const nextSearch$ = this.actions$.pipe(
-          ofType(FindBookPageActions.FindBookPageActionTypes.SearchBooks),
+          ofType(FindBookPageActions.searchBooks.type),
           skip(1)
         );
 
         return this.googleBooks.searchBooks(query).pipe(
           takeUntil(nextSearch$),
-          map((books: Book[]) => new BooksApiActions.SearchSuccess(books)),
-          catchError(err => of(new BooksApiActions.SearchFailure(err)))
+          map((books: Book[]) => BooksApiActions.searchSuccess({ books })),
+          catchError(err =>
+            of(BooksApiActions.searchFailure({ errorMsg: err }))
+          )
         );
       })
     );
