@@ -19,7 +19,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN', () => {
     it('should make pending to true', () => {
       const user = { username: 'test' } as Credentials;
-      const createAction = new LoginPageActions.Login({ credentials: user });
+      const createAction = LoginPageActions.login({ credentials: user });
 
       const expectedResult = {
         error: null,
@@ -35,7 +35,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_SUCCESS', () => {
     it('should have no error and no pending state', () => {
       const user = { name: 'test' } as User;
-      const createAction = new AuthApiActions.LoginSuccess({ user });
+      const createAction = AuthApiActions.loginSuccess({ user });
 
       const expectedResult = {
         error: null,
@@ -51,7 +51,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_FAILURE', () => {
     it('should have an error and no pending state', () => {
       const error = 'login failed';
-      const createAction = new AuthApiActions.LoginFailure({ error });
+      const createAction = AuthApiActions.loginFailure({ error });
 
       const expectedResult = {
         error: error,

@@ -14,14 +14,14 @@ export function reducer(
   action: AuthApiActions.AuthApiActionsUnion | AuthActions.AuthActionsUnion
 ): State {
   switch (action.type) {
-    case AuthApiActions.AuthApiActionTypes.LoginSuccess: {
+    case AuthApiActions.loginSuccess.type: {
       return {
         ...state,
-        user: action.payload.user,
+        user: action.user,
       };
     }
 
-    case AuthActions.AuthActionTypes.Logout: {
+    case AuthActions.logout.type: {
       return initialState;
     }
 

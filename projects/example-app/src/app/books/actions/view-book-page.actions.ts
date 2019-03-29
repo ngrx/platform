@@ -1,13 +1,8 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export enum ViewBookPageActionTypes {
-  SelectBook = '[View Book Page] Select Book',
-}
+export const selectBook = createAction(
+  '[View Book Page] Select Book',
+  props<{ id: string }>()
+);
 
-export class SelectBook implements Action {
-  readonly type = ViewBookPageActionTypes.SelectBook;
-
-  constructor(public payload: string) {}
-}
-
-export type ViewBookPageActionsUnion = SelectBook;
+export type ViewBookPageActionsUnion = ReturnType<typeof selectBook>;

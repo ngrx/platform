@@ -39,6 +39,6 @@ export class FindBookPageComponent {
   }
 
   search(query: string) {
-    this.store.dispatch(new FindBookPageActions.SearchBooks(query));
+    this.store.dispatch(FindBookPageActions.searchBooks({ query }));
   }
 }

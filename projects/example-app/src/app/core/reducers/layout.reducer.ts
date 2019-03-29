@@ -13,12 +13,12 @@ export function reducer(state: State = initialState, action: Action): State {
   const specificAction = action as LayoutActions.LayoutActionsUnion;
 
   switch (specificAction.type) {
-    case LayoutActions.LayoutActionTypes.CloseSidenav:
+    case LayoutActions.closeSidenav.type:
       return {
         showSidenav: false,
       };
 
-    case LayoutActions.LayoutActionTypes.OpenSidenav:
+    case LayoutActions.openSidenav.type:
       return {
         showSidenav: true,
       };
