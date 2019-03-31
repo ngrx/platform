@@ -1,9 +1,10 @@
 import { Injector } from '@angular/core';
 import {
   Action,
-  StoreModule,
+  props,
   ScannedActionsSubject,
   ActionsSubject,
+  createAction,
 } from '@ngrx/store';
 import { Actions, ofType } from '../';
 import { map, toArray, switchMap } from 'rxjs/operators';
@@ -25,16 +26,12 @@ describe('Actions', function() {
     type: 'SUBTRACT';
   }
 
-  function reducer(state: number = 0, action: Action) {
-    switch (action.type) {
-      case ADD:
-        return state + 1;
-      case SUBTRACT:
-        return state - 1;
-      default:
-        return state;
-    }
-  }
+  const square = createAction('SQUARE');
+  const multiply = createAction('MULTYPLY', props<{ by: number }>());
+  const divide = createAction('DIVIDE', props<{ by: number }>());
+
+  // Class-based Action types
+  const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
 
   beforeEach(function() {
     const injector = Injector.create([
@@ -69,12 +66,12 @@ describe('Actions', function() {
     });
 
     actions.forEach(action => dispatcher.next(action));
+    dispatcher.complete();
   });
 
-  const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
-  const expected = actions.filter(type => type === ADD);
+  it('should filter out actions', () => {
+    const expected = actions.filter(type => type === ADD);
 
-  it('should let you filter out actions', function() {
     actions$
       .pipe(
         ofType(ADD),
@@ -83,7 +80,7 @@ describe('Actions', function() {
       )
       .subscribe({
         next(actual) {
-          expect(actual).toEqual(expected as any[]);
+          expect(actual).toEqual(expected);
         },
       });
 
@@ -91,7 +88,9 @@ describe('Actions', function() {
     dispatcher.complete();
   });
 
-  it('should let you filter out actions and ofType can take an explicit type argument', function() {
+  it('should filter out actions and ofType can take an explicit type argument', () => {
+    const expected = actions.filter(type => type === ADD);
+
     actions$
       .pipe(
         ofType<AddAction>(ADD),
@@ -100,11 +99,192 @@ describe('Actions', function() {
       )
       .subscribe({
         next(actual) {
-          expect(actual).toEqual(expected as any[]);
+          expect(actual).toEqual(expected);
         },
       });
 
     actions.forEach(action => dispatcher.next({ type: action }));
+    dispatcher.complete();
+  });
+
+  it('should let you filter out multiple action types with explicit type argument', () => {
+    const expected = actions.filter(type => type === ADD || type === SUBTRACT);
+
+    actions$
+      .pipe(
+        ofType<AddAction | SubtractAction>(ADD, SUBTRACT),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
+
+    actions.forEach(action => dispatcher.next({ type: action }));
+    dispatcher.complete();
+  });
+
+  it('should filter out actions by action creator', () => {
+    actions$
+      .pipe(
+        ofType(square),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(['SQUARE']);
+        },
+      });
+
+    [...actions, square.type].forEach(action =>
+      dispatcher.next({ type: action })
+    );
+    dispatcher.complete();
+  });
+
+  it('should infer the type for the action when it is filter by action creator with property', () => {
+    const MULTYPLY_BY = 5;
+
+    actions$
+      .pipe(
+        ofType(multiply),
+        map(update => update.by),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual([MULTYPLY_BY]);
+        },
+      });
+
+    // Unrelated Actions
+    actions.forEach(action => dispatcher.next({ type: action }));
+    // Action under test
+    dispatcher.next(multiply({ by: MULTYPLY_BY }));
+    dispatcher.complete();
+  });
+
+  it('should infer the type for the action when it is filter by action creator', () => {
+    // Types are not provided for generic Actions
+    const untypedActions$: Actions = actions$;
+    const MULTYPLY_BY = 5;
+
+    untypedActions$
+      .pipe(
+        ofType(multiply),
+        // Type is infered, even though untypedActions$ is Actions<Action>
+        map(update => update.by),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual([MULTYPLY_BY]);
+        },
+      });
+
+    // Unrelated Actions
+    actions.forEach(action => dispatcher.next({ type: action }));
+    // Action under test
+    dispatcher.next(multiply({ by: MULTYPLY_BY }));
+    dispatcher.complete();
+  });
+
+  it('should filter out multiple actions by action creator', () => {
+    const DIVIDE_BY = 3;
+    const MULTYPLY_BY = 5;
+    const expected = [DIVIDE_BY, MULTYPLY_BY];
+
+    actions$
+      .pipe(
+        ofType(divide, multiply),
+        // Both have 'by' property
+        map(update => update.by),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
+
+    // Unrelated Actions
+    actions.forEach(action => dispatcher.next({ type: action }));
+    // Actions under test, in specific order
+    dispatcher.next(divide({ by: DIVIDE_BY }));
+    dispatcher.next(divide({ by: MULTYPLY_BY }));
+    dispatcher.complete();
+  });
+
+  it('should filter out actions by action creator and type string', () => {
+    const expected = [...actions.filter(type => type === ADD), square.type];
+
+    actions$
+      .pipe(
+        ofType(ADD, square),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
+
+    [...actions, square.type].forEach(action =>
+      dispatcher.next({ type: action })
+    );
+
+    dispatcher.complete();
+  });
+
+  it('should filter out actions by action creator and type string, with explicit type argument', () => {
+    const expected = [...actions.filter(type => type === ADD), square.type];
+
+    actions$
+      .pipe(
+        // Provided type overrides any inference from arguments
+        ofType<AddAction | ReturnType<typeof square>>(ADD, square),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
+
+    [...actions, square.type].forEach(action =>
+      dispatcher.next({ type: action })
+    );
+
+    dispatcher.complete();
+  });
+
+  it('should filter out up to 5 actions with type inference', () => {
+    // Mixing all of them, up to 5
+    const expected = [divide.type, ADD, square.type, SUBTRACT, multiply.type];
+
+    actions$
+      .pipe(
+        ofType(divide, ADD, square, SUBTRACT, multiply),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
+
+    // Actions under test, in specific order
+    dispatcher.next(divide({ by: 1 }));
+    dispatcher.next({ type: ADD });
+    dispatcher.next(square());
+    dispatcher.next({ type: SUBTRACT });
+    dispatcher.next(multiply({ by: 2 }));
     dispatcher.complete();
   });
 });
