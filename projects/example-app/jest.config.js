@@ -14,12 +14,12 @@ module.exports = {
     '^.+\\.(ts|js|html)$': 'ts-jest',
   },
   testMatch: ['<rootDir>/**/*.spec.ts'],
+  testEnvironment: 'jest-environment-jsdom-thirteen',
   moduleFileExtensions: ['html', 'js', 'json', 'ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '/modules/*.*/'],
   moduleNameMapper: {
     '^@ngrx/(.*)': '<rootDir>/../../modules/$1',
     '^@example-app/(.*)': '<rootDir>/src/app/$1',
-    'ngrx-store-freeze': '<rootDir>/../../projects/ngrx-store-freeze/',
   },
   transformIgnorePatterns: ['node_modules/(?!@ngrx)'],
   modulePathIgnorePatterns: ['dist'],
