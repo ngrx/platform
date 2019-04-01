@@ -19,7 +19,7 @@ context('Full round trip', () => {
     cy.get('[type="submit"]').click();
 
     (cy as any).eyesCheckWindow(
-      'shows a message when the credentials are wrong'
+      'show a message when the credentials are wrong'
     );
     cy.contains('Invalid username or password').should('be.visible');
   });
