@@ -1,24 +1,31 @@
 module.exports = {
   rootDir: '.',
-  setupTestFrameworkScriptFile: '<rootDir>/src/setup-jest.ts',
+  setupFilesAfterEnv: ['<rootDir>/src/setup-jest.ts'],
   globals: {
     'ts-jest': {
-      tsConfigFile: 'projects/example-app/tsconfig.spec.json',
+      tsConfig: 'projects/example-app/tsconfig.spec.json',
+      stringifyContentPathRegex: '\\.html?$',
+      astTransformers: [
+        require.resolve('jest-preset-angular/InlineHtmlStripStylesTransformer'),
+      ],
     },
-    __TRANSFORM_HTML__: true,
   },
   transform: {
-    '^.+\\.(ts|js|html)$':
-      '<rootDir>/../../node_modules/jest-preset-angular/preprocessor.js',
+    '^.+\\.(ts|js|html)$': 'ts-jest',
   },
   testMatch: ['<rootDir>/**/*.spec.ts'],
-  moduleFileExtensions: ['ts', 'js', 'html', 'json'],
-  mapCoverage: true,
+  moduleFileExtensions: ['html', 'js', 'json', 'ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '/modules/*.*/'],
   moduleNameMapper: {
     '^@ngrx/(.*)': '<rootDir>/../../modules/$1',
     '^@example-app/(.*)': '<rootDir>/src/app/$1',
+    'ngrx-store-freeze': '<rootDir>/../../projects/ngrx-store-freeze/',
   },
   transformIgnorePatterns: ['node_modules/(?!@ngrx)'],
   modulePathIgnorePatterns: ['dist'],
+  preset: 'jest-preset-angular',
+  snapshotSerializers: [
+    'jest-preset-angular/AngularSnapshotSerializer.js',
+    'jest-preset-angular/HTMLCommentSerializer.js',
+  ],
 };

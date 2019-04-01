@@ -92,7 +92,7 @@ exports[`Find Book Page should compile 1`] = `
               
               <div
                 class="mat-form-field-hint-wrapper ng-tns-c3-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                style="opacity:1;0:opacity;transform:translateY(0%);"
+                style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
               >
                 
                 <div
@@ -124,7 +124,7 @@ exports[`Find Book Page should compile 1`] = `
               cx="50%"
               cy="50%"
               r="10"
-              style="stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
+              style="animation-name: mat-progress-spinner-stroke-rotate-30; stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
             />
             
           </svg>
