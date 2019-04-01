@@ -9,10 +9,22 @@
     "outDir": "../out-tsc/spec",
     "module": "commonjs",
     "target": "es6",
-    "types": ["jasmine", "node"],
+    "types": ["jest", "node"],
     "baseUrl": ".",
-    "rootDir": "./"
+    "rootDir": "./",
+    "paths": {
+      "@ngrx/store": ["../../modules/store"],
+      "@ngrx/store/testing": ["../../modules/store/testing"],
+      "@ngrx/effects": ["../../modules/effects"],
+      "@ngrx/effects/testing": ["../../modules/effects/testing"],
+      "@ngrx/store-devtools": ["../../modules/store-devtools"],
+      "@ngrx/router-store": ["../../modules/router-store"],
+      "@ngrx/entity": ["../../modules/entity"],
+      "@ngrx/schematics": ["../../modules/schematics"],
+      "@example-app/*": ["./src/app/*"],
+      "ngrx-store-freeze": ["../../projects/ngrx-store-freeze"]
+    }
   },
-  "files": ["test.ts", "polyfills.ts"],
+  "files": ["src/test.ts", "src/polyfills.ts"],
   "include": ["**/*.spec.ts"]
 }

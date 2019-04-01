@@ -97,7 +97,7 @@ jobs:
       - checkout
       - restore_cache:
           key: *cache_key
-      - run: yarn run example:test --watch=false
+      - run: yarn run example:test --watch=false --runInBand
 
   example-e2e-tests:
     <<: *run_in_browser

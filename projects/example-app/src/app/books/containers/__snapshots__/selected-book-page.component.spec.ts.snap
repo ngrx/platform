@@ -7,7 +7,6 @@ exports[`Selected Book Page should compile 1`] = `
   store={[Function Store]}
 >
   <bc-book-detail
-    _nghost-c0=""
     ng-reflect-in-collection="false"
   >
     

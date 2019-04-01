@@ -5,31 +5,19 @@ exports[`Login Page should compile 1`] = `
   form={[Function FormGroup]}
   submitted={[Function EventEmitter]}
 >
-  <mat-card
-    _ngcontent-c0=""
-  >
-    <mat-card-title
-      _ngcontent-c0=""
-    >
+  <mat-card>
+    <mat-card-title>
       Login
     </mat-card-title>
-    <mat-card-content
-      _ngcontent-c0=""
-    >
+    <mat-card-content>
       <form
-        _ngcontent-c0=""
         class="ng-untouched ng-pristine ng-valid"
         ng-reflect-form="[object Object]"
         novalidate=""
       >
-        <p
-          _ngcontent-c0=""
-        >
-          <mat-form-field
-            _ngcontent-c0=""
-          >
+        <p>
+          <mat-form-field>
             <input
-              _ngcontent-c0=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="username"
               matinput=""
@@ -39,14 +27,9 @@ exports[`Login Page should compile 1`] = `
             />
           </mat-form-field>
         </p>
-        <p
-          _ngcontent-c0=""
-        >
-          <mat-form-field
-            _ngcontent-c0=""
-          >
+        <p>
+          <mat-form-field>
             <input
-              _ngcontent-c0=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="password"
               matinput=""
@@ -58,11 +41,9 @@ exports[`Login Page should compile 1`] = `
         </p>
         
         <p
-          _ngcontent-c0=""
           class="loginButtons"
         >
           <button
-            _ngcontent-c0=""
             mat-button=""
             type="submit"
           >
@@ -80,31 +61,19 @@ exports[`Login Page should disable the form if pending 1`] = `
   form={[Function FormGroup]}
   submitted={[Function EventEmitter]}
 >
-  <mat-card
-    _ngcontent-c1=""
-  >
-    <mat-card-title
-      _ngcontent-c1=""
-    >
+  <mat-card>
+    <mat-card-title>
       Login
     </mat-card-title>
-    <mat-card-content
-      _ngcontent-c1=""
-    >
+    <mat-card-content>
       <form
-        _ngcontent-c1=""
         class="ng-untouched ng-pristine"
         ng-reflect-form="[object Object]"
         novalidate=""
       >
-        <p
-          _ngcontent-c1=""
-        >
-          <mat-form-field
-            _ngcontent-c1=""
-          >
+        <p>
+          <mat-form-field>
             <input
-              _ngcontent-c1=""
               class="ng-untouched ng-pristine"
               disabled=""
               formcontrolname="username"
@@ -115,14 +84,9 @@ exports[`Login Page should disable the form if pending 1`] = `
             />
           </mat-form-field>
         </p>
-        <p
-          _ngcontent-c1=""
-        >
-          <mat-form-field
-            _ngcontent-c1=""
-          >
+        <p>
+          <mat-form-field>
             <input
-              _ngcontent-c1=""
               class="ng-untouched ng-pristine"
               disabled=""
               formcontrolname="password"
@@ -135,11 +99,9 @@ exports[`Login Page should disable the form if pending 1`] = `
         </p>
         
         <p
-          _ngcontent-c1=""
           class="loginButtons"
         >
           <button
-            _ngcontent-c1=""
             mat-button=""
             type="submit"
           >
@@ -158,31 +120,19 @@ exports[`Login Page should display an error message if provided 1`] = `
   form={[Function FormGroup]}
   submitted={[Function EventEmitter]}
 >
-  <mat-card
-    _ngcontent-c2=""
-  >
-    <mat-card-title
-      _ngcontent-c2=""
-    >
+  <mat-card>
+    <mat-card-title>
       Login
     </mat-card-title>
-    <mat-card-content
-      _ngcontent-c2=""
-    >
+    <mat-card-content>
       <form
-        _ngcontent-c2=""
         class="ng-untouched ng-pristine ng-valid"
         ng-reflect-form="[object Object]"
         novalidate=""
       >
-        <p
-          _ngcontent-c2=""
-        >
-          <mat-form-field
-            _ngcontent-c2=""
-          >
+        <p>
+          <mat-form-field>
             <input
-              _ngcontent-c2=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="username"
               matinput=""
@@ -192,14 +142,9 @@ exports[`Login Page should display an error message if provided 1`] = `
             />
           </mat-form-field>
         </p>
-        <p
-          _ngcontent-c2=""
-        >
-          <mat-form-field
-            _ngcontent-c2=""
-          >
+        <p>
+          <mat-form-field>
             <input
-              _ngcontent-c2=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="password"
               matinput=""
@@ -211,17 +156,14 @@ exports[`Login Page should display an error message if provided 1`] = `
         </p>
         
         <p
-          _ngcontent-c2=""
           class="loginError"
         >
            Invalid credentials 
         </p>
         <p
-          _ngcontent-c2=""
           class="loginButtons"
         >
           <button
-            _ngcontent-c2=""
             mat-button=""
             type="submit"
           >
