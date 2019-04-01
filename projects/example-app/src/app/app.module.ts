@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { DBModule } from '@ngrx/db';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -14,7 +13,6 @@ import { CoreModule } from '@example-app/core/core.module';
 import { AuthModule } from '@example-app/auth/auth.module';
 
 import { reducers, metaReducers } from '@example-app/reducers';
-import { schema } from '@example-app/db';
 
 import { AppComponent } from '@example-app/core/containers/app.component';
 import { AppRoutingModule } from '@example-app/app-routing.module';
@@ -67,12 +65,6 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
     EffectsModule.forRoot([]),
-
-    /**
-     * `provideDB` sets up @ngrx/db with the provided schema and makes the Database
-     * service available.
-     */
-    DBModule.provideDB(schema),
 
     CoreModule,
   ],

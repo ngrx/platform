@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { Database } from '@ngrx/db';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
@@ -12,6 +11,10 @@ import {
 } from '@example-app/books/actions';
 import { Book } from '@example-app/books/models/book';
 import { CollectionEffects } from '@example-app/books/effects/collection.effects';
+import {
+  BookStorageService,
+  LOCAL_STORAGE_TOKEN,
+} from '@example-app/core/services/';
 
 describe('CollectionEffects', () => {
   let db: any;
@@ -26,30 +29,37 @@ describe('CollectionEffects', () => {
       providers: [
         CollectionEffects,
         {
-          provide: Database,
+          provide: BookStorageService,
           useValue: {
-            open: jest.fn(),
-            query: jest.fn(),
-            insert: jest.fn(),
-            executeWrite: jest.fn(),
+            supported: jest.fn(),
+            deleteStoredCollection: jest.fn(),
+            addToCollection: jest.fn(),
+            getCollection: jest.fn(),
+            removeFromCollection: jest.fn(),
+          },
+        },
+        {
+          provide: LOCAL_STORAGE_TOKEN,
+          useValue: {
+            removeItem: jest.fn(),
+            setItem: jest.fn(),
+            getItem: jest.fn(_ => JSON.stringify([])),
           },
         },
         provideMockActions(() => actions$),
       ],
     });
 
-    db = TestBed.get(Database);
+    db = TestBed.get(BookStorageService);
     effects = TestBed.get(CollectionEffects);
     actions$ = TestBed.get(Actions);
   });
-
-  describe('openDB$', () => {
-    it('should call db.open when initially subscribed to', () => {
-      effects.openDB$.subscribe();
-      expect(db.open).toHaveBeenCalledWith('books_app');
+  describe('checkStorageSupport$', () => {
+    it('should call db.checkStorageSupport when initially subscribed to', () => {
+      effects.checkStorageSupport$.subscribe();
+      expect(db.supported).toHaveBeenCalled();
     });
   });
-
   describe('loadCollection$', () => {
     it('should return a collection.LoadSuccess, with the books, on success', () => {
       const action = CollectionPageActions.loadCollection();
@@ -58,9 +68,9 @@ describe('CollectionEffects', () => {
       });
 
       actions$ = hot('-a', { a: action });
-      const response = cold('-a-b|', { a: book1, b: book2 });
-      const expected = cold('-----c', { c: completion });
-      db.query = jest.fn(() => response);
+      const response = cold('-a|', { a: [book1, book2] });
+      const expected = cold('--c', { c: completion });
+      db.getCollection = jest.fn(() => response);
 
       expect(effects.loadCollection$).toBeObservable(expected);
     });
@@ -73,7 +83,7 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
-      db.query = jest.fn(() => response);
+      db.getCollection = jest.fn(() => response);
 
       expect(effects.loadCollection$).toBeObservable(expected);
     });
@@ -87,10 +97,10 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-b', { b: true });
       const expected = cold('--c', { c: completion });
-      db.insert = jest.fn(() => response);
+      db.addToCollection = jest.fn(() => response);
 
       expect(effects.addBookToCollection$).toBeObservable(expected);
-      expect(db.insert).toHaveBeenCalledWith('books', [book1]);
+      expect(db.addToCollection).toHaveBeenCalledWith([book1]);
     });
 
     it('should return a collection.AddBookFail, with the book, when the db insert throws', () => {
@@ -101,7 +111,7 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
-      db.insert = jest.fn(() => response);
+      db.addToCollection = jest.fn(() => response);
 
       expect(effects.addBookToCollection$).toBeObservable(expected);
     });
@@ -116,12 +126,10 @@ describe('CollectionEffects', () => {
         actions$ = hot('-a', { a: action });
         const response = cold('-b', { b: true });
         const expected = cold('--c', { c: completion });
-        db.executeWrite = jest.fn(() => response);
+        db.removeFromCollection = jest.fn(() => response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
-        expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [
-          book1.id,
-        ]);
+        expect(db.removeFromCollection).toHaveBeenCalledWith([book1.id]);
       });
 
       it('should return a collection.RemoveBookFail, with the book, when the db insert throws', () => {
@@ -134,12 +142,10 @@ describe('CollectionEffects', () => {
         actions$ = hot('-a', { a: action });
         const response = cold('-#', {}, error);
         const expected = cold('--c', { c: completion });
-        db.executeWrite = jest.fn(() => response);
+        db.removeFromCollection = jest.fn(() => response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
-        expect(db.executeWrite).toHaveBeenCalledWith('books', 'delete', [
-          book1.id,
-        ]);
+        expect(db.removeFromCollection).toHaveBeenCalledWith([book1.id]);
       });
     });
   });
