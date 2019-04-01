@@ -5,8 +5,3 @@ exports_files([
     "tsconfig.json",
     "LICENSE",
 ])
-
-alias(
-    name = "install",
-    actual = "@nodejs//:yarn",
-)

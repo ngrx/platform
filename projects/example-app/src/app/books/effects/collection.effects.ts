@@ -31,15 +31,15 @@ export class CollectionEffects {
 
   @Effect()
   loadCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(CollectionPageActions.CollectionPageActionTypes.LoadCollection),
+    ofType(CollectionPageActions.loadCollection.type),
     switchMap(() =>
       this.db.query('books').pipe(
         toArray(),
-        map(
-          (books: Book[]) => new CollectionApiActions.LoadBooksSuccess(books)
+        map((books: Book[]) =>
+          CollectionApiActions.loadBooksSuccess({ books })
         ),
         catchError(error =>
-          of(new CollectionApiActions.LoadBooksFailure(error))
+          of(CollectionApiActions.loadBooksFailure({ error }))
         )
       )
     )
@@ -47,24 +47,22 @@ export class CollectionEffects {
 
   @Effect()
   addBookToCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(SelectedBookPageActions.SelectedBookPageActionTypes.AddBook),
-    map(action => action.payload),
-    mergeMap(book =>
+    ofType(SelectedBookPageActions.addBook.type),
+    mergeMap(({ book }) =>
       this.db.insert('books', [book]).pipe(
-        map(() => new CollectionApiActions.AddBookSuccess(book)),
-        catchError(() => of(new CollectionApiActions.AddBookFailure(book)))
+        map(() => CollectionApiActions.addBookSuccess({ book })),
+        catchError(() => of(CollectionApiActions.addBookFailure({ book })))
       )
     )
   );
 
   @Effect()
   removeBookFromCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(SelectedBookPageActions.SelectedBookPageActionTypes.RemoveBook),
-    map(action => action.payload),
-    mergeMap(book =>
+    ofType(SelectedBookPageActions.removeBook.type),
+    mergeMap(({ book }) =>
       this.db.executeWrite('books', 'delete', [book.id]).pipe(
-        map(() => new CollectionApiActions.RemoveBookSuccess(book)),
-        catchError(() => of(new CollectionApiActions.RemoveBookFailure(book)))
+        map(() => CollectionApiActions.removeBookSuccess({ book })),
+        catchError(() => of(CollectionApiActions.removeBookFailure({ book })))
       )
     )
   );

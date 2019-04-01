@@ -40,6 +40,13 @@ Group the action file within an `actions` folder.
   - Type: `boolean`
   - Default: `false`
 
+Specifies if api success and failure actions should be generated.
+
+- `--api`
+  - Alias: `-a`
+  - Type: `boolean`
+  - Default: `false`  
+
 Generate a spec file alongside the action file.
 
 - `--spec`

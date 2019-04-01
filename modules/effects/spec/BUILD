@@ -11,8 +11,7 @@ ts_test_library(
     deps = [
         "//modules/effects",
         "//modules/store",
-        "@rxjs",
-        "@rxjs//operators",
+        "@npm//rxjs",
     ],
 )
 

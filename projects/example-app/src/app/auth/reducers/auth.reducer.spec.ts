@@ -25,7 +25,7 @@ describe('AuthReducer', () => {
   describe('LOGIN_SUCCESS', () => {
     it('should add a user set loggedIn to true in auth state', () => {
       const user = { name: 'test' } as User;
-      const createAction = new AuthApiActions.LoginSuccess({ user });
+      const createAction = AuthApiActions.loginSuccess({ user });
 
       const expectedResult = {
         user: { name: 'test' },
@@ -42,7 +42,7 @@ describe('AuthReducer', () => {
       const initialState = {
         user: { name: 'test' },
       } as fromAuth.State;
-      const createAction = new AuthActions.Logout();
+      const createAction = AuthActions.logout();
 
       const expectedResult = fromAuth.initialState;
 

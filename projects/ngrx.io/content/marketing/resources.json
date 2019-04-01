@@ -14,7 +14,7 @@
           "ngrx-best-practices-for-enterprise-angular-applications": {
             "title": "NgRx — Best Practices for Enterprise Angular Applications",
             "desc": "Enterprise NgRx pattern for organizing store into modules and sub modules",
-            "url": "https://itnext.io/ngrx-best-practices-for-enterprise-angular-applications-6f00bcdf36d7",
+            "url": "https://wesleygrimes.com/angular/2018/05/30/ngrx-best-practices-for-enterprise-angular-applications",
             "rev": true
           }
         }
@@ -69,6 +69,12 @@
             "url": "https://github.com/avatsaev/angular-contacts-app-example",
             "rev": true
           },
+          "angular-checklist": {
+            "title": "Angular Checklist",
+            "desc": "Curated list of common mistakes made when developing Angular applications",
+            "url": "https://angular-checklist.io",
+            "rev": true
+          },
           "online-training": {
             "title":
               "Online Training website using ASP.Net Core 2.0 & Angular 4",
@@ -86,6 +92,20 @@
             "desc":
               "Use a Pizza Provider of your choice and add/edit orders in real time with friends/colleagues",
             "url": "https://github.com/maxime1992/pizza-sync",
+            "rev": true
+          },
+          "goose-weather": {
+            "title": "Goose Weather",
+            "desc":
+              "Angular App that uses NOAA and the OpenWeatherMapAPI to create a weather forecast",
+            "url": "https://github.com/andrewevans02/goose-weather",
+            "rev": true
+          },
+          "mdb-angular-boilerplate": {
+            "title": "MDB Angular Boilerplate",
+            "desc":
+              "Angular CRUD application starter with NgRx state management and Firebase backend",
+            "url": "https://github.com/mdbootstrap/Angular-Bootstrap-Boilerplate",
             "rev": true
           }
         }

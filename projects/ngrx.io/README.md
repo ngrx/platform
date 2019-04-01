@@ -42,6 +42,10 @@ Here are the most important tasks you might need to use:
 
 - `yarn build-ie-polyfills` - generates a js file of polyfills that can be loaded in Internet Explorer.
 
+## Developing on Windows
+
+It is necessary to run `yarn setup` and `yarn boilerplate:add` using Administrator rights as Linux-specific symlinks are used.
+
 ## Using ServiceWorker locally
 
 Running `yarn start` (even when explicitly targeting production mode) does not set up the

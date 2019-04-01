@@ -52,7 +52,7 @@ describe('Collection Page', () => {
   });
 
   it('should dispatch a collection.Load on init', () => {
-    const action = new CollectionPageActions.LoadCollection();
+    const action = CollectionPageActions.loadCollection();
 
     fixture.detectChanges();
 

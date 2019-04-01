@@ -1,4 +1,4 @@
-import { ReflectiveInjector } from '@angular/core';
+import { Injector } from '@angular/core';
 import {
   Action,
   StoreModule,
@@ -37,9 +37,14 @@ describe('Actions', function() {
   }
 
   beforeEach(function() {
-    const injector = ReflectiveInjector.resolveAndCreate([
-      StoreModule.forRoot(reducer).providers || [],
-      Actions,
+    const injector = Injector.create([
+      {
+        provide: ScannedActionsSubject,
+        useClass: ScannedActionsSubject,
+        deps: [],
+      },
+      { provide: ActionsSubject, useClass: ActionsSubject, deps: [] },
+      { provide: Actions, useClass: Actions, deps: [ScannedActionsSubject] },
     ]);
 
     actions$ = injector.get(Actions);

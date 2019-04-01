@@ -127,6 +127,7 @@ describe('Entity Schematic', () => {
 
     const tree = schematicRunner.runSchematic('entity', options, appTree);
     const files = tree.files;
+
     expect(
       files.indexOf(`${projectPath}/src/app/foo/actions/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -146,6 +147,7 @@ describe('Entity Schematic', () => {
 
     const tree = schematicRunner.runSchematic('entity', options, appTree);
     const files = tree.files;
+
     expect(
       files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -158,5 +160,35 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/foo.reducer.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should update the state to plural', () => {
+    const options = {
+      ...defaultOptions,
+      name: 'user',
+      reducers: 'reducers/index.ts',
+      spec: true,
+    };
+
+    const reducerTree = schematicRunner.runSchematic('store', options, appTree);
+    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const files = tree.files;
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
+    expect(
+      files.indexOf(`${projectPath}/src/app/user.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/user.model.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/user.reducer.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/user.reducer.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(content).toMatch(/users\: fromUser.State/);
+    expect(content).toMatch(/users\: fromUser.reducer/);
   });
 });

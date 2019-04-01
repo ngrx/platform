@@ -51,6 +51,13 @@ Provide the path to a `reducers` file containing a state interface and a object 
   - Alias: `-r`
   - Type: `string`
 
+Specifies if api success and failure `actions`, `reducer`, and `effects` should be generated as part of this feature.
+
+- `--api`
+  - Alias: `-a`
+  - Type: `boolean`
+  - Default: `false`
+
 Generate spec files associated with the feature files.
 
 - `--spec`

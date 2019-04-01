@@ -1,38 +1,24 @@
 module.exports = {
-  "rootDir": ".",
-  "setupTestFrameworkScriptFile": "<rootDir>/src/setup-jest.ts",
-  "globals": {
-    "ts-jest": {
-      "tsConfigFile": "projects/example-app/tsconfig.spec.json"
+  rootDir: '.',
+  setupTestFrameworkScriptFile: '<rootDir>/src/setup-jest.ts',
+  globals: {
+    'ts-jest': {
+      tsConfigFile: 'projects/example-app/tsconfig.spec.json',
     },
-    "__TRANSFORM_HTML__": true
+    __TRANSFORM_HTML__: true,
   },
-  "transform": {
-    "^.+\\.(ts|js|html)$": "<rootDir>/../../node_modules/jest-preset-angular/preprocessor.js"
+  transform: {
+    '^.+\\.(ts|js|html)$':
+      '<rootDir>/../../node_modules/jest-preset-angular/preprocessor.js',
   },
-  "testMatch": [
-    "<rootDir>/**/*.spec.ts"
-  ],
-  "moduleFileExtensions": [
-    "ts",
-    "js",
-    "html",
-    "json"
-  ],
-  "mapCoverage": true,
-  "coveragePathIgnorePatterns": [
-    "/node_modules/",
-    "/modules/*.*/"
-  ],
-  "moduleNameMapper": {
-    "^@ngrx/(?!db)(.*)": "<rootDir>/../../modules/$1",
-    "^@example-app/(.*)": "<rootDir>/src/app/$1",
-    "ngrx-store-freeze": "<rootDir>/../../projects/ngrx-store-freeze/"
+  testMatch: ['<rootDir>/**/*.spec.ts'],
+  moduleFileExtensions: ['ts', 'js', 'html', 'json'],
+  mapCoverage: true,
+  coveragePathIgnorePatterns: ['/node_modules/', '/modules/*.*/'],
+  moduleNameMapper: {
+    '^@ngrx/(?!db)(.*)': '<rootDir>/../../modules/$1',
+    '^@example-app/(.*)': '<rootDir>/src/app/$1',
   },
-  "transformIgnorePatterns": [
-    "node_modules/(?!@ngrx)"
-  ],
-  "modulePathIgnorePatterns": [
-    "dist"
-  ]
+  transformIgnorePatterns: ['node_modules/(?!@ngrx)'],
+  modulePathIgnorePatterns: ['dist'],
 };

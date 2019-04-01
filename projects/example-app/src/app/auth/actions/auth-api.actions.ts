@@ -1,26 +1,20 @@
-import { Action } from '@ngrx/store';
+import { props, createAction } from '@ngrx/store';
 import { User } from '@example-app/auth/models/user';
 
-export enum AuthApiActionTypes {
-  LoginSuccess = '[Auth/API] Login Success',
-  LoginFailure = '[Auth/API] Login Failure',
-  LoginRedirect = '[Auth/API] Login Redirect',
-}
+export const loginSuccess = createAction(
+  '[Auth/API] Login Success',
+  props<{ user: User }>()
+);
 
-export class LoginSuccess implements Action {
-  readonly type = AuthApiActionTypes.LoginSuccess;
+export const loginFailure = createAction(
+  '[Auth/API] Login Failure',
+  props<{ error: any }>()
+);
 
-  constructor(public payload: { user: User }) {}
-}
+export const loginRedirect = createAction('[Auth/API] Login Redirect');
 
-export class LoginFailure implements Action {
-  readonly type = AuthApiActionTypes.LoginFailure;
-
-  constructor(public payload: { error: any }) {}
-}
-
-export class LoginRedirect implements Action {
-  readonly type = AuthApiActionTypes.LoginRedirect;
-}
-
-export type AuthApiActionsUnion = LoginSuccess | LoginFailure | LoginRedirect;
+// This is an alternative to union() type export. Work great when you need
+// to export only a single Action type.
+export type AuthApiActionsUnion = ReturnType<
+  typeof loginSuccess | typeof loginFailure | typeof loginRedirect
+>;

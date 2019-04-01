@@ -14,6 +14,7 @@ ng_module(
     visibility = ["//visibility:public"],
     deps = [
         "//modules/effects",
-        "@rxjs",
+        "@npm//@angular/core",
+        "@npm//rxjs",
     ],
 )

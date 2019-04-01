@@ -38,7 +38,7 @@ export class AppComponent {
   showSidenav$: Observable<boolean>;
   loggedIn$: Observable<boolean>;
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State & fromAuth.State>) {
     /**
      * Selectors can be applied with the `select` operator which passes the state
      * tree to the provided selector
@@ -54,16 +54,16 @@ export class AppComponent {
      * updates and user interaction through the life of our
      * application.
      */
-    this.store.dispatch(new LayoutActions.CloseSidenav());
+    this.store.dispatch(LayoutActions.closeSidenav());
   }
 
   openSidenav() {
-    this.store.dispatch(new LayoutActions.OpenSidenav());
+    this.store.dispatch(LayoutActions.openSidenav());
   }
 
   logout() {
     this.closeSidenav();
 
-    this.store.dispatch(new AuthActions.LogoutConfirmation());
+    this.store.dispatch(AuthActions.logoutConfirmation());
   }
 }
