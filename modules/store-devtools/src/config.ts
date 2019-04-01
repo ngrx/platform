@@ -21,8 +21,8 @@ export class StoreDevtoolsConfig {
   serialize?: boolean | SerializationOptions;
   logOnly?: boolean;
   features?: any;
-  actionsBlacklist?: string[];
-  actionsWhitelist?: string[];
+  actionsBlocklist?: string[];
+  actionsSafelist?: string[];
   predicate?: Predicate;
 }
 

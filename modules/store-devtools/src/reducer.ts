@@ -369,8 +369,8 @@ export function liftReducerWith(
               liftedState.computedStates[currentStateIndex],
               liftedAction,
               options.predicate,
-              options.actionsWhitelist,
-              options.actionsBlacklist
+              options.actionsSafelist,
+              options.actionsBlocklist
             ))
         ) {
           // If recording is paused or if the action should be ignored, overwrite the last state

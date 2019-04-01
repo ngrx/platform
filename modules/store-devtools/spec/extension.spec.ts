@@ -374,15 +374,15 @@ describe('DevtoolsExtension', () => {
       });
     });
 
-    describe('with Action and actionsBlacklist', () => {
+    describe('with Action and actionsBlocklist', () => {
       const NORMAL_ACTION = 'NORMAL_ACTION';
-      const BLACKLISTED_ACTION = 'BLACKLISTED_ACTION';
+      const BLOCKED_ACTION = 'BLOCKED_ACTION';
 
       beforeEach(() => {
         devtoolsExtension = new DevtoolsExtension(
           reduxDevtoolsExtension,
           createConfig({
-            actionsBlacklist: [BLACKLISTED_ACTION],
+            actionsBlocklist: [BLOCKED_ACTION],
           }),
           <any>null
         );
@@ -390,7 +390,7 @@ describe('DevtoolsExtension', () => {
         devtoolsExtension.actions$.subscribe(() => null);
       });
 
-      it('should ignore blacklisted action', () => {
+      it('should ignore the blocked action', () => {
         const options = createOptions();
         const state = createState();
 
@@ -403,22 +403,22 @@ describe('DevtoolsExtension', () => {
           state
         );
         devtoolsExtension.notify(
-          new PerformAction({ type: BLACKLISTED_ACTION }, 1234567),
+          new PerformAction({ type: BLOCKED_ACTION }, 1234567),
           state
         );
         expect(extensionConnection.send).toHaveBeenCalledTimes(2);
       });
     });
 
-    describe('with Action and actionsWhitelist', () => {
+    describe('with Action and actionsSafelist', () => {
       const NORMAL_ACTION = 'NORMAL_ACTION';
-      const WHITELISTED_ACTION = 'WHITELISTED_ACTION';
+      const SAFE_ACTION = 'SAFE_ACTION';
 
       beforeEach(() => {
         devtoolsExtension = new DevtoolsExtension(
           reduxDevtoolsExtension,
           createConfig({
-            actionsWhitelist: [WHITELISTED_ACTION],
+            actionsSafelist: [SAFE_ACTION],
           }),
           <any>null
         );
@@ -426,7 +426,7 @@ describe('DevtoolsExtension', () => {
         devtoolsExtension.actions$.subscribe(() => null);
       });
 
-      it('should only keep whitelisted action', () => {
+      it('should only keep the safe action', () => {
         const options = createOptions();
         const state = createState();
 
@@ -439,7 +439,7 @@ describe('DevtoolsExtension', () => {
           state
         );
         devtoolsExtension.notify(
-          new PerformAction({ type: WHITELISTED_ACTION }, 1234567),
+          new PerformAction({ type: SAFE_ACTION }, 1234567),
           state
         );
         expect(extensionConnection.send).toHaveBeenCalledTimes(1);
