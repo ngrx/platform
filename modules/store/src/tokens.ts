@@ -9,7 +9,7 @@ export const REDUCER_FACTORY = new InjectionToken(
   '@ngrx/store Reducer Factory'
 );
 export const _REDUCER_FACTORY = new InjectionToken(
-  '@ngrx/store Reducer Factory Provider'
+  '@ngrx/store Internal Reducer Factory Provider'
 );
 export const INITIAL_REDUCERS = new InjectionToken(
   '@ngrx/store Initial Reducers'
