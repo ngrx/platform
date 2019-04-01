@@ -4,7 +4,13 @@ import { cold, getTestScheduler } from 'jasmine-marbles';
 import { concat, NEVER, Observable, of, throwError, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Effect, EffectSources, OnIdentifyEffects, OnInitEffects } from '../';
+import {
+  Effect,
+  EffectSources,
+  OnIdentifyEffects,
+  OnInitEffects,
+  createEffect,
+} from '../';
 import { Store } from '@ngrx/store';
 
 describe('EffectSources', () => {
@@ -55,204 +61,427 @@ describe('EffectSources', () => {
   });
 
   describe('toActions() Operator', () => {
-    const a = { type: 'From Source A' };
-    const b = { type: 'From Source B' };
-    const c = { type: 'From Source C that completes' };
-    const d = { not: 'a valid action' };
-    const e = undefined;
-    const f = null;
-    const i = { type: 'From Source Identifier' };
-    const i2 = { type: 'From Source Identifier 2' };
+    describe('with @Effect()', () => {
+      const a = { type: 'From Source A' };
+      const b = { type: 'From Source B' };
+      const c = { type: 'From Source C that completes' };
+      const d = { not: 'a valid action' };
+      const e = undefined;
+      const f = null;
+      const i = { type: 'From Source Identifier' };
+      const i2 = { type: 'From Source Identifier 2' };
 
-    let circularRef = {} as any;
-    circularRef.circularRef = circularRef;
-    const g = { circularRef };
+      let circularRef = {} as any;
+      circularRef.circularRef = circularRef;
+      const g = { circularRef };
 
-    const error = new Error('An Error');
+      const error = new Error('An Error');
 
-    class SourceA {
-      @Effect() a$ = alwaysOf(a);
-    }
-
-    class SourceB {
-      @Effect() b$ = alwaysOf(b);
-    }
-
-    class SourceC {
-      @Effect() c$ = of(c);
-    }
-
-    class SourceD {
-      @Effect() d$ = alwaysOf(d);
-    }
-
-    class SourceE {
-      @Effect() e$ = alwaysOf(e);
-    }
-
-    class SourceF {
-      @Effect() f$ = alwaysOf(f);
-    }
-
-    class SourceG {
-      @Effect() g$ = alwaysOf(g);
-    }
-
-    class SourceError {
-      @Effect() e$ = throwError(error);
-    }
-
-    class SourceH {
-      @Effect() empty = of('value');
-      @Effect()
-      never = timer(50, getTestScheduler() as any).pipe(map(() => 'update'));
-    }
-
-    class SourceWithIdentifier implements OnIdentifyEffects {
-      effectIdentifier: string;
-      @Effect() i$ = alwaysOf(i);
-
-      ngrxOnIdentifyEffects() {
-        return this.effectIdentifier;
+      class SourceA {
+        @Effect() a$ = alwaysOf(a);
       }
 
-      constructor(identifier: string) {
-        this.effectIdentifier = identifier;
-      }
-    }
-
-    class SourceWithIdentifier2 implements OnIdentifyEffects {
-      effectIdentifier: string;
-      @Effect() i2$ = alwaysOf(i2);
-
-      ngrxOnIdentifyEffects() {
-        return this.effectIdentifier;
+      class SourceB {
+        @Effect() b$ = alwaysOf(b);
       }
 
-      constructor(identifier: string) {
-        this.effectIdentifier = identifier;
+      class SourceC {
+        @Effect() c$ = of(c);
       }
-    }
 
-    it('should resolve effects from instances', () => {
-      const sources$ = cold('--a--', { a: new SourceA() });
-      const expected = cold('--a--', { a });
+      class SourceD {
+        @Effect() d$ = alwaysOf(d);
+      }
 
-      const output = toActions(sources$);
+      class SourceE {
+        @Effect() e$ = alwaysOf(e);
+      }
 
-      expect(output).toBeObservable(expected);
-    });
+      class SourceF {
+        @Effect() f$ = alwaysOf(f);
+      }
 
-    it('should ignore duplicate sources', () => {
-      const sources$ = cold('--a--a--a--', {
-        a: new SourceA(),
+      class SourceG {
+        @Effect() g$ = alwaysOf(g);
+      }
+
+      class SourceError {
+        @Effect() e$ = throwError(error);
+      }
+
+      class SourceH {
+        @Effect() empty = of('value');
+        @Effect()
+        never = timer(50, getTestScheduler() as any).pipe(map(() => 'update'));
+      }
+
+      class SourceWithIdentifier implements OnIdentifyEffects {
+        effectIdentifier: string;
+        @Effect() i$ = alwaysOf(i);
+
+        ngrxOnIdentifyEffects() {
+          return this.effectIdentifier;
+        }
+
+        constructor(identifier: string) {
+          this.effectIdentifier = identifier;
+        }
+      }
+
+      class SourceWithIdentifier2 implements OnIdentifyEffects {
+        effectIdentifier: string;
+        @Effect() i2$ = alwaysOf(i2);
+
+        ngrxOnIdentifyEffects() {
+          return this.effectIdentifier;
+        }
+
+        constructor(identifier: string) {
+          this.effectIdentifier = identifier;
+        }
+      }
+
+      it('should resolve effects from instances', () => {
+        const sources$ = cold('--a--', { a: new SourceA() });
+        const expected = cold('--a--', { a });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
       });
-      const expected = cold('--a--------', { a });
 
-      const output = toActions(sources$);
+      it('should ignore duplicate sources', () => {
+        const sources$ = cold('--a--a--a--', {
+          a: new SourceA(),
+        });
+        const expected = cold('--a--------', { a });
 
-      expect(output).toBeObservable(expected);
-    });
+        const output = toActions(sources$);
 
-    it('should resolve effects with different identifiers', () => {
-      const sources$ = cold('--a--b--c--', {
-        a: new SourceWithIdentifier('a'),
-        b: new SourceWithIdentifier('b'),
-        c: new SourceWithIdentifier('c'),
+        expect(output).toBeObservable(expected);
       });
-      const expected = cold('--i--i--i--', { i });
 
-      const output = toActions(sources$);
+      it('should resolve effects with different identifiers', () => {
+        const sources$ = cold('--a--b--c--', {
+          a: new SourceWithIdentifier('a'),
+          b: new SourceWithIdentifier('b'),
+          c: new SourceWithIdentifier('c'),
+        });
+        const expected = cold('--i--i--i--', { i });
 
-      expect(output).toBeObservable(expected);
-    });
+        const output = toActions(sources$);
 
-    it('should ignore effects with the same identifier', () => {
-      const sources$ = cold('--a--b--c--', {
-        a: new SourceWithIdentifier('a'),
-        b: new SourceWithIdentifier('a'),
-        c: new SourceWithIdentifier('a'),
+        expect(output).toBeObservable(expected);
       });
-      const expected = cold('--i--------', { i });
 
-      const output = toActions(sources$);
+      it('should ignore effects with the same identifier', () => {
+        const sources$ = cold('--a--b--c--', {
+          a: new SourceWithIdentifier('a'),
+          b: new SourceWithIdentifier('a'),
+          c: new SourceWithIdentifier('a'),
+        });
+        const expected = cold('--i--------', { i });
 
-      expect(output).toBeObservable(expected);
-    });
+        const output = toActions(sources$);
 
-    it('should resolve effects with same identifiers but different classes', () => {
-      const sources$ = cold('--a--b--c--d--', {
-        a: new SourceWithIdentifier('a'),
-        b: new SourceWithIdentifier2('a'),
-        c: new SourceWithIdentifier('b'),
-        d: new SourceWithIdentifier2('b'),
+        expect(output).toBeObservable(expected);
       });
-      const expected = cold('--a--b--a--b--', { a: i, b: i2 });
 
-      const output = toActions(sources$);
+      it('should resolve effects with same identifiers but different classes', () => {
+        const sources$ = cold('--a--b--c--d--', {
+          a: new SourceWithIdentifier('a'),
+          b: new SourceWithIdentifier2('a'),
+          c: new SourceWithIdentifier('b'),
+          d: new SourceWithIdentifier2('b'),
+        });
+        const expected = cold('--a--b--a--b--', { a: i, b: i2 });
 
-      expect(output).toBeObservable(expected);
-    });
+        const output = toActions(sources$);
 
-    it('should report an error if an effect dispatches an invalid action', () => {
-      const sources$ = of(new SourceD());
-
-      toActions(sources$).subscribe();
-
-      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
-        new Error(
-          'Effect "SourceD.d$" dispatched an invalid action: {"not":"a valid action"}'
-        )
-      );
-    });
-
-    it('should report an error if an effect dispatches an `undefined`', () => {
-      const sources$ = of(new SourceE());
-
-      toActions(sources$).subscribe();
-
-      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
-        new Error('Effect "SourceE.e$" dispatched an invalid action: undefined')
-      );
-    });
-
-    it('should report an error if an effect dispatches a `null`', () => {
-      const sources$ = of(new SourceF());
-
-      toActions(sources$).subscribe();
-
-      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
-        new Error('Effect "SourceF.f$" dispatched an invalid action: null')
-      );
-    });
-
-    it(`should not break when the action in the error message can't be stringified`, () => {
-      const sources$ = of(new SourceG());
-
-      toActions(sources$).subscribe();
-
-      expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
-        new Error(
-          'Effect "SourceG.g$" dispatched an invalid action: [object Object]'
-        )
-      );
-    });
-
-    it('should not complete the group if just one effect completes', () => {
-      const sources$ = cold('g', {
-        g: new SourceH(),
+        expect(output).toBeObservable(expected);
       });
-      const expected = cold('a----b-----', { a: 'value', b: 'update' });
 
-      const output = toActions(sources$);
+      it('should report an error if an effect dispatches an invalid action', () => {
+        const sources$ = of(new SourceD());
 
-      expect(output).toBeObservable(expected);
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "SourceD.d$" dispatched an invalid action: {"not":"a valid action"}'
+          )
+        );
+      });
+
+      it('should report an error if an effect dispatches an `undefined`', () => {
+        const sources$ = of(new SourceE());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "SourceE.e$" dispatched an invalid action: undefined'
+          )
+        );
+      });
+
+      it('should report an error if an effect dispatches a `null`', () => {
+        const sources$ = of(new SourceF());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error('Effect "SourceF.f$" dispatched an invalid action: null')
+        );
+      });
+
+      it(`should not break when the action in the error message can't be stringified`, () => {
+        const sources$ = of(new SourceG());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "SourceG.g$" dispatched an invalid action: [object Object]'
+          )
+        );
+      });
+
+      it('should not complete the group if just one effect completes', () => {
+        const sources$ = cold('g', {
+          g: new SourceH(),
+        });
+        const expected = cold('a----b-----', { a: 'value', b: 'update' });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      function toActions(source: any): Observable<any> {
+        source['errorHandler'] = mockErrorReporter;
+        return (effectSources as any)['toActions'].call(source);
+      }
     });
 
-    function toActions(source: any): Observable<any> {
-      source['errorHandler'] = mockErrorReporter;
-      return (effectSources as any)['toActions'].call(source);
-    }
+    describe('with createEffect()', () => {
+      const a = { type: 'From Source A' };
+      const b = { type: 'From Source B' };
+      const c = { type: 'From Source C that completes' };
+      const d = { not: 'a valid action' };
+      const e = undefined;
+      const f = null;
+      const i = { type: 'From Source Identifier' };
+      const i2 = { type: 'From Source Identifier 2' };
+
+      let circularRef = {} as any;
+      circularRef.circularRef = circularRef;
+      const g = { circularRef };
+
+      const error = new Error('An Error');
+
+      class SourceA {
+        a$ = createEffect(() => alwaysOf(a));
+      }
+
+      class SourceB {
+        b$ = createEffect(() => alwaysOf(b));
+      }
+
+      class SourceC {
+        c$ = createEffect(() => of(c));
+      }
+
+      class SourceD {
+        // typed as `any` because otherwise there would be compile errors
+        // createEffect is typed that it always has to return an action
+        d$ = createEffect(() => alwaysOf(d) as any);
+      }
+
+      class SourceE {
+        // typed as `any` because otherwise there would be compile errors
+        // createEffect is typed that it always has to return an action
+        e$ = createEffect(() => alwaysOf(e) as any);
+      }
+
+      class SourceF {
+        // typed as `any` because otherwise there would be compile errors
+        // createEffect is typed that it always has to return an action
+        f$ = createEffect(() => alwaysOf(f) as any);
+      }
+
+      class SourceG {
+        // typed as `any` because otherwise there would be compile errors
+        // createEffect is typed that it always has to return an action
+        g$ = createEffect(() => alwaysOf(g) as any);
+      }
+
+      class SourceError {
+        e$ = createEffect(() => throwError(error));
+      }
+
+      class SourceH {
+        // typed as `any` because otherwise there would be compile errors
+        // createEffect is typed that it always has to return an action
+        empty = createEffect(() => of('value') as any);
+        never = createEffect(
+          () =>
+            // typed as `any` because otherwise there would be compile errors
+            // createEffect is typed that it always has to return an action
+            timer(50, getTestScheduler() as any).pipe(
+              map(() => 'update')
+            ) as any
+        );
+      }
+
+      class SourceWithIdentifier implements OnIdentifyEffects {
+        effectIdentifier: string;
+        i$ = createEffect(() => alwaysOf(i));
+
+        ngrxOnIdentifyEffects() {
+          return this.effectIdentifier;
+        }
+
+        constructor(identifier: string) {
+          this.effectIdentifier = identifier;
+        }
+      }
+
+      class SourceWithIdentifier2 implements OnIdentifyEffects {
+        effectIdentifier: string;
+        i2$ = createEffect(() => alwaysOf(i2));
+
+        ngrxOnIdentifyEffects() {
+          return this.effectIdentifier;
+        }
+
+        constructor(identifier: string) {
+          this.effectIdentifier = identifier;
+        }
+      }
+
+      it('should resolve effects from instances', () => {
+        const sources$ = cold('--a--', { a: new SourceA() });
+        const expected = cold('--a--', { a });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should ignore duplicate sources', () => {
+        const sources$ = cold('--a--a--a--', {
+          a: new SourceA(),
+        });
+        const expected = cold('--a--------', { a });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should resolve effects with different identifiers', () => {
+        const sources$ = cold('--a--b--c--', {
+          a: new SourceWithIdentifier('a'),
+          b: new SourceWithIdentifier('b'),
+          c: new SourceWithIdentifier('c'),
+        });
+        const expected = cold('--i--i--i--', { i });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should ignore effects with the same identifier', () => {
+        const sources$ = cold('--a--b--c--', {
+          a: new SourceWithIdentifier('a'),
+          b: new SourceWithIdentifier('a'),
+          c: new SourceWithIdentifier('a'),
+        });
+        const expected = cold('--i--------', { i });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should resolve effects with same identifiers but different classes', () => {
+        const sources$ = cold('--a--b--c--d--', {
+          a: new SourceWithIdentifier('a'),
+          b: new SourceWithIdentifier2('a'),
+          c: new SourceWithIdentifier('b'),
+          d: new SourceWithIdentifier2('b'),
+        });
+        const expected = cold('--a--b--a--b--', { a: i, b: i2 });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should report an error if an effect dispatches an invalid action', () => {
+        const sources$ = of(new SourceD());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "SourceD.d$" dispatched an invalid action: {"not":"a valid action"}'
+          )
+        );
+      });
+
+      it('should report an error if an effect dispatches an `undefined`', () => {
+        const sources$ = of(new SourceE());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "SourceE.e$" dispatched an invalid action: undefined'
+          )
+        );
+      });
+
+      it('should report an error if an effect dispatches a `null`', () => {
+        const sources$ = of(new SourceF());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error('Effect "SourceF.f$" dispatched an invalid action: null')
+        );
+      });
+
+      it(`should not break when the action in the error message can't be stringified`, () => {
+        const sources$ = of(new SourceG());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "SourceG.g$" dispatched an invalid action: [object Object]'
+          )
+        );
+      });
+
+      it('should not complete the group if just one effect completes', () => {
+        const sources$ = cold('g', {
+          g: new SourceH(),
+        });
+        const expected = cold('a----b-----', { a: 'value', b: 'update' });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      function toActions(source: any): Observable<any> {
+        source['errorHandler'] = mockErrorReporter;
+        return (effectSources as any)['toActions'].call(source);
+      }
+    });
   });
 
   function alwaysOf<T>(value: T) {

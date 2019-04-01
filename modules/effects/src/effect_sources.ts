@@ -12,7 +12,6 @@ import {
 
 import { verifyOutput } from './effect_notification';
 import { mergeEffects } from './effects_resolver';
-import { getSourceForInstance } from './effects_metadata';
 import {
   onIdentifyEffectsKey,
   onRunEffectsKey,
@@ -20,6 +19,7 @@ import {
   OnRunEffects,
   onInitEffects,
 } from './lifecycle_hooks';
+import { getSourceForInstance } from './utils';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
