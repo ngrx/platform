@@ -1,12 +1,12 @@
 require('ts-node/register');
-const tsConfig = require("./tsconfig.json");
-const tsConfigPaths = require("tsconfig-paths");
- 
-const baseUrl = "./";
+const tsConfig = require('./tsconfig.json');
+const tsConfigPaths = require('tsconfig-paths');
+
+const baseUrl = './';
 
 tsConfigPaths.register({
-    baseUrl,
-    paths: tsConfig.compilerOptions.paths
+  baseUrl,
+  paths: tsConfig.compilerOptions.paths,
 });
 
 require('core-js/es7/reflect');
@@ -25,15 +25,21 @@ global.jasmine = runner.jasmine;
 
 require('zone.js/dist/jasmine-patch.js');
 
+// Override console.warn, otherwise we log too much to the console
+// This is because of the `runtimeChecks` warning when no runtime config is provided
+console.warn = () => {};
+
 const { getTestBed } = require('@angular/core/testing');
-const { ServerTestingModule, platformServerTesting } = require('@angular/platform-server/testing');
+const {
+  ServerTestingModule,
+  platformServerTesting,
+} = require('@angular/platform-server/testing');
 
 getTestBed().initTestEnvironment(ServerTestingModule, platformServerTesting());
 
 runner.loadConfig({
   spec_dir: 'modules',
-  spec_files: [ '**/*.spec.ts' ]
+  spec_files: ['**/*.spec.ts'],
 });
 
 runner.execute();
-
