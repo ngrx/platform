@@ -38,7 +38,7 @@ describe('Service: GoogleBooks', () => {
 
     expect(service.searchBooks(queryTitle)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(
-      `https://www.googleapis.com/books/v1/volumes?q=${queryTitle}`
+      `https://www.googleapis.com/books/v1/volumes?orderBy=newest&q=${queryTitle}`
     );
   });
 
