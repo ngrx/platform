@@ -127,7 +127,6 @@
     "cpy-cli": "^1.0.1",
     "cypress": "^3.1.5",
     "deep-freeze": "^0.0.1",
-    "deep-freeze-strict": "^1.1.1",
     "express": "^4.16.4",
     "fs-extra": "^2.1.2",
     "glob": "^7.1.2",
