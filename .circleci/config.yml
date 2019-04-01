@@ -207,9 +207,9 @@ workflows:
       - example-tests:
           requires:
             - install
-      - example-e2e-tests:
-          requires:
-            - install
+      # - example-e2e-tests:
+      #     requires:
+      #       - install
       - docs-tests:
           requires:
             - install
@@ -226,7 +226,7 @@ workflows:
           requires:
             - docs
             - example-tests
-            - example-e2e-tests
+            # - example-e2e-tests
             - docs-tests
             - test
           filters:
