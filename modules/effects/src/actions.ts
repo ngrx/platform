@@ -113,22 +113,15 @@ export function ofType<V extends Action>(
 export function ofType(
   ...allowedTypes: Array<string | ActionCreator<string, Creator>>
 ): OperatorFunction<Action, Action> {
-  return filter((action: Action) => {
-    for (let typeOrActionCreator of allowedTypes) {
-      const actionCreatorType = (typeOrActionCreator as ActionCreator<
-        string,
-        Creator
-      >).type;
-      if (actionCreatorType !== undefined) {
-        // We are filtering by ActionCreator
-        if (actionCreatorType === action.type) {
-          return true;
-        }
+  return filter((action: Action) =>
+    allowedTypes.some(typeOrActionCreator => {
+      if (typeof typeOrActionCreator === 'string') {
         // Comparing the string to type
-      } else if (typeOrActionCreator === action.type) {
-        return true;
+        return typeOrActionCreator === action.type;
       }
-    }
-    return false;
-  });
+
+      // We are filtering by ActionCreator
+      return typeOrActionCreator.type === action.type;
+    })
+  );
 }
