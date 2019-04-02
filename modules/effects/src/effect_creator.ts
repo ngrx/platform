@@ -4,14 +4,14 @@ import { EffectMetadata } from './models';
 
 const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
 
-export function createEffect<T extends Action>(
-  source: (() => Observable<T>),
+export function createEffect(
+  source: (() => Observable<any>),
   options: { dispatch: false }
-): Observable<T>;
-export function createEffect<T extends Action>(
-  source: (() => (...args: any[]) => Observable<T>),
+): Observable<any>;
+export function createEffect(
+  source: (() => (...args: any[]) => Observable<any>),
   options: { dispatch: false }
-): ((...args: any[]) => Observable<T>);
+): ((...args: any[]) => Observable<any>);
 export function createEffect<T extends Action>(
   source: (() => Observable<T>),
   options?: { dispatch: true }
@@ -23,7 +23,7 @@ export function createEffect<T extends Action>(
 export function createEffect<T extends Action>(
   source: (() => Observable<T>) | (() => (...args: any[]) => Observable<T>),
   { dispatch = true } = {}
-): Observable<T> | ((...args: any[]) => Observable<T>) {
+): Observable<T> | ((...args: any[]) => Observable<T | any>) {
   const effect = source();
   Object.defineProperty(effect, CREATE_EFFECT_METADATA_KEY, {
     value: {

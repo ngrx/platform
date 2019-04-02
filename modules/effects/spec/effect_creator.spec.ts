@@ -30,6 +30,14 @@ describe('createEffect()', () => {
     expect(effect['__@ngrx/effects_create__']).toEqual({ dispatch: false });
   });
 
+  it('should be possible to create a non-dispatching effect returning a non-action', () => {
+    const effect: any = createEffect(() => of('foo'), {
+      dispatch: false,
+    });
+
+    expect(effect['__@ngrx/effects_create__']).toEqual({ dispatch: false });
+  });
+
   describe('getCreateEffectMetadata', () => {
     it('should get the effects metadata for a class instance', () => {
       class Fixture {

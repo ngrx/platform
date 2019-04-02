@@ -18,11 +18,13 @@ export class CollectionEffects {
    *
    * The `defer` observable accepts an observable factory function
    * that is called when the observable is subscribed to.
-   * Wrapping the database open call in `defer` makes
+   * Wrapping the supported call in `defer` makes
    * effect easier to test.
    */
-  @Effect({ dispatch: false })
-  checkStorageSupport$ = defer(() => this.storageService.supported());
+  checkStorageSupport$ = createEffect(
+    () => defer(() => this.storageService.supported()),
+    { dispatch: false }
+  );
 
   loadCollection$ = createEffect(() =>
     this.actions$.pipe(
