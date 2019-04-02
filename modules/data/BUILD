@@ -13,9 +13,9 @@ ng_module(
         "//modules/effects",
         "//modules/entity",
         "//modules/store",
-        "@angular//packages/common/http",
-        "@angular//packages/core",
-        "@rxjs",
+        "@npm//@angular/common",
+        "@npm//@angular/core",
+        "@npm//rxjs",
     ],
 )
 
