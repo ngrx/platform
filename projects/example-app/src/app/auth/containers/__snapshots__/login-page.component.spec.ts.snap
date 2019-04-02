@@ -7,35 +7,27 @@ exports[`Login Page should compile 1`] = `
   store={[Function Store]}
 >
   <bc-login-form
-    _nghost-c0=""
     ng-reflect-pending="false"
   >
     <mat-card
-      _ngcontent-c0=""
       class="mat-card"
     >
       <mat-card-title
-        _ngcontent-c0=""
         class="mat-card-title"
       >
         Login
       </mat-card-title>
       <mat-card-content
-        _ngcontent-c0=""
         class="mat-card-content"
       >
         <form
-          _ngcontent-c0=""
           class="ng-untouched ng-pristine ng-valid"
           ng-reflect-form="[object Object]"
           novalidate=""
         >
-          <p
-            _ngcontent-c0=""
-          >
+          <p>
             <mat-form-field
-              _ngcontent-c0=""
-              class="mat-form-field ng-tns-c2-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+              class="mat-form-field ng-tns-c1-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
             >
               <div
                 class="mat-form-field-wrapper"
@@ -49,7 +41,6 @@ exports[`Login Page should compile 1`] = `
                     class="mat-form-field-infix"
                   >
                     <input
-                      _ngcontent-c0=""
                       aria-invalid="false"
                       aria-required="false"
                       class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
@@ -68,7 +59,7 @@ exports[`Login Page should compile 1`] = `
                       
                       <label
                         aria-owns="mat-input-0"
-                        class="mat-form-field-label ng-tns-c2-0 ng-star-inserted"
+                        class="mat-form-field-label ng-tns-c1-0 ng-star-inserted"
                         for="mat-input-0"
                         id="mat-form-field-label-1"
                         ng-reflect-disabled="true"
@@ -86,7 +77,7 @@ exports[`Login Page should compile 1`] = `
                 </div>
                 
                 <div
-                  class="mat-form-field-underline ng-tns-c2-0 ng-star-inserted"
+                  class="mat-form-field-underline ng-tns-c1-0 ng-star-inserted"
                 >
                   <span
                     class="mat-form-field-ripple"
@@ -99,8 +90,8 @@ exports[`Login Page should compile 1`] = `
                   
                   
                   <div
-                    class="mat-form-field-hint-wrapper ng-tns-c2-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                    style="opacity:1;0:opacity;transform:translateY(0%);"
+                    class="mat-form-field-hint-wrapper ng-tns-c1-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                    style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
                   >
                     
                     <div
@@ -111,12 +102,9 @@ exports[`Login Page should compile 1`] = `
               </div>
             </mat-form-field>
           </p>
-          <p
-            _ngcontent-c0=""
-          >
+          <p>
             <mat-form-field
-              _ngcontent-c0=""
-              class="mat-form-field ng-tns-c2-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+              class="mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
             >
               <div
                 class="mat-form-field-wrapper"
@@ -130,7 +118,6 @@ exports[`Login Page should compile 1`] = `
                     class="mat-form-field-infix"
                   >
                     <input
-                      _ngcontent-c0=""
                       aria-invalid="false"
                       aria-required="false"
                       class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
@@ -149,7 +136,7 @@ exports[`Login Page should compile 1`] = `
                       
                       <label
                         aria-owns="mat-input-1"
-                        class="mat-form-field-label ng-tns-c2-1 mat-empty mat-form-field-empty ng-star-inserted"
+                        class="mat-form-field-label ng-tns-c1-1 mat-empty mat-form-field-empty ng-star-inserted"
                         for="mat-input-1"
                         id="mat-form-field-label-3"
                         ng-reflect-disabled="true"
@@ -167,7 +154,7 @@ exports[`Login Page should compile 1`] = `
                 </div>
                 
                 <div
-                  class="mat-form-field-underline ng-tns-c2-1 ng-star-inserted"
+                  class="mat-form-field-underline ng-tns-c1-1 ng-star-inserted"
                 >
                   <span
                     class="mat-form-field-ripple"
@@ -180,8 +167,8 @@ exports[`Login Page should compile 1`] = `
                   
                   
                   <div
-                    class="mat-form-field-hint-wrapper ng-tns-c2-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                    style="opacity:1;0:opacity;transform:translateY(0%);"
+                    class="mat-form-field-hint-wrapper ng-tns-c1-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                    style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
                   >
                     
                     <div
@@ -194,11 +181,9 @@ exports[`Login Page should compile 1`] = `
           </p>
           
           <p
-            _ngcontent-c0=""
             class="loginButtons"
           >
             <button
-              _ngcontent-c0=""
               mat-button=""
               type="submit"
             >

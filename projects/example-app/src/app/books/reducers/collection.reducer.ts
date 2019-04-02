@@ -24,38 +24,38 @@ export function reducer(
     | CollectionApiActions.CollectionApiActionsUnion
 ): State {
   switch (action.type) {
-    case CollectionPageActions.CollectionPageActionTypes.LoadCollection: {
+    case CollectionPageActions.loadCollection.type: {
       return {
         ...state,
         loading: true,
       };
     }
 
-    case CollectionApiActions.CollectionApiActionTypes.LoadBooksSuccess: {
+    case CollectionApiActions.loadBooksSuccess.type: {
       return {
         loaded: true,
         loading: false,
-        ids: action.payload.map(book => book.id),
+        ids: action.books.map(book => book.id),
       };
     }
 
-    case CollectionApiActions.CollectionApiActionTypes.AddBookSuccess:
-    case CollectionApiActions.CollectionApiActionTypes.RemoveBookFailure: {
-      if (state.ids.indexOf(action.payload.id) > -1) {
+    case CollectionApiActions.addBookSuccess.type:
+    case CollectionApiActions.removeBookFailure.type: {
+      if (state.ids.indexOf(action.book.id) > -1) {
         return state;
       }
 
       return {
         ...state,
-        ids: [...state.ids, action.payload.id],
+        ids: [...state.ids, action.book.id],
       };
     }
 
-    case CollectionApiActions.CollectionApiActionTypes.RemoveBookSuccess:
-    case CollectionApiActions.CollectionApiActionTypes.AddBookFailure: {
+    case CollectionApiActions.removeBookSuccess.type:
+    case CollectionApiActions.addBookFailure.type: {
       return {
         ...state,
-        ids: state.ids.filter(id => id !== action.payload.id),
+        ids: state.ids.filter(id => id !== action.book.id),
       };
     }
 

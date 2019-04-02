@@ -149,3 +149,49 @@ export async function postGithubComment() {
     });
   }
 }
+
+export async function cleanupDocsPreviews() {
+  const repoUrl = 'git@github.com:ngrx/ngrx-io-previews.git';
+  const repoDir = `./tmp/docs-preview-cleanup`;
+  const token = process.env.GITHUB_API_KEY;
+  const octokit = require('@octokit/rest')();
+
+  octokit.authenticate({ type: 'token', token });
+
+  const q = 'repo:ngrx/platform is:pr is:closed';
+
+  const { data }: { data: { items: any[] } } = await octokit.search.issues({
+    q,
+    per_page: 100,
+  });
+
+  await util.cmd('rm -rf', [`${repoDir}`]);
+  await util.cmd('mkdir ', [`-p ${repoDir}`]);
+  await process.chdir(`${repoDir}`);
+  await util.git([`init`]);
+  await util.git([`remote add origin ${repoUrl}`]);
+  await util.git([`fetch origin master --depth=1`]);
+  await util.git(['checkout origin/master -b master']);
+
+  const prsToRemove = data.items.reduce(
+    (prev: string[], curr: { number: number }) => {
+      prev.push(`pr${curr.number}*`);
+
+      return prev;
+    },
+    []
+  );
+
+  await util.cmd('rm -rf', [`${prsToRemove.join(' ')}`]);
+  await util.git([`config user.name "ngrxbot"`]);
+  await util.git([`config user.email "${process.env.GITHUB_BOT_EMAIL}"`]);
+  await util.git(['add --all']);
+
+  try {
+    await util.git([
+      `commit -m "chore: cleanup previews for closed pull requests"`,
+    ]);
+  } catch (e) {}
+
+  await util.git(['push origin master --force']);
+}

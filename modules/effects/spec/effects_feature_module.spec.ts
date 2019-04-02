@@ -8,8 +8,8 @@ import {
   Store,
   StoreModule,
 } from '@ngrx/store';
-import { map, withLatestFrom, filter } from 'rxjs/operators';
-import { Actions, Effect, EffectsModule, ofType, OnInitEffects } from '../';
+import { map, withLatestFrom } from 'rxjs/operators';
+import { Actions, Effect, EffectsModule, ofType, createEffect } from '../';
 import { EffectsFeatureModule } from '../src/effects_feature_module';
 import { EffectsRootModule } from '../src/effects_root_module';
 import { FEATURE_EFFECTS } from '../src/tokens';
@@ -80,6 +80,22 @@ describe('Effects Feature Module', () => {
         done();
       });
     });
+
+    it('should have the feature state defined to select from the createEffect', (done: any) => {
+      const action = { type: 'CREATE_INCREMENT' };
+      const result = { type: 'CREATE_INCREASE' };
+
+      effects.createEffectWithStore.subscribe(res => {
+        expect(res).toEqual(result);
+      });
+
+      store.dispatch(action);
+
+      store.pipe(select(getCreateDataState)).subscribe(data => {
+        expect(data).toBe(220);
+        done();
+      });
+    });
   });
 });
 
@@ -91,10 +107,12 @@ interface State {
 
 interface DataState {
   data: number;
+  createData: number;
 }
 
 const initialState: DataState = {
   data: 100,
+  createData: 200,
 };
 
 function reducer(state: DataState = initialState, action: Action) {
@@ -104,6 +122,11 @@ function reducer(state: DataState = initialState, action: Action) {
         ...state,
         data: state.data + 10,
       };
+    case 'CREATE_INCREASE':
+      return {
+        ...state,
+        createData: state.createData + 20,
+      };
   }
   return state;
 }
@@ -111,6 +134,10 @@ function reducer(state: DataState = initialState, action: Action) {
 const getFeatureState = createFeatureSelector<DataState>(FEATURE_KEY);
 
 const getDataState = createSelector(getFeatureState, state => state.data);
+const getCreateDataState = createSelector(
+  getFeatureState,
+  state => state.createData
+);
 
 @Injectable()
 class FeatureEffects {
@@ -121,6 +148,14 @@ class FeatureEffects {
     ofType('INCREMENT'),
     withLatestFrom(this.store.select(getDataState)),
     map(([action, state]) => ({ type: 'INCREASE' }))
+  );
+
+  createEffectWithStore = createEffect(() =>
+    this.actions.pipe(
+      ofType('CREATE_INCREMENT'),
+      withLatestFrom(this.store.select(getDataState)),
+      map(([action, state]) => ({ type: 'CREATE_INCREASE' }))
+    )
   );
 }
 

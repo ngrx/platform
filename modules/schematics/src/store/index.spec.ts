@@ -37,7 +37,9 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
+
     const files = tree.files;
+
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -56,8 +58,29 @@ describe('Store Schematic', () => {
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
     const files = tree.files;
+
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/reducers/index.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create the initial store to defaultProject if project is not provided', () => {
+    const options = {
+      ...defaultOptions,
+      project: undefined,
+    };
+
+    const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
+      ...defaultAppOptions,
+      name: defaultWorkspaceOptions.defaultProject,
+    });
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+
+    const files = tree.files;
+
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/app/reducers/index.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 

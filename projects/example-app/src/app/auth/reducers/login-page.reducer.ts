@@ -17,7 +17,7 @@ export function reducer(
     | LoginPageActions.LoginPageActionsUnion
 ): State {
   switch (action.type) {
-    case LoginPageActions.LoginPageActionTypes.Login: {
+    case LoginPageActions.login.type: {
       return {
         ...state,
         error: null,
@@ -25,7 +25,7 @@ export function reducer(
       };
     }
 
-    case AuthApiActions.AuthApiActionTypes.LoginSuccess: {
+    case AuthApiActions.loginSuccess.type: {
       return {
         ...state,
         error: null,
@@ -33,10 +33,10 @@ export function reducer(
       };
     }
 
-    case AuthApiActions.AuthApiActionTypes.LoginFailure: {
+    case AuthApiActions.loginFailure.type: {
       return {
         ...state,
-        error: action.payload.error,
+        error: action.error,
         pending: false,
       };
     }

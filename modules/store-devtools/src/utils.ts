@@ -26,7 +26,7 @@ export function unliftState(liftedState: LiftedState) {
   const { computedStates, currentStateIndex } = liftedState;
 
   // At start up NgRx dispatches init actions,
-  // When these init actions are being filtered out by the predicate or black/white list options
+  // When these init actions are being filtered out by the predicate or safe/block list options
   // we don't have a complete computed states yet.
   // At this point it could happen that we're out of bounds, when this happens we fall back to the last known state
   if (currentStateIndex >= computedStates.length) {
@@ -112,7 +112,7 @@ export function sanitizeState(
  * Read the config and tell if actions should be filtered
  */
 export function shouldFilterActions(config: StoreDevtoolsConfig) {
-  return config.predicate || config.actionsWhitelist || config.actionsBlacklist;
+  return config.predicate || config.actionsSafelist || config.actionsBlocklist;
 }
 
 /**
@@ -121,8 +121,8 @@ export function shouldFilterActions(config: StoreDevtoolsConfig) {
 export function filterLiftedState(
   liftedState: LiftedState,
   predicate?: Predicate,
-  whitelist?: string[],
-  blacklist?: string[]
+  safelist?: string[],
+  blocklist?: string[]
 ): LiftedState {
   const filteredStagedActionIds: number[] = [];
   const filteredActionsById: LiftedActions = {};
@@ -136,8 +136,8 @@ export function filterLiftedState(
         liftedState.computedStates[idx],
         liftedAction,
         predicate,
-        whitelist,
-        blacklist
+        safelist,
+        blocklist
       )
     ) {
       return;
@@ -161,13 +161,13 @@ export function isActionFiltered(
   state: any,
   action: LiftedAction,
   predicate?: Predicate,
-  whitelist?: string[],
-  blacklist?: string[]
+  safelist?: string[],
+  blockedlist?: string[]
 ) {
   const predicateMatch = predicate && !predicate(state, action.action);
-  const whitelistMatch =
-    whitelist && !action.action.type.match(whitelist.join('|'));
-  const blacklistMatch =
-    blacklist && action.action.type.match(blacklist.join('|'));
-  return predicateMatch || whitelistMatch || blacklistMatch;
+  const safelistMatch =
+    safelist && !action.action.type.match(safelist.join('|'));
+  const blocklistMatch =
+    blockedlist && action.action.type.match(blockedlist.join('|'));
+  return predicateMatch || safelistMatch || blocklistMatch;
 }

@@ -1,0 +1,19 @@
+// WORKAROUND https://github.com/angular/angular/issues/18810
+//
+// This file is required to run ngc on 3rd party libraries such as @angular/core
+// to write files like node_modules/@angular/core/core.ngsummary.json.
+//
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2015"],
+    "experimentalDecorators": true,
+    "types": [],
+    "module": "amd",
+    "moduleResolution": "node"
+  },
+  "angularCompilerOptions": {
+    "enableSummariesForJit": true
+  },
+  "include": ["node_modules/@angular/core/*"],
+  "exclude": ["node_modules/@angular/**/testing/**"]
+}

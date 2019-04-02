@@ -24,6 +24,6 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(credentials: Credentials) {
-    this.store.dispatch(new LoginPageActions.Login({ credentials }));
+    this.store.dispatch(LoginPageActions.login({ credentials }));
   }
 }

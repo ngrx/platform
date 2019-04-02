@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//tools:defaults.bzl", "ng_module", "ng_package", "ts_library")
+load("//tools:defaults.bzl", "ng_module", "ng_package")
 
 ng_module(
     name = "store-devtools",
@@ -11,7 +11,8 @@ ng_module(
     module_name = "@ngrx/store-devtools",
     deps = [
         "//modules/store",
-        "@rxjs",
+        "@npm//@angular/core",
+        "@npm//rxjs",
     ],
 )
 

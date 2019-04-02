@@ -12,8 +12,7 @@ Usage:
 <code-example header="my.effects.spec.ts">
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { hot, cold } from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 
 import { MyEffects } from './my-effects';
@@ -48,14 +47,44 @@ describe('My Effects', () => {
 
     expect(effects.someSource$).toBeObservable(expected);
   });
+});
+</code-example>
 
-  it('should work also', () => {
+It is also possible to use `ReplaySubject` as an alternative for marble tests:
+
+<code-example header="my.effects.spec.ts">
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { ReplaySubject } from 'rxjs';
+
+import { MyEffects } from './my-effects';
+import * as MyActions from '../actions/my-actions';
+
+describe('My Effects', () => {
+  let effects: MyEffects;
+  let actions: ReplaySubject&lt;any&gt;;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        // any modules needed
+      ],
+      providers: [
+        MyEffects,
+        provideMockActions(() => actions),
+        // other providers
+      ],
+    });
+
+    effects = TestBed.get(MyEffects);
+  });
+
+  it('should work', () => {
     actions = new ReplaySubject(1);
-
-    actions.next(SomeAction);
+    actions.next(new MyActions.ExampleAction());
 
     effects.someSource$.subscribe(result => {
-      expect(result).toEqual(AnotherAction);
+      expect(result).toEqual(new MyActions.ExampleActionSuccess());
     });
   });
 });

@@ -55,7 +55,7 @@ export default function(options: EntityOptions): Rule {
     ]);
 
     return chain([
-      addReducerToState({ ...options }),
+      addReducerToState({ ...options, plural: true }),
       addReducerImportToNgModule({ ...options }),
       branchAndMerge(chain([mergeWith(templateSource)])),
     ])(host, context);

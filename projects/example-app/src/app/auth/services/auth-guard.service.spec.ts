@@ -1,27 +1,29 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { StoreModule, Store, combineReducers } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 import { cold } from 'jasmine-marbles';
 import { AuthGuard } from '@example-app/auth/services/auth-guard.service';
-import { AuthApiActions } from '@example-app/auth/actions';
 import * as fromRoot from '@example-app/reducers';
 import * as fromAuth from '@example-app/auth/reducers';
+import * as fromLoginPage from '@example-app/auth/reducers/login-page.reducer';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
-  let store: Store<any>;
+  let store: MockStore<fromAuth.State>;
+  const initialState = {
+    auth: {
+      status: {
+        user: null,
+      },
+    },
+  } as fromAuth.State;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({
-          ...fromRoot.reducers,
-          auth: combineReducers(fromAuth.reducers),
-        }),
-      ],
+      providers: [AuthGuard, provideMockStore({ initialState })],
     });
 
     store = TestBed.get(Store);
-    spyOn(store, 'dispatch').and.callThrough();
     guard = TestBed.get(AuthGuard);
   });
 
@@ -32,9 +34,17 @@ describe('Auth Guard', () => {
   });
 
   it('should return true if the user state is logged in', () => {
-    const user: any = {};
-    const action = new AuthApiActions.LoginSuccess({ user });
-    store.dispatch(action);
+    store.setState({
+      ...initialState,
+      auth: {
+        loginPage: {} as fromLoginPage.State,
+        status: {
+          user: {
+            name: 'John',
+          },
+        },
+      },
+    });
 
     const expected = cold('(a|)', { a: true });
 

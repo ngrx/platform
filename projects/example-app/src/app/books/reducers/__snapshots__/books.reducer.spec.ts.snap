@@ -160,7 +160,7 @@ Object {
 }
 `;
 
-exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only new books when books already exist 1`] = `
+exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when books already exist 1`] = `
 Object {
   "entities": Object {
     "1": Object {
@@ -230,7 +230,7 @@ Object {
 }
 `;
 
-exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only new books when books already exist 2`] = `
+exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when books already exist 2`] = `
 Object {
   "entities": Object {
     "1": Object {

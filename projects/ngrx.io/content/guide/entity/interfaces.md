@@ -14,7 +14,7 @@ interface EntityState&lt;V&gt; {
 - `ids`: An array of all the primary ids in the collection
 - `entities`: A dictionary of entities in the collection indexed by the primary id
 
-Extend this interface to provided any additional properties for the entity state.
+Extend this interface to provide any additional properties for the entity state.
 
 Usage:
 

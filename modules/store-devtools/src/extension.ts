@@ -113,8 +113,8 @@ export class DevtoolsExtension {
           currentState,
           action,
           this.config.predicate,
-          this.config.actionsWhitelist,
-          this.config.actionsBlacklist
+          this.config.actionsSafelist,
+          this.config.actionsBlocklist
         )
       ) {
         return;

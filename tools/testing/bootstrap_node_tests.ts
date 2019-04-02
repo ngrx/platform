@@ -6,13 +6,15 @@ import 'zone.js/dist/sync-test.js';
 import 'zone.js/dist/async-test.js';
 import 'zone.js/dist/fake-async-test.js';
 
+// We must first initialize jasmine-core before calling
+// requiring `zone.js/dist/jasmine-patch.js` which patches
+// jasmine ENV with code which understands ProxyZone.
+// jasmine_node_test under Bazel will check if `jasmineCore.boot(jasmineCore)`
+// has been called and re-use the env if it has.
+// See https://github.com/bazelbuild/rules_nodejs/pull/539
 const jasmineCore: any = require('jasmine-core');
-const patchedJasmine = jasmineCore.boot(jasmineCore);
-(global as any)['jasmine'] = patchedJasmine;
-
-jasmineCore.boot = function() {
-  return patchedJasmine;
-};
+jasmineCore.boot(jasmineCore);
+import 'zone.js/dist/jasmine-patch.js';
 
 import { TestBed } from '@angular/core/testing';
 import {

@@ -1,77 +1,60 @@
-import {
-  Effect,
-  getEffectsMetadata,
-  getSourceMetadata,
-  getSourceForInstance,
-} from '../src/effects_metadata';
+import { getEffectsMetadata, getSourceMetadata } from '../src/effects_metadata';
+import { of } from 'rxjs';
+import { Effect, createEffect } from '..';
 
-describe('Effect Metadata', () => {
+describe('Effects metadata', () => {
   describe('getSourceMetadata', () => {
-    it('should get the effects metadata for a class instance', () => {
+    it('should combine effects created by the effect decorator and by createEffect', () => {
       class Fixture {
         @Effect() a: any;
-        @Effect() b: any;
+        b = createEffect(() => of({ type: 'a' }));
         @Effect({ dispatch: false })
         c: any;
+        d = createEffect(() => of({ type: 'a' }), { dispatch: false });
+        z: any;
       }
 
       const mock = new Fixture();
 
       expect(getSourceMetadata(mock)).toEqual([
         { propertyName: 'a', dispatch: true },
-        { propertyName: 'b', dispatch: true },
         { propertyName: 'c', dispatch: false },
+        { propertyName: 'b', dispatch: true },
+        { propertyName: 'd', dispatch: false },
       ]);
-    });
-
-    it('should return an empty array if the class has not been decorated', () => {
-      class Fixture {
-        a: any;
-        b: any;
-        c: any;
-      }
-
-      const mock = new Fixture();
-
-      expect(getSourceMetadata(mock)).toEqual([]);
-    });
-  });
-
-  describe('getSourceProto', () => {
-    it('should get the prototype for an instance of a source', () => {
-      class Fixture {}
-      const instance = new Fixture();
-
-      const proto = getSourceForInstance(instance);
-
-      expect(proto).toBe(Fixture.prototype);
     });
   });
 
   describe('getEffectsMetadata', () => {
-    it('should get map of metadata for all decorated effects in a class instance', () => {
+    it('should get map of metadata for all effects created', () => {
       class Fixture {
         @Effect() a: any;
+        b = createEffect(() => of({ type: 'd' }));
         @Effect({ dispatch: true })
-        b: any;
-        @Effect({ dispatch: false })
         c: any;
+        d = createEffect(() => of({ type: 'e' }), { dispatch: true });
+        @Effect({ dispatch: false })
+        e: any;
+        f = createEffect(() => of({ type: 'f' }), { dispatch: false });
       }
 
       const mock = new Fixture();
 
       expect(getEffectsMetadata(mock)).toEqual({
         a: { dispatch: true },
+        c: { dispatch: true },
+        e: { dispatch: false },
         b: { dispatch: true },
-        c: { dispatch: false },
+        d: { dispatch: true },
+        f: { dispatch: false },
       });
     });
 
-    it('should return an empty map if the class has not been decorated', () => {
+    it('should return an empty map if the class does not have effects', () => {
+      const fakeCreateEffect: any = () => {};
       class Fixture {
         a: any;
-        b: any;
-        c: any;
+        b = fakeCreateEffect(() => of({ type: 'a' }));
       }
 
       const mock = new Fixture();

@@ -48,7 +48,7 @@ describe('Selected Book Page', () => {
 
   it('should dispatch a collection.AddBook action when addToCollection is called', () => {
     const $event: Book = generateMockBook();
-    const action = new SelectedBookPageActions.AddBook($event);
+    const action = SelectedBookPageActions.addBook({ book: $event });
 
     instance.addToCollection($event);
 
@@ -57,7 +57,7 @@ describe('Selected Book Page', () => {
 
   it('should dispatch a collection.RemoveBook action on removeFromCollection', () => {
     const $event: Book = generateMockBook();
-    const action = new SelectedBookPageActions.RemoveBook($event);
+    const action = SelectedBookPageActions.removeBook({ book: $event });
 
     instance.removeFromCollection($event);
 

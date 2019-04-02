@@ -49,8 +49,8 @@ export function reducer(
     | CollectionApiActions.CollectionApiActionsUnion
 ): State {
   switch (action.type) {
-    case BooksApiActions.BooksApiActionTypes.SearchSuccess:
-    case CollectionApiActions.CollectionApiActionTypes.LoadBooksSuccess: {
+    case BooksApiActions.searchSuccess.type:
+    case CollectionApiActions.loadBooksSuccess.type: {
       /**
        * The addMany function provided by the created adapter
        * adds many records to the entity dictionary
@@ -58,10 +58,10 @@ export function reducer(
        * the collection is to be sorted, the adapter will
        * sort each record upon entry into the sorted array.
        */
-      return adapter.addMany(action.payload, state);
+      return adapter.addMany(action.books, state);
     }
 
-    case BookActions.BookActionTypes.LoadBook: {
+    case BookActions.loadBook.type: {
       /**
        * The addOne function provided by the created adapter
        * adds one record to the entity dictionary
@@ -69,13 +69,13 @@ export function reducer(
        * exist already. If the collection is to be sorted, the adapter will
        * insert the new record into the sorted array.
        */
-      return adapter.addOne(action.payload, state);
+      return adapter.addOne(action.book, state);
     }
 
-    case ViewBookPageActions.ViewBookPageActionTypes.SelectBook: {
+    case ViewBookPageActions.selectBook.type: {
       return {
         ...state,
-        selectedBookId: action.payload,
+        selectedBookId: action.id,
       };
     }
 

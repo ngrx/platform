@@ -122,7 +122,7 @@ enum RouterTrigger {
  *       { path: '', component: SimpleCmp },
  *       { path: 'next', component: SimpleCmp }
  *     ]),
- *     StoreRouterConnectingModule
+ *     StoreRouterConnectingModule.forRoot()
  *   ],
  *   bootstrap: [AppCmp]
  * })
@@ -130,23 +130,7 @@ enum RouterTrigger {
  * }
  * ```
  */
-@NgModule({
-  providers: [
-    {
-      provide: _ROUTER_CONFIG,
-      useValue: {},
-    },
-    {
-      provide: ROUTER_CONFIG,
-      useFactory: _createRouterConfig,
-      deps: [_ROUTER_CONFIG],
-    },
-    {
-      provide: RouterStateSerializer,
-      useClass: DefaultRouterStateSerializer,
-    },
-  ],
-})
+@NgModule({})
 export class StoreRouterConnectingModule {
   static forRoot<
     T extends BaseRouterStoreState = SerializedRouterStateSnapshot
@@ -157,6 +141,11 @@ export class StoreRouterConnectingModule {
       ngModule: StoreRouterConnectingModule,
       providers: [
         { provide: _ROUTER_CONFIG, useValue: config },
+        {
+          provide: ROUTER_CONFIG,
+          useFactory: _createRouterConfig,
+          deps: [_ROUTER_CONFIG],
+        },
         {
           provide: RouterStateSerializer,
           useClass: config.serializer

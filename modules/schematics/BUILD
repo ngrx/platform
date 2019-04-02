@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//tools:defaults.bzl", "npm_package", "ts_library")
+load("//tools:defaults.bzl", "jasmine_node_test", "npm_package", "ts_library", "ts_test_library")
 
 ts_library(
     name = "schematics",
@@ -39,5 +39,31 @@ npm_package(
     ],
     deps = [
         ":schematics",
+    ],
+)
+
+ts_test_library(
+    name = "test_lib",
+    srcs = glob(
+        [
+            "**/*.spec.ts",
+        ],
+    ),
+    data = glob([
+        "**/src/*/files/**/*",
+        "**/*.json",
+    ]),
+    deps = [
+        ":schematics",
+        "//modules/schematics-core",
+        "@npm//@angular-devkit/schematics",
+        "@npm//@schematics/angular",
+    ],
+)
+
+jasmine_node_test(
+    name = "test",
+    deps = [
+        ":test_lib",
     ],
 )

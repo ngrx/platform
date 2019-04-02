@@ -10,8 +10,7 @@ ts_test_library(
     deps = [
         "//modules/store",
         "//modules/store-devtools",
-        "@rxjs",
-        "@rxjs//operators",
+        "@npm//rxjs",
     ],
 )
 
