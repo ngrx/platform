@@ -13,10 +13,8 @@ ts_test_library(
         "//modules/effects/testing",
         "//modules/entity",
         "//modules/store",
-        "@angular//packages/common/http",
-        "@angular//packages/common/http/testing",
-        "@rxjs",
-        "@rxjs//operators",
+        "@npm//@angular/common",
+        "@npm//rxjs",
     ],
 )
 
