@@ -28,9 +28,16 @@ describe('Find Book Page', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        StoreModule.forRoot({
-          books: combineReducers(fromBooks.reducers),
-        }),
+        StoreModule.forRoot(
+          {
+            books: combineReducers(fromBooks.reducers),
+          },
+          {
+            runtimeChecks: {
+              strictImmutability: true,
+            },
+          }
+        ),
         RouterTestingModule,
         MatInputModule,
         MatCardModule,

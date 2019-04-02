@@ -17,9 +17,16 @@ describe('Login Page', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        StoreModule.forRoot({
-          auth: combineReducers(fromAuth.reducers),
-        }),
+        StoreModule.forRoot(
+          {
+            auth: combineReducers(fromAuth.reducers),
+          },
+          {
+            runtimeChecks: {
+              strictImmutability: true,
+            },
+          }
+        ),
         MatInputModule,
         MatCardModule,
         ReactiveFormsModule,
