@@ -80,7 +80,7 @@ type Fixture<T> = {
 };
 
 function createStore<T>(
-  reducer: ActionReducer<T, Action>,
+  reducer: ActionReducer<T | undefined, Action>,
   options: StoreDevtoolsOptions = {}
 ): Fixture<T> {
   TestBed.configureTestingModule({

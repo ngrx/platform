@@ -27,7 +27,7 @@ exports[`Login Page should compile 1`] = `
         >
           <p>
             <mat-form-field
-              class="mat-form-field ng-tns-c1-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+              class="mat-form-field ng-tns-c1-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
             >
               <div
                 class="mat-form-field-wrapper"
@@ -104,7 +104,7 @@ exports[`Login Page should compile 1`] = `
           </p>
           <p>
             <mat-form-field
-              class="mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+              class="mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
             >
               <div
                 class="mat-form-field-wrapper"
