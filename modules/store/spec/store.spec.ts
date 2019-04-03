@@ -546,6 +546,42 @@ describe('ngRx Store', () => {
         .pipe(select(selector3))
         .subscribe(result => expect(result).toBe(6));
     });
+
+    it('should allow you reset mocked selectors', () => {
+      const mockValue = 5;
+      const selector = createSelector(
+        () => initialState,
+        state => state.counter1
+      );
+      const selector2 = createSelector(
+        () => initialState,
+        state => state.counter2
+      );
+      const selector3 = createSelector(
+        selector,
+        selector2,
+        (sel1, sel2) => sel1 + sel2
+      );
+
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(1));
+
+      mockStore.overrideSelector(selector, mockValue);
+      mockStore.overrideSelector(selector2, mockValue);
+      selector3.release();
+
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(10));
+
+      mockStore.resetSelectors();
+      selector3.release();
+
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(1));
+    });
   });
 
   describe('Meta Reducers', () => {

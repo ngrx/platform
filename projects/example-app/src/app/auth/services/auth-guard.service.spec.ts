@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { Store } from '@ngrx/store';
+import { Store, MemoizedSelector } from '@ngrx/store';
 import { cold } from 'jasmine-marbles';
 import { AuthGuard } from '@example-app/auth/services/auth-guard.service';
 import * as fromAuth from '@example-app/auth/reducers';
-import { provideMockStore, MockStore, MockSelector } from '@ngrx/store/testing';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
   let store: MockStore<fromAuth.State>;
-  let loggedIn: MockSelector<fromAuth.State, boolean>;
+  let loggedIn: MemoizedSelector<fromAuth.State, boolean>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

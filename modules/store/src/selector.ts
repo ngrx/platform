@@ -63,7 +63,6 @@ export function defaultMemoize(
   function reset() {
     lastArguments = null;
     lastResult = null;
-    overrideResult = undefined;
   }
 
   function setResult(result: any = undefined) {

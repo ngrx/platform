@@ -7,14 +7,17 @@ import {
   ReducerManager,
   Store,
   createSelector,
+  MemoizedSelectorWithProps,
+  MemoizedSelector,
 } from '@ngrx/store';
 import { MockState } from './mock_state';
-import { MockSelector, MockSelectorWithProps } from './mock_selector';
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
   static selectors = new Map<
-    string | MockSelector<any, any> | MockSelectorWithProps<any, any, any>,
+    | string
+    | MemoizedSelector<any, any>
+    | MemoizedSelectorWithProps<any, any, any>,
     any
   >();
 
@@ -39,20 +42,20 @@ export class MockStore<T> extends Store<T> {
   overrideSelector<T, Result>(
     selector: string,
     value: Result
-  ): MockSelector<string, Result>;
+  ): MemoizedSelector<string, Result>;
   overrideSelector<T, Result>(
-    selector: MockSelector<T, Result>,
+    selector: MemoizedSelector<T, Result>,
     value: Result
-  ): MockSelector<T, Result>;
+  ): MemoizedSelector<T, Result>;
   overrideSelector<T, Result>(
-    selector: MockSelectorWithProps<T, any, Result>,
+    selector: MemoizedSelectorWithProps<T, any, Result>,
     value: Result
-  ): MockSelectorWithProps<T, any, Result>;
+  ): MemoizedSelectorWithProps<T, any, Result>;
   overrideSelector<T, Result>(
     selector:
       | string
-      | MockSelector<any, any>
-      | MockSelectorWithProps<any, any, any>,
+      | MemoizedSelector<any, any>
+      | MemoizedSelectorWithProps<any, any, any>,
     value: any
   ) {
     MockStore.selectors.set(selector, value);
@@ -71,6 +74,7 @@ export class MockStore<T> extends Store<T> {
   resetSelectors() {
     MockStore.selectors.forEach((_, selector) => {
       if (typeof selector !== 'string') {
+        selector.release();
         selector.setResult();
       }
     });
