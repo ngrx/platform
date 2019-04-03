@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let upcomingEvent of upcomingEvents$ | async">
+        <tr *ngFor="let upcomingEvent of upcomingEvents$ | async | eventOrderBy:'earlierToLater'">
           <th><a [href]="upcomingEvent.url" [title]="upcomingEvent.name">{{upcomingEvent.name}}</a></th>
           <td>{{upcomingEvent.location}}</td>
           <td>{{upcomingEvent | eventDateRange}}</td>
@@ -33,7 +33,7 @@ import { Observable } from 'rxjs';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pastEvent of pastEvents$ | async">
+        <tr *ngFor="let pastEvent of pastEvents$ | async | eventOrderBy:'laterToEarlier'">
           <th><a [href]="pastEvent.url" [title]="pastEvent.name">{{pastEvent.name}}</a></th>
           <td>{{pastEvent.location}}</td>
           <td>{{pastEvent | eventDateRange}}</td>
