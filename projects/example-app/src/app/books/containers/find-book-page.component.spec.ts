@@ -5,7 +5,7 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
 } from '@angular/material';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BookSearchComponent } from '@example-app/books/components/book-search.component';
@@ -18,26 +18,17 @@ import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { FindBookPageComponent } from '@example-app/books/containers/find-book-page.component';
 import { FindBookPageActions } from '@example-app/books/actions';
 import * as fromBooks from '@example-app/books/reducers';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('Find Book Page', () => {
   let fixture: ComponentFixture<FindBookPageComponent>;
-  let store: Store<fromBooks.State>;
+  let store: MockStore<fromBooks.State>;
   let instance: FindBookPageComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        StoreModule.forRoot(
-          {
-            books: combineReducers(fromBooks.reducers),
-          },
-          {
-            runtimeChecks: {
-              strictImmutability: true,
-            },
-          }
-        ),
         RouterTestingModule,
         MatInputModule,
         MatCardModule,
@@ -53,13 +44,19 @@ describe('Find Book Page', () => {
         AddCommasPipe,
         EllipsisPipe,
       ],
+      providers: [provideMockStore()],
     });
 
     fixture = TestBed.createComponent(FindBookPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
 
-    spyOn(store, 'dispatch').and.callThrough();
+    spyOn(store, 'dispatch');
+
+    store.overrideSelector(fromBooks.getSearchQuery, '');
+    store.overrideSelector(fromBooks.getSearchResults, []);
+    store.overrideSelector(fromBooks.getSearchLoading, false);
+    store.overrideSelector(fromBooks.getSearchError, '');
   });
 
   it('should compile', () => {

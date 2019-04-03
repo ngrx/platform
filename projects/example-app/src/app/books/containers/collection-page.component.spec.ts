@@ -1,5 +1,5 @@
 import { CollectionPageComponent } from '@example-app/books/containers/collection-page.component';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,26 +11,17 @@ import * as fromBooks from '@example-app/books/reducers';
 import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;
-  let store: Store<fromBooks.State>;
+  let store: MockStore<fromBooks.State>;
   let instance: CollectionPageComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        StoreModule.forRoot(
-          {
-            books: combineReducers(fromBooks.reducers),
-          },
-          {
-            runtimeChecks: {
-              strictImmutability: true,
-            },
-          }
-        ),
         MatCardModule,
         MatInputModule,
         RouterTestingModule,
@@ -43,16 +34,19 @@ describe('Collection Page', () => {
         AddCommasPipe,
         EllipsisPipe,
       ],
+      providers: [provideMockStore()],
     });
 
     fixture = TestBed.createComponent(CollectionPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
 
-    spyOn(store, 'dispatch').and.callThrough();
+    spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {
+    store.overrideSelector(fromBooks.getBookCollection, []);
+
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();

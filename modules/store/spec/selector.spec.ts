@@ -47,6 +47,20 @@ describe('Selectors', () => {
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
 
+    it('should allow an override of the selector return', () => {
+      const projectFn = jasmine.createSpy('projectionFn').and.returnValue(2);
+
+      const selector = createSelector(incrementOne, incrementTwo, projectFn);
+
+      expect(selector.projector()).toBe(2);
+
+      selector.setResult(5);
+
+      const result2 = selector({});
+
+      expect(result2).toBe(5);
+    });
+
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
       const selector = createSelector(incrementOne, incrementTwo, projectFn);

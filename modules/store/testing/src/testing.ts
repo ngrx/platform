@@ -6,6 +6,7 @@ import {
   ReducerManager,
   StateObservable,
   Store,
+  defaultMemoize,
 } from '@ngrx/store';
 import { MockStore } from './mock_store';
 import { MockReducerManager } from './mock_reducer_manager';
@@ -28,5 +29,6 @@ export function provideMockStore<T = any>(
 }
 
 export { MockReducerManager } from './mock_reducer_manager';
+export { MockSelector, MockSelectorWithProps } from './mock_selector';
 export { MockState } from './mock_state';
 export { MockStore } from './mock_store';
