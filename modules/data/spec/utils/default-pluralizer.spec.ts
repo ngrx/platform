@@ -64,6 +64,7 @@ describe('DefaultPluralizer', () => {
             multi: true,
             useValue: { Foot: 'Feet', Person: 'People' },
           },
+          { provide: Pluralizer, useClass: DefaultPluralizer },
         ],
       });
 

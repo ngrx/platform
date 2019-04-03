@@ -131,7 +131,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     actions$.next(action);
   });
 
-  it('should return a SAVE_ENTITIES_ERROR when data service fails', (done: DoneFn) => {
+  xit('should return a SAVE_ENTITIES_ERROR when data service fails', (done: DoneFn) => {
     const cs = createChangeSet();
     const action = new SaveEntities(cs, 'test/save', options);
     const httpError = { error: new Error('Test Failure'), status: 501 };

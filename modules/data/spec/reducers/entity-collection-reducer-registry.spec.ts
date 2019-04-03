@@ -48,10 +48,11 @@ describe('EntityCollectionReducerRegistry', () => {
   let entityActionFactory: EntityActionFactory;
   let entityCacheReducer: ActionReducer<EntityCache, Action>;
   let entityCollectionReducerRegistry: EntityCollectionReducerRegistry;
+  let logger: jasmine.Spy;
 
   beforeEach(() => {
     entityActionFactory = new EntityActionFactory();
-    const logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
 
     TestBed.configureTestingModule({
       providers: [
@@ -208,7 +209,18 @@ describe('EntityCollectionReducerRegistry', () => {
 
       TestBed.configureTestingModule({
         providers: [
+          EntityCacheReducerFactory,
+          EntityCollectionCreator,
+          {
+            provide: EntityCollectionReducerMethodsFactory,
+            useClass: EntityCollectionReducerMethodsFactory,
+          },
+          EntityCollectionReducerFactory,
+          EntityCollectionReducerRegistry,
+          EntityDefinitionService,
+          { provide: ENTITY_METADATA_TOKEN, multi: true, useValue: metadata },
           { provide: ENTITY_COLLECTION_META_REDUCERS, useValue: metaReducers },
+          { provide: Logger, useValue: logger },
         ],
       });
 

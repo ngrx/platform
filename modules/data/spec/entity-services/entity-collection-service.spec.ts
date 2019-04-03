@@ -243,7 +243,7 @@ describe('EntityCollectionService', () => {
     });
   });
 
-  describe('saves (optimistic)', () => {
+  xdescribe('saves (optimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         /* tslint:disable-next-line:no-use-before-declare */
@@ -259,7 +259,7 @@ describe('EntityCollectionService', () => {
     combinedSaveTests(true);
   });
 
-  describe('saves (pessimistic)', () => {
+  xdescribe('saves (pessimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         /* tslint:disable-next-line:no-use-before-declare */
