@@ -215,4 +215,27 @@ describe('Store Schematic', () => {
     );
     expect(content).toMatch(/export interface FeatureState {/);
   });
+
+  it('should fail if a feature state name is not specified', () => {
+    const options = {
+      ...defaultOptions,
+      name: undefined,
+      root: false,
+    };
+
+    expect(() => {
+      schematicRunner.runSchematic('store', options, appTree);
+    }).toThrowError('Please provide a name for the feature state');
+  });
+
+  it('should pass if a root state name is not specified', () => {
+    const options = {
+      ...defaultOptions,
+      name: undefined,
+    };
+
+    expect(() => {
+      schematicRunner.runSchematic('store', options, appTree);
+    }).not.toThrow();
+  });
 });
