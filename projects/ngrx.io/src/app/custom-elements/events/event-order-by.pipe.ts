@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Event } from './event.model';
 
-type EventOrderBy = 'earlierToLater' | 'laterToEarlier';
+type EventOrderBy = 'ascending' | 'descending';
 
 /**
  * Transforms the events to sorted order earlier to later or later to earlier.
@@ -14,10 +14,10 @@ export class EventOrderByPipe implements PipeTransform {
       return [];
     }
     switch (orderBy) {
-      case 'earlierToLater': {
+      case 'ascending': {
         return events.sort((eventOne, eventTwo) => +(eventOne.startDate || eventOne.endDate) - +(eventTwo.startDate || eventTwo.endDate));
       }
-      case 'laterToEarlier': {
+      case 'descending': {
         return events.sort((eventOne, eventTwo) => +(eventTwo.startDate || eventTwo.endDate) - +(eventOne.startDate || eventOne.endDate));
       }
     }

@@ -9,10 +9,10 @@ describe('Pipe: Event Order By', () => {
   });
 
   it('should return an empty array if the passed events array is null', () => {
-    expect(pipe.transform(null, 'earlierToLater')).toEqual([]);
+    expect(pipe.transform(null, 'ascending')).toEqual([]);
   });
 
-  describe('earlierToLater', () => {
+  describe('ascending', () => {
     it('should order an event with an earlier startDate before an event with a later startDate, '
       + 'regardless of endDate', () => {
       const earlierEvent: Event = {
@@ -31,7 +31,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-03')
       };
 
-      expect(pipe.transform([laterEvent, earlierEvent], 'earlierToLater')).toEqual([earlierEvent, laterEvent]);
+      expect(pipe.transform([laterEvent, earlierEvent], 'ascending')).toEqual([earlierEvent, laterEvent]);
     });
 
     it('should order an event with only an endDate before an event with a startDate '
@@ -51,7 +51,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-04')
       };
 
-      expect(pipe.transform([laterEvent, earlierEvent], 'earlierToLater')).toEqual([earlierEvent, laterEvent]);
+      expect(pipe.transform([laterEvent, earlierEvent], 'ascending')).toEqual([earlierEvent, laterEvent]);
     });
 
     it('should order an event with a startDate before an event with only an endDate '
@@ -71,7 +71,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-02')
       };
 
-      expect(pipe.transform([laterEvent, earlierEvent], 'earlierToLater')).toEqual([earlierEvent, laterEvent]);
+      expect(pipe.transform([laterEvent, earlierEvent], 'ascending')).toEqual([earlierEvent, laterEvent]);
     });
 
     it('should order an event with only an endDate before an event with only an endDate '
@@ -90,11 +90,11 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-02')
       };
 
-      expect(pipe.transform([laterEvent, earlierEvent], 'earlierToLater')).toEqual([earlierEvent, laterEvent]);
+      expect(pipe.transform([laterEvent, earlierEvent], 'ascending')).toEqual([earlierEvent, laterEvent]);
     });
   });
 
-  describe('laterToEarlier', () => {
+  describe('descending', () => {
     it('should order an event with an earlier startDate after an event with a later startDate, '
       + 'regardless of endDate', () => {
       const earlierEvent: Event = {
@@ -113,7 +113,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-03')
       };
 
-      expect(pipe.transform([earlierEvent, laterEvent], 'laterToEarlier')).toEqual([laterEvent, earlierEvent]);
+      expect(pipe.transform([earlierEvent, laterEvent], 'descending')).toEqual([laterEvent, earlierEvent]);
     });
 
     it('should order an event with only an endDate after an event with a startDate '
@@ -133,7 +133,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-04')
       };
 
-      expect(pipe.transform([earlierEvent, laterEvent], 'laterToEarlier')).toEqual([laterEvent, earlierEvent]);
+      expect(pipe.transform([earlierEvent, laterEvent], 'descending')).toEqual([laterEvent, earlierEvent]);
     });
 
     it('should order an event with a startDate after an event with only an endDate '
@@ -153,7 +153,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-02')
       };
 
-      expect(pipe.transform([earlierEvent, laterEvent], 'laterToEarlier')).toEqual([laterEvent, earlierEvent]);
+      expect(pipe.transform([earlierEvent, laterEvent], 'descending')).toEqual([laterEvent, earlierEvent]);
     });
 
     it('should order an event with only an endDate after an event with only an endDate '
@@ -172,7 +172,7 @@ describe('Pipe: Event Order By', () => {
         endDate: new Date('2019-01-02')
       };
 
-      expect(pipe.transform([earlierEvent, laterEvent], 'laterToEarlier')).toEqual([laterEvent, earlierEvent]);
+      expect(pipe.transform([earlierEvent, laterEvent], 'descending')).toEqual([laterEvent, earlierEvent]);
     });
   });
 });
