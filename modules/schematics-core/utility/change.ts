@@ -1,3 +1,7 @@
+import * as ts from 'typescript';
+import { Tree, UpdateRecorder } from '@angular-devkit/schematics';
+import { Path } from '@angular-devkit/core';
+
 /* istanbul ignore file */
 /**
  * @license
@@ -132,4 +136,28 @@ export class ReplaceChange implements Change {
       return host.write(this.path, `${prefix}${this.newText}${suffix}`);
     });
   }
+}
+
+export function createReplaceChange(
+  sourceFile: ts.SourceFile,
+  path: Path,
+  node: ts.Node,
+  oldText: string,
+  newText: string
+): ReplaceChange {
+  return new ReplaceChange(path, node.getStart(sourceFile), oldText, newText);
+}
+
+export function createChangeRecorder(
+  tree: Tree,
+  path: Path,
+  changes: ReplaceChange[]
+): UpdateRecorder {
+  const recorder = tree.beginUpdate(path);
+  for (const change of changes) {
+    const action = <any>change;
+    recorder.remove(action.pos, action.oldText.length);
+    recorder.insertLeft(action.pos, action.newText);
+  }
+  return recorder;
 }

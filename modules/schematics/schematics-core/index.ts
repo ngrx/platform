@@ -30,6 +30,8 @@ export {
   InsertChange,
   RemoveChange,
   ReplaceChange,
+  createReplaceChange,
+  createChangeRecorder,
 } from './utility/change';
 
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';

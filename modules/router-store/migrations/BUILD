@@ -17,6 +17,7 @@ ts_library(
     deps = [
         "//modules/router-store/schematics-core",
         "@npm//@angular-devkit/schematics",
+        "@npm//typescript",
     ],
 )
 
