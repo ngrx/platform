@@ -6,7 +6,7 @@ exports[`Find Book Page should compile 1`] = `
   error$={[Function Store]}
   loading$={[Function Store]}
   searchQuery$={[Function Store]}
-  store={[Function Store]}
+  store={[Function MockStore]}
 >
   <bc-book-search
     ng-reflect-error=""

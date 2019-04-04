@@ -4,11 +4,9 @@ exports[`Selected Book Page should compile 1`] = `
 <bc-selected-book-page
   book$={[Function Store]}
   isSelectedBookInCollection$={[Function Store]}
-  store={[Function Store]}
+  store={[Function MockStore]}
 >
-  <bc-book-detail
-    ng-reflect-in-collection="false"
-  >
+  <bc-book-detail>
     
   </bc-book-detail>
 </bc-selected-book-page>

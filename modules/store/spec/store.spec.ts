@@ -26,6 +26,7 @@ import Spy = jasmine.Spy;
 import any = jasmine.any;
 import { skip, take } from 'rxjs/operators';
 import { MockStore, provideMockStore } from '../testing';
+import { createSelector } from '../src/selector';
 
 interface TestAppSchema {
   counter1: number;
@@ -448,10 +449,9 @@ describe('ngRx Store', () => {
 
   describe('Mock Store', () => {
     let mockStore: MockStore<TestAppSchema>;
+    const initialState = { counter1: 0, counter2: 1 };
 
     beforeEach(() => {
-      const initialState = { counter1: 0, counter2: 1 };
-
       TestBed.configureTestingModule({
         providers: [provideMockStore({ initialState })],
       });
@@ -481,6 +481,106 @@ describe('ngRx Store', () => {
         .pipe(skip(1))
         .subscribe(scannedAction => expect(scannedAction).toEqual(action));
       mockStore.dispatch(action);
+    });
+
+    it('should allow mocking of store.select with string selector', () => {
+      const mockValue = 5;
+
+      mockStore.overrideSelector('counter1', mockValue);
+
+      mockStore
+        .select('counter1')
+        .subscribe(result => expect(result).toBe(mockValue));
+    });
+
+    it('should allow mocking of store.select with a memoized selector', () => {
+      const mockValue = 5;
+      const selector = createSelector(
+        () => initialState,
+        state => state.counter1
+      );
+
+      mockStore.overrideSelector(selector, mockValue);
+
+      mockStore
+        .select(selector)
+        .subscribe(result => expect(result).toBe(mockValue));
+    });
+
+    it('should allow mocking of store.pipe(select()) with a memoized selector', () => {
+      const mockValue = 5;
+      const selector = createSelector(
+        () => initialState,
+        state => state.counter2
+      );
+
+      mockStore.overrideSelector(selector, mockValue);
+
+      mockStore
+        .pipe(select(selector))
+        .subscribe(result => expect(result).toBe(mockValue));
+    });
+
+    it('should pass through unmocked selectors', () => {
+      const mockValue = 5;
+      const selector = createSelector(
+        () => initialState,
+        state => state.counter1
+      );
+      const selector2 = createSelector(
+        () => initialState,
+        state => state.counter2
+      );
+      const selector3 = createSelector(
+        selector,
+        selector2,
+        (sel1, sel2) => sel1 + sel2
+      );
+
+      mockStore.overrideSelector(selector, mockValue);
+
+      mockStore
+        .pipe(select(selector2))
+        .subscribe(result => expect(result).toBe(1));
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(6));
+    });
+
+    it('should allow you reset mocked selectors', () => {
+      const mockValue = 5;
+      const selector = createSelector(
+        () => initialState,
+        state => state.counter1
+      );
+      const selector2 = createSelector(
+        () => initialState,
+        state => state.counter2
+      );
+      const selector3 = createSelector(
+        selector,
+        selector2,
+        (sel1, sel2) => sel1 + sel2
+      );
+
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(1));
+
+      mockStore.overrideSelector(selector, mockValue);
+      mockStore.overrideSelector(selector2, mockValue);
+      selector3.release();
+
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(10));
+
+      mockStore.resetSelectors();
+      selector3.release();
+
+      mockStore
+        .pipe(select(selector3))
+        .subscribe(result => expect(result).toBe(1));
     });
   });
 

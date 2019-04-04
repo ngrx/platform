@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectedBookPageComponent } from '@example-app/books/containers/selected-book-page.component';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
 
@@ -10,41 +10,30 @@ import { BookDetailComponent } from '@example-app/books/components/book-detail.c
 import { Book, generateMockBook } from '@example-app/books/models/book';
 import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('Selected Book Page', () => {
   let fixture: ComponentFixture<SelectedBookPageComponent>;
-  let store: Store<fromBooks.State>;
+  let store: MockStore<fromBooks.State>;
   let instance: SelectedBookPageComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        StoreModule.forRoot(
-          {
-            books: combineReducers(fromBooks.reducers),
-          },
-          {
-            runtimeChecks: {
-              strictImmutability: true,
-            },
-          }
-        ),
-        MatCardModule,
-      ],
+      imports: [NoopAnimationsModule, MatCardModule],
       declarations: [
         SelectedBookPageComponent,
         BookDetailComponent,
         BookAuthorsComponent,
         AddCommasPipe,
       ],
+      providers: [provideMockStore()],
     });
 
     fixture = TestBed.createComponent(SelectedBookPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
 
-    spyOn(store, 'dispatch').and.callThrough();
+    spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {
