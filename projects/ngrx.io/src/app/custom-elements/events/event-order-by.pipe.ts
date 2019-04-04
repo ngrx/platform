@@ -4,7 +4,7 @@ import { Event } from './event.model';
 type EventOrderBy = 'ascending' | 'descending';
 
 /**
- * Transforms the events to sorted order earlier to later or later to earlier.
+ * Transforms the events to sorted ascending or descending order by date.
  * If an event has a startDate, order based on it.  If not, use it's endDate.
  */
 @Pipe({name: 'eventOrderBy'})
