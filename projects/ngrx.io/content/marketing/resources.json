@@ -107,6 +107,13 @@
               "Angular CRUD application starter with NgRx state management and Firebase backend",
             "url": "https://github.com/mdbootstrap/Angular-Bootstrap-Boilerplate",
             "rev": true
+          },
+          "sap-spartacus": {
+            "title": "Spartacus",
+            "desc":
+              "Spartacus is a lean, Angular-based JavaScript storefront for SAP Commerce Cloud that communicates exclusively through the Commerce REST API.",
+            "url": "https://github.com/SAP/cloud-commerce-spartacus-storefront",
+            "rev": true
           }
         }
       },
