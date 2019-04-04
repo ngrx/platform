@@ -332,7 +332,7 @@ export const selectLastStateTransitions = (count: number) => {
     // Combines the last `count` state values in array
     scan((acc, curr) => {
       return [ curr, acc[0], acc[1] ].filter(val => val !== undefined);
-    } [] as {foo: number; bar: string}[]) // XX: Explicit type hint for the array.
+    }, [] as {foo: number; bar: string}[]) // XX: Explicit type hint for the array.
                                           // Equivalent to what is emitted by the selector
   );
 }
