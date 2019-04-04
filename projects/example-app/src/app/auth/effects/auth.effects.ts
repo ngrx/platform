@@ -17,7 +17,7 @@ import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/
 export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(LoginPageActions.login.type),
+      ofType(LoginPageActions.login),
       map(action => action.credentials),
       exhaustMap((auth: Credentials) =>
         this.authService.login(auth).pipe(
@@ -31,7 +31,7 @@ export class AuthEffects {
   loginSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthApiActions.loginSuccess.type),
+        ofType(AuthApiActions.loginSuccess),
         tap(() => this.router.navigate(['/']))
       ),
     { dispatch: false }
@@ -40,7 +40,7 @@ export class AuthEffects {
   loginRedirect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthApiActions.loginRedirect.type, AuthActions.logout.type),
+        ofType(AuthApiActions.loginRedirect, AuthActions.logout),
         tap(authed => {
           this.router.navigate(['/login']);
         })
@@ -50,7 +50,7 @@ export class AuthEffects {
 
   logoutConfirmation$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.logoutConfirmation.type),
+      ofType(AuthActions.logoutConfirmation),
       exhaustMap(() => {
         const dialogRef = this.dialog.open<
           LogoutConfirmationDialogComponent,
@@ -70,7 +70,7 @@ export class AuthEffects {
   );
 
   constructor(
-    private actions$: Actions<LoginPageActions.LoginPageActionsUnion>,
+    private actions$: Actions,
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog
