@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { EventService } from './event.service';
 import { Event } from './event.model';
 import { EventDateRangePipe } from './event-date-range.pipe';
+import { EventOrderByPipe } from './event-order-by.pipe';
 
 const mockUpcomingEvents: Event[] = [
   {
@@ -35,7 +36,7 @@ describe('Event List Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventListComponent, EventDateRangePipe ],
+      declarations: [ EventListComponent, EventDateRangePipe, EventOrderByPipe ],
       providers: [{ provide: EventService, useClass: TestEventService }]
     });
 
