@@ -9,7 +9,7 @@ describe('createEffect()', () => {
         import { Action } from '@ngrx/store';
         import { createEffect } from '@ngrx/effects';
         import { of } from 'rxjs';
-          ${code}`,
+        ${code}`,
       {
         moduleResolution: 'node',
         target: 'es2015',
