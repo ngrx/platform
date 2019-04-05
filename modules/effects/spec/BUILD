@@ -22,6 +22,5 @@ jasmine_node_test(
         ":test_lib",
         "//modules/effects",
         "//modules/store",
-        "@npm//rxjs",
     ],
 )
