@@ -14,6 +14,7 @@ import {
   NavigationStart,
   Event,
   RouterEvent,
+  NavigationExtras,
 } from '@angular/router';
 import { select, Selector, Store } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
@@ -56,6 +57,7 @@ interface StoreRouterActionPayload {
   event: RouterEvent;
   routerState?: SerializedRouterStateSnapshot;
   storeState?: any;
+  extras?: NavigationExtras;
 }
 
 export enum NavigationActionTiming {
@@ -228,7 +230,12 @@ export class StoreRouterConnectingModule {
           );
           if (this.trigger !== RouterTrigger.STORE) {
             this.storeState = storeState;
-            this.dispatchRouterRequest(event);
+            const currentNavigation = this.router.getCurrentNavigation();
+            const extras = currentNavigation
+              ? currentNavigation.extras
+              : undefined;
+
+            this.dispatchRouterRequest(event, extras);
           }
         } else if (event instanceof RoutesRecognized) {
           routesRecognized = event;
@@ -254,8 +261,11 @@ export class StoreRouterConnectingModule {
       });
   }
 
-  private dispatchRouterRequest(event: NavigationStart): void {
-    this.dispatchRouterAction(ROUTER_REQUEST, { event });
+  private dispatchRouterRequest(
+    event: NavigationStart,
+    extras: NavigationExtras | undefined
+  ): void {
+    this.dispatchRouterAction(ROUTER_REQUEST, { event, extras });
   }
 
   private dispatchRouterNavigation(
