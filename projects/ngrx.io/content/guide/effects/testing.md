@@ -176,7 +176,7 @@ Doing this has the extra benefit of hiding implementation details, making your t
 
 ### provideMockStore
 
-Provies a mock test provider of the Store for testing effects that inject State using the RxJS `withLatestFrom` operator.  The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
+Provides a mock test provider of the Store for testing effects that inject State using the RxJS `withLatestFrom` operator.  The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
 
 <code-example header="collection.effects.ts">
 import { Injectable } from '@angular/core';
