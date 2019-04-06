@@ -131,9 +131,13 @@ function addImportToNgModule(options: StoreOptions): Rule {
 
 export default function(options: StoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
+    if (!options.name && !options.root) {
+      throw new Error(`Please provide a name for the feature state`);
+    }
+
     options.path = getProjectPath(host, options);
 
-    const parsedPath = parseName(options.path, options.name);
+    const parsedPath = parseName(options.path, options.name || '');
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 

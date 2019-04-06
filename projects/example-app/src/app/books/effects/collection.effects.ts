@@ -26,7 +26,7 @@ export class CollectionEffects {
 
   loadCollection$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CollectionPageActions.loadCollection.type),
+      ofType(CollectionPageActions.loadCollection),
       switchMap(() =>
         this.storageService.getCollection().pipe(
           map((books: Book[]) =>
@@ -42,7 +42,7 @@ export class CollectionEffects {
 
   addBookToCollection$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SelectedBookPageActions.addBook.type),
+      ofType(SelectedBookPageActions.addBook),
       mergeMap(({ book }) =>
         this.storageService.addToCollection([book]).pipe(
           map(() => CollectionApiActions.addBookSuccess({ book })),
@@ -54,7 +54,7 @@ export class CollectionEffects {
 
   removeBookFromCollection$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SelectedBookPageActions.removeBook.type),
+      ofType(SelectedBookPageActions.removeBook),
       mergeMap(({ book }) =>
         this.storageService.removeFromCollection([book.id]).pipe(
           map(() => CollectionApiActions.removeBookSuccess({ book })),
@@ -65,9 +65,7 @@ export class CollectionEffects {
   );
 
   constructor(
-    private actions$: Actions<
-      SelectedBookPageActions.SelectedBookPageActionsUnion
-    >,
+    private actions$: Actions,
     private storageService: BookStorageService
   ) {}
 }

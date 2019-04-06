@@ -29,7 +29,7 @@ const originalConfigureTestingModule = TestBed.configureTestingModule;
 TestBed.configureTestingModule = function() {
   TestBed.resetTestingModule();
 
-  return originalConfigureTestingModule.apply(null, arguments);
+  return originalConfigureTestingModule.apply(null, arguments as any);
 };
 
 TestBed.initTestEnvironment(ServerTestingModule, platformServerTesting());

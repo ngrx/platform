@@ -1,4 +1,3 @@
-import { Tree, VirtualTree } from '@angular-devkit/schematics';
 import {
   SchematicTestRunner,
   UnitTestTree,

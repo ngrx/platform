@@ -11,12 +11,13 @@ import { SelectedBookPageComponent } from '@example-app/books/containers/selecte
 import { BookDetailComponent } from '@example-app/books/components/book-detail.component';
 import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('View Book Page', () => {
-  const params = new BehaviorSubject({});
   let fixture: ComponentFixture<ViewBookPageComponent>;
-  let store: Store<fromBooks.State>;
+  let store: MockStore<fromBooks.State>;
   let instance: ViewBookPageComponent;
+  let route: ActivatedRoute;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,16 +25,9 @@ describe('View Book Page', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { params },
+          useValue: { params: new BehaviorSubject({}) },
         },
-        {
-          provide: Store,
-          useValue: {
-            select: jest.fn(),
-            next: jest.fn(),
-            pipe: jest.fn(),
-          },
-        },
+        provideMockStore(),
       ],
       declarations: [
         ViewBookPageComponent,
@@ -47,6 +41,9 @@ describe('View Book Page', () => {
     fixture = TestBed.createComponent(ViewBookPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
+    route = TestBed.get(ActivatedRoute);
+
+    jest.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {
@@ -57,10 +54,9 @@ describe('View Book Page', () => {
 
   it('should dispatch a book.Select action on init', () => {
     const action = ViewBookPageActions.selectBook({ id: '2' });
-    params.next({ id: '2' });
 
-    fixture.detectChanges();
+    (route.params as BehaviorSubject<any>).next({ id: '2' });
 
-    expect(store.next).toHaveBeenLastCalledWith(action);
+    expect(store.dispatch).toHaveBeenLastCalledWith(action);
   });
 });

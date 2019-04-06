@@ -33,7 +33,7 @@ export class BookEffects {
   search$ = createEffect(
     () => ({ debounce = 300, scheduler = asyncScheduler } = {}) =>
       this.actions$.pipe(
-        ofType(FindBookPageActions.searchBooks.type),
+        ofType(FindBookPageActions.searchBooks),
         debounceTime(debounce, scheduler),
         switchMap(({ query }) => {
           if (query === '') {
@@ -41,7 +41,7 @@ export class BookEffects {
           }
 
           const nextSearch$ = this.actions$.pipe(
-            ofType(FindBookPageActions.searchBooks.type),
+            ofType(FindBookPageActions.searchBooks),
             skip(1)
           );
 
@@ -57,7 +57,7 @@ export class BookEffects {
   );
 
   constructor(
-    private actions$: Actions<FindBookPageActions.FindBookPageActionsUnion>,
+    private actions$: Actions,
     private googleBooks: GoogleBooksService
   ) {}
 }
