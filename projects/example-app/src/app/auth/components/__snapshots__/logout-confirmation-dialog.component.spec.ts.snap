@@ -16,7 +16,6 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     class="mat-dialog-actions"
   >
     <button
-      aria-label="Close dialog"
       class="mat-button"
       mat-button=""
       ng-reflect-dialog-result="false"
@@ -39,7 +38,6 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       />
     </button>
     <button
-      aria-label="Close dialog"
       class="mat-button"
       mat-button=""
       ng-reflect-dialog-result="true"

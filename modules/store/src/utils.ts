@@ -93,7 +93,10 @@ export function createReducerFactory<T, V extends Action = Action>(
   metaReducers?: MetaReducer<T, V>[]
 ): ActionReducerFactory<T, V> {
   if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-    reducerFactory = compose.apply(null, [...metaReducers, reducerFactory]);
+    (reducerFactory as any) = compose.apply(null, [
+      ...metaReducers,
+      reducerFactory,
+    ]);
   }
 
   return (reducers: ActionReducerMap<T, V>, initialState?: InitialState<T>) => {
