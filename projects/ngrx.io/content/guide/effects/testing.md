@@ -174,9 +174,9 @@ expect(actual).toBeObservable(expected);
 
 Doing this has the extra benefit of hiding implementation details, making your tests less prone to break due to implementation details changes. Meaning that if you would change the `debounceTime` inside the effect your tests wouldn't have to be changed,these tests would still pass.
 
-### provideMockStore
+### Effects that use State
 
-Provides a mock test provider of the Store for testing effects that inject State using the RxJS `withLatestFrom` operator.  The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
+The mock store can simplify testing Effects that inject State using the RxJs `withLatestFrom` operator.  The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
 
 <code-example header="collection.effects.ts">
 import { Injectable } from '@angular/core';
@@ -207,7 +207,7 @@ export class CollectionEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromBooks.State>
+    private store: Store&lt;fromBooks.State&gt;
   ) {}
 }
 </code-example>
@@ -229,8 +229,8 @@ import * as fromBooks from '@example-app/books/reducers';
 
 describe('CollectionEffects', () => {
   let effects: CollectionEffects;
-  let actions$: Observable<any>;
-  let store: MockStore<fromBooks.State>;
+  let actions$: Observable&lt;any&gt;;
+  let store: MockStore&lt;fromBooks.State&gt;;
   const initialState = {
     books: {
       collection: {
