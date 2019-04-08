@@ -1,0 +1,4 @@
+{
+  "description": "NgRx Tutorial",
+  "files": ["!**/*.d.ts", "!**/*.js"]
+}
