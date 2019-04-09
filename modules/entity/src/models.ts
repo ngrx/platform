@@ -9,11 +9,11 @@ export type IdSelectorNum<T> = (model: T) => number;
 export type IdSelector<T> = IdSelectorStr<T> | IdSelectorNum<T>;
 
 export interface DictionaryNum<T> {
-  [id: number]: T;
+  [id: number]: T | undefined;
 }
 
 export abstract class Dictionary<T> implements DictionaryNum<T> {
-  [id: string]: T;
+  [id: string]: T | undefined;
 }
 
 export interface UpdateStr<T> {

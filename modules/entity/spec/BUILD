@@ -9,6 +9,7 @@ ts_test_library(
     ),
     deps = [
         "//modules/entity",
+        "//modules/store",
         "@npm//rxjs",
     ],
 )
@@ -17,6 +18,5 @@ jasmine_node_test(
     name = "test",
     deps = [
         ":test_lib",
-        "//modules/entity",
     ],
 )

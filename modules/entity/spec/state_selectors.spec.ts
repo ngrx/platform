@@ -6,6 +6,7 @@ import {
   AnimalFarm,
   TheGreatGatsby,
 } from './fixtures/book';
+import { MemoizedSelector, createSelector } from '@ngrx/store';
 
 describe('Entity State Selectors', () => {
   describe('Composed Selectors', () => {
@@ -87,6 +88,14 @@ describe('Entity State Selectors', () => {
       const entities = selectors.selectEntities(state);
 
       expect(entities).toEqual(state.entities);
+    });
+
+    it('should type single entity from Dictionary as entity type or undefined', () => {
+      // MemoizedSelector acts like a type checker
+      const singleEntity: MemoizedSelector<
+        EntityState<BookModel>,
+        BookModel | undefined
+      > = createSelector(selectors.selectEntities, enitites => enitites[0]);
     });
 
     it('should create a selector for selecting the list of models', () => {
