@@ -1,9 +1,10 @@
 import {
-  ActionReducerMap,
   createSelector,
   createFeatureSelector,
   ActionReducer,
   MetaReducer,
+  Action,
+  combineReducers,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import * as fromRouter from '@ngrx/router-store';
@@ -16,6 +17,7 @@ import * as fromRouter from '@ngrx/router-store';
  */
 
 import * as fromLayout from '@example-app/core/reducers/layout.reducer';
+import { SerializedRouterStateSnapshot } from '@ngrx/router-store';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -23,7 +25,7 @@ import * as fromLayout from '@example-app/core/reducers/layout.reducer';
  */
 export interface State {
   layout: fromLayout.State;
-  router: fromRouter.RouterReducerState;
+  router: fromRouter.RouterReducerState<any>;
 }
 
 /**
@@ -31,10 +33,12 @@ export interface State {
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export const reducers: ActionReducerMap<State> = {
-  layout: fromLayout.reducer,
-  router: fromRouter.routerReducer,
-};
+export function reducers(state: State | undefined, action: Action) {
+  return combineReducers({
+    layout: fromLayout.reducer,
+    router: fromRouter.routerReducer,
+  })(state, action);
+}
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {

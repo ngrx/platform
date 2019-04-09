@@ -1,4 +1,5 @@
 import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
+import { createReducer, on } from '@ngrx/store';
 
 export interface State {
   error: string | null;
@@ -10,42 +11,27 @@ export const initialState: State = {
   pending: false,
 };
 
-export function reducer(
-  state = initialState,
-  action:
-    | AuthApiActions.AuthApiActionsUnion
-    | LoginPageActions.LoginPageActionsUnion
-): State {
-  switch (action.type) {
-    case LoginPageActions.login.type: {
-      return {
-        ...state,
-        error: null,
-        pending: true,
-      };
-    }
+export const reducer = createReducer<State>(
+  [
+    on(LoginPageActions.login, state => ({
+      ...state,
+      error: null,
+      pending: true,
+    })),
 
-    case AuthApiActions.loginSuccess.type: {
-      return {
-        ...state,
-        error: null,
-        pending: false,
-      };
-    }
-
-    case AuthApiActions.loginFailure.type: {
-      return {
-        ...state,
-        error: action.error,
-        pending: false,
-      };
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+    on(AuthApiActions.loginSuccess, state => ({
+      ...state,
+      error: null,
+      pending: false,
+    })),
+    on(AuthApiActions.loginFailure, (state, { error }) => ({
+      ...state,
+      error,
+      pending: false,
+    })),
+  ],
+  initialState
+);
 
 export const getError = (state: State) => state.error;
 export const getPending = (state: State) => state.pending;

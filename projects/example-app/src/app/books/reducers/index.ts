@@ -1,7 +1,8 @@
 import {
   createSelector,
   createFeatureSelector,
-  ActionReducerMap,
+  combineReducers,
+  Action,
 } from '@ngrx/store';
 import * as fromSearch from '@example-app/books/reducers/search.reducer';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
@@ -19,11 +20,14 @@ export interface State extends fromRoot.State {
   books: BooksState;
 }
 
-export const reducers: ActionReducerMap<BooksState, any> = {
-  search: fromSearch.reducer,
-  books: fromBooks.reducer,
-  collection: fromCollection.reducer,
-};
+/** Provide reducer in AoT-compilation happy way */
+export function reducers(state: BooksState | undefined, action: Action) {
+  return combineReducers({
+    search: fromSearch.reducer,
+    books: fromBooks.reducer,
+    collection: fromCollection.reducer,
+  })(state, action);
+}
 
 /**
  * A selector function is a map function factory. We pass it parameters and it
