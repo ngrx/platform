@@ -38,8 +38,8 @@ describe('My Effects', () => {
   });
 
   it('should work', () => {
-    const action = new MyActions.ExampleAction();
-    const completion = new MyActions.ExampleActionSuccess();
+    const action = MyActions.exampleAction();
+    const completion = MyActions.exampleActionSuccess();
 
     // Refer to 'Writing Marble Tests' for details on '--a-' syntax
     actions = hot('--a-', { a: action });
@@ -81,10 +81,10 @@ describe('My Effects', () => {
 
   it('should work', () => {
     actions = new ReplaySubject(1);
-    actions.next(new MyActions.ExampleAction());
+    actions.next(MyActions.exampleAction());
 
     effects.someSource$.subscribe(result => {
-      expect(result).toEqual(new MyActions.ExampleActionSuccess());
+      expect(result).toEqual(MyActions.exampleActionSuccess());
     });
   });
 });

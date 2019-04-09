@@ -1,18 +1,18 @@
 // #docregion
 import { Action } from '@ngrx/store';
-import { ActionTypes } from './counter.actions';
+import { increment, decrement, reset } from './counter.actions';
 
 export const initialState = 0;
 
 export function counterReducer(state = initialState, action: Action) {
   switch (action.type) {
-    case ActionTypes.Increment:
+    case increment.type:
       return state + 1;
 
-    case ActionTypes.Decrement:
+    case decrement.type:
       return state - 1;
 
-    case ActionTypes.Reset:
+    case reset.type:
       return 0;
 
     default:
