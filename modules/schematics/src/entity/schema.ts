@@ -36,4 +36,10 @@ export interface Schema {
    */
 
   group?: boolean;
+
+  /**
+   * Specifies whether to generate action creators
+   * instead of action classes.
+   */
+  actionCreators?: boolean;
 }

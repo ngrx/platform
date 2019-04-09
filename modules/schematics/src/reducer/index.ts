@@ -37,26 +37,37 @@ export default function(options: ReducerOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
-    const templateSource = apply(url('./files'), [
+    const templateOptions = {
+      ...stringUtils,
+      'if-flat': (s: string) =>
+        stringUtils.group(
+          options.flat ? '' : s,
+          options.group ? 'reducers' : ''
+        ),
+      ...(options as object),
+    };
+
+    const commonTemplate = apply(url('./common-files'), [
       options.spec
         ? noop()
         : filter(path => !path.endsWith('.spec.ts.template')),
-      applyTemplates({
-        ...stringUtils,
-        'if-flat': (s: string) =>
-          stringUtils.group(
-            options.flat ? '' : s,
-            options.group ? 'reducers' : ''
-          ),
-        ...(options as object),
-      } as any),
+      applyTemplates(templateOptions),
       move(parsedPath.path),
     ]);
+
+    const templateSource = apply(
+      url(options.actionCreators ? './creator-files' : './files'),
+      [applyTemplates(templateOptions), move(parsedPath.path)]
+    );
 
     return chain([
       branchAndMerge(chain([addReducerToState(options)])),
       branchAndMerge(
-        chain([addReducerImportToNgModule(options), mergeWith(templateSource)])
+        chain([
+          addReducerImportToNgModule(options),
+          mergeWith(commonTemplate),
+          mergeWith(templateSource),
+        ])
       ),
     ])(host, context);
   };

@@ -60,6 +60,13 @@
       "description":
         "Specifies if api success and failure actions should be added to the reducer",
       "aliases": ["a"]
+    },
+    "actionCreators": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Specifies whether to generate action creators instead of action classes.",
+      "aliases": ["ac"]
     }
   },
   "required": []

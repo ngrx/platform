@@ -30,6 +30,8 @@ npm_package(
         ":README.md",
     ] + glob([
         "**/src/*/files/**/*",
+        "**/src/*/common-files/**/*",
+        "**/src/*/creator-files/**/*",
         "**/schema.json",
         "**/migration.json",
     ]),
@@ -51,6 +53,8 @@ ts_test_library(
     ),
     data = glob([
         "**/src/*/files/**/*",
+        "**/src/*/common-files/**/*",
+        "**/src/*/creator-files/**/*",
         "**/*.json",
     ]),
     deps = [

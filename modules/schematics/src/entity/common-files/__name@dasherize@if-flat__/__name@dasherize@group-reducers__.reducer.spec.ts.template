@@ -2,7 +2,7 @@ import { reducer, initialState } from '<%= featurePath(group, flat, "reducers", 
 
 describe('<%= classify(name) %> Reducer', () => {
   describe('unknown action', () => {
-    it('should return the initial state', () => {
+    it('should return the previous state', () => {
       const action = {} as any;
 
       const result = reducer(initialState, action);

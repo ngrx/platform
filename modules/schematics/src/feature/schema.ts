@@ -46,7 +46,7 @@ export interface Schema {
   api?: boolean;
 
   /**
-   * Specifies if the effect creation uses 'createEffect'
+   * Specifies whether to use creator functions for actions and effects.
    */
-  effectCreators?: boolean;
+  creators?: boolean;
 }

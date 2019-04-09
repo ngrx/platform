@@ -1,0 +1,14 @@
+import { createAction, union } from '@ngrx/store';
+
+export const load<%= classify(name) %>s = createAction('[<%= classify(name) %>] Load <%= classify(name) %>s');
+<% if (api) { %>export const load<%= classify(name) %>sSuccess = createAction('[<%= classify(name) %>] Load <%= classify(name) %>s Success');<% } %>
+<% if (api) { %>export const load<%= classify(name) %>sFailure = createAction('[<%= classify(name) %>] Load <%= classify(name) %>s Failure');<% } %>
+
+const all = union({
+  load<%= classify(name) %>s,
+<% if (api) { %>
+  load<%= classify(name) %>sSuccess,
+  load<%= classify(name) %>sFailure
+<% } %>
+});
+export Union = typeof all;
