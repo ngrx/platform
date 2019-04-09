@@ -9,7 +9,7 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 - [Selectors](guide/store/selectors) are pure functions used to select, derive and compose pieces of state.
 - State accessed with the `Store`, an observable of state and an observer of actions.
 
-## Installation 
+## Installation
 
 Detailed installation instructions can be found on the [Installation](guide/store/install) page.
 
@@ -17,7 +17,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 
 The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload></live-example>.
 
-1.  Generate a <a href="https://stackblitz.com/fork/ngrx-start" target="_blank">new project</a> using StackBlitz.
+1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example>.
 
 2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 
