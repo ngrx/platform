@@ -106,115 +106,45 @@ export interface User {
 </code-example>
 
 <code-example header="user.actions.ts">
-import { Action } from '@ngrx/store';
+import { createAction, props, union } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
-export enum UserActionTypes {
-  LOAD_USERS = '[User] Load Users',
-  ADD_USER = '[User] Add User',
-  UPSERT_USER = '[User] Upsert User',
-  ADD_USERS = '[User] Add Users',
-  UPSERT_USERS = '[User] Upsert Users',
-  UPDATE_USER = '[User] Update User',
-  UPDATE_USERS = '[User] Update Users',
-  MAP_USERS = '[User] Map Users',
-  DELETE_USER = '[User] Delete User',
-  DELETE_USERS = '[User] Delete Users',
-  DELETE_USERS_BY_PREDICATE = '[User] Delete Users By Predicate',
-  CLEAR_USERS = '[User] Clear Users',
-}
+export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
+export const addUser = createAction('[User/API] Add User', props&lt;{ user: User }&gt;());
+export const upsertUser = createAction('[User/API] Upsert User', props&lt;{ user: User }&gt;());
+export const addUsers = createAction('[User/API] Add Users', props&lt;{ user: User }&gt;());
+export const upsertUsers = createAction('[User/API] Upsert Users', props&lt;{ users: User[] }&gt;());
+export const updateUser = createAction('[User/API] Update User', props&lt;{ user: Update&lt;User&gt; }&gt;());
+export const updateUsers = createAction('[User/API] Update Users', props&lt;{ users: Update&lt;User&gt;[] }&gt;());
+export const mapUsers = createAction('[User/API] Map Users', props&lt;{ entityMap: EntityMap&lt;User&gt; }&gt;());
+export const deleteUser = createAction('[User/API] Delete User', props&lt;{ id: string }&gt;());
+export const deleteUsers = createAction('[User/API] Delete Users', props&lt;{ id: string[] }&gt;());
+export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props&lt;{ predicate: Predicate&lt;User&gt; }&gt;());
+export const clearUsers = createAction('[User/API] Clear Users');
 
-export class LoadUsers implements Action {
-  readonly type = UserActionTypes.LOAD_USERS;
-
-  constructor(public payload: { users: User[] }) {}
-}
-
-export class AddUser implements Action {
-  readonly type = UserActionTypes.ADD_USER;
-
-  constructor(public payload: { user: User }) {}
-}
-
-export class UpsertUser implements Action {
-  readonly type = UserActionTypes.UPSERT_USER;
-
-  constructor(public payload: { user: User }) {}
-}
-
-export class AddUsers implements Action {
-  readonly type = UserActionTypes.ADD_USERS;
-
-  constructor(public payload: { users: User[] }) {}
-}
-
-export class UpsertUsers implements Action {
-  readonly type = UserActionTypes.UPSERT_USERS;
-
-  constructor(public payload: { users: User[] }) {}
-}
-
-export class UpdateUser implements Action {
-  readonly type = UserActionTypes.UPDATE_USER;
-
-  constructor(public payload: { user: Update&lt;User&gt; }) {}
-}
-
-export class UpdateUsers implements Action {
-  readonly type = UserActionTypes.UPDATE_USERS;
-
-  constructor(public payload: { users: Update&lt;User&gt;[] }) {}
-}
-
-export class MapUsers implements Action {
-  readonly type = UserActionTypes.MAP_USERS;
-
-  constructor(public payload: { entityMap: EntityMap&lt;User&gt; }) {}
-}
-
-export class DeleteUser implements Action {
-  readonly type = UserActionTypes.DELETE_USER;
-
-  constructor(public payload: { id: string }) {}
-}
-
-export class DeleteUsers implements Action {
-  readonly type = UserActionTypes.DELETE_USERS;
-
-  constructor(public payload: { ids: string[] }) {}
-}
-
-export class DeleteUsersByPredicate implements Action {
-  readonly type = UserActionTypes.DELETE_USERS_BY_PREDICATE;
-
-  constructor(public payload: { predicate: Predicate&lt;User&gt; }) {}
-}
-
-export class ClearUsers implements Action {
-  readonly type = UserActionTypes.CLEAR_USERS;
-}
-
-export type UserActionsUnion =
-  | LoadUsers
-  | AddUser
-  | UpsertUser
-  | AddUsers
-  | UpsertUsers
-  | UpdateUser
-  | UpdateUsers
-  | MapUsers
-  | DeleteUser
-  | DeleteUsers
-  | DeleteUsersByPredicate
-  | ClearUsers;
+const all = union({
+  loadUsers,
+  addUser,
+  upsertUser,
+  addUsers,
+  upsertUsers,
+  updateUser,
+  updateUsers,
+  mapUsers,
+  deleteUser,
+  deleteUsers,
+  deleteUsersByPredicate,
+  clearUsers
+});
+export type Union = typeof all;
 </code-example>
 
 <code-example header="user.reducer.ts">
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
-import { UserActionsUnion, UserActionTypes } from '../actions/user.actions';
+import * as UserActions from '../actions/user.actions';
 
 export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
@@ -228,53 +158,53 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export function reducer(state = initialState, action: UserActionsUnion): State {
+export function reducer(state = initialState, action: UserActions.Union): State {
   switch (action.type) {
-    case UserActionTypes.ADD_USER: {
-      return adapter.addOne(action.payload.user, state);
+    case UserActions.addUser.type: {
+      return adapter.addOne(action.user, state);
     }
 
-    case UserActionTypes.UPSERT_USER: {
-      return adapter.upsertOne(action.payload.user, state);
+    case UserActions.upsertUser.type: {
+      return adapter.upsertOne(action.user, state);
     }
 
-    case UserActionTypes.ADD_USERS: {
-      return adapter.addMany(action.payload.users, state);
+    case UserActions.addUsers.type: {
+      return adapter.addMany(action.users, state);
     }
 
-    case UserActionTypes.UPSERT_USERS: {
-      return adapter.upsertMany(action.payload.users, state);
+    case UserActions.upsertUsers.type: {
+      return adapter.upsertMany(action.users, state);
     }
 
-    case UserActionTypes.UPDATE_USER: {
-      return adapter.updateOne(action.payload.user, state);
+    case UserActions.updateUser.type: {
+      return adapter.updateOne(action.user, state);
     }
 
-    case UserActionTypes.UPDATE_USERS: {
-      return adapter.updateMany(action.payload.users, state);
+    case UserActions.updateUsers.type: {
+      return adapter.updateMany(action.users, state);
     }
 
-    case UserActionTypes.MAP_USERS: {
-      return adapter.map(action.payload.entityMap, state);
+    case UserActions.mapUsers.type: {
+      return adapter.map(action.entityMap, state);
     }
 
-    case UserActionTypes.DELETE_USER: {
-      return adapter.removeOne(action.payload.id, state);
+    case UserActions.deleteUser.type: {
+      return adapter.removeOne(action.id, state);
     }
 
-    case UserActionTypes.DELETE_USERS: {
-      return adapter.removeMany(action.payload.ids, state);
+    case UserActions.deleteUsers.type: {
+      return adapter.removeMany(action.ids, state);
     }
 
-    case UserActionTypes.DELETE_USERS_BY_PREDICATE: {
-      return adapter.removeMany(action.payload.predicate, state);
+    case UserActions.deleteUsersByPredicate.type: {
+      return adapter.removeMany(action.predicate, state);
     }
 
-    case UserActionTypes.LOAD_USERS: {
-      return adapter.addAll(action.payload.users, state);
+    case UserActions.loadUsers.type: {
+      return adapter.addAll(action.users, state);
     }
 
-    case UserActionTypes.CLEAR_USERS: {
+    case UserActions.clearUsers.type: {
       return adapter.removeAll({ ...state, selectedUserId: null });
     }
 

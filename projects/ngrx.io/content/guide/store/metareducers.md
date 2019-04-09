@@ -27,7 +27,9 @@ export function debug(reducer: ActionReducer&lt;any&gt;): ActionReducer&lt;any&g
 export const metaReducers: MetaReducer&lt;any&gt;[] = [debug];
 
 @NgModule({
-  imports: [StoreModule.forRoot(reducers, { metaReducers })],
+  imports: [
+    StoreModule.forRoot(reducers, { metaReducers })
+  ],
 })
 export class AppModule {}
 </code-example>

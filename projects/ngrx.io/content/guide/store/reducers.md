@@ -1,10 +1,10 @@
 # Reducers
 
-Reducers in NgRx are responsible for handling transitions from one state to the next state in your application. Reducer functions handle these transitions by determining which [actions](guide/store/actions) to handle based on the type.
+Reducers in NgRx are responsible for handling transitions from one state to the next state in your application. Reducer functions handle these transitions by determining which [actions](guide/store/actions) to handle based on the action's type.
 
 ## Introduction
 
-Reducer functions are pure functions in that they produce the same output for a given input. They are without side effects and handle each state transition synchronously. Each reducer function takes the latest `Action` dispatched, the current state, and determines whether to return a newly modified state or the original state. This guide shows you how to write reducer functions, register them in your `Store`, and compose feature states.
+Reducers are pure functions in that they produce the same output for a given input. They are without side effects and handle each state transition synchronously. Each reducer function takes the latest `Action` dispatched, the current state, and determines whether to return a newly modified state or the original state. This guide shows you how to write reducer functions, register them in your `Store`, and compose feature states.
 
 ## The reducer function
 
@@ -20,29 +20,14 @@ and the associated reducer function.
 First, define some actions for interacting with a piece of state.
 
 <code-example header="scoreboard-page.actions.ts">
-import { Action } from '@ngrx/store';
+import { createAction } from '@ngrx/store';
 
-export enum ActionTypes {
-  IncrementHome = '[Scoreboard Page] Home Score',
-  IncrementAway = '[Scoreboard Page] Away Score',
-  Reset = '[Scoreboard Page] Score Reset',
-}
+export const homeScore = createAction('[Scoreboard Page] Home Score');
+export const awayScore createAction('[Scoreboard Page] Away Score');
+export const reset = createAction('[Scoreboard Page] Score Reset');
 
-export class IncrementHome implements Action {
-  readonly type = ActionTypes.IncrementHome;
-}
-
-export class IncrementAway implements Action {
-  readonly type = ActionTypes.IncrementAway;
-}
-
-export class Reset implements Action {
-  readonly type = ActionTypes.Reset;
-
-  constructor(public payload: { home: number; away: number }) {}
-}
-
-export type ActionsUnion = IncrementHome | IncrementAway | Reset;
+const all = union({ homeScore, awayScore, reset });
+export type ActionsUnion = typeof all;
 </code-example>
 
 Next, create a reducer file that imports the actions and define
@@ -53,7 +38,7 @@ a shape for the piece of state.
 Each reducer function is a listener of actions. The scoreboard actions defined above describe the possible transitions handled by the reducer. Import multiple sets of actions to handle additional state transitions within a reducer.
 
 <code-example header="scoreboard.reducer.ts">
-import * as Scoreboard from '../actions/scoreboard-page.actions';
+import * as ScoreboardPageActions from '../actions/scoreboard-page.actions';
 
 export interface State {
   home: number;
@@ -86,25 +71,25 @@ The reducer function's responsibility is to handle the state transitions in an i
 <code-example header="scoreboard.reducer.ts">
 export function reducer(
   state = initialState,
-  action: Scoreboard.ActionsUnion
+  action: ScoreboardPageActions.ActionsUnion
 ): State {
   switch (action.type) {
-    case Scoreboard.ActionTypes.IncrementHome: {
+    case ScoreboardPageActions.homeScore.type: {
       return {
         ...state,
         home: state.home + 1,
       };
     }
 
-    case Scoreboard.ActionTypes.IncrementAway: {
+    case ScoreboardPageActions.awayScore.type: {
       return {
         ...state,
         away: state.away + 1,
       };
     }
 
-    case Scoreboard.ActionTypes.Reset: {
-      return action.payload; // typed to { home: number, away: number }
+    case ScoreboardPageActions.reset.type: {
+      return { home: action.home, away: action.away };
     }
 
     default: {
@@ -116,11 +101,11 @@ export function reducer(
 
 Reducers use switch statements in combination with TypeScript's discriminated unions defined in your actions to provide type-safe processing of actions in a reducer. Switch statements use type unions to determine the correct shape of the action being consumed in each case. The action types defined with your actions are reused in your reducer functions as case statements. The type union is also provided to your reducer function to constrain the available actions that are handled in that reducer function.
 
-In the example above, the reducer is handling 3 actions: `IncrementHome`, `IncrementAway`, and `Reset`. Each action is strongly-typed based on the provided `ActionsUnion`. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+In the example above, the reducer is handling 3 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, and `[Scoreboard Page] Reset`. Each action is strongly-typed based on the provided `ActionsUnion`. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
 
 <div class="alert is-important">
 
-**Note:** The spread operator only does shallow copying and does not handle deeply nested objects. You need to copy each level in the object to ensure immutability. There are libraries that handle deep copying including [lodash](https://lodash.com) and [immer](https://github.com/mweststrate/immer).
+**Note:** The [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) only does shallow copying and does not handle deeply nested objects. You need to copy each level in the object to ensure immutability. There are libraries that handle deep copying including [lodash](https://lodash.com) and [immer](https://github.com/mweststrate/immer).
 
 </div>
 
@@ -136,7 +121,9 @@ import { StoreModule } from '@ngrx/store';
 import { scoreboardReducer } from './reducers/scoreboard.reducer';
 
 @NgModule({
-  imports: [StoreModule.forRoot({ game: scoreboardReducer })],
+  imports: [
+    StoreModule.forRoot({ game: scoreboardReducer })
+  ],
 })
 export class AppModule {}
 </code-example>
@@ -154,7 +141,9 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
-  imports: [StoreModule.forRoot({})],
+  imports: [
+    StoreModule.forRoot({})
+  ],
 })
 export class AppModule {}
 </code-example>
@@ -174,7 +163,9 @@ import { StoreModule } from '@ngrx/store';
 import { scoreboardReducer } from './reducers/scoreboard.reducer';
 
 @NgModule({
-  imports: [StoreModule.forFeature('game', scoreboardReducer)],
+  imports: [
+    StoreModule.forFeature('game', scoreboardReducer)
+  ],
 })
 export class ScoreboardModule {}
 </code-example>
@@ -187,7 +178,10 @@ import { StoreModule } from '@ngrx/store';
 import { ScoreboardModule } from './scoreboard/scoreboard.module';
 
 @NgModule({
-  imports: [StoreModule.forRoot({}), ScoreboardModule],
+  imports: [
+    StoreModule.forRoot({}),
+    ScoreboardModule
+  ],
 })
 export class AppModule {}
 </code-example>

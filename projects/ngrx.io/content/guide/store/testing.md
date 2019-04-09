@@ -20,7 +20,6 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 
 import { AuthGuard } from '../guards/auth.guard';
-import * as AuthActions from '../actions/auth-actions';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
@@ -87,11 +86,11 @@ export class MyComponent implements OnInit {
   constructor(private store: Store&lt;fromFeature.State&gt;) {}
 
   ngOnInit() {
-    this.store.dispatch(new DataActions.LoadData());
+    this.store.dispatch(DataActions.loadData());
   }
 
   onRefresh() {
-    this.store.dispatch(new DataActions.RefreshItems());
+    this.store.dispatch(DataActions.refreshItems());
   }
 }
 </code-example>
@@ -141,13 +140,13 @@ describe('My Component', () => {
   });
 
   it('should dispatch an action to load data when created', () => {
-    const action = new DataActions.LoadData();
+    const action = DataActions.loadData();
 
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 
   it('should dispatch an action to refreshing data', () => {
-    const action = new DataActions.RefreshData();
+    const action = DataActions.refreshData();
 
     component.onRefresh();
 
@@ -156,7 +155,7 @@ describe('My Component', () => {
 
   it('should display a list of items after the data is loaded', () => {
     const items = [1, 2, 3];
-    const action = new DataActions.LoadDataSuccess({ items });
+    const action = DataActions.loadDataSuccess({ items });
 
     store.dispatch(action);
 
