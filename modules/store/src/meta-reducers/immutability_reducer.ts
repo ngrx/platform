@@ -20,8 +20,7 @@ function freeze(target: any) {
     if (
       hasOwnProperty(target, prop) && targetIsFunction
         ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
-        : true &&
-          (isObjectLike(propValue) || isFunction(propValue)) &&
+        : (isObjectLike(propValue) || isFunction(propValue)) &&
           !Object.isFrozen(propValue)
     ) {
       freeze(propValue);
