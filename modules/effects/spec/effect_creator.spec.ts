@@ -18,7 +18,7 @@ describe('createEffect()', () => {
         paths: {
           '@ngrx/store': ['./modules/store'],
           '@ngrx/effects': ['./modules/effects'],
-          rxjs: ['./node_modules/rxjs'],
+          rxjs: ['../npm/node_modules/rxjs', './node_modules/rxjs'],
         },
       }
     );
