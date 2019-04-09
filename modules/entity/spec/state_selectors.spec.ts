@@ -92,7 +92,7 @@ describe('Entity State Selectors', () => {
 
     it('should type single entity from Dictonary as entity type or undefined', () => {
       // MemoizedSelector acts like a type checker
-      const singleEnitity: MemoizedSelector<
+      const singleEntity: MemoizedSelector<
         EntityState<BookModel>,
         BookModel | undefined
       > = createSelector(selectors.selectEntities, enitites => enitites[0]);
