@@ -173,3 +173,122 @@ expect(actual).toBeObservable(expected);
 </code-example>
 
 Doing this has the extra benefit of hiding implementation details, making your tests less prone to break due to implementation details changes. Meaning that if you would change the `debounceTime` inside the effect your tests wouldn't have to be changed,these tests would still pass.
+
+### Effects that use State
+
+The mock store can simplify testing Effects that inject State using the RxJs `withLatestFrom` operator.  The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
+
+<code-example header="collection.effects.ts">
+import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { map, withLatestFrom } from 'rxjs/operators';
+import { CollectionApiActions } from '@example-app/books/actions';
+import * as fromBooks from '@example-app/books/reducers';
+
+@Injectable()
+export class CollectionEffects {
+  addBookToCollectionSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CollectionApiActions.addBookSuccess),
+        withLatestFrom(this.store.pipe(select(fromBooks.getCollectionBookIds))),
+        map(([action, bookCollection]) => {
+          if (bookCollection.length === 1) {
+            window.alert('Congrats on adding your first book!');
+          } else {
+            window.alert('You have added book number ' + bookCollection.length);
+          }
+          return action;
+        })
+      ),
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private store: Store&lt;fromBooks.State&gt;
+  ) {}
+}
+</code-example>
+
+In the test, you can use the mock store to adjust the number of books in the collection.  You provide the `MockStore` an initial state containing one book. When testing the effect when two or more books are in the collection, you provide a different state using `setState()`.
+
+<code-example header="collection.effects.spec.ts">
+import { TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
+import { Actions } from '@ngrx/effects';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { cold, hot } from 'jasmine-marbles';
+import { Observable } from 'rxjs';
+import { CollectionEffects } from '@example-app/books/effects';
+import { CollectionApiActions } from '@example-app/books/actions';
+import { Book } from '@example-app/books/models/book';
+import * as fromBooks from '@example-app/books/reducers';
+
+describe('CollectionEffects', () => {
+  let effects: CollectionEffects;
+  let actions$: Observable&lt;any&gt;;
+  let store: MockStore&lt;fromBooks.State&gt;;
+  const initialState = {
+    books: {
+      collection: {
+        loaded: true,
+        loading: false,
+        ids: ['1'],
+      },
+    },
+  } as fromBooks.State;
+
+  const book1 = { id: '111', volumeInfo: {} } as Book;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        CollectionEffects,
+        provideMockActions(() => actions$),
+        provideMockStore({ initialState }),
+      ],
+    });
+
+    effects = TestBed.get(CollectionEffects);
+    actions$ = TestBed.get(Actions);
+    store = TestBed.get(Store);
+  });
+
+  describe('addBookToCollectionSuccess$', () => {
+    beforeEach(() => {
+      spyOn(window, 'alert');
+    });
+
+    it('should alert congratulatory message when adding the first book on success', () => {
+      const action = CollectionApiActions.addBookSuccess({ book: book1 });
+      const expected = cold('-c', { c: action });
+      actions$ = hot('-a', { a: action });
+      expect(effects.addBookToCollectionSuccess$).toBeObservable(expected);
+      expect(window.alert).toHaveBeenCalledWith(
+        'Congrats on adding your first book!'
+      );
+    });
+
+    it('should alert number of books after adding the second book', () => {
+      store.setState({
+        books: {
+          collection: {
+            loaded: true,
+            loading: false,
+            ids: ['1', '2'],
+          },
+        },
+      } as fromBooks.State);
+
+      const action = CollectionApiActions.addBookSuccess({ book: book1 });
+      const expected = cold('-c', { c: action });
+      actions$ = hot('-a', { a: action });
+      expect(effects.addBookToCollectionSuccess$).toBeObservable(expected);
+      expect(window.alert).toHaveBeenCalledWith('You have added book number 2');
+    });
+  });
+});
+</code-example>
