@@ -3,20 +3,20 @@
 Example application utilizing @ngrx libraries, showcasing common patterns and best practices. Try it on [StackBlitz](https://ngrx.github.io/platform/stackblitz.html).
 
 This app is a book collection manager. The user can authenticate, use the Google Books API to search for
-books and add them to their collection. This application utilizes [@ngrx/store](../../docs/store/README.md to manage
+books and add them to their collection. This application utilizes [@ngrx/store](https://ngrx.io/guide/store) to manage
 the state of the app and to cache requests made to the Google Books API;
-[@ngrx/effects](../../docs/effects/README.md) to isolate side effects; [@angular/router](https://github.com/angular/angular) to manage navigation between routes; [@angular/material](https://github.com/angular/material2) to provide design and styling.
+[@ngrx/effects](https://ngrx.io/guide/effects) to isolate side effects; [@angular/router](https://angular.io/guide/router) to manage navigation between routes; [@angular/material](https://github.com/angular/material2) to provide design and styling.
 
 Built with [@angular/cli](https://github.com/angular/angular-cli)
 
 ### Included
 
-- [@ngrx/store](../../docs/store/README.md) - RxJS powered state management for Angular apps, inspired by Redux
-- [@ngrx/effects](../../docs/effects/README.md) - Side effect model for @ngrx/store
-- [@ngrx/router-store](../../docs/router-store/README.md) - Bindings to connect the Angular Router to @ngrx/store
-- [@ngrx/entity](../../docs/entity/README.md) - Entity State adapter for managing record collections.
-- [@ngrx/store-devtools](../../docs/store-devtools/README.md) - Instrumentation for @ngrx/store enabling time-travel debugging
-- [@angular/router](https://github.com/angular/angular) - Angular Router
+- [@ngrx/store](https://ngrx.io/guide/store) - RxJS powered state management for Angular apps, inspired by Redux
+- [@ngrx/effects](https://ngrx.io/guide/effects) - Side effect model for @ngrx/store
+- [@ngrx/router-store](https://ngrx.io/guide/router-store) - Bindings to connect the Angular Router to @ngrx/store
+- [@ngrx/entity](https://ngrx.io/guide/entity) - Entity State adapter for managing record collections.
+- [@ngrx/store-devtools](https://ngrx.io/guide/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
+- [@angular/router](https://angular.io/guide/router) - Angular Router
 - [@angular/material](https://github.com/angular/material2) - Angular Material
 - [jest](https://facebook.github.io/jest/) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
 
