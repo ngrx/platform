@@ -2,6 +2,7 @@ export { createEffect } from './effect_creator';
 export { Effect } from './effect_decorator';
 export { getEffectsMetadata } from './effects_metadata';
 export { mergeEffects } from './effects_resolver';
+export { EffectsMetadata } from './models';
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';
