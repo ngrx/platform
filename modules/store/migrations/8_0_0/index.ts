@@ -1,7 +1,10 @@
 import * as ts from 'typescript';
 import { Rule, chain, Tree } from '@angular-devkit/schematics';
-import { Path } from '@angular-devkit/core';
-import { ReplaceChange } from '@ngrx/store/schematics-core';
+import {
+  ReplaceChange,
+  createChangeRecorder,
+  createReplaceChange,
+} from '@ngrx/store/schematics-core';
 
 const META_REDUCERS = 'META_REDUCERS';
 
@@ -23,9 +26,10 @@ function updateMetaReducersToken(): Rule {
       }
 
       const createChange = (node: ts.Node) =>
-        new ReplaceChange(
+        createReplaceChange(
+          sourceFile,
           path,
-          node.getStart(sourceFile),
+          node,
           META_REDUCERS,
           'USER_PROVIDED_META_REDUCERS'
         );
@@ -103,18 +107,4 @@ function findMetaReducersAssignment(
 
     ts.forEachChild(node, childNode => findMetaReducers(childNode, changes));
   }
-}
-
-function createChangeRecorder(
-  tree: Tree,
-  path: Path,
-  changes: ReplaceChange[]
-) {
-  const recorder = tree.beginUpdate(path);
-  for (const change of changes) {
-    const action = <any>change;
-    recorder.remove(action.pos, action.oldText.length);
-    recorder.insertLeft(action.pos, action.newText);
-  }
-  return recorder;
 }

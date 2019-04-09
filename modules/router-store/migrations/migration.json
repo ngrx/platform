@@ -6,6 +6,11 @@
       "description": "The road to v6",
       "version": "5.2",
       "factory": "./6_0_0/index"
+    },
+    "ngrx-router-store-migration-02": {
+      "description": "The road to v8",
+      "version": "8-beta",
+      "factory": "./8_0_0/index"
     }
   }
 }
