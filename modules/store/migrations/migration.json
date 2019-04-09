@@ -9,7 +9,7 @@
     },
     "ngrx-store-migration-02": {
       "description": "The road to v8",
-      "version": "7.0",
+      "version": "8-beta",
       "factory": "./8_0_0/index"
     }
   }
