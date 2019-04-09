@@ -1,11 +1,8 @@
 """Re-export of some bazel rules with repository-wide defaults."""
 
-load(
-    "@build_bazel_rules_nodejs//:defs.bzl",
-    _jasmine_node_test = "jasmine_node_test",
-    _npm_package = "npm_package",
-)
+load("@build_bazel_rules_nodejs//:defs.bzl", _npm_package = "npm_package")
 load("@npm_angular_bazel//:index.bzl", _ng_module = "ng_module", _ng_package = "ng_package")
+load("@npm_bazel_jasmine//:index.bzl", _jasmine_node_test = "jasmine_node_test")
 load("@npm_bazel_typescript//:defs.bzl", _ts_library = "ts_library")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
