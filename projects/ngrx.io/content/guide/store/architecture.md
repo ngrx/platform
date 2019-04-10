@@ -259,7 +259,7 @@ As you can see above we lose quite a bit of features when using plain JavaScript
 - ensuring we can't change the `type` value after instantiation. 
 - we would also need to perform checks on the `payload` being passed in to ensure it contains a `username` and `password`. 
 
-At this point I hope you want to return to the nice and typesafe world of Typescript. Lets talk about Action creation next. 
+At this point I hope you want to return to the nice and type safe world of TypeScript. Lets talk about Action creation next. 
 
 ### Creating an Action
 Ok, time has come to instantiate an object from our `Login` class and thereby create an action. One of the common places to create an action is in the context of being inside of a component and responding to a user event. So imagine we are inside of `login-page.component.ts` and the user has just entered their `username` and `password` and clicked on a button to login. At this point the `clicked()` method is invoked on our component. The code in the component looks as follows:
