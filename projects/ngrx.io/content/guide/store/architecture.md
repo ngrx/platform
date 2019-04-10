@@ -354,7 +354,7 @@ function reducer(state, action) {
 }
 </code-example>
 
-As you can see above we have no typesafety. We could be feeding this `reducer()` function any kind of parameters. So lets fix that shall we ?
+As you can see above we have no type safety. We could be feeding this `reducer()` function any kind of parameters. So lets fix that shall we?
 The first thing we are going to do is add something called a union type. Union types works in the following way:
 
 <code-example header="Example union">
