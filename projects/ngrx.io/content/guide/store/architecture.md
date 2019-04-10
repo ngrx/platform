@@ -240,6 +240,7 @@ export class Login implements Action {
   constructor(public payload: { username: string; password: string }) {}
 }
 </code-example>
+
 As you can see above we implemented the `Action` interface by creating the class `Login`. In doing so we also used the `readonly` keyword on the `type` field. Thereby we ensured that you can't change the value of `type` after we've instantiated an object from the `Login` class. 
 
 We did another thing as well, namely adding the `payload` to the constructor of the `Login` class and we used the keyword `public` to do it. Using an accessor like `public`, `private` or `protected` in a constructor is a nice short hand for creating the field as well as pass it in as a parameter into the constructor. The below code in plain Javascript looks like the following:
