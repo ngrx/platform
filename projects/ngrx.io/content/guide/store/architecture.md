@@ -135,7 +135,7 @@ NgRx is a Redux implementation meant for Angular and it makes heave use of TypSs
 So why would we want to make them typesafe in the first place? Well, remember when we constructed an action in our previous section and assigned a string value to the `type` field? That is actually quite error prone, cause you might mispel that string value. It's maybe hard to understand why a mispel would be such a big deal but let's very briefly mention how actions are used. 
 
 ### Dispatching an action
-Actions are being *dispatched* to reducer functions. What does that mean? Normally when you set up NGRX you do so be setting up your store like this:
+Actions are being *dispatched* to reducer functions. What does that mean? Normally when you set up NgRx you do so by setting up your store like this:
 
 <code-example header="app.module.ts and products.reducer.ts">
 // products.reducer.ts
