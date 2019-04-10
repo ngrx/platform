@@ -2,7 +2,7 @@
 
 NGRX is based on the architectural pattern Redux. Redux in turn is based upon the general pattern Pub-Sub or Publish, Subscribe. This means we send a message to a central data store and a number of listeners on that data store are being told there is a new message. 
 
-A very typical usage for this is a Chat application. In a Chat application the people in the chat room can communicate with specific participants or they can broadcast what they say to the entire chat room. It's messages being sent, some messages meant for specific people or for a group. 
+A very typical usage for this is a Chat application. In a Chat application, the people in the chat room can communicate with specific participants or they can broadcast what they say to the entire chat room. Its messages being sent, some messages meant for specific people or for a group. 
 
 Let's take this chat room analogy and apply it generally to an application. Every time we do something in an application like adding a product to a list or change the language or theme of the application some component/s wants to know about it. In the case of a product being added to a list a product list page component probably is the one that cares the most whereas with a change of an apps language that would be an application wide change. 
 
