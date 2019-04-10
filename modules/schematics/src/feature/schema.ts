@@ -44,4 +44,9 @@ export interface Schema {
    * should be generated as part of this feature.
    */
   api?: boolean;
+
+  /**
+   * Specifies if the effect creation uses 'createEffect'
+   */
+  effectCreators?: boolean;
 }

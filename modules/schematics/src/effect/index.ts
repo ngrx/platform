@@ -93,6 +93,21 @@ function addImportToNgModule(options: EffectOptions): Rule {
   };
 }
 
+function getEffectMethod(effectCreators?: boolean) {
+  return effectCreators ? 'createEffect' : 'Effect';
+}
+
+function getEffectStart(name: string, effectCreators?: boolean): string {
+  const effectName = stringUtils.classify(name);
+  return effectCreators
+    ? `load${effectName}s$ = createEffect(() => this.actions$.pipe(`
+    : '@Effect()\n' + `  load${effectName}s$ = this.actions$.pipe(`;
+}
+
+function getEffectEnd(effectCreators?: boolean) {
+  return effectCreators ? '));' : ');';
+}
+
 export default function(options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
@@ -116,6 +131,9 @@ export default function(options: EffectOptions): Rule {
             options.flat ? '' : s,
             options.group ? 'effects' : ''
           ),
+        effectMethod: getEffectMethod(options.effectCreators),
+        effectStart: getEffectStart(options.name, options.effectCreators),
+        effectEnd: getEffectEnd(options.effectCreators),
         ...(options as object),
       } as any),
       move(parsedPath.path),

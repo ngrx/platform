@@ -56,6 +56,13 @@
       "description":
         "Specifies if api success and failure actions, reducer, and effects should be generated as part of this feature.",
       "aliases": ["a"]
+    },
+    "creators": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Specifies if the effects and actions be created using creator functions",
+      "aliases": ["c"]
     }
   },
   "required": []
