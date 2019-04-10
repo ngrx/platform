@@ -23,7 +23,7 @@ describe('immutabilityCheckMetaReducer:', () => {
       immutabilityCheckMetaReducer((state, action) => {
         reduce(action);
         return state;
-      })({}, { type: 'invoke', numbers: [1, 2, 3] });
+      })({}, { type: 'invoke', numbers: [1, 2, 3], fun: function() {} });
     }
   });
 
@@ -48,7 +48,7 @@ describe('immutabilityCheckMetaReducer:', () => {
     });
 
     function invokeReducer(reduce: Function) {
-      immutabilityCheckMetaReducer((state, _action) => reduce(state))(
+      immutabilityCheckMetaReducer(state => reduce(state))(
         { numbers: [1, 2, 3] },
         { type: 'invoke' }
       );
