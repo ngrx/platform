@@ -124,6 +124,7 @@ class Store {
   }
 }
 </code-example>
+
 We have on purpose left out the part on how we subscribe to the store and how we broadcast a new store state after it has been changed by a call to `dispatch()`. The reason for that is that it's implementation specific to what Redux implementation we are talking about. In some implementations EventEmitters are being used, in NGRX it's RxJS. 
 
 At this point we have mentioned all major concepts in Redux like `action`, `reducer` and `store`. We've even shown a very naive implementation so you understand how all the pieces go together. Next is understanding where NGRX comes with its specific solution and especially why the heavy usage of Typescript makes sense and helps creating a better experience.
