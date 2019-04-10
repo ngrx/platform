@@ -38,7 +38,7 @@ If this is our state above that means the application is showing all its text in
 
 #### Changing our state in the store
 
-This is where we create an action representing our intent and because we want to change to something specific we need to have a payload with the value `french`. An action is nothing more than an object looking like this"
+This is where we create an action representing our intent and because we want to change to something specific we need to have a payload with the value `french`. An action is nothing more than an object looking like this:
 
 <code-example header="">
 const action { type: '[Language] change', payload: 'french' }
