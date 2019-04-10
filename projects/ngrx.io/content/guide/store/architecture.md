@@ -154,7 +154,7 @@ StoreModule.forRoot({
 })
 </code-example>
 
-When you do that you say that `products` is a thing that will exist in a store and it's state is something we can either *read* or *change*. The way we *read* the value is by subscribing to it using the `Store` service inside of component usually like so:
+When you do that you say that `products` is a piece of the state that will exist in the store and it's state is something we can either *read* or *change*. The way we *read* the value is by subscribing to it using the `Store` service inside of component usually like so:
 
 <code-example header="app.module.ts">
 constructor(private store: Store<AppState>) {
