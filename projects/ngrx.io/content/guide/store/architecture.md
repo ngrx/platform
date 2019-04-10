@@ -304,6 +304,7 @@ export enum ActionTypes {
   Login = '[Login Page] Login',
 }
 </code-example>
+
 As you can see above we've moved our `type` value into the `ActionTypes` enum and now we can perform the next step which is to replace our `type` value with our enum value:
 
 <code-example header="login-page.actions.ts">
