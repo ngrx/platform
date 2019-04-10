@@ -46,7 +46,7 @@ const action = { type: '[Language] change', payload: 'french' }
 
 At this point we want to *dispatch* this action so our intended change ends up the store. As we said before Reducers are the guards of the store. Therefore we need to pass our action to a Reducer. 
 
-Reducers are the guards of the store as has been mentioned a couple of times. So what other properties to they have? We know they are functions but a thing that makes Redux really great is that it's predictable. What do we mean by that? Predictability is something we achieve by having our Reducers be pure functions. Ok, another concept, what does pure functions mean? Pure functions are functions that act like mathematical functions is that given the same input data they produce the same output data. Let's see an example:
+Reducers are the guards of the store as has been mentioned a couple of times. So what other benefits do they have? We know they are functions but a thing that makes Redux really great is that it's predictable. What do we mean by that? Predictability is something we achieve by having our Reducers be pure functions. Ok, another concept, what does pure functions mean? Pure functions are functions that act like mathematical functions, that given the same input data they produce the same output data. Let's see an example:
 
 <code-example header="A pure function">
 function sum(lhs, rhs) { 
