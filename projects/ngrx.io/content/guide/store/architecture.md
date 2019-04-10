@@ -369,7 +369,7 @@ car('Porsche'); // Not OK
 car('Volvo') // OK
 </code-example>
 
-As you can see from above code we are defining the type `Cars` and what we are doing is adding a number of values that it can assume. Each value it can assume are separated by a pipe, `|`. The example invocation of the method `car()` tells us that `Ferrari` and `Volvo` are ok to add but not `Porsche` as it's not part of the definition of our union type.
+As you can see from the above code we are defining the type `Cars` and what we are doing is adding a number of values that it can assume. Each value it can assume are separated by a pipe, `|`. The example invocation of the method `car()` tells us that `Ferrari` and `Volvo` are ok to add but not `Porsche` as it's not part of the definition of our union type.
 
 So why is this interesting for our `reducer()` function? Well union types can take any type. Instead of it being different strings it could be class instead. The part we want to improve on our `reducer()` function is the `action` parameter. Lets head back to our `login-page.actions.ts` file and make a union type out our Action classes, like so:
 
