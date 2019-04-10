@@ -34,7 +34,7 @@ The first thing that happens in Redux is the following:
   "products": [{ "id": 1, "name": "movie" }]
 }
 ```
-If this is our state above that means the application is showing all its text in `english` and somewhere we are rendering a list of products. Lets say now the user changes the language in the applciation from `english` from `french`. How would we change this? 
+If this is our state above that means the application is showing all its text in `english` and somewhere we are rendering a list of products. Let's say that now the user changes the language in the application, from `english` from `french`. How would we change this? 
 
 #### Changing our state in the store
 
