@@ -298,7 +298,7 @@ export class Login implements Action {
 }
 </code-example>
 
-We've discussed previously how the above code, using Typescript, provides a lot of benefits over creating Actions using plain JavaScript and object literals or even using classes. We can take this one step further though, by using enums. Right now our `type` is a string. Let's first create an enum like so:
+We've discussed previously how the above code, using TypeScript, provides a lot of benefits over creating Actions using plain JavaScript and object literals or even using classes. We can take this one step further though, by using enums. Right now our `type` is a string. Let's first create an enum like so:
 
 <code-example header="An ActionTypes enum">
 export enum ActionTypes {
