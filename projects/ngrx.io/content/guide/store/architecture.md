@@ -253,6 +253,7 @@ class Login {
   }
 }
 </code-example>
+
 As you can see above we lose quite a bit of features when using plain JavaScript like: 
 - having fields like `payload` created for us via the constructor, 
 - ensuring we can't change the `type` value after instantiation. 
