@@ -13,7 +13,7 @@ Ok, so we managed to find some problem areas like
 - corrupted state, we made a mistake and suddenly one or more components are not in agreement what the state should be
 
 ## Redux
-As was stated earlier Redux is variant of a Pub Sub pattern and it uses certain constructs to make sure we can listen to data from one place and also change the data in a predictable way. 
+As stated earlier, Redux is a variant of the Pub-Sub pattern and it uses certain constructs to make sure we can listen to data from one place and also change the data in a predictable way. 
 
 ### Basic concepts
 For Redux to work properly there are some players in there that needs to exist, those are:
