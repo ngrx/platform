@@ -130,7 +130,7 @@ We have on purpose left out the part on how we subscribe to the store and how we
 At this point we have mentioned all major concepts in Redux like `action`, `reducer` and `store`. We've even shown a very naive implementation so you understand how all the pieces go together. Next is understanding where NgRx comes with its specific solution and especially why the heavy usage of TypeScript makes sense and helps creating a better experience.
 
 ## Introducing NGRX and the need for type safety
-NGRX is a Redux implementation meant for Angular and it makes heave use of Typescript and RxJS. The biggest reason is probably typesafety. 
+NgRx is a Redux implementation meant for Angular and it makes heave use of TypSscript and RxJS. The biggest reason is type safety. 
 
 So why would we want to make them typesafe in the first place? Well, remember when we constructed an action in our previous section and assigned a string value to the `type` field? That is actually quite error prone, cause you might mispel that string value. It's maybe hard to understand why a mispel would be such a big deal but let's very briefly mention how actions are used. 
 
