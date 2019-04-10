@@ -90,7 +90,7 @@ Ok, so we have a reducer, so how do we use it? Well, that's just a matter of inv
 <code-example header="invoking our reducer">
 let state = reducer('', { type: '[Language] change', payload: 'english' }); //english
 
-state = reducer(state, { type: '[Language] change', payload: 'french' })
+state = reducer(state, { type: '[Language] change', payload: 'french' }) //french
 </code-example>
 
 As you can see above we are invoking the reducer first with an empty string and an action saying we want to change to `english`. At that point our `state` variable is updated to contain the value `english`. In our next invocation we change the value by passing the existing `state` variable as the first parameter and then as our second parameter we pass an action object that will change the value to `french`. 
