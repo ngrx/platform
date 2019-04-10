@@ -358,7 +358,7 @@ As you can see above we have no type safety. We could be feeding this `reducer()
 The first thing we are going to do is add something called a union type. Union types works in the following way:
 
 <code-example header="Example union">
-type Cars = 'Ferrari' | 'Wolkswagen' | 'Volvo';
+type Cars = 'Ferrari' | 'Volkswagen' | 'Volvo';
 
 function car(car: Cars) {
   console.log(car);
