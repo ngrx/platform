@@ -231,7 +231,7 @@ import { Credentials } from '@example-app/auth/models/user';
 
 export const login = createAction(
   '[Login Page] Login',
-  props<{ credentials: Credentials }>()
+  props&lt;{ credentials: Credentials }&gt;()
 );
 
 export type LoginPageActionsUnion = ReturnType&lt;typeof login&gt;;
