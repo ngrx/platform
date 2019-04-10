@@ -41,7 +41,7 @@ If this is our state above that means the application is showing all its text in
 This is where we create an action representing our intent and because we want to change to something specific we need to have a payload with the value `french`. An action is nothing more than an object looking like this:
 
 <code-example header="">
-const action { type: '[Language] change', payload: 'french' }
+const action = { type: '[Language] change', payload: 'french' }
 </code-example>
 
 At this point we want to *dispatch* this action so our intended change ends up the store. As we said before Reducers are the guards of the store. Therefore we need to pass our action to a Reducer. 
