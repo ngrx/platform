@@ -218,3 +218,101 @@ export class MovieModule {}
 **Note:** Running an effects class multiple times, either by `forRoot()` or `forFeature()`, (for example via different lazy loaded modules) will not cause Effects to run multiple times. There is no functional difference between effects loaded by `forRoot()` and `forFeature()`; the important difference between the functions is that `forRoot()` sets up the providers required for effects.
 
 </div>
+
+## Incorporating State
+
+If additional metadata is needed to perform an effect besides the initiating action's `type`, we should rely on passed metadata from an action creator's `props` method.
+
+Let's look at an example of an action initiating a login request using an effect with additional passed metadata:
+
+<code-example header="login-page.actions.ts">
+import { createAction, props } from '@ngrx/store';
+import { Credentials } from '../models/user';
+
+export const login = createAction(
+  '[Login Page] Login',
+  props&lt;{ credentials: Credentials }&gt;()
+);
+</code-example>
+
+<code-example header="auth.effects.ts">
+import { Injectable } from '@angular/core';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, exhaustMap, map } from 'rxjs/operators';
+import {
+  LoginPageActions,
+  AuthApiActions,
+} from '../actions';
+import { Credentials } from '../models/user';
+import { AuthService } from '../services/auth.service';
+
+@Injectable()
+export class AuthEffects {
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.login),
+      exhaustMap(action =>
+        this.authService.login(action.credentials).pipe(
+          map(user => AuthApiActions.loginSuccess({ user })),
+          catchError(error => of(AuthApiActions.loginFailure({ error })))
+        )
+      )
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService
+  ) {}
+}
+</code-example>
+
+The `login` action has additional `credentials` metadata which is passed to a service to log the specific user into the application.
+
+However, there may be cases when the required metadata is only accessible from state.  When state is needed, the RxJS `withLatestFrom` operator can be used to provide it.
+
+The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
+
+<code-example header="collection.effects.ts">
+import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { tap, concatMap, withLatestFrom } from 'rxjs/operators';
+import { CollectionApiActions } from '../actions';
+import * as fromBooks from '../reducers';
+
+@Injectable()
+export class CollectionEffects {
+  addBookToCollectionSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CollectionApiActions.addBookSuccess),
+        concatMap(action => of(action).pipe(
+          withLatestFrom(this.store.pipe(select(fromBooks.getCollectionBookIds)))
+        )),
+        tap(([action, bookCollection]) => {
+          if (bookCollection.length === 1) {
+            window.alert('Congrats on adding your first book!');
+          } else {
+            window.alert('You have added book number ' + bookCollection.length);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+  constructor(
+    private actions$: Actions,
+    private store: Store&lt;fromBooks.State&gt;
+  ) {}
+}
+</code-example>
+
+<div class="alert is-important">
+
+**Note:** For performance reasons, use a flattening operator in combination with `withLatestFrom` to prevent the selector from firing until the correct action is dispatched.
+
+</div>
+
+To learn about testing effects that incorporate state, see [Effects that use State](guide/effects/testing#effects-that-use-state).
