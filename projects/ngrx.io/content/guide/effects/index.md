@@ -314,3 +314,5 @@ export class CollectionEffects {
 **Note:** For performance reasons, use a flattening operator in combination with `withLatestFrom` to prevent the selector from firing until the correct action is dispatched.
 
 </div>
+
+To learn about testing effects that incorporate state, see [Effects that use State](guide/effects/testing#effects-that-use-state).
