@@ -233,8 +233,6 @@ export const login = createAction(
   '[Login Page] Login',
   props&lt;{ credentials: Credentials }&gt;()
 );
-
-export type LoginPageActionsUnion = ReturnType&lt;typeof login&gt;;
 </code-example>
 
 <code-example header="auth.effects.ts">
@@ -254,9 +252,8 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
-      map(action => action.credentials),
-      exhaustMap((auth: Credentials) =>
-        this.authService.login(auth).pipe(
+      exhaustMap(action =>
+        this.authService.login(action.credentials).pipe(
           map(user => AuthApiActions.loginSuccess({ user })),
           catchError(error => of(AuthApiActions.loginFailure({ error })))
         )
@@ -282,7 +279,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, concatMap, withLatestFrom } from 'rxjs/operators';
+import { tap, concatMap, withLatestFrom } from 'rxjs/operators';
 import { CollectionApiActions } from '@example-app/books/actions';
 import * as fromBooks from '@example-app/books/reducers';
 
@@ -295,13 +292,12 @@ export class CollectionEffects {
         concatMap(action => of(action).pipe(
           withLatestFrom(this.store.pipe(select(fromBooks.getCollectionBookIds)))
         )),
-        map(([action, bookCollection]) => {
+        tap(([action, bookCollection]) => {
           if (bookCollection.length === 1) {
             window.alert('Congrats on adding your first book!');
           } else {
             window.alert('You have added book number ' + bookCollection.length);
           }
-          return action;
         })
       ),
     { dispatch: false }
