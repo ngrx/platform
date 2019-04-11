@@ -227,7 +227,7 @@ Let's look at an example of an action initiating a login request using an effect
 
 <code-example header="login-page.actions.ts">
 import { createAction, props } from '@ngrx/store';
-import { Credentials } from '@example-app/auth/models/user';
+import { Credentials } from '../models/user';
 
 export const login = createAction(
   '[Login Page] Login',
@@ -243,9 +243,9 @@ import { catchError, exhaustMap, map } from 'rxjs/operators';
 import {
   LoginPageActions,
   AuthApiActions,
-} from '@example-app/auth/actions';
-import { Credentials } from '@example-app/auth/models/user';
-import { AuthService } from '@example-app/auth/services/auth.service';
+} from '../actions';
+import { Credentials } from '../models/user';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
@@ -280,8 +280,8 @@ import { Store, select } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { tap, concatMap, withLatestFrom } from 'rxjs/operators';
-import { CollectionApiActions } from '@example-app/books/actions';
-import * as fromBooks from '@example-app/books/reducers';
+import { CollectionApiActions } from '../actions';
+import * as fromBooks from '../reducers';
 
 @Injectable()
 export class CollectionEffects {
