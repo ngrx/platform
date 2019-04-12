@@ -141,7 +141,7 @@ The following example effect debounces the user input into from a search action.
 <code-example header="my.effects.spec.ts">
 search$ = createEffect(() =>
   this.actions$.pipe(
-    ofType(BookActionTypes.Search),
+    ofType(BookActions.search),
     debounceTime(300, asyncScheduler),
     switchMap(...)
   )
@@ -152,12 +152,12 @@ The same effect but now defined as a function, would look as follows:
 
 <code-example header="my.effects.spec.ts">
 // refactor as input properties and provide default values
-search$ = ({
+search$ = createEffect(() => ({
   debounce = 300,
   scheduler = asyncScheduler
-} = {}) => createEffect(() =>
+} = {}) =>
   this.actions$.pipe(
-    ofType(BookActionTypes.Search),
+    ofType(BookActions.search),
     debounceTime(debounce, scheduler),
     switchMap(...)
   )
@@ -185,7 +185,7 @@ The mock store can simplify testing Effects that inject State using the RxJs `wi
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { tap, withLatestFrom } from 'rxjs/operators';
 import { CollectionApiActions } from '../books/actions';
 import * as fromBooks from '../books/reducers';
 
@@ -196,13 +196,12 @@ export class CollectionEffects {
       this.actions$.pipe(
         ofType(CollectionApiActions.addBookSuccess),
         withLatestFrom(this.store.pipe(select(fromBooks.getCollectionBookIds))),
-        map(([action, bookCollection]) => {
+        tap(([, bookCollection]) => {
           if (bookCollection.length === 1) {
             window.alert('Congrats on adding your first book!');
           } else {
             window.alert('You have added book number ' + bookCollection.length);
           }
-          return action;
         })
       ),
     { dispatch: false }
