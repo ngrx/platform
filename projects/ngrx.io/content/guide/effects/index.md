@@ -95,7 +95,7 @@ To isolate side-effects from your component, you must create an `Effects` class 
 Effects are injectable service classes with distinct parts:
 
 - An injectable `Actions` service that provides an observable stream of _all_ actions dispatched _after_ the latest state has been reduced.
-- Observable streams are decorated with metadata using the `Effect` decorator. The metadata is used to register the streams that are subscribed to the store. Any action returned from the effect stream is then dispatched back to the `Store`.
+- Metadata is attached to the observable streams using the `createEffect` function. The metadata is used to register the streams that are subscribed to the store. Any action returned from the effect stream is then dispatched back to the `Store`.
 - Actions are filtered using a pipeable `ofType` operator. The `ofType` operator takes one more action types as arguments to filter on which actions to act upon.
 - Effects are subscribed to the `Store` observable. 
 - Services are injected into effects to interact with external APIs and handle streams.
@@ -111,17 +111,15 @@ import { map, mergeMap } from 'rxjs/operators';
 @Injectable()
 export class MovieEffects {
 
-  @Effect()
-  loadMovies$ = this.actions$
-    .pipe(
-      ofType('[Movies Page] Load Movies'),
-      mergeMap(() => this.moviesService.getAll()
-        .pipe(
-          map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
-          catchError(() => EMPTY)
-        ))
-      )
-    );
+  loadMovies$ = createEffect(() => this.actions$.pipe(
+    ofType('[Movies Page] Load Movies'),
+    mergeMap(() => this.moviesService.getAll()
+      .pipe(
+        map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
 
   constructor(
     private actions$: Actions,
@@ -134,7 +132,14 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 
 <div class="alert is-important">
 
-Event streams are not limited to dispatched actions, but can be _any_ observable that produces new actions, such as observables from the Angular Router, observables created from browser events, and other observable streams.
+**Note:** Event streams are not limited to dispatched actions, but can be _any_ observable that produces new actions, such as observables from the Angular Router, observables created from browser events, and other observable streams.
+
+</div>
+
+<div class="alert is-important">
+
+**Note:** You can also write effects using the `@Effect()` decorator, which was the previously defined way before effects creators were introduced in NgRx. If 
+you are looking for examples of effect decorators, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/effects#writing-effects).
 
 </div>
 
@@ -151,17 +156,17 @@ import { map, mergeMap } from 'rxjs/operators';
 @Injectable()
 export class MovieEffects {
 
-  @Effect()
-  loadMovies$ = this.actions$
-    .pipe(
+  loadMovies$ = createEffect(() => 
+    this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
       mergeMap(() => this.moviesService.getAll()
         .pipe(
           map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
           catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        ))
+        )
       )
-    );
+    )
+  );
 
   constructor(
     private actions$: Actions,
@@ -302,6 +307,7 @@ export class CollectionEffects {
       ),
     { dispatch: false }
   );
+
   constructor(
     private actions$: Actions,
     private store: Store&lt;fromBooks.State&gt;
@@ -315,4 +321,4 @@ export class CollectionEffects {
 
 </div>
 
-To learn about testing effects that incorporate state, see [Effects that use State](guide/effects/testing#effects-that-use-state).
+To learn about testing effects that incorporate state, see the [Effects that use State](guide/effects/testing#effects-that-use-state) section in the testing guide.

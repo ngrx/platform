@@ -8,12 +8,13 @@ import {
 import { PrettyPrinter } from '../code/pretty-printer.service';
 
 const EFFECTS_EXAMPLE = `
-@Effect() search$ = this.actions$.pipe(
-  ofType<SearchAction>(BookActions.Types.Search),
-  map(action => action.query),
-  exhaustMap(query =>
-    this.googleBooksService.search(query)
-  ),
+search$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(BookActions.search),
+    exhaustMap(action =>
+      this.googleBooksService.search(action.query)
+    )
+  )
 );`;
 
 const SCHEMATICS_EXAMPLE = `
