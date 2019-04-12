@@ -48,4 +48,9 @@ export interface Schema {
    * Specifies if effect has api success and failure actions wired up
    */
   api?: boolean;
+
+  /**
+   * Specifies if the effect creation uses 'createEffect'
+   */
+  effectCreators?: boolean;
 }

@@ -27,6 +27,7 @@ describe('Effect Schematic', () => {
     feature: false,
     root: false,
     group: false,
+    effectCreators: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -314,6 +315,44 @@ describe('Effect Schematic', () => {
 
     expect(content).toMatch(
       /constructor\(private actions\$: Actions<FooActions>\) {}/
+    );
+  });
+
+  it('should create an effect using creator function', () => {
+    const options = { ...defaultOptions, effectCreators: true, feature: true };
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+    expect(content).toMatch(
+      /import { Actions, createEffect, ofType } from '@ngrx\/effects';/
+    );
+    expect(content).not.toMatch(/@Effect\(\)/);
+    expect(content).toMatch(
+      /loadFoos\$ = createEffect\(\(\) => this.actions\$.pipe\(/
+    );
+  });
+
+  it('should create an api effect using creator function', () => {
+    const options = {
+      ...defaultOptions,
+      effectCreators: true,
+      api: true,
+      feature: true,
+    };
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+
+    expect(content).toMatch(
+      /import { Actions, createEffect, ofType } from '@ngrx\/effects';/
+    );
+    expect(content).not.toMatch(/@Effect\(\)/);
+    expect(content).toMatch(
+      /loadFoos\$ = createEffect\(\(\) => this.actions\$.pipe\(/
     );
   });
 });
