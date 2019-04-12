@@ -92,8 +92,8 @@ describe('My Effects', () => {
 
 ### getEffectsMetadata
 
-Returns decorator configuration for all effects in a class instance.
-Use this function to ensure that effects have been properly decorated.
+Returns metadata configuration for all effects in a class instance.
+Use this function to ensure that effects have proper metadata attached.
 
 Usage:
 
@@ -139,27 +139,29 @@ Effects can be defined as functions as well as variables. Defining an effect as 
 The following example effect debounces the user input into from a search action.
 
 <code-example header="my.effects.spec.ts">
-@Effect()
-search$ = this.actions$.pipe(
-  ofType(BookActionTypes.Search),
-  debounceTime(300, asyncScheduler),
-  switchMap(...)
-)
+search$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(BookActionTypes.Search),
+    debounceTime(300, asyncScheduler),
+    switchMap(...)
+  )
+);
 </code-example>
 
 The same effect but now defined as a function, would look as follows:
 
 <code-example header="my.effects.spec.ts">
-@Effect()
 // refactor as input properties and provide default values
 search$ = ({
   debounce = 300,
   scheduler = asyncScheduler
-} = {}) => this.actions$.pipe(
-  ofType(BookActionTypes.Search),
-  debounceTime(debounce, scheduler),
-  switchMap(...)
-)
+} = {}) => createEffect(() =>
+  this.actions$.pipe(
+    ofType(BookActionTypes.Search),
+    debounceTime(debounce, scheduler),
+    switchMap(...)
+  )
+);
 </code-example>
 
 Within our tests we can now override the default properties:
@@ -169,6 +171,7 @@ const actual = effects.search$({
   debounce: 30,
   scheduler: getTestScheduler(),
 });
+
 expect(actual).toBeObservable(expected);
 </code-example>
 
@@ -183,8 +186,8 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { map, withLatestFrom } from 'rxjs/operators';
-import { CollectionApiActions } from '@example-app/books/actions';
-import * as fromBooks from '@example-app/books/reducers';
+import { CollectionApiActions } from '../books/actions';
+import * as fromBooks from '../books/reducers';
 
 @Injectable()
 export class CollectionEffects {
@@ -222,10 +225,10 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
-import { CollectionEffects } from '@example-app/books/effects';
-import { CollectionApiActions } from '@example-app/books/actions';
-import { Book } from '@example-app/books/models/book';
-import * as fromBooks from '@example-app/books/reducers';
+import { CollectionEffects } from '../books/effects';
+import { CollectionApiActions } from '../books/actions';
+import { Book } from '../books/models/book';
+import * as fromBooks from '../books/reducers';
 
 describe('CollectionEffects', () => {
   let effects: CollectionEffects;
