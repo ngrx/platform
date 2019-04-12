@@ -32,19 +32,19 @@ aio-shell.mode-next {
 
   .vertical-menu-item {
     &.selected, &:hover {
-      color: #84438a;
+      color: $lightpurple;
     }
   }
 
   .toc-inner ul.toc-list li.active a {
-    color: #84438a;
+    color: $lightpurple;
 
     &:before {
-      background-color: #84438a;
+      background-color: $lightpurple;
     }
   }
 
   .toc-inner ul.toc-list li:hover a {
-    color: #84438a;
+    color: $lightpurple;
   }
 }
