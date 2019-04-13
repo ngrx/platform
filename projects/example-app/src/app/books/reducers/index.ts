@@ -7,6 +7,7 @@ import * as fromSearch from '@example-app/books/reducers/search.reducer';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
 import * as fromCollection from '@example-app/books/reducers/collection.reducer';
 import * as fromRoot from '@example-app/reducers';
+import { Book } from '../models/book';
 
 export interface BooksState {
   search: fromSearch.State;
@@ -122,7 +123,9 @@ export const getSearchResults = createSelector(
   getBookEntities,
   getSearchBookIds,
   (books, searchIds) => {
-    return searchIds.map(id => books[id]);
+    return searchIds
+      .map(id => books[id])
+      .filter((book): book is Book => book != null);
   }
 );
 
@@ -148,7 +151,9 @@ export const getBookCollection = createSelector(
   getBookEntities,
   getCollectionBookIds,
   (entities, ids) => {
-    return ids.map(id => entities[id]);
+    return ids
+      .map(id => entities[id])
+      .filter((book): book is Book => book != null);
   }
 );
 
