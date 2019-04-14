@@ -91,6 +91,10 @@
           ]
         },
         {
+          "title": "Runtime checks",
+          "url": "guide/store/runtime-checks"
+        },
+        {
           "title": "Advanced",
           "children": [
             {
