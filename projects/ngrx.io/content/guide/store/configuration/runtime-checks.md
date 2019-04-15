@@ -51,7 +51,7 @@ function reducer(state = initialState, action: Action) {
 }
 ```
 
-To fix the above violation, you have to create a new reference to the state:
+To fix the above violation, a new reference to the state has to be created:
 
 ```ts
 function reducer(state = initialState, action: Action) {
