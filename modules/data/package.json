@@ -1,0 +1,32 @@
+{
+  "name": "@ngrx/data",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "API management for NgRx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "Angular",
+    "Redux",
+    "NgRx",
+    "Schematics",
+    "Angular CLI"
+  ],
+  "author": "NgRx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "peerDependencies": {
+    "@angular/common": "NG_VERSION",
+    "@angular/core": "NG_VERSION",
+    "@ngrx/store": "0.0.0-PLACEHOLDER",
+    "@ngrx/effects": "0.0.0-PLACEHOLDER",
+    "@ngrx/entity": "0.0.0-PLACEHOLDER",
+    "rxjs": "RXJS_VERSION"
+  },
+  "schematics": "MODULE_SCHEMATICS_COLLECTION",
+  "sideEffects": false
+}

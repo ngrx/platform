@@ -6,4 +6,6 @@ export {
   Update,
   EntityMap,
   Predicate,
+  IdSelector,
+  Comparer,
 } from './models';
