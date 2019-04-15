@@ -1,6 +1,6 @@
 # Runtime checks
 
-Runtime checks are here to guide developers to follow the NgRx and Redux core concepts and best practices. They are here to shorten the feedback loop of easy-to-make mistakes when you're starting to use NgRx, or even a well-seasoned developer might make. During development, when a rule is violated it will throw an error notifying you what went wrong.
+Runtime checks are here to guide developers to follow the NgRx and Redux core concepts and best practices. They are here to shorten the feedback loop of easy-to-make mistakes when you're starting to use NgRx, or even a well-seasoned developer might make. During development, when a rule is violated, an error is thrown notifying you what and where something went wrong.
 
 `@ngrx/store` ships with three built-in runtime checks:
 
@@ -51,6 +51,24 @@ function reducer(state = initialState, action: Action) {
 }
 ```
 
+To fix the above violation, you have to create a new reference to the state:
+
+```ts
+function reducer(state = initialState, action: Action) {
+  switch (action.type) {
+    case '[Todo List] Add new todo':
+      return {
+        ...state,
+        todoInput: '',
+        todos: [...state.todos, action.payload]
+      }
+
+    default:
+      return state
+  }
+}
+```
+
 ### strictStateSerializability
 
 This check verifies if the state is serializable. A serializable state is important to be able to persist the current state to be able to rehydrate the state in the future.
@@ -79,6 +97,29 @@ function reducer(state = initialState, action: Action) {
 }
 ```
 
+As a fix of the above violation the `Date` object must be made serializable:
+
+```ts
+function reducer(state = initialState, action: Action) {
+  switch (action.type) {
+    case '[Todo List] Complete todo':
+      return {
+        ...state,
+        todos: {
+          ...state.todos,
+          [payload.id]: {
+            ...state.todos[payload.id],
+            completedOn: new Date().toJSON(),
+          },
+        },
+      }
+
+    default:
+      return state
+  }
+}
+```
+
 ### strictActionSerializability
 
 The `strictActionSerializability` check resembles `strictStateSerializability` but as the name says, it verifies if the action is serializable. An action must be serializable to be replayed, this can be helpful during development while using the Redux DevTools and in production to be able to debug errors.
@@ -88,9 +129,19 @@ Example violation of the rule:
 ```ts
 const createTodo = createAction('[Todo List] Add new todo', (todo) => ({
   todo,
-  // Vialation, a function is not seriazable
+  // Violation, a function is not serializable
   logTodo: () => {
     console.log(todo)
   },
 }))
+```
+
+The fix for this violation is to not add functions on actions, as a replacement a function can be created:
+
+```ts
+const createTodo = createAction('[Todo List] Add new todo', (todo) => todo)
+
+function logTodo (todo: Todo) {
+  console.log(todo);
+}
 ```

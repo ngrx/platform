@@ -91,10 +91,6 @@
           ]
         },
         {
-          "title": "Runtime checks",
-          "url": "guide/store/runtime-checks"
-        },
-        {
           "title": "Advanced",
           "children": [
             {
@@ -113,6 +109,15 @@
             {
               "title": "Downgrade for AngularJS",
               "url": "guide/store/recipes/downgrade"
+            }
+          ]
+        },
+        {
+          "title": "Configuration",
+          "children": [
+            {
+              "title": "Runtime checks",
+              "url": "guide/store/configuration/runtime-checks"
             }
           ]
         },
