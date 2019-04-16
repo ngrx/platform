@@ -20,7 +20,6 @@
       "@ngrx/effects/testing": ["./modules/effects/testing"],
       "@ngrx/effects/schematics-core": ["./modules/effects/schematics-core"],
       "@ngrx/store": ["./modules/store"],
-      "@ngrx/store/testing": ["./modules/store/testing"],
       "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
       "@ngrx/store/testing": ["./modules/store/testing"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
