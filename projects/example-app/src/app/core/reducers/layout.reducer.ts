@@ -14,8 +14,8 @@ export const reducer = createReducer<State>(
     // Explicit 'State' return type for the 'on' functions is needed because
     // otherwise the return types are narrowed to showSidenav: false instead of
     // showSidenav: boolean (that State is asking for).
-    on(LayoutActions.closeSidenav, (): State => ({ showSidenav: false })),
-    on(LayoutActions.openSidenav, (): State => ({ showSidenav: true })),
+    on(LayoutActions.closeSidenav, state => ({ showSidenav: false })),
+    on(LayoutActions.openSidenav, state => ({ showSidenav: true })),
   ],
   initialState
 );
