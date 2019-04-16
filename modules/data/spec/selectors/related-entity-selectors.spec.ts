@@ -88,10 +88,10 @@ describe('Related-entity Selectors', () => {
         selectSidekickMap,
         (hero, sidekicks) => {
           const sidekickId = hero && hero.sidekickFk!;
-          return sidekicks[sidekickId];
+          return sidekickId && sidekicks[sidekickId];
         }
       );
-      return store.select(selectSideKick);
+      return store.select(selectSideKick) as Observable<Sidekick>;
     }
 
     // Note: async done() callback ensures test passes only if subscribe(successCallback()) called.
@@ -258,7 +258,7 @@ describe('Related-entity Selectors', () => {
         selectHeroBattleMap,
         (hero, heroBattleMap) => {
           const hid = hero && hero.id;
-          return heroBattleMap[hid] || [];
+          return (hid && heroBattleMap[hid]) || [];
         }
       );
       return store.select(selectHeroBattles);
@@ -358,12 +358,12 @@ describe('Related-entity Selectors', () => {
         selectPowerMap,
         (hero, heroPowerIds, powerMap) => {
           const hid = hero && hero.id;
-          const pids = heroPowerIds[hid] || [];
+          const pids = (hid && heroPowerIds[hid]) || [];
           const powers = pids.map(id => powerMap[id]).filter(power => power);
           return powers;
         }
       );
-      return store.select(selectHeroPowers);
+      return store.select(selectHeroPowers) as Observable<Power[]>;
     }
 
     // TODO: more tests

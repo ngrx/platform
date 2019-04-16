@@ -232,8 +232,8 @@ describe('EntityCollectionReducer', () => {
         queryResults
       );
       const collection = entityReducer(entityCache, action)['Hero'];
-      const originalValue =
-        collection.changeState[updatedEntity.id].originalValue;
+      const originalValue = collection.changeState[updatedEntity.id]!
+        .originalValue;
 
       expect(collection.entities[updatedEntity.id]).toEqual(
         updatedEntity,
@@ -342,8 +342,8 @@ describe('EntityCollectionReducer', () => {
         queriedUpdate
       );
       const collection = entityReducer(entityCache, action)['Hero'];
-      const originalValue =
-        collection.changeState[updatedEntity.id].originalValue;
+      const originalValue = collection.changeState[updatedEntity.id]!
+        .originalValue;
 
       expect(collection.entities[updatedEntity.id]).toEqual(
         updatedEntity,
@@ -470,8 +470,8 @@ describe('EntityCollectionReducer', () => {
         queryResults
       );
       const collection = entityReducer(entityCache, action)['Hero'];
-      const originalValue =
-        collection.changeState[updatedEntity.id].originalValue;
+      const originalValue = collection.changeState[updatedEntity.id]!
+        .originalValue;
 
       expect(collection.entities[updatedEntity.id]).toEqual(
         updatedEntity,
@@ -1059,7 +1059,7 @@ describe('EntityCollectionReducer', () => {
       );
       const entityChangeState = collection.changeState[id];
       expect(entityChangeState).toBeDefined('updated entity still tracked');
-      expect(entityChangeState.changeType).toBe(ChangeType.Deleted);
+      expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
 
     it('should be ok when the id is not in the collection', () => {
@@ -1114,7 +1114,7 @@ describe('EntityCollectionReducer', () => {
       );
       const entityChangeState = collection.changeState[id];
       expect(entityChangeState).toBeDefined('updated entity still tracked');
-      expect(entityChangeState.changeType).toBe(ChangeType.Deleted);
+      expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
   });
 
@@ -1309,7 +1309,7 @@ describe('EntityCollectionReducer', () => {
       );
       const entityChangeState = collection.changeState[id];
       expect(entityChangeState).toBeDefined('updated entity still tracked');
-      expect(entityChangeState.changeType).toBe(ChangeType.Deleted);
+      expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
 
     it('should be ok when the id is not in the collection', () => {
@@ -1364,7 +1364,7 @@ describe('EntityCollectionReducer', () => {
       );
       const entityChangeState = collection.changeState[id];
       expect(entityChangeState).toBeDefined('updated entity still tracked');
-      expect(entityChangeState.changeType).toBe(ChangeType.Deleted);
+      expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
   });
 

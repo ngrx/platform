@@ -236,10 +236,10 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               delete chgState[oldId];
             }
             const newOrigValue = {
-              ...(oldChangeState.originalValue as any),
+              ...(oldChangeState!.originalValue as any),
               ...(update.changes as any),
             };
-            chgState[newId] = {
+            (chgState as any)[newId] = {
               ...oldChangeState,
               originalValue: newOrigValue,
             };
@@ -645,13 +645,13 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
             acc.remove.push(id);
             break;
           case ChangeType.Deleted:
-            const removed = changeState.originalValue;
+            const removed = changeState!.originalValue;
             if (removed) {
               acc.upsert.push(removed);
             }
             break;
           case ChangeType.Updated:
-            acc.upsert.push(changeState.originalValue!);
+            acc.upsert.push(changeState!.originalValue!);
             break;
         }
         return acc;
@@ -704,13 +704,13 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               acc.remove.push(id);
               break;
             case ChangeType.Deleted:
-              const removed = change.originalValue;
+              const removed = change!.originalValue;
               if (removed) {
                 acc.upsert.push(removed);
               }
               break;
             case ChangeType.Updated:
-              acc.upsert.push(change.originalValue!);
+              acc.upsert.push(change!.originalValue!);
               break;
           }
         }
