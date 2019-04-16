@@ -236,10 +236,10 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               delete chgState[oldId];
             }
             const newOrigValue = {
-              ...(oldChangeState.originalValue as any),
+              ...(oldChangeState!.originalValue as any),
               ...(update.changes as any),
             };
-            chgState[newId] = {
+            (chgState as any)[newId] = {
               ...oldChangeState,
               originalValue: newOrigValue,
             };
@@ -352,7 +352,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               chgState = { ...chgState };
               didMutate = true;
             }
-            chgState[id].originalValue = entity;
+            chgState[id]!.originalValue = entity;
           } else {
             upsertEntities.push(entity);
           }
@@ -461,7 +461,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
           } else if (trackedChange.changeType === ChangeType.Updated) {
             // Special case: switch change type from Updated to Deleted.
             cloneChgStateOnce();
-            chgState[id].changeType = ChangeType.Deleted;
+            chgState[id]!.changeType = ChangeType.Deleted;
           }
         } else {
           // Start tracking this entity
@@ -640,18 +640,18 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
     const { remove, upsert } = ids.reduce(
       (acc, id) => {
         const changeState = acc.chgState[id];
-        switch (changeState.changeType) {
+        switch (changeState!.changeType) {
           case ChangeType.Added:
             acc.remove.push(id);
             break;
           case ChangeType.Deleted:
-            const removed = changeState.originalValue;
+            const removed = changeState!.originalValue;
             if (removed) {
               acc.upsert.push(removed);
             }
             break;
           case ChangeType.Updated:
-            acc.upsert.push(changeState.originalValue!);
+            acc.upsert.push(changeState!.originalValue!);
             break;
         }
         return acc;
@@ -700,18 +700,18 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
           const change = chgState[id];
           delete chgState[id]; // clear tracking of this entity
 
-          switch (change.changeType) {
+          switch (change!.changeType) {
             case ChangeType.Added:
               acc.remove.push(id);
               break;
             case ChangeType.Deleted:
-              const removed = change.originalValue;
+              const removed = change!.originalValue;
               if (removed) {
                 acc.upsert.push(removed);
               }
               break;
             case ChangeType.Updated:
-              acc.upsert.push(change.originalValue!);
+              acc.upsert.push(change!.originalValue!);
               break;
           }
         }
