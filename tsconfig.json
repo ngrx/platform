@@ -22,7 +22,6 @@
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store/testing": ["./modules/store/testing"],
       "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
-      "@ngrx/store/testing": ["./modules/store/testing"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
       "@ngrx/store-devtools/schematics-core": [
         "./modules/store-devtools/schematics-core"
