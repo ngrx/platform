@@ -149,7 +149,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // Use the returned entity data's id to get the entity from the collection
       // as it might be different from the entity returned from the server.
       withLatestFrom(this.entityCollection$),
-      map(([e, collection]) => collection.entities[this.selectId(e)]),
+      map(([e, collection]) => collection.entities[this.selectId(e)]!),
       shareReplay(1)
     );
   }
@@ -259,7 +259,9 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // Use the returned entity data's id to get the entity from the collection
       // as it might be different from the entity returned from the server.
       withLatestFrom(this.entityCollection$),
-      map(([entity, collection]) => collection.entities[this.selectId(entity)]),
+      map(
+        ([entity, collection]) => collection.entities[this.selectId(entity)]!
+      ),
       shareReplay(1)
     );
   }
@@ -353,7 +355,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // because the id changed or there are unsaved changes.
       map(updateData => updateData.changes),
       withLatestFrom(this.entityCollection$),
-      map(([e, collection]) => collection.entities[this.selectId(e as T)]),
+      map(([e, collection]) => collection.entities[this.selectId(e as T)]!),
       shareReplay(1)
     );
   }
@@ -384,7 +386,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // Use the returned entity data's id to get the entity from the collection
       // as it might be different from the entity returned from the server.
       withLatestFrom(this.entityCollection$),
-      map(([e, collection]) => collection.entities[this.selectId(e)]),
+      map(([e, collection]) => collection.entities[this.selectId(e)]!),
       shareReplay(1)
     );
   }
