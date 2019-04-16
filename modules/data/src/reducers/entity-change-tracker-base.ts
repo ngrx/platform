@@ -229,7 +229,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               didMutate = true;
             }
             const newId = this.selectId(update.changes as T);
-            const oldChangeState = chgState[oldId];
+            const oldChangeState = change;
             // If the server changed the id, register the new "originalValue" under the new id
             // and remove the change tracked under the old id.
             if (newId !== oldId) {
@@ -352,7 +352,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
               chgState = { ...chgState };
               didMutate = true;
             }
-            chgState[id]!.originalValue = entity;
+            change.originalValue = entity;
           } else {
             upsertEntities.push(entity);
           }
@@ -461,7 +461,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
           } else if (trackedChange.changeType === ChangeType.Updated) {
             // Special case: switch change type from Updated to Deleted.
             cloneChgStateOnce();
-            chgState[id]!.changeType = ChangeType.Deleted;
+            trackedChange.changeType = ChangeType.Deleted;
           }
         } else {
           // Start tracking this entity
@@ -639,8 +639,8 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
 
     const { remove, upsert } = ids.reduce(
       (acc, id) => {
-        const changeState = acc.chgState[id];
-        switch (changeState!.changeType) {
+        const changeState = acc.chgState[id]!;
+        switch (changeState.changeType) {
           case ChangeType.Added:
             acc.remove.push(id);
             break;
@@ -692,15 +692,14 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
           typeof entityOrId === 'object'
             ? this.selectId(entityOrId)
             : (entityOrId as string | number);
-        if (chgState[id]) {
+        const change = chgState[id]!;
+        if (change) {
           if (!didMutate) {
             chgState = { ...chgState };
             didMutate = true;
           }
-          const change = chgState[id];
           delete chgState[id]; // clear tracking of this entity
-
-          switch (change!.changeType) {
+          switch (change.changeType) {
             case ChangeType.Added:
               acc.remove.push(id);
               break;
