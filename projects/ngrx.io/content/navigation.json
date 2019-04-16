@@ -113,6 +113,15 @@
           ]
         },
         {
+          "title": "Configuration",
+          "children": [
+            {
+              "title": "Runtime checks",
+              "url": "guide/store/configuration/runtime-checks"
+            }
+          ]
+        },
+        {
           "title": "Testing",
           "url": "guide/store/testing"
         }
