@@ -5,6 +5,7 @@ import {
   MetaReducer,
   Action,
   combineReducers,
+  ActionReducerMap,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import * as fromRouter from '@ngrx/router-store';
@@ -17,7 +18,7 @@ import * as fromRouter from '@ngrx/router-store';
  */
 
 import * as fromLayout from '@example-app/core/reducers/layout.reducer';
-import { SerializedRouterStateSnapshot } from '@ngrx/router-store';
+import { InjectionToken } from '@angular/core';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -33,12 +34,14 @@ export interface State {
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export function reducers(state: State | undefined, action: Action) {
-  return combineReducers({
+export const ROOT_REDUCERS = new InjectionToken<
+  ActionReducerMap<State, Action>
+>('Root reducers token', {
+  factory: () => ({
     layout: fromLayout.reducer,
     router: fromRouter.routerReducer,
-  })(state, action);
-}
+  }),
+});
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
