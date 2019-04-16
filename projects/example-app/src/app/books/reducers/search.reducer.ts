@@ -23,14 +23,14 @@ export const reducer = createReducer<State>(
     on(FindBookPageActions.searchBooks, (state, { query }) => {
       return query === ''
         ? {
-            ...state,
-            loading: true,
+            ids: [],
+            loading: false,
             error: '',
             query,
           }
         : {
-            ids: [],
-            loading: false,
+            ...state,
+            loading: true,
             error: '',
             query,
           };

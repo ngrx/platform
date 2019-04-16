@@ -22,7 +22,6 @@ export const reducer = createReducer<State>(
     on(CollectionPageActions.loadCollection, state => ({
       ...state,
       loading: true,
-      blha: true,
     })),
     on(CollectionApiActions.loadBooksSuccess, (state, { books }) => ({
       loaded: true,
