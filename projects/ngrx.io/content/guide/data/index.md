@@ -141,12 +141,3 @@ export class HeroesComponent implements OnInit {
 In this example, we need to listen for the stream of hereos. We set the heroes$ property to the Observable returned from the heroeService.entities$.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
 
 By default, the service includes the `loading$` Observable to indicate whether an HTTP request is in progress.  This helps our application manage loading states.
-
-<code-example header="heroes.component.html">
-  <div *ngIf="heroes$ | async as heroes">
-    <mat-spinner *ngIf="loading$ | async;else heroList" mode="indeterminate" color="accent"></mat-spinner>
-    <ng-template #heroList>
-      <app-hero-list [heroes]="heroes" [selectedHero]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-hero-list>
-    </ng-template>
-  </div>
-</code-example>
