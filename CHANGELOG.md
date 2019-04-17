@@ -1,3 +1,104 @@
+<a name="8.0.0-beta.0"></a>
+
+# [8.0.0-beta.0](https://github.com/ngrx/platform/compare/7.4.0...8.0.0-beta.0) (2019-04-17)
+
+### Bug Fixes
+
+- **effects:** add the export of EffectMetadata ([#1720](https://github.com/ngrx/platform/issues/1720)) ([214316f](https://github.com/ngrx/platform/commit/214316f))
+- **example:** handle possible undefined results from Dictionary ([#1745](https://github.com/ngrx/platform/issues/1745)) ([861b0cb](https://github.com/ngrx/platform/commit/861b0cb)), closes [#1735](https://github.com/ngrx/platform/issues/1735)
+- **schematics:** check for empty name when using store schematic for feature states ([#1659](https://github.com/ngrx/platform/issues/1659)) ([#1666](https://github.com/ngrx/platform/issues/1666)) ([3b9b890](https://github.com/ngrx/platform/commit/3b9b890))
+- **store:** add the missing bracket in immutability meta-reducer ([#1721](https://github.com/ngrx/platform/issues/1721)) ([56f8a59](https://github.com/ngrx/platform/commit/56f8a59))
+- **Store:** selector with only a projector ([#1579](https://github.com/ngrx/platform/issues/1579)) ([da1ec80](https://github.com/ngrx/platform/commit/da1ec80)), closes [#1558](https://github.com/ngrx/platform/issues/1558)
+- **StoreDevTools:** rename action list filters ([#1589](https://github.com/ngrx/platform/issues/1589)) ([5581826](https://github.com/ngrx/platform/commit/5581826)), closes [#1557](https://github.com/ngrx/platform/issues/1557)
+
+### Code Refactoring
+
+- **Store:** don't export internal functions and tokens ([#1679](https://github.com/ngrx/platform/issues/1679)) ([0446a15](https://github.com/ngrx/platform/commit/0446a15)), closes [#1657](https://github.com/ngrx/platform/issues/1657)
+
+### Features
+
+- **effects:** add createEffect function ([#1667](https://github.com/ngrx/platform/issues/1667)) ([ced2d3d](https://github.com/ngrx/platform/commit/ced2d3d)), closes [#1368](https://github.com/ngrx/platform/issues/1368)
+- **effects:** allow non-dispatching effects to not return an action ([#1689](https://github.com/ngrx/platform/issues/1689)) ([04e07a6](https://github.com/ngrx/platform/commit/04e07a6))
+- **effects:** allow ofType to handle ActionCreator ([#1676](https://github.com/ngrx/platform/issues/1676)) ([a41d1d6](https://github.com/ngrx/platform/commit/a41d1d6))
+- **entity:** add undefined to Dictionary's index signature ([#1719](https://github.com/ngrx/platform/issues/1719)) ([d472757](https://github.com/ngrx/platform/commit/d472757))
+- **example:** update ofType in effects per [#1676](https://github.com/ngrx/platform/issues/1676) ([#1691](https://github.com/ngrx/platform/issues/1691)) ([c9c9a0e](https://github.com/ngrx/platform/commit/c9c9a0e))
+- **router-store:** add v8 migration schematic ([#1699](https://github.com/ngrx/platform/issues/1699)) ([0b794ce](https://github.com/ngrx/platform/commit/0b794ce))
+- **router-store:** Make usage of forRoot required ([#1662](https://github.com/ngrx/platform/issues/1662)) ([#1672](https://github.com/ngrx/platform/issues/1672)) ([c7e1406](https://github.com/ngrx/platform/commit/c7e1406))
+- **schematics:** add support for action creators to schematics ([#1765](https://github.com/ngrx/platform/issues/1765)) ([876f80a](https://github.com/ngrx/platform/commit/876f80a)), closes [#1670](https://github.com/ngrx/platform/issues/1670)
+- introduce [@ngrx](https://github.com/ngrx)/data library to the platform ([#1733](https://github.com/ngrx/platform/issues/1733)) ([5d569c3](https://github.com/ngrx/platform/commit/5d569c3))
+- introduce [@ngrx](https://github.com/ngrx)/data library to the platform ([#1754](https://github.com/ngrx/platform/issues/1754)) ([dbfdbaf](https://github.com/ngrx/platform/commit/dbfdbaf))
+- **schematics:** add support for effect creators to schematics ([#1725](https://github.com/ngrx/platform/issues/1725)) ([8901abd](https://github.com/ngrx/platform/commit/8901abd)), closes [#1682](https://github.com/ngrx/platform/issues/1682)
+- **store:** add API to mock selectors ([#1688](https://github.com/ngrx/platform/issues/1688)) ([2a9b067](https://github.com/ngrx/platform/commit/2a9b067)), closes [#1504](https://github.com/ngrx/platform/issues/1504)
+- **store:** add createReducer function ([#1746](https://github.com/ngrx/platform/issues/1746)) ([f954e14](https://github.com/ngrx/platform/commit/f954e14)), closes [#1724](https://github.com/ngrx/platform/issues/1724)
+- **store:** add immutability and serializability runtime checks ([#1613](https://github.com/ngrx/platform/issues/1613)) ([60633b7](https://github.com/ngrx/platform/commit/60633b7)), closes [#857](https://github.com/ngrx/platform/issues/857)
+- **store:** add META_REDUCERS replacement migration ([#1640](https://github.com/ngrx/platform/issues/1640)) ([57bacf5](https://github.com/ngrx/platform/commit/57bacf5))
+- **store:** run migration schema for v8 beta ([#1716](https://github.com/ngrx/platform/issues/1716)) ([0abc948](https://github.com/ngrx/platform/commit/0abc948))
+
+### BREAKING CHANGES
+
+- **entity:** Dictionary could be producing undefined but previous typings were not explicit about it.
+- **Store:** Internal functions and tokens are removed from the public API
+- **router-store:** usage of forRoot is now required for StoreRouterConnectingModule
+
+BEFORE:
+
+```ts
+@NgModule({
+  imports: [StoreRouterConnectingModule],
+})
+export class AppModule {}
+```
+
+AFTER:
+
+```ts
+@NgModule({
+  imports: [StoreRouterConnectingModule.forRoot()],
+})
+export class AppModule {}
+```
+
+- **Store:** Selectors with only a projector function aren't valid anymore.
+  This change will make the usage more consistent.
+
+BEFORE:
+
+```
+const getTodosById = createSelector(
+  (state: TodoAppSchema, id: number) => state.todos.find(p => p.id === id)
+);
+```
+
+AFTER:
+
+```
+const getTodosById = createSelector(
+  (state: TodoAppSchema) => state.todos,
+  (todos: Todo[], id: number) => todos.find(p => p.id === id)
+);
+```
+
+- **StoreDevTools:** `actionsWhitelist` is renamed to `actionsSafelist`
+  `actionsBlacklist` is renamed to `actionsBlocklist`
+
+BEFORE:
+
+```ts
+StoreDevtoolsModule.instrument({
+  actionsWhitelist: ['...'],
+  actionsBlacklist: ['...'],
+});
+```
+
+AFTER:
+
+```ts
+StoreDevtoolsModule.instrument({
+  actionsSafelist: ['...'],
+  actionsBlocklist: ['...'],
+});
+```
+
 <a name="7.4.0"></a>
 
 # [7.4.0](https://github.com/ngrx/platform/compare/7.3.0...7.4.0) (2019-03-29)
@@ -14,20 +115,16 @@
 
 <a name="7.3.0"></a>
 
-# [7.3.0](https://github.com/ngrx/platform/compare/7.2.0...7.3.0) (2019-03-29)
+# [7.3.0](https://github.com/ngrx/platform/compare/7.2.0...7.3.0) (2019-02-27)
 
 ### Bug Fixes
 
-- **Example:** linter problems ([#1597](https://github.com/ngrx/platform/issues/1597)) ([4cfcc08](https://github.com/ngrx/platform/commit/4cfcc08))
 - **schematics:** type actions and avoid endless loop in effect schematic ([#1576](https://github.com/ngrx/platform/issues/1576)) ([5fbcb3c](https://github.com/ngrx/platform/commit/5fbcb3c)), closes [#1573](https://github.com/ngrx/platform/issues/1573)
 - **store:** deprecate signature for selector with only a projector ([#1580](https://github.com/ngrx/platform/issues/1580)) ([e86c5f6](https://github.com/ngrx/platform/commit/e86c5f6))
 
 ### Features
 
-- **example-app:** add visual testing with Applitools ([#1605](https://github.com/ngrx/platform/issues/1605)) ([8856210](https://github.com/ngrx/platform/commit/8856210))
 - **schematics:** Add ng-add support with prompt for making our schematics default ([#1552](https://github.com/ngrx/platform/issues/1552)) ([01ff157](https://github.com/ngrx/platform/commit/01ff157))
-- **schematics:** use plural for entity schematics reducer key ([#1596](https://github.com/ngrx/platform/issues/1596)) ([1e49530](https://github.com/ngrx/platform/commit/1e49530)), closes [#1412](https://github.com/ngrx/platform/issues/1412)
-- **store:** add action creator functions ([#1654](https://github.com/ngrx/platform/issues/1654)) ([e7fe28b](https://github.com/ngrx/platform/commit/e7fe28b)), closes [#1480](https://github.com/ngrx/platform/issues/1480) [#1634](https://github.com/ngrx/platform/issues/1634)
 
 <a name="7.2.0"></a>
 
