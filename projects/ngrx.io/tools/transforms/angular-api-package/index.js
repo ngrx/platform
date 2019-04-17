@@ -84,6 +84,7 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
       'effects/testing/index.ts',
       'entity/index.ts',
       'router-store/index.ts',
+      'data/index.ts',
       'schematics/index.ts'
     ];
 
