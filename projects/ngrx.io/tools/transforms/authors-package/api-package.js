@@ -15,6 +15,7 @@ const packageMap = {
   effects: ['effects/index.ts', 'effects/testing/index.ts'],
   entity: ['entity/index.ts'],
   'router-store': ['router-store/index.ts'],
+  data: ['data/index.ts'],
   schematics: ['schematics/index.ts']
 };
 
