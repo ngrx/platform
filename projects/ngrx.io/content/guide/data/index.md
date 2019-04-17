@@ -1,6 +1,8 @@
 # NgRx Data
 
-NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of entity data while reducing the amount of boilerplate.
+NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of **entity data** while reducing the amount of boilerplate.  
+
+Entity data is only one kind of application data.  NgRx Data should not be used for non-entity or highly idiosyncratic data.
 
 <div class="alert is-important">
 
@@ -18,11 +20,9 @@ In even a small model, this is a ton of repetitive code to create, maintain, and
 
 NgRx Data allows consumers to use NgRx while radically reducing the boilerplate necessary to manage entities with NgRx.
 
-It is important to note that NgRx data should not be used for non-entity or highly idiosyncratic data.
-
 ## Key Concepts
 
-- Ngrx Data can be used with NgRx to provide simplified management of entity data.
+- NgRx Data can be used with NgRx to provide simplified management of entity data.
 - NgRx Data automates the creation of actions, reducers, effects, dispatchers, and selectors for each entity type.
 - NgRx Data provides default HTTP GET, PUT, POST, and DELETE methods for each entity type.
 - NgRx Data should not be used for non-entity or highly idiosyncratic data.  They are better managed with NgRx.
