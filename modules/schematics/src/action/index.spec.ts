@@ -75,43 +75,64 @@ describe('Action Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create an enum named "Foo"', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
+  describe('action classes', () => {
+    it('should create an enum named "Foo"', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
 
-    expect(fileContent).toMatch(/export enum FooActionTypes/);
+      expect(fileContent).toMatch(/export enum FooActionTypes/);
+    });
+
+    it('should create a class based on the provided name', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
+
+      expect(fileContent).toMatch(/export class LoadFoos implements Action/);
+    });
+
+    it('should create the union type based on the provided name', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
+
+      expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
+    });
   });
 
-  it('should create a class based on the provided name', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
+  describe('action creators', () => {
+    const creatorOptions = { ...defaultOptions, actionCreators: true };
 
-    expect(fileContent).toMatch(/export class LoadFoos implements Action/);
-  });
+    it('should create a const for the action creator', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        creatorOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
 
-  it('should create the union type based on the provided name', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
-
-    expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
+      expect(fileContent).toMatch(
+        /export const loadFoos = createAction\('\[Foo\] Load Foos'\);/
+      );
+    });
   });
 
   it('should group within an "actions" folder if group is set', () => {

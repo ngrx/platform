@@ -35,4 +35,10 @@ export interface Schema {
    * should be generated.
    */
   api?: boolean;
+
+  /**
+   * Specifies whether to generate action creators
+   * instead of action classes.
+   */
+  actionCreators?: boolean;
 }

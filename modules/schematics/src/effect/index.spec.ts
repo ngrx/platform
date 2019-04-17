@@ -334,6 +334,21 @@ describe('Effect Schematic', () => {
     );
   });
 
+  it('should use action creators when effectCreators is enabled in a feature', () => {
+    const options = { ...defaultOptions, effectCreators: true, feature: true };
+
+    const tree = schematicRunner.runSchematic('effect', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+
+    expect(content).toMatch(
+      /import { Actions, createEffect, ofType } from '@ngrx\/effects';/
+    );
+    expect(content).toMatch(/import \* as FooActions from '\.\/foo\.actions';/);
+    expect(content).toMatch(/ofType\(FooActions\.loadFoos\),/);
+  });
+
   it('should create an api effect using creator function', () => {
     const options = {
       ...defaultOptions,

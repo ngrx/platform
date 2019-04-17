@@ -18,6 +18,7 @@ export default function(options: FeatureOptions): Rule {
         project: options.project,
         spec: false,
         api: options.api,
+        actionCreators: options.creators,
       }),
       schematic('reducer', {
         flat: options.flat,
@@ -30,6 +31,7 @@ export default function(options: FeatureOptions): Rule {
         reducers: options.reducers,
         feature: true,
         api: options.api,
+        actionCreators: options.creators,
       }),
       schematic('effect', {
         flat: options.flat,
@@ -41,6 +43,7 @@ export default function(options: FeatureOptions): Rule {
         spec: options.spec,
         feature: true,
         api: options.api,
+        effectCreators: options.creators,
       }),
     ])(host, context);
   };

@@ -1,0 +1,7 @@
+import * as from<%= classify(name) %> from './<%= dasherize(name) %>.actions';
+
+describe('load<%= classify(name) %>s', () => {
+  it('should return an action', () => {
+    expect(from<%= classify(name) %>.load<%= classify(name) %>s().type).toBe('[<%= classify(name) %>] Load <%= classify(name) %>s');
+  });
+});

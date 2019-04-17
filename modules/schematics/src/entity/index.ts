@@ -36,28 +36,37 @@ export default function(options: EntityOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
-    const templateSource = apply(url('./files'), [
+    const templateOptions = {
+      ...stringUtils,
+      'if-flat': (s: string) => (options.flat ? '' : s),
+      'group-actions': (name: string) =>
+        stringUtils.group(name, options.group ? 'actions' : ''),
+      'group-models': (name: string) =>
+        stringUtils.group(name, options.group ? 'models' : ''),
+      'group-reducers': (s: string) =>
+        stringUtils.group(s, options.group ? 'reducers' : ''),
+      ...(options as object),
+    };
+
+    const commonTemplates = apply(url('./common-files'), [
       options.spec
         ? noop()
         : filter(path => !path.endsWith('.spec.ts.template')),
-      applyTemplates({
-        ...stringUtils,
-        'if-flat': (s: string) => (options.flat ? '' : s),
-        'group-actions': (name: string) =>
-          stringUtils.group(name, options.group ? 'actions' : ''),
-        'group-models': (name: string) =>
-          stringUtils.group(name, options.group ? 'models' : ''),
-        'group-reducers': (s: string) =>
-          stringUtils.group(s, options.group ? 'reducers' : ''),
-        ...(options as object),
-      } as any),
+      applyTemplates(templateOptions),
       move(parsedPath.path),
     ]);
+
+    const templateSource = apply(
+      url(options.actionCreators ? './creator-files' : './files'),
+      [applyTemplates(templateOptions), move(parsedPath.path)]
+    );
 
     return chain([
       addReducerToState({ ...options, plural: true }),
       addReducerImportToNgModule({ ...options }),
-      branchAndMerge(chain([mergeWith(templateSource)])),
+      branchAndMerge(
+        chain([mergeWith(commonTemplates), mergeWith(templateSource)])
+      ),
     ])(host, context);
   };
 }

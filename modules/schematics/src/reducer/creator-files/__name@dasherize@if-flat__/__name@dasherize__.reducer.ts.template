@@ -1,0 +1,27 @@
+<% if(!feature) { %>import { Action } from '@ngrx/store';<% } %>
+<% if(feature) { %>import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export function reducer(state = initialState, action: <% if(feature) { %><%= classify(name) %>Actions.Union<% } else { %>Action<% } %>): State {
+  switch (action.type) {
+<% if(feature) { %>
+    case <%= classify(name) %>Actions.load<%= classify(name) %>s.type:
+      return state;
+<% if(api) { %>
+    case <%= classify(name) %>Actions.load<%= classify(name) %>sSuccess.type:
+      return state;
+
+    case <%= classify(name) %>Actions.load<%= classify(name) %>sFailure.type:
+      return state;
+<% } %><% } %>
+    default:
+      return state;
+  }
+}

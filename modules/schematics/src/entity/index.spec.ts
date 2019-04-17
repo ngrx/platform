@@ -191,4 +191,37 @@ describe('Entity Schematic', () => {
     expect(content).toMatch(/users\: fromUser.State/);
     expect(content).toMatch(/users\: fromUser.reducer/);
   });
+
+  describe('action creators', () => {
+    const creatorOptions = { ...defaultOptions, actionCreators: true };
+
+    it('should create a const for the action creator', () => {
+      const tree = schematicRunner.runSchematic(
+        'entity',
+        creatorOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
+      expect(fileContent).toMatch(
+        /export const loadFoos = createAction\(\'\[Foo\/API\] Load Foos\', props<{ foos: Foo\[\] }>\(\)\);/
+      );
+    });
+
+    it('should use action creator types in the reducer', () => {
+      const tree = schematicRunner.runSchematic(
+        'entity',
+        creatorOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+      expect(fileContent).toMatch(
+        /import \* as FooActions from \'\.\/foo.actions\';/
+      );
+      expect(fileContent).toMatch(/case FooActions\.addFoo\.type: \{/);
+    });
+  });
 });
