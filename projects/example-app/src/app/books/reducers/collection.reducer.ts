@@ -3,6 +3,7 @@ import {
   CollectionPageActions,
   CollectionApiActions,
 } from '@example-app/books/actions';
+import { createReducer, on } from '@ngrx/store';
 
 export interface State {
   loaded: boolean;
@@ -16,54 +17,42 @@ const initialState: State = {
   ids: [],
 };
 
-export function reducer(
-  state = initialState,
-  action:
-    | SelectedBookPageActions.SelectedBookPageActionsUnion
-    | CollectionPageActions.CollectionPageActionsUnion
-    | CollectionApiActions.CollectionApiActionsUnion
-): State {
-  switch (action.type) {
-    case CollectionPageActions.loadCollection.type: {
-      return {
-        ...state,
-        loading: true,
-      };
-    }
-
-    case CollectionApiActions.loadBooksSuccess.type: {
-      return {
-        loaded: true,
-        loading: false,
-        ids: action.books.map(book => book.id),
-      };
-    }
-
-    case CollectionApiActions.addBookSuccess.type:
-    case CollectionApiActions.removeBookFailure.type: {
-      if (state.ids.indexOf(action.book.id) > -1) {
-        return state;
+export const reducer = createReducer<State>(
+  [
+    on(CollectionPageActions.loadCollection, state => ({
+      ...state,
+      loading: true,
+    })),
+    on(CollectionApiActions.loadBooksSuccess, (state, { books }) => ({
+      loaded: true,
+      loading: false,
+      ids: books.map(book => book.id),
+    })),
+    // Supports handing multiple types of actions
+    on(
+      CollectionApiActions.addBookSuccess,
+      CollectionApiActions.removeBookFailure,
+      (state, { book }) => {
+        if (state.ids.indexOf(book.id) > -1) {
+          return state;
+        }
+        return {
+          ...state,
+          ids: [...state.ids, book.id],
+        };
       }
-
-      return {
+    ),
+    on(
+      CollectionApiActions.removeBookSuccess,
+      CollectionApiActions.addBookFailure,
+      (state, { book }) => ({
         ...state,
-        ids: [...state.ids, action.book.id],
-      };
-    }
-
-    case CollectionApiActions.removeBookSuccess.type:
-    case CollectionApiActions.addBookFailure.type: {
-      return {
-        ...state,
-        ids: state.ids.filter(id => id !== action.book.id),
-      };
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+        ids: state.ids.filter(id => id !== book.id),
+      })
+    ),
+  ],
+  initialState
+);
 
 export const getLoaded = (state: State) => state.loaded;
 

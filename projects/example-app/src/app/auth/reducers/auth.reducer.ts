@@ -1,3 +1,4 @@
+import { createReducer, on } from '@ngrx/store';
 import { AuthApiActions, AuthActions } from '@example-app/auth/actions';
 import { User } from '@example-app/auth/models/user';
 
@@ -9,26 +10,12 @@ export const initialState: State = {
   user: null,
 };
 
-export function reducer(
-  state = initialState,
-  action: AuthApiActions.AuthApiActionsUnion | AuthActions.AuthActionsUnion
-): State {
-  switch (action.type) {
-    case AuthApiActions.loginSuccess.type: {
-      return {
-        ...state,
-        user: action.user,
-      };
-    }
-
-    case AuthActions.logout.type: {
-      return initialState;
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer = createReducer<State>(
+  [
+    on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
+    on(AuthActions.logout, () => initialState),
+  ],
+  initialState
+);
 
 export const getUser = (state: State) => state.user;

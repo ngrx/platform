@@ -2,6 +2,7 @@ import {
   BooksApiActions,
   FindBookPageActions,
 } from '@example-app/books/actions';
+import { createReducer, on } from '@ngrx/store';
 
 export interface State {
   ids: string[];
@@ -17,55 +18,37 @@ const initialState: State = {
   query: '',
 };
 
-export function reducer(
-  state = initialState,
-  action:
-    | BooksApiActions.BooksApiActionsUnion
-    | FindBookPageActions.FindBookPageActionsUnion
-): State {
-  switch (action.type) {
-    case FindBookPageActions.searchBooks.type: {
-      const query = action.query;
-
-      if (query === '') {
-        return {
-          ids: [],
-          loading: false,
-          error: '',
-          query,
-        };
-      }
-
-      return {
-        ...state,
-        loading: true,
-        error: '',
-        query,
-      };
-    }
-
-    case BooksApiActions.searchSuccess.type: {
-      return {
-        ids: action.books.map(book => book.id),
-        loading: false,
-        error: '',
-        query: state.query,
-      };
-    }
-
-    case BooksApiActions.searchFailure.type: {
-      return {
-        ...state,
-        loading: false,
-        error: action.errorMsg,
-      };
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer = createReducer<State>(
+  [
+    on(FindBookPageActions.searchBooks, (state, { query }) => {
+      return query === ''
+        ? {
+            ids: [],
+            loading: false,
+            error: '',
+            query,
+          }
+        : {
+            ...state,
+            loading: true,
+            error: '',
+            query,
+          };
+    }),
+    on(BooksApiActions.searchSuccess, (state, { books }) => ({
+      ids: books.map(book => book.id),
+      loading: false,
+      error: '',
+      query: state.query,
+    })),
+    on(BooksApiActions.searchFailure, (state, { errorMsg }) => ({
+      ...state,
+      loading: false,
+      error: errorMsg,
+    })),
+  ],
+  initialState
+);
 
 export const getIds = (state: State) => state.ids;
 

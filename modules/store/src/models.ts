@@ -7,6 +7,10 @@ export declare interface TypedAction<T extends string> extends Action {
   readonly type: T;
 }
 
+export type ActionType<A> = A extends ActionCreator<infer T, infer C>
+  ? ReturnType<C> & { type: T }
+  : never;
+
 export type TypeId<T> = () => T;
 
 export type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;
@@ -47,8 +51,10 @@ export type SelectorWithProps<State, Props, Result> = (
 
 export type Creator = (...args: any[]) => object;
 
-export type ActionCreator<T extends string, C extends Creator> = C &
-  TypedAction<T>;
+export type ActionCreator<
+  T extends string = string,
+  C extends Creator = Creator
+> = C & TypedAction<T>;
 
 export type FunctionWithParametersType<P extends unknown[], R = void> = (
   ...args: P

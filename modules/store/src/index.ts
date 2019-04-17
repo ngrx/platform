@@ -47,3 +47,4 @@ export {
   StoreRootModule,
   StoreFeatureModule,
 } from './store_module';
+export { on, createReducer } from './reducer_creator';

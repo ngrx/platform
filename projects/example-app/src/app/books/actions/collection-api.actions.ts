@@ -1,4 +1,4 @@
-import { createAction, props, union } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Book } from '@example-app/books/models/book';
 
 /**
@@ -39,13 +39,3 @@ export const loadBooksFailure = createAction(
   '[Collection/API] Load Books Failure',
   props<{ error: any }>()
 );
-
-const all = union({
-  addBookSuccess,
-  addBookFailure,
-  removeBookSuccess,
-  removeBookFailure,
-  loadBooksSuccess,
-  loadBooksFailure,
-});
-export type CollectionApiActionsUnion = typeof all;

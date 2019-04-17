@@ -1,4 +1,4 @@
-import { createAction, union, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Book } from '@example-app/books/models/book';
 
 /**
@@ -16,7 +16,3 @@ export const removeBook = createAction(
   '[Selected Book Page] Remove Book',
   props<{ book: Book }>()
 );
-
-const all = union({ addBook, removeBook });
-
-export type SelectedBookPageActionsUnion = typeof all;
