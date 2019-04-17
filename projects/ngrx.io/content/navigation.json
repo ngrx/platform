@@ -266,6 +266,10 @@
       "title": "Migrations",
       "children": [
         {
+          "title": "V8",
+          "url": "guide/migration/v8"
+        },
+        {
           "title": "V7",
           "url": "guide/migration/v7"
         },
