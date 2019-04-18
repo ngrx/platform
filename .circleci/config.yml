@@ -69,7 +69,8 @@ jobs:
           key: *cache_key
 
       # Build and Test
-      - run: yarn bazel test //...
+      - run: yarn bazel clean
+      - run: yarn test:bazel
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
