@@ -120,20 +120,6 @@
       "Libraries": {
         "order": 5,
         "resources": {
-          "angular-ngrx-data": {
-            "title": "angular-ngrx-data",
-            "desc":
-              "Zero Ngrx Boilerplate. You may never write an action, reducer, selector, effect, or HTTP dataservice again",
-            "url": "https://github.com/johnpapa/angular-ngrx-data",
-            "rev": true
-          },
-          "ngrx-store-freeze": {
-            "title": "ngrx-store-freeze",
-            "desc":
-              "ngrx-store-freeze is a meta-reducer that prevents state from being mutated",
-            "url": "https://github.com/brandonroberts/ngrx-store-freeze",
-            "rev": true
-          },
           "ngrx-enums": {
             "title": "ngrx-enums",
             "desc":
