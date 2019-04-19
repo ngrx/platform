@@ -138,6 +138,6 @@ export class HeroesComponent implements OnInit {
 }
 </code-example>
 
-In this example, we need to listen for the stream of hereos. We set the `heroes$` property to the Observable returned from the `heroeService.entities$`.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
+In this example, we need to listen for the stream of heroes. We set the `heroes$` property to the Observable returned from the `heroeService.entities$`.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
 
 By default, the service includes the `loading$` Observable to indicate whether an HTTP request is in progress.  This helps our application manage loading states.
