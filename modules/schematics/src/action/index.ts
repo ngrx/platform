@@ -30,7 +30,7 @@ export default function(options: ActionOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(
-      url(options.actionCreators ? './creator-files' : './files'),
+      url(options.creators ? './creator-files' : './files'),
       [
         options.spec
           ? noop()

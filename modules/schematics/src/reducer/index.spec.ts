@@ -188,4 +188,59 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
     expect(fileContent).not.toMatch(/import { Action } from '@ngrx\/store'/);
   });
+
+  it('should create an reducer function using createReducer', () => {
+    const tree = schematicRunner.runSchematic(
+      'reducer',
+      { ...defaultOptions, creators: true },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export function reducer\(state: State | undefined, action: Action\) {/
+    );
+    expect(fileContent).toMatch(/const fooReducer = createReducer<State>\(/);
+  });
+
+  it('should create an reducer function in a feature using createReducer', () => {
+    const tree = schematicRunner.runSchematic(
+      'reducer',
+      { ...defaultOptions, creators: true, feature: true },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export function reducer\(state: State | undefined, action: Action\) {/
+    );
+    expect(fileContent).toMatch(/const fooReducer = createReducer<State>\(/);
+    expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
+  });
+
+  it('should create an reducer function in an api feature using createReducer', () => {
+    const tree = schematicRunner.runSchematic(
+      'reducer',
+      { ...defaultOptions, creators: true, feature: true, api: true },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /export function reducer\(state: State | undefined, action: Action\) {/
+    );
+    expect(fileContent).toMatch(/const fooReducer = createReducer<State>\(/);
+    expect(fileContent).toMatch(
+      /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
+    );
+    expect(fileContent).toMatch(
+      /on\(FooActions.loadFoosFailure, \(state, action\) => state\)/
+    );
+  });
 });

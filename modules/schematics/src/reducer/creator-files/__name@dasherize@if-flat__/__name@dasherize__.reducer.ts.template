@@ -1,4 +1,4 @@
-<% if(!feature) { %>import { Action } from '@ngrx/store';<% } %>
+import { Action, createReducer, on } from '@ngrx/store';
 <% if(feature) { %>import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 
 export interface State {
@@ -9,19 +9,14 @@ export const initialState: State = {
 
 };
 
-export function reducer(state = initialState, action: <% if(feature) { %><%= classify(name) %>Actions.Union<% } else { %>Action<% } %>): State {
-  switch (action.type) {
+const <%= camelize(name) %>Reducer = createReducer<State>([
 <% if(feature) { %>
-    case <%= classify(name) %>Actions.load<%= classify(name) %>s.type:
-      return state;
-<% if(api) { %>
-    case <%= classify(name) %>Actions.load<%= classify(name) %>sSuccess.type:
-      return state;
-
-    case <%= classify(name) %>Actions.load<%= classify(name) %>sFailure.type:
-      return state;
+  on(<%= classify(name) %>Actions.load<%= classify(name) %>s, state => state),
+<% if(api) { %>  on(<%= classify(name) %>Actions.load<%= classify(name) %>sSuccess, (state, action) => state),
+  on(<%= classify(name) %>Actions.load<%= classify(name) %>sFailure, (state, action) => state),
 <% } %><% } %>
-    default:
-      return state;
-  }
+], initialState);
+
+export function reducer(state: State | undefined, action: Action) {
+  return <%= camelize(name) %>Reducer(state, action);
 }

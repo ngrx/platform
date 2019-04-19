@@ -1,3 +1,4 @@
+import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { <%= classify(name) %> } from '<%= featurePath(group, flat, "models", dasherize(name)) %><%= dasherize(name) %>.model';
 import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';
@@ -12,55 +13,41 @@ export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
 
-export function reducer(
-  state = initialState,
-  action: <%= classify(name) %>Actions.Union
-): State {
-  switch (action.type) {
-    case <%= classify(name) %>Actions.add<%= classify(name) %>.type: {
-      return adapter.addOne(action.<%= camelize(name) %>, state);
-    }
+const <%= camelize(name) %>Reducer = createReducer<State>([
+  on(<%= classify(name) %>Actions.add<%= classify(name) %>,
+    (state, action) => adapter.addOne(action.<%= camelize(name) %>, state)
+  ),
+  on(<%= classify(name) %>Actions.upsert<%= classify(name) %>,
+    (state, action) => adapter.upsertOne(action.<%= camelize(name) %>, state)
+  ),
+  on(<%= classify(name) %>Actions.add<%= classify(name) %>s,
+    (state, action) => adapter.addMany(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.upsert<%= classify(name) %>s,
+    (state, action) => adapter.upsertMany(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.update<%= classify(name) %>,
+    (state, action) => adapter.updateOne(action.<%= camelize(name) %>, state)
+  ),
+  on(<%= classify(name) %>Actions.update<%= classify(name) %>s,
+    (state, action) => adapter.updateMany(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.delete<%= classify(name) %>,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(<%= classify(name) %>Actions.delete<%= classify(name) %>s,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(<%= classify(name) %>Actions.load<%= classify(name) %>s,
+    (state, action) => adapter.addAll(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.clear<%= classify(name) %>s,
+    state => adapter.removeAll(state)
+  ),
+], initialState);
 
-    case <%= classify(name) %>Actions.upsert<%= classify(name) %>.type: {
-      return adapter.upsertOne(action.<%= camelize(name) %>, state);
-    }
-
-    case <%= classify(name) %>Actions.add<%= classify(name) %>s.type: {
-      return adapter.addMany(action.<%= camelize(name) %>s, state);
-    }
-
-    case <%= classify(name) %>Actions.upsert<%= classify(name) %>s.type: {
-      return adapter.upsertMany(action.<%= camelize(name) %>s, state);
-    }
-
-    case <%= classify(name) %>Actions.update<%= classify(name) %>.type: {
-      return adapter.updateOne(action.<%= camelize(name) %>, state);
-    }
-
-    case <%= classify(name) %>Actions.update<%= classify(name) %>s.type: {
-      return adapter.updateMany(action.<%= camelize(name) %>s, state);
-    }
-
-    case <%= classify(name) %>Actions.delete<%= classify(name) %>.type: {
-      return adapter.removeOne(action.id, state);
-    }
-
-    case <%= classify(name) %>Actions.delete<%= classify(name) %>s.type: {
-      return adapter.removeMany(action.ids, state);
-    }
-
-    case <%= classify(name) %>Actions.load<%= classify(name) %>s.type: {
-      return adapter.addAll(action.<%= camelize(name) %>s, state);
-    }
-
-    case <%= classify(name) %>Actions.clear<%= classify(name) %>s.type: {
-      return adapter.removeAll(state);
-    }
-
-    default: {
-      return state;
-    }
-  }
+export function reducer(state: State | undefined, action: Action) {
+  return <%= camelize(name) %>Reducer(state, action);
 }
 
 export const {

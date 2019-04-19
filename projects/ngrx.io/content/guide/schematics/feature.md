@@ -26,7 +26,7 @@ Provide the project name where the feature files will be created.
   - Alias: `-p`
   - Type: `string`
 
-Use creator functions for actions and effects.
+Use creator functions for actions, reducers, and effects.
 
 - `--creators`
   - Alias: `-c`

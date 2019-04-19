@@ -1,14 +1,15 @@
-import { createAction, union } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export const load<%= classify(name) %>s = createAction('[<%= classify(name) %>] Load <%= classify(name) %>s');
-<% if (api) { %>export const load<%= classify(name) %>sSuccess = createAction('[<%= classify(name) %>] Load <%= classify(name) %>s Success');<% } %>
-<% if (api) { %>export const load<%= classify(name) %>sFailure = createAction('[<%= classify(name) %>] Load <%= classify(name) %>s Failure');<% } %>
+export const load<%= classify(name) %>s = createAction(
+  '[<%= classify(name) %>] Load <%= classify(name) %>s'
+);
 
-const all = union({
-  load<%= classify(name) %>s,
-<% if (api) { %>
-  load<%= classify(name) %>sSuccess,
-  load<%= classify(name) %>sFailure
-<% } %>
-});
-export Union = typeof all;
+<% if (api) { %>export const load<%= classify(name) %>sSuccess = createAction(
+  '[<%= classify(name) %>] Load <%= classify(name) %>s Success',
+  props<{ data: any }>()
+);<% } %>
+
+<% if (api) { %>export const load<%= classify(name) %>sFailure = createAction(
+  '[<%= classify(name) %>] Load <%= classify(name) %>s Failure',
+  props<{ error: any }>()
+);<% } %>
