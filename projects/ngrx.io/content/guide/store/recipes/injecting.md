@@ -11,23 +11,16 @@ import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
-export const REDUCER_TOKEN = new InjectionToken<
-  ActionReducerMap&lt;fromRoot.State&gt;
->('Registered Reducers');
-
-export function getReducers(someService: SomeService) {
-  return someService.getReducers();
-}
+export const REDUCER_TOKEN = new InjectionToken&lt;ActionReducerMap&lt;fromRoot.State&gt;&gt;('Registered Reducers', {
+  factory: () => {
+    const serv = inject(SomeService);
+    // return reducers synchronously
+    return serv.getReducers();
+  }
+});
 
 @NgModule({
-  imports: [StoreModule.forRoot(REDUCER_TOKEN)],
-  providers: [
-    {
-      provide: REDUCER_TOKEN,
-      deps: [SomeService],
-      useFactory: getReducers,
-    },
-  ],
+  imports: [StoreModule.forRoot(REDUCER_TOKEN)]
 })
 export class AppModule {}
 </code-example>
