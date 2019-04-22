@@ -16,6 +16,8 @@
     "rootDir": "./",
     "strict": true,
     "paths": {
+      "@ngrx/data": ["./modules/data"],
+      "@ngrx/data/schematics-core": ["./modules/data/schematics-core"],
       "@ngrx/effects": ["./modules/effects"],
       "@ngrx/effects/testing": ["./modules/effects/testing"],
       "@ngrx/effects/schematics-core": ["./modules/effects/schematics-core"],
