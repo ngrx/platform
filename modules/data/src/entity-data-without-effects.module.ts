@@ -62,7 +62,7 @@ import { EntityServicesBase } from './entity-services/entity-services-base';
 import { EntityServicesElements } from './entity-services/entity-services-elements';
 import { Logger, Pluralizer, PLURAL_NAMES_TOKEN } from './utils/interfaces';
 
-export interface NgrxDataModuleConfig {
+export interface EntityDataModuleConfig {
   entityMetadata?: EntityMetadataMap;
   entityCacheMetaReducers?: (
     | MetaReducer<EntityCache, Action>
@@ -106,12 +106,12 @@ export interface NgrxDataModuleConfig {
     { provide: Logger, useClass: DefaultLogger },
   ],
 })
-export class NgrxDataModuleWithoutEffects implements OnDestroy {
+export class EntityDataModuleWithoutEffects implements OnDestroy {
   private entityCacheFeature: any;
 
-  static forRoot(config: NgrxDataModuleConfig): ModuleWithProviders {
+  static forRoot(config: EntityDataModuleConfig): ModuleWithProviders {
     return {
-      ngModule: NgrxDataModuleWithoutEffects,
+      ngModule: EntityDataModuleWithoutEffects,
       providers: [
         {
           provide: ENTITY_CACHE_META_REDUCERS,

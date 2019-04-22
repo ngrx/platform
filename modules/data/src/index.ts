@@ -73,9 +73,9 @@ export * from './utils/guid-fns';
 export * from './utils/interfaces';
 export * from './utils/utilities';
 
-// NgrxDataModule
-export { NgrxDataModule } from './ngrx-data.module';
+// EntityDataModule
+export { EntityDataModule } from './entity-data.module';
 export {
-  NgrxDataModuleWithoutEffects,
-  NgrxDataModuleConfig,
-} from './ngrx-data-without-effects.module';
+  EntityDataModuleWithoutEffects,
+  EntityDataModuleConfig,
+} from './entity-data-without-effects.module';

@@ -27,7 +27,7 @@ import {
   EntityCollection,
   EntityOp,
   EntityMetadataMap,
-  NgrxDataModule,
+  EntityDataModule,
   EntityCacheEffects,
   EntityDataService,
   EntityDispatcherFactory,
@@ -471,7 +471,7 @@ function entityServicesSetup() {
     imports: [
       StoreModule.forRoot({}),
       EffectsModule.forRoot([]),
-      NgrxDataModule.forRoot({
+      EntityDataModule.forRoot({
         entityMetadata: entityMetadata,
       }),
     ],

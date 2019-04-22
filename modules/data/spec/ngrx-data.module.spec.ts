@@ -20,7 +20,7 @@ import {
   persistOps,
   EntityAction,
   EntityActionFactory,
-  NgrxDataModule,
+  EntityDataModule,
   EntityCacheEffects,
   EntityEffects,
   EntityOp,
@@ -71,7 +71,7 @@ const entityMetadata = {
 
 //////// Tests begin ////////
 
-describe('NgrxDataModule', () => {
+describe('EntityDataModule', () => {
   describe('with replaced EntityEffects', () => {
     // factory never changes in these tests
     const entityActionFactory = new EntityActionFactory();
@@ -85,7 +85,7 @@ describe('NgrxDataModule', () => {
         imports: [
           StoreModule.forRoot({}),
           EffectsModule.forRoot([]),
-          NgrxDataModule.forRoot({
+          EntityDataModule.forRoot({
             entityMetadata: entityMetadata,
           }),
         ],
@@ -152,7 +152,7 @@ describe('NgrxDataModule', () => {
         imports: [
           StoreModule.forRoot({}),
           EffectsModule.forRoot([]),
-          NgrxDataModule.forRoot({
+          EntityDataModule.forRoot({
             entityMetadata: entityMetadata,
             entityCacheMetaReducers: [
               loggingEntityCacheMetaReducer,

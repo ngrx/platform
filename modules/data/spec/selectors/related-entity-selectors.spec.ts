@@ -17,7 +17,7 @@ import {
   EntityActionFactory,
   EntitySelectorsFactory,
   EntityCache,
-  NgrxDataModuleWithoutEffects,
+  EntityDataModuleWithoutEffects,
   ENTITY_METADATA_TOKEN,
   EntityOp,
   EntityAction,
@@ -41,9 +41,9 @@ describe('Related-entity Selectors', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}), NgrxDataModuleWithoutEffects],
+      imports: [StoreModule.forRoot({}), EntityDataModuleWithoutEffects],
       providers: [
-        // required by NgrxData but not used in these tests
+        // required by EntityData but not used in these tests
         { provide: Actions, useValue: null },
         {
           provide: ENTITY_METADATA_TOKEN,
