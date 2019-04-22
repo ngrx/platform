@@ -28,5 +28,9 @@
     "rxjs": "RXJS_VERSION"
   },
   "schematics": "MODULE_SCHEMATICS_COLLECTION",
+  "ng-update": {
+    "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
+    "migrations": "NG_UPDATE_MIGRATIONS"
+  },
   "sideEffects": false
 }
