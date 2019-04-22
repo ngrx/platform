@@ -52,20 +52,20 @@ Export the entity configuration to be used when registering it in your `AppModul
 
 ## Registering the entity store
 
-Once the entity configuration is created, you need to put it into the root store for NgRx.  This is done by importing the `entityConfig` and then passing it to the `NgrxDataModule.forRoot()` function.
+Once the entity configuration is created, you need to put it into the root store for NgRx.  This is done by importing the `entityConfig` and then passing it to the `EntityDataModule.forRoot()` function.
 
 <code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { DefaultDataServiceConfig, NgrxDataModule } from '@ngrx/data';
+import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
 @NgModule({
   imports: [
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    NgrxDataModule.forRoot(entityConfig)
+    EntityDataModule.forRoot(entityConfig)
   ]
 })
 export class AppModule {}
