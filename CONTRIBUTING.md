@@ -98,6 +98,7 @@ The scope should be the name of the npm package affected (as perceived by the pe
 
 The following is the list of supported scopes:
 
+- **data**
 - **effects**
 - **entity**
 - **example**
