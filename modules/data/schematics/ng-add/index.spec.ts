@@ -1,0 +1,100 @@
+import {
+  SchematicTestRunner,
+  UnitTestTree,
+} from '@angular-devkit/schematics/testing';
+import * as path from 'path';
+import { Schema as DataEntityOptions } from './schema';
+import {
+  createWorkspace,
+  getTestProjectPath,
+} from '../../../schematics-core/testing';
+
+fdescribe('Data ng-add Schematic', () => {
+  const schematicRunner = new SchematicTestRunner(
+    '@ngrx/data',
+    path.join(__dirname, '../collection.json')
+  );
+  const defaultOptions: DataEntityOptions = {
+    skipPackageJson: false,
+    project: 'bar',
+    module: 'app',
+  };
+
+  const projectPath = getTestProjectPath();
+
+  let appTree: UnitTestTree;
+
+  beforeEach(() => {
+    appTree = createWorkspace(schematicRunner, appTree);
+  });
+
+  it('should update package.json', () => {
+    const options = { ...defaultOptions };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const packageJson = JSON.parse(tree.readContent('/package.json'));
+
+    expect(packageJson.dependencies['@ngrx/data']).toBeDefined();
+  });
+
+  it('should skip package.json update', () => {
+    const options = { ...defaultOptions, skipPackageJson: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const packageJson = JSON.parse(tree.readContent('/package.json'));
+
+    expect(packageJson.dependencies['@ngrx/data']).toBeUndefined();
+  });
+
+  it('should import into a specified module', () => {
+    const options = { ...defaultOptions, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(/import { EntityDataModule } from '@ngrx\/data'/);
+  });
+
+  it('should fail if specified module does not exist', () => {
+    const options = {
+      ...defaultOptions,
+      module: `${projectPath}/src/app/app.moduleXXX.ts`,
+    };
+    let thrownError: Error | null = null;
+    try {
+      schematicRunner.runSchematic('data', options, appTree);
+    } catch (err) {
+      thrownError = err;
+    }
+    expect(thrownError).toBeDefined();
+  });
+
+  it('should import EntityDataModuleWithoutEffects into a specified module', () => {
+    const options = {
+      ...defaultOptions,
+      module: 'app.module.ts',
+      withoutEffects: true,
+    };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(
+      /import { EntityDataModuleWithoutEffects } from '@ngrx\/data'/
+    );
+  });
+
+  it('should register EntityDataModule in the provided module', () => {
+    const options = { ...defaultOptions };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(/EntityDataModule\n/);
+  });
+
+  it('should register EntityDataModuleWithoutEffects in the provided module', () => {
+    const options = { ...defaultOptions, withoutEffects: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(/EntityDataModuleWithoutEffects\n/);
+  });
+});
