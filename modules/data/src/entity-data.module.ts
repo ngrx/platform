@@ -29,18 +29,18 @@ import { Pluralizer, PLURAL_NAMES_TOKEN } from './utils/interfaces';
 import { DefaultPluralizer } from './utils/default-pluralizer';
 
 import {
-  NgrxDataModuleConfig,
-  NgrxDataModuleWithoutEffects,
-} from './ngrx-data-without-effects.module';
+  EntityDataModuleConfig,
+  EntityDataModuleWithoutEffects,
+} from './entity-data-without-effects.module';
 
 /**
- * Ngrx-data main module includes effects and HTTP data services
+ * entity-data main module includes effects and HTTP data services
  * Configure with `forRoot`.
  * No `forFeature` yet.
  */
 @NgModule({
   imports: [
-    NgrxDataModuleWithoutEffects,
+    EntityDataModuleWithoutEffects,
     EffectsModule, // do not supply effects because can't replace later
   ],
   providers: [
@@ -57,12 +57,12 @@ import {
     { provide: Pluralizer, useClass: DefaultPluralizer },
   ],
 })
-export class NgrxDataModule {
-  static forRoot(config: NgrxDataModuleConfig): ModuleWithProviders {
+export class EntityDataModule {
+  static forRoot(config: EntityDataModuleConfig): ModuleWithProviders {
     return {
-      ngModule: NgrxDataModule,
+      ngModule: EntityDataModule,
       providers: [
-        // TODO: Moved these effects classes up to NgrxDataModule itself
+        // TODO: Moved these effects classes up to EntityDataModule itself
         // Remove this comment if that was a mistake.
         // EntityCacheEffects,
         // EntityEffects,
@@ -98,7 +98,7 @@ export class NgrxDataModule {
     entityEffects: EntityEffects
   ) {
     // We can't use `forFeature()` because, if we did, the developer could not
-    // replace the ngrx-data `EntityEffects` with a custom alternative.
+    // replace the entity-data `EntityEffects` with a custom alternative.
     // Replacing that class is an extensibility point we need.
     //
     // The FEATURE_EFFECTS token is not exposed, so can't use that technique.
