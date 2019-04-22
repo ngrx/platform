@@ -208,6 +208,15 @@
       ]
     },
     {
+      "title": "Data",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/data"
+        }
+      ]
+    },
+    {
       "title": "Schematics",
       "children": [
         {
