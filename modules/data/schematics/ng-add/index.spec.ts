@@ -9,7 +9,7 @@ import {
   getTestProjectPath,
 } from '../../../schematics-core/testing';
 
-fdescribe('Data ng-add Schematic', () => {
+describe('Data ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/data',
     path.join(__dirname, '../collection.json')
@@ -96,5 +96,226 @@ fdescribe('Data ng-add Schematic', () => {
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/EntityDataModuleWithoutEffects\n/);
+  });
+
+  describe('Migration of angular-ngrx-data', () => {
+    it('should remove angular-ngrx-data from package.json', () => {
+      const options = { ...defaultOptions, migrateNgrxData: true };
+
+      const packageJsonBefore = JSON.parse(
+        appTree.readContent('/package.json')
+      );
+      packageJsonBefore['dependencies']['angular-ngrx-data'] = '1.0.0';
+      appTree.overwrite(
+        '/package.json',
+        JSON.stringify(packageJsonBefore, null, 2)
+      );
+
+      expect(
+        JSON.parse(appTree.readContent('/package.json'))['dependencies'][
+          'angular-ngrx-data'
+        ]
+      ).toBeDefined();
+
+      const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+      const packageJson = JSON.parse(tree.readContent('/package.json'));
+
+      expect(packageJson.dependencies['angular-ngrx-data']).not.toBeDefined();
+    });
+
+    it('should rename NgrxDataModule', () => {
+      const options = {
+        ...defaultOptions,
+        migrateNgrxData: true,
+      };
+
+      const dataModulePath = '/data.module.ts';
+
+      const input = `
+        import {
+          DefaultDataServiceConfig,
+          EntityDataService,
+          EntityHttpResourceUrls,
+          EntityServices,
+          Logger,
+          NgrxDataModule,
+          Pluralizer
+        } from 'ngrx-data';
+
+        @NgModule({
+          imports: [
+            NgrxDataModule.forRoot({
+              entityMetadata: entityMetadata,
+              pluralNames: pluralNames
+            })
+          ],
+        })
+        export class AppModule {}
+      `;
+
+      const output = `
+        import {
+          DefaultDataServiceConfig,
+          EntityDataService,
+          EntityHttpResourceUrls,
+          EntityServices,
+          Logger,
+          EntityDataModule,
+          Pluralizer
+        } from '@ngrx/data';
+
+        @NgModule({
+          imports: [
+            EntityDataModule.forRoot({
+              entityMetadata: entityMetadata,
+              pluralNames: pluralNames
+            })
+          ],
+        })
+        export class AppModule {}
+      `;
+      appTree.create(dataModulePath, input);
+
+      const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+      const actual = tree.readContent(dataModulePath);
+
+      expect(actual).toBe(output);
+    });
+
+    it('should rename NgrxDataModuleWithoutEffects ', () => {
+      const options = {
+        ...defaultOptions,
+        migrateNgrxData: true,
+      };
+
+      const dataModulePath = '/data.module.ts';
+
+      const input = `
+        import {
+          DefaultDataServiceConfig,
+          EntityDataService,
+          EntityHttpResourceUrls,
+          EntityServices,
+          Logger,
+          NgrxDataModuleWithoutEffects,
+          Pluralizer
+        } from 'ngrx-data';
+
+        @NgModule({
+          imports: [
+            NgrxDataModuleWithoutEffects.forRoot({
+              entityMetadata: entityMetadata,
+              pluralNames: pluralNames
+            })
+          ],
+        })
+        export class AppModule {}
+      `;
+
+      const output = `
+        import {
+          DefaultDataServiceConfig,
+          EntityDataService,
+          EntityHttpResourceUrls,
+          EntityServices,
+          Logger,
+          EntityDataModuleWithoutEffects,
+          Pluralizer
+        } from '@ngrx/data';
+
+        @NgModule({
+          imports: [
+            EntityDataModuleWithoutEffects.forRoot({
+              entityMetadata: entityMetadata,
+              pluralNames: pluralNames
+            })
+          ],
+        })
+        export class AppModule {}
+      `;
+      appTree.create(dataModulePath, input);
+
+      const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+      const actual = tree.readContent(dataModulePath);
+
+      expect(actual).toBe(output);
+    });
+
+    it('should rename NgrxDataModuleConfig ', () => {
+      const options = {
+        ...defaultOptions,
+        migrateNgrxData: true,
+      };
+
+      const dataModulePath = '/data.module.ts';
+
+      const input = `
+        import {
+          DefaultDataServiceConfig,
+          EntityDataService,
+          EntityHttpResourceUrls,
+          EntityServices,
+          Logger,
+          NgrxDataModule,
+          NgrxDataModuleConfig,
+          Pluralizer
+        } from 'ngrx-data';
+        
+        const customConfig: NgrxDataModuleConfig = {
+          root: 'api', // default root path to the server's web api
+          timeout: 3000, // request timeout
+        };
+
+        @NgModule({
+          imports: [
+            NgrxDataModule.forRoot({
+              entityMetadata: entityMetadata,
+              pluralNames: pluralNames
+            })
+          ],
+          providers: [
+            { provide: DefaultDataServiceConfig, useValue: customConfig },
+          ]
+        })
+        export class AppModule {}
+      `;
+
+      const output = `
+        import {
+          DefaultDataServiceConfig,
+          EntityDataService,
+          EntityHttpResourceUrls,
+          EntityServices,
+          Logger,
+          EntityDataModule,
+          EntityDataModuleConfig,
+          Pluralizer
+        } from '@ngrx/data';
+        
+        const customConfig: EntityDataModuleConfig = {
+          root: 'api', // default root path to the server's web api
+          timeout: 3000, // request timeout
+        };
+
+        @NgModule({
+          imports: [
+            EntityDataModule.forRoot({
+              entityMetadata: entityMetadata,
+              pluralNames: pluralNames
+            })
+          ],
+          providers: [
+            { provide: DefaultDataServiceConfig, useValue: customConfig },
+          ]
+        })
+        export class AppModule {}
+      `;
+      appTree.create(dataModulePath, input);
+
+      const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+      const actual = tree.readContent(dataModulePath);
+
+      expect(actual).toBe(output);
+    });
   });
 });

@@ -4,4 +4,5 @@ export interface Schema {
   skipPackageJson?: boolean;
   project?: string;
   module?: string;
+  migrateNgrxData?: boolean;
 }
