@@ -1,6 +1,6 @@
 # NgRx Data
 
-NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of **entity data** while reducing the amount of boilerplate.  
+NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of **entity data** while reducing the amount of explicitness.  
 
 Entity data is only one kind of application data.  NgRx Data should not be used for non-entity or highly idiosyncratic data.
 
@@ -18,7 +18,7 @@ In NgRx, to create, retrieve, update, and delete (CRUD) data for every entity ty
 
 In even a small model, this is a ton of repetitive code to create, maintain, and test.
 
-NgRx Data allows consumers to use NgRx while radically reducing the boilerplate necessary to manage entities with NgRx.
+NgRx Data allows consumers to use NgRx while radically reducing the explicitness necessary to manage entities with NgRx.
 
 ## Key Concepts
 
@@ -29,7 +29,7 @@ NgRx Data allows consumers to use NgRx while radically reducing the boilerplate 
 
 ## Defining the entities
 
-We create an `EntityMetadataMap` to tell NgRx Data about our entities.  Add a property to the set for each entity name.
+A `EntityMetadataMap` is used to tell NgRx Data about your entities.  Add a property to the set for each entity name.
 
 <code-example header="entity-metadata.ts">
 import { EntityMetadataMap } from '@ngrx/data';
@@ -48,11 +48,11 @@ export const entityConfig = {
 };
 </code-example>
 
-We export the entity configuration to be used when registering it in your `AppModule`.
+Export the entity configuration to be used when registering it in your `AppModule`.
 
 ## Registering the entity store
 
-We need to add the entity configuration we created, and put it into the root store for NgRx.  We do this by importing the `entityConfig` and then passing it to the `NgrxDataModule.forRoot()` function.
+Once the entity configuration is created, you need to put it into the root store for NgRx.  This is done by importing the `entityConfig` and then passing it to the `NgrxDataModule.forRoot()` function.
 
 <code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
@@ -73,7 +73,7 @@ export class AppModule {}
 
 ## Creating entity data services
 
-NgRx Data handles creating, retrieving, updating, and deleting our data for us by extending `EntityCollectionServiceBase` in our service class.
+NgRx Data handles creating, retrieving, updating, and deleting data on your server by extending `EntityCollectionServiceBase` in your service class.
 
 <code-example header="hero.service.ts">
 import { Injectable } from '@angular/core';
@@ -138,6 +138,6 @@ export class HeroesComponent implements OnInit {
 }
 </code-example>
 
-In this example, we need to listen for the stream of hereos. We set the `heroes$` property to the Observable returned from the `heroeService.entities$`.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
+In this example, you need to listen for the stream of hereos. The `heroes$` property references the `heroeService.entities$` Observable.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
 
-By default, the service includes the `loading$` Observable to indicate whether an HTTP request is in progress.  This helps our application manage loading states.
+By default, the service includes the `loading$` Observable to indicate whether an HTTP request is in progress.  This helps applications manage loading states.
