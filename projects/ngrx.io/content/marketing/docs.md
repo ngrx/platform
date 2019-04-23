@@ -18,4 +18,5 @@ NgRx is a framework for building reactive applications in Angular. NgRx provides
 - [Effects](guide/effects) - Side effect model for @ngrx/store.
 - [Router Store](guide/router-store) - Bindings to connect the Angular Router to @ngrx/store.
 - [Entity](guide/entity) - Entity State adapter for managing record collections.
+- [NgRx Data](guide/data) - Extension for simplified entity data management.
 - [Schematics](guide/schematics) - Scaffolding library for Angular applications using NgRx libraries.
