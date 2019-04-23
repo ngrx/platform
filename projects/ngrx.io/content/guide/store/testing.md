@@ -58,6 +58,81 @@ describe('Auth Guard', () => {
 });
 </code-example>
 
+#### Using Mock Selectors
+
+`MockStore` also provides the ability to mock individual selectors to return a passed value using the `overrideSelector()` method. When the selector is invoked by the `select` method, the returned value is overridden by the passed value, regardless of any state snapshot provided in `provideMockStore()`. 
+
+`overrideSelector()` returns a `MemoizedSelector`. To update the mock selector to return a different value, use the `MemoizedSelector`'s `setResult()` method.
+
+`overrideSelector()` supports mocking the `select` method (used in RxJS pipe) and the `Store` `select` instance method using a string or selector.
+
+Usage:
+
+<code-example header="auth.guard.ts">
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import * as fromAuth from '../reducers';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private store: Store&lt;fromAuth.State&gt;) {}
+
+  canActivate(): Observable&lt;boolean&gt; {
+    return this.store.pipe(
+      select(fromAuth.getLoggedIn),
+      take(1)
+    );
+  }
+}
+</code-example>
+
+<code-example header="auth.guard.spec.ts">
+import { TestBed } from '@angular/core/testing';
+import { Store, MemoizedSelector } from '@ngrx/store';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { cold } from 'jasmine-marbles';
+import { AuthGuard } from '../services/auth-guard.service';
+import * as fromAuth from '../reducers';
+
+describe('Auth Guard', () => {
+  let guard: AuthGuard;
+  let store: MockStore&lt;fromAuth.State&gt;;
+  let loggedIn: MemoizedSelector&lt;fromAuth.State, boolean&gt;;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [AuthGuard, provideMockStore()],
+    });
+
+    store = TestBed.get(Store);
+    guard = TestBed.get(AuthGuard);
+
+    loggedIn = store.overrideSelector(fromAuth.getLoggedIn, false);
+  });
+
+  it('should return false if the user state is not logged in', () => {
+    const expected = cold('(a|)', { a: false });
+
+    expect(guard.canActivate()).toBeObservable(expected);
+  });
+
+  it('should return true if the user state is logged in', () => {
+    const expected = cold('(a|)', { a: true });
+
+    loggedIn.setResult(true);
+
+    expect(guard.canActivate()).toBeObservable(expected);
+  });
+});
+</code-example>
+
+In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
+
 ### Using Store for Integration Testing
 
 Use the `StoreModule.forRoot` in your `TestBed` configuration when testing components or services that inject `Store`.
