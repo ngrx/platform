@@ -26,12 +26,12 @@ Provide the project name where the effect files will be created.
   - Alias: `-p`
   - Type: `string`
 
-Use effect creators to register effects instead of the `Effect` decorator.
+Use creator functions for actions and effects.
 
-- `--effectCreators`
-  - Alias: `-ec`
+- `--creators`
+  - Alias: `-c`
   - Type: `boolean`
-  - Default: `true`
+  - Default: `false`
 
 Nest the effects file within a folder based by the effect `name`.
 

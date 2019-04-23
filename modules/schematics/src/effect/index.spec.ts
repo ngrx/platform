@@ -27,7 +27,7 @@ describe('Effect Schematic', () => {
     feature: false,
     root: false,
     group: false,
-    effectCreators: false,
+    creators: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -319,7 +319,7 @@ describe('Effect Schematic', () => {
   });
 
   it('should create an effect using creator function', () => {
-    const options = { ...defaultOptions, effectCreators: true, feature: true };
+    const options = { ...defaultOptions, creators: true, feature: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
     const content = tree.readContent(
@@ -334,8 +334,8 @@ describe('Effect Schematic', () => {
     );
   });
 
-  it('should use action creators when effectCreators is enabled in a feature', () => {
-    const options = { ...defaultOptions, effectCreators: true, feature: true };
+  it('should use action creators when creators is enabled in a feature', () => {
+    const options = { ...defaultOptions, creators: true, feature: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
     const content = tree.readContent(
@@ -352,7 +352,7 @@ describe('Effect Schematic', () => {
   it('should create an api effect using creator function', () => {
     const options = {
       ...defaultOptions,
-      effectCreators: true,
+      creators: true,
       api: true,
       feature: true,
     };

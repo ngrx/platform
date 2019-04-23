@@ -57,7 +57,7 @@ export default function(options: EntityOptions): Rule {
     ]);
 
     const templateSource = apply(
-      url(options.actionCreators ? './creator-files' : './files'),
+      url(options.creators ? './creator-files' : './files'),
       [applyTemplates(templateOptions), move(parsedPath.path)]
     );
 

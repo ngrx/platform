@@ -193,7 +193,7 @@ describe('Entity Schematic', () => {
   });
 
   describe('action creators', () => {
-    const creatorOptions = { ...defaultOptions, actionCreators: true };
+    const creatorOptions = { ...defaultOptions, creators: true };
 
     it('should create a const for the action creator', () => {
       const tree = schematicRunner.runSchematic(
@@ -204,9 +204,9 @@ describe('Entity Schematic', () => {
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
-      expect(fileContent).toMatch(
-        /export const loadFoos = createAction\(\'\[Foo\/API\] Load Foos\', props<{ foos: Foo\[\] }>\(\)\);/
-      );
+      expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
+      expect(fileContent).toMatch(/\[Foo\/API\] Load Foos\'/);
+      expect(fileContent).toMatch(/props\<\{ foos\: Foo\[\] }>\(\)/);
     });
 
     it('should use action creator types in the reducer', () => {
@@ -221,7 +221,10 @@ describe('Entity Schematic', () => {
       expect(fileContent).toMatch(
         /import \* as FooActions from \'\.\/foo.actions\';/
       );
-      expect(fileContent).toMatch(/case FooActions\.addFoo\.type: \{/);
+      expect(fileContent).toMatch(/on\(FooActions.addFoo,/);
+      expect(fileContent).toMatch(
+        /\(state, action\) => adapter\.addOne\(action.foo, state\)/
+      );
     });
   });
 });

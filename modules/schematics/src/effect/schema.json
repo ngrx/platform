@@ -64,11 +64,12 @@
         "Specifies if effect has api success and failure actions wired up",
       "aliases": ["a"]
     },
-    "effectCreators": {
+    "creators": {
       "type": "boolean",
       "default": false,
-      "description": "Specifies whether to use the effect creators function",
-      "aliases": ["ec"]
+      "description":
+        "Specifies whether to use creator functions for handling actions, reducers, and effects.",
+      "aliases": ["c"]
     }
   },
   "required": []

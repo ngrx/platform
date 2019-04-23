@@ -61,7 +61,7 @@
       "type": "boolean",
       "default": false,
       "description":
-        "Specifies if the effects and actions be created using creator functions",
+        "Specifies if the actions, reducers, and effects should be created using creator functions",
       "aliases": ["c"]
     }
   },
