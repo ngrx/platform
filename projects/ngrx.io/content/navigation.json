@@ -17,6 +17,10 @@
       "title": "Events"
     },
     {
+      "url": "https://blog.ngrx.io",
+      "title": "Blog"
+    },
+    {
       "url": "https://github.com/ngrx/platform",
       "title": "GitHub"
     },
@@ -44,6 +48,10 @@
         {
           "url": "events",
           "title": "Events"
+        },
+        {
+          "url": "https://blog.ngrx.io",
+          "title": "Blog"
         },
         {
           "url": "https://github.com/ngrx/platform",
