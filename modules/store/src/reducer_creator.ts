@@ -47,8 +47,8 @@ export function on(
 }
 
 export function createReducer<S>(
-  ons: On<S>[],
-  initialState: S
+  initialState: S,
+  ...ons: On<S>[]
 ): ActionReducer<S> {
   const map = new Map<string, ActionReducer<S>>();
   for (let on of ons) {

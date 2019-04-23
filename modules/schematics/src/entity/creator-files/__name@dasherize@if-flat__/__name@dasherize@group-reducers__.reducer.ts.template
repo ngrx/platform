@@ -13,7 +13,8 @@ export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
 
-const <%= camelize(name) %>Reducer = createReducer<State>([
+const <%= camelize(name) %>Reducer = createReducer(
+  initialState,
   on(<%= classify(name) %>Actions.add<%= classify(name) %>,
     (state, action) => adapter.addOne(action.<%= camelize(name) %>, state)
   ),
@@ -44,7 +45,7 @@ const <%= camelize(name) %>Reducer = createReducer<State>([
   on(<%= classify(name) %>Actions.clear<%= classify(name) %>s,
     state => adapter.removeAll(state)
   ),
-], initialState);
+);
 
 export function reducer(state: State | undefined, action: Action) {
   return <%= camelize(name) %>Reducer(state, action);
