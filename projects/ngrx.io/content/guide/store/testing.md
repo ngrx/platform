@@ -133,6 +133,8 @@ describe('Auth Guard', () => {
 
 In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
 
+Try the <live-example name="testing-store"></live-example>.
+
 ### Using Store for Integration Testing
 
 Use the `StoreModule.forRoot` in your `TestBed` configuration when testing components or services that inject `Store`.
