@@ -4,11 +4,11 @@
   "title": "NgRx Data Schema",
   "type": "object",
   "properties": {
-    "withoutEffects": {
+    "effect": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description":
-        "Uses the EntityDataModuleWithoutEffects module instead of EntityDataModule."
+        "When false use the EntityDataModuleWithoutEffects module instead of EntityDataModule."
     },
     "skipPackageJson": {
       "type": "boolean",

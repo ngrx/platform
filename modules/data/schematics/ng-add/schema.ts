@@ -1,6 +1,6 @@
 export interface Schema {
   path?: string;
-  withoutEffects?: boolean;
+  effects?: boolean;
   skipPackageJson?: boolean;
   project?: string;
   module?: string;

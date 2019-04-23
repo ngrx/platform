@@ -72,7 +72,7 @@ describe('Data ng-add Schematic', () => {
     const options = {
       ...defaultOptions,
       module: 'app.module.ts',
-      withoutEffects: true,
+      effects: false,
     };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
@@ -91,7 +91,7 @@ describe('Data ng-add Schematic', () => {
   });
 
   it('should register EntityDataModuleWithoutEffects in the provided module', () => {
-    const options = { ...defaultOptions, withoutEffects: true };
+    const options = { ...defaultOptions, effects: false };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);

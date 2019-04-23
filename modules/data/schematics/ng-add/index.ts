@@ -51,9 +51,9 @@ function addEntityDataToNgModule(options: EntityDataOptions): Rule {
       true
     );
 
-    const moduleToImport = options.withoutEffects
-      ? 'EntityDataModuleWithoutEffects'
-      : 'EntityDataModule';
+    const moduleToImport = options.effects
+      ? 'EntityDataModule'
+      : 'EntityDataModuleWithoutEffects';
     const effectsModuleImport = insertImport(
       source,
       modulePath,
@@ -283,10 +283,10 @@ export default function(options: EntityDataOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     (options as any).name = '';
     options.path = getProjectPath(host, options);
-
-    if (options.module) {
-      options.module = findModuleFromOptions(host, options as any);
-    }
+    options.effects = options.effects === undefined ? true : options.effects;
+    options.module = options.module
+      ? findModuleFromOptions(host, options as any)
+      : options.module;
 
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
