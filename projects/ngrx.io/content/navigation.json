@@ -213,6 +213,10 @@
         {
           "title": "Overview",
           "url": "guide/data"
+        },
+        {
+          "title": "Installation",
+          "url": "guide/data/install"
         }
       ]
     },
