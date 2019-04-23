@@ -68,7 +68,7 @@
       "type": "boolean",
       "default": false,
       "description":
-        "Specifies whether to use creator functions for handling actions and reducers.",
+        "Specifies whether to use creator functions for handling actions, reducers, and effects.",
       "aliases": ["c"]
     }
   },
