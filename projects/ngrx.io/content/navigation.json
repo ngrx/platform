@@ -9,6 +9,10 @@
       "title": "Docs"
     },
     {
+      "url": "https://blog.ngrx.io",
+      "title": "Blog"
+    },
+    {
       "url": "resources",
       "title": "Resources"
     },
@@ -36,6 +40,10 @@
         {
           "url": "docs",
           "title": "Docs"
+        },
+        {
+          "url": "https://blog.ngrx.io",
+          "title": "Blog"
         },
         {
           "url": "resources",
@@ -313,7 +321,7 @@
           "tooltip": "Sponsor NgRx Development"
         },
         {
-          "url": "https://medium.com/@ngrx",
+          "url": "https://blog.ngrx.io",
           "title": "Blog",
           "tooltip": "NgRx Blog"
         }
