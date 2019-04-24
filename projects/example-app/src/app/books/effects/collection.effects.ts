@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
 import { defer, of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+  tap,
+} from 'rxjs/operators';
 import { Book } from '@example-app/books/models/book';
 import {
   CollectionApiActions,
@@ -9,6 +16,9 @@ import {
   SelectedBookPageActions,
 } from '@example-app/books/actions';
 import { BookStorageService } from '@example-app/core/services';
+import * as fromBooks from '@example-app/books/reducers';
+import { select, Store } from '@ngrx/store';
+
 @Injectable()
 export class CollectionEffects {
   /**
@@ -66,8 +76,25 @@ export class CollectionEffects {
     )
   );
 
+  addBookToCollectionSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CollectionApiActions.addBookSuccess),
+        withLatestFrom(this.store.pipe(select(fromBooks.getCollectionBookIds))),
+        tap(([, bookCollection]) => {
+          if (bookCollection.length === 1) {
+            window.alert('Congrats on adding your first book!');
+          } else {
+            window.alert('You have added book number ' + bookCollection.length);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
-    private storageService: BookStorageService
+    private storageService: BookStorageService,
+    private store: Store<fromBooks.State>
   ) {}
 }

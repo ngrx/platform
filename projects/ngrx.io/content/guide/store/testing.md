@@ -68,9 +68,9 @@ describe('Auth Guard', () => {
 
 Usage:
 
-<code-example header="auth-guard.service.ts" path="testing-store/src/app/auth-guard.service.ts">
+<code-example header="auth-guard.service.ts" path="testing-store/src/app/auth-guard.service.ts"></code-example>
 
-<code-example header="auth-guard.service.spec.ts" path="testing-store/src/app/auth-guard.service.spec.ts">
+<code-example header="auth-guard.service.spec.ts" path="testing-store/src/app/auth-guard.service.spec.ts"></code-example>
 
 In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
 
