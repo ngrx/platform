@@ -49,12 +49,10 @@ import {on} from './modules/store/src/reducer_creator';
           bar?: number;
         }
 
-        const fooBarReducer = createReducer<State>(
-          [
-            on(foo, (state, { foo }) => ({ ...state, foo })),
-            on(bar, (state, { bar }) => ({ ...state, bar })),
-          ],
-          {}
+        const fooBarReducer = createReducer(
+          {} as State,
+          on(foo, (state, { foo }) => ({ ...state, foo })),
+          on(bar, (state, { bar }) => ({ ...state, bar }))
         );
 
         expect(typeof fooBarReducer).toEqual('function');
@@ -72,9 +70,9 @@ import {on} from './modules/store/src/reducer_creator';
       it('should support reducers with multiple actions', () => {
         type State = string[];
 
-        const fooBarReducer = createReducer<State>(
-          [on(foo, bar, (state, { type }) => [...state, type])],
-          []
+        const fooBarReducer = createReducer(
+          [] as State,
+          on(foo, bar, (state, { type }) => [...state, type])
         );
 
         expect(typeof fooBarReducer).toEqual('function');

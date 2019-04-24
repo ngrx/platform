@@ -9,13 +9,14 @@ export const initialState: State = {
 
 };
 
-const <%= camelize(name) %>Reducer = createReducer<State>([
+const <%= camelize(name) %>Reducer = createReducer(
+  initialState,
 <% if(feature) { %>
   on(<%= classify(name) %>Actions.load<%= classify(name) %>s, state => state),
 <% if(api) { %>  on(<%= classify(name) %>Actions.load<%= classify(name) %>sSuccess, (state, action) => state),
   on(<%= classify(name) %>Actions.load<%= classify(name) %>sFailure, (state, action) => state),
 <% } %><% } %>
-], initialState);
+);
 
 export function reducer(state: State | undefined, action: Action) {
   return <%= camelize(name) %>Reducer(state, action);

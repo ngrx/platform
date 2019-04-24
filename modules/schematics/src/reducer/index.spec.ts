@@ -202,7 +202,7 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(
       /export function reducer\(state: State | undefined, action: Action\) {/
     );
-    expect(fileContent).toMatch(/const fooReducer = createReducer<State>\(/);
+    expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
   });
 
   it('should create an reducer function in a feature using createReducer', () => {
@@ -218,7 +218,7 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(
       /export function reducer\(state: State | undefined, action: Action\) {/
     );
-    expect(fileContent).toMatch(/const fooReducer = createReducer<State>\(/);
+    expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
     expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
   });
 
@@ -235,7 +235,7 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(
       /export function reducer\(state: State | undefined, action: Action\) {/
     );
-    expect(fileContent).toMatch(/const fooReducer = createReducer<State>\(/);
+    expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
     expect(fileContent).toMatch(
       /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
     );
