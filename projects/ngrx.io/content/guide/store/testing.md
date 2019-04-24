@@ -68,68 +68,9 @@ describe('Auth Guard', () => {
 
 Usage:
 
-<code-example header="auth.guard.ts">
-import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
-import * as fromAuth from '../reducers';
+<code-example header="auth-guard.service.ts" path="testing-store/src/app/auth-guard.service.ts">
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard implements CanActivate {
-  constructor(private store: Store&lt;fromAuth.State&gt;) {}
-
-  canActivate(): Observable&lt;boolean&gt; {
-    return this.store.pipe(
-      select(fromAuth.getLoggedIn),
-      take(1)
-    );
-  }
-}
-</code-example>
-
-<code-example header="auth.guard.spec.ts">
-import { TestBed } from '@angular/core/testing';
-import { Store, MemoizedSelector } from '@ngrx/store';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { cold } from 'jasmine-marbles';
-import { AuthGuard } from '../services/auth-guard.service';
-import * as fromAuth from '../reducers';
-
-describe('Auth Guard', () => {
-  let guard: AuthGuard;
-  let store: MockStore&lt;fromAuth.State&gt;;
-  let loggedIn: MemoizedSelector&lt;fromAuth.State, boolean&gt;;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [AuthGuard, provideMockStore()],
-    });
-
-    store = TestBed.get(Store);
-    guard = TestBed.get(AuthGuard);
-
-    loggedIn = store.overrideSelector(fromAuth.getLoggedIn, false);
-  });
-
-  it('should return false if the user state is not logged in', () => {
-    const expected = cold('(a|)', { a: false });
-
-    expect(guard.canActivate()).toBeObservable(expected);
-  });
-
-  it('should return true if the user state is logged in', () => {
-    const expected = cold('(a|)', { a: true });
-
-    loggedIn.setResult(true);
-
-    expect(guard.canActivate()).toBeObservable(expected);
-  });
-});
-</code-example>
+<code-example header="auth-guard.service.spec.ts" path="testing-store/src/app/auth-guard.service.spec.ts">
 
 In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
 
