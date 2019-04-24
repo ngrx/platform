@@ -183,6 +183,29 @@ jobs:
           at: dist
       - run: yarn run deploy:builds
 
+  publish-stable:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: dist
+      - run: yarn run publish:stable
+
+  publish-next:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: dist
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run: yarn run publish:next
+
   cleanup-previews:
     <<: *run_in_node
     steps:
@@ -239,3 +262,21 @@ workflows:
           filters:
             branches:
               only: master
+  publish:
+    jobs:
+      # - publish-stable:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /\d+\.\d+\.\d+(?!-\w+\.\d)/
+      - publish-next:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /\d+\.\d+\.\d+(-\w+\.\d)/
