@@ -40,4 +40,4 @@ This command will automate the following steps:
 With the `migrateNgRxData` flag the following will also take place:
 
 1. Remove `angular-ngrx-data` from `package.json` > `dependencies`.
-2. rename `angular-ngrx-data` types to the matching `@ngrx/data` types.
+2. Rename `angular-ngrx-data` types to the matching `@ngrx/data` types.
