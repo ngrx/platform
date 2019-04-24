@@ -131,7 +131,7 @@
             "title": "ngrx-ducks",
             "desc":
               "A plugin for ngrx automating creation and dispatch of actions",
-            "url": "https://github.com/co-IT/co-it/tree/master/ngrx/ducks",
+            "url": "https://github.com/co-IT/ngrx-ducks",
             "rev": true
           }
         }
