@@ -58,7 +58,7 @@ describe('Auth Guard', () => {
 });
 </code-example>
 
-#### Using Mock Selectors
+### Using Mock Selectors
 
 `MockStore` also provides the ability to mock individual selectors to return a passed value using the `overrideSelector()` method. When the selector is invoked by the `select` method, the returned value is overridden by the passed value, regardless of any state snapshot provided in `provideMockStore()`. 
 
