@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { AuthActions, AuthActionTypes } from '../auth.actions';
+import { createReducer, on } from '@ngrx/store';
+import { AuthActions } from '../actions';
 
 export interface State {
   loggedIn: boolean;
@@ -9,25 +9,12 @@ export const initialState: State = {
   loggedIn: false,
 };
 
-export function reducer(
-  state = initialState,
-  action: AuthActions
-): State {
-  switch (action.type) {
-    case AuthActionTypes.Login: {
-      return {
-        loggedIn: true
-      };
-    }
-    case AuthActionTypes.Logout: {
-      return {
-        loggedIn: false
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer = createReducer<State>(
+  [
+    on(AuthActions.login, (): State => ({ loggedIn: true })),
+    on(AuthActions.logout, (): State => ({ loggedIn: false }))
+  ],
+  initialState
+);
 
 export const getLoggedIn = (state: State) => state.loggedIn;
