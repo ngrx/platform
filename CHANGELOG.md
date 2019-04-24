@@ -1,3 +1,13 @@
+<a name="8.0.0-beta.1"></a>
+
+# [8.0.0-beta.1](https://github.com/ngrx/platform/compare/8.0.0-beta.0...8.0.0-beta.1) (2019-04-24)
+
+### Features
+
+- **data:** add schematics and migrations ([#1782](https://github.com/ngrx/platform/issues/1782)) ([c79362d](https://github.com/ngrx/platform/commit/c79362d))
+- **schematics:** add support for reducer creators ([#1785](https://github.com/ngrx/platform/issues/1785)) ([8a0a049](https://github.com/ngrx/platform/commit/8a0a049)), closes [#1764](https://github.com/ngrx/platform/issues/1764)
+- **store:** change createReducer to avoid generic ([#1796](https://github.com/ngrx/platform/issues/1796)) ([8f2cb7b](https://github.com/ngrx/platform/commit/8f2cb7b))
+
 <a name="8.0.0-beta.0"></a>
 
 # [8.0.0-beta.0](https://github.com/ngrx/platform/compare/7.4.0...8.0.0-beta.0) (2019-04-17)
