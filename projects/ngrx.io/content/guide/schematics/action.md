@@ -27,6 +27,13 @@ Provide the project name where the action files will be created.
   - Alias: `-p`
   - Type: `string`
 
+Use creator functions for actions
+
+- `--creators`
+  - Alias: `-c`
+  - Type: `boolean`
+  - Default: `false`
+
 Nest the actions file within a folder based on the action `name`.
 
 - `--flat`

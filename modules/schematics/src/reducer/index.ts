@@ -56,7 +56,7 @@ export default function(options: ReducerOptions): Rule {
     ]);
 
     const templateSource = apply(
-      url(options.actionCreators ? './creator-files' : './files'),
+      url(options.creators ? './creator-files' : './files'),
       [applyTemplates(templateOptions), move(parsedPath.path)]
     );
 

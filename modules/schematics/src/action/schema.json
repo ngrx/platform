@@ -46,12 +46,12 @@
         "Specifies if api success and failure actions should be generated.",
       "aliases": ["a"]
     },
-    "actionCreators": {
+    "creators": {
       "type": "boolean",
       "default": false,
       "description":
-        "Specifies whether to generate action creators instead of action classes.",
-      "aliases": ["ac"]
+        "Specifies whether to use creator functions for handling actions and reducers.",
+      "aliases": ["c"]
     }
   },
   "required": []

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxData",
+  "title": "NgRx Data Schema",
+  "type": "object",
+  "properties": {
+    "effect": {
+      "type": "boolean",
+      "default": true,
+      "description":
+        "When false use the EntityDataModuleWithoutEffects module instead of EntityDataModule."
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Do not add @ngrx/data as dependency to package.json (e.g., --skipPackageJson)."
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to the module.",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "aliases": ["p"]
+    },
+    "module": {
+      "type": "string",
+      "default": "app",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "subtype": "filepath"
+    },
+    "migrateNgrxData": {
+      "type": "boolean",
+      "default": false,
+      "description": "Migrate from angular-ngrx-data, will rename modules.",
+      "alias": "migrate"
+    }
+  },
+  "required": []
+}

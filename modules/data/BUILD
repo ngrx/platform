@@ -26,6 +26,9 @@ ng_package(
     ],
     entry_point = "modules/data/index.js",
     packages = [
+        "//modules/data/migrations:npm_package",
+        "//modules/data/schematics:npm_package",
+        "//modules/data/schematics-core:npm_package",
     ],
     deps = [
         ":data",

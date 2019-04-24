@@ -10,12 +10,10 @@ export const initialState: State = {
   user: null,
 };
 
-export const reducer = createReducer<State>(
-  [
-    on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
-    on(AuthActions.logout, () => initialState),
-  ],
-  initialState
+export const reducer = createReducer(
+  initialState,
+  on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
+  on(AuthActions.logout, () => initialState)
 );
 
 export const getUser = (state: State) => state.user;

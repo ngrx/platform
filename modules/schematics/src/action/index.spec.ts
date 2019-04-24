@@ -117,7 +117,7 @@ describe('Action Schematic', () => {
   });
 
   describe('action creators', () => {
-    const creatorOptions = { ...defaultOptions, actionCreators: true };
+    const creatorOptions = { ...defaultOptions, creators: true };
 
     it('should create a const for the action creator', () => {
       const tree = schematicRunner.runSchematic(
@@ -129,9 +129,25 @@ describe('Action Schematic', () => {
         `${projectPath}/src/app/foo.actions.ts`
       );
 
-      expect(fileContent).toMatch(
-        /export const loadFoos = createAction\('\[Foo\] Load Foos'\);/
+      expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
+      expect(fileContent).toMatch(/\[Foo\] Load Foos'/);
+    });
+
+    it('should create success/error actions when the api flag is set', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        { ...creatorOptions, api: true },
+        appTree
       );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
+
+      expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
+      expect(fileContent).toMatch(/\[Foo\] Load Foos Success/);
+      expect(fileContent).toMatch(/props<{ data: any }>\(\)/);
+      expect(fileContent).toMatch(/\[Foo\] Load Foos Failure/);
+      expect(fileContent).toMatch(/props<{ error: any }>\(\)/);
     });
   });
 

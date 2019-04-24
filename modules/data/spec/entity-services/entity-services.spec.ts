@@ -21,7 +21,7 @@ import {
   EntityCacheQuerySet,
   MergeQuerySet,
   EntityMetadataMap,
-  NgrxDataModule,
+  EntityDataModule,
   EntityCacheEffects,
   EntityDataService,
   EntityActionFactory,
@@ -202,7 +202,7 @@ function entityServicesSetup() {
     imports: [
       StoreModule.forRoot({}),
       EffectsModule.forRoot([]),
-      NgrxDataModule.forRoot({
+      EntityDataModule.forRoot({
         entityMetadata: entityMetadata,
       }),
     ],

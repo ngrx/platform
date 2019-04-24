@@ -11,26 +11,24 @@ export const initialState: State = {
   pending: false,
 };
 
-export const reducer = createReducer<State>(
-  [
-    on(LoginPageActions.login, state => ({
-      ...state,
-      error: null,
-      pending: true,
-    })),
+export const reducer = createReducer(
+  initialState,
+  on(LoginPageActions.login, state => ({
+    ...state,
+    error: null,
+    pending: true,
+  })),
 
-    on(AuthApiActions.loginSuccess, state => ({
-      ...state,
-      error: null,
-      pending: false,
-    })),
-    on(AuthApiActions.loginFailure, (state, { error }) => ({
-      ...state,
-      error,
-      pending: false,
-    })),
-  ],
-  initialState
+  on(AuthApiActions.loginSuccess, state => ({
+    ...state,
+    error: null,
+    pending: false,
+  })),
+  on(AuthApiActions.loginFailure, (state, { error }) => ({
+    ...state,
+    error,
+    pending: false,
+  }))
 );
 
 export const getError = (state: State) => state.error;

@@ -38,8 +38,8 @@ export interface Schema {
   group?: boolean;
 
   /**
-   * Specifies whether to generate action creators
-   * instead of action classes.
+   * Specifies whether to use creator functions for
+   * handling actions and reducers.
    */
-  actionCreators?: boolean;
+  creators?: boolean;
 }
