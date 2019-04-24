@@ -99,7 +99,6 @@ StoreDevtoolsModule.instrument({
 });
 ```
 
-
 <a name="7.4.0"></a>
 
 # [7.4.0](https://github.com/ngrx/platform/compare/7.3.0...7.4.0) (2019-03-29)
