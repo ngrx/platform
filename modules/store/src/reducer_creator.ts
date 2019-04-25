@@ -1,3 +1,4 @@
+import { isDevMode } from '@angular/core';
 import { ActionCreator, ActionReducer, ActionType, Action } from './models';
 
 // Return type of the `on` fn.
@@ -51,8 +52,15 @@ export function createReducer<S>(
   ...ons: On<S>[]
 ): ActionReducer<S> {
   const map = new Map<string, ActionReducer<S>>();
+  const devMode = isDevMode();
+
   for (let on of ons) {
     for (let type of on.types) {
+      if (devMode && map.has(type)) {
+        console.warn(
+          `@ngrx/store: The provided action type '${type}' is already provided.`
+        );
+      }
       map.set(type, on.reducer);
     }
   }
