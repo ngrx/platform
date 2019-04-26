@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as rimraf from 'rimraf';
 import { Config } from './config';
 
-export type RunnerFn = (config: Config) => Promise<any>;
+export type RunnerFn = (config: Config, previousResult?: any) => Promise<any>;
 export type TaskDef = [string, RunnerFn];
 export type BaseFn = (command: string) => string;
 
@@ -109,26 +109,32 @@ export async function mapSources(file: string) {
 }
 
 const ora = require('ora');
-async function runTask(name: string, taskFn: () => Promise<any>) {
+export async function runTask(name: string, taskFn: () => Promise<any>) {
   const spinner = ora(name);
+  let result: any;
 
   try {
     spinner.start();
 
-    await taskFn();
+    result = await taskFn();
 
     spinner.succeed();
   } catch (e) {
     spinner.fail();
 
     throw e;
+  } finally {
+    return result;
   }
 }
 
 export function createBuilder(tasks: TaskDef[]) {
   return async function(config: Config) {
+    let previousResult: any;
     for (let [name, runner] of tasks) {
-      await runTask(name, () => runner(config));
+      previousResult = await runTask(name, () =>
+        runner(config, previousResult)
+      );
     }
   };
 }

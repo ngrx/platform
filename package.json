@@ -33,7 +33,8 @@
     "bazel:lint": "yarn bazel:format --lint=warn",
     "bazel:lint-fix": "yarn bazel:format --lint=fix",
     "copy:schematics": "ts-node ./build/copy-schematics-core.ts",
-    "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html"
+    "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html",
+    "gen:contributors": "ts-node ./build/contributors.ts"
   },
   "engines": {
     "node": ">=10.9.0 <=11.12.0",

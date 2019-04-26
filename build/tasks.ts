@@ -1,6 +1,7 @@
 import { Config, modulesDir } from './config';
 import * as util from './util';
 import * as fs from 'fs';
+import * as path from 'path';
 import { ncp } from 'ncp';
 
 /**
@@ -194,4 +195,117 @@ export async function cleanupDocsPreviews() {
   } catch (e) {}
 
   await util.git(['push origin master --force']);
+}
+
+type Migrations = ({
+  fileName: string;
+  content: string;
+  replaceFrom: number;
+  replaceEnd: number;
+  tags: string[];
+  contributors: string[];
+})[];
+
+export async function getMigrations() {
+  const dir = './projects/ngrx.io/content/guide/migration/';
+  const tagToLookFor = '<!-- CONTRIBUTORS:';
+  const closingTag = '-->';
+  const files = fs.readdirSync(dir);
+
+  return files.filter(file => path.extname(file) === '.md').map(file => {
+    const fileName = dir + file;
+    const content = fs.readFileSync(fileName, 'utf-8');
+
+    const startOfOpeningTagIndex = content.indexOf(`${tagToLookFor}START`);
+    const endOfOpeningTagIndex = content.indexOf(
+      closingTag,
+      startOfOpeningTagIndex
+    );
+    const startOfClosingTagIndex = content.indexOf(
+      `${tagToLookFor}END`,
+      endOfOpeningTagIndex
+    );
+
+    if (
+      startOfOpeningTagIndex === -1 ||
+      endOfOpeningTagIndex === -1 ||
+      startOfClosingTagIndex === -1
+    ) {
+      return {
+        fileName,
+        content,
+        replaceFrom: endOfOpeningTagIndex + closingTag.length,
+        replaceEnd: startOfClosingTagIndex,
+        tags: [],
+        contributors: '',
+      };
+    }
+
+    // <!-- CONTRIBUTORS:START:[7.0.0, HEAD] -->
+    const startTagText = content.substr(
+      startOfOpeningTagIndex,
+      endOfOpeningTagIndex + closingTag.length
+    );
+
+    // [7.0.0, HEAD]
+    const versions = startTagText
+      .split('[')
+      .filter(v => v.indexOf(']') > -1)
+      .map(value => value.split(']')[0]);
+
+    const tags = versions.length
+      ? versions[0].split(',').map(v => v.trim())
+      : [];
+
+    return {
+      fileName,
+      content,
+      tags: tags,
+      replaceFrom: endOfOpeningTagIndex + closingTag.length,
+      replaceEnd: startOfClosingTagIndex,
+      contributors: '',
+    };
+  });
+}
+
+export async function getContributors(_: Config, migrations: Migrations) {
+  return await Promise.all(
+    migrations.map(async migration => {
+      if (migration.tags.length === 0) {
+        return migration;
+      }
+
+      const [from, to] = migration.tags;
+      const contributorsText = await util.git([`shortlog -sn ${from}...${to}`]);
+      const contributors = contributorsText
+        // there is a contributor per line
+        .split('\n')
+        .map(c => {
+          // a contributor has the number of contributons in front of the username, followed by a tab, e.g.
+          // 1  NgRxIsAwesome
+          const [_, name] = c.split('\t');
+          return name;
+        })
+        // remove the last empty line
+        .filter(Boolean);
+
+      return {
+        ...migration,
+        contributors,
+      };
+    })
+  );
+}
+
+export async function saveContributors(_: Config, migrations: Migrations) {
+  migrations.filter(migration => migration.tags.length).forEach(migration => {
+    const newContent = [
+      migration.content.slice(0, migration.replaceFrom),
+      'Thanks to all our contributors:',
+      migration.contributors.join(', '),
+      migration.content.slice(migration.replaceEnd),
+    ].join('\n\n');
+
+    fs.writeFileSync(migration.fileName, newContent, 'utf8');
+  });
 }
