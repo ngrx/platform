@@ -55,9 +55,13 @@ serve the files in `dist/` with `yarn http-server dist -p 4200`.
 ## Running on Docker
 
 The ngrx.io sample project can run as a docker container. 
-In order to run ngrx.io on docker, use the following commands (**run from the platform folder**):  
+In order to run ngrx.io on docker, use the following commands (**run from the platform folder**):
 * `docker build -t ngrx-docs:7.4.0 .` - building the ngrx.io app image
 * `docker run -p <host-port>:4200 ngrx-docs:7.4.0` - starting the container, listening on *<host-port>* for your choice.
+
+The container will run the documentation app with the script `start:docker` with the **stable configuration** and with 0.0.0.0
+host support.
+
 > tested on ubuntu 18.04.2 with Docker 18.09.4
 
 ## Guide to authoring
