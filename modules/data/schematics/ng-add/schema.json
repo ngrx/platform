@@ -37,7 +37,7 @@
     "migrateNgrxData": {
       "type": "boolean",
       "default": false,
-      "description": "Migrate from angular-ngrx-data, will rename modules.",
+      "description": "Migrate from ngrx-data, will rename modules.",
       "alias": "migrate"
     }
   },
