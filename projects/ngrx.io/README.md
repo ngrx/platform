@@ -52,6 +52,14 @@ Running `yarn start` (even when explicitly targeting production mode) does not s
 ServiceWorker. If you want to test the ServiceWorker locally, you can use `yarn build` and then
 serve the files in `dist/` with `yarn http-server dist -p 4200`.
 
+## Running on Docker
+
+The ngrx.io sample project can run as a docker container. 
+In order to run ngrx.io on docker, use the following commands (**run from the platform folder**):  
+* `docker build -t ngrx-docs:7.4.0 .` - building the ngrx.io app image
+* `docker run -p <host-port>:4200 ngrx-docs:7.4.0` - starting the container, listening on *<host-port>* for your choice.
+> tested on ubuntu 18.04.2 with Docker 18.09.4
+
 ## Guide to authoring
 
 There are two types of content in the documentation:
