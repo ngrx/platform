@@ -10,11 +10,11 @@ export const initialState: State = {
 };
 
 export const reducer = createReducer<State>(
+  initialState,
   [
     on(AuthActions.login, (): State => ({ loggedIn: true })),
     on(AuthActions.logout, (): State => ({ loggedIn: false }))
-  ],
-  initialState
+  ]
 );
 
 export const getLoggedIn = (state: State) => state.loggedIn;
