@@ -98,14 +98,14 @@ describe('Data ng-add Schematic', () => {
     expect(content).toMatch(/EntityDataModuleWithoutEffects\n/);
   });
 
-  describe('Migration of angular-ngrx-data', () => {
-    it('should remove angular-ngrx-data from package.json', () => {
+  describe('Migration of ngrx-data', () => {
+    it('should remove ngrx-data from package.json', () => {
       const options = { ...defaultOptions, migrateNgrxData: true };
 
       const packageJsonBefore = JSON.parse(
         appTree.readContent('/package.json')
       );
-      packageJsonBefore['dependencies']['angular-ngrx-data'] = '1.0.0';
+      packageJsonBefore['dependencies']['ngrx-data'] = '1.0.0';
       appTree.overwrite(
         '/package.json',
         JSON.stringify(packageJsonBefore, null, 2)
@@ -113,14 +113,14 @@ describe('Data ng-add Schematic', () => {
 
       expect(
         JSON.parse(appTree.readContent('/package.json'))['dependencies'][
-          'angular-ngrx-data'
+          'ngrx-data'
         ]
       ).toBeDefined();
 
       const tree = schematicRunner.runSchematic('ng-add', options, appTree);
       const packageJson = JSON.parse(tree.readContent('/package.json'));
 
-      expect(packageJson.dependencies['angular-ngrx-data']).not.toBeDefined();
+      expect(packageJson.dependencies['ngrx-data']).not.toBeDefined();
     });
 
     it('should rename NgrxDataModule', () => {

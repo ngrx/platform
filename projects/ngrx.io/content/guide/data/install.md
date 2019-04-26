@@ -29,7 +29,7 @@ ng add @ngrx/data
 * project - name of the project defined in your `angular.json` to help locating the module to add the `EntityDataModule` to.
 * module - name of file containing the module that you wish to add the import for the `EntityDataModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`.
 * effects - if `false` it will use the `EntityDataModuleWithoutEffects` module instead of the default `EntityDataModule`.
-* migrateNgRxData - if `true` it will replace the `angular-ngrx-data` module with the `@ngrx/data` module.
+* migrateNgRxData - if `true` it will replace the `ngrx-data` module with the `@ngrx/data` module.
 
 This command will automate the following steps:
 
@@ -39,5 +39,5 @@ This command will automate the following steps:
 
 With the `migrateNgRxData` flag the following will also take place:
 
-1. Remove `angular-ngrx-data` from `package.json` > `dependencies`.
-2. Rename `angular-ngrx-data` types to the matching `@ngrx/data` types.
+1. Remove `ngrx-data` from `package.json` > `dependencies`.
+2. Rename `ngrx-data` types to the matching `@ngrx/data` types.
