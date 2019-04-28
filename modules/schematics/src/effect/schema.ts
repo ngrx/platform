@@ -54,4 +54,9 @@ export interface Schema {
    * handling actions, reducers, and effects.
    */
   creators?: boolean;
+
+  /**
+   * Migrate to createEffect
+   */
+  migrateToCreators?: boolean;
 }

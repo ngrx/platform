@@ -370,4 +370,136 @@ describe('Effect Schematic', () => {
       /loadFoos\$ = createEffect\(\(\) => this.actions\$.pipe\(/
     );
   });
+
+  describe('Creator migration', () => {
+    it('should use createEffect for non-dispatching effects', () => {
+      const input = `
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+
+          @Effect()
+          foo$ = this.actions$.pipe(
+            ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+            tap(action => console.log(action))
+          );
+        }
+      `;
+
+      const output = `
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+
+
+          foo$ = createEffect(() => this.actions$.pipe(
+            ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+            tap(action => console.log(action))
+          ));
+        }
+      `;
+
+      runTest(input, output);
+    });
+
+    it('should use createEffect for non-dispatching effects', () => {
+      const input = `
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+
+          @Effect({ dispatch: false })
+          bar$ = this.actions$.pipe(
+            ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+            tap(action => console.log(action))
+          );
+        }
+      `;
+
+      const output = `
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+
+
+          bar$ = createEffect(() => this.actions$.pipe(
+            ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+            tap(action => console.log(action))
+          ), { dispatch: false });
+        }
+      `;
+
+      runTest(input, output);
+    });
+
+    it('should use createEffect for effects as functions', () => {
+      const input = `
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+
+          @Effect()
+          baz$ = ({ debounce = 300, scheduler = asyncScheduler } = {}) => this.actions$.pipe(
+            ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+            tap(action => console.log(action))
+          );
+        }
+      `;
+
+      const output = `
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+
+
+          baz$ = createEffect(() => ({ debounce = 300, scheduler = asyncScheduler } = {}) => this.actions$.pipe(
+            ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
+            tap(action => console.log(action))
+          ));
+        }
+      `;
+
+      runTest(input, output);
+    });
+
+    it('should import createEffect', () => {
+      const input = `
+        import { Actions, ofType, Effect } from '@ngrx/effects';
+
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+        }
+      `;
+
+      const output = `
+        import { Actions, ofType, createEffect } from '@ngrx/effects';
+
+        @Injectable()
+        export class SomeEffectsClass {
+          constructor(private actions$: Actions) {}
+        }
+      `;
+
+      runTest(input, output);
+    });
+
+    function runTest(input: string, expected: string) {
+      const options = {
+        ...defaultOptions,
+        migrateToCreators: true,
+        creators: false,
+        api: true,
+      };
+
+      const effectPath = '/some.effects.ts';
+      appTree.create(effectPath, input);
+
+      const tree = schematicRunner.runSchematic('effect', options, appTree);
+
+      const actual = tree.readContent(effectPath);
+      // spacing might be a bit weird due to the above snippets
+      expect(actual.replace(/ /g, '')).toBe(expected.replace(/ /g, ''));
+    }
+  });
 });

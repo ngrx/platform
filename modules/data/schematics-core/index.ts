@@ -21,6 +21,7 @@ export {
   addExportToModule,
   addImportToModule,
   addProviderToModule,
+  replaceImport,
 } from './utility/ast-utils';
 
 export {

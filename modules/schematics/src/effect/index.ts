@@ -26,6 +26,7 @@ import {
 } from '@ngrx/schematics/schematics-core';
 import * as ts from 'typescript';
 import { Schema as EffectOptions } from './schema';
+import { migrateToCreators } from './migrateToCreators';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
@@ -109,6 +110,10 @@ function getEffectEnd(creators?: boolean) {
 }
 
 export default function(options: EffectOptions): Rule {
+  if (options.migrateToCreators) {
+    return migrateToCreators;
+  }
+
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
