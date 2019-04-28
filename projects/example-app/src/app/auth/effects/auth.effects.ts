@@ -10,8 +10,8 @@ import {
   AuthApiActions,
 } from '@example-app/auth/actions';
 import { Credentials } from '@example-app/auth/models/user';
-import { AuthService } from '@example-app/auth/services/auth.service';
-import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/logout-confirmation-dialog.component';
+import { AuthService } from '@example-app/auth/services';
+import { LogoutConfirmationDialogComponent } from '@example-app/auth/components';
 
 @Injectable()
 export class AuthEffects {

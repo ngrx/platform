@@ -12,8 +12,8 @@ import {
 } from '@example-app/auth/actions';
 
 import { Credentials, User } from '@example-app/auth/models/user';
-import { AuthService } from '@example-app/auth/services/auth.service';
-import { AuthEffects } from '@example-app/auth/effects/auth.effects';
+import { AuthService } from '@example-app/auth/services';
+import { AuthEffects } from '@example-app/auth/effects';
 
 describe('AuthEffects', () => {
   let effects: AuthEffects;

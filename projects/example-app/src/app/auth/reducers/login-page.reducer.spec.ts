@@ -21,11 +21,6 @@ describe('LoginPageReducer', () => {
       const user = { username: 'test' } as Credentials;
       const createAction = LoginPageActions.login({ credentials: user });
 
-      const expectedResult = {
-        error: null,
-        pending: true,
-      };
-
       const result = reducer(fromLoginPage.initialState, createAction);
 
       expect(result).toMatchSnapshot();
@@ -37,11 +32,6 @@ describe('LoginPageReducer', () => {
       const user = { name: 'test' } as User;
       const createAction = AuthApiActions.loginSuccess({ user });
 
-      const expectedResult = {
-        error: null,
-        pending: false,
-      };
-
       const result = reducer(fromLoginPage.initialState, createAction);
 
       expect(result).toMatchSnapshot();
@@ -52,11 +42,6 @@ describe('LoginPageReducer', () => {
     it('should have an error and no pending state', () => {
       const error = 'login failed';
       const createAction = AuthApiActions.loginFailure({ error });
-
-      const expectedResult = {
-        error: error,
-        pending: false,
-      };
 
       const result = reducer(fromLoginPage.initialState, createAction);
 

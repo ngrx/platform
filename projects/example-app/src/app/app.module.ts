@@ -10,7 +10,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CoreModule } from '@example-app/core/core.module';
-import { AuthModule } from '@example-app/auth/auth.module';
+import { AuthModule } from '@example-app/auth';
 
 import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 

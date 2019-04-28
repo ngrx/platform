@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { LoginPageComponent } from '@example-app/auth/containers/login-page.component';
-import { LoginFormComponent } from '@example-app/auth/components/login-form.component';
-import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/logout-confirmation-dialog.component';
+import { LoginPageComponent } from '@example-app/auth/containers';
+import {
+  LoginFormComponent,
+  LogoutConfirmationDialogComponent,
+} from '@example-app/auth/components';
 
-import { AuthEffects } from '@example-app/auth/effects/auth.effects';
+import { AuthEffects } from '@example-app/auth/effects';
 import { reducers } from '@example-app/auth/reducers';
 import { MaterialModule } from '@example-app/material';
-import { AuthRoutingModule } from '@example-app/auth/auth-routing.module';
+import { AuthRoutingModule } from '@example-app/auth';
 
 export const COMPONENTS = [
   LoginPageComponent,

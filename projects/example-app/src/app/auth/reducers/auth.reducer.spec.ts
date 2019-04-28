@@ -1,6 +1,6 @@
 import { reducer } from '@example-app/auth/reducers/auth.reducer';
 import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
-import { AuthApiActions, AuthActions } from '@example-app/auth/actions/';
+import { AuthApiActions, AuthActions } from '@example-app/auth/actions';
 
 import { User } from '@example-app/auth/models/user';
 
@@ -27,10 +27,6 @@ describe('AuthReducer', () => {
       const user = { name: 'test' } as User;
       const createAction = AuthApiActions.loginSuccess({ user });
 
-      const expectedResult = {
-        user: { name: 'test' },
-      };
-
       const result = reducer(fromAuth.initialState, createAction);
 
       expect(result).toMatchSnapshot();
@@ -43,8 +39,6 @@ describe('AuthReducer', () => {
         user: { name: 'test' },
       } as fromAuth.State;
       const createAction = AuthActions.logout();
-
-      const expectedResult = fromAuth.initialState;
 
       const result = reducer(initialState, createAction);
 
