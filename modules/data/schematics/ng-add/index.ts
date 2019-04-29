@@ -20,6 +20,7 @@ import {
   createReplaceChange,
   ReplaceChange,
   createChangeRecorder,
+  replaceImport,
 } from '@ngrx/data/schematics-core';
 import { Schema as EntityDataOptions } from './schema';
 import { Path } from '@angular-devkit/core';
@@ -81,7 +82,7 @@ function addEntityDataToNgModule(options: EntityDataOptions): Rule {
   };
 }
 
-const renames = {
+const renames: Record<string, string> = {
   NgrxDataModule: 'EntityDataModule',
   NgrxDataModuleWithoutEffects: 'EntityDataModuleWithoutEffects',
   NgrxDataModuleConfig: 'EntityDataModuleConfig',
@@ -132,10 +133,22 @@ function renameNgrxDataModule(options: EntityDataOptions) {
         return;
       }
 
+      const importChanges = findNgrxDataImports(
+        sourceFile,
+        path,
+        ngrxDataImports
+      );
+      const importTextChanges = Object.keys(renames)
+        .map(key =>
+          replaceImport(sourceFile, path, 'ngrx-data', key, renames[key])
+        )
+        .reduce((acc, imports) => acc.concat(imports), []);
+      const replacementChanges = findNgrxDataReplacements(sourceFile, path);
+
       const changes = [
-        ...findNgrxDataImports(sourceFile, path, ngrxDataImports),
-        ...findNgrxDataImportDeclarations(sourceFile, path, ngrxDataImports),
-        ...findNgrxDataReplacements(sourceFile, path),
+        ...importChanges,
+        ...importTextChanges,
+        ...replacementChanges,
       ];
 
       if (changes.length === 0) {
@@ -162,48 +175,6 @@ function findNgrxDataImports(
       "'@ngrx/data'"
     )
   );
-
-  return changes;
-}
-
-function findNgrxDataImportDeclarations(
-  sourceFile: ts.SourceFile,
-  path: Path,
-  imports: ts.ImportDeclaration[]
-) {
-  const changes = imports
-    .map(p => (p.importClause!.namedBindings! as ts.NamedImports).elements)
-    .reduce((imports, curr) => imports.concat(curr), [] as ts.ImportSpecifier[])
-    .map(specifier => {
-      if (!ts.isImportSpecifier(specifier)) {
-        return { hit: false };
-      }
-
-      const ngrxDataImports = Object.keys(renames);
-      if (ngrxDataImports.includes(specifier.name.text)) {
-        return { hit: true, specifier, text: specifier.name.text };
-      }
-
-      // if import is renamed
-      if (
-        specifier.propertyName &&
-        ngrxDataImports.includes(specifier.propertyName.text)
-      ) {
-        return { hit: true, specifier, text: specifier.propertyName.text };
-      }
-
-      return { hit: false };
-    })
-    .filter(({ hit }) => hit)
-    .map(({ specifier, text }) =>
-      createReplaceChange(
-        sourceFile,
-        path,
-        specifier!,
-        text!,
-        (renames as any)[text!]
-      )
-    );
 
   return changes;
 }

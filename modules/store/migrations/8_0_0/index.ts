@@ -4,9 +4,11 @@ import {
   ReplaceChange,
   createChangeRecorder,
   createReplaceChange,
+  replaceImport,
 } from '@ngrx/store/schematics-core';
 
 const META_REDUCERS = 'META_REDUCERS';
+const USER_PROVIDED_META_REDUCERS = 'USER_PROVIDED_META_REDUCERS';
 
 function updateMetaReducersToken(): Rule {
   return (tree: Tree) => {
@@ -31,12 +33,18 @@ function updateMetaReducersToken(): Rule {
           path,
           node,
           META_REDUCERS,
-          'USER_PROVIDED_META_REDUCERS'
+          USER_PROVIDED_META_REDUCERS
         );
 
       const changes: ReplaceChange[] = [];
       changes.push(
-        ...findMetaReducersImportStatements(sourceFile, createChange)
+        ...replaceImport(
+          sourceFile,
+          path,
+          '@ngrx/store',
+          META_REDUCERS,
+          USER_PROVIDED_META_REDUCERS
+        )
       );
       changes.push(...findMetaReducersAssignment(sourceFile, createChange));
 
@@ -52,41 +60,6 @@ function updateMetaReducersToken(): Rule {
 
 export default function(): Rule {
   return chain([updateMetaReducersToken()]);
-}
-
-function findMetaReducersImportStatements(
-  sourceFile: ts.SourceFile,
-  createChange: (node: ts.Node) => ReplaceChange
-) {
-  const metaReducerImports = sourceFile.statements
-    .filter(ts.isImportDeclaration)
-    .filter(isNgRxStoreImport)
-    .map(p =>
-      (p.importClause!.namedBindings! as ts.NamedImports).elements.filter(
-        isMetaReducersImportSpecifier
-      )
-    )
-    .reduce((imports, curr) => imports.concat(curr), []);
-
-  const changes = metaReducerImports.map(createChange);
-  return changes;
-
-  function isNgRxStoreImport(importDeclaration: ts.ImportDeclaration) {
-    return (
-      importDeclaration.moduleSpecifier.getText(sourceFile) === "'@ngrx/store'"
-    );
-  }
-
-  function isMetaReducersImportSpecifier(importSpecifier: ts.ImportSpecifier) {
-    const isImport = () => importSpecifier.name.text === META_REDUCERS;
-    const isRenamedImport = () =>
-      importSpecifier.propertyName &&
-      importSpecifier.propertyName.text === META_REDUCERS;
-
-    return (
-      ts.isImportSpecifier(importSpecifier) && (isImport() || isRenamedImport())
-    );
-  }
 }
 
 function findMetaReducersAssignment(
