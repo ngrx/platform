@@ -10,6 +10,8 @@ import { ncp } from 'ncp';
  */
 export async function copySchematicsCore(config: Config) {
   (ncp as any).limit = 1;
+  const filter = (name: string) => !name.endsWith('BUILD.bazel');
+
   for (let pkg of util.getTopLevelPackages(config)) {
     const packageJson = fs
       .readFileSync(`${modulesDir}${pkg}/package.json`)
@@ -20,6 +22,7 @@ export async function copySchematicsCore(config: Config) {
       ncp(
         `${modulesDir}/schematics-core`,
         `${modulesDir}/${pkg}/schematics-core`,
+        { filter },
         function(err: any) {
           if (err) {
             return console.error(err);
