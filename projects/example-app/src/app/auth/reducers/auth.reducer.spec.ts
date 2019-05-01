@@ -2,7 +2,7 @@ import { reducer } from '@example-app/auth/reducers/auth.reducer';
 import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
 import { AuthApiActions, AuthActions } from '@example-app/auth/actions';
 
-import { User } from '@example-app/auth/models/user';
+import { User } from '@example-app/auth/models';
 
 describe('AuthReducer', () => {
   describe('undefined action', () => {

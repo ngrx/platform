@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Credentials } from '@example-app/auth/models/user';
+import { Credentials } from '@example-app/auth/models';
 
 @Component({
   selector: 'bc-login-form',
@@ -11,13 +11,23 @@ import { Credentials } from '@example-app/auth/models/user';
         <form [formGroup]="form" (ngSubmit)="submit()">
           <p>
             <mat-form-field>
-              <input type="text" matInput placeholder="Username" formControlName="username">
+              <input
+                type="text"
+                matInput
+                placeholder="Username"
+                formControlName="username"
+              />
             </mat-form-field>
           </p>
 
           <p>
             <mat-form-field>
-              <input type="password" matInput placeholder="Password" formControlName="password">
+              <input
+                type="password"
+                matInput
+                placeholder="Password"
+                formControlName="password"
+              />
             </mat-form-field>
           </p>
 
@@ -28,7 +38,6 @@ import { Credentials } from '@example-app/auth/models/user';
           <p class="loginButtons">
             <button type="submit" mat-button>Login</button>
           </p>
-
         </form>
       </mat-card-content>
     </mat-card>

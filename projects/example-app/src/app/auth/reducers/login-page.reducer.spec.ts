@@ -3,7 +3,7 @@ import * as fromLoginPage from '@example-app/auth/reducers/login-page.reducer';
 
 import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
 
-import { Credentials, User } from '@example-app/auth/models/user';
+import { Credentials, User } from '@example-app/auth/models';
 
 describe('LoginPageReducer', () => {
   describe('undefined action', () => {
