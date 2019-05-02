@@ -4,6 +4,7 @@ import {
   Action,
   ActionsSubject,
   INITIAL_STATE,
+  MOCK_SELECTORS,
   ReducerManager,
   Store,
   createSelector,
@@ -11,6 +12,7 @@ import {
   MemoizedSelector,
 } from '@ngrx/store';
 import { MockState } from './mock_state';
+import { MockSelector } from './mock_selector';
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
@@ -27,12 +29,23 @@ export class MockStore<T> extends Store<T> {
     private state$: MockState<T>,
     actionsObserver: ActionsSubject,
     reducerManager: ReducerManager,
-    @Inject(INITIAL_STATE) private initialState: T
+    @Inject(INITIAL_STATE) private initialState: T,
+    @Inject(MOCK_SELECTORS) mockSelectors?: MockSelector[]
   ) {
     super(state$, actionsObserver, reducerManager);
     this.resetSelectors();
     this.state$.next(this.initialState);
     this.scannedActions$ = actionsObserver.asObservable();
+    if (mockSelectors) {
+      mockSelectors.forEach(mockSelector => {
+        const selector = mockSelector.selector;
+        if (typeof selector === 'string') {
+          this.overrideSelector(selector, mockSelector.value);
+        } else {
+          this.overrideSelector(selector, mockSelector.value);
+        }
+      });
+    }
   }
 
   setState(nextState: T): void {
