@@ -58,6 +58,24 @@ describe('Auth Guard', () => {
 });
 </code-example>
 
+### Using Mock Selectors
+
+`MockStore` also provides the ability to mock individual selectors to return a passed value using the `overrideSelector()` method. When the selector is invoked by the `select` method, the returned value is overridden by the passed value, regardless of the current state in the store. 
+
+`overrideSelector()` returns a `MemoizedSelector`. To update the mock selector to return a different value, use the `MemoizedSelector`'s `setResult()` method.
+
+`overrideSelector()` supports mocking the `select` method (used in RxJS pipe) and the `Store` `select` instance method using a string or selector.
+
+Usage:
+
+<code-example header="auth-guard.service.ts" path="testing-store/src/app/auth-guard.service.ts"></code-example>
+
+<code-example header="auth-guard.service.spec.ts" path="testing-store/src/app/auth-guard.service.spec.ts"></code-example>
+
+In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
+
+Try the <live-example name="testing-store"></live-example>.
+
 ### Using Store for Integration Testing
 
 Use the `StoreModule.forRoot` in your `TestBed` configuration when testing components or services that inject `Store`.
