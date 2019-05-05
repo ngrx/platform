@@ -9,9 +9,9 @@ import {
   AuthActions,
   AuthApiActions,
 } from '@example-app/auth/actions';
-import { Credentials } from '@example-app/auth/models/user';
-import { AuthService } from '@example-app/auth/services/auth.service';
-import { LogoutConfirmationDialogComponent } from '@example-app/auth/components/logout-confirmation-dialog.component';
+import { Credentials } from '@example-app/auth/models';
+import { AuthService } from '@example-app/auth/services';
+import { LogoutConfirmationDialogComponent } from '@example-app/auth/components';
 
 @Injectable()
 export class AuthEffects {
@@ -60,11 +60,8 @@ export class AuthEffects {
 
         return dialogRef.afterClosed();
       }),
-      map(
-        result =>
-          result
-            ? AuthActions.logout()
-            : AuthActions.logoutConfirmationDismiss()
+      map(result =>
+        result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
       )
     )
   );

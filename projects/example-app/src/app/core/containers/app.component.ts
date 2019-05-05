@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as AuthActions from '@example-app/auth/actions/auth.actions';
+import { AuthActions } from '@example-app/auth/actions';
 import * as fromAuth from '@example-app/auth/reducers';
 import * as fromRoot from '@example-app/reducers';
 import { LayoutActions } from '@example-app/core/actions';
