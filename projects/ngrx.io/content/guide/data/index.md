@@ -129,7 +129,6 @@ export class HeroesComponent implements OnInit {
 
   getHeroes() {
     this.heroService.getAll();
-    this.close();
   }
 
   update(hero: Hero) {
