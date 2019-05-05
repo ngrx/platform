@@ -12,6 +12,7 @@
     "aio-check-local": "node tools/ng-packages-installer check .",
     "ng": "yarn check-env && ng",
     "start": "yarn check-env && ng serve --configuration=fast",
+    "start:docker": "yarn check-env && ng serve --configuration=stable --host 0.0.0.0",
     "build": "yarn build-for stable",
     "prebuild-for": "yarn setup",
     "build-for": "yarn ~~build --configuration",
