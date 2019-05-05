@@ -72,7 +72,7 @@ export interface EntityServerCommands<T> {
    * Dispatch action to query remote storage for the entities that satisfy a query expressed
    * with either a query parameter map or an HTTP URL query string,
    * and merge the results into the cached collection.
-   * @params queryParams the query in a form understood by the server
+   * @param queryParams the query in a form understood by the server
    * @param [options] options that influence merge behavior
    * @returns A terminating Observable of the queried entities
    * after server reports successful query or the query error.
