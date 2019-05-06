@@ -28,8 +28,8 @@ describe('Action Schematic', () => {
 
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
-    appTree = createWorkspace(schematicRunner, appTree);
+  beforeEach(async () => {
+    appTree = await createWorkspace(schematicRunner, appTree);
   });
 
   it('should create an action to specified project if provided', () => {

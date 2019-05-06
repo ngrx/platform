@@ -28,8 +28,8 @@ describe('Feature Schematic', () => {
 
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
-    appTree = createWorkspace(schematicRunner, appTree);
+  beforeEach(async () => {
+    appTree = await createWorkspace(schematicRunner, appTree);
   });
 
   it('should create all files of a feature', () => {

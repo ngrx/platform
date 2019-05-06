@@ -23,13 +23,15 @@ describe('CLI Schematic', () => {
 
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
-    appTree = createWorkspace(schematicRunner, appTree);
+  beforeEach(async () => {
+    appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create a class by the angular/cli', () => {
+  it('should create a class by the angular/cli', async () => {
     const options = { ...defaultOptions };
-    const tree = schematicRunner.runSchematic('class', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('class', options, appTree)
+      .toPromise();
     const content = tree.readContent(`${projectPath}/src/app/foo.ts`);
 
     expect(content).toMatch(/export class Foo/);

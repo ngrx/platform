@@ -76,35 +76,34 @@
     ]
   },
   "dependencies": {
-    "@angular/animations": "^8.0.0-beta.10",
-    "@angular/bazel": "^8.0.0-beta.10",
-    "@angular/cdk": "^7.3.0",
-    "@angular/cli": "^8.0.0-beta.10",
-    "@angular/common": "^8.0.0-beta.10",
-    "@angular/compiler": "^8.0.0-beta.10",
-    "@angular/compiler-cli": "^8.0.0-beta.10",
-    "@angular/core": "^8.0.0-beta.10",
-    "@angular/forms": "^8.0.0-beta.10",
-    "@angular/http": "^8.0.0-beta.10",
-    "@angular/material": "^7.3.0",
-    "@angular/platform-browser": "^8.0.0-beta.10",
-    "@angular/platform-browser-dynamic": "^8.0.0-beta.10",
-    "@angular/platform-server": "^8.0.0-beta.10",
-    "@angular/router": "^8.0.0-beta.10",
+    "@angular/animations": "^8.0.0-rc.0",
+    "@angular/bazel": "^8.0.0-rc.0",
+    "@angular/cdk": "^8.0.0-rc.0",
+    "@angular/cli": "^8.0.0-rc.0",
+    "@angular/common": "^8.0.0-rc.0",
+    "@angular/compiler": "^8.0.0-rc.0",
+    "@angular/compiler-cli": "^8.0.0-rc.0",
+    "@angular/core": "^8.0.0-rc.0",
+    "@angular/forms": "^8.0.0-rc.0",
+    "@angular/material": "^8.0.0-rc.0",
+    "@angular/platform-browser": "^8.0.0-rc.0",
+    "@angular/platform-browser-dynamic": "^8.0.0-rc.0",
+    "@angular/platform-server": "^8.0.0-rc.0",
+    "@angular/router": "^8.0.0-rc.0",
     "@applitools/eyes-cypress": "^3.4.12",
     "@bazel/buildifier": "^0.22.0",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "opencollective": "^1.0.3",
-    "rxjs": "^6.4.0",
+    "rxjs": "^6.5.1",
     "zone.js": "^0.9.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.0-beta.7",
+    "@angular-devkit/build-angular": "~0.800.0-rc.0",
     "@bazel/bazel": "^0.24.0",
     "@bazel/ibazel": "^0.10.0",
     "@bazel/jasmine": "^0.27.9",
-    "@bazel/typescript": "^0.27.9",
+    "@bazel/typescript": "^0.27.12",
     "@cypress/webpack-preprocessor": "^4.0.3",
     "@octokit/rest": "^15.17.0",
     "@types/fs-extra": "^2.1.0",
@@ -164,7 +163,7 @@
     "tslib": "^1.9.0",
     "tslint": "^5.7.0",
     "tsutils": "2.20.0",
-    "typescript": "~3.3.4000",
+    "typescript": "~3.4.4",
     "uglify-js": "^3.1.9"
   },
   "collective": {
@@ -178,7 +177,7 @@
     "listr-verbose-renderer": "^0.5.0",
     "lodash": "^4.17.11"
   },
-  "husky" : {
+  "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }

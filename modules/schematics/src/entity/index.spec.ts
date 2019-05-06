@@ -26,8 +26,8 @@ describe('Entity Schematic', () => {
 
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
-    appTree = createWorkspace(schematicRunner, appTree);
+  beforeEach(async () => {
+    appTree = await createWorkspace(schematicRunner, appTree);
   });
 
   it('should create 3 files', () => {
