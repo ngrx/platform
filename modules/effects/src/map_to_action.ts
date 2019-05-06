@@ -6,6 +6,7 @@ import {
   Observable,
   OperatorFunction,
   Subject,
+  NotificationKind,
 } from 'rxjs';
 import {
   concatMap,
@@ -15,7 +16,6 @@ import {
   map,
   materialize,
 } from 'rxjs/operators';
-import { NotificationKind } from 'rxjs/internal/Notification';
 
 /** Represents config with named paratemeters for mapToAction */
 export interface MapToActionConfig<
