@@ -24,8 +24,8 @@ describe('Data ng-add Schematic', () => {
 
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
-    appTree = createWorkspace(schematicRunner, appTree);
+  beforeEach(async () => {
+    appTree = await createWorkspace(schematicRunner, appTree);
   });
 
   it('should update package.json', () => {
@@ -260,7 +260,7 @@ describe('Data ng-add Schematic', () => {
           NgrxDataModuleConfig,
           Pluralizer
         } from 'ngrx-data';
-        
+
         const customConfig: NgrxDataModuleConfig = {
           root: 'api', // default root path to the server's web api
           timeout: 3000, // request timeout
@@ -291,7 +291,7 @@ describe('Data ng-add Schematic', () => {
           EntityDataModuleConfig,
           Pluralizer
         } from '@ngrx/data';
-        
+
         const customConfig: EntityDataModuleConfig = {
           root: 'api', // default root path to the server's web api
           timeout: 3000, // request timeout

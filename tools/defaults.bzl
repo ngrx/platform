@@ -3,11 +3,11 @@
 load("@build_bazel_rules_nodejs//:defs.bzl", _npm_package = "npm_package")
 load("@npm_angular_bazel//:index.bzl", _ng_module = "ng_module", _ng_package = "ng_package")
 load("@npm_bazel_jasmine//:index.bzl", _jasmine_node_test = "jasmine_node_test")
-load("@npm_bazel_typescript//:defs.bzl", _ts_library = "ts_library")
+load("@npm_bazel_typescript//:index.bzl", _ts_library = "ts_library")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^8.0.0-beta"
-RXJS_VERSION = "^6.4.0"
+RXJS_VERSION = "^6.5.0"
 NG_UPDATE_MIGRATIONS = "./migrations/migration.json"
 MODULE_SCHEMATICS_COLLECTION = "./schematics/collection.json"
 
@@ -65,8 +65,6 @@ def jasmine_node_test(node_modules = None, bootstrap = None, deps = [], **kwargs
         bootstrap = bootstrap,
         deps = [
             "//tools/testing:node",
-            # Needed since our bootstrap script above loads platform-server which deps on http
-            "@npm//@angular/http",
             # Very common dependencies for tests
             "@npm//chokidar",
             "@npm//core-js",

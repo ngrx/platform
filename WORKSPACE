@@ -11,8 +11,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "213dcf7e72f3acd4d1e369b7a356f3e5d9560f380bd655b13b7c0ea425d7c419",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.27.9/rules_nodejs-0.27.9.tar.gz"],
+    sha256 = "3a3efbf223f6de733475602844ad3a8faa02abda25ab8cfe1d1ed0db134887cf",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.27.12/rules_nodejs-0.27.12.tar.gz"],
 )
 
 http_archive(
@@ -38,7 +38,8 @@ check_bazel_version(minimum_bazel_version = "0.24.0")
 
 node_repositories(
     node_version = "10.9.0",
-    yarn_version = "1.9.2",
+    package_json = ["//:package.json"],
+    yarn_version = "1.12.1",
 )
 
 yarn_install(
@@ -61,7 +62,7 @@ browser_repositories(
     firefox = True,
 )
 
-load("@npm_bazel_typescript//:defs.bzl", "ts_setup_workspace")
+load("@npm_bazel_typescript//:index.bzl", "ts_setup_workspace")
 
 ts_setup_workspace()
 

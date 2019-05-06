@@ -27,8 +27,8 @@ describe('Reducer Schematic', () => {
 
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
-    appTree = createReducers(createWorkspace(schematicRunner, appTree));
+  beforeEach(async () => {
+    appTree = createReducers(await createWorkspace(schematicRunner, appTree));
   });
 
   it('should create one file', () => {

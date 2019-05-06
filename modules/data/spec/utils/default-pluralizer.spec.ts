@@ -3,16 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { DefaultPluralizer, Pluralizer, PLURAL_NAMES_TOKEN } from '../../';
 
 describe('DefaultPluralizer', () => {
-  let pluralizer: Pluralizer;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: Pluralizer, useClass: DefaultPluralizer }],
-    });
-  });
   describe('without plural names', () => {
-    it('should turn "Hero" to "Heros" because no plural names map', () => {
+    let pluralizer: Pluralizer;
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: Pluralizer, useClass: DefaultPluralizer }],
+      });
+
       pluralizer = TestBed.get(Pluralizer);
+    });
+    it('should turn "Hero" to "Heros" because no plural names map', () => {
       // No map so 'Hero' gets default pluralization
       expect(pluralizer.pluralize('Hero')).toBe('Heros');
     });
@@ -42,6 +42,8 @@ describe('DefaultPluralizer', () => {
   });
 
   describe('with injected plural names', () => {
+    let pluralizer: Pluralizer;
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
