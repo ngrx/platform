@@ -30,7 +30,7 @@ import { SearchService } from 'app/search/search.service';
 import { TocService } from 'app/shared/toc.service';
 
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, filter } from 'rxjs/operators';
 
 const sideNavView = 'SideNav';
 
@@ -170,7 +170,9 @@ export class AppComponent implements OnInit {
       this.navigationService.navigationViews.pipe(
         map(views => views['docVersions'])
       )
-    ).subscribe(([versionInfo, versions]) => {
+    )
+    .pipe(filter(([versionInfo, _]) => versionInfo !== undefined && versionInfo !== null))
+    .subscribe(([versionInfo, versions]) => {
       // TODO(pbd): consider whether we can lookup the stable and next versions from the internet
       const computedVersions: NavigationNode[] = [
         { title: 'next', url: 'https://next.ngrx.io' },

@@ -65,6 +65,24 @@
     "twitter": "tim_deschryver",
     "website": "https://github.com/timdeschryver",
     "bio": "Tim is an NgRx team member, and a writer for Angular in Depth.",
-    "group": "Contributor"
+    "group": "Core"
+  },
+
+  "wes": {
+    "name": "Wes Grimes",
+    "picture": "wesgrimes.jpg",
+    "twitter": "wesgrimes",
+    "website": "https://github.com/wesleygrimes",
+    "bio": "Wes is a software engineer in the insurance industry, and writer for Angular in Depth and Ultimate Courses.",
+    "group": "Core"
+  },
+
+  "alex": {
+    "name": "Alex Okrushko",
+    "picture": "alexo.jpg",
+    "twitter": "alexokrushko",
+    "website": "https://github.com/alex-okrushko",
+    "bio": "Alex is a software engineer at Google, and writer for Angular in Depth.",
+    "group": "Core"
   }
 }
