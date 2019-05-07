@@ -73,7 +73,7 @@
     "picture": "wesgrimes.jpg",
     "twitter": "wesgrimes",
     "website": "https://github.com/wesleygrimes",
-    "bio": "Wes is an NgRx core team member, software engineer in the insurance industry, and writer for Angular in Depth and Ultimate Courses.",
+    "bio": "Wes is a software engineer in the insurance industry, and writer for Angular in Depth and Ultimate Courses.",
     "group": "Core"
   },
 
@@ -82,7 +82,7 @@
     "picture": "alexo.jpg",
     "twitter": "alexokrushko",
     "website": "https://github.com/alex-okrushko",
-    "bio": "Alex is an NgRx core team member, software engineer at Google, and writer for Angular in Depth.",
+    "bio": "Alex is a software engineer at Google, and writer for Angular in Depth.",
     "group": "Core"
   }
 }
