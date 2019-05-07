@@ -19,20 +19,20 @@ import {
 
 /** Represents config with named paratemeters for mapToAction */
 export interface MapToActionConfig<
-  InputAction extends Action,
+  Input,
   OutputAction extends Action,
   ErrorAction extends Action,
   CompleteAction extends Action,
   UnsubscribeAction extends Action
 > {
   // Project function that produces the output actions in success cases
-  project: (action: InputAction, index: number) => Observable<OutputAction>;
+  project: (action: Input, index: number) => Observable<OutputAction>;
   // Error handle function for project
-  error: (error: any, action: InputAction) => ErrorAction;
+  error: (error: any, action: Input) => ErrorAction;
   // Optional complete action provider
   // count is the number of actions project emitted before completion
   // action is the action that was completed
-  complete?: (count: number, action: InputAction) => CompleteAction;
+  complete?: (count: number, action: Input) => CompleteAction;
   // Optional flattening operator
   operator?: <InputAction, OutputAction>(
     project: (input: InputAction, index: number) => Observable<OutputAction>
@@ -40,7 +40,7 @@ export interface MapToActionConfig<
   // Optional unsubscribe action provider
   // count is the number of actions project emitted before unsubscribing
   // action is the action that was unsubscribed from
-  unsubscribe?: (count: number, action: InputAction) => UnsubscribeAction;
+  unsubscribe?: (count: number, action: Input) => UnsubscribeAction;
 }
 
 /**
@@ -49,13 +49,13 @@ export interface MapToActionConfig<
  * callbacks or project/error callbacks that are required.
  */
 export function mapToAction<
-  InputAction extends Action,
+  Input,
   OutputAction extends Action,
   ErrorAction extends Action
 >(
-  project: (action: InputAction, index: number) => Observable<OutputAction>,
-  error: (error: any, action: InputAction) => ErrorAction
-): (source: Observable<InputAction>) => Observable<OutputAction | ErrorAction>;
+  project: (action: Input, index: number) => Observable<OutputAction>,
+  error: (error: any, action: Input) => ErrorAction
+): (source: Observable<Input>) => Observable<OutputAction | ErrorAction>;
 export function mapToAction<
   InputAction extends Action,
   OutputAction extends Action,
@@ -76,7 +76,7 @@ export function mapToAction<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 >;
 export function mapToAction<
-  InputAction extends Action,
+  Input,
   OutputAction extends Action,
   ErrorAction extends Action,
   CompleteAction extends Action = never,
@@ -85,16 +85,16 @@ export function mapToAction<
   /** Allow to take either config object or project/error functions */
   configOrProject:
     | MapToActionConfig<
-        InputAction,
+        Input,
         OutputAction,
         ErrorAction,
         CompleteAction,
         UnsubscribeAction
       >
-    | ((action: InputAction, index: number) => Observable<OutputAction>),
-  errorFn?: (error: any, action: InputAction) => ErrorAction
+    | ((action: Input, index: number) => Observable<OutputAction>),
+  errorFn?: (error: any, action: Input) => ErrorAction
 ): (
-  source: Observable<InputAction>
+  source: Observable<Input>
 ) => Observable<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 > {

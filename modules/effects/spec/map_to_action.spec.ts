@@ -62,6 +62,17 @@ describe('mapToAction operator', () => {
     expect(output$).toBeObservable(expected$);
   });
 
+  it('should take any type of Observable as an Input', () => {
+    const sources$ = hot('  -a', { a: 'a string' });
+    const project = () => cold('(v|)', genActions('v'));
+    const error = () => createAction('e')();
+    const expected$ = cold('-v', genActions('v'));
+
+    const output$ = sources$.pipe(mapToAction(project, error));
+
+    expect(output$).toBeObservable(expected$);
+  });
+
   it('should emit output action with config passed', () => {
     const sources$ = hot('  -a', genActions('a'));
     // Completes
