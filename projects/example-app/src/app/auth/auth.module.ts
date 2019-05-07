@@ -12,7 +12,7 @@ import {
 import { AuthEffects } from '@example-app/auth/effects';
 import { reducers } from '@example-app/auth/reducers';
 import { MaterialModule } from '@example-app/material';
-import { AuthRoutingModule } from '@example-app/auth';
+import { AuthRoutingModule } from './auth-routing.module';
 
 export const COMPONENTS = [
   LoginPageComponent,
