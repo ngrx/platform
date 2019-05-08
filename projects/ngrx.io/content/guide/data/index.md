@@ -2,8 +2,6 @@
 
 NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of **entity data** while reducing the amount of explicitness.  
 
-Entity data is only one kind of application data.  NgRx Data should not be used for non-entity or highly idiosyncratic data.
-
 <div class="alert is-important">
 
 An **entity** is an object with long-lived data values that you read from and write to a database.  An entity refers to some "thing" in the application domain.  Examples include a _Customer_, _Order_, _LineItem_, _Product_, and _User_.
@@ -14,18 +12,37 @@ An **entity** is an object with long-lived data values that you read from and wr
 
 Many applications have substantial _domain models_ with 10s or 100s of entity types.
 
-In NgRx, to create, retrieve, update, and delete (CRUD) data for every entity type is an overwhelming task. You're writing _actions_, _action-creators_, _reducers_, _effects_, _dispatchers_, and _selectors_ as well as the HTTP GET, PUT, POST, and DELETE methods _for each entity type_.
+Such applications typically create, retrieve, update, and delete entity data that are "persisted" in a database of some sort, hosted on a remote server.
 
-In even a small model, this is a ton of repetitive code to create, maintain, and test.
+Developers who build these app with the NgRx [Store](guide/store), [Effects](guide/effects), and [Entity](guide/entity) libraries alone tend to write a large number of _actions_, _action-creators_, _reducers_, _effects_, _dispatchers_, and _selectors_ as well as the HTTP GET, PUT, POST, and DELETE methods _for each entity type_.
+There will be a lot of repetitive code to create, maintain, and test.
+The more entities in your model, the bigger the challenge.
 
-NgRx Data allows consumers to use NgRx while radically reducing the explicitness necessary to manage entities with NgRx.
+With NgRx Data you can develop large entity models quickly with very little code 
+and without knowing much NgRx at all.
+Yet all of NgRx remains accessible to you, when and if you want it.
+
+NgRx Data is an abstraction over the Store, Effects, and Entity that radically reduces
+the amount of code you'll write.
+As with any abstraction, while you gain simplicity, 
+you lose the explicitness of direct interaction with the supporting NgRx libraries.
 
 ## Key Concepts
 
-- NgRx Data can be used with NgRx to provide simplified management of entity data.
-- NgRx Data automates the creation of actions, reducers, effects, dispatchers, and selectors for each entity type.
-- NgRx Data provides default HTTP GET, PUT, POST, and DELETE methods for each entity type.
-- NgRx Data should not be used for non-entity or highly idiosyncratic data.  They are better managed with NgRx.
+NgRx Data 
+- automates the creation of actions, reducers, effects, dispatchers, and selectors for each entity type.
+- provides default HTTP GET, PUT, POST, and DELETE methods for each entity type.
+- holds entity data as collections within a cache which is a slice of NgRx store state.
+- supports optimistic and pessimistic save strategies
+- enables transactional save of multiple entities of multiple types in the same request.
+- makes reasonable default implementation choices
+- offers numerous extension points for changing or augmenting those default behaviors.
+
+NgRx Data targets management of *persisted entity data*, like _Customers_ and _Orders_, that many apps query and save to remote storage. That's its sweet spot.
+
+It is ill-suited to non-entity data.
+Session data and highly idiosyncratic data are better managed with standard NgRx.
+Real world apps will benefit from a combination of techniques, all sharing a common store.
 
 ## Defining the entities
 
