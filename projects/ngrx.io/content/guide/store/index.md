@@ -1,4 +1,4 @@
-# Store
+# @ngrx/store
 
 Store is RxJS powered state management for Angular applications, inspired by Redux. Store is a controlled state container designed to help write performant, consistent applications on top of Angular.
 
