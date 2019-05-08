@@ -41,7 +41,6 @@ export {
   META_REDUCERS,
   FEATURE_REDUCERS,
   USER_PROVIDED_META_REDUCERS,
-  MOCK_SELECTORS,
 } from './tokens';
 export {
   StoreModule,

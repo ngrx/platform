@@ -4,7 +4,6 @@ import {
   Action,
   ActionsSubject,
   INITIAL_STATE,
-  MOCK_SELECTORS,
   ReducerManager,
   Store,
   createSelector,
@@ -13,6 +12,7 @@ import {
 } from '@ngrx/store';
 import { MockState } from './mock_state';
 import { MockSelector } from './mock_selector';
+import { MOCK_SELECTORS } from './tokens';
 
 @Injectable()
 export class MockStore<T> extends Store<T> {

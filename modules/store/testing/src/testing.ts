@@ -3,7 +3,6 @@ import { MockState } from './mock_state';
 import {
   ActionsSubject,
   INITIAL_STATE,
-  MOCK_SELECTORS,
   ReducerManager,
   StateObservable,
   Store,
@@ -11,6 +10,7 @@ import {
 import { MockStore } from './mock_store';
 import { MockReducerManager } from './mock_reducer_manager';
 import { MockSelector } from './mock_selector';
+import { MOCK_SELECTORS } from './tokens';
 
 export interface MockStoreConfig<T> {
   initialState?: T;

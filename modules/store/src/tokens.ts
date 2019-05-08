@@ -5,9 +5,6 @@ export const _INITIAL_STATE = new InjectionToken(
   '@ngrx/store Internal Initial State'
 );
 export const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
-export const MOCK_SELECTORS = new InjectionToken(
-  '@ngrx/store Initial Selector Values'
-);
 export const REDUCER_FACTORY = new InjectionToken(
   '@ngrx/store Reducer Factory'
 );
