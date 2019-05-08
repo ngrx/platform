@@ -119,6 +119,7 @@ export const upsertUsers = createAction('[User/API] Upsert Users', props&lt;{ us
 export const updateUser = createAction('[User/API] Update User', props&lt;{ user: Update&lt;User&gt; }&gt;());
 export const updateUsers = createAction('[User/API] Update Users', props&lt;{ users: Update&lt;User&gt;[] }&gt;());
 export const mapUsers = createAction('[User/API] Map Users', props&lt;{ entityMap: EntityMap&lt;User&gt; }&gt;());
+export const selectUser = createAction('[User/API] Select User', props&lt;{ id: string }&gt;());
 export const deleteUser = createAction('[User/API] Delete User', props&lt;{ id: string }&gt;());
 export const deleteUsers = createAction('[User/API] Delete Users', props&lt;{ id: string[] }&gt;());
 export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props&lt;{ predicate: Predicate&lt;User&gt; }&gt;());
@@ -133,6 +134,7 @@ const all = union({
   updateUser,
   updateUsers,
   mapUsers,
+  selectUser,
   deleteUser,
   deleteUsers,
   deleteUsersByPredicate,
@@ -206,6 +208,10 @@ export function reducer(state = initialState, action: UserActions.Union): State 
 
     case UserActions.clearUsers.type: {
       return adapter.removeAll({ ...state, selectedUserId: null });
+    }
+
+    case UserActions.selectUser.type: {
+      return { ...state, selectedUserId: action.id};
     }
 
     default: {
