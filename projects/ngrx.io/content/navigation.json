@@ -225,6 +225,72 @@
         {
           "title": "Installation",
           "url": "guide/data/install"
+        },
+        {
+          "title": "Architecture",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/data/architecture-overview"
+            },
+            {
+              "title": "Entity Metadata",
+              "url": "guide/data/entity-metadata"
+            },
+            {
+              "title": "Entity Actions",
+              "url": "guide/data/entity-actions"
+            },
+            {
+              "title": "Entity Collection",
+              "url": "guide/data/entity-collection"
+            },
+            {
+              "title": "Entity Collection Service",
+              "url": "guide/data/entity-collection-service"
+            },
+            {
+              "title": "Entity Dataservice",
+              "url": "guide/data/entity-dataservice"
+            },
+            {
+              "title": "Entity Effects",
+              "url": "guide/data/entity-effects"
+            },
+            {
+              "title": "Entity Reducer",
+              "url": "guide/data/entity-reducer"
+            },
+            {
+              "title": "Entity Services",
+              "url": "guide/data/entity-services"
+            }
+          ]
+        },
+        {
+          "title": "Advanced",
+          "children": [
+            {
+              "title": "Save Multiple Entities",
+              "url": "guide/data/save-entities"
+            },
+            {
+              "title": "Entity Change Tracking",
+              "url": "guide/data/entity-change-tracker"
+            },
+            {
+              "title": "Extension Points",
+              "url": "guide/data/extension-points"
+            }
+          ]
+        },
+        {
+          "title": "FAQ",
+          "url": "guide/data/faq"
+        },
+        {
+          "title": "Limitations",
+          "url": "guide/data/limitations"
         }
       ]
     },

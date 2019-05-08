@@ -29,7 +29,7 @@ NgRx Data allows consumers to use NgRx while radically reducing the explicitness
 
 ## Defining the entities
 
-A `EntityMetadataMap` is used to tell NgRx Data about your entities.  Add a property to the set for each entity name.
+A `EntityMetadataMap` tells NgRx Data about your entities.  Add a property to the set for each entity name.
 
 <code-example header="entity-metadata.ts">
 import { EntityMetadataMap } from '@ngrx/data';
