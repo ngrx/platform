@@ -19,7 +19,7 @@
     "example:test": "jest -c projects/example-app/jest.config.js --watch",
     "example:cypress:open": "cypress open --project=projects/example-app-cypress",
     "example:cypress:run": "cypress run --project=projects/example-app-cypress",
-    "example:cypress:ci": "npm-run-all --parallel --race example:server \"example:cypress:run -- --config=baseUrl=http://localhost:4000\"",
+    "example:cypress:ci": "npm-run-all --parallel --race example:server \"example:cypress:run --config=baseUrl=http://localhost:4000\"",
     "example:build": "yarn cli build --prod",
     "example:build:prod": "yarn example:build --no-progress --base-href \"/platform/example-app/\"",
     "example:server": "node build/example-app-server",

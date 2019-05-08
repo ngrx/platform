@@ -1,24 +1,21 @@
 context('Full round trip', () => {
   before(() => {
-    (cy as any).eyesOpen({
-      appName: 'books_app',
-      testName: 'round-trip',
-      browser: { width: 800, height: 600 },
-    });
     window.localStorage.removeItem('books_app');
     cy.visit('/');
   });
 
   beforeEach(() => {
     (cy as any).restoreLocalStorage();
+    (cy as any).eyesOpen({
+      appName: 'books_app',
+      testName: 'round-trip',
+      browser: { width: 800, height: 600 },
+    });
   });
 
   afterEach(() => {
-    (cy as any).saveLocalStorage();
-  });
-
-  after(() => {
     (cy as any).eyesClose();
+    (cy as any).saveLocalStorage();
   });
 
   it('shows a message when the credentials are wrong', () => {

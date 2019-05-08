@@ -69,7 +69,6 @@ jobs:
           key: *cache_key
 
       # Build and Test
-      - run: yarn bazel clean
       - run: yarn test:bazel
       # Store artifacts from build
       - persist_to_workspace:
@@ -107,7 +106,7 @@ jobs:
       - restore_cache:
           key: *cache_key
       - run: yarn run example:build:prod
-      # - run: yarn run example:cypress:ci
+      - run: yarn run example:cypress:ci
 
   docs-tests:
     <<: *run_in_browser
