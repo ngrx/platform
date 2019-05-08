@@ -16,6 +16,7 @@ import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 
 import { AppComponent } from '@example-app/core/containers/app.component';
 import { AppRoutingModule } from '@example-app/app-routing.module';
+import { UserEffects, RouterEffects } from '@example-app/core/effects';
 
 @NgModule({
   imports: [
@@ -69,7 +70,7 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
      *
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([UserEffects, RouterEffects]),
 
     CoreModule,
   ],
