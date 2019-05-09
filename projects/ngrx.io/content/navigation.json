@@ -295,7 +295,7 @@
       ]
     },
     {
-      "title": "Schematics",
+      "title": "@ngrx/schematics",
       "children": [
         {
           "title": "Overview",
