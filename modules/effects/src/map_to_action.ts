@@ -26,21 +26,23 @@ export interface MapToActionConfig<
   UnsubscribeAction extends Action
 > {
   // Project function that produces the output actions in success cases
-  project: (action: Input, index: number) => Observable<OutputAction>;
+  project: (input: Input, index: number) => Observable<OutputAction>;
   // Error handle function for project
-  error: (error: any, action: Input) => ErrorAction;
+  // error that happened during project execution
+  // input value that project errored with
+  error: (error: any, input: Input) => ErrorAction;
   // Optional complete action provider
   // count is the number of actions project emitted before completion
-  // action is the action that was completed
-  complete?: (count: number, action: Input) => CompleteAction;
+  // input value that project completed with
+  complete?: (count: number, input: Input) => CompleteAction;
   // Optional flattening operator
-  operator?: <InputAction, OutputAction>(
-    project: (input: InputAction, index: number) => Observable<OutputAction>
-  ) => OperatorFunction<InputAction, OutputAction>;
+  operator?: <Input, OutputAction>(
+    project: (input: Input, index: number) => Observable<OutputAction>
+  ) => OperatorFunction<Input, OutputAction>;
   // Optional unsubscribe action provider
   // count is the number of actions project emitted before unsubscribing
-  // action is the action that was unsubscribed from
-  unsubscribe?: (count: number, action: Input) => UnsubscribeAction;
+  // input value that was unsubscribed from
+  unsubscribe?: (count: number, input: Input) => UnsubscribeAction;
 }
 
 /**
@@ -53,25 +55,25 @@ export function mapToAction<
   OutputAction extends Action,
   ErrorAction extends Action
 >(
-  project: (action: Input, index: number) => Observable<OutputAction>,
-  error: (error: any, action: Input) => ErrorAction
+  project: (input: Input, index: number) => Observable<OutputAction>,
+  error: (error: any, input: Input) => ErrorAction
 ): (source: Observable<Input>) => Observable<OutputAction | ErrorAction>;
 export function mapToAction<
-  InputAction extends Action,
+  Input,
   OutputAction extends Action,
   ErrorAction extends Action,
   CompleteAction extends Action = never,
   UnsubscribeAction extends Action = never
 >(
   config: MapToActionConfig<
-    InputAction,
+    Input,
     OutputAction,
     ErrorAction,
     CompleteAction,
     UnsubscribeAction
   >
 ): (
-  source: Observable<InputAction>
+  source: Observable<Input>
 ) => Observable<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 >;
@@ -91,8 +93,8 @@ export function mapToAction<
         CompleteAction,
         UnsubscribeAction
       >
-    | ((action: Input, index: number) => Observable<OutputAction>),
-  errorFn?: (error: any, action: Input) => ErrorAction
+    | ((input: Input, index: number) => Observable<OutputAction>),
+  errorFn?: (error: any, input: Input) => ErrorAction
 ): (
   source: Observable<Input>
 ) => Observable<
@@ -120,12 +122,12 @@ export function mapToAction<
         const subject = new Subject<UnsubscribeAction>();
         return merge(
           source.pipe(
-            operator((action, index) =>
+            operator((input, index) =>
               defer(() => {
                 let completed = false;
                 let errored = false;
                 let projectedCount = 0;
-                return project(action, index).pipe(
+                return project(input, index).pipe(
                   materialize(),
                   map(
                     (notification): Notification<ResultAction> | undefined => {
@@ -134,14 +136,14 @@ export function mapToAction<
                           errored = true;
                           return new Notification(
                             NotificationKind.NEXT,
-                            error(notification.error, action)
+                            error(notification.error, input)
                           );
                         case NotificationKind.COMPLETE:
                           completed = true;
                           return complete
                             ? new Notification(
                                 NotificationKind.NEXT,
-                                complete(projectedCount, action)
+                                complete(projectedCount, input)
                               )
                             : undefined;
                         default:
@@ -154,7 +156,7 @@ export function mapToAction<
                   dematerialize(),
                   finalize(() => {
                     if (!completed && !errored && unsubscribe) {
-                      subject.next(unsubscribe(projectedCount, action));
+                      subject.next(unsubscribe(projectedCount, input));
                     }
                   })
                 );
