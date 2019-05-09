@@ -1,4 +1,4 @@
-# Schematics overview
+# @ngrx/schematics
 
 Scaffolding library for Angular applications using NgRx libraries.
 

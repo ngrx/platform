@@ -1,4 +1,4 @@
-# Entity overview
+# @ngrx/entity
 
 Entity State adapter for managing record collections.
 

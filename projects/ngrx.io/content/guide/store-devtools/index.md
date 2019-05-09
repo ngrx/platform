@@ -1,4 +1,4 @@
-# Store Devtools overview
+# @ngrx/store-devtools
 
 Store Devtools provides developer tools and instrumentation for [Store](guide/store).
 
