@@ -133,6 +133,12 @@
               "A plugin for ngrx automating creation and dispatch of actions",
             "url": "https://github.com/co-IT/ngrx-ducks",
             "rev": true
+          },
+          "ngrx-wieder": {
+            "title": "ngrx-wieder",
+            "desc": "Lightweight & configurable solution for implementing undo-redo based on NgRx and immer",
+            "url": "https://github.com/nilsmehlhorn/ngrx-wieder",
+            "rev": true
           }
         }
       }
