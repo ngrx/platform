@@ -9,7 +9,7 @@ import {
 import {
   BaseRouterStoreState,
   SerializedRouterStateSnapshot,
-} from './serializer';
+} from './serializers';
 
 /**
  * An action dispatched when a router navigation request is fired.

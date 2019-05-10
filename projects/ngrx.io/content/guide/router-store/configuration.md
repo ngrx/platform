@@ -5,12 +5,14 @@ interface StoreRouterConfig {
   stateKey?: string | Selector&lt;any, RouterReducerState&lt;T&gt;&gt;;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
+  state?: RouterState;
 }
 </code-example>
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
 - `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
 - `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
+- `routerState`: Set this property to decide which serializer should be used, if none is provided, and the metadata on the dispatched action.
 
 ## Custom Router State Serializer
 
@@ -86,5 +88,54 @@ export class AppModule {}
 <code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
   navigationActionTiming: NavigationActionTiming.PostActivation,
+});
+</code-example>
+
+## routerState
+
+This property decides which router serializer should be used. If there is a custom serializer provided, it will use the provided serializer. `routerState` also sets the metadata on dispatched `@ngrx/router-store` action.
+
+### RouterState.Full
+
+When this property is set to `RouterState.Full`, `@ngrx/router-store` will use the `DefaultRouterStateSerializer` serializer to serialize the Angular router event.
+
+The metadata on the action will contain the Angular router event, e.g. NavigationStart` and `RoutesRecognized`.
+
+<code-example header="app.module.ts">
+StoreRouterConnectingModule.forRoot({
+  routerState: RouterState.Full,
+});
+</code-example>
+
+### RouterState.Minimal
+
+`RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize Angular router event.
+
+The metadata on the action consists of the navigation id and the url.
+
+```ts
+{
+  type: '@ngrx/router-store/navigated',
+  payload: {
+    routerState: {
+      root: {
+        params: {},
+        url: [],
+        data: {},
+        queryParams: {}
+      },
+      url: '/login'
+    },
+    event: {
+      id: 2,
+      url: '/login'
+    }
+  }
+}
+```
+
+<code-example header="app.module.ts">
+StoreRouterConnectingModule.forRoot({
+  routerState: RouterState.Minimal,
 });
 </code-example>
