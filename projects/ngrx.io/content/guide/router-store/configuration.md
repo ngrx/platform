@@ -5,7 +5,7 @@ interface StoreRouterConfig {
   stateKey?: string | Selector&lt;any, RouterReducerState&lt;T&gt;&gt;;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
-  state?: RouterState;
+  routerState?: RouterState;
 }
 </code-example>
 
@@ -99,7 +99,7 @@ This property decides which router serializer should be used. If there is a cust
 
 When this property is set to `RouterState.Full`, `@ngrx/router-store` will use the `DefaultRouterStateSerializer` serializer to serialize the Angular router event.
 
-The metadata on the action will contain the Angular router event, e.g. NavigationStart` and `RoutesRecognized`.
+The metadata on the action will contain the Angular router event, e.g. `NavigationStart` and `RoutesRecognized`.
 
 <code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
@@ -109,11 +109,11 @@ StoreRouterConnectingModule.forRoot({
 
 ### RouterState.Minimal
 
-`RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize Angular router event.
+`RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
 
 The metadata on the action consists of the navigation id and the url.
 
-```ts
+```json
 {
   type: '@ngrx/router-store/navigated',
   payload: {

@@ -187,7 +187,7 @@ describe('Router Store Module', () => {
     });
 
     describe('Minimal', () => {
-      it('should dispatch the navidation id with url', async () => {
+      it('should dispatch the navigation id with url', async () => {
         const { actions, router } = setup(RouterState.Minimal);
         actions
           .pipe(filter(onlyRouterActions))

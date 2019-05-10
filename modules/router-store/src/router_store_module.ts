@@ -63,7 +63,7 @@ export interface StoreRouterConfig<
   /**
    * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
    * Set to `Full` to use the `DefaultRouterStateSerializer` and to set the angular router events as payload.
-   * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the nagivation id and url as payload.
+   * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
    */
   routerState?: RouterState;
 }
