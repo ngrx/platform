@@ -15,7 +15,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 
 ## Tutorial
 
-The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload></live-example>.
+The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload>Getting Started App</live-example>.
 
 1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example>.
 
