@@ -5,20 +5,22 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
 } from '@angular/material';
-import { Store } from '@ngrx/store';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { BookSearchComponent } from '@example-app/books/components/book-search.component';
-import { BookPreviewComponent } from '@example-app/books/components/book-preview.component';
-import { BookPreviewListComponent } from '@example-app/books/components/book-preview-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
-import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
-import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
-import { FindBookPageComponent } from '@example-app/books/containers/find-book-page.component';
 import { FindBookPageActions } from '@example-app/books/actions';
+import {
+  BookAuthorsComponent,
+  BookPreviewComponent,
+  BookPreviewListComponent,
+  BookSearchComponent,
+} from '@example-app/books/components';
+import { FindBookPageComponent } from '@example-app/books/containers';
 import * as fromBooks from '@example-app/books/reducers';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
+import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('Find Book Page', () => {
   let fixture: ComponentFixture<FindBookPageComponent>;

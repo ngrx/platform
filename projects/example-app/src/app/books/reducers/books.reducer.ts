@@ -1,11 +1,11 @@
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Book } from '@example-app/books/models/book';
 import {
-  BooksApiActions,
   BookActions,
-  ViewBookPageActions,
+  BooksApiActions,
   CollectionApiActions,
+  ViewBookPageActions,
 } from '@example-app/books/actions';
+import { Book } from '@example-app/books/models';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
 /**

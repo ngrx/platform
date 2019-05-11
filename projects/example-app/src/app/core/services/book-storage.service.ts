@@ -1,12 +1,7 @@
-import {
-  Injectable,
-  InjectionToken,
-  FactoryProvider,
-  Inject,
-} from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Book } from '@example-app/books/models';
 import { Observable, of, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Book } from '@example-app/books/models/book';
 
 export function storageFactory() {
   return typeof window === undefined || typeof localStorage === undefined

@@ -1,7 +1,6 @@
 import {
-  SelectedBookPageActions,
-  CollectionPageActions,
   CollectionApiActions,
+  CollectionPageActions,
 } from '@example-app/books/actions';
 import { createReducer, on } from '@ngrx/store';
 
