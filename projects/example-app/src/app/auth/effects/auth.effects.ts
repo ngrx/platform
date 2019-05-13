@@ -60,8 +60,11 @@ export class AuthEffects {
 
         return dialogRef.afterClosed();
       }),
-      map(result =>
-        result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
+      map(
+        result =>
+          result
+            ? AuthActions.logout()
+            : AuthActions.logoutConfirmationDismiss()
       )
     )
   );
