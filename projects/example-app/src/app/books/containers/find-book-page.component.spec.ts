@@ -44,7 +44,16 @@ describe('Find Book Page', () => {
         AddCommasPipe,
         EllipsisPipe,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore({
+          selectors: [
+            { selector: fromBooks.getSearchQuery, value: '' },
+            { selector: fromBooks.getSearchResults, value: [] },
+            { selector: fromBooks.getSearchLoading, value: false },
+            { selector: fromBooks.getSearchError, value: '' },
+          ],
+        }),
+      ],
     });
 
     fixture = TestBed.createComponent(FindBookPageComponent);
@@ -52,11 +61,6 @@ describe('Find Book Page', () => {
     store = TestBed.get(Store);
 
     spyOn(store, 'dispatch');
-
-    store.overrideSelector(fromBooks.getSearchQuery, '');
-    store.overrideSelector(fromBooks.getSearchResults, []);
-    store.overrideSelector(fromBooks.getSearchLoading, false);
-    store.overrideSelector(fromBooks.getSearchError, '');
   });
 
   it('should compile', () => {

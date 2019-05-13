@@ -34,7 +34,11 @@ describe('Collection Page', () => {
         AddCommasPipe,
         EllipsisPipe,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore({
+          selectors: [{ selector: fromBooks.getBookCollection, value: [] }],
+        }),
+      ],
     });
 
     fixture = TestBed.createComponent(CollectionPageComponent);
@@ -45,8 +49,6 @@ describe('Collection Page', () => {
   });
 
   it('should compile', () => {
-    store.overrideSelector(fromBooks.getBookCollection, []);
-
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
