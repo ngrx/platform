@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { Book } from '@example-app/books/models';
 
 @Component({

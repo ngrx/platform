@@ -1,3 +1,6 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
+
 import {
   BookActions,
   BooksApiActions,
@@ -5,8 +8,6 @@ import {
   ViewBookPageActions,
 } from '@example-app/books/actions';
 import { Book } from '@example-app/books/models';
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { createReducer, on } from '@ngrx/store';
 
 /**
  * @ngrx/entity provides a predefined interface for handling

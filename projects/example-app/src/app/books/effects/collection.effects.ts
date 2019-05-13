@@ -1,4 +1,9 @@
 import { Injectable } from '@angular/core';
+
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { defer, of } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+
 import {
   CollectionApiActions,
   CollectionPageActions,
@@ -6,9 +11,6 @@ import {
 } from '@example-app/books/actions';
 import { Book } from '@example-app/books/models';
 import { BookStorageService } from '@example-app/core/services';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { defer, of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class CollectionEffects {

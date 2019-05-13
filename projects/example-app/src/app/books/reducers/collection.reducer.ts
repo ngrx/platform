@@ -1,8 +1,9 @@
+import { createReducer, on } from '@ngrx/store';
+
 import {
   CollectionApiActions,
   CollectionPageActions,
 } from '@example-app/books/actions';
-import { createReducer, on } from '@ngrx/store';
 
 export interface State {
   loaded: boolean;

@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
 import { BooksRoutingModule } from '@example-app/books/books-routing.module';
 import {
   BookAuthorsComponent,
@@ -19,8 +23,6 @@ import { BookEffects, CollectionEffects } from '@example-app/books/effects';
 import { reducers } from '@example-app/books/reducers';
 import { MaterialModule } from '@example-app/material';
 import { PipesModule } from '@example-app/shared/pipes';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 
 export const COMPONENTS = [
   BookAuthorsComponent,

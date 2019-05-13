@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  BooksApiActions,
-  FindBookPageActions,
-} from '@example-app/books/actions';
-import { Book } from '@example-app/books/models';
 
-import { GoogleBooksService } from '@example-app/core/services/google-books.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { asyncScheduler, EMPTY as empty, of } from 'rxjs';
 import {
@@ -16,6 +10,13 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
+
+import { Book } from '@example-app/books/models';
+import {
+  BooksApiActions,
+  FindBookPageActions,
+} from '@example-app/books/actions';
+import { GoogleBooksService } from '@example-app/core/services/google-books.service';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
