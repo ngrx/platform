@@ -50,15 +50,15 @@ In the above code, we have imported `CounterModule` from our `my-counter` librar
 <code-example header="elementApp/src/app/app.component.html" path="store-elements/projects/elementApp/src/app/app.component.html">
 </code-example>
 Here we are using the Angular Elements, which we registered in our `my-counter` library.
-3. Run the below command and import the code given in `polyfills.ts` file available in both the app created.
+3. Run the below command to install polyfill required to support the Angular Elements on the older browser.
 ```sh
 npm i @webcomponents/webcomponentsjs -save
 ```
+4. Add the below polyfill to `polyfills.ts` file available in both the app created.
 ```json
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';
 ```
-The above polyfill is required to support Custom Elements for older browser.
-4. Verify the app by running it locally using below command.
+5. Verify the app by running it locally using below command.
 ```sh
 ng build my-counter && ng serve --project=elementApp -o
 ```
