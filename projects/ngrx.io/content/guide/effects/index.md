@@ -180,7 +180,7 @@ The `loadMovies$` effect returns a new observable in case an error occurs while 
 
 ### using `mapToAction` operator
 
-Alternatively, we recommend to use [`mapToAction`](guide/effects/operators#maptoaction) operator to catch any
+Alternatively, we recommend to use the [`mapToAction`](guide/effects/operators#maptoaction) operator to catch any
 potential errors.
 
 <code-example header="movie.effects.ts">
