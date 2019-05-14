@@ -7,7 +7,7 @@ used.
 ## `ofType`
 
 The `ofType` operator filters the stream of actions based on either string
-values or Action Creators.
+values (that represent `type`s of actions) or Action Creators.
 
 The generic for the `Actions<TypeUnion>` must be provided in order for type 
 inference to work properly with string values. Action Creators that are based on
@@ -58,8 +58,7 @@ with `catchError` to transform the failed request into another Action.
 
 Not only `catchError` is necessary, it's has to be used before the stream is 
 flattened or has to be constructed to re-subscribe to the source Observable.
-Missing such error handling results in bugs that are hard to discover during PR 
-submittion.
+Missing such error handling results in bugs that are hard to discover.
 
 Even people who are familiar with these mistakes still make them sometimes.
 
