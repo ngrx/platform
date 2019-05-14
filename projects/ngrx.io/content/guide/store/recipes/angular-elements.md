@@ -1,6 +1,6 @@
 # Using Store with Angular Elements
 ## Creating Angular Elements
-The following recipe shows you how to manage the state of a counter, and how to select and display it within an Angular Elements and use the same within an Angular Project and a static page.
+The following recipe  illustrates utilizing Angular Elements with a NgRx Store to manage the state of a counter, and select and display that counter state from within separate Angular Elements. All from within a single Angular Project and a static HTML page.
 ## Recipe
 You can download  <live-example name="store-elements" downloadOnly>Angular Elements Project</live-example>.
 
@@ -16,12 +16,11 @@ ng new ngRxElementDemo - createApplication=false
 ng g library my-counter
 ```
 2. Follow the instructions in the [Getting Started Guide](guide/store#installation) to create a new counter store complete with actions, reducer, and module.
-3. The only difference here is split the code for increment, decrement and reset in the sepearate component.
+3. The only difference here is to split the code for increment, decrement and reset into sepearate component.
 4. Rename `app.module.ts` to `counter.module.ts` file and add the below code.
 <code-example header="src/lib/counter.module.ts" path="store-elements/projects/my-counter/src/lib/counter.module.ts">
 </code-example>
-In the above code, we have added all the components in `entryComponents` array as we need to render these components as Angular Elements.
-Also inside `constructor` you may notice `createCustomElement`, this is used to register the Angular Components as Angular Elements.
+In the above code, we have added all the components in `entryComponents` array.This ensures the components are available for rendering as Angular Elements.In addition, inside the `constructor`, `createCustomElement` must be called for each component that will be used as an Angular Element.
 
 ### Creating Applications
 
@@ -59,15 +58,15 @@ import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';
 The above polyfill is required to support Custom Elements for older browser.
 4. Verify the app by running it locally using below command.
 ```sh
-ng build my-counter && ng serve - project=elementApp -o
+ng build my-counter && ng serve --project=elementApp -o
 ```
 
 ### Using with Static Page
 
-1. For building a custom-element.js file which can be used outside an Angular App. Go to `counterelement` App and add the below code in `app.module.ts`.
+1. In order to build the `custom-element.js` file, which can be used outside an Angular App, go to the `counterelement` app and add the below code in `app.module.ts`.
 <code-example header="counterelement/src/app/app.module.ts" path="store-elements/projects/counterelement/src/app/app.module.ts">
 </code-example>
-In the above code, you may notice we are not using any component inside the `bootstrap` array, as we are going to bootstrap our app manually using `ngDoBootstrap`. By making this change we will create a `counter-element.js` file which we can use inside any static page.
+In the above code, you may notice we are not using any component inside the `bootstrap` array. This is because we are going to bootstrap our app manually using `ngDoBootstrap`. This allows us to create a `counter-element.js` file which we can use inside any static page.
 2. Run the below commands to install a package to merge files to create `custom-element.js` file.
 ```sh
 npm install jscat - save-dev
@@ -80,9 +79,13 @@ npm install jscat - save-dev
 "build-element": "ng build my-counter && ng build - project=counterelement - prod - output-hashing=none",
 "package": "jscat ./dist/counterelement/runtime.js ./dist/counterelement/polyfills.js ./dist/counterelement/scripts.js ./dist/counterelement/main.js > htmlapp/counter-element.js",
 ```
-5. Run the following command to build and package your custom element into a single js file.
+5. Run the following commands to build and package your custom element into a single `.js` file.
 ```sh
 npm run build-element
 npm run package
 ```
-6. Move to `htmlapp` folder and run `http-server` make sure you have `http-server` installed globally.
+6. Install `http-server` globally by using below command. Read more about `http-server` package on [github](https://github.com/indexzero/http-server).
+```sh
+npm i -g http-server
+```
+7. Move to `htmlapp` folder and run `http-server`, to see Angular Elements with NgRx in action on a static page.

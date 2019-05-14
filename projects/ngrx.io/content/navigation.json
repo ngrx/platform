@@ -114,8 +114,8 @@
               "url": "guide/store/recipes/injecting"
             },
             {
-              "title": "Custom Elements",
-              "url": "guide/store/recipes/custom-elements"
+              "title": "Angular Elements",
+              "url": "guide/store/recipes/angular-elements"
             },
             {
               "title": "Downgrade for AngularJS",
