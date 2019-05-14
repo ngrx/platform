@@ -14,7 +14,7 @@ inference to work properly with string values. Action Creators that are based on
 `createAction` function do not have the same limitation.
 
 The `ofType` operator takes up to 5 arguments with proper type inference. It can
-take even more, however the type would be inferred as `Action` interface.
+take even more, however the type would be inferred as an `Action` interface.
 
 <code-example header="auth.effects.ts">
 import { Injectable } from '@angular/core';
@@ -63,8 +63,8 @@ submittion.
 
 Even people who are familiar with these mistakes still make them sometimes.
 
-`mapToAction` operator wraps the `project` function that should return the main
-"happy path" Observable that emits Action(s). It also requires `error` callback
+The `mapToAction` operator wraps the `project` function that should return the main
+"happy path" Observable that emits Action(s). It also requires an `error` callback
 to be provided, so that steam can be flattened safely.
 
 <code-example header="auth.effects.ts">
@@ -101,11 +101,11 @@ export class AuthEffects {
 }
 </code-example>
 
-Notice that it is no longer neccessy to wrap Error Action with `of` static 
+Notice that it is no longer necessary to wrap the Error Action with the static `of`
 Observable.
 
 ### `mapToAction` signatures
-`mapToAction` function has two signatures. The simple one takes two callbacks.
+The `mapToAction` function has two signatures. The simple one takes two callbacks.
 
 <code-example header="mapToAction with two callbacks">
 function mapToAction<
@@ -118,17 +118,17 @@ function mapToAction<
 ): (source: Observable&#60;Input&#62;) => Observable&#60;OutputAction | ErrorAction&#62;;
 </code-example>
 
-- `project`: A callback that is provided with input value (often an Action) and 
+- `project`: A callback that is provided with an input value (often an Action) and 
 expects the output result that is wrapped with Action
 - `error`: A callback that is called if `project` throws an error
 
-`mapToAction` uses `concatMap` flattening strategy by default. When more 
+`mapToAction` uses the `concatMap` flattening strategy by default. When a more 
 configurable option is needed or for more advanced use cases you can provide 
 the config object.
 
 <code-example header="mapToAction with config">
 
-/** Represents config with named paratemeters for mapToAction */
+/** Represents the config with named parameters for mapToAction */
 export interface MapToActionConfig<
   Input,
   OutputAction extends Action,
@@ -166,11 +166,11 @@ function mapToAction<
 &#62;;
 </code-example>
 
-- `project`: A callback that is provided with input value (often an Action) and 
+- `project`: A callback that is provided with an input value (often an Action) and 
 expects the output result that is wrapped with Action
 - `error`: A callback that is called if `project` throws an error
 - `complete`: Optional complete action provider, when project completes
 - `operator`: Optional flattening operator. `concatMap` is used by default
-- `unsubscribe`: Optional unsubscribe action provider, when project is unsubscribed 
-(e.g. in case of `switchMap` flattening operator when a new value arrives)
+- `unsubscribe`: Optional unsubscribe action provider, when `project` is unsubscribed 
+(e.g. in case of the `switchMap` flattening operator when a new value arrives)
 
