@@ -1,33 +1,28 @@
-import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { RouterStateSnapshot } from '@angular/router';
 import { BaseRouterStoreState, RouterStateSerializer } from './shared';
 
-export interface MinimalRouteSnapshot {
+export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {
+  url: RouterStateSnapshot['url'];
   params: RouterStateSnapshot['root']['params'];
-  url: RouterStateSnapshot['root']['url'];
   queryParams: RouterStateSnapshot['root']['queryParams'];
   data: RouterStateSnapshot['root']['data'];
-}
-
-export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {
-  root: MinimalRouteSnapshot;
-  url: string;
 }
 
 export class MinimalRouterStateSerializer
   implements RouterStateSerializer<MinimalRouterStateSnapshot> {
   serialize(routerState: RouterStateSnapshot): MinimalRouterStateSnapshot {
-    return {
-      root: this.serializeRoute(routerState.root),
-      url: routerState.url,
-    };
-  }
+    let route = routerState.root;
 
-  private serializeRoute(route: ActivatedRouteSnapshot): MinimalRouteSnapshot {
-    return {
-      params: route.params,
-      url: route.url,
-      data: route.data,
-      queryParams: route.queryParams,
-    };
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    const {
+      url,
+      root: { queryParams, data },
+    } = routerState;
+    const { params } = route;
+
+    return { url, params, queryParams, data };
   }
 }

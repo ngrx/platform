@@ -88,19 +88,32 @@ describe('minimal serializer', () => {
     } as RouterStateSnapshot;
 
     const actual = serializer.serialize(routerState);
-    const expected = {
-      url: 'url',
-      root: createExpectedSnapshot(),
+    const expected = createExpectedSnapshot();
+    expect(actual).toEqual(expected);
+  });
+
+  it('should serialize using firstChild', () => {
+    const serializer = new MinimalRouterStateSerializer();
+    const snapshot = {
+      ...createRouteSnapshot(),
+      firstChild: createRouteSnapshot('child'),
     };
+    const routerState = {
+      url: 'url',
+      root: snapshot,
+    } as RouterStateSnapshot;
+
+    const actual = serializer.serialize(routerState);
+    const expected = createExpectedSnapshot('child');
     expect(actual).toEqual(expected);
   });
 
   function createExpectedSnapshot(prefix = 'root'): any {
     return {
+      url: `url`,
+      data: `root-route.data`,
+      queryParams: `root-route.queryParams`,
       params: `${prefix}-route.params`,
-      data: `${prefix}-route.data`,
-      url: `${prefix}-route.url`,
-      queryParams: `${prefix}-route.queryParams`,
     };
   }
 });

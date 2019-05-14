@@ -115,20 +115,21 @@ The metadata on the action consists of the navigation id and the url.
 
 ```json
 {
-  type: '@ngrx/router-store/navigated',
+  type: '@ngrx/router-store/navigation',
   payload: {
     routerState: {
-      root: {
-        params: {},
-        url: [],
-        data: {},
-        queryParams: {}
+      url: '/books/KNCBDwAAQBAJ?showImage=true',
+      params: {
+        id: 'KNCBDwAAQBAJ'
       },
-      url: '/login'
+      queryParams: {
+        referrer: 'ngrx.io'
+      },
+      data: {}
     },
     event: {
-      id: 2,
-      url: '/login'
+      id: 13,
+      url: '/books/KNCBDwAAQBAJ?showImage=true'
     }
   }
 }
