@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Book } from '@example-app/books/models/book';
+
+import { Book } from '@example-app/books/models';
 
 @Component({
   selector: 'bc-book-preview-list',

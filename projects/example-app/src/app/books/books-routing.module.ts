@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { FindBookPageComponent } from '@example-app/books/containers/find-book-page.component';
-import { ViewBookPageComponent } from '@example-app/books/containers/view-book-page.component';
-import { CollectionPageComponent } from '@example-app/books/containers/collection-page.component';
-import { BookExistsGuard } from '@example-app/books/guards/book-exists.guard';
+import { RouterModule, Routes } from '@angular/router';
+
+import {
+  CollectionPageComponent,
+  FindBookPageComponent,
+  ViewBookPageComponent,
+} from '@example-app/books/containers';
+import { BookExistsGuard } from '@example-app/books/guards';
 
 export const routes: Routes = [
   { path: 'find', component: FindBookPageComponent },
