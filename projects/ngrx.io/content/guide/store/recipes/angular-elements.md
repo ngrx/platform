@@ -1,8 +1,7 @@
 # Using Store with Angular Elements
 ## Creating Angular Elements
-The following recipe  illustrates utilizing Angular Elements with a NgRx Store to manage the state of a counter, and select and display that counter state from within separate Angular Elements. All from within a single Angular Project and a static HTML page.
+The following recipe  illustrates utilizing Angular Elements with a NgRx Store to manage the state of a counter, and select and display that counter state from within separate Angular Elements. This is all accomplished from within a single Angular Project and static HTML page.
 ## Recipe
-You can download  <live-example name="store-elements" downloadOnly>Angular Elements Project</live-example>.
 
 1. Create a new application by running the below command
 ```sh
@@ -16,7 +15,7 @@ ng new ngRxElementDemo - createApplication=false
 ng g library my-counter
 ```
 2. Follow the instructions in the [Getting Started Guide](guide/store#installation) to create a new counter store complete with actions, reducer, and module.
-3. The only difference here is to split the code for increment, decrement and reset into sepearate component.
+3. The only difference here is to split the code for increment, decrement and reset into sepearate components.
 4. Rename `app.module.ts` to `counter.module.ts` file and add the below code.
 <code-example header="src/lib/counter.module.ts" path="store-elements/projects/my-counter/src/lib/counter.module.ts">
 </code-example>
@@ -91,3 +90,5 @@ npm run package
 npm i -g http-server
 ```
 7. Move to `htmlapp` folder and run `http-server`, to see Angular Elements with NgRx in action on a static page.
+
+You can download  <live-example name="store-elements" downloadOnly>Angular Elements Project</live-example>.
