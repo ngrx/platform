@@ -56,6 +56,7 @@ npm i @webcomponents/webcomponentsjs -save
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';
 ```
 The above polyfill is required to support Custom Elements for older browser.
+
 4. Verify the app by running it locally using below command.
 ```sh
 ng build my-counter && ng serve --project=elementApp -o
