@@ -1,6 +1,6 @@
 # Effects operators
 
-As part of Effect library, NgRx provides some useful operators that are frequently
+As part of the `Effects` library, NgRx provides some useful operators that are frequently
 used. 
 
 
