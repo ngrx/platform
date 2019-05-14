@@ -96,7 +96,7 @@ Effects are injectable service classes with distinct parts:
 
 - An injectable `Actions` service that provides an observable stream of _all_ actions dispatched _after_ the latest state has been reduced.
 - Metadata is attached to the observable streams using the `createEffect` function. The metadata is used to register the streams that are subscribed to the store. Any action returned from the effect stream is then dispatched back to the `Store`.
-- Actions are filtered using a pipeable [`ofType` operator](guide/effects/operators#oftype). The `ofType` operator takes one more action types as arguments to filter on which actions to act upon.
+- Actions are filtered using a pipeable [`ofType` operator](guide/effects/operators#oftype). The `ofType` operator takes one or more action types as arguments to filter on which actions to act upon.
 - Effects are subscribed to the `Store` observable. 
 - Services are injected into effects to interact with external APIs and handle streams.
 
