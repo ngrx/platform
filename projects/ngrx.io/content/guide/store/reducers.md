@@ -69,34 +69,12 @@ The initial values for the `home` and `away` properties of the state are 0.
 The reducer function's responsibility is to handle the state transitions in an immutable way. Define a reducer function that handles the actions for managing the state of the scoreboard.
 
 <code-example header="scoreboard.reducer.ts">
-export function reducer(
-  state = initialState,
-  action: ScoreboardPageActions.ActionsUnion
-): State {
-  switch (action.type) {
-    case ScoreboardPageActions.homeScore.type: {
-      return {
-        ...state,
-        home: state.home + 1,
-      };
-    }
-
-    case ScoreboardPageActions.awayScore.type: {
-      return {
-        ...state,
-        away: state.away + 1,
-      };
-    }
-
-    case ScoreboardPageActions.reset.type: {
-      return { home: action.home, away: action.away };
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer = createReducer(
+  initialScoreState,
+  on(ScoreboardPageActions.homeScore, (state): State => ({ ...state, home: state.home + 1 })),
+  on(ScoreboardPageActions.awayScore, (state): State => ({ ...state, away: state.away + 1 })),
+  on(ScoreboardPageActions.resetScore, (state): State => ({ ...state, home: 0 , away: 0 }))
+  );
 </code-example>
 
 Reducers use switch statements in combination with TypeScript's discriminated unions defined in your actions to provide type-safe processing of actions in a reducer. Switch statements use type unions to determine the correct shape of the action being consumed in each case. The action types defined with your actions are reused in your reducer functions as case statements. The type union is also provided to your reducer function to constrain the available actions that are handled in that reducer function.
