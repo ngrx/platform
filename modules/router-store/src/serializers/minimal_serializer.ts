@@ -3,9 +3,9 @@ import { BaseRouterStoreState, RouterStateSerializer } from './shared';
 
 export interface MinimalRouteSnapshot {
   params: RouterStateSnapshot['root']['params'];
-  url: RouterStateSnapshot['root']['params'];
-  queryParams: RouterStateSnapshot['root']['params'];
-  data: RouterStateSnapshot['root']['params'];
+  url: RouterStateSnapshot['root']['url'];
+  queryParams: RouterStateSnapshot['root']['queryParams'];
+  data: RouterStateSnapshot['root']['data'];
 }
 
 export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {

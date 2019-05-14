@@ -91,7 +91,7 @@ StoreRouterConnectingModule.forRoot({
 });
 </code-example>
 
-## routerState
+## Router State Snapshot
 
 This property decides which router serializer should be used. If there is a custom serializer provided, it will use the provided serializer. `routerState` also sets the metadata on dispatched `@ngrx/router-store` action.
 
