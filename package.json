@@ -130,7 +130,7 @@
     "fs-extra": "^2.1.2",
     "glob": "^7.1.2",
     "husky": "^1.2.0",
-    "jasmine": "^2.5.3",
+    "jasmine": "^3.4.0",
     "jasmine-core": "~2.5.2",
     "jasmine-marbles": "^0.4.0",
     "jasmine-spec-reporter": "~3.2.0",

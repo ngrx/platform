@@ -96,7 +96,7 @@ Effects are injectable service classes with distinct parts:
 
 - An injectable `Actions` service that provides an observable stream of _all_ actions dispatched _after_ the latest state has been reduced.
 - Metadata is attached to the observable streams using the `createEffect` function. The metadata is used to register the streams that are subscribed to the store. Any action returned from the effect stream is then dispatched back to the `Store`.
-- Actions are filtered using a pipeable `ofType` operator. The `ofType` operator takes one more action types as arguments to filter on which actions to act upon.
+- Actions are filtered using a pipeable [`ofType` operator](guide/effects/operators#oftype). The `ofType` operator takes one or more action types as arguments to filter on which actions to act upon.
 - Effects are subscribed to the `Store` observable. 
 - Services are injected into effects to interact with external APIs and handle streams.
 
@@ -177,6 +177,39 @@ export class MovieEffects {
 
 
 The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. You still use the `catchError` operator to handle error events, but return an observable of a new action that is dispatched to the `Store`.
+
+### using `mapToAction` operator
+
+Alternatively, we recommend to use the [`mapToAction`](guide/effects/operators#maptoaction) operator to catch any
+potential errors.
+
+<code-example header="movie.effects.ts">
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+
+@Injectable()
+export class MovieEffects {
+
+  loadMovies$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType('[Movies Page] Load Movies'),
+      mapToAction({
+        project: () => this.moviesService.getAll().pipe.map(response => 
+            ({type: '[Movies API] Movies Loaded Success', movies: response })),
+        error: () => { type: '[Movies API] Movies Loaded Error' },
+        operator: mergeMap,
+      })
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private moviesService: MoviesService
+  ) {}
+}
+</code-example>
 
 ## Registering root effects
 
