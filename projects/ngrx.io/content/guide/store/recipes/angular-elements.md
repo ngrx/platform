@@ -15,7 +15,7 @@ ng new ngRxElementDemo - createApplication=false
 ng g library my-counter
 ```
 2. Follow the instructions in the [Getting Started Guide](guide/store#installation) to create a new counter store complete with actions, reducer, and module.
-3. The only difference here is to split the code for increment, decrement and reset into sepearate components.
+3. The only difference here is to split the code for increment, decrement and reset into seperate components.
 4. Rename `app.module.ts` to `counter.module.ts` file and add the below code.
 <code-example header="src/lib/counter.module.ts" path="store-elements/projects/my-counter/src/lib/counter.module.ts">
 </code-example>
@@ -85,7 +85,7 @@ npm install jscat - save-dev
 npm run build-element
 npm run package
 ```
-6. Install `http-server` globally by using below command. Read more about `http-server` package on [github](https://github.com/indexzero/http-server).
+6. Install `http-server` globally by using the below command. Read more about `http-server` package on [github](https://github.com/indexzero/http-server).
 ```sh
 npm i -g http-server
 ```
