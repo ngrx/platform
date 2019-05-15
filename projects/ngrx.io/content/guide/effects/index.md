@@ -107,6 +107,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
+import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
@@ -152,6 +153,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
+import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
@@ -188,6 +190,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
