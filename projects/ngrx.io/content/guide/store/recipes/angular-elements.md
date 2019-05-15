@@ -91,4 +91,6 @@ npm i -g http-server
 ```
 7. Move to `htmlapp` folder and run `http-server`, to see Angular Elements with NgRx in action on a static page.
 
-You can download  <live-example name="store-elements" downloadOnly>Angular Elements Project</live-example>.
+### Project Example Repository
+
+You can refer the code from [GitHub Repo](https://github.com/ngrx/platform/tree/master/projects/ngrx.io/content/examples/store-elements) and download it.
