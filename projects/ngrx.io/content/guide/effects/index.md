@@ -13,13 +13,13 @@ In a service-based Angular application, components are responsible for interacti
 - Effects filter those actions based on the type of action they are interested in. This is done by using an operator.
 - Effects perform tasks, which are synchronous or asynchronous and return a new action.
 
-## Installation 
+## Installation
 
 Detailed installation instructions can be found on the [Installation](guide/effects/install) page.
 
 ## Comparison with component-based side effects
 
-In a service-based application, your components interact with data through many different services that expose data through properties and methods. These services may depend on other services that manage other sets of data. Your components consume these services to perform tasks, giving your components many responsibilities. 
+In a service-based application, your components interact with data through many different services that expose data through properties and methods. These services may depend on other services that manage other sets of data. Your components consume these services to perform tasks, giving your components many responsibilities.
 
 Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
 
@@ -90,14 +90,14 @@ The movies are still fetched through the `MoviesService`, but the component is n
 
 ## Writing Effects
 
-To isolate side-effects from your component, you must create an `Effects` class to listen for events and perform tasks. 
+To isolate side-effects from your component, you must create an `Effects` class to listen for events and perform tasks.
 
 Effects are injectable service classes with distinct parts:
 
 - An injectable `Actions` service that provides an observable stream of _all_ actions dispatched _after_ the latest state has been reduced.
 - Metadata is attached to the observable streams using the `createEffect` function. The metadata is used to register the streams that are subscribed to the store. Any action returned from the effect stream is then dispatched back to the `Store`.
 - Actions are filtered using a pipeable [`ofType` operator](guide/effects/operators#oftype). The `ofType` operator takes one or more action types as arguments to filter on which actions to act upon.
-- Effects are subscribed to the `Store` observable. 
+- Effects are subscribed to the `Store` observable.
 - Services are injected into effects to interact with external APIs and handle streams.
 
 To show how you handle loading movies from the example above, let's look at `MovieEffects`.
@@ -106,7 +106,8 @@ To show how you handle loading movies from the example above, let's look at `Mov
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
+import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
@@ -138,7 +139,7 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 
 <div class="alert is-important">
 
-**Note:** You can also write effects using the `@Effect()` decorator, which was the previously defined way before effects creators were introduced in NgRx. If 
+**Note:** You can also write effects using the `@Effect()` decorator, which was the previously defined way before effects creators were introduced in NgRx. If
 you are looking for examples of effect decorators, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/effects#writing-effects).
 
 </div>
@@ -151,12 +152,13 @@ Effects are built on top of observable streams provided by RxJS. Effects are lis
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
+import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
 
-  loadMovies$ = createEffect(() => 
+  loadMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
       mergeMap(() => this.moviesService.getAll()
@@ -188,15 +190,16 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
 
-  loadMovies$ = createEffect(() => 
+  loadMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
       mapToAction({
-        project: () => this.moviesService.getAll().pipe.map(response => 
+        project: () => this.moviesService.getAll().pipe.map(response =>
             ({type: '[Movies API] Movies Loaded Success', movies: response })),
         error: () => { type: '[Movies API] Movies Loaded Error' },
         operator: mergeMap,
@@ -237,7 +240,7 @@ Effects start running immediately after the AppModule is loaded to ensure they a
 
 ## Registering feature effects
 
-For feature modules, register your effects by adding the `EffectsModule.forFeature()` method in the `imports` array of your `NgModule`. 
+For feature modules, register your effects by adding the `EffectsModule.forFeature()` method in the `imports` array of your `NgModule`.
 
 <code-example header="admin.module.ts">
 import { EffectsModule } from '@ngrx/effects';
