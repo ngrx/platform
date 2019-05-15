@@ -151,7 +151,7 @@ Effects are built on top of observable streams provided by RxJS. Effects are lis
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class MovieEffects {
