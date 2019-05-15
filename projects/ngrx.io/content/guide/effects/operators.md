@@ -168,7 +168,7 @@ function mapToAction<
 - `project`: A callback that is provided with an input value (often an Action) and 
 expects the output result that is wrapped with Action
 - `error`: A callback that is called if `project` throws an error
-- `complete`: Optional complete action provider, when project completes
+- `complete`: Optional complete action provider, when `project` completes
 - `operator`: Optional flattening operator. `concatMap` is used by default
 - `unsubscribe`: Optional unsubscribe action provider, when `project` is unsubscribed 
 (e.g. in case of the `switchMap` flattening operator when a new value arrives)
