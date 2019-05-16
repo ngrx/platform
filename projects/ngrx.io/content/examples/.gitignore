@@ -12,6 +12,8 @@
 **/src/test.ts
 **/src/tsconfig.app.json
 **/src/tsconfig.spec.json
+**/projects/**/tsconfig.app.json
+**/projects/**/tsconfig.spec.json
 **/src/typings.d.ts
 **/e2e/src/app.po.ts
 **/e2e/tsconfig.e2e.json
