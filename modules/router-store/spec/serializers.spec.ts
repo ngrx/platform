@@ -88,15 +88,37 @@ describe('minimal serializer', () => {
     } as RouterStateSnapshot;
 
     const actual = serializer.serialize(routerState);
-    const expected = createExpectedSnapshot();
+    const expected = {
+      url: 'url',
+      root: createExpectedSnapshot(),
+    };
     expect(actual).toEqual(expected);
   });
 
-  it('should serialize using firstChild', () => {
+  it('should serialize with an empty routeConfig', () => {
+    const serializer = new MinimalRouterStateSerializer();
+    const snapshot = { ...createRouteSnapshot(), routeConfig: null };
+    const routerState = {
+      url: 'url',
+      root: snapshot,
+    } as RouterStateSnapshot;
+
+    const actual = serializer.serialize(routerState);
+    const expected = {
+      url: 'url',
+      root: {
+        ...createExpectedSnapshot(),
+        routeConfig: null,
+      },
+    };
+    expect(actual).toEqual(expected);
+  });
+
+  it('should serialize children', () => {
     const serializer = new MinimalRouterStateSerializer();
     const snapshot = {
       ...createRouteSnapshot(),
-      firstChild: createRouteSnapshot('child'),
+      children: [createRouteSnapshot('child')],
     };
     const routerState = {
       url: 'url',
@@ -104,17 +126,43 @@ describe('minimal serializer', () => {
     } as RouterStateSnapshot;
 
     const actual = serializer.serialize(routerState);
-    const expected = createExpectedSnapshot('child');
+
+    const expected = {
+      url: 'url',
+      root: {
+        ...createExpectedSnapshot(),
+        firstChild: createExpectedSnapshot('child'),
+        children: [createExpectedSnapshot('child')],
+      },
+    };
+
     expect(actual).toEqual(expected);
   });
 
-  function createExpectedSnapshot(prefix = 'root'): any {
-    return {
-      url: `url`,
-      data: `root-route.data`,
-      queryParams: `root-route.queryParams`,
-      params: `${prefix}-route.params`,
+  function createExpectedSnapshot(prefix = 'root') {
+    let snapshot = {
+      ...createRouteSnapshot(prefix),
+      routeConfig: {
+        // config doesn't have a component because it isn't serializable
+        path: `${prefix}-route.routeConfig.path`,
+        pathMatch: `${prefix}-route.routeConfig.pathMatch`,
+        redirectTo: `${prefix}-route.routeConfig.redirectTo`,
+        outlet: `${prefix}-route.routeConfig.outlet`,
+      },
+      firstChild: undefined,
     };
+
+    // properties that aren't serializable
+    delete snapshot.paramMap;
+    delete snapshot.queryParamMap;
+    delete snapshot.component;
+
+    // properties that do not exist on the minimal serializer
+    delete snapshot.root;
+    delete snapshot.parent;
+    delete snapshot.pathFromRoot;
+
+    return snapshot;
   }
 });
 

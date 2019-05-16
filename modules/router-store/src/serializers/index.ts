@@ -6,6 +6,7 @@ export {
 } from './default_serializer';
 
 export {
+  MinimalActivatedRouteSnapshot,
   MinimalRouterStateSnapshot,
   MinimalRouterStateSerializer,
 } from './minimal_serializer';

@@ -111,29 +111,7 @@ StoreRouterConnectingModule.forRoot({
 
 `RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
 
-The metadata on the action consists of the navigation id and the url.
-
-```json
-{
-  type: '@ngrx/router-store/navigation',
-  payload: {
-    routerState: {
-      url: '/books/KNCBDwAAQBAJ?showImage=true',
-      params: {
-        id: 'KNCBDwAAQBAJ'
-      },
-      queryParams: {
-        referrer: 'ngrx.io'
-      },
-      data: {}
-    },
-    event: {
-      id: 13,
-      url: '/books/KNCBDwAAQBAJ?showImage=true'
-    }
-  }
-}
-```
+The difference between `MinimalRouterStateSerializer` and the default `RouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
 
 <code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
