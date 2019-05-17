@@ -1,3 +1,23 @@
+<a name="8.0.0-beta.2"></a>
+
+# [8.0.0-beta.2](https://github.com/ngrx/platform/compare/8.0.0-beta.1...8.0.0-beta.2) (2019-05-15)
+
+### Bug Fixes
+
+- **data:** update the package name for replacement to ngrx-data ([#1805](https://github.com/ngrx/platform/issues/1805)) ([00c00e0](https://github.com/ngrx/platform/commit/00c00e0)), closes [#1802](https://github.com/ngrx/platform/issues/1802)
+- **example:** resolve circular dependency ([#1833](https://github.com/ngrx/platform/issues/1833)) ([1fbd59c](https://github.com/ngrx/platform/commit/1fbd59c))
+
+### Features
+
+- **effects:** add mapToAction operator ([#1822](https://github.com/ngrx/platform/issues/1822)) ([1ff986f](https://github.com/ngrx/platform/commit/1ff986f)), closes [#1224](https://github.com/ngrx/platform/issues/1224)
+- **store:** add option to mock selectors in MockStoreConfig ([#1836](https://github.com/ngrx/platform/issues/1836)) ([070228c](https://github.com/ngrx/platform/commit/070228c)), closes [#1827](https://github.com/ngrx/platform/issues/1827)
+- **store:** expand createReducer type signature to support up to ten action creators ([#1803](https://github.com/ngrx/platform/issues/1803)) ([63e4926](https://github.com/ngrx/platform/commit/63e4926))
+- **store:** warn when same action is registered ([#1801](https://github.com/ngrx/platform/issues/1801)) ([ecda5f7](https://github.com/ngrx/platform/commit/ecda5f7)), closes [#1758](https://github.com/ngrx/platform/issues/1758)
+
+### Reverts
+
+- warn when same action is registered ([#1801](https://github.com/ngrx/platform/issues/1801)) ([#1841](https://github.com/ngrx/platform/issues/1841)) ([b07ae4e](https://github.com/ngrx/platform/commit/b07ae4e))
+
 <a name="8.0.0-beta.1"></a>
 
 # [8.0.0-beta.1](https://github.com/ngrx/platform/compare/8.0.0-beta.0...8.0.0-beta.1) (2019-04-24)

@@ -220,10 +220,8 @@ class StackblitzBuilder {
   }
 
   _encodeBase64(file) {
-    // read binary data
-    var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
-    return Buffer(bitmap).toString('base64');
+    // read binary data and convert binary data to base64 encoded string
+    return fs.readFileSync(file, { encoding: 'base64' });
   }
 
   _existsSync(filename) {

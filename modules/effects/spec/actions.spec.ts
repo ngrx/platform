@@ -287,4 +287,38 @@ describe('Actions', function() {
     dispatcher.next(multiply({ by: 2 }));
     dispatcher.complete();
   });
+
+  it('should support more than 5 actions', () => {
+    const log = createAction('logarithm');
+    const expected = [
+      divide.type,
+      ADD,
+      square.type,
+      SUBTRACT,
+      multiply.type,
+      log.type,
+    ];
+
+    actions$
+      .pipe(
+        // Mixing all of them, more than 5. It still works, but we loose the type info
+        ofType(divide, ADD, square, SUBTRACT, multiply, log),
+        map(update => update.type),
+        toArray()
+      )
+      .subscribe({
+        next(actual) {
+          expect(actual).toEqual(expected);
+        },
+      });
+
+    // Actions under test, in specific order
+    dispatcher.next(divide({ by: 1 }));
+    dispatcher.next({ type: ADD });
+    dispatcher.next(square());
+    dispatcher.next({ type: SUBTRACT });
+    dispatcher.next(multiply({ by: 2 }));
+    dispatcher.next(log());
+    dispatcher.complete();
+  });
 });

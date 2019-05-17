@@ -1,26 +1,48 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
+import { NgModule } from '@angular/core';
+
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
-import { ComponentsModule } from '@example-app/books/components';
-import { BookEffects } from '@example-app/books/effects/book.effects';
-import { CollectionEffects } from '@example-app/books/effects/collection.effects';
-
-import { FindBookPageComponent } from '@example-app/books/containers/find-book-page.component';
-import { ViewBookPageComponent } from '@example-app/books/containers/view-book-page.component';
-import { SelectedBookPageComponent } from '@example-app/books/containers/selected-book-page.component';
-import { CollectionPageComponent } from '@example-app/books/containers/collection-page.component';
-import { MaterialModule } from '@example-app/material';
+import { BooksRoutingModule } from '@example-app/books/books-routing.module';
+import {
+  BookAuthorsComponent,
+  BookDetailComponent,
+  BookPreviewComponent,
+  BookPreviewListComponent,
+  BookSearchComponent,
+} from '@example-app/books/components';
+import {
+  CollectionPageComponent,
+  FindBookPageComponent,
+  SelectedBookPageComponent,
+  ViewBookPageComponent,
+} from '@example-app/books/containers';
+import { BookEffects, CollectionEffects } from '@example-app/books/effects';
 
 import { reducers } from '@example-app/books/reducers';
-import { BooksRoutingModule } from '@example-app/books/books-routing.module';
+import { MaterialModule } from '@example-app/material';
+import { PipesModule } from '@example-app/shared/pipes';
+
+export const COMPONENTS = [
+  BookAuthorsComponent,
+  BookDetailComponent,
+  BookPreviewComponent,
+  BookPreviewListComponent,
+  BookSearchComponent,
+];
+
+export const CONTAINERS = [
+  FindBookPageComponent,
+  ViewBookPageComponent,
+  SelectedBookPageComponent,
+  CollectionPageComponent,
+];
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
-    ComponentsModule,
     BooksRoutingModule,
 
     /**
@@ -40,12 +62,8 @@ import { BooksRoutingModule } from '@example-app/books/books-routing.module';
      * whether they are registered once or multiple times.
      */
     EffectsModule.forFeature([BookEffects, CollectionEffects]),
+    PipesModule,
   ],
-  declarations: [
-    FindBookPageComponent,
-    ViewBookPageComponent,
-    SelectedBookPageComponent,
-    CollectionPageComponent,
-  ],
+  declarations: [COMPONENTS, CONTAINERS],
 })
 export class BooksModule {}
