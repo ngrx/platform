@@ -36,37 +36,23 @@ The number one rule of NgRx, immutability. This `strictImmutability` check verif
 Example violation of the rule:
 
 ```ts
-function reducer(state = initialState, action: Action) {
-  switch (action.type) {
-    case '[Todo List] Add new todo':
+export const reducer= createReducer(initialState,
+  on(addTodo,(state) => ({ state.todoInput = '', state.todos.push(action.payload)  }))
       // vialation 1: we assign a new value to `todoInput` directly
-      state.todoInput = ''
       // vialotion 2: `push` modifies the array
-      state.todos.push(action.payload)
-      return state
-
-    default:
-      return state
-  }
-}
+);
 ```
 
 To fix the above violation, a new reference to the state has to be created:
 
 ```ts
-function reducer(state = initialState, action: Action) {
-  switch (action.type) {
-    case '[Todo List] Add new todo':
-      return {
-        ...state,
-        todoInput: '',
-        todos: [...state.todos, action.payload]
-      }
-
-    default:
-      return state
-  }
-}
+export const reducer= createReducer(initialState,
+   on(addTodo, (state) => ({
+    ...state,
+    todoInput : '' ,
+    todos: [...state.todos, action.payload]
+    }))
+);
 ```
 
 ### strictStateSerializability
@@ -76,48 +62,36 @@ This check verifies if the state is serializable. A serializable state is import
 Example violation of the rule:
 
 ```ts
-function reducer(state = initialState, action: Action) {
-  switch (action.type) {
-    case '[Todo List] Complete todo':
-      return {
-        ...state,
-        todos: {
-          ...state.todos,
-          [payload.id]: {
+export const reducer= createReducer(initialState,
+   on(addTodo, (state) => ({
+    ...state,
+    todos : {
+      ...state.todos,
+      [payload.id]: {
             ...state.todos[payload.id],
             // Vialation, Date is not seriazable
             completedOn: new Date(),
-          },
-        },
-      }
-
-    default:
-      return state
-  }
-}
+    },
+    }
+    }))
+);
 ```
 
 As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
-function reducer(state = initialState, action: Action) {
-  switch (action.type) {
-    case '[Todo List] Complete todo':
-      return {
-        ...state,
-        todos: {
-          ...state.todos,
-          [payload.id]: {
+export const reducer= createReducer(initialState,
+   on(addTodo, (state) => ({
+    ...state,
+    todos : {
+      ...state.todos,
+     [payload.id]: {
             ...state.todos[payload.id],
-            completedOn: new Date().toJSON(),
-          },
-        },
-      }
-
-    default:
-      return state
-  }
-}
+            completedOn: new Date().toJSON()
+          }
+    }
+    }))
+);
 ```
 
 ### strictActionSerializability

@@ -69,13 +69,7 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export function reducer(state = initialState, action): State {
-  switch (action.type) {
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer= createReducer(initialState)
 </code-example>
 
 ## Adapter Collection Methods
@@ -158,61 +152,40 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export function reducer(state = initialState, action: UserActions.Union): State {
-  switch (action.type) {
-    case UserActions.addUser.type: {
-      return adapter.addOne(action.user, state);
-    }
-
-    case UserActions.upsertUser.type: {
-      return adapter.upsertOne(action.user, state);
-    }
-
-    case UserActions.addUsers.type: {
-      return adapter.addMany(action.users, state);
-    }
-
-    case UserActions.upsertUsers.type: {
-      return adapter.upsertMany(action.users, state);
-    }
-
-    case UserActions.updateUser.type: {
-      return adapter.updateOne(action.user, state);
-    }
-
-    case UserActions.updateUsers.type: {
-      return adapter.updateMany(action.users, state);
-    }
-
-    case UserActions.mapUsers.type: {
-      return adapter.map(action.entityMap, state);
-    }
-
-    case UserActions.deleteUser.type: {
-      return adapter.removeOne(action.id, state);
-    }
-
-    case UserActions.deleteUsers.type: {
-      return adapter.removeMany(action.ids, state);
-    }
-
-    case UserActions.deleteUsersByPredicate.type: {
-      return adapter.removeMany(action.predicate, state);
-    }
-
-    case UserActions.loadUsers.type: {
-      return adapter.addAll(action.users, state);
-    }
-
-    case UserActions.clearUsers.type: {
-      return adapter.removeAll({ ...state, selectedUserId: null });
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer= createReducer(initialState,
+on(UserActions.addUser, (state) => {
+  adapter.addOne(action.user, state)
+}),
+on(UserActions.upsertUser,(state)=> {
+  adapter.upsertOne(action.user, state);
+}),
+on(UserActions.addUsers,(state)=> {
+  adapter.addMany(action.users, state);
+}),
+on(UserActions.upsertUsers,(state)=> {
+  adapter.upsertUsers(action.users, state);
+}),
+on(UserActions.updateUser,(state)=> {
+  adapter.updateOne(action.user, state);
+}),
+on(UserActions.updateUsers,(state)=> {
+  adapter.updateMany(action.users, state);
+}),
+on(UserActions.mapUsers,(state)=> {
+  adapter.map(action.entityMap, state);
+}),
+on(UserActions.deleteUsers,(state)=> {
+  adapter.removeOne(action.ids, state);
+}),
+on(UserActions.deleteUsersByPredicate,(state)=> {
+  adapter.updateMany(action.predicate, state);
+}),
+on(UserActions.loadUsers,(state)=> {
+  adapter.updateMany(action.users, state);
+}),
+on(UserActions.clearUsers,(state)=> {
+  adapter.removeAll({ ...state, selectedUserId: null });
+}));
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
 
