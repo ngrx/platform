@@ -1,5 +1,5 @@
 import * as ngCore from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { Store, StoreModule, META_REDUCERS } from '..';
 import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks } from '../src/models';
@@ -113,32 +113,29 @@ describe('Runtime checks:', () => {
   describe('State Serialization:', () => {
     const invalidAction = () => ({ type: ErrorTypes.UnserializableState });
 
-    it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictStateSerializability: true });
+    it(
+      'should throw when enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictStateSerializability: true });
 
-      store.subscribe({
-        error: err => {
-          expect(err).toMatch(/Detected unserializable state/);
-          done();
-        },
-      });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Detected unserializable state/);
+      })
+    );
 
-      store.dispatch(invalidAction());
-    });
+    it(
+      'should not throw when disabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictStateSerializability: false });
 
-    it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictStateSerializability: false });
-
-      store.subscribe({
-        next: ({ state }) => {
-          if (state.invalidSerializationState) {
-            done();
-          }
-        },
-      });
-
-      store.dispatch(invalidAction());
-    });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).not.toThrow();
+      })
+    );
   });
 
   describe('Action Serialization:', () => {
@@ -147,31 +144,29 @@ describe('Runtime checks:', () => {
       invalid: new Date(),
     });
 
-    it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictActionSerializability: true });
+    it(
+      'should throw when enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionSerializability: true });
 
-      store.subscribe({
-        error: err => {
-          expect(err).toMatch(/Detected unserializable action/);
-          done();
-        },
-      });
-      store.dispatch(invalidAction());
-    });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Detected unserializable action/);
+      })
+    );
 
-    it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictActionSerializability: false });
+    it(
+      'should not throw when disabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionSerializability: false });
 
-      store.subscribe({
-        next: ({ state }) => {
-          if (state.invalidSerializationAction) {
-            done();
-          }
-        },
-      });
-
-      store.dispatch(invalidAction());
-    });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).not.toThrow();
+      })
+    );
   });
 
   describe('State Mutations', () => {
@@ -179,31 +174,29 @@ describe('Runtime checks:', () => {
       type: ErrorTypes.MutateState,
     });
 
-    it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutability: true });
+    it(
+      'should throw when enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictImmutability: true });
 
-      store.subscribe({
-        error: _ => {
-          done();
-        },
-      });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Cannot add property/);
+      })
+    );
 
-      store.dispatch(invalidAction());
-    });
+    it(
+      'should not throw when disabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictImmutability: false });
 
-    it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutability: false });
-
-      store.subscribe({
-        next: ({ state }) => {
-          if (state.invalidMutationState) {
-            done();
-          }
-        },
-      });
-
-      store.dispatch(invalidAction());
-    });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).not.toThrow();
+      })
+    );
   });
 
   describe('Action Mutations', () => {
@@ -212,31 +205,29 @@ describe('Runtime checks:', () => {
       foo: 'foo',
     });
 
-    it('should throw when enabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutability: true });
+    it(
+      'should throw when enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictImmutability: true });
 
-      store.subscribe({
-        error: _ => {
-          done();
-        },
-      });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Cannot assign to read only property/);
+      })
+    );
 
-      store.dispatch(invalidAction());
-    });
+    it(
+      'should not throw when disabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictImmutability: false });
 
-    it('should not throw when disabled', (done: DoneFn) => {
-      const store = setupStore({ strictImmutability: false });
-
-      store.subscribe({
-        next: ({ state }) => {
-          if (state.invalidMutationAction) {
-            done();
-          }
-        },
-      });
-
-      store.dispatch(invalidAction());
-    });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).not.toThrow();
+      })
+    );
   });
 });
 
