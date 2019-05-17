@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+
 import { cold } from 'jasmine-marbles';
+
 import { Book } from '@example-app/books/models/book';
 import {
   BookStorageService,
