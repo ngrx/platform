@@ -64,9 +64,8 @@ $gold: (
 );
 aio-shell.page-home {
   .prettyprint-scroller {
-    overflow-x: auto;
+    overflow: auto;
     display: block;
-    max-width: 100%;
     max-width: 100vw;
   }
   pre.prettyprint {
