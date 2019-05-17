@@ -98,6 +98,12 @@ aio-shell.page-home {
     h3 {
       font-weight: bold;
     }
+
+    @media only screen and (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   .ngrx-callout-description {
@@ -113,6 +119,10 @@ aio-shell.page-home {
 
     p {
       color: rgba(255, 255, 255, 0.82);
+    }
+
+    @media only screen and (max-width: 600px) {
+      flex-basis: initial;
     }
   }
 
