@@ -31,4 +31,4 @@ export {
   SerializedRouterStateSnapshot,
   BaseRouterStoreState,
 } from './serializer';
-export { RouterAdapter } from './models';
+export * from './router_selectors';
