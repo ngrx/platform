@@ -9,7 +9,7 @@ interface StoreRouterConfig {
 </code-example>
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
-- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
+- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer` (see [Default Router State Serializer](guide/router-store/default-router-state-serializer)). See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
 - `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
 
 ## Custom Router State Serializer
