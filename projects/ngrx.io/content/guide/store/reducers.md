@@ -73,8 +73,8 @@ export const reducer = createReducer(
   initialScoreState,
   on(ScoreboardPageActions.homeScore, (state): State => ({ ...state, home: state.home + 1 })),
   on(ScoreboardPageActions.awayScore, (state): State => ({ ...state, away: state.away + 1 })),
-  on(ScoreboardPageActions.resetScore, (state): State => ({ ...state, home: 0 , away: 0 }))
-  );
+  on(ScoreboardPageActions.resetScore, (state): State => ({ ...state, home: 0, away: 0 }))
+);
 </code-example>
 
 Reducers use switch statements in combination with TypeScript's discriminated unions defined in your actions to provide type-safe processing of actions in a reducer. Switch statements use type unions to determine the correct shape of the action being consumed in each case. The action types defined with your actions are reused in your reducer functions as case statements. The type union is also provided to your reducer function to constrain the available actions that are handled in that reducer function.

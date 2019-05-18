@@ -46,12 +46,12 @@ export const reducer= createReducer(initialState,
 To fix the above violation, a new reference to the state has to be created:
 
 ```ts
-export const reducer= createReducer(initialState,
-   on(addTodo, (state) => ({
+export const reducer = createReducer(initialState,
+  on(addTodo, (state) => ({
     ...state,
-    todoInput : '' ,
+    todoInput: '',
     todos: [...state.todos, action.payload]
-    }))
+  }))
 );
 ```
 
@@ -62,35 +62,35 @@ This check verifies if the state is serializable. A serializable state is import
 Example violation of the rule:
 
 ```ts
-export const reducer= createReducer(initialState,
-   on(addTodo, (state) => ({
+export const reducer = createReducer(initialState,
+  on(addTodo, (state) => ({
     ...state,
-    todos : {
+    todos: {
       ...state.todos,
       [payload.id]: {
-            ...state.todos[payload.id],
-            // Vialation, Date is not seriazable
-            completedOn: new Date(),
-    },
+        ...state.todos[payload.id],
+        // Vialation, Date is not seriazable
+        completedOn: new Date(),
+      },
     }
-    }))
+  }))
 );
 ```
 
 As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
-export const reducer= createReducer(initialState,
-   on(addTodo, (state) => ({
+export const reducer = createReducer(initialState,
+  on(addTodo, (state) => ({
     ...state,
-    todos : {
+    todos: {
       ...state.todos,
-     [payload.id]: {
-            ...state.todos[payload.id],
-            completedOn: new Date().toJSON()
-          }
+      [payload.id]: {
+        ...state.todos[payload.id],
+        completedOn: new Date().toJSON()
+      }
     }
-    }))
+  }))
 );
 ```
 
