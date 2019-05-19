@@ -6,16 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CounterModule } from 'my-counter';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CounterModule
   ],
-  providers: [],
-  bootstrap: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
@@ -24,4 +19,4 @@ export class AppModule {
 
   }
 
- }
+}

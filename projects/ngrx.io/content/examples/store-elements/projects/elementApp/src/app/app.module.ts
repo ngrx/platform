@@ -12,7 +12,6 @@ import { CounterModule } from 'my-counter';
     BrowserModule,
     CounterModule
   ],
-  providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

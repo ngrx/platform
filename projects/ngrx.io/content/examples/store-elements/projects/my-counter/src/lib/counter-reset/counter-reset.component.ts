@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Reset } from '../counter.actions';
 
@@ -7,12 +7,9 @@ import { Reset } from '../counter.actions';
   templateUrl: './counter-reset.component.html',
   styleUrls: ['./counter-reset.component.css']
 })
-export class CounterResetComponent implements OnInit {
+export class CounterResetComponent {
 
   constructor(private store: Store<{ count: number }>) { }
-
-  ngOnInit() {
-  }
 
   reset() {
     this.store.dispatch(new Reset());
