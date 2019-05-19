@@ -12,7 +12,8 @@ search$ = createEffect(() =>
   this.actions$.pipe(
     ofType(BookActions.search),
     exhaustMap(action =>
-      this.googleBooksService.search(action.query)
+      this.googleBooksService
+        .search(action.query)
     )
   )
 );`;
