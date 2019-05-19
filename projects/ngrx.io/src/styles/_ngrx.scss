@@ -69,7 +69,6 @@ aio-shell.page-home {
     max-width: 100%;
   }
   pre.prettyprint {
-    min-width: 100%;
     border: none;
     padding: 1rem 2rem;
     margin: 0;
@@ -80,6 +79,9 @@ aio-shell.page-home {
     line-height: 1.6em;
     display: inline-block;
     background-color: rgba(0, 0, 0, 0.3);
+    @media screen and (max-width: 600px) {
+      min-width: 120%;
+    }
   }
   pre .nocode {
     background-color: none;
@@ -87,8 +89,7 @@ aio-shell.page-home {
   }
   pre .str {
     color: mat-color($dull-magenta, 100);
-  }
-  /* string  - pink */
+  } /* string  - pink */
   pre .kwd {
     color: #f0e68c;
     font-weight: bold;
@@ -136,7 +137,8 @@ aio-shell.page-home {
     margin-top: 0;
     margin-bottom: 0;
     color: #aeaeae;
-  } /* IE indents via margin-left */
+  }
+  /* IE indents via margin-left */
   li.L0,
   li.L1,
   li.L2,
