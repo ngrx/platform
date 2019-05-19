@@ -174,8 +174,11 @@ export const reducer = createReducer(initialState,
   on(UserActions.mapUsers, (state) => {
     adapter.map(action.entityMap, state);
   }),
-  on(UserActions.deleteUsers, (state) => {
+  on(UserActions.deleteUser, (state) => {
     adapter.removeOne(action.ids, state);
+  }),
+  on(UserActions.deleteUsers, (state) => {
+    adapter.removeMany(action.ids, state);
   }),
   on(UserActions.deleteUsersByPredicate, (state) => {
     adapter.updateMany(action.predicate, state);

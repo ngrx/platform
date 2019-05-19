@@ -36,10 +36,13 @@ The number one rule of NgRx, immutability. This `strictImmutability` check verif
 Example violation of the rule:
 
 ```ts
-export const reducer= createReducer(initialState,
-  on(addTodo,(state) => ({ state.todoInput = '', state.todos.push(action.payload)  }))
-      // vialation 1: we assign a new value to `todoInput` directly
-      // vialotion 2: `push` modifies the array
+export const reducer = createReducer(initialState,
+  on(addTodo, (state) => ({
+    // vialation 1: we assign a new value to `todoInput` directly
+    state.todoInput = '',
+    // vialotion 2: `push` modifies the array
+    state.todos.push(action.payload)
+  }))
 );
 ```
 
@@ -63,13 +66,13 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state) => ({
+  on(completeTodo, (state) => ({
     ...state,
     todos: {
       ...state.todos,
       [payload.id]: {
         ...state.todos[payload.id],
-        // Vialation, Date is not seriazable
+        // Violation, Date is not serializable
         completedOn: new Date(),
       },
     }
@@ -81,7 +84,7 @@ As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state) => ({
+  on(completeTodo, (state) => ({
     ...state,
     todos: {
       ...state.todos,
