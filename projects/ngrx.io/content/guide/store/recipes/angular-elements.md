@@ -2,7 +2,7 @@
 
 ## Creating Angular Elements
 
-The following recipe illustrates utilizing Angular Elements with a NgRx Store. This provides the ability  to manage the state of a counter, and to select and display that counter state from within separate Angular Elements. This is all accomplished from within a single Angular Project and static HTML page.
+The following recipe illustrates utilizing Angular Elements with a NgRx Store. This provides the ability to manage the state of a counter, and to select and display that counter state from within separate Angular Elements. This is all accomplished from within a single Angular Project and static HTML page.
 
 ## Recipe
 
@@ -95,7 +95,7 @@ npm install jscat --save-dev
 4. Add two (2) new commands to the `scripts` section of `package.json`.
 
 ```json
-"build-element": "ng build my-counter && ng build - project=counterelement - prod - output-hashing=none",
+"build-element": "ng build my-counter && ng build --project=counterelement --prod --output-hashing=none",
 "package": "jscat ./dist/counterelement/runtime.js ./dist/counterelement/polyfills.js ./dist/counterelement/scripts.js ./dist/counterelement/main.js > htmlapp/counter-element.js",
 ```
 
