@@ -9,13 +9,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { CoreModule } from '@example-app/core/core.module';
 import { AuthModule } from '@example-app/auth';
 
 import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 
-import { AppComponent } from '@example-app/core/containers/app.component';
+import { CoreModule } from '@example-app/core';
 import { AppRoutingModule } from '@example-app/app-routing.module';
+import { AppComponent } from '@example-app/core/containers';
 
 @NgModule({
   imports: [
@@ -70,7 +70,6 @@ import { AppRoutingModule } from '@example-app/app-routing.module';
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
     EffectsModule.forRoot([]),
-
     CoreModule,
   ],
   bootstrap: [AppComponent],
