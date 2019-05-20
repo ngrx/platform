@@ -1,17 +1,21 @@
-import { CollectionPageComponent } from '@example-app/books/containers/collection-page.component';
-import { Store } from '@ngrx/store';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { MatCardModule, MatInputModule } from '@angular/material';
-import { BookPreviewListComponent } from '@example-app/books/components/book-preview-list.component';
-import { BookPreviewComponent } from '@example-app/books/components/book-preview.component';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+
 import { CollectionPageActions } from '@example-app/books/actions';
+import {
+  BookAuthorsComponent,
+  BookPreviewComponent,
+  BookPreviewListComponent,
+} from '@example-app/books/components';
+import { CollectionPageComponent } from '@example-app/books/containers';
 import * as fromBooks from '@example-app/books/reducers';
-import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
-import { BookAuthorsComponent } from '@example-app/books/components/book-authors.component';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;
@@ -34,7 +38,11 @@ describe('Collection Page', () => {
         AddCommasPipe,
         EllipsisPipe,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore({
+          selectors: [{ selector: fromBooks.getBookCollection, value: [] }],
+        }),
+      ],
     });
 
     fixture = TestBed.createComponent(CollectionPageComponent);
@@ -45,8 +53,6 @@ describe('Collection Page', () => {
   });
 
   it('should compile', () => {
-    store.overrideSelector(fromBooks.getBookCollection, []);
-
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();

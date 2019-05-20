@@ -23,13 +23,16 @@ describe('Login Page', () => {
         ReactiveFormsModule,
       ],
       declarations: [LoginPageComponent, LoginFormComponent],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore({
+          selectors: [{ selector: fromAuth.getLoginPagePending, value: false }],
+        }),
+      ],
     });
 
     fixture = TestBed.createComponent(LoginPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.get(Store);
-    store.overrideSelector(fromAuth.getLoginPagePending, false);
 
     spyOn(store, 'dispatch');
   });

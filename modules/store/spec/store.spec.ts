@@ -449,11 +449,24 @@ describe('ngRx Store', () => {
 
   describe('Mock Store', () => {
     let mockStore: MockStore<TestAppSchema>;
-    const initialState = { counter1: 0, counter2: 1 };
+    const initialState = { counter1: 0, counter2: 1, counter4: 3 };
+    const stringSelector = 'counter4';
+    const memoizedSelector = createSelector(
+      () => initialState,
+      state => state.counter4
+    );
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideMockStore({ initialState })],
+        providers: [
+          provideMockStore({
+            initialState,
+            selectors: [
+              { selector: stringSelector, value: 87 },
+              { selector: memoizedSelector, value: 98 },
+            ],
+          }),
+        ],
       });
 
       mockStore = TestBed.get(Store);
@@ -483,7 +496,31 @@ describe('ngRx Store', () => {
       mockStore.dispatch(action);
     });
 
-    it('should allow mocking of store.select with string selector', () => {
+    it('should allow mocking of store.select with string selector using provideMockStore', () => {
+      const expectedValue = 87;
+
+      mockStore
+        .select(stringSelector)
+        .subscribe(result => expect(result).toBe(expectedValue));
+    });
+
+    it('should allow mocking of store.select with a memoized selector using provideMockStore', () => {
+      const expectedValue = 98;
+
+      mockStore
+        .select(memoizedSelector)
+        .subscribe(result => expect(result).toBe(expectedValue));
+    });
+
+    it('should allow mocking of store.pipe(select()) with a memoized selector using provideMockStore', () => {
+      const expectedValue = 98;
+
+      mockStore
+        .pipe(select(memoizedSelector))
+        .subscribe(result => expect(result).toBe(expectedValue));
+    });
+
+    it('should allow mocking of store.select with string selector using overrideSelector', () => {
       const mockValue = 5;
 
       mockStore.overrideSelector('counter1', mockValue);
@@ -493,7 +530,7 @@ describe('ngRx Store', () => {
         .subscribe(result => expect(result).toBe(mockValue));
     });
 
-    it('should allow mocking of store.select with a memoized selector', () => {
+    it('should allow mocking of store.select with a memoized selector using overrideSelector', () => {
       const mockValue = 5;
       const selector = createSelector(
         () => initialState,
@@ -507,7 +544,7 @@ describe('ngRx Store', () => {
         .subscribe(result => expect(result).toBe(mockValue));
     });
 
-    it('should allow mocking of store.pipe(select()) with a memoized selector', () => {
+    it('should allow mocking of store.pipe(select()) with a memoized selector using overrideSelector', () => {
       const mockValue = 5;
       const selector = createSelector(
         () => initialState,

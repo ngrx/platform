@@ -1,3 +1,4 @@
+import { Book } from '@example-app/books/models';
 import {
   createSelector,
   createFeatureSelector,
@@ -8,7 +9,6 @@ import * as fromSearch from '@example-app/books/reducers/search.reducer';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
 import * as fromCollection from '@example-app/books/reducers/collection.reducer';
 import * as fromRoot from '@example-app/reducers';
-import { Book } from '../models/book';
 
 export interface BooksState {
   search: fromSearch.State;

@@ -17,7 +17,7 @@ export function createActiveRuntimeChecks(
   if (isDevMode()) {
     if (runtimeChecks === undefined) {
       console.warn(
-        '@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version, see https://ngrx.io/guide/migration/v8 for more information.'
+        '@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.'
       );
     }
     return {

@@ -6,7 +6,7 @@ import {
   ViewBookPageActions,
   CollectionApiActions,
 } from '@example-app/books/actions';
-import { Book, generateMockBook } from '@example-app/books/models/book';
+import { Book, generateMockBook } from '@example-app/books/models';
 
 describe('BooksReducer', () => {
   const book1 = generateMockBook();

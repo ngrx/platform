@@ -71,7 +71,7 @@
       "hidden": true
     },
     {
-      "title": "Store",
+      "title": "@ngrx/store",
       "children": [
         {
           "title": "Getting Started",
@@ -136,7 +136,7 @@
       ]
     },
     {
-      "title": "Store Devtools",
+      "title": "@ngrx/store-devtools",
       "children": [
         {
           "title": "Overview",
@@ -153,7 +153,7 @@
       ]
     },
     {
-      "title": "Effects",
+      "title": "@ngrx/effects",
       "children": [
         {
           "title": "Overview",
@@ -170,11 +170,15 @@
         {
           "title": "Lifecycle",
           "url": "guide/effects/lifecycle"
+        },
+        {
+          "title": "Operators",
+          "url": "guide/effects/operators"
         }
       ]
     },
     {
-      "title": "Router Store",
+      "title": "@ngrx/router-store",
       "children": [
         {
           "title": "Overview",
@@ -195,7 +199,7 @@
       ]
     },
     {
-      "title": "Entity",
+      "title": "@ngrx/entity",
       "children": [
         {
           "title": "Overview",
@@ -216,7 +220,7 @@
       ]
     },
     {
-      "title": "Data",
+      "title": "@ngrx/data",
       "children": [
         {
           "title": "Overview",
@@ -295,7 +299,7 @@
       ]
     },
     {
-      "title": "Schematics",
+      "title": "@ngrx/schematics",
       "children": [
         {
           "title": "Overview",

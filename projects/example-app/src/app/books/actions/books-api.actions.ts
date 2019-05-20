@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Book } from '@example-app/books/models/book';
+
+import { Book } from '@example-app/books/models';
 
 export const searchSuccess = createAction(
   '[Books/API] Search Success',

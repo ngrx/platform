@@ -1,4 +1,4 @@
-# NgRx Data
+# @ngrx/data
 
 NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of **entity data** while reducing the amount of explicitness.  
 
