@@ -8,7 +8,7 @@ import {
 import {
   BaseRouterStoreState,
   SerializedRouterStateSnapshot,
-} from './serializer';
+} from './serializers';
 
 export type RouterReducerState<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
