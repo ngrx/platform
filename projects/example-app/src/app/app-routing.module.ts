@@ -11,7 +11,11 @@ export const routes: Routes = [
     loadChildren: '@example-app/books/books.module#BooksModule',
     canActivate: [AuthGuard],
   },
-  { path: '**', component: NotFoundPageComponent },
+  {
+    path: '**',
+    component: NotFoundPageComponent,
+    data: { title: 'Not found' },
+  },
 ];
 
 @NgModule({
