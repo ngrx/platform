@@ -10,8 +10,8 @@ ts_test_library(
     ),
     deps = [
         "//modules/store",
-        "//modules/store/testing",
         "//modules/store/spec/fixtures",
+        "//modules/store/testing",
         "@npm//rxjs",
         "@npm//ts-snippet",
     ],
