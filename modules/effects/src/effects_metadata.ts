@@ -5,8 +5,12 @@ import { getEffectDecoratorMetadata } from './effect_decorator';
 export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   const metadata: EffectsMetadata<T> = {};
 
-  for (const { propertyName, dispatch } of getSourceMetadata(instance)) {
-    metadata[propertyName] = { dispatch };
+  for (const {
+    propertyName,
+    dispatch,
+    resubscribeOnError,
+  } of getSourceMetadata(instance)) {
+    metadata[propertyName] = { dispatch, resubscribeOnError };
   }
 
   return metadata;
