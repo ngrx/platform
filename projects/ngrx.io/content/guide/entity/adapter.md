@@ -181,10 +181,10 @@ export const reducer = createReducer(initialState,
     adapter.removeMany(action.ids, state);
   }),
   on(UserActions.deleteUsersByPredicate, (state) => {
-    adapter.updateMany(action.predicate, state);
+    adapter.removeMany(action.predicate, state);
   }),
   on(UserActions.loadUsers, (state) => {
-    adapter.updateMany(action.users, state);
+    adapter.addAll(action.users, state);
   }),
   on(UserActions.clearUsers, (state) => {
     adapter.removeAll({ ...state, selectedUserId: null });
