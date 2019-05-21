@@ -12,11 +12,27 @@ export function getSelectors<V>(
 export function getSelectors<T>(
   selectState?: (state: any) => RouterReducerState
 ): RouterStateSelectors<T, any> {
-  const selectQueryParams = (state: any) =>
-    state && state.state.root.queryParams;
-  const selectRouteParams = (state: any) =>
-    state && state.state.root.routeParams;
-  const selectRouteData = (state: any) => state && state.state.root.data;
+  const selectQueryParams = (state: any) => {
+    if (state && state.state.root) {
+      return routeTraverse(state, 'query');
+    } else {
+      return state;
+    }
+  };
+  const selectRouteParams = (state: any) => {
+    if (state && state.state.root) {
+      return routeTraverse(state, 'route');
+    } else {
+      return state;
+    }
+  };
+  const selectRouteData = (state: any) => {
+    if (state && state.state.root) {
+      return routeTraverse(state, 'data');
+    } else {
+      return state;
+    }
+  };
   const selectUrl = (state: any) => state && state.state.url;
 
   if (!selectState) {
@@ -34,4 +50,23 @@ export function getSelectors<T>(
     selectRouteData: createSelector(selectState, selectRouteData),
     selectUrl: createSelector(selectState, selectUrl),
   };
+}
+
+export function routeTraverse(state: any, v: any) {
+  let routerState = state.state;
+  let route = routerState.root;
+  while (route.firstChild) {
+    route = route.firstChild;
+  }
+  switch (v) {
+    case 'data':
+      const { data } = route;
+      return { data };
+    case 'query':
+      const { queryParams } = route;
+      return { queryParams };
+    case 'route':
+      const { params } = route;
+      return { params };
+  }
 }
