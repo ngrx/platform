@@ -95,14 +95,14 @@ export class MockStore<T> extends Store<T> {
     MockStore.selectors.clear();
   }
 
-  select(selector: any) {
+  select(selector: any, prop?: any) {
     if (MockStore.selectors.has(selector)) {
       return new BehaviorSubject<any>(
         MockStore.selectors.get(selector)
       ).asObservable();
     }
 
-    return super.select(selector);
+    return super.select(selector, prop);
   }
 
   addReducer() {
