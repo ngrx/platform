@@ -44,7 +44,7 @@ describe('Effects metadata', () => {
         @Effect({ dispatch: false })
         e: any;
         f = createEffect(() => of({ type: 'f' }), { dispatch: false });
-        g = createEffect(() => of({ type: 'f' }), {
+        g = createEffect(() => of({ type: 'g' }), {
           resubscribeOnError: false,
         });
       }

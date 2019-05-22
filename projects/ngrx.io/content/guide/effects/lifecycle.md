@@ -42,10 +42,10 @@ export class LogEffects {
 
 Starting with version 8, when an error happens in the effect's main stream it is
 reported using Angular's `ErrorHandler`, and the source effect is 
-**automatically** resubscribe (instead of completeling), so it continues to 
+**automatically** resubscribed to (instead of completing), so it continues to 
 listen to all dispatched Actions.
 
-Generally, errors should be handled by users and operators such as `mapToAction`
+Generally, errors should be handled by users, and operators such as `mapToAction`
 should make it easier to do. However, for the cases where errors were missed, 
 this new behavior adds an additional safety net.
 
