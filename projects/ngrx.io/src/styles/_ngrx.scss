@@ -67,7 +67,6 @@ aio-shell.page-home {
     overflow: auto;
     display: flex;
     max-width: 100%;
-    justify-content: stretch;
   }
   pre.prettyprint {
     border: none;
@@ -80,10 +79,9 @@ aio-shell.page-home {
     line-height: 1.6em;
     display: inline-block;
     background-color: rgba(0, 0, 0, 0.3);
-    flex: 1 1 100%
-    // @media screen and (max-width: 600px) {
-    //   min-width: 140%;
-    // }
+    @media screen and (max-width: 600px) {
+      min-width: 440px;
+    }
   }
   pre .nocode {
     background-color: none;
