@@ -81,12 +81,14 @@ aio-shell.page-home {
     background-color: rgba(0, 0, 0, 0.3);
     @media screen and (max-width: 600px) {
       min-width: 460px;
-      // just for safari
-      @media not all and (min-resolution: 0.001dpcm) {
-        @supports (-webkit-appearance: none) {
-          .safari_only {
-            min-width: 580px;
-          }
+    }
+  }
+  // just for safari
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      pre.prettyprint {
+        @media screen and (max-width: 600px) {
+          min-width: 580px;
         }
       }
     }
