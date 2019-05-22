@@ -30,7 +30,6 @@ $dull-magenta: (
     A700: #000000,
   ),
 );
-
 $gold: (
   50: #fff5e7,
   100: #fee6c4,
@@ -63,98 +62,123 @@ $gold: (
     A700: #000000,
   ),
 );
-
 aio-shell.page-home {
+  .prettyprint-scroller {
+    overflow: auto;
+    display: block;
+    max-width: 100%;
+  }
   pre.prettyprint {
     border: none;
-    padding: 16px;
+    padding: 1rem 2rem;
     margin: 0;
     border-radius: 3px;
     font-family: 'PT Mono', monospace;
     font-weight: normal;
     font-size: 13px;
     line-height: 1.6em;
-    display: block;
+    display: inline-block;
     background-color: rgba(0, 0, 0, 0.3);
+    @media screen and (max-width: 600px) {
+      min-width: 460px;
+    }
   }
+
+   // just for safari on ios
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      pre.prettyprint {
+        @media screen and (max-width: 600px) {
+          min-width: 680px;
+        }
+      }
+    }
+  }
+  
   pre .nocode {
     background-color: none;
     color: #000;
   }
   pre .str {
     color: mat-color($dull-magenta, 100);
-  } /* string  - pink */
+  }
+  /* string  - pink */
   pre .kwd {
     color: #f0e68c;
     font-weight: bold;
   }
   pre .com {
     color: #87ceeb;
-  } /* comment - skyblue */
+  }
+  /* comment - skyblue */
   pre .typ {
     color: mat-color($gold, 300);
-  } /* type    - lightgreen */
+  }
+  /* type    - lightgreen */
   pre .lit {
     color: mat-color($dull-magenta, 300);
-  } /* literal - darkred */
+  }
+  /* literal - darkred */
   pre .pun {
     color: #fff;
-  } /* punctuation */
+  }
+  /* punctuation */
   pre .pln {
     color: #fff;
-  } /* plaintext */
+  }
+  /* plaintext */
   pre .tag {
     color: #f0e68c;
     font-weight: bold;
-  } /* html/xml tag    - lightyellow */
+  }
+  /* html/xml tag    - lightyellow */
   pre .atn {
     color: #bdb76b;
     font-weight: bold;
-  } /* attribute name  - khaki */
+  }
+  /* attribute name  - khaki */
   pre .atv {
     color: mat-color($dull-magenta, 100);
-  } /* attribute value - pink */
+  }
+  /* attribute value - pink */
   pre .dec {
     color: mat-color($gold, 300);
-  } /* decimal         - lightgreen */
-
+  }
+  /* decimal         - lightgreen */
   /* Specify class=linenums on a pre to get line numbering */
   ol.linenums {
     margin-top: 0;
     margin-bottom: 0;
     color: #aeaeae;
-  } /* IE indents via margin-left */
-    li.L0,
-    li.L1,
-    li.L2,
-    li.L3,
-    li.L5,
-    li.L6,
-    li.L7,
-    li.L8 {
-      list-style-type: none;
-    }
-    /* Alternate shading for lines */
-    li.L1,
-    li.L3,
-    li.L5,
-    li.L7,
-    li.L9 {
+  }
+  /* IE indents via margin-left */
+  li.L0,
+  li.L1,
+  li.L2,
+  li.L3,
+  li.L5,
+  li.L6,
+  li.L7,
+  li.L8 {
+    list-style-type: none;
+  }
+  /* Alternate shading for lines */
+  li.L1,
+  li.L3,
+  li.L5,
+  li.L7,
+  li.L9 {
   }
 }
-
 ngrx-circles circle {
   fill: white;
 }
-
 ngrx-circles[color='primary'] circle {
   fill: mat-color($dull-magenta, 500);
 }
-
 ngrx-circles[color='accent'] circle {
   fill: mat-color($gold, 500);
 }
-
 ngrx-circles {
   @for $i from 1 to 10 {
     g:nth-of-type(#{$i}) {
