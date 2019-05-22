@@ -58,17 +58,35 @@ metadata (second argument).
 
 <code-example header="disable-resubscribe.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { tap } from 'rxjs/operators';
+import { Actions, ofType, createEffect, mapToAction } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, exhaustMap, map } from 'rxjs/operators';
+import {
+  LoginPageActions,
+  AuthApiActions,
+} from '../actions';
+import { Credentials } from '../models/user';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class ErrorFreeEffects {
-  constructor(private actions$: Actions) {}
-  
-  disabledResubscriptionsActions$ = createEffect(() =>
+export class AuthEffects {
+  login$ = createEffect(() =>
     this.actions$.pipe(
-      tap(action => console.log(action))
-    ), { resubscribeOnError: false });
+      ofType(LoginPageActions.login),
+      mapToAction(
+        // Happy path callback
+        action => this.authService.login(action.credentials).pipe(
+            map(user => AuthApiActions.loginSuccess({ user }))),
+        // error callback
+        error => AuthApiActions.loginFailure({ error }),
+      )
+    // Errors are handled and it is safe to disable resubscription 
+    ), {resubscribeOnError: false });
+
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService
+  ) {}
 }
 </code-example>
 
