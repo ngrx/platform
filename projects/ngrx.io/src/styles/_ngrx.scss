@@ -80,19 +80,10 @@ aio-shell.page-home {
     display: inline-block;
     background-color: rgba(0, 0, 0, 0.3);
     @media screen and (max-width: 600px) {
-      min-width: 460px;
+      min-width: 580px;
     }
   }
-  // just for safari
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) {
-      pre.prettyprint {
-        @media screen and (max-width: 600px) {
-          min-width: 580px;
-        }
-      }
-    }
-  }
+  
   pre .nocode {
     background-color: none;
     color: #000;
