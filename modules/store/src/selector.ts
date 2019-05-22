@@ -489,7 +489,7 @@ export function createSelector<
 
 export function createSelector(
   ...input: any[]
-): Selector<any, any> | SelectorWithProps<any, any, any> {
+): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
   return createSelectorFactory(defaultMemoize)(...input);
 }
 
