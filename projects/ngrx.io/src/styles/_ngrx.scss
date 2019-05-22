@@ -81,10 +81,13 @@ aio-shell.page-home {
     background-color: rgba(0, 0, 0, 0.3);
     @media screen and (max-width: 600px) {
       min-width: 460px;
-      _::-webkit-full-page-media,
-      _:future,
-      :root .safari_only {
-        min-width: 580px;
+      // just for safari
+      @media not all and (min-resolution: 0.001dpcm) {
+        @supports (-webkit-appearance: none) {
+          .safari_only {
+            min-width: 580px;
+          }
+        }
       }
     }
   }
@@ -94,7 +97,8 @@ aio-shell.page-home {
   }
   pre .str {
     color: mat-color($dull-magenta, 100);
-  } /* string  - pink */
+  }
+  /* string  - pink */
   pre .kwd {
     color: #f0e68c;
     font-weight: bold;
