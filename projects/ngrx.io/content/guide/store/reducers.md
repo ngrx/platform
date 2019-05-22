@@ -75,7 +75,7 @@ export const reducer = createReducer(
 );
 </code-example>
 
-In the example above, the reducer is handling 3 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, and `[Scoreboard Page] Reset`. Each action is strongly-typed based on the provided `ActionsUnion`. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+In the example above, the reducer is handling 3 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, and `[Scoreboard Page] Reset`. Each action is strongly-typed. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
 
 <div class="alert is-important">
 
