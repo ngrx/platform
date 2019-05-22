@@ -100,7 +100,7 @@ export interface User {
 </code-example>
 
 <code-example header="user.actions.ts">
-import { createAction, props, union } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
@@ -118,21 +118,6 @@ export const deleteUsers = createAction('[User/API] Delete Users', props&lt;{ id
 export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props&lt;{ predicate: Predicate&lt;User&gt; }&gt;());
 export const clearUsers = createAction('[User/API] Clear Users');
 
-const all = union({
-  loadUsers,
-  addUser,
-  upsertUser,
-  addUsers,
-  upsertUsers,
-  updateUser,
-  updateUsers,
-  mapUsers,
-  deleteUser,
-  deleteUsers,
-  deleteUsersByPredicate,
-  clearUsers
-});
-export type Union = typeof all;
 </code-example>
 
 <code-example header="user.reducer.ts">

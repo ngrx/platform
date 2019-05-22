@@ -116,7 +116,7 @@ const createTodo = createAction('[Todo List] Add new todo', todo => ({
 The fix for this violation is to not add functions on actions, as a replacement a function can be created:
 
 ```ts
-const createTodo = createAction('[Todo List] Add new todo', todo => todo)
+const createTodo = createAction('[Todo List] Add new todo', props<{ todo: Todo }>());
 
 function logTodo (todo: Todo) {
   console.log(todo);
