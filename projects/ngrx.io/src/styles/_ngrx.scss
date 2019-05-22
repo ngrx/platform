@@ -81,6 +81,11 @@ aio-shell.page-home {
     background-color: rgba(0, 0, 0, 0.3);
     @media screen and (max-width: 600px) {
       min-width: 460px;
+      _::-webkit-full-page-media,
+      _:future,
+      :root .safari_only {
+        min-width: 580px;
+      }
     }
   }
   pre .nocode {
