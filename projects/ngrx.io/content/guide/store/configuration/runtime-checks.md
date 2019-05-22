@@ -37,7 +37,7 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state) => ({
+  on(addTodo, state => ({
     // vialation 1: we assign a new value to `todoInput` directly
     state.todoInput = '',
     // vialotion 2: `push` modifies the array
@@ -50,7 +50,7 @@ To fix the above violation, a new reference to the state has to be created:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state) => ({
+  on(addTodo, state => ({
     ...state,
     todoInput: '',
     todos: [...state.todos, action.payload]
@@ -66,7 +66,7 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(completeTodo, (state) => ({
+  on(completeTodo, state => ({
     ...state,
     todos: {
       ...state.todos,
@@ -84,7 +84,7 @@ As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(completeTodo, (state) => ({
+  on(completeTodo, state => ({
     ...state,
     todos: {
       ...state.todos,
@@ -104,7 +104,7 @@ The `strictActionSerializability` check resembles `strictStateSerializability` b
 Example violation of the rule:
 
 ```ts
-const createTodo = createAction('[Todo List] Add new todo', (todo) => ({
+const createTodo = createAction('[Todo List] Add new todo', todo => ({
   todo,
   // Violation, a function is not serializable
   logTodo: () => {
@@ -116,7 +116,7 @@ const createTodo = createAction('[Todo List] Add new todo', (todo) => ({
 The fix for this violation is to not add functions on actions, as a replacement a function can be created:
 
 ```ts
-const createTodo = createAction('[Todo List] Add new todo', (todo) => todo)
+const createTodo = createAction('[Todo List] Add new todo', todo => todo)
 
 function logTodo (todo: Todo) {
   console.log(todo);

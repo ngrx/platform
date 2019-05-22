@@ -71,9 +71,9 @@ The reducer function's responsibility is to handle the state transitions in an i
 <code-example header="scoreboard.reducer.ts">
 export const reducer = createReducer(
   initialScoreState,
-  on(ScoreboardPageActions.homeScore, (state) => ({ ...state, home: state.home + 1 })),
-  on(ScoreboardPageActions.awayScore, (state) => ({ ...state, away: state.away + 1 })),
-  on(ScoreboardPageActions.resetScore, (state) => ({ home: 0, away: 0 }))
+  on(ScoreboardPageActions.homeScore, state => ({ ...state, home: state.home + 1 })),
+  on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
+  on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 }))
 );
 </code-example>
 
