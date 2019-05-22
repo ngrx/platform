@@ -40,20 +40,20 @@ export class LogEffects {
 
 ### Resubscribe on Error
 
-Starting from NgRx V8 when error happens in the effect's main stream it is
-reported using Angular's `ErrorHandler` and the source effect is 
+Starting with version 8, when an error happens in the effect's main stream it is
+reported using Angular's `ErrorHandler`, and the source effect is 
 **automatically** resubscribe (instead of completeling), so it continues to 
-listen to any new dispatched Actions.
+listen to all dispatched Actions.
 
 Generally, errors should be handled by users and operators such as `mapToAction`
 should make it easier to do. However, for the cases where errors were missed, 
-this new behavior adds additional safety net.
+this new behavior adds an additional safety net.
 
-In some cases where particular RxJS operators are used the new behavior might
-produce unexpected results. For example, if the `startWith` operator is within 
+In some cases where particular RxJS operators are used, the new behavior might
+produce unexpected results. For example, if the `startWith` operator is within the
 effect's pipe then it will be triggered again.
 
-To remove resubscriptions add `{resubscribeOnError: false}` to `createEffect` 
+To disable resubscriptions add `{resubscribeOnError: false}` to the `createEffect` 
 metadata (second argument).
 
 <code-example header="disable-resubscribe.effects.ts">
