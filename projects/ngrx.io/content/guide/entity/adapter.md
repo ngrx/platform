@@ -157,7 +157,7 @@ export const reducer = createReducer(initialState,
     return adapter.updateMany(action.users, state);
   }),
   on(UserActions.mapUsers, state => {
-    adapter.map(action.entityMap, state);
+    return adapter.map(action.entityMap, state);
   }),
   on(UserActions.deleteUser, state => {
     return adapter.removeOne(action.ids, state);
