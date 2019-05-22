@@ -1,5 +1,5 @@
 import { compose } from '@ngrx/store';
-import { EffectMetadata } from './models';
+import { EffectMetadata, EffectConfig } from './models';
 import { getSourceForInstance } from './utils';
 
 const METADATA_KEY = '__@ngrx/effects__';
@@ -7,7 +7,7 @@ const METADATA_KEY = '__@ngrx/effects__';
 export function Effect<T>({
   dispatch = true,
   resubscribeOnError = true,
-} = {}): PropertyDecorator {
+}: EffectConfig = {}): PropertyDecorator {
   return function<K extends Extract<keyof T, string>>(
     target: T,
     propertyName: K
