@@ -1,15 +1,25 @@
 import { compose } from '@ngrx/store';
-import { EffectMetadata } from './models';
+import { EffectMetadata, EffectConfig } from './models';
 import { getSourceForInstance } from './utils';
 
 const METADATA_KEY = '__@ngrx/effects__';
 
-export function Effect<T>({ dispatch = true } = {}): PropertyDecorator {
+export function Effect<T>({
+  dispatch = true,
+  resubscribeOnError = true,
+}: EffectConfig = {}): PropertyDecorator {
   return function<K extends Extract<keyof T, string>>(
     target: T,
     propertyName: K
   ) {
-    const metadata: EffectMetadata<T> = { propertyName, dispatch };
+    // Right now both createEffect and @Effect decorator set default values.
+    // Ideally that should only be done in one place that aggregates that info,
+    // for example in mergeEffects().
+    const metadata: EffectMetadata<T> = {
+      propertyName,
+      dispatch,
+      resubscribeOnError,
+    };
     setEffectMetadataEntries<T>(target, [metadata]);
   } as (target: {}, propertyName: string | symbol) => void;
 }

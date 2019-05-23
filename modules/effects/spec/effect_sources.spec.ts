@@ -1,8 +1,8 @@
 import { ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { cold, getTestScheduler } from 'jasmine-marbles';
+import { cold, hot, getTestScheduler } from 'jasmine-marbles';
 import { concat, NEVER, Observable, of, throwError, timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 
 import {
   Effect,
@@ -235,6 +235,54 @@ describe('EffectSources', () => {
         );
       });
 
+      it('should report an error if an effect throws one', () => {
+        const sources$ = of(new SourceError());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error('An Error')
+        );
+      });
+
+      it('should resubscribe on error by default', () => {
+        class Eff {
+          @Effect()
+          b$ = hot('a--b--c--d').pipe(
+            map(v => {
+              if (v == 'b') throw new Error('An Error');
+              return v;
+            })
+          );
+        }
+
+        const sources$ = of(new Eff());
+
+        //                       👇 'b' is ignored.
+        const expected = cold('a-----c--d');
+
+        expect(toActions(sources$)).toBeObservable(expected);
+      });
+
+      it('should not resubscribe on error when resubscribeOnError is false', () => {
+        class Eff {
+          @Effect({ resubscribeOnError: false })
+          b$ = hot('a--b--c--d').pipe(
+            map(v => {
+              if (v == 'b') throw new Error('An Error');
+              return v;
+            })
+          );
+        }
+
+        const sources$ = of(new Eff());
+
+        //                       👇 completes.
+        const expected = cold('a--|');
+
+        expect(toActions(sources$)).toBeObservable(expected);
+      });
+
       it(`should not break when the action in the error message can't be stringified`, () => {
         const sources$ = of(new SourceG());
 
@@ -452,6 +500,77 @@ describe('EffectSources', () => {
         expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
           new Error('Effect "SourceF.f$" dispatched an invalid action: null')
         );
+      });
+
+      it('should report an error if an effect throws one', () => {
+        const sources$ = of(new SourceError());
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error('An Error')
+        );
+      });
+
+      it('should resubscribe on error by default', () => {
+        const sources$ = of(
+          new class {
+            b$ = createEffect(() =>
+              hot('a--b--c--d').pipe(
+                map(v => {
+                  if (v == 'b') throw new Error('An Error');
+                  return v;
+                })
+              )
+            );
+          }()
+        );
+        //                       👇 'b' is ignored.
+        const expected = cold('a-----c--d');
+
+        expect(toActions(sources$)).toBeObservable(expected);
+      });
+
+      it('should resubscribe on error by default when dispatch is false', () => {
+        const sources$ = of(
+          new class {
+            b$ = createEffect(
+              () =>
+                hot('a--b--c--d').pipe(
+                  map(v => {
+                    if (v == 'b') throw new Error('An Error');
+                    return v;
+                  })
+                ),
+              { dispatch: false }
+            );
+          }()
+        );
+        //                    👇 doesn't complete and doesn't dispatch
+        const expected = cold('----------');
+
+        expect(toActions(sources$)).toBeObservable(expected);
+      });
+
+      it('should not resubscribe on error when resubscribeOnError is false', () => {
+        const sources$ = of(
+          new class {
+            b$ = createEffect(
+              () =>
+                hot('a--b--c--d').pipe(
+                  map(v => {
+                    if (v == 'b') throw new Error('An Error');
+                    return v;
+                  })
+                ),
+              { dispatch: false, resubscribeOnError: false }
+            );
+          }()
+        );
+        //                       👇 errors with dispatch false
+        const expected = cold('---#', undefined, new Error('An Error'));
+
+        expect(toActions(sources$)).toBeObservable(expected);
       });
 
       it(`should not break when the action in the error message can't be stringified`, () => {
