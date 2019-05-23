@@ -52,44 +52,9 @@ To fix the above violation, a new reference to the state has to be created:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state, { todo }) => ({
+  on(addTodo, (state, { todo } => ({
     ...state,
     todoInput: '',
-    todos: [...state.todos, todo]
-  }))
-);
-```
-
-### strictActionImmutability
-
-Uses the same check as `strictStateImmutability`, but for actions. An action should not be modified.
-
-Example violation of the rule:
-
-```ts
-export const reducer = createReducer(initialState,
-  on(addTodo, (state, { todo }) => ({
-    // Violation, it's not allowed to modify an action
-    todo.id = generateUniqueId();
-    return {
-      ...state,
-      todos: [...state.todos, todo]
-    }
-  }))
-);
-```
-
-To fix the above violation, the todo's id should be set in the action creator or should be set in an immutable way. That way we can simply append the todo to the current `todos`:
-
-```ts
-export const addTodo = createAction(
-  '[Todo List] Add Todo',
-  (description: string) => ({ id: generateUniqueId(), description})
-);
-
-export const reducer = createReducer(initialState,
-  on(addTodo, (state, { todo }) => ({
-    ...state,
     todos: [...state.todos, todo]
   }))
 );
@@ -103,12 +68,12 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(completeTodo, state => ({
+  on(completeTodo, (state, { id }) => ({
     ...state,
     todos: {
       ...state.todos,
-      [payload.id]: {
-        ...state.todos[payload.id],
+      [id]: {
+        ...state.todos[id],
         // Violation, Date is not serializable
         completedOn: new Date(),
       },
@@ -121,12 +86,12 @@ As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(completeTodo, state => ({
+  on(completeTodo, (state, { id }) => ({
     ...state,
     todos: {
       ...state.todos,
-      [payload.id]: {
-        ...state.todos[payload.id],
+      [id]: {
+        ...state.todos[id],
         completedOn: new Date().toJSON()
       }
     }

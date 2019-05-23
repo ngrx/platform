@@ -139,41 +139,42 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export const reducer = createReducer(initialState,
-  on(UserActions.addUser, state => {
-   return adapter.addOne(action.user, state)
+export const reducer = createReducer(
+  initialState,
+  on(UserActions.addUser, (state, { user }) => {
+    return adapter.addOne(user, state)
   }),
-  on(UserActions.upsertUser, state => {
-    return adapter.upsertOne(action.user, state);
+  on(UserActions.upsertUser, (state, { user }) => {
+    return adapter.upsertOne(user, state);
   }),
-  on(UserActions.addUsers, state => {
-    return adapter.addMany(action.users, state);
+  on(UserActions.addUsers, (state, { users }) => {
+    return adapter.addMany(users, state);
   }),
-  on(UserActions.upsertUsers, state => {
-    return adapter.upsertUsers(action.users, state);
+  on(UserActions.upsertUsers, (state, { users }) => {
+    return adapter.upsertUsers(users, state);
   }),
-  on(UserActions.updateUser, state => {
-    return adapter.updateOne(action.user, state);
+  on(UserActions.updateUser, (state, { user }) => {
+    return adapter.updateOne(user, state);
   }),
-  on(UserActions.updateUsers, state => {
-    return adapter.updateMany(action.users, state);
+  on(UserActions.updateUsers, (state, { users }) => {
+    return adapter.updateMany(users, state);
   }),
-  on(UserActions.mapUsers, state => {
-    return adapter.map(action.entityMap, state);
+  on(UserActions.mapUsers, (state, { entityMap }) => {
+    return adapter.map(entityMap, state);
   }),
-  on(UserActions.deleteUser, state => {
-    return adapter.removeOne(action.ids, state);
+  on(UserActions.deleteUser, (state, { id }) => {
+    return adapter.removeOne(id, state);
   }),
-  on(UserActions.deleteUsers, state => {
-    return adapter.removeMany(action.ids, state);
+  on(UserActions.deleteUsers, (state, { ids }) => {
+    return adapter.removeMany(ids, state);
   }),
-  on(UserActions.deleteUsersByPredicate, state => {
-    return adapter.removeMany(action.predicate, state);
+  on(UserActions.deleteUsersByPredicate, (state, { predicate }) => {
+    return adapter.removeMany(predicate, state);
   }),
-  on(UserActions.loadUsers, state => {
-    return adapter.addAll(action.users, state);
+  on(UserActions.loadUsers, (state, { users }) => {
+    return adapter.addAll(users, state);
   }),
-  on(UserActions.clearUsers, state => {
+  on(UserActions.clearUsers, (state, { selectedUserId }) => {
     return adapter.removeAll({ ...state, selectedUserId: null });
   }));
 
