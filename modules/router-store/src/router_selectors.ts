@@ -11,7 +11,7 @@ export function getSelectors<V>(
   selectState: (state: V) => RouterReducerState<any>
 ): RouterStateSelectors<any, V>;
 export function getSelectors<T>(
-  selectState = (state: any) => state.state // is this what you are thinking for providing default selectState?
+  selectState = (state: any) => state.state
 ): RouterStateSelectors<T, any> {
   const router = (state: any) => state;
   const selectRouterState = createSelector(
