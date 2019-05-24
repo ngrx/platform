@@ -1,4 +1,3 @@
-import { State } from '@ngrx/store';
 import { RouterReducerState } from '@ngrx/router-store';
 import { createSelector } from '@ngrx/store';
 import { RouterStateSelectors } from './models';

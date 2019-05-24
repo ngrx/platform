@@ -137,9 +137,9 @@ describe('Router State Selectors', () => {
       );
     });
     it('should create a selector for selecting the url', () => {
-      const result = selectors.selectUrl(state);
+      const url = selectors.selectUrl(state);
 
-      expect(result).toEqual(state.router.state.url);
+      expect(url).toEqual(state.router.state.url);
     });
   });
 });
