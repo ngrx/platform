@@ -118,70 +118,28 @@ describe('Router State Selectors', () => {
     it('should create a selector for selecting the query params', () => {
       const result = selectors.selectQueryParams(state);
 
-      expect(result.queryParams).toEqual(
+      expect(result).toEqual(
         state.router.state.root.firstChild.firstChild.queryParams
       );
     });
     it('should create a selector for selecting the route params', () => {
       const result = selectors.selectRouteParams(state);
 
-      expect(result.params).toEqual(
+      expect(result).toEqual(
         state.router.state.root.firstChild.firstChild.params
       );
     });
     it('should create a selector for selecting the route data', () => {
       const result = selectors.selectRouteData(state);
 
-      expect(result.data).toEqual(
+      expect(result).toEqual(
         state.router.state.root.firstChild.firstChild.data
       );
     });
     it('should create a selector for selecting the url', () => {
-      const url = selectors.selectUrl(state);
+      const result = selectors.selectUrl(state);
 
-      expect(url).toEqual(state.router.state.url);
+      expect(result).toEqual(state.router.state.url);
     });
   });
-  // xdescribe('Uncomposed Selectors', () => {
-  //   // interface State {
-  //   //   router: RouterReducerState<any>;
-  //   // }
-  //   type State = RouterReducerState<any>;
-  //   let selectors: RouterStateSelectors<any, RouterReducerState<any>>;
-  //   let state: State;
-  //
-  //   beforeEach(() => {
-  //     // state = {
-  //     //   router: mockData,
-  //     // };
-  //     state = mockData;
-  //     selectors = getSelectors();
-  //   });
-  //   it('should create a selector for selecting the query params', () => {
-  //     const result = selectors.selectQueryParams(state);
-  //
-  //     expect(result.queryParams).toEqual(
-  //       state.root.firstChild.firstChild.queryParams
-  //     );
-  //   });
-  //   it('should create a selector for selecting the route params', () => {
-  //     const result = selectors.selectRouteParams(state);
-  //
-  //     expect(result.params).toEqual(
-  //       state.router.state.root.firstChild.firstChild.params
-  //     );
-  //   });
-  //   it('should create a selector for selecting the route data', () => {
-  //     const result = selectors.selectRouteData(state);
-  //
-  //     expect(result.data).toEqual(
-  //       state.router.state.root.firstChild.firstChild.data
-  //     );
-  //   });
-  //   it('should create a selector for selecting the url', () => {
-  //     const url = selectors.selectUrl(state);
-  //
-  //     expect(url).toEqual(state.router.state.url);
-  //   });
-  // });
 });
