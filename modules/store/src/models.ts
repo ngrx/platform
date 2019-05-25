@@ -67,4 +67,6 @@ export interface RuntimeChecks {
   strictStateSerializability: boolean;
   strictActionSerializability: boolean;
   strictImmutability: boolean;
+  strictStateImmutability: boolean;
+  strictActionImmutability: boolean;
 }

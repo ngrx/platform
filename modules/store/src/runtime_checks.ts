@@ -2,7 +2,8 @@ import { isDevMode, Provider } from '@angular/core';
 import {
   stateSerializationCheckMetaReducer,
   actionSerializationCheckMetaReducer,
-  immutabilityCheckMetaReducer,
+  stateImmutabilityCheckMetaReducer,
+  actionImmutabilityCheckMetaReducer,
 } from './meta-reducers';
 import { RuntimeChecks, MetaReducer } from './models';
 import {
@@ -24,6 +25,8 @@ export function createActiveRuntimeChecks(
       strictStateSerializability: false,
       strictActionSerializability: false,
       strictImmutability: false,
+      strictStateImmutability: false,
+      strictActionImmutability: false,
       ...runtimeChecks,
     };
   }
@@ -32,6 +35,8 @@ export function createActiveRuntimeChecks(
     strictStateSerializability: false,
     strictActionSerializability: false,
     strictImmutability: false,
+    strictStateImmutability: false,
+    strictActionImmutability: false,
   };
 }
 
@@ -57,7 +62,29 @@ export function createImmutabilityCheckMetaReducer({
   strictImmutability,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer;
+    strictImmutability
+      ? actionImmutabilityCheckMetaReducer(
+          stateImmutabilityCheckMetaReducer(reducer)
+        )
+      : reducer;
+}
+
+export function createStateImmutabilityCheckMetaReducer({
+  strictStateImmutability,
+}: RuntimeChecks): MetaReducer {
+  return reducer =>
+    strictStateImmutability
+      ? stateImmutabilityCheckMetaReducer(reducer)
+      : reducer;
+}
+
+export function createActionImmutabilityCheckMetaReducer({
+  strictActionImmutability,
+}: RuntimeChecks): MetaReducer {
+  return reducer =>
+    strictActionImmutability
+      ? actionImmutabilityCheckMetaReducer(reducer)
+      : reducer;
 }
 
 export function provideRuntimeChecks(
@@ -90,6 +117,18 @@ export function provideRuntimeChecks(
       multi: true,
       deps: [_ACTIVE_RUNTIME_CHECKS],
       useFactory: createImmutabilityCheckMetaReducer,
+    },
+    {
+      provide: META_REDUCERS,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: createStateImmutabilityCheckMetaReducer,
+    },
+    {
+      provide: META_REDUCERS,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: createActionImmutabilityCheckMetaReducer,
     },
   ];
 }

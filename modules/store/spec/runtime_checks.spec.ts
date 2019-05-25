@@ -11,6 +11,8 @@ describe('Runtime checks:', () => {
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictImmutability: false,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
       });
     });
 
@@ -45,11 +47,15 @@ describe('Runtime checks:', () => {
           strictStateSerializability: true,
           strictActionSerializability: true,
           strictImmutability: true,
+          strictStateImmutability: true,
+          strictActionImmutability: true,
         })
       ).toEqual({
         strictStateSerializability: true,
         strictActionSerializability: true,
         strictImmutability: true,
+        strictStateImmutability: true,
+        strictActionImmutability: true,
       });
     });
 
@@ -60,6 +66,8 @@ describe('Runtime checks:', () => {
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictImmutability: false,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
       });
     });
   });
@@ -175,9 +183,21 @@ describe('Runtime checks:', () => {
     });
 
     it(
-      'should throw when enabled',
+      'should throw when immutability enabled',
       fakeAsync(() => {
         const store = setupStore({ strictImmutability: true });
+
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Cannot add property/);
+      })
+    );
+
+    it(
+      'should throw when state immutability enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictStateImmutability: true });
 
         expect(() => {
           store.dispatch(invalidAction());
@@ -206,9 +226,21 @@ describe('Runtime checks:', () => {
     });
 
     it(
-      'should throw when enabled',
+      'should throw when immutabilty enabled',
       fakeAsync(() => {
         const store = setupStore({ strictImmutability: true });
+
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Cannot assign to read only property/);
+      })
+    );
+
+    it(
+      'should throw when action immutability enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionImmutability: true });
 
         expect(() => {
           store.dispatch(invalidAction());
