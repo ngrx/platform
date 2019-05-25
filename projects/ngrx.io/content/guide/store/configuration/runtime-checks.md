@@ -4,9 +4,13 @@ Runtime checks are here to guide developers to follow the NgRx and Redux core co
 
 `@ngrx/store` ships with three built-in runtime checks:
 
-- [`strictImmutability`](#strictimmutability): verifies that the state and actions aren't being mutated
-- [`strictStateSerializability`](#strictstateserializability): verifies if the state is serializable
-- [`strictActionSerializability`](#strictactionserializability): verifies if the actions are serializable
+- [Runtime checks](#runtime-checks)
+  - [Enabling runtime checks](#enabling-runtime-checks)
+    - [strictImmutability](#strictimmutability)
+    - [strictStateImmutability](#strictstateimmutability)
+    - [strictActionImmutability](#strictactionimmutability)
+    - [strictStateSerializability](#strictstateserializability)
+    - [strictActionSerializability](#strictactionserializability)
 
 These checks are all opt-in and will automatically be disabled in production builds.
 
@@ -20,6 +24,8 @@ It's possible to turn on the runtime checks one by one. To do so, you must enabl
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictImmutability: true,
+        strictStateImmutability: true,
+        strictActionImmutability: true,
         strictStateSerializability: true,
         strictActionSerializability: true,
       },
@@ -32,6 +38,37 @@ export class AppModule {}
 ### strictImmutability
 
 The number one rule of NgRx, immutability. This `strictImmutability` check verifies if a developer tries to modify the state object or an action. This check is important to be able to work with the state in a predictable way, it should always be possible to recreate the state.
+
+Example violation of the rule:
+
+```ts
+export const reducer = createReducer(initialState,
+  on(addTodo, state => ({
+    // Violation 1: we assign a new value to `todoInput` directly
+    state.todoInput = '',
+    // Violation 2: `push` modifies the array
+    state.todos.push(addTodo.payload)
+    // Violation 3: changes a value in the action
+    addTodo.lastRead = now();
+  }))
+);
+```
+
+To fix the above violation, a new reference to the state has to be created:
+
+```ts
+export const reducer = createReducer(initialState,
+  on(addTodo, state => ({
+    ...state,
+    todoInput: '',
+    todos: [...state.todos, action.payload]
+  }))
+);
+```
+
+### strictStateImmutability
+
+Like the `strictImmutability` rule, but only applies to the state.
 
 Example violation of the rule:
 
@@ -57,6 +94,22 @@ export const reducer = createReducer(initialState,
   }))
 );
 ```
+
+### strictActionImmutability
+
+Like the above `strictImmutability` rule, but only applies to actions.
+
+Example violation of the rule:
+
+```ts
+export const reducer = createReducer(initialState,
+  on(addTodo, state => ({
+    addTodo.lastRead = now();
+  }))
+);
+```
+
+To fix the above violation, do not set any values on the action.
 
 ### strictStateSerializability
 

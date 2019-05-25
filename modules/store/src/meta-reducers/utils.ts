@@ -109,3 +109,25 @@ export function isFunction(target: any): target is Function {
 export function hasOwnProperty(target: object, propertyName: string): boolean {
   return Object.prototype.hasOwnProperty.call(target, propertyName);
 }
+
+export function freeze(target: any) {
+  Object.freeze(target);
+
+  const targetIsFunction = isFunction(target);
+
+  Object.getOwnPropertyNames(target).forEach(prop => {
+    const propValue = target[prop];
+    if (
+      hasOwnProperty(target, prop) &&
+      (targetIsFunction
+        ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
+        : true) &&
+      (isObjectLike(propValue) || isFunction(propValue)) &&
+      !Object.isFrozen(propValue)
+    ) {
+      freeze(propValue);
+    }
+  });
+
+  return target;
+}

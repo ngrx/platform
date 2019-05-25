@@ -11,6 +11,8 @@ describe('Runtime checks:', () => {
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictImmutability: false,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
       });
     });
 
@@ -45,11 +47,15 @@ describe('Runtime checks:', () => {
           strictStateSerializability: true,
           strictActionSerializability: true,
           strictImmutability: true,
+          strictStateImmutability: true,
+          strictActionImmutability: true,
         })
       ).toEqual({
         strictStateSerializability: true,
         strictActionSerializability: true,
         strictImmutability: true,
+        strictStateImmutability: true,
+        strictActionImmutability: true,
       });
     });
 
@@ -60,6 +66,8 @@ describe('Runtime checks:', () => {
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictImmutability: false,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
       });
     });
   });
