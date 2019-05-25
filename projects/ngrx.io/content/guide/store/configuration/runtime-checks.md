@@ -2,7 +2,7 @@
 
 Runtime checks are here to guide developers to follow the NgRx and Redux core concepts and best practices. They are here to shorten the feedback loop of easy-to-make mistakes when you're starting to use NgRx, or even a well-seasoned developer might make. During development, when a rule is violated, an error is thrown notifying you what and where something went wrong.
 
-`@ngrx/store` ships with four built-in runtime checks:
+`@ngrx/store` ships with five built-in runtime checks:
 
 - [strictImmutability](#strictimmutability)
 - [strictStateImmutability](#strictstateimmutability)
