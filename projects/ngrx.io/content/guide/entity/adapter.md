@@ -174,7 +174,7 @@ export const reducer = createReducer(
   on(UserActions.loadUsers, (state, { users }) => {
     return adapter.addAll(users, state);
   }),
-  on(UserActions.clearUsers, (state, { selectedUserId }) => {
+  on(UserActions.clearUsers, (state) => {
     return adapter.removeAll({ ...state, selectedUserId: null });
   }));
 
