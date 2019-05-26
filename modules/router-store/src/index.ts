@@ -24,11 +24,15 @@ export {
   NavigationActionTiming,
   ROUTER_CONFIG,
   DEFAULT_ROUTER_FEATURENAME,
+  RouterState,
 } from './router_store_module';
 export {
   RouterStateSerializer,
   DefaultRouterStateSerializer,
   SerializedRouterStateSnapshot,
   BaseRouterStoreState,
-} from './serializer';
+  MinimalActivatedRouteSnapshot,
+  MinimalRouterStateSnapshot,
+  MinimalRouterStateSerializer,
+} from './serializers';
 export * from './router_selectors';

@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
+
 import { cold } from 'jasmine-marbles';
+
 import { GoogleBooksService } from '@example-app/core/services/google-books.service';
 
 describe('Service: GoogleBooks', () => {

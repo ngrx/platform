@@ -199,8 +199,9 @@ export class MovieEffects {
     this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
       mapToAction({
-        project: () => this.moviesService.getAll().pipe.map(response =>
-            ({type: '[Movies API] Movies Loaded Success', movies: response })),
+        project: () => this.moviesService.getAll().pipe(
+          map(response => ({type: '[Movies API] Movies Loaded Success', movies: response }))
+        ),
         error: () => { type: '[Movies API] Movies Loaded Error' },
         operator: mergeMap,
       })

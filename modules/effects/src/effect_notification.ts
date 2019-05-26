@@ -10,21 +10,7 @@ export interface EffectNotification {
   notification: Notification<Action | null | undefined>;
 }
 
-export function verifyOutput(
-  output: EffectNotification,
-  reporter: ErrorHandler
-) {
-  reportErrorThrown(output, reporter);
-  reportInvalidActions(output, reporter);
-}
-
-function reportErrorThrown(output: EffectNotification, reporter: ErrorHandler) {
-  if (output.notification.kind === 'E') {
-    reporter.handleError(output.notification.error);
-  }
-}
-
-function reportInvalidActions(
+export function reportInvalidActions(
   output: EffectNotification,
   reporter: ErrorHandler
 ) {

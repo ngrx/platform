@@ -12,6 +12,7 @@ import {
 import { Credentials } from '@example-app/auth/models';
 import { AuthService } from '@example-app/auth/services';
 import { LogoutConfirmationDialogComponent } from '@example-app/auth/components';
+import { UserActions } from '@example-app/core/actions';
 
 @Injectable()
 export class AuthEffects {
@@ -66,6 +67,13 @@ export class AuthEffects {
             ? AuthActions.logout()
             : AuthActions.logoutConfirmationDismiss()
       )
+    )
+  );
+
+  logoutIdleUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.idleTimeout),
+      map(() => AuthActions.logout())
     )
   );
 

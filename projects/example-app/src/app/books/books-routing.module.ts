@@ -9,13 +9,22 @@ import {
 import { BookExistsGuard } from '@example-app/books/guards';
 
 export const routes: Routes = [
-  { path: 'find', component: FindBookPageComponent },
+  {
+    path: 'find',
+    component: FindBookPageComponent,
+    data: { title: 'Find book' },
+  },
   {
     path: ':id',
     component: ViewBookPageComponent,
     canActivate: [BookExistsGuard],
+    data: { title: 'Book details' },
   },
-  { path: '', component: CollectionPageComponent },
+  {
+    path: '',
+    component: CollectionPageComponent,
+    data: { title: 'Collection' },
+  },
 ];
 
 @NgModule({

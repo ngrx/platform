@@ -26,8 +26,6 @@ export const homeScore = createAction('[Scoreboard Page] Home Score');
 export const awayScore createAction('[Scoreboard Page] Away Score');
 export const reset = createAction('[Scoreboard Page] Score Reset');
 
-const all = union({ homeScore, awayScore, reset });
-export type ActionsUnion = typeof all;
 </code-example>
 
 Next, create a reducer file that imports the actions and define
@@ -69,39 +67,15 @@ The initial values for the `home` and `away` properties of the state are 0.
 The reducer function's responsibility is to handle the state transitions in an immutable way. Define a reducer function that handles the actions for managing the state of the scoreboard.
 
 <code-example header="scoreboard.reducer.ts">
-export function reducer(
-  state = initialState,
-  action: ScoreboardPageActions.ActionsUnion
-): State {
-  switch (action.type) {
-    case ScoreboardPageActions.homeScore.type: {
-      return {
-        ...state,
-        home: state.home + 1,
-      };
-    }
-
-    case ScoreboardPageActions.awayScore.type: {
-      return {
-        ...state,
-        away: state.away + 1,
-      };
-    }
-
-    case ScoreboardPageActions.reset.type: {
-      return { home: action.home, away: action.away };
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
+export const reducer = createReducer(
+  initialScoreState,
+  on(ScoreboardPageActions.homeScore, state => ({ ...state, home: state.home + 1 })),
+  on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
+  on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 }))
+);
 </code-example>
 
-Reducers use switch statements in combination with TypeScript's discriminated unions defined in your actions to provide type-safe processing of actions in a reducer. Switch statements use type unions to determine the correct shape of the action being consumed in each case. The action types defined with your actions are reused in your reducer functions as case statements. The type union is also provided to your reducer function to constrain the available actions that are handled in that reducer function.
-
-In the example above, the reducer is handling 3 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, and `[Scoreboard Page] Reset`. Each action is strongly-typed based on the provided `ActionsUnion`. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+In the example above, the reducer is handling 3 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, and `[Scoreboard Page] Reset`. Each action is strongly-typed. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
 
 <div class="alert is-important">
 

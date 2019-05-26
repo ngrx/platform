@@ -58,7 +58,7 @@ describe('createEffect()', () => {
         expectSnippet(`
           const effect = createEffect(() => ({ foo: 'a' }), { dispatch: false });
         `).toFail(
-          /Type '{ foo: string; }' is not assignable to type 'Observable<Action> | ((...args: any[]) => Observable<Action>)'./
+          /Type '{ foo: string; }' is not assignable to type 'Observable<unknown> | ((...args: any[]) => Observable<unknown>)'./
         );
       });
     });
@@ -73,7 +73,9 @@ describe('createEffect()', () => {
   it('should dispatch by default', () => {
     const effect: any = createEffect(() => of({ type: 'a' }));
 
-    expect(effect['__@ngrx/effects_create__']).toEqual({ dispatch: true });
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ dispatch: true })
+    );
   });
 
   it('should be possible to explicitly create a dispatching effect', () => {
@@ -81,7 +83,9 @@ describe('createEffect()', () => {
       dispatch: true,
     });
 
-    expect(effect['__@ngrx/effects_create__']).toEqual({ dispatch: true });
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ dispatch: true })
+    );
   });
 
   it('should be possible to create a non-dispatching effect', () => {
@@ -89,7 +93,9 @@ describe('createEffect()', () => {
       dispatch: false,
     });
 
-    expect(effect['__@ngrx/effects_create__']).toEqual({ dispatch: false });
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ dispatch: false })
+    );
   });
 
   it('should be possible to create a non-dispatching effect returning a non-action', () => {
@@ -97,7 +103,9 @@ describe('createEffect()', () => {
       dispatch: false,
     });
 
-    expect(effect['__@ngrx/effects_create__']).toEqual({ dispatch: false });
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ dispatch: false })
+    );
   });
 
   describe('getCreateEffectMetadata', () => {
@@ -106,14 +114,30 @@ describe('createEffect()', () => {
         a = createEffect(() => of({ type: 'a' }));
         b = createEffect(() => of({ type: 'b' }), { dispatch: true });
         c = createEffect(() => of({ type: 'c' }), { dispatch: false });
+        d = createEffect(() => of({ type: 'd' }), { resubscribeOnError: true });
+        e = createEffect(() => of({ type: 'd' }), {
+          resubscribeOnError: false,
+        });
+        f = createEffect(() => of({ type: 'e' }), {
+          dispatch: false,
+          resubscribeOnError: false,
+        });
+        g = createEffect(() => of({ type: 'e' }), {
+          dispatch: true,
+          resubscribeOnError: false,
+        });
       }
 
       const mock = new Fixture();
 
       expect(getCreateEffectMetadata(mock)).toEqual([
-        { propertyName: 'a', dispatch: true },
-        { propertyName: 'b', dispatch: true },
-        { propertyName: 'c', dispatch: false },
+        { propertyName: 'a', dispatch: true, resubscribeOnError: true },
+        { propertyName: 'b', dispatch: true, resubscribeOnError: true },
+        { propertyName: 'c', dispatch: false, resubscribeOnError: true },
+        { propertyName: 'd', dispatch: true, resubscribeOnError: true },
+        { propertyName: 'e', dispatch: true, resubscribeOnError: false },
+        { propertyName: 'f', dispatch: false, resubscribeOnError: false },
+        { propertyName: 'g', dispatch: true, resubscribeOnError: false },
       ]);
     });
 

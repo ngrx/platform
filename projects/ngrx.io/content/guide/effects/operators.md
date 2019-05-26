@@ -64,7 +64,7 @@ Even people who are familiar with these mistakes still make them sometimes.
 
 The `mapToAction` operator wraps the `project` function that should return the main
 "happy path" Observable that emits Action(s). It also requires an `error` callback
-to be provided, so that steam can be flattened safely.
+to be provided, so that stream can be flattened safely.
 
 <code-example header="auth.effects.ts">
 import { Injectable } from '@angular/core';
@@ -86,7 +86,8 @@ export class AuthEffects {
       mapToAction(
         // Happy path callback
         action => this.authService.login(action.credentials).pipe(
-            map(user => AuthApiActions.loginSuccess({ user }))),
+          map(user => AuthApiActions.loginSuccess({ user }))
+        ),
         // error callback
         error => AuthApiActions.loginFailure({ error }),
       )
