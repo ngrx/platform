@@ -1,6 +1,7 @@
 const cypressTypeScriptPreprocessor = require('./cy-ts-preprocessor');
 
-module.exports = on => 
+module.exports = on =>
   on('file:preprocessor', cypressTypeScriptPreprocessor);
 
-require('@applitools/eyes-cypress')(module);
+// TODO: uncomment once Applitools work properly
+// require('@applitools/eyes-cypress')(module);

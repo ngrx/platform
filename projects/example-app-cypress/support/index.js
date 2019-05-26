@@ -1,4 +1,5 @@
-import '@applitools/eyes-cypress/commands';
+// TODO: uncomment once Applitools work properly
+// import '@applitools/eyes-cypress/commands';
 
 let LOCAL_STORAGE_MEMORY = {};
 
