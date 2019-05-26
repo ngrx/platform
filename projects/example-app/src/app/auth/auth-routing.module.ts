@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from '@example-app/auth/containers';
 
-const routes: Routes = [
-  { path: 'login', component: LoginPageComponent, data: { title: 'Login' } },
-];
+const routes: Routes = [{ path: 'login', component: LoginPageComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -489,7 +489,7 @@ export function createSelector<
 
 export function createSelector(
   ...input: any[]
-): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
+): Selector<any, any> | SelectorWithProps<any, any, any> {
   return createSelectorFactory(defaultMemoize)(...input);
 }
 
@@ -521,18 +521,18 @@ export type SelectorFactoryConfig<T = any, V = any> = {
 
 export function createSelectorFactory<T = any, V = any>(
   memoize: MemoizeFn
-): (...input: any[]) => MemoizedSelector<T, V>;
+): (...input: any[]) => Selector<T, V>;
 export function createSelectorFactory<T = any, V = any>(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<T, V>
-): (...input: any[]) => MemoizedSelector<T, V>;
+): (...input: any[]) => Selector<T, V>;
 export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn
-): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
+): (...input: any[]) => SelectorWithProps<T, Props, V>;
 export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<T, V>
-): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
+): (...input: any[]) => SelectorWithProps<T, Props, V>;
 export function createSelectorFactory(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<any, any> = {
@@ -541,7 +541,7 @@ export function createSelectorFactory(
 ) {
   return function(
     ...input: any[]
-  ): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
+  ): Selector<any, any> | SelectorWithProps<any, any, any> {
     let args = input;
     if (Array.isArray(args[0])) {
       const [head, ...tail] = args;

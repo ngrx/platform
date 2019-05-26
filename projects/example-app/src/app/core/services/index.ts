@@ -1,2 +1,4 @@
-export * from './book-storage.service';
-export * from './google-books.service';
+export {
+  BookStorageService,
+  LOCAL_STORAGE_TOKEN,
+} from './book-storage.service';
