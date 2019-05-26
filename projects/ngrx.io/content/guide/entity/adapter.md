@@ -19,7 +19,7 @@ export interface User {
   name: string;
 }
 
-export interface State extends EntityState&lt;User&gt; {
+export interface State extends EntityState<User> {
   // additional entities state properties
   selectedUserId: number;
 }
@@ -33,7 +33,7 @@ export function sortByName(a: User, b: User): number {
   return a.name.localeCompare(b.name);
 }
 
-export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;({
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
   selectId: selectUserId,
   sortComparer: sortByName,
 });
@@ -60,7 +60,7 @@ export interface User {
   name: string;
 }
 
-export interface State extends EntityState&lt;User&gt; {
+export interface State extends EntityState<User> {
   // additional entities state properties
   selectedUserId: number | null;
 }
@@ -106,17 +106,17 @@ import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
-export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
-export const addUser = createAction('[User/API] Add User', props&lt;{ user: User }&gt;());
-export const upsertUser = createAction('[User/API] Upsert User', props&lt;{ user: User }&gt;());
-export const addUsers = createAction('[User/API] Add Users', props&lt;{ user: User }&gt;());
-export const upsertUsers = createAction('[User/API] Upsert Users', props&lt;{ users: User[] }&gt;());
-export const updateUser = createAction('[User/API] Update User', props&lt;{ user: Update&lt;User&gt; }&gt;());
-export const updateUsers = createAction('[User/API] Update Users', props&lt;{ users: Update&lt;User&gt;[] }&gt;());
-export const mapUsers = createAction('[User/API] Map Users', props&lt;{ entityMap: EntityMap&lt;User&gt; }&gt;());
-export const deleteUser = createAction('[User/API] Delete User', props&lt;{ id: string }&gt;());
-export const deleteUsers = createAction('[User/API] Delete Users', props&lt;{ id: string[] }&gt;());
-export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props&lt;{ predicate: Predicate&lt;User&gt; }&gt;());
+export const loadUsers = createAction('[User/API] Load Users', props<{ users: User[] }>());
+export const addUser = createAction('[User/API] Add User', props<{ user: User }>());
+export const upsertUser = createAction('[User/API] Upsert User', props<{ user: User }>());
+export const addUsers = createAction('[User/API] Add Users', props<{ users: User }>());
+export const upsertUsers = createAction('[User/API] Upsert Users', props<{ users: User[] }>());
+export const updateUser = createAction('[User/API] Update User', props<{ user: Update<User> }>());
+export const updateUsers = createAction('[User/API] Update Users', props<{ users: Update<User>[] }>());
+export const mapUsers = createAction('[User/API] Map Users', props<{ entityMap: EntityMap<User> }>());
+export const deleteUser = createAction('[User/API] Delete User', props<{ id: string }>());
+export const deleteUsers = createAction('[User/API] Delete Users', props<{ ids: string[] }>());
+export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props<{ predicate: Predicate<User> }>());
 export const clearUsers = createAction('[User/API] Clear Users');
 
 </code-example>
@@ -127,12 +127,12 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
 
-export interface State extends EntityState&lt;User&gt; {
+export interface State extends EntityState<User> {
   // additional entities state properties
   selectedUserId: number | null;
 }
 
-export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;();
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
@@ -221,11 +221,11 @@ export interface State {
   users: fromUser.State;
 }
 
-export const reducers: ActionReducerMap&lt;State&gt; = {
+export const reducers: ActionReducerMap<State> = {
   users: fromUser.reducer,
 };
 
-export const selectUserState = createFeatureSelector&lt;fromUser.State&gt;('users');
+export const selectUserState = createFeatureSelector<fromUser.State>('users');
 
 export const selectUserIds = createSelector(
   selectUserState,
