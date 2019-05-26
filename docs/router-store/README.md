@@ -94,3 +94,4 @@ export class AppModule {}
 - [Configuration Options](./api.md#configuration-options)
 - [Custom Router State Serializer](./api.md#custom-router-state-serializer)
 - [Navigation Action Timing](./api.md#navigation-action-timing)
+- [Selectors](./api.md#router-selectors)
