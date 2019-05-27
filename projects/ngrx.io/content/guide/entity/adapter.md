@@ -19,7 +19,7 @@ export interface User {
   name: string;
 }
 
-export interface State extends EntityState<User> {
+export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
   selectedUserId: number;
 }
@@ -33,7 +33,7 @@ export function sortByName(a: User, b: User): number {
   return a.name.localeCompare(b.name);
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
+export const adapter: EntityAdapter<User> = createEntityAdapter&lt;User&gt;({
   selectId: selectUserId,
   sortComparer: sortByName,
 });
@@ -60,7 +60,7 @@ export interface User {
   name: string;
 }
 
-export interface State extends EntityState<User> {
+export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
   selectedUserId: number | null;
 }
@@ -127,12 +127,12 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
 
-export interface State extends EntityState<User> {
+export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
   selectedUserId: number | null;
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+export const adapter: EntityAdapter<User> = createEntityAdapter&lt;User&gt;();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
@@ -221,11 +221,11 @@ export interface State {
   users: fromUser.State;
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap&lt;State&gt; = {
   users: fromUser.reducer,
 };
 
-export const selectUserState = createFeatureSelector<fromUser.State>('users');
+export const selectUserState = createFeatureSelector&lt;fromUser.State&gt;('users');
 
 export const selectUserIds = createSelector(
   selectUserState,
