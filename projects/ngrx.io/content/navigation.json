@@ -195,6 +195,10 @@
         {
           "title": "Configuration",
           "url": "guide/router-store/configuration"
+        },
+        {
+          "title": "Selectors",
+          "url": "guide/router-store/selectors"
         }
       ]
     },
