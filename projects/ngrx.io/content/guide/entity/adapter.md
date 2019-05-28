@@ -33,7 +33,7 @@ export function sortByName(a: User, b: User): number {
   return a.name.localeCompare(b.name);
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter&lt;User&gt;({
+export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;({
   selectId: selectUserId,
   sortComparer: sortByName,
 });
@@ -132,7 +132,7 @@ export interface State extends EntityState&lt;User&gt; {
   selectedUserId: number | null;
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter&lt;User&gt;();
+export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
