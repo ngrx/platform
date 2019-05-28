@@ -12,9 +12,8 @@ export function getSelectors<V>(
 export function getSelectors<T>(
   selectState = (state: any) => state.state
 ): RouterStateSelectors<T, any> {
-  const router = (state: any) => state;
   const selectRouterState = createSelector(
-    router,
+    selectState,
     router => router && router.state
   );
   const selectCurrentRoute = createSelector(selectRouterState, routerState => {
@@ -44,21 +43,11 @@ export function getSelectors<T>(
     routerState => routerState && routerState.url
   );
 
-  if (!selectState) {
-    return {
-      selectCurrentRoute,
-      selectQueryParams,
-      selectRouteParams,
-      selectRouteData,
-      selectUrl,
-    };
-  }
-
   return {
-    selectCurrentRoute: createSelector(selectState, selectCurrentRoute),
-    selectQueryParams: createSelector(selectState, selectQueryParams),
-    selectRouteParams: createSelector(selectState, selectRouteParams),
-    selectRouteData: createSelector(selectState, selectRouteData),
-    selectUrl: createSelector(selectState, selectUrl),
+    selectCurrentRoute,
+    selectQueryParams,
+    selectRouteParams,
+    selectRouteData,
+    selectUrl,
   };
 }
