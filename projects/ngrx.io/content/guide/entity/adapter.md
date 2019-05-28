@@ -52,6 +52,7 @@ Returns the `initialState` for entity state based on the provided type. Addition
 Usage:
 
 <code-example header="user.reducer.ts">
+import { createReducer } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
@@ -121,6 +122,7 @@ export const clearUsers = createAction('[User/API] Clear Users');
 </code-example>
 
 <code-example header="user.reducer.ts">
+import { createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
