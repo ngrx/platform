@@ -10,7 +10,8 @@ describe('Runtime checks:', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
-        strictImmutability: false,
+        strictActionImmutability: false,
+        strictStateImmutability: false,
       });
     });
 
@@ -44,12 +45,14 @@ describe('Runtime checks:', () => {
         createActiveRuntimeChecks({
           strictStateSerializability: true,
           strictActionSerializability: true,
-          strictImmutability: true,
+          strictActionImmutability: true,
+          strictStateImmutability: true,
         })
       ).toEqual({
         strictStateSerializability: true,
         strictActionSerializability: true,
-        strictImmutability: true,
+        strictActionImmutability: true,
+        strictStateImmutability: true,
       });
     });
 
@@ -59,7 +62,8 @@ describe('Runtime checks:', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
-        strictImmutability: false,
+        strictActionImmutability: false,
+        strictStateImmutability: false,
       });
     });
   });
@@ -177,7 +181,7 @@ describe('Runtime checks:', () => {
     it(
       'should throw when enabled',
       fakeAsync(() => {
-        const store = setupStore({ strictImmutability: true });
+        const store = setupStore({ strictStateImmutability: true });
 
         expect(() => {
           store.dispatch(invalidAction());
@@ -189,7 +193,7 @@ describe('Runtime checks:', () => {
     it(
       'should not throw when disabled',
       fakeAsync(() => {
-        const store = setupStore({ strictImmutability: false });
+        const store = setupStore({ strictStateImmutability: false });
 
         expect(() => {
           store.dispatch(invalidAction());
@@ -208,7 +212,7 @@ describe('Runtime checks:', () => {
     it(
       'should throw when enabled',
       fakeAsync(() => {
-        const store = setupStore({ strictImmutability: true });
+        const store = setupStore({ strictActionImmutability: true });
 
         expect(() => {
           store.dispatch(invalidAction());
@@ -220,7 +224,7 @@ describe('Runtime checks:', () => {
     it(
       'should not throw when disabled',
       fakeAsync(() => {
-        const store = setupStore({ strictImmutability: false });
+        const store = setupStore({ strictActionImmutability: false });
 
         expect(() => {
           store.dispatch(invalidAction());

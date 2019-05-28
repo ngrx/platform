@@ -63,8 +63,10 @@ export type FunctionWithParametersType<P extends unknown[], R = void> = (
 export type ParametersType<T> = T extends (...args: infer U) => unknown
   ? U
   : never;
+
 export interface RuntimeChecks {
   strictStateSerializability: boolean;
   strictActionSerializability: boolean;
-  strictImmutability: boolean;
+  strictStateImmutability: boolean;
+  strictActionImmutability: boolean;
 }

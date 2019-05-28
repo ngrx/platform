@@ -2,11 +2,15 @@ import { ActionReducer } from '../models';
 import { isFunction, hasOwnProperty, isObjectLike } from './utils';
 
 export function immutabilityCheckMetaReducer(
-  reducer: ActionReducer<any, any>
+  reducer: ActionReducer<any, any>,
+  checks: { action: boolean; state: boolean }
 ): ActionReducer<any, any> {
   return function(state, action) {
-    const nextState = reducer(state, freeze(action));
-    return freeze(nextState);
+    const act = checks.action ? freeze(action) : action;
+
+    const nextState = reducer(state, act);
+
+    return checks.state ? freeze(nextState) : nextState;
   };
 }
 

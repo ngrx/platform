@@ -37,7 +37,8 @@ import { AppComponent } from '@example-app/core/containers';
     StoreModule.forRoot(ROOT_REDUCERS, {
       metaReducers,
       runtimeChecks: {
-        strictImmutability: true,
+        strictStateImmutability: true,
+        strictActionImmutability: true,
         strictStateSerializability: true,
         strictActionSerializability: true,
       },
