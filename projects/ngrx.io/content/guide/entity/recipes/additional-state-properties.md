@@ -20,9 +20,7 @@ export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
   selectedUserId: number;
 }
-
 ...
-
 export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;({
   ...
 });
@@ -37,8 +35,8 @@ import { Update } from '@ngrx/entity';
 import { User } from '../models/user.model';
 
 ...
-export const selectUser = createAction('[User/API] Select User', props&lt;{ id: string }&gt;());
-...
+export const selectUser = createAction('[User/API] Select User', props&lt;{ userId: string }&gt;());
+export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
 </code-example>
 
 Entity Adapter is only used to update the `EntityState` properties. Other than that additional state properties should be updated same as normal state properties like below.
@@ -63,14 +61,12 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(initialState,
   ...
-  on(UserActions.selectUser, state => {
-    // update using entity helper function
-    return adapter.addMany(action.users, { ...state, selectedUserId: action.id});
-    OR
-    // update without using entity helper function
-    return { ...state, selectedUserId: action.id};
+  on(UserActions.selectUser, (state, { userId }) => {
+    return { ...state, selectedUserId: userId };
   }),
-  ...
+  on(UserActions.loadUsers, (state, { users }) => {
+      return adapter.addMany(users, { ...state, selectedUserId: null });
+  })
 );
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
