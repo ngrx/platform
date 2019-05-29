@@ -109,7 +109,7 @@ import { User } from '../models/user.model';
 export const loadUsers = createAction('[User/API] Load Users', props<{ users: User[] }>());
 export const addUser = createAction('[User/API] Add User', props<{ user: User }>());
 export const upsertUser = createAction('[User/API] Upsert User', props<{ user: User }>());
-export const addUsers = createAction('[User/API] Add Users', props<{ users: User }>());
+export const addUsers = createAction('[User/API] Add Users', props<{ users: User[] }>());
 export const upsertUsers = createAction('[User/API] Upsert Users', props<{ users: User[] }>());
 export const updateUser = createAction('[User/API] Update User', props<{ user: Update&lt;User&gt; }>());
 export const updateUsers = createAction('[User/API] Update Users', props<{ users: Update&lt;User&gt;[] }>());
