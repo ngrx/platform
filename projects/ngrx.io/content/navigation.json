@@ -193,6 +193,10 @@
           "url": "guide/router-store/actions"
         },
         {
+          "title": "Selectors",
+          "url": "guide/router-store/selectors"
+        },
+        {
           "title": "Configuration",
           "url": "guide/router-store/configuration"
         }
