@@ -35,4 +35,4 @@ export {
   MinimalRouterStateSnapshot,
   MinimalRouterStateSerializer,
 } from './serializers';
-export * from './router_selectors';
+export { getSelectors } from './router_selectors';
