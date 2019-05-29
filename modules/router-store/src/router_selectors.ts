@@ -2,23 +2,22 @@ import { RouterReducerState } from '@ngrx/router-store';
 import { createSelector } from '@ngrx/store';
 import { RouterStateSelectors } from './models';
 
-export function getSelectors(): RouterStateSelectors<
-  any,
-  RouterReducerState<any>
->;
+// export function getSelectors(): RouterStateSelectors<
+//   RouterReducerState<any>
+// >;
 export function getSelectors<V>(
   selectState: (state: V) => RouterReducerState<any>
-): RouterStateSelectors<any, V>;
-export function getSelectors<T>(
-  selectState = (state: any) => state.state
-): RouterStateSelectors<T, any> {
+): RouterStateSelectors<V>;
+export function getSelectors<V>(
+  selectState: (state: V) => RouterReducerState<any>
+): RouterStateSelectors<V> {
   const selectRouterState = createSelector(
     selectState,
     router => router && router.state
   );
   const selectCurrentRoute = createSelector(selectRouterState, routerState => {
     if (!routerState) {
-      return false;
+      return undefined;
     }
     let route = routerState.root;
     while (route.firstChild) {

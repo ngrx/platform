@@ -105,7 +105,7 @@ describe('Router State Selectors', () => {
       router: RouterReducerState<any>;
     }
 
-    let selectors: RouterStateSelectors<any, State>;
+    let selectors: RouterStateSelectors<State>;
     let state: State;
 
     beforeEach(() => {
@@ -114,6 +114,25 @@ describe('Router State Selectors', () => {
       };
 
       selectors = getSelectors((state: State) => state.router);
+    });
+    it('should create selectCurrentRoute selector for selecting the current route', () => {
+      const result = selectors.selectCurrentRoute(state);
+
+      expect(result).toEqual(state.router.state.root.firstChild.firstChild);
+    });
+    it('should return undefined from selectCurrentRoute if routerState does not exist', () => {
+      interface State {
+        router: any;
+      }
+      let state: State;
+      state = {
+        router: undefined,
+      };
+      selectors = getSelectors((state: State) => state.router);
+
+      const result = selectors.selectCurrentRoute(state);
+
+      expect(result).toEqual(undefined);
     });
     it('should create a selector for selecting the query params', () => {
       const result = selectors.selectQueryParams(state);

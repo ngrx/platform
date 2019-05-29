@@ -1,6 +1,6 @@
 import { Data, Params } from '@angular/router';
 
-export interface RouterStateSelectors<T, V> {
+export interface RouterStateSelectors<V> {
   selectCurrentRoute: (state: V) => any;
   selectQueryParams: (state: V) => Params;
   selectRouteParams: (state: V) => Params;

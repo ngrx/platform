@@ -5,7 +5,7 @@ The `getSelectors` method supplied within `@ngrx/router-store` provides function
 The `getSelectors` method takes a selector function as its only argument to select the piece of state where the router state is being stored.
 The example below shows how to provide a selector for the top level `router` key in your state object.
 
-**Note:** The `getSelectors` method works with the `routerReducer` provided by `@ngrx/router-store`. If you use a [custom serializer](guide/router-store/configuration#custom-router-state-serializer), you'll need to provide your own selectors if they do not adhere to `RouterReducerState`.
+**Note:** The `getSelectors` method works with the `routerReducer` provided by `@ngrx/router-store`. If you use a [custom serializer](guide/router-store/configuration#custom-router-state-serializer), you'll need to provide your own selectors.
 
 Usage:
 
