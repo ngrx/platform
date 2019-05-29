@@ -106,17 +106,17 @@ import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
-export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
-export const addUser = createAction('[User/API] Add User', props&lt;{ user: User }&gt;());
-export const upsertUser = createAction('[User/API] Upsert User', props&lt;{ user: User }&gt;());
-export const addUsers = createAction('[User/API] Add Users', props&lt;{ user: User }&gt;());
-export const upsertUsers = createAction('[User/API] Upsert Users', props&lt;{ users: User[] }&gt;());
-export const updateUser = createAction('[User/API] Update User', props&lt;{ user: Update&lt;User&gt; }&gt;());
-export const updateUsers = createAction('[User/API] Update Users', props&lt;{ users: Update&lt;User&gt;[] }&gt;());
-export const mapUsers = createAction('[User/API] Map Users', props&lt;{ entityMap: EntityMap&lt;User&gt; }&gt;());
-export const deleteUser = createAction('[User/API] Delete User', props&lt;{ id: string }&gt;());
-export const deleteUsers = createAction('[User/API] Delete Users', props&lt;{ id: string[] }&gt;());
-export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props&lt;{ predicate: Predicate&lt;User&gt; }&gt;());
+export const loadUsers = createAction('[User/API] Load Users', props<{ users: User[] }>());
+export const addUser = createAction('[User/API] Add User', props<{ user: User }>());
+export const upsertUser = createAction('[User/API] Upsert User', props<{ user: User }>());
+export const addUsers = createAction('[User/API] Add Users', props<{ users: User[] }>());
+export const upsertUsers = createAction('[User/API] Upsert Users', props<{ users: User[] }>());
+export const updateUser = createAction('[User/API] Update User', props<{ user: Update&lt;User&gt; }>());
+export const updateUsers = createAction('[User/API] Update Users', props<{ users: Update&lt;User&gt;[] }>());
+export const mapUsers = createAction('[User/API] Map Users', props<{ entityMap: EntityMap&lt;User&gt; }>());
+export const deleteUser = createAction('[User/API] Delete User', props<{ id: string }>());
+export const deleteUsers = createAction('[User/API] Delete Users', props<{ ids: string[] }>());
+export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props<{ predicate: Predicate&lt;User&gt; }>());
 export const clearUsers = createAction('[User/API] Clear Users');
 
 </code-example>
@@ -139,39 +139,40 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export const reducer = createReducer(initialState,
-  on(UserActions.addUser, state => {
-   return adapter.addOne(action.user, state)
+export const reducer = createReducer(
+  initialState,
+  on(UserActions.addUser, (state, { user }) => {
+    return adapter.addOne(user, state)
   }),
-  on(UserActions.upsertUser, state => {
-    return adapter.upsertOne(action.user, state);
+  on(UserActions.upsertUser, (state, { user }) => {
+    return adapter.upsertOne(user, state);
   }),
-  on(UserActions.addUsers, state => {
-    return adapter.addMany(action.users, state);
+  on(UserActions.addUsers, (state, { users }) => {
+    return adapter.addMany(users, state);
   }),
-  on(UserActions.upsertUsers, state => {
-    return adapter.upsertUsers(action.users, state);
+  on(UserActions.upsertUsers, (state, { users }) => {
+    return adapter.upsertUsers(users, state);
   }),
-  on(UserActions.updateUser, state => {
-    return adapter.updateOne(action.user, state);
+  on(UserActions.updateUser, (state, { user }) => {
+    return adapter.updateOne(user, state);
   }),
-  on(UserActions.updateUsers, state => {
-    return adapter.updateMany(action.users, state);
+  on(UserActions.updateUsers, (state, { users }) => {
+    return adapter.updateMany(users, state);
   }),
-  on(UserActions.mapUsers, state => {
-    return adapter.map(action.entityMap, state);
+  on(UserActions.mapUsers, (state, { entityMap }) => {
+    return adapter.map(entityMap, state);
   }),
-  on(UserActions.deleteUser, state => {
-    return adapter.removeOne(action.ids, state);
+  on(UserActions.deleteUser, (state, { id }) => {
+    return adapter.removeOne(id, state);
   }),
-  on(UserActions.deleteUsers, state => {
-    return adapter.removeMany(action.ids, state);
+  on(UserActions.deleteUsers, (state, { ids }) => {
+    return adapter.removeMany(ids, state);
   }),
-  on(UserActions.deleteUsersByPredicate, state => {
-    return adapter.removeMany(action.predicate, state);
+  on(UserActions.deleteUsersByPredicate, (state, { predicate }) => {
+    return adapter.removeMany(predicate, state);
   }),
-  on(UserActions.loadUsers, state => {
-    return adapter.addAll(action.users, state);
+  on(UserActions.loadUsers, (state, { users }) => {
+    return adapter.addAll(users, state);
   }),
   on(UserActions.clearUsers, state => {
     return adapter.removeAll({ ...state, selectedUserId: null });

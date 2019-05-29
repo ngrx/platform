@@ -86,7 +86,6 @@ export const addTodo = createAction(
   '[Todo List] Add Todo',
   (description: string) => ({ id: generateUniqueId(), description})
 );
-
 export const reducer = createReducer(initialState,
   on(addTodo, (state, { todo }) => ({
     ...state,
@@ -103,12 +102,12 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(completeTodo, state => ({
+  on(completeTodo, (state, { id }) => ({
     ...state,
     todos: {
       ...state.todos,
-      [payload.id]: {
-        ...state.todos[payload.id],
+      [id]: {
+        ...state.todos[id],
         // Violation, Date is not serializable
         completedOn: new Date(),
       },
@@ -121,12 +120,12 @@ As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(completeTodo, state => ({
+  on(completeTodo, (state, { id }) => ({
     ...state,
     todos: {
       ...state.todos,
-      [payload.id]: {
-        ...state.todos[payload.id],
+      [id]: {
+        ...state.todos[id],
         completedOn: new Date().toJSON()
       }
     }

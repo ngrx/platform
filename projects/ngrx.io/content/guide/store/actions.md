@@ -81,8 +81,7 @@ The returned action has very specific context about where the action came from a
 
 <div class="alert is-important">
 
-**Note:** You can also write actions using classes, which was the previously defined way before action creators were introduced in NgRx. If
-you are looking for examples of action classes, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/actions).
+**Note:** You can also write actions using class-based action creators, which was the previously defined way before action creators were introduced in NgRx. If you are looking for examples of class-based action creators, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/actions).
 
 </div>
 
