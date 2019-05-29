@@ -11,8 +11,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "3a3efbf223f6de733475602844ad3a8faa02abda25ab8cfe1d1ed0db134887cf",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.27.12/rules_nodejs-0.27.12.tar.gz"],
+    sha256 = "abcf497e89cfc1d09132adfcd8c07526d026e162ae2cb681dcb896046417ce91",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.30.1/rules_nodejs-0.30.1.tar.gz"],
 )
 
 http_archive(
@@ -32,15 +32,9 @@ http_archive(
 ####################################
 # Load and install our dependencies downloaded above.
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_repositories", "yarn_install")
+load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "yarn_install")
 
-check_bazel_version(minimum_bazel_version = "0.24.0")
-
-node_repositories(
-    node_version = "10.9.0",
-    package_json = ["//:package.json"],
-    yarn_version = "1.12.1",
-)
+check_bazel_version(minimum_bazel_version = "0.26.0")
 
 yarn_install(
     name = "npm",
