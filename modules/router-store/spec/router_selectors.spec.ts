@@ -1,7 +1,7 @@
 import { RouterReducerState, getSelectors } from '@ngrx/router-store';
 import { RouterStateSelectors } from '../src/models';
 
-let mockData = {
+const mockData = {
   state: {
     root: {
       params: {},
