@@ -22,6 +22,8 @@ test --test_output=errors
 # Use the Angular 6 compiler
 build --define=compile=legacy
 
+build --incompatible_depset_union=false
+
 # Turn off legacy external runfiles
 run --nolegacy_external_runfiles
 test --nolegacy_external_runfiles
