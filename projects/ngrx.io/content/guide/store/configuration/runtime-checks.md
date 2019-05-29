@@ -52,7 +52,7 @@ To fix the above violation, a new reference to the state has to be created:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state, { todo } => ({
+  on(addTodo, (state, { todo }) => ({
     ...state,
     todoInput: '',
     todos: [...state.todos, todo]
