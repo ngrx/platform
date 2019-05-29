@@ -60,6 +60,40 @@ export const reducer = createReducer(initialState,
 );
 ```
 
+### strictActionImmutability
+
+Uses the same check as `strictStateImmutability`, but for actions. An action should not be modified.
+
+Example violation of the rule:
+
+```ts
+export const reducer = createReducer(initialState,
+  on(addTodo, (state, { todo }) => ({
+    // Violation, it's not allowed to modify an action
+    todo.id = generateUniqueId();
+    return {
+      ...state,
+      todos: [...state.todos, todo]
+    }
+  }))
+);
+```
+
+To fix the above violation, the todo's id should be set in the action creator or should be set in an immutable way. That way we can simply append the todo to the current `todos`:
+
+```ts
+export const addTodo = createAction(
+  '[Todo List] Add Todo',
+  (description: string) => ({ id: generateUniqueId(), description})
+);
+export const reducer = createReducer(initialState,
+  on(addTodo, (state, { todo }) => ({
+    ...state,
+    todos: [...state.todos, todo]
+  }))
+);
+```
+
 ### strictStateSerializability
 
 This check verifies if the state is serializable. A serializable state is important to be able to persist the current state to be able to rehydrate the state in the future.
