@@ -3,15 +3,14 @@ import {
   Rule,
   chain,
   Tree,
-  SchematicContext,
   SchematicsException,
 } from '@angular-devkit/schematics';
+import { Path } from '@angular-devkit/core';
 import {
   createChangeRecorder,
   RemoveChange,
   InsertChange,
 } from '@ngrx/store/schematics-core';
-import { Path } from '@angular-devkit/core';
 
 function removeNgrxStoreFreezeImport(): Rule {
   return (tree: Tree) => {
