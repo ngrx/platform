@@ -1,3 +1,71 @@
+<a name="8.0.0-rc.0"></a>
+
+# [8.0.0-rc.0](https://github.com/ngrx/platform/compare/8.0.0-beta.2...8.0.0-rc.0) (2019-05-30)
+
+### Bug Fixes
+
+- **store:** adjust mock store to handle selectors with props ([#1878](https://github.com/ngrx/platform/issues/1878)) ([a7ded00](https://github.com/ngrx/platform/commit/a7ded00)), closes [#1864](https://github.com/ngrx/platform/issues/1864) [#1873](https://github.com/ngrx/platform/issues/1873)
+- update signature for createSelectorFactory and createSelector to return a MemoizedSelector ([#1883](https://github.com/ngrx/platform/issues/1883)) ([8b31da7](https://github.com/ngrx/platform/commit/8b31da7))
+
+### Features
+
+- **effects:** resubscribe to effects on error ([#1881](https://github.com/ngrx/platform/issues/1881)) ([71137e5](https://github.com/ngrx/platform/commit/71137e5))
+- **example:** add examples of effects not based on the Actions stream ([#1845](https://github.com/ngrx/platform/issues/1845)) ([3454e70](https://github.com/ngrx/platform/commit/3454e70)), closes [#1830](https://github.com/ngrx/platform/issues/1830)
+- **router-store:** add routerState config option ([#1847](https://github.com/ngrx/platform/issues/1847)) ([d874cfc](https://github.com/ngrx/platform/commit/d874cfc)), closes [#1834](https://github.com/ngrx/platform/issues/1834)
+- **router-store:** add selectors for router state ([#1874](https://github.com/ngrx/platform/issues/1874)) ([21c67cc](https://github.com/ngrx/platform/commit/21c67cc)), closes [#1854](https://github.com/ngrx/platform/issues/1854)
+- **store:** split immutibility checks in state and action checks ([#1894](https://github.com/ngrx/platform/issues/1894)) ([c59c211](https://github.com/ngrx/platform/commit/c59c211))
+
+### Reverts
+
+- **store:** store should fail synchronously ([#1871](https://github.com/ngrx/platform/issues/1871)) ([59a9e6c](https://github.com/ngrx/platform/commit/59a9e6c)), closes [#1865](https://github.com/ngrx/platform/issues/1865)
+
+### BREAKING CHANGES
+
+- **effects:** Prior to introduction of automatic resubscriptions on errors, all effects had effectively {resubscribeOnError: false} behavior. For the rare cases when this is still wanted please add {resubscribeOnError: false} to the effect metadata.
+
+BEFORE:
+
+```ts
+login$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(LoginPageActions.login),
+    mapToAction(
+      // Happy path callback
+      action =>
+        this.authService
+          .login(action.credentials)
+          .pipe(map(user => AuthApiActions.loginSuccess({ user }))),
+      // error callback
+      error => AuthApiActions.loginFailure({ error })
+    )
+  )
+);
+```
+
+AFTER:
+
+```ts
+login$ = createEffect(
+  () =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.login),
+      mapToAction(
+        // Happy path callback
+        action =>
+          this.authService
+            .login(action.credentials)
+            .pipe(map(user => AuthApiActions.loginSuccess({ user }))),
+        // error callback
+        error => AuthApiActions.loginFailure({ error })
+      )
+      // Errors are handled and it is safe to disable resubscription
+    ),
+  { resubscribeOnError: false }
+);
+```
+
+- The return type of the createSelectorFactory and createSelector is now a MemoizedSelector instead of a Selector
+
 <a name="8.0.0-beta.2"></a>
 
 # [8.0.0-beta.2](https://github.com/ngrx/platform/compare/8.0.0-beta.1...8.0.0-beta.2) (2019-05-15)
