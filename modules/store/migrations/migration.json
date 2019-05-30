@@ -8,9 +8,14 @@
       "factory": "./6_0_0/index"
     },
     "ngrx-store-migration-02": {
-      "description": "The road to v8",
+      "description": "The road to v8 beta",
       "version": "8-beta",
-      "factory": "./8_0_0/index"
+      "factory": "./8_0_0-beta/index"
+    },
+    "ngrx-store-migration-03": {
+      "description": "The road to v8 RC",
+      "version": "8-rc.1",
+      "factory": "./8_0_0-rc/index"
     }
   }
 }

@@ -7,7 +7,14 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import * as ts from 'typescript';
-import { Change, InsertChange, NoopChange } from './change';
+import {
+  Change,
+  InsertChange,
+  NoopChange,
+  createReplaceChange,
+  ReplaceChange,
+} from './change';
+import { Path } from '@angular-devkit/core';
 
 /**
  * Find all nodes from the AST in the subtree of node of SyntaxKind kind.
@@ -635,4 +642,53 @@ export function insertImport(
     fallbackPos,
     ts.SyntaxKind.StringLiteral
   );
+}
+
+export function replaceImport(
+  sourceFile: ts.SourceFile,
+  path: Path,
+  importFrom: string,
+  importAsIs: string,
+  importToBe: string
+): ReplaceChange[] {
+  const imports = sourceFile.statements
+    .filter(ts.isImportDeclaration)
+    .filter(
+      ({ moduleSpecifier }) =>
+        moduleSpecifier.getText(sourceFile) === `'${importFrom}'` ||
+        moduleSpecifier.getText(sourceFile) === `"${importFrom}"`
+    );
+
+  if (imports.length === 0) {
+    return [];
+  }
+
+  const changes = imports
+    .map(p => (p.importClause!.namedBindings! as ts.NamedImports).elements)
+    .reduce((imports, curr) => imports.concat(curr), [] as ts.ImportSpecifier[])
+    .map(specifier => {
+      if (!ts.isImportSpecifier(specifier)) {
+        return { hit: false };
+      }
+
+      if (specifier.name.text === importAsIs) {
+        return { hit: true, specifier, text: specifier.name.text };
+      }
+
+      // if import is renamed
+      if (
+        specifier.propertyName &&
+        specifier.propertyName.text === importAsIs
+      ) {
+        return { hit: true, specifier, text: specifier.propertyName.text };
+      }
+
+      return { hit: false };
+    })
+    .filter(({ hit }) => hit)
+    .map(({ specifier, text }) =>
+      createReplaceChange(sourceFile, path, specifier!, text!, importToBe)
+    );
+
+  return changes;
 }
