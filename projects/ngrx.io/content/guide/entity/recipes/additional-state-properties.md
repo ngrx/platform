@@ -2,11 +2,11 @@
 
 It's possible to add extra properties to a `State` extending from `EntityState`. These properties must be updated manually. Just like in a non-entity state, we can update the added properties in the reducer. This can be done with or without using the `@ngrx/entity` helper functions.
 
-In the below example we are going to use the [Entity Adapter](https://ngrx.io/guide/entity/adapter) example.
+The steps below show you how to extend the [Entity Adapter](https://ngrx.io/guide/entity/adapter) example.
 
 Usage:
 
-We are declaring the `selectedUserId` as an additional state property.
+Declare the `selectedUserId` as an additional property in the interface.
 
 <code-example header="user.reducer.ts">
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
@@ -32,7 +32,7 @@ import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
-export const selectUser = createAction('[User/API] Select User', props&lt;{ userId: string }&gt;());
+export const selectUser = createAction('[Users Page] Select User', props&lt;{ userId: string }&gt;());
 export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
 </code-example>
 
@@ -61,7 +61,7 @@ export const reducer = createReducer(initialState,
     return { ...state, selectedUserId: userId };
   }),
   on(UserActions.loadUsers, (state, { users }) => {
-      return adapter.addMany(users, { ...state, selectedUserId: null });
+    return adapter.addMany(users, { ...state, selectedUserId: null });
   })
 );
 
