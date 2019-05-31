@@ -6,7 +6,7 @@ export function visitTSSourceFiles<Result = void>(
   visitor: (
     sourceFile: ts.SourceFile,
     tree: Tree,
-    result: Result | undefined
+    result?: Result
   ) => Result | undefined
 ): Result | undefined {
   let result: Result | undefined = undefined;
