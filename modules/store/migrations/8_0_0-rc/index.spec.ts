@@ -113,6 +113,31 @@ describe('Migration to version 8.0.0 rc', () => {
       },
       {
         description:
+          'enables strictStateImmutability and strictActionImmutability runtime checks with store config ending with a comma',
+        input: `
+        @NgModule({
+          imports: [
+            StoreModule.forRoot(ROOT_REDUCERS, { 
+              metaReducers,
+            }),
+          ],
+          bootstrap: [AppComponent],
+        })
+        export class AppModule {}`,
+        isStoreFreezeUsed: true,
+        expected: `
+        @NgModule({
+          imports: [
+            StoreModule.forRoot(ROOT_REDUCERS, { 
+              metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true },
+            }),
+          ],
+          bootstrap: [AppComponent],
+        })
+        export class AppModule {}`,
+      },
+      {
+        description:
           'enables strictStateImmutability and strictActionImmutability runtime checks with an empty store config',
         input: `
         @NgModule({
