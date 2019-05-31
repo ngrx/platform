@@ -146,7 +146,7 @@ export function createReplaceChange(
 
 export function createChangeRecorder(
   tree: Tree,
-  path: Path,
+  path: string,
   changes: Change[]
 ): UpdateRecorder {
   const recorder = tree.beginUpdate(path);

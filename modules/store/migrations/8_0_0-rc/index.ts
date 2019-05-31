@@ -5,17 +5,18 @@ import {
   Tree,
   SchematicsException,
 } from '@angular-devkit/schematics';
-import { Path } from '@angular-devkit/core';
 import {
   createChangeRecorder,
   RemoveChange,
   InsertChange,
+  visitTSSourceFiles,
 } from '@ngrx/store/schematics-core';
 
-function removeNgrxStoreFreezeImport(): Rule {
+function replaceWithRuntimeChecks(): Rule {
   return (tree: Tree) => {
     // only add runtime checks when ngrx-store-freeze is used
-    removeUsages(tree) && insertRuntimeChecks(tree);
+    visitTSSourceFiles<boolean>(tree, removeUsages) &&
+      visitTSSourceFiles(tree, insertRuntimeChecks);
   };
 }
 
@@ -47,71 +48,39 @@ function removeNgRxStoreFreezePackage(): Rule {
 }
 
 export default function(): Rule {
-  return chain([removeNgrxStoreFreezeImport(), removeNgRxStoreFreezePackage()]);
+  return chain([removeNgRxStoreFreezePackage(), replaceWithRuntimeChecks()]);
 }
 
-function removeUsages(tree: Tree) {
-  let ngrxStoreFreezeIsUsed = false;
+function removeUsages(
+  sourceFile: ts.SourceFile,
+  tree: Tree,
+  ngrxStoreFreezeIsUsed?: boolean
+) {
+  const importRemovements = findStoreFreezeImportsToRemove(sourceFile);
+  if (importRemovements.length === 0) {
+    return ngrxStoreFreezeIsUsed;
+  }
 
-  tree.visit(path => {
-    if (!path.endsWith('.ts')) {
-      return;
-    }
+  const usageReplacements = findStoreFreezeUsagesToRemove(sourceFile);
 
-    const sourceFile = ts.createSourceFile(
-      path,
-      tree.read(path)!.toString(),
-      ts.ScriptTarget.Latest
-    );
+  const changes = [...importRemovements, ...usageReplacements];
+  const recorder = createChangeRecorder(tree, sourceFile.fileName, changes);
+  tree.commitUpdate(recorder);
 
-    if (sourceFile.isDeclarationFile) {
-      return;
-    }
-
-    const importRemovements = findStoreFreezeImportsToRemove(sourceFile, path);
-    if (importRemovements.length === 0) {
-      return [];
-    }
-
-    ngrxStoreFreezeIsUsed = true;
-    const usageReplacements = findStoreFreezeUsagesToRemove(sourceFile, path);
-    const runtimeChecksInserts = findRuntimeCHecksToInsert(sourceFile, path);
-
-    const changes = [
-      ...importRemovements,
-      ...usageReplacements,
-      ...runtimeChecksInserts,
-    ];
-    const recorder = createChangeRecorder(tree, path, changes);
-    tree.commitUpdate(recorder);
-  });
-
-  return ngrxStoreFreezeIsUsed;
+  return true;
 }
 
-function insertRuntimeChecks(tree: Tree) {
-  tree.visit(path => {
-    if (!path.endsWith('.ts')) {
-      return;
-    }
-
-    const sourceFile = ts.createSourceFile(
-      path,
-      tree.read(path)!.toString(),
-      ts.ScriptTarget.Latest
-    );
-
-    if (sourceFile.isDeclarationFile) {
-      return;
-    }
-
-    const runtimeChecksInserts = findRuntimeCHecksToInsert(sourceFile, path);
-    const recorder = createChangeRecorder(tree, path, runtimeChecksInserts);
-    tree.commitUpdate(recorder);
-  });
+function insertRuntimeChecks(sourceFile: ts.SourceFile, tree: Tree) {
+  const runtimeChecksInserts = findRuntimeCHecksToInsert(sourceFile);
+  const recorder = createChangeRecorder(
+    tree,
+    sourceFile.fileName,
+    runtimeChecksInserts
+  );
+  tree.commitUpdate(recorder);
 }
 
-function findStoreFreezeImportsToRemove(sourceFile: ts.SourceFile, path: Path) {
+function findStoreFreezeImportsToRemove(sourceFile: ts.SourceFile) {
   const imports = sourceFile.statements
     .filter(ts.isImportDeclaration)
     .filter(({ moduleSpecifier }) => {
@@ -122,21 +91,21 @@ function findStoreFreezeImportsToRemove(sourceFile: ts.SourceFile, path: Path) {
     });
 
   const removements = imports.map(
-    i => new RemoveChange(path, i.getStart(sourceFile), i.getEnd())
+    i =>
+      new RemoveChange(sourceFile.fileName, i.getStart(sourceFile), i.getEnd())
   );
   return removements;
 }
 
-function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile, path: Path) {
+function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile) {
   let changes: (RemoveChange | InsertChange)[] = [];
-  ts.forEachChild(sourceFile, node => crawl(node, changes));
+  ts.forEachChild(sourceFile, crawl);
   return changes;
 
-  function crawl(node: ts.Node, changes: (RemoveChange | InsertChange)[]) {
-    if (!ts.isArrayLiteralExpression(node)) {
-      ts.forEachChild(node, childNode => crawl(childNode, changes));
-      return;
-    }
+  function crawl(node: ts.Node) {
+    ts.forEachChild(node, crawl);
+
+    if (!ts.isArrayLiteralExpression(node)) return;
 
     const elements = node.elements.map(elem => elem.getText(sourceFile));
     const elementsWithoutStoreFreeze = elements.filter(
@@ -153,7 +122,7 @@ function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile, path: Path) {
       );
       changes.push(
         new InsertChange(
-          path,
+          sourceFile.fileName,
           node.getStart(sourceFile),
           `[${elementsWithoutStoreFreeze.join(', ')}]`
         )
@@ -162,16 +131,15 @@ function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile, path: Path) {
   }
 }
 
-function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile, path: Path) {
+function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile) {
   let changes: (InsertChange)[] = [];
-  ts.forEachChild(sourceFile, node => crawl(node, changes));
+  ts.forEachChild(sourceFile, crawl);
   return changes;
 
-  function crawl(node: ts.Node, changes: (InsertChange)[]) {
-    if (!ts.isCallExpression(node)) {
-      ts.forEachChild(node, childNode => crawl(childNode, changes));
-      return;
-    }
+  function crawl(node: ts.Node) {
+    ts.forEachChild(node, crawl);
+
+    if (!ts.isCallExpression(node)) return;
 
     const expression = node.expression;
     if (
@@ -181,7 +149,6 @@ function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile, path: Path) {
         expression.name.getText(sourceFile) === 'forRoot'
       )
     ) {
-      ts.forEachChild(node, childNode => crawl(childNode, changes));
       return;
     }
 
@@ -191,7 +158,7 @@ function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile, path: Path) {
     if (node.arguments.length === 1) {
       changes.push(
         new InsertChange(
-          path,
+          sourceFile.fileName,
           node.arguments[0].getEnd(),
           `, { ${runtimeChecks}}`
         )
@@ -203,7 +170,7 @@ function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile, path: Path) {
         if (storeConfig.properties.length === 0) {
           changes.push(
             new InsertChange(
-              path,
+              sourceFile.fileName,
               storeConfig.getEnd() - 1,
               `${runtimeChecks} `
             )
@@ -214,12 +181,14 @@ function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile, path: Path) {
             storeConfig.properties[storeConfig.properties.length - 1];
 
           changes.push(
-            new InsertChange(path, lastProperty.getEnd(), `, ${runtimeChecks}`)
+            new InsertChange(
+              sourceFile.fileName,
+              lastProperty.getEnd(),
+              `, ${runtimeChecks}`
+            )
           );
         }
       }
     }
-
-    ts.forEachChild(node, childNode => crawl(childNode, changes));
   }
 }
