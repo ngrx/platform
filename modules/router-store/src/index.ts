@@ -28,11 +28,15 @@ export {
 } from './router_store_module';
 export {
   RouterStateSerializer,
+  BaseRouterStoreState,
+} from './serializers/base';
+export {
   DefaultRouterStateSerializer,
   SerializedRouterStateSnapshot,
-  BaseRouterStoreState,
+} from './serializers/default_serializer';
+export {
   MinimalActivatedRouteSnapshot,
   MinimalRouterStateSnapshot,
   MinimalRouterStateSerializer,
-} from './serializers';
+} from './serializers/minimal_serializer';
 export { getSelectors } from './router_selectors';
