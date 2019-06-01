@@ -1,6 +1,6 @@
-import { RouterReducerState } from '@ngrx/router-store';
 import { createSelector } from '@ngrx/store';
 import { RouterStateSelectors } from './models';
+import { RouterReducerState } from './reducer';
 
 export function getSelectors<V>(
   selectState: (state: V) => RouterReducerState<any>

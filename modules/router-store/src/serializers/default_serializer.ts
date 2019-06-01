@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { BaseRouterStoreState, RouterStateSerializer } from './shared';
+import { BaseRouterStoreState, RouterStateSerializer } from './base';
 
 export interface SerializedRouterStateSnapshot extends BaseRouterStoreState {
   root: ActivatedRouteSnapshot;

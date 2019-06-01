@@ -27,12 +27,14 @@ import {
 } from './actions';
 import { RouterReducerState } from './reducer';
 import {
-  DefaultRouterStateSerializer,
   RouterStateSerializer,
-  SerializedRouterStateSnapshot,
   BaseRouterStoreState,
-  MinimalRouterStateSerializer,
-} from './serializers';
+} from './serializers/base';
+import {
+  DefaultRouterStateSerializer,
+  SerializedRouterStateSnapshot,
+} from './serializers/default_serializer';
+import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
 
 export type StateKeyOrSelector<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot

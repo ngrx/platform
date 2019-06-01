@@ -6,10 +6,8 @@ import {
   RoutesRecognized,
 } from '@angular/router';
 
-import {
-  BaseRouterStoreState,
-  SerializedRouterStateSnapshot,
-} from './serializers';
+import { BaseRouterStoreState } from './serializers/base';
+import { SerializedRouterStateSnapshot } from './serializers/default_serializer';
 
 /**
  * An action dispatched when a router navigation request is fired.
