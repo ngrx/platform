@@ -199,10 +199,6 @@
         {
           "title": "Configuration",
           "url": "guide/router-store/configuration"
-        },
-        {
-          "title": "Default Router State Serializer",
-          "url": "guide/router-store/default-router-state-serializer"
         }
       ]
     },
