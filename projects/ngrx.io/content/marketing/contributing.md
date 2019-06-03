@@ -4,26 +4,26 @@ NgRx is a community-maintained project that thrives due to the contributions of 
 
 ## Prerequisites
 
-- `yarn` - The NgRx library utilizes the `yarn` CLI tool. Please make sure that you have the latest stable release of `yarn` installed. 
+- `yarn` - The NgRx library utilizes the `yarn` CLI tool. Please make sure that you have the latest stable release of `yarn` installed. For more information, visit the [Yarn Install Docs](https://yarnpkg.com/en/docs/install)
 
 ## Contributing to the Docs and NgRx.io Website
 
 ### Folder Structure
-Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning contribute features and/or bug fixes relating to the docs or the website, chances are the code will be found there. The structure is split up between the following sub folders and key files:
+Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning to contribute features and/or bug fixes relating to the docs or the website, chances are the code will be found there. The structure is split up between the following subfolders and key files:
 
 - `projects/ngrx.io/content/examples` - Code examples referenced on the website and in the docs should be placed under this folder
 - `projects/ngrx.io/content/guide` - The majority of official NgRx documentation exists under this folder. There are sub-folders for each module.
 - `projects/ngrx.io/content/marketing` - The majority of the additional website pages such as resources, events, about the NgRx team exist under this folder.
-- `projects/ngrx/io/content/events.json` - The Events page dynmically displays two tables, one for Past Events and one for Present events based on the contents of this file.
-- `projects/ngrx/io/content/resources.json` - The Resources page dynmically displays a list of NgRx resources based on the contents of this file.
-- `projects/ngrx/io/content/navigation.json` - All of the navigation and menus on the website and docs are populated from this json file. If a new page is being added, or adjusted make sure to update this file as well.
+- `projects/ngrx/io/content/events.json` - The Events page dynamically displays two tables, one for Past Events and one for Present events based on the contents of this file.
+- `projects/ngrx/io/content/resources.json` - The Resources page dynamically displays a list of NgRx resources based on the contents of this file.
+- `projects/ngrx/io/content/navigation.json` - All of the navigation and menus on the website and docs are populated from this JSON file. If a new page is being added or adjusted make sure to update this file as well.
 
 ### Submission Guidelines
 
 The NgRx team strives for excellence when it comes to documentation. 
 
 - Documentation should be free of typos, grammatical errors, slang, and vagueness. 
-- When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammer checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
+- When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammar checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
 - Confirm that all commit messages adhere to the [Commit Message Guidelines](#commit)
 
 ### Setup
@@ -60,7 +60,7 @@ Source code for the NgRx library exists under the `modules/` project folder. If 
 
 Within each of these `modules/*` folders exists a standard and pertinent set of files and folders:
 
-- `migrations` - With new releases, come new features and occasional breaking changes. We strive to create migrations, whenever possible for users to easily migrate to new versions. This folder will contain those version specific migration utility scripts.
+- `migrations` - With new releases come new features and occasional breaking changes. We strive to create migrations, whenever possible for users to easily migrate to new versions. This folder will contain those version specific migration utility scripts.
 - `schematics` - NgRx provides a fully featured set of schematics. This folder will contain those schematics specific to each module for use with `ng add` and `ng generate`.
 - `spec` - All unit tests for the given module will exist under this folder. 
 - `src` - This folder contains the actual module API features including private utility functions. 
