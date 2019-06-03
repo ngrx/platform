@@ -170,6 +170,23 @@ jobs:
           paths:
             - ~/docs/projects/ngrx.io/node_modules
 
+  deploy-docs-stable:
+    <<: *run_in_node
+    working_directory: ~/docs/projects/ngrx.io
+    steps:
+      - checkout:
+          path: ~/docs
+      - restore_cache:
+          keys:
+            - *cache_key
+            - *docs_cache_key
+      - run: npm rebuild node-sass
+      - run: yarn build --progress false --output-path dist/ngrx.io/ && yarn copy-404-page
+      - run: cp -rf src/extra-files/stable/. dist/ngrx.io/
+      - run:
+          name: Deploy Docs to Firebase
+          command: ./node_modules/.bin/firebase deploy --only hosting:stable --token=$FIREBASE_DEPLOY_TOKEN
+
   deploy:
     <<: *run_in_node
     steps:
@@ -182,6 +199,32 @@ jobs:
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
+
+  publish-stable:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: dist
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run: yarn run publish:stable
+
+  publish-next:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - attach_workspace:
+          at: dist
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run: yarn run publish:next
 
   cleanup-previews:
     <<: *run_in_node
@@ -239,3 +282,27 @@ workflows:
           filters:
             branches:
               only: master
+      # - publish-stable:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /\d+\.\d+\.\d+(?!-\w+\.\d)/
+      # - deploy-docs-stable:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /\d+\.\d+\.\d+(?!-\w+\.\d)/
+      - publish-next:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /\d+\.\d+\.\d+(-\w+\.\d)/
