@@ -1,48 +1,10 @@
-<h1>Contributing</h1>
+# Contributing
 
-## Yarn Package Management Tool Prequisite
+Intro blurb goes there
 
-The NgRx library utilizes the `yarn` CLI tool. Please make sure that you have the latest stable release of `yarn` installed. 
+## Prerequisites
 
-## Contributing to the Library Modules
-
-### Folder Structure
-
-Source code for the NgRx library exists under the `modules/` project folder. If you are planning to contribute features and/or bug fixes relating to the library, chances are the code will be found in one of the `modules` sub-folders. These sub-folders mirror, for the most part, the `npm` packages for `@ngrx/*`:
-
-- `modules/data` > `@ngrx/data`
-- `modules/effects` > `@ngrx/effects`
-- `modules/entity` > `@ngrx/entity`
-- `modules/router-store` > `@ngrx/router-store`
-- `modules/schematics` > `@ngrx/schematics`
-- `modules/schematics-core` > `@ngrx/schematics-core`
-- `modules/store` > `@ngrx/store`
-- `modules/store-devtools` > `@ngrx/store-devtools`
-
-Within each of these `modules/*` folders exists a standard and pertinent set of files and folders:
-
-- `migrations` - With new releases, come new features and occasional breaking changes. We strive to create migrations, whenever possible for users to easily migrate to new versions. This folder will contain those version specific migration utility scripts.
-- `schematics` - NgRx provides a fully featured set of schematics. This folder will contain those schematics specific to each module for use with `ng add` and `ng generate`.
-- `schematics-core` - Utility functions to help with schematics.
-- `spec` - All unit tests for the given module will exist under this folder. 
-- `src` - This folder contains the actual module API features including private utility functions. 
-- `src\index.ts` - This file is responsible for providing the public API surface layer. Only public API methods and models are exported from here.
-
-### Setup
-
-To ensure the correct project dependencies are installed, please run the following command before each new pull request (PR) is submitted. This command should be run from the root project folder.
-
-```sh
-yarn
-```
-
-### Testing
-
-It is good practice to run the following command from the root project folder before pushing new commits.
-
-```sh
-yarn test
-```
+- `yarn` - The NgRx library utilizes the `yarn` CLI tool. Please make sure that you have the latest stable release of `yarn` installed. 
 
 ## Contributing to the Docs and NgRx.io Website
 
@@ -56,9 +18,13 @@ Source code for the NgRx docs and the ngrx.io website exist under the `projects/
 - `projects/ngrx/io/content/resources.json` - The Resources page dynmically displays a list of NgRx resources based on the contents of this file.
 - `projects/ngrx/io/content/navigation.json` - All of the navigation and menus on the website and docs are populated from this json file. If a new page is being added, or adjusted make sure to update this file as well.
 
-### Striving For Excellence
+### Submission Guidelines
 
-The NgRx team strives for excellence when it comes to documentation. Documentation should be free of typos, grammatical errors, slang, and vagueness. When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammer checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
+The NgRx team strives for excellence when it comes to documentation. 
+
+- Documentation should be free of typos, grammatical errors, slang, and vagueness. 
+- When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammer checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
+- Confirm that all commit messages adhere to the [Commit Message Guidelines](#commit)
 
 ### Setup
 
@@ -77,6 +43,52 @@ yarn serve-and-sync
 ```
 
 After running this command, an instance of the website and docs will be available at `http://localhost:4200`
+
+## Contributing to the Library Modules
+
+### Folder Structure
+
+Source code for the NgRx library exists under the `modules/` project folder. If you are planning to contribute features and/or bug fixes relating to the library, chances are the code will be found in one of the `modules` sub-folders. These sub-folders mirror, for the most part, the `npm` packages for `@ngrx/*`:
+
+- `modules/data` > `@ngrx/data`
+- `modules/effects` > `@ngrx/effects`
+- `modules/entity` > `@ngrx/entity`
+- `modules/router-store` > `@ngrx/router-store`
+- `modules/schematics` > `@ngrx/schematics`
+- `modules/store` > `@ngrx/store`
+- `modules/store-devtools` > `@ngrx/store-devtools`
+
+Within each of these `modules/*` folders exists a standard and pertinent set of files and folders:
+
+- `migrations` - With new releases, come new features and occasional breaking changes. We strive to create migrations, whenever possible for users to easily migrate to new versions. This folder will contain those version specific migration utility scripts.
+- `schematics` - NgRx provides a fully featured set of schematics. This folder will contain those schematics specific to each module for use with `ng add` and `ng generate`.
+- `spec` - All unit tests for the given module will exist under this folder. 
+- `src` - This folder contains the actual module API features including private utility functions. 
+- `src\index.ts` - This file is responsible for providing the public API surface layer. Only public API methods and models are exported from here.
+
+### Setup
+
+To ensure the correct project dependencies are installed, please run the following command before each new pull request (PR) is submitted. This command should be run from the root project folder.
+
+```sh
+yarn
+```
+
+### Build
+
+NgRx uses `Bazel` for builds. In order to build locally, please run the following command:
+
+```sh
+yarn build
+```
+
+### Testing
+
+It is good practice to run the following command from the root project folder before pushing new commits.
+
+```sh
+yarn test
+```
 
 ## Submitting Pull Requests
 
