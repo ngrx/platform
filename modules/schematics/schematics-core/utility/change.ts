@@ -77,22 +77,18 @@ export class RemoveChange implements Change {
   order: number;
   description: string;
 
-  constructor(
-    public path: string,
-    private pos: number,
-    private toRemove: string
-  ) {
-    if (pos < 0) {
+  constructor(public path: string, public pos: number, public end: number) {
+    if (pos < 0 || end < 0) {
       throw new Error('Negative positions are invalid');
     }
-    this.description = `Removed ${toRemove} into position ${pos} of ${path}`;
+    this.description = `Removed text in position ${pos} to ${end} of ${path}`;
     this.order = pos;
   }
 
   apply(host: Host): Promise<void> {
     return host.read(this.path).then(content => {
       const prefix = content.substring(0, this.pos);
-      const suffix = content.substring(this.pos + this.toRemove.length);
+      const suffix = content.substring(this.end);
 
       // TODO: throw error if toRemove doesn't match removed string.
       return host.write(this.path, `${prefix}${suffix}`);
@@ -109,7 +105,7 @@ export class ReplaceChange implements Change {
 
   constructor(
     public path: string,
-    private pos: number,
+    public pos: number,
     public oldText: string,
     public newText: string
   ) {
@@ -150,14 +146,19 @@ export function createReplaceChange(
 
 export function createChangeRecorder(
   tree: Tree,
-  path: Path,
-  changes: ReplaceChange[]
+  path: string,
+  changes: Change[]
 ): UpdateRecorder {
   const recorder = tree.beginUpdate(path);
   for (const change of changes) {
-    const action = <any>change;
-    recorder.remove(action.pos, action.oldText.length);
-    recorder.insertLeft(action.pos, action.newText);
+    if (change instanceof InsertChange) {
+      recorder.insertLeft(change.pos, change.toAdd);
+    } else if (change instanceof RemoveChange) {
+      recorder.remove(change.pos, change.end - change.pos);
+    } else if (change instanceof ReplaceChange) {
+      recorder.remove(change.pos, change.oldText.length);
+      recorder.insertLeft(change.pos, change.newText);
+    }
   }
   return recorder;
 }

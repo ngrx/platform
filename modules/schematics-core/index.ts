@@ -21,6 +21,7 @@ export {
   addExportToModule,
   addImportToModule,
   addProviderToModule,
+  replaceImport,
 } from './utility/ast-utils';
 
 export {
@@ -71,3 +72,5 @@ export { parseName } from './utility/parse-name';
 export { addPackageToPackageJson } from './utility/package';
 
 export { platformVersion } from './utility/libs-version';
+
+export { visitTSSourceFiles } from './utility/visit-utils';
