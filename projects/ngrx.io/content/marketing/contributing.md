@@ -6,6 +6,8 @@ The NgRx library utilizes the `yarn` CLI tool. Please make sure that you have th
 
 ## Contributing to the Library Modules
 
+### Folder Structure
+
 Source code for the NgRx library exists under the `modules/` project folder. If you are planning to contribute features and/or bug fixes relating to the library, chances are the code will be found in one of the `modules` sub-folders. These sub-folders mirror, for the most part, the `npm` packages for `@ngrx/*`:
 
 - `modules/data` > `@ngrx/data`
@@ -44,12 +46,19 @@ yarn test
 
 ## Contributing to the Docs and NgRx.io Website
 
+### Folder Structure
 Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning contribute features and/or bug fixes relating to the docs or the website, chances are the code will be found there. The structure is split up between the following sub folders and key files:
 
-- `projects/ngrx.io/content/examples`
-- `projects/ngrx.io/content/guide`
-- `projects/ngrx.io/content/marketing`
-- `projects/ngrx/io/content/navigation.json` 
+- `projects/ngrx.io/content/examples` - Code examples referenced on the website and in the docs should be placed under this folder
+- `projects/ngrx.io/content/guide` - The majority of official NgRx documentation exists under this folder. There are sub-folders for each module.
+- `projects/ngrx.io/content/marketing` - The majority of the additional website pages such as resources, events, about the NgRx team exist under this folder.
+- `projects/ngrx/io/content/events.json` - The Events page dynmically displays two tables, one for Past Events and one for Present events based on the contents of this file.
+- `projects/ngrx/io/content/resources.json` - The Resources page dynmically displays a list of NgRx resources based on the contents of this file.
+- `projects/ngrx/io/content/navigation.json` - All of the navigation and menus on the website and docs are populated from this json file. If a new page is being added, or adjusted make sure to update this file as well.
+
+### Striving For Excellence
+
+The NgRx team strives for excellence when it comes to documentation. Documentation should be free of typos, grammatical errors, slang, and vagueness. When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammer checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
 
 ### Setup
 
