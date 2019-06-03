@@ -378,6 +378,11 @@
       "url": "api",
       "title": "API",
       "tooltip": "API Reference"
+    },
+    {
+      "url": "contributing",
+      "title": "Contributing",
+      "tooltip": "Contributing"
     }
   ],
   "Footer": [
