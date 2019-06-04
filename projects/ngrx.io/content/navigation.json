@@ -220,6 +220,15 @@
         {
           "title": "Entity Adapter",
           "url": "guide/entity/adapter"
+        },
+        {
+          "title": "Recipes",
+          "children": [
+            {
+              "title": "Additional State Properties",
+              "url": "guide/entity/recipes/additional-state-properties"
+            }
+          ]
         }
       ]
     },
