@@ -9,7 +9,7 @@ NgRx is a community-maintained project that thrives due to the contributions of 
 ## Contributing to the Docs and NgRx.io Website
 
 ### Folder Structure
-Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning to contribute features and/or bug fixes relating to the docs or the website, chances are the code will be found there. The structure is split up between the following subfolders and key files:
+Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning to contribute features and/or bug fixes relating to the docs or the website, the code is there. The structure is split up between the following subfolders and key files:
 
 - `projects/ngrx.io/content/examples` - Code examples referenced on the website and in the docs should be placed under this folder
 - `projects/ngrx.io/content/guide` - The majority of official NgRx documentation exists under this folder. There are sub-folders for each module.
@@ -20,7 +20,7 @@ Source code for the NgRx docs and the ngrx.io website exist under the `projects/
 
 ### Submission Guidelines
 
-The NgRx team strives for excellence when it comes to documentation. 
+The NgRx team values quality documentation as a way to help new and existing users understand and use features of the platform. The guidelines below help to ensure that quality for our users.
 
 - Documentation should be free of typos, grammatical errors, slang, and vagueness. 
 - When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammar checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
@@ -48,7 +48,7 @@ After running this command, an instance of the website and docs will be availabl
 
 ### Folder Structure
 
-Source code for the NgRx library exists under the `modules/` project folder. If you are planning to contribute features and/or bug fixes relating to the library, chances are the code will be found in one of the `modules` sub-folders. These sub-folders mirror, for the most part, the `npm` packages for `@ngrx/*`:
+Source code for the NgRx library exists under the `modules/` project folder. If you are planning to contribute features and/or bug fixes relating to the library, the code is in one of the `modules` sub-folders. These sub-folders mirror, for the most part, the `npm` packages for `@ngrx/*`:
 
 - `modules/data` > `@ngrx/data`
 - `modules/effects` > `@ngrx/effects`
@@ -95,7 +95,7 @@ yarn test
 **Please follow these basic steps to simplify pull request reviews. If you don't you'll probably just be asked to anyway.**
 
 - Please rebase your branch against the current master.
-- Run the `Setup` command to make sure your development dependencies are up-to-date.
+- Run the `Setup` instructions to make sure your development dependencies are up-to-date.
 - Please ensure the test suite passes before submitting a PR.
 - If you've added new functionality, **please** include tests which validate its behavior.
 - Make reference to possible [issues](https://github.com/ngrx/platform/issues) on PR comment.
@@ -118,7 +118,7 @@ yarn test
 
 We have very precise rules over how our git commit messages can be formatted. This leads to **more
 readable messages** that are easy to follow when looking through the **project history**. But also,
-we use the git commit messages to **generate the NgRx change log**.
+we use the git commit messages to **generate the NgRx changelog**.
 
 ### Commit Message Format
 
@@ -140,16 +140,20 @@ to read on GitHub as well as in various git tools.
 
 The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
+```
+feat(router-store): add routerState config option
+
+Closes #1834
+```
+
 Samples: (even more [samples](https://github.com/ngrx/platform/commits/master))
 
 ```
-docs(changelog): update changelog to beta.5
+docs: add new example to selectors guide
 ```
 
 ```
-fix(release): need to depend on latest rxjs and zone.js
-
-The version in our package.json gets copied to the one we publish, and users need the latest of these.
+fix(store): adjust mock store to handle selectors with props
 ```
 
 ### Revert
