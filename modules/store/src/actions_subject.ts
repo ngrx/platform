@@ -5,6 +5,18 @@ import { Action } from './models';
 
 export const INIT = '@ngrx/store/init' as '@ngrx/store/init';
 
+export const throwErrorOnInvalidAction = (action: Action) => {
+  if (typeof action === 'undefined') {
+    throw new TypeError(`Actions must be objects`);
+  } else if (typeof action === 'function') {
+    throw new TypeError(`
+      Actions as function are not now allowed.
+      Make sure your action is called e.g someAction()`);
+  } else if (typeof action.type === 'undefined') {
+    throw new TypeError(`Actions must have a type property`);
+  }
+};
+
 @Injectable()
 export class ActionsSubject extends BehaviorSubject<Action>
   implements OnDestroy {
@@ -13,12 +25,7 @@ export class ActionsSubject extends BehaviorSubject<Action>
   }
 
   next(action: Action): void {
-    if (typeof action === 'undefined') {
-      throw new TypeError(`Actions must be objects`);
-    } else if (typeof action.type === 'undefined') {
-      throw new TypeError(`Actions must have a type property`);
-    }
-
+    throwErrorOnInvalidAction(action);
     super.next(action);
   }
 
