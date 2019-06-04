@@ -10,9 +10,13 @@ interface StoreRouterConfig {
 </code-example>
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
-- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
+- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer` (see [Default Router State Serializer](#default-router-state-serializer)). See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
 - `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
 - `routerState`: Set this property to decide which serializer should be used, if none is provided, and the metadata on the dispatched action.
+
+## Default Router State Serializer
+
+If no router state serializer is provided through the [configuration](#configuration-options) of router store, the `DefaultRouterStateSerializer` is used. This router state serializer, serializes the URL together with the [ActivatedRouteSnapshot](https://angular.io/api/router/ActivatedRouteSnapshot) from [Angular Router](https://angular.io/guide/router). The latter is serialized recursively, but only with the possibility to traverse the route downward since `root` and `parent` parameters are set to `undefined`.
 
 ## Custom Router State Serializer
 
