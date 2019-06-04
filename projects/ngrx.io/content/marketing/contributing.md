@@ -8,6 +8,12 @@ NgRx is a community-maintained project that thrives due to the contributions of 
 
 ## Contributing to the Docs and NgRx.io Website
 
+### Learn How to Contribute
+
+Watch as Brandon Roberts and Jan-Niklas Wortmann walk through how to contribute to RxJS and NgRx through the docs. They will cover finding issues, making changes, and submitting a pull request.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ug0c1tUegm4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Folder Structure
 Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning to contribute features and/or bug fixes relating to the docs or the website, the code is there. The structure is split up between the following subfolders and key files:
 
@@ -24,7 +30,7 @@ The NgRx team values quality documentation as a way to help new and existing use
 
 - Documentation should be free of typos, grammatical errors, slang, and vagueness. 
 - When contributing, please take special care to ensure that all new copy has been spell-checked and run through a third-party grammar checking service. This will speed up the time to merge, as well as, save time for the maintainers reviewing the PR.
-- Confirm that all commit messages adhere to the [Commit Message Guidelines](#commit)
+- Confirm that all commit messages adhere to the [Commit Message Guidelines](#commit-message-guidelines)
 
 ### Setup
 
@@ -114,7 +120,7 @@ yarn test
 - The feature will be discussed and considered.
 - Once the PR is submitted, it will be reviewed and merged once approved.
 
-## <a name="commit"></a> Commit Message Guidelines
+## Commit Message Guidelines
 
 We have very precise rules over how our git commit messages can be formatted. This leads to **more
 readable messages** that are easy to follow when looking through the **project history**. But also,
