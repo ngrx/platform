@@ -1,3 +1,15 @@
+<a name="8.0.0-rc.1"></a>
+
+# [8.0.0-rc.1](https://github.com/ngrx/platform/compare/8.0.0-rc.0...8.0.0-rc.1) (2019-06-04)
+
+### Bug Fixes
+
+- **router-store:** remove circular dependency in serializers ([#1904](https://github.com/ngrx/platform/issues/1904)) ([0407c5b](https://github.com/ngrx/platform/commit/0407c5b)), closes [#1902](https://github.com/ngrx/platform/issues/1902)
+
+### Features
+
+- **store:** add ngrx-store-freeze migration ([#1901](https://github.com/ngrx/platform/issues/1901)) ([4146650](https://github.com/ngrx/platform/commit/4146650)), closes [#1896](https://github.com/ngrx/platform/issues/1896)
+
 <a name="8.0.0-rc.0"></a>
 
 # [8.0.0-rc.0](https://github.com/ngrx/platform/compare/8.0.0-beta.2...8.0.0-rc.0) (2019-05-30)
