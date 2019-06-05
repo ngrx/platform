@@ -41,24 +41,23 @@ export class LogEffects {
 ### Resubscribe on Error
 
 Starting with version 8, when an error happens in the effect's main stream it is
-reported using Angular's `ErrorHandler`, and the source effect is 
-**automatically** resubscribed to (instead of completing), so it continues to 
+reported using Angular's `ErrorHandler`, and the source effect is
+**automatically** resubscribed to (instead of completing), so it continues to
 listen to all dispatched Actions.
 
-Generally, errors should be handled by users, and operators such as `mapToAction`
-should make it easier to do. However, for the cases where errors were missed, 
+Generally, errors should be handled by users. However, for the cases where errors were missed,
 this new behavior adds an additional safety net.
 
 In some cases where particular RxJS operators are used, the new behavior might
 produce unexpected results. For example, if the `startWith` operator is within the
 effect's pipe then it will be triggered again.
 
-To disable resubscriptions add `{resubscribeOnError: false}` to the `createEffect` 
+To disable resubscriptions add `{resubscribeOnError: false}` to the `createEffect`
 metadata (second argument).
 
 <code-example header="disable-resubscribe.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, ofType, createEffect, mapToAction } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
 import {
@@ -70,18 +69,20 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  login$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(LoginPageActions.login),
-      mapToAction(
-        // Happy path callback
-        action => this.authService.login(action.credentials).pipe(
-            map(user => AuthApiActions.loginSuccess({ user }))),
-        // error callback
-        error => AuthApiActions.loginFailure({ error }),
-      )
-    // Errors are handled and it is safe to disable resubscription 
-    ), {resubscribeOnError: false });
+  logins$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(LoginPageActions.login),
+        exhaustMap(action =>
+          this.authService.login(action.credentials).pipe(
+            map(user => AuthApiActions.loginSuccess({ user })),
+            catchError(error => of(AuthApiActions.loginFailure({ error })))
+          )
+        )
+        // Errors are handled and it is safe to disable resubscription
+      ),
+    { resubscribeOnError: false }
+  );
 
   constructor(
     private actions$: Actions,
