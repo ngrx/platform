@@ -5,17 +5,11 @@ import { Action } from './models';
 
 export const INIT = '@ngrx/store/init' as '@ngrx/store/init';
 
-export const throwErrorOnInvalidAction = (action: Action) => {
-  if (typeof action === 'undefined') {
-    throw new TypeError(`Actions must be objects`);
-  } else if (typeof action === 'function') {
-    throw new TypeError(`
-      Actions as function are not now allowed.
-      Make sure your action is called e.g someAction()`);
-  } else if (typeof action.type === 'undefined') {
-    throw new TypeError(`Actions must have a type property`);
-  }
-};
+const typeOf = (value: any) =>
+  Object.prototype.toString
+    .call(value)
+    .slice(8, -1)
+    .toLowerCase();
 
 @Injectable()
 export class ActionsSubject extends BehaviorSubject<Action>
@@ -25,7 +19,14 @@ export class ActionsSubject extends BehaviorSubject<Action>
   }
 
   next(action: Action): void {
-    throwErrorOnInvalidAction(action);
+    if (typeOf(action) !== 'object') {
+      throw new TypeError(`
+        Dispatch expected an object, instead it received ${action}.
+        If you're using the createAction function, make sure to invoke the function
+        before dispatching the action. E.g. someAction should be someAction().`);
+    } else if (typeof action.type === 'undefined') {
+      throw new TypeError(`Actions must have a type property`);
+    }
     super.next(action);
   }
 

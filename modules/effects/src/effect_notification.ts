@@ -30,8 +30,19 @@ export function reportInvalidActions(
   }
 }
 
+const typeOf = (value: any) =>
+  Object.prototype.toString
+    .call(value)
+    .slice(8, -1)
+    .toLowerCase();
+
 function isAction(action: any): action is Action {
-  return action && action.type && typeof action.type === 'string';
+  return (
+    typeOf(action) === 'object' &&
+    action &&
+    action.type &&
+    typeof action.type === 'string'
+  );
 }
 
 function getEffectName({
