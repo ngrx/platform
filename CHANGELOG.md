@@ -1,3 +1,16 @@
+<a name="8.0.0"></a>
+
+# [8.0.0](https://github.com/ngrx/platform/compare/8.0.0-rc.1...8.0.0) (2019-06-06)
+
+### Features
+
+- **store:** add protection from type property use ([#1923](https://github.com/ngrx/platform/issues/1923)) ([bb9add7](https://github.com/ngrx/platform/commit/bb9add7)), closes [#1917](https://github.com/ngrx/platform/issues/1917)
+- **store:** capture the type of a selector projector function ([#1920](https://github.com/ngrx/platform/issues/1920)) ([4e39cc1](https://github.com/ngrx/platform/commit/4e39cc1)), closes [#1908](https://github.com/ngrx/platform/issues/1908)
+
+### Performance Improvements
+
+- fine tune schematics to only commit changes ([#1925](https://github.com/ngrx/platform/issues/1925)) ([5fcdd3b](https://github.com/ngrx/platform/commit/5fcdd3b))
+
 <a name="8.0.0-rc.1"></a>
 
 # [8.0.0-rc.1](https://github.com/ngrx/platform/compare/8.0.0-rc.0...8.0.0-rc.1) (2019-06-04)
