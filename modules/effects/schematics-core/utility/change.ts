@@ -136,12 +136,16 @@ export class ReplaceChange implements Change {
 
 export function createReplaceChange(
   sourceFile: ts.SourceFile,
-  path: Path,
   node: ts.Node,
   oldText: string,
   newText: string
 ): ReplaceChange {
-  return new ReplaceChange(path, node.getStart(sourceFile), oldText, newText);
+  return new ReplaceChange(
+    sourceFile.fileName,
+    node.getStart(sourceFile),
+    oldText,
+    newText
+  );
 }
 
 export function createChangeRecorder(
@@ -161,4 +165,14 @@ export function createChangeRecorder(
     }
   }
   return recorder;
+}
+
+export function commitChanges(tree: Tree, path: string, changes: Change[]) {
+  if (changes.length === 0) {
+    return false;
+  }
+
+  const recorder = createChangeRecorder(tree, path, changes);
+  tree.commitUpdate(recorder);
+  return true;
 }

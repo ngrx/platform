@@ -2,26 +2,14 @@ import * as ts from 'typescript';
 import { Rule, chain, Tree } from '@angular-devkit/schematics';
 import {
   ReplaceChange,
-  createChangeRecorder,
   createReplaceChange,
+  visitTSSourceFiles,
+  commitChanges,
 } from '@ngrx/router-store/schematics-core';
 
 function updateRouterStoreImport(): Rule {
   return (tree: Tree) => {
-    tree.visit(path => {
-      if (!path.endsWith('.ts')) {
-        return;
-      }
-
-      const sourceFile = ts.createSourceFile(
-        path,
-        tree.read(path)!.toString(),
-        ts.ScriptTarget.Latest
-      );
-
-      if (sourceFile.isDeclarationFile) {
-        return;
-      }
+    visitTSSourceFiles(tree, sourceFile => {
       let changes: ReplaceChange[] = [];
       ts.forEachChild(sourceFile, function findDecorator(node) {
         if (!ts.isDecorator(node)) {
@@ -43,7 +31,6 @@ function updateRouterStoreImport(): Rule {
                 changes.push(
                   createReplaceChange(
                     sourceFile,
-                    path,
                     element,
                     'StoreRouterConnectingModule',
                     'StoreRouterConnectingModule.forRoot()'
@@ -56,12 +43,7 @@ function updateRouterStoreImport(): Rule {
         });
       });
 
-      if (changes.length < 1) {
-        return;
-      }
-
-      const recorder = createChangeRecorder(tree, path, changes);
-      tree.commitUpdate(recorder);
+      commitChanges(tree, sourceFile.fileName, changes);
     });
   };
 }

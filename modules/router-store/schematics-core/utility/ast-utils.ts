@@ -687,7 +687,7 @@ export function replaceImport(
     })
     .filter(({ hit }) => hit)
     .map(({ specifier, text }) =>
-      createReplaceChange(sourceFile, path, specifier!, text!, importToBe)
+      createReplaceChange(sourceFile, specifier!, text!, importToBe)
     );
 
   return changes;

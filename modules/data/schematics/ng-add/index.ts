@@ -22,7 +22,6 @@ import {
   createChangeRecorder,
 } from '@ngrx/data/schematics-core';
 import { Schema as EntityDataOptions } from './schema';
-import { Path } from '@angular-devkit/core';
 
 function addNgRxDataToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
@@ -133,9 +132,9 @@ function renameNgrxDataModule(options: EntityDataOptions) {
       }
 
       const changes = [
-        ...findNgrxDataImports(sourceFile, path, ngrxDataImports),
-        ...findNgrxDataImportDeclarations(sourceFile, path, ngrxDataImports),
-        ...findNgrxDataReplacements(sourceFile, path),
+        ...findNgrxDataImports(sourceFile, ngrxDataImports),
+        ...findNgrxDataImportDeclarations(sourceFile, ngrxDataImports),
+        ...findNgrxDataReplacements(sourceFile),
       ];
 
       if (changes.length === 0) {
@@ -150,13 +149,11 @@ function renameNgrxDataModule(options: EntityDataOptions) {
 
 function findNgrxDataImports(
   sourceFile: ts.SourceFile,
-  path: Path,
   imports: ts.ImportDeclaration[]
 ) {
   const changes = imports.map(specifier =>
     createReplaceChange(
       sourceFile,
-      path,
       specifier.moduleSpecifier,
       "'ngrx-data'",
       "'@ngrx/data'"
@@ -168,7 +165,6 @@ function findNgrxDataImports(
 
 function findNgrxDataImportDeclarations(
   sourceFile: ts.SourceFile,
-  path: Path,
   imports: ts.ImportDeclaration[]
 ) {
   const changes = imports
@@ -198,7 +194,6 @@ function findNgrxDataImportDeclarations(
     .map(({ specifier, text }) =>
       createReplaceChange(
         sourceFile,
-        path,
         specifier!,
         text!,
         (renames as any)[text!]
@@ -208,7 +203,7 @@ function findNgrxDataImportDeclarations(
   return changes;
 }
 
-function findNgrxDataReplacements(sourceFile: ts.SourceFile, path: Path) {
+function findNgrxDataReplacements(sourceFile: ts.SourceFile) {
   const renameKeys = Object.keys(renames);
   let changes: ReplaceChange[] = [];
   ts.forEachChild(sourceFile, node => find(node, changes));
@@ -252,7 +247,6 @@ function findNgrxDataReplacements(sourceFile: ts.SourceFile, path: Path) {
       changes.push(
         createReplaceChange(
           sourceFile,
-          path,
           change.node,
           change.text,
           (renames as any)[change.text]

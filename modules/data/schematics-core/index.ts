@@ -33,6 +33,7 @@ export {
   ReplaceChange,
   createReplaceChange,
   createChangeRecorder,
+  commitChanges,
 } from './utility/change';
 
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
