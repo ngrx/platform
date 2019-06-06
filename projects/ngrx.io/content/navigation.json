@@ -457,6 +457,10 @@
   ],
   "docVersions": [
     {
+      "title": "v7",
+      "url": "https://v7.ngrx.io"
+    },
+    {
       "title": "v6",
       "url": "https://github.com/ngrx/platform/tree/6.1.2/docs"
     },
