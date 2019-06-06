@@ -40,7 +40,7 @@ The entity adapter is only used to update the `EntityState` properties. The addi
 
 <code-example header="user.reducer.ts">
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
 
@@ -56,7 +56,8 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export const reducer = createReducer(initialState,
+export const userReducer = createReducer(
+  initialState,
   on(UserActions.selectUser, (state, { userId }) => {
     return { ...state, selectedUserId: userId };
   }),
@@ -65,4 +66,7 @@ export const reducer = createReducer(initialState,
   })
 );
 
+export function reducer(state: State | undefined: action: Action) {
+  return userReducer(state, action);
+}
 </code-example>
