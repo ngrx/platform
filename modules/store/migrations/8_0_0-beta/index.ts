@@ -2,33 +2,19 @@ import * as ts from 'typescript';
 import { Rule, chain, Tree } from '@angular-devkit/schematics';
 import {
   ReplaceChange,
-  createChangeRecorder,
   createReplaceChange,
+  visitTSSourceFiles,
+  commitChanges,
 } from '@ngrx/store/schematics-core';
 
 const META_REDUCERS = 'META_REDUCERS';
 
 function updateMetaReducersToken(): Rule {
   return (tree: Tree) => {
-    tree.visit(path => {
-      if (!path.endsWith('.ts')) {
-        return;
-      }
-
-      const sourceFile = ts.createSourceFile(
-        path,
-        tree.read(path)!.toString(),
-        ts.ScriptTarget.Latest
-      );
-
-      if (sourceFile.isDeclarationFile) {
-        return;
-      }
-
+    visitTSSourceFiles(tree, sourceFile => {
       const createChange = (node: ts.Node) =>
         createReplaceChange(
           sourceFile,
-          path,
           node,
           META_REDUCERS,
           'USER_PROVIDED_META_REDUCERS'
@@ -40,12 +26,7 @@ function updateMetaReducersToken(): Rule {
       );
       changes.push(...findMetaReducersAssignment(sourceFile, createChange));
 
-      if (changes.length < 1) {
-        return;
-      }
-
-      const recorder = createChangeRecorder(tree, path, changes);
-      tree.commitUpdate(recorder);
+      return commitChanges(tree, sourceFile.fileName, changes);
     });
   };
 }

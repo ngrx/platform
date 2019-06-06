@@ -4,6 +4,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "moduleResolution": "node",
+    "downlevelIteration": true,
     "outDir": "../../dist/packages/schematics",
     "sourceMap": true,
     "inlineSources": true,
