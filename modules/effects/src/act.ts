@@ -17,8 +17,8 @@ import {
   materialize,
 } from 'rxjs/operators';
 
-/** Represents config with named paratemeters for mapToAction */
-export interface MapToActionConfig<
+/** Represents config with named paratemeters for act */
+export interface ActConfig<
   Input,
   OutputAction extends Action,
   ErrorAction extends Action,
@@ -50,7 +50,7 @@ export interface MapToActionConfig<
  * Takes either config with named properties that represent different possible
  * callbacks or project/error callbacks that are required.
  */
-export function mapToAction<
+export function act<
   Input,
   OutputAction extends Action,
   ErrorAction extends Action
@@ -58,14 +58,14 @@ export function mapToAction<
   project: (input: Input, index: number) => Observable<OutputAction>,
   error: (error: any, input: Input) => ErrorAction
 ): (source: Observable<Input>) => Observable<OutputAction | ErrorAction>;
-export function mapToAction<
+export function act<
   Input,
   OutputAction extends Action,
   ErrorAction extends Action,
   CompleteAction extends Action = never,
   UnsubscribeAction extends Action = never
 >(
-  config: MapToActionConfig<
+  config: ActConfig<
     Input,
     OutputAction,
     ErrorAction,
@@ -77,7 +77,7 @@ export function mapToAction<
 ) => Observable<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 >;
-export function mapToAction<
+export function act<
   Input,
   OutputAction extends Action,
   ErrorAction extends Action,
@@ -86,7 +86,7 @@ export function mapToAction<
 >(
   /** Allow to take either config object or project/error functions */
   configOrProject:
-    | MapToActionConfig<
+    | ActConfig<
         Input,
         OutputAction,
         ErrorAction,

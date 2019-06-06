@@ -1,10 +1,10 @@
 import { cold, hot } from 'jasmine-marbles';
 import { mergeMap, take, switchMap } from 'rxjs/operators';
 import { createAction, Action } from '@ngrx/store';
-import { mapToAction } from '@ngrx/effects';
+import { act } from '@ngrx/effects';
 import { throwError, Subject } from 'rxjs';
 
-describe('mapToAction operator', () => {
+describe('act operator', () => {
   /**
    * Helper function that converts a string (or array of letters) into the
    * object, each property of which is a letter that is assigned an Action
@@ -41,7 +41,7 @@ describe('mapToAction operator', () => {
       });
     const error = () => createAction('e')();
 
-    sources$.pipe(mapToAction(project, error)).subscribe();
+    sources$.pipe(act(project, error)).subscribe();
 
     expect(actual$).toBeObservable(
       cold('              -a-b', {
@@ -57,7 +57,7 @@ describe('mapToAction operator', () => {
     const error = () => createAction('e')();
     const expected$ = cold('-v', genActions('v'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -68,7 +68,7 @@ describe('mapToAction operator', () => {
     const error = () => createAction('e')();
     const expected$ = cold('-v', genActions('v'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -81,7 +81,7 @@ describe('mapToAction operator', () => {
     // offset by source delay and doesn't complete
     const expected$ = cold('-v--', genActions('v'));
 
-    const output$ = sources$.pipe(mapToAction({ project, error }));
+    const output$ = sources$.pipe(act({ project, error }));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -92,7 +92,7 @@ describe('mapToAction operator', () => {
     const error = () => createAction('e')();
     const expected$ = cold('-e', genActions('e'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -106,7 +106,7 @@ describe('mapToAction operator', () => {
     // handled
     const expected$ = cold('-e--v', genActions('ev'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -118,7 +118,7 @@ describe('mapToAction operator', () => {
     // offset by source delay and doesn't complete
     const expected$ = cold('-v-w-x-y--', genActions('vwxy'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -130,7 +130,7 @@ describe('mapToAction operator', () => {
     // offset by source delay
     const expected$ = cold('-v-w-x-y', genActions('vwxy'));
 
-    const output$ = sources$.pipe(mapToAction({ project, error }));
+    const output$ = sources$.pipe(act({ project, error }));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -142,7 +142,7 @@ describe('mapToAction operator', () => {
 
     const expected$ = cold('-v--v-', genActions('v'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -154,7 +154,7 @@ describe('mapToAction operator', () => {
 
     const expected$ = cold('-v--v-', genActions('v'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -168,7 +168,7 @@ describe('mapToAction operator', () => {
     // wait for the project to complete before handling second source action.
     const expected$ = cold('-v------(wv)---w', genActions('vw'));
 
-    const output$ = sources$.pipe(mapToAction(project, error));
+    const output$ = sources$.pipe(act(project, error));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -182,7 +182,7 @@ describe('mapToAction operator', () => {
     // wait for the project to complete before handling second source action.
     const expected$ = cold('-v------(wv)---w', genActions('vw'));
 
-    const output$ = sources$.pipe(mapToAction({ project, error }));
+    const output$ = sources$.pipe(act({ project, error }));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -195,9 +195,7 @@ describe('mapToAction operator', () => {
     // Merge map starts project streams in parallel
     const expected$ = cold('-v--v---w--w', genActions('vw'));
 
-    const output$ = sources$.pipe(
-      mapToAction({ project, error, operator: mergeMap })
-    );
+    const output$ = sources$.pipe(act({ project, error, operator: mergeMap }));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -211,7 +209,7 @@ describe('mapToAction operator', () => {
     // Completed is the last action
     const expected$ = cold('-v-c', genActions('vc'));
 
-    const output$ = sources$.pipe(mapToAction({ project, error, complete }));
+    const output$ = sources$.pipe(act({ project, error, complete }));
 
     expect(output$).toBeObservable(expected$);
   });
@@ -230,7 +228,7 @@ describe('mapToAction operator', () => {
         return createAction('c')();
       });
 
-    sources$.pipe(mapToAction({ project, error, complete })).subscribe();
+    sources$.pipe(act({ project, error, complete })).subscribe();
 
     expect(actual$).toBeObservable(
       cold('-----a', {
@@ -249,7 +247,7 @@ describe('mapToAction operator', () => {
     const expected$ = cold('-v-(uv)--w', genActions('vuw'));
 
     const output$ = sources$.pipe(
-      mapToAction({ project, error, unsubscribe, operator: switchMap })
+      act({ project, error, unsubscribe, operator: switchMap })
     );
 
     expect(output$).toBeObservable(expected$);
@@ -273,7 +271,7 @@ describe('mapToAction operator', () => {
         });
 
       sources$
-        .pipe(mapToAction({ project, error, unsubscribe, operator: switchMap }))
+        .pipe(act({ project, error, unsubscribe, operator: switchMap }))
         .subscribe();
 
       expect(actual$).toBeObservable(
