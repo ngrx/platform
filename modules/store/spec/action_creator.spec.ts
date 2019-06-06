@@ -77,6 +77,13 @@ describe('Action Creators', () => {
           const value = fooAction.bar;
       `).toFail(/'bar' does not exist on type/);
     });
+    it('should not allow type property', () => {
+      expectSnippet(`
+            const foo = createAction('FOO', (type: string) => ({type}));
+        `).toFail(
+        /Type '{ type: string; }' is not assignable to type '"type property is not allowed in action creators"/
+      );
+    });
   });
 
   describe('empty', () => {
@@ -140,6 +147,15 @@ describe('Action Creators', () => {
             const fooAction = foo({ foo: 42 });
             const value = fooAction.bar;
         `).toFail(/'bar' does not exist on type/);
+    });
+
+    it('should not allow type property', () => {
+      const foo = createAction('FOO', props<{ type: number }>() as any);
+      expectSnippet(`
+          const foo = createAction('FOO', props<{ type: number }>());
+        `).toFail(
+        /Argument of type '"type property is not allowed in action creators"' is not assignable to parameter of type/
+      );
     });
   });
 });
