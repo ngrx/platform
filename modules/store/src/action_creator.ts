@@ -27,7 +27,7 @@ export function createAction<
 ): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
 export function createAction<T extends string, C extends Creator>(
   type: T,
-  config?: { _as: 'props'; _p: object } | C
+  config?: { _as: 'props' } | C
 ): Creator {
   if (typeof config === 'function') {
     return defineType(type, (...args: any[]) => ({
