@@ -6,10 +6,10 @@ import {
   SchematicsException,
 } from '@angular-devkit/schematics';
 import {
-  createChangeRecorder,
   RemoveChange,
   InsertChange,
   visitTSSourceFiles,
+  commitChanges,
 } from '@ngrx/store/schematics-core';
 
 function replaceWithRuntimeChecks(): Rule {
@@ -56,28 +56,33 @@ function removeUsages(
   tree: Tree,
   ngrxStoreFreezeIsUsed?: boolean
 ) {
+  if (
+    sourceFile.fileName.endsWith('.spec.ts') ||
+    sourceFile.fileName.endsWith('.test.ts')
+  ) {
+    return ngrxStoreFreezeIsUsed;
+  }
+
   const importRemovements = findStoreFreezeImportsToRemove(sourceFile);
   if (importRemovements.length === 0) {
     return ngrxStoreFreezeIsUsed;
   }
 
   const usageReplacements = findStoreFreezeUsagesToRemove(sourceFile);
-
   const changes = [...importRemovements, ...usageReplacements];
-  const recorder = createChangeRecorder(tree, sourceFile.fileName, changes);
-  tree.commitUpdate(recorder);
-
-  return true;
+  return commitChanges(tree, sourceFile.fileName, changes);
 }
 
 function insertRuntimeChecks(sourceFile: ts.SourceFile, tree: Tree) {
-  const runtimeChecksInserts = findRuntimeCHecksToInsert(sourceFile);
-  const recorder = createChangeRecorder(
-    tree,
-    sourceFile.fileName,
-    runtimeChecksInserts
-  );
-  tree.commitUpdate(recorder);
+  if (
+    sourceFile.fileName.endsWith('.spec.ts') ||
+    sourceFile.fileName.endsWith('.test.ts')
+  ) {
+    return;
+  }
+
+  const changes = findRuntimeCHecksToInsert(sourceFile);
+  return commitChanges(tree, sourceFile.fileName, changes);
 }
 
 function findStoreFreezeImportsToRemove(sourceFile: ts.SourceFile) {

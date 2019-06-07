@@ -52,7 +52,7 @@ Returns the `initialState` for entity state based on the provided type. Addition
 Usage:
 
 <code-example header="user.reducer.ts">
-import { createReducer } from '@ngrx/store';
+import { Action, createReducer } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
@@ -70,7 +70,11 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export const reducer = createReducer(initialState);
+const userReducer = createReducer(initialState);
+
+export function reducer(state: State | undefined: action: Action) {
+  return userReducer(state, action);
+}
 </code-example>
 
 ## Adapter Collection Methods
@@ -122,7 +126,7 @@ export const clearUsers = createAction('[User/API] Clear Users');
 </code-example>
 
 <code-example header="user.reducer.ts">
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
@@ -139,7 +143,7 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export const reducer = createReducer(
+const userReducer = createReducer(
   initialState,
   on(UserActions.addUser, (state, { user }) => {
     return adapter.addOne(user, state)
@@ -176,7 +180,12 @@ export const reducer = createReducer(
   }),
   on(UserActions.clearUsers, state => {
     return adapter.removeAll({ ...state, selectedUserId: null });
-  }));
+  })
+);
+
+export function reducer(state: State | undefined: action: Action) {
+  return userReducer(state, action);
+}
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
 

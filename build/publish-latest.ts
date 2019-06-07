@@ -16,7 +16,6 @@ export async function publishToNpm(config: Config) {
       '--',
       '--access=public',
       '--tag=latest',
-      '--dry-run',
     ];
 
     shelljs.exec(cmd.join(' '));

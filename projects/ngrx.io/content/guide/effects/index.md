@@ -177,43 +177,7 @@ export class MovieEffects {
 }
 </code-example>
 
-
 The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. You still use the `catchError` operator to handle error events, but return an observable of a new action that is dispatched to the `Store`.
-
-### using `mapToAction` operator
-
-Alternatively, we recommend to use the [`mapToAction`](guide/effects/operators#maptoaction) operator to catch any
-potential errors.
-
-<code-example header="movie.effects.ts">
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { MoviesService } from './movies.service';
-
-@Injectable()
-export class MovieEffects {
-
-  loadMovies$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType('[Movies Page] Load Movies'),
-      mapToAction({
-        project: () => this.moviesService.getAll().pipe(
-          map(response => ({type: '[Movies API] Movies Loaded Success', movies: response }))
-        ),
-        error: () => { type: '[Movies API] Movies Loaded Error' },
-        operator: mergeMap,
-      })
-    )
-  );
-
-  constructor(
-    private actions$: Actions,
-    private moviesService: MoviesService
-  ) {}
-}
-</code-example>
 
 ## Registering root effects
 

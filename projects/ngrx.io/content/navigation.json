@@ -67,8 +67,7 @@
   "SideNav": [
     {
       "url": "docs",
-      "title": "Docs",
-      "hidden": true
+      "title": "Introduction"
     },
     {
       "title": "@ngrx/store",
