@@ -18,6 +18,8 @@ export class ActionsSubject extends BehaviorSubject<Action>
         Dispatch expected an object, instead it received function.
         If you're using the createAction function, make sure to invoke the function
         before dispatching the action. E.g. someAction should be someAction().`);
+    } else if (typeof action === 'undefined') {
+      throw new TypeError(`Actions must be objects`);
     } else if (typeof action.type === 'undefined') {
       throw new TypeError(`Actions must have a type property`);
     }
