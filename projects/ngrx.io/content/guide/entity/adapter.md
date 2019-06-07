@@ -72,7 +72,7 @@ export const initialState: State = adapter.getInitialState({
 
 const userReducer = createReducer(initialState);
 
-export function reducer(state: State | undefined: action: Action) {
+export function reducer(state: State | undefined, action: Action) {
   return userReducer(state, action);
 }
 </code-example>
@@ -183,7 +183,7 @@ const userReducer = createReducer(
   })
 );
 
-export function reducer(state: State | undefined: action: Action) {
+export function reducer(state: State | undefined, action: Action) {
   return userReducer(state, action);
 }
 
