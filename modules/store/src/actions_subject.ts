@@ -5,12 +5,6 @@ import { Action } from './models';
 
 export const INIT = '@ngrx/store/init' as '@ngrx/store/init';
 
-const typeOf = (value: any) =>
-  Object.prototype.toString
-    .call(value)
-    .slice(8, -1)
-    .toLowerCase();
-
 @Injectable()
 export class ActionsSubject extends BehaviorSubject<Action>
   implements OnDestroy {
@@ -19,9 +13,9 @@ export class ActionsSubject extends BehaviorSubject<Action>
   }
 
   next(action: Action): void {
-    if (typeOf(action) !== 'object') {
+    if (typeof action === 'function') {
       throw new TypeError(`
-        Dispatch expected an object, instead it received ${action}.
+        Dispatch expected an object, instead it received function.
         If you're using the createAction function, make sure to invoke the function
         before dispatching the action. E.g. someAction should be someAction().`);
     } else if (typeof action.type === 'undefined') {
