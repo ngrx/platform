@@ -256,7 +256,7 @@ export const pluralNames = {
 Then specify this map while configuring the NgRx Data library.
 
 ```typescript
-    NgRxDataModule.forRoot({
+    EntityDataModule.forRoot({
       ...
       pluralNames: pluralNames
     })
