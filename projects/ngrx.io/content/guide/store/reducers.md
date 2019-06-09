@@ -75,7 +75,7 @@ const scoreboardReducer = createReducer(
   on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 }))
 );
 
-export function reducer(state: State | undefined: action: Action) {
+export function reducer(state: State | undefined, action: Action) {
   return scoreboardReducer(state, action);
 }
 </code-example>

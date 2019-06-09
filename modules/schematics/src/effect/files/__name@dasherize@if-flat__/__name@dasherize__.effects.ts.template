@@ -50,7 +50,7 @@ export class <%= classify(name) %>Effects {
 <% if (feature && !creators) { %>
   constructor(private actions$: Actions<<%= classify(name) %>Actions>) {}
 <% } else if (feature && creators) { %>
-  constructor(private actions$: Actions) {}  
+  constructor(private actions$: Actions) {}
 <% } else { %>
   constructor(private actions$: Actions) {}
 <% } %>
