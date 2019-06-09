@@ -175,8 +175,8 @@ export class AppComponent implements OnInit {
     .subscribe(([versionInfo, versions]) => {
       // TODO(pbd): consider whether we can lookup the stable and next versions from the internet
       const computedVersions: NavigationNode[] = [
-        { title: 'next', url: 'https://next.ngrx.io' },
-        { title: 'stable', url: 'https://ngrx.io' },
+        { title: 'next', url: 'https://next.ngrx.io/docs' },
+        { title: 'stable', url: 'https://ngrx.io/docs' },
       ];
       if (this.deployment.mode === 'archive') {
         computedVersions.push({ title: `v${versionInfo.major}` });
