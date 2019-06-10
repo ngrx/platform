@@ -7,7 +7,7 @@ load("@npm_bazel_typescript//:index.bzl", _ts_library = "ts_library")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^8.0.0"
-RXJS_VERSION = "^6.5.0"
+RXJS_VERSION = "^6.4.0"
 NG_UPDATE_MIGRATIONS = "./migrations/migration.json"
 MODULE_SCHEMATICS_COLLECTION = "./schematics/collection.json"
 
