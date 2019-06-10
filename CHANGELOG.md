@@ -1,3 +1,11 @@
+<a name="8.0.1"></a>
+
+## [8.0.1](https://github.com/ngrx/platform/compare/8.0.0...8.0.1) (2019-06-10)
+
+### Bug Fixes
+
+- **store:** prevent passing of action creator function to store dispatch and effects ([#1914](https://github.com/ngrx/platform/issues/1914)) ([78153cb](https://github.com/ngrx/platform/commit/78153cb)), closes [#1906](https://github.com/ngrx/platform/issues/1906)
+
 <a name="8.0.0"></a>
 
 # [8.0.0](https://github.com/ngrx/platform/compare/8.0.0-rc.1...8.0.0) (2019-06-06)
