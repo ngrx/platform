@@ -37,7 +37,7 @@ You must register the metadata with the NgRx Data `EntityDefinitionService`.
 The easiest way to register metadata is to define a single `EntityMetadataMap` for the entire application and specify it in the one place where you initialize the NgRx Data library:
 
 ```typescript
-    NgRxDataModule.forRoot({
+    EntityDataModule.forRoot({
       ...
       entityMetadata: appEntityMetadata,
       ...
@@ -256,7 +256,7 @@ export const pluralNames = {
 Then specify this map while configuring the NgRx Data library.
 
 ```typescript
-    NgRxDataModule.forRoot({
+    EntityDataModule.forRoot({
       ...
       pluralNames: pluralNames
     })
