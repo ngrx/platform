@@ -6,7 +6,6 @@ import {
   Observable,
   OperatorFunction,
   Subject,
-  NotificationKind,
 } from 'rxjs';
 import {
   concatMap,
@@ -132,17 +131,19 @@ export function act<
                   map(
                     (notification): Notification<ResultAction> | undefined => {
                       switch (notification.kind) {
-                        case NotificationKind.ERROR:
+                        case 'E':
                           errored = true;
                           return new Notification(
-                            NotificationKind.NEXT,
+                            // TODO: remove any in RxJS 6.5
+                            'N' as any,
                             error(notification.error, input)
                           );
-                        case NotificationKind.COMPLETE:
+                        case 'C':
                           completed = true;
                           return complete
                             ? new Notification(
-                                NotificationKind.NEXT,
+                                // TODO: remove any in RxJS 6.5
+                                'N' as any,
                                 complete(projectedCount, input)
                               )
                             : undefined;
