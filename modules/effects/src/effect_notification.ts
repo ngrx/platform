@@ -31,7 +31,12 @@ export function reportInvalidActions(
 }
 
 function isAction(action: any): action is Action {
-  return action && action.type && typeof action.type === 'string';
+  return (
+    typeof action !== 'function' &&
+    action &&
+    action.type &&
+    typeof action.type === 'string'
+  );
 }
 
 function getEffectName({
