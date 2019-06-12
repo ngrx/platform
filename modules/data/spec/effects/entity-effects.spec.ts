@@ -31,16 +31,34 @@ describe('EntityEffects (normal testing)', () => {
   let logger: Logger;
   let dataService: TestDataService;
 
-  function expectCompletion(completion: EntityAction, done: DoneFn) {
+  function expectCompletionWithTag(
+    completion: EntityAction,
+    methodName: string | undefined,
+    done: DoneFn
+  ) {
     effects.persist$.subscribe(
       result => {
         expect(result).toEqual(completion);
+        if (methodName) {
+          expect(
+            expectDataServiceCalledWithTag(methodName, completion.payload.tag!)
+          );
+        }
         done();
       },
       error => {
         fail(error);
       }
     );
+  }
+
+  function expectCompletion(completion: EntityAction, done: DoneFn) {
+    expectCompletionWithTag(completion, undefined, done);
+  }
+
+  function expectDataServiceCalledWithTag(methodName: string, tag: string) {
+    const allArgs = (dataService as any)[methodName].calls.allArgs()[0];
+    expect(allArgs[allArgs.length - 1].tag).toEqual(tag);
   }
 
   beforeEach(() => {
@@ -116,7 +134,7 @@ describe('EntityEffects (normal testing)', () => {
     });
 
     actions$.next(action);
-    expectCompletion(completion, done);
+    expectCompletionWithTag(completion, 'getAll', done);
   });
 
   it('should perform QUERY_ALL when dispatch custom action w/ that entityOp', (done: DoneFn) => {
@@ -170,6 +188,28 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
+  it('should return a QUERY_BY_KEY_SUCCESS with a hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const hero = { id: 1, name: 'A' } as Hero;
+    const options = { tag: 'Custom Hero Tag' };
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.QUERY_BY_KEY,
+      1,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.QUERY_BY_KEY_SUCCESS,
+      hero,
+      options
+    );
+
+    actions$.next(action);
+    dataService.setResponse('getById', hero);
+
+    expectCompletionWithTag(completion, 'getById', done);
+  });
+
   it('should return a QUERY_BY_KEY_ERROR when data service fails', (done: DoneFn) => {
     const action = entityActionFactory.create(
       'Hero',
@@ -204,6 +244,34 @@ describe('EntityEffects (normal testing)', () => {
     dataService.setResponse('getWithQuery', heroes);
 
     expectCompletion(completion, done);
+  });
+
+  it('should return a QUERY_MANY_SUCCESS with selected heroes on success when dispatch custom tagged action', (done: DoneFn) => {
+    const hero1 = { id: 1, name: 'BA' } as Hero;
+    const hero2 = { id: 2, name: 'BB' } as Hero;
+    const heroes = [hero1, hero2];
+
+    const options = { tag: 'Custom Hero Tag' };
+
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.QUERY_MANY,
+      {
+        name: 'B',
+      },
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.QUERY_MANY_SUCCESS,
+      heroes,
+      options
+    );
+
+    dataService.setResponse('getWithQuery', heroes);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'getWithQuery', done);
   });
 
   it('should return a QUERY_MANY_ERROR when data service fails', (done: DoneFn) => {
@@ -244,6 +312,28 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
+  it('should return a SAVE_ADD_ONE_SUCCESS (Optimistic) with the hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const hero = { id: 1, name: 'A' } as Hero;
+    const options = { isOptimistic: true, tag: 'Custom Hero Tag' };
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_ADD_ONE,
+      hero,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_ADD_ONE_SUCCESS,
+      hero,
+      options
+    );
+
+    dataService.setResponse('add', hero);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'add', done);
+  });
+
   it('should return a SAVE_ADD_ONE_SUCCESS (Pessimistic) with the hero on success', (done: DoneFn) => {
     const hero = { id: 1, name: 'A' } as Hero;
 
@@ -262,6 +352,29 @@ describe('EntityEffects (normal testing)', () => {
     dataService.setResponse('add', hero);
 
     expectCompletion(completion, done);
+  });
+
+  it('should return a SAVE_ADD_ONE_SUCCESS (Pessimistic) with the hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const hero = { id: 1, name: 'A' } as Hero;
+    const options = { tag: 'Custom Hero Tag' };
+
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_ADD_ONE,
+      hero,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_ADD_ONE_SUCCESS,
+      hero,
+      options
+    );
+
+    dataService.setResponse('add', hero);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'add', done);
   });
 
   it('should return a SAVE_ADD_ONE_ERROR when data service fails', (done: DoneFn) => {
@@ -301,6 +414,27 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
+  it('should return a SAVE_DELETE_ONE_SUCCESS (Optimistic) on success with delete id when dispatch custom tagged action', (done: DoneFn) => {
+    const options = { isOptimistic: true, tag: 'Custom Hero Tag' };
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_DELETE_ONE,
+      42,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_DELETE_ONE_SUCCESS,
+      42,
+      options
+    );
+
+    dataService.setResponse('delete', 42);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'delete', done);
+  });
+
   it('should return a SAVE_DELETE_ONE_SUCCESS (Pessimistic) on success', (done: DoneFn) => {
     const action = entityActionFactory.create(
       'Hero',
@@ -317,6 +451,27 @@ describe('EntityEffects (normal testing)', () => {
     dataService.setResponse('delete', 42);
 
     expectCompletion(completion, done);
+  });
+
+  it('should return a SAVE_DELETE_ONE_SUCCESS (Pessimistic) on success when dispatch custom tagged action', (done: DoneFn) => {
+    const options = { tag: 'Custom Hero Tag' };
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_DELETE_ONE,
+      42,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_DELETE_ONE_SUCCESS,
+      42,
+      options
+    );
+
+    dataService.setResponse('delete', 42);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'delete', done);
   });
 
   it('should return a SAVE_DELETE_ONE_ERROR when data service fails', (done: DoneFn) => {
@@ -359,6 +514,30 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
+  it('should return a SAVE_UPDATE_ONE_SUCCESS (Optimistic) with the hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const updateEntity = { id: 1, name: 'A' };
+    const update = { id: 1, changes: updateEntity } as Update<Hero>;
+    const updateResponse = { ...update, changed: true };
+    const options = { isOptimistic: true, tag: 'Custom Hero Tag' };
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPDATE_ONE,
+      update,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPDATE_ONE_SUCCESS,
+      updateResponse,
+      options
+    );
+
+    dataService.setResponse('update', updateEntity);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'update', done);
+  });
+
   it('should return a SAVE_UPDATE_ONE_SUCCESS (Pessimistic) with the hero on success', (done: DoneFn) => {
     const updateEntity = { id: 1, name: 'A' };
     const update = { id: 1, changes: updateEntity } as Update<Hero>;
@@ -379,6 +558,31 @@ describe('EntityEffects (normal testing)', () => {
     dataService.setResponse('update', updateEntity);
 
     expectCompletion(completion, done);
+  });
+
+  it('should return a SAVE_UPDATE_ONE_SUCCESS (Pessimistic) with the hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const updateEntity = { id: 1, name: 'A' };
+    const update = { id: 1, changes: updateEntity } as Update<Hero>;
+    const updateResponse = { ...update, changed: true };
+    const options = { tag: 'Custom Hero Tag' };
+
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPDATE_ONE,
+      update,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPDATE_ONE_SUCCESS,
+      updateResponse,
+      options
+    );
+
+    dataService.setResponse('update', updateEntity);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'update', done);
   });
 
   it('should return a SAVE_UPDATE_ONE_ERROR when data service fails', (done: DoneFn) => {
@@ -420,6 +624,29 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
+  it('should return a SAVE_UPSERT_ONE_SUCCESS (Optimistic) with the hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const hero = { id: 1, name: 'A' } as Hero;
+    const options = { isOptimistic: true, tag: 'Custom Hero Tag' };
+
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPSERT_ONE,
+      hero,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPSERT_ONE_SUCCESS,
+      hero,
+      options
+    );
+
+    dataService.setResponse('upsert', hero);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'upsert', done);
+  });
+
   it('should return a SAVE_UPSERT_ONE_SUCCESS (Pessimistic) with the hero on success', (done: DoneFn) => {
     const hero = { id: 1, name: 'A' } as Hero;
 
@@ -438,6 +665,29 @@ describe('EntityEffects (normal testing)', () => {
     dataService.setResponse('upsert', hero);
 
     expectCompletion(completion, done);
+  });
+
+  it('should return a SAVE_UPSERT_ONE_SUCCESS (Pessimistic) with the hero on success when dispatch custom tagged action', (done: DoneFn) => {
+    const hero = { id: 1, name: 'A' } as Hero;
+    const options = { tag: 'Custom Hero Tag' };
+
+    const action = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPSERT_ONE,
+      hero,
+      options
+    );
+    const completion = entityActionFactory.create(
+      'Hero',
+      EntityOp.SAVE_UPSERT_ONE_SUCCESS,
+      hero,
+      options
+    );
+
+    dataService.setResponse('upsert', hero);
+    actions$.next(action);
+
+    expectCompletionWithTag(completion, 'upsert', done);
   });
 
   it('should return a SAVE_UPSERT_ONE_ERROR when data service fails', (done: DoneFn) => {

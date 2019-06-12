@@ -30,6 +30,8 @@ It _must_ include the properties that participate in the primary key (e.g., `id`
 The update property values are the _properties-to-update_;
 unmentioned properties should retain their current values.
 
+All those methods support a second parameter `options?: EntityDataServiceOptions`, in the options, there is a `tag` property which is from `action.payload`, for details, refer to [EntityActions](guide/data/entity-actions).
+
 </div>
 
 The default data service methods return the `Observables` returned by the corresponding Angular `HttpClient` methods.
@@ -62,7 +64,7 @@ Otherwise, the NgRx Data library will create and register an instance of the def
 
 ## The _DefaultDataService_
 
-The demo app doesn't register any entity data services. 
+The demo app doesn't register any entity data services.
 It relies entirely on a `DefaultDataService`, created for each entity type, by the injected `DefaultDataServiceFactory`.
 
 A `DefaultDataService<T>` makes REST-like calls to the server's web api with Angular's `HttpClient`.
@@ -98,7 +100,7 @@ The collection-level data services construct their own URLs for HTTP calls. They
 
 The shared configuration values are almost always specific to the application and may vary according the runtime environment.
 
-The NgRx Data library defines a `DefaultDataServiceConfig` for 
+The NgRx Data library defines a `DefaultDataServiceConfig` for
 conveying shared configuration to an entity collection data service.
 
 The most important configuration property, `root`, returns the _root_ of every web api URL, the parts that come before the entity resource name.
@@ -202,6 +204,30 @@ export class HeroDataService extends DefaultDataService&lt;Hero&gt; {
 This `HeroDataService` hooks into the _get_ operations to set the `Hero.dateLoaded` on fetched hero entities.
 It also tells the logger when it is created (see the console output of the running sample) .
 
+Sometimes you may want to dispatch to different backend endpoints in the same operation of the EntityDataService, for example, let's say in frontend, we need to get `most downloaded items` and `most starred items`, if the backend provides a unified endpoint, we can just overwrite the `getWithQuery` operation, but if the backend provides two endpoints, we still want to use `getWithQuery` mechanism, in this case, we can use `tag`.
+
+<code-example header="store/entity/hero-data-service.ts" linenums="false">
+export class HeroDataService extends DefaultDataService&lt;Hero&gt; {
+  getWithQuery(params: string | QueryParams, options?: EntityDataServiceOptions): Observable&lt;Hero[]&gt; {
+    let data$;
+    if (options && options.tag) {
+      if (options.tag === 'MOST_DOWNLOADED') {
+        // getData is your own httpService to get data from your backend endpoint
+        data$ = getData('${serverUrl}/mostdownloaded');
+      } else if (options.tag === 'MOST_STARRED') {
+        data$ = getData('${serverUrl}/moststarred');
+      }
+    }
+    if (!data$) {
+      data$ = super.getWithQuery(params);
+    }
+    return data$.pipe(map(heroes => heroes.map(hero => this.mapHero(hero))));
+  }
+}
+</code-example>
+
+And the `tag` is passed from the `EntityCollectionService`, for detail, please check [Entity Actions](guide/data/entity-actions).
+
 Finally, we must tell NgRx Data about this new data service.
 
 The sample app provides `HeroDataService` and registers it by calling the `registerService()` method on the `EntityDataService` in the app's _entity store module_:
@@ -231,9 +257,9 @@ You don't have to override members of the `DefaultDataService`.
 You could write a completely custom alternative that queries and saves
 entities by any mechanism you choose.
 
-You can register it the same way as long as it adheres to the interface. 
+You can register it the same way as long as it adheres to the interface.
 
 ```typescript
 // Register custom data service
-entityDataService.registerService('Hero', peculiarHeroDataService); 
+entityDataService.registerService('Hero', peculiarHeroDataService);
 ```

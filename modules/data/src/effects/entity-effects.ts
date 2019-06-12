@@ -111,28 +111,29 @@ export class EntityEffects {
   }
 
   private callDataService(action: EntityAction) {
-    const { entityName, entityOp, data } = action.payload;
+    const { entityName, entityOp, data, tag } = action.payload;
     const service = this.dataService.getService(entityName);
+    const options = { tag };
     switch (entityOp) {
       case EntityOp.QUERY_ALL:
       case EntityOp.QUERY_LOAD:
-        return service.getAll();
+        return service.getAll(options);
 
       case EntityOp.QUERY_BY_KEY:
-        return service.getById(data);
+        return service.getById(data, options);
 
       case EntityOp.QUERY_MANY:
-        return service.getWithQuery(data);
+        return service.getWithQuery(data, options);
 
       case EntityOp.SAVE_ADD_ONE:
-        return service.add(data);
+        return service.add(data, options);
 
       case EntityOp.SAVE_DELETE_ONE:
-        return service.delete(data);
+        return service.delete(data, options);
 
       case EntityOp.SAVE_UPDATE_ONE:
         const { id, changes } = data as Update<any>; // data must be Update<T>
-        return service.update(data).pipe(
+        return service.update(data, options).pipe(
           map(updatedEntity => {
             // Return an Update<T> with updated entity data.
             // If server returned entity data, merge with the changes that were sent
@@ -150,7 +151,7 @@ export class EntityEffects {
         );
 
       case EntityOp.SAVE_UPSERT_ONE:
-        return service.upsert(data).pipe(
+        return service.upsert(data, options).pipe(
           map(upsertedEntity => {
             const hasData =
               upsertedEntity && Object.keys(upsertedEntity).length > 0;

@@ -4,13 +4,19 @@ import { Update } from '@ngrx/entity';
 /** A service that performs REST-like HTTP data operations for an entity collection */
 export interface EntityCollectionDataService<T> {
   readonly name: string;
-  add(entity: T): Observable<T>;
-  delete(id: number | string): Observable<number | string>;
-  getAll(): Observable<T[]>;
-  getById(id: any): Observable<T>;
-  getWithQuery(params: QueryParams | string): Observable<T[]>;
-  update(update: Update<T>): Observable<T>;
-  upsert(entity: T): Observable<T>;
+  add(entity: T, options?: EntityDataServiceOptions): Observable<T>;
+  delete(
+    id: number | string,
+    options?: EntityDataServiceOptions
+  ): Observable<number | string>;
+  getAll(options?: EntityDataServiceOptions): Observable<T[]>;
+  getById(id: any, options?: EntityDataServiceOptions): Observable<T>;
+  getWithQuery(
+    params: QueryParams | string,
+    options?: EntityDataServiceOptions
+  ): Observable<T[]>;
+  update(update: Update<T>, options?: EntityDataServiceOptions): Observable<T>;
+  upsert(entity: T, options?: EntityDataServiceOptions): Observable<T>;
 }
 
 export type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT';
@@ -29,4 +35,12 @@ export interface RequestData {
  */
 export interface QueryParams {
   [name: string]: string | string[];
+}
+
+/**
+ * The EntityDataServiceOptions interface contains a tag property
+ * which is from the EntityActionOptions.tag
+ */
+export interface EntityDataServiceOptions {
+  tag?: string;
 }
