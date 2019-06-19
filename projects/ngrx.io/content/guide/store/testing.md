@@ -104,7 +104,7 @@ export class CounterComponent {
 }
 </code-example>
 
-This example component is a simple counter.  It has an increment method which dispatches an increment action to the `Store`. The reducer increments the previous state's counter, then the selector emits the latest value.
+This example component implements a simple counter which is displayed to the user.  It has an increment method which dispatches an increment action to the `Store`. A reducer increments the previous state's counter, then the selector emits the latest value to the component.
 
 <code-example header="counter-integration.spec.ts">
 import { TestBed, async } from '@angular/core/testing';
@@ -134,7 +134,7 @@ describe('CounterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should increment the counter value after increment is invoked`, () => {
+  it('should increment the counter value after increment is invoked', () => {
     component.increment();
     component.count$.subscribe(count =>
       expect(count).toBe(1)
@@ -143,7 +143,7 @@ describe('CounterComponent', () => {
 });
 </code-example>
 
-The integration test imports the dependent `Store`. In this example, we verify that dispatching an increment action causes the state to be updated with an incremented counter value, which is correctly emitted to the selector.
+The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we verify that dispatching an increment action causes the state to be updated with an incremented counter value, which is correctly emitted by the selector.
 
 ### Testing selectors
 
