@@ -86,7 +86,7 @@ export class AppModule {}
 
 ## Injecting Feature Config
 
-To inject the feature store configuration into your module, use should an `InjectionToken` and a `Provider` to register the feature config object through dependency injection.
+To inject the feature store configuration into your module, use an `InjectionToken` and a `Provider` to register the feature config object through dependency injection.
 
 <code-example header="feature.module.ts">
 import { NgModule, InjectionToken } from '@angular/core';
