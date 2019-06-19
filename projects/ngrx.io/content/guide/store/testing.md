@@ -76,113 +76,74 @@ In this example, we mock the `getLoggedIn` selector by using `overrideSelector`,
 
 Try the <live-example name="testing-store"></live-example>.
 
-### Using Store for Integration Testing
+### Integration Testing
 
-Use the `StoreModule.forRoot` in your `TestBed` configuration when testing components or services that inject `Store`.
+An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`.  An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration.
 
-- Reducing state is synchronous, so mocking out the `Store` isn't required.
-- Use the `combineReducers` method with the map of feature reducers to compose the `State` for the test.
-- Dispatch actions to load data into the `Store`.
-
-<code-example header="my.component.ts">
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import * as fromFeature from '../reducers';
-import * as DataActions from '../actions/data';
+<code-example header="counter.component.ts">
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { CounterActions } from '../actions';
+import * as fromCount from '../reducers';
 
 @Component({
-  selector: 'my-component',
+  selector: 'app-counter',
   template: `
-    &lt;div *ngFor="let item of items$ | async"&gt;{{ item }}&lt;/div&gt;
-
-    &lt;button (click)="onRefresh()"&gt;Refresh Items&lt;/button&gt;
-  `,
+    &lt;p&gt;{{ count$ | async }}&lt;/p&gt;
+    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt;
+  `
 })
-export class MyComponent implements OnInit {
-  items$ = this.store.pipe(select(fromFeature.selectFeatureItems));
+export class CounterComponent {
+  count$ = this.store.select(fromCount.getCount);
 
-  constructor(private store: Store&lt;fromFeature.State&gt;) {}
+  constructor(private store: Store&lt;fromCount.State&gt;) { }
 
-  ngOnInit() {
-    this.store.dispatch(DataActions.loadData());
-  }
-
-  onRefresh() {
-    this.store.dispatch(DataActions.refreshItems());
+  increment() {
+    this.store.dispatch(CounterActions.increment());
   }
 }
 </code-example>
 
-<code-example header="my.component.spec.ts">
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoreModule, Store, combineReducers } from '@ngrx/store';
-import { MyComponent } from './my.component';
-import * as fromRoot from '../reducers';
-import * as fromFeature from '../feature/reducers';
-import * as DataActions from '../actions/data';
+This example component is a simple counter.  It has an increment method which dispatches an increment action to the `Store`. The reducer increments the previous state's counter, then the selector emits the latest value.
 
-describe('My Component', () => {
-  let component: MyComponent;
-  let fixture: ComponentFixture&lt;MyComponent&gt;
-  let store: Store&lt;fromFeature.State&gt;
+<code-example header="counter-integration.spec.ts">
+import { TestBed, async } from '@angular/core/testing';
+import { StoreModule } from '@ngrx/store';
+import { CounterComponent } from '../counter/counter.component';
+import { reducers } from '../reducers';
 
-  beforeEach(() => {
+describe('CounterComponent', () => {
+  let component: CounterComponent;
+
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({
-          ...fromRoot.reducers,
-          feature: combineReducers(fromFeature.reducers),
-        }),
-        // other imports
-      ],
       declarations: [
-        MyComponent,
-        // other declarations
+        CounterComponent
       ],
-      providers: [
-        // other providers
-      ],
-    });
+      imports: [
+        StoreModule.forRoot(reducers)
+      ]
+    }).compileComponents();
 
-    store = TestBed.get(Store);
-
-    spyOn(store, 'dispatch').and.callThrough();
-
-    fixture = TestBed.createComponent(MyComponent);
-    component = fixture.componentInstance;
+    const fixture = TestBed.createComponent(CounterComponent);
+    component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
-  it('should be created', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch an action to load data when created', () => {
-    const action = DataActions.loadData();
-
-    expect(store.dispatch).toHaveBeenCalledWith(action);
-  });
-
-  it('should dispatch an action to refreshing data', () => {
-    const action = DataActions.refreshData();
-
-    component.onRefresh();
-
-    expect(store.dispatch).toHaveBeenCalledWith(action);
-  });
-
-  it('should display a list of items after the data is loaded', () => {
-    const items = [1, 2, 3];
-    const action = DataActions.loadDataSuccess({ items });
-
-    store.dispatch(action);
-
-    component.items$.subscribe(data => {
-      expect(data.length).toBe(items.length);
-    });
+  it(`should increment the counter value after increment is invoked`, () => {
+    component.increment();
+    component.count$.subscribe(count =>
+      expect(count).toBe(1)
+    );
   });
 });
 </code-example>
+
+The integration test imports the dependent `Store`. In this example, we verify that dispatching an increment action causes the state to be updated with an incremented counter value, which is correctly emitted to the selector.
 
 ### Testing selectors
 
