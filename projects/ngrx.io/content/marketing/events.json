@@ -117,5 +117,12 @@
     "url": "https://ngrome.io/",
     "location": "Rome, Italy",
     "endDate": "2019-10-07"
+  },
+  {
+    "name": "ngTalks",
+    "url": "https://ngtalks.io/",
+    "location": "Kharkiv, Ukraine",
+    "startDate": "2019-11-07",
+    "endDate": "2019-11-08"
   }
 ]
