@@ -49,7 +49,24 @@ export type SelectorWithProps<State, Props, Result> = (
   props: Props
 ) => Result;
 
-export type Creator = (...args: any[]) => object;
+export type DisallowTypeProperty<T> = T extends { type: any }
+  ? TypePropertyIsNotAllowed
+  : T;
+
+export const typePropertyIsNotAllowedMsg =
+  'type property is not allowed in action creators';
+type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
+
+export type Creator<
+  P extends any[] = any[],
+  R extends object = object
+> = R extends { type: any }
+  ? TypePropertyIsNotAllowed
+  : FunctionWithParametersType<P, R>;
+
+export type PropsReturnType<T extends object> = T extends { type: any }
+  ? TypePropertyIsNotAllowed
+  : { _as: 'props'; _p: T };
 
 export type ActionCreator<
   T extends string = string,
@@ -63,8 +80,10 @@ export type FunctionWithParametersType<P extends unknown[], R = void> = (
 export type ParametersType<T> = T extends (...args: infer U) => unknown
   ? U
   : never;
+
 export interface RuntimeChecks {
   strictStateSerializability: boolean;
   strictActionSerializability: boolean;
-  strictImmutability: boolean;
+  strictStateImmutability: boolean;
+  strictActionImmutability: boolean;
 }

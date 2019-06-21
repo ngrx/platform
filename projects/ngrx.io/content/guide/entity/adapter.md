@@ -52,6 +52,7 @@ Returns the `initialState` for entity state based on the provided type. Addition
 Usage:
 
 <code-example header="user.reducer.ts">
+import { Action, createReducer } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
@@ -69,12 +70,10 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export function reducer(state = initialState, action): State {
-  switch (action.type) {
-    default: {
-      return state;
-    }
-  }
+const userReducer = createReducer(initialState);
+
+export function reducer(state: State | undefined, action: Action) {
+  return userReducer(state, action);
 }
 </code-example>
 
@@ -106,42 +105,28 @@ export interface User {
 </code-example>
 
 <code-example header="user.actions.ts">
-import { createAction, props, union } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
-export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
-export const addUser = createAction('[User/API] Add User', props&lt;{ user: User }&gt;());
-export const upsertUser = createAction('[User/API] Upsert User', props&lt;{ user: User }&gt;());
-export const addUsers = createAction('[User/API] Add Users', props&lt;{ user: User }&gt;());
-export const upsertUsers = createAction('[User/API] Upsert Users', props&lt;{ users: User[] }&gt;());
-export const updateUser = createAction('[User/API] Update User', props&lt;{ user: Update&lt;User&gt; }&gt;());
-export const updateUsers = createAction('[User/API] Update Users', props&lt;{ users: Update&lt;User&gt;[] }&gt;());
-export const mapUsers = createAction('[User/API] Map Users', props&lt;{ entityMap: EntityMap&lt;User&gt; }&gt;());
-export const deleteUser = createAction('[User/API] Delete User', props&lt;{ id: string }&gt;());
-export const deleteUsers = createAction('[User/API] Delete Users', props&lt;{ id: string[] }&gt;());
-export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props&lt;{ predicate: Predicate&lt;User&gt; }&gt;());
+export const loadUsers = createAction('[User/API] Load Users', props<{ users: User[] }>());
+export const addUser = createAction('[User/API] Add User', props<{ user: User }>());
+export const upsertUser = createAction('[User/API] Upsert User', props<{ user: User }>());
+export const addUsers = createAction('[User/API] Add Users', props<{ users: User[] }>());
+export const upsertUsers = createAction('[User/API] Upsert Users', props<{ users: User[] }>());
+export const updateUser = createAction('[User/API] Update User', props<{ user: Update&lt;User&gt; }>());
+export const updateUsers = createAction('[User/API] Update Users', props<{ users: Update&lt;User&gt;[] }>());
+export const mapUsers = createAction('[User/API] Map Users', props<{ entityMap: EntityMap&lt;User&gt; }>());
+export const deleteUser = createAction('[User/API] Delete User', props<{ id: string }>());
+export const deleteUsers = createAction('[User/API] Delete Users', props<{ ids: string[] }>());
+export const deleteUsersByPredicate = createAction('[User/API] Delete Users By Predicate', props<{ predicate: Predicate&lt;User&gt; }>());
 export const clearUsers = createAction('[User/API] Clear Users');
 
-const all = union({
-  loadUsers,
-  addUser,
-  upsertUser,
-  addUsers,
-  upsertUsers,
-  updateUser,
-  updateUsers,
-  mapUsers,
-  deleteUser,
-  deleteUsers,
-  deleteUsersByPredicate,
-  clearUsers
-});
-export type Union = typeof all;
 </code-example>
 
 <code-example header="user.reducer.ts">
+import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
@@ -158,60 +143,48 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export function reducer(state = initialState, action: UserActions.Union): State {
-  switch (action.type) {
-    case UserActions.addUser.type: {
-      return adapter.addOne(action.user, state);
-    }
+const userReducer = createReducer(
+  initialState,
+  on(UserActions.addUser, (state, { user }) => {
+    return adapter.addOne(user, state)
+  }),
+  on(UserActions.upsertUser, (state, { user }) => {
+    return adapter.upsertOne(user, state);
+  }),
+  on(UserActions.addUsers, (state, { users }) => {
+    return adapter.addMany(users, state);
+  }),
+  on(UserActions.upsertUsers, (state, { users }) => {
+    return adapter.upsertUsers(users, state);
+  }),
+  on(UserActions.updateUser, (state, { user }) => {
+    return adapter.updateOne(user, state);
+  }),
+  on(UserActions.updateUsers, (state, { users }) => {
+    return adapter.updateMany(users, state);
+  }),
+  on(UserActions.mapUsers, (state, { entityMap }) => {
+    return adapter.map(entityMap, state);
+  }),
+  on(UserActions.deleteUser, (state, { id }) => {
+    return adapter.removeOne(id, state);
+  }),
+  on(UserActions.deleteUsers, (state, { ids }) => {
+    return adapter.removeMany(ids, state);
+  }),
+  on(UserActions.deleteUsersByPredicate, (state, { predicate }) => {
+    return adapter.removeMany(predicate, state);
+  }),
+  on(UserActions.loadUsers, (state, { users }) => {
+    return adapter.addAll(users, state);
+  }),
+  on(UserActions.clearUsers, state => {
+    return adapter.removeAll({ ...state, selectedUserId: null });
+  })
+);
 
-    case UserActions.upsertUser.type: {
-      return adapter.upsertOne(action.user, state);
-    }
-
-    case UserActions.addUsers.type: {
-      return adapter.addMany(action.users, state);
-    }
-
-    case UserActions.upsertUsers.type: {
-      return adapter.upsertMany(action.users, state);
-    }
-
-    case UserActions.updateUser.type: {
-      return adapter.updateOne(action.user, state);
-    }
-
-    case UserActions.updateUsers.type: {
-      return adapter.updateMany(action.users, state);
-    }
-
-    case UserActions.mapUsers.type: {
-      return adapter.map(action.entityMap, state);
-    }
-
-    case UserActions.deleteUser.type: {
-      return adapter.removeOne(action.id, state);
-    }
-
-    case UserActions.deleteUsers.type: {
-      return adapter.removeMany(action.ids, state);
-    }
-
-    case UserActions.deleteUsersByPredicate.type: {
-      return adapter.removeMany(action.predicate, state);
-    }
-
-    case UserActions.loadUsers.type: {
-      return adapter.addAll(action.users, state);
-    }
-
-    case UserActions.clearUsers.type: {
-      return adapter.removeAll({ ...state, selectedUserId: null });
-    }
-
-    default: {
-      return state;
-    }
-  }
+export function reducer(state: State | undefined, action: Action) {
+  return userReducer(state, action);
 }
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;

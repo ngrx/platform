@@ -4,12 +4,13 @@ ts_test_library(
     name = "test_lib",
     srcs = glob(
         [
-            "**/*.ts",
+            "*.ts",
+            "meta-reducers/**/*.ts",
         ],
-        exclude = ["ngc/**/*.ts"],
     ),
     deps = [
         "//modules/store",
+        "//modules/store/spec/fixtures",
         "//modules/store/testing",
         "@npm//rxjs",
         "@npm//ts-snippet",

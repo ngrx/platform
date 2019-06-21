@@ -5,10 +5,8 @@ import {
   ROUTER_NAVIGATION,
   RouterAction,
 } from './actions';
-import {
-  BaseRouterStoreState,
-  SerializedRouterStateSnapshot,
-} from './serializer';
+import { BaseRouterStoreState } from './serializers/base';
+import { SerializedRouterStateSnapshot } from './serializers/default_serializer';
 
 export type RouterReducerState<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot

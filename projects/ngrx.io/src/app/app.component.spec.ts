@@ -173,8 +173,8 @@ describe('AppComponent', () => {
 
     describe('version picker', () => {
       it('should contain next and stable by default', () => {
-        expect(component.docVersions).toContain({ title: 'next', url: 'https://next.ngrx.io' });
-        expect(component.docVersions).toContain({ title: 'stable (v6.3)', url: 'https://ngrx.io' });
+        expect(component.docVersions).toContain({ title: 'next', url: 'https://next.ngrx.io/docs' });
+        expect(component.docVersions).toContain({ title: 'stable (v6.3)', url: 'https://ngrx.io/docs' });
       });
 
       it('should add the current version if in archive mode', () => {

@@ -52,6 +52,16 @@ npm install github:ngrx/entity-builds
 yarn add github:ngrx/entity-builds
 ```
 
+### Data
+
+```sh
+npm install github:ngrx/data-builds
+```
+
+```sh
+yarn add github:ngrx/data-builds
+```
+
 ### Schematics
 
 ```sh

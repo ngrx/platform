@@ -119,11 +119,15 @@ describe('My Effects', () => {
   });
 
   it('should register someSource$ that dispatches an action', () => {
-    expect(metadata.someSource$).toEqual({ dispatch: true });
+    expect(metadata.someSource$).toEqual(
+      jasmine.objectContaining({ dispatch: true })
+    );
   });
 
   it('should register someOtherSource$ that does not dispatch an action', () => {
-    expect(metadata.someOtherSource$).toEqual({ dispatch: false });
+    expect(metadata.someOtherSource$).toEqual(
+      jasmine.objectContaining({ dispatch: false })
+    );
   });
 
   it('should not register undecoratedSource$', () => {

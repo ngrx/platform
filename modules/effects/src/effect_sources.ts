@@ -10,7 +10,10 @@ import {
   mergeMap,
 } from 'rxjs/operators';
 
-import { verifyOutput } from './effect_notification';
+import {
+  reportInvalidActions,
+  EffectNotification,
+} from './effect_notification';
 import { mergeEffects } from './effects_resolver';
 import {
   onIdentifyEffectsKey,
@@ -47,10 +50,9 @@ export class EffectSources extends Subject<any> {
       mergeMap(source$ => source$.pipe(groupBy(effectsInstance))),
       mergeMap(source$ =>
         source$.pipe(
-          exhaustMap(resolveEffectSource),
+          exhaustMap(resolveEffectSource(this.errorHandler)),
           map(output => {
-            verifyOutput(output, this.errorHandler);
-
+            reportInvalidActions(output, this.errorHandler);
             return output.notification;
           }),
           filter(
@@ -75,14 +77,18 @@ function effectsInstance(sourceInstance: any) {
   return '';
 }
 
-function resolveEffectSource(sourceInstance: any) {
-  const mergedEffects$ = mergeEffects(sourceInstance);
+function resolveEffectSource(
+  errorHandler: ErrorHandler
+): (sourceInstance: any) => Observable<EffectNotification> {
+  return sourceInstance => {
+    const mergedEffects$ = mergeEffects(sourceInstance, errorHandler);
 
-  if (isOnRunEffects(sourceInstance)) {
-    return sourceInstance.ngrxOnRunEffects(mergedEffects$);
-  }
+    if (isOnRunEffects(sourceInstance)) {
+      return sourceInstance.ngrxOnRunEffects(mergedEffects$);
+    }
 
-  return mergedEffects$;
+    return mergedEffects$;
+  };
 }
 
 function isOnRunEffects(sourceInstance: {

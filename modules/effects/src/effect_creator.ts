@@ -1,25 +1,27 @@
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { EffectMetadata } from './models';
+import { EffectMetadata, EffectConfig } from './models';
 
 const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
 
+type DispatchType<T> = T extends { dispatch: infer U } ? U : unknown;
 export function createEffect<
-  R extends Observable<unknown> | ((...args: any[]) => Observable<unknown>)
->(source: () => R, options: { dispatch: false }): R;
-export function createEffect<
-  T extends Action,
-  R extends Observable<T> | ((...args: any[]) => Observable<T>)
->(source: () => R, options?: { dispatch: true }): R;
-export function createEffect<
-  T extends Action,
-  R extends Observable<T> | ((...args: any[]) => Observable<T>)
->(source: () => R, { dispatch = true } = {}): R {
+  C extends EffectConfig,
+  T extends DispatchType<C>,
+  O extends T extends false ? Observable<unknown> : Observable<Action>,
+  R extends O | ((...args: any[]) => O)
+>(source: () => R, config?: Partial<C>): R {
   const effect = source();
+  // Right now both createEffect and @Effect decorator set default values.
+  // Ideally that should only be done in one place that aggregates that info,
+  // for example in mergeEffects().
+  const value: EffectConfig = {
+    dispatch: true,
+    resubscribeOnError: true,
+    ...config, // Overrides any defaults if values are provided
+  };
   Object.defineProperty(effect, CREATE_EFFECT_METADATA_KEY, {
-    value: {
-      dispatch,
-    },
+    value,
   });
   return effect;
 }

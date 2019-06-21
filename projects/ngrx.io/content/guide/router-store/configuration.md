@@ -5,12 +5,18 @@ interface StoreRouterConfig {
   stateKey?: string | Selector&lt;any, RouterReducerState&lt;T&gt;&gt;;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
+  routerState?: RouterState;
 }
 </code-example>
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
-- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
+- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer` (see [Default Router State Serializer](#default-router-state-serializer)). See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
 - `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
+- `routerState`: Set this property to decide which serializer should be used, if none is provided, and the metadata on the dispatched action.
+
+## Default Router State Serializer
+
+If no router state serializer is provided through the [configuration](#configuration-options) of router store, the `DefaultRouterStateSerializer` is used. This router state serializer, serializes the URL together with the [ActivatedRouteSnapshot](https://angular.io/api/router/ActivatedRouteSnapshot) from [Angular Router](https://angular.io/guide/router). The latter is serialized recursively, but only with the possibility to traverse the route downward since `root` and `parent` parameters are set to `undefined`.
 
 ## Custom Router State Serializer
 
@@ -86,5 +92,33 @@ export class AppModule {}
 <code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
   navigationActionTiming: NavigationActionTiming.PostActivation,
+});
+</code-example>
+
+## Router State Snapshot
+
+This property decides which router serializer should be used. If there is a custom serializer provided, it will use the provided serializer. `routerState` also sets the metadata on dispatched `@ngrx/router-store` action.
+
+### RouterState.Full
+
+When this property is set to `RouterState.Full`, `@ngrx/router-store` will use the `DefaultRouterStateSerializer` serializer to serialize the Angular router event.
+
+The metadata on the action will contain the Angular router event, e.g. `NavigationStart` and `RoutesRecognized`.
+
+<code-example header="app.module.ts">
+StoreRouterConnectingModule.forRoot({
+  routerState: RouterState.Full,
+});
+</code-example>
+
+### RouterState.Minimal
+
+`RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
+
+The difference between `MinimalRouterStateSerializer` and the default `RouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
+
+<code-example header="app.module.ts">
+StoreRouterConnectingModule.forRoot({
+  routerState: RouterState.Minimal,
 });
 </code-example>

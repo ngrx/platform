@@ -14,6 +14,8 @@ init$ = createEffect(() =>
 );
 </code-example>
 
+## Effect Metadata
+
 ### Non-dispatching Effects
 
 Sometimes you don't want effects to dispatch an action, for example when you only want to log or navigate based on an incoming action. But when an effect does not dispatch another action, the browser will crash because the effect is both 'subscribing' to and 'dispatching' the exact same action, causing an infinite loop. To prevent this, add `{ dispatch: false }` to the `createEffect` function as the second argument.
@@ -33,6 +35,59 @@ export class LogEffects {
     this.actions$.pipe(
       tap(action => console.log(action))
     ), { dispatch: false });
+}
+</code-example>
+
+### Resubscribe on Error
+
+Starting with version 8, when an error happens in the effect's main stream it is
+reported using Angular's `ErrorHandler`, and the source effect is
+**automatically** resubscribed to (instead of completing), so it continues to
+listen to all dispatched Actions.
+
+Generally, errors should be handled by users. However, for the cases where errors were missed,
+this new behavior adds an additional safety net.
+
+In some cases where particular RxJS operators are used, the new behavior might
+produce unexpected results. For example, if the `startWith` operator is within the
+effect's pipe then it will be triggered again.
+
+To disable resubscriptions add `{resubscribeOnError: false}` to the `createEffect`
+metadata (second argument).
+
+<code-example header="disable-resubscribe.effects.ts">
+import { Injectable } from '@angular/core';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, exhaustMap, map } from 'rxjs/operators';
+import {
+  LoginPageActions,
+  AuthApiActions,
+} from '../actions';
+import { Credentials } from '../models/user';
+import { AuthService } from '../services/auth.service';
+
+@Injectable()
+export class AuthEffects {
+  logins$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(LoginPageActions.login),
+        exhaustMap(action =>
+          this.authService.login(action.credentials).pipe(
+            map(user => AuthApiActions.loginSuccess({ user })),
+            catchError(error => of(AuthApiActions.loginFailure({ error })))
+          )
+        )
+        // Errors are handled and it is safe to disable resubscription
+      ),
+    { resubscribeOnError: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService
+  ) {}
 }
 </code-example>
 

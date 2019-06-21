@@ -26,7 +26,9 @@ $ ng g store State --root --module app.module.ts
 @Component({
   selector: 'ngrx-code-block',
   template: `
-    <pre class="prettyprint" #codeContainer></pre>
+    <div class="prettyprint-scroller">
+      <pre class="prettyprint" #codeContainer></pre>
+    </div>
   `,
 })
 export class CodeBlockComponent implements AfterContentInit {

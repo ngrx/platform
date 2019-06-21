@@ -1,7 +1,6 @@
 import { isDevMode, Provider } from '@angular/core';
 import {
-  stateSerializationCheckMetaReducer,
-  actionSerializationCheckMetaReducer,
+  serializationCheckMetaReducer,
   immutabilityCheckMetaReducer,
 } from './meta-reducers';
 import { RuntimeChecks, MetaReducer } from './models';
@@ -17,13 +16,14 @@ export function createActiveRuntimeChecks(
   if (isDevMode()) {
     if (runtimeChecks === undefined) {
       console.warn(
-        '@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version, see https://ngrx.io/guide/migration/v8 for more information.'
+        '@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.'
       );
     }
     return {
       strictStateSerializability: false,
       strictActionSerializability: false,
-      strictImmutability: false,
+      strictStateImmutability: false,
+      strictActionImmutability: false,
       ...runtimeChecks,
     };
   }
@@ -31,33 +31,35 @@ export function createActiveRuntimeChecks(
   return {
     strictStateSerializability: false,
     strictActionSerializability: false,
-    strictImmutability: false,
+    strictStateImmutability: false,
+    strictActionImmutability: false,
   };
 }
 
-export function createStateSerializationCheckMetaReducer({
+export function createSerializationCheckMetaReducer({
+  strictActionSerializability,
   strictStateSerializability,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictStateSerializability
-      ? stateSerializationCheckMetaReducer(reducer)
-      : reducer;
-}
-
-export function createActionSerializationCheckMetaReducer({
-  strictActionSerializability,
-}: RuntimeChecks): MetaReducer {
-  return reducer =>
-    strictActionSerializability
-      ? actionSerializationCheckMetaReducer(reducer)
+    strictActionSerializability || strictStateSerializability
+      ? serializationCheckMetaReducer(reducer, {
+          action: strictActionSerializability,
+          state: strictStateSerializability,
+        })
       : reducer;
 }
 
 export function createImmutabilityCheckMetaReducer({
-  strictImmutability,
+  strictActionImmutability,
+  strictStateImmutability,
 }: RuntimeChecks): MetaReducer {
   return reducer =>
-    strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer;
+    strictActionImmutability || strictStateImmutability
+      ? immutabilityCheckMetaReducer(reducer, {
+          action: strictActionImmutability,
+          state: strictStateImmutability,
+        })
+      : reducer;
 }
 
 export function provideRuntimeChecks(
@@ -77,19 +79,13 @@ export function provideRuntimeChecks(
       provide: META_REDUCERS,
       multi: true,
       deps: [_ACTIVE_RUNTIME_CHECKS],
-      useFactory: createStateSerializationCheckMetaReducer,
-    },
-    {
-      provide: META_REDUCERS,
-      multi: true,
-      deps: [_ACTIVE_RUNTIME_CHECKS],
-      useFactory: createActionSerializationCheckMetaReducer,
-    },
-    {
-      provide: META_REDUCERS,
-      multi: true,
-      deps: [_ACTIVE_RUNTIME_CHECKS],
       useFactory: createImmutabilityCheckMetaReducer,
+    },
+    {
+      provide: META_REDUCERS,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: createSerializationCheckMetaReducer,
     },
   ];
 }

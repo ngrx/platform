@@ -27,15 +27,27 @@ import {
 } from './actions';
 import { RouterReducerState } from './reducer';
 import {
-  DefaultRouterStateSerializer,
   RouterStateSerializer,
-  SerializedRouterStateSnapshot,
   BaseRouterStoreState,
-} from './serializer';
+} from './serializers/base';
+import {
+  DefaultRouterStateSerializer,
+  SerializedRouterStateSnapshot,
+} from './serializers/default_serializer';
+import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
 
 export type StateKeyOrSelector<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = string | Selector<any, RouterReducerState<T>>;
+
+/**
+ * Full = Serializes the router event with DefaultRouterStateSerializer
+ * Minimal = Serializes the router event with MinimalRouterStateSerializer
+ */
+export const enum RouterState {
+  Full,
+  Minimal,
+}
 
 export interface StoreRouterConfig<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
@@ -50,6 +62,12 @@ export interface StoreRouterConfig<
    * set this property to NavigationActionTiming.PostActivation.
    */
   navigationActionTiming?: NavigationActionTiming;
+  /**
+   * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
+   * Set to `Full` to use the `DefaultRouterStateSerializer` and to set the angular router events as payload.
+   * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
+   */
+  routerState?: RouterState;
 }
 
 interface StoreRouterActionPayload {
@@ -150,7 +168,9 @@ export class StoreRouterConnectingModule {
           provide: RouterStateSerializer,
           useClass: config.serializer
             ? config.serializer
-            : DefaultRouterStateSerializer,
+            : config.routerState === RouterState.Minimal
+              ? MinimalRouterStateSerializer
+              : DefaultRouterStateSerializer,
         },
       ],
     };
@@ -307,6 +327,10 @@ export class StoreRouterConnectingModule {
         payload: {
           routerState: this.routerState,
           ...payload,
+          event:
+            this.config.routerState === RouterState.Minimal
+              ? { id: payload.event.id, url: payload.event.url }
+              : payload.event,
         },
       });
     } finally {

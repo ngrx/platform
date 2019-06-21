@@ -1,10 +1,11 @@
 context('Full round trip', () => {
   before(() => {
-    (cy as any).eyesOpen({
-      appName: 'books_app',
-      testName: 'round-trip',
-      browser: { width: 800, height: 600 },
-    });
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesOpen({
+    //   appName: 'books_app',
+    //   testName: 'round-trip',
+    //   browser: { width: 800, height: 600 },
+    // });
     window.localStorage.removeItem('books_app');
     cy.visit('/');
   });
@@ -18,7 +19,8 @@ context('Full round trip', () => {
   });
 
   after(() => {
-    (cy as any).eyesClose();
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesClose();
   });
 
   it('shows a message when the credentials are wrong', () => {
@@ -26,9 +28,10 @@ context('Full round trip', () => {
     cy.get('[placeholder=Password]').type('supersafepassword');
     cy.get('[type="submit"]').click();
 
-    (cy as any).eyesCheckWindow(
-      'show a message when the credentials are wrong'
-    );
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesCheckWindow(
+    //   'show a message when the credentials are wrong'
+    // );
     cy.contains('Invalid username or password').should('be.visible');
   });
 
@@ -44,7 +47,8 @@ context('Full round trip', () => {
     cy.contains('menu').click();
     cy.contains('Browse Books').click();
 
-    (cy as any).eyesCheckWindow('is possible to search for books');
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesCheckWindow('is possible to search for books');
     cy.get('[placeholder="Search for a book"]').type('The Alchemist');
     cy.get('bc-book-preview')
       .its('length')
@@ -57,7 +61,8 @@ context('Full round trip', () => {
       .click();
 
     cy.contains('Add Book to Collection').click();
-    (cy as any).eyesCheckWindow('is possible to add books');
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesCheckWindow('is possible to add books');
     cy.contains('Add Book to Collection').should('not.exist');
   });
 
@@ -71,7 +76,8 @@ context('Full round trip', () => {
     cy.contains('Add Book to Collection').click();
     cy.contains('Remove Book from Collection').click();
 
-    (cy as any).eyesCheckWindow('is possible to remove books');
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesCheckWindow('is possible to remove books');
     cy.contains('Remove Book from Collection').should('not.exist');
   });
 
@@ -79,7 +85,8 @@ context('Full round trip', () => {
     cy.contains('menu').click();
     cy.contains('My Collection').click();
 
-    (cy as any).eyesCheckWindow('is possible to show the collection');
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesCheckWindow('is possible to show the collection');
     cy.get('bc-book-preview')
       .its('length')
       .should('be', 1);
@@ -90,7 +97,8 @@ context('Full round trip', () => {
     cy.contains('Sign Out').click();
     cy.contains('OK').click();
 
-    (cy as any).eyesCheckWindow('is possible to sign out');
+    // TODO: uncomment once Applitools work properly
+    // (cy as any).eyesCheckWindow('is possible to sign out');
     cy.get('[placeholder=Username]').should('exist');
     cy.get('[placeholder=Password]').should('exist');
   });

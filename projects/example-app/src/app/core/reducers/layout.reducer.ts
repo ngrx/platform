@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { LayoutActions } from '@example-app/core/actions';
 
 export interface State {

@@ -15,6 +15,9 @@ build --announce_rc
 # Prevent unstable environment variables from tainting cache keys
 build --experimental_strict_action_env
 
+# Workaround for invalid union deps
+build --incompatible_depset_union=false
+
 # Workaround https://github.com/bazelbuild/bazel/issues/3645
 # Bazel doesn't calculate the memory ceiling correctly when running under Docker.
 # Limit Bazel to consuming resources that fit in CircleCI "medium" class which is the default:

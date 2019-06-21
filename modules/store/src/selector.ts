@@ -12,17 +12,26 @@ export type MemoizeFn = (t: AnyFn) => MemoizedProjection;
 
 export type ComparatorFn = (a: any, b: any) => boolean;
 
-export interface MemoizedSelector<State, Result>
-  extends Selector<State, Result> {
+export type DefaultProjectorFn<T> = (...args: any[]) => T;
+
+export interface MemoizedSelector<
+  State,
+  Result,
+  ProjectorFn = DefaultProjectorFn<Result>
+> extends Selector<State, Result> {
   release(): void;
-  projector: AnyFn;
+  projector: ProjectorFn;
   setResult: (result?: Result) => void;
 }
 
-export interface MemoizedSelectorWithProps<State, Props, Result>
-  extends SelectorWithProps<State, Props, Result> {
+export interface MemoizedSelectorWithProps<
+  State,
+  Props,
+  Result,
+  ProjectorFn = DefaultProjectorFn<Result>
+> extends SelectorWithProps<State, Props, Result> {
   release(): void;
-  projector: AnyFn;
+  projector: ProjectorFn;
   setResult: (result?: Result) => void;
 }
 
@@ -489,7 +498,7 @@ export function createSelector<
 
 export function createSelector(
   ...input: any[]
-): Selector<any, any> | SelectorWithProps<any, any, any> {
+): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
   return createSelectorFactory(defaultMemoize)(...input);
 }
 
@@ -521,18 +530,18 @@ export type SelectorFactoryConfig<T = any, V = any> = {
 
 export function createSelectorFactory<T = any, V = any>(
   memoize: MemoizeFn
-): (...input: any[]) => Selector<T, V>;
+): (...input: any[]) => MemoizedSelector<T, V>;
 export function createSelectorFactory<T = any, V = any>(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<T, V>
-): (...input: any[]) => Selector<T, V>;
+): (...input: any[]) => MemoizedSelector<T, V>;
 export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn
-): (...input: any[]) => SelectorWithProps<T, Props, V>;
+): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<T, V>
-): (...input: any[]) => SelectorWithProps<T, Props, V>;
+): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 export function createSelectorFactory(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<any, any> = {
@@ -541,7 +550,7 @@ export function createSelectorFactory(
 ) {
   return function(
     ...input: any[]
-  ): Selector<any, any> | SelectorWithProps<any, any, any> {
+  ): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
     let args = input;
     if (Array.isArray(args[0])) {
       const [head, ...tail] = args;

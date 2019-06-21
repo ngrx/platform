@@ -86,6 +86,12 @@
     "endDate": "2019-06-12"
   },
   {
+    "name": "Angular In Depth",
+    "url": "https://angular-in-depth.org/",
+    "location": "Kyiv, Ukraine",
+    "endDate": "2019-06-15"
+  },
+  {
     "name": "NG-MY",
     "url": "https://ng-my.org/",
     "location": "Kuala Lumpur, Malaysia",
@@ -93,7 +99,7 @@
     "endDate": "2019-07-07"
   },
   {
-    "name": "ngDenver",
+    "name": "Angular Denver",
     "url": "http://angulardenver.com/",
     "location": "Denver, Colorado",
     "startDate": "2019-08-01",
@@ -111,5 +117,12 @@
     "url": "https://ngrome.io/",
     "location": "Rome, Italy",
     "endDate": "2019-10-07"
+  },
+  {
+    "name": "ngTalks",
+    "url": "https://ngtalks.io/",
+    "location": "Kharkiv, Ukraine",
+    "startDate": "2019-11-07",
+    "endDate": "2019-11-08"
   }
 ]

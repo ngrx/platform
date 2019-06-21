@@ -3,13 +3,13 @@ import {
   ActionCreator,
   TypedAction,
   FunctionWithParametersType,
-  ParametersType,
+  PropsReturnType,
+  DisallowTypeProperty,
 } from './models';
 
-/**
- * Action creators taken from ts-action library and modified a bit to better
- * fit current NgRx usage. Thank you Nicholas Jamieson (@cartant).
- */
+// Action creators taken from ts-action library and modified a bit to better
+// fit current NgRx usage. Thank you Nicholas Jamieson (@cartant).
+
 export function createAction<T extends string>(
   type: T
 ): ActionCreator<T, () => TypedAction<T>>;
@@ -17,20 +17,20 @@ export function createAction<T extends string, P extends object>(
   type: T,
   config: { _as: 'props'; _p: P }
 ): ActionCreator<T, (props: P) => P & TypedAction<T>>;
+export function createAction<
+  T extends string,
+  P extends any[],
+  R extends object
+>(
+  type: T,
+  creator: Creator<P, DisallowTypeProperty<R>>
+): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
 export function createAction<T extends string, C extends Creator>(
   type: T,
-  creator: C
-): FunctionWithParametersType<
-  ParametersType<C>,
-  ReturnType<C> & TypedAction<T>
-> &
-  TypedAction<T>;
-export function createAction<T extends string>(
-  type: T,
-  config?: { _as: 'props' } | Creator
+  config?: { _as: 'props' } | C
 ): Creator {
   if (typeof config === 'function') {
-    return defineType(type, (...args: unknown[]) => ({
+    return defineType(type, (...args: any[]) => ({
       ...config(...args),
       type,
     }));
@@ -40,8 +40,8 @@ export function createAction<T extends string>(
     case 'empty':
       return defineType(type, () => ({ type }));
     case 'props':
-      return defineType(type, (props: unknown) => ({
-        ...(props as object),
+      return defineType(type, (props: object) => ({
+        ...props,
         type,
       }));
     default:
@@ -49,8 +49,10 @@ export function createAction<T extends string>(
   }
 }
 
-export function props<P>(): { _as: 'props'; _p: P } {
-  return { _as: 'props', _p: undefined! };
+export function props<P extends object>(): PropsReturnType<P> {
+  // the return type does not match TypePropertyIsNotAllowed, so double casting
+  // is used.
+  return ({ _as: 'props', _p: undefined! } as unknown) as PropsReturnType<P>;
 }
 
 export function union<

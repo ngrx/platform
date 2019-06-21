@@ -8,6 +8,7 @@ export {
   MetaReducer,
   Selector,
   SelectorWithProps,
+  RuntimeChecks,
 } from './models';
 export { createAction, props, union } from './action_creator';
 export { Store, select } from './store';

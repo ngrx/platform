@@ -21,6 +21,7 @@ export {
   addExportToModule,
   addImportToModule,
   addProviderToModule,
+  replaceImport,
 } from './utility/ast-utils';
 
 export {
@@ -32,6 +33,7 @@ export {
   ReplaceChange,
   createReplaceChange,
   createChangeRecorder,
+  commitChanges,
 } from './utility/change';
 
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
@@ -71,3 +73,5 @@ export { parseName } from './utility/parse-name';
 export { addPackageToPackageJson } from './utility/package';
 
 export { platformVersion } from './utility/libs-version';
+
+export { visitTSSourceFiles } from './utility/visit-utils';

@@ -32,15 +32,6 @@ const BOILERPLATE_PATHS = {
     'tsconfig.json',
     'tslint.json'
   ],
-  systemjs: [
-    'src/systemjs-angular-loader.js',
-    'src/systemjs.config.js',
-    'src/tsconfig.json',
-    'bs-config.json',
-    'bs-config.e2e.json',
-    'package.json',
-    'tslint.json'
-  ],
   common: [
     'src/styles.css'
   ]
@@ -49,28 +40,6 @@ const BOILERPLATE_PATHS = {
 // All paths in this tool are relative to the current boilerplate folder, i.e boilerplate/i18n
 // This maps the CLI files that exists in a parent folder
 const cliRelativePath = BOILERPLATE_PATHS.cli.map(file => `../cli/${file}`);
-
-BOILERPLATE_PATHS.elements = [
-  ...cliRelativePath,
-  'tsconfig.json'
-];
-
-BOILERPLATE_PATHS.i18n = [
-  ...cliRelativePath,
-  'angular.json',
-  'package.json'
-];
-
-BOILERPLATE_PATHS.testing = [
-  ...cliRelativePath,
-  'angular.json'
-];
-
-BOILERPLATE_PATHS.universal = [
-  ...cliRelativePath,
-  'angular.json',
-  'package.json'
-];
 
 const EXAMPLE_CONFIG_FILENAME = 'example-config.json';
 

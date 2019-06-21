@@ -11,6 +11,7 @@
     "noEmitOnError": false,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    "downlevelIteration": true,
     "outDir": "../../dist/packages/router-store",
     "paths": {
       "@ngrx/store": ["../../dist/packages/store"]
