@@ -20,7 +20,7 @@ import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: Observable&lt;any&gt;;
+  let actions$: Observable&lt;any&gt;;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,7 +29,7 @@ describe('My Effects', () => {
       ],
       providers: [
         MyEffects,
-        provideMockActions(() => actions),
+        provideMockActions(() => actions$),
         // other providers
       ],
     });
@@ -42,7 +42,7 @@ describe('My Effects', () => {
     const completion = MyActions.exampleActionSuccess();
 
     // Refer to 'Writing Marble Tests' for details on '--a-' syntax
-    actions = hot('--a-', { a: action });
+    actions$ = hot('--a-', { a: action });
     const expected = cold('--b', { b: completion });
 
     expect(effects.someSource$).toBeObservable(expected);
