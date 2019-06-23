@@ -45,7 +45,7 @@ ng add @angular/elements
 
 ```json
 "scripts": [
-{"input": "node_modules/document-register-element/build/document-register-element.js"}
+  { "input": "node_modules/document-register-element/build/document-register-element.js" }
 ]
 ```
 
