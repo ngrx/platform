@@ -370,4 +370,18 @@ describe('Effect Schematic', () => {
       /loadFoos\$ = createEffect\(\(\) => this.actions\$.pipe\(/
     );
   });
+
+  it('should inject the effect service correctly', async () => {
+    const options = { ...defaultOptions, spec: true };
+    const tree = await schematicRunner
+      .runSchematicAsync('effect', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.spec.ts`
+    );
+
+    expect(content).toMatch(
+      /effects = TestBed\.get<FooEffects>\(FooEffects\);/
+    );
+  });
 });

@@ -121,4 +121,15 @@ describe('Container Schematic', () => {
       /import { Store, StoreModule } from '@ngrx\/store';/
     );
   });
+
+  it('should inject Store correctly', async () => {
+    const options = { ...defaultOptions, spec: true };
+    const tree = await schematicRunner
+      .runSchematicAsync('container', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.component.spec.ts`
+    );
+    expect(content).toMatch(/store = TestBed\.get<Store>\(Store\);/);
+  });
 });
