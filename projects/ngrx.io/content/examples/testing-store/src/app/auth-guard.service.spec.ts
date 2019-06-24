@@ -15,8 +15,8 @@ describe('Auth Guard', () => {
       providers: [AuthGuard, provideMockStore()],
     });
 
-    store = TestBed.get(Store);
-    guard = TestBed.get(AuthGuard);
+    store = TestBed.get<Store>(Store);
+    guard = TestBed.get<AuthGuard>(AuthGuard);
 
     loggedIn = store.overrideSelector(fromAuth.getLoggedIn, false);
   });

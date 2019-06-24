@@ -34,7 +34,7 @@ describe('My Effects', () => {
       ],
     });
 
-    effects = TestBed.get(MyEffects);
+    effects = TestBed.get&lt;MyEffects&gt;(MyEffects);
   });
 
   it('should work', () => {
@@ -76,7 +76,7 @@ describe('My Effects', () => {
       ],
     });
 
-    effects = TestBed.get(MyEffects);
+    effects = TestBed.get&lt;MyEffects&gt;(MyEffects);
   });
 
   it('should work', () => {
@@ -114,7 +114,7 @@ describe('My Effects', () => {
       ],
     });
 
-    effects = TestBed.get(MyEffects);
+    effects = TestBed.get&lt;MyEffects&gt;(MyEffects);
     metadata = getEffectsMetadata(effects);
   });
 
@@ -258,9 +258,9 @@ describe('CollectionEffects', () => {
       ],
     });
 
-    effects = TestBed.get(CollectionEffects);
-    actions$ = TestBed.get(Actions);
-    store = TestBed.get(Store);
+    effects = TestBed.get&lt;CollectionEffects&gt;(CollectionEffects);
+    actions$ = TestBed.get&lt;Actions&gt;(Actions);
+    store = TestBed.get&lt;Store&gt;(Store);
   });
 
   describe('addBookToCollectionSuccess$', () => {
