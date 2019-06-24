@@ -78,54 +78,28 @@ Try the <live-example name="testing-store"></live-example>.
 
 ### Integration Testing
 
-An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`.  An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration.
+An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`.  An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration.  Here is an example of an integration test for the MyCounter component introduced in the [getting started tutorial](guide/store).
 
-<code-example header="counter.component.ts">
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { CounterActions } from '../actions';
-import * as fromCount from '../reducers';
-
-@Component({
-  selector: 'app-counter',
-  template: `
-    &lt;p&gt;{{ count$ | async }}&lt;/p&gt;
-    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt;
-  `
-})
-export class CounterComponent {
-  count$ = this.store.select(fromCount.getCount);
-
-  constructor(private store: Store&lt;fromCount.State&gt;) { }
-
-  increment() {
-    this.store.dispatch(CounterActions.increment());
-  }
-}
-</code-example>
-
-This example component implements a simple counter which is displayed to the user.  It has an increment method which dispatches an increment action to the `Store`. A reducer increments the previous state's counter, then the selector emits the latest value to the component.
-
-<code-example header="counter-integration.spec.ts">
-import { TestBed, async } from '@angular/core/testing';
+<code-example header="integration.spec.ts">
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { CounterComponent } from '../counter/counter.component';
-import { reducers } from '../reducers';
+import { MyCounterComponent } from '../my-counter/my-counter.component';
+import { counterReducer } from '../counter.reducer';
 
-describe('CounterComponent', () => {
-  let component: CounterComponent;
+describe('MyCounterComponent', () => {
+  let component: MyCounterComponent;
+  let fixture: ComponentFixture&lt;MyCounterComponent&gt;;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        CounterComponent
-      ],
+      declarations: [ MyCounterComponent ],
       imports: [
-        StoreModule.forRoot(reducers)
+        StoreModule.forRoot({ count: counterReducer })
       ]
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(CounterComponent);
+    fixture = TestBed.createComponent(MyCounterComponent);
     component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
   }));
@@ -134,16 +108,45 @@ describe('CounterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should increment the counter value after increment is invoked', () => {
-    component.increment();
-    component.count$.subscribe(count =>
-      expect(count).toBe(1)
+  it('should increment the counter value when increment is clicked', () => {
+    clickByCSS('#increment');
+
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('div').textContent).toBe(
+      'Current Count: 1'
     );
   });
+
+  it('should decrement the counter value when decrement is clicked', () => {
+    clickByCSS('#decrement');
+
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('div').textContent).toBe(
+      'Current Count: -1'
+    );
+  });
+
+  it('should reset the counter value when reset is clicked', () => {
+    clickByCSS('#increment');
+    clickByCSS('#reset');
+
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('div').textContent).toBe(
+      'Current Count: 0'
+    );
+  });
+
+  function clickByCSS(selector: string) {
+    const debugElement = fixture.debugElement.query(By.css(selector));
+    const el: HTMLElement = debugElement.nativeElement;
+    el.click();
+    fixture.detectChanges();
+  }
 });
+
 </code-example>
 
-The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we verify that dispatching an increment action causes the state to be updated with an incremented counter value, which is correctly emitted by the selector.
+The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking a button dispatches an action that causes the state to be updated with an incremented, decremented, or resetted counter value, which is correctly emitted by the selector.
 
 ### Testing selectors
 
