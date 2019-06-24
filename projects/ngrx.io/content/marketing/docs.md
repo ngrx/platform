@@ -37,17 +37,17 @@ NgRx is also powered by memoized selector functions which optimize state query c
 In particular, you might use NgRx when you build an application with a lot of user interactions and multiple data sources, when managing state in services are no longer sufficient.
 
 A good substance that might answer the question "Do I need NgRx", is the 
-<a href="https://youtu.be/omnwu_etHTY" target="_blank"><b>SHARI</b></a> principle:
+<a href="https://youtu.be/omnwu_etHTY" target="_blank">**SHARI**</a> principle:
 
-* <b>S</b>hared state is accessed by many components and services
+* **S**hared state is accessed by many components and services
 
-* <b>H</b>ydrated  state that is persisted and and hydrated from storage
+* **H**ydrated  state that is persisted and and hydrated from storage
 
-* <b>A</b>vailable state that needs to be available when re-entering routes
+* **A**vailable state that needs to be available when re-entering routes
 
-* <b>R</b>etrieved state that needs to be available when re-entering routes
+* **R**etrieved state that needs to be available when re-entering routes
 
-* <b>I</b>mpacted state that is impacted by actions from other sources
+* **I**mpacted state that is impacted by actions from other sources
 
 
 However, realizing that using NgRx comes with some tradeoffs is also crucial. It is not meant to be the shortest or quickest way to write code and encourage its users the usage of many files.
