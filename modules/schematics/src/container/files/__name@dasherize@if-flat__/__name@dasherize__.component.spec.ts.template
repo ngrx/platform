@@ -20,7 +20,7 @@ describe('<%= classify(name) %>Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(<%= classify(name) %>Component);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.get<Store>(Store);
 
     spyOn(store, 'dispatch').and.callThrough();
     fixture.detectChanges();
