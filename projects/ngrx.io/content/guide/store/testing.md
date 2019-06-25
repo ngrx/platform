@@ -78,75 +78,12 @@ Try the <live-example name="testing-store"></live-example>.
 
 ### Integration Testing
 
-An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`.  An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration.  Here is an example of an integration test for the MyCounter component introduced in the [getting started tutorial](guide/store).
+An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`.  An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration.  Here is an example of an integration test for the `MyCounterComponent` introduced in the [getting started tutorial](guide/store#tutorial).
 
-<code-example header="integration.spec.ts">
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
-import { MyCounterComponent } from '../my-counter/my-counter.component';
-import { counterReducer } from '../counter.reducer';
-
-describe('MyCounterComponent', () => {
-  let component: MyCounterComponent;
-  let fixture: ComponentFixture&lt;MyCounterComponent&gt;;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MyCounterComponent ],
-      imports: [
-        StoreModule.forRoot({ count: counterReducer })
-      ]
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(MyCounterComponent);
-    component = fixture.debugElement.componentInstance;
-    fixture.detectChanges();
-  }));
-
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should increment the counter value when increment is clicked', () => {
-    clickByCSS('#increment');
-
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div').textContent).toBe(
-      'Current Count: 1'
-    );
-  });
-
-  it('should decrement the counter value when decrement is clicked', () => {
-    clickByCSS('#decrement');
-
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div').textContent).toBe(
-      'Current Count: -1'
-    );
-  });
-
-  it('should reset the counter value when reset is clicked', () => {
-    clickByCSS('#increment');
-    clickByCSS('#reset');
-
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div').textContent).toBe(
-      'Current Count: 0'
-    );
-  });
-
-  function clickByCSS(selector: string) {
-    const debugElement = fixture.debugElement.query(By.css(selector));
-    const el: HTMLElement = debugElement.nativeElement;
-    el.click();
-    fixture.detectChanges();
-  }
-});
-
+<code-example header="src/app/tests/integration.spec.ts" path="store/src/app/tests/integration.spec.ts">
 </code-example>
 
-The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking a button dispatches an action that causes the state to be updated with an incremented, decremented, or resetted counter value, which is correctly emitted by the selector.
+The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking a button dispatches an action that causes the state to be updated with an incremented, decremented, or reset counter value, which is correctly emitted by the selector.
 
 ### Testing selectors
 
