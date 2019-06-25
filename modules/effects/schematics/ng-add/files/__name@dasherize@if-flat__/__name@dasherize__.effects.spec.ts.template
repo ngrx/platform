@@ -16,7 +16,7 @@ describe('<%= classify(name) %>Effects', () => {
       ]
     });
 
-    effects = TestBed.get(<%= classify(name) %>Effects);
+    effects = TestBed.get<<%= classify(name) %>Effects>(<%= classify(name) %>Effects);
   });
 
   it('should be created', () => {

@@ -180,4 +180,18 @@ describe('Effect ng-add Schematic', () => {
       files.indexOf(`${projectPath}/src/app/effects/foo.effects.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
+
+  it('should inject the effect service correctly', async () => {
+    const options = { ...defaultOptions, spec: true };
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.spec.ts`
+    );
+
+    expect(content).toMatch(
+      /effects = TestBed\.get<FooEffects>\(FooEffects\);/
+    );
+  });
 });

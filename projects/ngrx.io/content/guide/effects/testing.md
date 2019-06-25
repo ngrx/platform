@@ -20,7 +20,7 @@ import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: Observable&lt;any&gt;;
+  let actions$: Observable&lt;any&gt;;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,12 +29,12 @@ describe('My Effects', () => {
       ],
       providers: [
         MyEffects,
-        provideMockActions(() => actions),
+        provideMockActions(() => actions$),
         // other providers
       ],
     });
 
-    effects = TestBed.get(MyEffects);
+    effects = TestBed.get&lt;MyEffects&gt;(MyEffects);
   });
 
   it('should work', () => {
@@ -42,7 +42,7 @@ describe('My Effects', () => {
     const completion = MyActions.exampleActionSuccess();
 
     // Refer to 'Writing Marble Tests' for details on '--a-' syntax
-    actions = hot('--a-', { a: action });
+    actions$ = hot('--a-', { a: action });
     const expected = cold('--b', { b: completion });
 
     expect(effects.someSource$).toBeObservable(expected);
@@ -76,7 +76,7 @@ describe('My Effects', () => {
       ],
     });
 
-    effects = TestBed.get(MyEffects);
+    effects = TestBed.get&lt;MyEffects&gt;(MyEffects);
   });
 
   it('should work', () => {
@@ -114,7 +114,7 @@ describe('My Effects', () => {
       ],
     });
 
-    effects = TestBed.get(MyEffects);
+    effects = TestBed.get&lt;MyEffects&gt;(MyEffects);
     metadata = getEffectsMetadata(effects);
   });
 
@@ -258,9 +258,9 @@ describe('CollectionEffects', () => {
       ],
     });
 
-    effects = TestBed.get(CollectionEffects);
-    actions$ = TestBed.get(Actions);
-    store = TestBed.get(Store);
+    effects = TestBed.get&lt;CollectionEffects&gt;(CollectionEffects);
+    actions$ = TestBed.get&lt;Actions&gt;(Actions);
+    store = TestBed.get&lt;Store&gt;(Store);
   });
 
   describe('addBookToCollectionSuccess$', () => {
