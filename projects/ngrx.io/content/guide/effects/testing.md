@@ -5,7 +5,7 @@
 ### `provideMockActions`
 
 An Effect subscribes to the `Actions` Observable to perform side effects.
-`provideMockActions` provides a mock `Actions` Observable to subscribe to for each test individually.
+`provideMockActions` provides a mock provider of the `Actions` Observable to subscribe to, for each test individually.
 
 <code-example header="my.effects.spec.ts">
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -17,7 +17,7 @@ TestBed.configureTestingModule({
 });
 </code-example>
 
-Later in the test cases, we assign the `actions$` variable to an Actions stream.
+Later in the test cases, we assign the `actions$` variable to a stream of actions.
 
 <code-example header="my.effects.spec.ts">
 // by creating an Observable
@@ -67,7 +67,7 @@ The `hot`, `cold`, and `toBeObservable` functions are imported from [`jasmine-ma
 </div>
 
 <code-example header="my.effects.spec.ts">
-// mock Actions to represent a user that is typing
+// create an actions stream to represent a user that is typing
 actions$ = hot('-a-b-', {
   a: { type: 'SEARCH CUSTOMERS', name: 'J' },
   b: { type: 'SEARCH CUSTOMERS', name: 'Jes' },
@@ -100,7 +100,7 @@ expect(
 To test simple Effects, it might be easier to create an Observable instead of using a marble diagram.
 
 <code-example header="my.effects.spec.ts">
-// mock Actions and immediately dispatch a GET action
+// create an actions stream and immediately dispatch a GET action
 actions$ = of({ type: 'GET CUSTOMERS' });
 
 // mock the service to prevent an HTTP request
@@ -142,7 +142,7 @@ effects.getAll$.subscribe(action => {
 
 ### A non-dispatching Effect
 
-Until now we only saw Effects that dispatch an Action and we verified the dispatched action.
+Until now, we only saw Effects that dispatch an Action and we verified the dispatched action.
 With an Effect that does not dispatch an action, we can't verify the Effects stream.
 What we can do, is verify the side-effect has been called.
 
@@ -208,7 +208,7 @@ Instead of using the Angular `TestBed`, we can instantiate the Effect class.
 <code-example header="my.effects.spec.ts">
 it('should get customers', () => {
   // instead of using `provideMockActions`,
-  // define the Actions Observable by creating a new `Actions` instance
+  // define the actions stream by creating a new `Actions` instance
   const actions = new Actions(
     hot('-a--', {
       a: { type: 'GET CUSTOMERS' },
@@ -236,7 +236,7 @@ it('should get customers', () => {
   const store = of({}) as Store&lt;Action&gt;;
 
   // instead of using `provideMockActions`,
-  // define the Actions Observable by creating a new `Actions` instance
+  // define the actions stream by creating a new `Actions` instance
   const actions = new Actions(
     hot('-a--', {
       a: { type: 'GET CUSTOMER BY NAME', name: 'Bob' },
