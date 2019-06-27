@@ -174,7 +174,8 @@ export function on<S>(
  * A state change function must be provided as the last parameter.
  *
  * @param args `ActionCreator`'s followed by a state change function.
- * To maintain type-safety, pass 10 or less `ActionCreator`'s.
+ *
+ * **To maintain type-safety**: pass 10 or less `ActionCreator`'s.
  * @returns an association of action types with a state change function.
  */
 export function on(
