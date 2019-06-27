@@ -15,6 +15,10 @@ export type TypeId<T> = () => T;
 
 export type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;
 
+/**
+ * A function that takes an `Action` and a `State`, and returns a `State`.
+ * See `createReducer`.
+ */
 export interface ActionReducer<T, V extends Action = Action> {
   (state: T | undefined, action: V): T;
 }
