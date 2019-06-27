@@ -36,7 +36,7 @@ export function createAction<
  *
  * @usageNotes
  *
- * **Declaring an Action Creator**
+ * **Declaring an action creator**
  *
  * Without additional metadata:
  * ```ts
@@ -50,7 +50,7 @@ export function createAction<
  * );
  * ```
  *
- * **Dispatching an Action**
+ * **Dispatching an action**
  *
  * Without additional metadata:
  * ```ts
@@ -61,7 +61,7 @@ export function createAction<
  * store.dispatch(loginSuccess({ user: newUser }));
  * ```
  *
- * **Referencing an Action in a Reducer**
+ * **Referencing an action in a reducer**
  *
  * Using a switch statement:
  * ```ts
