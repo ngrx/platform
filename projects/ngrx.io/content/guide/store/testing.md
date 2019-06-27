@@ -76,113 +76,14 @@ In this example, we mock the `getLoggedIn` selector by using `overrideSelector`,
 
 Try the <live-example name="testing-store"></live-example>.
 
-### Using Store for Integration Testing
+### Integration Testing
 
-Use the `StoreModule.forRoot` in your `TestBed` configuration when testing components or services that inject `Store`.
+An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`.  An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration.  Here is an example of an integration test for the `MyCounterComponent` introduced in the [getting started tutorial](guide/store#tutorial).
 
-- Reducing state is synchronous, so mocking out the `Store` isn't required.
-- Use the `combineReducers` method with the map of feature reducers to compose the `State` for the test.
-- Dispatch actions to load data into the `Store`.
-
-<code-example header="my.component.ts">
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import * as fromFeature from '../reducers';
-import * as DataActions from '../actions/data';
-
-@Component({
-  selector: 'my-component',
-  template: `
-    &lt;div *ngFor="let item of items$ | async"&gt;{{ item }}&lt;/div&gt;
-
-    &lt;button (click)="onRefresh()"&gt;Refresh Items&lt;/button&gt;
-  `,
-})
-export class MyComponent implements OnInit {
-  items$ = this.store.pipe(select(fromFeature.selectFeatureItems));
-
-  constructor(private store: Store&lt;fromFeature.State&gt;) {}
-
-  ngOnInit() {
-    this.store.dispatch(DataActions.loadData());
-  }
-
-  onRefresh() {
-    this.store.dispatch(DataActions.refreshItems());
-  }
-}
+<code-example header="src/app/tests/integration.spec.ts" path="store/src/app/tests/integration.spec.ts">
 </code-example>
 
-<code-example header="my.component.spec.ts">
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoreModule, Store, combineReducers } from '@ngrx/store';
-import { MyComponent } from './my.component';
-import * as fromRoot from '../reducers';
-import * as fromFeature from '../feature/reducers';
-import * as DataActions from '../actions/data';
-
-describe('My Component', () => {
-  let component: MyComponent;
-  let fixture: ComponentFixture&lt;MyComponent&gt;
-  let store: Store&lt;fromFeature.State&gt;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({
-          ...fromRoot.reducers,
-          feature: combineReducers(fromFeature.reducers),
-        }),
-        // other imports
-      ],
-      declarations: [
-        MyComponent,
-        // other declarations
-      ],
-      providers: [
-        // other providers
-      ],
-    });
-
-    store = TestBed.get&lt;Store&gt(Store);
-
-    spyOn(store, 'dispatch').and.callThrough();
-
-    fixture = TestBed.createComponent(MyComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should be created', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should dispatch an action to load data when created', () => {
-    const action = DataActions.loadData();
-
-    expect(store.dispatch).toHaveBeenCalledWith(action);
-  });
-
-  it('should dispatch an action to refreshing data', () => {
-    const action = DataActions.refreshData();
-
-    component.onRefresh();
-
-    expect(store.dispatch).toHaveBeenCalledWith(action);
-  });
-
-  it('should display a list of items after the data is loaded', () => {
-    const items = [1, 2, 3];
-    const action = DataActions.loadDataSuccess({ items });
-
-    store.dispatch(action);
-
-    component.items$.subscribe(data => {
-      expect(data.length).toBe(items.length);
-    });
-  });
-});
-</code-example>
+The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking a button dispatches an action that causes the state to be updated with an incremented, decremented, or reset counter value, which is correctly emitted by the selector.
 
 ### Testing selectors
 
