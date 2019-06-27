@@ -1,5 +1,5 @@
 /**
- * Configures an effect creator.  See `createEffect`.
+ * Configures an effect created by `createEffect`.
  */
 export interface EffectConfig {
   /**
