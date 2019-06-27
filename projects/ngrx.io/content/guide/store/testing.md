@@ -16,7 +16,7 @@ Usage:
 <code-example header="auth.guard.spec.ts">
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 
 import { AuthGuard } from '../guards/auth.guard';
