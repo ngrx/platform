@@ -191,18 +191,19 @@ export function on(
 
 /**
  * @description
- * Returns a reducer function to handle state transitions.
+ * Creates a reducer function to handle state transitions.
  *
  * Reducer creators reduce the explicitness of reducer functions with switch statements.
  *
  * @param initialState Provides a state value if the current state is `undefined`, as it is initially.
  * @param ons Associations between actions and state changes.
+ * @returns A reducer function.
  *
  * @usageNotes
  *
- * - Must be used with `ActionCreator`'s (usually returned by `createAction`).  Cannot be used with class-based action creators.
+ * - Must be used with `ActionCreator`'s (returned by `createAction`).  Cannot be used with class-based action creators.
  * - An action type should only be associated with at most one state change function, similar to switch statements.
- *   - In case this is violated, the latest defined associated will be used (the latest `on` function passed).
+ *   - In the case this is violated, the latest defined associated will be used (the latest `on` function passed).
  * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function.
  * This is because [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
  *
@@ -233,7 +234,7 @@ export function on(
  *
  * @NgModule({
  *   imports: [
- *     StoreModule.forRoot({ game: fromFeature.reducer })
+ *     StoreModule.forRoot({ feature: fromFeature.reducer })
  *   ],
  * })
  * export class AppModule {}

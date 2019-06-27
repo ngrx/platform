@@ -27,7 +27,7 @@ export function createAction<
 ): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
 /**
  * @description
- * Returns a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.
+ * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.
  *
  * Action creators reduce the explicitness of class-based action creators.
  *
