@@ -23,7 +23,7 @@ First, define some actions for interacting with a piece of state.
 import { createAction } from '@ngrx/store';
 
 export const homeScore = createAction('[Scoreboard Page] Home Score');
-export const awayScore createAction('[Scoreboard Page] Away Score');
+export const awayScore = createAction('[Scoreboard Page] Away Score');
 export const resetScore = createAction('[Scoreboard Page] Score Reset');
 
 </code-example>
