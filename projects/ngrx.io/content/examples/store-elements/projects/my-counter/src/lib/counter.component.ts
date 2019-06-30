@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-counter',
-  templateUrl: './counter.component.html',
-  styleUrls: ['./counter.component.css']
+  templateUrl: './counter.component.html'
 })
 export class CounterComponent implements OnInit {
 

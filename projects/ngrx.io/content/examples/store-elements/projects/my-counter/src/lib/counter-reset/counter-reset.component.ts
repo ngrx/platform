@@ -4,8 +4,7 @@ import { Reset } from '../counter.actions';
 
 @Component({
   selector: 'app-counter-reset',
-  templateUrl: './counter-reset.component.html',
-  styleUrls: ['./counter-reset.component.css']
+  templateUrl: './counter-reset.component.html'
 })
 export class CounterResetComponent {
 

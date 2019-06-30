@@ -4,8 +4,7 @@ import { Increment } from '../counter.actions';
 
 @Component({
   selector: 'app-counter-increment',
-  templateUrl: './counter-increment.component.html',
-  styleUrls: ['./counter-increment.component.css']
+  templateUrl: './counter-increment.component.html'
 })
 export class CounterIncrementComponent {
 

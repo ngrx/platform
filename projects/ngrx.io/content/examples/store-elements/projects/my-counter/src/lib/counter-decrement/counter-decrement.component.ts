@@ -5,8 +5,7 @@ import { Decrement } from '../counter.actions';
 
 @Component({
   selector: 'app-counter-decrement',
-  templateUrl: './counter-decrement.component.html',
-  styleUrls: ['./counter-decrement.component.css']
+  templateUrl: './counter-decrement.component.html'
 })
 export class CounterDecrementComponent {
 
