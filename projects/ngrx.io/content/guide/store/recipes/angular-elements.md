@@ -2,7 +2,7 @@
 
 ## Creating Angular Elements
 
-The following recipe illustrates utilizing Angular Elements with a NgRx Store. This provides the ability to manage the state of a counter, and to select and display that counter state from within separate Angular Elements. This is all accomplished from within a single Angular Project and static HTML page.
+The following recipe illustrates utilizing  [Angular Elements](https://angular.io/guide/elements) with a NgRx Store. This provides the ability to manage the state of a counter, and to select and display that counter state from within separate Angular Elements. This is all accomplished from within a single Angular Project and static HTML page.
 
 ## Recipe
 
