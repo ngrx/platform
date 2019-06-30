@@ -23,6 +23,7 @@ describe('Store Schematic', () => {
     module: undefined,
     flat: false,
     root: true,
+    skipRuntimeCheck: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -237,5 +238,27 @@ describe('Store Schematic', () => {
     expect(() => {
       schematicRunner.runSchematic('store', options, appTree);
     }).not.toThrow();
+  });
+
+  it('should add store runtime checks', () => {
+    const options = { ...defaultOptions, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(/, runtimeChecks: {/);
+    expect(content).toMatch(/strictStateImmutability: true,/);
+    expect(content).toMatch(/strictActionImmutability: true/);
+  });
+
+  it('should not add store runtime checks', () => {
+    const options = {
+      ...defaultOptions,
+      module: 'app.module.ts',
+      skipRuntimeCheck: true,
+    };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).not.toMatch(/, runtimeChecks: {/);
   });
 });
