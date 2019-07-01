@@ -8,7 +8,7 @@ export interface EffectConfig {
    */
   dispatch?: boolean;
   /**
-   * Determines if the effect will be resubscribed if an error occurs in the main actions stream.
+   * Determines if the effect will be resubscribed to if an error occurs in the main actions stream.
    */
   resubscribeOnError?: boolean;
 }
