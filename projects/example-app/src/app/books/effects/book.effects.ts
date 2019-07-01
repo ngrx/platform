@@ -50,7 +50,7 @@ export class BookEffects {
             takeUntil(nextSearch$),
             map((books: Book[]) => BooksApiActions.searchSuccess({ books })),
             catchError(err =>
-              of(BooksApiActions.searchFailure({ errorMsg: err }))
+              of(BooksApiActions.searchFailure({ errorMsg: err.message }))
             )
           );
         })
