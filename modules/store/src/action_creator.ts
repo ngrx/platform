@@ -31,7 +31,7 @@ export function createAction<
  *
  * Action creators reduce the explicitness of class-based action creators.
  *
- * @param type Describes the action that will be dispatched in your application
+ * @param type Describes the action that will be dispatched
  * @param config Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.
  *
  * @usageNotes
