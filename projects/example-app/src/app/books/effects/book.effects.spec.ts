@@ -61,7 +61,7 @@ describe('BookEffects', () => {
       const completion = BooksApiActions.searchFailure({
         errorMsg: 'Unexpected Error. Try again later.',
       });
-      const error = 'Unexpected Error. Try again later.';
+      const error = { message: 'Unexpected Error. Try again later.' };
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-#|', {}, error);
