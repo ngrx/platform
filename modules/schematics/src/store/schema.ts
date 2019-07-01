@@ -39,8 +39,4 @@ export interface Schema {
    * Specifies the interface for the state
    */
   stateInterface?: string;
-  /**
-   * Flag to skip the store runtime checks
-   */
-  skipRuntimeCheck?: boolean;
 }

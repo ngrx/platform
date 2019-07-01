@@ -54,11 +54,6 @@
       "default": "State",
       "description": "Specifies the interface for the state.",
       "alias": "si"
-    },
-    "skipRuntimeCheck": {
-      "type": "boolean",
-      "default": false,
-      "description": "Flag to skip the store runtime checks"
     }
   },
   "required": []

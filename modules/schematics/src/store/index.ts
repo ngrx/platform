@@ -28,15 +28,6 @@ import {
 } from '@ngrx/schematics/schematics-core';
 import { Schema as StoreOptions } from './schema';
 
-function addRuntimeChecks(skipRuntimeChecks?: boolean) {
-  return skipRuntimeChecks
-    ? ''
-    : `, runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-    }`;
-}
-
 function addImportToNgModule(options: StoreOptions): Rule {
   return (host: Tree) => {
     const modulePath = options.module;
@@ -70,13 +61,16 @@ function addImportToNgModule(options: StoreOptions): Rule {
       `${options.path}/environments/environment`
     );
 
+    const runtimeChecks = `runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+    }`;
+
     const storeNgModuleImport = addImportToModule(
       source,
       modulePath,
       options.root
-        ? `StoreModule.forRoot(reducers, { metaReducers${addRuntimeChecks(
-            options.skipRuntimeCheck
-          )} })`
+        ? `StoreModule.forRoot(reducers, { metaReducers, ${runtimeChecks} })`
         : `StoreModule.forFeature('${stringUtils.camelize(
             options.name
           )}', from${stringUtils.classify(
