@@ -61,11 +61,16 @@ function addImportToNgModule(options: StoreOptions): Rule {
       `${options.path}/environments/environment`
     );
 
+    const runtimeChecks = `runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+    }`;
+
     const storeNgModuleImport = addImportToModule(
       source,
       modulePath,
       options.root
-        ? `StoreModule.forRoot(reducers, { metaReducers })`
+        ? `StoreModule.forRoot(reducers, { metaReducers, ${runtimeChecks} })`
         : `StoreModule.forFeature('${stringUtils.camelize(
             options.name
           )}', from${stringUtils.classify(
