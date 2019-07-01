@@ -238,4 +238,14 @@ describe('Store Schematic', () => {
       schematicRunner.runSchematic('store', options, appTree);
     }).not.toThrow();
   });
+
+  it('should add store runtime checks', () => {
+    const options = { ...defaultOptions, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(/, runtimeChecks: {/);
+    expect(content).toMatch(/strictStateImmutability: true,/);
+    expect(content).toMatch(/strictActionImmutability: true/);
+  });
 });
