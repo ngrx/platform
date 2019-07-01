@@ -49,6 +49,13 @@ export function createAction<
  *   props<{ user: User }>()
  * );
  * ```
+ * With a function:
+ * ```ts
+ * export const loginSuccess = createAction(
+ *   '[Auth/API] Login Success',
+ *   (response: Response) => response.user
+ * );
+ * ```
  *
  * **Dispatching an action**
  *
@@ -78,6 +85,16 @@ export function createAction<
  * Using a reducer creator:
  * ```ts
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+ * ```
+ *
+ *  **Referencing an action in an effect**
+ * ```ts
+ * effectName$ = createEffect(
+ *   () => this.actions$.pipe(
+ *     ofType(AuthApiActions.loginSuccess),
+ *     // ...
+ *   )
+ * );
  * ```
  */
 export function createAction<T extends string, C extends Creator>(
