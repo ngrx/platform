@@ -73,8 +73,7 @@ const scoreboardReducer = createReducer(
   initialState,
   on(ScoreboardPageActions.homeScore, state => ({ ...state, home: state.home + 1 })),
   on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
-  on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 })),
-  on(ScoreboardPageActions.setScores, (state, { scores }) => ({ home: scores.home, away: scores.away }))
+  on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 }))
 );
 
 export function reducer(state: State | undefined, action: Action) {
@@ -88,7 +87,8 @@ export function reducer(state: State | undefined, action: Action) {
 
 </div>
 
-In the example above, the reducer is handling 4 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, `[Scoreboard Page] Score Reset`, and `[Scoreboard Page] Set Scores`. Each action is strongly-typed. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+In the example above, the reducer is handling 3 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score` and `[Scoreboard Page] Score Reset`. Each action is strongly-typed. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
+
 
 <div class="alert is-important">
 
@@ -103,6 +103,30 @@ When an action is dispatched, _all registered reducers_ receive the action. Whet
 **Note:** You can also write reducers using switch statements, which was the previously defined way before reducer creators were introduced in NgRx. If you are looking for examples of reducers using switch statements, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/reducers).
 
 </div>
+
+### Using createReducer
+
+`createReducer` is a function that handles state transitions while reducing the explicitness of reducer functions with switch statements. It takes in 2 parameters of `initialState` and `ons`. `initialState` provides a state value if the current state is undefined while `ons` are associations between actions and state changes. Each `on` takes in an action and a handler that can accept an optional second argument for `props`. You can access each actions `props` through deconstruction.
+
+
+<code-example header="scoreboard.reducer.ts">
+  on(ScoreboardPageActions.setScores, (state, { game }) => ({ home: game.home, away: game.away }))
+</code-example>
+
+
+<div class="alert is-important">
+
+**Note:** Must be used with `ActionCreator's` (returned by `createAction`) and cannot be used with class-based action creators.
+
+
+</div>
+
+<div class="alert is-important">
+
+**Note:** An action type should only be associated with at most one state change function, similar to switch statements.
+
+</div>
+
 
 ## Registering root state
 
