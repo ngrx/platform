@@ -58,6 +58,12 @@ When used with the `--module` option, it registers an effect within the `Angular
   - Type: `boolean`
   - Default: `false`
 
+Only provide minimal setup for the root effects setup. Only registers `EffectsModule.forRoot()` in the provided module with an empty array.
+
+- `--minimal`
+  - Type: `boolean`
+  - Default: `false`
+
 Specifies if effect has api success and failure actions wired up.
 
 - `--api`

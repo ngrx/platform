@@ -42,10 +42,13 @@ export {
   META_REDUCERS,
   FEATURE_REDUCERS,
   USER_PROVIDED_META_REDUCERS,
+  USER_RUNTIME_CHECKS,
 } from './tokens';
 export {
   StoreModule,
   StoreRootModule,
   StoreFeatureModule,
+  RootStoreConfig,
+  StoreConfig,
 } from './store_module';
 export { on, createReducer } from './reducer_creator';

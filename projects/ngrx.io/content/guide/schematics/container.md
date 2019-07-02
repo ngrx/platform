@@ -35,6 +35,13 @@ Provide the name of the interface exported for your state interface
   - Type: `string`
   - Default: `State`
 
+Specifies whether to create a unit test or an integration test
+
+- `--testDepth`
+  - Type: `string`
+  - Values: `unit|integration`
+  - Default: `integration`
+
 ## Examples
 
 Generate a `UsersPage` container component with your reducers imported and the `Store` typed a custom interface named `MyState`.

@@ -30,6 +30,14 @@
               "https://www.youtube.com/playlist?list=PL8OUS498tQP3FFsZzULTGnbyIcILFjHd3",
             "rev": true
           },
+          "angular-connect-2018": {
+            "title": "You might not need NgRx by Mike Ryan at AngularConnect 2018",
+            "desc":
+              "Mike Ryan talk about the benefits and complexity of NgRx, and introducing the SHARI principle",
+            "url":
+              "https://www.youtube.com/playlist?list=PL8OUS498tQP3FFsZzULTGnbyIcILFjHd3",
+            "rev": true
+          },
           "international-javascript-conference-london-2019": {
             "title": "State Management in Angular with NgRx Stores and Effects at iJS London 2019",
             "desc": "Overview of how to use NgRx stores and effects in an Angular application by Fabian Gosebrink",

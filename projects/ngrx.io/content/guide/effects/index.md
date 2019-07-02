@@ -76,7 +76,7 @@ Effects handle external data and interactions, allowing your services to be less
   `
 })
 export class MoviesPageComponent {
-  movies$: Observable<Movie[]> = this.store.select(state => state.movies);
+  movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
 
   constructor(private store: Store&lt;{ movies: Movie[] }&gt;) {}
 
@@ -104,7 +104,7 @@ To show how you handle loading movies from the example above, let's look at `Mov
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { MoviesService } from './movies.service';
@@ -150,7 +150,7 @@ Effects are built on top of observable streams provided by RxJS. Effects are lis
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { MoviesService } from './movies.service';
@@ -322,4 +322,4 @@ export class CollectionEffects {
 
 </div>
 
-To learn about testing effects that incorporate state, see the [Effects that use State](guide/effects/testing#effects-that-use-state) section in the testing guide.
+To learn about testing effects that incorporate state, see the [Effects that use State](guide/effects/testing#effect-that-uses-state) section in the testing guide.

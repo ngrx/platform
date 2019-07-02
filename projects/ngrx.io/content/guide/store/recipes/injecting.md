@@ -43,7 +43,7 @@ export function getReducers(): ActionReducerMap&lt;fromFeature.State&gt; {
 }
 
 @NgModule({
-  imports: [StoreModule.forFeature('feature', FEATURE_REDUCER_TOKEN)],
+  imports: [StoreModule.forFeature(fromFeature.featureKey, FEATURE_REDUCER_TOKEN)],
   providers: [
     {
       provide: FEATURE_REDUCER_TOKEN,
@@ -77,11 +77,22 @@ export function getMetaReducers(
       provide: META_REDUCERS,
       deps: [SomeService],
       useFactory: getMetaReducers,
+      multi: true,
     },
   ],
 })
 export class AppModule {}
 </code-example>
+
+<div class="alert is-important">
+
+Careful attention should be called to the use of the `multi` 
+property in the provider here for `META_REDUCERS`. As this injection token may be utilized 
+by many libraries concurrently, specifying `multi: true` is critical to ensuring that all 
+library meta reducers are applied to any project that consumes multiple NgRx libraries with 
+registered meta reducers.
+
+</div>
 
 
 ## Injecting Feature Config
@@ -99,11 +110,17 @@ export const FEATURE_CONFIG_TOKEN = new InjectionToken&lt;StoreConfig&lt;fromFea
 
 export function getConfig(someService: SomeService): StoreConfig&lt;fromFeature.State&gt; {
   // return the config synchronously.
-  return {initialState: someService.getInitialState()};
+  return {
+    initialState: someService.getInitialState(),
+
+    metaReducers: [
+      fromFeature.loggerFactory(someService.loggerConfig())
+    ]
+  };
 }
 
 @NgModule({
-  imports: [StoreModule.forFeature('feature', fromFeature.reducers, FEATURE_CONFIG_TOKEN)],
+  imports: [StoreModule.forFeature(fromFeature.featureKey, fromFeature.reducers, FEATURE_CONFIG_TOKEN)],
   providers: [
     {
       provide: FEATURE_CONFIG_TOKEN,

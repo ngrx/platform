@@ -25,7 +25,7 @@ import { InjectionToken } from '@angular/core';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  layout: fromLayout.State;
+  [fromLayout.layoutFeatureKey]: fromLayout.State;
   router: fromRouter.RouterReducerState<any>;
 }
 
@@ -38,7 +38,7 @@ export const ROOT_REDUCERS = new InjectionToken<
   ActionReducerMap<State, Action>
 >('Root reducers token', {
   factory: () => ({
-    layout: fromLayout.reducer,
+    [fromLayout.layoutFeatureKey]: fromLayout.reducer,
     router: fromRouter.routerReducer,
   }),
 });

@@ -10,22 +10,24 @@ import * as fromBooks from '@example-app/books/reducers/books.reducer';
 import * as fromCollection from '@example-app/books/reducers/collection.reducer';
 import * as fromRoot from '@example-app/reducers';
 
+export const booksFeatureKey = 'books';
+
 export interface BooksState {
-  search: fromSearch.State;
-  books: fromBooks.State;
-  collection: fromCollection.State;
+  [fromSearch.searchFeatureKey]: fromSearch.State;
+  [fromBooks.booksFeatureKey]: fromBooks.State;
+  [fromCollection.collectionFeatureKey]: fromCollection.State;
 }
 
 export interface State extends fromRoot.State {
-  books: BooksState;
+  [booksFeatureKey]: BooksState;
 }
 
 /** Provide reducer in AoT-compilation happy way */
 export function reducers(state: BooksState | undefined, action: Action) {
   return combineReducers({
-    search: fromSearch.reducer,
-    books: fromBooks.reducer,
-    collection: fromCollection.reducer,
+    [fromSearch.searchFeatureKey]: fromSearch.reducer,
+    [fromBooks.booksFeatureKey]: fromBooks.reducer,
+    [fromCollection.collectionFeatureKey]: fromCollection.reducer,
   })(state, action);
 }
 
@@ -49,7 +51,9 @@ export function reducers(state: BooksState | undefined, action: Action) {
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
  */
-export const getBooksState = createFeatureSelector<State, BooksState>('books');
+export const getBooksState = createFeatureSelector<State, BooksState>(
+  booksFeatureKey
+);
 
 /**
  * Every reducer module exports selector functions, however child reducers

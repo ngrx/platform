@@ -11,7 +11,6 @@ import {
   mergeWith,
   move,
   noop,
-  template,
   url,
 } from '@angular-devkit/schematics';
 import {
@@ -74,13 +73,22 @@ function addImportToNgModule(options: EffectOptions): Rule {
       effectsName,
       relativePath
     );
+
+    const effectsSetup =
+      options.root && options.minimal ? `[]` : `[${effectsName}]`;
     const [effectsNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `EffectsModule.for${options.root ? 'Root' : 'Feature'}([${effectsName}])`,
+      `EffectsModule.for${options.root ? 'Root' : 'Feature'}(${effectsSetup})`,
       relativePath
     );
-    const changes = [effectsModuleImport, effectsImport, effectsNgModuleImport];
+
+    let changes = [effectsModuleImport, effectsNgModuleImport];
+
+    if (!options.root || (options.root && !options.minimal)) {
+      changes = changes.concat([effectsImport]);
+    }
+
     const recorder = host.beginUpdate(modulePath);
     for (const change of changes) {
       if (change instanceof InsertChange) {
@@ -116,7 +124,7 @@ export default function(options: EffectOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
-    const parsedPath = parseName(options.path, options.name);
+    const parsedPath = parseName(options.path, options.name || '');
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
@@ -124,6 +132,7 @@ export default function(options: EffectOptions): Rule {
       options.spec
         ? noop()
         : filter(path => !path.endsWith('.spec.ts.template')),
+      options.root && options.minimal ? filter(_ => false) : noop(),
       applyTemplates({
         ...stringUtils,
         'if-flat': (s: string) =>

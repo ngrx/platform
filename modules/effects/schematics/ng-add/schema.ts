@@ -7,4 +7,8 @@ export interface Schema {
   project?: string;
   module?: string;
   group?: boolean;
+  /**
+   * Setup root effects module without registering initial effects.
+   */
+  minimal?: boolean;
 }

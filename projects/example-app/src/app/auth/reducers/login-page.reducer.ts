@@ -1,6 +1,8 @@
 import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
 import { createReducer, on } from '@ngrx/store';
 
+export const loginPageFeatureKey = 'loginPage';
+
 export interface State {
   error: string | null;
   pending: boolean;

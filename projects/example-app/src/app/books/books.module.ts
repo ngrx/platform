@@ -20,7 +20,7 @@ import {
 } from '@example-app/books/containers';
 import { BookEffects, CollectionEffects } from '@example-app/books/effects';
 
-import { reducers } from '@example-app/books/reducers';
+import * as fromBooks from '@example-app/books/reducers';
 import { MaterialModule } from '@example-app/material';
 import { PipesModule } from '@example-app/shared/pipes';
 
@@ -51,7 +51,7 @@ export const CONTAINERS = [
      * eagerly or lazily and will be dynamically added to
      * the existing state.
      */
-    StoreModule.forFeature('books', reducers),
+    StoreModule.forFeature(fromBooks.booksFeatureKey, fromBooks.reducers),
 
     /**
      * Effects.forFeature is used to register effects
