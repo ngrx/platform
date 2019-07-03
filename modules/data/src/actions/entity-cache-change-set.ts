@@ -85,7 +85,7 @@ export class ChangeSetItemFactory {
   }
 
   /** Create the ChangeSetUpdate for Updates of entities of the given entity type */
-  update<T extends { id: string }>(
+  update<T extends { id: string | number }>(
     entityName: string,
     updates: Update<T> | Update<T>[]
   ): ChangeSetUpdate<T> {
