@@ -11,7 +11,7 @@ import {
   createAppModuleWithEffects,
 } from '../../../schematics-core/testing';
 
-describe('Effect ng-add Schematic', () => {
+describe('Effects ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/effects',
     path.join(__dirname, '../collection.json')
@@ -64,6 +64,34 @@ describe('Effect ng-add Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/foo/foo.effects.ts`)
     ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should not create an effect if the minimal flag is provided', () => {
+    const options = { ...defaultOptions, minimal: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const files = tree.files;
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+
+    expect(content).toMatch(/EffectsModule\.forRoot\(\[\]\)/);
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo/foo.effects.spec.ts`)
+    ).toBe(-1);
+    expect(files.indexOf(`${projectPath}/src/app/foo/foo.effects.ts`)).toBe(-1);
+  });
+
+  it('should not import an effect into a specified module in the minimal flag is provided', () => {
+    const options = {
+      ...defaultOptions,
+      minimal: true,
+      module: 'app.module.ts',
+    };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).not.toMatch(
+      /import { FooEffects } from '.\/foo\/foo.effects'/
+    );
   });
 
   it('should be provided by default', () => {
