@@ -57,17 +57,19 @@ describe('Store ng-add Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should be provided by default', () => {
-    const options = { ...defaultOptions };
+  it('should skip the initial store setup files if the minimal flag is provided', () => {
+    const options = { ...defaultOptions, minimal: true };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(
+    const files = tree.files;
+
+    expect(content).not.toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
     );
-    expect(content).toMatch(
-      /StoreModule.forRoot\(reducers, { metaReducers }\)/
-    );
+    expect(content).toMatch(/StoreModule.forRoot\({}/);
+
+    expect(files.indexOf(`${projectPath}/src/app/reducers/index.ts`)).toBe(-1);
   });
 
   it('should import into a specified module', () => {
@@ -127,5 +129,16 @@ describe('Store ng-add Schematic', () => {
     );
 
     expect(content).toMatch(/export interface AppState {/);
+  });
+
+  it('should add runtime checks by default', () => {
+    const options = { ...defaultOptions, module: 'app.module.ts' };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+
+    expect(content).toMatch(/runtimeChecks: {/);
+    expect(content).toMatch(/strictStateImmutability: true,/);
+    expect(content).toMatch(/strictActionImmutability: true/);
   });
 });
