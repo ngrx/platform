@@ -48,6 +48,12 @@
       "default": false,
       "description": "Group effects file within 'effects' folder",
       "aliases": ["g"]
+    },
+    "minimal": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Setup root effects module without registering initial effects."
     }
   },
   "required": []
