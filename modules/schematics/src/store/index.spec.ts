@@ -45,6 +45,48 @@ describe('Store Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
+  it('should skip the initial store setup files if the minimal flag is provided', async () => {
+    const options = {
+      ...defaultOptions,
+      module: 'app.module.ts',
+      minimal: true,
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('store', options, appTree)
+      .toPromise();
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const files = tree.files;
+
+    expect(content).not.toMatch(
+      /import { reducers, metaReducers } from '\.\/reducers';/
+    );
+    expect(content).toMatch(/StoreModule.forRoot\({}/);
+
+    expect(files.indexOf(`${projectPath}/src/app/reducers/index.ts`)).toBe(-1);
+  });
+
+  it('should not skip the initial store setup files if the minimal flag is provided with a feature', async () => {
+    const options = {
+      ...defaultOptions,
+      root: false,
+      module: 'app.module.ts',
+      minimal: true,
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('store', options, appTree)
+      .toPromise();
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+
+    expect(content).toMatch(
+      /StoreModule\.forFeature\('foo', fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
+    );
+    expect(
+      tree.files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
   it('should create the initial store to specified project if provided', () => {
     const options = {
       ...defaultOptions,
@@ -154,6 +196,7 @@ describe('Store Schematic', () => {
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+
     expect(content).toMatch(
       /StoreModule\.forFeature\('foo', fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
     );
@@ -244,7 +287,7 @@ describe('Store Schematic', () => {
 
     const tree = schematicRunner.runSchematic('store', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(/, runtimeChecks: {/);
+    expect(content).toMatch(/runtimeChecks: {/);
     expect(content).toMatch(/strictStateImmutability: true,/);
     expect(content).toMatch(/strictActionImmutability: true/);
   });
