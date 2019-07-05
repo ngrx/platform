@@ -38,6 +38,12 @@ When used with the `--module` option, it registers the state within the `Angular
   - Type: `boolean`
   - Default: `false`
 
+Only provide minimal setup for the root state management. Only registers `StoreModule.forRoot()` in the provided module with an empty object, and default runtime checks.
+
+- `--minimal`
+  - Type: `boolean`
+  - Default: `false`
+
 Provide the folder where the state files will be created.
 
 - `--statePath`
