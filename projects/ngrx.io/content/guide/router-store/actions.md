@@ -10,13 +10,13 @@ Success case:
 - `ROUTER_NAVIGATION`
 - `ROUTER_NAVIGATED`
 
-Error / Cancel case (with early Navigation Action Timing:
+Error / Cancel case (with early Navigation Action Timing):
 
 - `ROUTER_REQUEST`
 - `ROUTER_NAVIGATION`
 - `ROUTER_CANCEL` / `ROUTER_ERROR`
 
-Error / Cancel case (with late Navigation Action Timing:
+Error / Cancel case (with late Navigation Action Timing):
 
 - `ROUTER_REQUEST`
 - `ROUTER_CANCEL` / `ROUTER_ERROR`
