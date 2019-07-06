@@ -2,9 +2,9 @@
 
 NgRx is a framework for building reactive applications in Angular. NgRx provides state management, isolation of side effects, entity collection management, router bindings, code generation, and developer tools that enhance developers experience when building many different types of applications.
 
-## Why NgRx?
+## Why NgRx for State Management?
 
-NgRx is built for creating maintainable explicit applications, by storing single state and the use of actions in order to express state changes.
+NgRx provides state management for creating maintainable explicit applications, by storing single state and the use of actions in order to express state changes.
 
 
 ### Serializability
@@ -24,30 +24,30 @@ Using NgRx [Effects](guide/effects) and [Store](guide/store), any interaction wi
 
 ### Testable
 
-Since NgRx is mostly based on pure functions like `selectors` and `reducers`, plus the ability to isolate side effects from the UI, testing becomes very straightforward.
+Because [Store](guide/store) uses pure functions for changing state and selecting data from state, and the ability to isolate side effects from the UI, testing becomes very straightforward.
 NgRx also provides tests setup like `provideMockStore` and `provideMockActions` for isolated tests, and a better test experience.
 
 ### Performance
 
-NgRx is built on a single immutable data state, making change detection turn into a very easy task, which means [`OnPush`](https://angular.io/api/core/ChangeDetectionStrategy#OnPush) strategy becomes available.
+[Store](guide/store) is built on a single immutable data state, making change detection turn into a very easy task using an [`OnPush`](https://angular.io/api/core/ChangeDetectionStrategy#OnPush) strategy.
 NgRx is also powered by memoized selector functions which optimize state query computations.
 
-## When Should I use NgRx
+## When Should I Use NgRx for State Management
 
 In particular, you might use NgRx when you build an application with a lot of user interactions and multiple data sources, when managing state in services are no longer sufficient.
 
 A good substance that might answer the question "Do I need NgRx", is the 
 <a href="https://youtu.be/omnwu_etHTY" target="_blank">**SHARI**</a> principle:
 
-* **S**hared state is accessed by many components and services
+* **S**hared: state that is accessed by many components and services.
 
-* **H**ydrated  state that is persisted and and hydrated from storage
+* **H**ydrated: state that is persisted and rehydrated from external storage.
 
-* **A**vailable state that needs to be available when re-entering routes
+* **A**vailable: state that needs to be available when re-entering routes.
 
-* **R**etrieved state that needs to be available when re-entering routes
+* **R**etrieved: state that must be retrieved with a side-effect.
 
-* **I**mpacted state that is impacted by actions from other sources
+* **I**mpacted: state that is impacted by actions from other sources.
 
 
 However, realizing that using NgRx comes with some tradeoffs is also crucial. It is not meant to be the shortest or quickest way to write code and encourage its users the usage of many files.
