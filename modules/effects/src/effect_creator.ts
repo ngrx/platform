@@ -5,7 +5,9 @@ import { EffectMetadata, EffectConfig } from './models';
 const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
 
 type DispatchType<T> = T extends { dispatch: infer U } ? U : unknown;
-type ReturnType<T> = T extends false ? Observable<unknown> : Observable<Action>;
+type ObservableReturnType<T> = T extends false
+  ? Observable<unknown>
+  : Observable<Action>;
 /**
  * @description
  * Creates an effect from an `Observable` and an `EffectConfig`.
@@ -41,7 +43,7 @@ type ReturnType<T> = T extends false ? Observable<unknown> : Observable<Action>;
 export function createEffect<
   C extends EffectConfig,
   T extends DispatchType<C>,
-  O extends ReturnType<T>,
+  O extends ObservableReturnType<T>,
   R extends O | ((...args: any[]) => O)
 >(source: () => R, config?: Partial<C>): R {
   const effect = source();
