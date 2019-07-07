@@ -224,20 +224,6 @@ export function on(
  *   return featureReducer(state, action);
  * }
  * ```
- *
- * **Registering reducer functions**
- *
- * ```ts
- * import { NgModule } from '@angular/core';
- * import { StoreModule } from '@ngrx/store';
- * import * as fromFeature from './reducers/feature.reducer';
- *
- * @NgModule({
- *   imports: [
- *     StoreModule.forRoot({ feature: fromFeature.reducer })
- *   ],
- * })
- * export class AppModule {}
  */
 export function createReducer<S>(
   initialState: S,
