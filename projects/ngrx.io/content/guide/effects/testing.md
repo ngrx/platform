@@ -60,7 +60,7 @@ Testing Effects via marble diagrams is particularly useful when the Effect is ti
 
 <div class="alert is-helpful">
 
-For a detailed look on the marble syntax, see [Writing marble tests](https://github.com/ReactiveX/rxjs/blob/master/doc/writing-marble-tests.md).
+For a detailed look on the marble syntax, see [Writing marble tests](https://rxjs.dev/guide/testing/marble-testing).
 
 The `hot`, `cold`, and `toBeObservable` functions are imported from [`jasmine-marbles`](https://www.npmjs.com/package/jasmine-marbles).
 
@@ -151,6 +151,9 @@ An example of this is to verify we navigate to the correct page.
 <code-example header="my.effects.spec.ts">
 it('should navigate to the customers detail page', () => {
   actions$ = of({ type: 'SELECT CUSTOMER', name: 'Bob' });
+  
+  // create a spy to verify the navigation will be called
+  spyOn(router, 'navigateByUrl');
 
   // subscribe to execute the Effect
   effects.selectCustomer$.subscribe();
