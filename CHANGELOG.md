@@ -1,3 +1,22 @@
+<a name="8.1.0"></a>
+
+# [8.1.0](https://github.com/ngrx/platform/compare/8.0.1...8.1.0) (2019-07-09)
+
+### Bug Fixes
+
+- **data:** allow ChangeSetItemFactory to update entities with number ids ([#1995](https://github.com/ngrx/platform/issues/1995)) ([f11c7b2](https://github.com/ngrx/platform/commit/f11c7b2)), closes [#1988](https://github.com/ngrx/platform/issues/1988)
+- **data:** search for replacements in all files when using ng-add ([#1971](https://github.com/ngrx/platform/issues/1971)) ([30ce2c6](https://github.com/ngrx/platform/commit/30ce2c6))
+- **store:** add immutability check for IE compatibility ([#1997](https://github.com/ngrx/platform/issues/1997)) ([11c0864](https://github.com/ngrx/platform/commit/11c0864)), closes [#1991](https://github.com/ngrx/platform/issues/1991)
+- **store:** fix typo in runtime checks injection token description ([#1975](https://github.com/ngrx/platform/issues/1975)) ([125d950](https://github.com/ngrx/platform/commit/125d950)), closes [#1972](https://github.com/ngrx/platform/issues/1972)
+
+### Features
+
+- **effects:** add support for minimal setup option for ng-add ([e839568](https://github.com/ngrx/platform/commit/e839568))
+- **effects:** export EffectConfig and add docs ([6a4bbcf](https://github.com/ngrx/platform/commit/6a4bbcf))
+- **schematics:** add support for minimal setup option for store and effects ([cede393](https://github.com/ngrx/platform/commit/cede393))
+- **schematics:** enable immutability checks for root store by default ([#1983](https://github.com/ngrx/platform/issues/1983)) ([2b8178d](https://github.com/ngrx/platform/commit/2b8178d)), closes [#1950](https://github.com/ngrx/platform/issues/1950)
+- **store:** add support for minimal setup option for ng-add ([12202a7](https://github.com/ngrx/platform/commit/12202a7))
+
 <a name="8.0.1"></a>
 
 ## [8.0.1](https://github.com/ngrx/platform/compare/8.0.0...8.0.1) (2019-06-10)
