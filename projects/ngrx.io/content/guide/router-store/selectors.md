@@ -12,7 +12,7 @@ Usage:
 `reducers/index.ts`
 
 ```ts
-import { getSelectors, RouterReducerState } from '@ngrx/router-store';
+import * as fromRouter from '@ngrx/router-store';
 
 export interface State {
   router: fromRouter.RouterReducerState<any>;
@@ -28,6 +28,6 @@ const {
   selectRouteParams,    // select the current route params
   selectRouteData,      // select the current route data
   selectUrl,            // select the current url
-} = getSelectors(selectRouter);
+} = fromRouter.getSelectors(selectRouter);
 
 ```
