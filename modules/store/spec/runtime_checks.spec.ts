@@ -1,8 +1,9 @@
 import * as ngCore from '@angular/core';
 import { TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { Store, StoreModule, META_REDUCERS } from '..';
+import { Store, StoreModule, META_REDUCERS, USER_RUNTIME_CHECKS } from '..';
 import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks } from '../src/models';
+import * as metaReducers from '../src/meta-reducers';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
@@ -65,6 +66,77 @@ describe('Runtime checks:', () => {
         strictActionImmutability: false,
         strictStateImmutability: false,
       });
+    });
+  });
+
+  describe('USER_RUNTIME_CHECKS Token', () => {
+    it('should be possible to toggle runtime reducers via the Injection Token', () => {
+      const serializationCheckMetaReducerSpy = spyOn(
+        metaReducers,
+        'serializationCheckMetaReducer'
+      ).and.callThrough();
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({})],
+        providers: [
+          {
+            provide: USER_RUNTIME_CHECKS,
+            useValue: {
+              strictStateSerializability: true,
+            },
+          },
+        ],
+      });
+
+      const _store = TestBed.get<Store<any>>(Store);
+      expect(serializationCheckMetaReducerSpy).toHaveBeenCalled();
+    });
+
+    it('should not create a meta reducer if not desired', () => {
+      const serializationCheckMetaReducerSpy = spyOn(
+        metaReducers,
+        'serializationCheckMetaReducer'
+      ).and.callThrough();
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({})],
+        providers: [
+          {
+            provide: USER_RUNTIME_CHECKS,
+            useValue: {
+              strictStateSerializability: false,
+            },
+          },
+        ],
+      });
+
+      const _store = TestBed.get<Store<any>>(Store);
+      expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not create a meta reducer without config', () => {
+      const serializationCheckMetaReducerSpy = spyOn(
+        metaReducers,
+        'serializationCheckMetaReducer'
+      ).and.callThrough();
+      const immutabilityCheckMetaReducerSpy = spyOn(
+        metaReducers,
+        'immutabilityCheckMetaReducer'
+      ).and.callThrough();
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({})],
+        providers: [
+          {
+            provide: USER_RUNTIME_CHECKS,
+            useValue: {},
+          },
+        ],
+      });
+
+      const _store = TestBed.get<Store<any>>(Store);
+      expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
+      expect(immutabilityCheckMetaReducerSpy).not.toHaveBeenCalled();
     });
   });
 
