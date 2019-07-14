@@ -93,8 +93,11 @@ export function addReducerToStateInterface(
     ? stringUtils.pluralize(options.name)
     : stringUtils.camelize(options.name);
 
-  const keyInsert =
-    state + ': from' + stringUtils.classify(options.name) + '.State;';
+  const keyInsert = `[from${stringUtils.classify(
+    options.name
+  )}.${stringUtils.camelize(state)}FeatureKey]: from${stringUtils.classify(
+    options.name
+  )}.State;`;
   const expr = node as any;
   let position;
   let toInsert;
@@ -156,8 +159,11 @@ export function addReducerToActionReducerMap(
     ? stringUtils.pluralize(options.name)
     : stringUtils.camelize(options.name);
 
-  const keyInsert =
-    state + ': from' + stringUtils.classify(options.name) + '.reducer,';
+  const keyInsert = `[from${stringUtils.classify(
+    options.name
+  )}.${stringUtils.camelize(state)}FeatureKey]: from${stringUtils.classify(
+    options.name
+  )}.reducer,`;
   const expr = node as any;
   let position;
   let toInsert;
