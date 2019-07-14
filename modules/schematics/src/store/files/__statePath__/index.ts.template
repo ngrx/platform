@@ -6,6 +6,8 @@ import {
   MetaReducer
 } from '@ngrx/store';
 <% if (!isLib) { %>import { environment } from '<%= environmentsPath %>';<% } %>
+<% if (!root) { %>
+export const <%= camelize(name) %>FeatureKey = '<%= camelize(name) %>';<% } %>
 
 export interface <%= classify(stateInterface) %> {
 

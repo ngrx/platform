@@ -82,9 +82,11 @@ function addImportToNgModule(options: StoreOptions): Rule {
       modulePath,
       options.root
         ? `StoreModule.forRoot(${rootStoreReducers}, ${rootStoreConfig})`
-        : `StoreModule.forFeature('${stringUtils.camelize(
+        : `StoreModule.forFeature(from${stringUtils.classify(
             options.name
-          )}', from${stringUtils.classify(
+          )}.${stringUtils.camelize(
+            options.name
+          )}FeatureKey, from${stringUtils.classify(
             options.name
           )}.reducers, { metaReducers: from${stringUtils.classify(
             options.name

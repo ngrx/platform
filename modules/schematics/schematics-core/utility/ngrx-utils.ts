@@ -227,12 +227,17 @@ export function addReducerImportToNgModule(options: any): Rule {
       relativePath,
       true
     );
+    const state = options.plural
+      ? stringUtils.pluralize(options.name)
+      : stringUtils.camelize(options.name);
     const [storeNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `StoreModule.forFeature('${stringUtils.camelize(
+      `StoreModule.forFeature(from${stringUtils.classify(
         options.name
-      )}', from${stringUtils.classify(options.name)}.reducer)`,
+      )}.${state}FeatureKey, from${stringUtils.classify(
+        options.name
+      )}.reducer)`,
       relativePath
     );
     const changes = [...commonImports, reducerImport, storeNgModuleImport];
