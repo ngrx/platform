@@ -80,7 +80,7 @@ describe('Store Schematic', () => {
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
     expect(content).toMatch(
-      /StoreModule\.forFeature\('foo', fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
+      /StoreModule\.forFeature\(fromFoo.fooFeatureKey, fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
     );
     expect(
       tree.files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
@@ -198,7 +198,7 @@ describe('Store Schematic', () => {
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
     expect(content).toMatch(
-      /StoreModule\.forFeature\('foo', fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
+      /StoreModule\.forFeature\(fromFoo.fooFeatureKey, fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
     );
   });
 
@@ -280,6 +280,26 @@ describe('Store Schematic', () => {
     expect(() => {
       schematicRunner.runSchematic('store', options, appTree);
     }).not.toThrow();
+  });
+
+  it('should add a feature key if not root', () => {
+    const options = { ...defaultOptions, root: false };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
+    expect(content).toMatch(/fooFeatureKey = 'foo'/);
+  });
+
+  it('should not add a feature key if root', () => {
+    const options = { ...defaultOptions };
+
+    const tree = schematicRunner.runSchematic('store', options, appTree);
+    const content = tree.readContent(
+      `${projectPath}/src/app/reducers/index.ts`
+    );
+    expect(content).not.toMatch(/fooFeatureKey = 'foo'/);
   });
 
   it('should add store runtime checks', () => {
