@@ -46,7 +46,7 @@ search$ = createEffect(() => ({
 </code-example>
 
 <code-example header="my.effects.spec.ts">
-effects.searchCustomers$({
+effects.search$({
   debounce: 30,
   scheduler: getTestScheduler(),
 });
