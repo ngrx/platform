@@ -147,6 +147,7 @@ export function addReducerToActionReducerMap(
 
       return { initializer: variable.initializer, type };
     })
+    .filter(initWithType => initWithType.type !== undefined)
     .find(({ type }) => type.typeName.text === 'ActionReducerMap');
 
   if (!actionReducerMap || !actionReducerMap.initializer) {
