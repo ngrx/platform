@@ -43,7 +43,7 @@ export function getReducers(): ActionReducerMap&lt;fromFeature.State&gt; {
 }
 
 @NgModule({
-  imports: [StoreModule.forFeature('feature', FEATURE_REDUCER_TOKEN)],
+  imports: [StoreModule.forFeature(fromFeature.featureKey, FEATURE_REDUCER_TOKEN)],
   providers: [
     {
       provide: FEATURE_REDUCER_TOKEN,
@@ -114,7 +114,7 @@ export function getConfig(someService: SomeService): StoreConfig&lt;fromFeature.
 }
 
 @NgModule({
-  imports: [StoreModule.forFeature('feature', fromFeature.reducers, FEATURE_CONFIG_TOKEN)],
+  imports: [StoreModule.forFeature(fromFeature.featureKey, fromFeature.reducers, FEATURE_CONFIG_TOKEN)],
   providers: [
     {
       provide: FEATURE_CONFIG_TOKEN,
