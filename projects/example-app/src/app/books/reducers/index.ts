@@ -13,9 +13,9 @@ import * as fromRoot from '@example-app/reducers';
 export const booksFeatureKey = 'books';
 
 export interface BooksState {
-  search: fromSearch.State;
-  books: fromBooks.State;
-  collection: fromCollection.State;
+  [fromSearch.searchFeatureKey]: fromSearch.State;
+  [fromBooks.booksFeatureKey]: fromBooks.State;
+  [fromCollection.collectionFeatureKey]: fromCollection.State;
 }
 
 export interface State extends fromRoot.State {
@@ -25,9 +25,9 @@ export interface State extends fromRoot.State {
 /** Provide reducer in AoT-compilation happy way */
 export function reducers(state: BooksState | undefined, action: Action) {
   return combineReducers({
-    search: fromSearch.reducer,
-    books: fromBooks.reducer,
-    collection: fromCollection.reducer,
+    [fromSearch.searchFeatureKey]: fromSearch.reducer,
+    [fromBooks.booksFeatureKey]: fromBooks.reducer,
+    [fromCollection.collectionFeatureKey]: fromCollection.reducer,
   })(state, action);
 }
 

@@ -5,6 +5,8 @@ import {
   CollectionPageActions,
 } from '@example-app/books/actions';
 
+export const collectionFeatureKey = 'collection';
+
 export interface State {
   loaded: boolean;
   loading: boolean;

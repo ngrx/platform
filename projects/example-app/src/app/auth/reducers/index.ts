@@ -11,8 +11,8 @@ import * as fromLoginPage from '@example-app/auth/reducers/login-page.reducer';
 export const authFeatureKey = 'auth';
 
 export interface AuthState {
-  status: fromAuth.State;
-  loginPage: fromLoginPage.State;
+  [fromAuth.statusFeatureKey]: fromAuth.State;
+  [fromLoginPage.loginPageFeatureKey]: fromLoginPage.State;
 }
 
 export interface State extends fromRoot.State {
@@ -21,8 +21,8 @@ export interface State extends fromRoot.State {
 
 export function reducers(state: AuthState | undefined, action: Action) {
   return combineReducers({
-    status: fromAuth.reducer,
-    loginPage: fromLoginPage.reducer,
+    [fromAuth.statusFeatureKey]: fromAuth.reducer,
+    [fromLoginPage.loginPageFeatureKey]: fromLoginPage.reducer,
   })(state, action);
 }
 
