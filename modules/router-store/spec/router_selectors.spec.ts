@@ -61,9 +61,13 @@ const mockData = {
           routeConfig: {
             path: ':id',
           },
-          queryParams: {},
+          queryParams: {
+            ref: 'ngrx.io',
+          },
           queryParamMap: {
-            params: {},
+            params: {
+              ref: 'ngrx.io',
+            },
           },
           children: [],
         },
@@ -115,11 +119,13 @@ describe('Router State Selectors', () => {
 
       selectors = getSelectors((state: State) => state.router);
     });
+
     it('should create selectCurrentRoute selector for selecting the current route', () => {
       const result = selectors.selectCurrentRoute(state);
 
       expect(result).toEqual(state.router.state.root.firstChild.firstChild);
     });
+
     it('should return undefined from selectCurrentRoute if routerState does not exist', () => {
       interface State {
         router: any;
@@ -134,6 +140,7 @@ describe('Router State Selectors', () => {
 
       expect(result).toEqual(undefined);
     });
+
     it('should create a selector for selecting the query params', () => {
       const result = selectors.selectQueryParams(state);
 
@@ -141,6 +148,15 @@ describe('Router State Selectors', () => {
         state.router.state.root.firstChild.firstChild.queryParams
       );
     });
+
+    it('should create a selector for selecting a specific query param', () => {
+      const result = selectors.selectQueryParam('ref')(state);
+
+      expect(result).toEqual(
+        state.router.state.root.firstChild.firstChild.queryParams.ref
+      );
+    });
+
     it('should create a selector for selecting the route params', () => {
       const result = selectors.selectRouteParams(state);
 
@@ -148,6 +164,15 @@ describe('Router State Selectors', () => {
         state.router.state.root.firstChild.firstChild.params
       );
     });
+
+    it('should create a selector for selecting a specific route param', () => {
+      const result = selectors.selectRouteParam('id')(state);
+
+      expect(result).toEqual(
+        state.router.state.root.firstChild.firstChild.params.id
+      );
+    });
+
     it('should create a selector for selecting the route data', () => {
       const result = selectors.selectRouteData(state);
 
@@ -155,6 +180,7 @@ describe('Router State Selectors', () => {
         state.router.state.root.firstChild.firstChild.data
       );
     });
+
     it('should create a selector for selecting the url', () => {
       const result = selectors.selectUrl(state);
 
