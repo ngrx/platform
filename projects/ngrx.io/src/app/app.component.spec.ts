@@ -42,8 +42,7 @@ describe('AppComponent', () => {
         MockAioDocViewerComponent,
         MockAioDtComponent,
         MockAioLazyCeComponent,
-        MockAioFooterComponent,
-        MockAioSearchBoxComponent
+        MockAioFooterComponent
       ],
       imports: [
         MatProgressBarModule,
@@ -613,9 +612,3 @@ class MockAioFooterComponent {
   @Input() nodes;
   @Input() versionInfo;
 }
-
-@Component({
-  selector: 'aio-search-box',
-  template: ''
-})
-class MockAioSearchBoxComponent {}
