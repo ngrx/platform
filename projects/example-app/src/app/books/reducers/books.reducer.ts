@@ -9,6 +9,8 @@ import {
 } from '@example-app/books/actions';
 import { Book } from '@example-app/books/models';
 
+export const booksFeatureKey = 'books';
+
 /**
  * @ngrx/entity provides a predefined interface for handling
  * a structured dictionary of records. This interface

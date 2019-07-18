@@ -188,8 +188,21 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/user.reducer.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
-    expect(content).toMatch(/users\: fromUser.State/);
-    expect(content).toMatch(/users\: fromUser.reducer/);
+    expect(content).toMatch(/\[fromUser.usersFeatureKey\]\: fromUser.State/);
+    expect(content).toMatch(/\[fromUser.usersFeatureKey\]\: fromUser.reducer/);
+  });
+
+  it('should create a plural featureKey', () => {
+    const tree = schematicRunner.runSchematic(
+      'entity',
+      defaultOptions,
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/foosFeatureKey = 'foos'/);
   });
 
   describe('action creators', () => {

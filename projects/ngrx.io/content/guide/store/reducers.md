@@ -151,6 +151,10 @@ This registers your application with an empty object for the root state.
 
 Now use the `scoreboard` reducer with a feature `NgModule` named `ScoreboardModule` to register additional state.
 
+<code-example header="scoreboard.reducer.ts">
+export const scoreboardFeatureKey = 'game';
+</code-example>
+
 <code-example header="scoreboard.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
@@ -158,11 +162,17 @@ import * as fromScoreboard from './reducers/scoreboard.reducer';
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('game', fromScoreboard.reducer)
+    StoreModule.forFeature(fromScoreboard.scoreboardFeatureKey, fromScoreboard.reducer)
   ],
 })
 export class ScoreboardModule {}
 </code-example>
+
+<div class="alert is-important">
+
+**Note:** It is recommended to abstract a feature key string to prevent hardcoding strings when registering feature state and calling `createFeatureSelector`.
+
+</div>
 
 Add the `ScoreboardModule` to the `AppModule` to load the state eagerly.
 
