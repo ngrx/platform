@@ -6,6 +6,7 @@ import { NavigationNode } from 'app/navigation/navigation.service';
   template: `
     <ul role="navigation">
       <li *ngFor="let node of nodes"><a class="nav-link" [href]="node.url" [title]="node.title">{{ node.title }}</a></li>
+      <li><ng-content></ng-content></li>
     </ul>`
 })
 export class TopMenuComponent {

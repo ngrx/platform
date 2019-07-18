@@ -26,14 +26,16 @@
       <img *ngSwitchCase="true" src="assets/images/badge.svg" width="37" height="40" title="Home" alt="Home">
       <img *ngSwitchDefault src="assets/images/badge.svg" width="37" height="40" title="Home" alt="Home">
     </a>
-    <aio-top-menu *ngIf="isSideBySide" [nodes]="topMenuNodes"></aio-top-menu>
-    <!-- <aio-search-box class="search-container" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)"></aio-search-box>
+    <aio-top-menu *ngIf="isSideBySide" [nodes]="topMenuNodes">
+      <aio-search-box class="search-container" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)"></aio-search-box>
+    </aio-top-menu>
+    <aio-search-box class="search-container" *ngIf="!isSideBySide" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)"></aio-search-box>
     <div class="toolbar-external-icons-container">
       <a  href="https://twitter.com/ngrx_io" title="Twitter">
         <img src="assets/images/logos/twitter-icon.svg"></a>
       <a  href="https://github.com/ngrx/platform" title="GitHub">
         <img src="assets/images/logos/github-icon.svg"></a>
-    </div> -->
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
