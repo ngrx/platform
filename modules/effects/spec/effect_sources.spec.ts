@@ -248,9 +248,9 @@ describe('EffectSources', () => {
       it('should resubscribe on error by default', () => {
         class Eff {
           @Effect()
-          b$ = hot('a--b--c--d').pipe(
+          b$ = hot('a--e--b--e--c--e--d').pipe(
             map(v => {
-              if (v == 'b') throw new Error('An Error');
+              if (v == 'e') throw new Error('An Error');
               return v;
             })
           );
@@ -258,8 +258,8 @@ describe('EffectSources', () => {
 
         const sources$ = of(new Eff());
 
-        //                       👇 'b' is ignored.
-        const expected = cold('a-----c--d');
+        //                       👇'e' is ignored.
+        const expected = cold('a-----b-----c-----d');
 
         expect(toActions(sources$)).toBeObservable(expected);
       });
