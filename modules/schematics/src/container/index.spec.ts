@@ -141,6 +141,6 @@ describe('Container Schematic', () => {
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.spec.ts`
     );
-    expect(content).toMatch(/store = TestBed\.get\(Store\);/);
+    expect(content).toMatch(/store = TestBed\.get<Store>\(Store\);/);
   });
 });
