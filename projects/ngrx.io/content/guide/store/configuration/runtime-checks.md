@@ -33,7 +33,7 @@ export class AppModule {}
 
 <div class="alert is-important">
 
-Runtime checks cannot be enabled if you use `@ngrx/router-store` with the `DefaultRouterStateSerializer`. The [default serializer](guide/router-store/configuration) returns a router state that is not serializable and contains references on components which should not be immutable. In order to use runtime checks either use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
+Runtime checks cannot be enabled if you use `@ngrx/router-store` with the `DefaultRouterStateSerializer`. The [default serializer](guide/router-store/configuration) returns a router state that is not serializable and contains references on components which should not be immutable. To use runtime checks either use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
 
 </div>
 
