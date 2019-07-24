@@ -143,4 +143,17 @@ describe('Container Schematic', () => {
     );
     expect(content).toMatch(/store = TestBed\.get<Store>\(Store\);/);
   });
+
+  it('should use StoreModule if integration test', async () => {
+    const options = { ...defaultOptions, spec: true, testDepth: 'Integration' };
+    const tree = await schematicRunner
+      .runSchematicAsync('container', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.component.spec.ts`
+    );
+    expect(content).toMatch(
+      /import { Store, StoreModule } from '@ngrx\/store';/
+    );
+  });
 });
