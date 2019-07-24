@@ -110,7 +110,13 @@ export const FEATURE_CONFIG_TOKEN = new InjectionToken&lt;StoreConfig&lt;fromFea
 
 export function getConfig(someService: SomeService): StoreConfig&lt;fromFeature.State&gt; {
   // return the config synchronously.
-  return {initialState: someService.getInitialState()};
+  return {
+    initialState: someService.getInitialState(),
+
+    metaReducers: [
+      fromFeature.loggerFactory(someService.loggerConfig())
+    ]
+  };
 }
 
 @NgModule({
