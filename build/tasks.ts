@@ -18,7 +18,10 @@ export async function copySchematicsCore(config: Config) {
       .toString('utf-8');
     const pkgConfig = JSON.parse(packageJson);
 
-    if (pkgConfig.schematics || pkgConfig['ng-update'].migrations) {
+    if (
+      pkgConfig.schematics ||
+      (pkgConfig['ng-update'] && pkgConfig['ng-update'].migrations)
+    ) {
       ncp(
         `${modulesDir}/schematics-core`,
         `${modulesDir}/${pkg}/schematics-core`,
