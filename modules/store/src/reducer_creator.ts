@@ -168,6 +168,16 @@ export function on<S>(
   creator: ActionCreator,
   ...rest: (ActionCreator | OnReducer<S, [ActionCreator]>)[]
 ): On<S>;
+/**
+ * @description
+ * Associates actions with a given state change function.
+ * A state change function must be provided as the last parameter.
+ *
+ * @param args `ActionCreator`'s followed by a state change function.
+ *
+ * **To maintain type-safety**: pass 10 or less `ActionCreator`'s.
+ * @returns an association of action types with a state change function.
+ */
 export function on(
   ...args: (ActionCreator | Function)[]
 ): { reducer: Function; types: string[] } {
@@ -179,18 +189,54 @@ export function on(
   return { reducer, types };
 }
 
-export function createReducer<S>(
+/**
+ * @description
+ * Creates a reducer function to handle state transitions.
+ *
+ * Reducer creators reduce the explicitness of reducer functions with switch statements.
+ *
+ * @param initialState Provides a state value if the current state is `undefined`, as it is initially.
+ * @param ons Associations between actions and state changes.
+ * @returns A reducer function.
+ *
+ * @usageNotes
+ *
+ * - Must be used with `ActionCreator`'s (returned by `createAction`).  Cannot be used with class-based action creators.
+ * - An action type should only be associated with at most one state change function, similar to switch statements.
+ *   - In the case this is violated, the latest defined associated will be used (the latest `on` function passed).
+ * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function.
+ * This is because [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
+ *
+ * **Declaring a reducer creator with an exported reducer function**
+ *
+ * ```ts
+ * const featureReducer = createReducer(
+ *   initialState,
+ *   on(
+ *     featureActions.actionOne,
+ *     featureActions.actionTwo,
+ *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
+ *   ),
+ *   on(featureActions.actionThree, () => initialState);
+ * );
+ *
+ * export function reducer(state: State | undefined, action: Action) {
+ *   return featureReducer(state, action);
+ * }
+ * ```
+ */
+export function createReducer<S, A extends Action = Action>(
   initialState: S,
   ...ons: On<S>[]
-): ActionReducer<S> {
-  const map = new Map<string, ActionReducer<S>>();
+): ActionReducer<S, A> {
+  const map = new Map<string, ActionReducer<S, A>>();
   for (let on of ons) {
     for (let type of on.types) {
       map.set(type, on.reducer);
     }
   }
 
-  return function(state: S = initialState, action: Action): S {
+  return function(state: S = initialState, action: A): S {
     const reducer = map.get(action.type);
     return reducer ? reducer(state, action) : state;
   };

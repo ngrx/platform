@@ -24,14 +24,19 @@ export function mergeEffects(
           ? sourceInstance[propertyName]()
           : sourceInstance[propertyName];
 
+      const resubscribeInCaseOfError = (
+        observable$: Observable<any>
+      ): Observable<any> =>
+        observable$.pipe(
+          catchError(error => {
+            if (errorHandler) errorHandler.handleError(error);
+            // Return observable that produces this particular effect
+            return resubscribeInCaseOfError(observable$);
+          })
+        );
+
       const resubscribable$ = resubscribeOnError
-        ? observable$.pipe(
-            catchError(error => {
-              if (errorHandler) errorHandler.handleError(error);
-              // Return observable that produces this particular effect
-              return observable$;
-            })
-          )
+        ? resubscribeInCaseOfError(observable$)
         : observable$;
 
       if (dispatch === false) {

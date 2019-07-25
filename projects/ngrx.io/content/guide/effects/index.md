@@ -322,4 +322,4 @@ export class CollectionEffects {
 
 </div>
 
-To learn about testing effects that incorporate state, see the [Effects that use State](guide/effects/testing#effects-that-use-state) section in the testing guide.
+To learn about testing effects that incorporate state, see the [Effects that use State](guide/effects/testing#effect-that-uses-state) section in the testing guide.

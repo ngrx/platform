@@ -4,6 +4,8 @@ import {
 } from '@example-app/books/actions';
 import { createReducer, on } from '@ngrx/store';
 
+export const searchFeatureKey = 'search';
+
 export interface State {
   ids: string[];
   loading: boolean;

@@ -1,6 +1,8 @@
 <% if(!feature) { %>import { Action } from '@ngrx/store';<% } %>
 <% if(feature) { %>import { <%= classify(name) %>Actions, <%= classify(name) %>ActionTypes } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 
+export const <%= camelize(name) %>FeatureKey = '<%= camelize(name) %>';
+
 export interface State {
 
 }

@@ -11,26 +11,25 @@ import {
   mergeWith,
   move,
   noop,
-  template,
   url,
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import * as ts from 'typescript';
 import {
-  stringUtils,
-  insertImport,
-  buildRelativePath,
-  addImportToModule,
   InsertChange,
-  getProjectPath,
+  addImportToModule,
+  buildRelativePath,
   findModuleFromOptions,
+  getProjectPath,
+  insertImport,
+  parseName,
+  stringUtils,
   addPackageToPackageJson,
   platformVersion,
-  parseName,
 } from '@ngrx/effects/schematics-core';
-import { Schema as RootEffectOptions } from './schema';
+import * as ts from 'typescript';
+import { Schema as EffectOptions } from './schema';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
-function addImportToNgModule(options: RootEffectOptions): Rule {
+function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
     const modulePath = options.module;
 
@@ -39,7 +38,7 @@ function addImportToNgModule(options: RootEffectOptions): Rule {
     }
 
     if (!host.exists(modulePath)) {
-      throw new Error('Specified module does not exist');
+      throw new Error(`Specified module path ${modulePath} does not exist`);
     }
 
     const text = host.read(modulePath);
@@ -77,13 +76,21 @@ function addImportToNgModule(options: RootEffectOptions): Rule {
       effectsName,
       relativePath
     );
+
+    const effectsSetup = options.minimal ? `[]` : `[${effectsName}]`;
     const [effectsNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `EffectsModule.forRoot([${effectsName}])`,
+      `EffectsModule.forRoot(${effectsSetup})`,
       relativePath
     );
-    const changes = [effectsModuleImport, effectsImport, effectsNgModuleImport];
+
+    let changes = [effectsModuleImport, effectsNgModuleImport];
+
+    if (!options.minimal) {
+      changes = changes.concat([effectsImport]);
+    }
+
     const recorder = host.beginUpdate(modulePath);
     for (const change of changes) {
       if (change instanceof InsertChange) {
@@ -109,7 +116,7 @@ function addNgRxEffectsToPackageJson() {
   };
 }
 
-export default function(options: RootEffectOptions): Rule {
+export default function(options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -117,7 +124,7 @@ export default function(options: RootEffectOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
-    const parsedPath = parseName(options.path, options.name);
+    const parsedPath = parseName(options.path, options.name || '');
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
@@ -125,6 +132,7 @@ export default function(options: RootEffectOptions): Rule {
       options.spec
         ? noop()
         : filter(path => !path.endsWith('.spec.ts.template')),
+      options.minimal ? filter(_ => false) : noop(),
       applyTemplates({
         ...stringUtils,
         'if-flat': (s: string) =>

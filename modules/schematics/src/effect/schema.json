@@ -70,6 +70,12 @@
       "description":
         "Specifies whether to use creator functions for handling actions, reducers, and effects.",
       "aliases": ["c"]
+    },
+    "minimal": {
+      "type": "boolean",
+      "default": false,
+      "description":
+        "Setup root effects module without registering initial effects."
     }
   },
   "required": []

@@ -16,7 +16,7 @@ Instrumentation with the Chrome / Firefox Extension
 
 <code-example header="app.module.ts">
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment'; // Angular CLI environemnt
+import { environment } from '../environments/environment'; // Angular CLI environment
 
 @NgModule({
   imports: [
