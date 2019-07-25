@@ -15,7 +15,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 
 ## Diagram
 <figure>
-  <img src="../../images/guide/data/state-management-lifecycle.png" alt="NGRX State Management Lifecycle Diagram">
+  <img src="../../images/guide/store/state-management-lifecycle.png" alt="NGRX State Management Lifecycle Diagram">
 </figure>
 
 ## Tutorial
