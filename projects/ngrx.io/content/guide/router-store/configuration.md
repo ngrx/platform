@@ -20,7 +20,8 @@ If no router state serializer is provided through the [configuration](#configura
 
 <div class="alert is-important">
 
-The `DefaultRouterStateSerializer` cannot be used when [runtime checks](guide/store/configuration/runtime-checks) are enabled. If you want to use runtime checks to enforce serializability and immutability of your state, you can configure `RouterStoreModule` to use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
+The `DefaultRouterStateSerializer` cannot be used when [serializability runtime checks](guide/store/configuration/runtime-checks) are enabled. If you want to use runtime checks to enforce serializability of your state and actions, you can configure `RouterStoreModule` to use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
+This also applies to Ivy with immutability runtime checks.
 
 </div>
 
