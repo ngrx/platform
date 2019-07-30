@@ -4,7 +4,7 @@ Reducers in NgRx are responsible for handling transitions from one state to the 
 
 ## Introduction
 
-Reducers are pure functions in that they produce the same output for a given input. They are without side effects and handle each state transition synchronously. Each reducer function takes the latest `Action` dispatched, the current state, and determines whether to return a newly modified state or the original state. This guide shows you how to write reducer functions, register them in your `Store`, and compose feature states.
+Reducers are pure functions in that the value of the output is only related to the value of the input. No matter the context, a pure function given a particular set of parameters will always produce the same return value. Reducers are without side effects and handle each state transition synchronously. Each reducer function takes the latest `Action` dispatched, the current state, and determines whether to return a newly modified state or the original state. This guide shows you how to write reducer functions, register them in your `Store`, and compose feature states.
 
 ## The reducer function
 
