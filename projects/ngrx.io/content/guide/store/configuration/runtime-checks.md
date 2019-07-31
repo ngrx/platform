@@ -31,6 +31,13 @@ It's possible to turn on the runtime checks one by one. To do so, you must enabl
 export class AppModule {}
 ```
 
+<div class="alert is-important">
+
+The serializability runtime checks cannot be enabled if you use `@ngrx/router-store` with the `DefaultRouterStateSerializer`. The [default serializer](guide/router-store/configuration) has an unserializable router state and actions that are not serializable. To use the serializability runtime checks either use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
+This also applies to Ivy with immutability runtime checks. 
+
+</div>
+
 ### strictStateImmutability
 
 The number one rule of NgRx, immutability. This `strictStateImmutability` check verifies if a developer tries to modify the state object. This check is important to be able to work with the state in a predictable way, it should always be possible to recreate the state.
