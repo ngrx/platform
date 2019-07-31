@@ -136,17 +136,20 @@ export default function(options: ContainerOptions): Rule {
       options
     );
 
-    const templateSource = apply(url('./files'), [
-      options.spec
-        ? noop()
-        : filter(path => !path.endsWith('.spec.ts.template')),
-      applyTemplates({
-        'if-flat': (s: string) => (options.flat ? '' : s),
-        ...stringUtils,
-        ...(options as object),
-      } as any),
-      move(parsedPath.path),
-    ]);
+    const templateSource = apply(
+      url(options.testDepth === 'unit' ? './files' : './integration-files'),
+      [
+        options.spec
+          ? noop()
+          : filter(path => !path.endsWith('.spec.ts.template')),
+        applyTemplates({
+          'if-flat': (s: string) => (options.flat ? '' : s),
+          ...stringUtils,
+          ...(options as object),
+        } as any),
+        move(parsedPath.path),
+      ]
+    );
 
     return chain([
       externalSchematic('@schematics/angular', 'component', {
