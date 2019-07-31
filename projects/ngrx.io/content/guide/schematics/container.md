@@ -39,8 +39,8 @@ Specifies whether to create a unit test or an integration test
 
 - `--testDepth`
   - Type: `string`
-  - Values: `Unit|Integration`
-  - Default: `Unit`
+  - Values: `unit|integration`
+  - Default: `integration`
 
 ## Examples
 

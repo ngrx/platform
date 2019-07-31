@@ -110,7 +110,7 @@ describe('Container Schematic', () => {
   });
 
   it('should update the component spec', async () => {
-    const options = { ...defaultOptions, spec: true };
+    const options = { ...defaultOptions, spec: true, testDepth: 'unit' };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();
@@ -122,8 +122,8 @@ describe('Container Schematic', () => {
     );
   });
 
-  it('should use the provideMockStore helper', async () => {
-    const options = { ...defaultOptions, spec: true };
+  it('should use the provideMockStore helper if unit', async () => {
+    const options = { ...defaultOptions, spec: true, testDepth: 'unit' };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();
@@ -145,7 +145,7 @@ describe('Container Schematic', () => {
   });
 
   it('should use StoreModule if integration test', async () => {
-    const options = { ...defaultOptions, spec: true, testDepth: 'Integration' };
+    const options = { ...defaultOptions, spec: true };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();

@@ -137,9 +137,7 @@ export default function(options: ContainerOptions): Rule {
     );
 
     const templateSource = apply(
-      url(
-        options.testDepth === 'Integration' ? './integration-files' : './files'
-      ),
+      url(options.testDepth === 'unit' ? './files' : './integration-files'),
       [
         options.spec
           ? noop()

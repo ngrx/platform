@@ -101,9 +101,9 @@
     "testDepth": {
       "description":
         "Specifies whether to create a unit test or an integration test.",
-      "enum": ["Unit", "Integration"],
+      "enum": ["unit", "integration"],
       "type": "string",
-      "default": "Unit"
+      "default": "integration"
     }
   },
   "required": []
