@@ -104,7 +104,7 @@ To show how you handle loading movies from the example above, let's look at `Mov
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { MoviesService } from './movies.service';
@@ -150,7 +150,7 @@ Effects are built on top of observable streams provided by RxJS. Effects are lis
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { MoviesService } from './movies.service';

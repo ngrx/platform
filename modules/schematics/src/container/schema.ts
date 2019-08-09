@@ -68,4 +68,9 @@ export interface Schema {
    * Specifies the interface for the state
    */
   stateInterface?: string;
+
+  /**
+   * Specifies whether to create a unit test or an integration test.
+   */
+  testDepth?: string;
 }

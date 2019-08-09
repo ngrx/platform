@@ -1,3 +1,19 @@
+<a name="8.2.0"></a>
+
+# [8.2.0](https://github.com/ngrx/platform/compare/8.1.0...8.2.0) (2019-07-31)
+
+### Bug Fixes
+
+- **effects:** resubscribe every time an error occurs ([#2023](https://github.com/ngrx/platform/issues/2023)) ([#2026](https://github.com/ngrx/platform/issues/2026)) ([5b48912](https://github.com/ngrx/platform/commit/5b48912))
+- **store:** add missing StoreConfig and RootStoreConfig exports ([#2009](https://github.com/ngrx/platform/issues/2009)) ([5e01e50](https://github.com/ngrx/platform/commit/5e01e50)), closes [#2007](https://github.com/ngrx/platform/issues/2007)
+
+### Features
+
+- **docs:** enable search functionality ([#2020](https://github.com/ngrx/platform/issues/2020)) ([3cc4f3d](https://github.com/ngrx/platform/commit/3cc4f3d))
+- **router-store:** add selectQueryParam and selectRouteParam ([#2014](https://github.com/ngrx/platform/issues/2014)) ([57fd3d7](https://github.com/ngrx/platform/commit/57fd3d7))
+- **schematics:** add option to use MockStore in container tests ([#2029](https://github.com/ngrx/platform/issues/2029)) ([6905d52](https://github.com/ngrx/platform/commit/6905d52)), closes [#2028](https://github.com/ngrx/platform/issues/2028)
+- **store:** add USER_RUNTIME_CHECKS public token ([#2006](https://github.com/ngrx/platform/issues/2006)) ([fa8da34](https://github.com/ngrx/platform/commit/fa8da34)), closes [#1973](https://github.com/ngrx/platform/issues/1973)
+
 <a name="8.1.0"></a>
 
 # [8.1.0](https://github.com/ngrx/platform/compare/8.0.1...8.1.0) (2019-07-09)
