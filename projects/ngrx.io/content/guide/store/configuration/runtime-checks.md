@@ -165,3 +165,4 @@ function logTodo (todo: Todo) {
   console.log(todo);
 }
 ```
+Please note, you may not need to set `strictActionSerializability` to `true` unless you are storing/replaying actions using external resources, for example `localStorage`.
