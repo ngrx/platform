@@ -13,6 +13,13 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 
 Detailed installation instructions can be found on the [Installation](guide/store/install) page.
 
+## Diagram
+
+The following diagram represents the overall general flow of application state in NgRx. 
+<figure>
+  <img src="generated/images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle Diagram" width="100%" height="100%" />
+</figure>
+
 ## Tutorial
 
 The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload></live-example>.
