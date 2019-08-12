@@ -344,7 +344,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       options
     );
     if (options.isOptimistic) {
-      this.guard.mustBeEntity(action as EntityAction);
+      this.guard.mustBeUpdate(action);
     }
     this.dispatch(action);
     return this.getResponseData$<UpdateResponseData<T>>(
