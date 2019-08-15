@@ -7,7 +7,7 @@ You can write tests validating behaviors corresponding to the specific state sna
 
 <div class="alert is-helpful">
 
-**Note:** All dispatched actions don't affect to the state, but you can see them in the `Actions` stream.
+**Note:** All dispatched actions don't affect the state, but you can see them in the `Actions` stream.
 
 </div>
 
