@@ -133,41 +133,37 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
     switch (method) {
       case 'DELETE': {
         result$ = this.http.delete(url, options);
-        if (this.saveDelay) {
-          result$ = result$.pipe(delay(this.saveDelay));
-        }
         break;
       }
       case 'GET': {
         result$ = this.http.get(url, options);
-        if (this.getDelay) {
-          result$ = result$.pipe(delay(this.getDelay));
-        }
         break;
       }
       case 'POST': {
         result$ = this.http.post(url, data, options);
-        if (this.saveDelay) {
-          result$ = result$.pipe(delay(this.saveDelay));
-        }
         break;
       }
       // N.B.: It must return an Update<T>
       case 'PUT': {
         result$ = this.http.put(url, data, options);
-        if (this.saveDelay) {
-          result$ = result$.pipe(delay(this.saveDelay));
-        }
         break;
       }
       default: {
-        const error = new Error('Unimplemented HTTP method, ' + method);
+        const error = new Error(`Unimplemented HTTP method, ${method}`);
         result$ = throwError(error);
       }
+    }
+
+    if (this.saveDelay) {
+      result$ = result$.pipe(delay(this.saveDelay));
+    }
+    if (this.getDelay) {
+      result$ = result$.pipe(delay(this.getDelay));
     }
     if (this.timeout) {
       result$ = result$.pipe(timeout(this.timeout + this.saveDelay));
     }
+
     return result$.pipe(catchError(this.handleError(req)));
   }
 
