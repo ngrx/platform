@@ -1,24 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
-import {
-  Action,
-  createSelector,
-  ScannedActionsSubject,
-  select,
-  Store,
-} from '@ngrx/store';
+import { Action, ScannedActionsSubject, Store } from '@ngrx/store';
 
 import { Observable, of, Subscription, throwError } from 'rxjs';
-import { filter, map, mergeMap, shareReplay, take } from 'rxjs/operators';
+import { filter, mergeMap, shareReplay, take } from 'rxjs/operators';
 
 import { CorrelationIdGenerator } from '../utils/correlation-id-generator';
-import { EntityAction, EntityActionOptions } from '../actions/entity-action';
-import { EntityActionFactory } from '../actions/entity-action-factory';
+import { EntityActionOptions } from '../actions/entity-action';
 import { EntityCache } from '../reducers/entity-cache';
 import { EntityDispatcherDefaultOptions } from './entity-dispatcher-default-options';
 
 import { MergeStrategy } from '../actions/merge-strategy';
 import { PersistanceCanceled } from './entity-dispatcher';
-import { UpdateResponseData } from '../actions/update-response-data';
 
 import { ChangeSet, ChangeSetItem } from '../actions/entity-cache-change-set';
 import {

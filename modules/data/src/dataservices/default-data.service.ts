@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, delay, map, tap, timeout } from 'rxjs/operators';
+import { catchError, delay, map, timeout } from 'rxjs/operators';
 
 import { Update } from '@ngrx/entity';
 

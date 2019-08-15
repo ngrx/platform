@@ -38,7 +38,6 @@ import {
 import { EntityCacheDataService } from '../dataservices/entity-cache-data.service';
 import { ENTITY_EFFECTS_SCHEDULER } from './entity-effects-scheduler';
 import { Logger } from '../utils/interfaces';
-import { PersistenceResultHandler } from '../dataservices/persistence-result-handler.service';
 
 @Injectable()
 export class EntityCacheEffects {

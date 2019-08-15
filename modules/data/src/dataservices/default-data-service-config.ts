@@ -1,4 +1,4 @@
-import { HttpUrlGenerator, EntityHttpResourceUrls } from './http-url-generator';
+import { EntityHttpResourceUrls } from './http-url-generator';
 
 /**
  * Optional configuration settings for an entity collection data service

@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
-
-import { Action } from '@ngrx/store';
-import { EntityAdapter, Dictionary, IdSelector, Update } from '@ngrx/entity';
-
-import { merge } from 'rxjs/operators';
-
+import { EntityAdapter, IdSelector, Update } from '@ngrx/entity';
 import {
   ChangeStateMap,
   ChangeType,
   EntityCollection,
 } from './entity-collection';
 import { EntityChangeTrackerBase } from './entity-change-tracker-base';
-import { defaultSelectId, toUpdateFactory } from '../utils/utilities';
+import { toUpdateFactory } from '../utils/utilities';
 import { EntityAction } from '../actions/entity-action';
 import { EntityActionDataServiceError } from '../dataservices/data-service-error';
 import { EntityActionGuard } from '../actions/entity-action-guard';

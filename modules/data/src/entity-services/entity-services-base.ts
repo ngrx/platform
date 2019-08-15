@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
@@ -6,14 +6,9 @@ import { Observable } from 'rxjs';
 import { EntityAction } from '../actions/entity-action';
 import { EntityCache } from '../reducers/entity-cache';
 import { EntityCollectionService } from './entity-collection-service';
-import { EntityCollectionServiceBase } from './entity-collection-service-base';
 import { EntityCollectionServiceFactory } from './entity-collection-service-factory';
 import { EntityCollectionServiceMap, EntityServices } from './entity-services';
-import { EntitySelectorsFactory } from '../selectors/entity-selectors';
-import {
-  EntitySelectors$,
-  EntitySelectors$Factory,
-} from '../selectors/entity-selectors$';
+import { EntitySelectors$ } from '../selectors/entity-selectors$';
 import { EntityServicesElements } from './entity-services-elements';
 
 // tslint:disable:member-ordering
