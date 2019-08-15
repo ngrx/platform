@@ -71,7 +71,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
 
   delete(key: number | string): Observable<number | string> {
     let err: Error | undefined;
-    if (!key) {
+    if (key == null) {
       err = new Error(`No "${this.entityName}" key to delete`);
     }
     return this.execute('DELETE', this.entityUrl + key, err).pipe(
@@ -86,7 +86,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
 
   getById(key: number | string): Observable<T> {
     let err: Error | undefined;
-    if (!key) {
+    if (key == null) {
       err = new Error(`No "${this.entityName}" key to get`);
     }
     return this.execute('GET', this.entityUrl + key, err);
@@ -103,9 +103,10 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
 
   update(update: Update<T>): Observable<T> {
     const id = update && update.id;
-    const updateOrError = !id
-      ? new Error(`No "${this.entityName}" update data or id`)
-      : update.changes;
+    const updateOrError =
+      id == null
+        ? new Error(`No "${this.entityName}" update data or id`)
+        : update.changes;
     return this.execute('PUT', this.entityUrl + id, updateOrError);
   }
 
