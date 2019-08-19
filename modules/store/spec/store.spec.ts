@@ -23,12 +23,17 @@ import {
 } from './fixtures/counter';
 import Spy = jasmine.Spy;
 import { take } from 'rxjs/operators';
+import { SUB_PROPERTY, subReducer } from './fixtures/sub';
+import { Observable } from 'rxjs';
 
 interface TestAppSchema {
   counter1: number;
   counter2: number;
   counter3: number;
   counter4?: number;
+  sub?: {
+    property: number;
+  };
 }
 
 describe('ngRx Store', () => {
@@ -43,6 +48,7 @@ describe('ngRx Store', () => {
       counter1: counterReducer,
       counter2: counterReducer,
       counter3: counterReducer,
+      sub: subReducer,
     };
 
     TestBed.configureTestingModule({
@@ -56,12 +62,12 @@ describe('ngRx Store', () => {
   describe('initial state', () => {
     it('should handle an initial state object', (done: any) => {
       setup();
-      testStoreValue({ counter1: 0, counter2: 1, counter3: 0 }, done);
+      testStoreValue({ counter1: 0, counter2: 1, counter3: 0, sub: {} }, done);
     });
 
     it('should handle an initial state function', (done: any) => {
       setup(() => ({ counter1: 0, counter2: 5 }));
-      testStoreValue({ counter1: 0, counter2: 5, counter3: 0 }, done);
+      testStoreValue({ counter1: 0, counter2: 5, counter3: 0, sub: {} }, done);
     });
 
     it('should keep initial state values when state is partially initialized', (done: DoneFn) => {
@@ -203,6 +209,27 @@ describe('ngRx Store', () => {
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
 
       expect(counterStateWithString).toBeObservable(
+        hot(stateSequence, counter1Values)
+      );
+    });
+
+    it('should let you select state with a sub-property key name', () => {
+      const counterSteps = hot('--a', {
+        a: { type: SUB_PROPERTY, payload: 55 },
+      });
+
+      counterSteps.subscribe(action => store.dispatch(action));
+
+      const subPropertyStateWithString: Observable<number> = store.pipe(
+        select('sub', 'property')
+      );
+      // uncommenting the next line should result in a compilation error
+      // const subProperty2StateWithString: boolean = store.pipe(select('sub', 'nonExistentProperty'));
+
+      const stateSequence = 'i-v';
+      const counter1Values = { i: undefined, v: 55 };
+
+      expect(subPropertyStateWithString).toBeObservable(
         hot(stateSequence, counter1Values)
       );
     });
