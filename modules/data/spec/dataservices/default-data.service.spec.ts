@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -14,7 +14,6 @@ import {
   DefaultDataService,
   DefaultDataServiceFactory,
   DefaultHttpUrlGenerator,
-  EntityHttpResourceUrls,
   HttpUrlGenerator,
   DefaultDataServiceConfig,
   DataServiceError,

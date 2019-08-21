@@ -1,9 +1,4 @@
-import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-
-import { EntityActionOptions } from './entity-action';
-import { EntityCacheAction } from './entity-cache-action';
-import { DataServiceError } from '../dataservices/data-service-error';
 
 export enum ChangeSetOperation {
   Add = 'Add',

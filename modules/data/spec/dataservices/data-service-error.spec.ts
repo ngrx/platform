@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { DataServiceError, RequestData } from '../../';
+import { DataServiceError } from '../../';
 
 describe('DataServiceError', () => {
   describe('#message', () => {

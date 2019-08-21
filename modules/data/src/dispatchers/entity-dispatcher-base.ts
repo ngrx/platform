@@ -1,7 +1,7 @@
-import { Action, createSelector, select, Store } from '@ngrx/store';
+import { Action, createSelector, Store } from '@ngrx/store';
 import { IdSelector, Update } from '@ngrx/entity';
 
-import { Observable, of, throwError, OperatorFunction } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import {
   filter,
   map,

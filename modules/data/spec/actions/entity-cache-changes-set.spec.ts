@@ -1,8 +1,4 @@
-import {
-  ChangeSet,
-  ChangeSetOperation,
-  changeSetItemFactory as cif,
-} from '../../';
+import { ChangeSetOperation, changeSetItemFactory as cif } from '../../';
 
 describe('changeSetItemFactory', () => {
   const hero = { id: 1, name: 'Hero 1' };

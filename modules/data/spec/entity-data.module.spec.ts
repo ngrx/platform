@@ -11,8 +11,8 @@ import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 // Not using marble testing
 import { TestBed } from '@angular/core/testing';
 
-import { Observable, of, Subject } from 'rxjs';
-import { map, skip, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, skip } from 'rxjs/operators';
 
 import {
   EntityCache,

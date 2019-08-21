@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 
 import { createEntityDefinition, EntityDefinition } from './entity-definition';
 import {
@@ -6,7 +6,6 @@ import {
   EntityMetadataMap,
   ENTITY_METADATA_TOKEN,
 } from './entity-metadata';
-import { ENTITY_CACHE_NAME } from '../reducers/constants';
 
 export interface EntityDefinitions {
   [entityName: string]: EntityDefinition<any>;

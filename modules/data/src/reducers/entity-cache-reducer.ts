@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Action, ActionReducer } from '@ngrx/store';
 
 import { EntityAction } from '../actions/entity-action';
-import { EntityActionDataServiceError } from '../dataservices/data-service-error';
 import { EntityCache } from './entity-cache';
 
 import {

@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { EntityActionOptions } from '../actions/entity-action';
-import { MergeStrategy } from '../actions/merge-strategy';
 import { QueryParams } from '../dataservices/interfaces';
 
 /** Commands that update the remote server. */

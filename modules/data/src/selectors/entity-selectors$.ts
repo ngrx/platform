@@ -1,11 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-
-import {
-  createFeatureSelector,
-  createSelector,
-  Selector,
-  Store,
-} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { Dictionary } from '@ngrx/entity';
 
@@ -25,8 +19,6 @@ import {
   EntityCollection,
   ChangeStateMap,
 } from '../reducers/entity-collection';
-import { EntityCollectionCreator } from '../reducers/entity-collection-creator';
-import { EntitySelectorsFactory } from './entity-selectors';
 
 /**
  * The selector observable functions for entity collection members.

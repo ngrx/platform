@@ -10,7 +10,6 @@ import {
 
 import {
   Action,
-  ActionReducer,
   combineReducers,
   MetaReducer,
   ReducerManager,
@@ -24,13 +23,9 @@ import { EntityActionFactory } from './actions/entity-action-factory';
 import { EntityCache } from './reducers/entity-cache';
 import { EntityCacheDispatcher } from './dispatchers/entity-cache-dispatcher';
 import { entityCacheSelectorProvider } from './selectors/entity-cache-selector';
-import { EntityCollectionService } from './entity-services/entity-collection-service';
 import { EntityCollectionServiceElementsFactory } from './entity-services/entity-collection-service-elements-factory';
 import { EntityCollectionServiceFactory } from './entity-services/entity-collection-service-factory';
-import {
-  EntityCollectionServiceMap,
-  EntityServices,
-} from './entity-services/entity-services';
+import { EntityServices } from './entity-services/entity-services';
 import { EntityCollection } from './reducers/entity-collection';
 import { EntityCollectionCreator } from './reducers/entity-collection-creator';
 import { EntityCollectionReducerFactory } from './reducers/entity-collection-reducer';
@@ -38,12 +33,7 @@ import { EntityCollectionReducerMethodsFactory } from './reducers/entity-collect
 import { EntityCollectionReducerRegistry } from './reducers/entity-collection-reducer-registry';
 import { EntityDispatcherFactory } from './dispatchers/entity-dispatcher-factory';
 import { EntityDefinitionService } from './entity-metadata/entity-definition.service';
-import { EntityEffects } from './effects/entity-effects';
-import {
-  EntityMetadataMap,
-  ENTITY_METADATA_TOKEN,
-} from './entity-metadata/entity-metadata';
-
+import { EntityMetadataMap } from './entity-metadata/entity-metadata';
 import { EntityCacheReducerFactory } from './reducers/entity-cache-reducer';
 import {
   ENTITY_CACHE_NAME,
@@ -54,13 +44,11 @@ import {
 } from './reducers/constants';
 
 import { DefaultLogger } from './utils/default-logger';
-import { DefaultPluralizer } from './utils/default-pluralizer';
-import { EntitySelectors } from './selectors/entity-selectors';
 import { EntitySelectorsFactory } from './selectors/entity-selectors';
 import { EntitySelectors$Factory } from './selectors/entity-selectors$';
 import { EntityServicesBase } from './entity-services/entity-services-base';
 import { EntityServicesElements } from './entity-services/entity-services-elements';
-import { Logger, Pluralizer, PLURAL_NAMES_TOKEN } from './utils/interfaces';
+import { Logger, PLURAL_NAMES_TOKEN } from './utils/interfaces';
 
 export interface EntityDataModuleConfig {
   entityMetadata?: EntityMetadataMap;
