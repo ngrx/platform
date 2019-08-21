@@ -603,19 +603,22 @@ export function createFeatureSelector<T, V>(
 export function createFeatureSelector(
   featureName: any
 ): MemoizedSelector<any, any> {
-  return createSelector((state: any) => {
-    const featureState = state[featureName];
-    if (isDevMode() && featureState === undefined) {
-      console.error(
-        `The feature name \"${featureName}\" does ` +
-          'not exist in the state, therefore createFeatureSelector ' +
-          'cannot access it.  Be sure it is imported in a loaded module ' +
-          `using StoreModule.forRoot('${featureName}', ...) or ` +
-          `StoreModule.forFeature('${featureName}', ...).  If the default ` +
-          'state is intended to be undefined, as is the case with router ' +
-          'state, this development-only error message can be ignored.'
-      );
-    }
-    return featureState;
-  }, (featureState: any) => featureState);
+  return createSelector(
+    (state: any) => {
+      const featureState = state[featureName];
+      if (isDevMode() && featureState === undefined) {
+        console.warn(
+          `The feature name \"${featureName}\" does ` +
+            'not exist in the state, therefore createFeatureSelector ' +
+            'cannot access it.  Be sure it is imported in a loaded module ' +
+            `using StoreModule.forRoot('${featureName}', ...) or ` +
+            `StoreModule.forFeature('${featureName}', ...).  If the default ` +
+            'state is intended to be undefined, as is the case with router ' +
+            'state, this development-only warning message can be ignored.'
+        );
+      }
+      return featureState;
+    },
+    (featureState: any) => featureState
+  );
 }
