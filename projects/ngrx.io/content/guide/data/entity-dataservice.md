@@ -101,7 +101,7 @@ The shared configuration values are almost always specific to the application an
 The NgRx Data library defines a `DefaultDataServiceConfig` for 
 conveying shared configuration to an entity collection data service.
 
-The most important configuration property, `root`, returns the _root_ of every web api URL, the parts that come before the entity resource name.
+The most important configuration property, `root`, returns the _root_ of every web api URL, the parts that come before the entity resource name. If you are using a remote API, this value can include the protocol, domain, port, and root path, such as `https://my-api-domain.com:8000/api/v1`.
 
 For a `DefaultDataService<T>`, the default value is `'api'`, which results in URLs such as `api/heroes`.
 
@@ -121,7 +121,7 @@ First, create a custom configuration object of type `DefaultDataServiceConfig` :
 
 ```typescript
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  root: 'api',
+  root: 'https://my-api-domain.com:8000/api/v1',
   timeout: 3000, // request timeout
 }
 ```
