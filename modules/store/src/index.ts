@@ -4,6 +4,7 @@ export {
   ActionReducer,
   ActionReducerMap,
   ActionReducerFactory,
+  ActionType,
   Creator,
   MetaReducer,
   Selector,
