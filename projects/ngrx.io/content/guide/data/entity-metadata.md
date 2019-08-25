@@ -276,7 +276,7 @@ Register `AdditionalPersistenceResultHandler` in `NgModule`,
 
 ```typescript
 @NgModule({
-  { provide: PersistenceResultHandler, useClass: PagePersistenceResultHandler },
+  { provide: PersistenceResultHandler, useClass: AdditionalPropertyPersistenceResultHandler },
 })
 ```
 
