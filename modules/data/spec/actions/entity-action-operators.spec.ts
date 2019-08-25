@@ -3,7 +3,6 @@ import { Action } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import {
-  EntityAction,
   EntityActionFactory,
   EntityOp,
   ofEntityType,
@@ -21,7 +20,9 @@ describe('EntityAction Operators', () => {
   const entityActionFactory = new EntityActionFactory();
 
   let results: any[];
-  let actions: Subject<EntityAction>;
+
+  // in a real-world application, actions can contains any type of action
+  let actions: Subject<Action>;
 
   const testActions = {
     foo: <Action>{ type: 'Foo' },
@@ -43,7 +44,7 @@ describe('EntityAction Operators', () => {
   }
 
   beforeEach(() => {
-    actions = new Subject<EntityAction>();
+    actions = new Subject<Action>();
     results = [];
   });
 

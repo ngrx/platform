@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { EntityAction } from './entity-action';
 import { EntityOp } from './entity-op';
 import { flattenArgs } from '../utils/utilities';
+import { Action } from '@ngrx/store';
 
 /**
  * Select actions concerning one of the allowed Entity operations
@@ -18,29 +19,29 @@ import { flattenArgs } from '../utils/utilities';
  */
 export function ofEntityOp<T extends EntityAction>(
   allowedOps: string[] | EntityOp[]
-): OperatorFunction<EntityAction, T>;
+): OperatorFunction<Action, T>;
 export function ofEntityOp<T extends EntityAction>(
   ...allowedOps: (string | EntityOp)[]
-): OperatorFunction<EntityAction, T>;
+): OperatorFunction<Action, T>;
 export function ofEntityOp<T extends EntityAction>(
   ...allowedEntityOps: any[]
-): OperatorFunction<EntityAction, T> {
+): OperatorFunction<Action, T> {
   const ops: string[] = flattenArgs(allowedEntityOps);
   switch (ops.length) {
     case 0:
       return filter(
-        (action: EntityAction): action is T =>
+        (action: any): action is T =>
           action.payload && action.payload.entityOp != null
       );
     case 1:
       const op = ops[0];
       return filter(
-        (action: EntityAction): action is T =>
+        (action: any): action is T =>
           action.payload && op === action.payload.entityOp
       );
     default:
       return filter(
-        (action: EntityAction): action is T => {
+        (action: any): action is T => {
           const entityOp = action.payload && action.payload.entityOp;
           return entityOp && ops.some(o => o === entityOp);
         }
@@ -62,29 +63,29 @@ export function ofEntityOp<T extends EntityAction>(
  */
 export function ofEntityType<T extends EntityAction>(
   allowedEntityNames?: string[]
-): OperatorFunction<EntityAction, T>;
+): OperatorFunction<Action, T>;
 export function ofEntityType<T extends EntityAction>(
   ...allowedEntityNames: string[]
-): OperatorFunction<EntityAction, T>;
+): OperatorFunction<Action, T>;
 export function ofEntityType<T extends EntityAction>(
   ...allowedEntityNames: any[]
-): OperatorFunction<EntityAction, T> {
+): OperatorFunction<Action, T> {
   const names: string[] = flattenArgs(allowedEntityNames);
   switch (names.length) {
     case 0:
       return filter(
-        (action: EntityAction): action is T =>
+        (action: any): action is T =>
           action.payload && action.payload.entityName != null
       );
     case 1:
       const name = names[0];
       return filter(
-        (action: EntityAction): action is T =>
+        (action: any): action is T =>
           action.payload && name === action.payload.entityName
       );
     default:
       return filter(
-        (action: EntityAction): action is T => {
+        (action: any): action is T => {
           const entityName = action.payload && action.payload.entityName;
           return !!entityName && names.some(n => n === entityName);
         }
