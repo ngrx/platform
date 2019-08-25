@@ -227,7 +227,6 @@ If the property you want to add comes from `backend`, you will need some additio
 Create a new class `AdditionalPersistenceResultHandler` that `extends DefaultPersistenceResultHandler` and overwrite the [handleSuccess](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/persistence-result-handler.service.ts) method, the purpose is to parse the data received from `DataService`, retrieve the additional property, and then save this to the `action.payload`. Here is an example.
 
 ```typescript
-@Injectable()
 export class AdditionalPropertyPersistenceResultHandler extends DefaultPersistenceResultHandler {
   handleSuccess(originalAction: EntityAction): (data: any) => Action {
     const actionHandler = super.handleSuccess(originalAction);
@@ -250,7 +249,6 @@ export class AdditionalPropertyPersistenceResultHandler extends DefaultPersisten
 Following the prior step, we have added the additional property to the `action.payload`. Up next we need to set it to the instance of EntityCollection in the `reducer`. In order to accomplish that, we need to create an `AdditionalEntityCollectionReducerMethods` that `extends EntityCollectionReducerMethods`. In addition, we will need to overwrite the method to match your `action`. For example, if the additional property `foo` is only available in `queryMany action(triggered by EntityCollectionService.getWithQuery)`, we can follow this approach.
 
 ```typescript
-@Injectable()
 export class AdditionalEntityCollectionReducerMethods<T> extends EntityCollectionReducerMethods<T> {
   constructor(public entityName: string, public definition: EntityDefinition<T>) {
     super(entityName, definition);
