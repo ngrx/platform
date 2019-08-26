@@ -1,3 +1,4 @@
+import * as ngCore from '@angular/core';
 import { cold } from 'jasmine-marbles';
 import {
   createSelector,
@@ -477,9 +478,11 @@ describe('Selectors', () => {
   describe('createFeatureSelector', () => {
     let featureName = '@ngrx/router-store';
     let featureSelector: (state: any) => number;
+    let warnSpy: jasmine.Spy;
 
     beforeEach(() => {
       featureSelector = createFeatureSelector<number>(featureName);
+      warnSpy = spyOn(console, 'warn');
     });
 
     it('should memoize the result', () => {
@@ -499,10 +502,11 @@ describe('Selectors', () => {
       );
 
       expect(featureState$).toBeObservable(expected$);
+      expect(warnSpy).not.toHaveBeenCalled();
     });
 
     it('should warn if the feature does not exist in the state', () => {
-      const spy = spyOn(console, 'warn');
+      spyOn(ngCore, 'isDevMode').and.returnValue(true);
 
       const state = { otherState: '' };
 
@@ -515,7 +519,7 @@ describe('Selectors', () => {
       );
 
       expect(featureState$).toBeObservable(expected$);
-      expect(spy).toHaveBeenCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         'The feature name "@ngrx/router-store" does not exist ' +
           'in the state, therefore createFeatureSelector cannot ' +
           'access it.  Be sure it is imported in a loaded module using ' +
@@ -525,6 +529,23 @@ describe('Selectors', () => {
           'with router state, this development-only warning message can ' +
           'be ignored.'
       );
+    });
+
+    it('should not warn if not in development mode', () => {
+      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+
+      const state = { otherState: '' };
+
+      const state$ = cold('a', { a: state });
+      const expected$ = cold('a', { a: undefined });
+
+      const featureState$ = state$.pipe(
+        map(featureSelector),
+        distinctUntilChanged()
+      );
+
+      expect(featureState$).toBeObservable(expected$);
+      expect(warnSpy).not.toHaveBeenCalled();
     });
   });
 
