@@ -1,3 +1,4 @@
+import * as ngCore from '@angular/core';
 import { cold } from 'jasmine-marbles';
 import {
   createSelector,
@@ -40,9 +41,11 @@ describe('Selectors', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
 
-      const selector = createSelector(incrementOne, incrementTwo, projectFn)(
-        {}
-      );
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        projectFn
+      )({});
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
@@ -50,7 +53,11 @@ describe('Selectors', () => {
     it('should allow an override of the selector return', () => {
       const projectFn = jasmine.createSpy('projectionFn').and.returnValue(2);
 
-      const selector = createSelector(incrementOne, incrementTwo, projectFn);
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        projectFn
+      );
 
       expect(selector.projector()).toBe(2);
 
@@ -63,7 +70,11 @@ describe('Selectors', () => {
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(incrementOne, incrementTwo, projectFn);
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        projectFn
+      );
 
       selector.projector('', '');
 
@@ -81,7 +92,10 @@ describe('Selectors', () => {
           return state.unchanged;
         });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(neverChangingSelector, projectFn);
+      const selector = createSelector(
+        neverChangingSelector,
+        projectFn
+      );
 
       selector(firstState);
       selector(secondState);
@@ -115,7 +129,10 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(incrementOne, projectFn);
+      const selector = createSelector(
+        incrementOne,
+        projectFn
+      );
 
       selector(state);
       selector(state);
@@ -127,9 +144,18 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector(incrementOne, a => a);
-      const parent = createSelector(grandparent, a => a);
-      const child = createSelector(parent, a => a);
+      const grandparent = createSelector(
+        incrementOne,
+        a => a
+      );
+      const parent = createSelector(
+        grandparent,
+        a => a
+      );
+      const child = createSelector(
+        parent,
+        a => a
+      );
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -245,16 +271,20 @@ describe('Selectors', () => {
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector([incrementOne, incrementTwo], projectFn)(
-        {}
-      );
+      const selector = createSelector(
+        [incrementOne, incrementTwo],
+        projectFn
+      )({});
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector([incrementOne, incrementTwo], projectFn);
+      const selector = createSelector(
+        [incrementOne, incrementTwo],
+        projectFn
+      );
 
       selector.projector('', '');
 
@@ -272,7 +302,10 @@ describe('Selectors', () => {
           return state.unchanged;
         });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector([neverChangingSelector], projectFn);
+      const selector = createSelector(
+        [neverChangingSelector],
+        projectFn
+      );
 
       selector(firstState);
       selector(secondState);
@@ -304,7 +337,10 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector([incrementOne], projectFn);
+      const selector = createSelector(
+        [incrementOne],
+        projectFn
+      );
 
       selector(state);
       selector(state);
@@ -316,9 +352,18 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector([incrementOne], a => a);
-      const parent = createSelector([grandparent], a => a);
-      const child = createSelector([parent], a => a);
+      const grandparent = createSelector(
+        [incrementOne],
+        a => a
+      );
+      const parent = createSelector(
+        [grandparent],
+        a => a
+      );
+      const child = createSelector(
+        [parent],
+        a => a
+      );
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -433,9 +478,11 @@ describe('Selectors', () => {
   describe('createFeatureSelector', () => {
     let featureName = '@ngrx/router-store';
     let featureSelector: (state: any) => number;
+    let warnSpy: jasmine.Spy;
 
     beforeEach(() => {
       featureSelector = createFeatureSelector<number>(featureName);
+      warnSpy = spyOn(console, 'warn');
     });
 
     it('should memoize the result', () => {
@@ -455,6 +502,50 @@ describe('Selectors', () => {
       );
 
       expect(featureState$).toBeObservable(expected$);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it('should warn if the feature does not exist in the state', () => {
+      spyOn(ngCore, 'isDevMode').and.returnValue(true);
+
+      const state = { otherState: '' };
+
+      const state$ = cold('a', { a: state });
+      const expected$ = cold('a', { a: undefined });
+
+      const featureState$ = state$.pipe(
+        map(featureSelector),
+        distinctUntilChanged()
+      );
+
+      expect(featureState$).toBeObservable(expected$);
+      expect(warnSpy).toHaveBeenCalledWith(
+        'The feature name "@ngrx/router-store" does not exist ' +
+          'in the state, therefore createFeatureSelector cannot ' +
+          'access it.  Be sure it is imported in a loaded module using ' +
+          "StoreModule.forRoot('@ngrx/router-store', ...) or " +
+          "StoreModule.forFeature('@ngrx/router-store', ...).  If the " +
+          'default state is intended to be undefined, as is the case ' +
+          'with router state, this development-only warning message can ' +
+          'be ignored.'
+      );
+    });
+
+    it('should not warn if not in development mode', () => {
+      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+
+      const state = { otherState: '' };
+
+      const state$ = cold('a', { a: state });
+      const expected$ = cold('a', { a: undefined });
+
+      const featureState$ = state$.pipe(
+        map(featureSelector),
+        distinctUntilChanged()
+      );
+
+      expect(featureState$).toBeObservable(expected$);
+      expect(warnSpy).not.toHaveBeenCalled();
     });
   });
 
