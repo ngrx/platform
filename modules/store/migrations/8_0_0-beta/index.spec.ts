@@ -110,4 +110,48 @@ describe('Store Migration 8_0_0 beta', () => {
 
     expect(file).toBe(expected);
   });
+
+  it(`should not run schematics when not using named imports`, () => {
+    const contents = `
+      import * as store from '@ngrx/store';
+
+      @NgModule({
+        imports: [
+          CommonModule,
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          AuthModule,
+          AppRoutingModule,
+          store.StoreModule.forRoot(reducers),
+        ],
+        providers: [
+          {
+            provide: store.META_REDUCERS,
+            useValue: [fooReducer, barReducer]
+          }
+        ]
+        bootstrap: [AppComponent],
+      })
+      export class AppModule {}
+    `;
+
+    appTree.create('./app.module.ts', contents);
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+
+    let logs: string[] = [];
+    runner.logger.subscribe(log => logs.push(log.message));
+
+    const newTree = runner.runSchematic(
+      `ngrx-${pkgName}-migration-02`,
+      {},
+      appTree
+    );
+    const file = newTree.readContent('app.module.ts');
+
+    expect(file).toBe(contents);
+
+    expect(logs.length).toBe(1);
+    expect(logs[0]).toMatch(/NgRx 8 Migration: Unable to run the schematics/);
+  });
 });
