@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "8.2.0",
+  "version": "8.3.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "build": "bazel build //modules/...",
