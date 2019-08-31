@@ -41,11 +41,9 @@ describe('Selectors', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
 
-      const selector = createSelector(
-        incrementOne,
-        incrementTwo,
-        projectFn
-      )({});
+      const selector = createSelector(incrementOne, incrementTwo, projectFn)(
+        {}
+      );
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
@@ -53,11 +51,7 @@ describe('Selectors', () => {
     it('should allow an override of the selector return', () => {
       const projectFn = jasmine.createSpy('projectionFn').and.returnValue(2);
 
-      const selector = createSelector(
-        incrementOne,
-        incrementTwo,
-        projectFn
-      );
+      const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
       expect(selector.projector()).toBe(2);
 
@@ -70,11 +64,7 @@ describe('Selectors', () => {
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        incrementOne,
-        incrementTwo,
-        projectFn
-      );
+      const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
       selector.projector('', '');
 
@@ -92,10 +82,7 @@ describe('Selectors', () => {
           return state.unchanged;
         });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        neverChangingSelector,
-        projectFn
-      );
+      const selector = createSelector(neverChangingSelector, projectFn);
 
       selector(firstState);
       selector(secondState);
@@ -126,13 +113,33 @@ describe('Selectors', () => {
       expect(projectFn).toHaveBeenCalledTimes(2);
     });
 
+    it('should not memoize last successful projection result in case of error', () => {
+      const firstState = { ok: true };
+      const secondState = { ok: false };
+      const fail = () => {
+        throw new Error();
+      };
+      const projectorFn = jasmine
+        .createSpy('projectorFn', (s: any) => (s.ok ? s.ok : fail()))
+        .and.callThrough();
+      const selectorFn = jasmine
+        .createSpy('selectorFn', createSelector(state => state, projectorFn))
+        .and.callThrough();
+
+      selectorFn(firstState);
+
+      expect(() => selectorFn(secondState)).toThrow(new Error());
+      expect(() => selectorFn(secondState)).toThrow(new Error());
+
+      selectorFn(firstState);
+      expect(selectorFn).toHaveBeenCalledTimes(4);
+      expect(projectorFn).toHaveBeenCalledTimes(3);
+    });
+
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        incrementOne,
-        projectFn
-      );
+      const selector = createSelector(incrementOne, projectFn);
 
       selector(state);
       selector(state);
@@ -144,18 +151,9 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector(
-        incrementOne,
-        a => a
-      );
-      const parent = createSelector(
-        grandparent,
-        a => a
-      );
-      const child = createSelector(
-        parent,
-        a => a
-      );
+      const grandparent = createSelector(incrementOne, a => a);
+      const parent = createSelector(grandparent, a => a);
+      const child = createSelector(parent, a => a);
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -271,20 +269,16 @@ describe('Selectors', () => {
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [incrementOne, incrementTwo],
-        projectFn
-      )({});
+      const selector = createSelector([incrementOne, incrementTwo], projectFn)(
+        {}
+      );
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [incrementOne, incrementTwo],
-        projectFn
-      );
+      const selector = createSelector([incrementOne, incrementTwo], projectFn);
 
       selector.projector('', '');
 
@@ -302,10 +296,7 @@ describe('Selectors', () => {
           return state.unchanged;
         });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [neverChangingSelector],
-        projectFn
-      );
+      const selector = createSelector([neverChangingSelector], projectFn);
 
       selector(firstState);
       selector(secondState);
@@ -337,10 +328,7 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [incrementOne],
-        projectFn
-      );
+      const selector = createSelector([incrementOne], projectFn);
 
       selector(state);
       selector(state);
@@ -352,18 +340,9 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector(
-        [incrementOne],
-        a => a
-      );
-      const parent = createSelector(
-        [grandparent],
-        a => a
-      );
-      const child = createSelector(
-        [parent],
-        a => a
-      );
+      const grandparent = createSelector([incrementOne], a => a);
+      const parent = createSelector([grandparent], a => a);
+      const child = createSelector([parent], a => a);
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
