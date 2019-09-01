@@ -229,15 +229,25 @@ export function createReducer<S, A extends Action = Action>(
   initialState: S,
   ...ons: On<S>[]
 ): ActionReducer<S, A> {
-  const map = new Map<string, ActionReducer<S, A>>();
+  const map = new Map<string, ActionReducer<S, A>[]>();
   for (let on of ons) {
     for (let type of on.types) {
-      map.set(type, on.reducer);
+      if (map.has(type)) {
+        const existingReducers = map.get(type) as ActionReducer<S, A>[];
+        map.set(type, [...existingReducers, on.reducer]);
+      } else {
+        map.set(type, [on.reducer]);
+      }
     }
   }
 
   return function(state: S = initialState, action: A): S {
-    const reducer = map.get(action.type);
-    return reducer ? reducer(state, action) : state;
+    const reducers = map.get(action.type);
+    return reducers && reducers.length > 0
+      ? reducers.reduce(
+          (previousState, reducer) => reducer(previousState, action),
+          state
+        )
+      : state;
   };
 }
