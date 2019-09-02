@@ -603,22 +603,55 @@ export function createFeatureSelector<T, V>(
 export function createFeatureSelector(
   featureName: any
 ): MemoizedSelector<any, any> {
-  return createSelector(
-    (state: any) => {
-      const featureState = state[featureName];
-      if (isDevMode() && featureState === undefined) {
-        console.warn(
-          `The feature name \"${featureName}\" does ` +
-            'not exist in the state, therefore createFeatureSelector ' +
-            'cannot access it.  Be sure it is imported in a loaded module ' +
-            `using StoreModule.forRoot('${featureName}', ...) or ` +
-            `StoreModule.forFeature('${featureName}', ...).  If the default ` +
-            'state is intended to be undefined, as is the case with router ' +
-            'state, this development-only warning message can be ignored.'
-        );
-      }
-      return featureState;
+  return createSelector((state: any) => {
+    const featureState = state[featureName];
+    if (isDevMode() && featureState === undefined) {
+      console.warn(
+        `The feature name \"${featureName}\" does ` +
+          'not exist in the state, therefore createFeatureSelector ' +
+          'cannot access it.  Be sure it is imported in a loaded module ' +
+          `using StoreModule.forRoot('${featureName}', ...) or ` +
+          `StoreModule.forFeature('${featureName}', ...).  If the default ` +
+          'state is intended to be undefined, as is the case with router ' +
+          'state, this development-only warning message can be ignored.'
+      );
+    }
+    return featureState;
+  }, (featureState: any) => featureState);
+}
+export interface SelectorFactoryByParams<State, Props, Result> {
+  (props: Props): MemoizedSelector<State, Result>;
+}
+export interface SelectorFactoryWithParam<State, Props, Result>
+  extends SelectorFactoryByParams<State, Props, Result> {
+  release(): void;
+
+  setResult(value: any): void;
+}
+
+export function createSelectorFactoryWithCache<State, Props, Result>(
+  selectorFactory: SelectorFactoryByParams<State, Props, Result>
+): SelectorFactoryWithParam<State, Props, Result> {
+  const selectors: Map<Props, MemoizedSelector<State, Result>> = new Map();
+  let selector: MemoizedSelector<State, Result> | undefined;
+
+  function CachedSelectorFactory(
+    param: Props
+  ): MemoizedSelector<State, Result> {
+    selector = selectors.get(param);
+    if (selector === undefined) {
+      selector = selectorFactory(param);
+      selectors.set(param, selector);
+    }
+    return selector;
+  }
+
+  return Object.assign(CachedSelectorFactory, {
+    release: () => {
+      selectors.clear();
     },
-    (featureState: any) => featureState
-  );
+    setResult: (result: any) => {
+      selector = createSelector({} as any, () => result);
+    },
+  });
 }

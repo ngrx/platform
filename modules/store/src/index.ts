@@ -34,6 +34,8 @@ export {
   MemoizedSelectorWithProps,
   resultMemoize,
   DefaultProjectorFn,
+  createSelectorFactoryWithCache,
+  SelectorFactoryWithParam,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';
 export {

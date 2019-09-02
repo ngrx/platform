@@ -7,6 +7,8 @@ import {
   createSelectorFactory,
   resultMemoize,
   MemoizedProjection,
+  createSelectorFactoryWithCache,
+  SelectorFactoryWithParam,
 } from '@ngrx/store';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -41,11 +43,9 @@ describe('Selectors', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
 
-      const selector = createSelector(
-        incrementOne,
-        incrementTwo,
-        projectFn
-      )({});
+      const selector = createSelector(incrementOne, incrementTwo, projectFn)(
+        {}
+      );
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
@@ -53,11 +53,7 @@ describe('Selectors', () => {
     it('should allow an override of the selector return', () => {
       const projectFn = jasmine.createSpy('projectionFn').and.returnValue(2);
 
-      const selector = createSelector(
-        incrementOne,
-        incrementTwo,
-        projectFn
-      );
+      const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
       expect(selector.projector()).toBe(2);
 
@@ -70,11 +66,7 @@ describe('Selectors', () => {
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        incrementOne,
-        incrementTwo,
-        projectFn
-      );
+      const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
       selector.projector('', '');
 
@@ -92,10 +84,7 @@ describe('Selectors', () => {
           return state.unchanged;
         });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        neverChangingSelector,
-        projectFn
-      );
+      const selector = createSelector(neverChangingSelector, projectFn);
 
       selector(firstState);
       selector(secondState);
@@ -129,10 +118,7 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        incrementOne,
-        projectFn
-      );
+      const selector = createSelector(incrementOne, projectFn);
 
       selector(state);
       selector(state);
@@ -144,18 +130,9 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector(
-        incrementOne,
-        a => a
-      );
-      const parent = createSelector(
-        grandparent,
-        a => a
-      );
-      const child = createSelector(
-        parent,
-        a => a
-      );
+      const grandparent = createSelector(incrementOne, a => a);
+      const parent = createSelector(grandparent, a => a);
+      const child = createSelector(parent, a => a);
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -271,20 +248,16 @@ describe('Selectors', () => {
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [incrementOne, incrementTwo],
-        projectFn
-      )({});
+      const selector = createSelector([incrementOne, incrementTwo], projectFn)(
+        {}
+      );
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [incrementOne, incrementTwo],
-        projectFn
-      );
+      const selector = createSelector([incrementOne, incrementTwo], projectFn);
 
       selector.projector('', '');
 
@@ -302,10 +275,7 @@ describe('Selectors', () => {
           return state.unchanged;
         });
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [neverChangingSelector],
-        projectFn
-      );
+      const selector = createSelector([neverChangingSelector], projectFn);
 
       selector(firstState);
       selector(secondState);
@@ -337,10 +307,7 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector(
-        [incrementOne],
-        projectFn
-      );
+      const selector = createSelector([incrementOne], projectFn);
 
       selector(state);
       selector(state);
@@ -352,18 +319,9 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector(
-        [incrementOne],
-        a => a
-      );
-      const parent = createSelector(
-        [grandparent],
-        a => a
-      );
-      const child = createSelector(
-        [parent],
-        a => a
-      );
+      const grandparent = createSelector([incrementOne], a => a);
+      const parent = createSelector([grandparent], a => a);
+      const child = createSelector([parent], a => a);
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -663,6 +621,95 @@ describe('Selectors', () => {
       expect(result2).toBeDefined();
       expect(result1).not.toBe(result2);
       expect(result1).not.toEqual(result2);
+    });
+  });
+  describe('createSelectorFactoryWithCache', () => {
+    const mockState = {
+      propA: {
+        a: 1,
+        b: 2,
+        c: 3,
+      },
+      propB: {
+        d: 4,
+        e: 5,
+        f: 6,
+      },
+    };
+
+    const selectPropA = createFeatureSelector<typeof mockState.propA>('propA');
+
+    describe('Use a selector created by createSelectorFactoryWithCache', () => {
+      let selectCMultipliedBy: SelectorFactoryWithParam<
+        typeof mockState,
+        number,
+        number
+      >;
+      let insideProjection: jasmine.Spy;
+      beforeEach(() => {
+        insideProjection = jasmine.createSpy('projection');
+        selectCMultipliedBy = createSelectorFactoryWithCache(
+          (multiplier: number) =>
+            createSelector(
+              selectPropA,
+              (propA: { a: number; b: number; c: number }) => {
+                insideProjection();
+                return propA.c * multiplier;
+              }
+            )
+        );
+      });
+
+      it('Should select the correct data', () => {
+        expect(selectCMultipliedBy(4)(mockState)).toEqual(
+          mockState.propA.c * 4
+        );
+      });
+
+      describe('Using the selector with several different parameters', () => {
+        it('projection function should be called once for each parameter', () => {
+          const times5 = selectCMultipliedBy(5)(mockState);
+          const times7 = selectCMultipliedBy(7)(mockState);
+          expect(insideProjection).toHaveBeenCalledTimes(2);
+        });
+
+        it('projection function should not be called again if called with the same parameter', () => {
+          const times5 = selectCMultipliedBy(5)(mockState);
+          const times7 = selectCMultipliedBy(7)(mockState);
+          const times5again = selectCMultipliedBy(5)(mockState);
+          expect(insideProjection).toHaveBeenCalledTimes(2);
+        });
+
+        it('selector data should be correct even when called with different params', () => {
+          const times5 = selectCMultipliedBy(5)(mockState);
+          const times7 = selectCMultipliedBy(7)(mockState);
+          const times5again = selectCMultipliedBy(5)(mockState);
+          const times7again = selectCMultipliedBy(7)(mockState);
+          expect(times5).toEqual(mockState.propA.c * 5);
+          expect(times5again).toEqual(mockState.propA.c * 5);
+          expect(times7).toEqual(mockState.propA.c * 7);
+          expect(times7again).toEqual(mockState.propA.c * 7);
+        });
+      });
+
+      describe('underlying state change', () => {
+        it('projection should be called again if state changed', () => {
+          expect(selectCMultipliedBy(5)(mockState)).toEqual(
+            mockState.propA.c * 5
+          );
+          expect(insideProjection).toHaveBeenCalledTimes(1);
+          expect(selectCMultipliedBy(5)(mockState)).toEqual(
+            mockState.propA.c * 5
+          );
+          expect(insideProjection).toHaveBeenCalledTimes(1);
+          expect(
+            selectCMultipliedBy(5)(
+              Object.assign({}, mockState, { propA: { c: 100 } })
+            )
+          ).toEqual(500);
+          expect(insideProjection).toHaveBeenCalledTimes(2);
+        });
+      });
     });
   });
 });
