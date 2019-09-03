@@ -155,7 +155,7 @@ const userReducer = createReducer(
     return adapter.addMany(users, state);
   }),
   on(UserActions.upsertUsers, (state, { users }) => {
-    return adapter.upsertUsers(users, state);
+    return adapter.upsertMany(users, state);
   }),
   on(UserActions.updateUser, (state, { user }) => {
     return adapter.updateOne(user, state);
