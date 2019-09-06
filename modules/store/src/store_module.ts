@@ -5,6 +5,8 @@ import {
   OnDestroy,
   InjectionToken,
   Injector,
+  Optional,
+  SkipSelf,
 } from '@angular/core';
 import {
   Action,
@@ -16,7 +18,7 @@ import {
   MetaReducer,
   RuntimeChecks,
 } from './models';
-import { compose, combineReducers, createReducerFactory } from './utils';
+import { combineReducers, createReducerFactory } from './utils';
 import {
   INITIAL_STATE,
   INITIAL_REDUCERS,
@@ -34,6 +36,7 @@ import {
   _FEATURE_CONFIGS,
   USER_PROVIDED_META_REDUCERS,
   _RESOLVED_META_REDUCERS,
+  _ROOT_STORE_GUARD,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -55,7 +58,10 @@ export class StoreRootModule {
     actions$: ActionsSubject,
     reducer$: ReducerObservable,
     scannedActions$: ScannedActionsSubject,
-    store: Store<any>
+    store: Store<any>,
+    @Optional()
+    @Inject(_ROOT_STORE_GUARD)
+    guard: any
   ) {}
 }
 
@@ -112,6 +118,11 @@ export class StoreModule {
     return {
       ngModule: StoreRootModule,
       providers: [
+        {
+          provide: _ROOT_STORE_GUARD,
+          useFactory: _provideForRootGuard,
+          deps: [[Store, new Optional(), new SkipSelf()]],
+        },
         { provide: _INITIAL_STATE, useValue: config.initialState },
         {
           provide: INITIAL_STATE,
@@ -284,4 +295,13 @@ export function _concatMetaReducers(
   userProvidedMetaReducers: MetaReducer[]
 ): MetaReducer[] {
   return metaReducers.concat(userProvidedMetaReducers);
+}
+
+export function _provideForRootGuard(store: Store<any>): any {
+  if (store) {
+    throw new TypeError(
+      `StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.`
+    );
+  }
+  return 'guarded';
 }
