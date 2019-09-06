@@ -1,4 +1,10 @@
+import { NgModuleFactoryLoader, NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import {
+  RouterTestingModule,
+  SpyNgModuleFactoryLoader,
+} from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { Store, Action } from '@ngrx/store';
 import {
   EffectsModule,
@@ -20,6 +26,7 @@ describe('NgRx Effects Integration spec', () => {
           RootEffectWithInitActionWithPayload,
         ]),
         EffectsModule.forFeature([FeatEffectWithInitAction]),
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         {
@@ -73,6 +80,21 @@ describe('NgRx Effects Integration spec', () => {
     ]);
   });
 
+  it('throws if forRoot() is used more than once', (done: DoneFn) => {
+    let router: Router = TestBed.get(Router);
+    const loader: SpyNgModuleFactoryLoader = TestBed.get(NgModuleFactoryLoader);
+
+    loader.stubbedModules = { feature: FeatModuleWithForRoot };
+    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+    router.navigateByUrl('/feature-path').catch((err: TypeError) => {
+      expect(err.message).toBe(
+        'EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.'
+      );
+      done();
+    });
+  });
+
   class RootEffectWithInitAction implements OnInitEffects {
     ngrxOnInitEffects(): Action {
       return { type: '[RootEffectWithInitAction]: INIT' };
@@ -110,4 +132,9 @@ describe('NgRx Effects Integration spec', () => {
 
     constructor(private effectIdentifier: string) {}
   }
+
+  @NgModule({
+    imports: [EffectsModule.forRoot([])],
+  })
+  class FeatModuleWithForRoot {}
 });
