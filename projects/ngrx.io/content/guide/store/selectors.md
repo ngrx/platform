@@ -346,5 +346,3 @@ Finally, the component will subscribe to the store, telling the number of state 
 // Subscribe to the store using the custom pipeable operator
 store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 </code-example>
-
-See the [advanced example live in action in a Stackblitz](https://stackblitz.com/edit/angular-ngrx-effects-1rj88y?file=app%2Fstore%2Ffoo.ts)
