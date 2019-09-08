@@ -122,7 +122,7 @@ describe('Action Schematic', () => {
         `${projectPath}/src/app/foo.actions.spec.ts`
       );
 
-      expect(fileContent).toMatch(/expect\(new fromFoo.LoadFoos\(\)\)/);
+      expect(fileContent).toMatch(/expect\(new FooActions.LoadFoos\(\)\)/);
     });
   });
 
