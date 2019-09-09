@@ -74,6 +74,12 @@ Usage:
 
 In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
 
+<div class="alert is-helpful">
+
+**Note:** Reset overridden selectors using the `MockStore.resetSelectors()` method to prevent other tests from using the overridden selector value.  This is shown in the above example.
+
+</div>
+
 Try the <live-example name="testing-store"></live-example>.
 
 ### Integration Testing
