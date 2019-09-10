@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {
   Action,
@@ -13,6 +14,17 @@ import {
 import { MockState } from './mock_state';
 import { MockSelector } from './mock_selector';
 import { MOCK_SELECTORS } from './tokens';
+
+if (typeof afterEach === 'function') {
+  afterEach(() => {
+    try {
+      const store = TestBed.get(Store) as MockStore<any>;
+      if (store && 'resetSelectors' in store) {
+        store.resetSelectors();
+      }
+    } catch {}
+  });
+}
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
