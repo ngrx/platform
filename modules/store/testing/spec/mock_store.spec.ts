@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { INCREMENT } from '../../spec/fixtures/counter';
 import { skip, take } from 'rxjs/operators';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Store, createSelector, select } from '@ngrx/store';
+import { Store, createSelector, select, StoreModule } from '@ngrx/store';
+import { INCREMENT } from '../../spec/fixtures/counter';
 
 interface TestAppSchema {
   counter1: number;
@@ -257,5 +257,49 @@ describe('Mock Store', () => {
     mockStore
       .pipe(select(selector3))
       .subscribe(result => expect(result).toBe(1));
+  });
+});
+
+describe('Cleans up after each test', () => {
+  const selectData = createSelector(
+    (state: any) => state,
+    state => state.value
+  );
+
+  it('should return the mocked selectors value', (done: DoneFn) => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({
+          initialState: {
+            value: 100,
+          },
+          selectors: [{ selector: selectData, value: 200 }],
+        }),
+      ],
+    });
+
+    const store = TestBed.get<Store<any>>(Store) as Store<any>;
+    store.pipe(select(selectData)).subscribe(v => {
+      expect(v).toBe(200);
+      done();
+    });
+  });
+
+  it('should return the real value', (done: DoneFn) => {
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({} as any, {
+          initialState: {
+            value: 300,
+          },
+        }),
+      ],
+    });
+
+    const store = TestBed.get<Store<any>>(Store) as Store<any>;
+    store.pipe(select(selectData)).subscribe(v => {
+      expect(v).toBe(300);
+      done();
+    });
   });
 });
