@@ -1,5 +1,11 @@
 import { Selector, SelectorWithProps } from './models';
 import { isDevMode } from '@angular/core';
+import {
+  CacheConfig,
+  createCache,
+  createKeySelector,
+  SelectorCache,
+} from 'modules/store/src/cache/cache.util';
 
 export type AnyFn = (...args: any[]) => any;
 
@@ -21,6 +27,7 @@ export interface MemoizedSelector<
   ProjectorFn = DefaultProjectorFn<Result>
 > extends Selector<State, Result> {
   release(): void;
+
   projector: ProjectorFn;
   setResult: (result?: Result) => void;
 }
@@ -32,6 +39,7 @@ export interface MemoizedSelectorWithProps<
   ProjectorFn = DefaultProjectorFn<Result>
 > extends SelectorWithProps<State, Props, Result> {
   release(): void;
+
   projector: ProjectorFn;
   setResult: (result?: Result) => void;
 }
@@ -619,9 +627,11 @@ export function createFeatureSelector(
     return featureState;
   }, (featureState: any) => featureState);
 }
+
 export interface SelectorFactoryByParams<State, Props, Result> {
   (props: Props): MemoizedSelector<State, Result>;
 }
+
 export interface SelectorFactoryWithParam<State, Props, Result>
   extends SelectorFactoryByParams<State, Props, Result> {
   release(): void;
@@ -630,28 +640,74 @@ export interface SelectorFactoryWithParam<State, Props, Result>
 }
 
 export function createSelectorFactoryWithCache<State, Props, Result>(
-  selectorFactory: SelectorFactoryByParams<State, Props, Result>
+  selectorFactory: SelectorFactoryByParams<State, Props, Result>,
+  cacheConfig: CacheConfig<Props> = {}
 ): SelectorFactoryWithParam<State, Props, Result> {
-  const selectors: Map<Props, MemoizedSelector<State, Result>> = new Map();
+  const selectorsCache: SelectorCache<MemoizedSelector<any, any>> = createCache<
+    Props,
+    MemoizedSelector<State, Result>
+  >(cacheConfig);
+  const keySelector = createKeySelector(cacheConfig);
   let selector: MemoizedSelector<State, Result> | undefined;
 
   function CachedSelectorFactory(
     param: Props
   ): MemoizedSelector<State, Result> {
-    selector = selectors.get(param);
+    const cacheKey = keySelector(param);
+    selector = selectorsCache.get(cacheKey);
     if (selector === undefined) {
       selector = selectorFactory(param);
-      selectors.set(param, selector);
+      selectorsCache.set(param, selector);
     }
     return selector;
   }
 
   return Object.assign(CachedSelectorFactory, {
     release: () => {
-      selectors.clear();
+      selectorsCache.clear();
     },
     setResult: (result: any) => {
       selector = createSelector({} as any, () => result);
     },
   });
+}
+
+export function createCachedSelector<State, Props, Result>(
+  cacheConfig: CacheConfig,
+  selectorFactory: (
+    ...input: any[]
+  ) => MemoizedSelectorWithProps<State, Props, Result> = createSelector
+) {
+  const selectorsCache: SelectorCache<
+    MemoizedSelectorWithProps<State, Props, Result>
+  > = createCache(cacheConfig);
+  const keySelector = createKeySelector(cacheConfig);
+
+  return function(
+    ...funcs: any[]
+  ): MemoizedSelectorWithProps<State, Props, Result> {
+    const projector = funcs[funcs.length - 1];
+
+    let selector = function(...args: any[]) {
+      const state = args.slice(0, args.length - 1);
+      const props = args[args.length - 1];
+      const cacheKey = keySelector(props);
+      let cacheResponse = selectorsCache.get(cacheKey);
+      if (cacheResponse === undefined) {
+        cacheResponse = selectorFactory(...(funcs as any[]));
+        selectorsCache.set(cacheKey, cacheResponse);
+      }
+
+      return (cacheResponse as any)(...state, props);
+    };
+    return Object.assign(selector, {
+      projector,
+      release: () => {
+        selectorsCache.clear();
+      },
+      setResult: (result: any) => {
+        selector = createSelector({} as any, () => result);
+      },
+    });
+  };
 }

@@ -9,6 +9,8 @@ import {
   MemoizedProjection,
   createSelectorFactoryWithCache,
   SelectorFactoryWithParam,
+  createCachedSelector,
+  MemoizedSelectorWithProps,
 } from '@ngrx/store';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -709,6 +711,45 @@ describe('Selectors', () => {
           ).toEqual(500);
           expect(insideProjection).toHaveBeenCalledTimes(2);
         });
+      });
+    });
+    describe('createCachedSelector', () => {
+      let cachedSelector: MemoizedSelectorWithProps<
+        typeof mockState,
+        number,
+        number
+      >;
+      let insideProjection: jasmine.Spy;
+      beforeEach(() => {
+        insideProjection = jasmine.createSpy('projection');
+        cachedSelector = createCachedSelector<typeof mockState, number, number>(
+          {}
+        )(
+          selectPropA,
+          (propA: { a: number; b: number; c: number }, multiplier: number) => {
+            insideProjection();
+            return propA.c * multiplier;
+          }
+        );
+      });
+      it('returns expected state', () => {
+        expect(cachedSelector(mockState, 2)).toEqual(mockState.propA.c * 2);
+      });
+      it('returns does not run twice for same props', () => {
+        cachedSelector(mockState, 2);
+        cachedSelector(mockState, 5);
+        cachedSelector(mockState, 2);
+        expect(insideProjection).toHaveBeenCalledTimes(2);
+      });
+      it('returns correct state when called multiple times', () => {
+        const times5 = cachedSelector(mockState, 5);
+        const times7 = cachedSelector(mockState, 7);
+        const times5again = cachedSelector(mockState, 5);
+        const times7again = cachedSelector(mockState, 7);
+        expect(times5).toEqual(mockState.propA.c * 5);
+        expect(times5again).toEqual(mockState.propA.c * 5);
+        expect(times7).toEqual(mockState.propA.c * 7);
+        expect(times7again).toEqual(mockState.propA.c * 7);
       });
     });
   });
