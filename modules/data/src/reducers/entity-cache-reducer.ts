@@ -39,7 +39,7 @@ export class EntityCacheReducerFactory {
   ) {}
 
   /**
-   * Create the ngrx-data entity cache reducer which either responds to entity cache level actions
+   * Create the @ngrx/data entity cache reducer which either responds to entity cache level actions
    * or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.
    */
   create(): ActionReducer<EntityCache, Action> {
