@@ -135,7 +135,7 @@ The demo uses this helper to create hero and villain filters. Here's how the app
  * matches the case-insensitive pattern.
  */
 export function nameAndSayingFilter(entities: Villain[], pattern: string) {
-  return PropsFilterFnFactory < Villain > ['name', 'saying'](guide/data/entities, pattern);
+  return PropsFilterFnFactory<Villain> ['name', 'saying'](entities, pattern);
 }
 ```
 
