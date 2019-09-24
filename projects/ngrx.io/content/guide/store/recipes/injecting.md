@@ -56,8 +56,35 @@ export class FeatureModule {}
 
 ## Injecting Meta-Reducers
 
-To inject 'middleware' meta reducers, use the `META_REDUCERS` injection token exported in
+To inject an initial set of meta-reducers, use the `USER_PROVIDED_META_REDUCERS` injection token exported in
 the Store API and a `Provider` to register the meta reducers through dependency
+injection.
+
+<code-example header="app.module.ts">
+import { MetaReducer, USER_PROVIDED_META_REDUCERS } from '@ngrx/store';
+import { SomeService } from './some.service';
+import * as fromRoot from './reducers';
+
+export function getMetaReducers(
+  some: SomeService
+): MetaReducer&lt;fromRoot.State&gt;[] {
+  // return initial meta reducers;
+}
+
+@NgModule({
+  providers: [
+    {
+      provide: USER_PROVIDED_META_REDUCERS,
+      deps: [SomeService],
+      useFactory: getMetaReducers
+    },
+  ],
+})
+export class AppModule {}
+</code-example>
+
+To inject 'middleware' meta reducers, use the `META_REDUCERS` injection token exported in
+the Store API and a `Provider` for every meta-reducer to register through dependency
 injection.
 
 <code-example header="app.module.ts">
