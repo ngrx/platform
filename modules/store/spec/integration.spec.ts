@@ -21,6 +21,12 @@ import {
   visibilityFilter,
   VisibilityFilters,
 } from './fixtures/todos';
+import {
+  RouterTestingModule,
+  SpyNgModuleFactoryLoader,
+} from '@angular/router/testing';
+import { Component, NgModuleFactoryLoader, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Todo {
   id: number;
@@ -476,6 +482,32 @@ describe('ngRx Integration spec', () => {
 
       store.pipe(select(state => state)).subscribe(state => {
         expect(state).toEqual(expected);
+      });
+    });
+
+    it('throws if forRoot() is used more than once', (done: DoneFn) => {
+      @NgModule({
+        imports: [StoreModule.forRoot({})],
+      })
+      class FeatureModule {}
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({}), RouterTestingModule.withRoutes([])],
+      });
+
+      let router: Router = TestBed.get(Router);
+      const loader: SpyNgModuleFactoryLoader = TestBed.get(
+        NgModuleFactoryLoader
+      );
+
+      loader.stubbedModules = { feature: FeatureModule };
+      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+      router.navigateByUrl('/feature-path').catch((err: TypeError) => {
+        expect(err.message).toBe(
+          'StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.'
+        );
+        done();
       });
     });
   });

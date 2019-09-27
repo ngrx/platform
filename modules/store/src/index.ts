@@ -33,6 +33,7 @@ export {
   MemoizedSelector,
   MemoizedSelectorWithProps,
   resultMemoize,
+  DefaultProjectorFn,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';
 export {

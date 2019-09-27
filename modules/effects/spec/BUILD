@@ -11,6 +11,7 @@ ts_test_library(
     deps = [
         "//modules/effects",
         "//modules/store",
+        "@npm//@angular/router",
         "@npm//rxjs",
         "@npm//ts-snippet",
     ],

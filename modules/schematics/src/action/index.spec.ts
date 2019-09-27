@@ -114,6 +114,16 @@ describe('Action Schematic', () => {
 
       expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
     });
+
+    it('should create spec class with right imports', () => {
+      const options = { ...defaultOptions, spec: true };
+      const tree = schematicRunner.runSchematic('action', options, appTree);
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.spec.ts`
+      );
+
+      expect(fileContent).toMatch(/expect\(new FooActions.LoadFoos\(\)\)/);
+    });
   });
 
   describe('action creators', () => {

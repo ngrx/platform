@@ -7,7 +7,7 @@ import {
 } from '@ngrx/store';
 import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
-import { ROOT_EFFECTS } from './tokens';
+import { ROOT_EFFECTS, _ROOT_EFFECTS_GUARD } from './tokens';
 
 export const ROOT_EFFECTS_INIT = '@ngrx/effects/init';
 
@@ -19,7 +19,10 @@ export class EffectsRootModule {
     store: Store<any>,
     @Inject(ROOT_EFFECTS) rootEffects: any[],
     @Optional() storeRootModule: StoreRootModule,
-    @Optional() storeFeatureModule: StoreFeatureModule
+    @Optional() storeFeatureModule: StoreFeatureModule,
+    @Optional()
+    @Inject(_ROOT_EFFECTS_GUARD)
+    guard: any
   ) {
     runner.start();
 
