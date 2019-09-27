@@ -1,5 +1,11 @@
 import * as ts from 'typescript';
-import { Rule, chain, Tree } from '@angular-devkit/schematics';
+import { tags, logging } from '@angular-devkit/core';
+import {
+  Rule,
+  chain,
+  Tree,
+  SchematicContext,
+} from '@angular-devkit/schematics';
 import {
   ReplaceChange,
   createReplaceChange,
@@ -10,7 +16,7 @@ import {
 const META_REDUCERS = 'META_REDUCERS';
 
 function updateMetaReducersToken(): Rule {
-  return (tree: Tree) => {
+  return (tree: Tree, context: SchematicContext) => {
     visitTSSourceFiles(tree, sourceFile => {
       const createChange = (node: ts.Node) =>
         createReplaceChange(
@@ -22,7 +28,11 @@ function updateMetaReducersToken(): Rule {
 
       const changes: ReplaceChange[] = [];
       changes.push(
-        ...findMetaReducersImportStatements(sourceFile, createChange)
+        ...findMetaReducersImportStatements(
+          sourceFile,
+          createChange,
+          context.logger
+        )
       );
       changes.push(...findMetaReducersAssignment(sourceFile, createChange));
 
@@ -37,11 +47,22 @@ export default function(): Rule {
 
 function findMetaReducersImportStatements(
   sourceFile: ts.SourceFile,
-  createChange: (node: ts.Node) => ReplaceChange
+  createChange: (node: ts.Node) => ReplaceChange,
+  logger: logging.LoggerApi
 ) {
+  let canRunSchematics = false;
+
   const metaReducerImports = sourceFile.statements
     .filter(ts.isImportDeclaration)
     .filter(isNgRxStoreImport)
+    .filter(p => {
+      canRunSchematics = Boolean(
+        p.importClause &&
+          p.importClause.namedBindings &&
+          (p.importClause!.namedBindings! as ts.NamedImports).elements
+      );
+      return canRunSchematics;
+    })
     .map(p =>
       (p.importClause!.namedBindings! as ts.NamedImports).elements.filter(
         isMetaReducersImportSpecifier
@@ -50,6 +71,15 @@ function findMetaReducersImportStatements(
     .reduce((imports, curr) => imports.concat(curr), []);
 
   const changes = metaReducerImports.map(createChange);
+  if (!canRunSchematics && changes.length === 0) {
+    logger.info(tags.stripIndent`
+      NgRx 8 Migration: Unable to run the schematics to rename \`META_REDUCERS\` to \`USER_PROVIDED_META_REDUCERS\`
+      in file '${sourceFile.fileName}'.
+
+      For more info see https://ngrx.io/guide/migration/v8#meta_reducers-token.
+    `);
+  }
+
   return changes;
 
   function isNgRxStoreImport(importDeclaration: ts.ImportDeclaration) {

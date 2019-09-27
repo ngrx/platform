@@ -1,6 +1,9 @@
 import { InjectionToken } from '@angular/core';
 import { RuntimeChecks, MetaReducer } from './models';
 
+export const _ROOT_STORE_GUARD = new InjectionToken<void>(
+  '@ngrx/store Internal Root Guard'
+);
 export const _INITIAL_STATE = new InjectionToken(
   '@ngrx/store Internal Initial State'
 );

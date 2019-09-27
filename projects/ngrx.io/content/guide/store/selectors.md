@@ -333,7 +333,7 @@ export const selectLastStateTransitions = (count: number) => {
     select(selectProjectedValues),
     // Combines the last `count` state values in array
     scan((acc, curr) => {
-      return [ curr, acc[0], acc[1] ].filter(val => val !== undefined);
+      return [ curr, ...acc ].filter((val, index) => index < count && val !== undefined)
     }, [] as {foo: number; bar: string}[]) // XX: Explicit type hint for the array.
                                           // Equivalent to what is emitted by the selector
   );
@@ -346,5 +346,3 @@ Finally, the component will subscribe to the store, telling the number of state 
 // Subscribe to the store using the custom pipeable operator
 store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 </code-example>
-
-See the [advanced example live in action in a Stackblitz](https://stackblitz.com/edit/angular-ngrx-effects-1rj88y?file=app%2Fstore%2Ffoo.ts)
