@@ -50,6 +50,13 @@
       "description": "Adds initial setup for state management"
     },
 
+    "data": {
+      "aliases": ["dt"],
+      "factory": "./src/data",
+      "schema": "./src/data/schema.json",
+      "description": "Adds a data entity service"
+    },
+
     "ng-add": {
       "aliases": ["init"],
       "factory": "./src/ng-add",
