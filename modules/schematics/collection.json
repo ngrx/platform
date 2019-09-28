@@ -64,6 +64,13 @@
       "description": "Add selectors"
     },
 
+    "data": {
+      "aliases": ["dt"],
+      "factory": "./src/data",
+      "schema": "./src/data/schema.json",
+      "description": "Adds a data entity service"
+    },
+
     "ng-add": {
       "aliases": ["init"],
       "factory": "./src/ng-add",
