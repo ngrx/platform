@@ -63,6 +63,7 @@ ts_test_library(
     deps = [
         ":schematics",
         "//modules/schematics-core",
+        "@npm//@angular-devkit/core",
         "@npm//@angular-devkit/schematics",
         "@npm//@schematics/angular",
     ],
