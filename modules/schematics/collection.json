@@ -56,7 +56,6 @@
       "schema": "./src/store/schema.json",
       "description": "Adds initial setup for state management"
     },
-
     "selector": {
       "aliases": ["se"],
       "factory": "./src/selector",
