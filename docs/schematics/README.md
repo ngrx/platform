@@ -87,7 +87,6 @@ ng generate @ngrx/schematics:effect App --root --module app.module.ts
 - [Feature](feature.md)
 - [Reducer](reducer.md)
 - [Store](store.md)
-- [Data](data.md)
 
 ## API Documentation
 
