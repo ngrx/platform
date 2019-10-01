@@ -34,6 +34,4 @@ describe('Auth Guard', () => {
 
     expect(guard.canActivate()).toBeObservable(expected);
   });
-
-  afterAll(() => store.resetSelectors());
 });
