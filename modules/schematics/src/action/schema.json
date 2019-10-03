@@ -10,7 +10,8 @@
       "$default": {
         "$source": "argv",
         "index": 0
-      }
+      },
+      "x-prompt": "What should be the name of the action?"
     },
     "path": {
       "type": "string",
@@ -44,14 +45,16 @@
       "default": false,
       "description":
         "Specifies if api success and failure actions should be generated.",
-      "aliases": ["a"]
+      "aliases": ["a"],
+      "x-prompt": "Should we generate success and failure actions?"
     },
     "creators": {
       "type": "boolean",
       "default": false,
       "description":
         "Specifies whether to use creator functions for handling actions and reducers.",
-      "aliases": ["c"]
+      "aliases": ["c"],
+      "x-prompt": "Do you want to use the create function?"
     }
   },
   "required": []
