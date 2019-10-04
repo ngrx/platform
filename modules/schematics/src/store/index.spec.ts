@@ -4,6 +4,7 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as StoreOptions } from './schema';
+import { getWorkspace, getWorkspacePath } from '../../../schematics-core';
 import {
   getTestProjectPath,
   createWorkspace,
@@ -125,6 +126,27 @@ describe('Store Schematic', () => {
       files.indexOf(`${specifiedProjectPath}/src/app/reducers/index.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
+
+  it('should fail if project is not provided and defaultProject does not exist', () => {
+    const options = {
+      ...defaultOptions,
+      project: undefined,
+    };
+    changeWorkspaceDefaultProject('not-existing-project');
+
+    expect(() => {
+      schematicRunner.runSchematic('store', options, appTree);
+    }).toThrowError(
+      'Project not-existing-project does not exist. Please provide a valid project.'
+    );
+  });
+
+  function changeWorkspaceDefaultProject(defaultProject: string) {
+    const workspace = getWorkspace(appTree);
+    const path = getWorkspacePath(appTree);
+    workspace.defaultProject = defaultProject;
+    appTree.overwrite(path, JSON.stringify(workspace, null, 2));
+  }
 
   it('should not be provided by default', () => {
     const options = { ...defaultOptions };

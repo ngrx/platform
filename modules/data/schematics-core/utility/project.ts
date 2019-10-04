@@ -1,4 +1,4 @@
-import { getWorkspace } from './config';
+import { getWorkspace, WorkspaceSchema } from './config';
 import { Tree } from '@angular-devkit/schematics';
 
 export interface WorkspaceProject {
@@ -6,12 +6,10 @@ export interface WorkspaceProject {
   projectType: string;
 }
 
-export function getProject(
-  host: Tree,
+function getProjectName(
+  workspace: WorkspaceSchema,
   options: { project?: string | undefined; path?: string | undefined }
-): WorkspaceProject {
-  const workspace = getWorkspace(host);
-
+): string {
   if (!options.project) {
     options.project =
       workspace.defaultProject !== undefined
@@ -19,7 +17,24 @@ export function getProject(
         : Object.keys(workspace.projects)[0];
   }
 
-  return workspace.projects[options.project];
+  return options.project;
+}
+
+export function getProject(
+  host: Tree,
+  options: { project?: string | undefined; path?: string | undefined }
+): WorkspaceProject {
+  const workspace = getWorkspace(host);
+  const projectName = getProjectName(workspace, options);
+  const project = workspace.projects[projectName];
+
+  if (!project) {
+    throw new Error(
+      `Project ${projectName} does not exist. Please provide a valid project.`
+    );
+  }
+
+  return project;
 }
 
 export function getProjectPath(
