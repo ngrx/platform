@@ -44,7 +44,7 @@ export class AppComponent {
      * tree to the provided selector
      */
     this.showSidenav$ = this.store.pipe(select(fromRoot.getShowSidenav));
-    this.loggedIn$ = this.store.pipe(select(fromAuth.getLoggedIn));
+    this.loggedIn$ = this.store.pipe(select(fromAuth.selectLoggedIn));
   }
 
   closeSidenav() {
