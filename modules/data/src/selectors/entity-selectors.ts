@@ -2,10 +2,8 @@ import { Inject, Injectable, Optional } from '@angular/core';
 
 // Prod build requires `MemoizedSelector even though not used.
 import { MemoizedSelector } from '@ngrx/store';
-import { createFeatureSelector, createSelector, Selector } from '@ngrx/store';
+import { createSelector, Selector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
-
-import { Observable } from 'rxjs';
 
 import { EntityCache } from '../reducers/entity-cache';
 import {
@@ -19,7 +17,6 @@ import {
   ChangeStateMap,
 } from '../reducers/entity-collection';
 import { EntityCollectionCreator } from '../reducers/entity-collection-creator';
-import { EntityFilterFn } from '../entity-metadata/entity-filters';
 import { EntityMetadata } from '../entity-metadata/entity-metadata';
 
 /**

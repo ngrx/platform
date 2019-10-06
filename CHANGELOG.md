@@ -1,3 +1,17 @@
+<a name="8.3.0"></a>
+
+# [8.3.0](https://github.com/ngrx/platform/compare/8.2.0...8.3.0) (2019-08-29)
+
+### Bug Fixes
+
+- **data:** use correct guard when handling optimistic update ([#2060](https://github.com/ngrx/platform/issues/2060)) ([34c0420](https://github.com/ngrx/platform/commit/34c0420)), closes [#2059](https://github.com/ngrx/platform/issues/2059)
+- **store:** add DefaultProjectorFn to public API ([#2090](https://github.com/ngrx/platform/issues/2090)) ([2d37b48](https://github.com/ngrx/platform/commit/2d37b48))
+- **store:** should not run schematics when not using named imports ([#2095](https://github.com/ngrx/platform/issues/2095)) ([7cadbc0](https://github.com/ngrx/platform/commit/7cadbc0)), closes [#2093](https://github.com/ngrx/platform/issues/2093)
+
+### Features
+
+- **store:** add verbose error message for undefined feature state in development mode ([#2078](https://github.com/ngrx/platform/issues/2078)) ([6946e2e](https://github.com/ngrx/platform/commit/6946e2e)), closes [#1897](https://github.com/ngrx/platform/issues/1897)
+
 <a name="8.2.0"></a>
 
 # [8.2.0](https://github.com/ngrx/platform/compare/8.1.0...8.2.0) (2019-07-31)

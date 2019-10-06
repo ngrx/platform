@@ -1,5 +1,5 @@
 // AOT v5 bug:
-// NO BARRELS or else `ng build --aot` of any app using ngrx-data produces strange errors
+// NO BARRELS or else `ng build --aot` of any app using @ngrx/data produces strange errors
 // actions
 export * from './actions/entity-action-factory';
 export * from './actions/entity-action-guard';

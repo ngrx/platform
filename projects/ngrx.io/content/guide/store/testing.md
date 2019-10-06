@@ -7,7 +7,7 @@ You can write tests validating behaviors corresponding to the specific state sna
 
 <div class="alert is-helpful">
 
-**Note:** All dispatched actions don't affect to the state, but you can see them in the `Actions` stream.
+**Note:** All dispatched actions don't affect the state, but you can see them in the `Actions` stream.
 
 </div>
 
@@ -73,6 +73,12 @@ Usage:
 <code-example header="auth-guard.service.spec.ts" path="testing-store/src/app/auth-guard.service.spec.ts"></code-example>
 
 In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
+
+<div class="alert is-helpful">
+
+**Note:** `MockStore` will reset all of the mocked selectors after each test (in the `afterEach()` hook) by calling the `MockStore.resetSelectors()` method.
+
+</div>
 
 Try the <live-example name="testing-store"></live-example>.
 

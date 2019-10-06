@@ -4,6 +4,7 @@ export {
   ActionReducer,
   ActionReducerMap,
   ActionReducerFactory,
+  ActionType,
   Creator,
   MetaReducer,
   Selector,
@@ -32,6 +33,7 @@ export {
   MemoizedSelector,
   MemoizedSelectorWithProps,
   resultMemoize,
+  DefaultProjectorFn,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';
 export {

@@ -148,6 +148,15 @@
         {
           "title": "Instrumentation",
           "url": "guide/store-devtools/config"
+        },
+        {
+          "title": "Recipes",
+          "children": [
+            {
+              "title": "Exclude from Production",
+              "url": "guide/store-devtools/recipes/exclude"
+            }
+          ]
         }
       ]
     },

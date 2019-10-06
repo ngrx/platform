@@ -1,19 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { HttpErrorResponse } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
 import { Action, StoreModule, Store } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
-
-import { Observable, of, ReplaySubject, throwError, timer } from 'rxjs';
-import {
-  delay,
-  filter,
-  first,
-  mergeMap,
-  skip,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { first, skip } from 'rxjs/operators';
 
 import {
   EntityAction,

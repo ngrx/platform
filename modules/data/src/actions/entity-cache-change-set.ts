@@ -1,9 +1,4 @@
-import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-
-import { EntityActionOptions } from './entity-action';
-import { EntityCacheAction } from './entity-cache-action';
-import { DataServiceError } from '../dataservices/data-service-error';
 
 export enum ChangeSetOperation {
   Add = 'Add',
@@ -53,7 +48,7 @@ export interface ChangeSet<T = any> {
 
   /**
    * An arbitrary, serializable object that should travel with the ChangeSet.
-   * Meaningful to the ChangeSet producer and consumer. Ignored by ngrx-data.
+   * Meaningful to the ChangeSet producer and consumer. Ignored by @ngrx/data.
    */
   extras?: T;
 

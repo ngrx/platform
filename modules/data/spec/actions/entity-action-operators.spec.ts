@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 
 import { Subject } from 'rxjs';
 
