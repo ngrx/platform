@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, createEffect } from '@ngrx/effects';
 import { Update } from '@ngrx/entity';
 
 import { asyncScheduler, Observable, of, race, SchedulerLike } from 'rxjs';
@@ -36,18 +36,22 @@ export class EntityEffects {
   /**
    * Observable of non-null cancellation correlation ids from CANCEL_PERSIST actions
    */
-  @Effect({ dispatch: false })
-  cancel$: Observable<any> = this.actions.pipe(
-    ofEntityOp(EntityOp.CANCEL_PERSIST),
-    map((action: EntityAction) => action.payload.correlationId),
-    filter(id => id != null)
+  cancel$: Observable<any> = createEffect(
+    () =>
+      this.actions.pipe(
+        ofEntityOp(EntityOp.CANCEL_PERSIST),
+        map((action: EntityAction) => action.payload.correlationId),
+        filter(id => id != null)
+      ),
+    { dispatch: false }
   );
 
-  @Effect()
   // `mergeMap` allows for concurrent requests which may return in any order
-  persist$: Observable<Action> = this.actions.pipe(
-    ofEntityOp(persistOps),
-    mergeMap(action => this.persist(action))
+  persist$: Observable<Action> = createEffect(() =>
+    this.actions.pipe(
+      ofEntityOp(persistOps),
+      mergeMap(action => this.persist(action))
+    )
   );
 
   constructor(
