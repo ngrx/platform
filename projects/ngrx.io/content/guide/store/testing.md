@@ -76,7 +76,7 @@ In this example, we mock the `getLoggedIn` selector by using `overrideSelector`,
 
 <div class="alert is-helpful">
 
-**Note:** Reset overridden selectors using the `MockStore.resetSelectors()` method to prevent other tests from using the overridden selector value.  This is shown in the above example.
+**Note:** `MockStore` will reset all of the mocked selectors after each test (in the `afterEach()` hook) by calling the `MockStore.resetSelectors()` method.
 
 </div>
 

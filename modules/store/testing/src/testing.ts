@@ -23,7 +23,7 @@ export function provideMockStore<T = any>(
   return [
     ActionsSubject,
     MockState,
-    { provide: INITIAL_STATE, useValue: config.initialState },
+    { provide: INITIAL_STATE, useValue: config.initialState || {} },
     { provide: MOCK_SELECTORS, useValue: config.selectors },
     { provide: StateObservable, useClass: MockState },
     { provide: ReducerManager, useClass: MockReducerManager },

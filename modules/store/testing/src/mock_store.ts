@@ -36,6 +36,7 @@ export class MockStore<T> extends Store<T> {
   >();
 
   public scannedActions$: Observable<Action>;
+  private lastState: T;
 
   constructor(
     private state$: MockState<T>,
@@ -46,7 +47,7 @@ export class MockStore<T> extends Store<T> {
   ) {
     super(state$, actionsObserver, reducerManager);
     this.resetSelectors();
-    this.state$.next(this.initialState);
+    this.setState(this.initialState);
     this.scannedActions$ = actionsObserver.asObservable();
     if (mockSelectors) {
       mockSelectors.forEach(mockSelector => {
@@ -62,6 +63,7 @@ export class MockStore<T> extends Store<T> {
 
   setState(nextState: T): void {
     this.state$.next(nextState);
+    this.lastState = nextState;
   }
 
   overrideSelector<T, Result>(
@@ -108,7 +110,7 @@ export class MockStore<T> extends Store<T> {
   }
 
   select(selector: any, prop?: any) {
-    if (MockStore.selectors.has(selector)) {
+    if (typeof selector === 'string' && MockStore.selectors.has(selector)) {
       return new BehaviorSubject<any>(
         MockStore.selectors.get(selector)
       ).asObservable();
@@ -123,5 +125,12 @@ export class MockStore<T> extends Store<T> {
 
   removeReducer() {
     /* noop */
+  }
+
+  /**
+   * Refreshes the existing state.
+   */
+  refreshState() {
+    this.setState({ ...(this.lastState as T) });
   }
 }

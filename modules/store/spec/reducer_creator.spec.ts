@@ -86,6 +86,23 @@ import {on} from './modules/store/src/reducer_creator';
         state = fooBarReducer(state, bar({ bar: 54 }));
         expect(state).toEqual(['[foobar] FOO', '[foobar] BAR']);
       });
+
+      it('should support "on"s to have identical action types', () => {
+        const increase = createAction('[COUNTER] increase');
+
+        const counterReducer = createReducer(
+          0,
+          on(increase, state => state + 1),
+          on(increase, state => state + 1)
+        );
+
+        expect(typeof counterReducer).toEqual('function');
+
+        let state = 5;
+
+        state = counterReducer(state, increase());
+        expect(state).toEqual(7);
+      });
     });
   });
 });

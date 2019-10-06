@@ -1,8 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-import { skip, take } from 'rxjs/operators';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { skip, take, tap } from 'rxjs/operators';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Store, createSelector, select, StoreModule } from '@ngrx/store';
+import {
+  Store,
+  createSelector,
+  select,
+  StoreModule,
+  MemoizedSelector,
+  createFeatureSelector,
+} from '@ngrx/store';
 import { INCREMENT } from '../../spec/fixtures/counter';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 interface TestAppSchema {
   counter1: number;
@@ -257,6 +267,81 @@ describe('Mock Store', () => {
     mockStore
       .pipe(select(selector3))
       .subscribe(result => expect(result).toBe(1));
+  });
+});
+
+describe('Refreshing state', () => {
+  type TodoState = {
+    items: { name: string; done: boolean }[];
+  };
+  const selectTodosState = createFeatureSelector<TodoState>('todos');
+  const todos = createSelector(selectTodosState, todos => todos.items);
+  const getTodoItems = (elSelector: string) =>
+    fixture.debugElement.queryAll(By.css(elSelector));
+  let mockStore: MockStore<TodoState>;
+  let mockSelector: MemoizedSelector<TodoState, any[]>;
+  const initialTodos = [{ name: 'aaa', done: false }];
+  let fixture: ComponentFixture<TodosComponent>;
+
+  @Component({
+    selector: 'app-todos',
+    template: `
+      <ul>
+        <li *ngFor="let todo of todos | async">
+          {{ todo.name }} <input type="checkbox" [checked]="todo.done" />
+        </li>
+
+        <p *ngFor="let todo of todosSelect | async">
+          {{ todo.name }} <input type="checkbox" [checked]="todo.done" />
+        </p>
+      </ul>
+    `,
+  })
+  class TodosComponent implements OnInit {
+    todos: Observable<any[]>;
+    todosSelect: Observable<any[]>;
+
+    constructor(private store: Store<{}>) {}
+
+    ngOnInit() {
+      this.todos = this.store.pipe(select(todos));
+      this.todosSelect = this.store.select(todos);
+    }
+  }
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [TodosComponent],
+      providers: [provideMockStore()],
+    }).compileComponents();
+
+    mockStore = TestBed.get(Store);
+    mockSelector = mockStore.overrideSelector(todos, initialTodos);
+
+    fixture = TestBed.createComponent(TodosComponent);
+    fixture.detectChanges();
+  });
+
+  it('should work with store and select operator', () => {
+    const newTodos = [{ name: 'bbb', done: true }];
+    mockSelector.setResult(newTodos);
+    mockStore.refreshState();
+
+    fixture.detectChanges();
+
+    expect(getTodoItems('li').length).toBe(1);
+    expect(getTodoItems('li')[0].nativeElement.textContent.trim()).toBe('bbb');
+  });
+
+  it('should work with store.select method', () => {
+    const newTodos = [{ name: 'bbb', done: true }];
+    mockSelector.setResult(newTodos);
+    mockStore.refreshState();
+
+    fixture.detectChanges();
+
+    expect(getTodoItems('p').length).toBe(1);
+    expect(getTodoItems('p')[0].nativeElement.textContent.trim()).toBe('bbb');
   });
 });
 
