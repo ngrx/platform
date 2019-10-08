@@ -50,10 +50,10 @@ describe('Find Book Page', () => {
       providers: [
         provideMockStore({
           selectors: [
-            { selector: fromBooks.getSearchQuery, value: '' },
-            { selector: fromBooks.getSearchResults, value: [] },
-            { selector: fromBooks.getSearchLoading, value: false },
-            { selector: fromBooks.getSearchError, value: '' },
+            { selector: fromBooks.selectSearchQuery, value: '' },
+            { selector: fromBooks.selectSearchResults, value: [] },
+            { selector: fromBooks.selectSearchLoading, value: false },
+            { selector: fromBooks.selectSearchError, value: '' },
           ],
         }),
       ],

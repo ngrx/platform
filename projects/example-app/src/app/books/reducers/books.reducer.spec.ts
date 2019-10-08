@@ -130,9 +130,9 @@ describe('BooksReducer', () => {
   });
 
   describe('Selectors', () => {
-    describe('getSelectedId', () => {
+    describe('selectSelectedId', () => {
       it('should return the selected id', () => {
-        const result = fromBooks.getSelectedId({
+        const result = fromBooks.selectSelectedId({
           ...initialState,
           selectedBookId: book1.id,
         });

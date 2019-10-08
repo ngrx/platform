@@ -43,7 +43,7 @@ export class AppComponent {
      * Selectors can be applied with the `select` operator which passes the state
      * tree to the provided selector
      */
-    this.showSidenav$ = this.store.pipe(select(fromRoot.getShowSidenav));
+    this.showSidenav$ = this.store.pipe(select(fromRoot.selecthowSidenav));
     this.loggedIn$ = this.store.pipe(select(fromAuth.selectLoggedIn));
   }
 

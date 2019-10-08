@@ -31,12 +31,12 @@ export class FindBookPageComponent {
 
   constructor(private store: Store<fromBooks.State>) {
     this.searchQuery$ = store.pipe(
-      select(fromBooks.getSearchQuery),
+      select(fromBooks.selectSearchQuery),
       take(1)
     );
-    this.books$ = store.pipe(select(fromBooks.getSearchResults));
-    this.loading$ = store.pipe(select(fromBooks.getSearchLoading));
-    this.error$ = store.pipe(select(fromBooks.getSearchError));
+    this.books$ = store.pipe(select(fromBooks.selectSearchResults));
+    this.loading$ = store.pipe(select(fromBooks.selectSearchLoading));
+    this.error$ = store.pipe(select(fromBooks.selectSearchError));
   }
 
   search(query: string) {

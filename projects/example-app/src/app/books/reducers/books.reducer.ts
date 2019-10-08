@@ -81,4 +81,4 @@ export const reducer = createReducer(
  * use-case.
  */
 
-export const getSelectedId = (state: State) => state.selectedBookId;
+export const selectSelectedId = (state: State) => state.selectedBookId;

@@ -19,4 +19,4 @@ export const reducer = createReducer(
   on(LayoutActions.openSidenav, state => ({ showSidenav: true }))
 );
 
-export const getShowSidenav = (state: State) => state.showSidenav;
+export const selectShowSidenav = (state: State) => state.showSidenav;
