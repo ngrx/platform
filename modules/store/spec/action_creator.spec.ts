@@ -77,6 +77,7 @@ describe('Action Creators', () => {
           const value = fooAction.bar;
       `).toFail(/'bar' does not exist on type/);
     });
+
     it('should not allow type property', () => {
       expectSnippet(`
             const foo = createAction('FOO', (type: string) => ({type}));
