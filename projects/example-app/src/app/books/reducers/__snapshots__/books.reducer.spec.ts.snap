@@ -352,6 +352,8 @@ Object {
 
 exports[`BooksReducer Selectors getSelectedId should return the selected id 1`] = `"1"`;
 
+exports[`BooksReducer Selectors selectSelectedId should return the selected id 1`] = `"1"`;
+
 exports[`BooksReducer undefined action should return the default state 1`] = `
 Object {
   "entities": Object {},
