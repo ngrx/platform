@@ -4,7 +4,7 @@ import {
   TypedAction,
   FunctionWithParametersType,
   PropsReturnType,
-  DisallowTypeProperty,
+  DisallowArraysAndTypeProperty,
 } from './models';
 
 // Action creators taken from ts-action library and modified a bit to better
@@ -23,7 +23,7 @@ export function createAction<
   R extends object
 >(
   type: T,
-  creator: Creator<P, DisallowTypeProperty<R>>
+  creator: Creator<P, DisallowArraysAndTypeProperty<R>>
 ): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
 /**
  * @description

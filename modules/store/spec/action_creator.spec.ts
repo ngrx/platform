@@ -84,6 +84,14 @@ describe('Action Creators', () => {
         /Type '{ type: string; }' is not assignable to type '"type property is not allowed in action creators"/
       );
     });
+
+    it('should not allow ararys', () => {
+      expectSnippet(`
+          const foo = createAction('FOO', () => [ ]);
+        `).toFail(
+        /Type 'any\[]' is not assignable to type '"arrays are not allowed in action creators"'/
+      );
+    });
   });
 
   describe('empty', () => {
@@ -155,6 +163,14 @@ describe('Action Creators', () => {
           const foo = createAction('FOO', props<{ type: number }>());
         `).toFail(
         /Argument of type '"type property is not allowed in action creators"' is not assignable to parameter of type/
+      );
+    });
+
+    it('should not allow ararys', () => {
+      expectSnippet(`
+          const foo = createAction('FOO', props<[]>());
+        `).toFail(
+        /Argument of type '"arrays are not allowed in action creators"' is not assignable to parameter of type/
       );
     });
   });

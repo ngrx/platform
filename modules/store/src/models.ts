@@ -53,9 +53,13 @@ export type SelectorWithProps<State, Props, Result> = (
   props: Props
 ) => Result;
 
-export type DisallowTypeProperty<T> = T extends { type: any }
-  ? TypePropertyIsNotAllowed
-  : T;
+export const arraysAreNotAllowedMsg =
+  'arrays are not allowed in action creators';
+type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
+
+export type DisallowArraysAndTypeProperty<T> = T extends any[]
+  ? ArraysAreNotAllowed
+  : T extends { type: any } ? TypePropertyIsNotAllowed : T;
 
 export const typePropertyIsNotAllowedMsg =
   'type property is not allowed in action creators';
@@ -67,13 +71,17 @@ type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 export type Creator<
   P extends any[] = any[],
   R extends object = object
-> = R extends { type: any }
-  ? TypePropertyIsNotAllowed
-  : FunctionWithParametersType<P, R>;
+> = R extends any[]
+  ? ArraysAreNotAllowed
+  : R extends { type: any }
+    ? TypePropertyIsNotAllowed
+    : FunctionWithParametersType<P, R>;
 
-export type PropsReturnType<T extends object> = T extends { type: any }
-  ? TypePropertyIsNotAllowed
-  : { _as: 'props'; _p: T };
+export type PropsReturnType<T extends object> = T extends any[]
+  ? ArraysAreNotAllowed
+  : T extends { type: any }
+    ? TypePropertyIsNotAllowed
+    : { _as: 'props'; _p: T };
 
 /**
  * See `Creator`.
