@@ -82,7 +82,7 @@ describe('Action Creators', () => {
       expectSnippet(`
             const foo = createAction('FOO', (type: string) => ({type}));
         `).toFail(
-        /Type '{ type: string; }' is not assignable to type '"type property is not allowed in action creators"/
+        /Type '{ type: string; }' is not assignable to type '"type property is not allowed in action creators"'/
       );
     });
 
