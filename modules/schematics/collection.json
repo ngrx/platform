@@ -22,6 +22,13 @@
       "description": "Add side effect class"
     },
 
+    "create-effect-migration": {
+      "aliases": ["cefm"],
+      "factory": "./src/create-effect-migration",
+      "schema": "./src/create-effect-migration/schema.json",
+      "description": "Migrated usages of @Effect() to createEffect()"
+    },
+
     "entity": {
       "aliases": ["en"],
       "factory": "./src/entity",

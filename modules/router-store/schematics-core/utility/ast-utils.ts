@@ -13,6 +13,8 @@ import {
   NoopChange,
   createReplaceChange,
   ReplaceChange,
+  RemoveChange,
+  createRemoveChange,
 } from './change';
 import { Path } from '@angular-devkit/core';
 
@@ -650,7 +652,7 @@ export function replaceImport(
   importFrom: string,
   importAsIs: string,
   importToBe: string
-): ReplaceChange[] {
+): (ReplaceChange | RemoveChange)[] {
   const imports = sourceFile.statements
     .filter(ts.isImportDeclaration)
     .filter(
@@ -663,32 +665,67 @@ export function replaceImport(
     return [];
   }
 
-  const changes = imports
-    .map(p => (p.importClause!.namedBindings! as ts.NamedImports).elements)
-    .reduce((imports, curr) => imports.concat(curr), [] as ts.ImportSpecifier[])
-    .map(specifier => {
-      if (!ts.isImportSpecifier(specifier)) {
-        return { hit: false };
+  const importText = (specifier: ts.ImportSpecifier) => {
+    if (specifier.name.text) {
+      return specifier.name.text;
+    }
+
+    // if import is renamed
+    if (specifier.propertyName && specifier.propertyName.text) {
+      return specifier.propertyName.text;
+    }
+
+    return '';
+  };
+
+  const changes = imports.map(p => {
+    const importSpecifiers = (p.importClause!.namedBindings! as ts.NamedImports)
+      .elements;
+
+    const isAlreadyImported = importSpecifiers
+      .map(importText)
+      .includes(importToBe);
+
+    const importChanges = importSpecifiers.map((specifier, index) => {
+      const text = importText(specifier);
+
+      // import is not the one we're looking for, can be skipped
+      if (text !== importAsIs) {
+        return undefined;
       }
 
-      if (specifier.name.text === importAsIs) {
-        return { hit: true, specifier, text: specifier.name.text };
+      // identifier has not been imported, simply replace the old text with the new text
+      if (!isAlreadyImported) {
+        return createReplaceChange(
+          sourceFile,
+          specifier!,
+          importAsIs,
+          importToBe
+        );
       }
 
-      // if import is renamed
-      if (
-        specifier.propertyName &&
-        specifier.propertyName.text === importAsIs
-      ) {
-        return { hit: true, specifier, text: specifier.propertyName.text };
+      const nextIdentifier = importSpecifiers[index + 1];
+      // identifer is not the last, also clean up the comma
+      if (nextIdentifier) {
+        return createRemoveChange(
+          sourceFile,
+          specifier,
+          specifier.getStart(sourceFile),
+          nextIdentifier.getStart(sourceFile)
+        );
       }
 
-      return { hit: false };
-    })
-    .filter(({ hit }) => hit)
-    .map(({ specifier, text }) =>
-      createReplaceChange(sourceFile, specifier!, text!, importToBe)
-    );
+      // there are no imports following, just remove it
+      return createRemoveChange(
+        sourceFile,
+        specifier,
+        specifier.getStart(sourceFile),
+        specifier.getEnd()
+      );
+    });
 
-  return changes;
+    return importChanges.filter(Boolean) as (ReplaceChange | RemoveChange)[];
+  });
+
+  return changes.reduce((imports, curr) => imports.concat(curr), []);
 }

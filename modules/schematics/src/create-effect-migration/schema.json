@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxCreateEffectMigration",
+  "title": "NgRx Effect Migration from @Effect to createEffect",
+  "type": "object",
+  "properties": {},
+  "required": []
+}
