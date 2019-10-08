@@ -166,9 +166,43 @@ describe('Creator migration', async () => {
 
   it('should not import createEffect if already imported', async () => {
     const input = tags.stripIndent`
-      import { Actions, ofType, createEffect } from '@ngrx/effects';
+      import { Actions, Effect, createEffect, ofType } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
+        @Effect()
+        logout$ = this.actions$.pipe(
+          ofType('LOGOUT'),
+          map(() => ({ type: 'LOGGED_OUT' }))
+        );
+        constructor(private actions$: Actions) {}
+      }
+    `;
+
+    const output = tags.stripIndent`
+      import { Actions, createEffect, ofType } from '@ngrx/effects';
+      @Injectable()
+      export class SomeEffectsClass {
+      **
+        logout$ = createEffect(() => this.actions$.pipe(
+          ofType('LOGOUT'),
+          map(() => ({ type: 'LOGGED_OUT' }))
+        ));
+        constructor(private actions$: Actions) {}
+      }
+    `;
+
+    await runTest(input, output);
+  });
+
+  it('should not run the schematic if the createEffect syntax is already used', async () => {
+    const input = tags.stripIndent`
+      import { Actions, createEffect, ofType } from '@ngrx/effects';
+      @Injectable()
+      export class SomeEffectsClass {
+        logout$ = createEffect(() => this.actions$.pipe(
+          ofType('LOGOUT'),
+          map(() => ({ type: 'LOGGED_OUT' }))
+        ));
         constructor(private actions$: Actions) {}
       }
     `;
