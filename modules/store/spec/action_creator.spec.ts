@@ -159,7 +159,6 @@ describe('Action Creators', () => {
     });
 
     it('should not allow type property', () => {
-      const foo = createAction('FOO', props<{ type: number }>() as any);
       expectSnippet(`
           const foo = createAction('FOO', props<{ type: number }>());
         `).toFail(
