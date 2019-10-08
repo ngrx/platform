@@ -53,4 +53,4 @@ export {
   RootStoreConfig,
   StoreConfig,
 } from './store_module';
-export { on, createReducer } from './reducer_creator';
+export { On, on, createReducer } from './reducer_creator';
