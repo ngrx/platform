@@ -1,0 +1,6 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+<% if(feature) { %>import { State, <%= camelize(name) %>FeatureKey } from '<%= reducerPath %>';
+
+export const select<%= classify(name) %>State = createFeatureSelector<State>(
+  <%= camelize(name) %>FeatureKey
+);<% } %>

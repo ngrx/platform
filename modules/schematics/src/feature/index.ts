@@ -45,6 +45,15 @@ export default function(options: FeatureOptions): Rule {
         api: options.api,
         creators: options.creators,
       }),
+      schematic('selector', {
+        flat: options.flat,
+        group: options.group,
+        name: options.name,
+        path: options.path,
+        project: options.project,
+        spec: options.spec,
+        feature: true,
+      }),
     ])(host, context);
   };
 }
