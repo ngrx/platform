@@ -71,7 +71,7 @@ export const selectBookEntitiesState = createSelector(
 
 export const selectSelectedBookId = createSelector(
   selectBookEntitiesState,
-  fromBooks.selectSelectedId
+  fromBooks.selectId
 );
 
 /**
