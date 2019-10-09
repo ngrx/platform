@@ -1,3 +1,21 @@
+<a name="8.4.0"></a>
+
+# [8.4.0](https://github.com/ngrx/platform/compare/8.3.0...8.4.0) (2019-10-09)
+
+### Bug Fixes
+
+- **schematics:** fixed the schematics/action spec template ([#2092](https://github.com/ngrx/platform/issues/2092)) ([ed3b1f9](https://github.com/ngrx/platform/commit/ed3b1f9)), closes [#2082](https://github.com/ngrx/platform/issues/2082)
+- **store:** improve consistency of memoized selector result when projection fails ([#2101](https://github.com/ngrx/platform/issues/2101)) ([c63941c](https://github.com/ngrx/platform/commit/c63941c)), closes [#2100](https://github.com/ngrx/platform/issues/2100)
+
+### Features
+
+- **effects:** throw error when forRoot() is used more than once ([b46748c](https://github.com/ngrx/platform/commit/b46748c))
+- **schematics:** add createEffect migration schematic ([#2136](https://github.com/ngrx/platform/issues/2136)) ([9eb1bd5](https://github.com/ngrx/platform/commit/9eb1bd5))
+- **store:** add refreshState method to mock store ([#2148](https://github.com/ngrx/platform/issues/2148)) ([30e876f](https://github.com/ngrx/platform/commit/30e876f)), closes [#2121](https://github.com/ngrx/platform/issues/2121)
+- **store:** allow multiple on handlers for the same action in createReducer([#2103](https://github.com/ngrx/platform/issues/2103)) ([9a70262](https://github.com/ngrx/platform/commit/9a70262)), closes [#1956](https://github.com/ngrx/platform/issues/1956)
+- **store:** cleanup selector after a test ([2964e2b](https://github.com/ngrx/platform/commit/2964e2b))
+- **store:** throw error when forRoot() is used more than once ([4304865](https://github.com/ngrx/platform/commit/4304865))
+
 <a name="8.3.0"></a>
 
 # [8.3.0](https://github.com/ngrx/platform/compare/8.2.0...8.3.0) (2019-08-29)
