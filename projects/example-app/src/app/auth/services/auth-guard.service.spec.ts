@@ -18,7 +18,7 @@ describe('Auth Guard', () => {
     store = TestBed.get(Store);
     guard = TestBed.get(AuthGuard);
 
-    loggedIn = store.overrideSelector(fromAuth.getLoggedIn, false);
+    loggedIn = store.overrideSelector(fromAuth.selectLoggedIn, false);
   });
 
   it('should return false if the user state is not logged in', () => {

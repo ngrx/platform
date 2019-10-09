@@ -17,8 +17,8 @@ import { LoginPageActions } from '@example-app/auth/actions';
   styles: [],
 })
 export class LoginPageComponent implements OnInit {
-  pending$ = this.store.pipe(select(fromAuth.getLoginPagePending));
-  error$ = this.store.pipe(select(fromAuth.getLoginPageError));
+  pending$ = this.store.pipe(select(fromAuth.selectLoginPagePending));
+  error$ = this.store.pipe(select(fromAuth.selectLoginPageError));
 
   constructor(private store: Store<fromAuth.State>) {}
 

@@ -25,7 +25,9 @@ describe('Login Page', () => {
       declarations: [LoginPageComponent, LoginFormComponent],
       providers: [
         provideMockStore({
-          selectors: [{ selector: fromAuth.getLoginPagePending, value: false }],
+          selectors: [
+            { selector: fromAuth.selectLoginPagePending, value: false },
+          ],
         }),
       ],
     });
