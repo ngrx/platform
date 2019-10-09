@@ -42,7 +42,7 @@
     },
     "entityConfig": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "Create the Entity config file"
     }
   },
