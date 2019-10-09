@@ -20,6 +20,12 @@ ng generate dt EntityName [options]
 
 ### Options
 
+Provide the project name where the entity files will be created.
+
+- `--project`
+  - Alias: `-p`
+  - Type: `string`
+
 Nest the data entity files within a folder based on the `data`.
 
 - `--flat`

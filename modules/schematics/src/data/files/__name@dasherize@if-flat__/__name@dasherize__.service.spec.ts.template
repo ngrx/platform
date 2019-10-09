@@ -8,12 +8,14 @@ describe('<%= classify(name) %>Service', () => {
   let service: <%= classify(name) %>Service;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       providers: [
         EntityCollectionServiceElementsFactory,
         <%= classify(name) %>Service
       ]
-    }).compileComponents();
+    });
+
+    await TestBed.compileComponents();
   });
 
   beforeEach(() => {

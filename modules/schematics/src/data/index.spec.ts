@@ -32,11 +32,8 @@ describe('Data Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create an data to specified project if provided', () => {
-    const options = {
-      ...defaultOptions,
-      project: 'baz',
-    };
+  it('should create the data service to a specified project if provided', () => {
+    const options = { ...defaultOptions, project: 'baz' };
 
     const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
       ...defaultAppOptions,
@@ -77,7 +74,7 @@ describe('Data Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  describe('service classe', () => {
+  describe('service class', () => {
     it('should import the correct model', () => {
       const options = { ...defaultOptions, spec: true };
       const tree = schematicRunner.runSchematic('data', options, appTree);
@@ -98,6 +95,8 @@ describe('Data Schematic', () => {
       expect(fileContent).toMatch(
         /export class FooService extends EntityCollectionServiceBase<Foo>/
       );
+
+      expect(fileContent).toMatch(/super\('Foo', serviceElementsFactory\);/);
     });
   });
 
