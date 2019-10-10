@@ -50,7 +50,7 @@ When used with the `--module` option, it registers an effect within the `Angular
   - Type: `boolean`
   - Default: `false`
 
-Generate a spec file alongside the action file.
+Generate a spec file alongside the effect file.
 
 - `--spec`
   - Type: `boolean`
