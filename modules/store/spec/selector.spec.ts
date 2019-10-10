@@ -511,18 +511,6 @@ describe('Selectors', () => {
 
           expect(warnSpy).not.toHaveBeenCalled();
         });
-
-        // it causes confusion when this message is logged
-        // because the initial state of router will always be undefined
-        // it also bloats the test log
-        it('"router" is the feature key', () => {
-          spyOn(ngCore, 'isDevMode').and.returnValue(false);
-          const selector = createFeatureSelector('router');
-
-          selector({ featureA: {} });
-
-          expect(warnSpy).not.toHaveBeenCalled();
-        });
       });
 
       describe('should log when: ', () => {
