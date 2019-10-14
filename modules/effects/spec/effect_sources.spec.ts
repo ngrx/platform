@@ -11,6 +11,7 @@ import {
   OnInitEffects,
   createEffect,
 } from '../';
+import { EffectsRunner } from '../src/effects_runner';
 import { Store } from '@ngrx/store';
 
 describe('EffectSources', () => {
@@ -21,6 +22,7 @@ describe('EffectSources', () => {
     TestBed.configureTestingModule({
       providers: [
         EffectSources,
+        EffectsRunner,
         {
           provide: Store,
           useValue: {
@@ -29,6 +31,9 @@ describe('EffectSources', () => {
         },
       ],
     });
+
+    const effectsRunner = TestBed.get(EffectsRunner);
+    effectsRunner.start();
 
     mockErrorReporter = TestBed.get(ErrorHandler);
     effectSources = TestBed.get(EffectSources);
@@ -52,7 +57,6 @@ describe('EffectSources', () => {
       }
     }
     const store = TestBed.get(Store);
-    effectSources.toActions().subscribe();
 
     effectSources.addEffects(new EffectWithInitAction());
 
@@ -69,7 +73,6 @@ describe('EffectSources', () => {
       }
     }
     const store = TestBed.get(Store);
-    effectSources.toActions().subscribe();
 
     effectSources.addEffects(new EffectWithInitAction());
     effectSources.addEffects(new EffectWithInitAction());
@@ -92,7 +95,6 @@ describe('EffectSources', () => {
       }
     }
     const store = TestBed.get(Store);
-    effectSources.toActions().subscribe();
 
     effectSources.addEffects(new EffectWithInitAction());
     effectSources.addEffects(new EffectWithInitAction());
