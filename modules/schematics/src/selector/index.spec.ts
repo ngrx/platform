@@ -103,76 +103,78 @@ describe('Selector Schematic', () => {
     ).toBeTruthy();
   });
 
-  it('should create a selector for a feature', () => {
-    const options = {
-      ...defaultOptions,
-      feature: true,
-    };
+  describe('With feature flag', () => {
+    it('should create a selector', () => {
+      const options = {
+        ...defaultOptions,
+        feature: true,
+      };
 
-    const tree = schematicRunner.runSchematic('selector', options, appTree);
-    const selectorsContent = tree.readContent(
-      `${projectPath}/src/app/foo.selectors.ts`
-    );
-    const specContent = tree.readContent(
-      `${projectPath}/src/app/foo.selectors.spec.ts`
-    );
+      const tree = schematicRunner.runSchematic('selector', options, appTree);
+      const selectorsContent = tree.readContent(
+        `${projectPath}/src/app/foo.selectors.ts`
+      );
+      const specContent = tree.readContent(
+        `${projectPath}/src/app/foo.selectors.spec.ts`
+      );
 
-    expect(cleanString(selectorsContent)).toBe(
-      cleanString(tags.stripIndent`
+      expect(cleanString(selectorsContent)).toBe(
+        cleanString(tags.stripIndent`
         import { createFeatureSelector, createSelector } from '@ngrx/store';
-        import { State, fooFeatureKey } from './foo.reducer';
+        import * as fromFoo from './foo.reducer';
 
-        export const selectFooState = createFeatureSelector<State>(
-          fooFeatureKey
+        export const selectFooState = createFeatureSelector<fromFoo.State>(
+          fromFoo.fooFeatureKey
         );
       `)
-    );
+      );
 
-    expect(cleanString(specContent)).toBe(
-      cleanString(tags.stripIndent`
-        import { fooFeatureKey } from './foo.reducer';
+      expect(cleanString(specContent)).toBe(
+        cleanString(tags.stripIndent`
+        import * as fromFoo from './foo.reducer';
         import { selectFooState } from './foo.selectors';
 
         describe('Foo Selectors', () => {
           it('should select the feature state', () => {
             const result = selectFooState({
-              [fooFeatureKey]: {}
+              [fromFoo.fooFeatureKey]: {}
             });
 
             expect(result).toEqual({});
           });
         });
       `)
-    );
-  });
+      );
+    });
 
-  it('should group and nest the selectors within a feature', () => {
-    const options = {
-      ...defaultOptions,
-      feature: true,
-      group: true,
-      flat: false,
-    };
+    it('should group and nest the selectors within a feature', () => {
+      const options = {
+        ...defaultOptions,
+        feature: true,
+        group: true,
+        flat: false,
+      };
 
-    const tree = schematicRunner.runSchematic('selector', options, appTree);
-    const selectorPath = `${projectPath}/src/app/selectors/foo/foo.selectors.ts`;
-    const specPath = `${projectPath}/src/app/selectors/foo/foo.selectors.spec.ts`;
+      const tree = schematicRunner.runSchematic('selector', options, appTree);
+      const selectorPath = `${projectPath}/src/app/selectors/foo/foo.selectors.ts`;
+      const specPath = `${projectPath}/src/app/selectors/foo/foo.selectors.spec.ts`;
 
-    expect(tree.files.includes(selectorPath)).toBeTruthy();
-    expect(tree.files.includes(specPath)).toBeTruthy();
+      expect(tree.files.includes(selectorPath)).toBeTruthy();
+      expect(tree.files.includes(specPath)).toBeTruthy();
 
-    const selectorContent = tree.readContent(selectorPath);
-    expect(selectorContent).toMatch(
-      /import\ \{ State, fooFeatureKey \} from\ \'\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
-    );
+      const selectorContent = tree.readContent(selectorPath);
+      expect(selectorContent).toMatch(
+        /import\ \* as fromFoo from\ \'\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
+      );
 
-    const specContent = tree.readContent(specPath);
-    expect(specContent).toMatch(
-      /import\ \{ fooFeatureKey \} from\ \'\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
-    );
-    expect(specContent).toMatch(
-      /import\ \{ selectFooState \} from\ \'\.\/foo\.selectors';/
-    );
+      const specContent = tree.readContent(specPath);
+      expect(specContent).toMatch(
+        /import\ \* as fromFoo from\ \'\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
+      );
+      expect(specContent).toMatch(
+        /import\ \{ selectFooState \} from\ \'\.\/foo\.selectors';/
+      );
+    });
   });
 
   function cleanString(value: string) {
