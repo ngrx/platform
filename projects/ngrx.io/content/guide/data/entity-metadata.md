@@ -196,12 +196,12 @@ the collection _before_ sending a corresponding HTTP request (_optimistic_) or _
 The caller can specify in the optional `isOptimistic` parameter.
 If the caller doesn't specify, the dispatcher chooses based on default options.
 
-The _default_ defaults are the safe ones: _optimistic_ for delete and _pessimistic_ for add and update.
+The _defaults_ are the safe ones: _optimistic_ for delete and _pessimistic_ for add and update.
 You can override those choices here.
 
 ### _additionalCollectionState_
 
-Each NgRx Data entity collection in the the store has
+Each NgRx Data entity collection in the store has
 [predefined properties](guide/data/entity-collection).
 
 You can add your own collection properties by setting the `additionalCollectionState` property to an object with those custom collection properties.
@@ -218,7 +218,7 @@ illustrate by adding `foo` and `bar` collection properties to test hero metadata
 
 The property values become the initial collection values for those properties when NgRx Data first creates the collection in the store.
 
-The NgRx Data library generates selectors for these properties but has no way to update them. You'll have to create or extend the existing reducers to do that yourself.
+The NgRx Data library generates selectors for these properties, but has no way to update them. You'll have to create or extend the existing reducers to do that yourself.
 
 If the property you want to add comes from `backend`, you will need some additional work to make sure the property can be saved into the store from `Effects` correctly.
 
