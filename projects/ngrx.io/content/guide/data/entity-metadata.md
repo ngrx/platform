@@ -110,7 +110,7 @@ In the accompanying demonstration app, the user can filter _heroes_ by name and 
 
 We felt this common scenario is worth building into the NgRx Data library. So every entity can have an _optional_ filter function.
 
-Each collection's `filteredEntities` selector applies the filter function to the collection, based on the user's filtering criteria, which are held in the the stored entity collection's `filter` property.
+Each collection's `filteredEntities` selector applies the filter function to the collection, based on the user's filtering criteria, which are held in the stored entity collection's `filter` property.
 
 If there is no filter function, the `filteredEntities` selector is the same as the `selectAll` selector, which returns all entities in the collection.
 
