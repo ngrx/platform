@@ -49,7 +49,7 @@ describe('NgRx Effects Integration spec', () => {
   });
 
   it('should dispatch init actions in the correct order', () => {
-    expect(dispatch.calls.count()).toBe(7);
+    expect(dispatch.calls.count()).toBe(6);
 
     // All of the root effects init actions are dispatched first
     expect(dispatch.calls.argsFor(0)).toEqual([
@@ -71,11 +71,6 @@ describe('NgRx Effects Integration spec', () => {
     ]);
 
     expect(dispatch.calls.argsFor(5)).toEqual([
-      { type: '[FeatEffectWithIdentifierAndInitAction]: INIT' },
-    ]);
-
-    // While the effect has the same identifier the init effect action is still being dispatched
-    expect(dispatch.calls.argsFor(6)).toEqual([
       { type: '[FeatEffectWithIdentifierAndInitAction]: INIT' },
     ]);
   });
