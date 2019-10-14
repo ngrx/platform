@@ -455,7 +455,7 @@ describe('Selectors', () => {
   });
 
   describe('createFeatureSelector', () => {
-    let featureName = '@ngrx/router-store';
+    let featureName = 'featureA';
     let featureSelector: (state: any) => number;
     let warnSpy: jasmine.Spy;
 
@@ -481,50 +481,51 @@ describe('Selectors', () => {
       );
 
       expect(featureState$).toBeObservable(expected$);
-      expect(warnSpy).not.toHaveBeenCalled();
     });
 
-    it('should warn if the feature does not exist in the state', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(true);
+    describe('Warning', () => {
+      describe('should not log when: ', () => {
+        it('the feature does exist', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const selector = createFeatureSelector('featureA');
 
-      const state = { otherState: '' };
+          selector({ featureA: {} });
 
-      const state$ = cold('a', { a: state });
-      const expected$ = cold('a', { a: undefined });
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
 
-      const featureState$ = state$.pipe(
-        map(featureSelector),
-        distinctUntilChanged()
-      );
+        it('the feature key exist but is falsy', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const selector = createFeatureSelector('featureB');
 
-      expect(featureState$).toBeObservable(expected$);
-      expect(warnSpy).toHaveBeenCalledWith(
-        'The feature name "@ngrx/router-store" does not exist ' +
-          'in the state, therefore createFeatureSelector cannot ' +
-          'access it.  Be sure it is imported in a loaded module using ' +
-          "StoreModule.forRoot('@ngrx/router-store', ...) or " +
-          "StoreModule.forFeature('@ngrx/router-store', ...).  If the " +
-          'default state is intended to be undefined, as is the case ' +
-          'with router state, this development-only warning message can ' +
-          'be ignored.'
-      );
-    });
+          selector({ featureA: {}, featureB: undefined });
 
-    it('should not warn if not in development mode', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
 
-      const state = { otherState: '' };
+        it('not in development mode', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(false);
+          const selector = createFeatureSelector('featureB');
 
-      const state$ = cold('a', { a: state });
-      const expected$ = cold('a', { a: undefined });
+          selector({ featureA: {} });
 
-      const featureState$ = state$.pipe(
-        map(featureSelector),
-        distinctUntilChanged()
-      );
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+      });
 
-      expect(featureState$).toBeObservable(expected$);
-      expect(warnSpy).not.toHaveBeenCalled();
+      describe('should log when: ', () => {
+        it('feature key does not exist', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const selector = createFeatureSelector('featureB');
+
+          selector({ featureA: {} });
+
+          expect(warnSpy).toHaveBeenCalled();
+          expect(warnSpy.calls.mostRecent().args[0]).toMatch(
+            /The feature name "featureB" does not exist/
+          );
+        });
+      });
     });
   });
 
