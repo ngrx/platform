@@ -15,7 +15,7 @@ ng generate selector selectorName [options]
 ##### OR
 
 ```sh
-ng generate s selectorName [options]
+ng generate se selectorName [options]
 ```
 
 ## Options

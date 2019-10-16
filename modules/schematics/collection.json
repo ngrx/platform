@@ -58,7 +58,7 @@
     },
 
     "selector": {
-      "aliases": ["s"],
+      "aliases": ["se"],
       "factory": "./src/selector",
       "schema": "./src/selector/schema.json",
       "description": "Add selectors"
