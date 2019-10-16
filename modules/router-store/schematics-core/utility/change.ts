@@ -148,6 +148,15 @@ export function createReplaceChange(
   );
 }
 
+export function createRemoveChange(
+  sourceFile: ts.SourceFile,
+  node: ts.Node,
+  from = node.getStart(sourceFile),
+  to = node.getEnd()
+): RemoveChange {
+  return new RemoveChange(sourceFile.fileName, from, to);
+}
+
 export function createChangeRecorder(
   tree: Tree,
   path: string,

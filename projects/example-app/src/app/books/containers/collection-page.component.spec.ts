@@ -40,7 +40,7 @@ describe('Collection Page', () => {
       ],
       providers: [
         provideMockStore({
-          selectors: [{ selector: fromBooks.getBookCollection, value: [] }],
+          selectors: [{ selector: fromBooks.selectBookCollection, value: [] }],
         }),
       ],
     });

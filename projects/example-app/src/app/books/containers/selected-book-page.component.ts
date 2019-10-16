@@ -24,7 +24,7 @@ export class SelectedBookPageComponent {
   isSelectedBookInCollection$: Observable<boolean>;
 
   constructor(private store: Store<fromBooks.State>) {
-    this.book$ = store.pipe(select(fromBooks.getSelectedBook)) as Observable<
+    this.book$ = store.pipe(select(fromBooks.selectSelectedBook)) as Observable<
       Book
     >;
     this.isSelectedBookInCollection$ = store.pipe(

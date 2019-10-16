@@ -7,12 +7,12 @@ import {
 import { Action } from '@ngrx/store';
 
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
-import { createConfig } from '../src/config';
+import { createConfig, DevToolsFeatureOptions } from '../src/config';
 import { unliftState } from '../src/utils';
 
 function createOptions(
   name: string = 'NgRx Store DevTools',
-  features: any = {
+  features: DevToolsFeatureOptions = {
     pause: true,
     lock: true,
     persist: true,
@@ -109,7 +109,6 @@ describe('DevtoolsExtension', () => {
       reduxDevtoolsExtension,
       createConfig({
         name: 'ngrx-store-devtool-todolist',
-        features: 'some features',
         maxAge: 10,
         serialize: true,
         // these two should not be added
@@ -122,7 +121,7 @@ describe('DevtoolsExtension', () => {
     devtoolsExtension.actions$.subscribe(() => null);
     const options = createOptions(
       'ngrx-store-devtool-todolist',
-      'some features',
+      undefined,
       true,
       10
     );
@@ -172,7 +171,6 @@ describe('DevtoolsExtension', () => {
         reduxDevtoolsExtension,
         createConfig({
           name: 'ngrx-store-devtool-todolist',
-          features: 'some features',
           maxAge: 10,
           serialize: true,
           // these two should not be added
@@ -181,9 +179,10 @@ describe('DevtoolsExtension', () => {
         }),
         <any>null
       );
+
       const options = createOptions(
         'ngrx-store-devtool-todolist',
-        'some features',
+        undefined,
         true,
         10
       );

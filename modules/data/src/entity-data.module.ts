@@ -110,7 +110,7 @@ export class EntityDataModule {
   }
 
   /**
-   * Add another class instance that contains @Effect methods.
+   * Add another class instance that contains effects.
    * @param effectSourceInstance a class instance that implements effects.
    * Warning: undocumented @ngrx/effects API
    */
