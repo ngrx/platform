@@ -27,7 +27,7 @@ require('zone.js/dist/jasmine-patch.js');
 
 // Override console.warn, otherwise we log too much to the console
 // This is because of the `runtimeChecks` warning when no runtime config is provided
-console.warn = () => {};
+console.warn = () => { };
 
 const { getTestBed } = require('@angular/core/testing');
 const {
@@ -38,7 +38,7 @@ const {
 getTestBed().initTestEnvironment(ServerTestingModule, platformServerTesting());
 
 runner.loadConfig({
-  spec_dir: 'modules',
+  spec_dir: 'modules/schematics/src/create-action-migration',
   spec_files: ['**/*.spec.ts'],
 });
 
