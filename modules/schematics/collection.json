@@ -29,6 +29,13 @@
       "description": "Migrated usages of @Effect() to createEffect()"
     },
 
+    "create-action-migration": {
+      "aliases": ["cacm"],
+      "factory": "./src/create-action-migration",
+      "schema": "./src/create-action-migration/schema.json",
+      "description": "Migrated usages of action class to createAction()"
+    },
+
     "entity": {
       "aliases": ["en"],
       "factory": "./src/entity",
