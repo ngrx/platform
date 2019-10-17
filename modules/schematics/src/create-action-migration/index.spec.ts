@@ -32,7 +32,7 @@ describe('Creator migration', async () => {
       export class SearchCompleteAction implements Action {
         readonly type = SEARCH_COMPLETE;
       
-        constructor(public payload: Book[]) { }
+        constructor(public payload: {blah: Book}) { }
       }
     `;
 

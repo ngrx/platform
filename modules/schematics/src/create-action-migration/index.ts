@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { Path } from '@angular-devkit/core';
+import { Path, tags } from '@angular-devkit/core';
 import { Tree, Rule, chain } from '@angular-devkit/schematics';
 import {
   InsertChange,
@@ -7,6 +7,7 @@ import {
   replaceImport,
   commitChanges,
 } from '@ngrx/schematics/schematics-core';
+import { camelize } from 'modules/effects/schematics-core/utility/strings';
 
 export function migrateToCreators(): Rule {
   return (host: Tree) =>
@@ -25,24 +26,68 @@ export function migrateToCreators(): Rule {
         return;
       }
 
-      const actionEnums = sourceFile.statements.filter(ts.isVariableStatement);
+      const actionTypeVariables = sourceFile.statements.filter(
+        ts.isVariableStatement
+      );
+      const actionEnumsRemovals = removeActionTypeVariables(
+        host,
+        path,
+        actionTypeVariables
+      );
 
-      const actionClasses = sourceFile.statements
-        .filter(ts.isClassDeclaration)
-        .filter(
-          statement =>
-            statement.heritageClauses && statement.heritageClauses.length
-        )
-        .filter(statement => {
-          return statement.heritageClauses!.filter(clause => {
-            return (clause.types || []).filter(type => {
-              return (
-                type.expression &&
-                (type.expression as ts.Identifier).text === 'Action'
-              );
-            }).length;
-          }).length;
-        });
+      const actionsClasses = getActionsClasses(sourceFile);
+
+      actionsClasses.forEach(clas => {
+        let type = clas.members
+          .filter(ts.isPropertyDeclaration)
+          .filter(member => (member.name as ts.Identifier).text === 'type')
+          .map(member => (member.initializer as ts.Identifier).text)[0];
+
+        if (type) {
+          let constructorTypeObj = clas.members
+            .filter(ts.isConstructorDeclaration)
+            .filter(
+              member => member.parameters.filter(param => param.type).length
+            )
+            .map(member => member.parameters[0].type)[0];
+
+          let payloadType;
+          if (constructorTypeObj) {
+            payloadType = host
+              .read(path)!
+              .toString('utf8')
+              .substring(constructorTypeObj.pos, constructorTypeObj.end)
+              .trim();
+          }
+
+          const typeValue = actionTypeVariables
+            .map(statement => statement.declarationList.declarations)
+            .filter(
+              declarations =>
+                declarations.filter(
+                  node => (node.name as ts.Identifier).text === type
+                ).length
+            )
+            .map(
+              declarations =>
+                (declarations[0].initializer as ts.Identifier).text
+            )[0];
+
+          if (typeValue) {
+            let actionName = camelize(clas.name!.text.replace('Action', ''));
+            let createAction = tags.stripIndent`
+              export const ${actionName} = createAction(
+                '${typeValue}'`;
+            if (payloadType) {
+              createAction += `,
+  props<{ payload: ${payloadType}} }>()`;
+            }
+            createAction += `
+);
+`;
+          }
+        }
+      });
 
       const effectsPerClass = sourceFile.statements
         .filter(ts.isClassDeclaration)
@@ -55,19 +100,6 @@ export function migrateToCreators(): Rule {
                 property.decorators.some(isEffectDecorator)
             )
         );
-
-      // const actionType = sourceFile.statements
-      //   .filter(ts.isClassDeclaration)
-      //   .map(classs =>
-      //     classs.members
-      //       .filter(ts.isPropertyDeclaration)
-      //       .map(property => property!.initializer)
-      //   );
-
-      //   const types = actionType.reduce(
-      //     (acc, types) => acc.concat(types),
-      //     []
-      //   );
 
       const effects = effectsPerClass.reduce(
         (acc, effects) => acc.concat(effects),
@@ -88,6 +120,48 @@ export function migrateToCreators(): Rule {
         ...createEffectsChanges,
       ]);
     });
+}
+
+function getActionsClasses(sourceFile: ts.SourceFile) {
+  return sourceFile.statements
+    .filter(ts.isClassDeclaration)
+    .filter(
+      statement => statement.heritageClauses && statement.heritageClauses.length
+    )
+    .filter(statement => {
+      return statement.heritageClauses!.filter(clause => {
+        return (clause.types || []).filter(type => {
+          return (
+            type.expression &&
+            (type.expression as ts.Identifier).text === 'Action'
+          );
+        }).length;
+      }).length;
+    });
+}
+
+function removeActionTypeVariables(
+  host: Tree,
+  path: Path,
+  typeVariables: ts.VariableStatement[]
+) {
+  const removes = typeVariables;
+  //   const removes = effects
+  //   .map(effect => effect.decorators)
+  //   .filter(decorators => decorators)
+  //   .map(decorators => {
+  //     const effectDecorators = decorators!.filter(isEffectDecorator);
+  //     return effectDecorators.map(decorator => {
+  //       return new RemoveChange(
+  //         path,
+  //         decorator.expression.pos - 1, // also get the @ sign
+  //         decorator.expression.end
+  //       );
+  //     });
+  //   })
+  //   .reduce((acc, removes) => acc.concat(removes), []);
+
+  // return [...removes];
 }
 
 function replaceEffectDecorators(
