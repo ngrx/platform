@@ -117,7 +117,7 @@ export function select<T, Props, K>(
 ): (source$: Observable<T>) => Observable<K>;
 export function select<T, a extends keyof T>(
   key: a,
-  props: null
+  props?: null
 ): (source$: Observable<T>) => Observable<T[a]>;
 export function select<T, a extends keyof T, b extends keyof T[a]>(
   key1: a,
