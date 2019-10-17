@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxSelector",
+  "title": "NgRx Selector Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the selector.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the selectors.",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "aliases": ["p"]
+    },
+    "spec": {
+      "type": "boolean",
+      "description": "Specifies if a spec file is generated.",
+      "default": false
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Flag to indicate if a dir is created."
+    },
+    "group": {
+      "type": "boolean",
+      "default": false,
+      "description": "Group selector file within 'selectors' folder",
+      "aliases": ["g"]
+    },
+    "feature": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flag to indicate if part of a feature schematic.",
+      "visible": false
+    }
+  },
+  "required": []
+}
