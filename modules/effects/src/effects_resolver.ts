@@ -51,10 +51,7 @@ export function mergeEffects(
   return merge(...observables$);
 }
 
-/**
- * @internal
- */
-export function resubscribeInCaseOfError<T extends Action = Action>(
+function resubscribeInCaseOfError<T extends Action>(
   observable$: Observable<T>,
   errorHandler?: ErrorHandler
 ): Observable<T> {
