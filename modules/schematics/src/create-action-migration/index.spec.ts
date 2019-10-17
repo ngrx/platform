@@ -20,6 +20,8 @@ describe('Creator migration', async () => {
 
   it('should use createAction to transform class action', async () => {
     const input = tags.stripIndent`
+      import { Action, createAction } from '@ngrx/store';
+
       export const SEARCH = '[Book] Search';
       export const SEARCH_COMPLETE =  '[Book] Search Complete';
 
