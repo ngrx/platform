@@ -29,14 +29,16 @@ export function migrateToCreators(): Rule {
       const actionTypeVariables = sourceFile.statements.filter(
         ts.isVariableStatement
       );
-      const actionEnumsRemovals = removeActionTypeVariables(
-        host,
-        path,
-        actionTypeVariables
-      );
+
+      // const actionEnumsRemovals = removeActionTypeVariables(
+      //   host,
+      //   path,
+      //   actionTypeVariables
+      // );
 
       const actionsClasses = getActionsClasses(sourceFile);
 
+      let inserts: InsertChange[] = [];
       actionsClasses.forEach(clas => {
         let type = clas.members
           .filter(ts.isPropertyDeclaration)
@@ -63,15 +65,11 @@ export function migrateToCreators(): Rule {
           const typeValue = actionTypeVariables
             .map(statement => statement.declarationList.declarations)
             .filter(
-              declarations =>
-                declarations.filter(
-                  node => (node.name as ts.Identifier).text === type
-                ).length
+              decl =>
+                decl.filter(node => (node.name as ts.Identifier).text === type)
+                  .length
             )
-            .map(
-              declarations =>
-                (declarations[0].initializer as ts.Identifier).text
-            )[0];
+            .map(decl => (decl[0].initializer as ts.Identifier).text)[0];
 
           if (typeValue) {
             let actionName = camelize(clas.name!.text.replace('Action', ''));
@@ -85,39 +83,22 @@ export function migrateToCreators(): Rule {
             createAction += `
 );
 `;
+            inserts.push(new InsertChange(path, sourceFile.end, createAction));
           }
         }
       });
 
-      const effectsPerClass = sourceFile.statements
-        .filter(ts.isClassDeclaration)
-        .map(clas =>
-          clas.members
-            .filter(ts.isPropertyDeclaration)
-            .filter(
-              property =>
-                property.decorators &&
-                property.decorators.some(isEffectDecorator)
-            )
-        );
-
-      const effects = effectsPerClass.reduce(
-        (acc, effects) => acc.concat(effects),
-        []
-      );
-
-      const createEffectsChanges = replaceEffectDecorators(host, path, effects);
-      const importChanges = replaceImport(
+      const replaceChanges = replaceImport(
         sourceFile,
         path,
-        '@ngrx/effects',
-        'Effect',
-        'createEffect'
+        '@ngrx/store',
+        'Action',
+        'createAction'
       );
 
       return commitChanges(host, sourceFile.fileName, [
-        ...importChanges,
-        ...createEffectsChanges,
+        ...replaceChanges,
+        ...inserts,
       ]);
     });
 }
