@@ -20,8 +20,8 @@ describe('Creator migration', async () => {
 
   it('should use createAction to transform class action', async () => {
     const input = tags.stripIndent`
-      import { Action, createAction } from '@ngrx/store';
-
+      import { Action } from '@ngrx/store';
+      
       export const SEARCH = '[Book] Search';
       export const SEARCH_COMPLETE =  '[Book] Search Complete';
 
@@ -48,7 +48,6 @@ describe('Creator migration', async () => {
         '[Book] Search Complete',
         props<{ payload: Book[] }>()
       );
-
     `;
 
     await runTest(input, output);

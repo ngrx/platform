@@ -8,6 +8,10 @@ import {
   commitChanges,
 } from '@ngrx/schematics/schematics-core';
 import { camelize } from 'modules/effects/schematics-core/utility/strings';
+import {
+  createRemoveChange,
+  ReplaceChange,
+} from 'modules/schematics-core/utility/change';
 
 export function migrateToCreators(): Rule {
   return (host: Tree) =>
@@ -22,88 +26,115 @@ export function migrateToCreators(): Rule {
         ts.ScriptTarget.Latest
       );
 
-      if (sourceFile.isDeclarationFile) {
+      if (sourceFile.isDeclarationFile || !isActionImported(sourceFile)) {
         return;
       }
 
+      const actionClasses = getActionClasses(sourceFile);
       const actionTypeVariables = sourceFile.statements.filter(
         ts.isVariableStatement
       );
 
-      // const actionEnumsRemovals = removeActionTypeVariables(
-      //   host,
-      //   path,
-      //   actionTypeVariables
-      // );
+      let importProps = false;
 
-      const actionsClasses = getActionsClasses(sourceFile);
+      let changes = (actionClasses
+        .map(actionClass => {
+          let typeProperty = actionClass.members
+            .filter(ts.isPropertyDeclaration)
+            .filter(member => (member.name as ts.Identifier).text === 'type')
+            .map(member => (member.initializer as ts.Identifier).text)[0];
 
-      let inserts: InsertChange[] = [];
-      actionsClasses.forEach(clas => {
-        let type = clas.members
-          .filter(ts.isPropertyDeclaration)
-          .filter(member => (member.name as ts.Identifier).text === 'type')
-          .map(member => (member.initializer as ts.Identifier).text)[0];
-
-        if (type) {
-          let constructorTypeObj = clas.members
-            .filter(ts.isConstructorDeclaration)
-            .filter(
-              member => member.parameters.filter(param => param.type).length
-            )
-            .map(member => member.parameters[0].type)[0];
-
-          let payloadType;
-          if (constructorTypeObj) {
-            payloadType = host
-              .read(path)!
-              .toString('utf8')
-              .substring(constructorTypeObj.pos, constructorTypeObj.end)
-              .trim();
+          if (!typeProperty) {
+            return undefined;
           }
 
-          const typeValue = actionTypeVariables
+          const matchingTypeVar = actionTypeVariables.filter(
+            statement =>
+              statement.declarationList.declarations.filter(
+                node => (node.name as ts.Identifier).text === typeProperty
+              ).length
+          );
+
+          const typeValue = matchingTypeVar
             .map(statement => statement.declarationList.declarations)
-            .filter(
-              decl =>
-                decl.filter(node => (node.name as ts.Identifier).text === type)
-                  .length
-            )
             .map(decl => (decl[0].initializer as ts.Identifier).text)[0];
 
-          if (typeValue) {
-            let actionName = camelize(clas.name!.text.replace('Action', ''));
-            let createAction = tags.stripIndent`
-              export const ${actionName} = createAction(
-                '${typeValue}'`;
-            if (payloadType) {
-              createAction += `,
-  props<{ payload: ${payloadType}} }>()`;
-            }
-            createAction += `
-);
-`;
-            inserts.push(new InsertChange(path, sourceFile.end, createAction));
+          if (!typeValue) {
+            return undefined;
           }
-        }
-      });
 
-      const replaceChanges = replaceImport(
-        sourceFile,
-        path,
-        '@ngrx/store',
-        'Action',
-        'createAction'
+          const payloadType = getConstructorPayloadType(
+            host,
+            path,
+            actionClass
+          );
+          if (payloadType) {
+            importProps = true;
+          }
+
+          const createActionDefinition = composeCreateAction(
+            typeValue,
+            payloadType,
+            actionClass
+          );
+
+          return [
+            new RemoveChange(
+              sourceFile.fileName,
+              matchingTypeVar[0].getStart(sourceFile),
+              matchingTypeVar[0].getEnd()
+            ),
+            new RemoveChange(
+              sourceFile.fileName,
+              actionClass.getStart(sourceFile),
+              actionClass.getEnd()
+            ),
+            new InsertChange(
+              path,
+              actionClass.getStart(sourceFile),
+              createActionDefinition
+            ),
+          ];
+        })
+        .filter(Boolean) as []).reduce(
+        (imports, curr) => imports.concat(curr),
+        []
       );
 
+      let replaceImportChanges: (ReplaceChange | RemoveChange)[] = [];
+      if (changes.length > 0)
+        replaceImportChanges = replaceImport(
+          sourceFile,
+          path,
+          '@ngrx/store',
+          'Action',
+          'createAction'
+        );
+
       return commitChanges(host, sourceFile.fileName, [
-        ...replaceChanges,
-        ...inserts,
+        ...changes,
+        ...replaceImportChanges,
       ]);
     });
 }
 
-function getActionsClasses(sourceFile: ts.SourceFile) {
+const isActionImported = (sourceFile: ts.SourceFile): boolean => {
+  return !!sourceFile.statements
+    .filter(ts.isImportDeclaration)
+    .filter(({ moduleSpecifier }) =>
+      moduleSpecifier.getText(sourceFile).includes('@ngrx/store')
+    )
+    .filter(p => {
+      return (p.importClause!
+        .namedBindings! as ts.NamedImports).elements.filter(spec => {
+        if (spec.name.text) {
+          return spec.name.text === 'Action';
+        }
+      }).length;
+    }).length;
+};
+
+const getActionClasses = (sourceFile: ts.SourceFile): ts.ClassDeclaration[] => {
   return sourceFile.statements
     .filter(ts.isClassDeclaration)
     .filter(
@@ -113,13 +144,54 @@ function getActionsClasses(sourceFile: ts.SourceFile) {
       return statement.heritageClauses!.filter(clause => {
         return (clause.types || []).filter(type => {
           return (
-            type.expression &&
-            (type.expression as ts.Identifier).text === 'Action'
+            type.expression && type.expression.getText(sourceFile) === 'Action'
           );
         }).length;
       }).length;
     });
-}
+};
+
+const getConstructorPayloadType = (
+  host: Tree,
+  path: Path,
+  actionClass: ts.ClassDeclaration
+): string => {
+  let payloadType = '';
+
+  let payloadInConstructor = actionClass.members
+    .filter(ts.isConstructorDeclaration)
+    .filter(member => member.parameters.filter(param => param.type).length)
+    .map(member => member.parameters[0].type)[0];
+
+  if (payloadInConstructor) {
+    payloadType = host
+      .read(path)!
+      .toString('utf8')
+      .substring(payloadInConstructor.pos, payloadInConstructor.end)
+      .trim();
+  }
+
+  return payloadType;
+};
+
+const composeCreateAction = (
+  typeValue: string,
+  payloadType: string,
+  actionClass: ts.ClassDeclaration
+): string => {
+  let actionName = camelize(actionClass.name!.text.replace('Action', ''));
+  let createAction = tags.stripIndent`
+        export const ${actionName} = createAction(
+          '${typeValue}'`;
+  if (payloadType) {
+    createAction += `,
+props<{ payload: ${payloadType}} }>()`;
+  }
+  createAction += `
+);
+`;
+  return createAction;
+};
 
 function removeActionTypeVariables(
   host: Tree,
