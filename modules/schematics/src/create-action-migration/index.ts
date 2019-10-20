@@ -1,17 +1,15 @@
 import * as ts from 'typescript';
 import { Path, tags } from '@angular-devkit/core';
+import { camelize } from '@angular-devkit/core/src/utils/strings';
 import { Tree, Rule, chain } from '@angular-devkit/schematics';
 import {
   InsertChange,
   RemoveChange,
+  ReplaceChange,
   replaceImport,
   commitChanges,
+  Change,
 } from '@ngrx/schematics/schematics-core';
-import { camelize } from 'modules/effects/schematics-core/utility/strings';
-import {
-  createRemoveChange,
-  ReplaceChange,
-} from 'modules/schematics-core/utility/change';
 
 export function migrateToCreators(): Rule {
   return (host: Tree) =>
@@ -48,14 +46,14 @@ export function migrateToCreators(): Rule {
             return undefined;
           }
 
-          const matchingTypeVar = actionTypeVariables.filter(
+          const typeVariable = actionTypeVariables.filter(
             statement =>
               statement.declarationList.declarations.filter(
                 node => (node.name as ts.Identifier).text === typeProperty
               ).length
           );
 
-          const typeValue = matchingTypeVar
+          const typeValue = typeVariable
             .map(statement => statement.declarationList.declarations)
             .map(decl => (decl[0].initializer as ts.Identifier).text)[0];
 
@@ -78,11 +76,15 @@ export function migrateToCreators(): Rule {
             actionClass
           );
 
+          if (createActionDefinition.includes('props')) {
+            importProps = true;
+          }
+
           return [
             new RemoveChange(
               sourceFile.fileName,
-              matchingTypeVar[0].getStart(sourceFile),
-              matchingTypeVar[0].getEnd()
+              typeVariable[0].getStart(sourceFile),
+              typeVariable[0].getEnd()
             ),
             new RemoveChange(
               sourceFile.fileName,
@@ -91,7 +93,7 @@ export function migrateToCreators(): Rule {
             ),
             new InsertChange(
               path,
-              actionClass.getStart(sourceFile),
+              typeVariable[0].getStart(sourceFile),
               createActionDefinition
             ),
           ];
@@ -101,19 +103,25 @@ export function migrateToCreators(): Rule {
         []
       );
 
-      let replaceImportChanges: (ReplaceChange | RemoveChange)[] = [];
-      if (changes.length > 0)
-        replaceImportChanges = replaceImport(
+      let importChanges: (ReplaceChange | RemoveChange | Change)[] = [];
+      const imports = [];
+      if (changes.length > 0) {
+        imports.push('createAction');
+        if (importProps) {
+          imports.push('props');
+        }
+        importChanges = replaceImport(
           sourceFile,
           path,
           '@ngrx/store',
           'Action',
-          'createAction'
+          imports.join(', ')
         );
+      }
 
       return commitChanges(host, sourceFile.fileName, [
         ...changes,
-        ...replaceImportChanges,
+        ...importChanges,
       ]);
     });
 }
@@ -185,102 +193,13 @@ const composeCreateAction = (
           '${typeValue}'`;
   if (payloadType) {
     createAction += `,
-props<{ payload: ${payloadType}} }>()`;
+  props<{ payload: ${payloadType} }>()`;
   }
   createAction += `
 );
 `;
   return createAction;
 };
-
-function removeActionTypeVariables(
-  host: Tree,
-  path: Path,
-  typeVariables: ts.VariableStatement[]
-) {
-  const removes = typeVariables;
-  //   const removes = effects
-  //   .map(effect => effect.decorators)
-  //   .filter(decorators => decorators)
-  //   .map(decorators => {
-  //     const effectDecorators = decorators!.filter(isEffectDecorator);
-  //     return effectDecorators.map(decorator => {
-  //       return new RemoveChange(
-  //         path,
-  //         decorator.expression.pos - 1, // also get the @ sign
-  //         decorator.expression.end
-  //       );
-  //     });
-  //   })
-  //   .reduce((acc, removes) => acc.concat(removes), []);
-
-  // return [...removes];
-}
-
-function replaceEffectDecorators(
-  host: Tree,
-  path: Path,
-  effects: ts.PropertyDeclaration[]
-) {
-  const inserts = effects
-    .filter(effect => !!effect.initializer)
-    .map(effect => {
-      const decorator = (effect.decorators || []).find(isEffectDecorator)!;
-      const effectArguments = getDispatchProperties(host, path, decorator);
-      const end = effectArguments ? `, ${effectArguments})` : ')';
-
-      return [
-        new InsertChange(path, effect.initializer!.pos, ' createEffect(() =>'),
-        new InsertChange(path, effect.initializer!.end, end),
-      ];
-    })
-    .reduce((acc, inserts) => acc.concat(inserts), []);
-
-  const removes = effects
-    .map(effect => effect.decorators)
-    .filter(decorators => decorators)
-    .map(decorators => {
-      const effectDecorators = decorators!.filter(isEffectDecorator);
-      return effectDecorators.map(decorator => {
-        return new RemoveChange(
-          path,
-          decorator.expression.pos - 1, // also get the @ sign
-          decorator.expression.end
-        );
-      });
-    })
-    .reduce((acc, removes) => acc.concat(removes), []);
-
-  return [...inserts, ...removes];
-}
-
-function isEffectDecorator(decorator: ts.Decorator) {
-  return (
-    ts.isCallExpression(decorator.expression) &&
-    ts.isIdentifier(decorator.expression.expression) &&
-    decorator.expression.expression.text === 'Effect'
-  );
-}
-
-function getDispatchProperties(
-  host: Tree,
-  path: Path,
-  decorator: ts.Decorator
-) {
-  if (!decorator.expression || !ts.isCallExpression(decorator.expression)) {
-    return '';
-  }
-
-  // just copy the effect properties
-  const content = host.read(path)!.toString('utf8');
-  const args = content
-    .substring(
-      decorator.expression.arguments.pos,
-      decorator.expression.arguments.end
-    )
-    .trim();
-  return args;
-}
 
 export default function(): Rule {
   return chain([migrateToCreators()]);
