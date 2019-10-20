@@ -38,7 +38,7 @@ const {
 getTestBed().initTestEnvironment(ServerTestingModule, platformServerTesting());
 
 runner.loadConfig({
-  spec_dir: 'modules/schematics/src/create-action-migration',
+  spec_dir: 'modules',
   spec_files: ['**/*.spec.ts'],
 });
 
