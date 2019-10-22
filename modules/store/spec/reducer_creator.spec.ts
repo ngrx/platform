@@ -1,38 +1,11 @@
 import { on, createReducer, createAction, props, union } from '@ngrx/store';
-import { expecter } from 'ts-snippet';
 
 describe('classes/reducer', function(): void {
-  const expectSnippet = expecter(
-    code => `
-// path goes from root
-import {createAction, props} from './modules/store/src/action_creator';
-import {on} from './modules/store/src/reducer_creator';
-  ${code}`,
-    {
-      moduleResolution: 'node',
-      target: 'es2015',
-    }
-  );
-
   describe('base', () => {
     const bar = createAction('[foobar] BAR', props<{ bar: number }>());
     const foo = createAction('[foobar] FOO', props<{ foo: number }>());
 
     describe('on', () => {
-      it('should enforce action property types', () => {
-        expectSnippet(`
-                    const foo = createAction('FOO', props<{ foo: number }>());
-                    on(foo, (state, action) => { const foo: string = action.foo; return state; });
-                `).toFail(/'number' is not assignable to type 'string'/);
-      });
-
-      it('should enforce action property names', () => {
-        expectSnippet(`
-                    const foo = createAction('FOO', props<{ foo: number }>());
-                    on(foo, (state, action) => { const bar: string = action.bar; return state; });
-                `).toFail(/'bar' does not exist on type/);
-      });
-
       it('should support reducers with multiple actions', () => {
         const both = union({ bar, foo });
         const func = (state: {}, action: typeof both) => ({});
