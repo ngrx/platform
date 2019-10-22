@@ -102,7 +102,7 @@ describe('EntitySelectors$', () => {
 
       // listen for changes to the hero collection
       store
-        .select<HeroCollection>(ENTITY_CACHE_NAME, 'Hero')
+        .select<HeroCollection>(ENTITY_CACHE_NAME as any, 'Hero')
         .subscribe((c: HeroCollection) => (collection = c));
     });
 
