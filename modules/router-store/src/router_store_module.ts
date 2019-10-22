@@ -199,7 +199,7 @@ export class StoreRouterConnectingModule {
   private setUpStoreStateListener(): void {
     this.store
       .pipe(
-        select(this.stateKey),
+        select(this.stateKey as any),
         withLatestFrom(this.store)
       )
       .subscribe(([routerStoreState, storeState]) => {
