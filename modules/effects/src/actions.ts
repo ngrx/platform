@@ -26,12 +26,6 @@ export class Actions<V = Action> extends Observable<V> {
   }
 }
 
-// Module-private helper type
-type ActionExtractor<
-  T extends string | AC,
-  AC extends ActionCreator<string, Creator>,
-  E
-> = T extends string ? E : ReturnType<Extract<T, AC>>;
 /**
  * 'ofType' filters an Observable of Actions into an observable of the actions
  * whose type strings are passed to it.
@@ -54,50 +48,47 @@ type ActionExtractor<
  * 'Observable<never>'. In such cases one has to manually set the generic type
  * like `actions.ofType<AdditionAction>('add')`.
  */
+
 export function ofType<
-  E extends Extract<U, { type: T1 }>,
-  AC extends ActionCreator<string, Creator>,
-  T1 extends string | AC,
+  AC extends ActionCreator<string, Creator>[],
   U extends Action = Action,
-  V = T1 extends string ? E : ReturnType<Extract<T1, AC>>
+  V = ReturnType<AC[number]>
+>(...allowedTypes: AC): OperatorFunction<U, V>;
+
+export function ofType<
+  V extends Extract<U, { type: T1 }>,
+  T1 extends string = string,
+  U extends Action = Action
 >(t1: T1): OperatorFunction<U, V>;
 export function ofType<
-  E extends Extract<U, { type: T1 | T2 }>,
-  AC extends ActionCreator<string, Creator>,
-  T1 extends string | AC,
-  T2 extends string | AC,
-  U extends Action = Action,
-  V = ActionExtractor<T1 | T2, AC, E>
+  V extends Extract<U, { type: T1 | T2 }>,
+  T1 extends string = string,
+  T2 extends string = string,
+  U extends Action = Action
 >(t1: T1, t2: T2): OperatorFunction<U, V>;
 export function ofType<
-  E extends Extract<U, { type: T1 | T2 | T3 }>,
-  AC extends ActionCreator<string, Creator>,
-  T1 extends string | AC,
-  T2 extends string | AC,
-  T3 extends string | AC,
-  U extends Action = Action,
-  V = ActionExtractor<T1 | T2 | T3, AC, E>
+  V extends Extract<U, { type: T1 | T2 | T3 }>,
+  T1 extends string = string,
+  T2 extends string = string,
+  T3 extends string = string,
+  U extends Action = Action
 >(t1: T1, t2: T2, t3: T3): OperatorFunction<U, V>;
 export function ofType<
-  E extends Extract<U, { type: T1 | T2 | T3 | T4 }>,
-  AC extends ActionCreator<string, Creator>,
-  T1 extends string | AC,
-  T2 extends string | AC,
-  T3 extends string | AC,
-  T4 extends string | AC,
-  U extends Action = Action,
-  V = ActionExtractor<T1 | T2 | T3 | T4, AC, E>
+  V extends Extract<U, { type: T1 | T2 | T3 | T4 }>,
+  T1 extends string = string,
+  T2 extends string = string,
+  T3 extends string = string,
+  T4 extends string = string,
+  U extends Action = Action
 >(t1: T1, t2: T2, t3: T3, t4: T4): OperatorFunction<U, V>;
 export function ofType<
-  E extends Extract<U, { type: T1 | T2 | T3 | T4 | T5 }>,
-  AC extends ActionCreator<string, Creator>,
-  T1 extends string | AC,
-  T2 extends string | AC,
-  T3 extends string | AC,
-  T4 extends string | AC,
-  T5 extends string | AC,
-  U extends Action = Action,
-  V = ActionExtractor<T1 | T2 | T3 | T4 | T5, AC, E>
+  V extends Extract<U, { type: T1 | T2 | T3 | T4 | T5 }>,
+  T1 extends string = string,
+  T2 extends string = string,
+  T3 extends string = string,
+  T4 extends string = string,
+  T5 extends string = string,
+  U extends Action = Action
 >(t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): OperatorFunction<U, V>;
 /**
  * Fallback for more than 5 arguments.
@@ -108,8 +99,9 @@ export function ofType<
  * arguments, to preserve backwards compatibility with old versions of ngrx.
  */
 export function ofType<V extends Action>(
-  ...allowedTypes: Array<string | ActionCreator<string, Creator>>
+  ...allowedTypes: string[]
 ): OperatorFunction<Action, V>;
+
 export function ofType(
   ...allowedTypes: Array<string | ActionCreator<string, Creator>>
 ): OperatorFunction<Action, Action> {
