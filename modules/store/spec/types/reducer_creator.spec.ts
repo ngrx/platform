@@ -1,17 +1,14 @@
 import { expecter } from 'ts-snippet';
+import { compilerOptions } from './utils';
 
 describe('createReducer()', () => {
   const expectSnippet = expecter(
     code => `
-      // path goes from root
-      import {createAction, props, on} from './modules/store';
+      import {createAction, props, on} from '@ngrx/store';
 
       ${code}
     `,
-    {
-      moduleResolution: 'node',
-      target: 'es2015',
-    }
+    compilerOptions()
   );
 
   describe('on()', () => {

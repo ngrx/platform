@@ -1,10 +1,10 @@
 import { expecter } from 'ts-snippet';
+import { compilerOptions } from './utils';
 
 describe('select()', () => {
   const expectSnippet = expecter(
     code => `
-      // path goes from root
-      import { Store, select, createSelector, createFeatureSelector } from './modules/store';
+      import { Store, select, createSelector, createFeatureSelector } '@ngrx/store';
 
       interface State { foo: { bar: { baz: [] } } };
       const store = {} as Store<State>;
@@ -13,10 +13,7 @@ describe('select()', () => {
 
       ${code}
     `,
-    {
-      moduleResolution: 'node',
-      target: 'es2015',
-    }
+    compilerOptions()
   );
 
   describe('as property', () => {

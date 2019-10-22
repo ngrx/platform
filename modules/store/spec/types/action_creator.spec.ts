@@ -1,17 +1,14 @@
 import { expecter } from 'ts-snippet';
+import { compilerOptions } from './utils';
 
 describe('createAction()', () => {
   const expectSnippet = expecter(
     code => `
-      // path goes from root
-      import {createAction, props, union} from './modules/store';
+      import {createAction, props, union} from '@ngrx/store';
 
       ${code}
     `,
-    {
-      moduleResolution: 'node',
-      target: 'es2015',
-    }
+    compilerOptions()
   );
 
   describe('with props', () => {
