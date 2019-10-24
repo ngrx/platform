@@ -10,14 +10,14 @@ A data service is an instance of a class that implements the `EntityCollectionDa
 This interface supports a basic set of CRUD operations for an entity.
 Each that return `Observables`:
 
-| Method                                                   | Meaning                               | HTTP Method with endpoint       |
-| -------------------------------------------------------- | ------------------------------------- | ------------------------------- |
-| `add(entity: T)`                                         | Add a new entity                      | `POST` /api/hero/               |
-| `delete(id: any)`                                        | Delete an entity by primary key value | `DELETE` /api/hero/5            |
-| `getAll()`                                               | Get all instances of this entity type | `GET` /api/heroes/              |
-| `getById(id: any)`                                       | Get an entity by its primary key      | `GET` /api/hero/5               |
-| `getWithQuery(queryParams: QueryParams` &#x7c; `string)` | Get entities that satisfy the query   | `GET` /api/heros/?name=bombasto |
-| `update(update: Update<T>)`                              | Update an existing entity             | `PUT` /api/hero/5               |
+| Method                                                   | Meaning                               | HTTP Method with endpoint        |
+| -------------------------------------------------------- | ------------------------------------- | -------------------------------- |
+| `add(entity: T)`                                         | Add a new entity                      | `POST` /api/hero/                |
+| `delete(id: any)`                                        | Delete an entity by primary key value | `DELETE` /api/hero/5             |
+| `getAll()`                                               | Get all instances of this entity type | `GET` /api/heroes/               |
+| `getById(id: any)`                                       | Get an entity by its primary key      | `GET` /api/hero/5                |
+| `getWithQuery(queryParams: QueryParams` &#x7c; `string)` | Get entities that satisfy the query   | `GET` /api/heroes/?name=bombasto |
+| `update(update: Update<T>)`                              | Update an existing entity             | `PUT` /api/hero/5                |
 
 <div class="alert is-helpful">
 
