@@ -2,17 +2,17 @@ import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from '../actions';
 
 export interface State {
-  loggedIn: boolean;
+  username: string;
 }
 
 export const initialState: State = {
-  loggedIn: false,
+  username: ''
 };
 
 export const reducer = createReducer<State>(
   initialState,
-  on(AuthActions.login, (): State => ({ loggedIn: true })),
-  on(AuthActions.logout, (): State => ({ loggedIn: false }))
+  on(AuthActions.login, ({ username }): State => ({ username })),
+  on(AuthActions.logout, (): State => ({ username: initialState.username })),
 );
 
-export const getLoggedIn = (state: State) => state.loggedIn;
+export const getUsername = (state: State) => state.username;
