@@ -21,10 +21,10 @@ Later in the test cases, we assign the `actions$` variable to a stream of action
 
 <code-example header="my.effects.spec.ts">
 // by creating an Observable
-actions$ = of({ type: 'ACTION ONE' });
+actions$ = of({ type: 'Action One' });
 
 // or by using a marble diagram
-actions$ = hot('--a-', { a: { type: 'ACTION ONE' } });
+actions$ = hot('--a-', { a: { type: 'Action One' } });
 </code-example>
 
 ### Effects with parameters
@@ -74,8 +74,8 @@ The `hot`, `cold`, and `toBeObservable` methods are imported from [`jasmine-marb
 <code-example header="my.effects.spec.ts">
 // create an actions stream to represent a user that is typing
 actions$ = hot('-a-b-', {
-  a: { type: 'SEARCH CUSTOMERS', name: 'J' },
-  b: { type: 'SEARCH CUSTOMERS', name: 'Jes' },
+  a: { type: '[Customers Page] Search Customers', name: 'J' },
+  b: { type: '[Customers Page] Search Customers', name: 'Jes' },
 })
 
 // mock the service to prevent an HTTP request to return an array of customers
@@ -87,7 +87,7 @@ customersServiceSpy.searchCustomers.and.returnValue(
 // expect the second action to result in a SUCCESS action
 const expected = hot('-------a', {
   a: {
-    type: 'SEARCH CUSTOMERS SUCCESS',
+    type: '[Customers API] Search Customers Success',
     customers: [...],
   },
 });
@@ -126,13 +126,13 @@ The callback method provides helper methods to mock Observable streams, and also
 // more info about the API can be found at https://rxjs.dev/guide/testing/marble-testing#api
 testScheduler.run(({ cold, hot, expectObservable }) => {
   // use the `hot` and `cold` helper methods to create the action and service streams
-  actions$ = hot('-a', { a : { type: 'GET CUSTOMERS' }});
+  actions$ = hot('-a', { a : { type: '[Customers Page] Get Customers' }});
   customersServiceSpy.getAllCustomers.and.returnValue(cold('--a|', { a: [...] }));
 
   // use the `expectObservable` helper method to assert if the output matches the expected output
   expectObservable(effects.getAll$).toBe('---c', {
     c: {
-      type: 'GET CUSTOMERS SUCCESS',
+      type: '[Customers API] Get Customers Success',
       customers: [...],
     }
   });
@@ -146,8 +146,8 @@ Instead of creating an effect as a method to override properties in test cases, 
 testScheduler.run(({ cold, hot, expectObservable }) => {
   // create an actions stream to represent a user that is typing
   actions$ = hot('-a-b-', {
-    a: { type: 'SEARCH CUSTOMERS', name: 'J' },
-    b: { type: 'SEARCH CUSTOMERS', name: 'Jes' },
+    a: { type: '[Customers Page] Search Customers', name: 'J' },
+    b: { type: '[Customers Page] Search Customers', name: 'Jes' },
   })
 
   // mock the service to prevent an HTTP request to return an array of customers
@@ -159,7 +159,7 @@ testScheduler.run(({ cold, hot, expectObservable }) => {
   // the `5ms` represents the time for the actions stream and the service to return a value
   expectObservable(effects.searchCustomers).toBe('300ms 5ms c', {
     c: {
-      type: 'SEARCH CUSTOMERS SUCCESS',
+      type: '[Customers API] Search Customers Success',
       customers: [...],
     },
   });
@@ -172,7 +172,7 @@ To test simple Effects, it might be easier to create an Observable instead of us
 
 <code-example header="my.effects.spec.ts">
 // create an actions stream and immediately dispatch a GET action
-actions$ = of({ type: 'GET CUSTOMERS' });
+actions$ = of({ type: '[Customers Page] Get Customers' });
 
 // mock the service to prevent an HTTP request
 customersServiceSpy.getAllCustomers.and.returnValue(of([...]));
@@ -180,7 +180,7 @@ customersServiceSpy.getAllCustomers.and.returnValue(of([...]));
 // subscribe to the Effect stream and verify it dispatches a SUCCESS action
 effects.getAll$.subscribe(action => {
   expect(action).toEqual({
-    type: 'GET CUSTOMERS SUCCESS',
+    type: '[Customers API] Get Customers Success',
     customers: [...],
   });
 });
@@ -198,12 +198,12 @@ actions$ = new ReplaySubject(1);
 customersServiceSpy.getAllCustomers.and.returnValue(of([...]));
 
 // dispatch the GET action
-(actions$ as ReplaySubject).next( type: 'GET CUSTOMERS' })
+(actions$ as ReplaySubject).next( type: '[Customers Page] Get Customers' })
 
 // subscribe to the Effect stream and verify it dispatches a SUCCESS action
 effects.getAll$.subscribe(action => {
   expect(action).toEqual({
-    type: 'GET CUSTOMERS SUCCESS',
+    type: '[Customers API] Get Customers Success',
     customers: [...],
   });
 });
@@ -221,7 +221,7 @@ An example of this is to verify we navigate to the correct page.
 
 <code-example header="my.effects.spec.ts">
 it('should navigate to the customers detail page', () => {
-  actions$ = of({ type: 'SELECT CUSTOMER', name: 'Bob' });
+  actions$ = of({ type: '[Customers Page] Customer Selected', name: 'Bob' });
   
   // create a spy to verify the navigation will be called
   spyOn(router, 'navigateByUrl');
@@ -265,7 +265,7 @@ effects = TestBed.get&lt;CustomersEffects&gt;(CustomersEffects);
 
 it('should not fetch if the user is already in the store', () => {
   actions$ = hot('-a--', {
-    a: { type: 'GET CUSTOMER BY NAME', name: 'Bob' },
+    a: { type: '[Customers Page] Search Customers', name: 'Bob' },
   });
 
   // there is no output, because Bob is already in the Store state
@@ -285,7 +285,7 @@ it('should get customers', () => {
   // define the actions stream by creating a new `Actions` instance
   const actions = new Actions(
     hot('-a--', {
-      a: { type: 'GET CUSTOMERS' },
+      a: { type: '[Customers Page] Get Customers' },
     })
   );
 
@@ -295,7 +295,7 @@ it('should get customers', () => {
   // expect remains the same
   effects.getAll$.subscribe(action => {
     expect(action).toEqual({
-      type: 'GET CUSTOMERS SUCCESS',
+      type: '[Customers API] Get Customers Success',
       customers: [...],
     });
   });
@@ -313,7 +313,7 @@ it('should get customers', () => {
   // define the actions stream by creating a new `Actions` instance
   const actions = new Actions(
     hot('-a--', {
-      a: { type: 'GET CUSTOMER BY NAME', name: 'Bob' },
+      a: { type: '[Search Customers Page] Get Customer', name: 'Bob' },
     })
   );
 
