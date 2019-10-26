@@ -29,11 +29,15 @@ actions$ = hot('--a-', { a: { type: 'ACTION ONE' } });
 
 ### Effects with parameters
 
-Creating an Effect as a function gives the opportunity to override defaults while testing the Effect.
-A common use case is to use the RxJS `TestScheduler`, or to override a default time.
+For time dependant effects, for example `debounceTime`, we must be able override the default RxJS scheduler with the `TestScheduler` during our test.
+That's why we create the effect as a function with parameters. By doing this we can assign default parameter values for the effect, and override these values later in the test cases.
+
+This practice also allows us to hide the implementation details of the effect.
+In the `debounceTime` test case, we can we can set the debounce time to a controlled value.
 
 <code-example header="my.effects.ts">
 search$ = createEffect(() => ({
+  // assign default values
   debounce = 300,
   scheduler = asyncScheduler
 } = {}) =>
@@ -46,6 +50,7 @@ search$ = createEffect(() => ({
 </code-example>
 
 <code-example header="my.effects.spec.ts">
+// override the default values
 effects.search$({
   debounce: 30,
   scheduler: getTestScheduler(),
@@ -62,7 +67,7 @@ Testing Effects via marble diagrams is particularly useful when the Effect is ti
 
 For a detailed look on the marble syntax, see [Writing marble tests](https://rxjs.dev/guide/testing/marble-testing).
 
-The `hot`, `cold`, and `toBeObservable` functions are imported from [`jasmine-marbles`](https://www.npmjs.com/package/jasmine-marbles).
+The `hot`, `cold`, and `toBeObservable` methods are imported from [`jasmine-marbles`](https://www.npmjs.com/package/jasmine-marbles).
 
 </div>
 
@@ -93,6 +98,72 @@ expect(
     scheduler: getTestScheduler(),
   })
 ).toBeObservable(expected);
+</code-example>
+
+### With `TestScheduler`
+
+Instead of using `jasmine-marbles`, we can also run tests with the [RxJS `TestScheduler`](https://rxjs.dev/guide/testing/marble-testing).
+
+To use the `TestScheduler` we first have to instantiate it,
+this can be done in the test case or within a `beforeEach` block.
+
+<code-example header="my.effects.spec.ts">
+import { TestScheduler } from 'rxjs/testing';
+
+let testScheduler: TestScheduler;
+
+beforeEach(() => {
+  testScheduler = new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  });
+});
+</code-example>
+
+The `TestScheduler` provides a `run` method which expects a callback, it's here where we write the test for an effect.
+The callback method provides helper methods to mock Observable streams, and also assertion helper methods to verify the output of a stream.
+
+<code-example header="my.effects.spec.ts">
+// more info about the API can be found at https://rxjs.dev/guide/testing/marble-testing#api
+testScheduler.run(({ cold, hot, expectObservable }) => {
+  // use the `hot` and `cold` helper methods to create the action and service streams
+  actions$ = hot('-a', { a : { type: 'GET CUSTOMERS' }});
+  customersServiceSpy.getAllCustomers.and.returnValue(cold('--a|', { a: [...] }));
+
+  // use the `expectObservable` helper method to assert if the output matches the expected output
+  expectObservable(effects.getAll$).toBe('---c', {
+    c: {
+      type: 'GET CUSTOMERS SUCCESS',
+      customers: [...],
+    }
+  });
+});
+</code-example>
+
+By using the `TestScheduler` we can also test effects dependant on a scheduler.
+Instead of creating an effect as a method to override properties in test cases, as shown in [`Effects with parameters`](#effects-with-parameters), we can rewrite the test case by using the `TestScheduler`.
+
+<code-example header="my.effects.spec.ts">
+testScheduler.run(({ cold, hot, expectObservable }) => {
+  // create an actions stream to represent a user that is typing
+  actions$ = hot('-a-b-', {
+    a: { type: 'SEARCH CUSTOMERS', name: 'J' },
+    b: { type: 'SEARCH CUSTOMERS', name: 'Jes' },
+  })
+
+  // mock the service to prevent an HTTP request to return an array of customers
+  customersServiceSpy.searchCustomers.and.returnValue(
+    cold('--a|', { a: [...] })
+  );
+
+  // the `300ms` is the set debounce time
+  // the `5ms` represents the time for the actions stream and the service to return a value
+  expectObservable(effects.searchCustomers).toBe('300ms 5ms c', {
+    c: {
+      type: 'SEARCH CUSTOMERS SUCCESS',
+      customers: [...],
+    },
+  });
+});
 </code-example>
 
 ### With Observables
