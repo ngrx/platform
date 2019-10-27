@@ -15,7 +15,7 @@
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the component.",
+      "description": "The path to create the service.",
       "visible": false
     },
     "project": {

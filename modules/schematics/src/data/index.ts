@@ -17,9 +17,9 @@ import {
   parseName,
   stringUtils,
 } from '@ngrx/schematics/schematics-core';
-import { Schema as ActionOptions } from './schema';
+import { Schema as DataOptions } from './schema';
 
-export default function(options: ActionOptions): Rule {
+export default function(options: DataOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
