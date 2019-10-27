@@ -293,8 +293,6 @@ export default function(options: EntityDataOptions): Rule {
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
 
-    const templateSource = createEntityConfigFile(options, parsedPath.path);
-
     return chain([
       options && options.skipPackageJson ? noop() : addNgRxDataToPackageJson(),
       options.migrateNgrxData
@@ -303,7 +301,9 @@ export default function(options: EntityDataOptions): Rule {
             renameNgrxDataModule(),
           ])
         : addEntityDataToNgModule(options),
-      options.entityConfig ? chain([templateSource]) : noop(),
+      options.entityConfig
+        ? createEntityConfigFile(options, parsedPath.path)
+        : noop(),
     ])(host, context);
   };
 }
