@@ -15,7 +15,11 @@ import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 
 import { CoreModule } from '@example-app/core';
 import { AppRoutingModule } from '@example-app/app-routing.module';
-import { UserEffects, RouterEffects } from '@example-app/core/effects';
+import {
+  UserEffects,
+  RouterEffects,
+  LayoutEffects,
+} from '@example-app/core/effects';
 import { AppComponent } from '@example-app/core/containers';
 
 @NgModule({
@@ -75,7 +79,7 @@ import { AppComponent } from '@example-app/core/containers';
      *
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
-    EffectsModule.forRoot([UserEffects, RouterEffects]),
+    EffectsModule.forRoot([UserEffects, RouterEffects, LayoutEffects]),
     CoreModule,
   ],
   bootstrap: [AppComponent],
