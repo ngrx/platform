@@ -605,9 +605,9 @@ export function createFeatureSelector(
 ): MemoizedSelector<any, any> {
   return createSelector((state: any) => {
     const featureState = state[featureName];
-    if (isDevMode() && featureState === undefined) {
+    if (isDevMode() && !(featureName in state)) {
       console.warn(
-        `The feature name \"${featureName}\" does ` +
+        `@ngrx/store: The feature name \"${featureName}\" does ` +
           'not exist in the state, therefore createFeatureSelector ' +
           'cannot access it.  Be sure it is imported in a loaded module ' +
           `using StoreModule.forRoot('${featureName}', ...) or ` +

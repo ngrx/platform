@@ -110,7 +110,7 @@ In the accompanying demonstration app, the user can filter _heroes_ by name and 
 
 We felt this common scenario is worth building into the NgRx Data library. So every entity can have an _optional_ filter function.
 
-Each collection's `filteredEntities` selector applies the filter function to the collection, based on the user's filtering criteria, which are held in the the stored entity collection's `filter` property.
+Each collection's `filteredEntities` selector applies the filter function to the collection, based on the user's filtering criteria, which are held in the stored entity collection's `filter` property.
 
 If there is no filter function, the `filteredEntities` selector is the same as the `selectAll` selector, which returns all entities in the collection.
 
@@ -196,12 +196,12 @@ the collection _before_ sending a corresponding HTTP request (_optimistic_) or _
 The caller can specify in the optional `isOptimistic` parameter.
 If the caller doesn't specify, the dispatcher chooses based on default options.
 
-The _default_ defaults are the safe ones: _optimistic_ for delete and _pessimistic_ for add and update.
+The _defaults_ are the safe ones: _optimistic_ for delete and _pessimistic_ for add and update.
 You can override those choices here.
 
 ### _additionalCollectionState_
 
-Each NgRx Data entity collection in the the store has
+Each NgRx Data entity collection in the store has
 [predefined properties](guide/data/entity-collection).
 
 You can add your own collection properties by setting the `additionalCollectionState` property to an object with those custom collection properties.
@@ -218,7 +218,7 @@ illustrate by adding `foo` and `bar` collection properties to test hero metadata
 
 The property values become the initial collection values for those properties when NgRx Data first creates the collection in the store.
 
-The NgRx Data library generates selectors for these properties but has no way to update them. You'll have to create or extend the existing reducers to do that yourself.
+The NgRx Data library generates selectors for these properties, but has no way to update them. You'll have to create or extend the existing reducers to do that yourself.
 
 If the property you want to add comes from `backend`, you will need some additional work to make sure the property can be saved into the store from `Effects` correctly.
 
@@ -274,7 +274,7 @@ Register `AdditionalPersistenceResultHandler` in `NgModule`,
 
 ```typescript
 @NgModule({
-  { provide: PersistenceResultHandler, useClass: PagePersistenceResultHandler },
+  { provide: PersistenceResultHandler, useClass: AdditionalPersistenceResultHandler },
 })
 ```
 

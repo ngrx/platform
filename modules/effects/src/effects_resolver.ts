@@ -25,13 +25,7 @@ export function mergeEffects(
           : sourceInstance[propertyName];
 
       const resubscribable$ = resubscribeOnError
-        ? observable$.pipe(
-            catchError(error => {
-              if (errorHandler) errorHandler.handleError(error);
-              // Return observable that produces this particular effect
-              return observable$;
-            })
-          )
+        ? resubscribeInCaseOfError(observable$, errorHandler)
         : observable$;
 
       if (dispatch === false) {
@@ -55,4 +49,17 @@ export function mergeEffects(
   );
 
   return merge(...observables$);
+}
+
+function resubscribeInCaseOfError<T extends Action>(
+  observable$: Observable<T>,
+  errorHandler?: ErrorHandler
+): Observable<T> {
+  return observable$.pipe(
+    catchError(error => {
+      if (errorHandler) errorHandler.handleError(error);
+      // Return observable that produces this particular effect
+      return resubscribeInCaseOfError(observable$, errorHandler);
+    })
+  );
 }

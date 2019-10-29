@@ -1,0 +1,12 @@
+<% if(feature) { %>import * as from<%= classify(name) %> from '<%= reducerPath %>';
+import { select<%= classify(name) %>State } from './<%= dasherize(name) %>.selectors';<% } %>
+
+describe('<%= classify(name) %> Selectors', () => {
+  it('should select the feature state', () => {
+    <% if(feature) { %>const result = select<%= classify(name) %>State({
+      [from<%= classify(name) %>.<%= camelize(name) %>FeatureKey]: {}
+    });
+
+    expect(result).toEqual({});<% } %>
+  });
+});

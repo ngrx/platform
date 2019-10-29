@@ -55,6 +55,12 @@ type ActionExtractor<
  * like `actions.ofType<AdditionAction>('add')`.
  */
 export function ofType<
+  AC extends ActionCreator<string, Creator>[],
+  U extends Action = Action,
+  V = ReturnType<AC[number]>
+>(...allowedTypes: AC): OperatorFunction<U, V>;
+
+export function ofType<
   E extends Extract<U, { type: T1 }>,
   AC extends ActionCreator<string, Creator>,
   T1 extends string | AC,
