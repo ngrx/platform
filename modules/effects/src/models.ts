@@ -13,6 +13,11 @@ export interface EffectConfig {
   resubscribeOnError?: boolean;
 }
 
+export const DEFAULT_EFFECT_CONFIG: Required<EffectConfig> = {
+  dispatch: true,
+  resubscribeOnError: true,
+};
+
 export type EffectPropertyKey<T extends Object> = Exclude<
   keyof T,
   keyof Object
