@@ -1,2 +1,2 @@
 // Import spec files individually for Stackblitz
-import './app/auth-guard.service.spec';
+import './app/user-greeting.component.spec';

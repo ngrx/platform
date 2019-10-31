@@ -62,17 +62,17 @@ describe('Auth Guard', () => {
 
 `MockStore` also provides the ability to mock individual selectors to return a passed value using the `overrideSelector()` method. When the selector is invoked by the `select` method, the returned value is overridden by the passed value, regardless of the current state in the store. 
 
-`overrideSelector()` returns a `MemoizedSelector`. To update the mock selector to return a different value, use the `MemoizedSelector`'s `setResult()` method.
+`overrideSelector()` returns a `MemoizedSelector`. To update the mock selector to return a different value, use the `MemoizedSelector`'s `setResult()` method.  Updating a selector's mock value will not cause it to emit automatically.  To trigger an emission from all selectors, use the `MockStore.refreshState()` method after updating the desired selectors.
 
 `overrideSelector()` supports mocking the `select` method (used in RxJS pipe) and the `Store` `select` instance method using a string or selector.
 
 Usage:
 
-<code-example header="auth-guard.service.ts" path="testing-store/src/app/auth-guard.service.ts"></code-example>
+<code-example header="user-greeting.component.ts" path="testing-store/src/app/user-greeting.component.ts"></code-example>
 
-<code-example header="auth-guard.service.spec.ts" path="testing-store/src/app/auth-guard.service.spec.ts"></code-example>
+<code-example header="user-greeting.component.spec.ts" path="testing-store/src/app/user-greeting.component.spec.ts"></code-example>
 
-In this example, we mock the `getLoggedIn` selector by using `overrideSelector`, passing in the `getLoggedIn` selector with a default mocked return value of `false`.  In the second test, we use `setResult()` to update the mock selector to return `true`.
+In this example, we mock the `getUsername` selector by using `overrideSelector`, passing in the `getUsername` selector with a default mocked return value of `'John'`.  In the second test, we use `setResult()` to update the mock selector to return `'Brandon'`, then we use `MockStore.refreshState()` to trigger an emission from the `getUsername` selector.
 
 <div class="alert is-helpful">
 
