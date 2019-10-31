@@ -24,7 +24,7 @@ Or you can keep the entity type in the NgRx Data system and take over the behavi
 
 * Create supplemental actions for that type. Give them custom `op` names that suit your purpose.
 
-* Register an alternative `EntityCollectionReducer` for that type with the `EntityReducerFactory`. Your custom reducer can respond to your custom actions and implement the standard operations in its own way.
+* Register an alternative `EntityCollectionReducer` for that type with the `EntityCollectionReducerFactory`. Your custom reducer can respond to your custom actions and implement the standard operations in its own way.
 
 * Create your own service facade, an alternative to `EntityCollectionService`, that dispatches the actions you care about
   and exposes the selectors that your type needs.

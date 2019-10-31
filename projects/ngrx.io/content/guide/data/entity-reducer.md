@@ -5,7 +5,7 @@ The _Entity Reducer_ is the _master reducer_ for all entity collections in the s
 <a id="reducer-factory"></a>
 
 The library doesn't have a named _entity reducer_ type.
-Rather it relies on the **`EntityReducerFactory.create()`** method to produce that reducer,
+Rather it relies on the **`EntityCacheReducerFactory.create()`** method to produce that reducer,
 which is an _NgRx_ `ActionReducer<EntityCache, EntityAction>`.
 
 Such a reducer function takes an `EntityCache` state and an `EntityAction` action
@@ -35,7 +35,7 @@ The _entity reducer's_ primary job is to
 An `EntityCollectionReducer` applies _actions_ to an `EntityCollection` in the `EntityCache` held in the _NgRx store_.
 
 There is always a reducer for a given entity type.
-The `EntityReducerFactory` maintains a registry of them.
+The `EntityCollectionReducerFactory` maintains a registry of them.
 If it can't find a reducer for the entity type, it [creates one](#collection-reducer-factory), with the help
 of the injected `EntityCollectionReducerFactory`, and registers that reducer
 so it can use it again next time.
@@ -45,10 +45,10 @@ so it can use it again next time.
 ### Register custom reducers
 
 You can create a custom reducer for an entity type and
-register it directly with `EntityReducerFactory.registerReducer()`.
+register it directly with `EntityCollectionReducerRegistry.registerReducer()`.
 
 You can register several custom reducers at the same time
-by calling `EntityReducerFactory.registerReducer(reducerMap)` where
+by calling `EntityCollectionReducerRegistry.registerReducer(reducerMap)` where
 the `reducerMap` is a hash of reducers, keyed by _entity-type-name_.
 
 <a id="collection-reducer-factory"></a>
@@ -91,7 +91,7 @@ The `NgRxDataModule` adds an empty `EntityCache` to the NgRx Data store.
 There are no collections in this cache.
 
 If the master `EntityReducer` can't find a collection for the _action_'s entity type,
-it creates a new, initialized collection with the help of the `EntityCollectionCreator`, which was injected into the `EntityReducerFactory`.
+it creates a new, initialized collection with the help of the `EntityCollectionCreator`, which was injected into the `EntityCacheReducerFactory`.
 
 The _creator_ returns an initialized collection from the `initialState` in the entity's `EntityDefinition`.
 If the entity type doesn't have a _definition_ or the definition doesn't have an `initialState` property value,
@@ -109,7 +109,7 @@ You can _replace_ the default _entity reducer_ by
 providing a custom alternative to the [`EntityCollectionReducerFactory`](#collection-reducer-factory).
 
 You could even _replace_ the master _entity reducer_ by
-providing a custom alternative to the [`EntityReducerFactory`](#reducer-factory).
+providing a custom alternative to the [`EntityCacheReducerFactory`](#reducer-factory).
 
 But quite often you'd like to extend a _collection reducer_ with some additional reducer logic that runs before or after.
 
@@ -247,7 +247,7 @@ add them to an array.
 Provide this array with the `ENTITY_COLLECTION_META_REDUCERS` injection token
 where you import the `NgRxDataModule`.
 
-The `EntityReducerFactory` injects it and composes the
+The `EntityCollectionReducerRegistry` injects it and composes the
 array of _MetaReducers_ into a single _meta-MetaReducer_.
 The earlier _MetaReducers_ wrap the later ones in the array.
 
