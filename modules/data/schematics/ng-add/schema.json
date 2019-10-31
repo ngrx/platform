@@ -39,6 +39,11 @@
       "default": false,
       "description": "Migrate from ngrx-data, will rename modules.",
       "alias": "migrate"
+    },
+    "entityConfig": {
+      "type": "boolean",
+      "default": true,
+      "description": "Create the Entity config file"
     }
   },
   "required": []

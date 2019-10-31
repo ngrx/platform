@@ -68,11 +68,45 @@ describe('Data ng-add Schematic', () => {
     expect(thrownError).toBeDefined();
   });
 
+  it('should add entity-metadata config to EntityDataModule', () => {
+    const options = { ...defaultOptions, effects: false, entityConfig: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(
+      /import { entityConfig } from '.\/entity-metadata'/
+    );
+    expect(content).toMatch(
+      /EntityDataModuleWithoutEffects.forRoot\(entityConfig\)/
+    );
+  });
+
+  it('should add entity-metadata config file', () => {
+    const options = { ...defaultOptions, entityConfig: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    expect(
+      tree.files.indexOf(`${projectPath}/src/app/entity-metadata.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should add entity-metadata config to EntityDataModule', () => {
+    const options = { ...defaultOptions, entityConfig: true };
+
+    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    expect(content).toMatch(
+      /import { entityConfig } from '.\/entity-metadata'/
+    );
+    expect(content).toMatch(/EntityDataModule.forRoot\(entityConfig\)/);
+  });
+
   it('should import EntityDataModuleWithoutEffects into a specified module', () => {
     const options = {
       ...defaultOptions,
       module: 'app.module.ts',
       effects: false,
+      entityConfig: false,
     };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
@@ -83,7 +117,7 @@ describe('Data ng-add Schematic', () => {
   });
 
   it('should register EntityDataModule in the provided module', () => {
-    const options = { ...defaultOptions };
+    const options = { ...defaultOptions, entityConfig: false };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
@@ -91,7 +125,7 @@ describe('Data ng-add Schematic', () => {
   });
 
   it('should register EntityDataModuleWithoutEffects in the provided module', () => {
-    const options = { ...defaultOptions, effects: false };
+    const options = { ...defaultOptions, effects: false, entityConfig: false };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
