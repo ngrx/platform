@@ -13,10 +13,16 @@ export interface EffectConfig {
   resubscribeOnError?: boolean;
 }
 
-export interface EffectMetadata<T> extends Required<EffectConfig> {
-  propertyName: Extract<keyof T, string>;
+export type EffectPropertyKey<T extends Object> = Exclude<
+  keyof T,
+  keyof Object
+>;
+
+export interface EffectMetadata<T extends Object>
+  extends Required<EffectConfig> {
+  propertyName: EffectPropertyKey<T>;
 }
 
 export type EffectsMetadata<T> = {
-  [key in Extract<keyof T, string>]?: EffectConfig
+  [key in EffectPropertyKey<T>]?: EffectConfig
 };

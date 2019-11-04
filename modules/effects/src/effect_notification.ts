@@ -4,7 +4,7 @@ import { Notification, Observable } from 'rxjs';
 
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);
-  propertyName: string;
+  propertyName: PropertyKey;
   sourceName: string;
   sourceInstance: any;
   notification: Notification<Action | null | undefined>;
@@ -46,7 +46,7 @@ function getEffectName({
 }: EffectNotification) {
   const isMethod = typeof sourceInstance[propertyName] === 'function';
 
-  return `"${sourceName}.${propertyName}${isMethod ? '()' : ''}"`;
+  return `"${sourceName}.${String(propertyName)}${isMethod ? '()' : ''}"`;
 }
 
 function stringify(action: Action | null | undefined) {
