@@ -18,7 +18,6 @@ import { mergeEffects } from './effects_resolver';
 import {
   onIdentifyEffectsKey,
   onRunEffectsKey,
-  onRunEffectsFn,
   OnRunEffects,
   onInitEffects,
 } from './lifecycle_hooks';
@@ -30,7 +29,7 @@ export class EffectSources extends Subject<any> {
     super();
   }
 
-  addEffects(effectSourceInstance: any) {
+  addEffects(effectSourceInstance: any): void {
     this.next(effectSourceInstance);
 
     if (
@@ -91,9 +90,9 @@ function resolveEffectSource(
   };
 }
 
-function isOnRunEffects(sourceInstance: {
-  [onRunEffectsKey]?: onRunEffectsFn;
-}): sourceInstance is OnRunEffects {
+function isOnRunEffects(
+  sourceInstance: Partial<OnRunEffects>
+): sourceInstance is OnRunEffects {
   const source = getSourceForInstance(sourceInstance);
 
   return (
