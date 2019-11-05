@@ -17,8 +17,7 @@ import { CoreModule } from '@example-app/core';
 import { AppRoutingModule } from '@example-app/app-routing.module';
 import {
   UserEffects,
-  RouterEffects,
-  LayoutEffects,
+  RouterEffects
 } from '@example-app/core/effects';
 import { AppComponent } from '@example-app/core/containers';
 
@@ -79,7 +78,7 @@ import { AppComponent } from '@example-app/core/containers';
      *
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
-    EffectsModule.forRoot([UserEffects, RouterEffects, LayoutEffects]),
+    EffectsModule.forRoot([UserEffects, RouterEffects]),
     CoreModule,
   ],
   bootstrap: [AppComponent],
