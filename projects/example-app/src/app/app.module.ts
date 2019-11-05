@@ -15,7 +15,10 @@ import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 
 import { CoreModule } from '@example-app/core';
 import { AppRoutingModule } from '@example-app/app-routing.module';
-import { UserEffects, RouterEffects } from '@example-app/core/effects';
+import {
+  UserEffects,
+  RouterEffects
+} from '@example-app/core/effects';
 import { AppComponent } from '@example-app/core/containers';
 
 @NgModule({
