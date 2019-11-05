@@ -8,16 +8,16 @@ When the NgRx Data library sees an action for an entity _persistence operation_,
 
 A data service is an instance of a class that implements the `EntityCollectionDataService`.
 This interface supports a basic set of CRUD operations for an entity.
-Eachthat return `Observables`:
+Each that return `Observables`:
 
-| Method                                                   | Meaning                               |
-| -------------------------------------------------------- | ------------------------------------- |
-| `add(entity: T)`                                         | Add a new entity                      |
-| `delete(id: any)`                                        | Delete an entity by primary key value |
-| `getAll()`                                               | Get all instances of this entity type |
-| `getById(id: any)`                                       | Get an entity by its primary key      |
-| `getWithQuery(queryParams: QueryParams` &#x7c; `string)` | Get entities that satisfy the query   |
-| `update(update: Update<T>)`                              | Update an existing entity             |
+| Method                                                   | Meaning                               | HTTP Method with endpoint        |
+| -------------------------------------------------------- | ------------------------------------- | -------------------------------- |
+| `add(entity: T)`                                         | Add a new entity                      | `POST` /api/hero/                |
+| `delete(id: any)`                                        | Delete an entity by primary key value | `DELETE` /api/hero/5             |
+| `getAll()`                                               | Get all instances of this entity type | `GET` /api/heroes/               |
+| `getById(id: any)`                                       | Get an entity by its primary key      | `GET` /api/hero/5                |
+| `getWithQuery(queryParams: QueryParams` &#x7c; `string)` | Get entities that satisfy the query   | `GET` /api/heroes/?name=bombasto |
+| `update(update: Update<T>)`                              | Update an existing entity             | `PUT` /api/hero/5                |
 
 <div class="alert is-helpful">
 
@@ -48,7 +48,7 @@ You can add custom data services to it by creating instances of those classes an
 
 1.  register a single data service by entity name with the `registerService()` method.
 
-1.  register several data services at the same time with by calling `registerServices` with an _entity-name/service_ map.
+2.  register several data services at the same time with by calling `registerServices` with an _entity-name/service_ map.
 
 <div class="alert is-helpful">
 

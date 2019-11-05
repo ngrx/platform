@@ -1,26 +1,33 @@
-import * as ts from 'typescript';
+import { Path } from '@angular-devkit/core';
 import {
+  apply,
+  applyTemplates,
+  chain,
+  mergeWith,
+  move,
+  noop,
   Rule,
   SchematicContext,
-  Tree,
-  chain,
-  noop,
   SchematicsException,
+  Tree,
+  url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
-  addPackageToPackageJson,
-  platformVersion,
-  findModuleFromOptions,
-  insertImport,
-  getProjectPath,
-  parseName,
   addImportToModule,
-  createReplaceChange,
-  ReplaceChange,
-  visitTSSourceFiles,
+  addPackageToPackageJson,
   commitChanges,
+  createReplaceChange,
+  findModuleFromOptions,
+  getProjectPath,
+  insertImport,
+  parseName,
+  platformVersion,
+  ReplaceChange,
+  stringUtils,
+  visitTSSourceFiles,
 } from '@ngrx/data/schematics-core';
+import * as ts from 'typescript';
 import { Schema as EntityDataOptions } from './schema';
 
 function addNgRxDataToPackageJson() {
@@ -53,6 +60,7 @@ function addEntityDataToNgModule(options: EntityDataOptions): Rule {
     const moduleToImport = options.effects
       ? 'EntityDataModule'
       : 'EntityDataModuleWithoutEffects';
+
     const effectsModuleImport = insertImport(
       source,
       modulePath,
@@ -63,11 +71,24 @@ function addEntityDataToNgModule(options: EntityDataOptions): Rule {
     const [dateEntityNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      moduleToImport,
+      options.entityConfig
+        ? [moduleToImport, 'forRoot(entityConfig)'].join('.')
+        : moduleToImport,
       ''
     );
 
     const changes = [effectsModuleImport, dateEntityNgModuleImport];
+
+    if (options.entityConfig) {
+      const entityConfigImport = insertImport(
+        source,
+        modulePath,
+        'entityConfig',
+        './entity-metadata'
+      );
+      changes.push(entityConfigImport);
+    }
+
     commitChanges(host, source.fileName, changes);
 
     return host;
@@ -248,6 +269,18 @@ function throwIfModuleNotSpecified(host: Tree, module?: string) {
   }
 }
 
+function createEntityConfigFile(options: EntityDataOptions, path: Path) {
+  return mergeWith(
+    apply(url('./files'), [
+      applyTemplates({
+        ...stringUtils,
+        ...options,
+      }),
+      move(path),
+    ])
+  );
+}
+
 export default function(options: EntityDataOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     (options as any).name = '';
@@ -268,6 +301,9 @@ export default function(options: EntityDataOptions): Rule {
             renameNgrxDataModule(),
           ])
         : addEntityDataToNgModule(options),
+      options.entityConfig
+        ? createEntityConfigFile(options, parsedPath.path)
+        : noop(),
     ])(host, context);
   };
 }

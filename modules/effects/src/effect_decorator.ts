@@ -1,14 +1,15 @@
 import { compose } from '@ngrx/store';
-import { EffectMetadata, EffectConfig } from './models';
+
+import { EffectConfig, EffectMetadata, EffectPropertyKey } from './models';
 import { getSourceForInstance } from './utils';
 
 const METADATA_KEY = '__@ngrx/effects__';
 
-export function Effect<T>({
+export function Effect({
   dispatch = true,
   resubscribeOnError = true,
-}: EffectConfig = {}): PropertyDecorator {
-  return function<K extends Extract<keyof T, string>>(
+}: EffectConfig = {}) {
+  return function<T extends Object, K extends EffectPropertyKey<T>>(
     target: T,
     propertyName: K
   ) {
@@ -21,7 +22,7 @@ export function Effect<T>({
       resubscribeOnError,
     };
     setEffectMetadataEntries<T>(target, [metadata]);
-  } as (target: {}, propertyName: string | symbol) => void;
+  };
 }
 
 export function getEffectDecoratorMetadata<T>(
@@ -35,7 +36,7 @@ export function getEffectDecoratorMetadata<T>(
   return effectsDecorators;
 }
 
-function setEffectMetadataEntries<T>(
+function setEffectMetadataEntries<T extends object>(
   sourceProto: T,
   entries: EffectMetadata<T>[]
 ) {
@@ -50,8 +51,12 @@ function setEffectMetadataEntries<T>(
   Array.prototype.push.apply(meta, entries);
 }
 
-function getEffectMetadataEntries<T>(sourceProto: T): EffectMetadata<T>[] {
+function getEffectMetadataEntries<T extends object>(
+  sourceProto: T
+): EffectMetadata<T>[] {
   return sourceProto.constructor.hasOwnProperty(METADATA_KEY)
-    ? (sourceProto.constructor as any)[METADATA_KEY]
+    ? (sourceProto.constructor as typeof sourceProto.constructor & {
+        [METADATA_KEY]: EffectMetadata<T>[];
+      })[METADATA_KEY]
     : [];
 }

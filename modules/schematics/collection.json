@@ -56,12 +56,18 @@
       "schema": "./src/store/schema.json",
       "description": "Adds initial setup for state management"
     },
-
     "selector": {
       "aliases": ["se"],
       "factory": "./src/selector",
       "schema": "./src/selector/schema.json",
       "description": "Add selectors"
+    },
+
+    "data": {
+      "aliases": ["dt"],
+      "factory": "./src/data",
+      "schema": "./src/data/schema.json",
+      "description": "Adds a data entity service"
     },
 
     "ng-add": {
