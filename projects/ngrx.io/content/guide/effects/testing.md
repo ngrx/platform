@@ -198,7 +198,7 @@ actions$ = new ReplaySubject(1);
 customersServiceSpy.getAllCustomers.and.returnValue(of([...]));
 
 // dispatch the GET action
-(actions$ as ReplaySubject).next( type: '[Customers Page] Get Customers' })
+(actions$ as ReplaySubject).next({ type: '[Customers Page] Get Customers' })
 
 // subscribe to the Effect stream and verify it dispatches a SUCCESS action
 effects.getAll$.subscribe(action => {
