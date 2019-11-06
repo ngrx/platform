@@ -1,5 +1,6 @@
 import { NgModule, Inject, Optional } from '@angular/core';
 import {
+  createAction,
   StoreModule,
   Store,
   StoreRootModule,
