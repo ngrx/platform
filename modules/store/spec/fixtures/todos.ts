@@ -11,6 +11,10 @@ export const COMPLETE_ALL_TODOS = 'COMPLETE_ALL_TODOS';
 
 let _id = 0;
 
+export function resetId() {
+  _id = 0;
+}
+
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',

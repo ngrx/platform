@@ -1,8 +1,12 @@
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { EffectMetadata, EffectConfig } from './models';
+import { EffectMetadata, EffectConfig, DEFAULT_EFFECT_CONFIG } from './models';
 
 const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
+
+interface CreateEffectMetadata {
+  [CREATE_EFFECT_METADATA_KEY]: EffectConfig;
+}
 
 type DispatchType<T> = T extends { dispatch: infer U } ? U : unknown;
 type ObservableReturnType<T> = T extends false
@@ -45,29 +49,22 @@ export function createEffect<
   T extends DispatchType<C>,
   O extends ObservableReturnType<T>,
   R extends O | ((...args: any[]) => O)
->(source: () => R, config?: Partial<C>): R {
+>(source: () => R, config?: Partial<C>): R & CreateEffectMetadata {
   const effect = source();
-  // Right now both createEffect and @Effect decorator set default values.
-  // Ideally that should only be done in one place that aggregates that info,
-  // for example in mergeEffects().
   const value: EffectConfig = {
-    dispatch: true,
-    resubscribeOnError: true,
+    ...DEFAULT_EFFECT_CONFIG,
     ...config, // Overrides any defaults if values are provided
   };
   Object.defineProperty(effect, CREATE_EFFECT_METADATA_KEY, {
     value,
   });
-  return effect;
+  return effect as typeof effect & CreateEffectMetadata;
 }
 
 export function getCreateEffectMetadata<
   T extends { [props in keyof T]: Object }
 >(instance: T): EffectMetadata<T>[] {
-  const propertyNames = Object.getOwnPropertyNames(instance) as Extract<
-    keyof T,
-    string
-  >[];
+  const propertyNames = Object.getOwnPropertyNames(instance) as Array<keyof T>;
 
   const metadata: EffectMetadata<T>[] = propertyNames
     .filter(

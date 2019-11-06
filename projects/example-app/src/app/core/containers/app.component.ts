@@ -62,8 +62,6 @@ export class AppComponent {
   }
 
   logout() {
-    this.closeSidenav();
-
     this.store.dispatch(AuthActions.logoutConfirmation());
   }
 }
