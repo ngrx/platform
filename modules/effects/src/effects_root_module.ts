@@ -11,7 +11,7 @@ import { EffectSources } from './effect_sources';
 import { ROOT_EFFECTS, _ROOT_EFFECTS_GUARD } from './tokens';
 
 export const ROOT_EFFECTS_INIT = '@ngrx/effects/init';
-export const rootEffectsInitAction = createAction(ROOT_EFFECTS_INIT);
+export const rootEffectsInit = createAction(ROOT_EFFECTS_INIT);
 
 @NgModule({})
 export class EffectsRootModule {
