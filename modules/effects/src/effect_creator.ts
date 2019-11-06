@@ -8,10 +8,8 @@ interface CreateEffectMetadata {
   [CREATE_EFFECT_METADATA_KEY]: EffectConfig;
 }
 
-type DispatchType<T> = T extends { dispatch: infer U } ? U : unknown;
-type ObservableReturnType<T> = T extends false
-  ? Observable<unknown>
-  : Observable<Action>;
+type DispatchType<T> = T extends { dispatch: infer U } ? U : true;
+type ObservableType<T, OriginalType> = T extends false ? OriginalType : Action;
 /**
  * @description
  * Creates an effect from an `Observable` and an `EffectConfig`.
@@ -46,9 +44,9 @@ type ObservableReturnType<T> = T extends false
  */
 export function createEffect<
   C extends EffectConfig,
-  T extends DispatchType<C>,
-  O extends ObservableReturnType<T>,
-  R extends O | ((...args: any[]) => O)
+  DT extends DispatchType<C>,
+  OT extends ObservableType<DT, OT>,
+  R extends Observable<OT> | ((...args: any[]) => Observable<OT>)
 >(source: () => R, config?: Partial<C>): R & CreateEffectMetadata {
   const effect = source();
   const value: EffectConfig = {
