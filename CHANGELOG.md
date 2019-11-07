@@ -1,3 +1,23 @@
+<a name="8.5.0"></a>
+
+# [8.5.0](https://github.com/ngrx/platform/compare/8.4.0...8.5.0) (2019-11-07)
+
+### Bug Fixes
+
+- **effects:** resubscribe every time an error occurs ([#2165](https://github.com/ngrx/platform/issues/2165)) ([0d59783](https://github.com/ngrx/platform/commit/0d59783))
+- **store:** disallow arrays in action creators ([#2155](https://github.com/ngrx/platform/issues/2155)) ([1e4c0be](https://github.com/ngrx/platform/commit/1e4c0be))
+- **store:** improve createFeatureSelector warning ([#2163](https://github.com/ngrx/platform/issues/2163)) ([e4765d6](https://github.com/ngrx/platform/commit/e4765d6)), closes [#2116](https://github.com/ngrx/platform/issues/2116)
+- **store:** improve types for string selectors ([#2174](https://github.com/ngrx/platform/issues/2174)) ([46a8467](https://github.com/ngrx/platform/commit/46a8467))
+
+### Features
+
+- **data:** add entity config in app module declaration for ng-add ([#2133](https://github.com/ngrx/platform/issues/2133)) ([6ca3056](https://github.com/ngrx/platform/commit/6ca3056))
+- **effects:** createEffect returns specific type for dispatch false ([#2195](https://github.com/ngrx/platform/issues/2195)) ([f70600f](https://github.com/ngrx/platform/commit/f70600f))
+- **effects:** improve types for ofType with action creators ([#2175](https://github.com/ngrx/platform/issues/2175)) ([cf02dd2](https://github.com/ngrx/platform/commit/cf02dd2))
+- **schematics:** add message prompts for individual schematics ([#2143](https://github.com/ngrx/platform/issues/2143)) ([fcb01e2](https://github.com/ngrx/platform/commit/fcb01e2))
+- **schematics:** add selector schematics ([#2160](https://github.com/ngrx/platform/issues/2160)) ([78817c7](https://github.com/ngrx/platform/commit/78817c7)), closes [#2140](https://github.com/ngrx/platform/issues/2140)
+- **store:** add On interface to public api ([#2157](https://github.com/ngrx/platform/issues/2157)) ([1b4ba1a](https://github.com/ngrx/platform/commit/1b4ba1a))
+
 <a name="8.4.0"></a>
 
 # [8.4.0](https://github.com/ngrx/platform/compare/8.3.0...8.4.0) (2019-10-09)
