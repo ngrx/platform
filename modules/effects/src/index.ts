@@ -10,7 +10,7 @@ export { EffectSources } from './effect_sources';
 export { EffectNotification } from './effect_notification';
 export {
   ROOT_EFFECTS_INIT,
-  rootEffectsInitAction,
+  rootEffectsInit,
 } from './effects_root_module';
 export { act } from './act';
 export {
