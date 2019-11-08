@@ -363,7 +363,7 @@ describe('Effect Schematic', () => {
     );
     expect(content).not.toMatch(/@Effect\(\)/);
     expect(content).toMatch(
-      /loadFoos\$ = createEffect\(\(\) => this.actions\$.pipe\(/
+      /loadFoos\$ = createEffect\(\(\) => {\s* return this.actions\$.pipe\(/
     );
   });
 
@@ -400,7 +400,7 @@ describe('Effect Schematic', () => {
     );
     expect(content).not.toMatch(/@Effect\(\)/);
     expect(content).toMatch(
-      /loadFoos\$ = createEffect\(\(\) => this.actions\$.pipe\(/
+      /loadFoos\$ = createEffect\(\(\) => {\s* return this.actions\$.pipe\(/
     );
   });
 

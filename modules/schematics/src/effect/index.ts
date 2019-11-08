@@ -108,12 +108,16 @@ function getEffectMethod(creators?: boolean) {
 function getEffectStart(name: string, creators?: boolean): string {
   const effectName = stringUtils.classify(name);
   return creators
-    ? `load${effectName}s$ = createEffect(() => this.actions$.pipe(`
+    ? `load${effectName}s$ = createEffect(() => {
+    return this.actions$.pipe(`
     : '@Effect()\n' + `  load${effectName}s$ = this.actions$.pipe(`;
 }
 
 function getEffectEnd(creators?: boolean) {
-  return creators ? '));' : ');';
+  return creators
+    ? `   ); 
+    }); `
+    : ');';
 }
 
 export default function(options: EffectOptions): Rule {
