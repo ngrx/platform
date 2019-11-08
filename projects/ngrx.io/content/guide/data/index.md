@@ -73,6 +73,7 @@ Once the entity configuration is created, you need to put it into the root store
 
 <code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
@@ -80,6 +81,7 @@ import { entityConfig } from './entity-metadata';
 
 @NgModule({
   imports: [
+    HttpClientModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig)
