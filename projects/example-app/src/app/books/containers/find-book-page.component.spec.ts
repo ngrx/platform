@@ -3,11 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-  MatCardModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
-} from '@angular/material';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
@@ -22,6 +17,7 @@ import { FindBookPageComponent } from '@example-app/books/containers';
 import * as fromBooks from '@example-app/books/reducers';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { MaterialModule } from '@example-app/material';
 
 describe('Find Book Page', () => {
   let fixture: ComponentFixture<FindBookPageComponent>;
@@ -33,9 +29,7 @@ describe('Find Book Page', () => {
       imports: [
         NoopAnimationsModule,
         RouterTestingModule,
-        MatInputModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
+        MaterialModule,
         ReactiveFormsModule,
       ],
       declarations: [
