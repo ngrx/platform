@@ -47,7 +47,7 @@ describe('createEffect()', () => {
       expectSnippet(`
         const effect = createEffect(() => ({ foo: 'a' }), { dispatch: false });
       `).toFail(
-        /Type '{ foo: string; }' is not assignable to type 'Observable<{}> | ((...args: any[]) => Observable<{}>)'./
+        /Type '{ foo: string; }' is not assignable to type 'Observable<unknown> | ((...args: any[]) => Observable<unknown>)'./
       );
     });
   });

@@ -13,6 +13,7 @@ import {
   template,
   move,
   mergeWith,
+  MergeStrategy,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import {
@@ -157,7 +158,7 @@ export default function(options: ContainerOptions): Rule {
         spec: false,
       }),
       addStateToComponent(options),
-      mergeWith(templateSource),
+      mergeWith(templateSource, MergeStrategy.Overwrite),
     ])(host, context);
   };
 }
