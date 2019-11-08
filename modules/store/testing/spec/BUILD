@@ -9,6 +9,7 @@ ts_test_library(
         "//modules/store",
         "//modules/store/spec/fixtures",
         "//modules/store/testing",
+        "@npm//@angular/platform-browser",
         "@npm//rxjs",
     ],
 )

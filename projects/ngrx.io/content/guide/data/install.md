@@ -30,6 +30,7 @@ ng add @ngrx/data
 * module - name of file containing the module that you wish to add the import for the `EntityDataModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`.
 * effects - if `false` it will use the `EntityDataModuleWithoutEffects` module instead of the default `EntityDataModule`.
 * migrateNgRxData - if `true` it will replace the `ngrx-data` module with the `@ngrx/data` module.
+* entityConfig - if `false` it will not create and declare the `entity-metadata` file.
 
 This command will automate the following steps:
 

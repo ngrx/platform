@@ -1,3 +1,4 @@
+import * as ngCore from '@angular/core';
 import { cold } from 'jasmine-marbles';
 import {
   createSelector,
@@ -110,6 +111,29 @@ describe('Selectors', () => {
       expect(incrementTwo).toHaveBeenCalledTimes(2);
       expect(incrementThree).toHaveBeenCalledTimes(2);
       expect(projectFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('should not memoize last successful projection result in case of error', () => {
+      const firstState = { ok: true };
+      const secondState = { ok: false };
+      const fail = () => {
+        throw new Error();
+      };
+      const projectorFn = jasmine
+        .createSpy('projectorFn', (s: any) => (s.ok ? s.ok : fail()))
+        .and.callThrough();
+      const selectorFn = jasmine
+        .createSpy('selectorFn', createSelector(state => state, projectorFn))
+        .and.callThrough();
+
+      selectorFn(firstState);
+
+      expect(() => selectorFn(secondState)).toThrow(new Error());
+      expect(() => selectorFn(secondState)).toThrow(new Error());
+
+      selectorFn(firstState);
+      expect(selectorFn).toHaveBeenCalledTimes(4);
+      expect(projectorFn).toHaveBeenCalledTimes(3);
     });
 
     it('should allow you to release memoized arguments', () => {
@@ -431,11 +455,13 @@ describe('Selectors', () => {
   });
 
   describe('createFeatureSelector', () => {
-    let featureName = '@ngrx/router-store';
+    let featureName = 'featureA';
     let featureSelector: (state: any) => number;
+    let warnSpy: jasmine.Spy;
 
     beforeEach(() => {
       featureSelector = createFeatureSelector<number>(featureName);
+      warnSpy = spyOn(console, 'warn');
     });
 
     it('should memoize the result', () => {
@@ -455,6 +481,51 @@ describe('Selectors', () => {
       );
 
       expect(featureState$).toBeObservable(expected$);
+    });
+
+    describe('Warning', () => {
+      describe('should not log when: ', () => {
+        it('the feature does exist', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const selector = createFeatureSelector('featureA');
+
+          selector({ featureA: {} });
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+
+        it('the feature key exist but is falsy', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const selector = createFeatureSelector('featureB');
+
+          selector({ featureA: {}, featureB: undefined });
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+
+        it('not in development mode', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(false);
+          const selector = createFeatureSelector('featureB');
+
+          selector({ featureA: {} });
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('should log when: ', () => {
+        it('feature key does not exist', () => {
+          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const selector = createFeatureSelector('featureB');
+
+          selector({ featureA: {} });
+
+          expect(warnSpy).toHaveBeenCalled();
+          expect(warnSpy.calls.mostRecent().args[0]).toMatch(
+            /The feature name "featureB" does not exist/
+          );
+        });
+      });
     });
   });
 

@@ -1,9 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, delay, map, timeout } from 'rxjs/operators';

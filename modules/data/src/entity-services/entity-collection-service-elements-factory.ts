@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EntityCollectionService } from './entity-collection-service';
-import { EntityCollectionServiceBase } from './entity-collection-service-base';
 import { EntityDispatcher } from '../dispatchers/entity-dispatcher';
 import { EntityDispatcherFactory } from '../dispatchers/entity-dispatcher-factory';
 import { EntityDefinitionService } from '../entity-metadata/entity-definition.service';

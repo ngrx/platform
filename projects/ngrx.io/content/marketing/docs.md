@@ -9,7 +9,7 @@ NgRx provides state management for creating maintainable explicit applications, 
 
 ### Serializability
 
-By normalizing state changes and pass them through observables, NgRx provides serializability and ensures state is predictably stored. This enables to save the state to an external storage, for example, `localStorage`.
+By normalizing state changes and passing them through observables, NgRx provides serializability and ensures state is predictably stored. This enables to save the state to an external storage, for example, `localStorage`.
 
 In addition, it also allows to inspect, download, upload, and dispatch actions, all from the [Store Devtools](guide/store-devtools).
 

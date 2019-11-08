@@ -82,6 +82,11 @@ jobs:
             - ~/.cache/yarn
             - ~/.cache/Cypress
             - node_modules
+    # required since `publish-*` jobs have tag filters AND requires `test`
+    # https://circleci.com/docs/2.0/workflows/#executing-workflows-for-a-git-tag
+    filters:
+      tags:
+        only: /.*/
 
   schematics-core-check:
     <<: *run_in_browser
@@ -211,7 +216,9 @@ jobs:
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      - run: yarn run publish:stable
+      - run:
+          name: Publish stable to npm
+          command: ./node_modules/.bin/ts-node ./build/publish-stable.ts
 
   publish-next:
     <<: *run_in_node
@@ -224,7 +231,9 @@ jobs:
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      - run: yarn run publish:next
+      - run:
+          name: Publish next to npm
+          command: ./node_modules/.bin/ts-node ./build/publish-next.ts
 
   cleanup-previews:
     <<: *run_in_node
@@ -282,27 +291,27 @@ workflows:
           filters:
             branches:
               only: master
-      # - publish-stable:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /\d+\.\d+\.\d+(?!-\w+\.\d)/
-      # - deploy-docs-stable:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /\d+\.\d+\.\d+(?!-\w+\.\d)/
+      - publish-stable:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /8\.\d+\.\d+(?!-\w+\.\d)/
+            branches:
+              ignore: /.*/
+      - deploy-docs-stable:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /8\.\d+\.\d+(?!-\w+\.\d)/
+            branches:
+              ignore: /.*/
       - publish-next:
           requires:
             - test
           filters:
+            tags:
+              only: /8\.\d+\.\d+(-\w+\.\d)/
             branches:
               ignore: /.*/
-            tags:
-              only: /\d+\.\d+\.\d+(-\w+\.\d)/

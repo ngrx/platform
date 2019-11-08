@@ -1,13 +1,10 @@
-import { Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 import { Dictionary, IdSelector, Update } from '@ngrx/entity';
 
 import { Observable } from 'rxjs';
 
 import { EntityAction, EntityActionOptions } from '../actions/entity-action';
 import { EntityActionGuard } from '../actions/entity-action-guard';
-import { EntityCache } from '../reducers/entity-cache';
 import {
   EntityCollection,
   ChangeStateMap,

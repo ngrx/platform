@@ -1,11 +1,14 @@
-import { HttpUrlGenerator, EntityHttpResourceUrls } from './http-url-generator';
+import { EntityHttpResourceUrls } from './http-url-generator';
 
 /**
  * Optional configuration settings for an entity collection data service
  * such as the `DefaultDataService<T>`.
  */
 export abstract class DefaultDataServiceConfig {
-  /** root path of the web api (default: 'api') */
+  /**
+   * root path of the web api.  may also include protocol, domain, and port
+   * for remote api, e.g.: `'https://api-domain.com:8000/api/v1'` (default: 'api')
+   */
   root?: string;
   /**
    * Known entity HttpResourceUrls.

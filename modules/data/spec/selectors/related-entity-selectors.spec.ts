@@ -1,15 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  Action,
-  createSelector,
-  Selector,
-  StoreModule,
-  Store,
-} from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
+import { createSelector, StoreModule, Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { Update } from '@ngrx/entity';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 import {

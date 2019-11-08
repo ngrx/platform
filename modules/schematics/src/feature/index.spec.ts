@@ -52,6 +52,12 @@ describe('Feature Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/foo.effects.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.selectors.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.selectors.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 
   it('should create all files of a feature to specified project if provided', () => {
@@ -82,6 +88,12 @@ describe('Feature Schematic', () => {
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.effects.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.selectors.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.selectors.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
   });
 
   it('should create all files of a feature within grouped folders if group is set', () => {
@@ -103,6 +115,12 @@ describe('Feature Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
     expect(
       files.indexOf(`${projectPath}/src/app/effects/foo.effects.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/selectors/foo.selectors.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/selectors/foo.selectors.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 

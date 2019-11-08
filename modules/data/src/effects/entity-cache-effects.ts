@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 
 import {
   asyncScheduler,
@@ -38,7 +38,6 @@ import {
 import { EntityCacheDataService } from '../dataservices/entity-cache-data.service';
 import { ENTITY_EFFECTS_SCHEDULER } from './entity-effects-scheduler';
 import { Logger } from '../utils/interfaces';
-import { PersistenceResultHandler } from '../dataservices/persistence-result-handler.service';
 
 @Injectable()
 export class EntityCacheEffects {
@@ -64,18 +63,22 @@ export class EntityCacheEffects {
   /**
    * Observable of SAVE_ENTITIES_CANCEL actions with non-null correlation ids
    */
-  @Effect({ dispatch: false })
-  saveEntitiesCancel$: Observable<SaveEntitiesCancel> = this.actions.pipe(
-    ofType(EntityCacheAction.SAVE_ENTITIES_CANCEL),
-    filter((a: SaveEntitiesCancel) => a.payload.correlationId != null)
+  saveEntitiesCancel$: Observable<SaveEntitiesCancel> = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(EntityCacheAction.SAVE_ENTITIES_CANCEL),
+        filter((a: SaveEntitiesCancel) => a.payload.correlationId != null)
+      ),
+    { dispatch: false }
   );
 
-  @Effect()
   // Concurrent persistence requests considered unsafe.
   // `mergeMap` allows for concurrent requests which may return in any order
-  saveEntities$: Observable<Action> = this.actions.pipe(
-    ofType(EntityCacheAction.SAVE_ENTITIES),
-    mergeMap((action: SaveEntities) => this.saveEntities(action))
+  saveEntities$: Observable<Action> = createEffect(() =>
+    this.actions.pipe(
+      ofType(EntityCacheAction.SAVE_ENTITIES),
+      mergeMap((action: SaveEntities) => this.saveEntities(action))
+    )
   );
 
   /**

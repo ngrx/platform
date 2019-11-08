@@ -6,13 +6,13 @@ import {
   Store,
   StoreModule,
 } from '@ngrx/store';
-import { Actions, Effect, EffectsModule } from '@ngrx/effects';
+import { Actions, EffectsModule, createEffect } from '@ngrx/effects';
 
 // Not using marble testing
 import { TestBed } from '@angular/core/testing';
 
-import { Observable, of, Subject } from 'rxjs';
-import { map, skip, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, skip } from 'rxjs/operators';
 
 import {
   EntityCache,
@@ -35,11 +35,12 @@ const EC_METAREDUCER_TOKEN = new InjectionToken<
 
 @Injectable()
 class TestEntityEffects {
-  @Effect()
-  test$: Observable<Action> = this.actions.pipe(
-    // tap(action => console.log('test$ effect', action)),
-    ofEntityOp(persistOps),
-    map(this.testHook)
+  test$: Observable<Action> = createEffect(() =>
+    this.actions.pipe(
+      // tap(action => console.log('test$ effect', action)),
+      ofEntityOp(persistOps),
+      map(this.testHook)
+    )
   );
 
   testHook(action: EntityAction) {

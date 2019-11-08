@@ -202,8 +202,7 @@ export function on(
  * @usageNotes
  *
  * - Must be used with `ActionCreator`'s (returned by `createAction`).  Cannot be used with class-based action creators.
- * - An action type should only be associated with at most one state change function, similar to switch statements.
- *   - In the case this is violated, the latest defined associated will be used (the latest `on` function passed).
+ * - An action can be associated with multiple state change functions. In this case the functions will be executed in the specified order.
  * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function.
  * This is because [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
  *
@@ -232,7 +231,14 @@ export function createReducer<S, A extends Action = Action>(
   const map = new Map<string, ActionReducer<S, A>>();
   for (let on of ons) {
     for (let type of on.types) {
-      map.set(type, on.reducer);
+      if (map.has(type)) {
+        const existingReducer = map.get(type) as ActionReducer<S, A>;
+        const newReducer: ActionReducer<S, A> = (state, action) =>
+          on.reducer(existingReducer(state, action), action);
+        map.set(type, newReducer);
+      } else {
+        map.set(type, on.reducer);
+      }
     }
   }
 

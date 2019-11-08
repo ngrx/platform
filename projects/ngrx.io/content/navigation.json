@@ -21,10 +21,6 @@
       "title": "Events"
     },
     {
-      "url": "https://github.com/ngrx/platform",
-      "title": "GitHub"
-    },
-    {
       "url": "https://opencollective.com/ngrx",
       "title": "Sponsor"
     }
@@ -148,6 +144,15 @@
         {
           "title": "Instrumentation",
           "url": "guide/store-devtools/config"
+        },
+        {
+          "title": "Recipes",
+          "children": [
+            {
+              "title": "Exclude from Production",
+              "url": "guide/store-devtools/recipes/exclude"
+            }
+          ]
         }
       ]
     },

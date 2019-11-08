@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {
   Action,
@@ -14,6 +15,17 @@ import { MockState } from './mock_state';
 import { MockSelector } from './mock_selector';
 import { MOCK_SELECTORS } from './tokens';
 
+if (typeof afterEach === 'function') {
+  afterEach(() => {
+    try {
+      const store = TestBed.get(Store) as MockStore<any>;
+      if (store && 'resetSelectors' in store) {
+        store.resetSelectors();
+      }
+    } catch {}
+  });
+}
+
 @Injectable()
 export class MockStore<T> extends Store<T> {
   static selectors = new Map<
@@ -24,6 +36,7 @@ export class MockStore<T> extends Store<T> {
   >();
 
   public scannedActions$: Observable<Action>;
+  private lastState: T;
 
   constructor(
     private state$: MockState<T>,
@@ -34,7 +47,7 @@ export class MockStore<T> extends Store<T> {
   ) {
     super(state$, actionsObserver, reducerManager);
     this.resetSelectors();
-    this.state$.next(this.initialState);
+    this.setState(this.initialState);
     this.scannedActions$ = actionsObserver.asObservable();
     if (mockSelectors) {
       mockSelectors.forEach(mockSelector => {
@@ -50,6 +63,7 @@ export class MockStore<T> extends Store<T> {
 
   setState(nextState: T): void {
     this.state$.next(nextState);
+    this.lastState = nextState;
   }
 
   overrideSelector<T, Result>(
@@ -96,7 +110,7 @@ export class MockStore<T> extends Store<T> {
   }
 
   select(selector: any, prop?: any) {
-    if (MockStore.selectors.has(selector)) {
+    if (typeof selector === 'string' && MockStore.selectors.has(selector)) {
       return new BehaviorSubject<any>(
         MockStore.selectors.get(selector)
       ).asObservable();
@@ -111,5 +125,12 @@ export class MockStore<T> extends Store<T> {
 
   removeReducer() {
     /* noop */
+  }
+
+  /**
+   * Refreshes the existing state.
+   */
+  refreshState() {
+    this.setState({ ...(this.lastState as T) });
   }
 }

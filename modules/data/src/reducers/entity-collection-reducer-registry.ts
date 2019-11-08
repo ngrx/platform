@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { ActionReducer, compose, MetaReducer } from '@ngrx/store';
+import { compose, MetaReducer } from '@ngrx/store';
 
 import { EntityAction } from '../actions/entity-action';
 import { EntityCollection } from './entity-collection';

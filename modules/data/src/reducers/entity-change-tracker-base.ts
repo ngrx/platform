@@ -1,19 +1,7 @@
-import {
-  EntityAdapter,
-  EntityState,
-  Dictionary,
-  IdSelector,
-  Update,
-} from '@ngrx/entity';
+import { EntityAdapter, IdSelector, Update } from '@ngrx/entity';
 
-import {
-  ChangeState,
-  ChangeStateMap,
-  ChangeType,
-  EntityCollection,
-} from './entity-collection';
+import { ChangeType, EntityCollection } from './entity-collection';
 import { defaultSelectId } from '../utils/utilities';
-import { EntityAction, EntityActionOptions } from '../actions/entity-action';
 import { EntityChangeTracker } from './entity-change-tracker';
 import { MergeStrategy } from '../actions/merge-strategy';
 import { UpdateResponseData } from '../actions/update-response-data';

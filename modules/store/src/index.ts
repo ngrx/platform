@@ -4,6 +4,7 @@ export {
   ActionReducer,
   ActionReducerMap,
   ActionReducerFactory,
+  ActionType,
   Creator,
   MetaReducer,
   Selector,
@@ -32,6 +33,7 @@ export {
   MemoizedSelector,
   MemoizedSelectorWithProps,
   resultMemoize,
+  DefaultProjectorFn,
 } from './selector';
 export { State, StateObservable, reduceState } from './state';
 export {
@@ -51,4 +53,4 @@ export {
   RootStoreConfig,
   StoreConfig,
 } from './store_module';
-export { on, createReducer } from './reducer_creator';
+export { On, on, createReducer } from './reducer_creator';

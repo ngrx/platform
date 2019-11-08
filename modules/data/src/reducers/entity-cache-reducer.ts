@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Action, ActionReducer } from '@ngrx/store';
 
 import { EntityAction } from '../actions/entity-action';
-import { EntityActionDataServiceError } from '../dataservices/data-service-error';
 import { EntityCache } from './entity-cache';
 
 import {
@@ -40,7 +39,7 @@ export class EntityCacheReducerFactory {
   ) {}
 
   /**
-   * Create the ngrx-data entity cache reducer which either responds to entity cache level actions
+   * Create the @ngrx/data entity cache reducer which either responds to entity cache level actions
    * or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.
    */
   create(): ActionReducer<EntityCache, Action> {

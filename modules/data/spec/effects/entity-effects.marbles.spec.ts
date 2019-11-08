@@ -2,7 +2,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { cold, hot, getTestScheduler } from 'jasmine-marbles';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Actions } from '@ngrx/effects';
 import { Update } from '@ngrx/entity';

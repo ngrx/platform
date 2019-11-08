@@ -1,38 +1,11 @@
 import { on, createReducer, createAction, props, union } from '@ngrx/store';
-import { expecter } from 'ts-snippet';
 
 describe('classes/reducer', function(): void {
-  const expectSnippet = expecter(
-    code => `
-// path goes from root
-import {createAction, props} from './modules/store/src/action_creator';
-import {on} from './modules/store/src/reducer_creator';
-  ${code}`,
-    {
-      moduleResolution: 'node',
-      target: 'es2015',
-    }
-  );
-
   describe('base', () => {
     const bar = createAction('[foobar] BAR', props<{ bar: number }>());
     const foo = createAction('[foobar] FOO', props<{ foo: number }>());
 
     describe('on', () => {
-      it('should enforce action property types', () => {
-        expectSnippet(`
-                    const foo = createAction('FOO', props<{ foo: number }>());
-                    on(foo, (state, action) => { const foo: string = action.foo; return state; });
-                `).toFail(/'number' is not assignable to type 'string'/);
-      });
-
-      it('should enforce action property names', () => {
-        expectSnippet(`
-                    const foo = createAction('FOO', props<{ foo: number }>());
-                    on(foo, (state, action) => { const bar: string = action.bar; return state; });
-                `).toFail(/'bar' does not exist on type/);
-      });
-
       it('should support reducers with multiple actions', () => {
         const both = union({ bar, foo });
         const func = (state: {}, action: typeof both) => ({});
@@ -85,6 +58,23 @@ import {on} from './modules/store/src/reducer_creator';
 
         state = fooBarReducer(state, bar({ bar: 54 }));
         expect(state).toEqual(['[foobar] FOO', '[foobar] BAR']);
+      });
+
+      it('should support "on"s to have identical action types', () => {
+        const increase = createAction('[COUNTER] increase');
+
+        const counterReducer = createReducer(
+          0,
+          on(increase, state => state + 1),
+          on(increase, state => state + 1)
+        );
+
+        expect(typeof counterReducer).toEqual('function');
+
+        let state = 5;
+
+        state = counterReducer(state, increase());
+        expect(state).toEqual(7);
       });
     });
   });

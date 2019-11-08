@@ -1,11 +1,9 @@
 import {
-  EntityAction,
   EntityActionOptions,
   EntityActionPayload,
   EntityOp,
   EntityActionFactory,
   MergeStrategy,
-  CorrelationIdGenerator,
 } from '../../';
 
 class Hero {

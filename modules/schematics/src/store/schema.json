@@ -10,7 +10,8 @@
       "$default": {
         "$source": "argv",
         "index": 0
-      }
+      },
+      "x-prompt": "What should be the name of the state?"
     },
     "path": {
       "type": "string",
@@ -38,7 +39,8 @@
       "default": "",
       "description": "Allows specification of the declaring module.",
       "alias": "m",
-      "subtype": "filepath"
+      "subtype": "filepath",
+      "x-prompt": "To which module (path) should the state be registered in?"
     },
     "statePath": {
       "type": "string",

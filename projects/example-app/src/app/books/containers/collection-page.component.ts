@@ -36,7 +36,7 @@ export class CollectionPageComponent implements OnInit {
   books$: Observable<Book[]>;
 
   constructor(private store: Store<fromBooks.State>) {
-    this.books$ = store.pipe(select(fromBooks.getBookCollection));
+    this.books$ = store.pipe(select(fromBooks.selectBookCollection));
   }
 
   ngOnInit() {

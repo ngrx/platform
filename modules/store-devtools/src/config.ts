@@ -11,6 +11,18 @@ export type SerializationOptions = {
   refs?: Array<any>;
 };
 export type Predicate = (state: any, action: Action) => boolean;
+export interface DevToolsFeatureOptions {
+  pause?: boolean;
+  lock?: boolean;
+  persist?: boolean;
+  export?: boolean;
+  import?: 'custom' | boolean;
+  jump?: boolean;
+  skip?: boolean;
+  reorder?: boolean;
+  dispatch?: boolean;
+  test?: boolean;
+}
 
 export class StoreDevtoolsConfig {
   maxAge: number | false;
@@ -20,7 +32,7 @@ export class StoreDevtoolsConfig {
   name?: string;
   serialize?: boolean | SerializationOptions;
   logOnly?: boolean;
-  features?: any;
+  features?: DevToolsFeatureOptions;
   actionsBlocklist?: string[];
   actionsSafelist?: string[];
   predicate?: Predicate;

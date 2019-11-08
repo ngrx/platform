@@ -1,19 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action, StoreModule, Store } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
 
-import { Observable, of, ReplaySubject, throwError, timer } from 'rxjs';
-import {
-  delay,
-  filter,
-  first,
-  mergeMap,
-  skip,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { Observable, of, throwError, timer } from 'rxjs';
+import { delay, filter, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { commandDispatchTest } from '../dispatchers/entity-dispatcher.spec';
 import {
@@ -24,7 +16,6 @@ import {
   EntityAction,
   EntityActionFactory,
   EntityCache,
-  EntityCollection,
   EntityOp,
   EntityMetadataMap,
   EntityDataModule,

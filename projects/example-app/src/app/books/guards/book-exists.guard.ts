@@ -30,7 +30,7 @@ export class BookExistsGuard implements CanActivate {
    */
   waitForCollectionToLoad(): Observable<boolean> {
     return this.store.pipe(
-      select(fromBooks.getCollectionLoaded),
+      select(fromBooks.selectCollectionLoaded),
       filter(loaded => loaded),
       take(1)
     );
@@ -42,7 +42,7 @@ export class BookExistsGuard implements CanActivate {
    */
   hasBookInStore(id: string): Observable<boolean> {
     return this.store.pipe(
-      select(fromBooks.getBookEntities),
+      select(fromBooks.selectBookEntities),
       map(entities => !!entities[id]),
       take(1)
     );

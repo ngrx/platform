@@ -22,6 +22,13 @@
       "description": "Add side effect class"
     },
 
+    "create-effect-migration": {
+      "aliases": ["cefm"],
+      "factory": "./src/create-effect-migration",
+      "schema": "./src/create-effect-migration/schema.json",
+      "description": "Migrated usages of @Effect() to createEffect()"
+    },
+
     "entity": {
       "aliases": ["en"],
       "factory": "./src/entity",
@@ -48,6 +55,19 @@
       "factory": "./src/store",
       "schema": "./src/store/schema.json",
       "description": "Adds initial setup for state management"
+    },
+    "selector": {
+      "aliases": ["se"],
+      "factory": "./src/selector",
+      "schema": "./src/selector/schema.json",
+      "description": "Add selectors"
+    },
+
+    "data": {
+      "aliases": ["dt"],
+      "factory": "./src/data",
+      "schema": "./src/data/schema.json",
+      "description": "Adds a data entity service"
     },
 
     "ng-add": {

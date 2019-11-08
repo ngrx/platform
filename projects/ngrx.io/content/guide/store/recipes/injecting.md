@@ -65,10 +65,12 @@ import { MetaReducer, META_REDUCERS } from '@ngrx/store';
 import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
-export function getMetaReducers(
-  some: SomeService
-): MetaReducer&lt;fromRoot.State&gt;[] {
-  // return array of meta reducers;
+export function metaReducerFactory(): MetaReducer&lt;fromRoot.State&gt; {
+  return (reducer: ActionReducer&lt;any&gt;) => (state, action) => {
+    console.log('state', state);
+    console.log('action', action);
+    return reducer(state, action);
+  };
 }
 
 @NgModule({
@@ -76,7 +78,7 @@ export function getMetaReducers(
     {
       provide: META_REDUCERS,
       deps: [SomeService],
-      useFactory: getMetaReducers,
+      useFactory: metaReducerFactory,
       multi: true,
     },
   ],

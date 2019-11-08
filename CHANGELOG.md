@@ -1,3 +1,55 @@
+<a name="8.5.0"></a>
+
+# [8.5.0](https://github.com/ngrx/platform/compare/8.4.0...8.5.0) (2019-11-07)
+
+### Bug Fixes
+
+- **effects:** resubscribe every time an error occurs ([#2165](https://github.com/ngrx/platform/issues/2165)) ([0d59783](https://github.com/ngrx/platform/commit/0d59783))
+- **store:** disallow arrays in action creators ([#2155](https://github.com/ngrx/platform/issues/2155)) ([1e4c0be](https://github.com/ngrx/platform/commit/1e4c0be))
+- **store:** improve createFeatureSelector warning ([#2163](https://github.com/ngrx/platform/issues/2163)) ([e4765d6](https://github.com/ngrx/platform/commit/e4765d6)), closes [#2116](https://github.com/ngrx/platform/issues/2116)
+- **store:** improve types for string selectors ([#2174](https://github.com/ngrx/platform/issues/2174)) ([46a8467](https://github.com/ngrx/platform/commit/46a8467))
+
+### Features
+
+- **data:** add entity config in app module declaration for ng-add ([#2133](https://github.com/ngrx/platform/issues/2133)) ([6ca3056](https://github.com/ngrx/platform/commit/6ca3056))
+- **effects:** createEffect returns specific type for dispatch false ([#2195](https://github.com/ngrx/platform/issues/2195)) ([f70600f](https://github.com/ngrx/platform/commit/f70600f))
+- **effects:** improve types for ofType with action creators ([#2175](https://github.com/ngrx/platform/issues/2175)) ([cf02dd2](https://github.com/ngrx/platform/commit/cf02dd2))
+- **schematics:** add message prompts for individual schematics ([#2143](https://github.com/ngrx/platform/issues/2143)) ([fcb01e2](https://github.com/ngrx/platform/commit/fcb01e2))
+- **schematics:** add selector schematics ([#2160](https://github.com/ngrx/platform/issues/2160)) ([78817c7](https://github.com/ngrx/platform/commit/78817c7)), closes [#2140](https://github.com/ngrx/platform/issues/2140)
+- **store:** add On interface to public api ([#2157](https://github.com/ngrx/platform/issues/2157)) ([1b4ba1a](https://github.com/ngrx/platform/commit/1b4ba1a))
+
+<a name="8.4.0"></a>
+
+# [8.4.0](https://github.com/ngrx/platform/compare/8.3.0...8.4.0) (2019-10-09)
+
+### Bug Fixes
+
+- **schematics:** fixed the schematics/action spec template ([#2092](https://github.com/ngrx/platform/issues/2092)) ([ed3b1f9](https://github.com/ngrx/platform/commit/ed3b1f9)), closes [#2082](https://github.com/ngrx/platform/issues/2082)
+- **store:** improve consistency of memoized selector result when projection fails ([#2101](https://github.com/ngrx/platform/issues/2101)) ([c63941c](https://github.com/ngrx/platform/commit/c63941c)), closes [#2100](https://github.com/ngrx/platform/issues/2100)
+
+### Features
+
+- **effects:** throw error when forRoot() is used more than once ([b46748c](https://github.com/ngrx/platform/commit/b46748c))
+- **schematics:** add createEffect migration schematic ([#2136](https://github.com/ngrx/platform/issues/2136)) ([9eb1bd5](https://github.com/ngrx/platform/commit/9eb1bd5))
+- **store:** add refreshState method to mock store ([#2148](https://github.com/ngrx/platform/issues/2148)) ([30e876f](https://github.com/ngrx/platform/commit/30e876f)), closes [#2121](https://github.com/ngrx/platform/issues/2121)
+- **store:** allow multiple on handlers for the same action in createReducer([#2103](https://github.com/ngrx/platform/issues/2103)) ([9a70262](https://github.com/ngrx/platform/commit/9a70262)), closes [#1956](https://github.com/ngrx/platform/issues/1956)
+- **store:** cleanup selector after a test ([2964e2b](https://github.com/ngrx/platform/commit/2964e2b))
+- **store:** throw error when forRoot() is used more than once ([4304865](https://github.com/ngrx/platform/commit/4304865))
+
+<a name="8.3.0"></a>
+
+# [8.3.0](https://github.com/ngrx/platform/compare/8.2.0...8.3.0) (2019-08-29)
+
+### Bug Fixes
+
+- **data:** use correct guard when handling optimistic update ([#2060](https://github.com/ngrx/platform/issues/2060)) ([34c0420](https://github.com/ngrx/platform/commit/34c0420)), closes [#2059](https://github.com/ngrx/platform/issues/2059)
+- **store:** add DefaultProjectorFn to public API ([#2090](https://github.com/ngrx/platform/issues/2090)) ([2d37b48](https://github.com/ngrx/platform/commit/2d37b48))
+- **store:** should not run schematics when not using named imports ([#2095](https://github.com/ngrx/platform/issues/2095)) ([7cadbc0](https://github.com/ngrx/platform/commit/7cadbc0)), closes [#2093](https://github.com/ngrx/platform/issues/2093)
+
+### Features
+
+- **store:** add verbose error message for undefined feature state in development mode ([#2078](https://github.com/ngrx/platform/issues/2078)) ([6946e2e](https://github.com/ngrx/platform/commit/6946e2e)), closes [#1897](https://github.com/ngrx/platform/issues/1897)
+
 <a name="8.2.0"></a>
 
 # [8.2.0](https://github.com/ngrx/platform/compare/8.1.0...8.2.0) (2019-07-31)
