@@ -13,6 +13,7 @@ ts_library(
         "@npm//@angular-devkit/core",
         "@npm//@angular-devkit/schematics",
         "@npm//rxjs",
+        "@npm//tslib",
         "@npm//typescript",
     ],
 )
