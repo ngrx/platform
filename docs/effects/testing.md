@@ -69,7 +69,7 @@ import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: ReplaySubject&lt;any&gt;;
+  let actions: ReplaySubject<any>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
