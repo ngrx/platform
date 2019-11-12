@@ -18,6 +18,12 @@ export const DEFAULT_EFFECT_CONFIG: Readonly<Required<EffectConfig>> = {
   resubscribeOnError: true,
 };
 
+export const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
+
+export interface CreateEffectMetadata {
+  [CREATE_EFFECT_METADATA_KEY]: EffectConfig;
+}
+
 export type EffectPropertyKey<T extends Object> = Exclude<
   keyof T,
   keyof Object
