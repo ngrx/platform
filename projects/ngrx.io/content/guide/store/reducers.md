@@ -20,7 +20,7 @@ and the associated reducer function.
 First, define some actions for interacting with a piece of state.
 
 <code-example header="scoreboard-page.actions.ts">
-import { createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 export const homeScore = createAction('[Scoreboard Page] Home Score');
 export const awayScore = createAction('[Scoreboard Page] Away Score');
