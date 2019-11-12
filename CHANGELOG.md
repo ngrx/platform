@@ -1,3 +1,12 @@
+<a name="8.5.1"></a>
+
+## [8.5.1](https://github.com/ngrx/platform/compare/8.5.0...8.5.1) (2019-11-12)
+
+### Bug Fixes
+
+- **effects:** add action creator for root effects init action ([#2219](https://github.com/ngrx/platform/issues/2219)) ([de9a590](https://github.com/ngrx/platform/commit/de9a590)), closes [#2218](https://github.com/ngrx/platform/issues/2218)
+- **effects:** export CreateEffectMetadata ([#2245](https://github.com/ngrx/platform/issues/2245)) ([bfe4c81](https://github.com/ngrx/platform/commit/bfe4c81)), closes [#2243](https://github.com/ngrx/platform/issues/2243)
+
 <a name="8.5.0"></a>
 
 # [8.5.0](https://github.com/ngrx/platform/compare/8.4.0...8.5.0) (2019-11-07)
