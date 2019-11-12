@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { EffectMetadata, EffectConfig, DEFAULT_EFFECT_CONFIG } from './models';
-
-const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
-
-interface CreateEffectMetadata {
-  [CREATE_EFFECT_METADATA_KEY]: EffectConfig;
-}
+import {
+  EffectMetadata,
+  EffectConfig,
+  DEFAULT_EFFECT_CONFIG,
+  CreateEffectMetadata,
+  CREATE_EFFECT_METADATA_KEY,
+} from './models';
 
 type DispatchType<T> = T extends { dispatch: infer U } ? U : true;
 type ObservableType<T, OriginalType> = T extends false ? OriginalType : Action;
