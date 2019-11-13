@@ -84,9 +84,6 @@ jobs:
             - node_modules
     # required since `publish-*` jobs have tag filters AND requires `test`
     # https://circleci.com/docs/2.0/workflows/#executing-workflows-for-a-git-tag
-    filters:
-      tags:
-        only: /.*/
 
   schematics-core-check:
     <<: *run_in_browser
@@ -250,13 +247,19 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - install
+      - install:
+          filters:
+            tags:
+              only: /.*/
       - lint:
           requires:
             - install
       - test:
           requires:
             - install
+          filters:
+            tags:
+              only: /.*/
       - example-tests:
           requires:
             - install
@@ -296,7 +299,7 @@ workflows:
             - test
           filters:
             tags:
-              only: /8\.\d+\.\d+(?!-\w+\.\d)/
+              only: /9\.\d+\.\d+(?!-\w+\.\d)/
             branches:
               ignore: /.*/
       - deploy-docs-stable:
@@ -304,7 +307,7 @@ workflows:
             - test
           filters:
             tags:
-              only: /8\.\d+\.\d+(?!-\w+\.\d)/
+              only: /9\.\d+\.\d+(?!-\w+\.\d)/
             branches:
               ignore: /.*/
       - publish-next:
@@ -312,6 +315,6 @@ workflows:
             - test
           filters:
             tags:
-              only: /8\.\d+\.\d+(-\w+\.\d)/
+              only: /9\.\d+\.\d+(-\w+\.\d)/
             branches:
               ignore: /.*/
