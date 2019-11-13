@@ -56,7 +56,7 @@ The `@ngrx/schematics` extend the default `@schematics/angular` collection. If y
 ```json
 "schematics": {
   "@ngrx/schematics:component": {
-    "styleext": "scss"
+    "style": "scss"
   }
 }
 ```

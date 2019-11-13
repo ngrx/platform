@@ -101,7 +101,7 @@
       "flat": true,
       "spec": false,
       "prefix": "bc",
-      "styleext": "css"
+      "style": "css"
     },
     "@schematics/angular:directive": {
       "prefix": "bc"

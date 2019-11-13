@@ -173,7 +173,7 @@
     "@schematics/angular:component": {
       "inlineStyle": true,
       "prefix": "aio",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "aio"
