@@ -20,7 +20,6 @@ describe('Reducer Schematic', () => {
   const defaultOptions: ReducerOptions = {
     name: 'foo',
     project: 'bar',
-    spec: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -64,7 +63,6 @@ describe('Reducer Schematic', () => {
   it('should create two files if spec is true', () => {
     const options = {
       ...defaultOptions,
-      spec: true,
     };
     const tree = schematicRunner.runSchematic('reducer', options, appTree);
 
@@ -162,7 +160,7 @@ describe('Reducer Schematic', () => {
   it('should group and nest the reducer within a feature', () => {
     const options = {
       ...defaultOptions,
-      spec: false,
+      skipTest: true,
       group: true,
       flat: false,
       feature: true,

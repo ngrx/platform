@@ -19,7 +19,6 @@ describe('Data Schematic', () => {
   const defaultOptions: DataOptions = {
     name: 'foo',
     project: 'bar',
-    spec: false,
     group: false,
     flat: true,
   };
@@ -60,10 +59,9 @@ describe('Data Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create two files if spec is true', () => {
+  it('should create two files if skipTest is false(as it is by default)', () => {
     const options = {
       ...defaultOptions,
-      spec: true,
     };
     const tree = schematicRunner.runSchematic('data', options, appTree);
     expect(
@@ -76,7 +74,7 @@ describe('Data Schematic', () => {
 
   describe('service class', () => {
     it('should import the correct model', () => {
-      const options = { ...defaultOptions, spec: true };
+      const options = { ...defaultOptions };
       const tree = schematicRunner.runSchematic('data', options, appTree);
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.service.ts`
@@ -86,7 +84,7 @@ describe('Data Schematic', () => {
     });
 
     it('should extending EntityCollectionServiceBase', () => {
-      const options = { ...defaultOptions, spec: true };
+      const options = { ...defaultOptions };
       const tree = schematicRunner.runSchematic('data', options, appTree);
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.service.ts`
@@ -101,7 +99,7 @@ describe('Data Schematic', () => {
   });
 
   it('should create model', () => {
-    const options = { ...defaultOptions, spec: true };
+    const options = { ...defaultOptions };
     const tree = schematicRunner.runSchematic('data', options, appTree);
     const fileContent = tree.readContent(`${projectPath}/src/app/foo.ts`);
 
@@ -110,7 +108,7 @@ describe('Data Schematic', () => {
   });
 
   it('should create spec class with right imports', () => {
-    const options = { ...defaultOptions, spec: true };
+    const options = { ...defaultOptions };
     const tree = schematicRunner.runSchematic('data', options, appTree);
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.service.spec.ts`

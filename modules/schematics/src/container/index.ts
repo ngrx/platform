@@ -140,9 +140,9 @@ export default function(options: ContainerOptions): Rule {
     const templateSource = apply(
       url(options.testDepth === 'unit' ? './files' : './integration-files'),
       [
-        options.spec
-          ? noop()
-          : filter(path => !path.endsWith('.spec.ts.template')),
+        options.skipTest
+          ? filter(path => !path.endsWith('.spec.ts.template'))
+          : noop(),
         applyTemplates({
           'if-flat': (s: string) => (options.flat ? '' : s),
           ...stringUtils,

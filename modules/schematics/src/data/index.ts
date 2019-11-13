@@ -28,9 +28,9 @@ export default function(options: DataOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.spec
-        ? noop()
-        : filter(path => !path.endsWith('.spec.ts.template')),
+      options.skipTest
+        ? filter(path => !path.endsWith('.spec.ts.template'))
+        : noop(),
       applyTemplates({
         ...stringUtils,
         'if-flat': (s: string) =>

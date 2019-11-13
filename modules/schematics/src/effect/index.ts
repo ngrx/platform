@@ -130,9 +130,9 @@ export default function(options: EffectOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.spec
-        ? noop()
-        : filter(path => !path.endsWith('.spec.ts.template')),
+      options.skipTest
+        ? filter(path => !path.endsWith('.spec.ts.template'))
+        : noop(),
       options.root && options.minimal ? filter(_ => false) : noop(),
       applyTemplates({
         ...stringUtils,

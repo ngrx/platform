@@ -19,7 +19,6 @@ describe('Action Schematic', () => {
   const defaultOptions: ActionOptions = {
     name: 'foo',
     project: 'bar',
-    spec: false,
     group: false,
     flat: true,
   };
@@ -61,10 +60,23 @@ describe('Action Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create two files if spec is true', () => {
+  it('should create two files test files by default', () => {
     const options = {
       ...defaultOptions,
-      spec: true,
+    };
+    const tree = schematicRunner.runSchematic('action', options, appTree);
+    expect(
+      tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should not create two files test files when skipTests is set to true', () => {
+    const options = {
+      ...defaultOptions,
+      skipTests: false,
     };
     const tree = schematicRunner.runSchematic('action', options, appTree);
     expect(
@@ -118,7 +130,7 @@ describe('Action Schematic', () => {
     });
 
     it('should create spec class with right imports', () => {
-      const options = { ...actionClassesDefaultOptions, spec: true };
+      const options = { ...actionClassesDefaultOptions };
       const tree = schematicRunner.runSchematic('action', options, appTree);
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.spec.ts`

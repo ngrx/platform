@@ -19,7 +19,6 @@ describe('Store Schematic', () => {
   const defaultOptions: StoreOptions = {
     name: 'foo',
     project: 'bar',
-    spec: true,
     module: undefined,
     flat: false,
     root: true,

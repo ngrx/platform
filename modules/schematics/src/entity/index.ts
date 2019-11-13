@@ -49,9 +49,9 @@ export default function(options: EntityOptions): Rule {
     };
 
     const commonTemplates = apply(url('./common-files'), [
-      options.spec
-        ? noop()
-        : filter(path => !path.endsWith('.spec.ts.template')),
+      options.skipTest
+        ? filter(path => !path.endsWith('.spec.ts.template'))
+        : noop(),
       applyTemplates(templateOptions),
       move(parsedPath.path),
     ]);

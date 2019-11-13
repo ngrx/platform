@@ -15,9 +15,9 @@ export interface Schema {
   project?: string;
 
   /**
-   * Specifies if a spec file is generated.
+   * When true, does not create test files.
    */
-  spec?: boolean;
+  skipTest?: boolean;
 
   /**
    * Flag to indicate if a dir is created.
