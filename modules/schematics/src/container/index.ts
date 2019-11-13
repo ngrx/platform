@@ -155,7 +155,7 @@ export default function(options: ContainerOptions): Rule {
     return chain([
       externalSchematic('@schematics/angular', 'component', {
         ...opts,
-        skipTests: true,
+        skipTests: true
       }),
       addStateToComponent(options),
       mergeWith(templateSource),

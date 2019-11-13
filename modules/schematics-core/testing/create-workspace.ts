@@ -20,13 +20,6 @@ export const defaultAppOptions = {
   skipTests: false,
 };
 
-const defaultModuleOptions = {
-  name: 'foo',
-  spec: true,
-  module: undefined,
-  flat: false,
-};
-
 const defaultLibOptions = {
   name: 'baz',
 };
