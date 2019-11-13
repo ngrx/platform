@@ -52,9 +52,9 @@ Provide the path to a `reducers` file containing a state interface and a object 
 
 Generate spec files associated with the feature files.
 
-- `--spec`
+- `--skipTest`
   - Type: `boolean`
-  - Default: `true`
+  - Default: `false`
 
 #### Examples
 

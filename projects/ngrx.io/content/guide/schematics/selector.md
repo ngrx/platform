@@ -41,9 +41,9 @@ Group the selector file within an `selectors` folder.
 
 Generate a spec file alongside the selector file.
 
-- `--spec`
+- `--skipTest`
   - Type: `boolean`
-  - Default: `true`
+  - Default: `false`
 
 ## Examples
 

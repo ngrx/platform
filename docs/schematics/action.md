@@ -41,7 +41,7 @@ Group the action file within an `actions` folder.
 
 Generate a spec file alongside the action file.
 
-- `--spec`
+- `--skipTest`
   - Type: `boolean`
   - Default: `false`
 
@@ -50,7 +50,7 @@ Generate a spec file alongside the action file.
 Generate a `User` actions file with an associated spec file.
 
 ```sh
-ng generate action User --spec
+ng generate action User
 ```
 
 Generate a `User` actions file within a nested folder

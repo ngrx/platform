@@ -52,9 +52,9 @@ When used with the `--module` option, it registers an effect within the `Angular
 
 Generate a spec file alongside the action file.
 
-- `--spec`
+- `--skiptest`
   - Type: `boolean`
-  - Default: `true`
+  - Default: `false`
 
 #### Examples
 
