@@ -374,8 +374,8 @@ describe('DevtoolsExtension', () => {
     });
 
     describe('with Action and actionsBlocklist', () => {
-      const NORMAL_ACTION = 'NORMAL_ACTION';
-      const BLOCKED_ACTION = 'BLOCKED_ACTION';
+      const NORMAL_ACTION = '[Test] NORMAL_ACTION';
+      const BLOCKED_ACTION = '[Test] BLOCKED_ACTION';
 
       beforeEach(() => {
         devtoolsExtension = new DevtoolsExtension(
@@ -410,8 +410,8 @@ describe('DevtoolsExtension', () => {
     });
 
     describe('with Action and actionsSafelist', () => {
-      const NORMAL_ACTION = 'NORMAL_ACTION';
-      const SAFE_ACTION = 'SAFE_ACTION';
+      const NORMAL_ACTION = '[Test] NORMAL_ACTION';
+      const SAFE_ACTION = '[Test] SAFE_ACTION';
 
       beforeEach(() => {
         devtoolsExtension = new DevtoolsExtension(
