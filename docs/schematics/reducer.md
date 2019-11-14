@@ -53,9 +53,9 @@ Provide the path to a `reducers` file containing a state interface and an object
 
 Generate a spec file alongside the reducer file.
 
-- `--skipTest`
+- `--spec`
   - Type: `boolean`
-  - Default: `false`
+  - Default: `true`
 
 #### Examples
 
