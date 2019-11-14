@@ -5,8 +5,6 @@ import { AuthActions } from '@example-app/auth/actions';
 
 export const layoutFeatureKey = 'layout';
 
-export const layoutFeatureKey = 'layout';
-
 export interface State {
   showSidenav: boolean;
 }
