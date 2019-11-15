@@ -166,10 +166,11 @@ export function isActionFiltered(
 ) {
   const predicateMatch = predicate && !predicate(state, action.action);
   const safelistMatch =
-    safelist && !action.action.type.match(escapeRegExp(safelist.join('|')));
+    safelist &&
+    !action.action.type.match(safelist.map(s => escapeRegExp(s)).join('|'));
   const blocklistMatch =
     blockedlist &&
-    action.action.type.match(escapeRegExp(blockedlist.join('|')));
+    action.action.type.match(blockedlist.map(s => escapeRegExp(s)).join('|'));
   return predicateMatch || safelistMatch || blocklistMatch;
 }
 
