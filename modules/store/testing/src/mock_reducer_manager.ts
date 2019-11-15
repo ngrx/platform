@@ -9,4 +9,14 @@ export class MockReducerManager extends BehaviorSubject<
   constructor() {
     super(() => undefined);
   }
+  
+  addFeature({
+    reducers,
+    reducerFactory,
+    metaReducers,
+    initialState,
+    key,
+  }: StoreFeature<any, any>) {
+    /* noop */
+  }
 }
