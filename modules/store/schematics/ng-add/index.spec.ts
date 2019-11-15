@@ -131,14 +131,16 @@ describe('Store ng-add Schematic', () => {
     expect(content).toMatch(/export interface AppState {/);
   });
 
-  it('should add runtime checks by default', () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+  it('should not add runtime checks by default', () => {
+    const options = {
+      ...defaultOptions,
+      module: 'app.module.ts',
+      minimal: true,
+    };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
-    expect(content).toMatch(/runtimeChecks: {/);
-    expect(content).toMatch(/strictStateImmutability: true,/);
-    expect(content).toMatch(/strictActionImmutability: true/);
+    expect(content).toMatch(/StoreModule.forRoot\(\{\}, \{\}\)/);
   });
 });

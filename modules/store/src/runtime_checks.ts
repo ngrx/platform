@@ -15,16 +15,11 @@ export function createActiveRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
 ): RuntimeChecks {
   if (isDevMode()) {
-    if (runtimeChecks === undefined) {
-      console.warn(
-        '@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.'
-      );
-    }
     return {
       strictStateSerializability: false,
       strictActionSerializability: false,
-      strictStateImmutability: false,
-      strictActionImmutability: false,
+      strictStateImmutability: true,
+      strictActionImmutability: true,
       ...runtimeChecks,
     };
   }
