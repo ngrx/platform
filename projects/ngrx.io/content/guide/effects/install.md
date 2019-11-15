@@ -31,7 +31,7 @@ ng add @ngrx/effects
 * spec - Specifies if a spec file is generated.
 * project - name of the project defined in your `angular.json` to help locating the module to add the `EffectsModule` to.
 * module - name of file containing the module that you wish to add the import for the `EffectsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`
-* minimal - Only provide minimal setup for the root effects setup. Only registers `EffectsModule.forRoot()` in the provided `module` with an empty array.
+* minimal - By default true, only provide minimal setup for the root effects setup. Only registers `EffectsModule.forRoot()` in the provided `module` with an empty array.
 * group - Group effects file within `effects` folder
 
 This command will automate the following steps:
