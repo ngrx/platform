@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ActionReducer } from '@ngrx/store';
+import {
+  Action,
+  ActionsSubject,
+  INITIAL_STATE,
+  ReducerManager,
+  Store,
+  createSelector,
+  MemoizedSelectorWithProps,
+  MemoizedSelector,
+} from '@ngrx/store';
 
 @Injectable()
 export class MockReducerManager extends BehaviorSubject<
@@ -10,13 +20,11 @@ export class MockReducerManager extends BehaviorSubject<
     super(() => undefined);
   }
   
-  addFeature({
-    reducers,
-    reducerFactory,
-    metaReducers,
-    initialState,
-    key,
-  }: StoreFeature<any, any>) {
+  addFeature(feature: any) {
+    /* noop */
+  }
+  
+  addFeatures(feature: any) {
     /* noop */
   }
 }
