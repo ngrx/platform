@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "module": "esnext",
     "strict": true,
     "noImplicitAny": false,
     // disabled because this is on by default in tsc 2.7 breaking our codebase - we need to refactor
