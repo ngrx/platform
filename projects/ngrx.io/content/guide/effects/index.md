@@ -76,7 +76,7 @@ Effects handle external data and interactions, allowing your services to be less
   `
 })
 export class MoviesPageComponent {
-  movies$: Observable<Movie[]> = this.store.select(state => state.movies);
+  movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
 
   constructor(private store: Store&lt;{ movies: Movie[] }&gt;) {}
 
