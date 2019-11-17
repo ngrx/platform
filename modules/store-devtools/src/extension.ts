@@ -1,38 +1,36 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Action } from '@ngrx/store';
-import { empty, of, Observable } from 'rxjs';
+import { Action, UPDATE } from '@ngrx/store';
+import { empty, Observable, of } from 'rxjs';
 import {
+  catchError,
+  concatMap,
+  debounceTime,
   filter,
   map,
   share,
   switchMap,
-  takeUntil,
-  concatMap,
-  debounceTime,
-  timeout,
-  catchError,
   take,
+  takeUntil,
+  timeout,
 } from 'rxjs/operators';
 
-import { PERFORM_ACTION, IMPORT_STATE } from './actions';
+import { IMPORT_STATE, PERFORM_ACTION } from './actions';
 import {
   SerializationOptions,
   STORE_DEVTOOLS_CONFIG,
   StoreDevtoolsConfig,
 } from './config';
+import { DevtoolsDispatcher } from './devtools-dispatcher';
 import { LiftedAction, LiftedState } from './reducer';
 import {
+  isActionFiltered,
   sanitizeAction,
   sanitizeActions,
   sanitizeState,
   sanitizeStates,
-  unliftState,
-  isActionFiltered,
-  filterLiftedState,
   shouldFilterActions,
+  unliftState,
 } from './utils';
-import { UPDATE } from '@ngrx/store';
-import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 export const ExtensionActionTypes = {
   START: 'START',

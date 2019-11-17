@@ -1,15 +1,9 @@
 import { ErrorHandler } from '@angular/core';
-import {
-  Action,
-  ActionReducer,
-  ActionsSubject,
-  ReducerManager,
-  UPDATE,
-  INIT,
-} from '@ngrx/store';
+import { Action, ActionReducer, UPDATE, INIT } from '@ngrx/store';
+
 import { difference, liftAction, isActionFiltered } from './utils';
 import * as DevtoolsActions from './actions';
-import { StoreDevtoolsConfig, StateSanitizer } from './config';
+import { StoreDevtoolsConfig } from './config';
 import { PerformAction } from './actions';
 
 export type InitAction = {

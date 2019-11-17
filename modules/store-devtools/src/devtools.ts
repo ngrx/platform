@@ -82,7 +82,7 @@ export class StoreDevtools implements Observer<any> {
           ({ state: liftedState }, [action, reducer]) => {
             let reducedLiftedState = reducer(liftedState, action);
             // On full state update
-            // If we have actions filters, we must filter completly our lifted state to be sync with the extension
+            // If we have actions filters, we must filter completely our lifted state to be sync with the extension
             if (action.type !== PERFORM_ACTION && shouldFilterActions(config)) {
               reducedLiftedState = filterLiftedState(
                 reducedLiftedState,

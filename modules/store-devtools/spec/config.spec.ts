@@ -1,10 +1,6 @@
-import { ActionReducer, Action } from '@ngrx/store';
-import {
-  createConfig,
-  StoreDevtoolsConfig,
-  noMonitor,
-  DEFAULT_NAME,
-} from '../src/config';
+import { Action } from '@ngrx/store';
+
+import { createConfig, DEFAULT_NAME, noMonitor } from '../src/config';
 
 const defaultFeatures = {
   pause: true,
