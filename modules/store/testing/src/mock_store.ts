@@ -102,7 +102,7 @@ export class MockStore<T> extends Store<T> {
     MockStore.selectors.forEach((_, selector) => {
       if (typeof selector !== 'string') {
         selector.release();
-        selector.setResult();
+        selector.clearResult();
       }
     });
 

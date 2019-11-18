@@ -7,6 +7,7 @@ export type MemoizedProjection = {
   memoized: AnyFn;
   reset: () => void;
   setResult: (result?: any) => void;
+  clearResult: () => void;
 };
 
 export type MemoizeFn = (t: AnyFn) => MemoizedProjection;
@@ -23,6 +24,7 @@ export interface MemoizedSelector<
   release(): void;
   projector: ProjectorFn;
   setResult: (result?: Result) => void;
+  clearResult: () => void;
 }
 
 export interface MemoizedSelectorWithProps<
@@ -34,6 +36,7 @@ export interface MemoizedSelectorWithProps<
   release(): void;
   projector: ProjectorFn;
   setResult: (result?: Result) => void;
+  clearResult: () => void;
 }
 
 export function isEqualCheck(a: any, b: any): boolean {
@@ -76,13 +79,17 @@ export function defaultMemoize(
   }
 
   function setResult(result: any = undefined) {
-    overrideResult = result;
+    overrideResult = { result };
+  }
+
+  function clearResult() {
+    overrideResult = undefined;
   }
 
   // tslint:disable-next-line:no-any anything could be the result.
   function memoized(): any {
     if (overrideResult !== undefined) {
-      return overrideResult;
+      return overrideResult.result;
     }
 
     if (!lastArguments) {
@@ -107,7 +114,7 @@ export function defaultMemoize(
     return newResult;
   }
 
-  return { memoized, reset, setResult };
+  return { memoized, reset, setResult, clearResult };
 }
 
 export function createSelector<State, S1, Result>(
@@ -590,6 +597,7 @@ export function createSelectorFactory(
       release,
       projector: memoizedProjector.memoized,
       setResult: memoizedState.setResult,
+      clearResult: memoizedState.clearResult,
     });
   };
 }
