@@ -179,17 +179,18 @@ describe('Reducer Schematic', () => {
     );
 
     expect(content).toMatch(
-      /import\ \{\ FooActions,\ FooActionTypes\ }\ from\ \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
+      /import \* as FooActions from '..\/..\/actions\/foo\/foo.actions';/
     );
   });
 
-  it('should create an reducer function with api success and failure, given feature and api', () => {
+  it('should create an reducer function with api success and failure, given creators=false, feature and api', () => {
     const tree = schematicRunner.runSchematic(
       'reducer',
       {
         ...defaultOptions,
         feature: true,
         api: true,
+        creators: false,
       },
       appTree
     );
@@ -205,7 +206,7 @@ describe('Reducer Schematic', () => {
   it('should create an reducer function using createReducer', () => {
     const tree = schematicRunner.runSchematic(
       'reducer',
-      { ...defaultOptions, creators: true },
+      defaultOptions,
       appTree
     );
     const fileContent = tree.readContent(
@@ -221,7 +222,7 @@ describe('Reducer Schematic', () => {
   it('should create an reducer function in a feature using createReducer', () => {
     const tree = schematicRunner.runSchematic(
       'reducer',
-      { ...defaultOptions, creators: true, feature: true },
+      { ...defaultOptions, feature: true },
       appTree
     );
     const fileContent = tree.readContent(
@@ -238,7 +239,7 @@ describe('Reducer Schematic', () => {
   it('should create an reducer function in an api feature using createReducer', () => {
     const tree = schematicRunner.runSchematic(
       'reducer',
-      { ...defaultOptions, creators: true, feature: true, api: true },
+      { ...defaultOptions, feature: true, api: true },
       appTree
     );
     const fileContent = tree.readContent(

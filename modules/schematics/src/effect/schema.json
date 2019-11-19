@@ -69,7 +69,7 @@
     },
     "creators": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description":
         "Specifies whether to use creator functions for handling actions, reducers, and effects.",
       "aliases": ["c"],

@@ -138,17 +138,18 @@ describe('Feature Schematic', () => {
     );
 
     expect(moduleFileContent).toMatch(
-      /import { FooEffects } from '\.\/foo\/effects\/foo.effects';/
+      /import { FooEffects } from '.\/foo\/effects\/foo.effects';/
     );
     expect(moduleFileContent).toMatch(
-      /import \* as fromFoo from '\.\/foo\/reducers\/foo.reducer';/
+      /import \* as fromFoo from '.\/foo\/reducers\/foo.reducer';/
     );
   });
 
-  it('should have all three api actions in actions type union if api flag enabled', () => {
+  it('should have all three api actions in actions type union if api flag enabled and creators=false', () => {
     const options = {
       ...defaultOptions,
       api: true,
+      creators: false,
     };
 
     const tree = schematicRunner.runSchematic('feature', options, appTree);
@@ -173,26 +174,27 @@ describe('Feature Schematic', () => {
     );
 
     expect(fileContent).toMatch(
-      /import { Actions, Effect, ofType } from '@ngrx\/effects';/
+      /import { Actions, createEffect, ofType } from '@ngrx\/effects';/
     );
     expect(fileContent).toMatch(
       /import { catchError, map, concatMap } from 'rxjs\/operators';/
     );
     expect(fileContent).toMatch(/import { EMPTY, of } from 'rxjs';/);
     expect(fileContent).toMatch(
-      /import { LoadFoosFailure, LoadFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
+      /import \* as FooActions from '.\/foo.actions';/
     );
 
     expect(fileContent).toMatch(/export class FooEffects/);
-    expect(fileContent).toMatch(/loadFoos\$ = this\.actions\$.pipe\(/);
-    expect(fileContent).toMatch(/ofType\(FooActionTypes\.LoadFoos\),/);
+    expect(fileContent).toMatch(/loadFoos\$ = createEffect\(\(\) => {/);
+    expect(fileContent).toMatch(/return this.actions\$.pipe\(/);
+    expect(fileContent).toMatch(/ofType\(FooActions.loadFoos\),/);
     expect(fileContent).toMatch(/concatMap\(\(\) =>/);
-    expect(fileContent).toMatch(/EMPTY\.pipe\(/);
+    expect(fileContent).toMatch(/EMPTY.pipe\(/);
     expect(fileContent).toMatch(
-      /map\(data => new LoadFoosSuccess\({ data }\)\),/
+      /map\(data => FooActions.loadFoosSuccess\({ data }\)\),/
     );
     expect(fileContent).toMatch(
-      /catchError\(error => of\(new LoadFoosFailure\({ error }\)\)\)\)/
+      /catchError\(error => of\(FooActions.loadFoosFailure\({ error }\)\)\)\)/
     );
   });
 
@@ -207,7 +209,12 @@ describe('Feature Schematic', () => {
       `${projectPath}/src/app/foo.reducer.ts`
     );
 
-    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosSuccess/);
-    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
+    expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\),/);
+    expect(fileContent).toMatch(
+      /on\(FooActions.loadFoosSuccess, \(state, action\) => state\),/
+    );
+    expect(fileContent).toMatch(
+      /on\(FooActions.loadFoosFailure, \(state, action\) => state\),/
+    );
   });
 });

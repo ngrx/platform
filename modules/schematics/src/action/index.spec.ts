@@ -76,10 +76,12 @@ describe('Action Schematic', () => {
   });
 
   describe('action classes', () => {
+    const actionClassesDefaultOptions = { ...defaultOptions, creators: false };
+
     it('should create an enum named "Foo"', () => {
       const tree = schematicRunner.runSchematic(
         'action',
-        defaultOptions,
+        actionClassesDefaultOptions,
         appTree
       );
       const fileContent = tree.readContent(
@@ -92,7 +94,7 @@ describe('Action Schematic', () => {
     it('should create a class based on the provided name', () => {
       const tree = schematicRunner.runSchematic(
         'action',
-        defaultOptions,
+        actionClassesDefaultOptions,
         appTree
       );
       const fileContent = tree.readContent(
@@ -105,7 +107,7 @@ describe('Action Schematic', () => {
     it('should create the union type based on the provided name', () => {
       const tree = schematicRunner.runSchematic(
         'action',
-        defaultOptions,
+        actionClassesDefaultOptions,
         appTree
       );
       const fileContent = tree.readContent(
@@ -116,7 +118,7 @@ describe('Action Schematic', () => {
     });
 
     it('should create spec class with right imports', () => {
-      const options = { ...defaultOptions, spec: true };
+      const options = { ...actionClassesDefaultOptions, spec: true };
       const tree = schematicRunner.runSchematic('action', options, appTree);
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.spec.ts`
@@ -127,12 +129,12 @@ describe('Action Schematic', () => {
   });
 
   describe('action creators', () => {
-    const creatorOptions = { ...defaultOptions, creators: true };
+    const creatorDefaultOptions = { ...defaultOptions };
 
     it('should create a const for the action creator', () => {
       const tree = schematicRunner.runSchematic(
         'action',
-        creatorOptions,
+        creatorDefaultOptions,
         appTree
       );
       const fileContent = tree.readContent(
@@ -146,7 +148,7 @@ describe('Action Schematic', () => {
     it('should create success/error actions when the api flag is set', () => {
       const tree = schematicRunner.runSchematic(
         'action',
-        { ...creatorOptions, api: true },
+        { ...creatorDefaultOptions, api: true },
         appTree
       );
       const fileContent = tree.readContent(
@@ -161,71 +163,74 @@ describe('Action Schematic', () => {
     });
   });
 
-  it('should group within an "actions" folder if group is set', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      {
-        ...defaultOptions,
-        group: true,
-      },
-      appTree
-    );
-    expect(
-      tree.files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
-  });
+  describe('api', () => {
+    it('should group within an "actions" folder if group is set', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        {
+          ...defaultOptions,
+          group: true,
+        },
+        appTree
+      );
+      expect(
+        tree.files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
+      ).toBeGreaterThanOrEqual(0);
+    });
 
-  it('should create a success class based on the provided name, given api', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      {
-        ...defaultOptions,
-        api: true,
-      },
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
+    it('should create a success class based on the provided name, given api', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        {
+          ...defaultOptions,
+          api: true,
+        },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
 
-    expect(fileContent).toMatch(
-      /export class LoadFoosSuccess implements Action/
-    );
-  });
+      expect(fileContent).toMatch(
+        /export const loadFoosSuccess = createAction\(\r?\n?\s*'\[Foo\] Load Foos Success'\r?\n?\s*,/
+      );
+    });
 
-  it('should create a failure class based on the provided name, given api', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      {
-        ...defaultOptions,
-        api: true,
-      },
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
+    it('should create a failure class based on the provided name, given api', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        {
+          ...defaultOptions,
+          api: true,
+        },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
 
-    expect(fileContent).toMatch(
-      /export class LoadFoosFailure implements Action/
-    );
-  });
+      expect(fileContent).toMatch(
+        /export const loadFoosFailure = createAction\(\r?\n?\s*'\[Foo\] Load Foos Failure'\r?\n?\s*,/
+      );
+    });
 
-  it('should create the union type with success and failure based on the provided name, given api', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      {
-        ...defaultOptions,
-        api: true,
-      },
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
+    it('should create the union type with success and failure based on the provided name, given api and creators false', () => {
+      const tree = schematicRunner.runSchematic(
+        'action',
+        {
+          ...defaultOptions,
+          api: true,
+          creators: false,
+        },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.actions.ts`
+      );
 
-    expect(fileContent).toMatch(
-      /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
-    );
+      expect(fileContent).toMatch(
+        /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
+      );
+    });
   });
 });
