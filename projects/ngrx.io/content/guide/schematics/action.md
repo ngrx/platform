@@ -32,7 +32,7 @@ Use creator functions for actions
 - `--creators`
   - Alias: `-c`
   - Type: `boolean`
-  - Default: `false`
+  - Default: `true`
 
 Nest the actions file within a folder based on the action `name`.
 
