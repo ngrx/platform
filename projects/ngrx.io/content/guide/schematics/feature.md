@@ -31,7 +31,7 @@ Use creator functions for actions, reducers, and effects.
 - `--creators`
   - Alias: `-c`
   - Type: `boolean`
-  - Default: `false`
+  - Default: `true`
 
 Nest the feature files within a folder based on the feature `name`.
 

@@ -32,7 +32,7 @@ Use creator functions to generate the actions and reducer.
 - `--creators`
   - Alias: `-c`
   - Type: `boolean`
-  - Default: `false`
+  - Default: `true`
 
 Nest the reducer file within a folder based on the reducer `name`.
 

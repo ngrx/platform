@@ -31,7 +31,7 @@ Use creator functions for actions and effects.
 - `--creators`
   - Alias: `-c`
   - Type: `boolean`
-  - Default: `false`
+  - Default: `true`
 
 Nest the effects file within a folder based by the effect `name`.
 
