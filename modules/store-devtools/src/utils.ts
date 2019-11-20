@@ -166,8 +166,18 @@ export function isActionFiltered(
 ) {
   const predicateMatch = predicate && !predicate(state, action.action);
   const safelistMatch =
-    safelist && !action.action.type.match(safelist.join('|'));
+    safelist &&
+    !action.action.type.match(safelist.map(s => escapeRegExp(s)).join('|'));
   const blocklistMatch =
-    blockedlist && action.action.type.match(blockedlist.join('|'));
+    blockedlist &&
+    action.action.type.match(blockedlist.map(s => escapeRegExp(s)).join('|'));
   return predicateMatch || safelistMatch || blocklistMatch;
+}
+
+/**
+ * Return string with escaped RegExp special characters
+ * https://stackoverflow.com/a/6969486/1337347
+ */
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

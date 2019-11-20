@@ -374,14 +374,15 @@ describe('DevtoolsExtension', () => {
     });
 
     describe('with Action and actionsBlocklist', () => {
-      const NORMAL_ACTION = 'NORMAL_ACTION';
-      const BLOCKED_ACTION = 'BLOCKED_ACTION';
+      const NORMAL_ACTION = '[Test] NORMAL_ACTION';
+      const BLOCKED_ACTION_1 = '[Test] BLOCKED_ACTION #1';
+      const BLOCKED_ACTION_2 = '[Test] BLOCKED_ACTION #2';
 
       beforeEach(() => {
         devtoolsExtension = new DevtoolsExtension(
           reduxDevtoolsExtension,
           createConfig({
-            actionsBlocklist: [BLOCKED_ACTION],
+            actionsBlocklist: [BLOCKED_ACTION_1, BLOCKED_ACTION_2],
           }),
           <any>null
         );
@@ -402,22 +403,28 @@ describe('DevtoolsExtension', () => {
           state
         );
         devtoolsExtension.notify(
-          new PerformAction({ type: BLOCKED_ACTION }, 1234567),
+          new PerformAction({ type: BLOCKED_ACTION_1 }, 1234567),
           state
         );
+        devtoolsExtension.notify(
+          new PerformAction({ type: BLOCKED_ACTION_2 }, 1234567),
+          state
+        );
+
         expect(extensionConnection.send).toHaveBeenCalledTimes(2);
       });
     });
 
     describe('with Action and actionsSafelist', () => {
-      const NORMAL_ACTION = 'NORMAL_ACTION';
-      const SAFE_ACTION = 'SAFE_ACTION';
+      const NORMAL_ACTION = '[Test] NORMAL_ACTION';
+      const SAFE_ACTION_1 = '[Test] SAFE_ACTION #1';
+      const SAFE_ACTION_2 = '[Test] SAFE_ACTION #2';
 
       beforeEach(() => {
         devtoolsExtension = new DevtoolsExtension(
           reduxDevtoolsExtension,
           createConfig({
-            actionsSafelist: [SAFE_ACTION],
+            actionsSafelist: [SAFE_ACTION_1, SAFE_ACTION_2],
           }),
           <any>null
         );
@@ -438,10 +445,15 @@ describe('DevtoolsExtension', () => {
           state
         );
         devtoolsExtension.notify(
-          new PerformAction({ type: SAFE_ACTION }, 1234567),
+          new PerformAction({ type: SAFE_ACTION_1 }, 1234567),
           state
         );
-        expect(extensionConnection.send).toHaveBeenCalledTimes(1);
+        devtoolsExtension.notify(
+          new PerformAction({ type: SAFE_ACTION_2 }, 1234567),
+          state
+        );
+
+        expect(extensionConnection.send).toHaveBeenCalledTimes(2);
       });
     });
 
