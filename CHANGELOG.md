@@ -1,3 +1,13 @@
+<a name="8.5.2"></a>
+
+## [8.5.2](https://github.com/ngrx/platform/compare/8.5.1...8.5.2) (2019-11-21)
+
+### Bug Fixes
+
+- **effects:** add EffectsRootModule and EffectsFeatureModule to public API ([#2273](https://github.com/ngrx/platform/issues/2273)) ([abe1f6b](https://github.com/ngrx/platform/commit/abe1f6b))
+- **store:** added noop for addFeature in MockReducerManager ([#2265](https://github.com/ngrx/platform/issues/2265)) ([c42e444](https://github.com/ngrx/platform/commit/c42e444)), closes [#2263](https://github.com/ngrx/platform/issues/2263)
+- **store-devtools:** escaping the safelist and blocklist strings ([#2259](https://github.com/ngrx/platform/issues/2259)) ([e888977](https://github.com/ngrx/platform/commit/e888977)), closes [#2228](https://github.com/ngrx/platform/issues/2228)
+
 <a name="8.5.1"></a>
 
 ## [8.5.1](https://github.com/ngrx/platform/compare/8.5.0...8.5.1) (2019-11-12)
