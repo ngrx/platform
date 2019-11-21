@@ -1,12 +1,12 @@
 # Selectors
 
-Selectors are pure functions used for obtaining slices of store state. @ngrx/store provides a few helper functions for optimizing this selection. Selectors provide many features when selecting slices of state.
+Selectors are pure functions used for obtaining slices of store state. @ngrx/store provides a few helper functions for optimizing this selection. Selectors provide many features when selecting slices of state:
 
-- Portable
+- Portability
 - Memoization
 - Composition
-- Testable
-- Type-safe
+- Testability
+- Type Safety
 
 When using the `createSelector` and `createFeatureSelector` functions @ngrx/store keeps track of the latest arguments in which your selector function was invoked. Because selectors are [pure functions](https://en.wikipedia.org/wiki/Pure_function), the last result can be returned when the arguments match without reinvoking your selector function. This can provide performance benefits, particularly with selectors that perform expensive computation. This practice is known as [memoization](https://en.wikipedia.org/wiki/Memoization).
 
@@ -35,7 +35,7 @@ export const selectFeatureCount = createSelector(
 
 The `createSelector` can be used to select some data from the state based on several slices of the same state.
 
-The `createSelector` function can take up to 8 selector function for more complete state selections.
+The `createSelector` function can take up to 8 selector functions for more complete state selections.
 
 For example, imagine you have a `selectedUser` object in the state. You also have an `allBooks` array of book objects.
 
@@ -104,7 +104,7 @@ ngOnInit() {
 }
 </code-example>
 
-Keep in mind that a selector only keeps the previous input arguments in its cache. If you re-use this selector with another multiply factor, the selector would always have to re-evaluate its value. This is because it's receiving both of the multiply factors (e.g. one time `2`, the other time `4`). In order to correctly memoize the selector, wrap the selector inside a factory function to create different instances of the selector.
+Keep in mind that a selector only keeps the previous input arguments in its cache. If you reuse this selector with another multiply factor, the selector would always have to re-evaluate its value. This is because it's receiving both of the multiply factors (e.g. one time `2`, the other time `4`). In order to correctly memoize the selector, wrap the selector inside a factory function to create different instances of the selector.
 
 The following is an example of using multiple counters differentiated by `id`.
 
@@ -267,7 +267,7 @@ store
   .subscribe(/* .. */);
 </code-example>
 
-The above can be further re-written to use the `select()` utility function from NgRx:
+The above can be further rewritten to use the `select()` utility function from NgRx:
 
 <code-example header="app.component.ts">
 import { select } from '@ngrx/store';
@@ -283,7 +283,7 @@ store
 
 #### Solution: Extracting a pipeable operator
 
-To make the `select()` and `filter()` behaviour a re-usable piece of code, we extract a [pipeable operator](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) using the RxJS `pipe()` utility function:
+To make the `select()` and `filter()` behaviour a reusable piece of code, we extract a [pipeable operator](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) using the RxJS `pipe()` utility function:
 
 <code-example header="app.component.ts">
 import { select } from '@ngrx/store';
