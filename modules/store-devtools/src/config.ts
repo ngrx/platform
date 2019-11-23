@@ -1,5 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { InjectionToken, Type } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export type ActionSanitizer = (action: Action, id: number) => Action;
 export type StateSanitizer = (state: any, index: number) => any;
@@ -66,7 +66,7 @@ export function createConfig(
     name: DEFAULT_NAME,
     serialize: false,
     logOnly: false,
-    // Add all features explicitely. This prevent buggy behavior for
+    // Add all features explicitly. This prevent buggy behavior for
     // options like "lock" which might otherwise not show up.
     features: {
       pause: true, // start/pause recording of dispatched actions
