@@ -21,10 +21,6 @@ NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
     "store-devtools",
 ]]
 
-NGRX_GLOBALS = dict({
-    "tslib": "tslib",
-}, **{p: p for p in NGRX_SCOPED_PACKAGES})
-
 PKG_GROUP_REPLACEMENTS = {
     "\"NG_UPDATE_PACKAGE_GROUP\"": """[
       %s
@@ -34,6 +30,25 @@ PKG_GROUP_REPLACEMENTS = {
     "NG_VERSION": NG_VERSION,
     "RXJS_VERSION": RXJS_VERSION,
 }
+
+# Convert a package name on npm to an identifier that's a legal global id
+# @ngrx/store -> ngrx.store
+# @ngrx/router-store -> ngrx.routerStore
+def _global_name(package_name):
+    # strip npm scoped package qualifier
+    start = 1 if package_name.startswith("@") else 0
+    parts = package_name[start:].split("/")
+    result_parts = []
+    for p in parts:
+        # convert dash case to camelCase
+        # First letter in the result is always unchanged
+        result = p[0] + "".join([p2.title() for p2 in p.split("-")])[1:]
+        result_parts.append(result)
+    return ".".join(result_parts)
+
+NGRX_GLOBALS = dict({
+    "tslib": "tslib",
+}, **{p: _global_name(p) for p in NGRX_SCOPED_PACKAGES})
 
 def ts_library(tsconfig = None, node_modules = None, deps = [], **kwargs):
     if not tsconfig:
