@@ -289,13 +289,13 @@ for each entity type in the original `CacheSet`.
 
 When the server responds with a `ChangeSet`, or the effect re-uses the original request `ChangeSet`, the effect returns a `SAVE_ENTITIES_SUCCESS` action with the `ChangeSet` in the payload.
 
-This `ChangeSet` has the save structure as the one in the `SAVE_ENTITIES` action, which was the source of the HTTP request.
+This `ChangeSet` has the same structure as the one in the `SAVE_ENTITIES` action, which was the source of the HTTP request.
 
 The `EntityCacheReducer` converts the `ChangeSet.changes` into
 a sequence of `EntityActions` to the entity collection reducers.
 
 The `store` never sees these reducer calls (and you won't see them in the redux tools).
-They are are applied synchronously, in succession to an instance of the `EntityCache` object.
+They are applied synchronously, in succession to an instance of the `EntityCache` object.
 
 After all `ChangeSet.changes` have been reduced, the `EntityCacheReducer` returns the updated `EntityCache` and the NgRx `Store` gets the new, fully-updated cache in one shot.
 
@@ -313,7 +313,7 @@ This version adds multi-entity save actions to `EntityOp`:
 
 <div class="alert is-helpful">
 
-These ops do not have corresponding `EntityCommands` because an multi-entity save is dispatched (via `SAVE_ENTITIES..` actions) to the `EntityCache` reducer,
+These ops do not have corresponding `EntityCommands` because a multi-entity save is dispatched (via `SAVE_ENTITIES..` actions) to the `EntityCache` reducer,
 not to a collection reducer (at least not in this version).
 
 </div>
@@ -362,7 +362,7 @@ You cannot tell the server to cancel this way and cannot know if the server did 
 Nor can you count on processing the cancel request before the client receives the server response
 and applies the changes on the server or to the cache.
 
-If you cancel before the server results arrives, the `EntityCacheEffect` will not try to update
+If you cancel before the server results arrive, the `EntityCacheEffect` will not try to update
 the cache with late arriving server results.
 The effect will issue a `SAVE_ENTITIES_CANCELED` action instead.
 The `EntityCache` reducer ignores this action but you can listen for it among the store actions
