@@ -205,7 +205,7 @@ export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
 }
 ```
 
-In order to hook it into ngrx data we need to provide it in the module where ngrx data is imported:
+Override the `HttpUrlGenerator` provider in the root `AppModule` where `EntityDataModule.forRoot()` is imported:
 
 ```ts
 @NgModule({
@@ -222,7 +222,7 @@ In order to hook it into ngrx data we need to provide it in the module where ngr
 export class AppModule {}
 ```
 
-Don't forget the unit tests:
+To unit test the custom HTTP URL generator:
 
 ```ts
 import { PluralHttpUrlGenerator } from './plural-http-url-generator';
