@@ -167,6 +167,96 @@ export const selectedCatsWithOwners = createSelector(
 
 ### Replace the HttpUrlGenerator
 
+This example replaces the `DefaultHttpUrlGenerator` with a customized `HttpUrlGenerator` that pluralizes both collection resource and entity resource URLs.
+
+The implementation simply overrides `DefaultHttpUrlGenerator.getResourceUrls(string, string)`:
+
+```ts
+import {
+  DefaultHttpUrlGenerator,
+  HttpResourceUrls,
+  normalizeRoot,
+  Pluralizer
+} from '@ngrx/data';
+
+export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
+  constructor(private pluralizzer: Pluralizer) {
+    super(pluralizzer);
+  }
+
+  protected getResourceUrls(
+    entityName: string,
+    root: string
+  ): HttpResourceUrls {
+    let resourceUrls = this.knownHttpResourceUrls[entityName];
+    if (!resourceUrls) {
+      const nRoot = normalizeRoot(root);
+      const url = `${nRoot}/${this.pluralizzer.pluralize(
+        entityName
+      )}/`.toLowerCase();
+      resourceUrls = {
+        entityResourceUrl: url,
+        collectionResourceUrl: url
+      };
+      this.registerHttpResourceUrls({ [entityName]: resourceUrls });
+    }
+    return resourceUrls;
+  }
+}
+```
+
+Override the `HttpUrlGenerator` provider in the root `AppModule` where `EntityDataModule.forRoot()` is imported:
+
+```ts
+@NgModule({
+  // ...
+  imports: [
+    // ...
+    EntityDataModule.forRoot({})
+  ],
+  providers: [
+    // ...
+    { provide: HttpUrlGenerator, useClass: PluralHttpUrlGenerator }
+  ]
+})
+export class AppModule {}
+```
+
+To unit test the custom HTTP URL generator:
+
+```ts
+import { PluralHttpUrlGenerator } from './plural-http-url-generator';
+import { DefaultPluralizer } from '@ngrx/data';
+
+describe('PluralHttpUrlGenerator', () => {
+  let generator: PluralHttpUrlGenerator;
+
+  beforeEach(() => {
+    generator = new PluralHttpUrlGenerator(new DefaultPluralizer([]));
+  });
+
+  it('should be created', () => {
+    expect(generator).toBeTruthy();
+  });
+
+  it('should pluralize entity resource URLs', () => {
+    let url = generator.entityResource('bar', 'https://foo.com/api');
+    expect(url).toBe('https://foo.com/api/bars/');
+  });
+
+  it('should pluralize collection resource URLs', () => {
+    const url = generator.collectionResource('bar', 'https://foo.com/api');
+    expect(url).toBe('https://foo.com/api/bars/');
+  });
+
+  it('should cache results (needed for 100% branch coverage)', () => {
+    const url = generator.entityResource('bar', 'https://foo.com/api');
+    const cachedUrl = generator.entityResource('bar', 'https://foo.com/api');
+    expect(cachedUrl).toBe(url);
+  });
+});
+```
+
 ## Serialization with back-end
 
 The shape of the JSON data going over the wire to-and-from the server often
