@@ -19,13 +19,16 @@ export function reportInvalidActions(
     const isInvalidAction = !isAction(action);
 
     if (isInvalidAction) {
-      reporter.handleError(
-        new Error(
-          `Effect ${getEffectName(
-            output
-          )} dispatched an invalid action: ${stringify(action)}`
-        )
-      );
+      try {
+        // handleError can throw errors
+        reporter.handleError(
+          new Error(
+            `Effect ${getEffectName(
+              output
+            )} dispatched an invalid action: ${stringify(action)}`
+          )
+        );
+      } catch {}
     }
   }
 }

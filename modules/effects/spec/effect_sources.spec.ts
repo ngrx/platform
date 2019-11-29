@@ -282,6 +282,28 @@ describe('EffectSources', () => {
         expect(toActions(sources$)).toBeObservable(expected);
       });
 
+      it('should resubscribe on error if errorHandler throws error', () => {
+        (mockErrorReporter.handleError as jasmine.Spy).and.throwError(
+          'Some error'
+        );
+
+        class Eff {
+          @Effect()
+          b$ = hot('a--e--b--e--c--e--d').pipe(
+            map(v => {
+              if (v == 'e') throw new Error('An Error');
+              return v;
+            })
+          );
+        }
+
+        const sources$ = of(new Eff());
+
+        //                       👇 'e' is ignored.
+        const expected = cold('a-----b-----c-----d');
+        expect(toActions(sources$)).toBeObservable(expected);
+      });
+
       it(`should not break when the action in the error message can't be stringified`, () => {
         const sources$ = of(new SourceG());
 
