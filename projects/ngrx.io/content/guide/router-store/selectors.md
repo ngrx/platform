@@ -32,6 +32,20 @@ const {
   selectUrl,            // select the current url
 } = fromRouter.getSelectors(selectRouter);
 
-export const selectRouteId = selectRouteParam('id');
-export const selectStatus = selectQueryParam('status');
+export const selectSelectedCarId = selectQueryParam('carId');
+export const selectCar = createSelector(
+   selectCarEntities,
+   selectSelectedCarId,
+   (cars, carId) => {
+       return cars[carId];
+    }
+)
+
+export const selectCarsByColor = createSelector(
+   selectCarEntities,
+   selectQueryParams,
+   (cars, params) => {
+       return cars.filter(c => c.color === params['color'];
+    }
+)
 ```
