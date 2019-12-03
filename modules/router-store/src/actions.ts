@@ -37,7 +37,7 @@ export type RouterRequestAction<
 
 export const routerRequestAction = createAction(
   ROUTER_REQUEST,
-  props<{ payload: RouterRequestPayload<BaseRouterStoreState> }>()
+  props<{ payload: RouterRequestPayload<SerializedRouterStateSnapshot> }>()
 );
 /**
  * An action dispatched when the router navigates.
@@ -66,7 +66,7 @@ export type RouterNavigationAction<
 
 export const routerNavigationAction = createAction(
   ROUTER_NAVIGATION,
-  props<{ payload: RouterNavigationPayload<BaseRouterStoreState> }>()
+  props<{ payload: RouterNavigationPayload<SerializedRouterStateSnapshot> }>()
 );
 
 /**
@@ -99,7 +99,7 @@ export type RouterCancelAction<
 
 export const routerCancelAction = createAction(
   ROUTER_CANCEL,
-  props<{ payload: RouterCancelPayload<BaseRouterStoreState> }>()
+  props<{ payload: RouterCancelPayload<SerializedRouterStateSnapshot> }>()
 );
 
 /**
@@ -132,7 +132,7 @@ export type RouterErrorAction<
 
 export const routerErrorAction = createAction(
   ROUTER_ERROR,
-  props<{ payload: RouterErrorPayload<BaseRouterStoreState> }>()
+  props<{ payload: RouterErrorPayload<SerializedRouterStateSnapshot> }>()
 );
 
 /**
@@ -162,7 +162,7 @@ export type RouterNavigatedAction<
 
 export const routerNavigatedAction = createAction(
   ROUTER_NAVIGATED,
-  props<{ payload: RouterNavigatedPayload<BaseRouterStoreState> }>()
+  props<{ payload: RouterNavigatedPayload<SerializedRouterStateSnapshot> }>()
 );
 
 /**
