@@ -2,25 +2,6 @@
 
 Router Store provides five navigation actions which are dispatched in a specific order. The `routerReducer` provided by Router Store updates its state with the latest router state given by the actions.
 
-## Order of actions
-
-Success case:
-
-- `ROUTER_REQUEST`
-- `ROUTER_NAVIGATION`
-- `ROUTER_NAVIGATED`
-
-Error / Cancel case (with early Navigation Action Timing):
-
-- `ROUTER_REQUEST`
-- `ROUTER_NAVIGATION`
-- `ROUTER_CANCEL` / `ROUTER_ERROR`
-
-Error / Cancel case (with late Navigation Action Timing):
-
-- `ROUTER_REQUEST`
-- `ROUTER_CANCEL` / `ROUTER_ERROR`
-
 ## Actions
 
 ### ROUTER_REQUEST
@@ -48,3 +29,11 @@ The action contains the store state before the navigation. You can use it to res
 When there is an error during navigation, the router will dispatch a `ROUTER_ERROR` action.
 
 The action contains the store state before the navigation. You can use it to restore the consistency of the store.
+
+## Order of actions
+
+The following diagram represents the action flow of the router store.
+
+<figure>
+  <img src="generated/images/guide/router-store/router-actions-lifecycle.png" alt="NgRx Router Store Lifecycle Diagram" width="100%" height="100%" />
+</figure>
