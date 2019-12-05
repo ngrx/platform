@@ -36,16 +36,12 @@ export const selectSelectedCarId = selectQueryParam('carId');
 export const selectCar = createSelector(
    selectCarEntities,
    selectSelectedCarId,
-   (cars, carId) => {
-       return cars[carId];
-    }
-)
+   (cars, carId) => cars[carId]
+);
 
 export const selectCarsByColor = createSelector(
    selectCarEntities,
    selectQueryParams,
-   (cars, params) => {
-       return cars.filter(c => c.color === params['color'];
-    }
-)
+   (cars, params) => cars.filter(c => c.color === params['color'])
+);
 ```
