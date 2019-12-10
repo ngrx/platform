@@ -12,7 +12,7 @@ It also removes an entity from the store _before making a delete request to the 
 
 <div class="alert is-helpful">
 
-The `EntityActions` whose operation names end in `_OPTIMISTIC` start an _optimistic_ save.
+The `EntityAction.isOptimistic` flag  is one of the `EntityActionOptions`. Set it to override the action's default optimistic or pessimistic behavior.
  
 </div>
 
@@ -78,7 +78,7 @@ When change tracking is enabled (the default), the `changeState` is a _primary k
 <div class="alert is-helpful">
 
 You can disable change tracking for an individual action or the collection as a whole as
-described [below](#enable-change-tracking).
+described [below](#disable-change-tracking).
 
 </div>
 
@@ -134,20 +134,25 @@ Delete (remove) is a special case with special rules.
 Here are the most important `EntityOps` that record an entity in the `changeState` map:
 
 <code-example linenums="false">
-// Optimistic save operations
-SAVE_ADD_ONE_OPTIMISTIC
-SAVE_DELETE_ONE_OPTIMISTIC
-SAVE_UPDATE_ONE_OPTIMISTIC
+  // Save operations when isOptimistic flag is true
+  SAVE_ADD_ONE
+  SAVE_ADD_MANY
+  SAVE_DELETE_ONE
+  SAVE_DELETE_MANY
+  SAVE_UPDATE_ONE
+  SAVE_UPDATE_MANY
+  SAVE_UPSERT_ONE
+  SAVE_UPSERT_MANY
 
-// Cache operations
-ADD_ONE
-ADD_MANY
-REMOVE_ONE
-REMOVE_MANY
-UPDATE_ONE
-UPDATE_MANY
-UPSERT_ONE
-UPSERT_MANY
+  // Cache operations
+  ADD_ONE
+  ADD_MANY
+  REMOVE_ONE
+  REMOVE_MANY
+  UPDATE_ONE
+  UPDATE_MANY
+  UPSERT_ONE
+  UPSERT_MANY
 </code-example>
 
 ### Removing an entity from the _changeState_ map.
@@ -169,14 +174,18 @@ Operations that put that entity in the store also remove it from the `changeStat
 Here are the operations that remove one or more specified entities from the `changeState` map.
 
 <code-example linenums="false">
+QUERY_ALL_SUCCESS
 QUERY_BY_KEY_SUCCESS
+QUERY_LOAD_SUCCESS
 QUERY_MANY_SUCCESS
 SAVE_ADD_ONE_SUCCESS
-SAVE_ADD_ONE_OPTIMISTIC_SUCCESS,
+SAVE_ADD_MANY_SUCCESS
 SAVE_DELETE_ONE_SUCCESS
-SAVE_DELETE_ONE_OPTIMISTIC_SUCCESS
+SAVE_DELETE_MANY_SUCCESS
 SAVE_UPDATE_ONE_SUCCESS
-SAVE_UPDATE_ONE_OPTIMISTIC_SUCCESS
+SAVE_UPDATE_MANY_SUCCESS
+SAVE_UPSERT_ONE_SUCCESS
+SAVE_UPSERT_MANY_SUCCESS
 COMMIT_ONE
 COMMIT_MANY
 UNDO_ONE
@@ -190,7 +199,7 @@ All entities in the collection (if any) become "unchanged".
 
 <code-example linenums="false">
 ADD_ALL
-QUERY_ALL_SUCCESS
+QUERY_LOAD_SUCCESS
 REMOVE_ALL
 COMMIT_ALL
 UNDO_ALL
@@ -269,24 +278,69 @@ is reclassified as "deleted".
 Its `originalValue` stays the same.
 Undoing the change will restore the entity to the collection in its pre-update state.
 
-<a id="enable-change-tracking"></a>
+<a id="merge-strategy"></a>
 
-### Enabling and disabling change tracking
+### Merge Strategies
 
-You can opt-out of change tracking for a collection by setting the collection's `enableChangeTracking` flag to `false` in its `entityMetadata`.
+You can determine how NgRx Data will merge entities after a query, a save, or a cache operation by setting the
+entity action's optional `mergeStrategy` property to one of the three strategy enums:
+
+1. `IgnoreChanges` - Update the collection entities and ignore all change tracking for this operation. Each entity's `changeState` is untouched.
+
+2. `PreserveChanges` -  Updates current values for unchanged entities. 
+For each changed entity it preserves the current value and overwrites the `originalValue` with the merge entity.
+This is the query-success default.
+
+3. `OverwriteChanges` - Replace the current collection entities.
+For each merged entity it discards the `changeState` and sets the `changeType` to "unchanged".
+This is the save-success default.
+
+Disabling change tracking with `IgnoreChanges` is the most frequent choice.
+
+<a id="disable-change-tracking"></a>
+
+### Disable change tracking
+
+You can opt-out of change tracking for the entire collection by setting the collection's `enableChangeTracking` flag to `false` in its `entityMetadata`.
 When `false`, NgRx Data does not track any changes for this collection
 and the `EntityCollection.changeState` property remains an empty object.
 
-You can also turnoff change tracking for a specific, cache-only action by choosing one of the
-"no-tracking" `EntityOps`. They all end in `_NO_TRACK`.
+You can opt-out of change tracking for a _specific_ entity action by supplying the  `mergeStrategy` in the optional `EntityActionOptions` that you can pass in the action payload.
 
-<code-example linenums="false">
-ADD_ONE_NO_TRACK
-ADD_MANY_NO_TRACK
-REMOVE_ONE_NO_TRACK
-REMOVE_MANY_NO_TRACK
-UPDATE_ONE_NO_TRACK
-UPDATE_MANY_NO_TRACK
-UPSERT_ONE_NO_TRACK
-UPSERT_MANY_NO_TRACK
-</code-example>
+> If you don't specify a `MergeStrategy`, Ngrx Data uses the default for that action.
+
+If you are dispatching an action with `EntityDispatcher` and you don't want that action to be change-tracked, you might write something like this:
+
+```typescript
+const hero: Hero = { id: 42, name: 'Francis' };
+
+dispatcher.addOneToCache(hero, {
+  mergeStrategy: MergeStrategy.IgnoreChanges,
+});
+```
+
+You can also pass that option to methods of a helpful `EntityCollectionService` facade such as your custom `HeroService`
+
+```typescript
+const hero: Hero = { id: 42, name: 'Francis' };
+
+heroService.addOneToCache(hero, {
+  mergeStrategy: MergeStrategy.IgnoreChanges,
+});
+```
+
+If you prepare the `EntityAction` directly with an `EntityActionFactory`, it might look like this:
+
+```typescript
+const hero: Hero = { id: 42, name: 'Francis' };
+
+const payload: EntityActionPayload = {
+  entityName: 'Hero',
+  entityOp: EntityOp.ADD_ONE,
+  data: hero,
+  mergeStrategy: MergeStrategy.IgnoreChanges,
+  // .. other options ..
+};
+
+const action = factory.create(payload);
+```

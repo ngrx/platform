@@ -18,9 +18,11 @@ such as `QUERY_ALL` for the `Hero` entity type.
 
 2.  NgRx kicks into gear ...
 
-    1.  The NgRx Data [EntityReducer](guide/data/entity-reducer) reads the action's `entityName` property (`Hero` in this example) and forwards the action and existing entity collection state to the `EntityCollectionReducer` for heroes.
+    1.  The NgRx Data [EntityReducer](guide/data/entity-reducer) reads the action's `entityName` property (`Hero` in this example) and 
+    forwards the action and existing entity collection state to the `EntityCollectionReducer` for heroes.
 
-    1.  The collection reducer picks a switch-case based on the action's `op` (operation) property. That case processes the action and collection state into a new (updated) hero collection.
+    1.  The collection reducer picks a switch-case based on the action's `entityOp` (operation) property. 
+    That case processes the action and collection state into a new (updated) hero collection.
 
     1.  The store updates the _entity cache_ in the state tree with that updated collection.
 
