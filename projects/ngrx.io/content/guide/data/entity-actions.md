@@ -17,43 +17,64 @@ It has additional properties that guide NgRx Data's handling of the action. Here
 <code-example header="EntityAction" linenums="false">
 export interface EntityAction&lt;P = any&gt; extends Action {
   readonly type: string;
+  readonly payload: EntityActionPayload&lt;P&gt;;
+}
+</code-example>
+
+<code-example header="EntityActionPayload" linenums="false">
+export interface EntityActionPayload&lt;P = any&gt; extends EntityActionOptions {
   readonly entityName: string;
-  readonly op: EntityOp;
-  readonly payload?: P;
+  readonly entityOp: EntityOp;
+  readonly data?: P;
+
+  // EntityActionOptions (also an interface)
+  readonly correlationId?: any;
+  readonly isOptimistic?: boolean;
+  readonly mergeStrategy?: MergeStrategy;
   readonly tag?: string;
   error?: Error;
   skip?: boolean
 }
 </code-example>
 
-* `type` - action name, typically generated from the `tag` and the `op`
-* `entityName` - the name of the entity type
-* `op` - the name of an entity operation
-* `payload?` - the message data for the action.
+* `type` - action name, typically generated from the `tag` and the `entityOp`.
+* `entityName` - the name of the entity type.
+* `entityOp` - the name of an entity operation.
+* `data?` - the message data for the action.
+* `correlationId?` - a serializable object (typically a string) for correlating related actions.
+* `isOptimistic?` - true if should perform the action optimistically (before the server responds).
+* `mergeStrategy` - how to merge an entity into the cache. See [Change Tracking](guide/data/entity-change-tracker).
 * `tag?` - the tag to use within the generated type. If not specified, the `entityName` is the tag.
 * `error?` - an unexpected action processing error.
 * `skip?` - true if downstream consumers should skip processing the action.
 
 The `type` is the only property required by _NgRx_. It is a string that uniquely identifies the action among the set of all the types of actions that can be dispatched to the store.
 
-NgRx Data doesn't care about the `type`. It pays attention to the `entityName` and `op` properties.
+NgRx Data doesn't care about the `type`. It pays attention to the `entityName` and `entityOp` properties.
 
 The `entityName` is the name of the entity type.
 It identifies the _entity collection_ in the NgRx Data cache to which this action applies.
 This name corresponds to [NgRx Data _metadata_](guide/data/entity-metadata) for that collection.
 An entity interface or class name, such as `'Hero'`, is a typical `entityName`.
 
-The `op` identifies the operation to perform on the _entity collection_, 
+The `entityOp` identifies the operation to perform on the _entity collection_, 
 one of the `EntityOp` enumerations that correspond to one of the
 almost _sixty_ distinct operations that NgRx Data can perform on a collection.
 
-The `payload` is conceptually the body of the message.
+The `data` is conceptually the body of the message.
 Its type and content should fit the requirements of the operation to be performed.
+
+The optional `correlationId?` is an optional serializable object (usually a GUID) that correlates two or more actions such as the action that initiates a server action ("get all heroes") and the subsequent actions that follow after the server action completed ("got heroes successfully" or "error while getting heroes").
+
+The optional `mergeStrategy` tells NgRx Data how to "merge" the result of the action into the cache.
+Mostly this is an instruction to the the [Change Tracking](guide/data/entity-change-tracker) sub-system.
 
 The optional `tag` appears in the generated `type` text when the `EntityActionFactory` creates this `EntityAction`.
 
 The `entityName` is the default tag that appears between brackets in the formatted `type`,
-e.g., `'[Hero] NgRx Data/query-all'`.
+e.g., `'[Hero] NgRx Data/query-all'`. 
+You can set this tag to identify the purpose of the operation and "who" dispatched it.
+Ngrx Data will put your tag between the brackets in the formatted `type`.
 
 The `error` property indicates that something went wrong while processing the action. [See more below](#action-error).
 
@@ -64,21 +85,21 @@ This flag is usually missing and is implicitly false.
 ## _EntityAction_ consumers
 
 The NgRx Data library ignores the `Action.type`.
-All NgRx Data library behaviors are determined by the `entityName` and `op` properties alone.
+All NgRx Data library behaviors are determined by the `entityName` and `entityOp` properties alone.
 
 The NgRx Data `EntityReducer` redirects an action to an `EntityCollectionReducer` based on the `entityName`
-and that reducer processes the action based on the `op`.
+and that reducer processes the action based on the `entityOp`.
 
-`EntityEffects` intercepts an action if its `op` is among the small set of persistence `EntityAction.op` names.
+`EntityEffects` intercepts an action if its `entityOp` is among the small set of persistence `EntityAction.entityOp` names.
 The effect picks the right _data service_ for that action's `entityName`, then tells the service to make the appropriate HTTP request and handle the response.
 
 ## Creating an _EntityAction_
 
 You can create an `EntityAction` by hand if you wish.
-The NgRx Data library considers _any action_ with an `entityName` and `op` properties to be an `EntityAction`.
+The NgRx Data library considers _any action_ with an `entityName` and `entityOp` properties to be an `EntityAction`.
 
 The `EntityActionFactory.create()` method helps you create a consistently well-formed `EntityAction` instance
-whose `type` is a string composed from the `tag` (the `entityName` by default) and the `op`.
+whose `type` is a string composed from the `tag` (the `entityName` by default) and the `entityOp`.
 
 For example, the default generated `Action.type` for the operation that queries the server for all heroes is `'[Hero] NgRx Data/query-all'`.
 
@@ -159,7 +180,7 @@ The action log now looks like this:
 ### Handcrafted _EntityAction_
 
 You don't have to create entity actions with the `EntityActionFactory`.
-Any action object with an `entityName` and `op` property is
+Any action object with an `entityName` and `entityOp` property is
 an entity action, as explained [below](#where-are-the-entityactions).
 
 The following example creates the initiating "query all heroes" action by hand.
@@ -168,7 +189,7 @@ The following example creates the initiating "query all heroes" action by hand.
 const action = {
   type: 'some/arbitrary/action/type',
   entityName: 'Hero',
-  op: EntityOp.QUERY_ALL
+  entityOp: EntityOp.QUERY_ALL
 };
 
 store.dispatch(action);

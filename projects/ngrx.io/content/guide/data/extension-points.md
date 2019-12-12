@@ -17,12 +17,12 @@ You can do that easily without abandoning NgRx Data for the rest of your entity 
 
 You can take it over completely simply by removing it from the entity metadata.
 Create your own collection and add it to the store's state-tree as you would in vanilla NgRx. Create your own actions, reducers, selectors and effects.
-As long as your actions don't have an `entityName` or `op` property,
+As long as your actions don't have an `entityName` or `entityOp` property,
 NgRx Data will ignore them.
 
 Or you can keep the entity type in the NgRx Data system and take over the behaviors that matter to you.
 
-* Create supplemental actions for that type. Give them custom `op` names that suit your purpose.
+* Create supplemental actions for that type. Give them custom `entityOp` names that suit your purpose.
 
 * Register an alternative `EntityCollectionReducer` for that type with the `EntityCollectionReducerFactory`. Your custom reducer can respond to your custom actions and implement the standard operations in its own way.
 
@@ -31,7 +31,7 @@ Or you can keep the entity type in the NgRx Data system and take over the behavi
 
 * Add additional properties to the collection state with the `EntityMetadata.additionalCollectionState` property. Manage these properties with custom reducer actions and selectors.
 
-* By-pass the `EntityEffects` completely by never dispatching an action with an `op` that it intercepts.
+* By-pass the `EntityEffects` completely by never dispatching an action with an `entityOp` that it intercepts.
   Create a custom _NgRx/effect_ that handles your custom persistence actions.
 
 ## Provide alternative service implementations
@@ -84,10 +84,10 @@ call to an `EntityDataService` and channels the HTTP response through a
 `PersistenceResultHandler` which produces a persistence results observable that
 goes back to the NgRx store.
 
-The `EntityEffects` class intercepts actions that have an `op` property whose
+The `EntityEffects` class intercepts actions that have an `entityOp` property whose
 value is one of the `persistOps`. Other actions are ignored by this effect.
 
-It tries to process any action with such an `op` property by looking for a
+It tries to process any action with such an `entityOp` property by looking for a
 
 ### Choose data service for the type
 
