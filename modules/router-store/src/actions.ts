@@ -8,6 +8,7 @@ import {
 
 import { BaseRouterStoreState } from './serializers/base';
 import { SerializedRouterStateSnapshot } from './serializers/default_serializer';
+import { createAction, props } from '@ngrx/store';
 
 /**
  * An action dispatched when a router navigation request is fired.
@@ -34,6 +35,10 @@ export type RouterRequestAction<
   payload: RouterRequestPayload<T>;
 };
 
+export const routerRequestAction = createAction(
+  ROUTER_REQUEST,
+  props<{ payload: RouterRequestPayload<SerializedRouterStateSnapshot> }>()
+);
 /**
  * An action dispatched when the router navigates.
  */
@@ -58,6 +63,11 @@ export type RouterNavigationAction<
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
 };
+
+export const routerNavigationAction = createAction(
+  ROUTER_NAVIGATION,
+  props<{ payload: RouterNavigationPayload<SerializedRouterStateSnapshot> }>()
+);
 
 /**
  * An action dispatched when the router cancels navigation.
@@ -87,6 +97,11 @@ export type RouterCancelAction<
   payload: RouterCancelPayload<T, V>;
 };
 
+export const routerCancelAction = createAction(
+  ROUTER_CANCEL,
+  props<{ payload: RouterCancelPayload<SerializedRouterStateSnapshot> }>()
+);
+
 /**
  * An action dispatched when the router errors.
  */
@@ -115,6 +130,11 @@ export type RouterErrorAction<
   payload: RouterErrorPayload<T, V>;
 };
 
+export const routerErrorAction = createAction(
+  ROUTER_ERROR,
+  props<{ payload: RouterErrorPayload<SerializedRouterStateSnapshot> }>()
+);
+
 /**
  * An action dispatched after navigation has ended and new route is active.
  */
@@ -139,6 +159,11 @@ export type RouterNavigatedAction<
   type: typeof ROUTER_NAVIGATED;
   payload: RouterNavigatedPayload<T>;
 };
+
+export const routerNavigatedAction = createAction(
+  ROUTER_NAVIGATED,
+  props<{ payload: RouterNavigatedPayload<SerializedRouterStateSnapshot> }>()
+);
 
 /**
  * A union type of router actions.

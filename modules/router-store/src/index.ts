@@ -15,6 +15,11 @@ export {
   RouterNavigationPayload,
   RouterRequestAction,
   RouterRequestPayload,
+  routerCancelAction,
+  routerErrorAction,
+  routerNavigatedAction,
+  routerNavigationAction,
+  routerRequestAction,
 } from './actions';
 export { routerReducer, RouterReducerState } from './reducer';
 export {
