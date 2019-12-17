@@ -9,6 +9,7 @@ export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';
 export { EffectNotification } from './effect_notification';
 export { EffectsFeatureModule } from './effects_feature_module';
+export { EffectsRunner } from './effects_runner';
 export {
   ROOT_EFFECTS_INIT,
   rootEffectsInit,
@@ -20,3 +21,4 @@ export {
   OnRunEffects,
   OnInitEffects,
 } from './lifecycle_hooks';
+export { IMMEDIATE_EFFECTS, ROOT_EFFECTS, FEATURE_EFFECTS } from './tokens';

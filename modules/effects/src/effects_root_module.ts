@@ -20,11 +20,11 @@ export class EffectsRootModule {
     runner: EffectsRunner,
     store: Store<any>,
     @Inject(ROOT_EFFECTS) rootEffects: any[],
-    @Optional() storeRootModule: StoreRootModule,
-    @Optional() storeFeatureModule: StoreFeatureModule,
+    @Optional() storeRootModule?: StoreRootModule,
+    @Optional() storeFeatureModule?: StoreFeatureModule,
     @Optional()
     @Inject(_ROOT_EFFECTS_GUARD)
-    guard: any
+    guard?: any
   ) {
     runner.start();
 
