@@ -1,3 +1,11 @@
+<a name="8.6.0"></a>
+
+# [8.6.0](https://github.com/ngrx/platform/compare/8.5.2...8.6.0) (2019-12-18)
+
+### Features
+
+- **router-store:** add action creator for root router actions ([#2272](https://github.com/ngrx/platform/issues/2272)) ([f17589f](https://github.com/ngrx/platform/commit/f17589f)), closes [#2206](https://github.com/ngrx/platform/issues/2206)
+
 <a name="8.5.2"></a>
 
 ## [8.5.2](https://github.com/ngrx/platform/compare/8.5.1...8.5.2) (2019-11-21)
