@@ -15,7 +15,7 @@ type ObservableType<T, OriginalType> = T extends false ? OriginalType : Action;
  * Creates an effect from an `Observable` and an `EffectConfig`.
  *
  * @param source A function which returns an `Observable`.
- * @param config A `Partial<EffectConfig>` to configure the effect.  By default, `dispatch` is true and `resubscribeOnError` is true.
+ * @param config A `Partial<EffectConfig>` to configure the effect.  By default, `dispatch` is true and `useEffectsErrorHandler` is true.
  * @returns If `EffectConfig`#`dispatch` is true, returns `Observable<Action>`.  Else, returns `Observable<unknown>`.
  *
  * @usageNotes

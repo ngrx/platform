@@ -9,7 +9,7 @@ export class MockReducerManager extends BehaviorSubject<
   constructor() {
     super(() => undefined);
   }
-  
+
   addFeature(feature: any) {
     /* noop */
   }

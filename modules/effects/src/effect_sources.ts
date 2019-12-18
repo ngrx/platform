@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, Inject, Injectable, Optional } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Notification, Observable, Subject } from 'rxjs';
 import {
@@ -15,18 +15,25 @@ import {
   reportInvalidActions,
   EffectNotification,
 } from './effect_notification';
-import { mergeEffects } from './effects_resolver';
+import { mergeEffects, EffectsErrorHandler } from './effects_resolver';
 import {
   onIdentifyEffectsKey,
   onRunEffectsKey,
   OnRunEffects,
   onInitEffects,
 } from './lifecycle_hooks';
+import { EFFECTS_ERROR_HANDLER } from './tokens';
 import { getSourceForInstance } from './utils';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
-  constructor(private errorHandler: ErrorHandler, private store: Store<any>) {
+  constructor(
+    private errorHandler: ErrorHandler,
+    private store: Store<any>,
+    @Optional()
+    @Inject(EFFECTS_ERROR_HANDLER)
+    private effectsErrorHandler: EffectsErrorHandler | null
+  ) {
     super();
   }
 
@@ -55,7 +62,12 @@ export class EffectSources extends Subject<any> {
       }),
       mergeMap(source$ =>
         source$.pipe(
-          exhaustMap(resolveEffectSource(this.errorHandler)),
+          exhaustMap(
+            resolveEffectSource(
+              this.errorHandler,
+              this.effectsErrorHandler || undefined
+            )
+          ),
           map(output => {
             reportInvalidActions(output, this.errorHandler);
             return output.notification;
@@ -83,10 +95,15 @@ function effectsInstance(sourceInstance: any) {
 }
 
 function resolveEffectSource(
-  errorHandler: ErrorHandler
+  errorHandler: ErrorHandler,
+  effectsErrorHandler?: EffectsErrorHandler
 ): (sourceInstance: any) => Observable<EffectNotification> {
   return sourceInstance => {
-    const mergedEffects$ = mergeEffects(sourceInstance, errorHandler);
+    const mergedEffects$ = mergeEffects(
+      sourceInstance,
+      errorHandler,
+      effectsErrorHandler
+    );
 
     if (isOnRunEffects(sourceInstance)) {
       return sourceInstance.ngrxOnRunEffects(mergedEffects$);

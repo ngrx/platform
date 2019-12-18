@@ -204,6 +204,62 @@ export class UserEffects implements OnRunEffects {
 }
 ```
 
+### EffectsErrorHandler
+
+By default, if an effect has `{useEffectsErrorHandler: true}` (the effect metadata default), when the effect encounters an error it
+is automatically resubscribed to, and the Angular `ErrorHandler.handleError` method is called with the error, and the
+effect observable resubscribed to.
+
+If you want to customize this behavior, for example if you have a [custom error handler](https://angular.io/api/core/ErrorHandler) that needs specific input, or you
+only want to resubscribe on certain errors etc, you may provide a custom handler using the `EFFECTS_ERROR_HANDLER`
+injection token.
+
+Usage:
+
+```ts
+import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
+import { MovieEffects } from './effects/movie.effects';
+import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
+import { Action } from '@ngrx/store';
+import { Observable, throwError } from 'rxjs';
+import { retryWhen, mergeMap } from 'rxjs/operators';
+
+export function effectResubscriptionHandler<T extends Action>(
+  observable$: Observable<T>,
+  errorHandler?: CustomErrorHandler
+): Observable<T> {
+  return observable$.pipe(
+    retryWhen(errors =>
+      errors.pipe(
+        mergeMap(e => {
+          if (isRetryable(e)) {
+            return errorHandler.handleRetryableError(e);
+          }
+
+          errorHandler.handleError(e);
+          return throwError(e);
+        })
+      )
+    )
+  );
+}
+
+@NgModule({
+  imports: [EffectsModule.forRoot([MovieEffects])],
+  providers: [
+    {
+      provide: EFFECTS_ERROR_HANDLER,
+      useValue: effectResubscriptionHandler,
+    },
+    {
+      provide: ErrorHandle,
+      useClass: CustomErrorHandler,
+    },
+  ],
+})
+export class AppModule {}
+```
+
 ## Utilities
 
 ### mergeEffects

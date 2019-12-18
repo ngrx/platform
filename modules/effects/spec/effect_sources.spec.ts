@@ -346,9 +346,9 @@ describe('EffectSources', () => {
         expect(toActions(sources$)).toBeObservable(expected);
       });
 
-      it('should not resubscribe on error when resubscribeOnError is false', () => {
+      it('should not resubscribe on error when useEffectsErrorHandler is false', () => {
         class Eff {
-          @Effect({ resubscribeOnError: false })
+          @Effect({ useEffectsErrorHandler: false })
           b$ = hot('a--b--c--d').pipe(
             map(v => {
               if (v == 'b') throw new Error('An Error');
@@ -635,7 +635,7 @@ describe('EffectSources', () => {
         expect(toActions(sources$)).toBeObservable(expected);
       });
 
-      it('should not resubscribe on error when resubscribeOnError is false', () => {
+      it('should not resubscribe on error when useEffectsErrorHandler is false', () => {
         const sources$ = of(
           new class {
             b$ = createEffect(
@@ -646,7 +646,7 @@ describe('EffectSources', () => {
                     return v;
                   })
                 ),
-              { dispatch: false, resubscribeOnError: false }
+              { dispatch: false, useEffectsErrorHandler: false }
             );
           }()
         );

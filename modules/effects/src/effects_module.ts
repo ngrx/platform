@@ -1,16 +1,16 @@
 import {
-  NgModule,
   ModuleWithProviders,
-  Type,
+  NgModule,
   Optional,
   SkipSelf,
+  Type,
 } from '@angular/core';
-import { EffectSources } from './effect_sources';
 import { Actions } from './actions';
-import { ROOT_EFFECTS, FEATURE_EFFECTS, _ROOT_EFFECTS_GUARD } from './tokens';
+import { EffectSources } from './effect_sources';
 import { EffectsFeatureModule } from './effects_feature_module';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
+import { _ROOT_EFFECTS_GUARD, FEATURE_EFFECTS, ROOT_EFFECTS } from './tokens';
 
 @NgModule({})
 export class EffectsModule {
