@@ -425,6 +425,11 @@
           "url": "https://blog.ngrx.io",
           "title": "Blog",
           "tooltip": "NgRx Blog"
+        },
+        {
+          "url": "presskit",
+          "title": "Press Kit",
+          "tooltip": "Press Kit"
         }
       ]
     },
