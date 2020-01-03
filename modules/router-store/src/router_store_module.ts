@@ -177,7 +177,7 @@ export class StoreRouterConnectingModule {
   }
 
   private lastEvent: Event | null = null;
-  private routerState: SerializedRouterStateSnapshot | null;
+  private routerState: SerializedRouterStateSnapshot | null = null;
   private storeState: any;
   private trigger = RouterTrigger.NONE;
 

@@ -170,13 +170,13 @@ describe('EntityServices', () => {
 
 // #region test helpers
 class Hero {
-  id: number;
-  name: string;
+  id!: number;
+  name!: string;
   saying?: string;
 }
 class Villain {
-  key: string;
-  name: string;
+  key!: string;
+  name!: string;
 }
 
 const entityMetadata: EntityMetadataMap = {

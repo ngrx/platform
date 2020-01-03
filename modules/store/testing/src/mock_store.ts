@@ -35,8 +35,8 @@ export class MockStore<T> extends Store<T> {
     any
   >();
 
-  public scannedActions$: Observable<Action>;
-  private lastState: T;
+  scannedActions$: Observable<Action>;
+  private lastState?: T;
 
   constructor(
     private state$: MockState<T>,
@@ -131,6 +131,6 @@ export class MockStore<T> extends Store<T> {
    * Refreshes the existing state.
    */
   refreshState() {
-    this.setState({ ...(this.lastState as T) });
+    if (this.lastState) this.setState({ ...this.lastState });
   }
 }

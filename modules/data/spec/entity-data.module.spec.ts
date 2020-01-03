@@ -55,14 +55,14 @@ class TestEntityEffects {
 }
 
 class Hero {
-  id: number;
-  name: string;
+  id!: number;
+  name!: string;
   power?: string;
 }
 
 class Villain {
-  id: string;
-  name: string;
+  id!: string;
+  name!: string;
 }
 
 const entityMetadata = {

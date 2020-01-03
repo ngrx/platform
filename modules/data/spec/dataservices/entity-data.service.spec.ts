@@ -27,8 +27,8 @@ export class CustomDataService {
 }
 
 export class Bazinga {
-  id: number;
-  wow: string;
+  id!: number;
+  wow!: string;
 }
 
 export class BazingaDataService

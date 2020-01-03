@@ -31,13 +31,13 @@ import {
 } from '../..';
 
 class Hero {
-  id: number;
-  name: string;
+  id!: number;
+  name!: string;
   power?: string;
 }
 class Villain {
-  key: string;
-  name: string;
+  key!: string;
+  name!: string;
 }
 
 const metadata: EntityMetadataMap = {

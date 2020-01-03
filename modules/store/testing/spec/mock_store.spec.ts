@@ -297,16 +297,11 @@ describe('Refreshing state', () => {
       </ul>
     `,
   })
-  class TodosComponent implements OnInit {
-    todos: Observable<any[]>;
-    todosSelect: Observable<any[]>;
+  class TodosComponent {
+    todos: Observable<any[]> = this.store.pipe(select(todos));
+    todosSelect: Observable<any[]> = this.store.select(todos);
 
     constructor(private store: Store<{}>) {}
-
-    ngOnInit() {
-      this.todos = this.store.pipe(select(todos));
-      this.todosSelect = this.store.select(todos);
-    }
   }
 
   beforeEach(() => {

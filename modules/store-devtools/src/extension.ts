@@ -67,11 +67,11 @@ export interface ReduxDevtoolsExtension {
 @Injectable()
 export class DevtoolsExtension {
   private devtoolsExtension: ReduxDevtoolsExtension;
-  private extensionConnection: ReduxDevtoolsExtensionConnection;
+  private extensionConnection!: ReduxDevtoolsExtensionConnection;
 
-  liftedActions$: Observable<any>;
-  actions$: Observable<any>;
-  start$: Observable<any>;
+  liftedActions$!: Observable<any>;
+  actions$!: Observable<any>;
+  start$!: Observable<any>;
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,

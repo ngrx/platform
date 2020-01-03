@@ -1,8 +1,8 @@
 import { PropsFilterFnFactory } from '../..';
 
 class Hero {
-  id: number;
-  name: string;
+  id!: number;
+  name!: string;
   saying?: string;
 }
 
