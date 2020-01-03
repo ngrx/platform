@@ -77,12 +77,6 @@ export type Creator<
     ? TypePropertyIsNotAllowed
     : FunctionWithParametersType<P, R>;
 
-export type TypedCreator<
-  T extends string,
-  P extends any[] = any[],
-  R extends object = object
-> = FunctionWithParametersType<P, R & TypedAction<T>>;
-
 export type PropsReturnType<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
   : T extends { type: any }
@@ -94,7 +88,7 @@ export type PropsReturnType<T extends object> = T extends any[]
  */
 export type ActionCreator<
   T extends string = string,
-  C extends Creator = TypedCreator<T>
+  C extends Creator = Creator
 > = C & TypedAction<T>;
 
 export type FunctionWithParametersType<P extends unknown[], R = void> = (

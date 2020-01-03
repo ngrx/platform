@@ -5,7 +5,6 @@ import {
   FunctionWithParametersType,
   PropsReturnType,
   DisallowArraysAndTypeProperty,
-  TypedCreator,
 } from './models';
 
 // Action creators taken from ts-action library and modified a bit to better
@@ -136,7 +135,7 @@ export function union<
 
 function defineType<T extends string>(
   type: T,
-  creator: TypedCreator<T>
+  creator: Creator
 ): ActionCreator<T> {
   return Object.defineProperty(creator, 'type', {
     value: type,
