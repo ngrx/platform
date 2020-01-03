@@ -3,8 +3,7 @@ import {
   ActionCreator,
   TypedAction,
   FunctionWithParametersType,
-  PropsReturnType,
-  DisallowArraysAndTypeProperty,
+  NotAllowedCheck,
 } from './models';
 
 // Action creators taken from ts-action library and modified a bit to better
@@ -16,14 +15,14 @@ export function createAction<T extends string>(
 export function createAction<T extends string, P extends object>(
   type: T,
   config: { _as: 'props'; _p: P }
-): ActionCreator<T, (props: P) => P & TypedAction<T>>;
+): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;
 export function createAction<
   T extends string,
   P extends any[],
   R extends object
 >(
   type: T,
-  creator: Creator<P, DisallowArraysAndTypeProperty<R>>
+  creator: Creator<P, R> & NotAllowedCheck<R>
 ): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
 /**
  * @description
@@ -121,10 +120,8 @@ export function createAction<T extends string, C extends Creator>(
   }
 }
 
-export function props<P extends object>(): PropsReturnType<P> {
-  // the return type does not match TypePropertyIsNotAllowed, so double casting
-  // is used.
-  return ({ _as: 'props', _p: undefined! } as unknown) as PropsReturnType<P>;
+export function props<P extends object>(): { _as: 'props'; _p: P } {
+  return { _as: 'props', _p: undefined! };
 }
 
 export function union<

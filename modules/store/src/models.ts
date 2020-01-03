@@ -75,17 +75,11 @@ export type FunctionIsNotAllowed<
 export type Creator<
   P extends any[] = any[],
   R extends object = object
-> = R extends any[]
-  ? ArraysAreNotAllowed
-  : R extends { type: any }
-    ? TypePropertyIsNotAllowed
-    : FunctionWithParametersType<P, R>;
+> = FunctionWithParametersType<P, R>;
 
-export type PropsReturnType<T extends object> = T extends any[]
+export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
-  : T extends { type: any }
-    ? TypePropertyIsNotAllowed
-    : { _as: 'props'; _p: T };
+  : T extends { type: any } ? TypePropertyIsNotAllowed : unknown;
 
 /**
  * See `Creator`.
