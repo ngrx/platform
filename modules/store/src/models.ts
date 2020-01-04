@@ -65,6 +65,10 @@ export const typePropertyIsNotAllowedMsg =
   'type property is not allowed in action creators';
 type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 
+export type FunctionIsNotAllowed<
+  T,
+  ErrorMessage extends string
+> = T extends Function ? ErrorMessage : T;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
  */
