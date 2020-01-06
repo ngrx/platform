@@ -100,7 +100,7 @@ export function createAction<
 export function createAction<T extends string, C extends Creator>(
   type: T,
   config?: { _as: 'props' } | C
-): Creator {
+): ActionCreator<T> {
   if (typeof config === 'function') {
     return defineType(type, (...args: any[]) => ({
       ...config(...args),
@@ -133,7 +133,10 @@ export function union<
   return undefined!;
 }
 
-function defineType(type: string, creator: Creator): Creator {
+function defineType<T extends string>(
+  type: T,
+  creator: Creator
+): ActionCreator<T> {
   return Object.defineProperty(creator, 'type', {
     value: type,
     writable: false,
