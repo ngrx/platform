@@ -3,7 +3,7 @@ import { Observable, Observer, Operator } from 'rxjs';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
 import { ActionsSubject } from './actions_subject';
-import { Action, ActionReducer } from './models';
+import { Action, ActionReducer, FunctionIsNotAllowed } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
 
@@ -93,7 +93,13 @@ export class Store<T> extends Observable<T> implements Observer<Action> {
     return store;
   }
 
-  dispatch<V extends Action = Action>(action: V) {
+  dispatch<V extends Action = Action>(
+    action: V &
+      FunctionIsNotAllowed<
+        V,
+        'Functions are not allowed to be dispatched. Did you forget to call action creator function?'
+      >
+  ) {
     this.actionsObserver.next(action);
   }
 
