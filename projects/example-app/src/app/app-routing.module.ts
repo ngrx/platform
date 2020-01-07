@@ -8,7 +8,8 @@ export const routes: Routes = [
   { path: '', redirectTo: '/books', pathMatch: 'full' },
   {
     path: 'books',
-    loadChildren: '@example-app/books/books.module#BooksModule',
+    loadChildren: () =>
+      import('@example-app/books/books.module').then(m => m.BooksModule),
     canActivate: [AuthGuard],
   },
   {

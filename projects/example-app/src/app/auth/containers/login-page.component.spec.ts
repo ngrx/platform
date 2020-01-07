@@ -1,5 +1,4 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatInputModule, MatCardModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Store } from '@ngrx/store';
@@ -8,6 +7,7 @@ import { LoginFormComponent } from '@example-app/auth/components';
 import * as fromAuth from '@example-app/auth/reducers';
 import { LoginPageActions } from '@example-app/auth/actions';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { MaterialModule } from '@example-app/material';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginPageComponent>;
@@ -16,12 +16,7 @@ describe('Login Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        MatInputModule,
-        MatCardModule,
-        ReactiveFormsModule,
-      ],
+      imports: [NoopAnimationsModule, MaterialModule, ReactiveFormsModule],
       declarations: [LoginPageComponent, LoginFormComponent],
       providers: [
         provideMockStore({

@@ -14,6 +14,7 @@
   },
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
-    "enableSummariesForJit": false
+    "enableSummariesForJit": false,
+    "enableIvy": false
   }
 }

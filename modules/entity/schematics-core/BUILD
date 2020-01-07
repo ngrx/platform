@@ -17,6 +17,7 @@ ts_library(
     deps = [
         "@npm//@angular-devkit/core",
         "@npm//@angular-devkit/schematics",
+        "@npm//tslib",
         "@npm//typescript",
     ],
 )

@@ -10,15 +10,21 @@ version: 2
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.11.0
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.1
 var_2: &run_in_node
   docker:
-    - image: circleci/node:10.12
+    - image: circleci/node:12.9.1
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
 var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.1
 var_5: &run_in_browser
+  docker:
+    - image: circleci/node:12.9.1-browsers
+var_6: &docs_in_node
+  docker:
+    - image: circleci/node:10.12
+var_7: &docs_in_browser
   docker:
     - image: circleci/node:10.12-browsers
 
@@ -52,12 +58,12 @@ jobs:
 
       # Run the Buildifier to check our Bazel rules for format issues.
       - run: 'yarn bazel:format --mode=check ||
-              (echo "BUILD files not formatted. Please run ''yarn bazel:format --mode=fix''" ; exit 1)'
+          (echo "BUILD files not formatted. Please run ''yarn bazel:format --mode=fix''" ; exit 1)'
 
       # Run the Buildifier to check our Bazel rules for lint issues.
       # Note: The `--lint=warn` will auto fixe (re-write) the affected files.
       - run: 'yarn bazel:format --lint=warn ||
-              (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
+          (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
   test:
     <<: *run_in_node
@@ -112,7 +118,7 @@ jobs:
       - run: yarn run example:cypress:ci
 
   docs-tests:
-    <<: *run_in_browser
+    <<: *docs_in_browser
     working_directory: ~/docs/projects/ngrx.io
     steps:
       - checkout:
@@ -122,7 +128,7 @@ jobs:
       - run: yarn test --watch=false
 
   docs:
-    <<: *run_in_node
+    <<: *docs_in_node
     working_directory: ~/docs/projects/ngrx.io
     steps:
       - checkout:
@@ -144,7 +150,7 @@ jobs:
             - ~/docs/projects/ngrx.io/node_modules
 
   docs-preview:
-    <<: *run_in_node
+    <<: *docs_in_node
     working_directory: ~/docs/projects/ngrx.io
     steps:
       - add_ssh_keys:
@@ -166,14 +172,14 @@ jobs:
       - run: npm rebuild node-sass
       - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
       - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/
-      - run: yarn --cwd ../../ install && yarn --cwd ../../ run deploy:preview
+      - run: yarn --cwd ../../ install --ignore-engines && yarn --cwd ../../ run deploy:preview
       - save_cache:
           key: *docs_cache_key
           paths:
             - ~/docs/projects/ngrx.io/node_modules
 
   deploy-docs-stable:
-    <<: *run_in_node
+    <<: *docs_in_node
     working_directory: ~/docs/projects/ngrx.io
     steps:
       - checkout:

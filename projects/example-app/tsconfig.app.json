@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "strictPropertyInitialization": false,
@@ -10,7 +11,7 @@
     "lib": ["es2017", "dom"],
     "outDir": "../out-tsc/app",
     "target": "es5",
-    "module": "es2015",
+    "module": "esnext",
     "types": [],
     "baseUrl": ".",
     "paths": {
@@ -23,10 +24,6 @@
       "@example-app/*": ["./src/app/*"]
     }
   },
-  "exclude": [
-    "../../node_modules",
-    "**/test.ts",
-    "**/*.spec.ts",
-    "**/setup-jest.ts"
-  ]
+  "files": ["src/main.ts", "src/polyfills.ts"],
+  "include": ["src/**/*.d.ts"]
 }

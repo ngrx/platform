@@ -60,6 +60,7 @@ __build__/**
 release
 dist
 bazel-out
+bazel-bin
 /node_modules/
 lerna-debug.log
 /lib/

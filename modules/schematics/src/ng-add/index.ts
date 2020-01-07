@@ -12,7 +12,11 @@ import {
 } from '../../schematics-core/utility/config';
 import { Schema as SchematicOptions } from './schema';
 
-function updateWorkspace(host: Tree, key: keyof WorkspaceSchema, value: any) {
+function updateWorkspace<K extends keyof WorkspaceSchema>(
+  host: Tree,
+  key: K,
+  value: any
+) {
   const workspace = getWorkspace(host);
   const path = getWorkspacePath(host);
   workspace[key] = value;

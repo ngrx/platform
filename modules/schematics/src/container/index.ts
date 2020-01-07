@@ -13,6 +13,7 @@ import {
   template,
   move,
   mergeWith,
+  MergeStrategy,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import {
@@ -154,7 +155,7 @@ export default function(options: ContainerOptions): Rule {
     return chain([
       externalSchematic('@schematics/angular', 'component', {
         ...opts,
-        spec: false,
+        skipTests: true,
       }),
       addStateToComponent(options),
       mergeWith(templateSource),

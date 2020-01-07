@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { MatCardModule, MatInputModule } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
@@ -16,6 +15,7 @@ import { CollectionPageComponent } from '@example-app/books/containers';
 import * as fromBooks from '@example-app/books/reducers';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { MaterialModule } from '@example-app/material';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;
@@ -24,12 +24,7 @@ describe('Collection Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        MatCardModule,
-        MatInputModule,
-        RouterTestingModule,
-      ],
+      imports: [NoopAnimationsModule, MaterialModule, RouterTestingModule],
       declarations: [
         CollectionPageComponent,
         BookPreviewListComponent,

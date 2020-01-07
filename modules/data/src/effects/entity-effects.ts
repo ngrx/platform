@@ -130,7 +130,7 @@ export class EntityEffects {
       case EntityOp.SAVE_UPDATE_ONE:
         const { id, changes } = data as Update<any>; // data must be Update<T>
         return service.update(data).pipe(
-          map(updatedEntity => {
+          map((updatedEntity: any) => {
             // Return an Update<T> with updated entity data.
             // If server returned entity data, merge with the changes that were sent
             // and set the 'changed' flag to true.
@@ -148,7 +148,7 @@ export class EntityEffects {
 
       case EntityOp.SAVE_UPSERT_ONE:
         return service.upsert(data).pipe(
-          map(upsertedEntity => {
+          map((upsertedEntity: any) => {
             const hasData =
               upsertedEntity && Object.keys(upsertedEntity).length > 0;
             return hasData ? upsertedEntity : data; // ensure a returned entity value.

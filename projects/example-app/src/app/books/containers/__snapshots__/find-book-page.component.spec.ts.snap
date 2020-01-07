@@ -14,7 +14,7 @@ exports[`Find Book Page should compile 1`] = `
     ng-reflect-searching="false"
   >
     <mat-card
-      class="mat-card"
+      class="mat-card _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -62,7 +62,11 @@ exports[`Find Book Page should compile 1`] = `
                   >
                     
                     
-                    Search for a book
+                    <span
+                      class="ng-tns-c1-0 ng-star-inserted"
+                    >
+                      Search for a book
+                    </span>
                     
                     
                   </label>

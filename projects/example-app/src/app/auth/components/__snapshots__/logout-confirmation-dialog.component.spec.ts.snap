@@ -16,7 +16,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     class="mat-dialog-actions"
   >
     <button
-      class="mat-button"
+      class="mat-button mat-button-base"
       mat-button=""
       ng-reflect-dialog-result="false"
       type="button"
@@ -38,7 +38,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       />
     </button>
     <button
-      class="mat-button"
+      class="mat-button mat-button-base"
       mat-button=""
       ng-reflect-dialog-result="true"
       type="button"
