@@ -57,10 +57,6 @@ export const arraysAreNotAllowedMsg =
   'arrays are not allowed in action creators';
 type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
 
-export type DisallowArraysAndTypeProperty<T> = T extends any[]
-  ? ArraysAreNotAllowed
-  : T extends { type: any } ? TypePropertyIsNotAllowed : T;
-
 export const typePropertyIsNotAllowedMsg =
   'type property is not allowed in action creators';
 type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
@@ -88,6 +84,11 @@ export type ActionCreator<
   T extends string = string,
   C extends Creator = Creator
 > = C & TypedAction<T>;
+
+export interface Props<T> {
+  _as: 'props';
+  _p: T;
+}
 
 export type FunctionWithParametersType<P extends unknown[], R = void> = (
   ...args: P

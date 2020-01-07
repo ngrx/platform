@@ -4,6 +4,7 @@ import {
   TypedAction,
   FunctionWithParametersType,
   NotAllowedCheck,
+  Props,
 } from './models';
 
 // Action creators taken from ts-action library and modified a bit to better
@@ -14,7 +15,7 @@ export function createAction<T extends string>(
 ): ActionCreator<T, () => TypedAction<T>>;
 export function createAction<T extends string, P extends object>(
   type: T,
-  config: { _as: 'props'; _p: P }
+  config: Props<P>
 ): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;
 export function createAction<
   T extends string,
@@ -120,7 +121,7 @@ export function createAction<T extends string, C extends Creator>(
   }
 }
 
-export function props<P extends object>(): { _as: 'props'; _p: P } {
+export function props<P extends object>(): Props<P> {
   return { _as: 'props', _p: undefined! };
 }
 
