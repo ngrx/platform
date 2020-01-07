@@ -2,7 +2,6 @@
   "compilerOptions": {
     "stripInternal": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "downlevelIteration": true,
     "outDir": "../../dist/packages/schematics",

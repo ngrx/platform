@@ -4,7 +4,6 @@
     "declaration": true,
     "stripInternal": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false,
     "downlevelIteration": true,
     "module": "es2015",
     "moduleResolution": "node",
