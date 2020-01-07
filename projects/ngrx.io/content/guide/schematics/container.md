@@ -55,7 +55,7 @@ If you want to generate a container with an scss file, add `@ngrx/schematics:con
 ```json
 "schematics": {
   "@ngrx/schematics:container": {
-    "styleext": "scss"
+    "style": "scss"
   }
 }
 ```

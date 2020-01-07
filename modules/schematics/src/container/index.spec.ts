@@ -21,7 +21,7 @@ describe('Container Schematic', () => {
     inlineStyle: false,
     inlineTemplate: false,
     changeDetection: 'Default',
-    styleext: 'css',
+    style: 'css',
     spec: true,
     module: undefined,
     export: false,

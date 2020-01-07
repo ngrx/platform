@@ -55,8 +55,9 @@
       "description": "The prefix to apply to generated selectors.",
       "alias": "p"
     },
-    "styleext": {
-      "description": "The file extension to be used for style files.",
+    "style": {
+      "description":
+        "The file extension or preprocessor to use for style files.",
       "type": "string",
       "default": "css"
     },
