@@ -40,7 +40,7 @@
     },
     "minimal": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description":
         "Setup state management without registering initial reducers."
     }
