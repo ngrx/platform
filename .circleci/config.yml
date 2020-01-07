@@ -76,7 +76,8 @@ jobs:
 
       # Build and Test
       - run: yarn bazel clean
-      - run: yarn test:bazel
+      - run: yarn test
+      - run: yarn build
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
