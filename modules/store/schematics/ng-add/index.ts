@@ -8,7 +8,6 @@ import {
   branchAndMerge,
   chain,
   mergeWith,
-  template,
   url,
   noop,
   move,
@@ -59,18 +58,9 @@ function addImportToNgModule(options: RootStoreOptions): Rule {
     const storeModuleReducers = options.minimal ? `{}` : `reducers`;
 
     const storeModuleConfig = options.minimal
-      ? `{
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
-    }`
+      ? `{}`
       : `{
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
+      metaReducers
     }`;
     const storeModuleSetup = `StoreModule.forRoot(${storeModuleReducers}, ${storeModuleConfig})`;
 

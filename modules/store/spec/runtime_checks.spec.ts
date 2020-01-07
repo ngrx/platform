@@ -7,7 +7,34 @@ import * as metaReducers from '../src/meta-reducers';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
-    it('should disable all checks by default', () => {
+    it('should enable immutability checks by default', () => {
+      expect(createActiveRuntimeChecks()).toEqual({
+        strictStateSerializability: false,
+        strictActionSerializability: false,
+        strictActionImmutability: true,
+        strictStateImmutability: true,
+      });
+    });
+
+    it('should allow the user to override the config', () => {
+      expect(
+        createActiveRuntimeChecks({
+          strictStateSerializability: true,
+          strictActionSerializability: true,
+          strictActionImmutability: false,
+          strictStateImmutability: false,
+        })
+      ).toEqual({
+        strictStateSerializability: true,
+        strictActionSerializability: true,
+        strictActionImmutability: false,
+        strictStateImmutability: false,
+      });
+    });
+
+    it('should disable runtime checks in production by default', () => {
+      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
@@ -16,51 +43,15 @@ describe('Runtime checks:', () => {
       });
     });
 
-    it('should log a warning in dev mode when no configuration is provided', () => {
-      const spy = spyOn(console, 'warn');
-
-      createActiveRuntimeChecks();
-
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('should not log a warning in dev mode when configuration is provided', () => {
-      const spy = spyOn(console, 'warn');
-
-      createActiveRuntimeChecks({});
-
-      expect(spy).not.toHaveBeenCalled();
-    });
-
-    it('should not log a warning when not dev mode when no configuration is provided', () => {
+    it('should disable runtime checks in production even if opted in to enable', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
-      const spy = spyOn(console, 'warn');
 
-      createActiveRuntimeChecks();
-
-      expect(spy).not.toHaveBeenCalled();
-    });
-
-    it('should allow the user to override the config', () => {
       expect(
         createActiveRuntimeChecks({
           strictStateSerializability: true,
           strictActionSerializability: true,
-          strictActionImmutability: true,
-          strictStateImmutability: true,
         })
       ).toEqual({
-        strictStateSerializability: true,
-        strictActionSerializability: true,
-        strictActionImmutability: true,
-        strictStateImmutability: true,
-      });
-    });
-
-    it('should disable runtime checks in production', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
-
-      expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictActionImmutability: false,
@@ -114,7 +105,7 @@ describe('Runtime checks:', () => {
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
     });
 
-    it('should not create a meta reducer without config', () => {
+    it('should create immutability meta reducer without config', () => {
       const serializationCheckMetaReducerSpy = spyOn(
         metaReducers,
         'serializationCheckMetaReducer'
@@ -136,7 +127,7 @@ describe('Runtime checks:', () => {
 
       const _store = TestBed.get<Store<any>>(Store);
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
-      expect(immutabilityCheckMetaReducerSpy).not.toHaveBeenCalled();
+      expect(immutabilityCheckMetaReducerSpy).toHaveBeenCalled();
     });
   });
 
