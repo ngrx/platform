@@ -316,6 +316,15 @@
       ]
     },
     {
+      "title": "@ngrx/component",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/component"
+        }
+      ]
+    },
+    {
       "title": "@ngrx/schematics",
       "children": [
         {
@@ -425,7 +434,8 @@
         {
           "url": "https://stackoverflow.com/questions/tagged/ngrx",
           "title": "Stack Overflow",
-          "tooltip": "Stack Overflow: where the community answers your technical NgRx questions."
+          "tooltip":
+            "Stack Overflow: where the community answers your technical NgRx questions."
         },
         {
           "url": "https://gitter.im/ngrx/platform",
