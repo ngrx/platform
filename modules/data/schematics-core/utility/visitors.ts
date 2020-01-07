@@ -42,3 +42,31 @@ function* visit(directory: DirEntry): IterableIterator<ts.SourceFile> {
     yield* visit(directory.dir(path));
   }
 }
+
+export function visitNgModuleImports(
+  sourceFile: ts.SourceFile,
+  callback: (
+    importNode: ts.PropertyAssignment,
+    elementExpressions: ts.NodeArray<ts.Expression>
+  ) => void
+) {
+  ts.forEachChild(sourceFile, function findDecorator(node) {
+    if (!ts.isDecorator(node)) {
+      ts.forEachChild(node, findDecorator);
+      return;
+    }
+
+    ts.forEachChild(node, function findImportsNode(n) {
+      if (
+        ts.isPropertyAssignment(n) &&
+        ts.isArrayLiteralExpression(n.initializer) &&
+        ts.isIdentifier(n.name) &&
+        n.name.text === 'imports'
+      ) {
+        callback(n, n.initializer.elements);
+      }
+
+      ts.forEachChild(n, findImportsNode);
+    });
+  });
+}

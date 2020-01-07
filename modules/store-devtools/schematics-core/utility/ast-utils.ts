@@ -729,3 +729,18 @@ export function replaceImport(
 
   return changes.reduce((imports, curr) => imports.concat(curr), []);
 }
+
+export function containsProperty(
+  objectLiteral: ts.ObjectLiteralExpression,
+  propertyName: string
+) {
+  return (
+    objectLiteral &&
+    objectLiteral.properties.some(
+      prop =>
+        ts.isPropertyAssignment(prop) &&
+        ts.isIdentifier(prop.name) &&
+        prop.name.text === propertyName
+    )
+  );
+}
