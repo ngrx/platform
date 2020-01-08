@@ -5,7 +5,6 @@
     "stripInternal": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false,
     "module": "es2015",
     "moduleResolution": "node",
     "noEmitOnError": false,

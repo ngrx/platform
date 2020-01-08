@@ -482,8 +482,8 @@ describe('EntityEffects (normal testing)', () => {
 
 // #region test helpers
 export class Hero {
-  id: number;
-  name: string;
+  id!: number;
+  name!: string;
 }
 
 /** make error produced by the EntityDataService */

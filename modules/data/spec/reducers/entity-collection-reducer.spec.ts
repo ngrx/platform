@@ -27,17 +27,17 @@ import {
 } from '../../';
 
 class Foo {
-  id: string;
-  foo: string;
+  id!: string;
+  foo!: string;
 }
 class Hero {
-  id: number;
-  name: string;
+  id!: number;
+  name!: string;
   power?: string;
 }
 class Villain {
-  key: string;
-  name: string;
+  key!: string;
+  name!: string;
 }
 
 const metadata: EntityMetadataMap = {
