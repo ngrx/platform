@@ -76,6 +76,28 @@ describe('Action Creators', () => {
       narrow(foo({ foo: 42 }));
     });
 
+    it('should allow the union of types in props', () => {
+      interface A {
+        sameProp: 'A';
+      }
+      interface B {
+        sameProp: 'B';
+        extraProp: string;
+      }
+      type U = A | B;
+      const foo = createAction('FOO', props<U>());
+
+      const fooA = foo({ sameProp: 'A' });
+      const fooB = foo({ sameProp: 'B', extraProp: 'allowed' });
+
+      expect(fooA).toEqual({ type: 'FOO', sameProp: 'A' });
+      expect(fooB).toEqual({
+        type: 'FOO',
+        sameProp: 'B',
+        extraProp: 'allowed',
+      });
+    });
+
     it('should be serializable', () => {
       const foo = createAction('FOO', props<{ foo: number }>());
       const fooAction = foo({ foo: 42 });
