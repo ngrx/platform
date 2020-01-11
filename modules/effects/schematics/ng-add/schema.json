@@ -51,7 +51,7 @@
     },
     "minimal": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description":
         "Setup root effects module without registering initial effects."
     }
