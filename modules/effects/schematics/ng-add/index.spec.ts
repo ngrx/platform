@@ -25,6 +25,7 @@ describe('Effects ng-add Schematic', () => {
     module: 'app',
     flat: false,
     group: false,
+    minimal: false,
   };
 
   const projectPath = getTestProjectPath();
