@@ -15,7 +15,7 @@ export function createAction<T extends string>(
 ): ActionCreator<T, () => TypedAction<T>>;
 export function createAction<T extends string, P extends object>(
   type: T,
-  config: Props<P>
+  config: Props<P> & NotAllowedCheck<P>
 ): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;
 export function createAction<
   T extends string,

@@ -39,7 +39,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{ type: number }>());
       `).toFail(
-        /Argument of type '"type property is not allowed in action creators"' is not assignable to parameter of type/
+        / Type 'Props<\{ type: number; \}>' is not assignable to type '"type property is not allowed in action creators"'/
       );
     });
 
@@ -47,7 +47,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<[]>());
       `).toFail(
-        /Argument of type '"arrays are not allowed in action creators"' is not assignable to parameter of type/
+        /Type 'Props<\[\]>' is not assignable to type '"arrays are not allowed in action creators"'/
       );
     });
   });
@@ -80,7 +80,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', (type: string) => ({type}));
       `).toFail(
-        /Type '{ type: string; }' is not assignable to type '"type property is not allowed in action creators"'/
+        /Type '\(type: string\) => \{ type: string; \}' is not assignable to type '"type property is not allowed in action creators"'/
       );
     });
 
@@ -88,7 +88,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', () => [ ]);
       `).toFail(
-        /Type 'any\[]' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type '\(\) => any\[\]' is not assignable to type '"arrays are not allowed in action creators"'/
       );
     });
   });
