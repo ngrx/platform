@@ -38,8 +38,8 @@ describe('Auth Guard', () => {
       ],
     });
 
-    store = TestBed.get&lt;Store&gt(Store);
-    guard = TestBed.get&lt;AuthGuard&gt;(AuthGuard);
+    store = TestBed.inject&lt;Store&gt(Store);
+    guard = TestBed.inject&lt;AuthGuard&gt;(AuthGuard);
   });
 
   it('should return false if the user state is not logged in', () => {

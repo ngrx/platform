@@ -261,7 +261,7 @@ TestBed.configureTestingModule({
   ],
 });
 
-effects = TestBed.get&lt;CustomersEffects&gt;(CustomersEffects);
+effects = TestBed.inject&lt;CustomersEffects&gt;(CustomersEffects);
 
 it('should not fetch if the user is already in the store', () => {
   actions$ = hot('-a--', {

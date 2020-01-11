@@ -19,7 +19,7 @@ describe('User Greeting Component', () => {
     });
 
     fixture = TestBed.createComponent(UserGreetingComponent);
-    mockStore = TestBed.get(Store);
+    mockStore = TestBed.inject(Store);
     mockUsernameSelector = mockStore.overrideSelector(fromAuth.getUsername, 'John');
     fixture.detectChanges();
   });
