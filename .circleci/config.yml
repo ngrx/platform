@@ -41,6 +41,7 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/.cache/Cypress
+            - ~/.cache/bazel
             - node_modules
 
   # Enforce some static analysis invariants.
@@ -98,6 +99,7 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/.cache/Cypress
+            - ~/.cache/bazel
             - node_modules
 
   schematics-core-check:
