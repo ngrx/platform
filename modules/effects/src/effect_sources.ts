@@ -48,9 +48,7 @@ export class EffectSources extends Subject<any> {
               onInitEffects in source$.key &&
               typeof source$.key[onInitEffects] === 'function'
             ) {
-              this.store.dispatch(
-                source$.key[onInitEffects].bind(source$.key)()
-              );
+              this.store.dispatch(source$.key.ngrxOnInitEffects());
             }
           })
         );
