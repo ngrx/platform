@@ -8,6 +8,7 @@ import {
   groupBy,
   map,
   mergeMap,
+  tap,
 } from 'rxjs/operators';
 
 import {
@@ -31,13 +32,6 @@ export class EffectSources extends Subject<any> {
 
   addEffects(effectSourceInstance: any): void {
     this.next(effectSourceInstance);
-
-    if (
-      onInitEffects in effectSourceInstance &&
-      typeof effectSourceInstance[onInitEffects] === 'function'
-    ) {
-      this.store.dispatch(effectSourceInstance[onInitEffects]());
-    }
   }
 
   /**
@@ -46,7 +40,19 @@ export class EffectSources extends Subject<any> {
   toActions(): Observable<Action> {
     return this.pipe(
       groupBy(getSourceForInstance),
-      mergeMap(source$ => source$.pipe(groupBy(effectsInstance))),
+      mergeMap(source$ => {
+        return source$.pipe(
+          groupBy(effectsInstance),
+          tap(() => {
+            if (
+              onInitEffects in source$.key &&
+              typeof source$.key[onInitEffects] === 'function'
+            ) {
+              this.store.dispatch(source$.key.ngrxOnInitEffects());
+            }
+          })
+        );
+      }),
       mergeMap(source$ =>
         source$.pipe(
           exhaustMap(resolveEffectSource(this.errorHandler)),

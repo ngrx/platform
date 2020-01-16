@@ -1,8 +1,16 @@
 import { ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { cold, hot, getTestScheduler } from 'jasmine-marbles';
-import { concat, NEVER, Observable, of, throwError, timer } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import {
+  concat,
+  NEVER,
+  Observable,
+  of,
+  throwError,
+  timer,
+  Subject,
+} from 'rxjs';
+import { map, mapTo } from 'rxjs/operators';
 
 import {
   Effect,
@@ -10,8 +18,11 @@ import {
   OnIdentifyEffects,
   OnInitEffects,
   createEffect,
+  Actions,
 } from '../';
+import { EffectsRunner } from '../src/effects_runner';
 import { Store } from '@ngrx/store';
+import { ofType } from '../src';
 
 describe('EffectSources', () => {
   let mockErrorReporter: ErrorHandler;
@@ -21,6 +32,7 @@ describe('EffectSources', () => {
     TestBed.configureTestingModule({
       providers: [
         EffectSources,
+        EffectsRunner,
         {
           provide: Store,
           useValue: {
@@ -29,6 +41,9 @@ describe('EffectSources', () => {
         },
       ],
     });
+
+    const effectsRunner = TestBed.get(EffectsRunner);
+    effectsRunner.start();
 
     mockErrorReporter = TestBed.get(ErrorHandler);
     effectSources = TestBed.get(EffectSources);
@@ -51,13 +66,81 @@ describe('EffectSources', () => {
         return { type: '[EffectWithInitAction] Init' };
       }
     }
+    const store = TestBed.get(Store);
 
     effectSources.addEffects(new EffectWithInitAction());
 
-    const store = TestBed.get(Store);
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith({
       type: '[EffectWithInitAction] Init',
     });
+  });
+
+  it('should dispatch an action on ngrxOnInitEffects after being registered (class has effects)', () => {
+    class EffectWithInitActionAndEffects implements OnInitEffects {
+      effectOne = createEffect(() => {
+        return this.actions$.pipe(
+          ofType('Action 1'),
+          mapTo({ type: 'Action 1 Response' })
+        );
+      });
+      effectTwo = createEffect(() => {
+        return this.actions$.pipe(
+          ofType('Action 2'),
+          mapTo({ type: 'Action 2 Response' })
+        );
+      });
+
+      ngrxOnInitEffects() {
+        return { type: '[EffectWithInitAction] Init' };
+      }
+
+      constructor(private actions$: Actions) {}
+    }
+    const store = TestBed.get(Store);
+
+    effectSources.addEffects(new EffectWithInitActionAndEffects(new Subject()));
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith({
+      type: '[EffectWithInitAction] Init',
+    });
+  });
+
+  it('should only dispatch an action on ngrxOnInitEffects once after being registered', () => {
+    class EffectWithInitAction implements OnInitEffects {
+      ngrxOnInitEffects() {
+        return { type: '[EffectWithInitAction] Init' };
+      }
+    }
+    const store = TestBed.get(Store);
+
+    effectSources.addEffects(new EffectWithInitAction());
+    effectSources.addEffects(new EffectWithInitAction());
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('should dispatch an action on ngrxOnInitEffects multiple times after being registered with different identifiers', () => {
+    let id = 0;
+    class EffectWithInitAction implements OnInitEffects, OnIdentifyEffects {
+      effectId = '';
+      ngrxOnIdentifyEffects(): string {
+        return this.effectId;
+      }
+      ngrxOnInitEffects() {
+        return { type: '[EffectWithInitAction] Init' };
+      }
+      constructor() {
+        this.effectId = (id++).toString();
+      }
+    }
+    const store = TestBed.get(Store);
+
+    effectSources.addEffects(new EffectWithInitAction());
+    effectSources.addEffects(new EffectWithInitAction());
+
+    expect(store.dispatch).toHaveBeenCalledTimes(2);
   });
 
   describe('toActions() Operator', () => {
