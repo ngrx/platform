@@ -41,7 +41,7 @@ Group the data entity files within an `data` folder.
 
 Generate a spec file alongside the data entity files.
 
-- `--spec`
+- `--skipTest`
   - Type: `boolean`
   - Default: `false`
 
@@ -50,7 +50,7 @@ Generate a spec file alongside the data entity files.
 Generate a `User` data entity files with an associated spec file.
 
 ```sh
-ng generate data User --spec
+ng generate data User
 ```
 
 Generate a `User` data entity files within a nested folder

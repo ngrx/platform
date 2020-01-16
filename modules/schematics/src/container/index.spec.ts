@@ -22,7 +22,6 @@ describe('Container Schematic', () => {
     inlineTemplate: false,
     changeDetection: 'Default',
     style: 'css',
-    spec: true,
     module: undefined,
     export: false,
     prefix: 'app',
@@ -110,7 +109,7 @@ describe('Container Schematic', () => {
   });
 
   it('should update the component spec', async () => {
-    const options = { ...defaultOptions, spec: true, testDepth: 'unit' };
+    const options = { ...defaultOptions, testDepth: 'unit' };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();
@@ -123,7 +122,7 @@ describe('Container Schematic', () => {
   });
 
   it('should use the provideMockStore helper if unit', async () => {
-    const options = { ...defaultOptions, spec: true, testDepth: 'unit' };
+    const options = { ...defaultOptions, testDepth: 'unit' };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();
@@ -134,7 +133,7 @@ describe('Container Schematic', () => {
   });
 
   it('should inject Store correctly', async () => {
-    const options = { ...defaultOptions, spec: true };
+    const options = { ...defaultOptions };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();
@@ -145,7 +144,7 @@ describe('Container Schematic', () => {
   });
 
   it('should use StoreModule if integration test', async () => {
-    const options = { ...defaultOptions, spec: true };
+    const options = { ...defaultOptions };
     const tree = await schematicRunner
       .runSchematicAsync('container', options, appTree)
       .toPromise();

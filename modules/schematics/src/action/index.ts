@@ -32,9 +32,9 @@ export default function(options: ActionOptions): Rule {
     const templateSource = apply(
       url(options.creators ? './creator-files' : './files'),
       [
-        options.spec
-          ? noop()
-          : filter(path => !path.endsWith('.spec.ts.template')),
+        options.skipTests
+          ? filter(path => !path.endsWith('.spec.ts.template'))
+          : noop(),
         applyTemplates({
           ...stringUtils,
           'if-flat': (s: string) =>

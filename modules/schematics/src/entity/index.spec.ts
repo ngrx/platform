@@ -19,7 +19,6 @@ describe('Entity Schematic', () => {
   const defaultOptions: EntityOptions = {
     name: 'foo',
     project: 'bar',
-    spec: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -95,7 +94,6 @@ describe('Entity Schematic', () => {
   it('should create 4 files if spec is true', () => {
     const options = {
       ...defaultOptions,
-      spec: true,
     };
     const tree = schematicRunner.runSchematic('entity', options, appTree);
 
@@ -123,7 +121,7 @@ describe('Entity Schematic', () => {
   });
 
   it('should create all files of an entity within grouped and nested folders', () => {
-    const options = { ...defaultOptions, flat: false, group: true, spec: true };
+    const options = { ...defaultOptions, flat: false, group: true };
 
     const tree = schematicRunner.runSchematic('entity', options, appTree);
     const files = tree.files;
@@ -143,7 +141,7 @@ describe('Entity Schematic', () => {
   });
 
   it('should create all files of an entity within grouped folders if group is set', () => {
-    const options = { ...defaultOptions, group: true, spec: true };
+    const options = { ...defaultOptions, group: true };
 
     const tree = schematicRunner.runSchematic('entity', options, appTree);
     const files = tree.files;
@@ -167,7 +165,6 @@ describe('Entity Schematic', () => {
       ...defaultOptions,
       name: 'user',
       reducers: 'reducers/index.ts',
-      spec: true,
     };
 
     const reducerTree = schematicRunner.runSchematic('store', options, appTree);

@@ -21,7 +21,6 @@ describe('Effect Schematic', () => {
   const defaultOptions: EffectOptions = {
     name: 'foo',
     project: 'bar',
-    spec: true,
     module: undefined,
     flat: false,
     feature: false,
@@ -104,8 +103,8 @@ describe('Effect Schematic', () => {
     expect(thrownError).toBeDefined();
   });
 
-  it('should respect the spec flag', () => {
-    const options = { ...defaultOptions, spec: false };
+  it('should respect the skipTest flag', () => {
+    const options = { ...defaultOptions, skipTest: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
     const files = tree.files;
@@ -241,7 +240,12 @@ describe('Effect Schematic', () => {
   });
 
   it('should group within an "effects" folder if group is set', () => {
-    const options = { ...defaultOptions, flat: true, spec: false, group: true };
+    const options = {
+      ...defaultOptions,
+      flat: true,
+      skipTest: true,
+      group: true,
+    };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
     const files = tree.files;
@@ -253,7 +257,7 @@ describe('Effect Schematic', () => {
   it('should group and nest the effect within a feature', () => {
     const options = {
       ...defaultOptions,
-      spec: false,
+      skipTest: true,
       group: true,
       flat: false,
       feature: true,
@@ -405,7 +409,7 @@ describe('Effect Schematic', () => {
   });
 
   it('should inject the effect service correctly', async () => {
-    const options = { ...defaultOptions, spec: true };
+    const options = { ...defaultOptions };
     const tree = await schematicRunner
       .runSchematicAsync('effect', options, appTree)
       .toPromise();

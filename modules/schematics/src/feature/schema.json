@@ -34,10 +34,10 @@
       "description": "Specifies the declaring module.",
       "aliases": ["m"]
     },
-    "spec": {
+    "skipTest": {
       "type": "boolean",
-      "default": true,
-      "description": "Specifies if a spec file is generated."
+      "default": false,
+      "description": "When true, does not create test files."
     },
     "reducers": {
       "type": "string",

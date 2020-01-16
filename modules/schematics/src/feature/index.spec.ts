@@ -20,7 +20,6 @@ describe('Feature Schematic', () => {
     name: 'foo',
     project: 'bar',
     module: '',
-    spec: true,
     group: false,
   };
 

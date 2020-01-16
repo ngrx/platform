@@ -18,7 +18,6 @@ describe('Selector Schematic', () => {
   const defaultOptions: SelectorOptions = {
     name: 'foo',
     project: 'bar',
-    spec: true,
   };
 
   const projectPath = getTestProjectPath();
@@ -62,7 +61,7 @@ describe('Selector Schematic', () => {
   it('should not create a spec file if spec is false', () => {
     const options = {
       ...defaultOptions,
-      spec: false,
+      skipTest: true,
     };
     const tree = schematicRunner.runSchematic('selector', options, appTree);
 

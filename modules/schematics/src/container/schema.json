@@ -61,10 +61,10 @@
       "type": "string",
       "default": "css"
     },
-    "spec": {
+    "skipTest": {
       "type": "boolean",
-      "description": "Specifies if a spec file is generated.",
-      "default": true
+      "description": "When true, does not create test files.",
+      "default": false
     },
     "flat": {
       "type": "boolean",

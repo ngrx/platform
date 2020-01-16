@@ -23,9 +23,9 @@
       "description": "The name of the project.",
       "aliases": ["p"]
     },
-    "spec": {
+    "skipTest": {
       "type": "boolean",
-      "description": "Specifies if a spec file is generated.",
+      "description": "When true, does not create test files.",
       "default": false
     },
     "flat": {

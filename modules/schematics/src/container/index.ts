@@ -140,9 +140,9 @@ export default function(options: ContainerOptions): Rule {
     const templateSource = apply(
       url(options.testDepth === 'unit' ? './files' : './integration-files'),
       [
-        options.spec
-          ? noop()
-          : filter(path => !path.endsWith('.spec.ts.template')),
+        options.skipTest
+          ? filter(path => !path.endsWith('.spec.ts.template'))
+          : noop(),
         applyTemplates({
           'if-flat': (s: string) => (options.flat ? '' : s),
           ...stringUtils,
@@ -155,7 +155,7 @@ export default function(options: ContainerOptions): Rule {
     return chain([
       externalSchematic('@schematics/angular', 'component', {
         ...opts,
-        skipTests: true,
+        skipTests: true
       }),
       addStateToComponent(options),
       mergeWith(templateSource),

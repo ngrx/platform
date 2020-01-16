@@ -24,10 +24,10 @@
       "description": "The name of the project.",
       "aliases": ["p"]
     },
-    "spec": {
+    "skipTest": {
       "type": "boolean",
-      "description": "Specifies if a spec file is generated.",
-      "default": true
+      "description": "When true, does not create test files.",
+      "default": false
     },
     "reducers": {
       "type": "string",
