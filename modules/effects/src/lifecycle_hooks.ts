@@ -37,6 +37,12 @@ export interface OnIdentifyEffects {
 export const onIdentifyEffectsKey: keyof OnIdentifyEffects =
   'ngrxOnIdentifyEffects';
 
+export function isOnIdentifyEffects(
+  instance: any
+): instance is OnIdentifyEffects {
+  return isFunction(instance, onIdentifyEffectsKey);
+}
+
 /**
  * @description
  * Interface to control the lifecycle of effects.
@@ -76,6 +82,10 @@ export interface OnRunEffects {
 
 export const onRunEffectsKey: keyof OnRunEffects = 'ngrxOnRunEffects';
 
+export function isOnRunEffects(instance: any): instance is OnRunEffects {
+  return isFunction(instance, onRunEffectsKey);
+}
+
 /**
  * @description
  * Interface to dispatch an action after effect registration.
@@ -105,3 +115,15 @@ export interface OnInitEffects {
 }
 
 export const onInitEffects: keyof OnInitEffects = 'ngrxOnInitEffects';
+
+export function isOnInitEffects(instance: any): instance is OnInitEffects {
+  return isFunction(instance, onInitEffects);
+}
+
+function isFunction(instance: any, functionName: string) {
+  return (
+    instance &&
+    functionName in instance &&
+    typeof instance[functionName] === 'function'
+  );
+}
