@@ -75,3 +75,4 @@ example-dist/
 *.tgz
 modules/*/schematics-core/testing
 !modules/schematics-core/testing
+projects/docs-app/src/generated

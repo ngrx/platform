@@ -1,0 +1,125 @@
+// TYPOGRAPHY
+$main-font: "Roboto","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+$code-font: "Droid Sans Mono", monospace;
+$bold-font-weight: 600;
+
+// Z-LAYER
+$layer-1: 1;
+$layer-2: 2;
+$layer-3: 3;
+$layer-4: 4;
+$layer-5: 5;
+
+// COLOR PALETTE
+$blue: #1976D2;
+$purple: #412846;
+$lightpurple: #84438a;
+$accentblue: #1E88E5;
+$brightred: #DD0031;
+$darkred: #C3002F;
+$white: #FFFFFF;
+$offwhite: #FAFAFA;
+$backgroundgray: #F1F1F1;
+$lightgray: #DBDBDB;
+$mist: #ECEFF1;
+$mediumgray: #6e6e6e;
+$darkgray: #333;
+$black: #0A1014;
+$orange: #FF9800;
+$darkorange: #940;
+$anti-pattern: $brightred;
+
+// API & CODE COLORS
+$amber-700: #FFA000;
+$purple-400: #42A5F5;
+$purple-500: #2196F3;
+$purple-600: #1E88E5;
+$purple-800: #1565C0;
+$purple-900: #0D47A1;
+$purple-grey-50: #ECEFF1;
+$purple-grey-100: #CFD8DC;
+$purple-grey-200: #B0BEC5;
+$purple-grey-300: #90A4AE;
+$purple-grey-400: #78909C;
+$purple-grey-500: #607D8B;
+$purple-grey-600: #546E7A;
+$purple-grey-700: #455A64;
+$purple-grey-800: #37474F;
+$purple-grey-900: #263238;
+$codegreen: #17ff0b;
+$green-500: #4CAF50;
+$green-800: #2E7D32;
+$light-green-600: #7CB342;
+$pink-600: #D81B60;
+$purple-600: #8E24AA;
+$teal-500: #009688;
+$lightgrey: #F5F6F7;
+
+// GRADIENTS
+$bluegradient: linear-gradient(145deg,#0D47A1,#42A5F5);
+$redgradient: linear-gradient(145deg,$darkred,$brightred);
+
+// API LABEL COLOR AND SYMBOLS MAP
+$api-symbols: (
+  all: (
+    content: ' ',
+    background: $white
+  ),
+  decorator: (
+    content: '@',
+    background: $purple-800
+  ),
+  directive: (
+    content: 'D',
+    background: $pink-600
+  ),
+  pipe: (
+    content: 'P',
+    background: $purple-grey-600
+  ),
+  class: (
+    content: 'C',
+    background: $purple-500
+  ),
+  interface: (
+    content: 'I',
+    background: $teal-500
+  ),
+  function: (
+    content: 'F',
+    background: $green-500
+  ),
+  enum: (
+    content: 'E',
+    background: $amber-700
+  ),
+  const: (
+    content: 'K',
+    background: $mediumgray
+  ),
+  let: (
+    content: 'K',
+    background: $mediumgray
+  ),
+  var: (
+    content: 'K',
+    background: $mediumgray
+  ),
+  ngmodule: (
+    content: 'M',
+    background: $darkorange
+  ),
+  type-alias: (
+    content: 'T',
+    background: $light-green-600
+  ),
+  package: (
+    content: 'Pk',
+    background: $purple-600
+  )
+);
+
+// OTHER
+$small-breakpoint-width: 840px;
+$phone-breakpoint: 480px;
+$tablet-breakpoint: 800px;

@@ -39,7 +39,8 @@
       "@ngrx/schematics/schematics-core": [
         "./modules/schematics/schematics-core"
       ],
-      "@example-app/*": ["./projects/example-app/src/app/*"]
+      "@example-app/*": ["./projects/example-app/src/app/*"],
+      "app/*": ["./projects/docs-app/src/app/*"]
     }
   },
   "exclude": [

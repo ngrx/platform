@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import './styles/ngrx-io-theme';
+@import './styles/main.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}

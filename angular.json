@@ -23,7 +23,17 @@
             "tsConfig": "projects/example-app/tsconfig.app.json",
             "assets": [
               "projects/example-app/src/favicon.ico",
-              "projects/example-app/src/assets"
+              "projects/example-app/src/assets",
+              {
+                "glob": "custom-elements.min.js",
+                "input": "node_modules/@webcomponents/custom-elements",
+                "output": "/assets/js"
+              },
+              {
+                "glob": "native-shim.js",
+                "input": "node_modules/@webcomponents/custom-elements/src",
+                "output": "/assets/js"
+              }
             ],
             "styles": ["projects/example-app/src/styles.css"],
             "scripts": []
@@ -95,6 +105,120 @@
               "projects/example-app/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "docs-app": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/docs-app",
+      "sourceRoot": "projects/docs-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/docs-app",
+            "index": "projects/docs-app/src/index.html",
+            "main": "projects/docs-app/src/main.ts",
+            "polyfills": "projects/docs-app/src/polyfills.ts",
+            "tsConfig": "projects/docs-app/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/docs-app/src/favicon.ico",
+              "projects/docs-app/src/assets",
+              "projects/docs-app/src/generated"
+            ],
+            "styles": ["projects/docs-app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace":
+                    "projects/docs-app/src/environments/environment.ts",
+                  "with":
+                    "projects/docs-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "docs-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "docs-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "docs-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/docs-app/src/test.ts",
+            "polyfills": "projects/docs-app/src/polyfills.ts",
+            "tsConfig": "projects/docs-app/tsconfig.spec.json",
+            "karmaConfig": "projects/docs-app/karma.conf.js",
+            "assets": [
+              "projects/docs-app/src/favicon.ico",
+              "projects/docs-app/src/assets"
+            ],
+            "styles": ["projects/docs-app/src/styles.css"],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/docs-app/tsconfig.app.json",
+              "projects/docs-app/tsconfig.spec.json",
+              "projects/docs-app/e2e/tsconfig.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/docs-app/e2e/protractor.conf.js",
+            "devServerTarget": "docs-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "docs-app:serve:production"
+            }
           }
         }
       }
