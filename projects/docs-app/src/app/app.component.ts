@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
    * An HTML friendly identifier for the currently displayed page.
    * This is computed from the `currentDocument.id` by replacing `/` with `-`
    */
-  pageId: string;
+  pageId: string = '';
   /**
    * An HTML friendly identifer for the "folder" of the currently displayed page.
    * This is computed by taking everything up to the first `/` in the `currentDocument.id`

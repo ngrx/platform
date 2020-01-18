@@ -24,7 +24,7 @@ export class DtComponent {
   @Input('doc') doc: DocumentContents;
   @Output() docChange = new EventEmitter<DocumentContents>();
 
-  @ViewChild('dt', { read: ElementRef })
+  @ViewChild('dt', { read: ElementRef, static: true })
   dt: ElementRef;
 
   get text() {

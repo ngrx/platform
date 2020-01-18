@@ -35,7 +35,8 @@ export class SearchBoxComponent implements OnInit {
   private searchDebounce = 300;
   private searchSubject = new Subject<string>();
 
-  @ViewChild('searchBox') searchBox: ElementRef;
+  @ViewChild('searchBox', { static: true })
+  searchBox: ElementRef;
   @Output()
   onSearch = this.searchSubject.pipe(
     distinctUntilChanged(),

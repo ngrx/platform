@@ -4,12 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-import {
-  Location,
-  LocationStrategy,
-  PathLocationStrategy,
-} from '@angular/common';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -47,6 +41,9 @@ import { SwUpdatesModule } from 'app/sw-updates/sw-updates.module';
 import { MarkdownModule } from 'ngx-markdown';
 
 import { environment } from '../environments/environment';
+import { RouterModule } from '@angular/router';
+import { EmptyComponent } from './pages/empty.component';
+import { EventsComponent } from './pages/events/events.component';
 
 // These are the hardcoded inline svg sources to be used by the `<mat-icon>` component.
 // tslint:disable: max-line-length
@@ -129,6 +126,24 @@ export const svgIconProviders = [
       enabled: environment.production,
     }),
     MarkdownModule.forRoot(),
+    RouterModule.forRoot(
+      [
+        {
+          path: 'events',
+          loadChildren: () =>
+            import('./pages/events/events.module').then(m => m.EventsModule),
+        },
+        {
+          path: 'resources',
+          loadChildren: () =>
+            import('./pages/resources/resources.module').then(
+              m => m.ResourcesModule
+            ),
+        },
+        { path: '**', component: EmptyComponent },
+      ],
+      { initialNavigation: true, enableTracing: false }
+    ),
   ],
   declarations: [
     AppComponent,
@@ -141,6 +156,7 @@ export const svgIconProviders = [
     SearchBoxComponent,
     NotificationComponent,
     TopMenuComponent,
+    EmptyComponent,
   ],
   providers: [
     Deployment,
@@ -148,8 +164,8 @@ export const svgIconProviders = [
     // { provide: ErrorHandler, useClass: ReportingErrorHandler },
     GaService,
     Logger,
-    Location,
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    // Location,
+    // { provide: LocationStrategy, useClass: PathLocationStrategy },
     LocationService,
     { provide: MatIconRegistry, useClass: CustomIconRegistry },
     NavigationService,

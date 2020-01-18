@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Location, PlatformLocation } from '@angular/common';
 
 import { ReplaySubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, filter } from 'rxjs/operators';
 
 import { GaService } from 'app/shared/ga.service';
 import { SwUpdatesService } from 'app/sw-updates/sw-updates.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Injectable()
 export class LocationService {
@@ -25,13 +26,23 @@ export class LocationService {
     private gaService: GaService,
     private location: Location,
     private platformLocation: PlatformLocation,
+    private router: Router,
     swUpdates: SwUpdatesService
   ) {
-    this.urlSubject.next(location.path(true));
+    // this.urlSubject.next(location.path(true));
 
-    this.location.subscribe(state => {
-      return this.urlSubject.next(state.url || '');
-    });
+    // this.location.subscribe(state => {
+    //   return this.urlSubject.next(state.url || '');
+    // });
+    this.router.events
+      .pipe(
+        // tap(console.log),
+        filter(e => e instanceof NavigationEnd),
+        tap(routerEvent => {
+          this.urlSubject.next((routerEvent as NavigationEnd).url);
+        })
+      )
+      .subscribe();
 
     swUpdates.updateActivated.subscribe(() => (this.swUpdateActivated = true));
     this.baseHref = platformLocation.getBaseHrefFromDOM();
@@ -48,8 +59,9 @@ export class LocationService {
       // (or do a "full page navigation" if a ServiceWorker update has been activated)
       this.goExternal(url);
     } else {
-      this.location.go(url);
-      this.urlSubject.next(url);
+      // this.location.go(url);
+      // this.urlSubject.next(url);
+      this.router.navigateByUrl(url);
     }
   }
 
@@ -66,41 +78,44 @@ export class LocationService {
   }
 
   search() {
-    const search: { [index: string]: string | undefined } = {};
-    const path = this.location.path();
-    const q = path.indexOf('?');
-    if (q > -1) {
-      try {
-        const params = path.substr(q + 1).split('&');
-        params.forEach(p => {
-          const pair = p.split('=');
-          if (pair[0]) {
-            search[decodeURIComponent(pair[0])] =
-              pair[1] && decodeURIComponent(pair[1]);
-          }
-        });
-      } catch (e) {
-        /* don't care */
-      }
-    }
-    return search;
+    // const search: { [index: string]: string | undefined } = {};
+    // const path = this.location.path();
+    // const q = path.indexOf('?');
+    // if (q > -1) {
+    //   try {
+    //     const params = path.substr(q + 1).split('&');
+    //     params.forEach(p => {
+    //       const pair = p.split('=');
+    //       if (pair[0]) {
+    //         search[decodeURIComponent(pair[0])] =
+    //         pair[1] && decodeURIComponent(pair[1]);
+    //       }
+    //     });
+    //   } catch (e) {
+    //     /* don't care */
+    //   }
+    // }
+    // return search;
+    return this.router.routerState.root.snapshot.queryParams;
   }
 
   setSearch(label: string, params: { [key: string]: string | undefined }) {
-    const search = Object.keys(params).reduce((acc, key) => {
-      const value = params[key];
-      return value === undefined
-        ? acc
-        : (acc +=
-            (acc ? '&' : '?') +
-            `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-    }, '');
+    // const search = Object.keys(params).reduce((acc, key) => {
+    //   const value = params[key];
+    //   return value === undefined
+    //     ? acc
+    //     : (acc +=
+    //         (acc ? '&' : '?') +
+    //         `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    // }, '');
 
-    this.platformLocation.replaceState(
-      {},
-      label,
-      this.platformLocation.pathname + search
-    );
+    this.router.navigateByUrl(this.router.url, { queryParams: params });
+
+    // this.platformLocation.replaceState(
+    //   {},
+    //   label,
+    //   this.platformLocation.pathname + search
+    // );
   }
 
   /**

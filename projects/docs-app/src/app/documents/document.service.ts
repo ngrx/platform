@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { AsyncSubject, Observable, of } from 'rxjs';
-import { catchError, switchMap, tap, map } from 'rxjs/operators';
+import { catchError, switchMap, tap, map, filter } from 'rxjs/operators';
 
 import { DocumentContents } from './document-contents';
 export { DocumentContents } from './document-contents';
@@ -52,17 +52,33 @@ export class DocumentService {
   private getDocument(url: string) {
     const id = url || 'index';
     this.logger.log('getting document', id);
-    // if ( !this.cache.has(id)) {
-    //   this.cache.set(id, this.fetchDocument(id));
-    // }
-    // return this.cache.get(id)!;
-    return this.fetchDocument(id);
+    if (!this.cache.has(id)) {
+      this.cache.set(id, this.fetchDocument(id));
+    }
+    return this.cache.get(id)!;
   }
 
   private fetchDocument(id: string): Observable<DocumentContents> {
-    const requestPath = `${
-      this.baseHref
-    }${DOC_CONTENT_URL_PREFIX}${id}/index.md`;
+    const indexMap = {
+      'guide/store': 'guide/store/index',
+      'guide/effects': 'guide/effects/index',
+      'guide/entity': 'guide/entity/index',
+      'guide/router-store': 'guide/router-store/index',
+      'guide/store-devtools': 'guide/store-devtools/index',
+      'guide/data': 'guide/data/index',
+      'guide/schematics': 'guide/schematics/index',
+    };
+    const placeholders = ['resources', 'events'];
+    const placeholder = placeholders.find(ph => ph === id);
+
+    let doc = id;
+    if (indexMap[id]) {
+      doc = indexMap[id];
+    } else if (placeholder) {
+      doc = 'placeholder';
+    }
+
+    const requestPath = `${this.baseHref}${DOC_CONTENT_URL_PREFIX}${doc}.md`;
     const subject = new AsyncSubject<DocumentContents>();
 
     this.logger.log('fetching document from', requestPath);
@@ -71,7 +87,7 @@ export class DocumentService {
       .pipe(
         map(data => {
           return {
-            id: new Date().getTime().toString(),
+            id,
             contents: this.markdownService.compile(data),
           };
         }),

@@ -11,6 +11,7 @@ import { EventOrderByPipe } from './event-order-by.pipe';
   declarations: [EventListComponent, EventDateRangePipe, EventOrderByPipe],
   entryComponents: [EventListComponent],
   providers: [EventService],
+  exports: [EventListComponent],
 })
 export class EventListModule implements WithCustomElementComponent {
   customElementComponent: Type<any> = EventListComponent;

@@ -19,5 +19,14 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2016", "dom"]
   },
-  "exclude": ["content", "tools", "aio-builds-setup", "node_modules", "scripts"]
+  "exclude": [
+    "content",
+    "tools",
+    "aio-builds-setup",
+    "node_modules",
+    "scripts"
+  ],
+  "angularCompilerOptions": {
+    "enableIvy": false
+  }
 }

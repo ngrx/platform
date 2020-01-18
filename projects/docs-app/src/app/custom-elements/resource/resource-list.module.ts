@@ -9,6 +9,7 @@ import { WithCustomElementComponent } from '../element-registry';
   declarations: [ResourceListComponent],
   entryComponents: [ResourceListComponent],
   providers: [ResourceService],
+  exports: [ResourceListComponent],
 })
 export class ResourceListModule implements WithCustomElementComponent {
   customElementComponent: Type<any> = ResourceListComponent;
