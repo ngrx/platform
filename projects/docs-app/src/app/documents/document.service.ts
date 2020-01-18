@@ -14,7 +14,7 @@ import { MarkdownService } from 'ngx-markdown';
 export const FILE_NOT_FOUND_ID = 'file-not-found';
 export const FETCHING_ERROR_ID = 'fetching-error';
 
-export const CONTENT_URL_PREFIX = 'generated/';
+export const CONTENT_URL_PREFIX = 'content/';
 export const DOC_CONTENT_URL_PREFIX = CONTENT_URL_PREFIX + 'docs/';
 const FETCHING_ERROR_CONTENTS = `
   <div class="nf-container l-flex-wrap flex-center">

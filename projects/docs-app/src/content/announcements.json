@@ -1,0 +1,10 @@
+[
+  {
+    "startDate": "2019-12-10",
+    "endDate": "2020-11-06",
+    "message":
+      "Join us for NgRx Conf, the Galaxy's First Reactive Angular Conference<br/>Nov 5th-6th, 2020",
+    "imageUrl": "generated/images/marketing/home/ngrx-conf-badge.svg",
+    "linkUrl": "https://conf.ngrx.io/"
+  }
+]

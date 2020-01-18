@@ -1,0 +1,128 @@
+[
+  {
+    "name": "NgColombia",
+    "url": "http://www.ngcolombia.com",
+    "location": "Medellín, Colombia",
+    "startDate": "2018-09-06",
+    "endDate": "2018-09-07"
+  },
+  {
+    "name": "DevFestATL",
+    "url": "http://devfestatl.com",
+    "location": "Atlanta, Georgia",
+    "endDate": "2018-09-22"
+  },
+  {
+    "name": "Framework Summit",
+    "url": "http://frameworksummit.com",
+    "location": "Park City, Utah",
+    "endDate": "2018-09-22"
+  },
+  {
+    "name": "DevFestATL",
+    "url": "http://devfestatl.com",
+    "location": "Atlanta, Georgia",
+    "startDate": "2018-10-02",
+    "endDate": "2018-10-03"
+  },
+  {
+    "name": "AngularMix",
+    "url": "http://www.angularmix.com",
+    "location": "Orlando, Florida",
+    "startDate": "2018-10-10",
+    "endDate": "2018-10-12"
+  },
+  {
+    "name": "AngularConnect",
+    "url": "https://www.angularconnect.com",
+    "location": "Excel, London",
+    "startDate": "2018-11-06",
+    "endDate": "2018-11-07"
+  },
+  {
+    "name": "ngAtlanta",
+    "url": "http://ng-atl.org/",
+    "location": "Atlanta, Georgia",
+    "startDate": "2019-01-09",
+    "endDate": "2019-01-12"
+  },
+  {
+    "name": "ng-India",
+    "url": "https://www.ng-ind.com",
+    "location": "Gurgaon, India",
+    "endDate": "2019-02-23"
+  },
+  {
+    "name": "Open Source 101",
+    "url": "https://opensource101.com/",
+    "location": "Columbia, South Carolina",
+    "endDate": "2019-04-18"
+  },
+  {
+    "name": "NG-Conf",
+    "url": "https://www.ng-conf.org",
+    "location": "Salt Lake City, Utah",
+    "startDate": "2019-05-01",
+    "endDate": "2019-05-03"
+  },
+  {
+    "name": "ngVikings",
+    "url": "https://ngvikings.org/",
+    "location": "Copenhagen, Denmark",
+    "startDate": "2019-05-26",
+    "endDate": "2019-05-28"
+  },
+  {
+    "name": "REFACTR.TECH",
+    "url": "https://refactr.tech/",
+    "location": "Atlanta, Georgia",
+    "startDate": "2019-06-05",
+    "endDate": "2019-06-07"
+  },
+  {
+    "name": "AngularUP",
+    "url": "https://angular-up.com/",
+    "location": "Tel Aviv, Israel",
+    "endDate": "2019-06-12"
+  },
+  {
+    "name": "Angular In Depth",
+    "url": "https://angular-in-depth.org/",
+    "location": "Kyiv, Ukraine",
+    "endDate": "2019-06-15"
+  },
+  {
+    "name": "NG-MY",
+    "url": "https://ng-my.org/",
+    "location": "Kuala Lumpur, Malaysia",
+    "startDate": "2019-07-06",
+    "endDate": "2019-07-07"
+  },
+  {
+    "name": "Angular Denver",
+    "url": "http://angulardenver.com/",
+    "location": "Denver, Colorado",
+    "startDate": "2019-08-01",
+    "endDate": "2019-08-02"
+  },
+  {
+    "name": "AngularConnect",
+    "url": "https://www.angularconnect.com/",
+    "location": "London, United Kingdom",
+    "startDate": "2019-09-19",
+    "endDate": "2019-09-20"
+  },
+  {
+    "name": "NG-Rome",
+    "url": "https://ngrome.io/",
+    "location": "Rome, Italy",
+    "endDate": "2019-10-07"
+  },
+  {
+    "name": "ngTalks",
+    "url": "https://ngtalks.io/",
+    "location": "Kharkiv, Ukraine",
+    "startDate": "2019-11-07",
+    "endDate": "2019-11-08"
+  }
+]

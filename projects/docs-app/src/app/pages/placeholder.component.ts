@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'docs-empty',
+  selector: 'docs-placeholder',
   template: '',
   styles: [],
 })
-export class EmptyComponent implements OnInit {
+export class PlaceholderComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}

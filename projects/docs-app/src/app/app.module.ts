@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -41,9 +42,7 @@ import { SwUpdatesModule } from 'app/sw-updates/sw-updates.module';
 import { MarkdownModule } from 'ngx-markdown';
 
 import { environment } from '../environments/environment';
-import { RouterModule } from '@angular/router';
-import { EmptyComponent } from './pages/empty.component';
-import { EventsComponent } from './pages/events/events.component';
+import { PlaceholderComponent } from './pages/placeholder.component';
 
 // These are the hardcoded inline svg sources to be used by the `<mat-icon>` component.
 // tslint:disable: max-line-length
@@ -140,9 +139,9 @@ export const svgIconProviders = [
               m => m.ResourcesModule
             ),
         },
-        { path: '**', component: EmptyComponent },
+        { path: '**', component: PlaceholderComponent },
       ],
-      { initialNavigation: true, enableTracing: false }
+      { enableTracing: false }
     ),
   ],
   declarations: [
@@ -156,7 +155,7 @@ export const svgIconProviders = [
     SearchBoxComponent,
     NotificationComponent,
     TopMenuComponent,
-    EmptyComponent,
+    PlaceholderComponent,
   ],
   providers: [
     Deployment,

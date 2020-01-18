@@ -128,7 +128,7 @@
             "assets": [
               "projects/docs-app/src/favicon.ico",
               "projects/docs-app/src/assets",
-              "projects/docs-app/src/generated"
+              "projects/docs-app/src/content"
             ],
             "styles": ["projects/docs-app/src/styles.scss"],
             "scripts": []
