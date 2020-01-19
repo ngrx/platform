@@ -130,8 +130,15 @@
               "projects/docs-app/src/assets",
               "projects/docs-app/src/content"
             ],
-            "styles": ["projects/docs-app/src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "projects/docs-app/src/styles.scss",
+              "node_modules/prism-themes/themes/prism-material-dark.css"
+            ],
+            "scripts": [
+              "node_modules/marked/lib/marked.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.min.js"
+            ]
           },
           "configurations": {
             "production": {

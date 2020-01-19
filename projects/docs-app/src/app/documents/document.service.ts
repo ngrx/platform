@@ -88,7 +88,7 @@ export class DocumentService {
         map(data => {
           return {
             id,
-            contents: this.markdownService.compile(data),
+            contents: data,
           };
         }),
         tap(data => {

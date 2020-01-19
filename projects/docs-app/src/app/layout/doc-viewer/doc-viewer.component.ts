@@ -19,6 +19,7 @@ import {
 import { Logger } from 'app/shared/logger.service';
 import { TocService } from 'app/shared/toc.service';
 import { ElementsLoader } from 'app/custom-elements/elements-loader';
+import { MarkdownService } from 'ngx-markdown';
 
 // Constants
 export const NO_ANIMATIONS = 'no-animations';
@@ -79,7 +80,8 @@ export class DocViewerComponent implements OnDestroy {
     private titleService: Title,
     private metaService: Meta,
     private tocService: TocService,
-    private elementsLoader: ElementsLoader
+    private elementsLoader: ElementsLoader,
+    private markdownService: MarkdownService
   ) {
     this.hostElement = elementRef.nativeElement;
     // Security: the initialDocViewerContent comes from the prerendered DOM and is considered to be secure
@@ -156,10 +158,13 @@ export class DocViewerComponent implements OnDestroy {
       doc.id === FILE_NOT_FOUND_ID || doc.id === FETCHING_ERROR_ID
     );
 
+    doc.contents = this.markdownService.compile(doc.contents || '');
+
     return this.void$.pipe(
       // Security: `doc.contents` is always authored by the documentation team
       //           and is considered to be safe.
       tap(() => (this.nextViewContainer.innerHTML = doc.contents || '')),
+      tap(() => this.markdownService.highlight(this.nextViewContainer)),
       tap(
         () =>
           (addTitleAndToc = this.prepareTitleAndToc(

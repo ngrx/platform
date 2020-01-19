@@ -29,40 +29,157 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 
-<code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
-</code-example>
+<!-- <code-example header="store/src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
+</code-example> -->
+
+<!-- embedme store/src/app/counter.actions.ts-->
+
+```ts
+import { createAction } from '@ngrx/store';
+
+export const increment = createAction('[Counter Component] Increment');
+export const decrement = createAction('[Counter Component] Decrement');
+export const reset = createAction('[Counter Component] Reset');
+```
 
 3.  Define a reducer function to handle changes in the counter value based on the provided actions.
 
-<code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
-</code-example>
+<!-- <code-example header="store/src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
+</code-example> -->
+<!-- embedme store/src/app/counter.reducer.ts -->
+
+```ts
+import { createReducer, on } from '@ngrx/store';
+import { increment, decrement, reset } from './counter.actions';
+
+export const initialState = 0;
+
+const _counterReducer = createReducer(
+  initialState,
+  on(increment, state => state + 1),
+  on(decrement, state => state - 1),
+  on(reset, state => 0)
+);
+
+export function counterReducer(state, action) {
+  return _counterReducer(state, action);
+}
+```
 
 4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file.
 
-<code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
-</code-example>
+<!-- <code-example header="store/src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
+</code-example> -->
+<!-- embedme store/src/app/app.module.ts -->
+
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter.reducer';
+import { MyCounterComponent } from './my-counter/my-counter.component';
+
+@NgModule({
+  declarations: [AppComponent, MyCounterComponent],
+  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
 
 5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
-</code-example>
+<!-- <code-example header="store/src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
+</code-example> -->
+<!-- embedme store/src/app/app.module.1.ts -->
+
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter.reducer';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
 
 6.  Create a new _Component_ named `my-counter` in the `app` folder. Inject the `Store` service into your component to dispatch the counter actions, and use the `select` operator to _select_ data from the state.
 
 Update the `MyCounterComponent` template with buttons to call the increment, decrement, and reset methods. Use the async pipe to subscribe to the _count$_ observable.
 
-<code-example header="src/app/my-counter/my-counter.component.html" path="store/src/app/my-counter/my-counter.component.html">
-</code-example>
+<!-- <code-example header="store/src/app/my-counter/my-counter.component.html" path="store/src/app/my-counter/my-counter.component.html">
+</code-example> -->
+<!-- embedme store/src/app/my-counter/my-counter.component.html -->
+
+```ts
+<button id="increment" (click)="increment()">Increment</button>
+
+<div>Current Count: {{ count$ | async }}</div>
+
+<button id="decrement" (click)="decrement()">Decrement</button>
+
+<button id="reset" (click)="reset()">Reset Counter</button>
+```
 
 Update the `MyCounterComponent` class with a selector for the _count_, and methods to dispatch the Increment, Decrement, and Reset actions.
 
-<code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
-</code-example>
+<!-- <code-example header="store/src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
+</code-example> -->
+<!-- embedme store/src/app/my-counter/my-counter.component.ts -->
+
+```ts
+import { Component } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { increment, decrement, reset } from '../counter.actions';
+
+@Component({
+  selector: 'app-my-counter',
+  templateUrl: './my-counter.component.html',
+  styleUrls: ['./my-counter.component.css'],
+})
+export class MyCounterComponent {
+  count$: Observable<number>;
+
+  constructor(private store: Store<{ count: number }>) {
+    this.count$ = store.pipe(select('count'));
+  }
+
+  increment() {
+    this.store.dispatch(increment());
+  }
+
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+
+  reset() {
+    this.store.dispatch(reset());
+  }
+}
+```
 
 7.  Add the `MyCounter` component to your `AppComponent` template.
 
-<code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
-</code-example>
+<!-- <code-example header="store/src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
+</code-example> -->
+<!-- embedme store/src/app/app.component.html#L3-L4 -->
+
+```html
+<app-my-counter></app-my-counter>
+```
 
 And that's it! Click the increment, decrement, and reset buttons to change the state of the counter.
 
