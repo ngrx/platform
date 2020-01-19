@@ -1,12 +1,6 @@
 import { Action } from '@ngrx/store';
 import { merge, Notification, Observable } from 'rxjs';
-import {
-  ignoreElements,
-  map,
-  materialize,
-  catchError,
-  tap,
-} from 'rxjs/operators';
+import { ignoreElements, map, materialize, catchError } from 'rxjs/operators';
 
 import { EffectNotification } from './effect_notification';
 import { getSourceMetadata } from './effects_metadata';
@@ -21,7 +15,7 @@ export type EffectsErrorHandler = <T extends Action>(
 export function mergeEffects(
   sourceInstance: any,
   globalErrorHandler: ErrorHandler,
-  effectsErrorHandler: EffectsErrorHandler = resubscribeInCaseOfError
+  effectsErrorHandler: EffectsErrorHandler
 ): Observable<EffectNotification> {
   const sourceName = getSourceForInstance(sourceInstance).constructor.name;
 
@@ -63,9 +57,9 @@ export function mergeEffects(
   return merge(...observables$);
 }
 
-function resubscribeInCaseOfError<T extends Action>(
+export function resubscribeInCaseOfError<T extends Action>(
   observable$: Observable<T>,
-  errorHandler?: ErrorHandler
+  errorHandler: ErrorHandler
 ): Observable<T> {
   return observable$.pipe(
     catchError(error => {

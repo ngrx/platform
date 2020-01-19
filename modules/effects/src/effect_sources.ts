@@ -1,4 +1,4 @@
-import { ErrorHandler, Inject, Injectable, Optional } from '@angular/core';
+import { ErrorHandler, Inject, Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Notification, Observable, Subject } from 'rxjs';
 import {
@@ -30,9 +30,8 @@ export class EffectSources extends Subject<any> {
   constructor(
     private errorHandler: ErrorHandler,
     private store: Store<any>,
-    @Optional()
     @Inject(EFFECTS_ERROR_HANDLER)
-    private effectsErrorHandler: EffectsErrorHandler | null
+    private effectsErrorHandler: EffectsErrorHandler
   ) {
     super();
   }
@@ -63,10 +62,7 @@ export class EffectSources extends Subject<any> {
       mergeMap(source$ =>
         source$.pipe(
           exhaustMap(
-            resolveEffectSource(
-              this.errorHandler,
-              this.effectsErrorHandler || undefined
-            )
+            resolveEffectSource(this.errorHandler, this.effectsErrorHandler)
           ),
           map(output => {
             reportInvalidActions(output, this.errorHandler);
@@ -96,7 +92,7 @@ function effectsInstance(sourceInstance: any) {
 
 function resolveEffectSource(
   errorHandler: ErrorHandler,
-  effectsErrorHandler?: EffectsErrorHandler
+  effectsErrorHandler: EffectsErrorHandler
 ): (sourceInstance: any) => Observable<EffectNotification> {
   return sourceInstance => {
     const mergedEffects$ = mergeEffects(

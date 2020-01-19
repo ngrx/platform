@@ -8,9 +8,15 @@ import {
 import { Actions } from './actions';
 import { EffectSources } from './effect_sources';
 import { EffectsFeatureModule } from './effects_feature_module';
+import { resubscribeInCaseOfError } from './effects_resolver';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
-import { _ROOT_EFFECTS_GUARD, FEATURE_EFFECTS, ROOT_EFFECTS } from './tokens';
+import {
+  _ROOT_EFFECTS_GUARD,
+  EFFECTS_ERROR_HANDLER,
+  FEATURE_EFFECTS,
+  ROOT_EFFECTS,
+} from './tokens';
 
 @NgModule({})
 export class EffectsModule {
@@ -41,6 +47,10 @@ export class EffectsModule {
           provide: _ROOT_EFFECTS_GUARD,
           useFactory: _provideForRootGuard,
           deps: [[EffectsRunner, new Optional(), new SkipSelf()]],
+        },
+        {
+          provide: EFFECTS_ERROR_HANDLER,
+          useValue: resubscribeInCaseOfError,
         },
         EffectsRunner,
         EffectSources,
