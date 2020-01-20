@@ -27,7 +27,7 @@ if (typeof afterEach === 'function') {
 }
 
 @Injectable()
-export class MockStore<T> extends Store<T> {
+export class MockStore<T = object> extends Store<T> {
   static selectors = new Map<
     | string
     | MemoizedSelector<any, any>
