@@ -15,10 +15,7 @@ import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 
 import { CoreModule } from '@example-app/core';
 import { AppRoutingModule } from '@example-app/app-routing.module';
-import {
-  UserEffects,
-  RouterEffects
-} from '@example-app/core/effects';
+import { UserEffects, RouterEffects } from '@example-app/core/effects';
 import { AppComponent } from '@example-app/core/containers';
 
 @NgModule({
@@ -50,9 +47,7 @@ import { AppComponent } from '@example-app/core/containers';
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
-    StoreRouterConnectingModule.forRoot({
-      routerState: RouterState.Minimal,
-    }),
+    StoreRouterConnectingModule.forRoot(),
 
     /**
      * Store devtools instrument the store retaining past versions of state
