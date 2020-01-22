@@ -48,7 +48,7 @@ You can create a custom reducer for an entity type and
 register it directly with `EntityCollectionReducerRegistry.registerReducer()`.
 
 You can register several custom reducers at the same time
-by calling `EntityCollectionReducerRegistry.registerReducer(reducerMap)` where
+by calling `EntityCollectionReducerRegistry.registerReducers(reducerMap)` where
 the `reducerMap` is a hash of reducers, keyed by _entity-type-name_.
 
 <a id="collection-reducer-factory"></a>
