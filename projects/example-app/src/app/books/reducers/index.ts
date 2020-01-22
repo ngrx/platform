@@ -103,7 +103,7 @@ export const selectSelectedBook = createSelector(
  */
 export const selectSearchState = createSelector(
   selectBooksState,
-  (state: BooksState) => state.search
+  state => state.search
 );
 
 export const selectSearchBookIds = createSelector(
@@ -139,7 +139,7 @@ export const selectSearchResults = createSelector(
 
 export const selectCollectionState = createSelector(
   selectBooksState,
-  (state: BooksState) => state.collection
+  state => state.collection
 );
 
 export const selectCollectionLoaded = createSelector(

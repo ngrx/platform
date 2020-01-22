@@ -69,7 +69,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
  * Layout Reducers
  */
 export const selectLayoutState = createFeatureSelector<State, fromLayout.State>(
-  'layout'
+  fromLayout.layoutFeatureKey
 );
 
 export const selecthowSidenav = createSelector(
