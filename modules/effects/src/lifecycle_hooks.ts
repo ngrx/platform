@@ -26,7 +26,7 @@ import { Action } from '@ngrx/store';
  *
  * ```
  */
-export interface OnIdentifyEffects {
+export declare interface OnIdentifyEffects {
   /**
    * @description
    * String identifier to differentiate effect instances.
@@ -70,7 +70,7 @@ export function isOnIdentifyEffects(
  * }
  * ```
  */
-export interface OnRunEffects {
+export declare interface OnRunEffects {
   /**
    * @description
    * Method to control the lifecycle of effects.
@@ -106,7 +106,7 @@ export function isOnRunEffects(instance: any): instance is OnRunEffects {
  *  }
  * ```
  */
-export interface OnInitEffects {
+export declare interface OnInitEffects {
   /**
    * @description
    * Action to be dispatched after the effect is registered.
