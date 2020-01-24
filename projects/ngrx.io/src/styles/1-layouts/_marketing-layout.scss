@@ -102,7 +102,7 @@ section#intro {
   .hero-sub-headline {
     font-size: 18px;
     line-height: 32px;
-  }  
+  }
 
   .hero-logo {
     display: flex;
@@ -275,14 +275,14 @@ section#intro {
 }
 
 aio-shell {
-  &.page-resources, &.page-events, &.page-features, &.page-presskit, &.page-contribute {
+  &.page-resources, &.page-events, &.page-features, &.page-contribute {
     section {
       padding: 0rem 0rem 3rem;
     }
   }
 
   &.page-home {
-    
+
     article {
       color: $white;
       background-color: $purple;
