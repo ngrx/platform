@@ -21,6 +21,9 @@ import {
   onRunEffectsKey,
   OnRunEffects,
   onInitEffects,
+  isOnIdentifyEffects,
+  isOnRunEffects,
+  isOnInitEffects,
 } from './lifecycle_hooks';
 import { getSourceForInstance } from './utils';
 
@@ -44,10 +47,7 @@ export class EffectSources extends Subject<any> {
         return source$.pipe(
           groupBy(effectsInstance),
           tap(() => {
-            if (
-              onInitEffects in source$.key &&
-              typeof source$.key[onInitEffects] === 'function'
-            ) {
+            if (isOnInitEffects(source$.key)) {
               this.store.dispatch(source$.key.ngrxOnInitEffects());
             }
           })
@@ -72,11 +72,8 @@ export class EffectSources extends Subject<any> {
 }
 
 function effectsInstance(sourceInstance: any) {
-  if (
-    onIdentifyEffectsKey in sourceInstance &&
-    typeof sourceInstance[onIdentifyEffectsKey] === 'function'
-  ) {
-    return sourceInstance[onIdentifyEffectsKey]();
+  if (isOnIdentifyEffects(sourceInstance)) {
+    return sourceInstance.ngrxOnIdentifyEffects();
   }
 
   return '';
@@ -88,20 +85,11 @@ function resolveEffectSource(
   return sourceInstance => {
     const mergedEffects$ = mergeEffects(sourceInstance, errorHandler);
 
-    if (isOnRunEffects(sourceInstance)) {
-      return sourceInstance.ngrxOnRunEffects(mergedEffects$);
+    const source = getSourceForInstance(sourceInstance);
+    if (isOnRunEffects(source)) {
+      return source.ngrxOnRunEffects(mergedEffects$);
     }
 
     return mergedEffects$;
   };
-}
-
-function isOnRunEffects(
-  sourceInstance: Partial<OnRunEffects>
-): sourceInstance is OnRunEffects {
-  const source = getSourceForInstance(sourceInstance);
-
-  return (
-    onRunEffectsKey in source && typeof source[onRunEffectsKey] === 'function'
-  );
 }
