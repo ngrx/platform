@@ -22,3 +22,7 @@ export {
   OnRunEffects,
   OnInitEffects,
 } from './lifecycle_hooks';
+export {
+  USER_PROVIDED_ROOT_EFFECTS,
+  USER_PROVIDED_FEATURE_EFFECTS,
+} from './tokens';
