@@ -27,6 +27,9 @@ export interface EntitySelectors$<T> {
   /** Name of the entity collection for these selectors$ */
   readonly entityName: string;
 
+  /** Names from custom selectors from additionalCollectionState fits here, 'any' to avoid conflict with entityName */
+  readonly [name: string]: Observable<any> | Store<any> | any;
+
   /** Observable of the collection as a whole */
   readonly collection$: Observable<EntityCollection> | Store<EntityCollection>;
 
