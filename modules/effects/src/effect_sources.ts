@@ -15,7 +15,8 @@ import {
   reportInvalidActions,
   EffectNotification,
 } from './effect_notification';
-import { mergeEffects, EffectsErrorHandler } from './effects_resolver';
+import { EffectsErrorHandler } from './effects_error_handler';
+import { mergeEffects } from './effects_resolver';
 import {
   onIdentifyEffectsKey,
   onRunEffectsKey,

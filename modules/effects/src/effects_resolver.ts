@@ -1,16 +1,12 @@
 import { Action } from '@ngrx/store';
 import { merge, Notification, Observable } from 'rxjs';
-import { ignoreElements, map, materialize, catchError } from 'rxjs/operators';
+import { ignoreElements, map, materialize } from 'rxjs/operators';
 
 import { EffectNotification } from './effect_notification';
 import { getSourceMetadata } from './effects_metadata';
+import { EffectsErrorHandler } from './effects_error_handler';
 import { getSourceForInstance } from './utils';
 import { ErrorHandler } from '@angular/core';
-
-export type EffectsErrorHandler = <T extends Action>(
-  observable$: Observable<T>,
-  errorHandler: ErrorHandler
-) => Observable<T>;
 
 export function mergeEffects(
   sourceInstance: any,
@@ -55,17 +51,4 @@ export function mergeEffects(
   );
 
   return merge(...observables$);
-}
-
-export function resubscribeInCaseOfError<T extends Action>(
-  observable$: Observable<T>,
-  errorHandler: ErrorHandler
-): Observable<T> {
-  return observable$.pipe(
-    catchError(error => {
-      if (errorHandler) errorHandler.handleError(error);
-      // Return observable that produces this particular effect
-      return resubscribeInCaseOfError(observable$, errorHandler);
-    })
-  );
 }

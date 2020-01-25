@@ -92,20 +92,21 @@ export class AuthEffects {
 </code-example>
 
 ### Customizing the Effects Error Handler
-Starting with version 9 the behavior of the default resubscription handler can be customized 
+
+The behavior of the default resubscription handler can be customized 
 by providing a custom handler using the `EFFECTS_ERROR_HANDLER` injection token.
 
-This will allow you to provide your own custom behavior such as only retrying on
-certain "retryable" errors, or retrying a set number of times etc.
+This allows you to provide a custom behavior, such as only retrying on
+certain "retryable" errors, or with maximum number of retries.
 
 <code-example header="customise-error-handler.effects.ts">
 ```ts
+import { Observable, throwError } from 'rxjs';
+import { retryWhen, mergeMap } from 'rxjs/operators';
+import { Action } from '@ngrx/store';
 import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
 import { MovieEffects } from './effects/movie.effects';
 import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
-import { Action } from '@ngrx/store';
-import { Observable, throwError } from 'rxjs';
-import { retryWhen, mergeMap } from 'rxjs/operators';
 
 export function effectResubscriptionHandler<T extends Action>(
   observable$: Observable<T>,
@@ -135,7 +136,7 @@ export function effectResubscriptionHandler<T extends Action>(
       useValue: effectResubscriptionHandler,
     },
     {
-      provide: ErrorHandle, 
+      provide: ErrorHandler, 
       useClass: CustomErrorHandler 
     }
   ],

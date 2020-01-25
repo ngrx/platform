@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { createEffect, EFFECTS_ERROR_HANDLER, EffectsModule } from '..';
 
-describe('NgRx Effects Error Handler spec', () => {
+describe('Effects Error Handler', () => {
   let subscriptionCount: number;
   let globalErrorHandler: jasmine.Spy;
   let storeNext: jasmine.Spy;

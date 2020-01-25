@@ -8,7 +8,7 @@ import {
 import { Actions } from './actions';
 import { EffectSources } from './effect_sources';
 import { EffectsFeatureModule } from './effects_feature_module';
-import { resubscribeInCaseOfError } from './effects_resolver';
+import { defaultEffectsErrorHandler } from './effects_error_handler';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
 import {
@@ -50,7 +50,7 @@ export class EffectsModule {
         },
         {
           provide: EFFECTS_ERROR_HANDLER,
-          useValue: resubscribeInCaseOfError,
+          useValue: defaultEffectsErrorHandler,
         },
         EffectsRunner,
         EffectSources,

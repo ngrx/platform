@@ -22,9 +22,9 @@ import {
   EffectsErrorHandler,
   Actions,
 } from '../';
+import { defaultEffectsErrorHandler } from '../src/effects_error_handler';
 import { EffectsRunner } from '../src/effects_runner';
 import { Store } from '@ngrx/store';
-import { resubscribeInCaseOfError } from '../src/effects_resolver';
 import { ofType } from '../src';
 
 describe('EffectSources', () => {
@@ -37,7 +37,7 @@ describe('EffectSources', () => {
       providers: [
         {
           provide: EFFECTS_ERROR_HANDLER,
-          useValue: resubscribeInCaseOfError,
+          useValue: defaultEffectsErrorHandler,
         },
         EffectSources,
         EffectsRunner,
