@@ -24,7 +24,7 @@ Usage:
 
 <code-example header="log.effects.ts">
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
@@ -64,7 +64,6 @@ import {
   LoginPageActions,
   AuthApiActions,
 } from '../actions';
-import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -100,18 +99,18 @@ This allows you to provide a custom behavior, such as only retrying on
 certain "retryable" errors, or with maximum number of retries.
 
 <code-example header="customise-error-handler.effects.ts">
-```ts
 import { Observable, throwError } from 'rxjs';
 import { retryWhen, mergeMap } from 'rxjs/operators';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
 import { MovieEffects } from './effects/movie.effects';
 import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
 
-export function effectResubscriptionHandler<T extends Action>(
-  observable$: Observable<T>,
+export function effectResubscriptionHandler&gt;T extends Action&lt;(
+  observable$: Observable&gt;T&lt;,
   errorHandler?: CustomErrorHandler
-): Observable<T> {
+): Observable&gt;T&lt; {
   return observable$.pipe(
     retryWhen(errors =>
       errors.pipe(
@@ -167,30 +166,29 @@ By default, effects are merged and subscribed to the store. Implement the `OnRun
 Usage:
 
 <code-example header="user.effects.ts">
+import { Observable } from 'rxjs';
+import { exhaustMap, takeUntil, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   Actions,
-  Effect,
   OnRunEffects,
   EffectNotification,
   ofType,
+  createEffect,
 } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { exhaustMap, takeUntil, tap } from 'rxjs/operators';
 
 @Injectable()
 export class UserEffects implements OnRunEffects {
   constructor(private actions$: Actions) {}
 
   updateUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType('UPDATE_USER'),
-      tap(action => {
-        console.log(action);
-      })
-    ),
-  { dispatch: false });
+      this.actions$.pipe(
+        ofType('UPDATE_USER'),
+        tap(action => {
+          console.log(action);
+        })
+      ),
+    { dispatch: false });
 
   ngrxOnRunEffects(resolvedEffects$: Observable&lt;EffectNotification&gt;) {
     return this.actions$.pipe(
