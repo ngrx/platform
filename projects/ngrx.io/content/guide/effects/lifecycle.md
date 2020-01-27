@@ -52,7 +52,7 @@ In some cases where particular RxJS operators are used, the new behavior might
 produce unexpected results. For example, if the `startWith` operator is within the
 effect's pipe then it will be triggered again.
 
-To disable resubscriptions add `{resubscribeOnError: false}` to the `createEffect`
+To disable resubscriptions add `{useEffectsErrorHandler: false}` to the `createEffect`
 metadata (second argument).
 
 <code-example header="disable-resubscribe.effects.ts">
@@ -81,7 +81,7 @@ export class AuthEffects {
         )
         // Errors are handled and it is safe to disable resubscription
       ),
-    { resubscribeOnError: false }
+    { useEffectsErrorHandler: false }
   );
 
   constructor(
@@ -89,6 +89,58 @@ export class AuthEffects {
     private authService: AuthService
   ) {}
 }
+</code-example>
+
+### Customizing the Effects Error Handler
+
+The behavior of the default resubscription handler can be customized 
+by providing a custom handler using the `EFFECTS_ERROR_HANDLER` injection token.
+
+This allows you to provide a custom behavior, such as only retrying on
+certain "retryable" errors, or with maximum number of retries.
+
+<code-example header="customise-error-handler.effects.ts">
+```ts
+import { Observable, throwError } from 'rxjs';
+import { retryWhen, mergeMap } from 'rxjs/operators';
+import { Action } from '@ngrx/store';
+import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
+import { MovieEffects } from './effects/movie.effects';
+import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
+
+export function effectResubscriptionHandler<T extends Action>(
+  observable$: Observable<T>,
+  errorHandler?: CustomErrorHandler
+): Observable<T> {
+  return observable$.pipe(
+    retryWhen(errors =>
+      errors.pipe(
+        mergeMap(e => {
+          if (isRetryable(e)) {
+            return errorHandler.handleRetryableError(e);
+          }
+
+          errorHandler.handleError(e);
+          return throwError(e);
+        })
+      )
+    )
+  );
+}
+
+@NgModule({
+  imports: [EffectsModule.forRoot([MovieEffects])],
+  providers: [
+    {
+      provide: EFFECTS_ERROR_HANDLER,
+      useValue: effectResubscriptionHandler,
+    },
+    {
+      provide: ErrorHandler, 
+      useClass: CustomErrorHandler 
+    }
+  ],
+})
 </code-example>
 
 ## Controlling Effects

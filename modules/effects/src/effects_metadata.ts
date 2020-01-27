@@ -6,9 +6,9 @@ export function getEffectsMetadata<T>(instance: T): EffectsMetadata<T> {
   return getSourceMetadata(instance).reduce(
     (
       acc: EffectsMetadata<T>,
-      { propertyName, dispatch, resubscribeOnError }
+      { propertyName, dispatch, useEffectsErrorHandler }
     ) => {
-      acc[propertyName] = { dispatch, resubscribeOnError };
+      acc[propertyName] = { dispatch, useEffectsErrorHandler };
       return acc;
     },
     {}

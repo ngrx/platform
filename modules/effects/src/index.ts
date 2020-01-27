@@ -3,6 +3,7 @@ export { EffectConfig } from './models';
 export { Effect } from './effect_decorator';
 export { getEffectsMetadata } from './effects_metadata';
 export { mergeEffects } from './effects_resolver';
+export { EffectsErrorHandler } from './effects_error_handler';
 export { EffectsMetadata, CreateEffectMetadata } from './models';
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';
@@ -14,6 +15,7 @@ export {
   rootEffectsInit,
   EffectsRootModule,
 } from './effects_root_module';
+export { EFFECTS_ERROR_HANDLER } from './tokens';
 export { act } from './act';
 export {
   OnIdentifyEffects,

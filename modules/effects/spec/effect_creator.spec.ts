@@ -52,30 +52,32 @@ describe('createEffect()', () => {
         a = createEffect(() => of({ type: 'a' }));
         b = createEffect(() => of({ type: 'b' }), { dispatch: true });
         c = createEffect(() => of({ type: 'c' }), { dispatch: false });
-        d = createEffect(() => of({ type: 'd' }), { resubscribeOnError: true });
+        d = createEffect(() => of({ type: 'd' }), {
+          useEffectsErrorHandler: true,
+        });
         e = createEffect(() => of({ type: 'd' }), {
-          resubscribeOnError: false,
+          useEffectsErrorHandler: false,
         });
         f = createEffect(() => of({ type: 'e' }), {
           dispatch: false,
-          resubscribeOnError: false,
+          useEffectsErrorHandler: false,
         });
         g = createEffect(() => of({ type: 'e' }), {
           dispatch: true,
-          resubscribeOnError: false,
+          useEffectsErrorHandler: false,
         });
       }
 
       const mock = new Fixture();
 
       expect(getCreateEffectMetadata(mock)).toEqual([
-        { propertyName: 'a', dispatch: true, resubscribeOnError: true },
-        { propertyName: 'b', dispatch: true, resubscribeOnError: true },
-        { propertyName: 'c', dispatch: false, resubscribeOnError: true },
-        { propertyName: 'd', dispatch: true, resubscribeOnError: true },
-        { propertyName: 'e', dispatch: true, resubscribeOnError: false },
-        { propertyName: 'f', dispatch: false, resubscribeOnError: false },
-        { propertyName: 'g', dispatch: true, resubscribeOnError: false },
+        { propertyName: 'a', dispatch: true, useEffectsErrorHandler: true },
+        { propertyName: 'b', dispatch: true, useEffectsErrorHandler: true },
+        { propertyName: 'c', dispatch: false, useEffectsErrorHandler: true },
+        { propertyName: 'd', dispatch: true, useEffectsErrorHandler: true },
+        { propertyName: 'e', dispatch: true, useEffectsErrorHandler: false },
+        { propertyName: 'f', dispatch: false, useEffectsErrorHandler: false },
+        { propertyName: 'g', dispatch: true, useEffectsErrorHandler: false },
       ]);
     });
 

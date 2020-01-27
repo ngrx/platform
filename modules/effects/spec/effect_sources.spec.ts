@@ -18,8 +18,11 @@ import {
   OnIdentifyEffects,
   OnInitEffects,
   createEffect,
+  EFFECTS_ERROR_HANDLER,
+  EffectsErrorHandler,
   Actions,
 } from '../';
+import { defaultEffectsErrorHandler } from '../src/effects_error_handler';
 import { EffectsRunner } from '../src/effects_runner';
 import { Store } from '@ngrx/store';
 import { ofType } from '../src';
@@ -27,10 +30,15 @@ import { ofType } from '../src';
 describe('EffectSources', () => {
   let mockErrorReporter: ErrorHandler;
   let effectSources: EffectSources;
+  let effectsErrorHandler: EffectsErrorHandler;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        {
+          provide: EFFECTS_ERROR_HANDLER,
+          useValue: defaultEffectsErrorHandler,
+        },
         EffectSources,
         EffectsRunner,
         {
@@ -47,6 +55,7 @@ describe('EffectSources', () => {
 
     mockErrorReporter = TestBed.get(ErrorHandler);
     effectSources = TestBed.get(EffectSources);
+    effectsErrorHandler = TestBed.get(EFFECTS_ERROR_HANDLER);
 
     spyOn(mockErrorReporter, 'handleError');
   });
@@ -144,6 +153,12 @@ describe('EffectSources', () => {
   });
 
   describe('toActions() Operator', () => {
+    function toActions(source: any): Observable<any> {
+      source['errorHandler'] = mockErrorReporter;
+      source['effectsErrorHandler'] = effectsErrorHandler;
+      return (effectSources as any)['toActions'].call(source);
+    }
+
     describe('with @Effect()', () => {
       const a = { type: 'From Source A' };
       const b = { type: 'From Source B' };
@@ -346,9 +361,9 @@ describe('EffectSources', () => {
         expect(toActions(sources$)).toBeObservable(expected);
       });
 
-      it('should not resubscribe on error when resubscribeOnError is false', () => {
+      it('should not resubscribe on error when useEffectsErrorHandler is false', () => {
         class Eff {
-          @Effect({ resubscribeOnError: false })
+          @Effect({ useEffectsErrorHandler: false })
           b$ = hot('a--b--c--d').pipe(
             map(v => {
               if (v == 'b') throw new Error('An Error');
@@ -387,11 +402,6 @@ describe('EffectSources', () => {
 
         expect(output).toBeObservable(expected);
       });
-
-      function toActions(source: any): Observable<any> {
-        source['errorHandler'] = mockErrorReporter;
-        return (effectSources as any)['toActions'].call(source);
-      }
     });
 
     describe('with createEffect()', () => {
@@ -635,7 +645,7 @@ describe('EffectSources', () => {
         expect(toActions(sources$)).toBeObservable(expected);
       });
 
-      it('should not resubscribe on error when resubscribeOnError is false', () => {
+      it('should not resubscribe on error when useEffectsErrorHandler is false', () => {
         const sources$ = of(
           new class {
             b$ = createEffect(
@@ -646,7 +656,7 @@ describe('EffectSources', () => {
                     return v;
                   })
                 ),
-              { dispatch: false, resubscribeOnError: false }
+              { dispatch: false, useEffectsErrorHandler: false }
             );
           }()
         );
@@ -678,11 +688,6 @@ describe('EffectSources', () => {
 
         expect(output).toBeObservable(expected);
       });
-
-      function toActions(source: any): Observable<any> {
-        source['errorHandler'] = mockErrorReporter;
-        return (effectSources as any)['toActions'].call(source);
-      }
     });
   });
 
