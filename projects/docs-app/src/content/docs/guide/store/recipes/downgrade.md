@@ -9,7 +9,7 @@ If you want to **dispatch** an action or **select** some slice of your store
 state, you will need to downgrade the Store service to use it in the AngularJS
 parts of your application.
 
-<code-example header="app.module.js">
+```ts
 import { Store, select } from '@ngrx/store';
 import { downgradeInjectable } from '@angular/upgrade/static';
 import { module as ngModule } from 'angular';
@@ -22,14 +22,14 @@ ngModule('appName').factory('ngrxStoreService', downgradeInjectable(Store));
 
 // AngularJS controller
 export default ngModule('appName').controller('AngularJSController', [
-'$scope',
-'$controller',
-'ngrxStoreService',
-function($scope, $controller, ngrxStoreService) {
-// ...
-ngrxStoreService.dispatch(new MyActionClass(myPayload));
-ngrxStoreService.pipe(select(mySelectorFunction)).subscribe(/*...*/);
-// ...
-},
+  '$scope',
+  '$controller',
+  'ngrxStoreService',
+  function($scope, $controller, ngrxStoreService) {
+    // ...
+    ngrxStoreService.dispatch(new MyActionClass(myPayload));
+    ngrxStoreService.pipe(select(mySelectorFunction)).subscribe(/*...*/);
+    // ...
+  },
 ]);
-</code-example>
+```

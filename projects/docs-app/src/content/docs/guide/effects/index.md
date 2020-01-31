@@ -23,13 +23,13 @@ In a service-based application, your components interact with data through many 
 
 Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
 
-<!-- <code-example header="movies-page.component.ts">
+```ts
 @Component({
   template: `
-    <li *ngFor="let movie of movies">
+    &lt;li *ngFor="let movie of movies"&gt;
       {{ movie.name }}
-    </li>
-  `
+    &lt;/li&gt;
+  `,
 })
 export class MoviesPageComponent {
   movies: Movie[];
@@ -37,25 +37,25 @@ export class MoviesPageComponent {
   constructor(private movieService: MoviesService) {}
 
   ngOnInit() {
-    this.movieService.getAll().subscribe(movies => this.movies = movies);
+    this.movieService.getAll().subscribe(movies => (this.movies = movies));
   }
 }
-</code-example> -->
+```
 
 You also have the corresponding service that handles the fetching of movies.
 
-<!-- <code-example header="movies.service.ts">
+```ts
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MoviesService {
-  constructor (private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get('/movies');
   }
 }
-</code-example> -->
+```
 
 The component has multiple responsibilities:
 
@@ -67,24 +67,24 @@ The component has multiple responsibilities:
 
 Effects handle external data and interactions, allowing your services to be less stateful and only perform tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
-<!-- <code-example header="movies-page.component.ts">
+```ts
 @Component({
   template: `
-    <div *ngFor="let movie of movies$ | async">
+    &lt;div *ngFor="let movie of movies$ | async"&gt;
       {{ movie.name }}
-    </div>
+    &lt;/div&gt;
   `
 })
 export class MoviesPageComponent {
-  movies$: Observable<Movie[]> = this.store.select(state => state.movies);
+  movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
 
-  constructor(private store: Store<{ movies: Movie[] }>) {}
+  constructor(private store: Store&lt;{ movies: Movie[] }&gt;) {}
 
   ngOnInit() {
     this.store.dispatch({ type: '[Movies Page] Load Movies' });
   }
 }
-</code-example> -->
+```
 
 The movies are still fetched through the `MoviesService`, but the component is no longer concerned with how the movies are fetched and loaded. It's only responsible for declaring its _intent_ to load movies and using selectors to access movie list data. Effects are where the asynchronous activity of fetching movies happens. Your component becomes easier to test and less responsible for the data it needs.
 
@@ -102,7 +102,7 @@ Effects are injectable service classes with distinct parts:
 
 To show how you handle loading movies from the example above, let's look at `MovieEffects`.
 
-<!-- <code-example header="movie.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
@@ -111,14 +111,18 @@ import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
-
-  loadMovies$ = createEffect(() => this.actions$.pipe(
-    ofType('[Movies Page] Load Movies'),
-    mergeMap(() => this.moviesService.getAll()
-      .pipe(
-        map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
-        catchError(() => EMPTY)
-      ))
+  loadMovies$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType('[Movies Page] Load Movies'),
+      mergeMap(() =>
+        this.moviesService.getAll().pipe(
+          map(movies => ({
+            type: '[Movies API] Movies Loaded Success',
+            payload: movies,
+          })),
+          catchError(() => EMPTY)
+        )
+      )
     )
   );
 
@@ -127,7 +131,7 @@ export class MovieEffects {
     private moviesService: MoviesService
   ) {}
 }
-</code-example> -->
+```
 
 The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `mergeMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. Its also important to [handle errors](#handling-errors) when dealing with observable streams so that the effects continue running.
 
@@ -148,7 +152,7 @@ you are looking for examples of effect decorators, visit the documentation for [
 
 Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
 
-<!-- <code-example header="movie.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -157,13 +161,15 @@ import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MovieEffects {
-
   loadMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
-      mergeMap(() => this.moviesService.getAll()
-        .pipe(
-          map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
+      mergeMap(() =>
+        this.moviesService.getAll().pipe(
+          map(movies => ({
+            type: '[Movies API] Movies Loaded Success',
+            payload: movies,
+          })),
           catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
       )
@@ -175,7 +181,7 @@ export class MovieEffects {
     private moviesService: MoviesService
   ) {}
 }
-</code-example> -->
+```
 
 The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. You still use the `catchError` operator to handle error events, but return an observable of a new action that is dispatched to the `Store`.
 
@@ -183,17 +189,15 @@ The `loadMovies$` effect returns a new observable in case an error occurs while 
 
 After you've written your Effects class, you must register it so the effects start running. To register root-level effects, add the `EffectsModule.forRoot()` method with an array of your effects to your `AppModule`.
 
-<!-- <code-example header="app.module.ts">
+```ts
 import { EffectsModule } from '@ngrx/effects';
 import { MovieEffects } from './effects/movie.effects';
 
 @NgModule({
-  imports: [
-    EffectsModule.forRoot([MovieEffects])
-  ],
+  imports: [EffectsModule.forRoot([MovieEffects])],
 })
 export class AppModule {}
-</code-example> -->
+```
 
 <div class="alert is-critical">
 
@@ -207,17 +211,15 @@ Effects start running immediately after the AppModule is loaded to ensure they a
 
 For feature modules, register your effects by adding the `EffectsModule.forFeature()` method in the `imports` array of your `NgModule`.
 
-<!-- <code-example header="admin.module.ts">
+```ts
 import { EffectsModule } from '@ngrx/effects';
 import { MovieEffects } from './effects/movie.effects';
 
 @NgModule({
-  imports: [
-    EffectsModule.forFeature([MovieEffects])
-  ],
+  imports: [EffectsModule.forFeature([MovieEffects])],
 })
 export class MovieModule {}
-</code-example> -->
+```
 
 <div class="alert is-important">
 
@@ -231,25 +233,22 @@ If additional metadata is needed to perform an effect besides the initiating act
 
 Let's look at an example of an action initiating a login request using an effect with additional passed metadata:
 
-<!-- <code-example header="login-page.actions.ts">
+```ts
 import { createAction, props } from '@ngrx/store';
 import { Credentials } from '../models/user';
 
 export const login = createAction(
   '[Login Page] Login',
-  props<{ credentials: Credentials }>()
+  props&lt;{ credentials: Credentials }&gt;()
 );
-</code-example> -->
+```
 
-<!-- <code-example header="auth.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
-import {
-  LoginPageActions,
-  AuthApiActions,
-} from '../actions';
+import { LoginPageActions, AuthApiActions } from '../actions';
 import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
@@ -267,12 +266,9 @@ export class AuthEffects {
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {}
+  constructor(private actions$: Actions, private authService: AuthService) {}
 }
-</code-example> -->
+```
 
 The `login` action has additional `credentials` metadata which is passed to a service to log the specific user into the application.
 
@@ -280,7 +276,7 @@ However, there may be cases when the required metadata is only accessible from s
 
 The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
 
-<!-- <code-example header="collection.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
@@ -311,10 +307,10 @@ export class CollectionEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromBooks.State>
+    private store: Store&lt;fromBooks.State&gt;
   ) {}
 }
-</code-example> -->
+```
 
 <div class="alert is-important">
 

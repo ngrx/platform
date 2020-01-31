@@ -1,13 +1,13 @@
 # Configuration Options
 
-<code-example header="RouterStore Config">
+```ts
 interface StoreRouterConfig {
-  stateKey?: string | Selector<any, RouterReducerState<T>>;
+  stateKey?: string | Selector&lt;any, RouterReducerState&lt;T&gt;&gt;;
   serializer?: new (...args: any[]) => RouterStateSerializer;
   navigationActionTiming?: NavigationActionTiming;
   routerState?: RouterState;
 }
-</code-example>
+```
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
 - `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer` (see [Default Router State Serializer](#default-router-state-serializer)). See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
@@ -36,19 +36,19 @@ You then provide the serializer through the config.
 
 **In a custom serializer ts file**
 
-<code-example header="custom-route-serializer.ts">
+```ts
 import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
-url: string;
-params: Params;
-queryParams: Params;
+  url: string;
+  params: Params;
+  queryParams: Params;
 }
 
-export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
-serialize(routerState: RouterStateSnapshot): RouterStateUrl {
-let route = routerState.root;
+export class CustomSerializer implements RouterStateSerializer&lt;RouterStateUrl&gt; {
+  serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+    let route = routerState.root;
 
     while (route.firstChild) {
       route = route.firstChild;
@@ -63,22 +63,21 @@ let route = routerState.root;
     // Only return an object including the URL, params and query params
     // instead of the entire snapshot
     return { url, params, queryParams };
-
+  }
 }
-}
-</code-example>
+```
 
 **In your root reducer**
 
-<code-example header="index.ts">
-export const reducers: ActionReducerMap<State> = {
+```ts
+export const reducers: ActionReducerMap&lt;State&gt; = {
   router: routerReducer
 };
-</code-example>
+```
 
 **In your AppModule**
 
-<code-example header="app.module.ts">
+```ts
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers),
@@ -86,22 +85,22 @@ export const reducers: ActionReducerMap<State> = {
       // routes
     ]),
     StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
-    })
-  ]
+      serializer: CustomSerializer,
+    }),
+  ],
 })
 export class AppModule {}
-</code-example>
+```
 
 ## Navigation action timing
 
 `ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:
 
-<code-example header="app.module.ts">
+```ts
 StoreRouterConnectingModule.forRoot({
   navigationActionTiming: NavigationActionTiming.PostActivation,
 });
-</code-example>
+```
 
 ## Router State Snapshot
 
@@ -113,11 +112,11 @@ When this property is set to `RouterState.Full`, `@ngrx/router-store` will use t
 
 The metadata on the action will contain the Angular router event, e.g. `NavigationStart` and `RoutesRecognized`.
 
-<code-example header="app.module.ts">
+```ts
 StoreRouterConnectingModule.forRoot({
   routerState: RouterState.Full,
 });
-</code-example>
+```
 
 ### RouterState.Minimal
 
@@ -125,8 +124,8 @@ StoreRouterConnectingModule.forRoot({
 
 The difference between `MinimalRouterStateSerializer` and the default `RouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
 
-<code-example header="app.module.ts">
+```ts
 StoreRouterConnectingModule.forRoot({
   routerState: RouterState.Minimal,
 });
-</code-example>
+```

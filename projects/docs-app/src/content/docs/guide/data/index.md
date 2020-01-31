@@ -49,22 +49,22 @@ Real world apps will benefit from a combination of techniques, all sharing a com
 
 A `EntityMetadataMap` tells NgRx Data about your entities. Add a property to the set for each entity name.
 
-<code-example header="entity-metadata.ts">
+```ts
 import { EntityMetadataMap } from '@ngrx/data';
 
 const entityMetadata: EntityMetadataMap = {
-Hero: {},
-Villain: {}
+  Hero: {},
+  Villain: {},
 };
 
 // because the plural of "hero" is not "heros"
 const pluralNames = { Hero: 'Heroes' };
 
 export const entityConfig = {
-entityMetadata,
-pluralNames
+  entityMetadata,
+  pluralNames,
 };
-</code-example>
+```
 
 Export the entity configuration to be used when registering it in your `AppModule`.
 
@@ -72,7 +72,7 @@ Export the entity configuration to be used when registering it in your `AppModul
 
 Once the entity configuration is created, you need to put it into the root store for NgRx. This is done by importing the `entityConfig` and then passing it to the `EntityDataModule.forRoot()` function.
 
-<code-example header="app.module.ts">
+```ts
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
@@ -81,21 +81,21 @@ import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
 @NgModule({
-imports: [
-HttpClientModule,
-StoreModule.forRoot({}),
-EffectsModule.forRoot([]),
-EntityDataModule.forRoot(entityConfig)
-]
+  imports: [
+    HttpClientModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    EntityDataModule.forRoot(entityConfig),
+  ],
 })
 export class AppModule {}
-</code-example>
+```
 
 ## Creating entity data services
 
 NgRx Data handles creating, retrieving, updating, and deleting data on your server by extending `EntityCollectionServiceBase` in your service class.
 
-<code-example header="hero.service.ts">
+```ts
 import { Injectable } from '@angular/core';
 import {
   EntityCollectionServiceBase,
@@ -104,58 +104,58 @@ import {
 import { Hero } from '../core';
 
 @Injectable({ providedIn: 'root' })
-export class HeroService extends EntityCollectionServiceBase<Hero> {
-constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-super('Hero', serviceElementsFactory);
+export class HeroService extends EntityCollectionServiceBase&lt;Hero&gt; {
+  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+    super('Hero', serviceElementsFactory);
+  }
 }
-}
-</code-example>
+```
 
 ## Using NgRx Data in components
 
 To access the entity data, components should inject entity data services.
 
-<code-example header="heroes.component.ts">
+```ts
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Hero } from '../../core';
 import { HeroService } from '../hero.service';
 
 @Component({
-selector: 'app-heroes',
-templateUrl: './heroes.component.html',
-styleUrls: ['./heroes.component.scss']
+  selector: 'app-heroes',
+  templateUrl: './heroes.component.html',
+  styleUrls: ['./heroes.component.scss']
 })
 export class HeroesComponent implements OnInit {
-loading$: Observable<boolean>;
-heroes$: Observable<Hero[]>;
+  loading$: Observable&lt;boolean&gt;;
+  heroes$: Observable&lt;Hero[]&gt;;
 
-constructor(private heroService: HeroService) {
-this.heroes$ = heroService.entities$;
-this.loading$ = heroService.loading$;
-}
+  constructor(private heroService: HeroService) {
+    this.heroes$ = heroService.entities$;
+    this.loading$ = heroService.loading$;
+  }
 
-ngOnInit() {
-this.getHeroes();
-}
+  ngOnInit() {
+    this.getHeroes();
+  }
 
-add(hero: Hero) {
-this.heroService.add(hero);
-}
+  add(hero: Hero) {
+    this.heroService.add(hero);
+  }
 
-delete(hero: Hero) {
-this.heroService.delete(hero.id);
-}
+  delete(hero: Hero) {
+    this.heroService.delete(hero.id);
+  }
 
-getHeroes() {
-this.heroService.getAll();
-}
+  getHeroes() {
+    this.heroService.getAll();
+  }
 
-update(hero: Hero) {
-this.heroService.update(hero);
+  update(hero: Hero) {
+    this.heroService.update(hero);
+  }
 }
-}
-</code-example>
+```
 
 In this example, you need to listen for the stream of heroes. The `heroes$` property references the `heroeService.entities$` Observable. When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
 

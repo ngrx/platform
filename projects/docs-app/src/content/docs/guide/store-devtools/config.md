@@ -67,7 +67,7 @@ features: {
 
 ## Example Object as provided in module imports
 
-<code-example header="app.module.ts">
+```ts
 @NgModule({
   ...
   imports: [
@@ -84,4 +84,4 @@ features: {
   ],
   ...
 })
-</code-example>
+```

@@ -86,19 +86,19 @@ described [below](#disable-change-tracking).
 
 A `changeState` map adheres to the following interface
 
-<code-example header="ChangeState" linenums="false">
-export interface ChangeState<T> {
+```ts
+export interface ChangeState&lt;T&gt; {
   changeType: ChangeType;
   originalValue: T | undefined;
 }
 
 export enum ChangeType {
-Unchanged, // the entity has not been changed.
-Added, // the entity was added to the collection
-Updated, // the entity in the collection was updated
-Deleted, // the entity is scheduled for delete and was removed from collection.
+  Unchanged, // the entity has not been changed.
+  Added,     // the entity was added to the collection
+  Updated,   // the entity in the collection was updated
+  Deleted,   // the entity is scheduled for delete and was removed from collection.
 }
-</code-example>
+```
 
 A _ChangeState_ describes an entity that changed since its last known server value.
 The `changeType` property tells you how it changed.
@@ -133,27 +133,27 @@ Delete (remove) is a special case with special rules.
 
 Here are the most important `EntityOps` that record an entity in the `changeState` map:
 
-<code-example linenums="false">
-  // Save operations when isOptimistic flag is true
-  SAVE_ADD_ONE
-  SAVE_ADD_MANY
-  SAVE_DELETE_ONE
-  SAVE_DELETE_MANY
-  SAVE_UPDATE_ONE
-  SAVE_UPDATE_MANY
-  SAVE_UPSERT_ONE
-  SAVE_UPSERT_MANY
+```ts
+// Save operations when isOptimistic flag is true
+SAVE_ADD_ONE;
+SAVE_ADD_MANY;
+SAVE_DELETE_ONE;
+SAVE_DELETE_MANY;
+SAVE_UPDATE_ONE;
+SAVE_UPDATE_MANY;
+SAVE_UPSERT_ONE;
+SAVE_UPSERT_MANY;
 
 // Cache operations
-ADD_ONE
-ADD_MANY
-REMOVE_ONE
-REMOVE_MANY
-UPDATE_ONE
-UPDATE_MANY
-UPSERT_ONE
-UPSERT_MANY
-</code-example>
+ADD_ONE;
+ADD_MANY;
+REMOVE_ONE;
+REMOVE_MANY;
+UPDATE_ONE;
+UPDATE_MANY;
+UPSERT_ONE;
+UPSERT_MANY;
+```
 
 ### Removing an entity from the _changeState_ map.
 
@@ -173,37 +173,37 @@ Operations that put that entity in the store also remove it from the `changeStat
 
 Here are the operations that remove one or more specified entities from the `changeState` map.
 
-<code-example linenums="false">
-QUERY_ALL_SUCCESS
-QUERY_BY_KEY_SUCCESS
-QUERY_LOAD_SUCCESS
-QUERY_MANY_SUCCESS
-SAVE_ADD_ONE_SUCCESS
-SAVE_ADD_MANY_SUCCESS
-SAVE_DELETE_ONE_SUCCESS
-SAVE_DELETE_MANY_SUCCESS
-SAVE_UPDATE_ONE_SUCCESS
-SAVE_UPDATE_MANY_SUCCESS
-SAVE_UPSERT_ONE_SUCCESS
-SAVE_UPSERT_MANY_SUCCESS
-COMMIT_ONE
-COMMIT_MANY
-UNDO_ONE
-UNDO_MANY
-</code-example>
+```ts
+QUERY_ALL_SUCCESS;
+QUERY_BY_KEY_SUCCESS;
+QUERY_LOAD_SUCCESS;
+QUERY_MANY_SUCCESS;
+SAVE_ADD_ONE_SUCCESS;
+SAVE_ADD_MANY_SUCCESS;
+SAVE_DELETE_ONE_SUCCESS;
+SAVE_DELETE_MANY_SUCCESS;
+SAVE_UPDATE_ONE_SUCCESS;
+SAVE_UPDATE_MANY_SUCCESS;
+SAVE_UPSERT_ONE_SUCCESS;
+SAVE_UPSERT_MANY_SUCCESS;
+COMMIT_ONE;
+COMMIT_MANY;
+UNDO_ONE;
+UNDO_MANY;
+```
 
 ### Operations that clear the _changeState_ map.
 
 The `EntityOps` that replace or remove every entity in the collection also reset the `changeState` to an empty object.
 All entities in the collection (if any) become "unchanged".
 
-<code-example linenums="false">
-ADD_ALL
-QUERY_LOAD_SUCCESS
-REMOVE_ALL
-COMMIT_ALL
-UNDO_ALL
-</code-example>
+```ts
+ADD_ALL;
+QUERY_LOAD_SUCCESS;
+REMOVE_ALL;
+COMMIT_ALL;
+UNDO_ALL;
+```
 
 Two of these may surprise you.
 

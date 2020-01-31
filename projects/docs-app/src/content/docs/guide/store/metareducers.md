@@ -10,27 +10,26 @@ Use the `metaReducers` configuration option to provide an array of meta-reducers
 
 ### Using a meta-reducer to log all actions
 
-<code-example header="app.module.ts">
+```ts
 import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { reducers } from './reducers';
 
 // console.log all actions
-export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
-return function(state, action) {
-console.log('state', state);
-console.log('action', action);
+export function debug(reducer: ActionReducer&lt;any&gt;): ActionReducer&lt;any&gt; {
+  return function(state, action) {
+    console.log('state', state);
+    console.log('action', action);
 
     return reducer(state, action);
-
-};
+  };
 }
 
-export const metaReducers: MetaReducer<any>[] = [debug];
+export const metaReducers: MetaReducer&lt;any&gt;[] = [debug];
 
 @NgModule({
-imports: [
-StoreModule.forRoot(reducers, { metaReducers })
-],
+  imports: [
+    StoreModule.forRoot(reducers, { metaReducers })
+  ],
 })
 export class AppModule {}
-</code-example>
+```

@@ -10,11 +10,11 @@ Actions are used in many areas of NgRx. Actions are the inputs and outputs of ma
 
 An `Action` in NgRx is made up of a simple interface:
 
-<code-example header="Action Interface">
+```ts
 interface Action {
   type: string;
 }
-</code-example>
+```
 
 The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event` and is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action.
 
@@ -52,25 +52,24 @@ Following these guidelines helps you follow how these actions flow throughout yo
 
 Let's look at an example action of initiating a login request.
 
-<code-example header="login-page.actions.ts">
+```ts
 import { createAction, props } from '@ngrx/store';
 
 export const login = createAction(
-'[Login Page] Login',
-props<{ username: string; password: string }>()
+  '[Login Page] Login',
+  props&lt;{ username: string; password: string }&gt;()
 );
-
-</code-example>
+```
 
 The `createAction` function returns a function, that when called returns an object in the shape of the `Action` interface. The `props` method is used to define any additional metadata needed for the handling of the action. Action creators provide a consistent, type-safe way to construct an action that is being dispatched.
 
 Use the action creator to return the `Action` when dispatching.
 
-<code-example header="login-page.component.ts">
+```ts
   onSubmit(username: string, password: string) {
     store.dispatch(login({ username: username, password: password }));
   }
-</code-example>
+```
 
 The `login` action creator receives an object of `username` and `password` and returns a plain JavaScript object with a `type` property of `[Login Page] Login`, with `username` and `password` as additional properties.
 

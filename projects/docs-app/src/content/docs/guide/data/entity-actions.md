@@ -14,28 +14,28 @@ It's optional `payload` carries the message data necessary to perform the operat
 An `EntityAction` is a super-set of the _NgRx `Action`_.
 It has additional properties that guide NgRx Data's handling of the action. Here's the full interface.
 
-<code-example header="EntityAction" linenums="false">
-export interface EntityAction<P = any> extends Action {
+```ts
+export interface EntityAction&lt;P = any&gt; extends Action {
   readonly type: string;
-  readonly payload: EntityActionPayload<P>;
+  readonly payload: EntityActionPayload&lt;P&gt;;
 }
-</code-example>
+```
 
-<code-example header="EntityActionPayload" linenums="false">
-export interface EntityActionPayload<P = any> extends EntityActionOptions {
+```ts
+export interface EntityActionPayload&lt;P = any&gt; extends EntityActionOptions {
   readonly entityName: string;
   readonly entityOp: EntityOp;
   readonly data?: P;
 
-// EntityActionOptions (also an interface)
-readonly correlationId?: any;
-readonly isOptimistic?: boolean;
-readonly mergeStrategy?: MergeStrategy;
-readonly tag?: string;
-error?: Error;
-skip?: boolean
+  // EntityActionOptions (also an interface)
+  readonly correlationId?: any;
+  readonly isOptimistic?: boolean;
+  readonly mergeStrategy?: MergeStrategy;
+  readonly tag?: string;
+  error?: Error;
+  skip?: boolean
 }
-</code-example>
+```
 
 - `type` - action name, typically generated from the `tag` and the `entityOp`.
 - `entityName` - the name of the entity type.

@@ -5,14 +5,14 @@
 After all the root effects have been added, the root effect dispatches a `ROOT_EFFECTS_INIT` action.
 You can see this action as a lifecycle hook, which you can use in order to execute some code after all your root effects have been added.
 
-<code-example header="init.effects.ts">
-init$ = createEffect(() => 
+```ts
+init$ = createEffect(() =>
   this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     map(action => ...)
   )
 );
-</code-example>
+```
 
 ## Effect Metadata
 
@@ -22,21 +22,21 @@ Sometimes you don't want effects to dispatch an action, for example when you onl
 
 Usage:
 
-<code-example header="log.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LogEffects {
-constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) {}
 
-logActions$ = createEffect(() =>
-this.actions$.pipe(
-tap(action => console.log(action))
-), { dispatch: false });
+  logActions$ = createEffect(
+    () => this.actions$.pipe(tap(action => console.log(action))),
+    { dispatch: false }
+  );
 }
-</code-example>
+```
 
 ### Resubscribe on Error
 
@@ -55,41 +55,35 @@ effect's pipe then it will be triggered again.
 To disable resubscriptions add `{resubscribeOnError: false}` to the `createEffect`
 metadata (second argument).
 
-<code-example header="disable-resubscribe.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
-import {
-  LoginPageActions,
-  AuthApiActions,
-} from '../actions';
+import { LoginPageActions, AuthApiActions } from '../actions';
 import { Credentials } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-logins$ = createEffect(
-() =>
-this.actions$.pipe(
-ofType(LoginPageActions.login),
-exhaustMap(action =>
-this.authService.login(action.credentials).pipe(
-map(user => AuthApiActions.loginSuccess({ user })),
-catchError(error => of(AuthApiActions.loginFailure({ error })))
-)
-)
-// Errors are handled and it is safe to disable resubscription
-),
-{ resubscribeOnError: false }
-);
+  logins$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(LoginPageActions.login),
+        exhaustMap(action =>
+          this.authService.login(action.credentials).pipe(
+            map(user => AuthApiActions.loginSuccess({ user })),
+            catchError(error => of(AuthApiActions.loginFailure({ error })))
+          )
+        )
+        // Errors are handled and it is safe to disable resubscription
+      ),
+    { resubscribeOnError: false }
+  );
 
-constructor(
-private actions$: Actions,
-private authService: AuthService
-) {}
+  constructor(private actions$: Actions, private authService: AuthService) {}
 }
-</code-example>
+```
 
 ## Controlling Effects
 
@@ -100,13 +94,13 @@ You can listen to this action in the rest of the application to execute somethin
 
 Usage:
 
-<code-example header="user.effects.ts">
+```ts
 class UserEffects implements OnInitEffects {
   ngrxOnInitEffects(): Action {
     return { type: '[UserEffects]: Init' };
   }
 }
-</code-example>
+```
 
 ### OnRunEffects
 
@@ -114,7 +108,7 @@ By default, effects are merged and subscribed to the store. Implement the `OnRun
 
 Usage:
 
-<code-example header="user.effects.ts">
+```ts
 import { Injectable } from '@angular/core';
 import {
   Actions,
@@ -129,29 +123,29 @@ import { exhaustMap, takeUntil, tap } from 'rxjs/operators';
 
 @Injectable()
 export class UserEffects implements OnRunEffects {
-constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) {}
 
-updateUser$ = createEffect(() =>
-this.actions$.pipe(
-ofType('UPDATE_USER'),
-tap(action => {
-console.log(action);
-})
-),
-{ dispatch: false });
+  updateUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType('UPDATE_USER'),
+      tap(action => {
+        console.log(action);
+      })
+    ),
+  { dispatch: false });
 
-ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
-return this.actions$.pipe(
-ofType('LOGGED_IN'),
-exhaustMap(() =>
-resolvedEffects$.pipe(
-takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))
-)
-)
-);
+  ngrxOnRunEffects(resolvedEffects$: Observable&lt;EffectNotification&gt;) {
+    return this.actions$.pipe(
+      ofType('LOGGED_IN'),
+      exhaustMap(() =>
+        resolvedEffects$.pipe(
+          takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))
+        )
+      )
+    );
+  }
 }
-}
-</code-example>
+```
 
 ### Identify Effects Uniquely
 
@@ -160,12 +154,12 @@ By implementing this interface, you define a unique identifier to register an Ef
 
 Usage:
 
-<code-example header="user.effects.ts">
+```ts
 class EffectWithIdentifier implements OnIdentifyEffects {
   constructor(private effectIdentifier: string) {}
 
-ngrxOnIdentifyEffects() {
-return this.effectIdentifier;
+  ngrxOnIdentifyEffects() {
+    return this.effectIdentifier;
+  }
 }
-}
-</code-example>
+```

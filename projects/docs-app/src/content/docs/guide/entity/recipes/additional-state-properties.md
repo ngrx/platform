@@ -8,65 +8,65 @@ Usage:
 
 Declare the `selectedUserId` as an additional property in the interface.
 
-<code-example header="user.reducer.ts">
+```ts
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface User {
-id: string;
-name: string;
+  id: string;
+  name: string;
 }
 
-export interface State extends EntityState<User> {
-// additional state property
-selectedUserId: number;
+export interface State extends EntityState&lt;User&gt; {
+  // additional state property
+  selectedUserId: number;
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
-</code-example>
+export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;();
+```
 
 Then create an action to update the `selectedUserId`
 
-<code-example header="user.actions.ts">
+```ts
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
-export const selectUser = createAction('[Users Page] Select User', props<{ userId: string }>());
-export const loadUsers = createAction('[User/API] Load Users', props<{ users: User[] }>());
-</code-example>
+export const selectUser = createAction('[Users Page] Select User', props&lt;{ userId: string }&gt;());
+export const loadUsers = createAction('[User/API] Load Users', props&lt;{ users: User[] }&gt;());
+```
 
 The entity adapter is only used to update the `EntityState` properties. The additional state properties should be updated same as normal state properties, as the example below.
 
-<code-example header="user.reducer.ts">
+```ts
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
 
-export interface State extends EntityState<User> {
-// additional state property
-selectedUserId: number | null;
+export interface State extends EntityState&lt;User&gt; {
+  // additional state property
+  selectedUserId: number | null;
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;();
 
 export const initialState: State = adapter.getInitialState({
-// additional entity state properties
-selectedUserId: null,
+  // additional entity state properties
+  selectedUserId: null,
 });
 
 export const userReducer = createReducer(
-initialState,
-on(UserActions.selectUser, (state, { userId }) => {
-return { ...state, selectedUserId: userId };
-}),
-on(UserActions.loadUsers, (state, { users }) => {
-return adapter.addMany(users, { ...state, selectedUserId: null });
-})
+  initialState,
+  on(UserActions.selectUser, (state, { userId }) => {
+    return { ...state, selectedUserId: userId };
+  }),
+  on(UserActions.loadUsers, (state, { users }) => {
+    return adapter.addMany(users, { ...state, selectedUserId: null });
+  })
 );
 
 export function reducer(state: State | undefined, action: Action) {
-return userReducer(state, action);
+  return userReducer(state, action);
 }
-</code-example>
+```

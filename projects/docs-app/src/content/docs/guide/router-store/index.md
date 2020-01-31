@@ -8,23 +8,23 @@ Detailed installation instructions can be found on the [Installation](guide/rout
 
 ## Setup
 
-<code-example header="app.module.ts">
+```ts
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
 
 @NgModule({
-imports: [
-BrowserModule,
-StoreModule.forRoot({
-router: routerReducer,
-}),
-RouterModule.forRoot([
-// routes
-]),
-// Connects RouterModule with StoreModule
-StoreRouterConnectingModule.forRoot(),
-],
-bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({
+      router: routerReducer,
+    }),
+    RouterModule.forRoot([
+      // routes
+    ]),
+    // Connects RouterModule with StoreModule
+    StoreRouterConnectingModule.forRoot(),
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
-</code-example>
+```

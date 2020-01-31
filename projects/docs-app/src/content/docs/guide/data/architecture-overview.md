@@ -11,7 +11,7 @@ The following diagram illustrates the journey of a persistence `EntityAction`
 such as `QUERY_ALL` for the `Hero` entity type.
 
 <figure>
-  <img src="generated/images/guide/data/action-flow.png" alt="flow diagram">
+  <img src="content/images/guide/data/action-flow.png" alt="flow diagram">
 </figure>
 
 1.  The view/component calls [`EntityCollectionService.getAll()`](guide/data/entity-services), which dispatches the hero's `QUERY_ALL` [EntityAction](guide/data/entity-actions) to the store.

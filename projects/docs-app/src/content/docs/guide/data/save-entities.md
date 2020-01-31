@@ -42,7 +42,7 @@ We assume a server is ready to handle such a request.
 
 First create the changes (each a `ChangeSetItem`) for the `ChangeSet`.
 
-<code-example linenums="false">
+```ts
 import { ChangeSetOperation } from '@ngrx/data';
 ...
 const changes: ChangeSetItem[] = [
@@ -57,7 +57,7 @@ const changes: ChangeSetItem[] = [
     entities: [2, 3] // delete by their ids
   }
 ];
-</code-example>
+```
 
 The `changeSetItemFactory` makes it easier to write these changes.
 
@@ -123,24 +123,21 @@ This complicated dance is standard NgRx. Fortunately, all you have to know is th
 The `ChangeSet` interface is a simple structure with only one critical property,
 `changes`, which holds the entity data to save.
 
-<code-example header="ChangeSet" linenums="false">
+```ts
+export interface ChangeSet&lt;T = any&gt; {
+  /** An array of ChangeSetItems to be processed in the array order */
+  changes: ChangeSetItem[];
 
-export interface ChangeSet<T = any> {
-/\*_ An array of ChangeSetItems to be processed in the array order _/
-changes: ChangeSetItem[];
-
-/\*\*
-
-- An arbitrary, serializable object that should travel with the ChangeSet.
-- Meaningful to the ChangeSet producer and consumer. Ignored by NgRx Data.
-  \*/
+  /**
+   * An arbitrary, serializable object that should travel with the ChangeSet.
+   * Meaningful to the ChangeSet producer and consumer. Ignored by NgRx Data.
+   */
   extras?: T;
 
-/\*_ An arbitrary string, identifying the ChangeSet and perhaps its purpose _/
-tag?: string;
+  /** An arbitrary string, identifying the ChangeSet and perhaps its purpose */
+  tag?: string;
 }
-
-</code-example>
+```
 
 At the heart of it is `changes`, an array of `ChangeSetItems` that describes a change operation to be performed with one or more entities of a particular type.
 
@@ -153,14 +150,14 @@ For example,
 
 There are four `ChangeSetOperations`
 
-<code-example header="ChangeSetOperation">
+```ts
 export enum ChangeSetOperation {
   Add = 'Add',
   Delete = 'Delete',
   Update = 'Update',
-  Upsert = 'Upsert'
+  Upsert = 'Upsert',
 }
-</code-example>
+```
 
 <div class="alert is-helpful">
 
@@ -170,13 +167,13 @@ export enum ChangeSetOperation {
 
 Each kind of `ChangeSetItem` follows a pattern similar to `ChangeSetAdd`.
 
-<code-example header="ChangeSetAdd">
-export interface ChangeSetAdd<T = any> {
+```ts
+export interface ChangeSetAdd&lt;T = any&gt; {
   op: ChangeSetOperation.Add;
   entityName: string;
   entities: T[];
 }
-</code-example>
+```
 
 The `ChangeSetItem` flavors all have `op`, `entityName` and `entities` properties.
 They differ substantively only in the nature of the `entities` array which corresponds to the change operation:

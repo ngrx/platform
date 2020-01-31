@@ -19,15 +19,17 @@ and the associated reducer function.
 
 First, define some actions for interacting with a piece of state.
 
-<code-example header="scoreboard-page.actions.ts">
+```ts
 import { createAction, props } from '@ngrx/store';
 
 export const homeScore = createAction('[Scoreboard Page] Home Score');
 export const awayScore = createAction('[Scoreboard Page] Away Score');
 export const resetScore = createAction('[Scoreboard Page] Score Reset');
-export const setScores = createAction('[Scoreboard Page] Set Scores', props<{game: Game}>());
-
-</code-example>
+export const setScores = createAction(
+  '[Scoreboard Page] Set Scores',
+  props<{ game: Game }>()
+);
+```
 
 Next, create a reducer file that imports the actions and define
 a shape for the piece of state.
@@ -36,15 +38,15 @@ a shape for the piece of state.
 
 Each reducer function is a listener of actions. The scoreboard actions defined above describe the possible transitions handled by the reducer. Import multiple sets of actions to handle additional state transitions within a reducer.
 
-<code-example header="scoreboard.reducer.ts">
+```ts
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ScoreboardPageActions from '../actions/scoreboard-page.actions';
 
 export interface State {
-home: number;
-away: number;
+  home: number;
+  away: number;
 }
-</code-example>
+```
 
 You define the shape of the state according to what you are capturing, whether it be a single type such as a number, or a more complex object with multiple properties.
 
@@ -55,12 +57,12 @@ The initial state gives the state an initial value, or provides a value if the c
 Create and export a variable to capture the initial state with one or
 more default values.
 
-<code-example header="scoreboard.reducer.ts">
+```ts
 export const initialState: State = {
   home: 0,
   away: 0,
 };
-</code-example>
+```
 
 The initial values for the `home` and `away` properties of the state are 0.
 
@@ -68,19 +70,28 @@ The initial values for the `home` and `away` properties of the state are 0.
 
 The reducer function's responsibility is to handle the state transitions in an immutable way. Create a reducer function that handles the actions for managing the state of the scoreboard using the `createReducer` function.
 
-<code-example header="scoreboard.reducer.ts">
+```ts
 const scoreboardReducer = createReducer(
   initialState,
-  on(ScoreboardPageActions.homeScore, state => ({ ...state, home: state.home + 1 })),
-  on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
+  on(ScoreboardPageActions.homeScore, state => ({
+    ...state,
+    home: state.home + 1,
+  })),
+  on(ScoreboardPageActions.awayScore, state => ({
+    ...state,
+    away: state.away + 1,
+  })),
   on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 })),
-  on(ScoreboardPageActions.setScores, (state, { game }) => ({ home: game.home, away: game.away }))
+  on(ScoreboardPageActions.setScores, (state, { game }) => ({
+    home: game.home,
+    away: game.away,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {
-return scoreboardReducer(state, action);
+  return scoreboardReducer(state, action);
 }
-</code-example>
+```
 
 <div class="alert is-important">
 
@@ -108,18 +119,16 @@ When an action is dispatched, _all registered reducers_ receive the action. Whet
 
 The state of your application is defined as one large object. Registering reducer functions to manage parts of your state only defines keys with associated values in the object. To register the global `Store` within your application, use the `StoreModule.forRoot()` method with a map of key/value pairs that define your state. The `StoreModule.forRoot()` registers the global providers for your application, including the `Store` service you inject into your components and services to dispatch actions and select pieces of state.
 
-<code-example header="app.module.ts">
+```ts
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import * as fromScoreboard from './reducers/scoreboard.reducer';
 
 @NgModule({
-imports: [
-StoreModule.forRoot({ game: fromScoreboard.reducer })
-],
+  imports: [StoreModule.forRoot({ game: fromScoreboard.reducer })],
 })
 export class AppModule {}
-</code-example>
+```
 
 Registering states with `StoreModule.forRoot()` ensures that the states are defined upon application startup. In general, you register root states that always need to be available to all areas of your application immediately.
 
@@ -129,17 +138,15 @@ Feature states behave in the same way root states do, but allow you to define th
 
 Looking at an example state object, you see how a feature state allows your state to be built up incrementally. Let's start with an empty state object.
 
-<code-example header="app.module.ts">
+```ts
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
-imports: [
-StoreModule.forRoot({})
-],
+  imports: [StoreModule.forRoot({})],
 })
 export class AppModule {}
-</code-example>
+```
 
 This registers your application with an empty object for the root state.
 
@@ -149,22 +156,25 @@ This registers your application with an empty object for the root state.
 
 Now use the `scoreboard` reducer with a feature `NgModule` named `ScoreboardModule` to register additional state.
 
-<code-example header="scoreboard.reducer.ts">
+```ts
 export const scoreboardFeatureKey = 'game';
-</code-example>
+```
 
-<code-example header="scoreboard.module.ts">
+```ts
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import * as fromScoreboard from './reducers/scoreboard.reducer';
 
 @NgModule({
-imports: [
-StoreModule.forFeature(fromScoreboard.scoreboardFeatureKey, fromScoreboard.reducer)
-],
+  imports: [
+    StoreModule.forFeature(
+      fromScoreboard.scoreboardFeatureKey,
+      fromScoreboard.reducer
+    ),
+  ],
 })
 export class ScoreboardModule {}
-</code-example>
+```
 
 <div class="alert is-important">
 
@@ -174,19 +184,16 @@ export class ScoreboardModule {}
 
 Add the `ScoreboardModule` to the `AppModule` to load the state eagerly.
 
-<code-example header="app.module.ts">
+```ts
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { ScoreboardModule } from './scoreboard/scoreboard.module';
 
 @NgModule({
-imports: [
-StoreModule.forRoot({}),
-ScoreboardModule
-],
+  imports: [StoreModule.forRoot({}), ScoreboardModule],
 })
 export class AppModule {}
-</code-example>
+```
 
 Once the `ScoreboardModule` is loaded, the `game` key becomes a property in the object and is now managed in the state.
 

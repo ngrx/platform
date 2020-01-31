@@ -12,12 +12,12 @@ You can specify metadata for several entities at the same time in an **`EntityMe
 Here is an example `EntityMetadataMap` similar to the one in the demo app
 that defines metadata for two entities, `Hero` and `Villain`.
 
-<code-example header="app-entity-metadata.ts">
+```ts
 export const appEntityMetadata: EntityMetadataMap = {
   Hero: {
     /* optional settings */
     filterFn: nameFilter,
-    sortComparer: sortByName
+    sortComparer: sortByName,
   },
   Villain: {
     villainSelectId, // necessary if key is not `id`
@@ -25,11 +25,10 @@ export const appEntityMetadata: EntityMetadataMap = {
     /* optional settings */
     entityName: 'Villain', // optional because same as map key
     filterFn: nameAndSayingFilter,
-    entityDispatcherOptions: { optimisticAdd: true, optimisticUpdate: true }
-
-}
+    entityDispatcherOptions: { optimisticAdd: true, optimisticUpdate: true },
+  },
 };
-</code-example>
+```
 
 ## Register metadata
 

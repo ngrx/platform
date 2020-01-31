@@ -159,7 +159,7 @@ To support this feature, we 'll create a `HeroDataService` class that implements
 In the sample app the `HeroDataService` derives from the NgRx Data `DefaultDataService<T>` in order to leverage its base functionality.
 It only overrides what it really needs.
 
-<code-example header="store/entity/hero-data-service.ts" linenums="false">
+```ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
@@ -175,29 +175,29 @@ import { map } from 'rxjs/operators';
 import { Hero } from '../../core';
 
 @Injectable()
-export class HeroDataService extends DefaultDataService<Hero> {
-constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator, logger: Logger) {
-super('Hero', http, httpUrlGenerator);
-logger.log('Created custom Hero EntityDataService');
-}
+export class HeroDataService extends DefaultDataService&lt;Hero&gt; {
+  constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator, logger: Logger) {
+    super('Hero', http, httpUrlGenerator);
+    logger.log('Created custom Hero EntityDataService');
+  }
 
-getAll(): Observable<Hero[]> {
-return super.getAll().pipe(map(heroes => heroes.map(hero => this.mapHero(hero))));
-}
+  getAll(): Observable&lt;Hero[]&gt; {
+    return super.getAll().pipe(map(heroes => heroes.map(hero => this.mapHero(hero))));
+  }
 
-getById(id: string | number): Observable<Hero> {
-return super.getById(id).pipe(map(hero => this.mapHero(hero)));
-}
+  getById(id: string | number): Observable&lt;Hero&gt; {
+    return super.getById(id).pipe(map(hero => this.mapHero(hero)));
+  }
 
-getWithQuery(params: string | QueryParams): Observable<Hero[]> {
-return super.getWithQuery(params).pipe(map(heroes => heroes.map(hero => this.mapHero(hero))));
-}
+  getWithQuery(params: string | QueryParams): Observable&lt;Hero[]&gt; {
+    return super.getWithQuery(params).pipe(map(heroes => heroes.map(hero => this.mapHero(hero))));
+  }
 
-private mapHero(hero: Hero): Hero {
-return { ...hero, dateLoaded: new Date() };
+  private mapHero(hero: Hero): Hero {
+    return { ...hero, dateLoaded: new Date() };
+  }
 }
-}
-</code-example>
+```
 
 This `HeroDataService` hooks into the _get_ operations to set the `Hero.dateLoaded` on fetched hero entities.
 It also tells the logger when it is created (see the console output of the running sample) .
@@ -206,24 +206,24 @@ Finally, we must tell NgRx Data about this new data service.
 
 The sample app provides `HeroDataService` and registers it by calling the `registerService()` method on the `EntityDataService` in the app's _entity store module_:
 
-<code-example header="store/entity-store.module.ts" linenums="false">
+```ts
 import { EntityDataService } from '@ngrx/data'; // <-- import the NgRx Data data service registry
 
 import { HeroDataService } from './hero-data-service';
 
 @NgModule({
-imports: [ ... ],
-providers: [ HeroDataService ] // <-- provide the data service
+  imports: [ ... ],
+  providers: [ HeroDataService ] // <-- provide the data service
 })
 export class EntityStoreModule {
-constructor(
-entityDataService: EntityDataService,
-heroDataService: HeroDataService,
-) {
-entityDataService.registerService('Hero', heroDataService); // <-- register it
+  constructor(
+    entityDataService: EntityDataService,
+    heroDataService: HeroDataService,
+  ) {
+    entityDataService.registerService('Hero', heroDataService); // <-- register it
+  }
 }
-}
-</code-example>
+```
 
 ### A custom _DataService_
 
