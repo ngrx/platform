@@ -37,7 +37,8 @@
     "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html",
     "publish:next": "ts-node ./build/publish-next.ts",
     "publish:latest": "ts-node ./build/publish-latest.ts",
-    "docs:embed": "embedme --source-root projects/ngrx.io/content/examples projects/docs-app/src/content/docs/**/*.md"
+    "docs:embed": "embedme --source-root projects/ngrx.io/content/examples projects/docs-app/src/content/docs/**/*.md",
+    "docs:generate-stackblitz": "node ./projects/docs-app/tools/stackblitz-builder/generateStackblitz"
   },
   "engines": {
     "node": ">=10.9.0 <=12.13.0",

@@ -175,10 +175,10 @@ export class AppComponent implements OnInit {
       )
     )
       .pipe(
-        filter(
-          ([versionInfo, _]) =>
-            versionInfo !== undefined && versionInfo !== null
-        )
+        filter(([versionInfo, _]) => {
+          console.log(versionInfo);
+          return versionInfo !== undefined && versionInfo !== null;
+        })
       )
       .subscribe(([versionInfo, versions]) => {
         // TODO(pbd): consider whether we can lookup the stable and next versions from the internet

@@ -487,5 +487,11 @@
       "title": "v4",
       "url": "https://github.com/ngrx/platform/tree/v4.1.1/docs"
     }
-  ]
+  ],
+  "__versionInfo": {
+    "major": 8,
+    "minor": 6,
+    "patch": 0,
+    "raw": "8.6.0"
+  }
 }

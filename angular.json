@@ -23,17 +23,7 @@
             "tsConfig": "projects/example-app/tsconfig.app.json",
             "assets": [
               "projects/example-app/src/favicon.ico",
-              "projects/example-app/src/assets",
-              {
-                "glob": "custom-elements.min.js",
-                "input": "node_modules/@webcomponents/custom-elements",
-                "output": "/assets/js"
-              },
-              {
-                "glob": "native-shim.js",
-                "input": "node_modules/@webcomponents/custom-elements/src",
-                "output": "/assets/js"
-              }
+              "projects/example-app/src/assets"
             ],
             "styles": ["projects/example-app/src/styles.css"],
             "scripts": []
@@ -128,7 +118,18 @@
             "assets": [
               "projects/docs-app/src/favicon.ico",
               "projects/docs-app/src/assets",
-              "projects/docs-app/src/content"
+              "projects/docs-app/src/content",
+              "projects/docs-app/src/pwa-manifest.json",
+              {
+                "glob": "custom-elements.min.js",
+                "input": "node_modules/@webcomponents/custom-elements",
+                "output": "/assets/js"
+              },
+              {
+                "glob": "native-shim.js",
+                "input": "node_modules/@webcomponents/custom-elements/src",
+                "output": "/assets/js"
+              }
             ],
             "styles": [
               "projects/docs-app/src/styles.scss",
@@ -170,6 +171,36 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "fast": {
+              "optimization": false
+            },
+            "next": {
+              "fileReplacements": [
+                {
+                  "src": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.next.ts"
+                }
+              ],
+              "serviceWorker": true
+            },
+            "stable": {
+              "fileReplacements": [
+                {
+                  "src": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.stable.ts"
+                }
+              ],
+              "serviceWorker": true
+            },
+            "archive": {
+              "fileReplacements": [
+                {
+                  "src": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.archive.ts"
+                }
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -181,6 +212,18 @@
           "configurations": {
             "production": {
               "browserTarget": "docs-app:build:production"
+            },
+            "fast": {
+              "browserTarget": "docs-app:build:fast"
+            },
+            "next": {
+              "browserTarget": "docs-app:build:next"
+            },
+            "stable": {
+              "browserTarget": "docs-app:build:stable"
+            },
+            "archive": {
+              "browserTarget": "docs-app:build:archive"
             }
           }
         },
