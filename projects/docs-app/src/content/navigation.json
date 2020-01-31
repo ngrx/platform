@@ -399,7 +399,8 @@
     {
       "url": "api",
       "title": "API",
-      "tooltip": "API Reference"
+      "tooltip": "API Reference",
+      "hidden": true
     },
     {
       "url": "contributing",
