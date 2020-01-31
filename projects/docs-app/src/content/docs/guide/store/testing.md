@@ -137,7 +137,7 @@ In this example, we mock the `getUsername` selector by using `overrideSelector`,
 
 </div>
 
-Try the <live-example name="testing-store"></live-example>.
+Try the <a href="https://stackblitz.com/angular/ndrdrxjdgbl" target="_blank">live example</a>.
 
 ### Integration Testing
 
