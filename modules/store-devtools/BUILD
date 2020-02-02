@@ -22,7 +22,7 @@ ng_package(
         "package.json",
     ],
     entry_point = "modules/store-devtools/index.js",
-    packages = [
+    nested_packages = [
         "//modules/store-devtools/migrations:npm_package",
         "//modules/store-devtools/schematics:npm_package",
         "//modules/store-devtools/schematics-core:npm_package",

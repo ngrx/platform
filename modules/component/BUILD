@@ -24,7 +24,7 @@ ng_package(
         "package.json",
     ],
     entry_point = "modules/component/index.js",
-    packages = [
+    nested_packages = [
         # TODO: @ngrx/component - add schematic
         # "//modules/component/schematics-core:npm_package",
     ],
