@@ -88,15 +88,12 @@ def ts_test_library(node_modules = None, deps = [], **kwargs):
 
 def jasmine_node_test(node_modules = None, deps = [], **kwargs):
     templated_args = kwargs.pop("templated_args", [])
-
-    # loads bootstrap_node_tests, but fails on import statements
-    # templated_args += ["--node_options=--require=$(rlocation $(location %s))" % "//tools/testing:node"]
-    # can't find the file?
     templated_args += ["--node_options=--require=$(rlocation $(location %s))" % "//tools/testing:node_es5"]
 
     _jasmine_node_test(
         deps = [
             "//tools/testing:node",
+            "//tools/testing:node_es5",
             # Very common dependencies for tests
             "@npm//chokidar",
             "@npm//core-js",
