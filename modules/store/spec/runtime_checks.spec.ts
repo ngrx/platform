@@ -7,12 +7,13 @@ import * as metaReducers from '../src/meta-reducers';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
-    it('should enable immutability checks by default', () => {
+    it('should enable immutability and NgZone checks by default', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictActionImmutability: true,
         strictStateImmutability: true,
+        strictActionWithinNgZone: true,
       });
     });
 
@@ -23,12 +24,14 @@ describe('Runtime checks:', () => {
           strictActionSerializability: true,
           strictActionImmutability: false,
           strictStateImmutability: false,
+          strictActionWithinNgZone: false,
         })
       ).toEqual({
         strictStateSerializability: true,
         strictActionSerializability: true,
         strictActionImmutability: false,
         strictStateImmutability: false,
+        strictActionWithinNgZone: false,
       });
     });
 
@@ -40,6 +43,7 @@ describe('Runtime checks:', () => {
         strictActionSerializability: false,
         strictActionImmutability: false,
         strictStateImmutability: false,
+        strictActionWithinNgZone: false,
       });
     });
 
@@ -50,12 +54,14 @@ describe('Runtime checks:', () => {
         createActiveRuntimeChecks({
           strictStateSerializability: true,
           strictActionSerializability: true,
+          strictActionWithinNgZone: true,
         })
       ).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictActionImmutability: false,
         strictStateImmutability: false,
+        strictActionWithinNgZone: false,
       });
     });
   });
@@ -88,6 +94,10 @@ describe('Runtime checks:', () => {
         metaReducers,
         'serializationCheckMetaReducer'
       ).and.callThrough();
+      const inNgZoneAssertMetaReducerSpy = spyOn(
+        metaReducers,
+        'inNgZoneAssertMetaReducer'
+      ).and.callThrough();
 
       TestBed.configureTestingModule({
         imports: [StoreModule.forRoot({})],
@@ -96,6 +106,7 @@ describe('Runtime checks:', () => {
             provide: USER_RUNTIME_CHECKS,
             useValue: {
               strictStateSerializability: false,
+              strictActionWithinNgZone: false,
             },
           },
         ],
@@ -103,6 +114,7 @@ describe('Runtime checks:', () => {
 
       const _store = TestBed.get<Store<any>>(Store);
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
+      expect(inNgZoneAssertMetaReducerSpy).not.toHaveBeenCalled();
     });
 
     it('should create immutability meta reducer without config', () => {
@@ -113,6 +125,10 @@ describe('Runtime checks:', () => {
       const immutabilityCheckMetaReducerSpy = spyOn(
         metaReducers,
         'immutabilityCheckMetaReducer'
+      ).and.callThrough();
+      const inNgZoneAssertMetaReducerSpy = spyOn(
+        metaReducers,
+        'inNgZoneAssertMetaReducer'
       ).and.callThrough();
 
       TestBed.configureTestingModule({
@@ -128,6 +144,7 @@ describe('Runtime checks:', () => {
       const _store = TestBed.get<Store<any>>(Store);
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
       expect(immutabilityCheckMetaReducerSpy).toHaveBeenCalled();
+      expect(inNgZoneAssertMetaReducerSpy).toHaveBeenCalled();
     });
   });
 
@@ -296,6 +313,44 @@ describe('Runtime checks:', () => {
       })
     );
   });
+
+  describe('Action in NgZone', () => {
+    const invalidAction = () => ({ type: ErrorTypes.OutOfNgZoneAction });
+
+    beforeAll(() => {
+      ngCore.NgZone.isInAngularZone = jasmine
+        .createSpy('isInAngularZone')
+        .and.returnValue(false);
+    });
+
+    afterAll(() => {
+      ngCore.NgZone.isInAngularZone = jasmine
+        .createSpy('isInAngularZone')
+        .and.returnValue(true);
+    });
+
+    it(
+      'should throw when enabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionWithinNgZone: true });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(/Action not running in NgZone/);
+      })
+    );
+
+    it(
+      'should not throw when disabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionWithinNgZone: false });
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).not.toThrow();
+      })
+    );
+  });
 });
 
 function setupStore(runtimeChecks?: Partial<RuntimeChecks>): Store<any> {
@@ -318,6 +373,7 @@ enum ErrorTypes {
   UnserializableAction = 'Action type producing unserializable action',
   MutateAction = 'Action type producing action mutation',
   MutateState = 'Action type producing state mutation',
+  OutOfNgZoneAction = 'Action triggered outside of NgZone',
 }
 
 function reducerWithBugs(state: any = {}, action: any) {
@@ -343,6 +399,10 @@ function reducerWithBugs(state: any = {}, action: any) {
 
     case ErrorTypes.MutateState: {
       state.invalidMutationState = true;
+      return state;
+    }
+
+    case ErrorTypes.OutOfNgZoneAction: {
       return state;
     }
 
