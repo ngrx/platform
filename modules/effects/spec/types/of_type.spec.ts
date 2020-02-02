@@ -55,7 +55,7 @@ describe('ofType()', () => {
         const effect = actions$.pipe(ofType(actionA, actionB, actionC, actionD, actionE, actionF, actionG))
       `).toInfer(
         'effect',
-        'Observable<TypedAction<"Action A"> | TypedAction<"Action B"> | TypedAction<"Action C"> | TypedAction<"Action D"> | TypedAction<"Action E"> | TypedAction<"Action F"> | TypedAction<"Action G">>'
+        'Observable<TypedAction<"Action A"> | TypedAction<"Action B"> | TypedAction<"Action C"> | TypedAction<"Action D"> | TypedAction<"Action E"> | TypedAction<...> | TypedAction<...>>'
       );
     });
   });
