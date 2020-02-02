@@ -51,7 +51,7 @@ NGRX_GLOBALS = dict({
     "tslib": "tslib",
 }, **{p: _global_name(p) for p in NGRX_SCOPED_PACKAGES})
 
-def ts_library(name, tsconfig = None, testonly = False, node_modules = None, deps = [], **kwargs):
+def ts_library(name, tsconfig = None, node_modules = None, deps = [], **kwargs):
     if not tsconfig:
         tsconfig = DEFAULT_TSCONFIG
     _ts_library(
@@ -63,19 +63,9 @@ def ts_library(name, tsconfig = None, testonly = False, node_modules = None, dep
         **kwargs
     )
 
-    # Select the es5 .js output of the ts_library for use in downstream boostrap targets
-    # with `output_group = "es5_sources"`. This exposes an internal detail of ts_library
-    # that is not ideal.
-    # TODO(gregmagolan): clean this up by using tsc() in these cases rather than ts_library
-    native.filegroup(
-        name = "%s_es5" % name,
-        srcs = [":%s" % name],
-        testonly = testonly,
-        output_group = "es5_sources",
-    )
-
-def ts_test_library(node_modules = None, deps = [], **kwargs):
+def ts_test_library(name, node_modules = None, deps = [], **kwargs):
     ts_library(
+        name,
         testonly = 1,
         deps = [
             "@npm//@angular/core",
@@ -84,6 +74,13 @@ def ts_test_library(node_modules = None, deps = [], **kwargs):
             "@npm//zone.js",
         ] + deps,
         **kwargs
+    )
+
+    native.filegroup(
+        name = "%s_es5" % name,
+        srcs = [":%s" % name],
+        testonly = 1,
+        output_group = "es5_sources",
     )
 
 def jasmine_node_test(node_modules = None, deps = [], **kwargs):
