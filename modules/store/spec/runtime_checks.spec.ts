@@ -7,13 +7,13 @@ import * as metaReducers from '../src/meta-reducers';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
-    it('should enable immutability and NgZone checks by default', () => {
+    it('should enable immutability checks by default', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictActionImmutability: true,
         strictStateImmutability: true,
-        strictActionWithinNgZone: true,
+        strictActionWithinNgZone: false,
       });
     });
 
@@ -126,10 +126,6 @@ describe('Runtime checks:', () => {
         metaReducers,
         'immutabilityCheckMetaReducer'
       ).and.callThrough();
-      const inNgZoneAssertMetaReducerSpy = spyOn(
-        metaReducers,
-        'inNgZoneAssertMetaReducer'
-      ).and.callThrough();
 
       TestBed.configureTestingModule({
         imports: [StoreModule.forRoot({})],
@@ -144,7 +140,6 @@ describe('Runtime checks:', () => {
       const _store = TestBed.get<Store<any>>(Store);
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
       expect(immutabilityCheckMetaReducerSpy).toHaveBeenCalled();
-      expect(inNgZoneAssertMetaReducerSpy).toHaveBeenCalled();
     });
   });
 

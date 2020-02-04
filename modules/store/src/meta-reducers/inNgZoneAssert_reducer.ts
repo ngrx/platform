@@ -7,7 +7,9 @@ export function inNgZoneAssertMetaReducer(
 ) {
   return function(state: any, action: any) {
     if (checks.action && !ngCore.NgZone.isInAngularZone()) {
-      throw new Error('Action not running in NgZone');
+      throw new Error(
+        'Action running outside of NgZone. ChangeDetection will not be run upon completion.'
+      );
     }
     return reducer(state, action);
   };

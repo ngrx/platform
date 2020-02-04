@@ -21,7 +21,7 @@ export function createActiveRuntimeChecks(
       strictActionSerializability: false,
       strictStateImmutability: true,
       strictActionImmutability: true,
-      strictActionWithinNgZone: true,
+      strictActionWithinNgZone: false,
       ...runtimeChecks,
     };
   }
