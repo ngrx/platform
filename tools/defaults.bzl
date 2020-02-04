@@ -1,6 +1,6 @@
 """Re-export of some bazel rules with repository-wide defaults."""
 
-load("@build_bazel_rules_nodejs//:index.bzl", _npm_package = "npm_package")
+load("@build_bazel_rules_nodejs//:index.bzl", _pkg_npm = "pkg_npm")
 load("@npm_angular_bazel//:index.bzl", _ng_module = "ng_module", _ng_package = "ng_package")
 load("@npm_bazel_jasmine//:index.bzl", _jasmine_node_test = "jasmine_node_test")
 load("@npm_bazel_typescript//:index.bzl", _ts_library = "ts_library")
@@ -51,10 +51,11 @@ NGRX_GLOBALS = dict({
     "tslib": "tslib",
 }, **{p: _global_name(p) for p in NGRX_SCOPED_PACKAGES})
 
-def ts_library(tsconfig = None, node_modules = None, deps = [], **kwargs):
+def ts_library(name, tsconfig = None, node_modules = None, deps = [], **kwargs):
     if not tsconfig:
         tsconfig = DEFAULT_TSCONFIG
     _ts_library(
+        name = name,
         tsconfig = tsconfig,
         deps = [
             "@npm//@types",
@@ -62,8 +63,9 @@ def ts_library(tsconfig = None, node_modules = None, deps = [], **kwargs):
         **kwargs
     )
 
-def ts_test_library(node_modules = None, deps = [], **kwargs):
+def ts_test_library(name, node_modules = None, deps = [], **kwargs):
     ts_library(
+        name,
         testonly = 1,
         deps = [
             "@npm//@angular/core",
@@ -74,13 +76,21 @@ def ts_test_library(node_modules = None, deps = [], **kwargs):
         **kwargs
     )
 
-def jasmine_node_test(node_modules = None, bootstrap = None, deps = [], **kwargs):
-    if not bootstrap:
-        bootstrap = ["ngrx/tools/testing/bootstrap_node_tests.js"]
+    native.filegroup(
+        name = "%s_es5" % name,
+        srcs = [":%s" % name],
+        testonly = 1,
+        output_group = "es5_sources",
+    )
+
+def jasmine_node_test(node_modules = None, deps = [], **kwargs):
+    templated_args = kwargs.pop("templated_args", [])
+    templated_args += ["--node_options=--require=$(rlocation $(location %s))" % "//tools/testing:node_es5"]
+
     _jasmine_node_test(
-        bootstrap = bootstrap,
         deps = [
             "//tools/testing:node",
+            "//tools/testing:node_es5",
             # Very common dependencies for tests
             "@npm//chokidar",
             "@npm//core-js",
@@ -93,6 +103,7 @@ def jasmine_node_test(node_modules = None, bootstrap = None, deps = [], **kwargs
             "@npm//tslib",
             "@npm//xhr2",
         ] + deps,
+        templated_args = templated_args,
         **kwargs
     )
 
@@ -123,13 +134,13 @@ def ng_package(name, readme_md = None, license_banner = None, globals = {}, **kw
         readme_md = readme_md,
         license_banner = license_banner,
         globals = dict(globals, **NGRX_GLOBALS),
-        replacements = PKG_GROUP_REPLACEMENTS,
+        substitutions = PKG_GROUP_REPLACEMENTS,
         **kwargs
     )
 
-def npm_package(name, replacements = {}, **kwargs):
-    _npm_package(
+def pkg_npm(name, substitutions = {}, **kwargs):
+    _pkg_npm(
         name = name,
-        replacements = dict(replacements, **PKG_GROUP_REPLACEMENTS),
+        substitutions = dict(substitutions, **PKG_GROUP_REPLACEMENTS),
         **kwargs
     )

@@ -22,7 +22,7 @@ ng_package(
         "package.json",
     ],
     entry_point = "modules/entity/index.js",
-    packages = [
+    nested_packages = [
         "//modules/entity/migrations:npm_package",
         "//modules/entity/schematics:npm_package",
         "//modules/entity/schematics-core:npm_package",

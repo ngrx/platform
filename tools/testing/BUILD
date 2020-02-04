@@ -1,6 +1,6 @@
-package(default_visibility = ["//visibility:public"])
-
 load("//tools:defaults.bzl", "ts_test_library")
+
+package(default_visibility = ["//visibility:public"])
 
 ts_test_library(
     name = "node",

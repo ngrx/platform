@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//tools:defaults.bzl", "jasmine_node_test", "npm_package", "ts_library", "ts_test_library")
+load("//tools:defaults.bzl", "jasmine_node_test", "pkg_npm", "ts_library", "ts_test_library")
 
 ts_library(
     name = "schematics",
@@ -23,7 +23,7 @@ ts_library(
     ],
 )
 
-npm_package(
+pkg_npm(
     name = "npm_package",
     srcs = [
         ":collection.json",
@@ -37,7 +37,7 @@ npm_package(
         "**/schema.json",
         "**/migration.json",
     ]),
-    packages = [
+    nested_packages = [
         "//modules/schematics/migrations:npm_package",
         "//modules/schematics/schematics-core:npm_package",
     ],
