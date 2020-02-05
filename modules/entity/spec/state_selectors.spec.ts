@@ -24,7 +24,7 @@ describe('Entity State Selectors', () => {
       });
 
       state = {
-        books: adapter.addAll(
+        books: adapter.setAll(
           [AClockworkOrange, AnimalFarm, TheGreatGatsby],
           adapter.getInitialState()
         ),
@@ -70,7 +70,7 @@ describe('Entity State Selectors', () => {
         selectId: (book: BookModel) => book.id,
       });
 
-      state = adapter.addAll(
+      state = adapter.setAll(
         [AClockworkOrange, AnimalFarm, TheGreatGatsby],
         adapter.getInitialState()
       );
