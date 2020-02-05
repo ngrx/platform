@@ -244,7 +244,7 @@ selectTotal.release();
 
 When injecting `Store` into components and other injectables, it is possible to omit the generic type. If injected without the generic, the default generic is applied as follows `Store<T = object>`.
 
-The most common way to select information the store is to use a selector function defined with `createSelector`. When doing so, TypeScript is able to automatically infer types from the selector function, therefore reducing the need to define the type in the store generic.
+The most common way to select information from the store is to use a selector function defined with `createSelector`. When doing so, TypeScript is able to automatically infer types from the selector function, therefore reducing the need to define the type in the store generic.
 
 <div class="alert is-important">
 It is important to continue to provide a Store type generic if you are using the string version of selectors as types cannot be inferred automatically in those instances.
@@ -254,9 +254,9 @@ The follow example demonstrates the use of Store without providing a generic:
 
 <code-example header="app.component.ts">
 export class AppComponent {
-  counter$ = this.store.pipe(select(fromCounter.selectCounter));
+  counter$ = this.store.select(fromCounter.selectCounter);
 
-  constructor(private store: Store) {}
+  constructor(private readonly store: Store) {}
 }
 </code-example>
 
