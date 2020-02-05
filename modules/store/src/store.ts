@@ -8,7 +8,8 @@ import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
 
 @Injectable()
-export class Store<T> extends Observable<T> implements Observer<Action> {
+export class Store<T = object> extends Observable<T>
+  implements Observer<Action> {
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,

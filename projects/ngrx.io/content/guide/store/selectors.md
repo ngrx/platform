@@ -240,6 +240,26 @@ selectTotal.release();
  */
 </code-example>
 
+## Using Store Without Type Generic
+
+When injecting `Store` into components and other injectables, it is possible to omit the generic type. If injected without the generic, the default generic is applied as follows `Store<T = object>`.
+
+The most common way to select information from the store is to use a selector function defined with `createSelector`. When doing so, TypeScript is able to automatically infer types from the selector function, therefore reducing the need to define the type in the store generic.
+
+<div class="alert is-important">
+It is important to continue to provide a Store type generic if you are using the string version of selectors as types cannot be inferred automatically in those instances.
+</div>
+
+The follow example demonstrates the use of Store without providing a generic:
+
+<code-example header="app.component.ts">
+export class AppComponent {
+  counter$ = this.store.select(fromCounter.selectCounter);
+
+  constructor(private readonly store: Store) {}
+}
+</code-example>
+
 ## Advanced Usage
 
 Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
