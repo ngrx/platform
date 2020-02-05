@@ -42,7 +42,7 @@ const <%= camelize(name) %>Reducer = createReducer(
     (state, action) => adapter.removeMany(action.ids, state)
   ),
   on(<%= classify(name) %>Actions.load<%= classify(name) %>s,
-    (state, action) => adapter.addAll(action.<%= camelize(name) %>s, state)
+    (state, action) => adapter.setAll(action.<%= camelize(name) %>s, state)
   ),
   on(<%= classify(name) %>Actions.clear<%= classify(name) %>s,
     state => adapter.removeAll(state)
