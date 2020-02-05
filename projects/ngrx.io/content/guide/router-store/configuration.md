@@ -63,8 +63,7 @@ export class CustomSerializer implements RouterStateSerializer&lt;RouterStateUrl
     // Only return an object including the URL, params and query params
     // instead of the entire snapshot
     return { url, params, queryParams };
-
-}
+  }
 }
 </code-example>
 
