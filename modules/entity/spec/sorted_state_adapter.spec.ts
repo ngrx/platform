@@ -69,10 +69,27 @@ describe('Sorted State Adapter', () => {
     });
   });
 
-  it('should let you add all entities to the state', () => {
+  it('should remove existing and add new ones on setAll', () => {
     const withOneEntity = adapter.addOne(TheGreatGatsby, state);
 
-    const withAll = adapter.addAll(
+    const withAll = adapter.setAll(
+      [AClockworkOrange, AnimalFarm],
+      withOneEntity
+    );
+
+    expect(withAll).toEqual({
+      ids: [AClockworkOrange.id, AnimalFarm.id],
+      entities: {
+        [AClockworkOrange.id]: AClockworkOrange,
+        [AnimalFarm.id]: AnimalFarm,
+      },
+    });
+  });
+
+  it('should remove existing and add new ones on addAll (deprecated)', () => {
+    const withOneEntity = adapter.addOne(TheGreatGatsby, state);
+
+    const withAll = adapter.setAll(
       [AClockworkOrange, AnimalFarm],
       withOneEntity
     );
@@ -98,7 +115,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should let you remove many entities by id from the state', () => {
-    const withAll = adapter.addAll(
+    const withAll = adapter.setAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
@@ -117,7 +134,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should let you remove many entities by a predicate from the state', () => {
-    const withAll = adapter.addAll(
+    const withAll = adapter.setAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
@@ -133,7 +150,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should let you remove all entities from the state', () => {
-    const withAll = adapter.addAll(
+    const withAll = adapter.setAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
@@ -182,7 +199,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should not change ids state if you attempt to update an entity that does not impact sorting', () => {
-    const withAll = adapter.addAll(
+    const withAll = adapter.setAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
@@ -223,7 +240,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should resort correctly if same id but sort key update', () => {
-    const withAll = adapter.addAll(
+    const withAll = adapter.setAll(
       [TheGreatGatsby, AnimalFarm, AClockworkOrange],
       state
     );
@@ -251,7 +268,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should resort correctly if the id and sort key update', () => {
-    const withOne = adapter.addAll(
+    const withOne = adapter.setAll(
       [TheGreatGatsby, AnimalFarm, AClockworkOrange],
       state
     );
@@ -281,7 +298,7 @@ describe('Sorted State Adapter', () => {
   it('should let you update many entities by id in the state', () => {
     const firstChange = { title: 'Zack' };
     const secondChange = { title: 'Aaron' };
-    const withMany = adapter.addAll([TheGreatGatsby, AClockworkOrange], state);
+    const withMany = adapter.setAll([TheGreatGatsby, AClockworkOrange], state);
 
     const withUpdates = adapter.updateMany(
       [
@@ -310,7 +327,7 @@ describe('Sorted State Adapter', () => {
     const firstChange = { ...TheGreatGatsby, title: 'First change' };
     const secondChange = { ...AClockworkOrange, title: 'Second change' };
 
-    const withMany = adapter.addAll(
+    const withMany = adapter.setAll(
       [TheGreatGatsby, AClockworkOrange, AnimalFarm],
       state
     );
@@ -372,7 +389,7 @@ describe('Sorted State Adapter', () => {
 
   it('should let you upsert many entities in the state', () => {
     const firstChange = { title: 'Zack' };
-    const withMany = adapter.addAll([TheGreatGatsby], state);
+    const withMany = adapter.setAll([TheGreatGatsby], state);
 
     const withUpserts = adapter.upsertMany(
       [{ ...TheGreatGatsby, ...firstChange }, AClockworkOrange],

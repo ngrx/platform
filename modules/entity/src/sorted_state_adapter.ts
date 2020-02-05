@@ -50,6 +50,16 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     return DidMutate.Both;
   }
 
+  function setAllMutably(models: T[], state: R): DidMutate;
+  function setAllMutably(models: any[], state: any): DidMutate {
+    state.entities = {};
+    state.ids = [];
+
+    addManyMutably(models, state);
+
+    return DidMutate.Both;
+  }
+
   function updateOneMutably(update: Update<T>, state: R): DidMutate;
   function updateOneMutably(update: any, state: any): DidMutate {
     return updateManyMutably([update], state);
@@ -200,6 +210,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     updateOne: createStateOperator(updateOneMutably),
     upsertOne: createStateOperator(upsertOneMutably),
     addAll: createStateOperator(addAllMutably),
+    setAll: createStateOperator(setAllMutably),
     addMany: createStateOperator(addManyMutably),
     updateMany: createStateOperator(updateManyMutably),
     upsertMany: createStateOperator(upsertManyMutably),
