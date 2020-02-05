@@ -21,7 +21,7 @@ interface StoreRouterConfig {
 <div class="alert is-important">
 
 The `DefaultRouterStateSerializer` cannot be used when [serializability runtime checks](guide/store/configuration/runtime-checks) are enabled.
-With runtime checks enabled `MinimalRouterStateSerializer` serializer is used by default in `RouterStoreModule` when no other serializer is provided. This also applies to Ivy with immutability runtime checks.
+With serializability runtime checks enabled, the `MinimalRouterStateSerializer` serializer **must** be used. This also applies to Ivy with immutability runtime checks.
 
 </div>
 
@@ -41,14 +41,14 @@ import { Params, RouterStateSnapshot } from '@angular/router';
 import { RouterStateSerializer } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
-url: string;
-params: Params;
-queryParams: Params;
+  url: string;
+  params: Params;
+  queryParams: Params;
 }
 
 export class CustomSerializer implements RouterStateSerializer&lt;RouterStateUrl&gt; {
-serialize(routerState: RouterStateSnapshot): RouterStateUrl {
-let route = routerState.root;
+  serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+    let route = routerState.root;
 
     while (route.firstChild) {
       route = route.firstChild;
