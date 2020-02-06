@@ -44,8 +44,8 @@ describe('immutabilityCheckMetaReducer:', () => {
 
     function invokeActionReducer(reduce: Function, checkIsOn = true) {
       immutabilityCheckMetaReducer((state, action) => reduce(state, action), {
-        action: checkIsOn,
-        state: false,
+        action: () => checkIsOn,
+        state: () => false,
       })({}, { type: 'invoke', numbers: [1, 2, 3], fun: function() {} });
     }
   });
@@ -95,8 +95,8 @@ describe('immutabilityCheckMetaReducer:', () => {
           return reduce(state, action);
         },
         {
-          state: checkIsOn,
-          action: false,
+          state: () => checkIsOn,
+          action: () => false,
         }
       );
 

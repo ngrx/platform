@@ -2,7 +2,7 @@ import * as ngCore from '@angular/core';
 import { TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { Store, StoreModule, META_REDUCERS, USER_RUNTIME_CHECKS } from '..';
 import { createActiveRuntimeChecks } from '../src/runtime_checks';
-import { RuntimeChecks } from '../src/models';
+import { RuntimeChecks, Action } from '../src/models';
 import * as metaReducers from '../src/meta-reducers';
 
 describe('Runtime checks:', () => {
@@ -203,6 +203,18 @@ describe('Runtime checks:', () => {
         }).not.toThrow();
       })
     );
+
+    it(
+      'should not throw for NgRx actions',
+      fakeAsync(() => {
+        const store = setupStore({ strictStateSerializability: true });
+
+        expect(() => {
+          store.dispatch(makeNgrxAction(invalidAction()));
+          flush();
+        }).not.toThrow();
+      })
+    );
   });
 
   describe('Action Serialization:', () => {
@@ -295,6 +307,18 @@ describe('Runtime checks:', () => {
         }).not.toThrow();
       })
     );
+
+    it(
+      'should not throw for NgRx actions',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionImmutability: true });
+
+        expect(() => {
+          store.dispatch(makeNgrxAction(invalidAction()));
+          flush();
+        }).not.toThrow();
+      })
+    );
   });
 });
 
@@ -349,4 +373,9 @@ function reducerWithBugs(state: any = {}, action: any) {
     default:
       return state;
   }
+}
+
+export function makeNgrxAction(action: Action) {
+  action.type = '@ngrx ' + action.type;
+  return action;
 }

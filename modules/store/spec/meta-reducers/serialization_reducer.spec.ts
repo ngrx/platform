@@ -95,15 +95,15 @@ describe('serializationCheckMetaReducer:', () => {
 
   function invokeActionReducer(action: any, checkIsOn = true) {
     serializationCheckMetaReducer(state => state, {
-      action: checkIsOn,
-      state: false,
+      action: () => checkIsOn,
+      state: () => false,
     })(undefined, action);
   }
 
   function invokeStateReducer(nextState?: any, checkIsOn = true) {
     serializationCheckMetaReducer(() => nextState, {
-      state: checkIsOn,
-      action: false,
+      state: () => checkIsOn,
+      action: () => false,
     })(undefined, {
       type: 'invokeReducer',
     });
