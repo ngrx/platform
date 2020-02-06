@@ -7,7 +7,11 @@ import * as shelljs from 'shelljs';
  * Publish release to NPM on "latest" tag
  */
 export async function publishToNpm(config: Config) {
-  for (let pkg of util.getTopLevelPackages(config)) {
+  const publishablePackages = util
+    .getTopLevelPackages(config)
+    .filter(pkg => !pkg.includes('component'));
+
+  for (let pkg of publishablePackages) {
     console.log(`Publishing @ngrx/${pkg}`);
 
     const cmd = [
