@@ -1,14 +1,16 @@
 import * as ngCore from '@angular/core';
-import { ActionReducer } from '../models';
+import { ActionReducer, Action } from '../models';
 
 export function inNgZoneAssertMetaReducer(
-  reducer: ActionReducer<any, any>,
+  reducer: ActionReducer<any, Action>,
   checks: { action: boolean }
 ) {
-  return function(state: any, action: any) {
+  return function(state: any, action: Action) {
     if (checks.action && !ngCore.NgZone.isInAngularZone()) {
       throw new Error(
-        'Action running outside of NgZone. ChangeDetection will not be run upon completion.'
+        `Action '${
+          action.type
+        }' running outside NgZone. ChangeDetection will not be triggered by any event in this call stack.`
       );
     }
     return reducer(state, action);
