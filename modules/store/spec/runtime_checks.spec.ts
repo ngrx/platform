@@ -312,21 +312,17 @@ describe('Runtime checks:', () => {
   describe('Action in NgZone', () => {
     const invalidAction = () => ({ type: ErrorTypes.OutOfNgZoneAction });
 
-    afterAll(() => {
-      ngCore.NgZone.isInAngularZone = jasmine
-        .createSpy('isInAngularZone')
-        .and.returnValue(true);
-    });
-
     it(
       'should throw when enabled',
       fakeAsync(() => {
+        ngCore.NgZone.isInAngularZone = jasmine
+          .createSpy('isInAngularZone')
+          .and.returnValue(true);
         const store = setupStore({ strictActionWithinNgZone: true });
+        ngCore.NgZone.isInAngularZone = jasmine
+          .createSpy('isInAngularZone')
+          .and.returnValue(false);
         expect(() => {
-          flush();
-          ngCore.NgZone.isInAngularZone = jasmine
-            .createSpy('isInAngularZone')
-            .and.returnValue(false);
           store.dispatch(invalidAction());
           flush();
         }).toThrowError(
@@ -336,7 +332,7 @@ describe('Runtime checks:', () => {
     );
 
     it(
-      'should not throw when disabled',
+      'should not be called when disabled',
       fakeAsync(() => {
         const store = setupStore({ strictActionWithinNgZone: false });
         expect(() => {
@@ -346,6 +342,8 @@ describe('Runtime checks:', () => {
           store.dispatch(invalidAction());
           flush();
         }).not.toThrow();
+
+        expect(ngCore.NgZone.isInAngularZone).not.toHaveBeenCalled();
       })
     );
   });
