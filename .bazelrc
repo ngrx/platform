@@ -16,7 +16,7 @@ build --symlink_prefix=dist/
 # https://github.com/bazelbuild/bazel/issues/7026 for more details.
 # This flag is needed to so that the bazel cache is not invalidated
 # when running bazel via `yarn bazel`.
-# See https://github.com/angular/angular/issues/27514.
+# See https://github.com/angular/angular/issues/27514
 build --incompatible_strict_action_env
 run --incompatible_strict_action_env
 test --incompatible_strict_action_env
