@@ -99,9 +99,9 @@ This allows you to provide a custom behavior, such as only retrying on
 certain "retryable" errors, or with maximum number of retries.
 
 <code-example header="customise-error-handler.effects.ts">
+import { ErrorHandler, NgModule } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { retryWhen, mergeMap } from 'rxjs/operators';
-import { ErrorHandler, NgModule } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
 import { MovieEffects } from './effects/movie.effects';
@@ -166,9 +166,9 @@ By default, effects are merged and subscribed to the store. Implement the `OnRun
 Usage:
 
 <code-example header="user.effects.ts">
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { exhaustMap, takeUntil, tap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
 import {
   Actions,
   OnRunEffects,
