@@ -450,7 +450,7 @@ export class EntityCollectionServiceBase<
   errors$: Observable<EntityAction>;
 
   /** Observable of the filter pattern applied by the entity collection's filter function */
-  filter$: Observable<string> | Store<string>;
+  filter$: Observable<any> | Store<any>;
 
   /** Observable of entities in the cached collection that pass the filter function */
   filteredEntities$: Observable<T[]> | Store<T[]>;
