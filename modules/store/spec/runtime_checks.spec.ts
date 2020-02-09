@@ -371,6 +371,45 @@ describe('Runtime checks:', () => {
       })
     );
   });
+
+  describe('Action in NgZone', () => {
+    const invalidAction = () => ({ type: ErrorTypes.OutOfNgZoneAction });
+
+    it(
+      'should throw when enabled',
+      fakeAsync(() => {
+        ngCore.NgZone.isInAngularZone = jasmine
+          .createSpy('isInAngularZone')
+          .and.returnValue(true);
+        const store = setupStore({ strictActionWithinNgZone: true });
+        ngCore.NgZone.isInAngularZone = jasmine
+          .createSpy('isInAngularZone')
+          .and.returnValue(false);
+        expect(() => {
+          store.dispatch(invalidAction());
+          flush();
+        }).toThrowError(
+          "Action 'Action triggered outside of NgZone' running outside NgZone. ChangeDetection will not be triggered by any event in this call stack."
+        );
+      })
+    );
+
+    it(
+      'should not be called when disabled',
+      fakeAsync(() => {
+        const store = setupStore({ strictActionWithinNgZone: false });
+        expect(() => {
+          ngCore.NgZone.isInAngularZone = jasmine
+            .createSpy('isInAngularZone')
+            .and.returnValue(false);
+          store.dispatch(invalidAction());
+          flush();
+        }).not.toThrow();
+
+        expect(ngCore.NgZone.isInAngularZone).not.toHaveBeenCalled();
+      })
+    );
+  });
 });
 
 function setupStore(runtimeChecks?: Partial<RuntimeChecks>): Store<any> {
