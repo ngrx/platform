@@ -72,7 +72,10 @@ export function createInNgZoneCheckMetaReducer({
 }: RuntimeChecks): MetaReducer {
   return reducer =>
     strictActionWithinNgZone
-      ? inNgZoneAssertMetaReducer(reducer, { action: strictActionWithinNgZone })
+      ? inNgZoneAssertMetaReducer(reducer, {
+          action: action =>
+            strictActionWithinNgZone && !ignoreNgrxAction(action),
+        })
       : reducer;
 }
 

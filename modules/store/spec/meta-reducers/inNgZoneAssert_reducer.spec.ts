@@ -32,7 +32,7 @@ describe('inNgZoneAssertMetaReducer:', () => {
 
   function invokeActionReducer(reduce: Function, checkIsOn = true) {
     inNgZoneAssertMetaReducer((state, action) => reduce(state, action), {
-      action: checkIsOn,
+      action: () => checkIsOn,
     })({}, { type: 'invoke' });
   }
 });

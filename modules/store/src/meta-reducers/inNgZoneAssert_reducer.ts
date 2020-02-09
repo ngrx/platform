@@ -3,10 +3,10 @@ import { ActionReducer, Action } from '../models';
 
 export function inNgZoneAssertMetaReducer(
   reducer: ActionReducer<any, Action>,
-  checks: { action: boolean }
+  checks: { action: (action: Action) => boolean }
 ) {
   return function(state: any, action: Action) {
-    if (checks.action && !ngCore.NgZone.isInAngularZone()) {
+    if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
       throw new Error(
         `Action '${
           action.type
