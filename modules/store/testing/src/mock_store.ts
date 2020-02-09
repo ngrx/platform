@@ -18,24 +18,28 @@ import { MOCK_SELECTORS } from './tokens';
 if (typeof afterEach === 'function') {
   afterEach(() => {
     try {
-      const store = TestBed.get(Store) as MockStore<any>;
-      if (store && 'resetSelectors' in store) {
-        store.resetSelectors();
+      const store = TestBed.inject(Store) as Store<any> | undefined;
+      if (store && typeof (store as MockStore).resetSelectors === 'function') {
+        (store as MockStore).resetSelectors();
       }
     } catch {}
   });
 }
 
+type OnlyMemoized<T, Result> = T extends string
+  ? MemoizedSelector<any, Result>
+  : T;
+
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
-  static selectors = new Map<
+  private readonly selectors = new Map<
     | string
     | MemoizedSelector<any, any>
     | MemoizedSelectorWithProps<any, any, any>,
     any
   >();
 
-  scannedActions$: Observable<Action>;
+  readonly scannedActions$: Observable<Action>;
   private lastState?: T;
 
   constructor(
@@ -43,21 +47,14 @@ export class MockStore<T = object> extends Store<T> {
     actionsObserver: ActionsSubject,
     reducerManager: ReducerManager,
     @Inject(INITIAL_STATE) private initialState: T,
-    @Inject(MOCK_SELECTORS) mockSelectors?: MockSelector[]
+    @Inject(MOCK_SELECTORS) mockSelectors: MockSelector[] = []
   ) {
     super(state$, actionsObserver, reducerManager);
     this.resetSelectors();
     this.setState(this.initialState);
     this.scannedActions$ = actionsObserver.asObservable();
-    if (mockSelectors) {
-      mockSelectors.forEach(mockSelector => {
-        const selector = mockSelector.selector;
-        if (typeof selector === 'string') {
-          this.overrideSelector(selector, mockSelector.value);
-        } else {
-          this.overrideSelector(selector, mockSelector.value);
-        }
-      });
+    for (const mockSelector of mockSelectors) {
+      this.overrideSelector(mockSelector.selector, mockSelector.value);
     }
   }
 
@@ -66,53 +63,41 @@ export class MockStore<T = object> extends Store<T> {
     this.lastState = nextState;
   }
 
-  overrideSelector<T, Result>(
-    selector: string,
+  overrideSelector<
+    Result,
+    Memoized extends
+      | MemoizedSelector<any, Result>
+      | MemoizedSelectorWithProps<any, any, Result>
+  >(
+    selector: Memoized | string,
     value: Result
-  ): MemoizedSelector<string, Result>;
-  overrideSelector<T, Result>(
-    selector: MemoizedSelector<T, Result>,
-    value: Result
-  ): MemoizedSelector<T, Result>;
-  overrideSelector<T, Result>(
-    selector: MemoizedSelectorWithProps<T, any, Result>,
-    value: Result
-  ): MemoizedSelectorWithProps<T, any, Result>;
-  overrideSelector<T, Result>(
-    selector:
-      | string
-      | MemoizedSelector<any, any>
-      | MemoizedSelectorWithProps<any, any, any>,
-    value: any
-  ) {
-    MockStore.selectors.set(selector, value);
+  ): OnlyMemoized<typeof selector, Result> {
+    this.selectors.set(selector, value);
 
     if (typeof selector === 'string') {
       const stringSelector = createSelector(() => {}, () => value);
-
       return stringSelector;
     }
-
     selector.setResult(value);
 
-    return selector;
+    return selector as OnlyMemoized<typeof selector, Result>;
   }
 
   resetSelectors() {
-    MockStore.selectors.forEach((_, selector) => {
+    for (const selector of this.selectors.keys()) {
       if (typeof selector !== 'string') {
         selector.release();
         selector.clearResult();
       }
-    });
+    }
 
-    MockStore.selectors.clear();
+    this.selectors.clear();
   }
 
   select(selector: any, prop?: any) {
-    if (typeof selector === 'string' && MockStore.selectors.has(selector)) {
+    if (typeof selector === 'string' && this.selectors.has(selector)) {
       return new BehaviorSubject<any>(
-        MockStore.selectors.get(selector)
+        this.selectors.get(selector)
       ).asObservable();
     }
 
