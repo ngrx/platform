@@ -21,9 +21,7 @@ describe('inNgZoneAssertMetaReducer:', () => {
   });
 
   it('should not call isInAngularZone when check is off', () => {
-    ngCore.NgZone.isInAngularZone = jasmine
-      .createSpy('isInAngularZone')
-      .and.returnValue(false);
+    ngCore.NgZone.isInAngularZone = jasmine.createSpy('isInAngularZone');
     expect(() =>
       invokeActionReducer((state: any) => state, false)
     ).not.toThrow();
