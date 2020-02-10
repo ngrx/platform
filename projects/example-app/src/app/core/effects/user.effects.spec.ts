@@ -19,7 +19,7 @@ describe('UserEffects', () => {
       providers: [UserEffects],
     });
 
-    effects = TestBed.get(UserEffects);
+    effects = TestBed.inject(UserEffects);
   });
 
   describe('idle$', () => {

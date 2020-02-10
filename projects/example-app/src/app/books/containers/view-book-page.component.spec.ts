@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
-import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,7 +17,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('View Book Page', () => {
   let fixture: ComponentFixture<ViewBookPageComponent>;
-  let store: MockStore<fromBooks.State>;
+  let store: MockStore;
   let route: ActivatedRoute;
 
   beforeEach(() => {
@@ -41,8 +40,8 @@ describe('View Book Page', () => {
     });
 
     fixture = TestBed.createComponent(ViewBookPageComponent);
-    store = TestBed.get(Store);
-    route = TestBed.get(ActivatedRoute);
+    store = TestBed.inject(MockStore);
+    route = TestBed.inject(ActivatedRoute);
 
     jest.spyOn(store, 'dispatch');
   });

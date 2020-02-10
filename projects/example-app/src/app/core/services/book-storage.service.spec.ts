@@ -34,7 +34,7 @@ describe('BookStorageService', () => {
         },
       ],
     });
-    fixture = TestBed.get(BookStorageService);
+    fixture = TestBed.inject(BookStorageService);
   });
 
   describe('supported', () => {
@@ -53,7 +53,7 @@ describe('BookStorageService', () => {
         ],
       });
 
-      fixture = TestBed.get(BookStorageService);
+      fixture = TestBed.inject(BookStorageService);
       const expected = cold('#', {}, 'Local Storage Not Supported');
       expect(fixture.supported()).toBeObservable(expected);
     });
