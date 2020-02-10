@@ -187,7 +187,7 @@ function callbackOutsideNgZone(){
 }
 ```
 
-To fix, ensure actions are running within `NgZone`. Identify the event trigger and then verify if the code can be updated to use a `NgZone` aware feature. If this is not possible use the `NgZone.run` method to explicitly run the asynchronous task within NgZone.
+To fix ensure actions are running within `NgZone`. Identify the event trigger and then verify if the code can be updated to use a `NgZone` aware feature. If this is not possible use the `NgZone.run` method to explicitly run the asynchronous task within NgZone.
 
 ```ts
 import { NgZone } from '@angular/core';
