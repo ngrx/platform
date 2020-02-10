@@ -15,7 +15,7 @@ describe('inNgZoneAssertMetaReducer:', () => {
       .createSpy('isInAngularZone')
       .and.returnValue(false);
     expect(() => invokeActionReducer((state: any) => state)).toThrowError(
-      `strictActionWithinNgZone: Action 'invoke' running outside NgZone.`
+      `Action 'invoke' running outside NgZone. https://ngrx.io/guide/store/configuration/runtime-checks#strictactionwithinngzone`
     );
     expect(ngCore.NgZone.isInAngularZone).toHaveBeenCalled();
   });

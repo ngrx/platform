@@ -7,6 +7,7 @@ import {
   isBoolean,
   isString,
   isArray,
+  RUNTIME_CHECK_URL,
 } from './utils';
 
 export function serializationCheckMetaReducer(
@@ -82,7 +83,7 @@ function throwIfUnserializable(
 
   const unserializablePath = unserializable.path.join('.');
   const error: any = new Error(
-    `Detected unserializable ${context} at "${unserializablePath}"`
+    `Detected unserializable ${context} at "${unserializablePath}". ${RUNTIME_CHECK_URL}#strict${context}serializability`
   );
   error.value = unserializable.value;
   error.unserializablePath = unserializablePath;

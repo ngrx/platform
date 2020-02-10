@@ -347,7 +347,7 @@ describe('Runtime checks:', () => {
           store.dispatch(invalidAction());
           flush();
         }).toThrowError(
-          "strictActionWithinNgZone: Action 'Action triggered outside of NgZone' running outside NgZone."
+          "Action 'Action triggered outside of NgZone' running outside NgZone. https://ngrx.io/guide/store/configuration/runtime-checks#strictactionwithinngzone"
         );
       })
     );
