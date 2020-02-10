@@ -97,7 +97,9 @@ export interface EntityDataModuleConfig {
 export class EntityDataModuleWithoutEffects implements OnDestroy {
   private entityCacheFeature: any;
 
-  static forRoot(config: EntityDataModuleConfig): ModuleWithProviders {
+  static forRoot(
+    config: EntityDataModuleConfig
+  ): ModuleWithProviders<EntityDataModuleWithoutEffects> {
     return {
       ngModule: EntityDataModuleWithoutEffects,
       providers: [
