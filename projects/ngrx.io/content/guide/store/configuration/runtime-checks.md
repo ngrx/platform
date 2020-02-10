@@ -8,7 +8,7 @@ Runtime checks are here to guide developers to follow the NgRx and Redux core co
 - [`strictActionImmutability`](#strictactionimmutability): verifies that actions aren't mutated
 - [`strictStateSerializability`](#strictstateserializability): verifies if the state is serializable
 - [`strictActionSerializability`](#strictactionserializability): verifies if the actions are serializable
-- [`strictActionWithinNgZone`](#strictActionWithinNgZone): verifies if actions are dispatched within NgZone
+- [`strictActionWithinNgZone`](#strictactionwithinngzone): verifies if actions are dispatched within NgZone
 
 These checks are all opt-in and will automatically be disabled in production builds.
 
