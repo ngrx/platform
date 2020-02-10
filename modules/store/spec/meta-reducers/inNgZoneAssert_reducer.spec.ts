@@ -1,5 +1,5 @@
 import * as ngCore from '@angular/core';
-import { inNgZoneAssertMetaReducer } from '../../src/meta-reducers/inNgZoneAssert_reducer';
+import { inNgZoneAssertMetaReducer } from '../../src/meta-reducers';
 
 describe('inNgZoneAssertMetaReducer:', () => {
   it('should not throw if in NgZone', () => {
