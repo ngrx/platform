@@ -1,17 +1,19 @@
-import { NgModuleFactoryLoader, NgModule } from '@angular/core';
+import { NgModule, NgModuleFactoryLoader } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   RouterTestingModule,
   SpyNgModuleFactoryLoader,
 } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { Store, Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import {
   EffectsModule,
+  EffectSources,
+  OnIdentifyEffects,
   OnInitEffects,
   ROOT_EFFECTS_INIT,
-  OnIdentifyEffects,
-  EffectSources,
+  USER_PROVIDED_FEATURE_EFFECTS,
+  USER_PROVIDED_ROOT_EFFECTS,
 } from '..';
 
 describe('NgRx Effects Integration spec', () => {
@@ -90,6 +92,56 @@ describe('NgRx Effects Integration spec', () => {
     });
   });
 
+  it('should execute user provided root effects', (done: DoneFn) => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [EffectsModule.forRoot()],
+      providers: [
+        {
+          provide: Store,
+          useValue: {
+            dispatch: jasmine.createSpy('dispatch'),
+          },
+        },
+        RootUserProvidedEffect,
+        {
+          provide: USER_PROVIDED_ROOT_EFFECTS,
+          multi: true,
+          useValue: [RootUserProvidedEffect],
+        },
+      ],
+    });
+
+    const store = TestBed.get(Store) as Store<any>;
+    dispatch = store.dispatch as jasmine.Spy;
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: '[RootUserProvidedEffect]: INIT',
+    });
+    done();
+  });
+
+  it('should execute user provided feature effects', (done: DoneFn) => {
+    let router: Router = TestBed.get(Router);
+    const loader: SpyNgModuleFactoryLoader = TestBed.get(NgModuleFactoryLoader);
+
+    loader.stubbedModules = { feature: FeatModuleWithUserProvidedEffects };
+    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+    router.navigateByUrl('/feature-path').then(() => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: '[FeatUserProvidedEffect]: INIT',
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: '[FeatUserProvidedEffect2]: INIT',
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: '[FeatUserProvidedEffect3]: INIT',
+      });
+      done();
+    });
+  });
+
   class RootEffectWithInitAction implements OnInitEffects {
     ngrxOnInitEffects(): Action {
       return { type: '[RootEffectWithInitAction]: INIT' };
@@ -108,6 +160,24 @@ describe('NgRx Effects Integration spec', () => {
   }
 
   class RootEffectWithoutLifecycle {}
+
+  class RootUserProvidedEffect implements OnInitEffects {
+    public ngrxOnInitEffects(): Action {
+      return { type: '[RootUserProvidedEffect]: INIT' };
+    }
+  }
+
+  @NgModule({
+    imports: [EffectsModule.forRoot()],
+    providers: [
+      {
+        provide: USER_PROVIDED_ROOT_EFFECTS,
+        multi: true,
+        useValue: [RootUserProvidedEffect],
+      },
+    ],
+  })
+  class RootModuleWithUserProvidedEffects {}
 
   class FeatEffectWithInitAction implements OnInitEffects {
     ngrxOnInitEffects(): Action {
@@ -128,8 +198,46 @@ describe('NgRx Effects Integration spec', () => {
     constructor(private effectIdentifier: string) {}
   }
 
+  class FeatUserProvidedEffect implements OnInitEffects {
+    public ngrxOnInitEffects(): Action {
+      return { type: '[FeatUserProvidedEffect]: INIT' };
+    }
+  }
+
+  class FeatUserProvidedEffect2 implements OnInitEffects {
+    public ngrxOnInitEffects(): Action {
+      return { type: '[FeatUserProvidedEffect2]: INIT' };
+    }
+  }
+
+  class FeatUserProvidedEffect3 implements OnInitEffects {
+    public ngrxOnInitEffects(): Action {
+      return { type: '[FeatUserProvidedEffect3]: INIT' };
+    }
+  }
+
   @NgModule({
-    imports: [EffectsModule.forRoot([])],
+    imports: [EffectsModule.forRoot()],
   })
   class FeatModuleWithForRoot {}
+
+  @NgModule({
+    imports: [EffectsModule.forFeature()],
+    providers: [
+      FeatUserProvidedEffect,
+      FeatUserProvidedEffect2,
+      FeatUserProvidedEffect3,
+      {
+        provide: USER_PROVIDED_FEATURE_EFFECTS,
+        multi: true,
+        useValue: [FeatUserProvidedEffect, FeatUserProvidedEffect2],
+      },
+      {
+        provide: USER_PROVIDED_FEATURE_EFFECTS,
+        multi: true,
+        useValue: [FeatUserProvidedEffect3],
+      },
+    ],
+  })
+  class FeatModuleWithUserProvidedEffects {}
 });

@@ -1,4 +1,5 @@
 import {
+  Injector,
   ModuleWithProviders,
   NgModule,
   Optional,
@@ -7,38 +8,51 @@ import {
 } from '@angular/core';
 import { Actions } from './actions';
 import { EffectSources } from './effect_sources';
-import { EffectsFeatureModule } from './effects_feature_module';
-import { defaultEffectsErrorHandler } from './effects_error_handler';
-import { EffectsRootModule } from './effects_root_module';
-import { EffectsRunner } from './effects_runner';
 import {
+  _FEATURE_EFFECTS,
+  _ROOT_EFFECTS,
   _ROOT_EFFECTS_GUARD,
   EFFECTS_ERROR_HANDLER,
   FEATURE_EFFECTS,
   ROOT_EFFECTS,
+  USER_PROVIDED_FEATURE_EFFECTS,
+  USER_PROVIDED_ROOT_EFFECTS,
 } from './tokens';
+import { EffectsFeatureModule } from './effects_feature_module';
+import { defaultEffectsErrorHandler } from './effects_error_handler';
+import { EffectsRootModule } from './effects_root_module';
+import { EffectsRunner } from './effects_runner';
 
 @NgModule({})
 export class EffectsModule {
   static forFeature(
-    featureEffects: Type<any>[]
+    featureEffects: Type<any>[] = []
   ): ModuleWithProviders<EffectsFeatureModule> {
     return {
       ngModule: EffectsFeatureModule,
       providers: [
         featureEffects,
         {
+          provide: USER_PROVIDED_FEATURE_EFFECTS,
+          multi: true,
+          useValue: [],
+        },
+        {
+          provide: _FEATURE_EFFECTS,
+          useValue: featureEffects,
+        },
+        {
           provide: FEATURE_EFFECTS,
           multi: true,
-          deps: featureEffects,
-          useFactory: createSourceInstances,
+          useFactory: createEffects,
+          deps: [Injector, _FEATURE_EFFECTS, USER_PROVIDED_FEATURE_EFFECTS],
         },
       ],
     };
   }
 
   static forRoot(
-    rootEffects: Type<any>[]
+    rootEffects: Type<any>[] = []
   ): ModuleWithProviders<EffectsRootModule> {
     return {
       ngModule: EffectsRootModule,
@@ -57,17 +71,41 @@ export class EffectsModule {
         Actions,
         rootEffects,
         {
+          provide: USER_PROVIDED_ROOT_EFFECTS,
+          multi: true,
+          useValue: [],
+        },
+        {
+          provide: _ROOT_EFFECTS,
+          useValue: rootEffects,
+        },
+        {
           provide: ROOT_EFFECTS,
-          deps: rootEffects,
-          useFactory: createSourceInstances,
+          useFactory: createEffects,
+          deps: [Injector, _ROOT_EFFECTS, USER_PROVIDED_ROOT_EFFECTS],
         },
       ],
     };
   }
 }
 
-export function createSourceInstances(...instances: any[]) {
-  return instances;
+export function createEffects(
+  injector: Injector,
+  effects: Type<any>[],
+  userProvidedEffectGroups: Type<any>[][]
+): any[] {
+  const mergedEffects: Type<any>[] = effects;
+  for (let userProvidedEffectGroup of userProvidedEffectGroups) {
+    mergedEffects.push(...userProvidedEffectGroup);
+  }
+  return createEffectInstances(injector, mergedEffects);
+}
+
+export function createEffectInstances(
+  injector: Injector,
+  effects: Type<any>[]
+): any[] {
+  return effects.map(effect => injector.get(effect));
 }
 
 export function _provideForRootGuard(runner: EffectsRunner): any {
