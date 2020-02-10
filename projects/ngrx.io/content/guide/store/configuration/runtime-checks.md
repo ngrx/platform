@@ -4,17 +4,19 @@ Runtime checks are here to guide developers to follow the NgRx and Redux core co
 
 `@ngrx/store` ships with five (5) built-in runtime checks:
 
-- [`strictStateImmutability`](#strictstateimmutability): verifies that the state isn't mutated
-- [`strictActionImmutability`](#strictactionimmutability): verifies that actions aren't mutated
-- [`strictStateSerializability`](#strictstateserializability): verifies if the state is serializable
-- [`strictActionSerializability`](#strictactionserializability): verifies if the actions are serializable
-- [`strictActionWithinNgZone`](#strictactionwithinngzone): verifies if actions are dispatched within NgZone
+- Default On:
+  - [`strictStateImmutability`](#strictstateimmutability): verifies that the state isn't mutated.
+  - [`strictActionImmutability`](#strictactionimmutability): verifies that actions aren't mutated
+- Default Off:
+  - [`strictStateSerializability`](#strictstateserializability): verifies if the state is serializable
+  - [`strictActionSerializability`](#strictactionserializability): verifies if the actions are serializable
+  - [`strictActionWithinNgZone`](#strictactionwithinngzone): verifies if actions are dispatched within NgZone
 
-These checks are all opt-in and will automatically be disabled in production builds.
+All checks will automatically be disabled in production builds.
 
-## Enabling runtime checks
+## Configuring runtime checks
 
-It's possible to turn on the runtime checks one by one. To do so, you must enable them while providing the root store. Use the `runtimeChecks` property on the root store's config object. For each runtime check you can toggle the check with a `boolean`, `true` to enable the check, `false` to disable the check.
+It's possible to override the default configuration of runtime checks. To do so, use the `runtimeChecks` property on the root store's config object. For each runtime check you can toggle the check with a `boolean`, `true` to enable the check, `false` to disable the check.
 
 ```ts
 @NgModule({
@@ -176,7 +178,7 @@ Please note, you may not need to set `strictActionSerializability` to `true` unl
 
 ### strictActionWithinNgZone
 
-The `strictActionWithinNgZone` check verifies that Actions are dispatched by asynchonous tasks running within `NgZone`. Actions dispatched by tasks, running outside of `NgZone`, will not trigger ChangeDetection upon completion and may result in a stale view.
+The `strictActionWithinNgZone` check verifies that Actions are dispatched by asynchronous tasks running within `NgZone`. Actions dispatched by tasks, running outside of `NgZone`, will not trigger ChangeDetection upon completion and may result in a stale view.
 
 Example violation of the rule:
 
