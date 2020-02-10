@@ -2,12 +2,13 @@
 
 Runtime checks are here to guide developers to follow the NgRx and Redux core concepts and best practices. They are here to shorten the feedback loop of easy-to-make mistakes when you're starting to use NgRx, or even a well-seasoned developer might make. During development, when a rule is violated, an error is thrown notifying you what and where something went wrong.
 
-`@ngrx/store` ships with four (4) built-in runtime checks:
+`@ngrx/store` ships with five (5) built-in runtime checks:
 
 - [`strictStateImmutability`](#strictstateimmutability): verifies that the state isn't mutated
 - [`strictActionImmutability`](#strictactionimmutability): verifies that actions aren't mutated
 - [`strictStateSerializability`](#strictstateserializability): verifies if the state is serializable
 - [`strictActionSerializability`](#strictactionserializability): verifies if the actions are serializable
+- [`strictActionWithinNgZone`](#strictActionWithinNgZone): verifies if actions are dispatched within NgZone
 
 These checks are all opt-in and will automatically be disabled in production builds.
 
@@ -24,6 +25,7 @@ It's possible to turn on the runtime checks one by one. To do so, you must enabl
         strictActionImmutability: true,
         strictStateSerializability: true,
         strictActionSerializability: true,
+        strictActionWithinNgZone: true
       },
     }),
   ],
@@ -171,3 +173,31 @@ function logTodo (todo: Todo) {
 Please note, you may not need to set `strictActionSerializability` to `true` unless you are storing/replaying actions using external resources, for example `localStorage`.
 
 </div>
+
+### strictActionWithinNgZone
+
+The `strictActionWithinNgZone` check verifies that Actions are dispatched by asynchonous tasks running within `NgZone`. Actions dispatched by tasks, running outside of `NgZone`, will not trigger ChangeDetection upon completion and may result in a stale view.
+
+Example violation of the rule:
+
+```ts
+// Callback running outside of NgZone
+function callbackOutsideNgZone(){
+  this.store.dispatch(clearTodos());
+}
+```
+
+To fix, ensure actions are running within `NgZone`. Identify the event trigger and then verify if the code can be updated to use a `NgZone` aware feature. If this is not possible use the `NgZone.run` method to explicitly run the asynchronous task within NgZone.
+
+```ts
+import { NgZone } from '@angular/core';
+
+constructor(private ngZone: NgZone){}
+
+// Callback running outside of NgZone brought back in NgZone.
+function callbackOutsideNgZone(){
+  this.ngZone.run(() => {
+    this.store.dispatch(clearTodos());
+  }
+}
+```
