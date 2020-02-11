@@ -720,7 +720,6 @@ describe('EntityChangeTrackerBase', () => {
         collection,
         addedEntity,
         deletedEntity,
-        preUpdatedEntity,
         updatedEntity,
       } = createTestTrackedEntities();
 

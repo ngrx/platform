@@ -28,6 +28,8 @@ import {
   ChangeSet,
   ChangeSetOperation,
   Logger,
+  MergeStrategy,
+  ChangeType,
 } from '../..';
 
 class Hero {
@@ -297,6 +299,125 @@ describe('EntityCacheReducer', () => {
         expect(heroCollection.entities[42]).toEqual(
           { id: 42, name: 'Bobby' },
           'merged hero'
+        );
+      });
+
+      it('should use default preserve changes merge strategy', () => {
+        const {
+          unchangedHero,
+          unchangedHeroServerUpdated,
+          updatedHero,
+          locallyUpdatedHero,
+          serverUpdatedHero,
+          initialCache,
+        } = createInitialCacheForMerges();
+        const querySet: EntityCacheQuerySet = {
+          Hero: [unchangedHeroServerUpdated, serverUpdatedHero],
+        };
+        const action = new MergeQuerySet(querySet);
+
+        const state = entityCacheReducer(initialCache, action);
+        expect(state['Hero'].entities[unchangedHero.id]).toEqual(
+          unchangedHeroServerUpdated,
+          'Updates current value for unchanged entity'
+        );
+        expect(state['Hero'].entities[updatedHero.id]).toEqual(
+          locallyUpdatedHero,
+          'Preserves the current value for changed entity'
+        );
+        expect(
+          state['Hero'].changeState[updatedHero.id]!.originalValue
+        ).toEqual(
+          serverUpdatedHero,
+          'Overwrites the originalValue with the merge entity'
+        );
+      });
+
+      it('should be able to use ignore changes merge strategy', () => {
+        const {
+          updatedHero,
+          serverUpdatedHero,
+          initialCache,
+        } = createInitialCacheForMerges();
+        const querySet: EntityCacheQuerySet = {
+          Hero: [serverUpdatedHero],
+        };
+        const action = new MergeQuerySet(querySet, MergeStrategy.IgnoreChanges);
+
+        const state = entityCacheReducer(initialCache, action);
+        expect(state['Hero'].entities[updatedHero.id]).toEqual(
+          serverUpdatedHero,
+          'Update the collection entity'
+        );
+        expect(
+          state['Hero'].changeState[updatedHero.id]!.originalValue
+        ).toEqual(updatedHero, 'changeState is untouched');
+      });
+
+      it('should be able to use preserve changes merge strategy', () => {
+        const {
+          unchangedHero,
+          unchangedHeroServerUpdated,
+          updatedHero,
+          locallyUpdatedHero,
+          serverUpdatedHero,
+          initialCache,
+        } = createInitialCacheForMerges();
+        const querySet: EntityCacheQuerySet = {
+          Hero: [unchangedHeroServerUpdated, serverUpdatedHero],
+        };
+        const action = new MergeQuerySet(
+          querySet,
+          MergeStrategy.PreserveChanges
+        );
+
+        const state = entityCacheReducer(initialCache, action);
+        expect(state['Hero'].entities[unchangedHero.id]).toEqual(
+          unchangedHeroServerUpdated,
+          'Updates current value for unchanged entity'
+        );
+        expect(state['Hero'].entities[updatedHero.id]).toEqual(
+          locallyUpdatedHero,
+          'Preserves the current value for changed entity'
+        );
+        expect(
+          state['Hero'].changeState[updatedHero.id]!.originalValue
+        ).toEqual(
+          serverUpdatedHero,
+          'Overwrites the originalValue with the merge entity'
+        );
+      });
+
+      it('should be able to use overwrite changes merge strategy', () => {
+        const {
+          unchangedHero,
+          unchangedHeroServerUpdated,
+          updatedHero,
+          serverUpdatedHero,
+          initialCache,
+        } = createInitialCacheForMerges();
+        const querySet: EntityCacheQuerySet = {
+          Hero: [unchangedHeroServerUpdated, serverUpdatedHero],
+        };
+        const action = new MergeQuerySet(
+          querySet,
+          MergeStrategy.OverwriteChanges
+        );
+
+        const state = entityCacheReducer(initialCache, action);
+        expect(state['Hero'].entities[unchangedHero.id]).toEqual(
+          unchangedHeroServerUpdated,
+          'Replace the current collection entity for unchanged entity'
+        );
+        expect(state['Hero'].changeState[unchangedHero.id]).toBeUndefined(
+          'Discards the changeState (changeType unchanged) for unchanged entity'
+        );
+        expect(state['Hero'].entities[updatedHero.id]).toEqual(
+          serverUpdatedHero,
+          'Replace the current collection entity for changed entity'
+        );
+        expect(state['Hero'].changeState[updatedHero.id]).toBeUndefined(
+          'Discards the changeState (changeType unchanged) for changed entity'
         );
       });
     });
@@ -612,6 +733,53 @@ describe('EntityCacheReducer', () => {
     }
 
     return cache;
+  }
+
+  function createInitialCacheForMerges() {
+    // general test data for testing mergeStrategy
+    const unchangedHero = { id: 1, name: 'Thor', power: 'Hammer' };
+    const unchangedHeroServerUpdated = { id: 1, name: 'Thor', power: 'Bish' };
+    const deletedHero = { id: 2, name: 'Hulk', power: 'Bash' };
+    const addedHero = { id: 3, name: 'Ant-Man', power: 'Tiny' };
+    const updatedHero = { id: 4, name: 'Iron Man', power: 'Tech' };
+    const locallyUpdatedHero = { id: 4, name: 'Iron Man', power: 'Suit' };
+    const serverUpdatedHero = { id: 4, name: 'Iron Man', power: 'Nano' };
+    const ids = [unchangedHero.id, addedHero.id, updatedHero.id];
+    const initialCache = {
+      Hero: {
+        ids,
+        entities: {
+          [unchangedHero.id]: unchangedHero,
+          [addedHero.id]: addedHero,
+          [updatedHero.id]: locallyUpdatedHero,
+        },
+        entityName: 'Hero',
+        filter: '',
+        loaded: true,
+        loading: false,
+        changeState: {
+          [deletedHero.id]: {
+            changeType: ChangeType.Deleted,
+            originalValue: deletedHero,
+          },
+          [updatedHero.id]: {
+            changeType: ChangeType.Updated,
+            originalValue: updatedHero,
+          },
+          [addedHero.id]: { changeType: ChangeType.Added },
+        },
+      },
+    };
+    return {
+      unchangedHero,
+      unchangedHeroServerUpdated,
+      deletedHero,
+      addedHero,
+      updatedHero,
+      locallyUpdatedHero,
+      serverUpdatedHero,
+      initialCache,
+    };
   }
 
   function createInitialSaveTestEntities() {
