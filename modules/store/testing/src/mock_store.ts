@@ -28,7 +28,13 @@ if (typeof afterEach === 'function') {
 
 type OnlyMemoized<T, Result> = T extends string
   ? MemoizedSelector<any, Result>
-  : T;
+  : T extends MemoizedSelector<any, any>
+    ? Extract<T, MemoizedSelector<any, any>>
+    : Extract<T, MemoizedSelectorWithProps<any, any, any>>;
+
+type Memoized<Result> =
+  | MemoizedSelector<any, Result>
+  | MemoizedSelectorWithProps<any, any, Result>;
 
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
@@ -63,19 +69,17 @@ export class MockStore<T = object> extends Store<T> {
     this.lastState = nextState;
   }
 
-  overrideSelector<
-    Result,
-    Memoized extends
+  overrideSelector<Result, Value extends Result>(
+    selector:
       | MemoizedSelector<any, Result>
       | MemoizedSelectorWithProps<any, any, Result>
-  >(
-    selector: Memoized | string,
-    value: Result
+      | string,
+    value: Value
   ): OnlyMemoized<typeof selector, Result> {
     this.selectors.set(selector, value);
 
     if (typeof selector === 'string') {
-      const stringSelector = createSelector(() => {}, () => value);
+      const stringSelector = createSelector(() => {}, (): Result => value);
       return stringSelector;
     }
     selector.setResult(value);

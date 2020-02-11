@@ -408,8 +408,8 @@ describe('Resets selectors after each test', () => {
   );
   let shouldSetMockStore = true;
 
-  function setupModules(shouldSetMockStore: boolean) {
-    if (shouldSetMockStore) {
+  function setupModules(isMock: boolean) {
+    if (isMock) {
       TestBed.configureTestingModule({
         providers: [
           provideMockStore({
