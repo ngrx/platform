@@ -16,7 +16,7 @@ import {
   BooksApiActions,
   FindBookPageActions,
 } from '@example-app/books/actions';
-import { GoogleBooksService } from '@example-app/core/services/google-books.service';
+import { GoogleBooksService } from '@example-app/core/services';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
