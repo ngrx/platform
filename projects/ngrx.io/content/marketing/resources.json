@@ -144,9 +144,9 @@
           "ngrx-ducks": {
             "title": "ngrx-ducks",
             "desc":
-              "A plugin for ngrx automating creation and dispatch of actions",
-            "url": "https://github.com/co-IT/ngrx-ducks",
-            "rev": true
+              "A plugin for NgRx creating dynamic store facades",
+              "url": "https://co-it.gitbook.io/ngrx-ducks/",
+              "rev": true
           },
           "ngrx-wieder": {
             "title": "ngrx-wieder",
