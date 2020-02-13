@@ -43,7 +43,8 @@ export class LogEffects {
 Starting with version 8, when an error happens in the effect's main stream it is
 reported using Angular's `ErrorHandler`, and the source effect is
 **automatically** resubscribed to (instead of completing), so it continues to
-listen to all dispatched Actions.
+listen to all dispatched Actions. By default, effects are resubscribed up to 10
+errors.
 
 Generally, errors should be handled by users. However, for the cases where errors were missed,
 this new behavior adds an additional safety net.
@@ -96,7 +97,8 @@ The behavior of the default resubscription handler can be customized
 by providing a custom handler using the `EFFECTS_ERROR_HANDLER` injection token.
 
 This allows you to provide a custom behavior, such as only retrying on
-certain "retryable" errors, or with maximum number of retries.
+certain "retryable" errors, or change the maximum number of retries (it's set to
+10 by default).
 
 <code-example header="customise-error-handler.effects.ts">
 import { ErrorHandler, NgModule } from '@angular/core';
