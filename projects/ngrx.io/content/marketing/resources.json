@@ -8,7 +8,7 @@
           "angular-in-depth": {
             "title": "Angular in Depth",
             "desc": "All articles in Angular in Depth tagged with NgRx",
-            "url": "https://blog.angularindepth.com/tagged/ngrx",
+            "url": "https://indepth.dev/ngrx/",
             "rev": true
           },
           "ngrx-best-practices-for-enterprise-angular-applications": {
