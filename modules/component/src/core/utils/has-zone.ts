@@ -5,11 +5,6 @@ import { NgZone } from '@angular/core';
  *
  * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
  *
- * @param {NgZone} z - The zone service to check.
- * @returns {boolean} - true if the application runs with `NgZone`, false if the application runs with `NgNoopZone`
- *
- * @usageNotes
- *
  * The function can be just imported and used everywhere.
  *
  * ```ts

@@ -96,7 +96,10 @@ describe('DefaultDataService', () => {
     let expectedHeroes: Hero[];
 
     beforeEach(() => {
-      expectedHeroes = [{ id: 1, name: 'A' }, { id: 2, name: 'B' }] as Hero[];
+      expectedHeroes = [
+        { id: 1, name: 'A' },
+        { id: 2, name: 'B' },
+      ] as Hero[];
     });
 
     it('should return expected heroes (called once)', () => {
@@ -240,7 +243,10 @@ describe('DefaultDataService', () => {
     let expectedHeroes: Hero[];
 
     beforeEach(() => {
-      expectedHeroes = [{ id: 1, name: 'BA' }, { id: 2, name: 'BB' }] as Hero[];
+      expectedHeroes = [
+        { id: 1, name: 'BA' },
+        { id: 2, name: 'BB' },
+      ] as Hero[];
     });
 
     it('should return expected selected heroes w/ object params', () => {

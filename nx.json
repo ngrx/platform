@@ -1,0 +1,54 @@
+{
+  "npmScope": "ngrx",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "build-release", "test", "lint", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "example-app": {
+      "tags": []
+    },
+    "store": {
+      "tags": []
+    },
+    "effects": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "entity": {
+      "tags": []
+    },
+    "store-devtools": {
+      "tags": []
+    },
+    "router-store": {
+      "tags": []
+    },
+    "schematics": {
+      "tags": []
+    },
+    "schematics-e2e": {
+      "tags": [],
+      "implicitDependencies": ["schematics"]
+    },
+    "component": {
+      "tags": []
+    },
+    "component-store": {
+      "tags": []
+    }
+  }
+}

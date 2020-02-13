@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page should compile 1`] = `
+<bc-login-form
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  <mat-card>
+    <mat-card-title>
+      Login
+    </mat-card-title>
+    <mat-card-content>
+      <form
+        class="ng-untouched ng-pristine ng-valid"
+        novalidate=""
+      >
+        <p>
+          <mat-form-field>
+            <input
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="username"
+              matinput=""
+              placeholder="Username"
+              type="text"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="password"
+              matinput=""
+              placeholder="Password"
+              type="password"
+            />
+          </mat-form-field>
+        </p>
+        
+        <p
+          class="loginButtons"
+        >
+          <button
+            mat-button=""
+            type="submit"
+          >
+            Login
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</bc-login-form>
+`;
+
+exports[`Login Page should disable the form if pending 1`] = `
+<bc-login-form
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  <mat-card>
+    <mat-card-title>
+      Login
+    </mat-card-title>
+    <mat-card-content>
+      <form
+        class="ng-untouched ng-pristine"
+        novalidate=""
+      >
+        <p>
+          <mat-form-field>
+            <input
+              class="ng-untouched ng-pristine"
+              disabled=""
+              formcontrolname="username"
+              matinput=""
+              placeholder="Username"
+              type="text"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input
+              class="ng-untouched ng-pristine"
+              disabled=""
+              formcontrolname="password"
+              matinput=""
+              placeholder="Password"
+              type="password"
+            />
+          </mat-form-field>
+        </p>
+        
+        <p
+          class="loginButtons"
+        >
+          <button
+            mat-button=""
+            type="submit"
+          >
+            Login
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</bc-login-form>
+`;
+
+exports[`Login Page should display an error message if provided 1`] = `
+<bc-login-form
+  errorMessage={[Function String]}
+  form={[Function FormGroup]}
+  submitted={[Function EventEmitter]}
+>
+  <mat-card>
+    <mat-card-title>
+      Login
+    </mat-card-title>
+    <mat-card-content>
+      <form
+        class="ng-untouched ng-pristine ng-valid"
+        novalidate=""
+      >
+        <p>
+          <mat-form-field>
+            <input
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="username"
+              matinput=""
+              placeholder="Username"
+              type="text"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input
+              class="ng-untouched ng-pristine ng-valid"
+              formcontrolname="password"
+              matinput=""
+              placeholder="Password"
+              type="password"
+            />
+          </mat-form-field>
+        </p>
+        
+        <p
+          class="loginError"
+        >
+           Invalid credentials 
+        </p>
+        <p
+          class="loginButtons"
+        >
+          <button
+            mat-button=""
+            type="submit"
+          >
+            Login
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</bc-login-form>
+`;

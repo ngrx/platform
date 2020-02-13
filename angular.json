@@ -1,13 +1,12 @@
 {
-  "$schema":
-    "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "",
   "defaultProject": "example-app",
   "projects": {
     "example-app": {
-      "root": "",
-      "sourceRoot": "projects/example-app/src",
+      "root": "apps/example-app",
+      "sourceRoot": "apps/example-app/src",
       "projectType": "application",
       "prefix": "bc",
       "schematics": {},
@@ -16,16 +15,16 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "projects/example-app/dist",
-            "index": "projects/example-app/src/index.html",
-            "main": "projects/example-app/src/main.ts",
-            "polyfills": "projects/example-app/src/polyfills.ts",
-            "tsConfig": "projects/example-app/tsconfig.app.json",
+            "outputPath": "dist/apps/example-app",
+            "index": "apps/example-app/src/index.html",
+            "main": "apps/example-app/src/main.ts",
+            "polyfills": "apps/example-app/src/polyfills.ts",
+            "tsConfig": "apps/example-app/tsconfig.app.json",
             "assets": [
-              "projects/example-app/src/favicon.ico",
-              "projects/example-app/src/assets"
+              "apps/example-app/src/favicon.ico",
+              "apps/example-app/src/assets"
             ],
-            "styles": ["projects/example-app/src/styles.css"],
+            "styles": ["apps/example-app/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -38,10 +37,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace":
-                    "projects/example-app/src/environments/environment.ts",
-                  "with":
-                    "projects/example-app/src/environments/environment.prod.ts"
+                  "replace": "apps/example-app/src/environments/environment.ts",
+                  "with": "apps/example-app/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -76,13 +73,457 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/example-app/tsconfig.app.json",
-              "projects/example-app/tsconfig.spec.json"
+              "apps/example-app/tsconfig.app.json",
+              "apps/example-app/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }
         }
       }
+    },
+    "store": {
+      "projectType": "library",
+      "root": "modules/store",
+      "sourceRoot": "modules/store/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/store/tsconfig-build.json",
+            "project": "modules/store/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build store"
+              },
+              {
+                "command": "yarn tsc -p modules/store/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/store/tsconfig-build.json",
+              "modules/store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/store/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/store/jest.config.js",
+            "tsConfig": "modules/store/tsconfig.spec.json",
+            "setupFile": "modules/store/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "effects": {
+      "projectType": "library",
+      "root": "modules/effects",
+      "sourceRoot": "modules/effects/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/effects/tsconfig-build.json",
+            "project": "modules/effects/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build effects"
+              },
+              {
+                "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/effects/tsconfig-build.json",
+              "modules/effects/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/effects/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/effects/jest.config.js",
+            "tsConfig": "modules/effects/tsconfig.spec.json",
+            "setupFile": "modules/effects/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "data": {
+      "projectType": "library",
+      "root": "modules/data",
+      "sourceRoot": "modules/data/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/data/tsconfig-build.json",
+            "project": "modules/data/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build data"
+              },
+              {
+                "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/data/tsconfig-build.json",
+              "modules/data/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/data/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/data/jest.config.js",
+            "tsConfig": "modules/data/tsconfig.spec.json",
+            "setupFile": "modules/data/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "entity": {
+      "projectType": "library",
+      "root": "modules/entity",
+      "sourceRoot": "modules/entity/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/entity/tsconfig-build.json",
+            "project": "modules/entity/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build entity"
+              },
+              {
+                "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/entity/tsconfig-build.json",
+              "modules/entity/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/entity/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/entity/jest.config.js",
+            "tsConfig": "modules/entity/tsconfig.spec.json",
+            "setupFile": "modules/entity/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "store-devtools": {
+      "projectType": "library",
+      "root": "modules/store-devtools",
+      "sourceRoot": "modules/store-devtools/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/store-devtools/tsconfig-build.json",
+            "project": "modules/store-devtools/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build store-devtools"
+              },
+              {
+                "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/store-devtools/tsconfig-build.json",
+              "modules/store-devtools/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/store-devtools/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/store-devtools/jest.config.js",
+            "tsConfig": "modules/store-devtools/tsconfig.spec.json",
+            "setupFile": "modules/store-devtools/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "router-store": {
+      "projectType": "library",
+      "root": "modules/router-store",
+      "sourceRoot": "modules/router-store/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/router-store/tsconfig-build.json",
+            "project": "modules/router-store/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build router-store"
+              },
+              {
+                "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/router-store/tsconfig-build.json",
+              "modules/router-store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/router-store/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/router-store/jest.config.js",
+            "tsConfig": "modules/router-store/tsconfig.spec.json",
+            "setupFile": "modules/router-store/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "schematics": {
+      "root": "modules/schematics",
+      "sourceRoot": "modules/schematics/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/schematics/tsconfig.lib.json",
+              "modules/schematics/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/schematics/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/schematics/jest.config.js",
+            "tsConfig": "modules/schematics/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/modules/schematics",
+            "tsConfig": "modules/schematics/tsconfig-build.json",
+            "packageJson": "modules/schematics/package.json",
+            "main": "modules/schematics/src/index.ts",
+            "sourceMap": false,
+            "assets": [
+              "collection.json",
+              {
+                "input": "./modules/schematics/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./modules/schematics",
+                "glob": "collection.json",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build schematics"
+              },
+              {
+                "command": "yarn tsc -p modules/schematics/tsconfig.schematics.json"
+              },
+              {
+                "command": "cp modules/schematics/collection.json dist/modules/schematics/collection.json"
+              },
+              {
+                "command": "cp modules/schematics/migrations/migration.json dist/modules/schematics/migrations/migration.json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "schematics-e2e": {
+      "projectType": "application",
+      "root": "apps/schematics-e2e",
+      "sourceRoot": "apps/schematics-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "schematics:build",
+            "npmPackageName": "@ngrx/schematics",
+            "pluginOutputPath": "dist/modules/schematics",
+            "jestConfig": "apps/schematics-e2e/jest.config.js",
+            "tsSpecConfig": "apps/schematics-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "component": {
+      "projectType": "library",
+      "root": "modules/component",
+      "sourceRoot": "modules/component/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/component/tsconfig-build.json",
+            "project": "modules/component/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/component/tsconfig-build.json",
+              "modules/component/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/component/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/component/jest.config.js",
+            "tsConfig": "modules/component/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "modules/component/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "component-store": {
+      "projectType": "library",
+      "root": "modules/component-store",
+      "sourceRoot": "modules/component-store/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "modules/component-store/tsconfig-build.json",
+            "project": "modules/component-store/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/component-store/tsconfig-build.json",
+              "modules/component-store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/component-store/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/component-store/jest.config.js",
+            "tsConfig": "modules/component-store/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "modules/component-store/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "schematics": {
@@ -99,6 +540,7 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@nrwl/angular"
   }
 }

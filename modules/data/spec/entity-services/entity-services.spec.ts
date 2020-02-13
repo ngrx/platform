@@ -148,19 +148,14 @@ describe('EntityServices', () => {
       const { entityServices } = entityServicesSetup();
 
       // Skip initial value. Want the first one after merge is dispatched
-      entityServices.entityCache$
-        .pipe(
-          skip(1),
-          first()
-        )
-        .subscribe(cache => {
-          expect(cache['Hero'].ids).toEqual([1, 2], 'has merged heroes');
-          expect(cache['Villain'].entities['DE']).toEqual(
-            villain,
-            'has merged villain'
-          );
-          done();
-        });
+      entityServices.entityCache$.pipe(skip(1), first()).subscribe(cache => {
+        expect(cache['Hero'].ids).toEqual([1, 2], 'has merged heroes');
+        expect(cache['Villain'].entities['DE']).toEqual(
+          villain,
+          'has merged villain'
+        );
+        done();
+      });
       entityServices.dispatch(action);
     });
   });

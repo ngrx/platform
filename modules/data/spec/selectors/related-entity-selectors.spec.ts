@@ -216,21 +216,18 @@ describe('Related-entity Selectors', () => {
       const selectHeroBattleMap = createSelector(
         selectBattleEntities,
         battles =>
-          battles.reduce(
-            (acc, battle) => {
-              const hid = battle.heroFk;
-              if (hid) {
-                const hbs = acc[hid];
-                if (hbs) {
-                  hbs.push(battle);
-                } else {
-                  acc[hid] = [battle];
-                }
+          battles.reduce((acc, battle) => {
+            const hid = battle.heroFk;
+            if (hid) {
+              const hbs = acc[hid];
+              if (hbs) {
+                hbs.push(battle);
+              } else {
+                acc[hid] = [battle];
               }
-              return acc;
-            },
-            {} as { [heroId: number]: Battle[] }
-          )
+            }
+            return acc;
+          }, {} as { [heroId: number]: Battle[] })
       );
 
       return {
@@ -310,21 +307,18 @@ describe('Related-entity Selectors', () => {
       const selectHeroPowerIds = createSelector(
         selectHeroPowerMapEntities,
         hpMaps =>
-          hpMaps.reduce(
-            (acc, hpMap) => {
-              const hid = hpMap.heroFk;
-              if (hid) {
-                const hpIds = acc[hid];
-                if (hpIds) {
-                  hpIds.push(hpMap.powerFk);
-                } else {
-                  acc[hid] = [hpMap.powerFk];
-                }
+          hpMaps.reduce((acc, hpMap) => {
+            const hid = hpMap.heroFk;
+            if (hid) {
+              const hpIds = acc[hid];
+              if (hpIds) {
+                hpIds.push(hpMap.powerFk);
+              } else {
+                acc[hid] = [hpMap.powerFk];
               }
-              return acc;
-            },
-            {} as { [heroId: number]: number[] }
-          )
+            }
+            return acc;
+          }, {} as { [heroId: number]: number[] })
       );
 
       return {

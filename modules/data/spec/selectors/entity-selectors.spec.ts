@@ -91,7 +91,10 @@ describe('EntitySelectors', () => {
     let heroEntities: Hero[];
 
     beforeEach(() => {
-      heroEntities = [{ id: 42, name: 'A' }, { id: 48, name: 'B' }];
+      heroEntities = [
+        { id: 42, name: 'A' },
+        { id: 48, name: 'B' },
+      ];
 
       heroCollection = <HeroCollection>(<any>{
         ids: [42, 48],

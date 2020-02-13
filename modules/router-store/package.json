@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/router-store",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "9.1.2",
   "description": "Bindings to connect @angular/router to @ngrx/store",
   "repository": {
     "type": "git",
@@ -20,16 +20,24 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "NG_VERSION",
-    "@angular/core": "NG_VERSION",
-    "@angular/router": "NG_VERSION",
-    "@ngrx/store": "0.0.0-PLACEHOLDER",
-    "rxjs": "RXJS_VERSION"
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0",
+    "@angular/router": "^9.0.0",
+    "@ngrx/store": "9.1.2",
+    "rxjs": "^6.5.3"
   },
-  "schematics": "MODULE_SCHEMATICS_COLLECTION",
+  "schematics": "./schematics/collection.json",
   "ng-update": {
-    "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
-    "migrations": "NG_UPDATE_MIGRATIONS"
+    "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools"
+    ],
+    "migrations": "./migrations/migration.json"
   },
   "sideEffects": false
 }

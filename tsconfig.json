@@ -12,12 +12,12 @@
     "outDir": "../out-tsc/app",
     "target": "es5",
     "module": "commonjs",
-    "baseUrl": "",
-    "rootDir": "./",
+    "baseUrl": ".",
+    "rootDir": ".",
     "strict": true,
     "paths": {
-      "@ngrx/component": ["./modules/component"],
-      "@ngrx/component-store": ["./modules/component-store"],
+      "@ngrx/component": ["modules/component"],
+      "@ngrx/component-store": ["modules/component-store"],
       "@ngrx/data": ["./modules/data"],
       "@ngrx/data/schematics-core": ["./modules/data/schematics-core"],
       "@ngrx/effects": ["./modules/effects"],
@@ -40,7 +40,7 @@
       "@ngrx/schematics/schematics-core": [
         "./modules/schematics/schematics-core"
       ],
-      "@example-app/*": ["./projects/example-app/src/app/*"]
+      "@example-app/*": ["./apps/example-app/src/app/*"]
     },
     "typeRoots": ["node_modules/@types"]
   },

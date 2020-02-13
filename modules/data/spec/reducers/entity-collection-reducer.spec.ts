@@ -124,7 +124,10 @@ describe('EntityCollectionReducer', () => {
 
     it('QUERY_ALL_SUCCESS can create the initial collection', () => {
       let state = entityReducer({}, queryAction);
-      const heroes: Hero[] = [{ id: 2, name: 'B' }, { id: 1, name: 'A' }];
+      const heroes: Hero[] = [
+        { id: 2, name: 'B' },
+        { id: 1, name: 'A' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_ALL_SUCCESS, heroes);
       state = entityReducer(state, action);
       const collection = state['Hero'];
@@ -138,7 +141,10 @@ describe('EntityCollectionReducer', () => {
 
     it('QUERY_ALL_SUCCESS sets the loaded flag and clears loading flag', () => {
       let state = entityReducer({}, queryAction);
-      const heroes: Hero[] = [{ id: 2, name: 'B' }, { id: 1, name: 'A' }];
+      const heroes: Hero[] = [
+        { id: 2, name: 'B' },
+        { id: 1, name: 'A' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_ALL_SUCCESS, heroes);
       state = entityReducer(state, action);
       const collection = state['Hero'];
@@ -208,7 +214,10 @@ describe('EntityCollectionReducer', () => {
 
     it('QUERY_ALL_SUCCESS can add and update existing collection', () => {
       let state = entityReducer(initialCache, queryAction);
-      const heroes: Hero[] = [{ id: 3, name: 'C' }, { id: 1, name: 'A+' }];
+      const heroes: Hero[] = [
+        { id: 3, name: 'C' },
+        { id: 1, name: 'A+' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_ALL_SUCCESS, heroes);
       state = entityReducer(state, action);
       const collection = state['Hero'];
@@ -446,7 +455,10 @@ describe('EntityCollectionReducer', () => {
 
     it('QUERY_MANY_SUCCESS can add and update existing collection', () => {
       let state = entityReducer(initialCache, queryAction);
-      const heroes: Hero[] = [{ id: 3, name: 'C' }, { id: 1, name: 'A+' }];
+      const heroes: Hero[] = [
+        { id: 3, name: 'C' },
+        { id: 1, name: 'A+' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_MANY_SUCCESS, heroes);
       state = entityReducer(state, action);
       const collection = state['Hero'];
@@ -550,7 +562,10 @@ describe('EntityCollectionReducer', () => {
 
     it('QUERY_LOAD_SUCCESS fills collection, clears loading flag, and sets loaded flag', () => {
       let state = entityReducer({}, queryAction);
-      const heroes: Hero[] = [{ id: 2, name: 'B' }, { id: 1, name: 'A' }];
+      const heroes: Hero[] = [
+        { id: 2, name: 'B' },
+        { id: 1, name: 'A' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_LOAD_SUCCESS, heroes);
       state = entityReducer(state, action);
       const collection = state['Hero'];
@@ -599,7 +614,10 @@ describe('EntityCollectionReducer', () => {
         },
       };
       state = entityReducer(state, queryAction);
-      const heroes: Hero[] = [{ id: 2, name: 'B' }, { id: 1, name: 'A' }];
+      const heroes: Hero[] = [
+        { id: 2, name: 'B' },
+        { id: 1, name: 'A' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_LOAD_SUCCESS, heroes);
       state = entityReducer(state, action);
       const collection = state['Hero'];
@@ -2572,7 +2590,10 @@ describe('EntityCollectionReducer', () => {
       expect(collection.loaded).toBe(false, 'should not be loaded at first');
       expect(collection.loading).toBe(true, 'should be loading at first');
 
-      const heroes: Hero[] = [{ id: 2, name: 'B' }, { id: 1, name: 'A' }];
+      const heroes: Hero[] = [
+        { id: 2, name: 'B' },
+        { id: 1, name: 'A' },
+      ];
       const action = createAction('Hero', EntityOp.QUERY_LOAD_SUCCESS, heroes);
       state = entityReducer(state, action);
       collection = state['Hero'];
@@ -2666,9 +2687,7 @@ describe('EntityCollectionReducer', () => {
 
           default:
             throw new Error(
-              `${
-                action.payload.entityOp
-              } is an illegal operation for the "Hero" collection`
+              `${action.payload.entityOp} is an illegal operation for the "Hero" collection`
             );
         }
       };
@@ -2684,13 +2703,10 @@ describe('EntityCollectionReducer', () => {
     return {
       ...collectionCreator.create<T>(entityName),
       ids: data.map(e => selectId(e)) as string[] | number[],
-      entities: data.reduce(
-        (acc, e) => {
-          acc[selectId(e)] = e;
-          return acc;
-        },
-        {} as any
-      ),
+      entities: data.reduce((acc, e) => {
+        acc[selectId(e)] = e;
+        return acc;
+      }, {} as any),
     } as EntityCollection<T>;
   }
 

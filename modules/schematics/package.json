@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/schematics",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "9.1.2",
   "description": "NgRx Schematics for Angular",
   "repository": {
     "type": "git",
@@ -22,7 +22,15 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "schematics": "./collection.json",
   "ng-update": {
-    "packageGroup": "NG_UPDATE_PACKAGE_GROUP",
-    "migrations": "NG_UPDATE_MIGRATIONS"
+    "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools"
+    ],
+    "migrations": "./migrations/migration.json"
   }
 }

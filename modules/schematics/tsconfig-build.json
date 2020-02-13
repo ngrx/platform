@@ -1,16 +1,23 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "downlevelIteration": true,
-    "outDir": "../../dist/packages/schematics",
+    "outDir": "../../dist/modules/schematics",
+    "paths": {
+      "@ngrx/schematics/schematics-core": ["./schematics-core"]
+    },
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "strict": true
   },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
     "enableSummariesForJit": false,

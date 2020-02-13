@@ -590,13 +590,10 @@ describe('EntityCacheReducer', () => {
     return {
       ...collectionCreator.create<T>(entityName),
       ids: data.map(e => selectId(e)) as string[] | number[],
-      entities: data.reduce(
-        (acc, e) => {
-          acc[selectId(e)] = e;
-          return acc;
-        },
-        {} as any
-      ),
+      entities: data.reduce((acc, e) => {
+        acc[selectId(e)] = e;
+        return acc;
+      }, {} as any),
     } as EntityCollection<T>;
   }
 

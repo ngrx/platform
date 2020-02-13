@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Find Book Page should compile 1`] = `
+<bc-find-book-page
+  books$={[Function Store]}
+  error$={[Function Store]}
+  loading$={[Function Store]}
+  searchQuery$={[Function Store]}
+  store={[Function MockStore]}
+>
+  <bc-book-search>
+    <mat-card
+      class="mat-card _mat-animation-noopable"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Find a Book
+      </mat-card-title>
+      <mat-card-content
+        class="mat-card-content"
+      >
+        <mat-form-field
+          class="mat-form-field ng-tns-c1-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder _mat-animation-noopable"
+        >
+          <div
+            class="mat-form-field-wrapper"
+          >
+            <div
+              class="mat-form-field-flex"
+            >
+              
+              
+              <div
+                class="mat-form-field-infix"
+              >
+                <input
+                  aria-invalid="false"
+                  aria-required="false"
+                  class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                  id="mat-input-0"
+                  matinput=""
+                  placeholder="Search for a book"
+                />
+                <span
+                  class="mat-form-field-label-wrapper"
+                >
+                  
+                  <label
+                    aria-owns="mat-input-0"
+                    class="mat-form-field-label ng-tns-c1-0 mat-empty mat-form-field-empty ng-star-inserted"
+                    for="mat-input-0"
+                    id="mat-form-field-label-1"
+                  >
+                    
+                    
+                    <span
+                      class="ng-tns-c1-0 ng-star-inserted"
+                    >
+                      Search for a book
+                    </span>
+                    
+                    
+                  </label>
+                </span>
+              </div>
+              
+            </div>
+            
+            <div
+              class="mat-form-field-underline ng-tns-c1-0 ng-star-inserted"
+            >
+              <span
+                class="mat-form-field-ripple"
+              />
+            </div>
+            <div
+              class="mat-form-field-subscript-wrapper"
+            >
+              
+              
+              <div
+                class="mat-form-field-hint-wrapper ng-tns-c1-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+              >
+                
+                <div
+                  class="mat-form-field-hint-spacer"
+                />
+              </div>
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-spinner
+          class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation _mat-animation-noopable"
+          mode="indeterminate"
+          role="progressbar"
+          style="width: 30px; height: 30px;"
+        >
+          <svg
+            focusable="false"
+            preserveAspectRatio="xMidYMid meet"
+            style="width: 30px; height: 30px;"
+            viewBox="0 0 23 23"
+          >
+            
+            <circle
+              class="ng-star-inserted"
+              cx="50%"
+              cy="50%"
+              r="10"
+              style="animation-name: mat-progress-spinner-stroke-rotate-30; stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
+            />
+            
+          </svg>
+        </mat-spinner>
+      </mat-card-content>
+      <mat-card-footer
+        class="mat-card-footer"
+      >
+        
+      </mat-card-footer>
+    </mat-card>
+  </bc-book-search><bc-book-preview-list>
+    
+  </bc-book-preview-list>
+</bc-find-book-page>
+`;

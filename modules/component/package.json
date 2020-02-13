@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "9.1.2",
   "description": "Reactive Extensions for Angular Components",
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "NG_VERSION",
-    "@angular/core": "NG_VERSION",
-    "rxjs": "RXJS_VERSION"
+    "@angular/common": "^9.0.0",
+    "@angular/core": "^9.0.0",
+    "rxjs": "^6.5.3"
   },
   "sideEffects": false
 }

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "outDir": "../../dist/modules/store-devtools",
+    "paths": {
+      "@ngrx/store-devtools/schematics-core": ["./schematics-core"]
+    },
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": ["migrations/**/*.ts", "schematics/**/*.ts"],
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true,
+    "enableSummariesForJit": false,
+    "enableIvy": false
+  }
+}

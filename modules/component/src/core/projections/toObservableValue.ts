@@ -7,11 +7,6 @@ import { from, of, Observable, ObservableInput } from 'rxjs';
  * It takes `null`, `undefined` or `Observable<T>` and returns `Observable<null, undefined, T>`.
  * Every other value throws an error.
  *
- * @param {Observable<T> | Promise<T> | undefined | null} p -
- * @returns {Observable<T| undefined | null>} - proper observable values
- *
- * @usageNotes
- *
  * ```ts
  * import { toObservableValue } from `projections/toObservableValue`;
  *
@@ -21,7 +16,7 @@ import { from, of, Observable, ObservableInput } from 'rxjs';
  * ```
  */
 export function toObservableValue<T>(
-  p: ObservableInput<T> | undefined | null
+  p: ObservableInput<any>
 ): Observable<T | undefined | null> {
-  return p == null ? of(p) : from(p);
+  return p ? from(p) : of(p);
 }
