@@ -3,7 +3,10 @@ export { EffectConfig } from './models';
 export { Effect } from './effect_decorator';
 export { getEffectsMetadata } from './effects_metadata';
 export { mergeEffects } from './effects_resolver';
-export { EffectsErrorHandler } from './effects_error_handler';
+export {
+  EffectsErrorHandler,
+  defaultEffectsErrorHandler,
+} from './effects_error_handler';
 export { EffectsMetadata, CreateEffectMetadata } from './models';
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';
