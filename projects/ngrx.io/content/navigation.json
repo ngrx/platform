@@ -112,6 +112,10 @@
             {
               "title": "Downgrade for AngularJS",
               "url": "guide/store/recipes/downgrade"
+            },
+            {
+              "title": "Existing Projects",
+              "url": "guide/store/recipes/adding"
             }
           ]
         },
@@ -439,8 +443,7 @@
         {
           "url": "https://stackoverflow.com/questions/tagged/ngrx",
           "title": "Stack Overflow",
-          "tooltip":
-            "Stack Overflow: where the community answers your technical NgRx questions."
+          "tooltip": "Stack Overflow: where the community answers your technical NgRx questions."
         },
         {
           "url": "https://gitter.im/ngrx/platform",
