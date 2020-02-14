@@ -63,7 +63,7 @@ describe('Mock Store', () => {
     mockStore.resetSelectors();
   });
 
-  it('should provide the same instance with Store and MockStore', (done: DoneFn) => {
+  it('should provide the same instance with Store and MockStore', () => {
     const fromStore = TestBed.get(Store);
     const fromMockStore = TestBed.get(MockStore);
     expect(fromStore).toBe(fromMockStore);
