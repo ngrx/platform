@@ -63,6 +63,12 @@ describe('Mock Store', () => {
     mockStore.resetSelectors();
   });
 
+  it('should provide the same instance with Store and MockStore', () => {
+    const fromStore = TestBed.get(Store);
+    const fromMockStore = TestBed.get(MockStore);
+    expect(fromStore).toBe(fromMockStore);
+  });
+
   it('should set the initial state to a mocked one', (done: DoneFn) => {
     const fixedState = {
       counter1: 17,

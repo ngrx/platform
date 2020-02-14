@@ -28,7 +28,7 @@ export function provideMockStore<T = any>(
     { provide: MOCK_SELECTORS, useValue: config.selectors },
     { provide: StateObservable, useClass: MockState },
     { provide: ReducerManager, useClass: MockReducerManager },
-    { provide: Store, useClass: MockStore },
+    { provide: Store, useExisting: MockStore },
   ];
 }
 
