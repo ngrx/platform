@@ -3,4 +3,4 @@ import { createAction } from '@ngrx/store';
 /**
  * Load Collection Action
  */
-export const loadCollection = createAction('[Collection Page] Load Collection');
+export const loadCollectionEnter = createAction('[Collection Page] Enter');

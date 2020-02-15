@@ -21,7 +21,7 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(CollectionPageActions.loadCollection, state => ({
+  on(CollectionPageActions.loadCollectionEnter, state => ({
     ...state,
     loading: true,
   })),
