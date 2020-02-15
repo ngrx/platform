@@ -175,7 +175,7 @@ Many Angular APIs produce _RxJS Observables_ so programming "reactively" with _O
 Some folks try to conquer the "too much boilerplate" problem by generating the code.
 
 Adding the `Foo` entity type? Run a code generator to produce _actions_, _action-creators_, _reducers_, _effects_, _dispatchers_, and _selectors_ for `Foo`.
-Run another one to product the service that makes HTTP GET, PUT, POST, and DELETE calls for `Foo`.
+Run another one to produce the service that makes HTTP GET, PUT, POST, and DELETE calls for `Foo`.
 
 Maybe it generates canned tests for them too.
 
