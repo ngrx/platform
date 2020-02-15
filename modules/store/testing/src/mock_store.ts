@@ -78,14 +78,14 @@ export class MockStore<T = object> extends Store<T> {
   ): OnlyMemoized<typeof selector, Result> {
     this.selectors.set(selector, value);
 
-    const resultSelector: OnlyMemoized<typeof selector, Result> =
+    const resultSelector: Memoized<Result> =
       typeof selector === 'string'
         ? createSelector(() => {}, (): Result => value)
-        : ((selector as unknown) as OnlyMemoized<typeof selector, Result>);
+        : selector;
 
     resultSelector.setResult(value);
 
-    return resultSelector;
+    return resultSelector as OnlyMemoized<typeof selector, Result>;
   }
 
   resetSelectors() {
