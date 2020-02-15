@@ -1,6 +1,6 @@
 import { ErrorHandler, Inject, Injectable } from '@angular/core';
-import { Action, Store } from '@ngrx/store';
-import { Notification, Observable, Subject } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { Notification, Observable, Subject, merge } from 'rxjs';
 import {
   dematerialize,
   exhaustMap,
@@ -8,7 +8,7 @@ import {
   groupBy,
   map,
   mergeMap,
-  tap,
+  take,
 } from 'rxjs/operators';
 
 import {
@@ -33,7 +33,6 @@ import { getSourceForInstance } from './utils';
 export class EffectSources extends Subject<any> {
   constructor(
     private errorHandler: ErrorHandler,
-    private store: Store<any>,
     @Inject(EFFECTS_ERROR_HANDLER)
     private effectsErrorHandler: EffectsErrorHandler
   ) {
@@ -51,20 +50,16 @@ export class EffectSources extends Subject<any> {
     return this.pipe(
       groupBy(getSourceForInstance),
       mergeMap(source$ => {
-        return source$.pipe(
-          groupBy(effectsInstance),
-          tap(() => {
-            if (isOnInitEffects(source$.key)) {
-              this.store.dispatch(source$.key.ngrxOnInitEffects());
-            }
-          })
-        );
+        return source$.pipe(groupBy(effectsInstance));
       }),
-      mergeMap(source$ =>
-        source$.pipe(
-          exhaustMap(
-            resolveEffectSource(this.errorHandler, this.effectsErrorHandler)
-          ),
+      mergeMap(source$ => {
+        const effect$ = source$.pipe(
+          exhaustMap(sourceInstance => {
+            return resolveEffectSource(
+              this.errorHandler,
+              this.effectsErrorHandler
+            )(sourceInstance);
+          }),
           map(output => {
             reportInvalidActions(output, this.errorHandler);
             return output.notification;
@@ -74,8 +69,18 @@ export class EffectSources extends Subject<any> {
               notification.kind === 'N'
           ),
           dematerialize()
-        )
-      )
+        );
+
+        // start the stream with an INIT action
+        // do this only for the first Effect instance
+        const init$ = source$.pipe(
+          take(1),
+          filter(isOnInitEffects),
+          map(instance => instance.ngrxOnInitEffects())
+        );
+
+        return merge(effect$, init$);
+      })
     );
   }
 }
