@@ -18,19 +18,19 @@ import { MOCK_SELECTORS } from './tokens';
 if (typeof afterEach === 'function') {
   afterEach(() => {
     try {
-      const store = TestBed.inject(Store) as Store<any> | undefined;
-      if (store && typeof (store as MockStore).resetSelectors === 'function') {
-        (store as MockStore).resetSelectors();
+      const mockStore: MockStore | undefined = TestBed.inject(MockStore);
+      if (mockStore) {
+        mockStore.resetSelectors();
       }
     } catch {}
   });
 }
 
-type OnlyMemoized<T, Result> = T extends string
+type OnlyMemoized<T, Result> = T extends string | MemoizedSelector<any, any>
   ? MemoizedSelector<any, Result>
-  : T extends MemoizedSelector<any, any>
-    ? Extract<T, MemoizedSelector<any, any>>
-    : Extract<T, MemoizedSelectorWithProps<any, any, any>>;
+  : T extends MemoizedSelectorWithProps<any, any, any>
+    ? MemoizedSelectorWithProps<any, any, Result>
+    : never;
 
 type Memoized<Result> =
   | MemoizedSelector<any, Result>
@@ -38,12 +38,7 @@ type Memoized<Result> =
 
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
-  private readonly selectors = new Map<
-    | string
-    | MemoizedSelector<any, any>
-    | MemoizedSelectorWithProps<any, any, any>,
-    any
-  >();
+  private readonly selectors = new Map<Memoized<any> | string, any>();
 
   readonly scannedActions$: Observable<Action>;
   private lastState?: T;
@@ -69,22 +64,28 @@ export class MockStore<T = object> extends Store<T> {
     this.lastState = nextState;
   }
 
-  overrideSelector<Result, Value extends Result>(
-    selector:
-      | MemoizedSelector<any, Result>
-      | MemoizedSelectorWithProps<any, any, Result>
-      | string,
+  overrideSelector<
+    Selector extends Memoized<Result>,
+    Value extends Result,
+    Result = Selector extends MemoizedSelector<any, infer T>
+      ? T
+      : Selector extends MemoizedSelectorWithProps<any, any, infer U>
+        ? U
+        : Value
+  >(
+    selector: Selector | string,
     value: Value
   ): OnlyMemoized<typeof selector, Result> {
     this.selectors.set(selector, value);
 
-    if (typeof selector === 'string') {
-      const stringSelector = createSelector(() => {}, (): Result => value);
-      return stringSelector;
-    }
-    selector.setResult(value);
+    const resultSelector: OnlyMemoized<typeof selector, Result> =
+      typeof selector === 'string'
+        ? createSelector(() => {}, (): Result => value)
+        : ((selector as unknown) as OnlyMemoized<typeof selector, Result>);
 
-    return selector as OnlyMemoized<typeof selector, Result>;
+    resultSelector.setResult(value);
+
+    return resultSelector;
   }
 
   resetSelectors() {
