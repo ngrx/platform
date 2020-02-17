@@ -11,7 +11,7 @@ import {
 } from '@example-app/books/actions';
 import { BookEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
-import { GoogleBooksService } from '@example-app/core/services/google-books.service';
+import { GoogleBooksService } from '@example-app/core/services';
 
 describe('BookEffects', () => {
   let effects: BookEffects;

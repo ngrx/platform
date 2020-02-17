@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { cold } from 'jasmine-marbles';
 
-import { GoogleBooksService } from '@example-app/core/services/google-books.service';
+import { GoogleBooksService } from './google-books.service';
 
 describe('Service: GoogleBooks', () => {
   let service: GoogleBooksService;
