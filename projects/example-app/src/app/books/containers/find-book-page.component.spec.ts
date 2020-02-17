@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { FindBookPageActions } from '@example-app/books/actions';
@@ -21,7 +20,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('Find Book Page', () => {
   let fixture: ComponentFixture<FindBookPageComponent>;
-  let store: MockStore<fromBooks.State>;
+  let store: MockStore;
   let instance: FindBookPageComponent;
 
   beforeEach(() => {
@@ -55,7 +54,7 @@ describe('Find Book Page', () => {
 
     fixture = TestBed.createComponent(FindBookPageComponent);
     instance = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.inject(MockStore);
 
     spyOn(store, 'dispatch');
   });

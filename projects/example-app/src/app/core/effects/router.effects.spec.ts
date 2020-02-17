@@ -26,8 +26,8 @@ describe('RouterEffects', () => {
       ],
     });
 
-    effects = TestBed.get(RouterEffects);
-    titleService = TestBed.get(Title);
+    effects = TestBed.inject(RouterEffects);
+    titleService = TestBed.inject(Title);
   });
 
   describe('updateTitle$', () => {

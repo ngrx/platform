@@ -30,9 +30,9 @@ describe('BookEffects', () => {
       ],
     });
 
-    effects = TestBed.get(BookEffects);
-    googleBooksService = TestBed.get(GoogleBooksService);
-    actions$ = TestBed.get(Actions);
+    effects = TestBed.inject(BookEffects);
+    googleBooksService = TestBed.inject(GoogleBooksService);
+    actions$ = TestBed.inject(Actions);
   });
 
   describe('search$', () => {

@@ -50,9 +50,9 @@ describe('CollectionEffects', () => {
       ],
     });
 
-    db = TestBed.get(BookStorageService);
-    effects = TestBed.get(CollectionEffects);
-    actions$ = TestBed.get(Actions);
+    db = TestBed.inject(BookStorageService);
+    effects = TestBed.inject(CollectionEffects);
+    actions$ = TestBed.inject(Actions);
   });
   describe('checkStorageSupport$', () => {
     it('should call db.checkStorageSupport when initially subscribed to', () => {
