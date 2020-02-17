@@ -97,5 +97,5 @@ class HostComponent {
   path = 'code-path';
   hidecopy: boolean | string = false;
 
-  @ViewChild(CodeExampleComponent) codeExampleComponent: CodeExampleComponent;
+  @ViewChild(CodeExampleComponent, { static: true }) codeExampleComponent: CodeExampleComponent;
 }

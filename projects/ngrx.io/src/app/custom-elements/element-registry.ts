@@ -1,4 +1,5 @@
 import { InjectionToken, Type } from '@angular/core';
+import { LoadChildrenCallback } from '@angular/router';
 
 // Modules containing custom elements must be set up as lazy-loaded routes (loadChildren)
 // TODO(andrewjs): This is a hack, Angular should have first-class support for preparing a module
@@ -7,66 +8,66 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
   {
     selector: 'aio-announcement-bar',
     loadChildren:
-      './announcement-bar/announcement-bar.module#AnnouncementBarModule',
+      () => import('./announcement-bar/announcement-bar.module').then(m => m.AnnouncementBarModule),
   },
   {
     selector: 'aio-api-list',
-    loadChildren: './api/api-list.module#ApiListModule',
+    loadChildren: () => import('./api/api-list.module').then(m => m.ApiListModule),
   },
   {
     selector: 'aio-contributor-list',
-    loadChildren: './contributor/contributor-list.module#ContributorListModule',
+    loadChildren: () => import('./contributor/contributor-list.module').then(m => m.ContributorListModule),
   },
   {
     selector: 'aio-event-list',
-    loadChildren: './events/event-list.module#EventListModule',
+    loadChildren: () => import('./events/event-list.module').then(m => m.EventListModule),
   },
   {
     selector: 'aio-file-not-found-search',
     loadChildren:
-      './search/file-not-found-search.module#FileNotFoundSearchModule',
+      () => import('./search/file-not-found-search.module').then(m => m.FileNotFoundSearchModule),
   },
   {
     selector: 'aio-resource-list',
-    loadChildren: './resource/resource-list.module#ResourceListModule',
+    loadChildren: () => import('./resource/resource-list.module').then(m => m.ResourceListModule),
   },
   {
     selector: 'aio-toc',
-    loadChildren: './toc/toc.module#TocModule',
+    loadChildren: () => import('./toc/toc.module').then(m => m.TocModule),
   },
   {
     selector: 'code-example',
-    loadChildren: './code/code-example.module#CodeExampleModule',
+    loadChildren: () => import('./code/code-example.module').then(m => m.CodeExampleModule),
   },
   {
     selector: 'code-tabs',
-    loadChildren: './code/code-tabs.module#CodeTabsModule',
+    loadChildren: () => import('./code/code-tabs.module').then(m => m.CodeTabsModule),
   },
   {
     selector: 'current-location',
     loadChildren:
-      './current-location/current-location.module#CurrentLocationModule',
+      () => import('./current-location/current-location.module').then(m => m.CurrentLocationModule),
   },
   {
     selector: 'expandable-section',
     loadChildren:
-      './expandable-section/expandable-section.module#ExpandableSectionModule',
+      () => import('./expandable-section/expandable-section.module').then(m => m.ExpandableSectionModule),
   },
   {
     selector: 'live-example',
-    loadChildren: './live-example/live-example.module#LiveExampleModule',
+    loadChildren: () => import('./live-example/live-example.module').then(m => m.LiveExampleModule),
   },
   {
     selector: 'ngrx-circles',
-    loadChildren: './ngrx/circles.module#CirclesModule',
+    loadChildren: () => import('./ngrx/circles.module').then(m => m.CirclesModule),
   },
   {
     selector: 'ngrx-code-block',
-    loadChildren: './ngrx/code-block.module#CodeBlockModule',
+    loadChildren: () => import('./ngrx/code-block.module').then(m => m.CodeBlockModule),
   },
   {
     selector: 'ngrx-store-animation',
-    loadChildren: './ngrx/store-animation.module#StoreAnimationModule',
+    loadChildren: () => import('./ngrx/store-animation.module').then(m => m.StoreAnimationModule),
   },
 ];
 
@@ -84,7 +85,7 @@ export const ELEMENT_MODULE_PATHS_TOKEN = new InjectionToken(
 );
 
 /** Map of possible custom element selectors to their lazy-loadable module paths. */
-export const ELEMENT_MODULE_PATHS = new Map<string, string>();
+export const ELEMENT_MODULE_PATHS = new Map<string, LoadChildrenCallback>();
 ELEMENT_MODULE_PATHS_AS_ROUTES.forEach(route => {
   ELEMENT_MODULE_PATHS.set(route.selector, route.loadChildren);
 });
