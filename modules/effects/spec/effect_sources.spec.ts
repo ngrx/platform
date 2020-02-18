@@ -69,89 +69,6 @@ describe('EffectSources', () => {
     expect(effectSources.next).toHaveBeenCalledWith(effectSource);
   });
 
-  it('should dispatch an action on ngrxOnInitEffects after being registered', () => {
-    class EffectWithInitAction implements OnInitEffects {
-      ngrxOnInitEffects() {
-        return { type: '[EffectWithInitAction] Init' };
-      }
-    }
-    const store = TestBed.get(Store);
-
-    effectSources.addEffects(new EffectWithInitAction());
-
-    expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith({
-      type: '[EffectWithInitAction] Init',
-    });
-  });
-
-  it('should dispatch an action on ngrxOnInitEffects after being registered (class has effects)', () => {
-    class EffectWithInitActionAndEffects implements OnInitEffects {
-      effectOne = createEffect(() => {
-        return this.actions$.pipe(
-          ofType('Action 1'),
-          mapTo({ type: 'Action 1 Response' })
-        );
-      });
-      effectTwo = createEffect(() => {
-        return this.actions$.pipe(
-          ofType('Action 2'),
-          mapTo({ type: 'Action 2 Response' })
-        );
-      });
-
-      ngrxOnInitEffects() {
-        return { type: '[EffectWithInitAction] Init' };
-      }
-
-      constructor(private actions$: Actions) {}
-    }
-    const store = TestBed.get(Store);
-
-    effectSources.addEffects(new EffectWithInitActionAndEffects(new Subject()));
-
-    expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith({
-      type: '[EffectWithInitAction] Init',
-    });
-  });
-
-  it('should only dispatch an action on ngrxOnInitEffects once after being registered', () => {
-    class EffectWithInitAction implements OnInitEffects {
-      ngrxOnInitEffects() {
-        return { type: '[EffectWithInitAction] Init' };
-      }
-    }
-    const store = TestBed.get(Store);
-
-    effectSources.addEffects(new EffectWithInitAction());
-    effectSources.addEffects(new EffectWithInitAction());
-
-    expect(store.dispatch).toHaveBeenCalledTimes(1);
-  });
-
-  it('should dispatch an action on ngrxOnInitEffects multiple times after being registered with different identifiers', () => {
-    let id = 0;
-    class EffectWithInitAction implements OnInitEffects, OnIdentifyEffects {
-      effectId = '';
-      ngrxOnIdentifyEffects(): string {
-        return this.effectId;
-      }
-      ngrxOnInitEffects() {
-        return { type: '[EffectWithInitAction] Init' };
-      }
-      constructor() {
-        this.effectId = (id++).toString();
-      }
-    }
-    const store = TestBed.get(Store);
-
-    effectSources.addEffects(new EffectWithInitAction());
-    effectSources.addEffects(new EffectWithInitAction());
-
-    expect(store.dispatch).toHaveBeenCalledTimes(2);
-  });
-
   describe('toActions() Operator', () => {
     function toActions(source: any): Observable<any> {
       source['errorHandler'] = mockErrorReporter;
@@ -413,6 +330,7 @@ describe('EffectSources', () => {
       const f = null;
       const i = { type: 'From Source Identifier' };
       const i2 = { type: 'From Source Identifier 2' };
+      const initAction = { type: '[SourceWithInitAction] Init' };
 
       let circularRef = {} as any;
       circularRef.circularRef = circularRef;
@@ -499,6 +417,35 @@ describe('EffectSources', () => {
           this.effectIdentifier = identifier;
         }
       }
+      class SourceWithInitAction implements OnInitEffects, OnIdentifyEffects {
+        effectIdentifier: string;
+
+        ngrxOnInitEffects() {
+          return initAction;
+        }
+
+        ngrxOnIdentifyEffects() {
+          return this.effectIdentifier;
+        }
+
+        effectOne = createEffect(() => {
+          return this.actions$.pipe(
+            ofType('Action 1'),
+            mapTo({ type: 'Action 1 Response' })
+          );
+        });
+
+        effectTwo = createEffect(() => {
+          return this.actions$.pipe(
+            ofType('Action 2'),
+            mapTo({ type: 'Action 2 Response' })
+          );
+        });
+
+        constructor(private actions$: Actions, identifier: string = '') {
+          this.effectIdentifier = identifier;
+        }
+      }
 
       it('should resolve effects from instances', () => {
         const sources$ = cold('--a--', { a: new SourceA() });
@@ -553,7 +500,44 @@ describe('EffectSources', () => {
           c: new SourceWithIdentifier('b'),
           d: new SourceWithIdentifier2('b'),
         });
-        const expected = cold('--a--b--a--b--', { a: i, b: i2 });
+        const expected = cold('--a--b--a--b--', {
+          a: i,
+          b: i2,
+        });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should start with an  action after being registered with OnInitEffects', () => {
+        const sources$ = cold('--a--', {
+          a: new SourceWithInitAction(new Subject()),
+        });
+        const expected = cold('--a--', { a: initAction });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should not start twice for the same instance', () => {
+        const sources$ = cold('--a--a--', {
+          a: new SourceWithInitAction(new Subject()),
+        });
+        const expected = cold('--a--', { a: initAction });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should start twice for the same instance with a different key', () => {
+        const sources$ = cold('--a--b--', {
+          a: new SourceWithInitAction(new Subject(), 'a'),
+          b: new SourceWithInitAction(new Subject(), 'b'),
+        });
+        const expected = cold('--a--a--', { a: initAction });
 
         const output = toActions(sources$);
 
