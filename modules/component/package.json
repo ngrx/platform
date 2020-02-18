@@ -1,16 +1,16 @@
 {
   "name": "@ngrx/component",
   "version": "0.0.0-PLACEHOLDER",
-  "description": "Reactive utilities for components",
+  "description": "Reactive Extensions for Angular Components",
   "repository": {
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
   },
   "keywords": [
     "Angular",
-    "Redux",
+    "RxJS",
     "NgRx",
-    "Schematics",
+    "Components",
     "Angular CLI"
   ],
   "author": "NgRx",
