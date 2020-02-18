@@ -104,6 +104,358 @@ describe('EntityChangeTrackerBase', () => {
     });
   });
 
+  describe('#mergeQueryResults', () => {
+    it('should use default preserve changes strategy', () => {
+      let {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        locallyUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+      const collection = tracker.mergeQueryResults(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        locallyUpdatedHero,
+        'Preserves the current value for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        serverUpdatedHero,
+        'Overwrites the originalValue with the merge entity'
+      );
+    });
+
+    it('should be able to use ignore changes strategy', () => {
+      const {
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeQueryResults(
+        [serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.IgnoreChanges // manually provide strategy
+      );
+
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Update the collection entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        updatedHero,
+        'changeState is untouched'
+      );
+    });
+
+    it('should be able to use preserve changes strategy', () => {
+      const {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        locallyUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeQueryResults(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.PreserveChanges // manually provide strategy
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        locallyUpdatedHero,
+        'Preserves the current value for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        serverUpdatedHero,
+        'Overwrites the originalValue with the merge entity'
+      );
+    });
+
+    it('should be able to use overwrite changes strategy', () => {
+      const {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeQueryResults(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.OverwriteChanges // manually provide strategy
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Replace the current collection entity for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for changed entity'
+      );
+    });
+  });
+
+  describe('#mergeSaveAdds', () => {
+    it('should use default overwrite changes strategy', () => {
+      let {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+      const collection = tracker.mergeSaveAdds(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Replace the current collection entity for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for changed entity'
+      );
+    });
+
+    it('should be able to use ignore changes strategy', () => {
+      const {
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeSaveAdds(
+        [serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.IgnoreChanges // manually provide strategy
+      );
+
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Update the collection entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        updatedHero,
+        'changeState is untouched'
+      );
+    });
+
+    it('should be able to use preserve changes strategy', () => {
+      const {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        locallyUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeSaveAdds(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.PreserveChanges // manually provide strategy
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        locallyUpdatedHero,
+        'Preserves the current value for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        serverUpdatedHero,
+        'Overwrites the originalValue with the merge entity'
+      );
+    });
+
+    it('should be able to use overwrite changes strategy', () => {
+      const {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeSaveAdds(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.OverwriteChanges // manually provide strategy
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Replace the current collection entity for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for changed entity'
+      );
+    });
+  });
+
+  describe('#mergeSaveDeletes', () => {
+    // TODO: add some tests
+  });
+
+  describe('#mergeSaveUpdates', () => {
+    // TODO: add some tests
+  });
+
+  describe('#mergeSaveUpserts', () => {
+    it('should use default overwrite changes strategy', () => {
+      let {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+      const collection = tracker.mergeSaveUpserts(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Replace the current collection entity for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for changed entity'
+      );
+    });
+
+    it('should be able to use ignore changes strategy', () => {
+      const {
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeSaveUpserts(
+        [serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.IgnoreChanges // manually provide strategy
+      );
+
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Update the collection entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        updatedHero,
+        'changeState is untouched'
+      );
+    });
+
+    it('should be able to use preserve changes strategy', () => {
+      const {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        locallyUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeSaveUpserts(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.PreserveChanges // manually provide strategy
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        locallyUpdatedHero,
+        'Preserves the current value for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
+        serverUpdatedHero,
+        'Overwrites the originalValue with the merge entity'
+      );
+    });
+
+    it('should be able to use overwrite changes strategy', () => {
+      const {
+        unchangedHero,
+        unchangedHeroServerUpdated,
+        updatedHero,
+        serverUpdatedHero,
+        initialCache,
+      } = createInitialCacheForMerges();
+
+      const collection = tracker.mergeSaveUpserts(
+        [unchangedHeroServerUpdated, serverUpdatedHero],
+        initialCache.Hero,
+        MergeStrategy.OverwriteChanges // manually provide strategy
+      );
+
+      expect(collection.entities[unchangedHero.id]).toEqual(
+        unchangedHeroServerUpdated,
+        'Replace the current collection entity for unchanged entity'
+      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for unchanged entity'
+      );
+      expect(collection.entities[updatedHero.id]).toEqual(
+        serverUpdatedHero,
+        'Replace the current collection entity for changed entity'
+      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined(
+        'Discards the changeState (changeType unchanged) for changed entity'
+      );
+    });
+  });
+
   describe('#trackAddOne', () => {
     it('should return a new collection with tracked new entity', () => {
       const addedEntity = { id: 42, name: 'Ted', power: 'Chatty' };
@@ -821,6 +1173,61 @@ describe('EntityChangeTrackerBase', () => {
       deletedEntity,
       preUpdatedEntity,
       updatedEntity,
+    };
+  }
+
+  function createInitialCacheForMerges() {
+    // general test data for testing mergeStrategy
+    const unchangedHero = { id: 1, name: 'Unchanged', power: 'Hammer' };
+    const unchangedHeroServerUpdated = {
+      id: 1,
+      name: 'UnchangedUpdated',
+      power: 'Bish',
+    };
+    const deletedHero = { id: 2, name: 'Deleted', power: 'Bash' };
+    const addedHero = { id: 3, name: 'Added', power: 'Tiny' };
+    const updatedHero = { id: 4, name: 'Pre Updated', power: 'Tech' };
+    const locallyUpdatedHero = {
+      id: 4,
+      name: 'Locally Updated',
+      power: 'Suit',
+    };
+    const serverUpdatedHero = { id: 4, name: 'Server Updated', power: 'Nano' };
+    const ids = [unchangedHero.id, addedHero.id, updatedHero.id];
+    const initialCache = {
+      Hero: {
+        ids,
+        entities: {
+          [unchangedHero.id]: unchangedHero,
+          [addedHero.id]: addedHero,
+          [updatedHero.id]: locallyUpdatedHero,
+        },
+        entityName: 'Hero',
+        filter: '',
+        loaded: true,
+        loading: false,
+        changeState: {
+          [deletedHero.id]: {
+            changeType: ChangeType.Deleted,
+            originalValue: deletedHero,
+          },
+          [updatedHero.id]: {
+            changeType: ChangeType.Updated,
+            originalValue: updatedHero,
+          },
+          [addedHero.id]: { changeType: ChangeType.Added },
+        },
+      },
+    };
+    return {
+      unchangedHero,
+      unchangedHeroServerUpdated,
+      deletedHero,
+      addedHero,
+      updatedHero,
+      locallyUpdatedHero,
+      serverUpdatedHero,
+      initialCache,
     };
   }
 

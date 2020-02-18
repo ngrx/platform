@@ -337,10 +337,15 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
           const change = chgState[id];
           if (change) {
             if (!didMutate) {
-              chgState = { ...chgState };
+              chgState = {
+                ...chgState,
+                [id]: {
+                  ...chgState[id]!,
+                  originalValue: entity,
+                },
+              };
               didMutate = true;
             }
-            change.originalValue = entity;
           } else {
             upsertEntities.push(entity);
           }
