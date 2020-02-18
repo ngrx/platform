@@ -133,7 +133,7 @@ It is notable for:
 
 * The store publishes an _event_ when updated by a reducer.
 
-* You application listens for store _events_; when it hears an event of interest, the app pulls the corresponding object(s) from the store.
+* Your application listens for store _events_; when it hears an event of interest, the app pulls the corresponding object(s) from the store.
 
 _NgRx_ is similar in almost all important respects.
 It differs most significantly in replacing _events_ with _observables_.
