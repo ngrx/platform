@@ -1,3 +1,24 @@
+<a name="9.0.0-beta.1"></a>
+
+# [9.0.0-beta.1](https://github.com/ngrx/platform/compare/9.0.0-beta.0...9.0.0-beta.1) (2020-02-18)
+
+### Bug Fixes
+
+- **data:** Angular 9 style ModuleWithProvider ([#2356](https://github.com/ngrx/platform/issues/2356)) ([#2357](https://github.com/ngrx/platform/issues/2357)) ([182f140](https://github.com/ngrx/platform/commit/182f140))
+- **data:** change type of filter observable ([#2349](https://github.com/ngrx/platform/issues/2349)) ([94f3ef1](https://github.com/ngrx/platform/commit/94f3ef1)), closes [#2337](https://github.com/ngrx/platform/issues/2337)
+- **data:** EntityDataModuleWithoutEffect ModuleWithProviders ([#2366](https://github.com/ngrx/platform/issues/2366)) ([234ce84](https://github.com/ngrx/platform/commit/234ce84))
+- **data:** make mergeServerUpserts change state immutably ([#2374](https://github.com/ngrx/platform/issues/2374)) ([#2389](https://github.com/ngrx/platform/issues/2389)) ([b3a49c1](https://github.com/ngrx/platform/commit/b3a49c1))
+- **data:** make undoMany remove tracking changes in changeState ([#2346](https://github.com/ngrx/platform/issues/2346)) ([#2352](https://github.com/ngrx/platform/issues/2352)) ([637b2c7](https://github.com/ngrx/platform/commit/637b2c7))
+- **data:** use ng_package for bundling instead of pkg_npm ([9a935b1](https://github.com/ngrx/platform/commit/9a935b1))
+- **effects:** dispatch OnInitEffects action after registration ([#2386](https://github.com/ngrx/platform/issues/2386)) ([daf1e64](https://github.com/ngrx/platform/commit/daf1e64)), closes [#2373](https://github.com/ngrx/platform/issues/2373)
+- **store:** provide the same instance of MockStore ([#2381](https://github.com/ngrx/platform/issues/2381)) ([827f336](https://github.com/ngrx/platform/commit/827f336)), closes [#2362](https://github.com/ngrx/platform/issues/2362)
+
+### Features
+
+- **effects:** limit retries to 10 by default ([#2376](https://github.com/ngrx/platform/issues/2376)) ([88124a7](https://github.com/ngrx/platform/commit/88124a7)), closes [#2303](https://github.com/ngrx/platform/issues/2303)
+- **store:** add strictActionWithinNgZone runtime check ([#2364](https://github.com/ngrx/platform/issues/2364)) ([4cae255](https://github.com/ngrx/platform/commit/4cae255)), closes [#2339](https://github.com/ngrx/platform/issues/2339)
+- **store:** testing - clean up mock store and remove static property ([#2361](https://github.com/ngrx/platform/issues/2361)) ([ee2c114](https://github.com/ngrx/platform/commit/ee2c114))
+
 <a name="9.0.0-beta.0"></a>
 
 # [9.0.0-beta.0](https://github.com/ngrx/platform/compare/8.6.0...9.0.0-beta.0) (2020-02-06)
