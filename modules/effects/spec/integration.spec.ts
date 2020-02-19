@@ -14,8 +14,9 @@ import {
   EffectSources,
   Actions,
 } from '..';
-import { ofType, createEffect } from '../src';
-import { mapTo } from 'rxjs/operators';
+import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
+import { mapTo, exhaustMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 describe('NgRx Effects Integration spec', () => {
   it('throws if forRoot() is used more than once', (done: DoneFn) => {
@@ -27,8 +28,10 @@ describe('NgRx Effects Integration spec', () => {
       ],
     });
 
-    let router: Router = TestBed.get(Router);
-    const loader: SpyNgModuleFactoryLoader = TestBed.get(NgModuleFactoryLoader);
+    let router: Router = TestBed.inject(Router);
+    const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+      NgModuleFactoryLoader
+    ) as SpyNgModuleFactoryLoader;
 
     loader.stubbedModules = { feature: FeatModuleWithForRoot };
     router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
@@ -61,7 +64,7 @@ describe('NgRx Effects Integration spec', () => {
             EffectsModule.forRoot([EffectWithOnInitAndResponse]),
           ],
         });
-        TestBed.get(EffectSources);
+        TestBed.inject(EffectSources);
 
         expect(dispatchedActionsLog).toEqual([
           INIT,
@@ -91,7 +94,7 @@ describe('NgRx Effects Integration spec', () => {
             ]),
           ],
         });
-        TestBed.get(EffectSources);
+        TestBed.inject(EffectSources);
 
         expect(dispatchedActionsLog).toEqual([
           INIT,
@@ -148,6 +151,7 @@ describe('NgRx Effects Integration spec', () => {
             dispatched: createDispatchedReducer(dispatchedActionsLog),
           }),
           EffectsModule.forRoot([
+            EffectLoggerWithOnRunEffects,
             RootEffectWithInitAction,
             EffectWithOnInitAndResponse,
             RootEffectWithoutLifecycle,
@@ -158,7 +162,9 @@ describe('NgRx Effects Integration spec', () => {
         ],
       });
 
-      const effectSources = TestBed.get(EffectSources) as EffectSources;
+      const logger = TestBed.inject(EffectLoggerWithOnRunEffects);
+
+      const effectSources = TestBed.inject(EffectSources);
       effectSources.addEffects(
         new FeatEffectWithIdentifierAndInitAction('one')
       );
@@ -169,17 +175,17 @@ describe('NgRx Effects Integration spec', () => {
         new FeatEffectWithIdentifierAndInitAction('one')
       );
 
-      let router: Router = TestBed.get(Router);
-      const loader: SpyNgModuleFactoryLoader = TestBed.get(
+      let router: Router = TestBed.inject(Router);
+      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
         NgModuleFactoryLoader
-      );
+      ) as SpyNgModuleFactoryLoader;
 
       loader.stubbedModules = { feature: FeatModuleWithForFeature };
       router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
 
       await router.navigateByUrl('/feature-path');
 
-      expect(dispatchedActionsLog).toEqual([
+      const expectedLog = [
         // first store init
         INIT,
 
@@ -201,9 +207,31 @@ describe('NgRx Effects Integration spec', () => {
 
         // from lazy loaded module
         '[FeatEffectFromLazyLoadedModuleWithInitAction]: INIT',
-      ]);
+      ];
+
+      // reducers should receive all actions
+      expect(dispatchedActionsLog).toEqual(expectedLog);
+
+      // ngrxOnRunEffects should receive all actions except STORE_INIT
+      expect(logger.actionsLog).toEqual(expectedLog.slice(1));
     });
   });
+
+  @Injectable()
+  class EffectLoggerWithOnRunEffects implements OnRunEffects {
+    actionsLog: string[] = [];
+
+    constructor(private actions$: Actions) {}
+
+    ngrxOnRunEffects(
+      resolvedEffects$: Observable<EffectNotification>
+    ): Observable<EffectNotification> {
+      return this.actions$.pipe(
+        tap(action => this.actionsLog.push(action.type)),
+        exhaustMap(() => resolvedEffects$)
+      );
+    }
+  }
 
   @Injectable()
   class EffectWithOnInitAndResponse implements OnInitEffects {
