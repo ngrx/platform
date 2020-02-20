@@ -13,6 +13,7 @@ import {
   remainHigherOrder,
 } from './utils';
 import {
+  defer,
   NextObserver,
   Observable,
   PartialObserver,
@@ -31,21 +32,24 @@ export interface CoalescingConfig {
 // If you extend this class you need to implement how the update of the rendered value happens.
 // Also custom behaviour is something you need to implement in the extending class
 export abstract class CdAware implements OnDestroy {
-  globalThis = getGlobalThis();
   handleChangeDetection: <T>(component?: T) => void = getChangeDetectionHandler(
     this.ngZone,
     this.cdRef
   );
   protected requestAnimationFrameRef: (
     cb: () => void
-  ) => number = getRequestAnimationFrameInAngular().bind(this.globalThis);
+  ) => number = getRequestAnimationFrameInAngular().bind(getGlobalThis());
   protected subscription = new Subscription();
   protected observablesSubject = new Subject<potentialObservableValue<any>>();
-  protected observables$ = this.observablesSubject.pipe(
-    processCdAwareObservables(
-      this.getResetContextBehaviour(),
-      this.getUpdateContextBehaviour(),
-      this.getConfigurableBehaviour()
+  // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
+  // extending class. So getConfigurableBehaviour is not available in the abstract layer
+  protected observables$ = defer(() =>
+    this.observablesSubject.pipe(
+      processCdAwareObservables(
+        this.getResetContextBehaviour(),
+        this.getUpdateContextBehaviour(),
+        this.getConfigurableBehaviour()
+      )
     )
   );
 
@@ -55,9 +59,9 @@ export abstract class CdAware implements OnDestroy {
   ) {}
 
   work(): void {
-    // cast is needed to make is work for typescript.
-    // cdRef is kinda EmbeddedView
     this.handleChangeDetection(
+      // cast is needed to make is work for typescript.
+      // cdRef is kinda EmbeddedView
       (this.cdRef as EmbeddedViewRef<Type<any>>).context
     );
   }

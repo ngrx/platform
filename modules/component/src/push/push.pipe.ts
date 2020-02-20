@@ -1,15 +1,8 @@
 import { ChangeDetectorRef, NgZone, Pipe, PipeTransform } from '@angular/core';
 import { NextObserver, Observable, PartialObserver, pipe, Subject } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs/operators';
 import {
   CdAware,
-  coalesce,
   CoalescingConfig,
   remainHigherOrder,
   STATE_DEFAULT,
@@ -22,10 +15,7 @@ export class PushPipe extends CdAware implements PipeTransform {
   private renderedValue: any = STATE_DEFAULT;
 
   configSubject = new Subject<NgRxPushPipeConfig>();
-  config$ = this.configSubject.asObservable().pipe(
-    filter(v => v !== undefined),
-    distinctUntilChanged()
-  );
+  config$ = this.configSubject.asObservable().pipe(distinctUntilChanged());
 
   constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
     super(cdRef, ngZone);
@@ -50,10 +40,8 @@ export class PushPipe extends CdAware implements PipeTransform {
         return !config.optimized
           ? value$.pipe(tap(_ => this.work()))
           : value$.pipe(
-              coalesce({
-                context: (this.cdRef as any)._cdRefInjectingView,
-                executionContextRef: this.requestAnimationFrameRef,
-              })
+              // @TODO Add coalesce operator here
+              tap(_ => this.work())
             );
       })
     );

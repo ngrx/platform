@@ -6,12 +6,12 @@ import {
   potentialObservableValue,
 } from '../utils';
 
-// @TODO make it a OperatorFunction
 export function toObservableValue<T>(
   potentialObservableValue$: potentialObservableValue<T>
 ): Observable<T | undefined | null> {
   if (
     potentialObservableValue$ === undefined ||
+    // @NOTICE This check is here to mirror the async pipes behaviour
     potentialObservableValue$ === null
   ) {
     return of(potentialObservableValue$);
