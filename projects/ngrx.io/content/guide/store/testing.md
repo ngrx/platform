@@ -38,8 +38,7 @@ describe('Auth Guard', () => {
     });
 
     store = TestBed.inject(MockStore);
-    guard = TestBed.inject&lt;AuthGuard&gt;(AuthGuard);
-
+    guard = TestBed.inject(AuthGuard);
   });
 
   it('should return false if the user state is not logged in', () => {
