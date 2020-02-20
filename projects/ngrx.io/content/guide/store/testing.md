@@ -21,42 +21,40 @@ import { cold } from 'jasmine-marbles';
 import { AuthGuard } from '../guards/auth.guard';
 
 describe('Auth Guard', () => {
-let guard: AuthGuard;
-let store: MockStore;
-const initialState = { loggedIn: false };
+  let guard: AuthGuard;
+  let store: MockStore;
+  const initialState = { loggedIn: false };
 
-beforeEach(() => {
-TestBed.configureTestingModule({
-imports: [
-// any modules needed
-],
-providers: [
-AuthGuard,
-provideMockStore({ initialState }),
-// other providers
-],
-});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        // any modules needed
+      ],
+      providers: [
+        AuthGuard,
+        provideMockStore({ initialState }),
+        // other providers
+      ],
+    });
 
     store = TestBed.inject(MockStore);
     guard = TestBed.inject&lt;AuthGuard&gt;(AuthGuard);
 
-});
+  });
 
-it('should return false if the user state is not logged in', () => {
-const expected = cold('(a|)', { a: false });
+  it('should return false if the user state is not logged in', () => {
+    const expected = cold('(a|)', { a: false });
 
     expect(guard.canActivate()).toBeObservable(expected);
+  });
 
-});
-
-it('should return true if the user state is logged in', () => {
-store.setState({ loggedIn: true });
+  it('should return true if the user state is logged in', () => {
+    store.setState({ loggedIn: true });
 
     const expected = cold('(a|)', { a: true });
 
     expect(guard.canActivate()).toBeObservable(expected);
-
-});
+  });
 });
 </code-example>
 
@@ -104,17 +102,17 @@ export interface State {
 }
 
 export const selectSumEvenNums = createSelector(
-(state: State) => state.evenNums,
-evenNums => evenNums.reduce((prev, curr) => prev + curr)
+  (state: State) => state.evenNums,
+  evenNums => evenNums.reduce((prev, curr) => prev + curr)
 );
 export const selectSumOddNums = createSelector(
-(state: State) => state.oddNums,
-oddNums => oddNums.reduce((prev, curr) => prev + curr)
+  (state: State) => state.oddNums,
+  oddNums => oddNums.reduce((prev, curr) => prev + curr)
 );
 export const selectTotal = createSelector(
-selectSumEvenNums,
-selectSumOddNums,
-(evenSum, oddSum) => evenSum + oddSum
+  selectSumEvenNums,
+  selectSumOddNums,
+  (evenSum, oddSum) => evenSum + oddSum
 );
 </code-example>
 
@@ -122,8 +120,8 @@ selectSumOddNums,
 import * as fromMyReducers from './my-reducers';
 
 describe('My Selectors', () => {
-it('should calc selectTotal', () => {
-expect(fromMyReducers.selectTotal.projector(2, 3)).toBe(5);
-});
+  it('should calc selectTotal', () => {
+    expect(fromMyReducers.selectTotal.projector(2, 3)).toBe(5);
+  });
 });
 </code-example>
