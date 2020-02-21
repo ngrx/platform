@@ -7,7 +7,7 @@ import {
   EntityMap,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
-import { selectIdValue } from './utils';
+import { isObject, selectIdValue } from './utils';
 
 export function createUnsortedStateAdapter<T>(
   selectId: IdSelector<T>
@@ -97,7 +97,9 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     state: any
   ): boolean {
     const original = state.entities[update.id];
-    const updated: T = Object.assign({}, original, update.changes);
+    const updated: T = isObject(update.changes)
+      ? Object.assign({}, original, update.changes)
+      : update.changes;
     const newKey = selectIdValue(updated, selectId);
     const hasNewKey = newKey !== update.id;
 

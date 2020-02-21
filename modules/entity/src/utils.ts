@@ -17,3 +17,11 @@ export function selectIdValue<T>(entity: T, selectId: IdSelector<T>) {
 
   return key;
 }
+
+export function isObjectLike(target: any): target is object {
+  return typeof target === 'object' && target !== null;
+}
+
+export function isObject(target: any): target is object {
+  return isObjectLike(target) && !Array.isArray(target);
+}

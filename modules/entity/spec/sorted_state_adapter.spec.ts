@@ -1,4 +1,4 @@
-import { EntityStateAdapter, EntityState, Update } from '../src/models';
+import { EntityStateAdapter, EntityState } from '../src/models';
 import { createEntityAdapter } from '../src/create_adapter';
 import {
   BookModel,
@@ -6,6 +6,7 @@ import {
   AClockworkOrange,
   AnimalFarm,
 } from './fixtures/book';
+import { BookType, MovieType, ShowType, TypeModel } from './fixtures/type';
 
 describe('Sorted State Adapter', () => {
   let adapter: EntityStateAdapter<BookModel>;
@@ -89,7 +90,7 @@ describe('Sorted State Adapter', () => {
   it('should remove existing and add new ones on addAll (deprecated)', () => {
     const withOneEntity = adapter.addOne(TheGreatGatsby, state);
 
-    const withAll = adapter.setAll(
+    const withAll = adapter.addAll(
       [AClockworkOrange, AnimalFarm],
       withOneEntity
     );
@@ -337,8 +338,8 @@ describe('Sorted State Adapter', () => {
         book.title === TheGreatGatsby.title
           ? firstChange
           : book.title === AClockworkOrange.title
-            ? secondChange
-            : book,
+          ? secondChange
+          : book,
       withMany
     );
 
@@ -404,6 +405,223 @@ describe('Sorted State Adapter', () => {
           ...firstChange,
         },
         [AClockworkOrange.id]: AClockworkOrange,
+      },
+    });
+  });
+});
+
+describe('Sorted State Adapter with string entities', () => {
+  let adapter: EntityStateAdapter<TypeModel>;
+  let state: EntityState<TypeModel>;
+
+  beforeEach(() => {
+    adapter = createEntityAdapter({
+      selectId: (type: TypeModel) => type,
+      sortComparer: (a, b) => a.localeCompare(b),
+    });
+
+    state = { ids: [], entities: {} };
+  });
+
+  it('should let you add one entity to the state', () => {
+    const withOneEntity = adapter.addOne(BookType, state);
+
+    expect(withOneEntity).toEqual({
+      ids: [BookType],
+      entities: {
+        [BookType]: BookType,
+      },
+    });
+  });
+
+  it('should not change state if you attempt to re-add an entity', () => {
+    const withOneEntity = adapter.addOne(BookType, state);
+
+    const readded = adapter.addOne(BookType, withOneEntity);
+
+    expect(readded).toBe(withOneEntity);
+  });
+
+  it('should let you add many entities to the state', () => {
+    const withOneEntity = adapter.addOne(BookType, state);
+
+    const withManyMore = adapter.addMany([MovieType, ShowType], withOneEntity);
+
+    expect(withManyMore).toEqual({
+      ids: [BookType, MovieType, ShowType],
+      entities: {
+        [BookType]: BookType,
+        [MovieType]: MovieType,
+        [ShowType]: ShowType,
+      },
+    });
+  });
+
+  it('should remove existing and add new ones on setAll', () => {
+    const withOneEntity = adapter.addOne(BookType, state);
+
+    const withAll = adapter.setAll([MovieType, ShowType], withOneEntity);
+
+    expect(withAll).toEqual({
+      ids: [MovieType, ShowType],
+      entities: {
+        [MovieType]: MovieType,
+        [ShowType]: ShowType,
+      },
+    });
+  });
+
+  it('should remove existing and add new ones on addAll (deprecated)', () => {
+    const withOneEntity = adapter.addOne(BookType, state);
+
+    const withAll = adapter.addAll([MovieType, ShowType], withOneEntity);
+
+    expect(withAll).toEqual({
+      ids: [MovieType, ShowType],
+      entities: {
+        [MovieType]: MovieType,
+        [ShowType]: ShowType,
+      },
+    });
+  });
+
+  it('should let you add remove an entity from the state', () => {
+    adapter.addOne(BookType, state);
+
+    const withoutOne = adapter.removeOne(BookType, state);
+
+    expect(withoutOne).toEqual({
+      ids: [],
+      entities: {},
+    });
+  });
+
+  it('should let you remove many entities by id from the state', () => {
+    const withAll = adapter.setAll([BookType, MovieType, ShowType], state);
+
+    const withoutMany = adapter.removeMany([BookType, MovieType], withAll);
+
+    expect(withoutMany).toEqual({
+      ids: [ShowType],
+      entities: {
+        [ShowType]: ShowType,
+      },
+    });
+  });
+
+  it('should let you remove many entities by a predicate from the state', () => {
+    const withAll = adapter.setAll([BookType, MovieType, ShowType], state);
+
+    const withoutMany = adapter.removeMany(
+      p => p === BookType || p === MovieType,
+      withAll
+    );
+
+    expect(withoutMany).toEqual({
+      ids: [ShowType],
+      entities: {
+        [ShowType]: ShowType,
+      },
+    });
+  });
+
+  it('should let you remove all entities from the state', () => {
+    const withAll = adapter.setAll([BookType, MovieType, ShowType], state);
+
+    const withoutAll = adapter.removeAll(withAll);
+
+    expect(withoutAll).toEqual({
+      ids: [],
+      entities: {},
+    });
+  });
+
+  it('should let you update an entity in the state', () => {
+    const withOne = adapter.addOne(BookType, state);
+
+    const withUpdates = adapter.updateOne(
+      {
+        id: BookType,
+        changes: BookType,
+      },
+      withOne
+    );
+
+    expect(withUpdates).toEqual({
+      ids: [BookType],
+      entities: {
+        [BookType]: BookType,
+      },
+    });
+  });
+
+  it('should not change state if you attempt to update an entity that has not been added', () => {
+    const withUpdates = adapter.updateOne(
+      {
+        id: BookType,
+        changes: BookType,
+      },
+      state
+    );
+
+    expect(withUpdates).toBe(state);
+  });
+
+  it('should not change ids state if you attempt to update an entity that does not impact sorting', () => {
+    const withAll = adapter.setAll([BookType, MovieType, ShowType], state);
+
+    const withUpdates = adapter.updateOne(
+      {
+        id: BookType,
+        changes: BookType,
+      },
+      withAll
+    );
+
+    expect(withAll.ids).toBe(withUpdates.ids);
+  });
+
+  it('should let you update the id of entity', () => {
+    const withOne = adapter.addOne(BookType, state);
+
+    const withUpdates = adapter.updateOne(
+      {
+        id: BookType,
+        changes: BookType,
+      },
+      withOne
+    );
+
+    expect(withUpdates).toEqual({
+      ids: [BookType],
+      entities: {
+        [BookType]: BookType,
+      },
+    });
+  });
+
+  it('should let you add one entity to the state with upsert()', () => {
+    const withOneEntity = adapter.upsertOne(BookType, state);
+
+    expect(withOneEntity).toEqual({
+      ids: [BookType],
+      entities: {
+        [BookType]: BookType,
+      },
+    });
+  });
+
+  it('should let you upsert many entities in the state', () => {
+    const withMany = adapter.setAll([BookType], state);
+
+    const withUpserts = adapter.upsertMany([MovieType, ShowType], withMany);
+
+    expect(withUpserts).toEqual({
+      ids: [BookType, MovieType, ShowType],
+      entities: {
+        [BookType]: BookType,
+        [MovieType]: MovieType,
+        [ShowType]: ShowType,
       },
     });
   });

@@ -1,6 +1,6 @@
 import * as ngCore from '@angular/core';
 import { selectIdValue } from '../src/utils';
-import { BookModel, AClockworkOrange } from './fixtures/book';
+import { AClockworkOrange } from './fixtures/book';
 
 describe('Entity utils', () => {
   describe(`selectIdValue()`, () => {

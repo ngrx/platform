@@ -8,7 +8,7 @@ import {
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
-import { selectIdValue } from './utils';
+import { isObject, selectIdValue } from './utils';
 
 export function createSortedStateAdapter<T>(
   selectId: IdSelector<T>,
@@ -62,7 +62,9 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     }
 
     const original = state.entities[update.id];
-    const updated = Object.assign({}, original, update.changes);
+    const updated = isObject(update.changes)
+      ? Object.assign({}, original, update.changes)
+      : update.changes;
     const newKey = selectIdValue(updated, selectId);
 
     delete state.entities[update.id];
