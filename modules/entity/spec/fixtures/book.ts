@@ -3,6 +3,7 @@ const deepFreeze = require('deep-freeze');
 export interface BookModel {
   id: string;
   title: string;
+  description?: string;
 }
 
 export const AClockworkOrange: BookModel = deepFreeze({
@@ -18,4 +19,5 @@ export const AnimalFarm: BookModel = deepFreeze({
 export const TheGreatGatsby: BookModel = deepFreeze({
   id: 'tgg',
   title: 'The Great Gatsby',
+  description: 'A 1925 novel written by American author F. Scott Fitzgerald',
 });

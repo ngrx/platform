@@ -347,4 +347,31 @@ describe('Unsorted State Adapter', () => {
       },
     });
   });
+
+  it('should let you add one entity to the state with setOne()', () => {
+    const withOneEntity = adapter.setOne(TheGreatGatsby, state);
+    expect(withOneEntity).toEqual({
+      ids: [TheGreatGatsby.id],
+      entities: {
+        [TheGreatGatsby.id]: TheGreatGatsby,
+      },
+    });
+  });
+
+  it('should let you replace an entity in the state with setOne()', () => {
+    const withOne = adapter.addOne(TheGreatGatsby, state);
+    const updatedBook = {
+      id: TheGreatGatsby.id,
+      title: 'A New Hope',
+      description: undefined,
+    };
+
+    const withUpdates = adapter.setOne(updatedBook, withOne);
+    expect(withUpdates).toEqual({
+      ids: [TheGreatGatsby.id],
+      entities: {
+        [TheGreatGatsby.id]: updatedBook,
+      },
+    });
+  });
 });
