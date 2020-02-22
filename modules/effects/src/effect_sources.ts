@@ -104,9 +104,8 @@ function resolveEffectSource(
       effectsErrorHandler
     );
 
-    const source = getSourceForInstance(sourceInstance);
-    if (isOnRunEffects(source)) {
-      return source.ngrxOnRunEffects(mergedEffects$);
+    if (isOnRunEffects(sourceInstance)) {
+      return sourceInstance.ngrxOnRunEffects(mergedEffects$);
     }
 
     return mergedEffects$;
