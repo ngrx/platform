@@ -180,8 +180,8 @@ import {
 } from '@ngrx/data';
 
 export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
-  constructor(private pluralizzer: Pluralizer) {
-    super(pluralizzer);
+  constructor(private pluralizer: Pluralizer) {
+    super(pluralizer);
   }
 
   protected getResourceUrls(
