@@ -172,6 +172,7 @@ This example replaces the `DefaultHttpUrlGenerator` with a customized `HttpUrlGe
 The implementation simply overrides `DefaultHttpUrlGenerator.getResourceUrls(string, string)`:
 
 ```ts
+import { Injectable } from '@angular/core';
 import {
   DefaultHttpUrlGenerator,
   HttpResourceUrls,
@@ -179,6 +180,7 @@ import {
   Pluralizer
 } from '@ngrx/data';
 
+@Injectable()
 export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
   constructor(private pluralizer: Pluralizer) {
     super(pluralizer);
