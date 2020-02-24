@@ -20,7 +20,7 @@ Many apps are easier to build when saves are "optimistic" because
 the changes are immediately available to application code that is watching collection selectors.
 The app doesn't have to wait for confirmation that the entity operation succeeded on the server.
 
-A _pessimistic save_ doesn't update the store until the server until the server confirms that the save succeeded,
+A _pessimistic save_ doesn't update the store until the server confirms that the save succeeded,
 which NgRx Data then turns into a "SUCCESS" action that updates the collection.
 With a _pessimistic_ save, the changes won't be available in the store
 
