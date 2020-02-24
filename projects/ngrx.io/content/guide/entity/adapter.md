@@ -106,7 +106,7 @@ export interface User {
 
 <code-example header="user.actions.ts">
 import { createAction, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
+import { Update, EntityMap, Predicate } from '@ngrx/entity';
 
 import { User } from '../models/user.model';
 
