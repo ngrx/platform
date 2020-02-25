@@ -87,7 +87,6 @@ state if no changes were made.
 - `addMany`: Add multiple entities to the collection
 - ~~`addAll`~~: (Deprecated and renamed to `setAll`). ~~Replace current collection with provided collection~~
 - `setAll`: Replace current collection with provided collection
-- `setOne`: Add or Replace on entity in the collection
 - `removeOne`: Remove one entity from the collection
 - `removeMany`: Remove multiple entities from the collection
 - `removeAll`: Clear entity collection
@@ -118,7 +117,6 @@ import { User } from './user.model';
 export enum UserActionTypes {
   LOAD_USERS = '[User] Load Users',
   ADD_USER = '[User] Add User',
-  SET_USER = '[User] Set User',
   UPSERT_USER = '[User] Upsert User',
   ADD_USERS = '[User] Add Users',
   UPSERT_USERS = '[User] Upsert Users',
@@ -137,12 +135,6 @@ export class LoadUsers implements Action {
 
 export class AddUser implements Action {
   readonly type = UserActionTypes.ADD_USER;
-
-  constructor(public payload: { user: User }) {}
-}
-
-export class SetUser implements Action {
-  readonly type = UserActionTypes.SET_USER;
 
   constructor(public payload: { user: User }) {}
 }
@@ -196,7 +188,6 @@ export class ClearUsers implements Action {
 export type UserActionsUnion =
   | LoadUsers
   | AddUser
-  | SetUser
   | UpsertUser
   | AddUsers
   | UpsertUsers
@@ -230,10 +221,6 @@ export function reducer(state = initialState, action: UserActionsUnion): State {
   switch (action.type) {
     case UserActionTypes.ADD_USER: {
       return adapter.addOne(action.payload.user, state);
-    }
-
-    case UserActionTypes.SET_USER: {
-      return adapter.setOne(action.payload.user, state);
     }
 
     case UserActionTypes.UPSERT_USER: {
