@@ -419,7 +419,7 @@ describe('Sorted State Adapter', () => {
   });
 
   it('should let you replace an entity in the state with setOne()', () => {
-    const withOne = adapter.addOne(
+    const withMany = adapter.addOne(
       TheGreatGatsby,
       adapter.addOne(AnimalFarm, adapter.addOne(AClockworkOrange, state))
     );
@@ -429,7 +429,7 @@ describe('Sorted State Adapter', () => {
       description: undefined,
     };
 
-    const withUpdates = adapter.setOne(updatedBook, withOne);
+    const withUpdates = adapter.setOne(updatedBook, withMany);
     expect(withUpdates).toEqual({
       ids: [AClockworkOrange.id, updatedBook.id, AnimalFarm.id],
       entities: {
