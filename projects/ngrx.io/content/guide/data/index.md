@@ -2,12 +2,6 @@
 
 NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of **entity data** while reducing the amount of explicitness.  
 
-<div class="alert is-important">
-
-An **entity** is an object with long-lived data values that you read from and write to a database.  An entity refers to some "thing" in the application domain.  Examples include a _Customer_, _Order_, _LineItem_, _Product_, and _User_.
-
-</div>
-
 ## Introduction
 
 Many applications have substantial _domain models_ with 10s or 100s of entity types.
@@ -29,7 +23,7 @@ you lose the explicitness of direct interaction with the supporting NgRx librari
 
 ## Key Concepts
 
-NgRx Data 
+#### NgRx Data 
 - automates the creation of actions, reducers, effects, dispatchers, and selectors for each entity type.
 - provides default HTTP GET, PUT, POST, and DELETE methods for each entity type.
 - holds entity data as collections within a cache which is a slice of NgRx store state.
@@ -40,9 +34,27 @@ NgRx Data
 
 NgRx Data targets management of *persisted entity data*, like _Customers_ and _Orders_, that many apps query and save to remote storage. That's its sweet spot.
 
-It is ill-suited to non-entity data.
-Session data and highly idiosyncratic data are better managed with standard NgRx.
-Real world apps will benefit from a combination of techniques, all sharing a common store.
+It is ill-suited to _non-entity_ data.
+Value types, enumerations, session data and highly idiosyncratic data are better managed with standard NgRx.
+Real world apps will benefit from a combination of NgRx techniques, all sharing a common store.
+
+#### Entity
+
+An **entity** is an object with long-lived data values that you read from and write to a database.  An entity refers to some "thing" in the application domain.  Examples include a _Customer_, _Order_, _LineItem_, _Product_, _Person_ and _User_.
+
+An **entity** is a specific kind of data, an object defined by its _thread of continuity and identity_. 
+
+We experience its "continuity" by storing and retrieving ("persisting") entity objects in a permanent store on a server, a store such as a database. Whether we retrieve the "Sally" entity today or tomorrow or next week, we "mean" that we're getting the same conceptual "Sally" no matter how her data attributes have changed.
+
+In Ngrx Data we maintain the entity object's identity by means of its **primary key**. Every entity in NgRx Data must have a _primary key_. The primary key is usually a single attribute of the object. For example, that "Sally" entity object might be an instance of the "Customer" entity type, an instance whose permanent, unchanging primary key is the `id` property with a value of `42`.
+
+The primary key doesn't have to be a single attribute. It can consist of multiple attributes of the object if you need that feature. What matters is that the primary key _uniquely_ identifies that object within a permanent collection of entities of the same type. There can be exactly one `Customer` entity with `id: 42` and that entity is "Sally".
+
+### Entity Collection
+
+The notion of an *Entity Collection* is also fundamental to NgRx Data. All entities belong to a collection of the same entity type. A `Customer` entity belongs to a `Customers` collection.
+
+Even if you have only one instance of an entity type, it must be held within an entity collection: perhaps a collection with a single element.
 
 ## Defining the entities
 
