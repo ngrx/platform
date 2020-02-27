@@ -86,6 +86,7 @@ state if no changes were made.
 - `addOne`: Add one entity to the collection
 - `addMany`: Add multiple entities to the collection
 - `addAll`: Replace current collection with provided collection
+- `setOne`: Add or Replace one entity in the collection
 - `removeOne`: Remove one entity from the collection
 - `removeMany`: Remove multiple entities from the collection, by id or by predicate
 - `removeAll`: Clear entity collection
@@ -112,6 +113,7 @@ import { User } from '../models/user.model';
 
 export const loadUsers = createAction('[User/API] Load Users', props<{ users: User[] }>());
 export const addUser = createAction('[User/API] Add User', props<{ user: User }>());
+export const setUser = createAction('[User/API] Set User', props<{ user: User }>());
 export const upsertUser = createAction('[User/API] Upsert User', props<{ user: User }>());
 export const addUsers = createAction('[User/API] Add Users', props<{ users: User[] }>());
 export const upsertUsers = createAction('[User/API] Upsert Users', props<{ users: User[] }>());
@@ -147,6 +149,9 @@ const userReducer = createReducer(
   initialState,
   on(UserActions.addUser, (state, { user }) => {
     return adapter.addOne(user, state)
+  }),
+  on(UserActions.setUser, (state, { user }) => {
+    return adapter.setOne(user, state)
   }),
   on(UserActions.upsertUser, (state, { user }) => {
     return adapter.upsertOne(user, state);

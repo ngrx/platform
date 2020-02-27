@@ -50,6 +50,21 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return DidMutate.Both;
   }
 
+  function setOneMutably(entity: T, state: R): DidMutate;
+  function setOneMutably(entity: any, state: any): DidMutate {
+    const key = selectIdValue(entity, selectId);
+
+    if (key in state.entities) {
+      state.entities[key] = entity;
+      return DidMutate.EntitiesOnly;
+    }
+
+    state.ids.push(key);
+    state.entities[key] = entity;
+
+    return DidMutate.Both;
+  }
+
   function removeOneMutably(key: T, state: R): DidMutate;
   function removeOneMutably(key: any, state: any): DidMutate {
     return removeManyMutably([key], state);
@@ -196,6 +211,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     addMany: createStateOperator(addManyMutably),
     addAll: createStateOperator(setAllMutably),
     setAll: createStateOperator(setAllMutably),
+    setOne: createStateOperator(setOneMutably),
     updateOne: createStateOperator(updateOneMutably),
     updateMany: createStateOperator(updateManyMutably),
     upsertOne: createStateOperator(upsertOneMutably),
