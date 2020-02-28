@@ -94,7 +94,7 @@ The integration test sets up the dependent `Store` by importing the `StoreModule
 
 You can use the projector function used by the selector by accessing the `.projector` property.
 
-<code-example header="my.reducer.ts">
+<code-example header="my.selectors.ts">
 export interface State {
   evenNums: number[];
   oddNums: number[];
@@ -115,7 +115,7 @@ export const selectTotal = createSelector(
 );
 </code-example>
 
-<code-example header="my.reducer.spec.ts">
+<code-example header="my.selectors.spec.ts">
 import * as fromMyReducers from './my-reducers';
 
 describe('My Selectors', () => {
