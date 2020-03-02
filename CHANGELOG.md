@@ -1,3 +1,16 @@
+<a name="9.0.0-rc.0"></a>
+
+# [9.0.0-rc.0](https://github.com/ngrx/platform/compare/9.0.0-beta.2...9.0.0-rc.0) (2020-03-02)
+
+### Bug Fixes
+
+- **data:** correct AppEntityServices example in ngrx data doc page ([#2413](https://github.com/ngrx/platform/issues/2413)) ([711ba0e](https://github.com/ngrx/platform/commit/711ba0e)), closes [#2280](https://github.com/ngrx/platform/issues/2280)
+- **example:** fix a typo selectShowSidenav ([#2414](https://github.com/ngrx/platform/issues/2414)) ([c9ebb06](https://github.com/ngrx/platform/commit/c9ebb06))
+
+### Features
+
+- **entity:** add 'setOne' method to entity adapter ([#2410](https://github.com/ngrx/platform/issues/2410)) ([4b4bb85](https://github.com/ngrx/platform/commit/4b4bb85)), closes [#2369](https://github.com/ngrx/platform/issues/2369)
+
 <a name="9.0.0-beta.2"></a>
 
 # [9.0.0-beta.2](https://github.com/ngrx/platform/compare/9.0.0-beta.1...9.0.0-beta.2) (2020-02-25)
