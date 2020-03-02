@@ -19,7 +19,7 @@ import { mapTo, exhaustMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 describe('NgRx Effects Integration spec', () => {
-  it('throws if forRoot() is used more than once', (done: DoneFn) => {
+  it('throws if forRoot() is used more than once', (done: any) => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),

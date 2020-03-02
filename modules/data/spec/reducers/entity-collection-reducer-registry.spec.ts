@@ -52,7 +52,11 @@ describe('EntityCollectionReducerRegistry', () => {
 
   beforeEach(() => {
     entityActionFactory = new EntityActionFactory();
-    logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    const logger = {
+      error: jasmine.createSpy('error'),
+      log: jasmine.createSpy('log'),
+      warn: jasmine.createSpy('warn'),
+    };
 
     TestBed.configureTestingModule({
       providers: [

@@ -32,7 +32,11 @@ describe('EntityEffects (marble testing)', () => {
   let logger: Logger;
 
   beforeEach(() => {
-    logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    logger = {
+      error: jasmine.createSpy('error'),
+      log: jasmine.createSpy('log'),
+      warn: jasmine.createSpy('warn'),
+    };
 
     TestBed.configureTestingModule({
       providers: [

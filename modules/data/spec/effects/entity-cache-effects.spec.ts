@@ -35,7 +35,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     mergeStrategy: typeof mergeStrategy;
   };
 
-  function expectCompletion(completion: any, done: DoneFn) {
+  function expectCompletion(completion: any, done: any) {
     effects.saveEntities$.subscribe(result => {
       expect(result).toEqual(completion);
       done();
@@ -45,7 +45,11 @@ describe('EntityCacheEffects (normal testing)', () => {
   beforeEach(() => {
     actions$ = new ReplaySubject<Action>(1);
     correlationId = 'CORID42';
-    logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    logger = {
+      error: jasmine.createSpy('error'),
+      log: jasmine.createSpy('log'),
+      warn: jasmine.createSpy('warn'),
+    };
     mergeStrategy = undefined;
     options = { correlationId, mergeStrategy };
 
@@ -70,7 +74,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     dataService = TestBed.get(EntityCacheDataService);
   });
 
-  it('should return a SAVE_ENTITIES_SUCCESS with the expected ChangeSet on success', (done: DoneFn) => {
+  it('should return a SAVE_ENTITIES_SUCCESS with the expected ChangeSet on success', (done: any) => {
     const cs = createChangeSet();
     const action = new SaveEntities(cs, 'test/save', options);
     const completion = new SaveEntitiesSuccess(cs, 'test/save', options);
@@ -81,7 +85,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     dataService.setResponse(cs);
   });
 
-  it('should not emit SAVE_ENTITIES_SUCCESS if cancel arrives in time', (done: DoneFn) => {
+  it('should not emit SAVE_ENTITIES_SUCCESS if cancel arrives in time', (done: any) => {
     const cs = createChangeSet();
     const action = new SaveEntities(cs, 'test/save', options);
     const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
@@ -97,7 +101,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     dataService.setResponse(cs);
   });
 
-  it('should emit SAVE_ENTITIES_SUCCESS if cancel arrives too late', (done: DoneFn) => {
+  it('should emit SAVE_ENTITIES_SUCCESS if cancel arrives too late', (done: any) => {
     const cs = createChangeSet();
     const action = new SaveEntities(cs, 'test/save', options);
     const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
@@ -112,7 +116,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     setTimeout(() => actions$.next(cancel), 1);
   });
 
-  it('should emit SAVE_ENTITIES_SUCCESS immediately if no changes to save', (done: DoneFn) => {
+  it('should emit SAVE_ENTITIES_SUCCESS immediately if no changes to save', (done: any) => {
     const action = new SaveEntities({ changes: [] }, 'test/save', options);
     effects.saveEntities$.subscribe(result => {
       expect(result instanceof SaveEntitiesSuccess).toBe(true);
@@ -122,7 +126,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     actions$.next(action);
   });
 
-  xit('should return a SAVE_ENTITIES_ERROR when data service fails', (done: DoneFn) => {
+  xit('should return a SAVE_ENTITIES_ERROR when data service fails', (done: any) => {
     const cs = createChangeSet();
     const action = new SaveEntities(cs, 'test/save', options);
     const httpError = { error: new Error('Test Failure'), status: 501 };

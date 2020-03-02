@@ -70,15 +70,9 @@ describe('EntityChangeTrackerBase', () => {
         updatedEntity,
       } = createTestTrackedEntities();
       collection = tracker.commitMany([updatedEntity], collection);
-      expect(collection.changeState[updatedEntity.id]).toBeUndefined(
-        'no changes tracked for updated entity'
-      );
-      expect(collection.changeState[deletedEntity!.id]).toBeDefined(
-        'still tracking deleted entity'
-      );
-      expect(collection.changeState[addedEntity.id]).toBeDefined(
-        'still tracking added entity'
-      );
+      expect(collection.changeState[updatedEntity.id]).toBeUndefined();
+      expect(collection.changeState[deletedEntity!.id]).toBeDefined();
+      expect(collection.changeState[addedEntity.id]).toBeDefined();
     });
   });
 
@@ -92,15 +86,9 @@ describe('EntityChangeTrackerBase', () => {
         updatedEntity,
       } = createTestTrackedEntities();
       collection = tracker.commitMany([addedEntity, updatedEntity], collection);
-      expect(collection.changeState[addedEntity.id]).toBeUndefined(
-        'no changes tracked for added entity'
-      );
-      expect(collection.changeState[updatedEntity.id]).toBeUndefined(
-        'no changes tracked for updated entity'
-      );
-      expect(collection.changeState[deletedEntity!.id]).toBeDefined(
-        'still tracking deleted entity'
-      );
+      expect(collection.changeState[addedEntity.id]).toBeUndefined();
+      expect(collection.changeState[updatedEntity.id]).toBeUndefined();
+      expect(collection.changeState[deletedEntity!.id]).toBeDefined();
     });
   });
 
@@ -205,16 +193,12 @@ describe('EntityChangeTrackerBase', () => {
         unchangedHeroServerUpdated,
         'Replace the current collection entity for unchanged entity'
       );
-      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for unchanged entity'
-      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined();
       expect(collection.entities[updatedHero.id]).toEqual(
         serverUpdatedHero,
         'Replace the current collection entity for changed entity'
       );
-      expect(collection.changeState[updatedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for changed entity'
-      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
   });
 
@@ -236,16 +220,12 @@ describe('EntityChangeTrackerBase', () => {
         unchangedHeroServerUpdated,
         'Replace the current collection entity for unchanged entity'
       );
-      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for unchanged entity'
-      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined();
       expect(collection.entities[updatedHero.id]).toEqual(
         serverUpdatedHero,
         'Replace the current collection entity for changed entity'
       );
-      expect(collection.changeState[updatedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for changed entity'
-      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
 
     it('should be able to use ignore changes strategy', () => {
@@ -320,16 +300,12 @@ describe('EntityChangeTrackerBase', () => {
         unchangedHeroServerUpdated,
         'Replace the current collection entity for unchanged entity'
       );
-      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for unchanged entity'
-      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined();
       expect(collection.entities[updatedHero.id]).toEqual(
         serverUpdatedHero,
         'Replace the current collection entity for changed entity'
       );
-      expect(collection.changeState[updatedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for changed entity'
-      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
   });
 
@@ -359,16 +335,12 @@ describe('EntityChangeTrackerBase', () => {
         unchangedHeroServerUpdated,
         'Replace the current collection entity for unchanged entity'
       );
-      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for unchanged entity'
-      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined();
       expect(collection.entities[updatedHero.id]).toEqual(
         serverUpdatedHero,
         'Replace the current collection entity for changed entity'
       );
-      expect(collection.changeState[updatedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for changed entity'
-      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
 
     it('should be able to use ignore changes strategy', () => {
@@ -443,16 +415,12 @@ describe('EntityChangeTrackerBase', () => {
         unchangedHeroServerUpdated,
         'Replace the current collection entity for unchanged entity'
       );
-      expect(collection.changeState[unchangedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for unchanged entity'
-      );
+      expect(collection.changeState[unchangedHero.id]).toBeUndefined();
       expect(collection.entities[updatedHero.id]).toEqual(
         serverUpdatedHero,
         'Replace the current collection entity for changed entity'
       );
-      expect(collection.changeState[updatedHero.id]).toBeUndefined(
-        'Discards the changeState (changeType unchanged) for changed entity'
-      );
+      expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
   });
 
@@ -463,11 +431,9 @@ describe('EntityChangeTrackerBase', () => {
 
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[addedEntity.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Added);
-      expect(change!.originalValue).toBeUndefined(
-        'no original value for a new entity'
-      );
+      expect(change!.originalValue).toBeUndefined();
     });
 
     it('should leave added entity tracked as added when entity is updated', () => {
@@ -480,11 +446,9 @@ describe('EntityChangeTrackerBase', () => {
       collection.entities[addedEntity.id] = updatedEntity;
 
       const change = collection.changeState[updatedEntity.id];
-      expect(change).toBeDefined('is still tracked as an added entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Added);
-      expect(change!.originalValue).toBeUndefined(
-        'still no original value for added entity'
-      );
+      expect(change!.originalValue).toBeUndefined();
     });
 
     it('should return same collection if called with null entity', () => {
@@ -502,7 +466,7 @@ describe('EntityChangeTrackerBase', () => {
 
       expect(collection).toBe(origCollection);
       const change = collection.changeState[addedEntity.id];
-      expect(change).toBeUndefined('not tracking the entity');
+      expect(change).toBeUndefined();
     });
   });
 
@@ -520,15 +484,13 @@ describe('EntityChangeTrackerBase', () => {
 
       trackKeys.forEach((key, ix) => {
         const change = collection.changeState[key];
-        expect(change).toBeDefined(`tracking the entity ${key}`);
+        expect(change).toBeDefined();
         expectChangeType(
           change,
           ChangeType.Added,
           `tracking ${key} as a new entity`
         );
-        expect(change!.originalValue).toBeUndefined(
-          `no original value for new entity ${key}`
-        );
+        expect(change!.originalValue).toBeUndefined();
       });
     });
 
@@ -547,7 +509,7 @@ describe('EntityChangeTrackerBase', () => {
       );
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
       expect(change!.originalValue).toBe(
         existingEntity,
@@ -563,7 +525,7 @@ describe('EntityChangeTrackerBase', () => {
       );
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
       expect(change!.originalValue).toBe(
         existingEntity,
@@ -583,11 +545,11 @@ describe('EntityChangeTrackerBase', () => {
       };
 
       let change = collection.changeState[addedEntity.id];
-      expect(change).toBeDefined('tracking the new entity');
+      expect(change).toBeDefined();
 
       collection = tracker.trackDeleteOne(addedEntity.id, collection);
       change = collection.changeState[addedEntity.id];
-      expect(change).not.toBeDefined('is no longer tracking the new entity');
+      expect(change).not.toBeDefined();
     });
 
     it('should switch an updated entity to a deleted entity when it is removed', () => {
@@ -603,12 +565,12 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       let change = collection.changeState[updatedEntity.id];
-      expect(change).toBeDefined('tracking the updated existing entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated, 'updated at first');
 
       collection = tracker.trackDeleteOne(updatedEntity.id, collection);
       change = collection.changeState[updatedEntity.id];
-      expect(change).toBeDefined('tracking the deleted, updated entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted, 'after delete');
       expect(change!.originalValue).toEqual(
         existingEntity,
@@ -624,7 +586,7 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       let change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the deleted entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
 
       // This shouldn't be possible but let's try it.
@@ -633,7 +595,7 @@ describe('EntityChangeTrackerBase', () => {
 
       collection = tracker.trackUpdateOne(toUpdate(updatedEntity), collection);
       change = collection.changeState[updatedEntity.id];
-      expect(change).toBeDefined('is still tracked as a deleted entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
       expect(change!.originalValue).toEqual(
         existingEntity,
@@ -660,7 +622,7 @@ describe('EntityChangeTrackerBase', () => {
       );
       expect(collection).toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeUndefined('not tracking the entity');
+      expect(change).toBeUndefined();
     });
   });
 
@@ -674,7 +636,7 @@ describe('EntityChangeTrackerBase', () => {
       expect(collection).not.toBe(origCollection);
       existingEntities.forEach((entity, ix) => {
         const change = collection.changeState[existingEntities[ix]!.id];
-        expect(change).toBeDefined(`tracking entity #${ix}`);
+        expect(change).toBeDefined();
         expectChangeType(change, ChangeType.Deleted, `entity #${ix}`);
         expect(change!.originalValue).toBe(
           existingEntities[ix],
@@ -704,7 +666,7 @@ describe('EntityChangeTrackerBase', () => {
       const collection = tracker.trackUpdateOne(updatedEntity, origCollection);
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
       expect(change!.originalValue).toBe(
         existingEntity,
@@ -721,7 +683,7 @@ describe('EntityChangeTrackerBase', () => {
       const collection = tracker.trackUpdateOne(updatedEntity, origCollection);
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
       expect(change!.originalValue).toBe(
         existingEntity,
@@ -738,7 +700,7 @@ describe('EntityChangeTrackerBase', () => {
       let collection = tracker.trackUpdateOne(updatedEntity, origCollection);
 
       let change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the updated entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
 
       // This shouldn't be possible but let's try it.
@@ -747,7 +709,7 @@ describe('EntityChangeTrackerBase', () => {
 
       collection = tracker.trackAddOne(addedEntity, collection);
       change = collection.changeState[addedEntity.id];
-      expect(change).toBeDefined('is still tracked as an updated entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
       expect(change!.originalValue).toEqual(
         existingEntity,
@@ -779,7 +741,7 @@ describe('EntityChangeTrackerBase', () => {
       );
       expect(collection).toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeUndefined('not tracking the entity');
+      expect(change).toBeUndefined();
     });
   });
 
@@ -796,7 +758,7 @@ describe('EntityChangeTrackerBase', () => {
       expect(collection).not.toBe(origCollection);
       existingEntities.forEach((entity, ix) => {
         const change = collection.changeState[existingEntities[ix]!.id];
-        expect(change).toBeDefined(`tracking entity #${ix}`);
+        expect(change).toBeDefined();
         expectChangeType(change, ChangeType.Updated, `entity #${ix}`);
         expect(change!.originalValue).toBe(
           existingEntities[ix],
@@ -829,11 +791,9 @@ describe('EntityChangeTrackerBase', () => {
       const collection = tracker.trackUpsertOne(addedEntity, origCollection);
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[addedEntity.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Added);
-      expect(change!.originalValue).toBeUndefined(
-        'no originalValue for added entity'
-      );
+      expect(change!.originalValue).toBeUndefined();
     });
 
     it('should return a new collection with tracked updated entity', () => {
@@ -844,7 +804,7 @@ describe('EntityChangeTrackerBase', () => {
       );
       expect(collection).not.toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
       expect(change!.originalValue).toBe(
         existingEntity,
@@ -860,7 +820,7 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       let change = collection.changeState[existingEntity!.id];
-      expect(change).toBeDefined('tracking the updated entity');
+      expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated, 'first updated');
 
       const updatedAgainEntity = {
@@ -873,7 +833,7 @@ describe('EntityChangeTrackerBase', () => {
         collection
       );
       change = collection.changeState[updatedAgainEntity.id];
-      expect(change).toBeDefined('is still tracked as an updated entity');
+      expect(change).toBeDefined();
       expectChangeType(
         change,
         ChangeType.Updated,
@@ -900,7 +860,7 @@ describe('EntityChangeTrackerBase', () => {
       );
       expect(collection).toBe(origCollection);
       const change = collection.changeState[existingEntity!.id];
-      expect(change).toBeUndefined('not tracking the entity');
+      expect(change).toBeUndefined();
     });
   });
 
@@ -920,7 +880,7 @@ describe('EntityChangeTrackerBase', () => {
       expect(collection).not.toBe(origCollection);
       updatedEntities.forEach((entity, ix) => {
         const change = collection.changeState[(updatedEntities[ix] as Hero).id];
-        expect(change).toBeDefined(`tracking entity #${ix}`);
+        expect(change).toBeDefined();
         // first two should be updated, the 3rd is added
         expectChangeType(
           change,
@@ -933,9 +893,7 @@ describe('EntityChangeTrackerBase', () => {
             `entity #${ix} originalValue`
           );
         } else {
-          expect(change!.originalValue).toBeUndefined(
-            `no originalValue for added entity #${ix}`
-          );
+          expect(change!.originalValue).toBeUndefined();
         }
       });
     });
@@ -972,12 +930,8 @@ describe('EntityChangeTrackerBase', () => {
       } = createTestTrackedEntities();
 
       // Before undo
-      expect(collection.entities[addedEntity.id]).toBeDefined(
-        'added entity should be present'
-      );
-      expect(collection.entities[deletedEntity!.id]).toBeUndefined(
-        'deleted entity should be missing'
-      );
+      expect(collection.entities[addedEntity.id]).toBeDefined();
+      expect(collection.entities[deletedEntity!.id]).toBeUndefined();
       expect(updatedEntity.name).not.toEqual(
         preUpdatedEntity!.name,
         'updated entity should be changed'
@@ -986,12 +940,8 @@ describe('EntityChangeTrackerBase', () => {
       collection = tracker.undoAll(collection);
 
       // After undo
-      expect(collection.entities[addedEntity.id]).toBeUndefined(
-        'added entity should be removed'
-      );
-      expect(collection.entities[deletedEntity!.id]).toBeDefined(
-        'deleted entity should be restored'
-      );
+      expect(collection.entities[addedEntity.id]).toBeUndefined();
+      expect(collection.entities[deletedEntity!.id]).toBeDefined();
       const revertedUpdate = collection.entities[updatedEntity.id];
       expect(revertedUpdate!.name).toEqual(
         preUpdatedEntity!.name,
@@ -1029,12 +979,8 @@ describe('EntityChangeTrackerBase', () => {
 
       collection = tracker.undoOne(deletedEntity as Hero, collection);
 
-      expect(collection.entities[deletedEntity!.id]).toBeDefined(
-        'deleted entity should be restored'
-      );
-      expect(collection.entities[addedEntity.id]).toBeDefined(
-        'added entity should still be present'
-      );
+      expect(collection.entities[deletedEntity!.id]).toBeDefined();
+      expect(collection.entities[addedEntity.id]).toBeDefined();
       expect(updatedEntity.name).not.toEqual(
         preUpdatedEntity!.name,
         'updated entity should be changed'
@@ -1052,12 +998,8 @@ describe('EntityChangeTrackerBase', () => {
       } = createTestTrackedEntities();
 
       collection = tracker.undoOne(null as any, collection);
-      expect(collection.entities[addedEntity.id]).toBeDefined(
-        'added entity should be present'
-      );
-      expect(collection.entities[deletedEntity!.id]).toBeUndefined(
-        'deleted entity should be missing'
-      );
+      expect(collection.entities[addedEntity.id]).toBeDefined();
+      expect(collection.entities[deletedEntity!.id]).toBeUndefined();
       expect(updatedEntity.name).not.toEqual(
         preUpdatedEntity!.name,
         'updated entity should be changed'
@@ -1106,12 +1048,8 @@ describe('EntityChangeTrackerBase', () => {
         [addedEntity, deletedEntity, updatedEntity],
         collection
       );
-      expect(collection.entities[addedEntity.id]).toBeUndefined(
-        'added entity should be removed'
-      );
-      expect(collection.entities[deletedEntity!.id]).toBeDefined(
-        'deleted entity should be restored'
-      );
+      expect(collection.entities[addedEntity.id]).toBeUndefined();
+      expect(collection.entities[deletedEntity!.id]).toBeDefined();
       const revertedUpdate = collection.entities[updatedEntity.id];
       expect(revertedUpdate!.name).toEqual(
         preUpdatedEntity!.name,
@@ -1130,12 +1068,8 @@ describe('EntityChangeTrackerBase', () => {
       } = createTestTrackedEntities();
 
       collection = tracker.undoMany([], collection);
-      expect(collection.entities[addedEntity.id]).toBeDefined(
-        'added entity should be present'
-      );
-      expect(collection.entities[deletedEntity!.id]).toBeUndefined(
-        'deleted entity should be missing'
-      );
+      expect(collection.entities[addedEntity.id]).toBeDefined();
+      expect(collection.entities[deletedEntity!.id]).toBeUndefined();
       expect(updatedEntity.name).not.toEqual(
         preUpdatedEntity!.name,
         'updated entity should be changed'

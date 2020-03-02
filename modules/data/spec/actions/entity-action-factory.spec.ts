@@ -23,7 +23,7 @@ describe('EntityActionFactory', () => {
     const { entityName, entityOp, data } = action.payload;
     expect(entityName).toBe('Hero');
     expect(entityOp).toBe(EntityOp.QUERY_ALL);
-    expect(data).toBeUndefined('no data property');
+    expect(data).toBeUndefined();
   });
 
   it('#create should create an EntityAction with the given data', () => {

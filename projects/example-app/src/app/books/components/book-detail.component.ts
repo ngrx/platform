@@ -69,8 +69,8 @@ export class BookDetailComponent {
    *
    * More on 'smart' and 'presentational' components: https://gist.github.com/btroncone/a6e4347326749f938510#utilizing-container-components
    */
-  @Input() book: Book;
-  @Input() inCollection: boolean;
+  @Input() book!: Book;
+  @Input() inCollection!: boolean;
   @Output() add = new EventEmitter<Book>();
   @Output() remove = new EventEmitter<Book>();
 

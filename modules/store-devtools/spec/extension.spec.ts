@@ -71,14 +71,18 @@ describe('DevtoolsExtension', () => {
   let devtoolsExtension: DevtoolsExtension;
 
   beforeEach(() => {
-    extensionConnection = jasmine.createSpyObj(
-      'reduxDevtoolsExtensionConnection',
-      ['init', 'subscribe', 'unsubscribe', 'send']
-    );
-    reduxDevtoolsExtension = jasmine.createSpyObj('reduxDevtoolsExtension', [
-      'send',
-      'connect',
-    ]);
+    extensionConnection = {
+      init: jasmine.createSpy('init'),
+      subscribe: jasmine.createSpy('subscribe'),
+      unsubscribe: jasmine.createSpy('unsubscribe'),
+      send: jasmine.createSpy('send'),
+      error: jasmine.createSpy('error'),
+    };
+
+    reduxDevtoolsExtension = {
+      send: jasmine.createSpy('send'),
+      connect: jasmine.createSpy('connect'),
+    };
     (reduxDevtoolsExtension.connect as jasmine.Spy).and.returnValue(
       extensionConnection
     );

@@ -185,7 +185,7 @@ describe('ngRx Integration spec', () => {
         expect(currentlyVisibleTodos.length).toBe(0);
       });
 
-      it('should use props to get a todo', (done: DoneFn) => {
+      it('should use props to get a todo', (done: any) => {
         const getTodosById = createSelector(
           (state: TodoAppSchema) => state.todos,
           (todos: Todo[], id: number) => {
@@ -224,7 +224,7 @@ describe('ngRx Integration spec', () => {
         });
       });
 
-      it('should use the selector and props to get a todo', (done: DoneFn) => {
+      it('should use the selector and props to get a todo', (done: any) => {
         const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
           'todos'
         );
@@ -322,7 +322,7 @@ describe('ngRx Integration spec', () => {
         expect(currentlyVisibleTodos.length).toBe(0);
       });
 
-      it('should use the selector and props to get a todo', (done: DoneFn) => {
+      it('should use the selector and props to get a todo', (done: any) => {
         const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
           'todos'
         );
@@ -356,7 +356,7 @@ describe('ngRx Integration spec', () => {
         });
       });
 
-      it('should use the props in the projector to get a todo', (done: DoneFn) => {
+      it('should use the props in the projector to get a todo', (done: any) => {
         const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
           'todos'
         );
@@ -479,7 +479,7 @@ describe('ngRx Integration spec', () => {
       });
     });
 
-    it('throws if forRoot() is used more than once', (done: DoneFn) => {
+    it('throws if forRoot() is used more than once', (done: any) => {
       @NgModule({
         imports: [StoreModule.forRoot({})],
       })

@@ -28,9 +28,9 @@ describe('EntitySelectors', () => {
   let entitySelectorsFactory: EntitySelectorsFactory;
 
   beforeEach(() => {
-    collectionCreator = jasmine.createSpyObj('entityCollectionCreator', [
-      'create',
-    ]);
+    collectionCreator = {
+      create: jasmine.createSpy('create'),
+    };
     entitySelectorsFactory = new EntitySelectorsFactory(collectionCreator);
   });
 
@@ -111,7 +111,7 @@ describe('EntitySelectors', () => {
         heroMetadata
       );
 
-      expect(selectors.selectEntities).toBeDefined('selectEntities');
+      expect(selectors.selectEntities).toBeDefined();
       expect(selectors.selectEntities(store)).toEqual(
         heroEntities,
         'selectEntities'
@@ -122,7 +122,7 @@ describe('EntitySelectors', () => {
         'filtered B heroes'
       );
 
-      expect(selectors.selectFoo).toBeDefined('selectFoo exists');
+      expect(selectors.selectFoo).toBeDefined();
       expect(selectors.selectFoo(store)).toBe('Foo', 'execute `selectFoo`');
     });
 
@@ -138,7 +138,7 @@ describe('EntitySelectors', () => {
       const eaFactory = new EntitySelectorsFactory();
       const selectors = eaFactory.create<Hero, HeroSelectors>(heroMetadata);
 
-      expect(selectors.selectEntities).toBeDefined('selectEntities');
+      expect(selectors.selectEntities).toBeDefined();
       expect(selectors.selectEntities(store)).toEqual(
         heroEntities,
         'selectEntities'
@@ -149,7 +149,7 @@ describe('EntitySelectors', () => {
         'filtered B heroes'
       );
 
-      expect(selectors.selectFoo).toBeDefined('selectFoo exists');
+      expect(selectors.selectFoo).toBeDefined();
       expect(selectors.selectFoo(store)).toBe('Foo', 'execute `selectFoo`');
     });
 
@@ -159,8 +159,8 @@ describe('EntitySelectors', () => {
       // const selectors = entitySelectorsFactory.create<Hero, HeroSelectors>('Hero');
       // There won't be extra selectors so type selectors for Hero collection only
       const selectors = entitySelectorsFactory.create<Hero>('Hero');
-      expect(selectors.selectEntities).toBeDefined('selectEntities');
-      expect(selectors.selectFoo).not.toBeDefined('selectFoo should not exist');
+      expect(selectors.selectEntities).toBeDefined();
+      expect(selectors.selectFoo).not.toBeDefined();
       expect(selectors.selectFilteredEntities(store)).toEqual(
         heroEntities,
         'filtered same as all hero entities'
@@ -178,7 +178,7 @@ describe('EntitySelectors', () => {
       const selectors = entitySelectorsFactory.create<Villain>(villainMetadata);
       const expectedEntities: Villain[] = [{ key: 'evil', name: 'A' }];
 
-      expect(selectors.selectEntities).toBeDefined('selectAll');
+      expect(selectors.selectEntities).toBeDefined();
       expect(selectors.selectEntities(store)).toEqual(
         expectedEntities,
         'try selectAll'

@@ -64,7 +64,7 @@ describe('EntityDefinitionService', () => {
       expect(def).toBeDefined();
       // Hero is still defined after registering Foo
       def = service.getDefinition('Hero');
-      expect(def).toBeDefined('Hero still defined');
+      expect(def).toBeDefined();
     });
 
     it('can register new definitions by metadata map', () => {
@@ -74,11 +74,11 @@ describe('EntityDefinitionService', () => {
       });
 
       let def = service.getDefinition('Foo');
-      expect(def).toBeDefined('Foo');
+      expect(def).toBeDefined();
       def = service.getDefinition('Bar');
-      expect(def).toBeDefined('Bar');
+      expect(def).toBeDefined();
       def = service.getDefinition('Hero');
-      expect(def).toBeDefined('Hero still defined');
+      expect(def).toBeDefined();
     });
 
     it('entityName property should trump map key', () => {
@@ -87,9 +87,9 @@ describe('EntityDefinitionService', () => {
       });
 
       let def = service.getDefinition('Foo');
-      expect(def).toBeDefined('Foo');
+      expect(def).toBeDefined();
       def = service.getDefinition('Hero');
-      expect(def).toBeDefined('Hero still defined');
+      expect(def).toBeDefined();
     });
 
     it('a (lazy-loaded) module can register metadata with its constructor', () => {
@@ -97,7 +97,7 @@ describe('EntityDefinitionService', () => {
       // Although LazyModule is actually eagerly-loaded in this test,
       // the registration technique is the important thing.
       const def = service.getDefinition('Sidekick');
-      expect(def).toBeDefined('Sidekick');
+      expect(def).toBeDefined();
     });
   });
 
@@ -110,7 +110,7 @@ describe('EntityDefinitionService', () => {
       expect(def).toBeDefined();
       // Hero is still defined after registering Foo
       def = service.getDefinition('Hero');
-      expect(def).toBeDefined('Hero still defined');
+      expect(def).toBeDefined();
     });
 
     it('can register a map of several definitions', () => {
@@ -121,11 +121,11 @@ describe('EntityDefinitionService', () => {
       service.registerDefinitions(newDefMap);
 
       let def = service.getDefinition('Foo');
-      expect(def).toBeDefined('Foo');
+      expect(def).toBeDefined();
       def = service.getDefinition('Bar');
-      expect(def).toBeDefined('Bar');
+      expect(def).toBeDefined();
       def = service.getDefinition('Hero');
-      expect(def).toBeDefined('Hero still defined');
+      expect(def).toBeDefined();
     });
 
     it('can re-register an existing definition', () => {
@@ -137,7 +137,7 @@ describe('EntityDefinitionService', () => {
       service.registerDefinition(newDef);
 
       const def = service.getDefinition('Hero');
-      expect(def).toBeDefined('Hero still defined');
+      expect(def).toBeDefined();
       expect(def.selectId).toBe(testSelectId, 'updated w/ new selectId');
     });
   });
