@@ -426,7 +426,7 @@ describe('Sorted State Adapter', () => {
     const updatedBook = {
       id: TheGreatGatsby.id,
       title: 'A New Hope',
-      description: undefined,
+      /* description property is not provided */
     };
 
     const withUpdates = adapter.setOne(updatedBook, withMany);
