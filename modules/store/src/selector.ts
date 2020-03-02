@@ -1,4 +1,5 @@
 import { Selector, SelectorWithProps } from './models';
+import { isNgrxMockEnvironment } from './flags';
 import { isDevMode } from '@angular/core';
 
 export type AnyFn = (...args: any[]) => any;
@@ -613,7 +614,7 @@ export function createFeatureSelector(
 ): MemoizedSelector<any, any> {
   return createSelector((state: any) => {
     const featureState = state[featureName];
-    if (isDevMode() && !(featureName in state)) {
+    if (!isNgrxMockEnvironment() && isDevMode() && !(featureName in state)) {
       console.warn(
         `@ngrx/store: The feature name \"${featureName}\" does ` +
           'not exist in the state, therefore createFeatureSelector ' +
