@@ -1,3 +1,16 @@
+<a name="9.0.0-beta.2"></a>
+
+# [9.0.0-beta.2](https://github.com/ngrx/platform/compare/9.0.0-beta.1...9.0.0-beta.2) (2020-02-25)
+
+### Bug Fixes
+
+- **docs:** replace duplicate link ([#2399](https://github.com/ngrx/platform/issues/2399)) ([d4502b4](https://github.com/ngrx/platform/commit/d4502b4))
+- **effects:** use source instance for ngrxOnRunEffects to retain context ([#2401](https://github.com/ngrx/platform/issues/2401)) ([79c830c](https://github.com/ngrx/platform/commit/79c830c))
+
+### Features
+
+- **store-devtools:** add INITIAL_OPTIONS to public API ([#2405](https://github.com/ngrx/platform/issues/2405)) ([37f91db](https://github.com/ngrx/platform/commit/37f91db)), closes [#1470](https://github.com/ngrx/platform/issues/1470)
+
 <a name="9.0.0-beta.1"></a>
 
 # [9.0.0-beta.1](https://github.com/ngrx/platform/compare/9.0.0-beta.0...9.0.0-beta.1) (2020-02-18)

@@ -135,12 +135,7 @@ The following `AppEntityServices` demonstrates.
 
 <code-example header="app-entity-services.ts">
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import {
-  EntityCache,
-  EntityCollectionServiceFactory,
-  EntityServicesBase
-} from '@ngrx/data';
+import { EntityServicesBase, EntityServicesElements } from '@ngrx/data';
 
 import { SideKick } from '../../model';
 import { HeroService, VillainService } from '../../services';
@@ -148,18 +143,15 @@ import { HeroService, VillainService } from '../../services';
 @Injectable()
 export class AppEntityServices extends EntityServicesBase {
   constructor(
-    public readonly store: Store&lt;EntityCache&gt;,
-    public readonly entityCollectionServiceFactory: EntityCollectionServiceFactory,
+    elements: EntityServicesElements,
 
     // Inject custom services, register them with the EntityServices, and expose in API.
-    public readonly heroesService: HeroesService,
-    public readonly villainsService: VillainsService
+    readonly heroesService: HeroesService,
+    readonly villainsService: VillainsService
   ) {
-    super(store, entityCollectionServiceFactory);
+    super(elements);
     this.registerEntityCollectionServices([heroesService, villainsService]);
   }
-
-  // ... Additional convenience members
 
   /** get the (default) SideKicks service */
   get sideKicksService() {
@@ -168,10 +160,13 @@ export class AppEntityServices extends EntityServicesBase {
 }
 </code-example>
 
-`AppEntityServices` injects the two custom collection services, `HeroesService` and `VillainsService`,
-which it also exposes directly as convenience properties.
+`AppEntityService` first injects the `EntityServicesElements` helper which it passes straight through to the base class constructor. 
+The "elements" enclose the ingredients that the base class needs to make and manage the entities you described in metadata.
 
-There is no custom collections service for the `SideKick`.
+Then it injects your two custom collection services, `HeroesService` and `VillainsService`,
+and exposes them directly to consumers as convenience properties for accessing those services.
+
+In this example, we don't need a custom collection service for the `SideKick` entity.
 The default service will do.
 
 Nonetheless, we add a `sideKicksService` property that gets or creates a default service for `SideKick`.

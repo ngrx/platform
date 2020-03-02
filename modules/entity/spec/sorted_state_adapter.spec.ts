@@ -407,4 +407,36 @@ describe('Sorted State Adapter', () => {
       },
     });
   });
+
+  it('should let you add one entity to the state with setOne()', () => {
+    const withOneEntity = adapter.setOne(TheGreatGatsby, state);
+    expect(withOneEntity).toEqual({
+      ids: [TheGreatGatsby.id],
+      entities: {
+        [TheGreatGatsby.id]: TheGreatGatsby,
+      },
+    });
+  });
+
+  it('should let you replace an entity in the state with setOne()', () => {
+    const withMany = adapter.addOne(
+      TheGreatGatsby,
+      adapter.addOne(AnimalFarm, adapter.addOne(AClockworkOrange, state))
+    );
+    const updatedBook = {
+      id: TheGreatGatsby.id,
+      title: 'A New Hope',
+      description: undefined,
+    };
+
+    const withUpdates = adapter.setOne(updatedBook, withMany);
+    expect(withUpdates).toEqual({
+      ids: [AClockworkOrange.id, updatedBook.id, AnimalFarm.id],
+      entities: {
+        [AClockworkOrange.id]: AClockworkOrange,
+        [updatedBook.id]: updatedBook,
+        [AnimalFarm.id]: AnimalFarm,
+      },
+    });
+  });
 });
