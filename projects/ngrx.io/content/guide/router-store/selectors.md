@@ -24,6 +24,7 @@ export const selectRouter = createFeatureSelector<
 >('router');
 
 const {
+  selectCurrentRoute,   // select the current route
   selectQueryParams,    // select the current route query params
   selectQueryParam,     // factory function to select a query param
   selectRouteParams,    // select the current route params
