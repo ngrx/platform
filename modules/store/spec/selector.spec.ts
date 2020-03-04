@@ -512,20 +512,6 @@ describe('Selectors', () => {
           expect(warnSpy).not.toHaveBeenCalled();
         });
       });
-
-      describe('should log when: ', () => {
-        it('feature key does not exist', () => {
-          spyOn(ngCore, 'isDevMode').and.returnValue(true);
-          const selector = createFeatureSelector('featureB');
-
-          selector({ featureA: {} });
-
-          expect(warnSpy).toHaveBeenCalled();
-          expect(warnSpy.calls.mostRecent().args[0]).toMatch(
-            /The feature name "featureB" does not exist/
-          );
-        });
-      });
     });
   });
 
