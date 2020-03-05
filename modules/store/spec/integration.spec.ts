@@ -28,6 +28,7 @@ import {
 } from '@angular/router/testing';
 import { NgModuleFactoryLoader, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
+import { DISABLE_ROOT_STORE_GUARD } from '../src';
 
 interface Todo {
   id: number;
@@ -501,6 +502,35 @@ describe('ngRx Integration spec', () => {
         expect(err.message).toBe(
           'StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.'
         );
+        done();
+      });
+    });
+
+    it('disables the forRoot() guard by providing the DISABLE_ROOT_STORE_GUARD token', (done: any) => {
+      @NgModule({
+        imports: [StoreModule.forRoot({})],
+      })
+      class FeatureModule {}
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({}), RouterTestingModule.withRoutes([])],
+        providers: [
+          {
+            provide: DISABLE_ROOT_STORE_GUARD,
+            useValue: true,
+          },
+        ],
+      });
+
+      let router: Router = TestBed.get(Router);
+      const loader: SpyNgModuleFactoryLoader = TestBed.get(
+        NgModuleFactoryLoader
+      );
+
+      loader.stubbedModules = { feature: FeatureModule };
+      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+      router.navigateByUrl('/feature-path').then(() => {
         done();
       });
     });

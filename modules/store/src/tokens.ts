@@ -1,6 +1,9 @@
 import { InjectionToken } from '@angular/core';
 import { RuntimeChecks, MetaReducer } from './models';
 
+export const DISABLE_ROOT_STORE_GUARD = new InjectionToken<boolean>(
+  '@ngrx/store Disable Internal Root Guard'
+);
 export const _ROOT_STORE_GUARD = new InjectionToken<void>(
   '@ngrx/store Internal Root Guard'
 );

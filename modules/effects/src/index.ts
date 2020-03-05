@@ -13,12 +13,13 @@ export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';
 export { EffectNotification } from './effect_notification';
 export { EffectsFeatureModule } from './effects_feature_module';
+
 export {
   ROOT_EFFECTS_INIT,
   rootEffectsInit,
   EffectsRootModule,
 } from './effects_root_module';
-export { EFFECTS_ERROR_HANDLER } from './tokens';
+export { DISABLE_ROOT_EFFECTS_GUARD, EFFECTS_ERROR_HANDLER } from './tokens';
 export { act } from './act';
 export {
   OnIdentifyEffects,

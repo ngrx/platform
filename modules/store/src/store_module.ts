@@ -37,6 +37,7 @@ import {
   USER_PROVIDED_META_REDUCERS,
   _RESOLVED_META_REDUCERS,
   _ROOT_STORE_GUARD,
+  DISABLE_ROOT_STORE_GUARD,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -121,7 +122,10 @@ export class StoreModule {
         {
           provide: _ROOT_STORE_GUARD,
           useFactory: _provideForRootGuard,
-          deps: [[Store, new Optional(), new SkipSelf()]],
+          deps: [
+            [Store, new Optional(), new SkipSelf()],
+            [DISABLE_ROOT_STORE_GUARD, new Optional(), new SkipSelf()],
+          ],
         },
         { provide: _INITIAL_STATE, useValue: config.initialState },
         {
@@ -297,8 +301,11 @@ export function _concatMetaReducers(
   return metaReducers.concat(userProvidedMetaReducers);
 }
 
-export function _provideForRootGuard(store: Store<any>): any {
-  if (store) {
+export function _provideForRootGuard(
+  store: Store<any>,
+  disableRootGuardCheck: boolean | null
+): any {
+  if (store && disableRootGuardCheck !== true) {
     throw new TypeError(
       `StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.`
     );

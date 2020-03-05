@@ -1,6 +1,9 @@
 import { InjectionToken, Type } from '@angular/core';
 import { EffectsErrorHandler } from './effects_error_handler';
 
+export const DISABLE_ROOT_EFFECTS_GUARD = new InjectionToken<boolean>(
+  '@ngrx/effects Disable Internal Root Guard'
+);
 export const _ROOT_EFFECTS_GUARD = new InjectionToken<void>(
   '@ngrx/effects Internal Root Guard'
 );

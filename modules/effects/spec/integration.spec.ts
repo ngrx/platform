@@ -14,7 +14,13 @@ import {
   EffectSources,
   Actions,
 } from '..';
-import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
+import {
+  ofType,
+  createEffect,
+  OnRunEffects,
+  EffectNotification,
+  DISABLE_ROOT_EFFECTS_GUARD,
+} from '../src';
 import { mapTo, exhaustMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -40,6 +46,34 @@ describe('NgRx Effects Integration spec', () => {
       expect(err.message).toBe(
         'EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.'
       );
+      done();
+    });
+  });
+
+  it('disables the forRoot() guard by providing the DISABLE_ROOT_EFFECTS_GUARD token', (done: any) => {
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
+        RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        {
+          provide: DISABLE_ROOT_EFFECTS_GUARD,
+          useValue: true,
+        },
+      ],
+    });
+
+    let router: Router = TestBed.inject(Router);
+    const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+      NgModuleFactoryLoader
+    ) as SpyNgModuleFactoryLoader;
+
+    loader.stubbedModules = { feature: FeatModuleWithForRoot };
+    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+    router.navigateByUrl('/feature-path').then(() => {
       done();
     });
   });

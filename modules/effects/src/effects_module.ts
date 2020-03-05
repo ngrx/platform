@@ -16,6 +16,7 @@ import {
   EFFECTS_ERROR_HANDLER,
   FEATURE_EFFECTS,
   ROOT_EFFECTS,
+  DISABLE_ROOT_EFFECTS_GUARD,
 } from './tokens';
 
 @NgModule({})
@@ -46,7 +47,10 @@ export class EffectsModule {
         {
           provide: _ROOT_EFFECTS_GUARD,
           useFactory: _provideForRootGuard,
-          deps: [[EffectsRunner, new Optional(), new SkipSelf()]],
+          deps: [
+            [EffectsRunner, new Optional(), new SkipSelf()],
+            [DISABLE_ROOT_EFFECTS_GUARD, new Optional(), SkipSelf()],
+          ],
         },
         {
           provide: EFFECTS_ERROR_HANDLER,
@@ -70,8 +74,11 @@ export function createSourceInstances(...instances: any[]) {
   return instances;
 }
 
-export function _provideForRootGuard(runner: EffectsRunner): any {
-  if (runner) {
+export function _provideForRootGuard(
+  runner: EffectsRunner,
+  disableRootGuardCheck: boolean | null
+): any {
+  if (runner && disableRootGuardCheck !== true) {
     throw new TypeError(
       `EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.`
     );

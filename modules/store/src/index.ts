@@ -45,6 +45,7 @@ export {
   FEATURE_REDUCERS,
   USER_PROVIDED_META_REDUCERS,
   USER_RUNTIME_CHECKS,
+  DISABLE_ROOT_STORE_GUARD,
 } from './tokens';
 export {
   StoreModule,
