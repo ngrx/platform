@@ -69,7 +69,7 @@ describe('Mock Store', () => {
     expect(fromStore).toBe(fromMockStore);
   });
 
-  it('should set the initial state to a mocked one', (done: DoneFn) => {
+  it('should set the initial state to a mocked one', (done: any) => {
     const fixedState = {
       counter1: 17,
       counter2: 11,
@@ -363,7 +363,7 @@ describe('Cleans up after each test', () => {
     state => state.value
   );
 
-  it('should return the mocked selectors value', (done: DoneFn) => {
+  it('should return the mocked selectors value', (done: any) => {
     TestBed.configureTestingModule({
       providers: [
         provideMockStore({
@@ -382,7 +382,7 @@ describe('Cleans up after each test', () => {
     });
   });
 
-  it('should return the real value', (done: DoneFn) => {
+  it('should return the real value', (done: any) => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({} as any, {
@@ -439,7 +439,7 @@ describe('Resets selectors after each test', () => {
    * setup MockStore and override selector. The next one would use the regular
    * Store and verifies that the selector is cleared/reset.
    */
-  it('should reset selector - attempt one', (done: DoneFn) => {
+  it('should reset selector - attempt one', (done: any) => {
     setupModules(shouldSetMockStore);
     const store: Store<{}> = TestBed.get<Store<{}>>(Store);
     store.select(selectorUnderTest).subscribe(v => {
@@ -449,7 +449,7 @@ describe('Resets selectors after each test', () => {
     });
   });
 
-  it('should reset selector - attempt two', (done: DoneFn) => {
+  it('should reset selector - attempt two', (done: any) => {
     setupModules(shouldSetMockStore);
     const store: Store<{}> = TestBed.get<Store<{}>>(Store);
     store.select(selectorUnderTest).subscribe(v => {

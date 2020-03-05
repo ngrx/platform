@@ -86,7 +86,7 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
-  @Input() errorMessage: string | null;
+  @Input() errorMessage!: string | null;
 
   @Output() submitted = new EventEmitter<Credentials>();
 

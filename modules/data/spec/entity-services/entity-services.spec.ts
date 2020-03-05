@@ -83,13 +83,13 @@ describe('EntityServices', () => {
         'entityCache$ callback twice'
       );
       expect(entityCacheValues[0]).toEqual({}, 'empty at first');
-      expect(entityCacheValues[1].Hero).toBeDefined('has Hero collection');
+      expect(entityCacheValues[1].Hero).toBeDefined();
     });
   });
 
   describe('dispatch(MergeQuerySet)', () => {
     // using async test to guard against false test pass.
-    it('should update entityCache$ twice after merging two individual collections', (done: DoneFn) => {
+    it('should update entityCache$ twice after merging two individual collections', (done: any) => {
       const hero1 = { id: 1, name: 'A' } as Hero;
       const hero2 = { id: 2, name: 'B' } as Hero;
       const heroes = [hero1, hero2];
@@ -113,9 +113,7 @@ describe('EntityServices', () => {
             [1, 2],
             '#2 has heroes'
           );
-          expect(entityCacheValues[1]['Villain']).toBeUndefined(
-            '#2 does not have Villain collection'
-          );
+          expect(entityCacheValues[1]['Villain']).toBeUndefined();
           expect(entityCacheValues[2]['Villain'].entities['DE']).toEqual(
             villain,
             '#3 has villain'
@@ -136,7 +134,7 @@ describe('EntityServices', () => {
     });
 
     // using async test to guard against false test pass.
-    it('should update entityCache$ once when MergeQuerySet multiple collections', (done: DoneFn) => {
+    it('should update entityCache$ once when MergeQuerySet multiple collections', (done: any) => {
       const hero1 = { id: 1, name: 'A' } as Hero;
       const hero2 = { id: 2, name: 'B' } as Hero;
       const heroes = [hero1, hero2];
@@ -185,7 +183,11 @@ const entityMetadata: EntityMetadataMap = {
 };
 
 function entityServicesSetup() {
-  const logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+  const logger = {
+    error: jasmine.createSpy('error'),
+    log: jasmine.createSpy('log'),
+    warn: jasmine.createSpy('warn'),
+  };
 
   TestBed.configureTestingModule({
     imports: [

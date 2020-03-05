@@ -115,7 +115,7 @@ describe('DefaultDataService', () => {
       const req = httpTestingController.expectOne(heroesUrl);
       expect(req.request.method).toEqual('GET');
 
-      expect(req.request.body).toBeNull('should not send data');
+      expect(req.request.body).toBeNull();
 
       // Respond with the mock heroes
       req.flush(expectedHeroes);
@@ -163,7 +163,7 @@ describe('DefaultDataService', () => {
       service.getAll().subscribe(
         heroes => fail('getAll succeeded when expected it to fail with a 404'),
         err => {
-          expect(err).toBeDefined('request should have failed');
+          expect(err).toBeDefined();
           expect(err instanceof DataServiceError).toBe(
             true,
             'is DataServiceError'
@@ -207,7 +207,7 @@ describe('DefaultDataService', () => {
       // One request to GET hero from expected URL
       const req = httpTestingController.expectOne(heroUrlId1);
 
-      expect(req.request.body).toBeNull('should not send data');
+      expect(req.request.body).toBeNull();
 
       // Respond with the expected hero
       req.flush(expectedHero);
@@ -260,7 +260,7 @@ describe('DefaultDataService', () => {
       const req = httpTestingController.expectOne(heroesUrl + '?name=B');
       expect(req.request.method).toEqual('GET');
 
-      expect(req.request.body).toBeNull('should not send data');
+      expect(req.request.body).toBeNull();
 
       // Respond with the mock heroes
       req.flush(expectedHeroes);
@@ -307,7 +307,7 @@ describe('DefaultDataService', () => {
         heroes =>
           fail('getWithQuery succeeded when expected it to fail with a 404'),
         err => {
-          expect(err).toBeDefined('request should have failed');
+          expect(err).toBeDefined();
           expect(err instanceof DataServiceError).toBe(
             true,
             'is DataServiceError'
@@ -378,7 +378,7 @@ describe('DefaultDataService', () => {
         r => r.method === 'DELETE' && r.url === heroUrlId1
       );
 
-      expect(req.request.body).toBeNull('should not send data');
+      expect(req.request.body).toBeNull();
 
       // Respond with empty nonsense object
       req.flush({});
@@ -541,7 +541,12 @@ describe('DefaultDataServiceFactory', () => {
         collectionResourceUrl: heroesUrl,
       },
     });
-    http = jasmine.createSpyObj('HttpClient', ['get', 'delete', 'post', 'put']);
+    http = {
+      get: jasmine.createSpy('get'),
+      delete: jasmine.createSpy('delete'),
+      post: jasmine.createSpy('post'),
+      put: jasmine.createSpy('put'),
+    };
     http.get.and.returnValue(of([]));
   });
 

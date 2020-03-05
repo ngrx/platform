@@ -77,7 +77,7 @@ import { Book } from '@example-app/books/models';
   ],
 })
 export class BookPreviewComponent {
-  @Input() book: Book;
+  @Input() book!: Book;
 
   get id() {
     return this.book.id;

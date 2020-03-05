@@ -10,7 +10,7 @@ version: 2
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.3
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.4
 var_2: &run_in_node
   docker:
     - image: circleci/node:12.9.1
@@ -75,7 +75,7 @@ jobs:
           key: *cache_key
 
       # Build and Test
-      - run: yarn test
+      - run: yarn test --maxWorkers=1 --ci
 
   build:
     <<: *run_in_node
@@ -108,14 +108,6 @@ jobs:
           key: *cache_key
       - run: yarn copy:schematics
       - run: git diff --name-only --exit-code ./modules
-
-  example-tests:
-    <<: *run_in_browser
-    steps:
-      - checkout
-      - restore_cache:
-          key: *cache_key
-      - run: yarn run example:test --watch=false --runInBand
 
   example-e2e-tests:
     <<: *run_in_browser
@@ -278,9 +270,6 @@ workflows:
       - build:
           requires:
             - test
-      - example-tests:
-          requires:
-            - install
       - example-e2e-tests:
           requires:
             - install
@@ -299,7 +288,6 @@ workflows:
       - deploy:
           requires:
             - docs
-            - example-tests
             - example-e2e-tests
             - docs-tests
             - build

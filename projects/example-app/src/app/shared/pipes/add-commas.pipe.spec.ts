@@ -22,7 +22,7 @@ describe('Pipe: Add Commas', () => {
   });
 
   it('transforms undefined to "Author Unknown"', () => {
-    expect(pipe.transform(undefined)).toEqual('Author Unknown');
+    expect(pipe.transform(null)).toEqual('Author Unknown');
   });
 
   it('transforms [] to "Author Unknown"', () => {

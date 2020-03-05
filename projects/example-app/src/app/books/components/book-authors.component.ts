@@ -19,7 +19,7 @@ import { Book } from '@example-app/books/models';
   ],
 })
 export class BookAuthorsComponent {
-  @Input() book: Book;
+  @Input() book!: Book;
 
   get authors() {
     return this.book.volumeInfo.authors;
