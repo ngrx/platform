@@ -5,13 +5,13 @@ import {
   SpyNgModuleFactoryLoader,
 } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { Action, StoreModule, INIT, Store } from '@ngrx/store';
+import { Action, StoreModule, INIT } from '@ngrx/store';
 import {
   EffectsModule,
-  EffectSources,
-  OnIdentifyEffects,
   OnInitEffects,
   ROOT_EFFECTS_INIT,
+  OnIdentifyEffects,
+  EffectSources,
   Actions,
   USER_PROVIDED_EFFECTS,
 } from '..';
