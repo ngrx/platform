@@ -1,7 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Store } from '@ngrx/store';
 import { LoginPageComponent } from '@example-app/auth/containers';
 import { LoginFormComponent } from '@example-app/auth/components';
 import * as fromAuth from '@example-app/auth/reducers';
@@ -11,7 +10,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginPageComponent>;
-  let store: MockStore<fromAuth.State>;
+  let store: MockStore;
   let instance: LoginPageComponent;
 
   beforeEach(() => {
@@ -29,7 +28,7 @@ describe('Login Page', () => {
 
     fixture = TestBed.createComponent(LoginPageComponent);
     instance = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.inject(MockStore);
 
     spyOn(store, 'dispatch');
   });

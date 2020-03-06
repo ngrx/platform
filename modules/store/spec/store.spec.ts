@@ -64,7 +64,7 @@ describe('ngRx Store', () => {
       testStoreValue({ counter1: 0, counter2: 5, counter3: 0 }, done);
     });
 
-    it('should keep initial state values when state is partially initialized', (done: DoneFn) => {
+    it('should keep initial state values when state is partially initialized', (done: any) => {
       TestBed.configureTestingModule({
         imports: [
           StoreModule.forRoot({} as any, {
@@ -163,7 +163,7 @@ describe('ngRx Store', () => {
       );
     }
 
-    function testStoreValue(expected: any, done: DoneFn) {
+    function testStoreValue(expected: any, done: any) {
       store = TestBed.get(Store);
 
       store.pipe(take(1)).subscribe({
@@ -520,7 +520,7 @@ describe('ngRx Store', () => {
       expect(metaReducerSpy2).toHaveBeenCalledWith(counterReducer2);
     });
 
-    it('should initial state with value', (done: DoneFn) => {
+    it('should initial state with value', (done: any) => {
       const counterInitialState = 2;
       TestBed.configureTestingModule({
         imports: [
@@ -557,7 +557,7 @@ describe('ngRx Store', () => {
       FEATURE_CONFIG2_TOKEN = new InjectionToken('Feature Config2');
     });
 
-    it('should initial state with value', (done: DoneFn) => {
+    it('should initial state with value', (done: any) => {
       const initialState = { counter1: 1 };
       const featureKey = 'counter';
 
@@ -589,7 +589,7 @@ describe('ngRx Store', () => {
       });
     });
 
-    it('should initial state with value for multi features', (done: DoneFn) => {
+    it('should initial state with value for multi features', (done: any) => {
       const initialState = 1;
       const initialState2 = 2;
       const initialState3 = 3;

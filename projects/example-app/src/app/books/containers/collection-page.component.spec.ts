@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { CollectionPageActions } from '@example-app/books/actions';
@@ -19,7 +18,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;
-  let store: MockStore<fromBooks.State>;
+  let store: MockStore;
   let instance: CollectionPageComponent;
 
   beforeEach(() => {
@@ -42,7 +41,7 @@ describe('Collection Page', () => {
 
     fixture = TestBed.createComponent(CollectionPageComponent);
     instance = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.inject(MockStore);
 
     spyOn(store, 'dispatch');
   });

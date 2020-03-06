@@ -1,84 +1,38 @@
-import { NgModule, NgModuleFactoryLoader } from '@angular/core';
+import { NgModuleFactoryLoader, NgModule, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   RouterTestingModule,
   SpyNgModuleFactoryLoader,
 } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { Action, Store } from '@ngrx/store';
+import { Action, StoreModule, INIT, Store } from '@ngrx/store';
 import {
   EffectsModule,
   EffectSources,
   OnIdentifyEffects,
   OnInitEffects,
   ROOT_EFFECTS_INIT,
+  Actions,
   USER_PROVIDED_EFFECTS,
 } from '..';
+import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
+import { mapTo, exhaustMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 describe('NgRx Effects Integration spec', () => {
-  let dispatch: jasmine.Spy;
-
-  beforeEach(() => {
+  it('throws if forRoot() is used more than once', (done: any) => {
     TestBed.configureTestingModule({
       imports: [
-        EffectsModule.forRoot([
-          RootEffectWithInitAction,
-          RootEffectWithoutLifecycle,
-          RootEffectWithInitActionWithPayload,
-        ]),
-        EffectsModule.forFeature([FeatEffectWithInitAction]),
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         RouterTestingModule.withRoutes([]),
-      ],
-      providers: [
-        {
-          provide: Store,
-          useValue: {
-            dispatch: jasmine.createSpy('dispatch'),
-          },
-        },
       ],
     });
 
-    const store = TestBed.get(Store) as Store<any>;
-
-    const effectSources = TestBed.get(EffectSources) as EffectSources;
-    effectSources.addEffects(new FeatEffectWithIdentifierAndInitAction('one'));
-    effectSources.addEffects(new FeatEffectWithIdentifierAndInitAction('two'));
-    effectSources.addEffects(new FeatEffectWithIdentifierAndInitAction('one'));
-
-    dispatch = store.dispatch as jasmine.Spy;
-  });
-
-  it('should dispatch init actions in the correct order', () => {
-    expect(dispatch.calls.count()).toBe(6);
-
-    // All of the root effects init actions are dispatched first
-    expect(dispatch.calls.argsFor(0)).toEqual([
-      { type: '[RootEffectWithInitAction]: INIT' },
-    ]);
-
-    expect(dispatch.calls.argsFor(1)).toEqual([new ActionWithPayload()]);
-
-    // After all of the root effects are registered, the ROOT_EFFECTS_INIT action is dispatched
-    expect(dispatch.calls.argsFor(2)).toEqual([{ type: ROOT_EFFECTS_INIT }]);
-
-    // After the root effects init, the feature effects are dispatched
-    expect(dispatch.calls.argsFor(3)).toEqual([
-      { type: '[FeatEffectWithInitAction]: INIT' },
-    ]);
-
-    expect(dispatch.calls.argsFor(4)).toEqual([
-      { type: '[FeatEffectWithIdentifierAndInitAction]: INIT' },
-    ]);
-
-    expect(dispatch.calls.argsFor(5)).toEqual([
-      { type: '[FeatEffectWithIdentifierAndInitAction]: INIT' },
-    ]);
-  });
-
-  it('throws if forRoot() is used more than once', (done: DoneFn) => {
-    let router: Router = TestBed.get(Router);
-    const loader: SpyNgModuleFactoryLoader = TestBed.get(NgModuleFactoryLoader);
+    let router: Router = TestBed.inject(Router);
+    const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+      NgModuleFactoryLoader
+    ) as SpyNgModuleFactoryLoader;
 
     loader.stubbedModules = { feature: FeatModuleWithForRoot };
     router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
@@ -91,56 +45,281 @@ describe('NgRx Effects Integration spec', () => {
     });
   });
 
-  it('should execute user provided effects in root module', (done: DoneFn) => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [EffectsModule.forRoot()],
-      providers: [
-        {
-          provide: Store,
-          useValue: {
-            dispatch: jasmine.createSpy('dispatch'),
+  describe('actions', () => {
+    const createDispatchedReducer = (dispatchedActions: string[] = []) => (
+      state = {},
+      action: Action
+    ) => {
+      dispatchedActions.push(action.type);
+      return state;
+    };
+
+    describe('init actions', () => {
+      it('should dispatch and react to init effect', () => {
+        let dispatchedActionsLog: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({
+              dispatched: createDispatchedReducer(dispatchedActionsLog),
+            }),
+            EffectsModule.forRoot([EffectWithOnInitAndResponse]),
+          ],
+        });
+        TestBed.inject(EffectSources);
+
+        expect(dispatchedActionsLog).toEqual([
+          INIT,
+
+          '[EffectWithOnInitAndResponse]: INIT',
+          '[EffectWithOnInitAndResponse]: INIT Response',
+
+          ROOT_EFFECTS_INIT,
+        ]);
+      });
+
+      it('should dispatch once for an instance', () => {
+        let dispatchedActionsLog: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({
+              dispatched: createDispatchedReducer(dispatchedActionsLog),
+            }),
+            EffectsModule.forRoot([
+              RootEffectWithInitAction,
+              RootEffectWithInitAction,
+              RootEffectWithInitAction2,
+            ]),
+            EffectsModule.forFeature([
+              RootEffectWithInitAction,
+              RootEffectWithInitAction2,
+            ]),
+          ],
+        });
+        TestBed.inject(EffectSources);
+
+        expect(dispatchedActionsLog).toEqual([
+          INIT,
+
+          '[RootEffectWithInitAction]: INIT',
+          '[RootEffectWithInitAction2]: INIT',
+
+          ROOT_EFFECTS_INIT,
+        ]);
+      });
+
+      it('should dispatch once per instance key', () => {
+        let dispatchedActionsLog: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({
+              dispatched: createDispatchedReducer(dispatchedActionsLog),
+            }),
+            EffectsModule.forRoot([]),
+          ],
+        });
+        const effectsSources = TestBed.inject(EffectSources);
+
+        effectsSources.addEffects(
+          new FeatEffectWithIdentifierAndInitAction('One')
+        );
+        effectsSources.addEffects(
+          new FeatEffectWithIdentifierAndInitAction('Two')
+        );
+        effectsSources.addEffects(
+          new FeatEffectWithIdentifierAndInitAction('One')
+        );
+        effectsSources.addEffects(
+          new FeatEffectWithIdentifierAndInitAction('Two')
+        );
+
+        expect(dispatchedActionsLog).toEqual([
+          INIT,
+          ROOT_EFFECTS_INIT,
+
+          // for One
+          '[FeatEffectWithIdentifierAndInitAction]: INIT',
+          // for Two
+          '[FeatEffectWithIdentifierAndInitAction]: INIT',
+        ]);
+      });
+    });
+
+    it('should dispatch actions in the correct order', async () => {
+      let dispatchedActionsLog: string[] = [];
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({
+            dispatched: createDispatchedReducer(dispatchedActionsLog),
+          }),
+          EffectsModule.forRoot([
+            EffectLoggerWithOnRunEffects,
+            RootEffectWithInitAction,
+            EffectWithOnInitAndResponse,
+            RootEffectWithoutLifecycle,
+            RootEffectWithInitActionWithPayload,
+          ]),
+          EffectsModule.forFeature([FeatEffectWithInitAction]),
+          RouterTestingModule.withRoutes([]),
+        ],
+      });
+
+      const logger = TestBed.inject(EffectLoggerWithOnRunEffects);
+
+      const effectSources = TestBed.inject(EffectSources);
+      effectSources.addEffects(
+        new FeatEffectWithIdentifierAndInitAction('one')
+      );
+      effectSources.addEffects(
+        new FeatEffectWithIdentifierAndInitAction('two')
+      );
+      effectSources.addEffects(
+        new FeatEffectWithIdentifierAndInitAction('one')
+      );
+
+      let router: Router = TestBed.inject(Router);
+      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+        NgModuleFactoryLoader
+      ) as SpyNgModuleFactoryLoader;
+
+      loader.stubbedModules = { feature: FeatModuleWithForFeature };
+      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+      await router.navigateByUrl('/feature-path');
+
+      const expectedLog = [
+        // first store init
+        INIT,
+
+        // second root effects
+        '[RootEffectWithInitAction]: INIT',
+        '[EffectWithOnInitAndResponse]: INIT',
+        '[EffectWithOnInitAndResponse]: INIT Response',
+        '[RootEffectWithInitActionWithPayload]: INIT',
+
+        // third effects init
+        ROOT_EFFECTS_INIT,
+
+        // next feat effects
+        '[FeatEffectWithInitAction]: INIT',
+
+        // lastly added features (3 effects but 2 unique keys)
+        '[FeatEffectWithIdentifierAndInitAction]: INIT',
+        '[FeatEffectWithIdentifierAndInitAction]: INIT',
+
+        // from lazy loaded module
+        '[FeatEffectFromLazyLoadedModuleWithInitAction]: INIT',
+      ];
+
+      // reducers should receive all actions
+      expect(dispatchedActionsLog).toEqual(expectedLog);
+
+      // ngrxOnRunEffects should receive all actions except STORE_INIT
+      expect(logger.actionsLog).toEqual(expectedLog.slice(1));
+    });
+
+    it('should dispatch user provided effects actions in order', async () => {
+      let dispatchedActionsLog: string[] = [];
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({
+            dispatched: createDispatchedReducer(dispatchedActionsLog),
+          }),
+          EffectsModule.forRoot([
+            EffectLoggerWithOnRunEffects,
+            RootEffectWithInitAction,
+          ]),
+          RouterTestingModule.withRoutes([]),
+        ],
+        providers: [
+          UserProvidedEffect1,
+          {
+            provide: USER_PROVIDED_EFFECTS,
+            multi: true,
+            useValue: [UserProvidedEffect1],
           },
-        },
-        UserProvidedEffect1,
-        {
-          provide: USER_PROVIDED_EFFECTS,
-          multi: true,
-          useValue: [UserProvidedEffect1],
-        },
-      ],
-    });
+        ],
+      });
 
-    const store = TestBed.get(Store) as Store<any>;
-    dispatch = store.dispatch as jasmine.Spy;
+      const logger = TestBed.inject(EffectLoggerWithOnRunEffects);
+      const router: Router = TestBed.inject(Router);
+      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+        NgModuleFactoryLoader
+      ) as SpyNgModuleFactoryLoader;
 
-    expect(dispatch).toHaveBeenCalledWith({
-      type: '[UserProvidedEffect1]: INIT',
+      loader.stubbedModules = { feature: FeatModuleWithUserProvidedEffects };
+      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+      await router.navigateByUrl('/feature-path');
+
+      const expectedLog = [
+        // Store init
+        INIT,
+
+        // Root effects
+        '[RootEffectWithInitAction]: INIT',
+
+        // User provided effects loaded by root module
+        '[UserProvidedEffect1]: INIT',
+
+        // Effects init
+        ROOT_EFFECTS_INIT,
+
+        // User provided effects loaded by feature module
+        '[UserProvidedEffect2]: INIT',
+      ];
+      expect(dispatchedActionsLog).toEqual(expectedLog);
     });
-    done();
   });
 
-  it('should execute user provided effects in feature module', (done: DoneFn) => {
-    let router: Router = TestBed.get(Router);
-    const loader: SpyNgModuleFactoryLoader = TestBed.get(NgModuleFactoryLoader);
+  @Injectable()
+  class EffectLoggerWithOnRunEffects implements OnRunEffects {
+    actionsLog: string[] = [];
 
-    loader.stubbedModules = { feature: FeatModuleWithUserProvidedEffects };
-    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+    constructor(private actions$: Actions) {}
 
-    router.navigateByUrl('/feature-path').then(() => {
-      expect(dispatch).toHaveBeenCalledWith({
-        type: '[UserProvidedEffect1]: INIT',
-      });
-      expect(dispatch).toHaveBeenCalledWith({
-        type: '[UserProvidedEffect2]: INIT',
-      });
-      done();
+    ngrxOnRunEffects(
+      resolvedEffects$: Observable<EffectNotification>
+    ): Observable<EffectNotification> {
+      return this.actions$.pipe(
+        tap(action => this.actionsLog.push(action.type)),
+        exhaustMap(() => resolvedEffects$)
+      );
+    }
+  }
+
+  @Injectable()
+  class EffectWithOnInitAndResponse implements OnInitEffects {
+    ngrxOnInitEffects(): Action {
+      return { type: '[EffectWithOnInitAndResponse]: INIT' };
+    }
+
+    response = createEffect(() => {
+      return this.actions$.pipe(
+        ofType('[EffectWithOnInitAndResponse]: INIT'),
+        mapTo({ type: '[EffectWithOnInitAndResponse]: INIT Response' })
+      );
     });
-  });
+
+    noop = createEffect(() => {
+      return this.actions$.pipe(
+        ofType('noop'),
+        mapTo({ type: 'noop response' })
+      );
+    });
+
+    constructor(private actions$: Actions) {}
+  }
 
   class RootEffectWithInitAction implements OnInitEffects {
     ngrxOnInitEffects(): Action {
       return { type: '[RootEffectWithInitAction]: INIT' };
+    }
+  }
+
+  class RootEffectWithInitAction2 implements OnInitEffects {
+    ngrxOnInitEffects(): Action {
+      return { type: '[RootEffectWithInitAction2]: INIT' };
     }
   }
 
@@ -172,12 +351,11 @@ describe('NgRx Effects Integration spec', () => {
   @NgModule({
     imports: [EffectsModule.forFeature()],
     providers: [
-      UserProvidedEffect1,
       UserProvidedEffect2,
       {
         provide: USER_PROVIDED_EFFECTS,
         multi: true,
-        useValue: [UserProvidedEffect1, UserProvidedEffect2],
+        useValue: [UserProvidedEffect2],
       },
     ],
   })
@@ -202,8 +380,23 @@ describe('NgRx Effects Integration spec', () => {
     constructor(private effectIdentifier: string) {}
   }
 
+  class FeatEffectFromLazyLoadedModuleWithInitAction implements OnInitEffects {
+    ngrxOnInitEffects(): Action {
+      return { type: '[FeatEffectFromLazyLoadedModuleWithInitAction]: INIT' };
+    }
+  }
+
   @NgModule({
     imports: [EffectsModule.forRoot()],
   })
   class FeatModuleWithForRoot {}
+
+  @NgModule({
+    imports: [
+      EffectsModule.forFeature([FeatEffectFromLazyLoadedModuleWithInitAction]),
+      // should not be loaded because it's already loaded in forRoot
+      EffectsModule.forFeature([FeatEffectWithInitAction]),
+    ],
+  })
+  class FeatModuleWithForFeature {}
 });

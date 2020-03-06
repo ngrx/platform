@@ -8,7 +8,7 @@
           "angular-in-depth": {
             "title": "Angular in Depth",
             "desc": "All articles in Angular in Depth tagged with NgRx",
-            "url": "https://blog.angularindepth.com/tagged/ngrx",
+            "url": "https://indepth.dev/ngrx/",
             "rev": true
           },
           "ngrx-best-practices-for-enterprise-angular-applications": {
@@ -35,7 +35,7 @@
             "desc":
               "Mike Ryan talk about the benefits and complexity of NgRx, and introducing the SHARI principle",
             "url":
-              "https://www.youtube.com/playlist?list=PL8OUS498tQP3FFsZzULTGnbyIcILFjHd3",
+              "https://www.youtube.com/watch?v=omnwu_etHTY",
             "rev": true
           },
           "international-javascript-conference-london-2019": {
@@ -144,9 +144,9 @@
           "ngrx-ducks": {
             "title": "ngrx-ducks",
             "desc":
-              "A plugin for ngrx automating creation and dispatch of actions",
-            "url": "https://github.com/co-IT/ngrx-ducks",
-            "rev": true
+              "A plugin for NgRx creating dynamic store facades",
+              "url": "https://co-it.gitbook.io/ngrx-ducks/",
+              "rev": true
           },
           "ngrx-wieder": {
             "title": "ngrx-wieder",

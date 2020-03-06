@@ -1,20 +1,21 @@
-import { ErrorHandler, Provider } from '@angular/core';
+import { ErrorHandler, Provider, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Action, Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { createEffect, EFFECTS_ERROR_HANDLER, EffectsModule } from '..';
+import * as effectsSrc from '../src/effects_error_handler';
 
 describe('Effects Error Handler', () => {
   let subscriptionCount: number;
   let globalErrorHandler: jasmine.Spy;
   let storeNext: jasmine.Spy;
 
-  function makeEffectTestBed(...providers: Provider[]) {
+  function makeEffectTestBed(effect: Type<any>, ...providers: Provider[]) {
     subscriptionCount = 0;
 
     TestBed.configureTestingModule({
-      imports: [EffectsModule.forRoot([ErrorEffect])],
+      imports: [EffectsModule.forRoot([effect])],
       providers: [
         {
           provide: Store,
@@ -38,8 +39,14 @@ describe('Effects Error Handler', () => {
     storeNext = store.next;
   }
 
+  it('should retry on infinite error up to 10 times', () => {
+    makeEffectTestBed(AlwaysErrorEffect);
+
+    expect(globalErrorHandler.calls.count()).toBe(10);
+  });
+
   it('should retry and notify error handler when effect error handler is not provided', () => {
-    makeEffectTestBed();
+    makeEffectTestBed(ErrorEffect);
 
     // two subscriptions expected:
     // 1. Initial subscription to the effect (this will error)
@@ -62,7 +69,7 @@ describe('Effects Error Handler', () => {
         );
       });
 
-    makeEffectTestBed({
+    makeEffectTestBed(ErrorEffect, {
       provide: EFFECTS_ERROR_HANDLER,
       useValue: effectsErrorHandlerSpy,
     });
@@ -82,6 +89,10 @@ describe('Effects Error Handler', () => {
     effect$ = createEffect(errorFirstSubscriber, {
       useEffectsErrorHandler: true,
     });
+  }
+
+  class AlwaysErrorEffect {
+    effect$ = createEffect(() => throwError('always an error'));
   }
 
   /**

@@ -38,13 +38,13 @@ describe('EntityCollectionCreator', () => {
     const hdef = eds.getDefinition('Hero');
     hdef.initialState = undefined as any; // ZAP!
     const collection = creator.create<Hero, HeroCollection>('Hero');
-    expect(collection.foo).toBeUndefined('foo');
-    expect(collection.ids).toBeDefined('ids');
+    expect(collection.foo).toBeUndefined();
+    expect(collection.ids).toBeDefined();
   });
 
   it('should create empty collection even when no def for entity type', () => {
     const collection = creator.create('Bazinga');
-    expect(collection.ids).toBeDefined('ids');
+    expect(collection.ids).toBeDefined();
   });
 });
 

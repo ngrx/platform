@@ -74,7 +74,11 @@ describe('EntityCollectionReducer', () => {
     const collectionReducerFactory = new EntityCollectionReducerFactory(
       collectionReducerMethodsFactory
     );
-    logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    logger = {
+      error: jasmine.createSpy('error'),
+      log: jasmine.createSpy('log'),
+      warn: jasmine.createSpy('warn'),
+    };
 
     entityReducerRegistry = new EntityCollectionReducerRegistry(
       collectionReducerFactory
@@ -239,7 +243,7 @@ describe('EntityCollectionReducer', () => {
         updatedEntity,
         'current value still the update'
       );
-      expect(originalValue).toBeDefined('entity still in changeState');
+      expect(originalValue).toBeDefined();
       expect(originalValue).not.toEqual(
         preUpdatedEntity,
         'no longer the initial entity'
@@ -349,7 +353,7 @@ describe('EntityCollectionReducer', () => {
         updatedEntity,
         'current value still the update'
       );
-      expect(originalValue).toBeDefined('entity still in changeState');
+      expect(originalValue).toBeDefined();
       expect(originalValue).not.toEqual(
         preUpdatedEntity,
         'no longer the initial entity'
@@ -477,7 +481,7 @@ describe('EntityCollectionReducer', () => {
         updatedEntity,
         'current value still the update'
       );
-      expect(originalValue).toBeDefined('entity still in changeState');
+      expect(originalValue).toBeDefined();
       expect(originalValue).not.toEqual(
         preUpdatedEntity,
         'no longer the initial entity'
@@ -1012,7 +1016,7 @@ describe('EntityCollectionReducer', () => {
       });
 
       const collection = entityReducer(initialCache, action)['Hero'];
-      expect(collection.entities[hero.id]).toBeUndefined('hero removed');
+      expect(collection.entities[hero.id]).toBeUndefined();
       expect(collection.loading).toBe(true, 'loading on');
     });
 
@@ -1028,7 +1032,7 @@ describe('EntityCollectionReducer', () => {
       });
 
       const collection = entityReducer(initialCache, action)['Hero'];
-      expect(collection.entities[hero.id]).toBeUndefined('hero removed');
+      expect(collection.entities[hero.id]).toBeUndefined();
       expect(collection.loading).toBe(true, 'loading on');
     });
 
@@ -1041,8 +1045,8 @@ describe('EntityCollectionReducer', () => {
       const { entities, changeState } = entityReducer(entityCache, action)[
         'Hero'
       ];
-      expect(entities[id]).toBeUndefined('added entity removed');
-      expect(changeState[id]).toBeUndefined('no longer tracked');
+      expect(entities[id]).toBeUndefined();
+      expect(changeState[id]).toBeUndefined();
       expect(action.payload.skip).toBe(true, 'should skip save');
     });
 
@@ -1054,18 +1058,14 @@ describe('EntityCollectionReducer', () => {
       });
       const collection = entityReducer(entityCache, action)['Hero'];
 
-      expect(collection.entities[id]).toBeUndefined(
-        'updated entity removed from collection'
-      );
+      expect(collection.entities[id]).toBeUndefined();
       const entityChangeState = collection.changeState[id];
-      expect(entityChangeState).toBeDefined('updated entity still tracked');
+      expect(entityChangeState).toBeDefined();
       expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
 
     it('should be ok when the id is not in the collection', () => {
-      expect(initialCache['Hero'].entities[1000]).toBeUndefined(
-        'should not exist'
-      );
+      expect(initialCache['Hero'].entities[1000]).toBeUndefined();
 
       const action = createAction(
         'Hero',
@@ -1075,7 +1075,7 @@ describe('EntityCollectionReducer', () => {
       );
 
       const collection = entityReducer(initialCache, action)['Hero'];
-      expect(collection.entities[1000]).toBeUndefined('hero removed');
+      expect(collection.entities[1000]).toBeUndefined();
       expect(collection.loading).toBe(true, 'loading on');
     });
   });
@@ -1098,8 +1098,8 @@ describe('EntityCollectionReducer', () => {
       const { entities, changeState } = entityReducer(entityCache, action)[
         'Hero'
       ];
-      expect(entities[id]).toBeUndefined('added entity removed');
-      expect(changeState[id]).toBeUndefined('no longer tracked');
+      expect(entities[id]).toBeUndefined();
+      expect(changeState[id]).toBeUndefined();
       expect(action.payload.skip).toBe(true, 'should skip save');
     });
 
@@ -1109,11 +1109,9 @@ describe('EntityCollectionReducer', () => {
       const action = createAction('Hero', EntityOp.SAVE_DELETE_ONE, id);
       const collection = entityReducer(entityCache, action)['Hero'];
 
-      expect(collection.entities[id]).toBeDefined(
-        'updated entity still in collection'
-      );
+      expect(collection.entities[id]).toBeDefined();
       const entityChangeState = collection.changeState[id];
-      expect(entityChangeState).toBeDefined('updated entity still tracked');
+      expect(entityChangeState).toBeDefined();
       expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
   });
@@ -1134,9 +1132,7 @@ describe('EntityCollectionReducer', () => {
         entities: initialEntities,
         changeState: initialChangeState,
       } = entityCache['Hero'];
-      expect(initialChangeState[removedEntity.id]).toBeDefined(
-        'removed is tracked before save success'
-      );
+      expect(initialChangeState[removedEntity.id]).toBeDefined();
 
       const action = createAction(
         'Hero',
@@ -1148,15 +1144,11 @@ describe('EntityCollectionReducer', () => {
       const collection = entityReducer(entityCache, action)['Hero'];
       expect(collection.entities).toBe(initialEntities, 'entities untouched');
       expect(collection.loading).toBe(false, 'loading off');
-      expect(collection.changeState[removedEntity.id]).toBeUndefined(
-        'removed no longer tracked'
-      );
+      expect(collection.changeState[removedEntity.id]).toBeUndefined();
     });
 
     it('should be ok when the id is not in the collection', () => {
-      expect(initialCache['Hero'].entities[1000]).toBeUndefined(
-        'should not exist'
-      );
+      expect(initialCache['Hero'].entities[1000]).toBeUndefined();
 
       const action = createAction(
         'Hero',
@@ -1168,7 +1160,7 @@ describe('EntityCollectionReducer', () => {
       const state = entityReducer(initialCache, action);
       const collection = state['Hero'];
 
-      expect(collection.entities[1000]).toBeUndefined('hero removed');
+      expect(collection.entities[1000]).toBeUndefined();
       expect(collection.loading).toBe(false, 'loading off');
     });
   });
@@ -1189,14 +1181,12 @@ describe('EntityCollectionReducer', () => {
 
       const collection = entityReducer(initialCache, action)['Hero'];
 
-      expect(collection.entities[hero.id]).toBeUndefined('hero removed');
+      expect(collection.entities[hero.id]).toBeUndefined();
       expect(collection.loading).toBe(false, 'loading off');
     });
 
     it('should be ok when the id is not in the collection', () => {
-      expect(initialCache['Hero'].entities[1000]).toBeUndefined(
-        'should not exist'
-      );
+      expect(initialCache['Hero'].entities[1000]).toBeUndefined();
 
       const action = createAction(
         'Hero',
@@ -1206,7 +1196,7 @@ describe('EntityCollectionReducer', () => {
 
       const collection = entityReducer(initialCache, action)['Hero'];
 
-      expect(collection.entities[1000]).toBeUndefined('hero removed');
+      expect(collection.entities[1000]).toBeUndefined();
       expect(collection.loading).toBe(false, 'loading off');
     });
   });
@@ -1278,8 +1268,8 @@ describe('EntityCollectionReducer', () => {
       });
 
       const collection = entityReducer(initialCache, action)['Hero'];
-      expect(collection.entities[ids[0]]).toBeUndefined('heroes[0] removed');
-      expect(collection.entities[ids[1]]).toBeUndefined('heroes[1] removed');
+      expect(collection.entities[ids[0]]).toBeUndefined();
+      expect(collection.entities[ids[1]]).toBeUndefined();
       expect(collection.loading).toBe(true, 'loading on');
     });
 
@@ -1292,8 +1282,8 @@ describe('EntityCollectionReducer', () => {
       const { entities, changeState } = entityReducer(entityCache, action)[
         'Hero'
       ];
-      expect(entities[id]).toBeUndefined('added entity removed');
-      expect(changeState[id]).toBeUndefined('no longer tracked');
+      expect(entities[id]).toBeUndefined();
+      expect(changeState[id]).toBeUndefined();
     });
 
     it('should reclassify change of an unsaved updated hero to "deleted"', () => {
@@ -1304,18 +1294,14 @@ describe('EntityCollectionReducer', () => {
       });
       const collection = entityReducer(entityCache, action)['Hero'];
 
-      expect(collection.entities[id]).toBeUndefined(
-        'updated entity removed from collection'
-      );
+      expect(collection.entities[id]).toBeUndefined();
       const entityChangeState = collection.changeState[id];
-      expect(entityChangeState).toBeDefined('updated entity still tracked');
+      expect(entityChangeState).toBeDefined();
       expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
 
     it('should be ok when the id is not in the collection', () => {
-      expect(initialCache['Hero'].entities[1000]).toBeUndefined(
-        'should not exist'
-      );
+      expect(initialCache['Hero'].entities[1000]).toBeUndefined();
 
       const action = createAction(
         'Hero',
@@ -1325,7 +1311,7 @@ describe('EntityCollectionReducer', () => {
       );
 
       const collection = entityReducer(initialCache, action)['Hero'];
-      expect(collection.entities[1000]).toBeUndefined('hero removed');
+      expect(collection.entities[1000]).toBeUndefined();
       expect(collection.loading).toBe(true, 'loading on');
     });
   });
@@ -1348,8 +1334,8 @@ describe('EntityCollectionReducer', () => {
       const { entities, changeState } = entityReducer(entityCache, action)[
         'Hero'
       ];
-      expect(entities[id]).toBeUndefined('added entity removed');
-      expect(changeState[id]).toBeUndefined('no longer tracked');
+      expect(entities[id]).toBeUndefined();
+      expect(changeState[id]).toBeUndefined();
       expect(action.payload.skip).toBe(true, 'should skip save');
     });
 
@@ -1359,11 +1345,9 @@ describe('EntityCollectionReducer', () => {
       const action = createAction('Hero', EntityOp.SAVE_DELETE_ONE, id);
       const collection = entityReducer(entityCache, action)['Hero'];
 
-      expect(collection.entities[id]).toBeDefined(
-        'updated entity still in collection'
-      );
+      expect(collection.entities[id]).toBeDefined();
       const entityChangeState = collection.changeState[id];
-      expect(entityChangeState).toBeDefined('updated entity still tracked');
+      expect(entityChangeState).toBeDefined();
       expect(entityChangeState!.changeType).toBe(ChangeType.Deleted);
     });
   });
@@ -1384,12 +1368,8 @@ describe('EntityCollectionReducer', () => {
       let collection = entityReducer(entityCache, action)['Hero'];
       let changeState = collection.changeState;
       expect(collection.loading).toBe(true, 'loading on');
-      expect(changeState[ids[0]]).toBeDefined(
-        '[0] removed is tracked before save success'
-      );
-      expect(changeState[ids[1]]).toBeDefined(
-        '[1] removed is tracked before save success'
-      );
+      expect(changeState[ids[0]]).toBeDefined();
+      expect(changeState[ids[1]]).toBeDefined();
 
       action = createAction(
         'Hero',
@@ -1401,18 +1381,12 @@ describe('EntityCollectionReducer', () => {
       collection = entityReducer(entityCache, action)['Hero'];
       changeState = collection.changeState;
       expect(collection.loading).toBe(false, 'loading off');
-      expect(changeState[ids[0]]).toBeUndefined(
-        '[0] removed no longer tracked'
-      );
-      expect(changeState[ids[1]]).toBeUndefined(
-        '[1] removed no longer tracked'
-      );
+      expect(changeState[ids[0]]).toBeUndefined();
+      expect(changeState[ids[1]]).toBeUndefined();
     });
 
     it('should be ok when the id is not in the collection', () => {
-      expect(initialCache['Hero'].entities[1000]).toBeUndefined(
-        'should not exist'
-      );
+      expect(initialCache['Hero'].entities[1000]).toBeUndefined();
 
       const action = createAction(
         'Hero',
@@ -1424,7 +1398,7 @@ describe('EntityCollectionReducer', () => {
       const state = entityReducer(initialCache, action);
       const collection = state['Hero'];
 
-      expect(collection.entities[1000]).toBeUndefined('hero removed');
+      expect(collection.entities[1000]).toBeUndefined();
       expect(collection.loading).toBe(false, 'loading off');
     });
   });
@@ -1452,16 +1426,14 @@ describe('EntityCollectionReducer', () => {
 
       const collection = entityReducer(initialCache, action)['Hero'];
 
-      expect(collection.entities[ids[0]]).toBeUndefined('heroes[0] gone');
-      expect(collection.entities[ids[1]]).toBeUndefined('heroes[1] gone');
+      expect(collection.entities[ids[0]]).toBeUndefined();
+      expect(collection.entities[ids[1]]).toBeUndefined();
       expect(collection.loading).toBe(false, 'loading off');
     });
 
     it('should be ok when an id is not in the collection', () => {
       const ids = [initialHeroes[0].id, 1000];
-      expect(initialCache['Hero'].entities[1000]).toBeUndefined(
-        'should not exist'
-      );
+      expect(initialCache['Hero'].entities[1000]).toBeUndefined();
 
       const action = createAction(
         'Hero',
@@ -1472,10 +1444,8 @@ describe('EntityCollectionReducer', () => {
 
       const collection = entityReducer(initialCache, action)['Hero'];
 
-      expect(collection.entities[ids[0]]).toBeUndefined('heroes[0] gone');
-      expect(collection.entities[1000]).toBeUndefined(
-        'hero[1000] not there now either'
-      );
+      expect(collection.entities[ids[0]]).toBeUndefined();
+      expect(collection.entities[1000]).toBeUndefined();
       expect(collection.loading).toBe(false, 'loading off');
     });
   });

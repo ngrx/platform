@@ -383,6 +383,10 @@
       "title": "Migrations",
       "children": [
         {
+          "title": "V9",
+          "url": "guide/migration/v9"
+        },
+        {
           "title": "V8",
           "url": "guide/migration/v8"
         },

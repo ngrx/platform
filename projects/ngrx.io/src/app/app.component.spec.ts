@@ -9,7 +9,10 @@ import { NavigationService, CurrentNodes, VersionInfo, NavigationViews } from '.
 import { ScrollService } from './shared/scroll.service';
 import { SearchService } from './search/search.service';
 import { TocService, TocItem } from './shared/toc.service';
-import { MatProgressBarModule, MatToolbarModule, MatSidenavModule, MatSidenav } from '@angular/material';
+
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockSearchService } from 'testing/search.service';
 import { NotificationComponent } from './layout/notification/notification.component';

@@ -2,6 +2,7 @@ import { isDevMode, Provider } from '@angular/core';
 import {
   serializationCheckMetaReducer,
   immutabilityCheckMetaReducer,
+  inNgZoneAssertMetaReducer,
 } from './meta-reducers';
 import { RuntimeChecks, MetaReducer, Action } from './models';
 import {
@@ -20,6 +21,7 @@ export function createActiveRuntimeChecks(
       strictActionSerializability: false,
       strictStateImmutability: true,
       strictActionImmutability: true,
+      strictActionWithinNgZone: false,
       ...runtimeChecks,
     };
   }
@@ -29,6 +31,7 @@ export function createActiveRuntimeChecks(
     strictActionSerializability: false,
     strictStateImmutability: false,
     strictActionImmutability: false,
+    strictActionWithinNgZone: false,
   };
 }
 
@@ -64,6 +67,18 @@ function ignoreNgrxAction(action: Action) {
   return action.type.startsWith('@ngrx');
 }
 
+export function createInNgZoneCheckMetaReducer({
+  strictActionWithinNgZone,
+}: RuntimeChecks): MetaReducer {
+  return reducer =>
+    strictActionWithinNgZone
+      ? inNgZoneAssertMetaReducer(reducer, {
+          action: action =>
+            strictActionWithinNgZone && !ignoreNgrxAction(action),
+        })
+      : reducer;
+}
+
 export function provideRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
 ): Provider[] {
@@ -93,6 +108,12 @@ export function provideRuntimeChecks(
       multi: true,
       deps: [_ACTIVE_RUNTIME_CHECKS],
       useFactory: createSerializationCheckMetaReducer,
+    },
+    {
+      provide: META_REDUCERS,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: createInNgZoneCheckMetaReducer,
     },
   ];
 }

@@ -54,7 +54,11 @@ describe('EntityCacheReducer', () => {
 
   beforeEach(() => {
     entityActionFactory = new EntityActionFactory();
-    const logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    const logger = {
+      error: jasmine.createSpy('error'),
+      log: jasmine.createSpy('log'),
+      warn: jasmine.createSpy('warn'),
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -340,7 +344,7 @@ describe('EntityCacheReducer', () => {
 
         const action = new SetEntityCache(newCache);
         const state = entityCacheReducer(priorCache, action);
-        expect(state['Villain']).toBeUndefined('No villains');
+        expect(state['Villain']).toBeUndefined();
 
         const heroCollection = state['Hero'];
         expect(heroCollection.ids).toEqual([42], 'hero ids');
@@ -573,8 +577,8 @@ describe('EntityCacheReducer', () => {
         // Added entities remain in cache (if not on the server), with pending changeState
         expect(entityCache['Hero'].ids).toEqual([42, 43], 'added Hero ids');
         const heroChangeState = entityCache['Hero'].changeState;
-        expect(heroChangeState[42]).toBeDefined('Hero [42] has changeState');
-        expect(heroChangeState[43]).toBeDefined('Hero [43] has changeState');
+        expect(heroChangeState[42]).toBeDefined();
+        expect(heroChangeState[43]).toBeDefined();
       });
     });
   });

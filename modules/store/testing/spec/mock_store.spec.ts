@@ -63,7 +63,13 @@ describe('Mock Store', () => {
     mockStore.resetSelectors();
   });
 
-  it('should set the initial state to a mocked one', (done: DoneFn) => {
+  it('should provide the same instance with Store and MockStore', () => {
+    const fromStore = TestBed.get(Store);
+    const fromMockStore = TestBed.get(MockStore);
+    expect(fromStore).toBe(fromMockStore);
+  });
+
+  it('should set the initial state to a mocked one', (done: any) => {
     const fixedState = {
       counter1: 17,
       counter2: 11,
@@ -338,6 +344,17 @@ describe('Refreshing state', () => {
     expect(getTodoItems('p').length).toBe(1);
     expect(getTodoItems('p')[0].nativeElement.textContent.trim()).toBe('bbb');
   });
+
+  it('should work with overrideSelector twice', () => {
+    const newTodos = [{ name: 'bbb', done: true }];
+    mockStore.overrideSelector(todos, newTodos);
+    mockStore.refreshState();
+
+    fixture.detectChanges();
+
+    expect(getTodoItems('li').length).toBe(1);
+    expect(getTodoItems('li')[0].nativeElement.textContent.trim()).toBe('bbb');
+  });
 });
 
 describe('Cleans up after each test', () => {
@@ -346,7 +363,7 @@ describe('Cleans up after each test', () => {
     state => state.value
   );
 
-  it('should return the mocked selectors value', (done: DoneFn) => {
+  it('should return the mocked selectors value', (done: any) => {
     TestBed.configureTestingModule({
       providers: [
         provideMockStore({
@@ -365,7 +382,7 @@ describe('Cleans up after each test', () => {
     });
   });
 
-  it('should return the real value', (done: DoneFn) => {
+  it('should return the real value', (done: any) => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({} as any, {
@@ -379,6 +396,65 @@ describe('Cleans up after each test', () => {
     const store = TestBed.get<Store<any>>(Store) as Store<any>;
     store.pipe(select(selectData)).subscribe(v => {
       expect(v).toBe(300);
+      done();
+    });
+  });
+});
+
+describe('Resets selectors after each test', () => {
+  const selectorUnderTest = createSelector(
+    (state: any) => state,
+    state => state.value
+  );
+  let shouldSetMockStore = true;
+
+  function setupModules(isMock: boolean) {
+    if (isMock) {
+      TestBed.configureTestingModule({
+        providers: [
+          provideMockStore({
+            initialState: {
+              value: 100,
+            },
+            selectors: [{ selector: selectorUnderTest, value: 200 }],
+          }),
+        ],
+      });
+    } else {
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({} as any, {
+            initialState: {
+              value: 300,
+            },
+          }),
+        ],
+      });
+    }
+  }
+
+  /**
+   * Tests run in random order, so that's why we have two attempts (one runs
+   * before another - in any order) and whichever runs the test first would
+   * setup MockStore and override selector. The next one would use the regular
+   * Store and verifies that the selector is cleared/reset.
+   */
+  it('should reset selector - attempt one', (done: any) => {
+    setupModules(shouldSetMockStore);
+    const store: Store<{}> = TestBed.get<Store<{}>>(Store);
+    store.select(selectorUnderTest).subscribe(v => {
+      expect(v).toBe(shouldSetMockStore ? 200 : 300);
+      shouldSetMockStore = false;
+      done();
+    });
+  });
+
+  it('should reset selector - attempt two', (done: any) => {
+    setupModules(shouldSetMockStore);
+    const store: Store<{}> = TestBed.get<Store<{}>>(Store);
+    store.select(selectorUnderTest).subscribe(v => {
+      expect(v).toBe(shouldSetMockStore ? 200 : 300);
+      shouldSetMockStore = false;
       done();
     });
   });

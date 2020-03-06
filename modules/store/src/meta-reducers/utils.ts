@@ -1,3 +1,6 @@
+export const RUNTIME_CHECK_URL =
+  'https://ngrx.io/guide/store/configuration/runtime-checks';
+
 export function isUndefined(target: any): target is undefined {
   return target === undefined;
 }

@@ -62,7 +62,7 @@ describe('serializationCheckMetaReducer:', () => {
           payload: { foo: { bar: unSerializables['date'] } },
         })
       ).toThrowError(
-        /Detected unserializable action at "payload.foo.bar.value"/
+        `Detected unserializable action at "payload.foo.bar.value". https://ngrx.io/guide/store/configuration/runtime-checks#strictactionserializability`
       );
     });
   });
@@ -80,13 +80,13 @@ describe('serializationCheckMetaReducer:', () => {
       ).toThrowError(/Detected unserializable state at "foo.bar.value"/);
     });
 
-    it('should not throw if state is null', () => {
+    it('should throw if state is null', () => {
       expect(() => invokeStateReducer(null)).toThrowError(
-        /Detected unserializable state at "root"/
+        `Detected unserializable state at "root". https://ngrx.io/guide/store/configuration/runtime-checks#strictstateserializability`
       );
     });
 
-    it('should not throw if state is undefined', () => {
+    it('should throw if state is undefined', () => {
       expect(() => invokeStateReducer(undefined)).toThrowError(
         /Detected unserializable state at "root"/
       );

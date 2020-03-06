@@ -5,4 +5,5 @@ export {
   StoreDevtoolsConfig,
   StoreDevtoolsOptions,
   DevToolsFeatureOptions,
+  INITIAL_OPTIONS,
 } from './config';

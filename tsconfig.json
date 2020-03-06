@@ -40,7 +40,8 @@
         "./modules/schematics/schematics-core"
       ],
       "@example-app/*": ["./projects/example-app/src/app/*"]
-    }
+    },
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": [
     "bazel-out",

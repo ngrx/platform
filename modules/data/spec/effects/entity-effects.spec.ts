@@ -31,7 +31,7 @@ describe('EntityEffects (normal testing)', () => {
   let logger: Logger;
   let dataService: TestDataService;
 
-  function expectCompletion(completion: EntityAction, done: DoneFn) {
+  function expectCompletion(completion: EntityAction, done: any) {
     effects.persist$.subscribe(
       result => {
         expect(result).toEqual(completion);
@@ -44,7 +44,11 @@ describe('EntityEffects (normal testing)', () => {
   }
 
   beforeEach(() => {
-    logger = jasmine.createSpyObj('Logger', ['error', 'log', 'warn']);
+    logger = {
+      error: jasmine.createSpy('error'),
+      log: jasmine.createSpy('log'),
+      warn: jasmine.createSpy('warn'),
+    };
     actions$ = new ReplaySubject<Action>(1);
 
     TestBed.configureTestingModule({
@@ -67,7 +71,7 @@ describe('EntityEffects (normal testing)', () => {
     dataService = TestBed.get(EntityDataService);
   });
 
-  it('cancel$ should emit correlation id for CANCEL_PERSIST', (done: DoneFn) => {
+  it('cancel$ should emit correlation id for CANCEL_PERSIST', (done: any) => {
     const action = entityActionFactory.create(
       'Hero',
       EntityOp.CANCEL_PERSIST,
@@ -81,7 +85,7 @@ describe('EntityEffects (normal testing)', () => {
     actions$.next(action);
   });
 
-  it('should return a QUERY_ALL_SUCCESS with the heroes on success', (done: DoneFn) => {
+  it('should return a QUERY_ALL_SUCCESS with the heroes on success', (done: any) => {
     const hero1 = { id: 1, name: 'A' } as Hero;
     const hero2 = { id: 2, name: 'B' } as Hero;
     const heroes = [hero1, hero2];
@@ -98,7 +102,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should perform QUERY_ALL when dispatch custom tagged action', (done: DoneFn) => {
+  it('should perform QUERY_ALL when dispatch custom tagged action', (done: any) => {
     const hero1 = { id: 1, name: 'A' } as Hero;
     const hero2 = { id: 2, name: 'B' } as Hero;
     const heroes = [hero1, hero2];
@@ -119,7 +123,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should perform QUERY_ALL when dispatch custom action w/ that entityOp', (done: DoneFn) => {
+  it('should perform QUERY_ALL when dispatch custom action w/ that entityOp', (done: any) => {
     const hero1 = { id: 1, name: 'A' } as Hero;
     const hero2 = { id: 2, name: 'B' } as Hero;
     const heroes = [hero1, hero2];
@@ -142,7 +146,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a QUERY_ALL_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a QUERY_ALL_ERROR when data service fails', (done: any) => {
     const action = entityActionFactory.create('Hero', EntityOp.QUERY_ALL);
     const httpError = { error: new Error('Test Failure'), status: 501 };
     const error = makeDataServiceError('GET', httpError);
@@ -155,7 +159,7 @@ describe('EntityEffects (normal testing)', () => {
     expect(completion.payload.entityOp).toEqual(EntityOp.QUERY_ALL_ERROR);
   });
 
-  it('should return a QUERY_BY_KEY_SUCCESS with a hero on success', (done: DoneFn) => {
+  it('should return a QUERY_BY_KEY_SUCCESS with a hero on success', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
     const action = entityActionFactory.create('Hero', EntityOp.QUERY_BY_KEY, 1);
     const completion = entityActionFactory.create(
@@ -170,7 +174,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a QUERY_BY_KEY_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a QUERY_BY_KEY_ERROR when data service fails', (done: any) => {
     const action = entityActionFactory.create(
       'Hero',
       EntityOp.QUERY_BY_KEY,
@@ -186,7 +190,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a QUERY_MANY_SUCCESS with selected heroes on success', (done: DoneFn) => {
+  it('should return a QUERY_MANY_SUCCESS with selected heroes on success', (done: any) => {
     const hero1 = { id: 1, name: 'BA' } as Hero;
     const hero2 = { id: 2, name: 'BB' } as Hero;
     const heroes = [hero1, hero2];
@@ -206,7 +210,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a QUERY_MANY_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a QUERY_MANY_ERROR when data service fails', (done: any) => {
     const action = entityActionFactory.create('Hero', EntityOp.QUERY_MANY, {
       name: 'B',
     });
@@ -222,7 +226,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_ADD_ONE_SUCCESS (Optimistic) with the hero on success', (done: DoneFn) => {
+  it('should return a SAVE_ADD_ONE_SUCCESS (Optimistic) with the hero on success', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
 
     const action = entityActionFactory.create(
@@ -244,7 +248,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_ADD_ONE_SUCCESS (Pessimistic) with the hero on success', (done: DoneFn) => {
+  it('should return a SAVE_ADD_ONE_SUCCESS (Pessimistic) with the hero on success', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
 
     const action = entityActionFactory.create(
@@ -264,7 +268,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_ADD_ONE_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a SAVE_ADD_ONE_ERROR when data service fails', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
     const action = entityActionFactory.create(
       'Hero',
@@ -281,7 +285,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_DELETE_ONE_SUCCESS (Optimistic) on success with delete id', (done: DoneFn) => {
+  it('should return a SAVE_DELETE_ONE_SUCCESS (Optimistic) on success with delete id', (done: any) => {
     const action = entityActionFactory.create(
       'Hero',
       EntityOp.SAVE_DELETE_ONE,
@@ -301,7 +305,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_DELETE_ONE_SUCCESS (Pessimistic) on success', (done: DoneFn) => {
+  it('should return a SAVE_DELETE_ONE_SUCCESS (Pessimistic) on success', (done: any) => {
     const action = entityActionFactory.create(
       'Hero',
       EntityOp.SAVE_DELETE_ONE,
@@ -319,7 +323,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_DELETE_ONE_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a SAVE_DELETE_ONE_ERROR when data service fails', (done: any) => {
     const action = entityActionFactory.create(
       'Hero',
       EntityOp.SAVE_DELETE_ONE,
@@ -335,7 +339,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_UPDATE_ONE_SUCCESS (Optimistic) with the hero on success', (done: DoneFn) => {
+  it('should return a SAVE_UPDATE_ONE_SUCCESS (Optimistic) with the hero on success', (done: any) => {
     const updateEntity = { id: 1, name: 'A' };
     const update = { id: 1, changes: updateEntity } as Update<Hero>;
     const updateResponse = { ...update, changed: true };
@@ -359,7 +363,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_UPDATE_ONE_SUCCESS (Pessimistic) with the hero on success', (done: DoneFn) => {
+  it('should return a SAVE_UPDATE_ONE_SUCCESS (Pessimistic) with the hero on success', (done: any) => {
     const updateEntity = { id: 1, name: 'A' };
     const update = { id: 1, changes: updateEntity } as Update<Hero>;
     const updateResponse = { ...update, changed: true };
@@ -381,7 +385,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_UPDATE_ONE_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a SAVE_UPDATE_ONE_ERROR when data service fails', (done: any) => {
     const update = { id: 1, changes: { id: 1, name: 'A' } } as Update<Hero>;
     const action = entityActionFactory.create(
       'Hero',
@@ -398,7 +402,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_UPSERT_ONE_SUCCESS (Optimistic) with the hero on success', (done: DoneFn) => {
+  it('should return a SAVE_UPSERT_ONE_SUCCESS (Optimistic) with the hero on success', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
 
     const action = entityActionFactory.create(
@@ -420,7 +424,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_UPSERT_ONE_SUCCESS (Pessimistic) with the hero on success', (done: DoneFn) => {
+  it('should return a SAVE_UPSERT_ONE_SUCCESS (Pessimistic) with the hero on success', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
 
     const action = entityActionFactory.create(
@@ -440,7 +444,7 @@ describe('EntityEffects (normal testing)', () => {
     expectCompletion(completion, done);
   });
 
-  it('should return a SAVE_UPSERT_ONE_ERROR when data service fails', (done: DoneFn) => {
+  it('should return a SAVE_UPSERT_ONE_ERROR when data service fails', (done: any) => {
     const hero = { id: 1, name: 'A' } as Hero;
     const action = entityActionFactory.create(
       'Hero',
@@ -456,7 +460,7 @@ describe('EntityEffects (normal testing)', () => {
 
     expectCompletion(completion, done);
   });
-  it(`should not do anything with an irrelevant action`, (done: DoneFn) => {
+  it(`should not do anything with an irrelevant action`, (done: any) => {
     // Would clear the cached collection
     const action = entityActionFactory.create('Hero', EntityOp.REMOVE_ALL);
 

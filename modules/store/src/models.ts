@@ -115,4 +115,9 @@ export interface RuntimeChecks {
    * Verifies that actions aren't mutated
    */
   strictActionImmutability: boolean;
+
+  /**
+   * Verifies that actions are dispatched within NgZone
+   */
+  strictActionWithinNgZone: boolean;
 }

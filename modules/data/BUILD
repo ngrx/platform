@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//tools:defaults.bzl", "ng_module", "pkg_npm")
+load("//tools:defaults.bzl", "ng_module", "ng_package")
 
 ng_module(
     name = "data",
@@ -19,11 +19,12 @@ ng_module(
     ],
 )
 
-pkg_npm(
+ng_package(
     name = "npm_package",
     srcs = glob(["**/*.externs.js"]) + [
         "package.json",
     ],
+    entry_point = "modules/data/index.js",
     nested_packages = [
         "//modules/data/migrations:npm_package",
         "//modules/data/schematics:npm_package",

@@ -81,9 +81,9 @@ describe('EntitySelectors$', () => {
       );
 
       // EntitySelectors
-      collectionCreator = jasmine.createSpyObj('entityCollectionCreator', [
-        'create',
-      ]);
+      collectionCreator = {
+        create: jasmine.createSpy('create'),
+      };
       collectionCreator.create.and.returnValue(emptyHeroCollection);
       const entitySelectorsFactory = new EntitySelectorsFactory(
         collectionCreator
@@ -121,14 +121,12 @@ describe('EntitySelectors$', () => {
       );
       let selectorCollection: EntityCollection<HeroCollection>;
       selectors$.collection$.subscribe(c => (selectorCollection = c));
-      expect(selectorCollection!).toBeDefined('selector collection');
+      expect(selectorCollection!).toBeDefined();
       expect(selectorCollection!.entities).toEqual({}, 'entities');
 
       // Important: the selector is returning these values;
       // They are not actually in the store's entity cache collection!
-      expect(collection).toBeUndefined(
-        'no collection until reducer creates it.'
-      );
+      expect(collection).toBeUndefined();
     });
 
     it('selectors$ emit default empty values when collection is undefined', () => {
@@ -206,9 +204,7 @@ describe('EntitySelectors$', () => {
 
       // Important: the selector is returning these values;
       // They are not actually in the store's entity cache collection!
-      expect(collection).toBeUndefined(
-        'no collection until reducer creates it.'
-      );
+      expect(collection).toBeUndefined();
     });
 
     it('`entityCache$` should observe the entire entity cache', () => {
@@ -220,7 +216,7 @@ describe('EntitySelectors$', () => {
 
       expect(entityCacheValues.length).toEqual(2, 'set the cache twice');
       expect(entityCacheValues[0]).toEqual({}, 'empty at first');
-      expect(entityCacheValues[1].Hero).toBeDefined('has Hero collection');
+      expect(entityCacheValues[1].Hero).toBeDefined();
     });
 
     it('`actions$` emits hero collection EntityActions and no other actions', () => {

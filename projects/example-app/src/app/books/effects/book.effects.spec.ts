@@ -11,7 +11,7 @@ import {
 } from '@example-app/books/actions';
 import { BookEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
-import { GoogleBooksService } from '@example-app/core/services/google-books.service';
+import { GoogleBooksService } from '@example-app/core/services';
 
 describe('BookEffects', () => {
   let effects: BookEffects;
@@ -30,9 +30,9 @@ describe('BookEffects', () => {
       ],
     });
 
-    effects = TestBed.get(BookEffects);
-    googleBooksService = TestBed.get(GoogleBooksService);
-    actions$ = TestBed.get(Actions);
+    effects = TestBed.inject(BookEffects);
+    googleBooksService = TestBed.inject(GoogleBooksService);
+    actions$ = TestBed.inject(Actions);
   });
 
   describe('search$', () => {

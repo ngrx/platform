@@ -50,6 +50,18 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     return DidMutate.Both;
   }
 
+  function setOneMutably(entity: T, state: R): DidMutate;
+  function setOneMutably(entity: any, state: any): DidMutate {
+    const id = selectIdValue(entity, selectId);
+    if (id in state.entities) {
+      state.ids = state.ids.filter((val: string | number) => val !== id);
+      merge([entity], state);
+      return DidMutate.Both;
+    } else {
+      return addOneMutably(entity, state);
+    }
+  }
+
   function updateOneMutably(update: Update<T>, state: R): DidMutate;
   function updateOneMutably(update: any, state: any): DidMutate {
     return updateManyMutably([update], state);
@@ -201,6 +213,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     upsertOne: createStateOperator(upsertOneMutably),
     addAll: createStateOperator(setAllMutably),
     setAll: createStateOperator(setAllMutably),
+    setOne: createStateOperator(setOneMutably),
     addMany: createStateOperator(addManyMutably),
     updateMany: createStateOperator(updateManyMutably),
     upsertMany: createStateOperator(upsertManyMutably),
