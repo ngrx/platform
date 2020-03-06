@@ -94,7 +94,7 @@ export function _createRouterConfig(
 ): StoreRouterConfig {
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
-    serializer: DefaultRouterStateSerializer,
+    serializer: MinimalRouterStateSerializer,
     navigationActionTiming: NavigationActionTiming.PreActivation,
     ...config,
   };
@@ -168,9 +168,9 @@ export class StoreRouterConnectingModule {
           provide: RouterStateSerializer,
           useClass: config.serializer
             ? config.serializer
-            : config.routerState === RouterState.Minimal
-              ? MinimalRouterStateSerializer
-              : DefaultRouterStateSerializer,
+            : config.routerState === RouterState.Full
+              ? DefaultRouterStateSerializer
+              : MinimalRouterStateSerializer,
         },
       ],
     };
@@ -328,9 +328,9 @@ export class StoreRouterConnectingModule {
           routerState: this.routerState,
           ...payload,
           event:
-            this.config.routerState === RouterState.Minimal
-              ? { id: payload.event.id, url: payload.event.url }
-              : payload.event,
+            this.config.routerState === RouterState.Full
+              ? payload.event
+              : { id: payload.event.id, url: payload.event.url },
         },
       });
     } finally {

@@ -3,7 +3,7 @@ import {
   serializationCheckMetaReducer,
   immutabilityCheckMetaReducer,
 } from './meta-reducers';
-import { RuntimeChecks, MetaReducer } from './models';
+import { RuntimeChecks, MetaReducer, Action } from './models';
 import {
   _USER_RUNTIME_CHECKS,
   _ACTIVE_RUNTIME_CHECKS,
@@ -39,8 +39,9 @@ export function createSerializationCheckMetaReducer({
   return reducer =>
     strictActionSerializability || strictStateSerializability
       ? serializationCheckMetaReducer(reducer, {
-          action: strictActionSerializability,
-          state: strictStateSerializability,
+          action: action =>
+            strictActionSerializability && !ignoreNgrxAction(action),
+          state: () => strictStateSerializability,
         })
       : reducer;
 }
@@ -52,10 +53,15 @@ export function createImmutabilityCheckMetaReducer({
   return reducer =>
     strictActionImmutability || strictStateImmutability
       ? immutabilityCheckMetaReducer(reducer, {
-          action: strictActionImmutability,
-          state: strictStateImmutability,
+          action: action =>
+            strictActionImmutability && !ignoreNgrxAction(action),
+          state: () => strictStateImmutability,
         })
       : reducer;
+}
+
+function ignoreNgrxAction(action: Action) {
+  return action.type.startsWith('@ngrx');
 }
 
 export function provideRuntimeChecks(

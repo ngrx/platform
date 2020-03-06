@@ -52,7 +52,7 @@ export function reducer(
     }
 
     case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>s: {
-      return adapter.addAll(action.payload.<%= camelize(name) %>s, state);
+      return adapter.setAll(action.payload.<%= camelize(name) %>s, state);
     }
 
     case <%= classify(name) %>ActionTypes.Clear<%= classify(name) %>s: {

@@ -47,9 +47,7 @@ import { AppComponent } from '@example-app/core/containers';
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
-    StoreRouterConnectingModule.forRoot({
-      routerState: RouterState.Minimal,
-    }),
+    StoreRouterConnectingModule.forRoot(),
 
     /**
      * Store devtools instrument the store retaining past versions of state

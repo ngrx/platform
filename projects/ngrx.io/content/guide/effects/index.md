@@ -247,7 +247,7 @@ Alternatively, you can provide feature-level effects with the provider `USER_PRO
 
 <div class="alert is-critical">
 
-The `EffectsModule.forChild()` method must be added to your `MovieModule` imports even if you only provide the effects over the token, and don't pass them via parameters.
+The `EffectsModule.forChild()` method must be added to the module imports even if you only provide the effects over the token, and don't pass them via parameters.
 
 </div>
 

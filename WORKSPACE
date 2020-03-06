@@ -12,8 +12,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Rules for NodeJS
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "16fc00ab0d1e538e88f084272316c0693a2e9007d64f45529b82f6230aedb073",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.42.2/rules_nodejs-0.42.2.tar.gz"],
+    sha256 = "6bcef105e75cac3c5f8212e0d0431b6ec1aaa1963e093b0091474ab98ecf29d2",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/1.2.2/rules_nodejs-1.2.2.tar.gz"],
 )
 
 # Rules for web testing
@@ -28,11 +28,12 @@ http_archive(
 # Rules for compiling sass
 http_archive(
     name = "io_bazel_rules_sass",
-    sha256 = "ad08e8c82aa1f48b72dc295cb83bba33f514cdf24cc7b0e21e9353f20f0dc147",
-    strip_prefix = "rules_sass-5d1b26f8cd12c5d75dd359f9291090b341e8fd52",
-    # We need to use a version that includes SHA 5d1b26f8cd12c5d75dd359f9291090b341e8fd52 of
-    # the "rules_sass" repository as it adds support for workers.
-    url = "https://github.com/bazelbuild/rules_sass/archive/5d1b26f8cd12c5d75dd359f9291090b341e8fd52.zip",
+    sha256 = "77e241148f26d5dbb98f96fe0029d8f221c6cb75edbb83e781e08ac7f5322c5f",
+    strip_prefix = "rules_sass-1.24.0",
+    urls = [
+        "https://github.com/bazelbuild/rules_sass/archive/1.24.0.zip",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_sass/archive/1.24.0.zip",
+    ],
 )
 
 ####################################

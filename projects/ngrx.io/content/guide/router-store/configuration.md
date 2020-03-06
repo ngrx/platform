@@ -16,12 +16,12 @@ interface StoreRouterConfig {
 
 ## Default Router State Serializer
 
-If no router state serializer is provided through the [configuration](#configuration-options) of router store, the `DefaultRouterStateSerializer` is used. This router state serializer, serializes the URL together with the [ActivatedRouteSnapshot](https://angular.io/api/router/ActivatedRouteSnapshot) from [Angular Router](https://angular.io/guide/router). The latter is serialized recursively, but only with the possibility to traverse the route downward since `root` and `parent` parameters are set to `undefined`.
+`DefaultRouterStateSerializer` router state serializer, serializes the URL together with the [ActivatedRouteSnapshot](https://angular.io/api/router/ActivatedRouteSnapshot) from [Angular Router](https://angular.io/guide/router). The latter is serialized recursively, but only with the possibility to traverse the route downward since `root` and `parent` parameters are set to `undefined`.
 
 <div class="alert is-important">
 
-The `DefaultRouterStateSerializer` cannot be used when [serializability runtime checks](guide/store/configuration/runtime-checks) are enabled. If you want to use runtime checks to enforce serializability of your state and actions, you can configure `RouterStoreModule` to use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
-This also applies to Ivy with immutability runtime checks.
+The `DefaultRouterStateSerializer` cannot be used when [serializability runtime checks](guide/store/configuration/runtime-checks) are enabled.
+With serializability runtime checks enabled, the `MinimalRouterStateSerializer` serializer **must** be used. This also applies to Ivy with immutability runtime checks.
 
 </div>
 

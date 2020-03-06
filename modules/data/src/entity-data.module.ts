@@ -58,7 +58,9 @@ import {
   ],
 })
 export class EntityDataModule {
-  static forRoot(config: EntityDataModuleConfig): ModuleWithProviders {
+  static forRoot(
+    config: EntityDataModuleConfig
+  ): ModuleWithProviders<EntityDataModule> {
     return {
       ngModule: EntityDataModule,
       providers: [

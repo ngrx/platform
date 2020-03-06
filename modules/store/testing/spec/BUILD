@@ -18,6 +18,5 @@ jasmine_node_test(
     name = "test",
     deps = [
         ":test_lib",
-        "//modules/store",
     ],
 )

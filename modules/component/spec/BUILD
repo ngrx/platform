@@ -20,7 +20,6 @@ jasmine_node_test(
     name = "test",
     deps = [
         ":test_lib",
-        "//modules/component",
         # TODO: @ngrx/component - add ngrx deps
         # "//modules/store",
     ],

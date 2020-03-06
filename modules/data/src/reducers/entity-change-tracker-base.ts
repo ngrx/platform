@@ -687,6 +687,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
             didMutate = true;
           }
           delete chgState[id]; // clear tracking of this entity
+          acc.changeState = chgState;
           switch (change.changeType) {
             case ChangeType.Added:
               acc.remove.push(id);
@@ -714,7 +715,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
 
     collection = this.adapter.removeMany(remove as string[], collection);
     collection = this.adapter.upsertMany(upsert, collection);
-    return didMutate ? collection : { ...collection, changeState };
+    return didMutate ? { ...collection, changeState } : collection;
   }
 
   /**

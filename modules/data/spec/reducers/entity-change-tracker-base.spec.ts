@@ -649,6 +649,22 @@ describe('EntityChangeTrackerBase', () => {
   });
 
   describe('#undoOne', () => {
+    it('should clear one tracked change', () => {
+      let { collection, deletedEntity } = createTestTrackedEntities();
+
+      expect(Object.keys(collection.changeState).length).toBe(
+        3,
+        'tracking 3 entities'
+      );
+
+      collection = tracker.undoOne(deletedEntity as Hero, collection);
+
+      expect(Object.keys(collection.changeState).length).toBe(
+        2,
+        'tracking 2 entities'
+      );
+    });
+
     it('should restore the collection to the pre-change state for the given entity', () => {
       // tslint:disable-next-line:prefer-const
       let {
@@ -698,6 +714,32 @@ describe('EntityChangeTrackerBase', () => {
   });
 
   describe('#undoMany', () => {
+    it('should clear many tracked changes', () => {
+      // tslint:disable-next-line:prefer-const
+      let {
+        collection,
+        addedEntity,
+        deletedEntity,
+        preUpdatedEntity,
+        updatedEntity,
+      } = createTestTrackedEntities();
+
+      expect(Object.keys(collection.changeState).length).toBe(
+        3,
+        'tracking 3 entities'
+      );
+
+      collection = tracker.undoMany(
+        [addedEntity, deletedEntity, updatedEntity],
+        collection
+      );
+
+      expect(Object.keys(collection.changeState).length).toBe(
+        0,
+        'tracking 2 entities'
+      );
+    });
+
     it('should restore the collection to the pre-change state for the given entities', () => {
       // tslint:disable-next-line:prefer-const
       let {

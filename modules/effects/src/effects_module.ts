@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { Actions } from './actions';
 import { EffectSources } from './effect_sources';
-import { Actions } from './actions';
 import {
   _FEATURE_EFFECTS,
   _ROOT_EFFECTS,
   _ROOT_EFFECTS_GUARD,
+  EFFECTS_ERROR_HANDLER,
   FEATURE_EFFECTS,
   ROOT_EFFECTS,
   USER_PROVIDED_FEATURE_EFFECTS,
@@ -22,12 +22,6 @@ import { EffectsFeatureModule } from './effects_feature_module';
 import { defaultEffectsErrorHandler } from './effects_error_handler';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
-import {
-  _ROOT_EFFECTS_GUARD,
-  EFFECTS_ERROR_HANDLER,
-  FEATURE_EFFECTS,
-  ROOT_EFFECTS,
-} from './tokens';
 
 @NgModule({})
 export class EffectsModule {

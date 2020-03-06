@@ -141,7 +141,7 @@ describe('Router Store Module', () => {
   });
 
   describe('routerState', () => {
-    function setup(routerState: RouterState, serializer?: any) {
+    function setup(routerState?: RouterState, serializer?: any) {
       createTestModule({
         reducers: {},
         config: {
@@ -172,7 +172,17 @@ describe('Router Store Module', () => {
         await router.navigateByUrl('/');
       });
 
-      it('should use the default router serializer', () => {
+      it('should use the minimal router serializer by default', () => {
+        const { serializer } = setup();
+        expect(serializer).toEqual(new MinimalRouterStateSerializer());
+      });
+
+      it('should use the minimal router serializer if minimal state option is passed in', () => {
+        const { serializer } = setup(RouterState.Minimal);
+        expect(serializer).toEqual(new MinimalRouterStateSerializer());
+      });
+
+      it('should use the default router serializer if full state option is passed in', () => {
         const { serializer } = setup(RouterState.Full);
         expect(serializer).toEqual(new DefaultRouterStateSerializer());
       });

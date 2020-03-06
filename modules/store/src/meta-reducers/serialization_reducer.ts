@@ -1,4 +1,4 @@
-import { ActionReducer } from '../models';
+import { ActionReducer, Action } from '../models';
 import {
   isPlainObject,
   isUndefined,
@@ -11,17 +11,17 @@ import {
 
 export function serializationCheckMetaReducer(
   reducer: ActionReducer<any, any>,
-  checks: { action: boolean; state: boolean }
+  checks: { action: (action: Action) => boolean; state: () => boolean }
 ): ActionReducer<any, any> {
   return function(state, action) {
-    if (checks.action) {
+    if (checks.action(action)) {
       const unserializableAction = getUnserializable(action);
       throwIfUnserializable(unserializableAction, 'action');
     }
 
     const nextState = reducer(state, action);
 
-    if (checks.state) {
+    if (checks.state()) {
       const unserializableState = getUnserializable(nextState);
       throwIfUnserializable(unserializableState, 'state');
     }

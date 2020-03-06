@@ -21,7 +21,7 @@ import { AppComponent } from './app.component';
     RouterModule.forRoot([
       // routes
     ]),
-    // Connects RouterModule with StoreModule
+    // Connects RouterModule with StoreModule, uses MinimalRouterStateSerializer by default
     StoreRouterConnectingModule.forRoot(),
   ],
   bootstrap: [AppComponent],
