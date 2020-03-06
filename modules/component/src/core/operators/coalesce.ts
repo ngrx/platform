@@ -1,23 +1,38 @@
 import { Observable } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { ignoreElements, tap } from 'rxjs/operators';
 import {
   CoalesceConfig,
-  getCoalesceWorkConfig,
   coalesceWork,
+  getCoalesceWorkConfig,
   isScheduling,
 } from '../utils';
 
-// @TODO consider throttle like config
 export function coalesce<T>(cfg?: CoalesceConfig) {
   return (o: Observable<T>): Observable<T> => {
+    let firstSent = false;
+    let last: T;
     return new Observable<T>(subscriber => {
-      const prepedCfg = getCoalesceWorkConfig(cfg);
+      const preparedCfg = getCoalesceWorkConfig(cfg);
       return o
         .pipe(
-          filter(_ => isScheduling(prepedCfg)),
-          tap(_ => coalesceWork(() => {}, prepedCfg))
+          tap(n => {
+            last = n;
+            if (!firstSent && preparedCfg.leading) {
+              firstSent = true;
+              subscriber.next(last);
+            }
+            if (isScheduling(preparedCfg)) {
+              return;
+            }
+            coalesceWork(() => {
+              if (preparedCfg.trailing) {
+                subscriber.next(last);
+              }
+            }, preparedCfg);
+          }),
+          ignoreElements()
         )
-        .subscribe(subscriber);
+        .subscribe();
     });
   };
 }
