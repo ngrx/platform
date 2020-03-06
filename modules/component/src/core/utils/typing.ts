@@ -10,18 +10,18 @@ export type remainHigherOrder<T> = (
   o$$: Observable<Observable<T>>
 ) => Observable<Observable<T>>;
 
-export function isPromiseGuard<T>(value: unknown): value is Promise<T> {
+export function isPromiseGuard<T>(value: any): value is Promise<T> {
   return (
     !!value &&
-    typeof (<any>value).subscribe !== 'function' &&
+    typeof (value as any).subscribe !== 'function' &&
     typeof (value as any).then === 'function'
   );
 }
 
 export function isObservableGuard<T>(
-  potentialObservableValue: unknown
-): potentialObservableValue is Observable<T> {
-  return isObservable(potentialObservableValue);
+  potentialObservable: any
+): potentialObservable is Observable<T> {
+  return isObservable(potentialObservable);
 }
 
 export function isOperateFnArrayGuard<T>(
@@ -34,10 +34,11 @@ export function isStringArrayGuard(op: any[]): op is string[] {
   return op.every((i: any) => typeof i !== 'string');
 }
 
-export function isDefinedGuard<T>(opr: unknown): opr is T {
+export function isDefinedGuard<T>(opr: any): opr is T {
   return !!opr;
 }
-export function isIterableGuard<T>(obj: unknown): obj is Array<T> {
+
+export function isIterableGuard<T>(obj: any): obj is Array<T> {
   if (obj === undefined) {
     return false;
   }

@@ -3,11 +3,10 @@ import {
   ArgumentNotObservableError,
   isObservableGuard,
   isPromiseGuard,
-  potentialObservableValue,
 } from '../utils';
 
 export function toObservableValue<T>(
-  potentialObservableValue$: potentialObservableValue<T>
+  potentialObservableValue$: any
 ): Observable<T | undefined | null> {
   if (
     potentialObservableValue$ === undefined ||
@@ -18,8 +17,8 @@ export function toObservableValue<T>(
   }
 
   if (
-    isPromiseGuard(potentialObservableValue$) ||
-    isObservableGuard(potentialObservableValue$)
+    isPromiseGuard<T>(potentialObservableValue$) ||
+    isObservableGuard<T>(potentialObservableValue$)
   ) {
     return from(potentialObservableValue$);
   }

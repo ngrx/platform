@@ -20,18 +20,16 @@ import {
   distinctUntilChanged,
   filter,
   map,
+  startWith,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import {
   CdAware,
-  coalesce,
-  CoalescingConfig,
+  CoalescingConfig as NgRxLetConfig,
   remainHigherOrder,
   STATE_DEFAULT,
 } from '../core';
-
-export interface NgRxLetConfig extends CoalescingConfig {}
 
 export interface LetContext {
   // to enable `let` syntax we have to use $implicit (var; let v = var)
@@ -61,7 +59,8 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
   configSubject = new ReplaySubject<NgRxLetConfig>();
   config$ = this.configSubject.pipe(
     filter(v => v !== undefined),
-    distinctUntilChanged()
+    distinctUntilChanged(),
+    startWith({ optimized: true })
   );
 
   @Input()
@@ -71,7 +70,7 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
 
   @Input()
   set ngrxLetConfig(config: NgRxLetConfig) {
-    this.configSubject.next(config);
+    this.configSubject.next(config || { optimized: true });
   }
 
   constructor(
@@ -125,10 +124,8 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
         return !config.optimized
           ? value$.pipe(tap(_ => this.work()))
           : value$.pipe(
-              coalesce({
-                context: (this.cdRef as any)._cdRefInjectingView,
-                executionContextRef: this.requestAnimationFrameRef,
-              })
+              // @TODO add coalesce operator here
+              tap(_ => this.work())
             );
       })
     );

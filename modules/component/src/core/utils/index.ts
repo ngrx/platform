@@ -15,3 +15,10 @@ export {
   isPromiseGuard,
   isStringArrayGuard,
 } from './typing';
+export {
+  CoalescingContext,
+  CoalesceConfig,
+  getCoalesceWorkConfig,
+  isScheduling,
+  coalesceWork,
+} from './coalesce-work';

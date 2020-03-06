@@ -3,12 +3,10 @@ import { NextObserver, Observable, PartialObserver, pipe, Subject } from 'rxjs';
 import { distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs/operators';
 import {
   CdAware,
-  CoalescingConfig,
+  CoalescingConfig as NgRxPushPipeConfig,
   remainHigherOrder,
   STATE_DEFAULT,
 } from '../core';
-
-interface NgRxPushPipeConfig extends CoalescingConfig {}
 
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe extends CdAware implements PipeTransform {
