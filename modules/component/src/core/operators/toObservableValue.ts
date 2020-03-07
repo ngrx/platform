@@ -6,7 +6,7 @@ import {
 } from '../utils';
 
 export function toObservableValue<T>(
-  potentialObservableValue$: Observable<T> | undefined | null
+  potentialObservableValue$: Observable<T> | Promise<T> | undefined | null
 ): Observable<T | undefined | null> {
   if (
     potentialObservableValue$ === undefined ||
