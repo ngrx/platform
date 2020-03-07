@@ -12,6 +12,9 @@ import { CoalescingConfig } from '../../src/core';
 let pushPipe: PushPipe;
 
 let id = 0;
+function wrapWithSpace(str: string): string {
+  return ' ' + str + ' ';
+}
 
 function MockRequestAnimationFrame(cb: Function) {
   cb && cb();
@@ -139,52 +142,62 @@ describe('PushPipe', () => {
       it('should return undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
         pushPipeTestComponent.value$ = undefined;
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('undefined');
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
       });
 
       it('should return null as value when initially null was passed (as no value ever was emitted)', () => {
         pushPipeTestComponent.value$ = null;
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('null');
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('null'));
       });
 
       it('should return undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
         pushPipeTestComponent.value$ = of(undefined);
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('undefined');
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
       });
 
       it('should return null as value when initially of(null) was passed (as null was emitted)', () => {
         pushPipeTestComponent.value$ = of(null);
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('null');
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('null'));
       });
 
       it('should return undefined as value when initially EMPTY was passed (as no value ever was emitted)', () => {
         pushPipeTestComponent.value$ = EMPTY;
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('undefined');
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
       });
 
       it('should return undefined as value when initially NEVER was passed (as no value ever was emitted)', () => {
         pushPipeTestComponent.value$ = NEVER;
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('undefined');
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
       });
 
       it('should return emitted value from passed observable without changing it', () => {
         pushPipeTestComponent.value$ = of(42);
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('42');
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
       });
 
       it('should return undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
         pushPipeTestComponent.value$ = of(42);
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('42');
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
         pushPipeTestComponent.value$ = NEVER;
         fixturePushPipeTestComponent.detectChanges();
-        expect(componentNativeElement.textContent).toBe('undefined');
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
       });
     });
   });
