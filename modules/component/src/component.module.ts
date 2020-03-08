@@ -10,4 +10,4 @@ export const EXPORTS = [DECLARATIONS];
   imports: [],
   exports: [EXPORTS],
 })
-export class NgRxComponentModule {}
+export class ComponentModule {}
