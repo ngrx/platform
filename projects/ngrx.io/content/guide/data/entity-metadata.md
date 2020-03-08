@@ -224,10 +224,10 @@ If the property you want to add comes from `backend`, you will need some additio
 
 #### Step 1: Implement `PersistenceResultHandler` to save data from backend to action.payload
 
-Create a new class `AdditionalPersistenceResultHandler` that `extends DefaultPersistenceResultHandler` and overwrite the [handleSuccess](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/persistence-result-handler.service.ts) method, the purpose is to parse the data received from `DataService`, retrieve the additional property, and then save this to the `action.payload`. Here is an example.
+Create a new class `AdditionalPersistenceResultHandler` that `extends DefaultPersistenceResultHandler` and overwrite the [handleSuccess](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/persistence-result-handler.service.ts) method, the purpose is to parse the data received from `DataService`, retrieve the additional property, and then save this to the `action.payload`. Note that the default reducer for success actions requires that `action.payload.data` is an array of entities or an entity. This would need to be set after retrieving the additional property, not shown in the example below.
 
 ```typescript
-export class AdditionalPropertyPersistenceResultHandler extends DefaultPersistenceResultHandler {
+export class AdditionalPersistenceResultHandler extends DefaultPersistenceResultHandler {
   handleSuccess(originalAction: EntityAction): (data: any) => Action {
     const actionHandler = super.handleSuccess(originalAction);
     // return a factory to get a data handler to
