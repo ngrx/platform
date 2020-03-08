@@ -1,5 +1,3 @@
 export function getGlobalThis() {
-  // @ TODO discuss with ngRx-Team
-  //  AND consider self
-  return (global || window) as any;
+  return ((globalThis as any) || (self as any) || (window as any)) as any;
 }
