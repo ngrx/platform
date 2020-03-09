@@ -60,7 +60,7 @@ export abstract class CdAware implements OnDestroy {
 
   work(): void {
     this.handleChangeDetection(
-      // cast is needed to make is work for typescript.
+      // cast is needed to make it work for typescript.
       // cdRef is kinda EmbeddedView
       (this.cdRef as EmbeddedViewRef<Type<any>>).context
     );

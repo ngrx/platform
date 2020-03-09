@@ -16,7 +16,7 @@ describe('toObservableValue', () => {
       expect(isObservable(observable)).toBe(true);
     });
 
-    it('should take a undefined', () => {
+    it('should take undefined', () => {
       const observable: Observable<any> = toObservableValue(undefined);
       expect(isObservable(observable)).toBe(true);
     });
@@ -55,7 +55,7 @@ describe('toObservableValue', () => {
       expect(complete).toHaveBeenCalled();
     });
 
-    it('should take a undefined', () => {
+    it('should take undefined', () => {
       const observable: Observable<any> = of(undefined);
       observable.pipe(toObservableValue).subscribe(val => {
         expect(val).toBe(undefined);

@@ -7,7 +7,11 @@ describe('processCdAwareObservables', () => {
   it('should work as RxJS operator', () => {
     const empty: Observable<Observable<any>> = EMPTY;
     const source: Observable<Observable<any>> = empty.pipe(
-      processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$)
+      processCdAwareObservables(
+        o$ => o$,
+        o$ => o$,
+        o$ => o$
+      )
     );
     const complete: jasmine.Spy = jasmine.createSpy('complete');
     source.subscribe({
@@ -21,7 +25,13 @@ describe('processCdAwareObservables', () => {
       const observable: Observable<Observable<never>> = of(EMPTY);
       const complete: jasmine.Spy = jasmine.createSpy('complete');
       observable
-        .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+        .pipe(
+          processCdAwareObservables(
+            o$ => o$,
+            o$ => o$,
+            o$ => o$
+          )
+        )
         .subscribe({
           complete: complete,
         });
@@ -31,16 +41,28 @@ describe('processCdAwareObservables', () => {
     it('should take a promise', () => {
       const observable: Observable<Promise<any>> = of(Promise.resolve(42));
       observable
-        .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+        .pipe(
+          processCdAwareObservables(
+            o$ => o$,
+            o$ => o$,
+            o$ => o$
+          )
+        )
         .subscribe(v => expect(v).toBe(42));
     });
 
-    it('should take a undefined', () => {
+    it('should take undefined', () => {
       const observable: Observable<any> = of(undefined);
       const next: jasmine.Spy = jasmine.createSpy('complete');
       const complete: jasmine.Spy = jasmine.createSpy('complete');
       observable
-        .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+        .pipe(
+          processCdAwareObservables(
+            o$ => o$,
+            o$ => o$,
+            o$ => o$
+          )
+        )
         .subscribe({
           next: next,
           complete: complete,
@@ -54,7 +76,13 @@ describe('processCdAwareObservables', () => {
       const next: jasmine.Spy = jasmine.createSpy('complete');
       const complete: jasmine.Spy = jasmine.createSpy('complete');
       observable
-        .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+        .pipe(
+          processCdAwareObservables(
+            o$ => o$,
+            o$ => o$,
+            o$ => o$
+          )
+        )
         .subscribe({
           next: next,
           complete: complete,
@@ -68,7 +96,13 @@ describe('processCdAwareObservables', () => {
         throwError(ArgumentNotObservableError)
       );
       observable
-        .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+        .pipe(
+          processCdAwareObservables(
+            o$ => o$,
+            o$ => o$,
+            o$ => o$
+          )
+        )
         .subscribe({
           error(e) {
             expect(e).toBe(ArgumentNotObservableError);
@@ -80,7 +114,13 @@ describe('processCdAwareObservables', () => {
   it('should forward emitted values form an observable', () => {
     const observable: Observable<Observable<number>> = of(of(42));
     observable
-      .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+      .pipe(
+        processCdAwareObservables(
+          o$ => o$,
+          o$ => o$,
+          o$ => o$
+        )
+      )
       .subscribe(val => {
         expect(val).toBe(42);
       });
@@ -91,7 +131,13 @@ describe('processCdAwareObservables', () => {
       throwError(ArgumentNotObservableError)
     );
     observable
-      .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+      .pipe(
+        processCdAwareObservables(
+          o$ => o$,
+          o$ => o$,
+          o$ => o$
+        )
+      )
       .subscribe({
         error(e) {
           expect(e).toBe(ArgumentNotObservableError);
@@ -102,7 +148,13 @@ describe('processCdAwareObservables', () => {
   it('should forward emitted values form a promise', () => {
     const observable: Observable<Promise<number>> = of(Promise.resolve(42));
     observable
-      .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+      .pipe(
+        processCdAwareObservables(
+          o$ => o$,
+          o$ => o$,
+          o$ => o$
+        )
+      )
       .subscribe(val => {
         expect(val).toBe(42);
       });
@@ -113,7 +165,13 @@ describe('processCdAwareObservables', () => {
       Promise.reject(ArgumentNotObservableError)
     );
     observable
-      .pipe(processCdAwareObservables(o$ => o$, o$ => o$, o$ => o$))
+      .pipe(
+        processCdAwareObservables(
+          o$ => o$,
+          o$ => o$,
+          o$ => o$
+        )
+      )
       .subscribe({
         error(e) {
           expect(e).toBe(ArgumentNotObservableError);
@@ -129,7 +187,11 @@ describe('processCdAwareObservables', () => {
       const resetContextBehaviour = pipe(tap(nextCallback));
       observableValues
         .pipe(
-          processCdAwareObservables(resetContextBehaviour, o$ => o$, o$ => o$)
+          processCdAwareObservables(
+            resetContextBehaviour,
+            o$ => o$,
+            o$ => o$
+          )
         )
         .subscribe();
 
@@ -149,7 +211,11 @@ describe('processCdAwareObservables', () => {
       );
       observableValues
         .pipe(
-          processCdAwareObservables(o$ => o$, updateContextBehaviour, o$ => o$)
+          processCdAwareObservables(
+            o$ => o$,
+            updateContextBehaviour,
+            o$ => o$
+          )
         )
         .subscribe();
 
@@ -168,7 +234,11 @@ describe('processCdAwareObservables', () => {
       );
       observableValues
         .pipe(
-          processCdAwareObservables(o$ => o$, updateContextBehaviour, o$ => o$)
+          processCdAwareObservables(
+            o$ => o$,
+            updateContextBehaviour,
+            o$ => o$
+          )
         )
         .subscribe();
 
