@@ -1,3 +1,11 @@
+<a name="9.0.0"></a>
+
+# [9.0.0](https://github.com/ngrx/platform/compare/9.0.0-rc.0...9.0.0) (2020-03-09)
+
+### Features
+
+- **effects:** add EffectsRunner to public API ([#2427](https://github.com/ngrx/platform/issues/2427)) ([f66fd64](https://github.com/ngrx/platform/commit/f66fd64))
+
 <a name="9.0.0-rc.0"></a>
 
 # [9.0.0-rc.0](https://github.com/ngrx/platform/compare/9.0.0-beta.2...9.0.0-rc.0) (2020-03-02)
