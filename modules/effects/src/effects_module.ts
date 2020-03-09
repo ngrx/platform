@@ -72,8 +72,7 @@ export class EffectsModule {
         rootEffects,
         {
           provide: _ROOT_EFFECTS,
-          multi: true,
-          useValue: rootEffects,
+          useValue: [rootEffects],
         },
         {
           provide: USER_PROVIDED_EFFECTS,
