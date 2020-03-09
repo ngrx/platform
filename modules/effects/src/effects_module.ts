@@ -33,6 +33,7 @@ export class EffectsModule {
         featureEffects,
         {
           provide: _FEATURE_EFFECTS,
+          multi: true,
           useValue: featureEffects,
         },
         {
@@ -71,6 +72,7 @@ export class EffectsModule {
         rootEffects,
         {
           provide: _ROOT_EFFECTS,
+          multi: true,
           useValue: rootEffects,
         },
         {
@@ -90,13 +92,19 @@ export class EffectsModule {
 
 export function createEffects(
   injector: Injector,
-  effects: Type<any>[],
+  effectGroups: Type<any>[][],
   userProvidedEffectGroups: Type<any>[][]
 ): any[] {
-  const mergedEffects: Type<any>[] = effects;
+  const mergedEffects: Type<any>[] = [];
+
+  for (let effectGroup of effectGroups) {
+    mergedEffects.push(...effectGroup);
+  }
+
   for (let userProvidedEffectGroup of userProvidedEffectGroups) {
     mergedEffects.push(...userProvidedEffectGroup);
   }
+
   return createEffectInstances(injector, mergedEffects);
 }
 
