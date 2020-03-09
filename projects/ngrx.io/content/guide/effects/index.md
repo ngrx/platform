@@ -203,16 +203,6 @@ The `EffectsModule.forRoot()` method must be added to your `AppModule` imports e
 
 Effects start running immediately after the AppModule is loaded to ensure they are listening for all relevant actions as soon as possible.
 
-Alternatively, you can provide root-level effects with the provider `USER_PROVIDED_ROOT_EFFECTS`.
-
-<code-example header="app.module.ts">
-{
-  provide: USER_PROVIDED_ROOT_EFFECTS,
-  multi: true,
-  useValue: [MovieEffects],
-}
-</code-example>
-
 ## Registering feature effects
 
 For feature modules, register your effects by adding the `EffectsModule.forFeature()` method in the `imports` array of your `NgModule`.
@@ -235,11 +225,13 @@ export class MovieModule {}
 
 </div>
 
-Alternatively, you can provide feature-level effects with the provider `USER_PROVIDED_FEATURE_EFFECTS`.
+## Alternative way of registering effects
+
+You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
 
 <code-example header="admin.module.ts">
 {
-  provide: USER_PROVIDED_FEATURE_EFFECTS,
+  provide: USER_PROVIDED_EFFECTS,
   multi: true,
   useValue: [MovieEffects],
 }
@@ -247,7 +239,7 @@ Alternatively, you can provide feature-level effects with the provider `USER_PRO
 
 <div class="alert is-critical">
 
-The `EffectsModule.forChild()` method must be added to the module imports even if you only provide the effects over the token, and don't pass them via parameters.
+The `EffectsModule.forChild()` method must be added to the module imports even if you only provide effects over token, and don't pass them via parameters. (Same goes for `EffectsModule.forRoot()`)
 
 </div>
 
