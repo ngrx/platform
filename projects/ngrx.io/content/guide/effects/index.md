@@ -230,11 +230,14 @@ export class MovieModule {}
 You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
 
 <code-example header="admin.module.ts">
-{
-  provide: USER_PROVIDED_EFFECTS,
-  multi: true,
-  useValue: [MovieEffects],
-}
+providers: [
+  MovieEffects,
+  {
+    provide: USER_PROVIDED_EFFECTS,
+    multi: true,
+    useValue: [MovieEffects],
+  },
+]
 </code-example>
 
 <div class="alert is-critical">
