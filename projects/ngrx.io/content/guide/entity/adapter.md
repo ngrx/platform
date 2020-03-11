@@ -90,10 +90,10 @@ state if no changes were made.
 - `removeOne`: Remove one entity from the collection
 - `removeMany`: Remove multiple entities from the collection, by id or by predicate
 - `removeAll`: Clear entity collection
-- `updateOne`: Update one entity in the collection
-- `updateMany`: Update multiple entities in the collection
-- `upsertOne`: Add or Update one entity in the collection
-- `upsertMany`: Add or Update multiple entities in the collection
+- `updateOne`: Update one entity in the collection. Supports partial updates.
+- `updateMany`: Update multiple entities in the collection. Supports partial updates.
+- `upsertOne`: Add or Update one entity in the collection. Supports partial updates.
+- `upsertMany`: Add or Update multiple entities in the collection. Supports partial updates.
 - `map`: Update multiple entities in the collection by defining a map function, similar to [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
 Usage:
@@ -117,8 +117,8 @@ export const setUser = createAction('[User/API] Set User', props<{ user: User }>
 export const upsertUser = createAction('[User/API] Upsert User', props<{ user: User }>());
 export const addUsers = createAction('[User/API] Add Users', props<{ users: User[] }>());
 export const upsertUsers = createAction('[User/API] Upsert Users', props<{ users: User[] }>());
-export const updateUser = createAction('[User/API] Update User', props<{ user: Update&lt;User&gt; }>());
-export const updateUsers = createAction('[User/API] Update Users', props<{ users: Update&lt;User&gt;[] }>());
+export const updateUser = createAction('[User/API] Update User', props<{ update: Update&lt;User&gt; }>());
+export const updateUsers = createAction('[User/API] Update Users', props<{ updates: Update&lt;User&gt;[] }>());
 export const mapUsers = createAction('[User/API] Map Users', props<{ entityMap: EntityMap&lt;User&gt; }>());
 export const deleteUser = createAction('[User/API] Delete User', props<{ id: string }>());
 export const deleteUsers = createAction('[User/API] Delete Users', props<{ ids: string[] }>());
@@ -162,11 +162,11 @@ const userReducer = createReducer(
   on(UserActions.upsertUsers, (state, { users }) => {
     return adapter.upsertMany(users, state);
   }),
-  on(UserActions.updateUser, (state, { user }) => {
-    return adapter.updateOne(user, state);
+  on(UserActions.updateUser, (state, { update }) => {
+    return adapter.updateOne(update, state);
   }),
-  on(UserActions.updateUsers, (state, { users }) => {
-    return adapter.updateMany(users, state);
+  on(UserActions.updateUsers, (state, { updates }) => {
+    return adapter.updateMany(updates, state);
   }),
   on(UserActions.mapUsers, (state, { entityMap }) => {
     return adapter.map(entityMap, state);
@@ -214,6 +214,30 @@ export const selectAllUsers = selectAll;
 // select the total user count
 export const selectUserTotal = selectTotal;
 </code-example>
+
+### Entity Updates
+
+There are a few caveats to be aware of when updating entities using the entity adapter. 
+
+The first is that `updateOne` and `updateMany` make use of the `Update<T>` interface shown below. This supports partial updates.
+
+```typescript
+interface UpdateStr<T> {
+  id: string;
+  changes: Partial<T>;
+}
+
+interface UpdateNum<T> {
+  id: number;
+  changes: Partial<T>;
+}
+
+type Update<T> = UpdateStr<T> | UpdateNum<T>;
+```
+
+Secondly, `upsertOne` and `upsertMany` will perform an insert or update. If a partial entity is provided this will perform an update.
+
+To prevent partial updates either explicitly set all the fields, setting non-used fields with value `undefined`, or use the `setOne` or `setAll` adapter methods. 
 
 ### Entity Selectors
 
