@@ -1,9 +1,5 @@
 import { from, Observable, of } from 'rxjs';
-import {
-  ArgumentNotObservableError,
-  isObservableGuard,
-  isPromiseGuard,
-} from '../utils';
+import { isObservableGuard, isPromiseGuard } from '../utils';
 
 export function toObservableValue<T>(
   potentialObservableValue$: Observable<T> | Promise<T> | undefined | null
@@ -22,5 +18,7 @@ export function toObservableValue<T>(
     return from(potentialObservableValue$);
   }
 
-  throw new ArgumentNotObservableError();
+  throw new Error(
+    'Argument not observable. Only null/undefined or Promise/Observable-like values are allowed.'
+  );
 }
