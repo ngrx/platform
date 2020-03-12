@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import {
   CollectionApiActions,
   CollectionPageActions,
+  SelectedBookPageActions,
 } from '@example-app/books/actions';
 
 export const collectionFeatureKey = 'collection';
@@ -30,9 +31,15 @@ export const reducer = createReducer(
     loading: false,
     ids: books.map(book => book.id),
   })),
-  // Supports handing multiple types of actions
+  /**
+   * Optimistically add book to collection.
+   * If this succeeds there's nothing to do.
+   * If this fails we revert state by removing the book.
+   *
+   * `on` supports handling multiple types of actions
+   */
   on(
-    CollectionApiActions.addBookSuccess,
+    SelectedBookPageActions.addBook,
     CollectionApiActions.removeBookFailure,
     (state, { book }) => {
       if (state.ids.indexOf(book.id) > -1) {
@@ -44,8 +51,12 @@ export const reducer = createReducer(
       };
     }
   ),
+  /**
+   * Optimistically remove book from collection.
+   * If addBook fails, we "undo" adding the book.
+   */
   on(
-    CollectionApiActions.removeBookSuccess,
+    SelectedBookPageActions.removeBook,
     CollectionApiActions.addBookFailure,
     (state, { book }) => ({
       ...state,
