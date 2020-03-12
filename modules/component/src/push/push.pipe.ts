@@ -23,14 +23,20 @@ export class PushPipe extends CdAware implements PipeTransform {
     this.subscription.add(this.observables$.subscribe());
   }
 
-  transform<T>(obj: null | undefined, config?: NgRxPushPipeConfig): null;
-  transform<T>(obj: Observable<T>, config?: NgRxPushPipeConfig): T;
   transform<T>(
-    obs: Observable<T> | null | undefined,
+    potentialObservable: null | undefined,
+    config?: NgRxPushPipeConfig
+  ): null;
+  transform<T>(
+    potentialObservable: Observable<T>,
+    config?: NgRxPushPipeConfig
+  ): T;
+  transform<T>(
+    potentialObservable: Observable<T> | null | undefined,
     config: NgRxPushPipeConfig = { optimized: true }
   ): T | null | undefined {
     this.configSubject.next(config);
-    this.observablesSubject.next(obs);
+    this.observablesSubject.next(potentialObservable);
     return this.renderedValue;
   }
 

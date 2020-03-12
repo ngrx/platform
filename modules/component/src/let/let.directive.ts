@@ -65,8 +65,8 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
   );
 
   @Input()
-  set ngrxLet(obs: Observable<any>) {
-    this.observablesSubject.next(obs);
+  set ngrxLet(potentialObservable: Observable<any>) {
+    this.observablesSubject.next(potentialObservable);
   }
 
   @Input()
