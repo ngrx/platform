@@ -1,5 +1,15 @@
 import { getGlobalThis } from './get-global-this';
 
+// Table for ng global presence in ViewEngine and Ivy for prod/dev modes:
+//
+// | render     |  ViewEngine    |  ViewEngine    |      Ivy          |      Ivy          |
+// | mode       |     prod       |      dev       |      prod         |      dev          |
+// | ng         |     present    |     present    |     undefined     |     present       |
+// | ng.probe   |     present    |     present    |     undefined     |     undefined     |
+//
+// So for Ivy we need to make sure that ng is undefined or,
+// in case of dev environment, ng.probe is undefined
+
 export function isIvy(): boolean {
   const ng: any = getGlobalThis().ng;
 
