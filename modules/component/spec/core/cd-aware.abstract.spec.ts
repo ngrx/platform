@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Injector, NgZone, OnDestroy } from '@angular/core';
 import {
-  ArgumentNotObservableError,
   CdAware,
   getGlobalThis,
   observableValue,
@@ -33,7 +32,9 @@ class CdAwareImplementation extends CdAware implements OnDestroy {
   error: any = undefined;
   completed: boolean = false;
 
-  public observablesSubject = new Subject<observableValue<any> | undefined>();
+  public observablesSubject = new Subject<
+    observableValue<any> | undefined | null
+  >();
   protected observables$ = this.observablesSubject.pipe(
     processCdAwareObservables(
       this.getResetContextBehaviour(),
@@ -165,7 +166,7 @@ describe('CdAware', () => {
     it('error handling', () => {
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
       (cdAwareImplementation as any).observables$.subscribe({
-        error: (e: Error) => expect(e).toBe(ArgumentNotObservableError),
+        error: (e: Error) => expect(e).toBeDefined(),
       });
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
       // @TODO use this line
