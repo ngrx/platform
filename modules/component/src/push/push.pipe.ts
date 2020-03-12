@@ -11,7 +11,7 @@ import {
 
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe extends CdAware implements PipeTransform {
-  private renderedValue: any = STATE_DEFAULT;
+  private renderedValue: any | null | undefined = STATE_DEFAULT;
 
   private readonly configSubject = new Subject<NgRxPushPipeConfig>();
   private readonly config$ = this.configSubject
@@ -23,10 +23,11 @@ export class PushPipe extends CdAware implements PipeTransform {
     this.subscription.add(this.observables$.subscribe());
   }
 
+  transform<T>(potentialObservable: null, config?: NgRxPushPipeConfig): null;
   transform<T>(
-    potentialObservable: null | undefined,
+    potentialObservable: undefined,
     config?: NgRxPushPipeConfig
-  ): null;
+  ): undefined;
   transform<T>(
     potentialObservable: Observable<T>,
     config?: NgRxPushPipeConfig
