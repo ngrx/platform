@@ -60,7 +60,6 @@ export class PushPipe extends CdAware implements PipeTransform {
     return {
       // assign value that will get returned from the transform function on the next change detection
       next: (value: any) => (this.renderedValue = value),
-      error: (error: Error) => (this.renderedValue = error.message),
     };
   }
 
