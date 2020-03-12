@@ -204,7 +204,6 @@ describe('PushPipe', () => {
 
   xdescribe('when used in zone-less', () => {
     let noopNgZone: any;
-
     beforeEach(async(() => {
       getGlobalThis().requestAnimationFrame = undefined;
       getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
