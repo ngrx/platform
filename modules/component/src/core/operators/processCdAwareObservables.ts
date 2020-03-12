@@ -25,7 +25,7 @@ export function processCdAwareObservables<T>(
       // then flatten the latest internal observables into the output
       // @NOTICE applied behaviour (on the values, not the observable) will fire here
       switchAll(),
-      // reduce number of emissions to distinct values compared to teh previous one
+      // reduce number of emissions to distinct values compared to the previous one
       distinctUntilChanged()
     );
   };
