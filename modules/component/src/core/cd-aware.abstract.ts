@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import {
   getChangeDetectionHandler,
-  getGlobalThis,
-  getRequestAnimationFrameInAngular,
   potentialObservableValue,
   RemainHigherOrder,
 } from './utils';
@@ -35,9 +33,6 @@ export abstract class CdAware implements OnDestroy {
   readonly handleChangeDetection: <T>(
     component?: T
   ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
-  protected readonly requestAnimationFrameRef: (
-    callback: () => void
-  ) => number = getRequestAnimationFrameInAngular().bind(getGlobalThis());
   protected readonly subscription = new Subscription();
   protected readonly observablesSubject = new Subject<
     potentialObservableValue<any> | undefined
