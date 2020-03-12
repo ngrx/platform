@@ -5,7 +5,7 @@ import {
   Component,
   NgZone as OriginalNgZone,
 } from '@angular/core';
-import { getGlobalThis, isIvy, isZoneLess } from '../../src/core/utils';
+import { getGlobalThis, isIvy, hasZone } from '../../src/core/utils';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
 import { CoalescingConfig } from '../../src/core';
 
@@ -245,16 +245,16 @@ describe('PushPipe', () => {
     it('should call dcRef.detectChanges in ViewEngine', () => {
       getGlobalThis().ng = { probe: true };
       const ngZone = (pushPipe as any).ngZone;
-      expect(isZoneLess(noopNgZone)).toBe(true);
+      expect(!hasZone(noopNgZone)).toBe(true);
       expect(noopNgZone).toBe(ngZone);
-      expect(isZoneLess(ngZone)).toBe(true);
+      expect(!hasZone(ngZone)).toBe(true);
       expect(isIvy()).toBe(false);
       expect(pushPipe.handleChangeDetection.name).toBe('detectChanges');
     });
 
     it('should call detectChanges in Ivy', () => {
       getGlobalThis().ng = undefined;
-      expect(isZoneLess(noopNgZone)).toBe(true);
+      expect(!hasZone(noopNgZone)).toBe(true);
       expect(isIvy()).toBe(true);
       // @TODO
       expect(false).toBe('detectChanges');
@@ -266,14 +266,14 @@ describe('PushPipe', () => {
 
     it('should call dcRef.markForCheck in ViewEngine', () => {
       getGlobalThis().ng = { probe: true };
-      expect(isZoneLess(ngZone)).toBe(false);
+      expect(!hasZone(ngZone)).toBe(false);
       expect(isIvy()).toBe(false);
       expect(pushPipe.handleChangeDetection()).toBe('markForCheck');
     });
 
     it('should call markDirty in Ivy', () => {
       getGlobalThis().ng = undefined;
-      expect(isZoneLess(ngZone)).toBe(false);
+      expect(!hasZone(ngZone)).toBe(false);
       expect(isIvy()).toBe(true);
       // @TODO
       expect(false).toBe('markDirty');

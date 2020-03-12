@@ -6,16 +6,16 @@ import {
 } from '@angular/core';
 
 import { isIvy } from './is-ivy';
-import { isZoneLess } from './is-zone-less';
+import { hasZone } from './has-zone';
 
 export function getChangeDetectionHandler(
   ngZone: NgZone,
   cdRef: ChangeDetectorRef
 ): <T>(component?: T) => void {
   if (isIvy()) {
-    return isZoneLess(ngZone) ? detectChanges : markDirty;
+    return !hasZone(ngZone) ? detectChanges : markDirty;
   } else {
-    return isZoneLess(ngZone)
+    return !hasZone(ngZone)
       ? cdRef.detectChanges.bind(cdRef)
       : cdRef.markForCheck.bind(cdRef);
   }
