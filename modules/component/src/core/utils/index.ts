@@ -4,7 +4,7 @@ export { getGlobalThis } from './get-global-this';
 export { getRequestAnimationFrameInAngular } from './get-request-animation-frame-in-angular';
 export { isIvy } from './is-ivy';
 export { isZoneLess } from './is-zone-less';
-export { STATE_DEFAULT } from './state-default';
+
 export {
   potentialObservableValue,
   RemainHigherOrder,

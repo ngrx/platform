@@ -5,7 +5,6 @@ import {
   getGlobalThis,
   potentialObservableValue,
   processCdAwareObservables,
-  STATE_DEFAULT,
 } from '../../src/core';
 import {
   concat,
@@ -50,7 +49,7 @@ class CdAwareImplementation extends CdAware implements OnDestroy {
 
   getResetContextObserver<T>(): NextObserver<T> {
     return {
-      next: _ => (this.renderedValue = STATE_DEFAULT),
+      next: _ => (this.renderedValue = undefined),
       error: e => (this.error = e),
       complete: () => (this.completed = true),
     };
