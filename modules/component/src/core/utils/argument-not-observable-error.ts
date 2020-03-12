@@ -7,7 +7,8 @@ export interface ArgumentNotObservableErrorCtor {
 
 function ArgumentNotObservableErrorImpl(this: any) {
   Error.call(this);
-  this.message = 'argument not observable';
+  this.message =
+    'Argument not observable. Only null/undefined or Promise/Observable-like values are allowed.';
   this.name = 'ArgumentNotObservableError';
   return this;
 }
