@@ -32,7 +32,7 @@ export interface CoalescingConfig {
 // If you extend this class you need to implement how the update of the rendered value happens.
 // Also custom behaviour is something you need to implement in the extending class
 export abstract class CdAware implements OnDestroy {
-  protected readonly handleChangeDetection: <T>(
+  readonly handleChangeDetection: <T>(
     component?: T
   ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
   protected readonly requestAnimationFrameRef: (

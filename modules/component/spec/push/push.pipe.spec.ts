@@ -59,22 +59,59 @@ let pushPipeTestComponent: {
   value$: Observable<any> | undefined | null;
 };
 let componentNativeElement: any;
+let noopNgZone: any;
+let ngZone: NgZone;
 
+const setupPushPipeComponent = () => {
+  TestBed.configureTestingModule({
+    providers: [
+      PushPipe,
+      { provide: NgZone, useClass: NgZone },
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+    ],
+  });
+  pushPipe = TestBed.get(PushPipe);
+};
+const setupPushPipeComponentZoneLess = () => {
+  getGlobalThis().requestAnimationFrame = undefined;
+  getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
+  getGlobalThis().ng = undefined;
+
+  TestBed.configureTestingModule({
+    providers: [
+      { provide: NgZone, useClass: NoopNgZone },
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      {
+        provide: PushPipe,
+        useClass: PushPipe,
+        depths: [ChangeDetectorRef, NoopNgZone],
+      },
+    ],
+  });
+  pushPipe = TestBed.get(PushPipe);
+  noopNgZone = TestBed.get(NgZone);
+};
+
+const setupPushPipeComponentZoneFull = () => {
+  getGlobalThis().requestAnimationFrame = undefined;
+  getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
+  getGlobalThis().ng = undefined;
+  TestBed.configureTestingModule({
+    providers: [
+      PushPipe,
+      { provide: NgZone, useClass: NgZone },
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+    ],
+  });
+  pushPipe = TestBed.get(PushPipe);
+  ngZone = TestBed.get(NgZone);
+};
 describe('PushPipe', () => {
   describe('used as a Service', () => {
     getGlobalThis().requestAnimationFrame = undefined;
     getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
 
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        providers: [
-          PushPipe,
-          { provide: NgZone, useClass: NgZone },
-          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-        ],
-      });
-      pushPipe = TestBed.get(PushPipe);
-    }));
+    beforeEach(async(setupPushPipeComponent));
 
     it('should be instantiable', () => {
       expect(pushPipe).toBeDefined();
@@ -203,26 +240,7 @@ describe('PushPipe', () => {
   });
 
   xdescribe('when used in zone-less', () => {
-    let noopNgZone: any;
-    beforeEach(async(() => {
-      getGlobalThis().requestAnimationFrame = undefined;
-      getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
-      getGlobalThis().ng = undefined;
-
-      TestBed.configureTestingModule({
-        providers: [
-          { provide: NgZone, useClass: NoopNgZone },
-          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-          {
-            provide: PushPipe,
-            useClass: PushPipe,
-            depths: [ChangeDetectorRef, NoopNgZone],
-          },
-        ],
-      });
-      pushPipe = TestBed.get(PushPipe);
-      noopNgZone = TestBed.get(NgZone);
-    }));
+    beforeEach(async(setupPushPipeComponentZoneLess));
 
     it('should call dcRef.detectChanges in ViewEngine', () => {
       getGlobalThis().ng = { probe: true };
@@ -244,21 +262,7 @@ describe('PushPipe', () => {
   });
 
   xdescribe('when used in zone-full mode', () => {
-    let ngZone: NgZone;
-    beforeEach(async(() => {
-      getGlobalThis().requestAnimationFrame = undefined;
-      getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
-      getGlobalThis().ng = undefined;
-      TestBed.configureTestingModule({
-        providers: [
-          PushPipe,
-          { provide: NgZone, useClass: NgZone },
-          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-        ],
-      });
-      pushPipe = TestBed.get(PushPipe);
-      ngZone = TestBed.get(NgZone);
-    }));
+    beforeEach(async(setupPushPipeComponentZoneFull));
 
     it('should call dcRef.markForCheck in ViewEngine', () => {
       getGlobalThis().ng = { probe: true };

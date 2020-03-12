@@ -85,26 +85,63 @@ let letDirectiveTestComponent: {
 };
 let componentNativeElement: any;
 
+const setupLetDirectiveTestComponent = (): void => {
+  TestBed.configureTestingModule({
+    declarations: [LetDirectiveTestComponent, LetDirective],
+    providers: [
+      { provide: NgZone, useClass: NgZone },
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: TemplateRef, useClass: TemplateRef },
+      { provide: ViewContainerRef, useClass: ViewContainerRef },
+    ],
+  });
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+const setupLetDirectiveTestComponentError = (): void => {
+  TestBed.configureTestingModule({
+    declarations: [LetDirectiveTestErrorComponent, LetDirective],
+    providers: [
+      { provide: NgZone, useClass: NgZone },
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: TemplateRef, useClass: TemplateRef },
+      { provide: ViewContainerRef, useClass: ViewContainerRef },
+    ],
+  });
+
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestErrorComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+const setupLetDirectiveTestComponentComplete = (): void => {
+  TestBed.configureTestingModule({
+    declarations: [LetDirectiveTestCompleteComponent, LetDirective],
+    providers: [
+      { provide: NgZone, useClass: NgZone },
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: TemplateRef, useClass: TemplateRef },
+      { provide: ViewContainerRef, useClass: ViewContainerRef },
+    ],
+  });
+
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestCompleteComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+
 describe('LetDirective', () => {
   describe('when nexting values', () => {
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        declarations: [LetDirectiveTestComponent, LetDirective],
-        providers: [
-          { provide: NgZone, useClass: NgZone },
-          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-          { provide: TemplateRef, useClass: TemplateRef },
-          { provide: ViewContainerRef, useClass: ViewContainerRef },
-        ],
-      });
-
-      fixtureLetDirectiveTestComponent = TestBed.createComponent(
-        LetDirectiveTestComponent
-      );
-      letDirectiveTestComponent =
-        fixtureLetDirectiveTestComponent.componentInstance;
-      componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
-    }));
+    beforeEach(async(setupLetDirectiveTestComponent));
 
     it('should be instantiable', () => {
       expect(fixtureLetDirectiveTestComponent).toBeDefined();
@@ -165,24 +202,7 @@ describe('LetDirective', () => {
   });
 
   xdescribe('when error', () => {
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        declarations: [LetDirectiveTestErrorComponent, LetDirective],
-        providers: [
-          { provide: NgZone, useClass: NgZone },
-          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-          { provide: TemplateRef, useClass: TemplateRef },
-          { provide: ViewContainerRef, useClass: ViewContainerRef },
-        ],
-      });
-
-      fixtureLetDirectiveTestComponent = TestBed.createComponent(
-        LetDirectiveTestErrorComponent
-      );
-      letDirectiveTestComponent =
-        fixtureLetDirectiveTestComponent.componentInstance;
-      componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
-    }));
+    beforeEach(async(setupLetDirectiveTestComponentError));
 
     it('should render the error if one occurs', () => {
       letDirectiveTestComponent.value$ = throwError(new Error('error message'));
@@ -192,24 +212,7 @@ describe('LetDirective', () => {
   });
 
   describe('when complete', () => {
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        declarations: [LetDirectiveTestCompleteComponent, LetDirective],
-        providers: [
-          { provide: NgZone, useClass: NgZone },
-          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-          { provide: TemplateRef, useClass: TemplateRef },
-          { provide: ViewContainerRef, useClass: ViewContainerRef },
-        ],
-      });
-
-      fixtureLetDirectiveTestComponent = TestBed.createComponent(
-        LetDirectiveTestCompleteComponent
-      );
-      letDirectiveTestComponent =
-        fixtureLetDirectiveTestComponent.componentInstance;
-      componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
-    }));
+    beforeEach(async(setupLetDirectiveTestComponentComplete));
 
     it('should render true if completed', () => {
       letDirectiveTestComponent.value$ = EMPTY;

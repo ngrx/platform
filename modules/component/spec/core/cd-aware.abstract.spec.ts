@@ -45,7 +45,7 @@ class CdAwareImplementation extends CdAware implements OnDestroy {
 
   constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
     super(cdRef, ngZone);
-    this.subscription = this.observables$.subscribe();
+    this.subscription.add(this.observables$.subscribe());
   }
 
   getResetContextObserver<T>(): NextObserver<T> {
@@ -72,7 +72,7 @@ class CdAwareImplementation extends CdAware implements OnDestroy {
 }
 
 let cdAwareImplementation: CdAwareImplementation;
-beforeAll(() => {
+const setupCdAwareImplementation = () => {
   const injector = Injector.create([
     {
       provide: CdAwareImplementation,
@@ -83,7 +83,9 @@ beforeAll(() => {
     { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef, deps: [] },
   ]);
   cdAwareImplementation = injector.get(CdAwareImplementation);
-});
+};
+
+beforeAll(setupCdAwareImplementation);
 
 describe('CdAware', () => {
   beforeEach(() => {
