@@ -29,7 +29,6 @@ import {
   // This will later on replaced by a new NgRxLetConfig interface
   CoalescingConfig as NgRxLetConfig,
   RemainHigherOrder,
-  STATE_DEFAULT,
 } from '../core';
 
 export interface LetContext {
@@ -99,10 +98,10 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
   getResetContextObserver(): NextObserver<any> {
     return {
       next: _ => {
-        this.ViewContext.$implicit = STATE_DEFAULT;
-        this.ViewContext.ngrxLet = STATE_DEFAULT;
-        this.ViewContext.$error = STATE_DEFAULT;
-        this.ViewContext.$complete = STATE_DEFAULT;
+        this.ViewContext.$implicit = undefined;
+        this.ViewContext.ngrxLet = undefined;
+        this.ViewContext.$error = undefined;
+        this.ViewContext.$complete = undefined;
       },
     };
   }

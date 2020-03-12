@@ -40,7 +40,7 @@ export abstract class CdAware implements OnDestroy {
   ) => number = getRequestAnimationFrameInAngular().bind(getGlobalThis());
   protected readonly subscription = new Subscription();
   protected readonly observablesSubject = new Subject<
-    potentialObservableValue<any>
+    potentialObservableValue<any> | undefined
   >();
   // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
   // extending class. So getConfigurableBehaviour is not available in the abstract layer

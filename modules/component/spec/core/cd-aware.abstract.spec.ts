@@ -33,7 +33,9 @@ class CdAwareImplementation extends CdAware implements OnDestroy {
   error: any = undefined;
   completed: boolean = false;
 
-  public observablesSubject = new Subject<potentialObservableValue<any>>();
+  public observablesSubject = new Subject<
+    potentialObservableValue<any> | undefined
+  >();
   protected observables$ = this.observablesSubject.pipe(
     processCdAwareObservables(
       this.getResetContextBehaviour(),

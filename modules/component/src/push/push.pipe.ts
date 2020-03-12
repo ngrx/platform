@@ -6,12 +6,11 @@ import {
   // This will later on replaced by a new NgRxPushPipeConfig interface
   CoalescingConfig as NgRxPushPipeConfig,
   RemainHigherOrder,
-  STATE_DEFAULT,
 } from '../core';
 
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe extends CdAware implements PipeTransform {
-  private renderedValue: any | null | undefined = STATE_DEFAULT;
+  private renderedValue: any | null | undefined;
 
   private readonly configSubject = new Subject<NgRxPushPipeConfig>();
   private readonly config$ = this.configSubject
@@ -65,7 +64,7 @@ export class PushPipe extends CdAware implements PipeTransform {
 
   getResetContextObserver(): NextObserver<any> {
     return {
-      next: _ => (this.renderedValue = STATE_DEFAULT),
+      next: _ => (this.renderedValue = undefined),
     };
   }
 }
