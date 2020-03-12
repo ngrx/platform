@@ -1,5 +1,4 @@
 import { toObservableValue } from '../../../src/core/operators/toObservableValue';
-import { ArgumentNotObservableError } from '../../../src/core/utils';
 import { EMPTY, isObservable, Observable, of } from 'rxjs';
 
 describe('toObservableValue', () => {
@@ -30,7 +29,7 @@ describe('toObservableValue', () => {
       const observable: Observable<any> = toObservableValue(null);
       observable.subscribe({
         error(e) {
-          expect(e).toBe(ArgumentNotObservableError);
+          expect(e).toBeDefined();
         },
       });
     });
@@ -73,7 +72,7 @@ describe('toObservableValue', () => {
       const observable: Observable<string> = of('invalid');
       observable.pipe(toObservableValue).subscribe({
         error(e) {
-          expect(e).toBe(ArgumentNotObservableError);
+          expect(e).toBeDefined();
         },
       });
     });

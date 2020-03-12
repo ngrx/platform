@@ -1,7 +1,6 @@
 import { processCdAwareObservables } from '../../../src/core/operators';
 import { EMPTY, Observable, of, pipe, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ArgumentNotObservableError } from '../../../src/core/utils';
 
 describe('processCdAwareObservables', () => {
   it('should work as RxJS operator', () => {
@@ -92,9 +91,7 @@ describe('processCdAwareObservables', () => {
     });
 
     it('throw if no observable, promise, undefined or null is passed', () => {
-      const observable: Observable<any> = of(
-        throwError(ArgumentNotObservableError)
-      );
+      const observable: Observable<any> = of(throwError(new Error()));
       observable
         .pipe(
           processCdAwareObservables(
@@ -105,7 +102,7 @@ describe('processCdAwareObservables', () => {
         )
         .subscribe({
           error(e) {
-            expect(e).toBe(ArgumentNotObservableError);
+            expect(e).toBeDefined();
           },
         });
     });
@@ -128,7 +125,7 @@ describe('processCdAwareObservables', () => {
 
   it('should forward emitted errors form an observable', () => {
     const observable: Observable<Observable<number>> = of(
-      throwError(ArgumentNotObservableError)
+      throwError(new Error())
     );
     observable
       .pipe(
@@ -140,7 +137,7 @@ describe('processCdAwareObservables', () => {
       )
       .subscribe({
         error(e) {
-          expect(e).toBe(ArgumentNotObservableError);
+          expect(e).toBeDefined();
         },
       });
   });
@@ -162,7 +159,7 @@ describe('processCdAwareObservables', () => {
 
   it('should forward emitted errors form a promise', () => {
     const observable: Observable<Promise<number>> = of(
-      Promise.reject(ArgumentNotObservableError)
+      Promise.reject(new Error())
     );
     observable
       .pipe(
@@ -174,7 +171,7 @@ describe('processCdAwareObservables', () => {
       )
       .subscribe({
         error(e) {
-          expect(e).toBe(ArgumentNotObservableError);
+          expect(e).toBeDefined();
         },
       });
   });
