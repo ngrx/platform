@@ -3,6 +3,7 @@ import { NextObserver, Observable, PartialObserver, pipe, Subject } from 'rxjs';
 import { distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs/operators';
 import {
   CdAware,
+  // This will later on replaced by a new NgRxPushPipeConfig interface
   CoalescingConfig as NgRxPushPipeConfig,
   remainHigherOrder,
   STATE_DEFAULT,
@@ -35,6 +36,7 @@ export class PushPipe extends CdAware implements PipeTransform {
     return pipe(
       withLatestFrom(this.config$),
       map(([value$, config]) => {
+        // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
         return !config.optimized
           ? value$.pipe(tap(_ => this.work()))
           : value$.pipe(

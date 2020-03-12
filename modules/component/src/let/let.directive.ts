@@ -26,6 +26,7 @@ import {
 } from 'rxjs/operators';
 import {
   CdAware,
+  // This will later on replaced by a new NgRxLetConfig interface
   CoalescingConfig as NgRxLetConfig,
   remainHigherOrder,
   STATE_DEFAULT,
@@ -121,6 +122,7 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
     return pipe(
       withLatestFrom(this.config$),
       map(([value$, config]: [Observable<any>, NgRxLetConfig]) => {
+        // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
         return !config.optimized
           ? value$.pipe(tap(_ => this.work()))
           : value$.pipe(
