@@ -6,7 +6,7 @@ export type potentialObservableValue<T> =
   | undefined
   | null;
 
-export type remainHigherOrder<T> = (
+export type RemainHigherOrder<T> = (
   o$$: Observable<Observable<T>>
 ) => Observable<Observable<T>>;
 

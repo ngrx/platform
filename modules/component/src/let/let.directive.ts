@@ -28,7 +28,7 @@ import {
   CdAware,
   // This will later on replaced by a new NgRxLetConfig interface
   CoalescingConfig as NgRxLetConfig,
-  remainHigherOrder,
+  RemainHigherOrder,
   STATE_DEFAULT,
 } from '../core';
 
@@ -118,7 +118,7 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
     };
   }
 
-  getConfigurableBehaviour<T>(): remainHigherOrder<T> {
+  getConfigurableBehaviour<T>(): RemainHigherOrder<T> {
     return pipe(
       withLatestFrom(this.config$),
       map(([value$, config]: [Observable<any>, NgRxLetConfig]) => {

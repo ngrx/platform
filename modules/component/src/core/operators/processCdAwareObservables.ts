@@ -1,12 +1,12 @@
 import { distinctUntilChanged, map, switchAll } from 'rxjs/operators';
 import { MonoTypeOperatorFunction, Observable } from 'rxjs';
-import { remainHigherOrder } from '../utils';
+import { RemainHigherOrder } from '../utils';
 import { toObservableValue } from './toObservableValue';
 
 export function processCdAwareObservables<T>(
-  resetContextBehaviour: remainHigherOrder<T>,
-  updateContextBehaviour: remainHigherOrder<T>,
-  configurableBehaviour: remainHigherOrder<T>
+  resetContextBehaviour: RemainHigherOrder<T>,
+  updateContextBehaviour: RemainHigherOrder<T>,
+  configurableBehaviour: RemainHigherOrder<T>
 ): MonoTypeOperatorFunction<T> {
   return (o$: Observable<any>): Observable<T> => {
     return o$.pipe(

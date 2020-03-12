@@ -10,7 +10,7 @@ import {
   getGlobalThis,
   getRequestAnimationFrameInAngular,
   potentialObservableValue,
-  remainHigherOrder,
+  RemainHigherOrder,
 } from './utils';
 import {
   defer,
@@ -78,15 +78,15 @@ export abstract class CdAware implements OnDestroy {
 
   // The custom behaviour of the observable carrying the values to render
   // Here we apply potential configurations as well as behaviour for different implementers ob this abstract calss
-  abstract getConfigurableBehaviour<T>(): remainHigherOrder<T>;
+  abstract getConfigurableBehaviour<T>(): RemainHigherOrder<T>;
 
-  getUpdateContextBehaviour<T>(): remainHigherOrder<T> {
+  getUpdateContextBehaviour<T>(): RemainHigherOrder<T> {
     return map(value$ =>
       value$.pipe(tap<T>(this.getUpdateViewContextObserver()))
     );
   }
 
-  getResetContextBehaviour<T>(): remainHigherOrder<T> {
+  getResetContextBehaviour<T>(): RemainHigherOrder<T> {
     return tap<Observable<T>>(this.getResetContextObserver());
   }
 

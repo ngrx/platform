@@ -5,7 +5,7 @@ import {
   CdAware,
   // This will later on replaced by a new NgRxPushPipeConfig interface
   CoalescingConfig as NgRxPushPipeConfig,
-  remainHigherOrder,
+  RemainHigherOrder,
   STATE_DEFAULT,
 } from '../core';
 
@@ -41,7 +41,7 @@ export class PushPipe extends CdAware implements PipeTransform {
     return this.renderedValue;
   }
 
-  getConfigurableBehaviour<T>(): remainHigherOrder<T> {
+  getConfigurableBehaviour<T>(): RemainHigherOrder<T> {
     return pipe(
       withLatestFrom(this.config$),
       map(([value$, config]) => {

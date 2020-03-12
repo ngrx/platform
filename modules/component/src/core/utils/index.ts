@@ -7,7 +7,7 @@ export { isZoneLess } from './is-zone-less';
 export { STATE_DEFAULT } from './state-default';
 export {
   potentialObservableValue,
-  remainHigherOrder,
+  RemainHigherOrder,
   isDefinedGuard,
   isIterableGuard,
   isObservableGuard,
