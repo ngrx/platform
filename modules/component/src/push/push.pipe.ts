@@ -13,12 +13,14 @@ import {
 export class PushPipe extends CdAware implements PipeTransform {
   private renderedValue: any = STATE_DEFAULT;
 
-  configSubject = new Subject<NgRxPushPipeConfig>();
-  config$ = this.configSubject.asObservable().pipe(distinctUntilChanged());
+  private readonly configSubject = new Subject<NgRxPushPipeConfig>();
+  private readonly config$ = this.configSubject
+    .asObservable()
+    .pipe(distinctUntilChanged());
 
   constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
     super(cdRef, ngZone);
-    this.subscription = this.observables$.subscribe();
+    this.subscription.add(this.observables$.subscribe());
   }
 
   transform<T>(obj: null | undefined, config?: NgRxPushPipeConfig): null;

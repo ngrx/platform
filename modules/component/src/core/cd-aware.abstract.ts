@@ -32,18 +32,19 @@ export interface CoalescingConfig {
 // If you extend this class you need to implement how the update of the rendered value happens.
 // Also custom behaviour is something you need to implement in the extending class
 export abstract class CdAware implements OnDestroy {
-  handleChangeDetection: <T>(component?: T) => void = getChangeDetectionHandler(
-    this.ngZone,
-    this.cdRef
-  );
-  protected requestAnimationFrameRef: (
+  protected readonly handleChangeDetection: <T>(
+    component?: T
+  ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
+  protected readonly requestAnimationFrameRef: (
     cb: () => void
   ) => number = getRequestAnimationFrameInAngular().bind(getGlobalThis());
-  protected subscription = new Subscription();
-  protected observablesSubject = new Subject<potentialObservableValue<any>>();
+  protected readonly subscription = new Subscription();
+  protected readonly observablesSubject = new Subject<
+    potentialObservableValue<any>
+  >();
   // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
   // extending class. So getConfigurableBehaviour is not available in the abstract layer
-  protected observables$ = defer(() =>
+  protected readonly observables$ = defer(() =>
     this.observablesSubject.pipe(
       processCdAwareObservables(
         this.getResetContextBehaviour(),

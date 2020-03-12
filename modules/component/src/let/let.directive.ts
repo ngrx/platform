@@ -56,9 +56,9 @@ function getLetContextObj(): LetContext {
   selector: '[ngrxLet]',
 })
 export class LetDirective extends CdAware implements OnInit, OnDestroy {
-  private ViewContext = getLetContextObj();
-  configSubject = new ReplaySubject<NgRxLetConfig>();
-  config$ = this.configSubject.pipe(
+  private readonly ViewContext = getLetContextObj();
+  private readonly configSubject = new ReplaySubject<NgRxLetConfig>();
+  private readonly config$ = this.configSubject.pipe(
     filter(v => v !== undefined),
     distinctUntilChanged(),
     startWith({ optimized: true })
@@ -81,7 +81,7 @@ export class LetDirective extends CdAware implements OnInit, OnDestroy {
     private readonly viewContainerRef: ViewContainerRef
   ) {
     super(cdRef, ngZone);
-    this.subscription = this.observables$.subscribe();
+    this.subscription.add(this.observables$.subscribe());
   }
 
   ngOnInit() {
