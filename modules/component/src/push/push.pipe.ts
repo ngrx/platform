@@ -40,10 +40,10 @@ export class PushPipe extends CdAware implements PipeTransform {
       map(([value$, config]) => {
         // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
         return !config.optimized
-          ? value$.pipe(tap(_ => this.work()))
+          ? value$.pipe(tap(() => this.work()))
           : value$.pipe(
               // @TODO Add coalesce operator here
-              tap(_ => this.work())
+              tap(() => this.work())
             );
       })
     );
