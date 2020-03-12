@@ -9,4 +9,4 @@ const EXPORTS = [DECLARATIONS];
   declarations: [DECLARATIONS],
   exports: [EXPORTS],
 })
-export class ComponentModule {}
+export class ReactiveComponentModule {}

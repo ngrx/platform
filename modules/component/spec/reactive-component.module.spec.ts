@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { ComponentModule } from '../';
+import { ReactiveComponentModule } from '../';
 
 describe('Component Module', () => {
   let componentModule: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ComponentModule],
+      imports: [ReactiveComponentModule],
     });
 
-    componentModule = TestBed.get(ComponentModule);
+    componentModule = TestBed.get(ReactiveComponentModule);
   });
 
   it('should add all effects when instantiated', () => {
