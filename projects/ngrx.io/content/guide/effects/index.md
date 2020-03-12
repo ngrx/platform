@@ -229,7 +229,7 @@ export class MovieModule {}
 
 You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
 
-<code-example header="admin.module.ts">
+<code-example header="movies.module.ts">
 providers: [
   MovieEffects,
   {
