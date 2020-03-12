@@ -36,7 +36,7 @@ export abstract class CdAware implements OnDestroy {
     component?: T
   ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
   protected readonly requestAnimationFrameRef: (
-    cb: () => void
+    callback: () => void
   ) => number = getRequestAnimationFrameInAngular().bind(getGlobalThis());
   protected readonly subscription = new Subscription();
   protected readonly observablesSubject = new Subject<

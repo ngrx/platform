@@ -6,7 +6,7 @@ export interface CoalesceConfig {
   leading?: boolean;
   trailing?: boolean;
   context: CoalescingContext;
-  executionContextRef: (cb: () => void) => number;
+  executionContextRef: (callback: () => void) => number;
 }
 
 export function getCoalesceWorkConfig(

@@ -16,8 +16,8 @@ function wrapWithSpace(str: string): string {
   return ' ' + str + ' ';
 }
 
-function MockRequestAnimationFrame(cb: Function) {
-  cb && cb();
+function MockRequestAnimationFrame(callback: Function) {
+  callback();
   return ++id;
 }
 

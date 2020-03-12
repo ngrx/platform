@@ -17,8 +17,8 @@ export function getRequestAnimationFrameInAngular() {
     return globalThis.requestAnimationFrame;
   }
   // if on server (SSR) return empty function
-  return (cb: Function) => {
-    cb();
+  return (callback: Function) => {
+    callback();
     // Return a random number to fake the asyncId of async tasks
     return Math.random();
   };

@@ -23,8 +23,8 @@ class MockChangeDetectorRef {}
 
 let id = 0;
 
-function MockRequestAnimationFrame(cb: Function) {
-  cb && cb();
+function MockRequestAnimationFrame(callback: Function) {
+  callback();
   return ++id;
 }
 
