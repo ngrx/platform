@@ -66,7 +66,7 @@ const setupPushPipeComponent = () => {
   TestBed.configureTestingModule({
     providers: [
       PushPipe,
-      { provide: NgZone, useClass: NgZone },
+      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
     ],
   });
@@ -84,7 +84,7 @@ const setupPushPipeComponentZoneLess = () => {
       {
         provide: PushPipe,
         useClass: PushPipe,
-        depths: [ChangeDetectorRef, NoopNgZone],
+        depths: [ChangeDetectorRef, NgZone],
       },
     ],
   });
@@ -99,7 +99,7 @@ const setupPushPipeComponentZoneFull = () => {
   TestBed.configureTestingModule({
     providers: [
       PushPipe,
-      { provide: NgZone, useClass: NgZone },
+      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
     ],
   });

@@ -89,10 +89,10 @@ const setupLetDirectiveTestComponent = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestComponent, LetDirective],
     providers: [
-      { provide: NgZone, useClass: NgZone },
+      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      { provide: TemplateRef, useClass: TemplateRef },
-      { provide: ViewContainerRef, useClass: ViewContainerRef },
+      TemplateRef,
+      ViewContainerRef,
     ],
   });
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
@@ -106,10 +106,10 @@ const setupLetDirectiveTestComponentError = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestErrorComponent, LetDirective],
     providers: [
-      { provide: NgZone, useClass: NgZone },
+      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      { provide: TemplateRef, useClass: TemplateRef },
-      { provide: ViewContainerRef, useClass: ViewContainerRef },
+      TemplateRef,
+      ViewContainerRef,
     ],
   });
 
@@ -124,10 +124,10 @@ const setupLetDirectiveTestComponentComplete = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestCompleteComponent, LetDirective],
     providers: [
-      { provide: NgZone, useClass: NgZone },
+      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      { provide: TemplateRef, useClass: TemplateRef },
-      { provide: ViewContainerRef, useClass: ViewContainerRef },
+      TemplateRef,
+      ViewContainerRef,
     ],
   });
 
