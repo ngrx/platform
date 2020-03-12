@@ -9,9 +9,8 @@ export function toObservableValue<T>(
   potentialObservableValue$: Observable<T> | Promise<T> | undefined | null
 ): Observable<T | undefined | null> {
   if (
-    potentialObservableValue$ === undefined ||
-    // @NOTICE This check is here to mirror the async pipes behaviour
-    potentialObservableValue$ === null
+    // Comparing to the literal null value with the == operator covers both null and undefined values.
+    potentialObservableValue$ == null
   ) {
     return of(potentialObservableValue$);
   }
