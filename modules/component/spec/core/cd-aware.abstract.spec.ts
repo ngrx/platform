@@ -3,7 +3,7 @@ import {
   ArgumentNotObservableError,
   CdAware,
   getGlobalThis,
-  potentialObservableValue,
+  observableValue,
   processCdAwareObservables,
 } from '../../src/core';
 import {
@@ -33,9 +33,7 @@ class CdAwareImplementation extends CdAware implements OnDestroy {
   error: any = undefined;
   completed: boolean = false;
 
-  public observablesSubject = new Subject<
-    potentialObservableValue<any> | undefined
-  >();
+  public observablesSubject = new Subject<observableValue<any> | undefined>();
   protected observables$ = this.observablesSubject.pipe(
     processCdAwareObservables(
       this.getResetContextBehaviour(),

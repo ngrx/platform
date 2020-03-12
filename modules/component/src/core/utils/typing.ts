@@ -1,6 +1,6 @@
 import { isObservable, Observable, OperatorFunction } from 'rxjs';
 
-export type potentialObservableValue<T> = Promise<T> | Observable<T> | null;
+export type observableValue<T> = Promise<T> | Observable<T>;
 
 export type RemainHigherOrder<T> = (
   o$$: Observable<Observable<T>>

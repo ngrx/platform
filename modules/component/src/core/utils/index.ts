@@ -4,7 +4,7 @@ export { isIvy } from './is-ivy';
 export { hasZone } from './has-zone';
 
 export {
-  potentialObservableValue,
+  observableValue,
   RemainHigherOrder,
   isDefinedGuard,
   isIterableGuard,

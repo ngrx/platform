@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {
   getChangeDetectionHandler,
-  potentialObservableValue,
+  observableValue,
   RemainHigherOrder,
 } from './utils';
 import {
@@ -35,7 +35,7 @@ export abstract class CdAware implements OnDestroy {
   ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
   protected readonly subscription = new Subscription();
   protected readonly observablesSubject = new Subject<
-    potentialObservableValue<any> | undefined
+    observableValue<any> | null | undefined
   >();
   // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
   // extending class. So getConfigurableBehaviour is not available in the abstract layer
