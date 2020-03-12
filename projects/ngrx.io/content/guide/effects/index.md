@@ -242,7 +242,7 @@ providers: [
 
 <div class="alert is-critical">
 
-The `EffectsModule.forChild()` method must be added to the module imports even if you only provide effects over token, and don't pass them via parameters. (Same goes for `EffectsModule.forRoot()`)
+The `EffectsModule.forFeature()` method must be added to the module imports even if you only provide effects over token, and don't pass them via parameters. (Same goes for `EffectsModule.forRoot()`)
 
 </div>
 
