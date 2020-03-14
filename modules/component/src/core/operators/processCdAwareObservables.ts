@@ -3,6 +3,25 @@ import { MonoTypeOperatorFunction, Observable } from 'rxjs';
 import { RemainHigherOrder } from '../utils';
 import { toObservableValue } from './toObservableValue';
 
+/**
+ * function processCdAwareObservables
+ *
+ * @description
+ * It is a RxJS operator function that, takes observable values like a Promise or an Observable,
+ * flattens its values and renders the emitted values.
+ * Additionally it adds custom behaviour to the observable
+ *
+ * @param resetContextBehaviour
+ * The behaviour that resets the rendered value in e.g. a pipe or directive
+ *
+ * @param updateContextBehaviour
+ * The behaviour that update the rendered value in emitted by the passed observable value
+ *
+ * @param configurableBehaviour
+ * The custom behaviour added to the observable e.g. coalescing of changes
+ *
+ * @return MonoTypeOperatorFunction<T>
+ */
 export function processCdAwareObservables<T>(
   resetContextBehaviour: RemainHigherOrder<T>,
   updateContextBehaviour: RemainHigherOrder<T>,
