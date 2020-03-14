@@ -10,7 +10,8 @@ version: 2
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.4
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.9
+var_1: &cache_key_fallback yarn-cache-
 var_2: &run_in_node
   docker:
     - image: circleci/node:12.9.1
@@ -34,13 +35,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - run: yarn --frozen-lockfile --non-interactive
-      - save_cache:
-          key: *cache_key
+      - persist_to_workspace:
+          root: ~/
           paths:
-            - ~/.cache/yarn
-            - ~/.cache/Cypress
+            - .cache/yarn
+            - .cache/Cypress
+            - .cache/bazel_repository_cache
+            - .cache/bazel_disk_cache
             - node_modules
 
   # Enforce some static analysis invariants.
@@ -54,7 +59,9 @@ jobs:
       - checkout
       - *set_bazel_options
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
 
       # Run the Buildifier to check our Bazel rules for format issues.
       - run: 'yarn bazel:format --mode=check ||
@@ -72,7 +79,9 @@ jobs:
       - *set_bazel_options
 
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
 
       # Build and Test
       - run: yarn test --maxWorkers=1 --ci
@@ -84,10 +93,12 @@ jobs:
       - *set_bazel_options
 
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
 
       # Build
-      - run: ./node_modules/.bin/bazel build //modules/...
+      - run: yarn bazel build //modules/...
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -98,6 +109,8 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/.cache/Cypress
+            - ~/.cache/bazel_repository_cache
+            - ~/.cache/bazel_disk_cache
             - node_modules
 
   schematics-core-check:
@@ -105,7 +118,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - run: yarn copy:schematics
       - run: git diff --name-only --exit-code ./modules
 
@@ -114,7 +129,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
 
@@ -162,6 +179,7 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
+            - *cache_key_fallback
             - *docs_cache_key
       - run:
           name: Setup Environment Variables
@@ -188,6 +206,7 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
+            - *cache_key_fallback
             - *docs_cache_key
       - run: npm rebuild node-sass
       - run: yarn build --progress false --output-path dist/ngrx.io/ && yarn copy-404-page
@@ -204,7 +223,9 @@ jobs:
             - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
@@ -214,7 +235,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - attach_workspace:
           at: dist
       - run:
@@ -229,7 +252,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - attach_workspace:
           at: dist
       - run:
@@ -247,7 +272,9 @@ jobs:
             - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
       - restore_cache:
-          key: *cache_key
+          keys:
+            - *cache_key
+            - *cache_key_fallback
       - run: yarn run cleanup:previews
 
 workflows:
