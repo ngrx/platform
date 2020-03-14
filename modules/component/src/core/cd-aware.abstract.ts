@@ -1,27 +1,22 @@
-import {
-  ChangeDetectorRef,
-  EmbeddedViewRef,
-  NgZone,
-  OnDestroy,
-  Type,
-} from '@angular/core';
+import { ChangeDetectorRef, NgZone } from '@angular/core';
 import { getChangeDetectionHandler } from './utils';
 import {
-  defer,
-  MonoTypeOperatorFunction,
   NextObserver,
   Observable,
-  ObservableInput,
-  OperatorFunction,
   PartialObserver,
-  pipe,
   Subject,
+  Subscription,
 } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { processCdAwareObservables } from './operators';
+import { distinctUntilChanged, map, switchAll, tap } from 'rxjs/operators';
+import { toObservableValue } from './operators';
 
 export interface CoalescingConfig {
   optimized: boolean;
+}
+
+export interface CdAware<U> {
+  next: (v: Observable<U> | Promise<U> | null | undefined) => void;
+  subscribe: () => Subscription;
 }
 
 /**
@@ -33,66 +28,60 @@ export interface CoalescingConfig {
  * If you extend this class you need to implement how the update of the rendered value happens.
  * Also custom behaviour is something you need to implement in the extending class
  */
-export abstract class CdAware<S> {
-  readonly handleChangeDetection: <T>(
-    component?: T
-  ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
-  protected readonly observablesSubject = new Subject<
-    Promise<S> | Observable<S>
+export function createCdAware<U>(cfg: {
+  cdRef: ChangeDetectorRef;
+  ngZone: NgZone;
+  context: any;
+  resetContextObserver: NextObserver<unknown>;
+  updateViewContextObserver: PartialObserver<U | null | undefined>;
+  configurableBehaviour: (o: Observable<any>) => Observable<any>;
+}): CdAware<U> {
+  const _render: <T>(component?: T) => void = getChangeDetectionHandler(
+    cfg.ngZone,
+    cfg.cdRef
+  );
+  const _observablesSubject = new Subject<
+    Observable<U> | Promise<U> | null | undefined
   >();
   // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
   // extending class. So getConfigurableBehaviour is not available in the abstract layer
-  protected readonly observables$ = defer(() =>
-    this.observablesSubject.pipe(
-      processCdAwareObservables(
-        this.getResetContextBehaviour<S>(),
-        this.getUpdateContextBehaviour<S>(),
-        this.getConfigurableBehaviour<S>()
+  const _observables$ = _observablesSubject.pipe(
+    // Ignore potential observables of the same instances
+    distinctUntilChanged(),
+    // Try to convert it to values, throw if not possible
+    toObservableValue(),
+    // Add behaviour to apply changes to context for new observables
+    tap((v: any) => {
+      cfg.resetContextObserver.next(v);
+      _render(cfg.context);
+    }),
+    // Add behaviour to apply configurable behaviour
+    cfg.configurableBehaviour,
+    // Add behaviour to apply changes to context for new values
+    map((value$: Observable<U>) =>
+      value$.pipe(
+        tap(cfg.updateViewContextObserver),
+        tap(() => _render(cfg.context))
       )
-    )
+    ),
+    // Unsubscribe from previous observables
+    // Then flatten the latest internal observables into the output
+    // @NOTICE applied behaviour (on the values, not the observable) will fire here
+    switchAll(),
+    // reduce number of emissions to distinct values compared to the previous one
+    distinctUntilChanged()
   );
 
-  constructor(
-    protected readonly cdRef: ChangeDetectorRef,
-    protected readonly ngZone: NgZone
-  ) {}
-
-  work(): void {
-    this.handleChangeDetection(
-      // cast is needed to make it work for typescript.
-      // cdRef is kinda EmbeddedView
-      (this.cdRef as EmbeddedViewRef<Type<any>>).context
-    );
+  function next(v: Observable<U> | Promise<U> | null | undefined) {
+    _observablesSubject.next(v);
   }
 
-  // The side effect for when a new value is emitted from the passed observable
-  // Here we can use the next, error and complete channels for side-effects
-  // We dont handle the error here
-  abstract getUpdateViewContextObserver<T>(): PartialObserver<T>;
-
-  // The custom behaviour of the observable carrying the values to render
-  // Here we apply potential configurations as well as behaviour for different implementers ob this abstract calss
-  abstract getConfigurableBehaviour<T>(): MonoTypeOperatorFunction<
-    Observable<T>
-  >;
-
-  protected getUpdateContextBehaviour<T>(): MonoTypeOperatorFunction<
-    Observable<T>
-  > {
-    return map(
-      (value$: any): Observable<T> =>
-        value$.pipe(tap(this.getUpdateViewContextObserver<T>()))
-    );
+  function subscribe(): Subscription {
+    return _observables$.subscribe();
   }
 
-  // The side effect for when a new potential observable enters
-  // Only the NextObserver is needed as we handle error and complete somewhere else
-  abstract getResetContextObserver<T>(): NextObserver<T>;
-
-  protected getResetContextBehaviour<T>(): OperatorFunction<
-    Observable<T>,
-    Observable<T>
-  > {
-    return pipe(tap(this.getResetContextObserver<Observable<T>>()));
-  }
+  return {
+    next,
+    subscribe,
+  };
 }

@@ -1,11 +1,5 @@
 import { isObservable, Observable, OperatorFunction } from 'rxjs';
 
-export type observableValue<T> = Promise<T> | Observable<T>;
-
-export type RemainHigherOrder<T> = (
-  o$$: Observable<Observable<T>>
-) => Observable<Observable<T>>;
-
 export function isPromiseGuard<T>(value: any): value is Promise<T> {
   return (
     !!value &&

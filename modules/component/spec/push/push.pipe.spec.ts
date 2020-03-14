@@ -9,7 +9,7 @@ import { getGlobalThis, isIvy, hasZone } from '../../src/core/utils';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
 import { CoalescingConfig } from '../../src/core';
 
-let pushPipe: PushPipe;
+let pushPipe: any;
 
 let id = 0;
 function wrapWithSpace(str: string): string {

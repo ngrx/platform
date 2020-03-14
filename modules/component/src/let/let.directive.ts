@@ -1,20 +1,19 @@
 import {
   ChangeDetectorRef,
   Directive,
+  EmbeddedViewRef,
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
   TemplateRef,
+  Type,
   ViewContainerRef,
 } from '@angular/core';
 
 import {
-  MonoTypeOperatorFunction,
   NextObserver,
   Observable,
   PartialObserver,
-  pipe,
   ReplaySubject,
   Subscription,
 } from 'rxjs';
@@ -23,16 +22,15 @@ import {
   filter,
   map,
   startWith,
-  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import {
   CdAware,
   CoalescingConfig as NgRxLetConfig,
-  RemainHigherOrder,
+  createCdAware,
 } from '../core';
 
-export interface LetContext<T> {
+export interface LetViewContext<T> {
   // to enable `let` syntax we have to use $implicit (var; let v = var)
   $implicit?: T;
   // to enable `as` syntax we have to assign the directives selector (var as v)
@@ -41,15 +39,6 @@ export interface LetContext<T> {
   $error?: Error | undefined;
   // set context var complete to true (var$; let v = $complete)
   $complete?: boolean | undefined;
-}
-
-function getLetContextObj<T>(): LetContext<T> {
-  return {
-    $implicit: undefined,
-    ngrxLet: undefined,
-    $error: undefined,
-    $complete: undefined,
-  };
 }
 
 /**
@@ -121,10 +110,22 @@ function getLetContextObj<T>(): LetContext<T> {
  * @publicApi
  */
 @Directive({ selector: '[ngrxLet]' })
-export class LetDirective<D> extends CdAware<D> implements OnInit, OnDestroy {
-  protected readonly subscription = new Subscription();
+export class LetDirective<U> implements OnDestroy {
+  static ngTemplateContextGuard<U>(
+    dir: LetDirective<U>,
+    ctx: unknown
+  ): ctx is LetViewContext<U> {
+    return true;
+  }
 
-  private readonly ViewContext = getLetContextObj<D>();
+  private readonly embeddedView = EmbeddedViewRef;
+  private readonly ViewContext: LetViewContext<U | undefined | null> = {
+    $implicit: undefined,
+    ngrxLet: undefined,
+    $error: undefined,
+    $complete: undefined,
+  };
+
   private readonly configSubject = new ReplaySubject<NgRxLetConfig>();
   private readonly config$ = this.configSubject.pipe(
     filter(v => v !== undefined),
@@ -132,16 +133,61 @@ export class LetDirective<D> extends CdAware<D> implements OnInit, OnDestroy {
     startWith({ optimized: true })
   );
 
-  static ngTemplateContextGuard<R>(
-    dir: LetDirective<R>,
-    ctx: unknown
-  ): ctx is LetContext<R> {
-    return true;
-  }
+  protected readonly subscription = new Subscription();
+  private readonly cdAware: CdAware<U>;
+  private readonly resetContextObserver: NextObserver<unknown> = {
+    next: () => {
+      // if not initialized no need to set undefined
+      if (this.embeddedView) {
+        this.ViewContext.$implicit = undefined;
+        this.ViewContext.ngrxLet = undefined;
+        this.ViewContext.$error = undefined;
+        this.ViewContext.$complete = undefined;
+      }
+    },
+  };
+  private readonly updateViewContextObserver: PartialObserver<
+    U | null | undefined
+  > = {
+    next: (value: U | null | undefined) => {
+      // to have init lazy
+      if (!this.embeddedView) {
+        this.createEmbeddedView();
+      }
+      this.ViewContext.$implicit = value;
+      this.ViewContext.ngrxLet = value;
+    },
+    error: error => {
+      // to have init lazy
+      if (!this.embeddedView) {
+        this.createEmbeddedView();
+      }
+      this.ViewContext.$error = error;
+    },
+    complete: () => {
+      // to have init lazy
+      if (!this.embeddedView) {
+        this.createEmbeddedView();
+      }
+      this.ViewContext.$complete = true;
+    },
+  };
+  private readonly configurableBehaviour = <T>(
+    o$: Observable<Observable<T>>
+  ): Observable<Observable<T>> =>
+    o$.pipe(
+      withLatestFrom(this.config$),
+      map(([value$, config]) => {
+        // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
+        return value$.pipe();
+      })
+    );
 
   @Input()
-  set ngrxLet(potentialObservable: Observable<any>) {
-    this.observablesSubject.next(potentialObservable);
+  set ngrxLet(
+    potentialObservable: Observable<U> | Promise<U> | null | undefined
+  ) {
+    this.cdAware.next(potentialObservable);
   }
 
   @Input()
@@ -152,14 +198,21 @@ export class LetDirective<D> extends CdAware<D> implements OnInit, OnDestroy {
   constructor(
     cdRef: ChangeDetectorRef,
     ngZone: NgZone,
-    private readonly templateRef: TemplateRef<LetContext<D>>,
+    private readonly templateRef: TemplateRef<LetViewContext<U>>,
     private readonly viewContainerRef: ViewContainerRef
   ) {
-    super(cdRef, ngZone);
-    this.subscription.add(this.observables$.subscribe());
+    this.cdAware = createCdAware<U>({
+      cdRef,
+      ngZone,
+      context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+      resetContextObserver: this.resetContextObserver,
+      updateViewContextObserver: this.updateViewContextObserver,
+      configurableBehaviour: this.configurableBehaviour,
+    });
+    this.subscription.add(this.cdAware.subscribe());
   }
 
-  ngOnInit() {
+  createEmbeddedView() {
     this.viewContainerRef.createEmbeddedView(
       this.templateRef,
       this.ViewContext
@@ -169,42 +222,5 @@ export class LetDirective<D> extends CdAware<D> implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.viewContainerRef.clear();
-  }
-
-  getResetContextObserver(): NextObserver<unknown> {
-    return {
-      next: () => {
-        this.ViewContext.$implicit = undefined;
-        this.ViewContext.ngrxLet = undefined;
-        this.ViewContext.$error = undefined;
-        this.ViewContext.$complete = undefined;
-      },
-    };
-  }
-
-  getUpdateViewContextObserver(): PartialObserver<D> {
-    return {
-      next: (value: D) => {
-        this.ViewContext.$implicit = value;
-        this.ViewContext.ngrxLet = value;
-      },
-      error: error => (this.ViewContext.$error = error),
-      complete: () => (this.ViewContext.$complete = true),
-    };
-  }
-
-  getConfigurableBehaviour<T>(): MonoTypeOperatorFunction<Observable<T>> {
-    return pipe(
-      withLatestFrom(this.config$),
-      map(([value$, config]: [Observable<any>, NgRxLetConfig]) => {
-        // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
-        return !config.optimized
-          ? value$.pipe(tap(() => this.work()))
-          : value$.pipe(
-              // @TODO add coalesce operator here
-              tap(() => this.work())
-            );
-      })
-    );
   }
 }
