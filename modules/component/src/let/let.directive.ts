@@ -10,11 +10,13 @@ import {
 } from '@angular/core';
 
 import {
+  MonoTypeOperatorFunction,
   NextObserver,
   Observable,
   PartialObserver,
   pipe,
   ReplaySubject,
+  Subscription,
 } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -26,7 +28,6 @@ import {
 } from 'rxjs/operators';
 import {
   CdAware,
-  // This will later on replaced by a new NgRxLetConfig interface
   CoalescingConfig as NgRxLetConfig,
   RemainHigherOrder,
 } from '../core';
@@ -120,7 +121,9 @@ function getLetContextObj<T>(): LetContext<T> {
  * @publicApi
  */
 @Directive({ selector: '[ngrxLet]' })
-export class LetDirective<D> extends CdAware implements OnInit, OnDestroy {
+export class LetDirective<D> extends CdAware<D> implements OnInit, OnDestroy {
+  protected readonly subscription = new Subscription();
+
   private readonly ViewContext = getLetContextObj<D>();
   private readonly configSubject = new ReplaySubject<NgRxLetConfig>();
   private readonly config$ = this.configSubject.pipe(
@@ -164,13 +167,13 @@ export class LetDirective<D> extends CdAware implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
+    this.subscription.unsubscribe();
     this.viewContainerRef.clear();
   }
 
-  getResetContextObserver(): NextObserver<any> {
+  getResetContextObserver(): NextObserver<unknown> {
     return {
-      next: _ => {
+      next: () => {
         this.ViewContext.$implicit = undefined;
         this.ViewContext.ngrxLet = undefined;
         this.ViewContext.$error = undefined;
@@ -190,7 +193,7 @@ export class LetDirective<D> extends CdAware implements OnInit, OnDestroy {
     };
   }
 
-  getConfigurableBehaviour<T>(): RemainHigherOrder<T> {
+  getConfigurableBehaviour<T>(): MonoTypeOperatorFunction<Observable<T>> {
     return pipe(
       withLatestFrom(this.config$),
       map(([value$, config]: [Observable<any>, NgRxLetConfig]) => {

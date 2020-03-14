@@ -1,6 +1,10 @@
-import { distinctUntilChanged, map, switchAll } from 'rxjs/operators';
-import { MonoTypeOperatorFunction, Observable } from 'rxjs';
-import { RemainHigherOrder } from '../utils';
+import { distinctUntilChanged, switchAll } from 'rxjs/operators';
+import {
+  MonoTypeOperatorFunction,
+  Observable,
+  ObservableInput,
+  OperatorFunction,
+} from 'rxjs';
 import { toObservableValue } from './toObservableValue';
 
 /**
@@ -23,17 +27,16 @@ import { toObservableValue } from './toObservableValue';
  * @return MonoTypeOperatorFunction<T>
  */
 export function processCdAwareObservables<T>(
-  resetContextBehaviour: RemainHigherOrder<T>,
-  updateContextBehaviour: RemainHigherOrder<T>,
-  configurableBehaviour: RemainHigherOrder<T>
-): MonoTypeOperatorFunction<T> {
-  return (o$: Observable<any>): Observable<T> => {
-    return o$.pipe(
+  resetContextBehaviour: MonoTypeOperatorFunction<Observable<T>>,
+  updateContextBehaviour: MonoTypeOperatorFunction<Observable<T>>,
+  configurableBehaviour: MonoTypeOperatorFunction<Observable<T>>
+): OperatorFunction<Observable<T> | Promise<T>, T> {
+  return (source): Observable<T> =>
+    source.pipe(
       // Ignore observables of the same instances
       distinctUntilChanged(),
       // try to convert it to values, throw if not possible
-      // @TODO fix any type
-      map((o: Observable<any>) => toObservableValue(o)),
+      toObservableValue<any>(),
       // Add behaviour to apply changes to context for new observables
       resetContextBehaviour,
       // Add behaviour to apply changes to context for new values
@@ -47,5 +50,4 @@ export function processCdAwareObservables<T>(
       // reduce number of emissions to distinct values compared to the previous one
       distinctUntilChanged()
     );
-  };
 }

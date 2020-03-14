@@ -1,12 +1,21 @@
-import { ChangeDetectorRef, NgZone, Pipe, PipeTransform } from '@angular/core';
-import { NextObserver, Observable, PartialObserver, pipe, Subject } from 'rxjs';
-import { distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs/operators';
 import {
-  CdAware,
-  // This will later on replaced by a new NgRxPushPipeConfig interface
-  CoalescingConfig as NgRxPushPipeConfig,
-  RemainHigherOrder,
-} from '../core';
+  ChangeDetectorRef,
+  NgZone,
+  OnDestroy,
+  Pipe,
+  PipeTransform,
+} from '@angular/core';
+import {
+  MonoTypeOperatorFunction,
+  NextObserver,
+  Observable,
+  PartialObserver,
+  pipe,
+  Subject,
+  Subscription,
+} from 'rxjs';
+import { distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs/operators';
+import { CdAware, CoalescingConfig as NgRxPushPipeConfig } from '../core';
 
 /**
  * @Pipe PushPipe
@@ -18,7 +27,7 @@ import {
  *
  * The current way of binding an observable to the view looks like that:
 
- *  ```htmlmixed
+ *  ```html
  *  {{observable$ | async}}
  * <ng-container *ngIf="observable$ | async as o">{{o}}</ng-container>
  * <component [value]="observable$ | async"></component>
@@ -53,7 +62,9 @@ import {
  * @publicApi
  */
 @Pipe({ name: 'ngrxPush', pure: false })
-export class PushPipe extends CdAware implements PipeTransform {
+export class PushPipe<S> extends CdAware<S>
+  implements PipeTransform, OnDestroy {
+  protected readonly subscription = new Subscription();
   private renderedValue: any | null | undefined;
 
   private readonly configSubject = new Subject<NgRxPushPipeConfig>();
@@ -66,25 +77,22 @@ export class PushPipe extends CdAware implements PipeTransform {
     this.subscription.add(this.observables$.subscribe());
   }
 
-  transform<T>(potentialObservable: null, config?: NgRxPushPipeConfig): null;
-  transform<T>(
+  transform(potentialObservable: null, config?: NgRxPushPipeConfig): null;
+  transform(
     potentialObservable: undefined,
     config?: NgRxPushPipeConfig
   ): undefined;
-  transform<T>(
-    potentialObservable: Observable<T>,
-    config?: NgRxPushPipeConfig
-  ): T;
-  transform<T>(
-    potentialObservable: Observable<T> | null | undefined,
+  transform(potentialObservable: Observable<S>, config?: NgRxPushPipeConfig): S;
+  transform(
+    potentialObservable: Observable<S> | Promise<S> | null | undefined,
     config: NgRxPushPipeConfig = { optimized: true }
-  ): T | null | undefined {
+  ): S | null | undefined {
     this.configSubject.next(config);
-    this.observablesSubject.next(potentialObservable);
+    this.observablesSubject.next(potentialObservable as any);
     return this.renderedValue;
   }
 
-  getConfigurableBehaviour<T>(): RemainHigherOrder<T> {
+  getConfigurableBehaviour<T>(): MonoTypeOperatorFunction<Observable<T>> {
     return pipe(
       withLatestFrom(this.config$),
       map(([value$, config]) => {
@@ -99,16 +107,20 @@ export class PushPipe extends CdAware implements PipeTransform {
     );
   }
 
-  getUpdateViewContextObserver(): PartialObserver<any> {
+  getUpdateViewContextObserver(): PartialObserver<S> {
     return {
       // assign value that will get returned from the transform function on the next change detection
       next: (value: any) => (this.renderedValue = value),
     };
   }
 
-  getResetContextObserver(): NextObserver<any> {
+  getResetContextObserver(): NextObserver<unknown> {
     return {
-      next: _ => (this.renderedValue = undefined),
+      next: () => (this.renderedValue = undefined),
     };
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

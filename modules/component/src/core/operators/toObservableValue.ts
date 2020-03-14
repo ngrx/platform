@@ -1,14 +1,15 @@
 import { from, Observable, of } from 'rxjs';
-import { isObservableGuard, isPromiseGuard, observableValue } from '../utils';
+import { isObservableGuard, isPromiseGuard } from '../utils';
 
 export function toObservableValue<T>() {
   return (
-    potentialObservableValue$: observableValue<T> | undefined | null
-  ): Observable<T | undefined | null> => {
-    if (
-      isPromiseGuard<T>(potentialObservableValue$) ||
-      isObservableGuard<T>(potentialObservableValue$)
-    ) {
+    potentialObservableValue$: Observable<T> | Promise<T>
+  ): Observable<T> => {
+    if (isObservableGuard(potentialObservableValue$)) {
+      return from(potentialObservableValue$);
+    }
+
+    if (isPromiseGuard(potentialObservableValue$)) {
       return from(potentialObservableValue$);
     }
 

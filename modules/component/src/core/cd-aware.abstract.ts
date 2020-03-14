@@ -5,18 +5,17 @@ import {
   OnDestroy,
   Type,
 } from '@angular/core';
-import {
-  getChangeDetectionHandler,
-  observableValue,
-  RemainHigherOrder,
-} from './utils';
+import { getChangeDetectionHandler } from './utils';
 import {
   defer,
+  MonoTypeOperatorFunction,
   NextObserver,
   Observable,
+  ObservableInput,
+  OperatorFunction,
   PartialObserver,
+  pipe,
   Subject,
-  Subscription,
 } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { processCdAwareObservables } from './operators';
@@ -34,22 +33,21 @@ export interface CoalescingConfig {
  * If you extend this class you need to implement how the update of the rendered value happens.
  * Also custom behaviour is something you need to implement in the extending class
  */
-export abstract class CdAware implements OnDestroy {
+export abstract class CdAware<S> {
   readonly handleChangeDetection: <T>(
     component?: T
   ) => void = getChangeDetectionHandler(this.ngZone, this.cdRef);
-  protected readonly subscription = new Subscription();
   protected readonly observablesSubject = new Subject<
-    observableValue<any> | null | undefined
+    Promise<S> | Observable<S>
   >();
   // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
   // extending class. So getConfigurableBehaviour is not available in the abstract layer
   protected readonly observables$ = defer(() =>
     this.observablesSubject.pipe(
       processCdAwareObservables(
-        this.getResetContextBehaviour(),
-        this.getUpdateContextBehaviour(),
-        this.getConfigurableBehaviour()
+        this.getResetContextBehaviour<S>(),
+        this.getUpdateContextBehaviour<S>(),
+        this.getConfigurableBehaviour<S>()
       )
     )
   );
@@ -67,10 +65,6 @@ export abstract class CdAware implements OnDestroy {
     );
   }
 
-  // The side effect for when a new potential observable enters
-  // Only the NextObserver is needed as we handle error and complete somewhere else
-  abstract getResetContextObserver<T>(): NextObserver<T>;
-
   // The side effect for when a new value is emitted from the passed observable
   // Here we can use the next, error and complete channels for side-effects
   // We dont handle the error here
@@ -78,19 +72,27 @@ export abstract class CdAware implements OnDestroy {
 
   // The custom behaviour of the observable carrying the values to render
   // Here we apply potential configurations as well as behaviour for different implementers ob this abstract calss
-  abstract getConfigurableBehaviour<T>(): RemainHigherOrder<T>;
+  abstract getConfigurableBehaviour<T>(): MonoTypeOperatorFunction<
+    Observable<T>
+  >;
 
-  getUpdateContextBehaviour<T>(): RemainHigherOrder<T> {
-    return map(value$ =>
-      value$.pipe(tap<T>(this.getUpdateViewContextObserver()))
+  protected getUpdateContextBehaviour<T>(): MonoTypeOperatorFunction<
+    Observable<T>
+  > {
+    return map(
+      (value$: any): Observable<T> =>
+        value$.pipe(tap(this.getUpdateViewContextObserver<T>()))
     );
   }
 
-  getResetContextBehaviour<T>(): RemainHigherOrder<T> {
-    return tap<Observable<T>>(this.getResetContextObserver());
-  }
+  // The side effect for when a new potential observable enters
+  // Only the NextObserver is needed as we handle error and complete somewhere else
+  abstract getResetContextObserver<T>(): NextObserver<T>;
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  protected getResetContextBehaviour<T>(): OperatorFunction<
+    Observable<T>,
+    Observable<T>
+  > {
+    return pipe(tap(this.getResetContextObserver<Observable<T>>()));
   }
 }
