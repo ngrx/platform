@@ -8,7 +8,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { distinctUntilChanged, map, switchAll, tap } from 'rxjs/operators';
-import { toObservableValue } from './operators';
+import { toObservableValue } from './projections';
 
 export interface CoalescingConfig {
   optimized: boolean;
@@ -49,16 +49,16 @@ export function createCdAware<U>(cfg: {
     // Ignore potential observables of the same instances
     distinctUntilChanged(),
     // Try to convert it to values, throw if not possible
-    toObservableValue(),
+    map(v => toObservableValue(v)),
     // Add behaviour to apply changes to context for new observables
-    tap((v: any) => {
+    tap(v => {
       cfg.resetContextObserver.next(v);
       _render(cfg.context);
     }),
     // Add behaviour to apply configurable behaviour
     cfg.configurableBehaviour,
     // Add behaviour to apply changes to context for new values
-    map((value$: Observable<U>) =>
+    map(value$ =>
       value$.pipe(
         tap(cfg.updateViewContextObserver),
         tap(() => _render(cfg.context))
