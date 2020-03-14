@@ -5,10 +5,9 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { CoalescingConfig } from '../../src/core';
 import { EMPTY, NEVER, Observable, of, throwError } from 'rxjs';
 import { async, TestBed } from '@angular/core/testing';
-import { LetDirective } from '../../src/let';
+import { LetDirective } from '@ngrx/component';
 
 let letDirective: any;
 
@@ -50,7 +49,7 @@ class MockChangeDetectorRef {
   `,
 })
 class LetDirectiveTestComponent {
-  cfg: CoalescingConfig = { optimized: false };
+  cfg: any = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
@@ -62,7 +61,7 @@ class LetDirectiveTestComponent {
   `,
 })
 class LetDirectiveTestErrorComponent {
-  cfg: CoalescingConfig = { optimized: false };
+  cfg: any = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
@@ -74,13 +73,13 @@ class LetDirectiveTestErrorComponent {
   `,
 })
 class LetDirectiveTestCompleteComponent {
-  cfg: CoalescingConfig = { optimized: false };
+  cfg: any = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
 let fixtureLetDirectiveTestComponent: any;
 let letDirectiveTestComponent: {
-  cfg: CoalescingConfig;
+  cfg: any;
   value$: Observable<any> | undefined | null;
 };
 let componentNativeElement: any;

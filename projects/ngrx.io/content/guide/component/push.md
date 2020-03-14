@@ -6,7 +6,7 @@ running in zone-full as well as zone-less mode without any changes to the code.
 
 The current way of binding an observable to the view looks like that:
 
-```htmlmixed
+```html
 {{observable$ | async}}
 <ng-container *ngIf="observable$ | async as o">{{o}}</ng-container>
 <component [value]="observable$ | async"></component>

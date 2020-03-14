@@ -1,5 +1,5 @@
-import { toObservableValue } from '../../../src/core/operators/toObservableValue';
 import { EMPTY, isObservable, Observable, of } from 'rxjs';
+import { toObservableValue } from '../../../src/core/operators';
 
 describe('toObservableValue', () => {
   describe('used as RxJS creation function', () => {
