@@ -481,6 +481,10 @@
   ],
   "docVersions": [
     {
+      "title": "v8",
+      "url": "https://v8.ngrx.io"
+    },
+    {
       "title": "v7",
       "url": "https://v7.ngrx.io"
     },
