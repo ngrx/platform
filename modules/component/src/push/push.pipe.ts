@@ -12,7 +12,6 @@ import {
   Observable,
   PartialObserver,
   Subject,
-  Subscription,
   Unsubscribable,
 } from 'rxjs';
 import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
@@ -92,7 +91,8 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     o$.pipe(
       withLatestFrom(this.config$),
       map(([value$, config]) => {
-        // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
+        // As discussed with Brandon we keep it here
+        // because in the beta we implement configuration behavior here
         return value$.pipe();
       })
     );

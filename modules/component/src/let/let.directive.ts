@@ -108,7 +108,7 @@ export interface LetViewContext<T> {
  * Observable completed: {{c}}
  * </ng-container>
  * </ng-container>
- ```
+ * ```
  *
  * @publicApi
  */
