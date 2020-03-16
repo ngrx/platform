@@ -15,27 +15,16 @@ import {
   Observable,
   of,
   PartialObserver,
-  Subscription,
+  Unsubscribable,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
-class NoopNgZone {}
-
-class MockChangeDetectorRef {}
-
-let id = 0;
-
-function MockRequestAnimationFrame(callback: Function) {
-  callback();
-  return ++id;
-}
 
 class CdAwareImplementation<U> implements OnDestroy {
   public renderedValue: any = undefined;
   public error: any = undefined;
   public completed: boolean = false;
-  private readonly subscription = new Subscription();
-  public cdAware: CdAware<U>;
+  private readonly subscription: Unsubscribable;
+  public cdAware: CdAware<U | undefined | null>;
   resetContextObserver: NextObserver<any> = {
     next: _ => (this.renderedValue = undefined),
     error: e => (this.error = e),
@@ -50,16 +39,14 @@ class CdAwareImplementation<U> implements OnDestroy {
     o$: Observable<Observable<T>>
   ): Observable<Observable<T>> => o$.pipe(tap());
 
-  constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
+  constructor() {
     this.cdAware = createCdAware<U>({
-      cdRef,
-      ngZone,
-      context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+      work: () => {},
       resetContextObserver: this.resetContextObserver,
       updateViewContextObserver: this.updateViewContextObserver,
       configurableBehaviour: this.configurableBehaviour,
     });
-    this.subscription.add(this.cdAware.subscribe());
+    this.subscription = this.cdAware.subscribe();
   }
 
   ngOnDestroy(): void {
@@ -69,27 +56,15 @@ class CdAwareImplementation<U> implements OnDestroy {
 
 let cdAwareImplementation: CdAwareImplementation<any>;
 const setupCdAwareImplementation = () => {
-  const injector = Injector.create([
-    {
-      provide: CdAwareImplementation,
-      useClass: CdAwareImplementation,
-      deps: [NgZone, ChangeDetectorRef],
-    },
-    { provide: NgZone, useClass: NoopNgZone, deps: [] },
-    { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef, deps: [] },
-  ]);
-  cdAwareImplementation = injector.get(CdAwareImplementation);
+  cdAwareImplementation = new CdAwareImplementation();
+  cdAwareImplementation.renderedValue = undefined;
+  cdAwareImplementation.error = undefined;
+  cdAwareImplementation.completed = false;
 };
 
-beforeAll(setupCdAwareImplementation);
-
-fdescribe('CdAware', () => {
+describe('CdAware', () => {
   beforeEach(() => {
-    getGlobalThis().requestAnimationFrame = undefined;
-    getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
-    cdAwareImplementation.renderedValue = undefined;
-    cdAwareImplementation.error = undefined;
-    cdAwareImplementation.completed = false;
+    setupCdAwareImplementation();
   });
 
   it('should be implementable', () => {
@@ -161,7 +136,7 @@ fdescribe('CdAware', () => {
 
     it('error handling', () => {
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
-      (cdAwareImplementation as any).observables$.subscribe({
+      cdAwareImplementation.cdAware.subscribe({
         error: (e: Error) => expect(e).toBeDefined(),
       });
       expect(cdAwareImplementation.renderedValue).toBe(undefined);

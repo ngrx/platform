@@ -5,6 +5,7 @@ import {
   Observable,
   PartialObserver,
   Subject,
+  Subscribable,
   Subscription,
 } from 'rxjs';
 import { distinctUntilChanged, map, switchAll, tap } from 'rxjs/operators';
@@ -14,9 +15,22 @@ export interface CoalescingConfig {
   optimized: boolean;
 }
 
-export interface CdAware<U> {
-  next: (v: Observable<U> | Promise<U> | null | undefined) => void;
-  subscribe: () => Subscription;
+export interface CdAware<U> extends Subscribable<U> {
+  next: (value: Observable<U> | Promise<U> | null | undefined) => void;
+}
+
+export interface WorkConfig {
+  context: any;
+  ngZone: NgZone;
+  cdRef: ChangeDetectorRef;
+}
+
+export function setUpWork(cfg: WorkConfig): () => void {
+  const render: (component?: any) => void = getChangeDetectionHandler(
+    cfg.ngZone,
+    cfg.cdRef
+  );
+  return () => render(cfg.context);
 }
 
 /**
@@ -29,59 +43,47 @@ export interface CdAware<U> {
  * Also custom behaviour is something you need to implement in the extending class
  */
 export function createCdAware<U>(cfg: {
-  cdRef: ChangeDetectorRef;
-  ngZone: NgZone;
-  context: any;
+  work: () => void;
   resetContextObserver: NextObserver<unknown>;
+  configurableBehaviour: (
+    o: Observable<Observable<U | null | undefined>>
+  ) => Observable<Observable<U | null | undefined>>;
   updateViewContextObserver: PartialObserver<U | null | undefined>;
-  configurableBehaviour: (o: Observable<any>) => Observable<any>;
-}): CdAware<U> {
-  const _render: <T>(component?: T) => void = getChangeDetectionHandler(
-    cfg.ngZone,
-    cfg.cdRef
-  );
-  const _observablesSubject = new Subject<
+}): CdAware<U | undefined | null> {
+  const observablesSubject = new Subject<
     Observable<U> | Promise<U> | null | undefined
   >();
   // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
   // extending class. So getConfigurableBehaviour is not available in the abstract layer
-  const _observables$ = _observablesSubject.pipe(
+  const observables$: Observable<
+    U | undefined | null
+  > = observablesSubject.pipe(
     // Ignore potential observables of the same instances
     distinctUntilChanged(),
     // Try to convert it to values, throw if not possible
     map(v => toObservableValue(v)),
-    // Add behaviour to apply changes to context for new observables
-    tap(v => {
+    tap((v: any) => {
       cfg.resetContextObserver.next(v);
-      _render(cfg.context);
+      cfg.work();
     }),
-    // Add behaviour to apply configurable behaviour
-    cfg.configurableBehaviour,
-    // Add behaviour to apply changes to context for new values
     map(value$ =>
-      value$.pipe(
-        tap(cfg.updateViewContextObserver),
-        tap(() => _render(cfg.context))
-      )
+      value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver))
     ),
+    // e.g. coalescing
+    cfg.configurableBehaviour,
     // Unsubscribe from previous observables
     // Then flatten the latest internal observables into the output
     // @NOTICE applied behaviour (on the values, not the observable) will fire here
     switchAll(),
-    // reduce number of emissions to distinct values compared to the previous one
-    distinctUntilChanged()
+    tap(() => cfg.work())
   );
 
-  function next(v: Observable<U> | Promise<U> | null | undefined) {
-    _observablesSubject.next(v);
-  }
-
-  function subscribe(): Subscription {
-    return _observables$.subscribe();
-  }
-
   return {
-    next,
-    subscribe,
-  };
+    next(value: any): void {
+      observablesSubject.next(value);
+    },
+    subscribe(): Subscription {
+      return observables$.subscribe();
+    },
+  } as CdAware<U | undefined | null>;
 }
