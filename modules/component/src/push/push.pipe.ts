@@ -13,12 +13,14 @@ import {
   PartialObserver,
   Subject,
   Subscription,
+  Unsubscribable,
 } from 'rxjs';
 import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
 import {
   CdAware,
   CoalescingConfig as PushPipeConfig,
   createCdAware,
+  setUpWork,
 } from '../core';
 
 /**
@@ -30,7 +32,6 @@ import {
  * running in zone-full as well as zone-less mode without any changes to the code.
  *
  * The current way of binding an observable to the view looks like that:
-
  *  ```html
  *  {{observable$ | async}}
  * <ng-container *ngIf="observable$ | async as o">{{o}}</ng-container>
@@ -74,8 +75,8 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     .asObservable()
     .pipe(distinctUntilChanged());
 
-  private readonly subscription = new Subscription();
-  private readonly cdAware: CdAware<S>;
+  private readonly subscription: Unsubscribable;
+  private readonly cdAware: CdAware<S | null | undefined>;
   private readonly updateViewContextObserver: PartialObserver<
     S | null | undefined
   > = {
@@ -98,20 +99,24 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
 
   constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
     this.cdAware = createCdAware<S>({
-      cdRef,
-      ngZone,
-      context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+      work: setUpWork({
+        ngZone,
+        cdRef,
+        context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+      }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
       configurableBehaviour: this.configurableBehaviour,
     });
-    this.subscription.add(this.cdAware.subscribe());
+    this.subscription = this.cdAware.subscribe();
   }
 
   transform(potentialObservable: null, config?: PushPipeConfig): null;
   transform(potentialObservable: undefined, config?: PushPipeConfig): undefined;
-  transform(potentialObservable: Observable<S>, config?: PushPipeConfig): S;
-  transform(potentialObservable: Promise<S>, config?: PushPipeConfig): S;
+  transform(
+    potentialObservable: Observable<S> | Promise<S>,
+    config?: PushPipeConfig
+  ): S;
   transform(
     potentialObservable: Observable<S> | Promise<S> | null | undefined,
     config: PushPipeConfig = { optimized: true }
