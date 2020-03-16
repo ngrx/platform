@@ -10,4 +10,6 @@ export {
   isOperateFnArrayGuard,
   isPromiseGuard,
   isStringArrayGuard,
+  PotentialObservableValue,
+  Output,
 } from './typing';
