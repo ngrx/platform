@@ -11,13 +11,15 @@ import {
 } from '@angular/core';
 
 import {
+  EMPTY,
   NextObserver,
   Observable,
   PartialObserver,
   ReplaySubject,
-  Subscription,
+  Unsubscribable,
 } from 'rxjs';
 import {
+  catchError,
   distinctUntilChanged,
   filter,
   map,
@@ -28,6 +30,7 @@ import {
   CdAware,
   CoalescingConfig as NgRxLetConfig,
   createCdAware,
+  setUpWork,
 } from '../core';
 
 export interface LetViewContext<T> {
@@ -36,9 +39,9 @@ export interface LetViewContext<T> {
   // to enable `as` syntax we have to assign the directives selector (var as v)
   ngrxLet?: T;
   // set context var complete to true (var$; let v = $error)
-  $error?: Error | undefined;
+  $error?: boolean;
   // set context var complete to true (var$; let v = $complete)
-  $complete?: boolean | undefined;
+  $complete?: boolean;
 }
 
 /**
@@ -118,31 +121,31 @@ export class LetDirective<U> implements OnDestroy {
     return true;
   }
 
-  private readonly embeddedView = EmbeddedViewRef;
+  private embeddedView: any;
   private readonly ViewContext: LetViewContext<U | undefined | null> = {
     $implicit: undefined,
     ngrxLet: undefined,
-    $error: undefined,
-    $complete: undefined,
+    $error: false,
+    $complete: false,
   };
 
   private readonly configSubject = new ReplaySubject<NgRxLetConfig>();
   private readonly config$ = this.configSubject.pipe(
-    filter(v => v !== undefined),
+    filter(v => v !== undefined && v !== null),
     distinctUntilChanged(),
     startWith({ optimized: true })
   );
 
-  protected readonly subscription = new Subscription();
-  private readonly cdAware: CdAware<U>;
+  protected readonly subscription: Unsubscribable;
+  private readonly cdAware: CdAware<U | null | undefined>;
   private readonly resetContextObserver: NextObserver<unknown> = {
     next: () => {
       // if not initialized no need to set undefined
       if (this.embeddedView) {
         this.ViewContext.$implicit = undefined;
         this.ViewContext.ngrxLet = undefined;
-        this.ViewContext.$error = undefined;
-        this.ViewContext.$complete = undefined;
+        this.ViewContext.$error = false;
+        this.ViewContext.$complete = false;
       }
     },
   };
@@ -157,12 +160,12 @@ export class LetDirective<U> implements OnDestroy {
       this.ViewContext.$implicit = value;
       this.ViewContext.ngrxLet = value;
     },
-    error: error => {
+    error: (error: Error) => {
       // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
-      this.ViewContext.$error = error;
+      this.ViewContext.$error = true;
     },
     complete: () => {
       // to have init lazy
@@ -177,9 +180,9 @@ export class LetDirective<U> implements OnDestroy {
   ): Observable<Observable<T>> =>
     o$.pipe(
       withLatestFrom(this.config$),
+      // @NOTICE: unused config => As discussed with Brandon we keep it here because in the beta release we implement configuration behavior here
       map(([value$, config]) => {
-        // As discussed with Brandon we keep it here because in the beta we implement configuration behavior here
-        return value$.pipe();
+        return value$.pipe(catchError(e => EMPTY));
       })
     );
 
@@ -202,18 +205,20 @@ export class LetDirective<U> implements OnDestroy {
     private readonly viewContainerRef: ViewContainerRef
   ) {
     this.cdAware = createCdAware<U>({
-      cdRef,
-      ngZone,
-      context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+      work: setUpWork({
+        cdRef,
+        ngZone,
+        context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+      }),
       resetContextObserver: this.resetContextObserver,
       updateViewContextObserver: this.updateViewContextObserver,
       configurableBehaviour: this.configurableBehaviour,
     });
-    this.subscription.add(this.cdAware.subscribe());
+    this.subscription = this.cdAware.subscribe();
   }
 
   createEmbeddedView() {
-    this.viewContainerRef.createEmbeddedView(
+    this.embeddedView = this.viewContainerRef.createEmbeddedView(
       this.templateRef,
       this.ViewContext
     );
