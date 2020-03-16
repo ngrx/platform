@@ -1,12 +1,10 @@
-import { from, Observable, of } from 'rxjs';
-import { isObservableGuard, isPromiseGuard } from '../utils';
-
-type PotentialObservableValue<T> =
-  | Observable<T>
-  | Promise<T>
-  | undefined
-  | null;
-type Output<T> = Observable<T> | Observable<undefined> | Observable<null>;
+import { from, of } from 'rxjs';
+import {
+  isObservableGuard,
+  isPromiseGuard,
+  PotentialObservableValue,
+  Output,
+} from '../utils';
 
 export function toObservableValue<T>(
   p: PotentialObservableValue<T>
