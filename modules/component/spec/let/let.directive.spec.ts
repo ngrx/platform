@@ -11,13 +11,6 @@ import { LetDirective } from '@ngrx/component';
 
 let letDirective: any;
 
-let id = 0;
-
-function MockRequestAnimationFrame(callback: Function) {
-  callback();
-  return ++id;
-}
-
 class NgZone extends OriginalNgZone {
   constructor() {
     super({ enableLongStackTrace: false });
@@ -55,9 +48,7 @@ class LetDirectiveTestComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $error as error">{{
-      error.message
-    }}</ng-container>
+    <ng-container *ngrxLet="value$; $error as error">{{ error }}</ng-container>
   `,
 })
 class LetDirectiveTestErrorComponent {
@@ -178,10 +169,10 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render undefined as value when initially NEVER was passed (as no value ever was emitted)', () => {
+    it('should render nothing as value when initially NEVER was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = NEVER;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
+      expect(componentNativeElement.textContent).toBe('');
     });
 
     it('should render emitted value from passed observable without changing it', () => {
@@ -200,13 +191,19 @@ describe('LetDirective', () => {
     });
   });
 
-  xdescribe('when error', () => {
+  describe('when error', () => {
     beforeEach(async(setupLetDirectiveTestComponentError));
 
-    it('should render the error if one occurs', () => {
+    it('should render the error to false if next or complete', () => {
+      letDirectiveTestComponent.value$ = of(1);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('false');
+    });
+
+    it('should render the error to true if one occurs', () => {
       letDirectiveTestComponent.value$ = throwError(new Error('error message'));
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('error message');
+      expect(componentNativeElement.textContent).toBe('true');
     });
   });
 

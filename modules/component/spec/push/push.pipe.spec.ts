@@ -11,14 +11,8 @@ import { CoalescingConfig } from '../../src/core';
 
 let pushPipe: any;
 
-let id = 0;
 function wrapWithSpace(str: string): string {
   return ' ' + str + ' ';
-}
-
-function MockRequestAnimationFrame(callback: Function) {
-  callback();
-  return ++id;
 }
 
 class NgZone extends OriginalNgZone {
@@ -73,8 +67,6 @@ const setupPushPipeComponent = () => {
   pushPipe = TestBed.get(PushPipe);
 };
 const setupPushPipeComponentZoneLess = () => {
-  getGlobalThis().requestAnimationFrame = undefined;
-  getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
   getGlobalThis().ng = undefined;
 
   TestBed.configureTestingModule({
@@ -93,8 +85,6 @@ const setupPushPipeComponentZoneLess = () => {
 };
 
 const setupPushPipeComponentZoneFull = () => {
-  getGlobalThis().requestAnimationFrame = undefined;
-  getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
   getGlobalThis().ng = undefined;
   TestBed.configureTestingModule({
     providers: [
@@ -108,9 +98,6 @@ const setupPushPipeComponentZoneFull = () => {
 };
 describe('PushPipe', () => {
   describe('used as a Service', () => {
-    getGlobalThis().requestAnimationFrame = undefined;
-    getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
-
     beforeEach(async(setupPushPipeComponent));
 
     it('should be instantiable', () => {
@@ -154,9 +141,6 @@ describe('PushPipe', () => {
   });
 
   describe('used as a Pipe', () => {
-    getGlobalThis().requestAnimationFrame = undefined;
-    getGlobalThis().__zone_symbol__requestAnimationFrame = MockRequestAnimationFrame;
-
     beforeEach(() => {
       TestBed.configureTestingModule({
         declarations: [PushPipe, PushPipeTestComponent],
