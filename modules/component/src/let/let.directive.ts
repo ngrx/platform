@@ -114,13 +114,6 @@ export interface LetViewContext<T> {
  */
 @Directive({ selector: '[ngrxLet]' })
 export class LetDirective<U> implements OnDestroy {
-  static ngTemplateContextGuard<U>(
-    dir: LetDirective<U>,
-    ctx: unknown
-  ): ctx is LetViewContext<U> {
-    return true;
-  }
-
   private embeddedView: any;
   private readonly ViewContext: LetViewContext<U | undefined | null> = {
     $implicit: undefined,
@@ -175,6 +168,14 @@ export class LetDirective<U> implements OnDestroy {
       this.ViewContext.$complete = true;
     },
   };
+
+  static ngTemplateContextGuard<U>(
+    dir: LetDirective<U>,
+    ctx: unknown
+  ): ctx is LetViewContext<U> {
+    return true;
+  }
+
   private readonly configurableBehaviour = <T>(
     o$: Observable<Observable<T>>
   ): Observable<Observable<T>> =>
