@@ -5,9 +5,10 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { EMPTY, NEVER, Observable, of, throwError } from 'rxjs';
-import { async, TestBed } from '@angular/core/testing';
+import { EMPTY, interval, NEVER, Observable, of, throwError } from 'rxjs';
+import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { LetDirective } from '@ngrx/component';
+import { take } from 'rxjs/operators';
 
 let letDirective: any;
 
@@ -189,6 +190,41 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('undefined');
     });
+
+    it('should render new value as value when a new observable was passed', () => {
+      letDirectiveTestComponent.value$ = of(42);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('42');
+      letDirectiveTestComponent.value$ = of(45);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('45');
+    });
+
+    it('should render the last value when a new observable was passed', () => {
+      letDirectiveTestComponent.value$ = of(42, 45);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('45');
+    });
+
+    it('should render values over time when a new observable was passed', fakeAsync(() => {
+      letDirectiveTestComponent.value$ = interval(1000).pipe(take(3));
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('undefined');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('0');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('1');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('2');
+
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      // Remains at 2, since that was the last value.
+      expect(componentNativeElement.textContent).toBe('2');
+    }));
   });
 
   describe('when error', () => {
