@@ -209,7 +209,7 @@ describe('LetDirective', () => {
     it('should render values over time when a new observable was passed', fakeAsync(() => {
       letDirectiveTestComponent.value$ = interval(1000).pipe(take(3));
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
+      expect(componentNativeElement.textContent).toBe('');
       tick(1000);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('0');
