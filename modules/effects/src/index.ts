@@ -26,3 +26,4 @@ export {
   OnRunEffects,
   OnInitEffects,
 } from './lifecycle_hooks';
+export { USER_PROVIDED_EFFECTS } from './tokens';

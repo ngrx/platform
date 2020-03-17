@@ -7,8 +7,17 @@ export const _ROOT_EFFECTS_GUARD = new InjectionToken<void>(
 export const IMMEDIATE_EFFECTS = new InjectionToken<any[]>(
   'ngrx/effects: Immediate Effects'
 );
+export const USER_PROVIDED_EFFECTS = new InjectionToken<Type<any>[][]>(
+  'ngrx/effects: User Provided Effects'
+);
+export const _ROOT_EFFECTS = new InjectionToken<Type<any>[]>(
+  'ngrx/effects: Internal Root Effects'
+);
 export const ROOT_EFFECTS = new InjectionToken<Type<any>[]>(
   'ngrx/effects: Root Effects'
+);
+export const _FEATURE_EFFECTS = new InjectionToken<Type<any>[]>(
+  'ngrx/effects: Internal Feature Effects'
 );
 export const FEATURE_EFFECTS = new InjectionToken<any[][]>(
   'ngrx/effects: Feature Effects'

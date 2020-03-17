@@ -225,6 +225,27 @@ export class MovieModule {}
 
 </div>
 
+## Alternative way of registering effects
+
+You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
+
+<code-example header="movies.module.ts">
+providers: [
+  MovieEffects,
+  {
+    provide: USER_PROVIDED_EFFECTS,
+    multi: true,
+    useValue: [MovieEffects],
+  },
+]
+</code-example>
+
+<div class="alert is-critical">
+
+The `EffectsModule.forFeature()` method must be added to the module imports even if you only provide effects over token, and don't pass them via parameters. (Same goes for `EffectsModule.forRoot()`)
+
+</div>
+
 ## Incorporating State
 
 If additional metadata is needed to perform an effect besides the initiating action's `type`, we should rely on passed metadata from an action creator's `props` method.

@@ -13,6 +13,7 @@ import {
   OnIdentifyEffects,
   EffectSources,
   Actions,
+  USER_PROVIDED_EFFECTS,
 } from '..';
 import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
 import { mapTo, exhaustMap, tap } from 'rxjs/operators';
@@ -215,6 +216,60 @@ describe('NgRx Effects Integration spec', () => {
       // ngrxOnRunEffects should receive all actions except STORE_INIT
       expect(logger.actionsLog).toEqual(expectedLog.slice(1));
     });
+
+    it('should dispatch user provided effects actions in order', async () => {
+      let dispatchedActionsLog: string[] = [];
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [
+          StoreModule.forRoot({
+            dispatched: createDispatchedReducer(dispatchedActionsLog),
+          }),
+          EffectsModule.forRoot([
+            EffectLoggerWithOnRunEffects,
+            RootEffectWithInitAction,
+          ]),
+          RouterTestingModule.withRoutes([]),
+        ],
+        providers: [
+          UserProvidedEffect1,
+          {
+            provide: USER_PROVIDED_EFFECTS,
+            multi: true,
+            useValue: [UserProvidedEffect1],
+          },
+        ],
+      });
+
+      const logger = TestBed.inject(EffectLoggerWithOnRunEffects);
+      const router: Router = TestBed.inject(Router);
+      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+        NgModuleFactoryLoader
+      ) as SpyNgModuleFactoryLoader;
+
+      loader.stubbedModules = { feature: FeatModuleWithUserProvidedEffects };
+      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+      await router.navigateByUrl('/feature-path');
+
+      const expectedLog = [
+        // Store init
+        INIT,
+
+        // Root effects
+        '[RootEffectWithInitAction]: INIT',
+
+        // User provided effects loaded by root module
+        '[UserProvidedEffect1]: INIT',
+
+        // Effects init
+        ROOT_EFFECTS_INIT,
+
+        // User provided effects loaded by feature module
+        '[UserProvidedEffect2]: INIT',
+      ];
+      expect(dispatchedActionsLog).toEqual(expectedLog);
+    });
   });
 
   @Injectable()
@@ -281,6 +336,31 @@ describe('NgRx Effects Integration spec', () => {
 
   class RootEffectWithoutLifecycle {}
 
+  class UserProvidedEffect1 implements OnInitEffects {
+    public ngrxOnInitEffects(): Action {
+      return { type: '[UserProvidedEffect1]: INIT' };
+    }
+  }
+
+  class UserProvidedEffect2 implements OnInitEffects {
+    public ngrxOnInitEffects(): Action {
+      return { type: '[UserProvidedEffect2]: INIT' };
+    }
+  }
+
+  @NgModule({
+    imports: [EffectsModule.forFeature()],
+    providers: [
+      UserProvidedEffect2,
+      {
+        provide: USER_PROVIDED_EFFECTS,
+        multi: true,
+        useValue: [UserProvidedEffect2],
+      },
+    ],
+  })
+  class FeatModuleWithUserProvidedEffects {}
+
   class FeatEffectWithInitAction implements OnInitEffects {
     ngrxOnInitEffects(): Action {
       return { type: '[FeatEffectWithInitAction]: INIT' };
@@ -307,7 +387,7 @@ describe('NgRx Effects Integration spec', () => {
   }
 
   @NgModule({
-    imports: [EffectsModule.forRoot([])],
+    imports: [EffectsModule.forRoot()],
   })
   class FeatModuleWithForRoot {}
 
