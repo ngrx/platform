@@ -18,7 +18,7 @@ interface Action {
 
 The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event` and is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action.
 
-Listed below are examples of actions written as plain javascript objects (POJOS):
+Listed below are examples of actions written as plain old JavaScript objects (POJOs):
 
 ```json
 {
