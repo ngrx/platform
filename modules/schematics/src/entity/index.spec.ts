@@ -237,4 +237,44 @@ describe('Entity Schematic', () => {
       );
     });
   });
+
+  describe('View engine', () => {
+    beforeEach(() => {
+      const tsConfig = JSON.parse(appTree.readContent('./tsconfig.json'));
+      tsConfig.angularCompilerOptions.enableIvy = false;
+      appTree.overwrite('./tsconfig.json', JSON.stringify(tsConfig));
+    });
+
+    it('should create and export a reducer as a function', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(
+        /export function reducer\(state: State | undefined, action: Action\) {/
+      );
+      expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
+      expect(fileContent).toMatch(/export function reducer/);
+    });
+  });
+
+  describe('Ivy', () => {
+    it('should create and export a reducer', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
+    });
+  });
 });

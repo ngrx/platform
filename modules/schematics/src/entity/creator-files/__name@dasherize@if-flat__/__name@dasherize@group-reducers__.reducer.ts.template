@@ -15,6 +15,41 @@ export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
 
+<% if(isIvyEnabled) { %>
+export const reducer = createReducer(
+  initialState,
+  on(<%= classify(name) %>Actions.add<%= classify(name) %>,
+    (state, action) => adapter.addOne(action.<%= camelize(name) %>, state)
+  ),
+  on(<%= classify(name) %>Actions.upsert<%= classify(name) %>,
+    (state, action) => adapter.upsertOne(action.<%= camelize(name) %>, state)
+  ),
+  on(<%= classify(name) %>Actions.add<%= classify(name) %>s,
+    (state, action) => adapter.addMany(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.upsert<%= classify(name) %>s,
+    (state, action) => adapter.upsertMany(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.update<%= classify(name) %>,
+    (state, action) => adapter.updateOne(action.<%= camelize(name) %>, state)
+  ),
+  on(<%= classify(name) %>Actions.update<%= classify(name) %>s,
+    (state, action) => adapter.updateMany(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.delete<%= classify(name) %>,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(<%= classify(name) %>Actions.delete<%= classify(name) %>s,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(<%= classify(name) %>Actions.load<%= classify(name) %>s,
+    (state, action) => adapter.setAll(action.<%= camelize(name) %>s, state)
+  ),
+  on(<%= classify(name) %>Actions.clear<%= classify(name) %>s,
+    state => adapter.removeAll(state)
+  ),
+);
+<% }else { %>
 const <%= camelize(name) %>Reducer = createReducer(
   initialState,
   on(<%= classify(name) %>Actions.add<%= classify(name) %>,
@@ -52,6 +87,7 @@ const <%= camelize(name) %>Reducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return <%= camelize(name) %>Reducer(state, action);
 }
+<% } %>
 
 export const {
   selectIds,

@@ -10,6 +10,8 @@ import {
   pluralize,
 } from './utility/strings';
 
+export { isIvyEnabled } from './utility/angular-utils';
+
 export {
   findNodes,
   getSourceNodes,
@@ -46,6 +48,8 @@ export {
   buildRelativePath,
   ModuleOptions,
 } from './utility/find-module';
+
+export { findPropertyInAstObject } from './utility/json-utilts';
 
 export {
   addReducerToState,

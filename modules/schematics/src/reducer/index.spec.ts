@@ -87,17 +87,129 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(/fooFeatureKey = 'foo'/);
   });
 
-  it('should create an reducer function', () => {
-    const tree = schematicRunner.runSchematic(
-      'reducer',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
+  describe('View engine', () => {
+    beforeEach(() => {
+      const tsConfig = JSON.parse(appTree.readContent('./tsconfig.json'));
+      tsConfig.angularCompilerOptions.enableIvy = false;
+      appTree.overwrite('./tsconfig.json', JSON.stringify(tsConfig));
+    });
 
-    expect(fileContent).toMatch(/export function reducer/);
+    it('should create an reducer function', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(/export function reducer/);
+    });
+
+    it('should create an reducer function using createReducer', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(
+        /export function reducer\(state: State | undefined, action: Action\) {/
+      );
+      expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
+    });
+
+    it('should create an reducer function in a feature using createReducer', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        { ...defaultOptions, feature: true },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(
+        /export function reducer\(state: State | undefined, action: Action\) {/
+      );
+      expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
+      expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
+    });
+
+    it('should create an reducer function in an api feature using createReducer', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        { ...defaultOptions, feature: true, api: true },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(
+        /export function reducer\(state: State | undefined, action: Action\) {/
+      );
+      expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
+      expect(fileContent).toMatch(
+        /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
+      );
+      expect(fileContent).toMatch(
+        /on\(FooActions.loadFoosFailure, \(state, action\) => state\)/
+      );
+    });
+  });
+
+  describe('Ivy', () => {
+    it('should create and export a reducer', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        defaultOptions,
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
+    });
+
+    it('should create and export a reducer in a feature', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        { ...defaultOptions, feature: true },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
+      expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
+    });
+
+    it('should create and export a reducer in an api feature', () => {
+      const tree = schematicRunner.runSchematic(
+        'reducer',
+        { ...defaultOptions, feature: true, api: true },
+        appTree
+      );
+      const fileContent = tree.readContent(
+        `${projectPath}/src/app/foo.reducer.ts`
+      );
+
+      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
+      expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
+      expect(fileContent).toMatch(
+        /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
+      );
+      expect(fileContent).toMatch(
+        /on\(FooActions.loadFoosFailure, \(state, action\) => state\)/
+      );
+    });
   });
 
   it('should import into a specified module', () => {
@@ -199,60 +311,5 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosSuccess/);
     expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
     expect(fileContent).not.toMatch(/import { Action } from '@ngrx\/store'/);
-  });
-
-  it('should create an reducer function using createReducer', () => {
-    const tree = schematicRunner.runSchematic(
-      'reducer',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export function reducer\(state: State | undefined, action: Action\) {/
-    );
-    expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
-  });
-
-  it('should create an reducer function in a feature using createReducer', () => {
-    const tree = schematicRunner.runSchematic(
-      'reducer',
-      { ...defaultOptions, feature: true },
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export function reducer\(state: State | undefined, action: Action\) {/
-    );
-    expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
-    expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
-  });
-
-  it('should create an reducer function in an api feature using createReducer', () => {
-    const tree = schematicRunner.runSchematic(
-      'reducer',
-      { ...defaultOptions, feature: true, api: true },
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export function reducer\(state: State | undefined, action: Action\) {/
-    );
-    expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
-    expect(fileContent).toMatch(
-      /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
-    );
-    expect(fileContent).toMatch(
-      /on\(FooActions.loadFoosFailure, \(state, action\) => state\)/
-    );
   });
 });
