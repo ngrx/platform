@@ -62,7 +62,7 @@ describe('CollectionEffects', () => {
   });
   describe('loadCollection$', () => {
     it('should return a collection.LoadSuccess, with the books, on success', () => {
-      const action = CollectionPageActions.loadCollectionEnter();
+      const action = CollectionPageActions.enter();
       const completion = CollectionApiActions.loadBooksSuccess({
         books: [book1, book2],
       });
