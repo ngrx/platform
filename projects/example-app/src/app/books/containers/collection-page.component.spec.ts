@@ -54,7 +54,7 @@ describe('Collection Page', () => {
   });
 
   it('should dispatch a collection.Load on init', () => {
-    const action = CollectionPageActions.loadCollectionEnter();
+    const action = CollectionPageActions.enter();
 
     fixture.detectChanges();
 
