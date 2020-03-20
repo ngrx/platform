@@ -76,7 +76,7 @@ describe('CollectionEffects', () => {
     });
 
     it('should return a collection.LoadFail, if the query throws', () => {
-      const action = CollectionPageActions.loadCollectionEnter();
+      const action = CollectionPageActions.enter();
       const error = 'Error!';
       const completion = CollectionApiActions.loadBooksFailure({ error });
 
