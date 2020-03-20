@@ -40,6 +40,6 @@ export class CollectionPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(CollectionPageActions.loadCollectionEnter());
+    this.store.dispatch(CollectionPageActions.enter());
   }
 }
