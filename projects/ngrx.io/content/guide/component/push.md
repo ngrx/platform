@@ -4,6 +4,8 @@ The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
 It contains intelligent handling of change detection to enable us
 running in zone-full as well as zone-less mode without any changes to the code.
 
+Same as [LetDirective](guide/component/let), it also respects ViewEngine as well as Ivy's new rendering API.
+
 The current way of binding an observable to the view looks like that:
 
 ```html

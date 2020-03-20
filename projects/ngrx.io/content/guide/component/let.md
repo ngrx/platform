@@ -3,6 +3,8 @@
 The `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).
 It also helps with several internal processing under the hood.
 
+Same as [PushPipe](guide/component/push), it also respects ViewEngine as well as Ivy's new rendering API.
+
 The current way of binding an observable to the view looks like that:
 ```html
 <ng-container *ngIf="observableNumber$ as n">

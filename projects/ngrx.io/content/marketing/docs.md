@@ -62,4 +62,5 @@ It is also often require a steep learning curve, including some good understandi
 - [Router Store](guide/router-store) - Bindings to connect the Angular Router to @ngrx/store.
 - [Entity](guide/entity) - Entity State adapter for managing record collections.
 - [NgRx Data](guide/data) - Extension for simplified entity data management.
+- [NgRx Component](guide/component) - Extension for fully reactive, fully zone-less applications.
 - [Schematics](guide/schematics) - Scaffolding library for Angular applications using NgRx libraries.
