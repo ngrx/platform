@@ -1,8 +1,8 @@
 import { Observable, Subscriber } from 'rxjs';
 
 export function generateFrames(
-  asyncProducer: asyncProducerFn,
-  asyncCanceler: asyncCancelerFn,
+  asyncProducer: asyncProducerFn = window.requestAnimationFrame,
+  asyncCanceler: asyncCancelerFn = window.cancelAnimationFrame,
   timestampProvider: TimestampProvider = Date
 ) {
   return asyncProducer || asyncCanceler
