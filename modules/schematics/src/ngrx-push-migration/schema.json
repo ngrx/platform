@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxNgRxPushMigration",
+  "title": "NgRx Component NgRxPush Migration from async to ngrxPush",
+  "type": "object",
+  "properties": {},
+  "required": []
+}

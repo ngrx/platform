@@ -81,4 +81,11 @@ export { addPackageToPackageJson } from './utility/package';
 
 export { platformVersion } from './utility/libs-version';
 
-export { visitTSSourceFiles, visitNgModuleImports } from './utility/visitors';
+export {
+  visitTSSourceFiles,
+  visitNgModuleImports,
+  visitComponents,
+  visitDecorator,
+  visitNgModules,
+  visitTemplates,
+} from './utility/visitors';

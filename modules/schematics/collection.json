@@ -43,6 +43,13 @@
       "description": "Add feature state"
     },
 
+    "ngrx-push-migration": {
+      "aliases": ["ngrxpush"],
+      "factory": "./src/ngrx-push-migration",
+      "schema": "./src/ngrx-push-migration/schema.json",
+      "description": "Migration to replace the `async` pipe with `ngrxPush`"
+    },
+
     "reducer": {
       "aliases": ["r"],
       "factory": "./src/reducer",
