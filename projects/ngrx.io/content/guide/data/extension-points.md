@@ -167,9 +167,9 @@ export const selectedCatsWithOwners = createSelector(
 
 ### Replace the HttpUrlGenerator
 
-This example replaces the `DefaultHttpUrlGenerator` with a customized `HttpUrlGenerator` that pluralizes both collection resource and entity resource URLs.
+This example replaces the `DefaultHttpUrlGenerator` with a customized `HttpUrlGenerator` that pluralizes both collection resource and entity resource URLs and adds hyphenation to REST endpoints.
 
-The implementation simply overrides `DefaultHttpUrlGenerator.getResourceUrls(string, string)`:
+This is implemented by overriding `DefaultHttpUrlGenerator.getResourceUrls(string, string)`:
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -181,21 +181,26 @@ import {
 } from '@ngrx/data';
 
 @Injectable()
-export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
-  constructor(private pluralizer: Pluralizer) {
-    super(pluralizer);
+export class KebabHttpUrlGenerator extends DefaultHttpUrlGenerator {
+  /* Declare the new variable with suffix E (for extended) as
+     `pluralizer` is already declared in the base class. */
+  constructor(private pluralizerE: Pluralizer) {
+    super(pluralizerE);
   }
 
   protected getResourceUrls(
     entityName: string,
-    root: string
-  ): HttpResourceUrls {
+    root: string): HttpResourceUrls {
     let resourceUrls = this.knownHttpResourceUrls[entityName];
     if (!resourceUrls) {
       const nRoot = normalizeRoot(root);
-      const url = `${nRoot}/${this.pluralizzer.pluralize(
-        entityName
-      )}/`.toLowerCase();
+
+      // Convert PascalCase or camelCase entity names to pluralized, hyphenated REST endpoints.
+      // e.g. PetToys -> pet-toys
+      const entityUrl = this.pluralizerE.pluralize(entityName)
+        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/\s+/g, '-')
+      const url = `${nRoot}/${entityUrl}/`.toLowerCase();
       resourceUrls = {
         entityResourceUrl: url,
         collectionResourceUrl: url
@@ -205,6 +210,8 @@ export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
     return resourceUrls;
   }
 }
+
+
 ```
 
 Override the `HttpUrlGenerator` provider in the root `AppModule` where `EntityDataModule.forRoot()` is imported:
@@ -218,7 +225,7 @@ Override the `HttpUrlGenerator` provider in the root `AppModule` where `EntityDa
   ],
   providers: [
     // ...
-    { provide: HttpUrlGenerator, useClass: PluralHttpUrlGenerator }
+    { provide: HttpUrlGenerator, useClass: KebabHttpUrlGenerator }
   ]
 })
 export class AppModule {}
