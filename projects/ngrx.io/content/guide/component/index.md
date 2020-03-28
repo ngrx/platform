@@ -8,6 +8,7 @@ This package includes primitives that act as the glue in reactive Angular applic
 They take over rendering and provide reactivity to parts where Angular doesn't out of the box. 
 
 ## Key Concepts
-- Rendering happens in the template only:
+
+Rendering happens in the template only:
   - [Push Pipe](guide/component/push)
   - [Let Directive](guide/component/let)
