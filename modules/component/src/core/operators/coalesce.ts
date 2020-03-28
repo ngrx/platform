@@ -24,16 +24,20 @@ export interface CoalesceConfig {
   trailing?: boolean;
 }
 
-export const defaultCoalesceConfig: CoalesceConfig = {
-  // @TODO consiger getGlobalThis aas default
-  context: { isCoalescing: false },
+export const defaultCoalesceConfig: Pick<
+  CoalesceConfig,
+  'leading' | 'trailing'
+> & { context: undefined } = {
   leading: false,
   trailing: true,
+  context: undefined,
 };
 
 export function getCoalesceConfig(
   config: CoalesceConfig = defaultCoalesceConfig
-): CoalesceConfig {
+): Pick<CoalesceConfig, 'leading' | 'trailing'> & {
+  context: { isCoalescing: boolean } | undefined;
+} {
   return {
     ...defaultCoalesceConfig,
     ...config,
@@ -95,15 +99,13 @@ export function coalesce<T>(
   config?: CoalesceConfig
 ): MonoTypeOperatorFunction<T> {
   return (source: Observable<T>) =>
-    source.lift(
-      new CoalesceOperator(durationSelector, getCoalesceConfig(config))
-    );
+    source.lift(new CoalesceOperator(durationSelector, config));
 }
 
 class CoalesceOperator<T> implements Operator<T, T> {
   constructor(
     private durationSelector: (value: T) => SubscribableOrPromise<any>,
-    private config: CoalesceConfig
+    private config?: CoalesceConfig
   ) {}
 
   call(subscriber: Subscriber<T>, source: any): TeardownLogic {
@@ -117,22 +119,21 @@ class CoalesceSubscriber<T, R> extends OuterSubscriber<T, R> {
   private _coalesced: Subscription | null | undefined;
   private _sendValue: T | null = null;
   private _hasValue = false;
-  private _leading: boolean;
-  private _trailing: boolean;
+  private _leading: boolean | undefined;
+  private _trailing: boolean | undefined;
   private _context: CoalescingContext;
 
   constructor(
     protected destination: Subscriber<T>,
     private durationSelector: (value: T) => SubscribableOrPromise<number>,
-    config: CoalesceConfig
+    config?: CoalesceConfig
   ) {
     super(destination);
-    this._leading = config.leading;
-    this._trailing = config.trailing;
-    this._context = config.context;
-    if (!this._context) {
-      this._context = {} as any;
-    }
+    const parsedConfig = getCoalesceConfig(config);
+    this._leading = parsedConfig.leading;
+    this._trailing = parsedConfig.trailing;
+    // We create the object for scoping by default per subscription
+    this._context = parsedConfig.context || { isCoalescing: false };
   }
 
   protected _next(value: T): void {

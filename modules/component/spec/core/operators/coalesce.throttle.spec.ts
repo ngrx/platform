@@ -1,397 +1,386 @@
-import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
-import { observableMatcher } from '../../observableMatcher';
-import { mergeMap, mapTo } from 'rxjs/operators';
-import { of, concat, timer } from 'rxjs';
+import { mapTo, mergeMap } from 'rxjs/operators';
+import { concat, of, timer } from 'rxjs';
 import { coalesce, CoalesceConfig } from '../../../src';
+import { marbles } from 'rxjs-marbles/jest';
 
 /** @test {coalesce} */
 describe('coalesce operator', () => {
-  let testScheduler: TestScheduler;
   let cfg: CoalesceConfig = { leading: true, trailing: false };
 
-  beforeEach(() => {
-    testScheduler = new TestScheduler(observableMatcher);
-  });
+  it(
+    'should simply mirror the source if values are not emitted often enough',
+    marbles(m => {
+      const e1 = m.hot('^a--------b-----c----|');
+      const e1subs = '^--------------------!';
+      const e2 = m.cold('----|                 ');
+      const e2subs = [
+        '-^---!                ',
+        '----------^---!       ',
+        '----------------^---! ',
+      ];
+      const expected = '-a--------b-----c----|';
 
-  it('should simply mirror the source if values are not emitted often enough', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('^a--------b-----c----|');
-        const e1subs = '^--------------------!';
-        const e2 = cold('----|                 ');
-        const e2subs = [
-          '-^---!                ',
-          '----------^---!       ',
-          '----------------^---! ',
-        ];
-        const expected = '-a--------b-----c----|';
+      const result = e1.pipe(coalesce(() => e2, cfg));
 
-        const result = e1.pipe(coalesce(() => e2, cfg));
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
 
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
+  it(
+    'should coalesce with duration Observable using next to close the duration',
+    marbles(m => {
+      const e1 = m.hot('^a-xy-----b--x--cxxx-|');
+      const e1subs = '^--------------------!';
+      const e2 = m.cold('----x-y-z            ');
+      const e2subs = [
+        '-^---!                ',
+        '----------^---!       ',
+        '----------------^---! ',
+      ];
+      const expected = '-a--------b-----c----|';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should interrupt source and duration when result is unsubscribed early',
+    marbles(m => {
+      const e1 = m.hot('-a-x-y-z-xyz-x-y-z----b--x-x-|');
+      const unsub = '--------------!               ';
+      const e1subs = '^-------------!               ';
+      const e2 = m.cold(' ---------------------|       ');
+      const e2subs = '-^------------!               ';
+      const expected = '-a-------------               ';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result, unsub).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should not break unsubscription chains when result is unsubscribed explicitly',
+    marbles(m => {
+      const e1 = m.hot('-a-x-y-z-xyz-x-y-z----b--x-x-|');
+      const e1subs = '^-------------!               ';
+      const e2 = m.cold('------------------|           ');
+      const e2subs = '-^------------!               ';
+      const expected = '-a-------------               ';
+      const unsub = '--------------!               ';
+
+      const result = e1.pipe(
+        mergeMap((x: string) => of(x)),
+        coalesce(() => e2, cfg),
+        mergeMap((x: string) => of(x))
+      );
+
+      m.expect(result, unsub).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should handle a busy producer emitting a regular repeating sequence',
+    marbles(m => {
+      const e1 = m.hot('abcdefabcdefabcdefabcdefa|');
+      const e1subs = '^------------------------!';
+      const e2 = m.cold('-----|                    ');
+      const e2subs = [
+        '^----!                    ',
+        '------^----!              ',
+        '------------^----!        ',
+        '------------------^----!  ',
+        '------------------------^!',
+      ];
+      const expected = 'a-----a-----a-----a-----a|';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should mirror source if durations are always empty',
+    marbles(m => {
+      const e1 = m.hot('abcdefabcdefabcdefabcdefa|');
+      const e1subs = '^------------------------!';
+      const e2 = m.cold('|                         ');
+      const expected = 'abcdefabcdefabcdefabcdefa|';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+    })
+  );
+
+  it(
+    'should take only the first value emitted if duration is a never',
+    marbles(m => {
+      const e1 = m.hot('----abcdefabcdefabcdefabcdefa|');
+      const e1subs = '^----------------------------!';
+      const e2 = m.cold('-                             ');
+      const e2subs = '----^------------------------!';
+      const expected = '----a------------------------|';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should unsubscribe duration Observable when source raise error',
+    marbles(m => {
+      const e1 = m.hot('----abcdefabcdefabcdefabcdefa#');
+      const e1subs = '^----------------------------!';
+      const e2 = m.cold('-                             ');
+      const e2subs = '----^------------------------!';
+      const expected = '----a------------------------#';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should raise error as soon as just-throw duration is used',
+    marbles(m => {
+      const e1 = m.hot('----abcdefabcdefabcdefabcdefa|');
+      const e1subs = '^---!-------------------------';
+      const e2 = m.cold('#                             ');
+      const e2subs = '----(^!)                      ';
+      const expected = '----(a#)                      ';
+
+      const result = e1.pipe(coalesce(() => e2, cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      m.expect(e2).toHaveSubscriptions(e2subs);
+    })
+  );
+
+  it(
+    'should coalesce using durations of constying lengths',
+    marbles(m => {
+      const e1 = m.hot('abcdefabcdabcdefghabca|   ');
+      const e1subs = '^---------------------!   ';
+      const e2 = [
+        m.cold('-----|                    '),
+        m.cold('      ---|                '),
+        m.cold('          -------|        '),
+        m.cold('                  --|     '),
+        m.cold('                     ----|'),
+      ];
+      const e2subs = [
+        '^----!                    ',
+        '------^--!                ',
+        '----------^------!        ',
+        '------------------^-!     ',
+        '---------------------^!   ',
+      ];
+      const expected = 'a-----a---a-------a--a|   ';
+
+      let i = 0;
+      const result = e1.pipe(coalesce(() => e2[i++], cfg));
+
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      for (let j = 0; j < e2.length; j++) {
+        m.expect(e2[j]).toHaveSubscriptions(e2subs[j]);
       }
-    );
-  });
+    })
+  );
 
-  it('should coalesce with duration Observable using next to close the duration', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('^a-xy-----b--x--cxxx-|');
-        const e1subs = '^--------------------!';
-        const e2 = cold('----x-y-z            ');
-        const e2subs = [
-          '-^---!                ',
-          '----------^---!       ',
-          '----------------^---! ',
-        ];
-        const expected = '-a--------b-----c----|';
+  it(
+    'should propagate error from duration Observable',
+    marbles(m => {
+      const e1 = m.hot('abcdefabcdabcdefghabca|   ');
+      const e1subs = '^----------------!        ';
+      const e2 = [
+        m.cold('-----|                    '),
+        m.cold('      ---|                '),
+        m.cold('          -------#        '),
+      ];
+      const e2subs = [
+        '^----!                    ',
+        '------^--!                ',
+        '----------^------!        ',
+      ];
+      const expected = 'a-----a---a------#        ';
 
-        const result = e1.pipe(coalesce(() => e2, cfg));
+      let i = 0;
+      const result = e1.pipe(coalesce(() => e2[i++], cfg));
 
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(e1subs);
+      for (let j = 0; j < e2.length; j++) {
+        m.expect(e2[j]).toHaveSubscriptions(e2subs[j]);
       }
-    );
-  });
+    })
+  );
 
-  it('should interrupt source and duration when result is unsubscribed early', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('-a-x-y-z-xyz-x-y-z----b--x-x-|');
-        const unsub = '--------------!               ';
-        const e1subs = '^-------------!               ';
-        const e2 = cold(' ---------------------|       ');
-        const e2subs = '-^------------!               ';
-        const expected = '-a-------------               ';
+  it(
+    'should propagate error thrown from durationSelector function',
+    marbles(m => {
+      const s1 = m.hot('--^--x--x--x--x--x--x--e--x--x--x--|');
+      const s1Subs = '^--------------------!              ';
+      const n1 = m.cold('----|                               ');
+      const n1Subs = [
+        '---^---!                            ',
+        '---------^---!                      ',
+        '---------------^---!                ',
+      ];
+      const exp = '---x-----x-----x-----(e#)           ';
 
-        const result = e1.pipe(coalesce(() => e2, cfg));
+      let i = 0;
+      const result = s1.pipe(
+        coalesce(() => {
+          if (i++ === 3) {
+            throw new Error('lol');
+          }
+          return n1;
+        }, cfg)
+      );
+      m.expect(result).toBeObservable(exp, undefined, new Error('lol'));
+      m.expect(s1).toHaveSubscriptions(s1Subs);
+      m.expect(n1).toHaveSubscriptions(n1Subs);
+    })
+  );
 
-        expectObservable(result, unsub).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
+  it(
+    'should complete when source does not emit',
+    marbles(m => {
+      const e1 = m.hot('-----|');
+      const subs = '^----!';
+      const expected = '-----|';
+
+      function durationSelector() {
+        return m.cold('-----|');
       }
-    );
-  });
 
-  it('should not break unsubscription chains when result is unsubscribed explicitly', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('-a-x-y-z-xyz-x-y-z----b--x-x-|');
-        const e1subs = '^-------------!               ';
-        const e2 = cold('------------------|           ');
-        const e2subs = '-^------------!               ';
-        const expected = '-a-------------               ';
-        const unsub = '--------------!               ';
+      m.expect(e1.pipe(coalesce(durationSelector, cfg))).toBeObservable(
+        expected
+      );
+      m.expect(e1).toHaveSubscriptions(subs);
+    })
+  );
 
-        const result = e1.pipe(
-          mergeMap((x: string) => of(x)),
-          coalesce(() => e2, cfg),
-          mergeMap((x: string) => of(x))
-        );
+  it(
+    'should raise error when source does not emit and raises error',
+    marbles(m => {
+      const e1 = m.hot('-----#');
+      const subs = '^----!';
+      const expected = '-----#';
 
-        expectObservable(result, unsub).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
+      function durationSelector() {
+        return m.cold('-----|');
       }
-    );
-  });
 
-  it('should handle a busy producer emitting a regular repeating sequence', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('abcdefabcdefabcdefabcdefa|');
-        const e1subs = '^------------------------!';
-        const e2 = cold('-----|                    ');
-        const e2subs = [
-          '^----!                    ',
-          '------^----!              ',
-          '------------^----!        ',
-          '------------------^----!  ',
-          '------------------------^!',
-        ];
-        const expected = 'a-----a-----a-----a-----a|';
+      m.expect(e1.pipe(coalesce(durationSelector, cfg))).toBeObservable(
+        expected
+      );
+      m.expect(e1).toHaveSubscriptions(subs);
+    })
+  );
 
-        const result = e1.pipe(coalesce(() => e2, cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
-      }
-    );
-  });
-
-  it('should mirror source if durations are always empty', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('abcdefabcdefabcdefabcdefa|');
-        const e1subs = '^------------------------!';
-        const e2 = cold('|                         ');
-        const expected = 'abcdefabcdefabcdefabcdefa|';
-
-        const result = e1.pipe(coalesce(() => e2, cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-      }
-    );
-  });
-
-  it('should take only the first value emitted if duration is a never', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('----abcdefabcdefabcdefabcdefa|');
-        const e1subs = '^----------------------------!';
-        const e2 = cold('-                             ');
-        const e2subs = '----^------------------------!';
-        const expected = '----a------------------------|';
-
-        const result = e1.pipe(coalesce(() => e2, cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
-      }
-    );
-  });
-
-  it('should unsubscribe duration Observable when source raise error', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('----abcdefabcdefabcdefabcdefa#');
-        const e1subs = '^----------------------------!';
-        const e2 = cold('-                             ');
-        const e2subs = '----^------------------------!';
-        const expected = '----a------------------------#';
-
-        const result = e1.pipe(coalesce(() => e2, cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
-      }
-    );
-  });
-
-  it('should raise error as soon as just-throw duration is used', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('----abcdefabcdefabcdefabcdefa|');
-        const e1subs = '^---!-------------------------';
-        const e2 = cold('#                             ');
-        const e2subs = '----(^!)                      ';
-        const expected = '----(a#)                      ';
-
-        const result = e1.pipe(coalesce(() => e2, cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        expectSubscriptions(e2.subscriptions).toBe(e2subs);
-      }
-    );
-  });
-
-  it('should coalesce using durations of constying lengths', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('abcdefabcdabcdefghabca|   ');
-        const e1subs = '^---------------------!   ';
-        const e2 = [
-          cold('-----|                    '),
-          cold('      ---|                '),
-          cold('          -------|        '),
-          cold('                  --|     '),
-          cold('                     ----|'),
-        ];
-        const e2subs = [
-          '^----!                    ',
-          '------^--!                ',
-          '----------^------!        ',
-          '------------------^-!     ',
-          '---------------------^!   ',
-        ];
-        const expected = 'a-----a---a-------a--a|   ';
-
-        let i = 0;
-        const result = e1.pipe(coalesce(() => e2[i++], cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        for (let j = 0; j < e2.length; j++) {
-          expectSubscriptions(e2[j].subscriptions).toBe(e2subs[j]);
-        }
-      }
-    );
-  });
-
-  it('should propagate error from duration Observable', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('abcdefabcdabcdefghabca|   ');
-        const e1subs = '^----------------!        ';
-        const e2 = [
-          cold('-----|                    '),
-          cold('      ---|                '),
-          cold('          -------#        '),
-        ];
-        const e2subs = [
-          '^----!                    ',
-          '------^--!                ',
-          '----------^------!        ',
-        ];
-        const expected = 'a-----a---a------#        ';
-
-        let i = 0;
-        const result = e1.pipe(coalesce(() => e2[i++], cfg));
-
-        expectObservable(result).toBe(expected);
-        expectSubscriptions(e1.subscriptions).toBe(e1subs);
-        for (let j = 0; j < e2.length; j++) {
-          expectSubscriptions(e2[j].subscriptions).toBe(e2subs[j]);
-        }
-      }
-    );
-  });
-
-  it('should propagate error thrown from durationSelector function', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const s1 = hot('--^--x--x--x--x--x--x--e--x--x--x--|');
-        const s1Subs = '^--------------------!              ';
-        const n1 = cold('----|                               ');
-        const n1Subs = [
-          '---^---!                            ',
-          '---------^---!                      ',
-          '---------------^---!                ',
-        ];
-        const exp = '---x-----x-----x-----(e#)           ';
-
-        let i = 0;
-        const result = s1.pipe(
-          coalesce(() => {
-            if (i++ === 3) {
-              throw new Error('lol');
-            }
-            return n1;
-          }, cfg)
-        );
-        expectObservable(result).toBe(exp, undefined, new Error('lol'));
-        expectSubscriptions(s1.subscriptions).toBe(s1Subs);
-        expectSubscriptions(n1.subscriptions).toBe(n1Subs);
-      }
-    );
-  });
-
-  it('should complete when source does not emit', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('-----|');
-        const subs = '^----!';
-        const expected = '-----|';
-
-        function durationSelector() {
-          return cold('-----|');
-        }
-
-        expectObservable(e1.pipe(coalesce(durationSelector, cfg))).toBe(
-          expected
-        );
-        expectSubscriptions(e1.subscriptions).toBe(subs);
-      }
-    );
-  });
-
-  it('should raise error when source does not emit and raises error', () => {
-    testScheduler.run(
-      ({ cold, hot, expectObservable, expectSubscriptions }) => {
-        const e1 = hot('-----#');
-        const subs = '^----!';
-        const expected = '-----#';
-
-        function durationSelector() {
-          return cold('-----|');
-        }
-
-        expectObservable(e1.pipe(coalesce(durationSelector, cfg))).toBe(
-          expected
-        );
-        expectSubscriptions(e1.subscriptions).toBe(subs);
-      }
-    );
-  });
-
-  it('should handle an empty source', () => {
-    testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-      const e1 = cold('|     ');
+  it(
+    'should handle an empty source',
+    marbles(m => {
+      const e1 = m.cold('|     ');
       const subs = '(^!)  ';
       const expected = '|     ';
+
       function durationSelector() {
-        return cold('-----|');
+        return m.cold('-----|');
       }
 
-      expectObservable(e1.pipe(coalesce(durationSelector, cfg))).toBe(expected);
-      expectSubscriptions(e1.subscriptions).toBe(subs);
-    });
-  });
+      m.expect(e1.pipe(coalesce(durationSelector, cfg))).toBeObservable(
+        expected
+      );
+      m.expect(e1).toHaveSubscriptions(subs);
+    })
+  );
 
-  it('should handle a never source', () => {
-    testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-      const e1 = cold('-     ');
+  it(
+    'should handle a never source',
+    marbles(m => {
+      const e1 = m.cold('-     ');
       const subs = '^     ';
       const expected = '-     ';
+
       function durationSelector() {
-        return cold('-----|');
+        return m.cold('-----|');
       }
 
-      expectObservable(e1.pipe(coalesce(durationSelector, cfg))).toBe(expected);
-      expectSubscriptions(e1.subscriptions).toBe(subs);
-    });
-  });
+      const result = e1.pipe(coalesce(durationSelector, cfg));
+      m.expect(result).toBeObservable(expected);
+      m.expect(e1).toHaveSubscriptions(subs);
+    })
+  );
 
-  it('should handle a throw source', () => {
-    testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-      const e1 = cold('#     ');
+  it(
+    'should handle a throw source',
+    marbles(m => {
+      const e1 = m.cold('#     ');
       const subs = '(^!)  ';
       const expected = '#     ';
+
       function durationSelector() {
-        return cold('-----|');
+        return m.cold('-----|');
       }
 
-      expectObservable(e1.pipe(coalesce(durationSelector, cfg))).toBe(expected);
-      expectSubscriptions(e1.subscriptions).toBe(subs);
-    });
-  });
+      m.expect(e1.pipe(coalesce(durationSelector, cfg))).toBeObservable(
+        expected
+      );
+      m.expect(e1).toHaveSubscriptions(subs);
+    })
+  );
 
   it('should coalesce by promise resolves', () => {
-    testScheduler.run(() => {
-      const e1 = concat(
-        of(1),
-        timer(10).pipe(mapTo(2)),
-        timer(10).pipe(mapTo(3)),
-        timer(50).pipe(mapTo(4))
-      );
-      const expected = [1, 2, 3, 4];
+    const e1 = concat(
+      of(1),
+      timer(10).pipe(mapTo(2)),
+      timer(10).pipe(mapTo(3)),
+      timer(50).pipe(mapTo(4))
+    );
+    const expected = [1, 2, 3, 4];
 
-      e1.pipe(
-        coalesce(() => {
-          return new Promise((resolve: any) => {
-            resolve(42);
-          });
-        }, cfg)
-      ).subscribe(
-        (x: number) => {
-          expect(x).to.equal(expected.shift());
-        },
-        () => {
-          throw new Error('should not be called');
-        },
-        () => {
-          expect(expected.length).to.equal(0);
-        }
-      );
-    });
+    e1.pipe(
+      coalesce(() => {
+        return new Promise((resolve: any) => {
+          resolve(42);
+        });
+      }, cfg)
+    ).subscribe(
+      (x: number) => {
+        expect(x).to.equal(expected.shift());
+      },
+      () => {
+        throw new Error('should not be called');
+      },
+      () => {
+        expect(expected.length).to.equal(0);
+      }
+    );
   });
 
   it('should raise error when promise rejects', () => {
@@ -431,42 +420,40 @@ describe('coalesce operator', () => {
   });
 
   describe('coalesce(fn, { leading: true, trailing: true })', () => {
-    it('should work for individual values', () => {
-      testScheduler.run(
-        ({ cold, hot, expectObservable, expectSubscriptions }) => {
-          const s1 = hot('-^-x------------------|     ');
-          const s1Subs = ' ^--------------------!     ';
-          const n1 = cold('   ------------------------|');
-          const n1Subs = ['--^------------------!      '];
-          const exp = '--x------------------|      ';
+    it(
+      'should work for individual values',
+      marbles(m => {
+        const s1 = m.hot('-^-x------------------|     ');
+        const s1Subs = ' ^--------------------!     ';
+        const n1 = m.cold('   ------------------------|');
+        const n1Subs = ['--^------------------!      '];
+        const exp = '--x------------------|      ';
 
-          const result = s1.pipe(
-            coalesce(() => n1, { leading: true, trailing: true })
-          );
-          expectObservable(result).toBe(exp);
-          expectSubscriptions(s1.subscriptions).toBe(s1Subs);
-          expectSubscriptions(n1.subscriptions).toBe(n1Subs);
-        }
-      );
-    });
+        const result = s1.pipe(
+          coalesce(() => n1, { leading: true, trailing: true })
+        );
+        m.expect(result).toBeObservable(exp);
+        m.expect(s1).toHaveSubscriptions(s1Subs);
+        m.expect(n1).toHaveSubscriptions(n1Subs);
+      })
+    );
   });
 
   describe('coalesce(fn, { leading: false, trailing: true })', () => {
-    it('should work for individual values', () => {
-      testScheduler.run(
-        ({ cold, hot, expectObservable, expectSubscriptions }) => {
-          const s1 = hot('-^-x------------------|     ');
-          const s1Subs = ' ^--------------------!     ';
-          const n1 = cold('   -------------|           ');
-          const n1Subs = [' --^------------!           '];
-          const exp = ' ---------------x-----|     ';
+    it(
+      'should work for individual values',
+      marbles(m => {
+        const s1 = m.hot('-^-x------------------|     ');
+        const s1Subs = ' ^--------------------!     ';
+        const n1 = m.cold('   -------------|           ');
+        const n1Subs = [' --^------------!           '];
+        const exp = ' ---------------x-----|     ';
 
-          const result = s1.pipe(coalesce(() => n1));
-          expectObservable(result).toBe(exp);
-          expectSubscriptions(s1.subscriptions).toBe(s1Subs);
-          expectSubscriptions(n1.subscriptions).toBe(n1Subs);
-        }
-      );
-    });
+        const result = s1.pipe(coalesce(() => n1));
+        m.expect(result).toBeObservable(exp);
+        m.expect(s1).toHaveSubscriptions(s1Subs);
+        m.expect(n1).toHaveSubscriptions(n1Subs);
+      })
+    );
   });
 });
