@@ -14,8 +14,10 @@ import {
 } from 'rxjs/internal-compatibility';
 import { generateFrames } from '../projections';
 
+export const ngrxCoalescingContextFlag = Symbol('ngrxCoalescingContextFlag');
+
 export interface CoalescingContext {
-  isCoalescing: any | undefined;
+  [ngrxCoalescingContextFlag]: any | undefined;
 }
 
 export interface CoalesceConfig {
@@ -36,7 +38,7 @@ export const defaultCoalesceConfig: Pick<
 export function getCoalesceConfig(
   config: CoalesceConfig = defaultCoalesceConfig
 ): Pick<CoalesceConfig, 'leading' | 'trailing'> & {
-  context: { isCoalescing: boolean } | undefined;
+  context: { [ngrxCoalescingContextFlag]: boolean } | undefined;
 } {
   return {
     ...defaultCoalesceConfig,
@@ -133,7 +135,9 @@ class CoalesceSubscriber<T, R> extends OuterSubscriber<T, R> {
     this._leading = parsedConfig.leading;
     this._trailing = parsedConfig.trailing;
     // We create the object for scoping by default per subscription
-    this._context = parsedConfig.context || { isCoalescing: false };
+    this._context = parsedConfig.context || {
+      [ngrxCoalescingContextFlag]: false,
+    };
   }
 
   protected _next(value: T): void {
@@ -175,7 +179,7 @@ class CoalesceSubscriber<T, R> extends OuterSubscriber<T, R> {
     const duration = this.tryDurationSelector(value);
     if (!!duration) {
       this.add((this._coalesced = subscribeToResult(this, duration)));
-      this._context.isCoalescing = true;
+      this._context[ngrxCoalescingContextFlag] = true;
     }
   }
 
@@ -186,11 +190,11 @@ class CoalesceSubscriber<T, R> extends OuterSubscriber<T, R> {
     }
     this._coalesced = null;
 
-    if (_context.isCoalescing) {
+    if (_context[ngrxCoalescingContextFlag]) {
       if (_trailing) {
         this.exhaustLastValue();
       }
-      this._context.isCoalescing = false;
+      this._context[ngrxCoalescingContextFlag] = false;
     }
   }
 
