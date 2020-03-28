@@ -163,6 +163,7 @@
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
+    "rxjs-marbles": "^6.0.0",
     "shelljs": "^0.8.3",
     "sorcery": "^0.10.0",
     "ts-loader": "^5.3.3",
