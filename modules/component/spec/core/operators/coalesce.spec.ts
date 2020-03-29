@@ -1,7 +1,7 @@
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
 import { mergeMapTo, share } from 'rxjs/operators';
 import { concat, defer, from, of, timer } from 'rxjs';
-import { observableMatcher } from '../../observableMatcher';
+import { jestMatcher } from '../../helper/jest.observable-matcher';
 
 import { generateFrames, coalesce, CoalesceConfig } from '../../../src/core';
 
@@ -11,7 +11,7 @@ describe('coalesce operator additional logic', () => {
   let coalesceConfig: CoalesceConfig;
 
   beforeEach(() => {
-    testScheduler = new TestScheduler(observableMatcher);
+    testScheduler = new TestScheduler(jestMatcher);
   });
 
   it('should emit last value if source completes before durationSelector', () => {
@@ -227,21 +227,17 @@ describe('coalesce operator additional logic', () => {
   describe('with scoping', () => {
     it('should emit per subscriber by default async', () => {
       testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-        const coalesceConfig = {
-          leading: false,
-          trailing: true,
-          context: window as any,
-        };
         const s1 = cold('---abcdef---|');
         const s1Subs = ['^-----------!', '^-----------!'];
         const n1 = cold('   -----|    ');
         const n1Subs = ['---^----!    ', '---^----!    '];
-        const exp = '--------f---|';
+        const exp1 = '--------f---|';
+        const exp2 = '--------f---|';
 
-        const result1 = s1.pipe(coalesce(() => n1, coalesceConfig));
-        const result2 = s1.pipe(coalesce(() => n1, coalesceConfig));
-        expectObservable(result1).toBe(exp);
-        expectObservable(result2).toBe(exp);
+        const result1 = s1.pipe(coalesce(() => n1));
+        const result2 = s1.pipe(coalesce(() => n1));
+        expectObservable(result1).toBe(exp1);
+        expectObservable(result2).toBe(exp2);
         expectSubscriptions(s1.subscriptions).toBe(s1Subs);
         expectSubscriptions(n1.subscriptions).toBe(n1Subs);
       });
@@ -249,21 +245,17 @@ describe('coalesce operator additional logic', () => {
 
     it('should emit per subscriber by default sync', () => {
       testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-        const coalesceConfig = {
-          leading: false,
-          trailing: true,
-          context: window as any,
-        };
         const s1 = cold('--(abcdef)--|');
         const s1Subs = ['^-----------!', '^-----------!'];
-        const n1 = cold('   -----|    ');
-        const n1Subs = ['---^----!    ', '---^----!    '];
-        const exp = '--------f---|';
+        const n1 = cold('  (-----|)   ');
+        const n1Subs = ['--(^----!)   ', '--(^----!)   '];
+        const exp1 = '--(-----f)--|';
+        const exp2 = '--(-----f)--|';
 
-        const result1 = s1.pipe(coalesce(() => n1, coalesceConfig));
-        const result2 = s1.pipe(coalesce(() => n1, coalesceConfig));
-        expectObservable(result1).toBe(exp);
-        expectObservable(result2).toBe(exp);
+        const result1 = s1.pipe(coalesce(() => n1));
+        const result2 = s1.pipe(coalesce(() => n1));
+        expectObservable(result1).toBe(exp1);
+        expectObservable(result2).toBe(exp2);
         expectSubscriptions(s1.subscriptions).toBe(s1Subs);
         expectSubscriptions(n1.subscriptions).toBe(n1Subs);
       });

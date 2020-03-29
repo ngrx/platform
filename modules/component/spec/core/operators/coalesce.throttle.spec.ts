@@ -2,7 +2,7 @@ import { mapTo, mergeMap } from 'rxjs/operators';
 import { concat, of, timer } from 'rxjs';
 import { coalesce, CoalesceConfig } from '../../../src';
 
-import { observableMatcher } from '../../observableMatcher';
+import { jestMatcher } from '../../helper/jest.observable-matcher';
 import { TestScheduler } from 'rxjs/testing';
 
 /** @test {coalesce} */
@@ -11,7 +11,7 @@ describe('coalesce operator', () => {
   let cfg: CoalesceConfig = { leading: true, trailing: false };
 
   beforeEach(() => {
-    testScheduler = new TestScheduler(observableMatcher);
+    testScheduler = new TestScheduler(jestMatcher);
   });
 
   it('should simply mirror the source if values are not emitted often enough', () => {
