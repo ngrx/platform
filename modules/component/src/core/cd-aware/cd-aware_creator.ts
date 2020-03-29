@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, NgZone } from '@angular/core';
-import { getChangeDetectionHandler } from './utils';
 import {
   NextObserver,
   Observable,
@@ -9,7 +8,8 @@ import {
   Subscription,
 } from 'rxjs';
 import { distinctUntilChanged, map, switchAll, tap } from 'rxjs/operators';
-import { toObservableValue } from './projections';
+import { toObservableValue } from '../projections';
+import { getChangeDetectionHandler } from './get-change-detection-handling';
 
 export interface CoalescingConfig {
   optimized: boolean;
@@ -53,12 +53,9 @@ export function createCdAware<U>(cfg: {
   const observablesSubject = new Subject<
     Observable<U> | Promise<U> | null | undefined
   >();
-  // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
-  // extending class. So getConfigurableBehaviour is not available in the abstract layer
   const observables$: Observable<
     U | undefined | null
   > = observablesSubject.pipe(
-    // Ignore potential observables of the same instances
     distinctUntilChanged(),
     // Try to convert it to values, throw if not possible
     map(toObservableValue),
@@ -69,11 +66,7 @@ export function createCdAware<U>(cfg: {
     map(value$ =>
       value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver))
     ),
-    // e.g. coalescing
     cfg.configurableBehaviour,
-    // Unsubscribe from previous observables
-    // Then flatten the latest internal observables into the output
-    // @NOTICE applied behaviour (on the values, not the observable) will fire here
     switchAll(),
     tap(() => cfg.work())
   );

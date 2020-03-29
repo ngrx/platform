@@ -1,12 +1,5 @@
-import {
-  ChangeDetectorRef,
-  EmbeddedViewRef,
-  Injector,
-  NgZone,
-  OnDestroy,
-  Type,
-} from '@angular/core';
-import { CdAware, createCdAware, getGlobalThis } from '../../src/core';
+import { OnDestroy } from '@angular/core';
+import { CdAware, createCdAware } from '../../../src/core';
 import {
   concat,
   EMPTY,

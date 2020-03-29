@@ -5,8 +5,8 @@ import {
   ɵmarkDirty as markDirty,
 } from '@angular/core';
 
-import { isIvy } from './is-ivy';
-import { hasZone } from './has-zone';
+import { isIvy } from '../utils/is-ivy';
+import { hasZone } from '../utils/has-zone';
 
 export function getChangeDetectionHandler(
   ngZone: NgZone,

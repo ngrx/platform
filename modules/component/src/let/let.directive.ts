@@ -38,9 +38,9 @@ export interface LetViewContext<T> {
   $implicit?: T;
   // to enable `as` syntax we have to assign the directives selector (var as v)
   ngrxLet?: T;
-  // set context var complete to true (var$; let v = $error)
+  // set context var complete to true (var$; let e = $error)
   $error?: boolean;
-  // set context var complete to true (var$; let v = $complete)
+  // set context var complete to true (var$; let c = $complete)
   $complete?: boolean;
 }
 
@@ -133,7 +133,6 @@ export class LetDirective<U> implements OnDestroy {
   private readonly cdAware: CdAware<U | null | undefined>;
   private readonly resetContextObserver: NextObserver<unknown> = {
     next: () => {
-      // if not initialized no need to set undefined
       if (this.embeddedView) {
         this.ViewContext.$implicit = undefined;
         this.ViewContext.ngrxLet = undefined;
@@ -146,7 +145,6 @@ export class LetDirective<U> implements OnDestroy {
     U | null | undefined
   > = {
     next: (value: U | null | undefined) => {
-      // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
@@ -154,14 +152,12 @@ export class LetDirective<U> implements OnDestroy {
       this.ViewContext.ngrxLet = value;
     },
     error: (error: Error) => {
-      // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
       this.ViewContext.$error = true;
     },
     complete: () => {
-      // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
@@ -181,7 +177,6 @@ export class LetDirective<U> implements OnDestroy {
   ): Observable<Observable<T>> =>
     o$.pipe(
       withLatestFrom(this.config$),
-      // @NOTICE: unused config => As discussed with Brandon we keep it here because in the beta release we implement configuration behavior here
       map(([value$, config]) => {
         return value$.pipe(catchError(e => EMPTY));
       })

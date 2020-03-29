@@ -1,8 +1,6 @@
-import {
-  getChangeDetectionHandler,
-  getGlobalThis,
-} from '../../../src/core/utils';
+import { getGlobalThis } from '../../../src/core/utils';
 import { Injector } from '@angular/core';
+import { getChangeDetectionHandler } from '../../../src/core/cd-aware';
 
 class NgZone {}
 class NoopNgZone {}

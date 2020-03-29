@@ -1,4 +1,4 @@
-// Returns a reference to global thin
+// Returns a reference to global this
 // - Browser
 // - SSR
 // - Tests
