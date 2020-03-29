@@ -265,27 +265,6 @@ export function reducer(state = initialState, action: UserActionsUnion): State {
   }
 }
 
-export const getSelectedUserId = (state: State) => state.selectedUserId;
-
-// get the selectors
-const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors();
-
-// select the array of user ids
-export const selectUserIds = selectIds;
-
-// select the dictionary of user entities
-export const selectUserEntities = selectEntities;
-
-// select the array of users
-export const selectAllUsers = selectAll;
-
-// select the total user count
-export const selectUserTotal = selectTotal;
 ```
 
 ### Entity Selectors
@@ -314,7 +293,34 @@ export const reducers: ActionReducerMap<State> = {
   users: fromUser.reducer,
 };
 
-export const selectUserState = createFeatureSelector<fromUser.State>('users');
+
+// get the feature state
+export const selectUserFeatureState = createFeatureSelector<State>('users');
+
+// pass the feature state to the user entity state
+expost const selectUserState = createSelector(selectUserFeatureState, (s: State) => s.users);
+
+export const getSelectedUserId = (state: fromUser.State) => state.selectedUserId;
+
+// pass the user entity state to the adapter and get the selectors
+const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = fromUser.adapter.getSelectors(selectUserState);
+
+// select the array of user ids
+export const selectUserIds = selectIds;
+
+// select the dictionary of user entities
+export const selectUserEntities = selectEntities;
+
+// select the array of users
+export const selectAllUsers = selectAll;
+
+// select the total user count
+export const selectUserTotal = selectTotal;
 
 export const selectUserIds = createSelector(
   selectUserState,
