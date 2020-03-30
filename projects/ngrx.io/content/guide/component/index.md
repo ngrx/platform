@@ -14,6 +14,11 @@ Rendering happens in the template only:
   - [Push Pipe](guide/component/push)
   - [Let Directive](guide/component/let)
 
+**RxJS Operators**
+To render observable values, or fix change detection this package provides a set of helpers operators trigger rendering:
+  - [generateFrames](guide/component/rxjs/generateFrames)
+  - [coalesce](guide/component/rxjs/operators/coalesce)
+
 ## Installation
 
 Detailed installation instructions can be found on the [Installation](guide/component/install) page.
