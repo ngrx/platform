@@ -11,7 +11,6 @@ version: 2
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.9
-var_1: &cache_key_fallback yarn-cache-
 var_2: &run_in_node
   docker:
     - image: circleci/node:12.9.1
@@ -37,9 +36,9 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - run: yarn --frozen-lockfile --non-interactive
-      - persist_to_workspace:
+      - save_cache:
+          key: *cache_key
           root: ~/
           paths:
             - .cache/yarn
@@ -61,7 +60,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
 
       # Run the Buildifier to check our Bazel rules for format issues.
       - run: 'yarn bazel:format --mode=check ||
@@ -81,7 +79,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
 
       # Build and Test
       - run: yarn test --maxWorkers=1 --ci
@@ -95,7 +92,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
 
       # Build
       - run: yarn bazel build //modules/...
@@ -120,7 +116,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - run: yarn copy:schematics
       - run: git diff --name-only --exit-code ./modules
 
@@ -131,7 +126,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
 
@@ -179,7 +173,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
             - *docs_cache_key
       - run:
           name: Setup Environment Variables
@@ -206,7 +199,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
             - *docs_cache_key
       - run: npm rebuild node-sass
       - run: yarn build --progress false --output-path dist/ngrx.io/ && yarn copy-404-page
@@ -225,7 +217,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
@@ -237,7 +228,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - attach_workspace:
           at: dist
       - run:
@@ -254,7 +244,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - attach_workspace:
           at: dist
       - run:
@@ -274,7 +263,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-            - *cache_key_fallback
       - run: yarn run cleanup:previews
 
 workflows:
