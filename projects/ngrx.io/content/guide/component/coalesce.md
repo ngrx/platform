@@ -29,7 +29,7 @@ In addition to that is provides emitted values for the trailing end only, as wel
  If provided, the buffered changes of the source will only be emitted once per scope.
  This is especially helpful in scenarios where you want to have only one emission across multiple usages of the operator.
  
- You find a more in depth explanation in the [usage of context scoping](#Usage-of-Context-Scoping) section of this document.
+ You find a more in depth explanation in the [usage of context scoping](#usage-of-context-scoping) section of this document.
  
  ## Basic usage
   
