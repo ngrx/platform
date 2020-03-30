@@ -225,6 +225,24 @@ describe('coalesce operator additional logic', () => {
   });
 
   describe('with scoping', () => {
+    it('should not mutate the passed context (internal WeakMap)', () => {
+      const coalescingConfig = { context: { isCoalescing: false } };
+
+      testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
+        const s1 = cold('---a---------');
+        const s1Subs = '^------------';
+        const n1 = cold('   -----|    ');
+        const n1Subs = '---^----!    ';
+        const exp1 = '--------a----';
+
+        const result1 = s1.pipe(coalesce(() => n1, coalescingConfig));
+        expectObservable(result1).toBe(exp1);
+        expectSubscriptions(s1.subscriptions).toBe(s1Subs);
+        expectSubscriptions(n1.subscriptions).toBe(n1Subs);
+      });
+      expect(Reflect.ownKeys(coalescingConfig.context).length).toBe(1);
+    });
+
     it('should emit per subscriber by default async', () => {
       testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
         const s1 = cold('---abcdef---|');
