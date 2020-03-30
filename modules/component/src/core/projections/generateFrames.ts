@@ -1,8 +1,44 @@
 import { Observable, Subscriber } from 'rxjs';
 
+export interface AsyncProducerFn {
+  (arg?: any): any;
+}
+
+export interface AsyncCancelerFn {
+  (arg?: any): void;
+}
+
+export interface TimestampProvider {
+  now(): number;
+}
+
+/**
+ * @description
+ * Observable creation functions helpful in environments with patched global APIs like zone.js environments where you can't use RxJSs `animationFrames`.
+ * The projection function is similar to [`animationFrames`](https://rxjs.dev/api/index/function/animationFrames) of RxJS.
+ *
+ * @param {AsyncProducerFn} asyncProducer - The timestamp provider to use to create the observable
+ * @param {AsyncCancelerFn} asyncCanceler - The timestamp provider to use to create the observable
+ * @param {TimestampProvider} timestampProvider - The timestamp provider to use to create the observable
+ * @return {Observable<number>} An Observable of numbers emitting every tick incremented.
+ *
+ * @usageNotes
+ * This operator can be used to get the un-patched functions.
+ *
+ * ```ts
+ * import {Observable} from 'rxjs';
+ * import {generateFrames, asyncProducerFn, asyncCancelerFn} from '@ngrx/component';
+ *
+ * // Animation frame DOES NOT triggers zone
+ * const asyncProducer: asyncProducerFn = window['__zone_symbol__requestAnimationFrame'];
+ * const asyncCanceler: asyncCancelerFn = window['__zone_symbol__cancelAnimationFrame'];
+ *
+ * const afUnpatched$: Observable<number> =  generateFrames(asyncProducer,asyncCanceler);
+ * ```
+ */
 export function generateFrames(
-  asyncProducer: asyncProducerFn = window.requestAnimationFrame,
-  asyncCanceler: asyncCancelerFn = window.cancelAnimationFrame,
+  asyncProducer: AsyncProducerFn = window.requestAnimationFrame,
+  asyncCanceler: AsyncCancelerFn = window.cancelAnimationFrame,
   timestampProvider: TimestampProvider = Date
 ) {
   return asyncProducer || asyncCanceler
@@ -10,13 +46,9 @@ export function generateFrames(
     : DEFAULT_GENERATE_FRAMES_OPERATOR;
 }
 
-/**
- * Does the work of creating the observable for `animationFrames`.
- * @param timestampProvider The timestamp provider to use to create the observable
- */
 function generateFramesFactory(
-  asyncProducer: asyncProducerFn,
-  asyncCanceler: asyncCancelerFn,
+  asyncProducer: AsyncProducerFn,
+  asyncCanceler: AsyncCancelerFn,
   timestampProvider: TimestampProvider = Date
 ) {
   return new Observable<number>((subscriber: Subscriber<number>) => {
@@ -43,10 +75,3 @@ const DEFAULT_GENERATE_FRAMES_OPERATOR = generateFramesFactory(
   window.requestAnimationFrame,
   window.cancelAnimationFrame
 );
-
-export type asyncProducerFn = (arg?: any) => any;
-export type asyncCancelerFn = (arg?: any) => void;
-
-export interface TimestampProvider {
-  now(): number;
-}

@@ -12,7 +12,7 @@ Like `animationFrames` this function returns an observable emitting the passed m
 In comparison to `animationFrames`, `generateFrames` is more generic and is able to take `animationFrame`, `setInterval`, `setTimeout` PromiseLike things, etc.
 
 This is especially helpful in environments where global APIs are patched by libraries like zone.js. 
-Using this operator can ensure we use an unpatched version of the API.
+Using this operator can ensure we use an un-patched version of the API.
 
 ## Signature
 
