@@ -24,6 +24,7 @@ import {
 
 /**
  * @Pipe PushPipe
+ *
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -53,8 +54,6 @@ import {
  *  - Coalescing of change detection calls to boost performance
  *
  * @usageNotes
- *
- * ### Examples
  *
  * `ngrxPush` pipe solves that problem. It can be used like shown here:
  * ```html
