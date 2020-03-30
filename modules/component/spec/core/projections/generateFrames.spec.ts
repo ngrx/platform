@@ -1,18 +1,18 @@
 import {
-  asyncCancelerFn,
-  asyncProducerFn,
+  AsyncCancelerFn,
+  AsyncProducerFn,
   generateFrames,
 } from '../../../src/core/projections';
 import { of } from 'rxjs';
 
 /** @test {generateFrames} */
 describe('generateFrames', () => {
-  const afProducer: asyncProducerFn = window.requestAnimationFrame;
-  const afCanceler: asyncCancelerFn = window.cancelAnimationFrame;
-  const tiProducer: asyncProducerFn = window.setTimeout;
-  const tiCanceler: asyncCancelerFn = window.clearTimeout;
-  const inProducer: asyncProducerFn = window.setInterval;
-  const inCanceler: asyncCancelerFn = window.clearInterval;
+  const afProducer: AsyncProducerFn = window.requestAnimationFrame;
+  const afCanceler: AsyncCancelerFn = window.cancelAnimationFrame;
+  const tiProducer: AsyncProducerFn = window.setTimeout;
+  const tiCanceler: AsyncCancelerFn = window.clearTimeout;
+  const inProducer: AsyncProducerFn = window.setInterval;
+  const inCanceler: AsyncCancelerFn = window.clearInterval;
 
   it('should work with defaults', () => {
     let sync: any;

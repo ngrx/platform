@@ -27,11 +27,11 @@ export interface TimestampProvider {
  *
  * ```ts
  * import {Observable} from 'rxjs';
- * import {generateFrames, asyncProducerFn, asyncCancelerFn} from '@ngrx/component';
+ * import {generateFrames, AsyncProducerFn, AsyncCancelerFn} from '@ngrx/component';
  *
  * // Animation frame DOES NOT triggers zone
- * const asyncProducer: asyncProducerFn = window['__zone_symbol__requestAnimationFrame'];
- * const asyncCanceler: asyncCancelerFn = window['__zone_symbol__cancelAnimationFrame'];
+ * const asyncProducer: AsyncProducerFn = window['__zone_symbol__requestAnimationFrame'];
+ * const asyncCanceler: AsyncCancelerFn = window['__zone_symbol__cancelAnimationFrame'];
  *
  * const afUnpatched$: Observable<number> =  generateFrames(asyncProducer,asyncCanceler);
  * ```
