@@ -7,7 +7,7 @@ Same as [PushPipe](guide/component/push), it also respects ViewEngine as well as
 
 The current way of binding an observable to the view looks like that:
 ```html
-<ng-container *ngIf="observableNumber$ as n">
+<ng-container *ngIf="observableNumber$ | async as n">
   <app-number [number]="n">
   </app-number>
   <app-number-special [number]="n">
@@ -15,10 +15,10 @@ The current way of binding an observable to the view looks like that:
 </ng-container>
  ```
 
-The problem is `*ngIf` is also interfering with rendering and in case of a `0` the component would be hidden
+The problem is `*ngIf` is also interfering with rendering and in case of a falsy value the component would be hidden
 
 The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
-`<ng-container *let="observableNumber$ as c"></ng-container>`
+`<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
 
 ```html
 <ng-container *ngrxLet="observableNumber$ as n">
