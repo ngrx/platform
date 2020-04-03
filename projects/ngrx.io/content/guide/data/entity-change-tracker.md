@@ -301,8 +301,8 @@ Disabling change tracking with `IgnoreChanges` is the most frequent choice.
 
 ### Disable change tracking
 
-You can opt-out of change tracking for the entire collection by setting the collection's `enableChangeTracking` flag to `false` in its `entityMetadata`.
-When `false`, NgRx Data does not track any changes for this collection
+You can opt-out of change tracking for the entire collection by setting the collection's `noChangeTracking` flag to `true` in its `entityMetadata`.
+When `true`, NgRx Data does not track any changes for this collection
 and the `EntityCollection.changeState` property remains an empty object.
 
 You can opt-out of change tracking for a _specific_ entity action by supplying the  `mergeStrategy` in the optional `EntityActionOptions` that you can pass in the action payload.
