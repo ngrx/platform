@@ -61,7 +61,7 @@ export function createCdAware<U>(cfg: {
     // Ignore potential observables of the same instances
     distinctUntilChanged(),
     // Try to convert it to values, throw if not possible
-    map(v => toObservableValue(v)),
+    map(toObservableValue),
     tap((v: any) => {
       cfg.resetContextObserver.next(v);
       cfg.work();
