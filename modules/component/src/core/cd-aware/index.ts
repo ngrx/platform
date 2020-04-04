@@ -1,2 +1,2 @@
-export * from './cd-aware.abstract';
+export * from './create_cd-aware';
 export * from './strategy';
