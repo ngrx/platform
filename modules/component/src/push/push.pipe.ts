@@ -1,26 +1,12 @@
 import {
   ChangeDetectorRef,
-  EmbeddedViewRef,
   NgZone,
   OnDestroy,
   Pipe,
   PipeTransform,
-  Type,
 } from '@angular/core';
-import {
-  NextObserver,
-  Observable,
-  PartialObserver,
-  Subject,
-  Unsubscribable,
-} from 'rxjs';
-import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
-import {
-  CdAware,
-  CoalescingConfig as PushPipeConfig,
-  createCdAware,
-  setUpWork,
-} from '../core';
+import { NextObserver, Observable, Unsubscribable } from 'rxjs';
+import { CdAware, createCdAware, getStrategies } from '../core';
 
 /**
  * @Pipe PushPipe
@@ -39,7 +25,8 @@ import {
  * ```
  *
  * The problem is `async` pipe just marks the component and all its ancestors as dirty.
- * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked components.
+ * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked
+ *     components.
  *
  * Heavy dynamic and interactive UIs suffer from zones change detection a lot and can
  * lean to bad performance or even unusable applications, but the `async` pipe does not work in zone-less mode.
@@ -66,60 +53,45 @@ import {
  */
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe<S> implements PipeTransform, OnDestroy {
-  private renderedValue: S | null | undefined;
-
-  private readonly configSubject = new Subject<PushPipeConfig>();
-  private readonly config$ = this.configSubject
-    .asObservable()
-    .pipe(distinctUntilChanged());
+  private renderedValue: any | null | undefined;
 
   private readonly subscription: Unsubscribable;
   private readonly cdAware: CdAware<S | null | undefined>;
-  private readonly updateViewContextObserver: PartialObserver<
+  private readonly resetContextObserver: NextObserver<unknown> = {
+    next: (value: unknown) => (this.renderedValue = undefined),
+  };
+  private readonly updateViewContextObserver: NextObserver<
     S | null | undefined
   > = {
     next: (value: S | null | undefined) => (this.renderedValue = value),
   };
-  private readonly resetContextObserver: NextObserver<unknown> = {
-    next: (value: unknown) => (this.renderedValue = undefined),
-  };
-  private readonly configurableBehaviour = <T>(
-    o$: Observable<Observable<T>>
-  ): Observable<Observable<T>> =>
-    o$.pipe(
-      withLatestFrom(this.config$),
-      map(([value$, config]) => {
-        return value$.pipe();
-      })
-    );
 
   constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
     this.cdAware = createCdAware<S>({
-      work: setUpWork({
+      strategies: getStrategies<S>({
+        component: (cdRef as any).context,
         ngZone,
         cdRef,
-        context: (cdRef as EmbeddedViewRef<Type<any>>).context,
       }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
-      configurableBehaviour: this.configurableBehaviour,
     });
     this.subscription = this.cdAware.subscribe();
   }
 
-  transform(potentialObservable: null, config?: PushPipeConfig): null;
-  transform(potentialObservable: undefined, config?: PushPipeConfig): undefined;
-  transform(
-    potentialObservable: Observable<S> | Promise<S>,
-    config?: PushPipeConfig
-  ): S;
-  transform(
-    potentialObservable: Observable<S> | Promise<S> | null | undefined,
-    config: PushPipeConfig = { optimized: true }
-  ): S | null | undefined {
-    this.configSubject.next(config);
-    this.cdAware.next(potentialObservable);
-    return this.renderedValue;
+  transform<T>(potentialObservable: null, config?: string): null;
+  transform<T>(potentialObservable: undefined, config?: string): undefined;
+  transform<T>(
+    potentialObservable: Observable<T> | Promise<T>,
+    config?: string
+  ): T;
+  transform<T>(
+    potentialObservable: Observable<T> | Promise<T> | null | undefined,
+    config: string | undefined
+  ): T | null | undefined {
+    this.cdAware.nextConfig(config || '');
+    this.cdAware.nextVale(potentialObservable as any);
+    return this.renderedValue as T | null | undefined;
   }
 
   ngOnDestroy(): void {

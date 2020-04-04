@@ -1,37 +1,15 @@
 import {
   ChangeDetectorRef,
   Directive,
-  EmbeddedViewRef,
   Input,
   NgZone,
   OnDestroy,
   TemplateRef,
-  Type,
   ViewContainerRef,
 } from '@angular/core';
 
-import {
-  EMPTY,
-  NextObserver,
-  Observable,
-  PartialObserver,
-  ReplaySubject,
-  Unsubscribable,
-} from 'rxjs';
-import {
-  catchError,
-  distinctUntilChanged,
-  filter,
-  map,
-  startWith,
-  withLatestFrom,
-} from 'rxjs/operators';
-import {
-  CdAware,
-  CoalescingConfig as NgRxLetConfig,
-  createCdAware,
-  setUpWork,
-} from '../core';
+import { NextObserver, Observable, Observer, Unsubscribable } from 'rxjs';
+import { CdAware, createCdAware, getStrategies } from '../core';
 
 export interface LetViewContext<T> {
   // to enable `let` syntax we have to use $implicit (var; let v = var)
@@ -75,7 +53,7 @@ export interface LetViewContext<T> {
  * @usageNotes
  *
  * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
- * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
+ * `<ng-container *let="observableNumber$ as c"></ng-container>`
  *
  * ```html
  * <ng-container *ngrxLet="observableNumber$ as n">
@@ -120,17 +98,11 @@ export class LetDirective<U> implements OnDestroy {
     $complete: false,
   };
 
-  private readonly configSubject = new ReplaySubject<NgRxLetConfig>();
-  private readonly config$ = this.configSubject.pipe(
-    filter(v => v !== undefined && v !== null),
-    distinctUntilChanged(),
-    startWith({ optimized: true })
-  );
-
   protected readonly subscription: Unsubscribable;
   private readonly cdAware: CdAware<U | null | undefined>;
   private readonly resetContextObserver: NextObserver<unknown> = {
     next: () => {
+      // if not initialized no need to set undefined
       if (this.embeddedView) {
         this.ViewContext.$implicit = undefined;
         this.ViewContext.ngrxLet = undefined;
@@ -139,10 +111,9 @@ export class LetDirective<U> implements OnDestroy {
       }
     },
   };
-  private readonly updateViewContextObserver: PartialObserver<
-    U | null | undefined
-  > = {
+  private readonly updateViewContextObserver: Observer<U | null | undefined> = {
     next: (value: U | null | undefined) => {
+      // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
@@ -150,12 +121,14 @@ export class LetDirective<U> implements OnDestroy {
       this.ViewContext.ngrxLet = value;
     },
     error: (error: Error) => {
+      // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
       this.ViewContext.$error = true;
     },
     complete: () => {
+      // to have init lazy
       if (!this.embeddedView) {
         this.createEmbeddedView();
       }
@@ -165,31 +138,23 @@ export class LetDirective<U> implements OnDestroy {
 
   static ngTemplateContextGuard<U>(
     dir: LetDirective<U>,
-    ctx: unknown
+    ctx: unknown | null | undefined
   ): ctx is LetViewContext<U> {
     return true;
   }
 
-  private readonly configurableBehaviour = <T>(
-    o$: Observable<Observable<T>>
-  ): Observable<Observable<T>> =>
-    o$.pipe(
-      withLatestFrom(this.config$),
-      map(([value$, config]) => {
-        return value$.pipe(catchError(e => EMPTY));
-      })
-    );
+  static ngTemplateGuard_ngrxLet: 'binding';
 
   @Input()
   set ngrxLet(
     potentialObservable: Observable<U> | Promise<U> | null | undefined
   ) {
-    this.cdAware.next(potentialObservable);
+    this.cdAware.nextVale(potentialObservable);
   }
 
   @Input()
-  set ngrxLetConfig(config: NgRxLetConfig) {
-    this.configSubject.next(config || { optimized: true });
+  set ngrxLetConfig(config: string | undefined) {
+    this.cdAware.nextConfig(config || '');
   }
 
   constructor(
@@ -199,14 +164,13 @@ export class LetDirective<U> implements OnDestroy {
     private readonly viewContainerRef: ViewContainerRef
   ) {
     this.cdAware = createCdAware<U>({
-      work: setUpWork({
-        cdRef,
+      strategies: getStrategies<U>({
+        component: (cdRef as any).context,
         ngZone,
-        context: (cdRef as EmbeddedViewRef<Type<any>>).context,
+        cdRef,
       }),
       resetContextObserver: this.resetContextObserver,
       updateViewContextObserver: this.updateViewContextObserver,
-      configurableBehaviour: this.configurableBehaviour,
     });
     this.subscription = this.cdAware.subscribe();
   }

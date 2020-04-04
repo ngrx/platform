@@ -10,7 +10,6 @@ import {
 } from 'rxjs';
 import {
   distinctUntilChanged,
-  filter,
   map,
   startWith,
   switchMap,
@@ -38,8 +37,8 @@ export interface CdAware<U> extends Subscribable<U> {
  */
 export function createCdAware<U>(cfg: {
   strategies: StrategySelection<U>;
-  resetContextObserver: NextObserver<unknown>;
-  updateViewContextObserver: PartialObserver<any>;
+  resetContextObserver: NextObserver<any>;
+  updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
 }): CdAware<U | undefined | null> {
   const configSubject = new Subject<string>();
   const config$: Observable<CdStrategy<U>> = configSubject.pipe(
@@ -50,14 +49,13 @@ export function createCdAware<U>(cfg: {
         cfg.strategies[strategy]
           ? cfg.strategies[strategy]
           : cfg.strategies.idle
-    ),
-    tap(strategy => console.log('strategy', strategy.name))
+    )
   );
 
   const observablesSubject = new Subject<Observable<U>>();
   const observables$$ = observablesSubject.pipe(distinctUntilChanged());
 
-  let prevObservable;
+  let prevObservable: Observable<U>;
   const renderSideEffect$ = combineLatest([observables$$, config$]).pipe(
     switchMap(([observable$, strategy]) => {
       if (prevObservable === observable$) {
