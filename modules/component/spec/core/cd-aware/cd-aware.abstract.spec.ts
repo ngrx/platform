@@ -20,8 +20,6 @@ class CdAwareImplementation<U> implements OnDestroy {
   public cdAware: CdAware<U | undefined | null>;
   resetContextObserver: NextObserver<any> = {
     next: _ => (this.renderedValue = undefined),
-    error: e => (this.error = e),
-    complete: () => (this.completed = true),
   };
   updateViewContextObserver: PartialObserver<U | undefined | null> = {
     next: (n: U | undefined | null) => (this.renderedValue = n),

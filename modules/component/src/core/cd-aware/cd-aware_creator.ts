@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, NgZone } from '@angular/core';
 import {
+  combineLatest,
+  NEVER,
   NextObserver,
   Observable,
   PartialObserver,
@@ -7,30 +8,22 @@ import {
   Subscribable,
   Subscription,
 } from 'rxjs';
-import { distinctUntilChanged, map, switchAll, tap } from 'rxjs/operators';
-import { toObservableValue } from '../projections';
-import { getChangeDetectionHandler } from './get-change-detection-handling';
-
-export interface CoalescingConfig {
-  optimized: boolean;
-}
+import {
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+import {
+  CdStrategy,
+  DEFAULT_STRATEGY_NAME,
+  StrategySelection,
+} from './strategy';
 
 export interface CdAware<U> extends Subscribable<U> {
-  next: (value: Observable<U> | Promise<U> | null | undefined) => void;
-}
-
-export interface WorkConfig {
-  context: any;
-  ngZone: NgZone;
-  cdRef: ChangeDetectorRef;
-}
-
-export function setUpWork(cfg: WorkConfig): () => void {
-  const render: (component?: any) => void = getChangeDetectionHandler(
-    cfg.ngZone,
-    cfg.cdRef
-  );
-  return () => render(cfg.context);
+  nextValue: (value: any) => void;
+  nextConfig: (config: string) => void;
 }
 
 /**
@@ -43,40 +36,57 @@ export function setUpWork(cfg: WorkConfig): () => void {
  * Also custom behaviour is something you need to implement in the extending class
  */
 export function createCdAware<U>(cfg: {
-  work: () => void;
-  resetContextObserver: NextObserver<unknown>;
-  configurableBehaviour: (
-    o: Observable<Observable<U | null | undefined>>
-  ) => Observable<Observable<U | null | undefined>>;
-  updateViewContextObserver: PartialObserver<U | null | undefined>;
+  strategies: StrategySelection<U>;
+  resetContextObserver: NextObserver<any>;
+  updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
 }): CdAware<U | undefined | null> {
-  const observablesSubject = new Subject<
-    Observable<U> | Promise<U> | null | undefined
-  >();
-  const observables$: Observable<
-    U | undefined | null
-  > = observablesSubject.pipe(
+  const configSubject = new Subject<string>();
+  const config$: Observable<CdStrategy<U>> = configSubject.pipe(
     distinctUntilChanged(),
-    // Try to convert it to values, throw if not possible
-    map(toObservableValue),
-    tap((v: any) => {
-      cfg.resetContextObserver.next(v);
-      cfg.work();
-    }),
-    map(value$ =>
-      value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver))
-    ),
-    cfg.configurableBehaviour,
-    switchAll(),
-    tap(() => cfg.work())
+    startWith(DEFAULT_STRATEGY_NAME),
+    map(
+      (strategy: string): CdStrategy<U> =>
+        cfg.strategies[strategy]
+          ? cfg.strategies[strategy]
+          : cfg.strategies.idle
+    )
+  );
+
+  const observablesSubject = new Subject<Observable<U>>();
+  const observables$$ = observablesSubject.pipe(distinctUntilChanged());
+
+  let prevObservable: Observable<U>;
+  const renderSideEffect$ = combineLatest([observables$$, config$]).pipe(
+    switchMap(([observable$, strategy]) => {
+      if (prevObservable === observable$) {
+        return NEVER;
+      }
+      prevObservable = observable$;
+
+      if (observable$ == null) {
+        cfg.resetContextObserver.next(observable$);
+        strategy.render();
+        return NEVER;
+      }
+
+      return observable$.pipe(
+        distinctUntilChanged(),
+        tap(cfg.updateViewContextObserver),
+        strategy.behaviour(),
+        tap(() => strategy.render())
+      );
+    })
   );
 
   return {
-    next(value: any): void {
+    nextValue(value: any): void {
       observablesSubject.next(value);
     },
+    nextConfig(nextConfig: string): void {
+      configSubject.next(nextConfig);
+    },
     subscribe(): Subscription {
-      return observables$.subscribe();
+      return renderSideEffect$.subscribe();
     },
   } as CdAware<U | undefined | null>;
 }
