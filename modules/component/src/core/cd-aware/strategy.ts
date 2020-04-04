@@ -74,11 +74,11 @@ export function getStrategies<T>(
  * | ZoneLess | cdRef.markForCheck | ❌         | None           |
  */
 export function createIdleStrategy<T>(
-  cfg: Pick<StrategyFactoryConfig, 'cdRef'>
+  cfg: Pick<StrategyFactoryConfig, 'cdRef' | 'component'>
 ): CdStrategy<T> {
   return {
     render: (): void => {
-      cfg.cdRef.markForCheck();
+      isIvy() ? markDirty(cfg.component) : cfg.cdRef.markForCheck();
     },
     behaviour: () => o => o,
     name: 'idle',

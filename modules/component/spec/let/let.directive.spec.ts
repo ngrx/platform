@@ -43,7 +43,6 @@ class MockChangeDetectorRef {
   `,
 })
 class LetDirectiveTestComponent {
-  cfg: any = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
@@ -53,7 +52,6 @@ class LetDirectiveTestComponent {
   `,
 })
 class LetDirectiveTestErrorComponent {
-  cfg: any = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
@@ -65,7 +63,6 @@ class LetDirectiveTestErrorComponent {
   `,
 })
 class LetDirectiveTestCompleteComponent {
-  cfg: any = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
@@ -143,7 +140,7 @@ describe('LetDirective', () => {
     it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = undefined;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
+      expect(componentNativeElement.textContent).toBe('');
     });
 
     it('should render null as value when initially null was passed (as no value ever was emitted)', () => {

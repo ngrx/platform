@@ -1,5 +1,6 @@
 import {
   combineLatest,
+  EMPTY,
   NEVER,
   NextObserver,
   Observable,
@@ -9,6 +10,7 @@ import {
   Subscription,
 } from 'rxjs';
 import {
+  catchError,
   distinctUntilChanged,
   map,
   startWith,
@@ -61,19 +63,23 @@ export function createCdAware<U>(cfg: {
       if (prevObservable === observable$) {
         return NEVER;
       }
-      prevObservable = observable$;
 
       if (observable$ == null) {
-        cfg.resetContextObserver.next(observable$);
+        cfg.updateViewContextObserver.next(observable$);
         strategy.render();
         return NEVER;
       }
+
+      prevObservable = observable$;
+      cfg.resetContextObserver.next(observable$);
+      strategy.render();
 
       return observable$.pipe(
         distinctUntilChanged(),
         tap(cfg.updateViewContextObserver),
         strategy.behaviour(),
-        tap(() => strategy.render())
+        tap(() => strategy.render()),
+        catchError(e => EMPTY)
       );
     })
   );

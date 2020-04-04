@@ -1,7 +1,7 @@
 import { EMPTY, isObservable, Observable } from 'rxjs';
 import { toObservableValue } from '../../../src/core/projections';
 
-describe('toObservableValue', () => {
+describe('toObservable', () => {
   describe('used as RxJS creation function', () => {
     // NOTE: (benlesh) These tests are probably all redundant, as you're just
     // testing `rxjs` from in every case but `null` and `undefined`.
