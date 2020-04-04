@@ -1,2 +1,2 @@
-export * from './get-change-detection-handling';
-export * from './cd-aware_creator';
+export * from './cd-aware.abstract';
+export * from './strategy';
