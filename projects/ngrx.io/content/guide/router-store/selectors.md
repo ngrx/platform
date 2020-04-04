@@ -13,6 +13,7 @@ Usage:
 
 ```ts
 import * as fromRouter from '@ngrx/router-store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface State {
   router: fromRouter.RouterReducerState<any>;
@@ -23,7 +24,7 @@ export const selectRouter = createFeatureSelector<
   fromRouter.RouterReducerState<any>
 >('router');
 
-const {
+export const {
   selectCurrentRoute,   // select the current route
   selectQueryParams,    // select the current route query params
   selectQueryParam,     // factory function to select a query param
