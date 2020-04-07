@@ -20,7 +20,7 @@ The current way of binding an observable to the view looks like that:
 
 The problem is `*ngIf` is also interfering with rendering and in case of a falsy value the component would be hidden.
 
-The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template.
+The `*ngrxLet` directive takes over several things while making it more convenient and safe to work with streams in the template.
 
 `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
 
