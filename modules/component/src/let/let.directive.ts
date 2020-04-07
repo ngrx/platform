@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-import { NextObserver, Observable, Observer, Unsubscribable } from 'rxjs';
+import { NextObserver, ObservableInput, Observer, Unsubscribable } from 'rxjs';
 import { CdAware, createCdAware, getStrategies } from '../core';
 
 export interface LetViewContext<T> {
@@ -146,10 +146,8 @@ export class LetDirective<U> implements OnDestroy {
   static ngTemplateGuard_ngrxLet: 'binding';
 
   @Input()
-  set ngrxLet(
-    potentialObservable: Observable<U> | Promise<U> | null | undefined
-  ) {
-    this.cdAware.nextVale(potentialObservable);
+  set ngrxLet(potentialObservable: ObservableInput<U> | null | undefined) {
+    this.cdAware.nextValue(potentialObservable);
   }
 
   @Input()
