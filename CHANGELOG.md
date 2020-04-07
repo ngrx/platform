@@ -1,3 +1,20 @@
+<a name="9.1.0"></a>
+
+# [9.1.0](https://github.com/ngrx/platform/compare/9.0.0...9.1.0) (2020-04-07)
+
+### Bug Fixes
+
+- **component:** add docs overview ([#2444](https://github.com/ngrx/platform/issues/2444)) ([a279dd1](https://github.com/ngrx/platform/commit/a279dd1)), closes [#2442](https://github.com/ngrx/platform/issues/2442)
+- **example:** optimistically add/remove book from collection ([#2429](https://github.com/ngrx/platform/issues/2429)) ([b0aacf7](https://github.com/ngrx/platform/commit/b0aacf7)), closes [#2417](https://github.com/ngrx/platform/issues/2417)
+- **schematics:** install v9 with ng-add ([#2455](https://github.com/ngrx/platform/issues/2455)) ([19f1bda](https://github.com/ngrx/platform/commit/19f1bda))
+- **toObservableValue:** accommodate all observable inputs ([#2471](https://github.com/ngrx/platform/issues/2471)) ([468303a](https://github.com/ngrx/platform/commit/468303a))
+
+### Features
+
+- **component:** add ngrxPush pipe and ngrxLet directive to [@ngrx](https://github.com/ngrx)/component package ([#2046](https://github.com/ngrx/platform/issues/2046)) ([464073d](https://github.com/ngrx/platform/commit/464073d))
+- **effects:** add user provided effects to EffectsModule.forFeature ([#2231](https://github.com/ngrx/platform/issues/2231)) ([59ce3e2](https://github.com/ngrx/platform/commit/59ce3e2)), closes [#2232](https://github.com/ngrx/platform/issues/2232)
+- **schematics:** export reducer directly when Ivy is enabled ([#2440](https://github.com/ngrx/platform/issues/2440)) ([b68fa67](https://github.com/ngrx/platform/commit/b68fa67))
+
 <a name="9.0.0"></a>
 
 # [9.0.0](https://github.com/ngrx/platform/compare/9.0.0-rc.0...9.0.0) (2020-03-09)
