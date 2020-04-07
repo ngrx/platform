@@ -1,11 +1,14 @@
-# NgRxLet Structural Directive
+# ngrxLet Structural Directive
 
 The `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).
 It also helps with several internal processing under the hood.
 
 Same as [PushPipe](guide/component/push), it also respects ViewEngine as well as Ivy's new rendering API.
 
+## Comparison with Async Pipe
+
 The current way of binding an observable to the view looks like that:
+
 ```html
 <ng-container *ngIf="observableNumber$ | async as n">
   <app-number [number]="n">
@@ -15,9 +18,10 @@ The current way of binding an observable to the view looks like that:
 </ng-container>
  ```
 
-The problem is `*ngIf` is also interfering with rendering and in case of a falsy value the component would be hidden
+The problem is `*ngIf` is also interfering with rendering and in case of a falsy value the component would be hidden.
 
-The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
+The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template.
+
 `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
 
 ```html
@@ -34,6 +38,7 @@ The `*ngrxLet` directive take over several things and makes it more convenient a
 
 In addition to that it provides us information from the whole observable context.
 We can track the observables:
+
 - next value
 - error value
 - complete state
@@ -51,7 +56,8 @@ We can track the observables:
 </ng-container>
 ```
 
-Included Features:
+## Included Features
+
 - binding is always present. (`*ngIf="truthy$"`)
 - it takes away the multiple usages of the `async` or `ngrxPush` pipe
 - a unified/structured way of handling null and undefined

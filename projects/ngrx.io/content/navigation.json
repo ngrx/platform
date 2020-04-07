@@ -321,6 +321,18 @@
         {
           "title": "Overview",
           "url": "guide/component"
+        },
+        {
+          "title": "Installation",
+          "url": "guide/component/install"
+        },
+        {
+          "title": "Let Directive",
+          "url": "guide/component/let"
+        },
+        {
+          "title": "Push Pipe",
+          "url": "guide/component/push"
         }
       ]
     },
