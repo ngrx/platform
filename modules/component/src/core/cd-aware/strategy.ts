@@ -1,4 +1,4 @@
-// @Notice this part of the code is in the coalescing PR
+// @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
 // import { generateFrames } from '../projections/generateFrames';
 // import { coalesce } from '../operators/coalesce';
 import { defer, from, MonoTypeOperatorFunction, Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { mapTo } from 'rxjs/operators';
 
 function getSaveDurationSelector(ngZone: NgZone): () => Observable<number> {
   return () => defer(() => from(Promise.resolve()).pipe(mapTo(1)));
-  // @Notice this part of the code is in the coalescing PR
+  // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
   /* hasZone(ngZone)
       ? generateFrames(
           (window as any).__zone_symbol__requestAnimationFrame,
@@ -153,7 +153,7 @@ export function createPessimistic1Strategy<T>(
     return !inZone && !inIvy
       ? o$
           .pipe
-          // @Notice this part of the code is in the coalescing PR
+          // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
           // coalesce(durationSelector)
           ()
       : o$;
@@ -208,7 +208,7 @@ export function createPessimistic2Strategy<T>(
     return !inZone && !inIvy
       ? o$
           .pipe
-          // @Notice this part of the code is in the coalescing PR
+          // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
           // coalesce(durationSelector, coalesceConfig)
           ()
       : o$;
@@ -271,7 +271,7 @@ export function createOptimistic1Strategy<T>(
     return inZone
       ? o$
           .pipe
-          // @Notice this part of the code is in the coalescing PR
+          // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
           // coalesce(durationSelector, coalesceConfig)
           ()
       : o$;
@@ -315,7 +315,7 @@ export function createOptimistic2Strategy<T>(
   const behaviour = (o$: Observable<T>): Observable<T> => {
     return o$
       .pipe
-      // @Notice this part of the code is in the coalescing PR
+      // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
       // coalesce(durationSelector, coalesceConfig)
       ();
   };
