@@ -1,14 +1,19 @@
 # @ngrx/component
 
-The Component package is a set of primitive reactive helpers to enable fully reactive, fully zone-less applications.
+Component is a set of primitive reactive helpers to enable fully reactive, fully zone-less applications. They give more control over rendering, and provide further reactivity for Angular applications.
 
-## Introduction
+<div class="alert is-critical">
 
-This package includes primitives that act as the glue in reactive Angular applications.
-They take over rendering and provide reactivity to parts where Angular doesn't out of the box. 
+This package is experimental and may change during development.
+
+</div>
 
 ## Key Concepts
 
 Rendering happens in the template only:
   - [Push Pipe](guide/component/push)
   - [Let Directive](guide/component/let)
+
+## Installation
+
+Detailed installation instructions can be found on the [Installation](guide/component/install) page.
