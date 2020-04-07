@@ -61,13 +61,13 @@ export function createCdAware<U>(cfg: {
   const renderSideEffect$ = combineLatest([observables$$, config$]).pipe(
     switchMap(([observable$, strategy]) => {
       if (prevObservable === observable$) {
-        return NEVER;
+        return EMPTY;
       }
 
       if (observable$ == null) {
         cfg.updateViewContextObserver.next(observable$);
         strategy.render();
-        return NEVER;
+        return EMPTY;
       }
 
       prevObservable = observable$;
