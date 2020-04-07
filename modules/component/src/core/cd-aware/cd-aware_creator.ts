@@ -1,7 +1,6 @@
 import {
   combineLatest,
   EMPTY,
-  NEVER,
   NextObserver,
   Observable,
   PartialObserver,

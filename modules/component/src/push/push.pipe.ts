@@ -53,7 +53,7 @@ import { CdAware, createCdAware, getStrategies } from '../core';
  */
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe<S> implements PipeTransform, OnDestroy {
-  private renderedValue: any | null | undefined;
+  private renderedValue: S | null | undefined;
 
   private readonly subscription: Unsubscribable;
   private readonly cdAware: CdAware<S | null | undefined>;
@@ -87,7 +87,7 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     config: string | undefined
   ): T | null | undefined {
     this.cdAware.nextConfig(config || '');
-    this.cdAware.nextVale(potentialObservable as any);
+    this.cdAware.nextValue(potentialObservable);
     return this.renderedValue as T | null | undefined;
   }
 
