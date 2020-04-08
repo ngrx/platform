@@ -54,10 +54,15 @@ export function createCdAware<U>(cfg: {
   );
 
   const observablesSubject = new Subject<Observable<U>>();
-  const observables$$ = observablesSubject.pipe(distinctUntilChanged());
+  const observablesFromTemplate$ = observablesSubject.pipe(
+    distinctUntilChanged()
+  );
 
   let prevObservable: Observable<U>;
-  const renderSideEffect$ = combineLatest([observables$$, config$]).pipe(
+  const renderSideEffect$ = combineLatest([
+    observablesFromTemplate$,
+    config$,
+  ]).pipe(
     switchMap(([observable$, strategy]) => {
       if (prevObservable === observable$) {
         return EMPTY;
