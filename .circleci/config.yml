@@ -97,10 +97,11 @@ jobs:
       - write_master_hash
       - restore_cache:
           keys:
-            - *cache_key
             - *bazel_cache_key
+            - *cache_key
 
       # Build
+      - run: yarn
       - run: yarn bazel build //modules/...
       # Store artifacts from build
       - persist_to_workspace:
@@ -122,21 +123,17 @@ jobs:
       - write_master_hash
       - restore_cache:
           keys:
-            - *cache_key
             - *bazel_cache_key
 
       # Build
+      - run: yarn
       - run: yarn bazel build //modules/...
-      # Store artifacts from build
-      - persist_to_workspace:
-          root: dist
-          paths:
-            - bin/*
       - save_cache:
           key: *bazel_cache_key
           paths:
             - ~/.cache/bazel_repository_cache
             - ~/.cache/bazel_disk_cache
+            - node_modules
 
   schematics-core-check:
     <<: *run_in_browser
@@ -246,8 +243,8 @@ jobs:
       - write_master_hash      
       - restore_cache:
           keys:
-            - *cache_key
             - *bazel_cache_key
+            - *cache_key
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
@@ -259,8 +256,8 @@ jobs:
       - write_master_hash      
       - restore_cache:
           keys:
-            - *cache_key
             - *bazel_cache_key
+            - *cache_key
       - attach_workspace:
           at: dist
       - run:
@@ -277,8 +274,8 @@ jobs:
       - write_master_hash      
       - restore_cache:
           keys:
-            - *cache_key
             - *bazel_cache_key
+            - *cache_key
       - attach_workspace:
           at: dist
       - run:
