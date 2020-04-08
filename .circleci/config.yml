@@ -2,7 +2,7 @@
 
 # Opt-in to newer CircleCI system
 # Complete documentation is at https://circleci.com/docs/2.0/
-version: 2
+version: 2.1
 
 # Note: YAML anchors allow an object to be re-used, reducing duplication.
 # The ampersand declares an alias for an object, then later the `<<: *name`
@@ -27,6 +27,14 @@ var_6: &docs_in_node
 var_7: &docs_in_browser
   docker:
     - image: circleci/node:10.13-browsers
+var_8: &bazel_cache_key yarn-bazel-cache-{{ checksum "master.txt" }}-0.12.9
+
+commands:
+  write_master_hash:
+    steps:
+      - run: git remote add upstream git@github.com:ngrx/platform.git
+      - run: git fetch upstream master
+      - run: git log --format='%h' -n 1 upstream/master > ~/project/master.txt
 
 jobs:
   install:
@@ -43,8 +51,6 @@ jobs:
           paths:
             - .cache/yarn
             - .cache/Cypress
-            - .cache/bazel_repository_cache
-            - .cache/bazel_disk_cache
             - node_modules
 
   # Enforce some static analysis invariants.
@@ -88,10 +94,11 @@ jobs:
     steps:
       - checkout
       - *set_bazel_options
-
+      - write_master_hash
       - restore_cache:
           keys:
             - *cache_key
+            - *bazel_cache_key
 
       # Build
       - run: yarn bazel build //modules/...
@@ -105,9 +112,31 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/.cache/Cypress
+            - node_modules
+
+  update-master-hash:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - *set_bazel_options
+      - write_master_hash
+      - restore_cache:
+          keys:
+            - *cache_key
+            - *bazel_cache_key
+
+      # Build
+      - run: yarn bazel build //modules/...
+      # Store artifacts from build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - bin/*
+      - save_cache:
+          key: *bazel_cache_key
+          paths:
             - ~/.cache/bazel_repository_cache
             - ~/.cache/bazel_disk_cache
-            - node_modules
 
   schematics-core-check:
     <<: *run_in_browser
@@ -214,9 +243,11 @@ jobs:
           fingerprints:
             - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
+      - write_master_hash      
       - restore_cache:
           keys:
             - *cache_key
+            - *bazel_cache_key
       - attach_workspace:
           at: dist
       - run: yarn run deploy:builds
@@ -225,9 +256,11 @@ jobs:
     <<: *run_in_node
     steps:
       - checkout
+      - write_master_hash      
       - restore_cache:
           keys:
             - *cache_key
+            - *bazel_cache_key
       - attach_workspace:
           at: dist
       - run:
@@ -241,9 +274,11 @@ jobs:
     <<: *run_in_node
     steps:
       - checkout
+      - write_master_hash      
       - restore_cache:
           keys:
             - *cache_key
+            - *bazel_cache_key
       - attach_workspace:
           at: dist
       - run:
@@ -310,6 +345,12 @@ workflows:
             branches:
               only: master
       - cleanup-previews:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - update-master-hash:
           requires:
             - install
           filters:
