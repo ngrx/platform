@@ -11,7 +11,17 @@ import {
 import { hasZone, isIvy } from '../utils';
 import { mapTo } from 'rxjs/operators';
 
+/** A shared promise instance to cause a delay of one microtask */
+let resolvedPromise: Promise<void> | null = null;
+
+function getResolvedPromise() {
+  resolvedPromise = resolvedPromise || Promise.resolve();
+  return resolvedPromise;
+}
+
 function getSaveDurationSelector(ngZone: NgZone): () => Observable<number> {
+  return () => defer(getResolvedPromise).pipe(mapTo(1));
+
   return () => defer(() => from(Promise.resolve()).pipe(mapTo(1)));
   // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
   /* hasZone(ngZone)
@@ -38,6 +48,7 @@ export const DEFAULT_STRATEGY_NAME = 'idle';
 
 export interface StrategySelection<U> {
   idle: CdStrategy<U>;
+
   [key: string]: CdStrategy<U>;
 }
 
