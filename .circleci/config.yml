@@ -240,10 +240,8 @@ jobs:
           fingerprints:
             - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
-      - write_master_hash      
       - restore_cache:
           keys:
-            - *bazel_cache_key
             - *cache_key
       - attach_workspace:
           at: dist
@@ -253,10 +251,8 @@ jobs:
     <<: *run_in_node
     steps:
       - checkout
-      - write_master_hash      
       - restore_cache:
           keys:
-            - *bazel_cache_key
             - *cache_key
       - attach_workspace:
           at: dist
@@ -271,10 +267,8 @@ jobs:
     <<: *run_in_node
     steps:
       - checkout
-      - write_master_hash      
       - restore_cache:
           keys:
-            - *bazel_cache_key
             - *cache_key
       - attach_workspace:
           at: dist
