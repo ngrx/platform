@@ -43,8 +43,8 @@ export function createCdAware<U>(cfg: {
 }): CdAware<U | undefined | null> {
   const configSubject = new Subject<string>();
   const config$: Observable<CdStrategy<U>> = configSubject.pipe(
-    distinctUntilChanged(),
     startWith(DEFAULT_STRATEGY_NAME),
+    distinctUntilChanged(),
     map(
       (strategy: string): CdStrategy<U> =>
         cfg.strategies[strategy]
