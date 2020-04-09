@@ -147,12 +147,12 @@ export class LetDirective<U> implements OnDestroy {
 
   @Input()
   set ngrxLet(potentialObservable: ObservableInput<U> | null | undefined) {
-    this.cdAware.nextValue(potentialObservable);
+    this.cdAware.nextPotentialObservable(potentialObservable);
   }
 
   @Input()
   set ngrxLetConfig(config: string | undefined) {
-    this.cdAware.nextConfig(config || '');
+    this.cdAware.nextStrategy(config || '');
   }
 
   constructor(

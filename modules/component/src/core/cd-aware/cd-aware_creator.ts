@@ -23,8 +23,8 @@ import {
 } from './strategy';
 
 export interface CdAware<U> extends Subscribable<U> {
-  nextValue: (value: any) => void;
-  nextConfig: (config: string) => void;
+  nextPotentialObservable: (value: any) => void;
+  nextStrategy: (config: string) => void;
 }
 
 /**
@@ -99,10 +99,10 @@ export function createCdAware<U>(cfg: {
   );
 
   return {
-    nextValue(value: any): void {
+    nextPotentialObservable(value: any): void {
       potentialObservablesSubject.next(value);
     },
-    nextConfig(nextConfig: string): void {
+    nextStrategy(nextConfig: string): void {
       strategyNameSubject.next(nextConfig);
     },
     subscribe(): Subscription {
