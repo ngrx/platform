@@ -38,7 +38,7 @@ class MockChangeDetectorRef {
 
 @Component({
   template: `
-    {{ (value$ | ngrxPush) || 'undefined' }}
+    {{ (value$ | ngrxPush | json) || 'undefined' }}
   `,
 })
 class PushPipeTestComponent {
@@ -166,7 +166,7 @@ describe('PushPipe', () => {
         );
       });
 
-      xit('should return null as value when initially null was passed (as no value ever was emitted)', () => {
+      it('should return null as value when initially null was passed (as no value ever was emitted)', () => {
         pushPipeTestComponent.value$ = null;
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('null'));
@@ -180,7 +180,7 @@ describe('PushPipe', () => {
         );
       });
 
-      xit('should return null as value when initially of(null) was passed (as null was emitted)', () => {
+      it('should return null as value when initially of(null) was passed (as null was emitted)', () => {
         pushPipeTestComponent.value$ = of(null);
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('null'));

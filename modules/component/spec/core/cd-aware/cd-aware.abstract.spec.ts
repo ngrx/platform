@@ -5,12 +5,10 @@ import {
   EMPTY,
   NEVER,
   NextObserver,
-  Observable,
+  Observer,
   of,
-  PartialObserver,
   Unsubscribable,
 } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 class CdAwareImplementation<U> implements OnDestroy {
   public renderedValue: any = undefined;
@@ -21,21 +19,23 @@ class CdAwareImplementation<U> implements OnDestroy {
   resetContextObserver: NextObserver<any> = {
     next: _ => (this.renderedValue = undefined),
   };
-  updateViewContextObserver: PartialObserver<U | undefined | null> = {
+  updateViewContextObserver: Observer<U | undefined | null> = {
     next: (n: U | undefined | null) => (this.renderedValue = n),
     error: e => (this.error = e),
     complete: () => (this.completed = true),
   };
-  configurableBehaviour = <T>(
-    o$: Observable<Observable<T>>
-  ): Observable<Observable<T>> => o$.pipe(tap());
 
   constructor() {
     this.cdAware = createCdAware<U>({
-      work: () => {},
-      resetContextObserver: this.resetContextObserver,
+      strategies: {
+        idle: {
+          render: () => {},
+          behaviour: () => o => o,
+          name: 'idle',
+        },
+      },
       updateViewContextObserver: this.updateViewContextObserver,
-      configurableBehaviour: this.configurableBehaviour,
+      resetContextObserver: this.resetContextObserver,
     });
     this.subscription = this.cdAware.subscribe();
   }
@@ -68,58 +68,60 @@ describe('CdAware', () => {
     });
 
     it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
-      cdAwareImplementation.cdAware.next(undefined);
+      cdAwareImplementation.cdAware.nextPotentialObservable(undefined);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
     it('should render null as value when initially null was passed (as no value ever was emitted)', () => {
-      cdAwareImplementation.cdAware.next(null);
+      cdAwareImplementation.cdAware.nextPotentialObservable(null);
       expect(cdAwareImplementation.renderedValue).toBe(null);
     });
 
     it('should render undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
-      cdAwareImplementation.cdAware.next(of(undefined));
+      cdAwareImplementation.cdAware.nextPotentialObservable(of(undefined));
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
     it('should render null as value when initially of(null) was passed (as null was emitted)', () => {
-      cdAwareImplementation.cdAware.next(of(null));
+      cdAwareImplementation.cdAware.nextPotentialObservable(of(null));
       expect(cdAwareImplementation.renderedValue).toBe(null);
     });
 
     it('should render undefined as value when initially EMPTY was passed (as no value ever was emitted)', () => {
-      cdAwareImplementation.cdAware.next(EMPTY);
+      cdAwareImplementation.cdAware.nextPotentialObservable(EMPTY);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
     it('should render undefined as value when initially NEVER was passed (as no value ever was emitted)', () => {
-      cdAwareImplementation.cdAware.next(NEVER);
+      cdAwareImplementation.cdAware.nextPotentialObservable(NEVER);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
     // Also: 'should keep last emitted value in the view until a new observable NEVER was passed (as no value ever was emitted from new observable)'
     it('should render emitted value from passed observable without changing it', () => {
-      cdAwareImplementation.cdAware.next(of(42));
+      cdAwareImplementation.cdAware.nextPotentialObservable(of(42));
       expect(cdAwareImplementation.renderedValue).toBe(42);
     });
 
     it('should render undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
-      cdAwareImplementation.cdAware.next(of(42));
+      cdAwareImplementation.cdAware.nextPotentialObservable(of(42));
       expect(cdAwareImplementation.renderedValue).toBe(42);
-      cdAwareImplementation.cdAware.next(NEVER);
+      cdAwareImplementation.cdAware.nextPotentialObservable(NEVER);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
   });
 
   describe('observable context', () => {
     it('next handling running observable', () => {
-      cdAwareImplementation.cdAware.next(concat(of(42), NEVER));
+      cdAwareImplementation.cdAware.nextPotentialObservable(
+        concat(of(42), NEVER)
+      );
       expect(cdAwareImplementation.renderedValue).toBe(42);
       expect(cdAwareImplementation.error).toBe(undefined);
       expect(cdAwareImplementation.completed).toBe(false);
     });
 
     it('next handling completed observable', () => {
-      cdAwareImplementation.cdAware.next(of(42));
+      cdAwareImplementation.cdAware.nextPotentialObservable(of(42));
       expect(cdAwareImplementation.renderedValue).toBe(42);
       expect(cdAwareImplementation.error).toBe(undefined);
       expect(cdAwareImplementation.completed).toBe(true);
@@ -137,7 +139,7 @@ describe('CdAware', () => {
     });
 
     it('completion handling', () => {
-      cdAwareImplementation.cdAware.next(EMPTY);
+      cdAwareImplementation.cdAware.nextPotentialObservable(EMPTY);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
       expect(cdAwareImplementation.error).toBe(undefined);
       expect(cdAwareImplementation.completed).toBe(true);
