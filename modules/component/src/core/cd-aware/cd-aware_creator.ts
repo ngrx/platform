@@ -1,4 +1,5 @@
 import {
+  BehaviorSubject,
   combineLatest,
   EMPTY,
   NextObserver,
@@ -41,9 +42,8 @@ export function createCdAware<U>(cfg: {
   resetContextObserver: NextObserver<any>;
   updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
 }): CdAware<U | undefined | null> {
-  const configSubject = new Subject<string>();
+  const configSubject = new BehaviorSubject<string>(DEFAULT_STRATEGY_NAME);
   const config$: Observable<CdStrategy<U>> = configSubject.pipe(
-    startWith(DEFAULT_STRATEGY_NAME),
     distinctUntilChanged(),
     map(
       (strategy: string): CdStrategy<U> =>
