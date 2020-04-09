@@ -64,10 +64,6 @@ export function createCdAware<U>(cfg: {
     config$,
   ]).pipe(
     switchMap(([observable$, strategy]) => {
-      if (prevObservable === observable$) {
-        return EMPTY;
-      }
-
       if (observable$ == null) {
         cfg.updateViewContextObserver.next(observable$);
         strategy.render();
