@@ -21,8 +21,6 @@ function getResolvedPromise() {
 
 function getSaveDurationSelector(ngZone: NgZone): () => Observable<number> {
   return () => defer(getResolvedPromise).pipe(mapTo(1));
-
-  return () => defer(() => from(Promise.resolve()).pipe(mapTo(1)));
   // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
   /* hasZone(ngZone)
       ? generateFrames(
