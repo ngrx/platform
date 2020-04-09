@@ -60,10 +60,7 @@ export function createCdAware<U>(cfg: {
     distinctUntilChanged()
   );
 
-  const renderSideEffect$ = combineLatest([
-    observablesFromTemplate$,
-    strategy$,
-  ]).pipe(
+  const rendering$ = combineLatest([observablesFromTemplate$, strategy$]).pipe(
     // Compose the observables from the template and the strategy
     switchMap(([observable$, strategy]) => {
       // If the passed observable is:
@@ -109,7 +106,7 @@ export function createCdAware<U>(cfg: {
       strategyNameSubject.next(nextConfig);
     },
     subscribe(): Subscription {
-      return renderSideEffect$.subscribe();
+      return rendering$.subscribe();
     },
   } as CdAware<U | undefined | null>;
 }
