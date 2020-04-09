@@ -100,7 +100,7 @@ export class LetDirective<U> implements OnDestroy {
 
   protected readonly subscription: Unsubscribable;
   private readonly cdAware: CdAware<U | null | undefined>;
-  private readonly resetContextObserver: NextObserver<unknown> = {
+  private readonly resetContextObserver: NextObserver<undefined> = {
     next: () => {
       // if not initialized no need to set undefined
       if (this.embeddedView) {

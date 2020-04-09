@@ -57,8 +57,8 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
 
   private readonly subscription: Unsubscribable;
   private readonly cdAware: CdAware<S | null | undefined>;
-  private readonly resetContextObserver: NextObserver<unknown> = {
-    next: (value: unknown) => (this.renderedValue = undefined),
+  private readonly resetContextObserver: NextObserver<undefined> = {
+    next: (value: undefined) => (this.renderedValue = undefined),
   };
   private readonly updateViewContextObserver: NextObserver<
     S | null | undefined
