@@ -79,7 +79,10 @@ export function createCdAware<U>(cfg: {
         tap(cfg.updateViewContextObserver),
         strategy.behaviour(),
         tap(() => strategy.render()),
-        catchError(e => EMPTY)
+        catchError(e => {
+          console.error(e);
+          return EMPTY;
+        })
       );
     })
   );
