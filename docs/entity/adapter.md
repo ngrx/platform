@@ -252,7 +252,7 @@ export function reducer(state = initialState, action: UserActionsUnion): State {
     }
 
     case UserActionTypes.LOAD_USERS: {
-      return adapter.addAll(action.payload.users, state);
+      return adapter.setAll(action.payload.users, state);
     }
 
     case UserActionTypes.CLEAR_USERS: {
