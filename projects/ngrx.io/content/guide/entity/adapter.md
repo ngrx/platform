@@ -181,7 +181,7 @@ const userReducer = createReducer(
     return adapter.removeMany(predicate, state);
   }),
   on(UserActions.loadUsers, (state, { users }) => {
-    return adapter.addAll(users, state);
+    return adapter.setAll(users, state);
   }),
   on(UserActions.clearUsers, state => {
     return adapter.removeAll({ ...state, selectedUserId: null });
