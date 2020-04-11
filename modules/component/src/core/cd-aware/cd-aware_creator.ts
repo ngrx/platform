@@ -21,6 +21,7 @@ import {
   DEFAULT_STRATEGY_NAME,
   StrategySelection,
 } from './strategy';
+import { nameToStrategy } from '../rxjs';
 
 export interface CdAware<U> extends Subscribable<U> {
   nextPotentialObservable: (value: any) => void;
@@ -45,14 +46,7 @@ export function createCdAware<U>(cfg: {
     DEFAULT_STRATEGY_NAME
   );
   const strategy$: Observable<CdStrategy<U>> = strategyNameSubject.pipe(
-    distinctUntilChanged(),
-    // convert a strategy name of type string into { render: () => void, behavior: () => OperatorFunction, name:string}
-    map(
-      (strategy: string): CdStrategy<U> =>
-        cfg.strategies[strategy]
-          ? cfg.strategies[strategy]
-          : cfg.strategies.idle
-    )
+    nameToStrategy(cfg.strategies)
   );
 
   const potentialObservablesSubject = new Subject<Observable<U>>();
