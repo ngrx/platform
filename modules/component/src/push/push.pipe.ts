@@ -24,6 +24,7 @@ import {
 
 /**
  * @Pipe PushPipe
+ *
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -54,8 +55,6 @@ import {
  *
  * @usageNotes
  *
- * ### Examples
- *
  * `ngrxPush` pipe solves that problem. It can be used like shown here:
  * ```html
  * {{observable$ | ngrxPush}}
@@ -79,7 +78,6 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
   private readonly updateViewContextObserver: PartialObserver<
     S | null | undefined
   > = {
-    // assign value that will get returned from the transform function on the next change detection
     next: (value: S | null | undefined) => (this.renderedValue = value),
   };
   private readonly resetContextObserver: NextObserver<unknown> = {
@@ -91,8 +89,6 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     o$.pipe(
       withLatestFrom(this.config$),
       map(([value$, config]) => {
-        // As discussed with Brandon we keep it here
-        // because in the beta we implement configuration behavior here
         return value$.pipe();
       })
     );
