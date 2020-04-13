@@ -1,6 +1,5 @@
 import {
   ChangeDetectorRef,
-  NgZone,
   OnDestroy,
   Pipe,
   PipeTransform,
@@ -85,13 +84,10 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     potentialObservable: ObservableInput<T> | null | undefined,
     config: string | undefined
   ): T | null | undefined {
-    console.info('transform');
-    console.info('renderedValue ', this.renderedValue);
     if (config) {
       this.cdAware.nextStrategy(config);
     }
     this.cdAware.nextPotentialObservable(potentialObservable);
-    console.info('renderedValue2 ', this.renderedValue);
     return this.renderedValue as T | null | undefined;
   }
 
