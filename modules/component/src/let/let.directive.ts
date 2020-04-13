@@ -2,7 +2,6 @@ import {
   ChangeDetectorRef,
   Directive,
   Input,
-  NgZone,
   OnDestroy,
   TemplateRef,
   ViewContainerRef,

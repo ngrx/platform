@@ -1,10 +1,9 @@
 // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
 // import { generateFrames } from '../projections/generateFrames';
 // import { coalesce } from '../operators/coalesce';
-import { defer, from, MonoTypeOperatorFunction, Observable } from 'rxjs';
+import { defer, MonoTypeOperatorFunction, Observable } from 'rxjs';
 import {
   ChangeDetectorRef,
-  NgZone,
   ɵdetectChanges as detectChanges,
   ɵmarkDirty as markDirty,
 } from '@angular/core';

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { EMPTY, interval, NEVER, Observable, of, throwError } from 'rxjs';
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { LetDirective } from '@ngrx/component';
+import { LetDirective } from '../../src/let';
 import { take } from 'rxjs/operators';
 
 let letDirective: any;
@@ -35,6 +35,24 @@ class LetDirectiveTestComponent {
 
 @Component({
   template: `
+    <ng-container
+      *ngrxLet="value$ as value; $error as error; $complete as complete"
+      >{{ (value | json) || 'undefined' }}</ng-container
+    >
+  `,
+})
+class LetDirectiveTestComponentStrategy {
+  numRenders = 0;
+
+  renders() {
+    return ++this.numRenders;
+  }
+
+  value$: Observable<number> = of(42);
+}
+
+@Component({
+  template: `
     <ng-container *ngrxLet="value$; $error as error">{{ error }}</ng-container>
   `,
 })
@@ -55,7 +73,7 @@ class LetDirectiveTestCompleteComponent {
 
 let fixtureLetDirectiveTestComponent: any;
 let letDirectiveTestComponent: {
-  cfg: any;
+  strategy: any;
   value$: Observable<any> | undefined | null;
 };
 let componentNativeElement: any;
@@ -71,6 +89,22 @@ const setupLetDirectiveTestComponent = (): void => {
   });
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
     LetDirectiveTestComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+const setupLetDirectiveTestComponentStrategy = (): void => {
+  TestBed.configureTestingModule({
+    declarations: [LetDirectiveTestComponentStrategy, LetDirective],
+    providers: [
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      TemplateRef,
+      ViewContainerRef,
+    ],
+  });
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestComponentStrategy
   );
   letDirectiveTestComponent =
     fixtureLetDirectiveTestComponent.componentInstance;
@@ -124,7 +158,7 @@ describe('LetDirective', () => {
     it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = undefined;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('');
+      expect(componentNativeElement.textContent).toBe('undefined');
     });
 
     it('should render null as value when initially null was passed (as no value ever was emitted)', () => {
@@ -231,6 +265,17 @@ describe('LetDirective', () => {
       letDirectiveTestComponent.value$ = EMPTY;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
+    });
+  });
+
+  describe('when using  strategy', () => {
+    beforeEach(async(setupLetDirectiveTestComponentStrategy));
+
+    it('should work with different if a strategy other than the default', () => {
+      letDirectiveTestComponent.value$ = of(1, 2, 3, 4, 5);
+      letDirectiveTestComponent.strategy = 'local';
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('5');
     });
   });
 });

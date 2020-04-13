@@ -12,7 +12,6 @@ import {
 import {
   catchError,
   distinctUntilChanged,
-  map,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -21,7 +20,7 @@ import {
   DEFAULT_STRATEGY_NAME,
   StrategySelection,
 } from './strategy';
-import { nameToStrategy } from '../rxjs';
+import { nameToStrategy } from './nameToStrategy';
 
 export interface CdAware<U> extends Subscribable<U> {
   nextPotentialObservable: (value: any) => void;
