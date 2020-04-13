@@ -7,10 +7,6 @@ import { getGlobalThis, hasZone, isIvy } from '../../../src/core/utils';
 import { range } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 
-class NgZone {}
-
-class NoopNgZone {}
-
 class ChangeDetectorRef {
   public markForCheck(): void {}
 
@@ -34,22 +30,16 @@ let componentNativeElement: any;
 
 const setupTestComponent = () => {
   TestBed.configureTestingModule({
-    providers: [NgZone, ChangeDetectorRef],
+    providers: [ChangeDetectorRef],
   });
 };
 
-let noopNgZone: any;
-let ngZone: any;
 let changeDetectorRef: any;
 
 beforeAll(() => {
   const injector = Injector.create([
-    { provide: NgZone, useClass: NgZone, deps: [] },
-    { provide: NoopNgZone, useClass: NoopNgZone, deps: [] },
     { provide: ChangeDetectorRef, useClass: ChangeDetectorRef, deps: [] },
   ]);
-  noopNgZone = injector.get(NoopNgZone) as NgZone;
-  ngZone = injector.get(NgZone);
   changeDetectorRef = injector.get(ChangeDetectorRef);
 
   TestBed.configureTestingModule({
@@ -68,7 +58,7 @@ describe('Strategy env setup and config generation', () => {
 
     expect(isIvy()).toBe(true);
     expect(cfg.component).toBeDefined();
-    expect(hasZone(cfg.ngZone)).toBe(true);
+    expect(hasZone()).toBe(true);
     expect(cfg.cdRef).toBeDefined();
   });
 
@@ -77,7 +67,7 @@ describe('Strategy env setup and config generation', () => {
 
     expect(isIvy()).toBe(true);
     expect(cfg.component).toBeDefined();
-    expect(hasZone(cfg.ngZone)).toBe(false);
+    expect(hasZone()).toBe(false);
     expect(cfg.cdRef).toBeDefined();
   });
 
@@ -86,7 +76,7 @@ describe('Strategy env setup and config generation', () => {
 
     expect(isIvy()).toBe(false);
     expect(cfg.component).toBeDefined();
-    expect(hasZone(cfg.ngZone)).toBe(true);
+    expect(hasZone()).toBe(true);
     expect(cfg.cdRef).toBeDefined();
   });
 
@@ -94,7 +84,7 @@ describe('Strategy env setup and config generation', () => {
     const cfg = setUpViewEngineZoneLessEnvAndGetCgf();
 
     expect(isIvy()).toBe(false);
-    expect(hasZone(cfg.ngZone)).toBe(false);
+    expect(hasZone()).toBe(false);
     expect(cfg.component).toBeDefined();
     expect(cfg.cdRef).toBeDefined();
   });
@@ -181,7 +171,6 @@ describe('createIdleStrategy', () => {
 function setUpIvyZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
   getGlobalThis().ng = undefined;
   return {
-    ngZone: ngZone,
     cdRef: changeDetectorRef,
     component: (testComponent.cdRef as any).context,
   };
@@ -190,7 +179,6 @@ function setUpIvyZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
 function setUpIvyZoneLessEnvAndGetCgf(): StrategyFactoryConfig {
   getGlobalThis().ng = undefined;
   return {
-    ngZone: noopNgZone,
     cdRef: changeDetectorRef,
     component: changeDetectorRef.context,
   };
@@ -199,7 +187,6 @@ function setUpIvyZoneLessEnvAndGetCgf(): StrategyFactoryConfig {
 function setUpViewEngineZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
   getGlobalThis().ng = { probe: 'simulate ViewEngine' };
   return {
-    ngZone: ngZone,
     cdRef: changeDetectorRef,
     component: changeDetectorRef.context,
   };
@@ -208,7 +195,6 @@ function setUpViewEngineZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
 function setUpViewEngineZoneLessEnvAndGetCgf(): StrategyFactoryConfig {
   getGlobalThis().ng = { probe: 'simulate ViewEngine' };
   return {
-    ngZone: noopNgZone,
     cdRef: changeDetectorRef,
     component: changeDetectorRef.context,
   };

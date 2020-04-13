@@ -1,7 +1,6 @@
 import {
   ChangeDetectorRef,
   Component,
-  NgZone as OriginalNgZone,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
@@ -11,18 +10,6 @@ import { LetDirective } from '@ngrx/component';
 import { take } from 'rxjs/operators';
 
 let letDirective: any;
-
-class NgZone extends OriginalNgZone {
-  constructor() {
-    super({ enableLongStackTrace: false });
-  }
-}
-
-class NoopNgZone {
-  constructor() {
-    // super({enableLongStackTrace: false});
-  }
-}
 
 class MockChangeDetectorRef {
   public markForCheck(): string {
@@ -77,7 +64,6 @@ const setupLetDirectiveTestComponent = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestComponent, LetDirective],
     providers: [
-      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       TemplateRef,
       ViewContainerRef,
@@ -94,7 +80,6 @@ const setupLetDirectiveTestComponentError = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestErrorComponent, LetDirective],
     providers: [
-      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       TemplateRef,
       ViewContainerRef,
@@ -112,7 +97,6 @@ const setupLetDirectiveTestComponentComplete = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestCompleteComponent, LetDirective],
     providers: [
-      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       TemplateRef,
       ViewContainerRef,

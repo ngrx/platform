@@ -28,10 +28,10 @@ class CdAwareImplementation<U> implements OnDestroy {
   constructor() {
     this.cdAware = createCdAware<U>({
       strategies: {
-        idle: {
+        asyncLike: {
           render: () => {},
           behaviour: () => o => o,
-          name: 'idle',
+          name: 'asyncLike',
         },
       },
       updateViewContextObserver: this.updateViewContextObserver,
