@@ -52,7 +52,7 @@ beforeAll(() => {
   componentNativeElement = fixtureTestComponent.nativeElement;
 });
 
-describe('Strategy env setup and config generation', () => {
+xdescribe('Strategy env setup and config generation', () => {
   it('should create Ivy zone-full', () => {
     const cfg = setUpIvyZoneFullEnvAndGetCgf();
 
@@ -90,14 +90,14 @@ describe('Strategy env setup and config generation', () => {
   });
 });
 
-describe('createIdleStrategy', () => {
+xdescribe('createIdleStrategy', () => {
   it('should return strategy', () => {
     const cfg = setUpIvyZoneFullEnvAndGetCgf();
     const idleStrategy = createIdleStrategy(cfg);
     expect(idleStrategy).toBeDefined();
   });
 
-  fit('should render:markForCheck, behaviour:noop in VE zone-full mode', () => {
+  it('should render:markForCheck, behaviour:noop in VE zone-full mode', () => {
     const cfg = setUpIvyZoneFullEnvAndGetCgf();
     const markForCheckSpy = jasmine.createSpy('markForCheck');
     cfg.cdRef.markForCheck = markForCheckSpy;
