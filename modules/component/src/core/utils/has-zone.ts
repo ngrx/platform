@@ -1,11 +1,9 @@
-import { NgZone } from '@angular/core';
-
+import { getGlobalThis } from './get-global-this';
 /**
  * @description
  *
- * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
+ * Determines if the application maintains a Zone instance.
  *
- * @param {NgZone} z - The zone service to check.
  * @returns {boolean} - true if the application runs with `NgZone`, false if the application runs with `NgNoopZone`
  *
  * @usageNotes
@@ -18,6 +16,6 @@ import { NgZone } from '@angular/core';
  * console.log(hasZone());
  * ```
  */
-export function hasZone(z: NgZone): boolean {
-  return z.constructor.name !== 'NoopNgZone';
+export function hasZone(): boolean {
+  return typeof getGlobalThis().Zone === 'undefined';
 }

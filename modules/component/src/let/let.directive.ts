@@ -159,14 +159,12 @@ export class LetDirective<U> implements OnDestroy {
 
   constructor(
     cdRef: ChangeDetectorRef,
-    ngZone: NgZone,
     private readonly templateRef: TemplateRef<LetViewContext<U>>,
     private readonly viewContainerRef: ViewContainerRef
   ) {
     this.cdAware = createCdAware<U>({
       strategies: getStrategies<U>({
         component: (cdRef as any).context,
-        ngZone,
         cdRef,
       }),
       resetContextObserver: this.resetContextObserver,
