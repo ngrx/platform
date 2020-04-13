@@ -182,8 +182,8 @@ import {
 
 @Injectable()
 export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
-  constructor(private pluralizer: Pluralizer) {
-    super(pluralizer);
+  constructor(private myPluralizer: Pluralizer) {
+    super(myPluralizer);
   }
 
   protected getResourceUrls(
@@ -193,7 +193,7 @@ export class PluralHttpUrlGenerator extends DefaultHttpUrlGenerator {
     let resourceUrls = this.knownHttpResourceUrls[entityName];
     if (!resourceUrls) {
       const nRoot = normalizeRoot(root);
-      const url = `${nRoot}/${this.pluralizzer.pluralize(
+      const url = `${nRoot}/${this.myPluralizer.pluralize(
         entityName
       )}/`.toLowerCase();
       resourceUrls = {
