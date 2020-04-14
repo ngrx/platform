@@ -1,3 +1,3 @@
 export { getGlobalThis } from './get-global-this';
-export { isIvy } from './is-ivy';
-export { hasZone } from './has-zone';
+export * from './view-engine-checks';
+export * from './zone-checks';

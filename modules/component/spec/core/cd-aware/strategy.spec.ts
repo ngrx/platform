@@ -3,7 +3,11 @@ import {
   StrategyFactoryConfig,
 } from '../../../src/core/cd-aware/strategy';
 import { Component, Injector } from '@angular/core';
-import { getGlobalThis, hasZone, isIvy } from '../../../src/core/utils';
+import {
+  getGlobalThis,
+  envZonePatched,
+  isViewEngineIvy,
+} from '../../../src/core/utils';
 import { range } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 
@@ -56,35 +60,35 @@ xdescribe('Strategy env setup and config generation', () => {
   it('should create Ivy zone-full', () => {
     const cfg = setUpIvyZoneFullEnvAndGetCgf();
 
-    expect(isIvy()).toBe(true);
+    expect(isViewEngineIvy()).toBe(true);
     expect(cfg.component).toBeDefined();
-    expect(hasZone()).toBe(true);
+    expect(envZonePatched()).toBe(true);
     expect(cfg.cdRef).toBeDefined();
   });
 
   it('should create Ivy zone-less', () => {
     const cfg = setUpIvyZoneLessEnvAndGetCgf();
 
-    expect(isIvy()).toBe(true);
+    expect(isViewEngineIvy()).toBe(true);
     expect(cfg.component).toBeDefined();
-    expect(hasZone()).toBe(false);
+    expect(envZonePatched()).toBe(false);
     expect(cfg.cdRef).toBeDefined();
   });
 
   it('should create ViewEngine zone-full', () => {
     const cfg = setUpViewEngineZoneFullEnvAndGetCgf();
 
-    expect(isIvy()).toBe(false);
+    expect(isViewEngineIvy()).toBe(false);
     expect(cfg.component).toBeDefined();
-    expect(hasZone()).toBe(true);
+    expect(envZonePatched()).toBe(true);
     expect(cfg.cdRef).toBeDefined();
   });
 
   it('should create ViewEngine zone-less', () => {
     const cfg = setUpViewEngineZoneLessEnvAndGetCgf();
 
-    expect(isIvy()).toBe(false);
-    expect(hasZone()).toBe(false);
+    expect(isViewEngineIvy()).toBe(false);
+    expect(envZonePatched()).toBe(false);
     expect(cfg.component).toBeDefined();
     expect(cfg.cdRef).toBeDefined();
   });
@@ -185,14 +189,6 @@ function setUpIvyZoneLessEnvAndGetCgf(): StrategyFactoryConfig {
 }
 
 function setUpViewEngineZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
-  getGlobalThis().ng = { probe: 'simulate ViewEngine' };
-  return {
-    cdRef: changeDetectorRef,
-    component: changeDetectorRef.context,
-  };
-}
-
-function setUpViewEngineZoneLessEnvAndGetCgf(): StrategyFactoryConfig {
   getGlobalThis().ng = { probe: 'simulate ViewEngine' };
   return {
     cdRef: changeDetectorRef,

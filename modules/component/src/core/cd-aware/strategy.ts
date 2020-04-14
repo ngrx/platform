@@ -7,7 +7,7 @@ import {
   ɵdetectChanges as detectChanges,
   ɵmarkDirty as markDirty,
 } from '@angular/core';
-import { hasZone, isIvy } from '../utils';
+import { envZonePatched, isViewEngineIvy } from '../utils';
 import { mapTo } from 'rxjs/operators';
 
 /** A shared promise instance to cause a delay of one microtask */
@@ -15,7 +15,7 @@ let resolvedPromise: Promise<void> | null = null;
 
 function getResolvedPromise(): Promise<void> {
   resolvedPromise =
-    resolvedPromise || hasZone()
+    resolvedPromise || envZonePatched()
       ? ((window as any).__zone_symbol__Promise.resolve() as Promise<void>)
       : Promise.resolve();
   return resolvedPromise;
@@ -79,7 +79,7 @@ export function createIdleStrategy<T>(
 ): CdStrategy<T> {
   return {
     render: (): void => {
-      isIvy() ? markDirty(cfg.component) : cfg.cdRef.markForCheck();
+      isViewEngineIvy() ? markDirty(cfg.component) : cfg.cdRef.markForCheck();
     },
     behaviour: () => o => o,
     name: 'asyncLike',
@@ -122,7 +122,7 @@ export function createNoopStrategy<T>(cfg?: any): CdStrategy<T> {
 export function createGlobalStrategy<T>(
   cfg: StrategyFactoryConfig
 ): CdStrategy<T> {
-  const inIvy = isIvy();
+  const inIvy = isViewEngineIvy();
   function render() {
     if (!inIvy) {
       cfg.cdRef.markForCheck();
@@ -149,8 +149,8 @@ export function createGlobalStrategy<T>(
 export function createLocalStrategy<T>(
   cfg: StrategyFactoryConfig
 ): CdStrategy<T> {
-  const inIvy = isIvy();
-  const inZone = hasZone();
+  const inIvy = isViewEngineIvy();
+  const inZone = envZonePatched();
   const durationSelector = getSaveDurationSelector();
   const coalesceConfig = { context: cfg.component as any };
 

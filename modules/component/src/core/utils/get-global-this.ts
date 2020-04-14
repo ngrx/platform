@@ -1,22 +1,14 @@
 /**
  * @description
  *
- * This function returns a reference to globalThis in the following environments:
- * - Browser
- * - SSR (Server Side Rendering)
- * - Tests
+ * A fallback for the new `globalThis` reference.
  *
- * @returns {any} - the reference to globalThis in the current environment.
+ *  It should be used to replace `window` due to different environments in:
+ *  - SSR (Server Side Rendering)
+ *  - Tests
+ *  - Browser
  *
- * @usageNotes
- *
- * The function can be just imported and used everywhere.
- *
- * ```ts
- * import { getGlobalThis } from `utils/get-global-this`;
- *
- * console.log(getGlobalThis());
- * ```
+ *  @return {globalThis} - A reference to globalThis. `window` in the Browser.
  */
 export function getGlobalThis(): any {
   return ((globalThis as any) || (self as any) || (window as any)) as any;
