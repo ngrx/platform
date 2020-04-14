@@ -46,6 +46,10 @@ export function isFunction(target: any): target is Function {
   return typeof target === 'function';
 }
 
+export function isComponent(target: any) {
+  return isFunction(target) && target.hasOwnProperty('ɵcmp');
+}
+
 export function hasOwnProperty(target: object, propertyName: string): boolean {
   return Object.prototype.hasOwnProperty.call(target, propertyName);
 }
