@@ -13,7 +13,9 @@ export function nameToStrategy<U>(strategies: StrategySelection<U>) {
       startWith(DEFAULT_STRATEGY_NAME),
       map(
         (strategy: string): CdStrategy<U> =>
-          strategies[strategy] ? strategies[strategy] : strategies.idle
+          strategies[strategy]
+            ? strategies[strategy]
+            : strategies[DEFAULT_STRATEGY_NAME]
       )
     );
   };

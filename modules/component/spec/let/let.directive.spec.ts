@@ -268,7 +268,7 @@ describe('LetDirective', () => {
     });
   });
 
-  describe('when using  strategy', () => {
+  describe('when using strategy', () => {
     beforeEach(async(setupLetDirectiveTestComponentStrategy));
 
     it('should work with different if a strategy other than the default', () => {
