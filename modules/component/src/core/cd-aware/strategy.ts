@@ -166,6 +166,16 @@ export function createGlobalStrategy<T>(
  * all it's children that are on a path
  * that is marked as dirty or has components with `ChangeDetectionStrategy.Default`.
  *
+ * As detectChanges has no coalescing of render calls
+ * like `ChangeDetectorRef#markForCheck` or `ɵmarkDirty` has, so we have to apply our own coalescing, 'scoped' on component level.
+ *
+ * Coalescing, in this very manner,
+ * means **collecting all events** in the same [EventLoop](https://developer.mozilla.org/de/docs/Web/JavaScript/EventLoop) tick,
+ * that would cause a re-render and execute **re-rendering only once**.
+ *
+ * 'Scoped' coalescing, in addition, means **grouping the collected events by** a specific context.
+ * E. g. the **component** from which the re-rendering was initiated.
+ *
  * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
  * |-------------| --------------| ------------ ------ | ---------------- |
  * | `local`     | ✔️/✔️          | dC / ɵDC            | ✔️ + C/ LV       |
