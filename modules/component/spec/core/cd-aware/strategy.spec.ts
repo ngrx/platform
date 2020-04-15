@@ -1,197 +1,124 @@
 import {
-  createIdleStrategy,
-  StrategyFactoryConfig,
-} from '../../../src/core/cd-aware/strategy';
-import { Component, Injector } from '@angular/core';
-import {
+  createNativeStrategy,
+  createNoopStrategy,
+  DEFAULT_STRATEGY_NAME,
   getGlobalThis,
-  envZonePatched,
-  isViewEngineIvy,
-} from '../../../src/core/utils';
-import { range } from 'rxjs';
-import { TestBed } from '@angular/core/testing';
+  getStrategies,
+  getZoneUnPatchedDurationSelector,
+} from '../../../src/core';
+import {
+  getMockNativeStrategyConfig,
+  getMockNoopStrategyConfig,
+} from '../../fixtures/fixtures';
+import { TestScheduler } from 'rxjs/testing';
+import { jestMatcher } from '../../rx-marbles';
 
-class ChangeDetectorRef {
-  public markForCheck(): void {}
+let testScheduler: TestScheduler;
 
-  public detectChanges(): void {}
+// In THIS test setup Zone is initiated and __zone_symbol__Promise has already value
+const original__zone_symbol__Promise =
+  getGlobalThis().__zone_symbol__Promise || Promise;
+function restoreGlobalThis() {
+  getGlobalThis().__zone_symbol__Promise = original__zone_symbol__Promise;
 }
 
-@Component({
-  template: `
-    Test
-  `,
-})
-class TestComponent {
-  constructor(public cdRef: ChangeDetectorRef) {}
-}
+describe('getZoneUnPatchedDurationSelector', () => {
+  beforeEach(restoreGlobalThis);
 
-let fixtureTestComponent: any;
-let testComponent: {
-  cdRef: ChangeDetectorRef;
-};
-let componentNativeElement: any;
+  it('should return the the native/un-patched Promise from globalThis.Promise if zone didnt patch it', () => {
+    getGlobalThis().__zone_symbol__Promise = undefined;
+    const originalThen: Function = Promise.prototype.then;
+    let called = false;
+    Promise.prototype.then = function() {
+      const chained = originalThen.apply(this, arguments);
+      called = true;
+      return chained;
+    };
 
-const setupTestComponent = () => {
-  TestBed.configureTestingModule({
-    providers: [ChangeDetectorRef],
-  });
-};
-
-let changeDetectorRef: any;
-
-beforeAll(() => {
-  const injector = Injector.create([
-    { provide: ChangeDetectorRef, useClass: ChangeDetectorRef, deps: [] },
-  ]);
-  changeDetectorRef = injector.get(ChangeDetectorRef);
-
-  TestBed.configureTestingModule({
-    declarations: [TestComponent],
-    providers: [ChangeDetectorRef],
+    const promise = getZoneUnPatchedDurationSelector();
+    promise().subscribe(() => {
+      expect(called).toBe(true);
+    });
   });
 
-  fixtureTestComponent = TestBed.createComponent(TestComponent);
-  testComponent = fixtureTestComponent.componentInstance;
-  componentNativeElement = fixtureTestComponent.nativeElement;
-});
-
-xdescribe('Strategy env setup and config generation', () => {
-  it('should create Ivy zone-full', () => {
-    const cfg = setUpIvyZoneFullEnvAndGetCgf();
-
-    expect(isViewEngineIvy()).toBe(true);
-    expect(cfg.component).toBeDefined();
-    expect(envZonePatched()).toBe(true);
-    expect(cfg.cdRef).toBeDefined();
-  });
-
-  it('should create Ivy zone-less', () => {
-    const cfg = setUpIvyZoneLessEnvAndGetCgf();
-
-    expect(isViewEngineIvy()).toBe(true);
-    expect(cfg.component).toBeDefined();
-    expect(envZonePatched()).toBe(false);
-    expect(cfg.cdRef).toBeDefined();
-  });
-
-  it('should create ViewEngine zone-full', () => {
-    const cfg = setUpViewEngineZoneFullEnvAndGetCgf();
-
-    expect(isViewEngineIvy()).toBe(false);
-    expect(cfg.component).toBeDefined();
-    expect(envZonePatched()).toBe(true);
-    expect(cfg.cdRef).toBeDefined();
-  });
-
-  it('should create ViewEngine zone-less', () => {
-    const cfg = setUpViewEngineZoneLessEnvAndGetCgf();
-
-    expect(isViewEngineIvy()).toBe(false);
-    expect(envZonePatched()).toBe(false);
-    expect(cfg.component).toBeDefined();
-    expect(cfg.cdRef).toBeDefined();
+  it('should return the the native/un-patched Promise from globalThis.__zone_symbol__Promise', () => {
+    const originalThen: Function = getGlobalThis().__zone_symbol__Promise
+      .prototype.then;
+    let called = false;
+    getGlobalThis().__zone_symbol__Promise.prototype.then = function() {
+      const chained = originalThen.apply(this, arguments);
+      called = true;
+      return chained;
+    };
+    const promise = getZoneUnPatchedDurationSelector();
+    promise().subscribe(res => {
+      expect(called).toBe(true);
+    });
   });
 });
 
-xdescribe('createIdleStrategy', () => {
-  it('should return strategy', () => {
-    const cfg = setUpIvyZoneFullEnvAndGetCgf();
-    const idleStrategy = createIdleStrategy(cfg);
-    expect(idleStrategy).toBeDefined();
-  });
-
-  it('should render:markForCheck, behaviour:noop in VE zone-full mode', () => {
-    const cfg = setUpIvyZoneFullEnvAndGetCgf();
-    const markForCheckSpy = jasmine.createSpy('markForCheck');
-    cfg.cdRef.markForCheck = markForCheckSpy;
-    const idleStrategy = createIdleStrategy(cfg);
-
-    expect(markForCheckSpy).not.toHaveBeenCalled();
-    idleStrategy.render();
-    // expect(markForCheckSpy).toHaveBeenCalled();
-
-    const nextSpy = jasmine.createSpy('next');
-    range(1, 5)
-      .pipe(idleStrategy.behaviour())
-      .subscribe(v => nextSpy(v));
-    expect(nextSpy).toHaveBeenCalledTimes(5);
-  });
-
-  it('should render:markForCheck, behaviour:noop in VE zone-less mode', () => {
-    const cfg = setUpIvyZoneLessEnvAndGetCgf();
-    const markForCheckSpy = jasmine.createSpy('markForCheck');
-    cfg.cdRef.markForCheck = markForCheckSpy;
-    const idleStrategy = createIdleStrategy(cfg);
-
-    expect(markForCheckSpy).not.toHaveBeenCalled();
-    // idleStrategy.render();
-    // expect(markForCheckSpy).toHaveBeenCalled();
-
-    const nextSpy = jasmine.createSpy('next');
-    range(1, 5)
-      .pipe(idleStrategy.behaviour())
-      .subscribe(v => nextSpy(v));
-    expect(nextSpy).toHaveBeenCalledTimes(5);
-  });
-
-  it('should render:markForCheck, behaviour:noop in Ivy zone-full mode', () => {
-    const cfg = setUpIvyZoneFullEnvAndGetCgf();
-    const markForCheckSpy = jasmine.createSpy('markForCheck');
-    cfg.cdRef.markForCheck = markForCheckSpy;
-    const idleStrategy = createIdleStrategy(cfg);
-
-    expect(markForCheckSpy).not.toHaveBeenCalled();
-    // idleStrategy.render();
-    // expect(markForCheckSpy).toHaveBeenCalled();
-
-    const nextSpy = jasmine.createSpy('next');
-    range(1, 5)
-      .pipe(idleStrategy.behaviour())
-      .subscribe(v => nextSpy(v));
-    expect(nextSpy).toHaveBeenCalledTimes(5);
-  });
-
-  it('should render:markForCheck, behaviour:noop in Ivy zone-less mode', () => {
-    const cfg = setUpIvyZoneLessEnvAndGetCgf();
-    const markForCheckSpy = jasmine.createSpy('markForCheck');
-    cfg.cdRef.markForCheck = markForCheckSpy;
-    const idleStrategy = createIdleStrategy(cfg);
-
-    expect(markForCheckSpy).not.toHaveBeenCalled();
-    // idleStrategy.render();
-    // expect(markForCheckSpy).toHaveBeenCalled();
-
-    const nextSpy = jasmine.createSpy('next');
-    range(1, 5)
-      .pipe(idleStrategy.behaviour())
-      .subscribe(v => nextSpy(v));
-    expect(nextSpy).toHaveBeenCalledTimes(5);
+describe('DEFAULT_STRATEGY_NAME', () => {
+  it('should be `native`', () => {
+    const strategies = getStrategies(getMockNativeStrategyConfig());
+    expect(strategies[DEFAULT_STRATEGY_NAME].name).toBe('native');
   });
 });
 
-// ===
+describe('strategies', () => {
+  beforeEach(() => {
+    testScheduler = new TestScheduler(jestMatcher);
+  });
 
-function setUpIvyZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
-  getGlobalThis().ng = undefined;
-  return {
-    cdRef: changeDetectorRef,
-    component: (testComponent.cdRef as any).context,
-  };
-}
+  describe('createNativeStrategy', () => {
+    it('should return a strategy named `native`', () => {
+      const strategy = createNativeStrategy(getMockNativeStrategyConfig());
+      expect(strategy.name).toBe('native');
+    });
 
-function setUpIvyZoneLessEnvAndGetCgf(): StrategyFactoryConfig {
-  getGlobalThis().ng = undefined;
-  return {
-    cdRef: changeDetectorRef,
-    component: changeDetectorRef.context,
-  };
-}
+    it('should call the renderMethod `ChangeDetectorRef#markForCheck`', () => {
+      const cfg = getMockNativeStrategyConfig();
+      const strategy = createNativeStrategy(cfg);
+      strategy.render();
+      expect(cfg.cdRef.markForCheck).toHaveBeenCalledTimes(1);
+    });
 
-function setUpViewEngineZoneFullEnvAndGetCgf(): StrategyFactoryConfig {
-  getGlobalThis().ng = { probe: 'simulate ViewEngine' };
-  return {
-    cdRef: changeDetectorRef,
-    component: changeDetectorRef.context,
-  };
-}
+    it('should have a "noop" behavior', () => {
+      testScheduler.run(({ cold, expectObservable }) => {
+        const cfg = getMockNativeStrategyConfig();
+        const strategy = createNativeStrategy(cfg);
+
+        const source$ = cold('abcde|');
+        const expexted = 'abcde|';
+        const result$ = source$.pipe(strategy.behaviour());
+        expectObservable(result$).toBe(expexted);
+      });
+    });
+  });
+
+  describe('createNoopStrategy', () => {
+    it('should return a strategy named `noop`', () => {
+      const strategy = createNoopStrategy(getMockNoopStrategyConfig());
+      expect(strategy.name).toBe('noop');
+    });
+
+    it('should call no renderMethod', () => {
+      const cfg = getMockNoopStrategyConfig();
+      const strategy = createNoopStrategy(cfg);
+      strategy.render();
+      expect(cfg.cdRef.markForCheck).toHaveBeenCalledTimes(0);
+      expect(cfg.cdRef.detectChanges).toHaveBeenCalledTimes(0);
+    });
+
+    it('should have a "noop" behavior', () => {
+      testScheduler.run(({ cold, expectObservable }) => {
+        const cfg = getMockNoopStrategyConfig();
+        const strategy = createNoopStrategy(cfg);
+
+        const source$ = cold('abcde|');
+        const expexted = 'abcde|';
+        const result$ = source$.pipe(strategy.behaviour());
+        expectObservable(result$).toBe(expexted);
+      });
+    });
+  });
+});

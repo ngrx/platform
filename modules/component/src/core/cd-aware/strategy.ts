@@ -1,13 +1,13 @@
 // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
 // import { generateFrames } from '../projections/generateFrames';
 // import { coalesce } from '../operators/coalesce';
-import { defer, MonoTypeOperatorFunction, Observable } from 'rxjs';
+import { defer, from, MonoTypeOperatorFunction, Observable } from 'rxjs';
 import {
   ChangeDetectorRef,
   ɵdetectChanges as detectChanges,
   ɵmarkDirty as markDirty,
 } from '@angular/core';
-import { envZonePatched, isViewEngineIvy } from '../utils';
+import { apiZonePatched, getGlobalThis, isViewEngineIvy } from '../utils';
 import { mapTo } from 'rxjs/operators';
 
 /** A shared promise instance to cause a delay of one microtask */
@@ -15,14 +15,14 @@ let resolvedPromise: Promise<void> | null = null;
 
 function getResolvedPromise(): Promise<void> {
   resolvedPromise =
-    resolvedPromise || envZonePatched()
-      ? ((window as any).__zone_symbol__Promise.resolve() as Promise<void>)
+    resolvedPromise || apiZonePatched('Promise')
+      ? (getGlobalThis().__zone_symbol__Promise.resolve() as Promise<void>)
       : Promise.resolve();
   return resolvedPromise;
 }
 
-function getSaveDurationSelector(): () => Observable<number> {
-  return () => defer(getResolvedPromise).pipe(mapTo(1));
+export function getZoneUnPatchedDurationSelector(): () => Observable<number> {
+  return () => defer(() => from(getResolvedPromise()).pipe(mapTo(1)));
 }
 
 export interface StrategyFactoryConfig {
@@ -31,15 +31,15 @@ export interface StrategyFactoryConfig {
 }
 
 export interface CdStrategy<T> {
-  behaviour: (cfg?: any) => MonoTypeOperatorFunction<T>;
+  behaviour: () => MonoTypeOperatorFunction<T>;
   render: () => void;
   name: string;
 }
 
-export const DEFAULT_STRATEGY_NAME = 'asyncLike';
+export const DEFAULT_STRATEGY_NAME = 'native';
 
 export interface StrategySelection<U> {
-  asyncLike: CdStrategy<U>;
+  native: CdStrategy<U>;
 
   [key: string]: CdStrategy<U>;
 }
@@ -48,7 +48,7 @@ export function getStrategies<T>(
   cfg: StrategyFactoryConfig
 ): StrategySelection<T> {
   return {
-    asyncLike: createIdleStrategy<T>(cfg),
+    native: createNativeStrategy<T>(cfg),
     noop: createNoopStrategy<T>(),
     global: createGlobalStrategy<T>(cfg),
     local: createLocalStrategy<T>(cfg),
@@ -56,53 +56,62 @@ export function getStrategies<T>(
 }
 
 /**
- * AsyncLike Strategy
+ * Strategies
  *
- * This strategy is the drop-in replacement for Angular's built-in `async` pipe.
- * This is the only strategy that **does not also work in zone-less environments**.
+ * - VE/I - Options for ViewEngine / Ivy
+ * - mFC - `cdRef.markForCheck`
+ * - dC - `cdRef.detectChanges`
+ * - ɵMD - `ɵmarkDirty`
+ * - ɵDC - `ɵdetectChanges`
+ * - LV  - `LView`
+ * - C - `Component`
  *
- * - \>=ViewEngine
- * |          | Render Method      | Coalescing | Coalesce Scope |
- * | -------- | -------------------| ---------- | -------------- |
- * | ZoneFull | cdRef.markForCheck | ❌         | None           |
- * | ZoneLess | cdRef.markForCheck | ❌         | None           |
+ * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
+ * |-------------| --------------| ------------ ------ | ---------------- |
+ * | `native`    | ❌/❌         | mFC / mFC           | ❌               |
+ * | `global`    | ❌/✔️         | mFC  / ɵMD           | ❌              |
+ * | `local`     | ✔️/✔️          | dC / ɵDC            | ✔️ + C/ LV       |
+ * | `noop`      | ❌/❌         | no rendering        | ❌               |
  *
- * - Ivy
- *
- * |          | Render Method      | Coalescing | Coalesce Scope |
- * | -------- | -------------------| ---------- | -------------- |
- * | ZoneFull | cdRef.markForCheck | ❌         | None           |
- * | ZoneLess | cdRef.markForCheck | ❌         | None           |
  */
-export function createIdleStrategy<T>(
-  cfg: Pick<StrategyFactoryConfig, 'cdRef' | 'component'>
+
+/**
+ * Native Strategy
+ * @description
+ *
+ * This strategy mirrors Angular's built-in `async` pipe.
+ * This means for every emitted value `ChangeDetectorRef#markForCheck` is called.
+ *
+ * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
+ * |-------------| --------------| ------------ ------ | ---------------- |
+ * | `native`    | ❌/❌         | mFC / mFC           | ❌               |
+ *
+ * @param config { StrategyFactoryConfig } - The values this strategy needs to get calculated.
+ * @return {CdStrategy<T>} - The calculated strategy
+ *
+ */
+export function createNativeStrategy<T>(
+  config: StrategyFactoryConfig
 ): CdStrategy<T> {
   return {
-    render: (): void => {
-      isViewEngineIvy() ? markDirty(cfg.component) : cfg.cdRef.markForCheck();
-    },
+    render: (): void => config.cdRef.markForCheck(),
     behaviour: () => o => o,
-    name: 'asyncLike',
+    name: 'native',
   };
 }
 
 /**
  * Noop Strategy
  *
- * This strategy is does nothing.
+ * This strategy is does nothing. It serves for debugging only
  *
- * - \>=ViewEngine
- * |          | Render Method      | Coalescing | Coalesce Scope |
- * | -------- | -------------------| ---------- | -------------- |
- * | ZoneFull | None               | ❌         | None           |
- * | ZoneLess | None               | ❌         | None           |
+ * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
+ * |-------------| --------------| ------------ ------ | ---------------- |
+ * | `noop`      | ❌/❌         | no rendering        | ❌               |
  *
- * - Ivy
+ * @param config { StrategyFactoryConfig } - The values this strategy needs to get calculated.
+ * @return {CdStrategy<T>} - The calculated strategy
  *
- * |          | Render Method      | Coalescing | Coalesce Scope |
- * | -------- | -------------------| ---------- | -------------- |
- * | ZoneFull | None               | ❌         | None           |
- * | ZoneLess | None               | ❌         | None           |
  */
 export function createNoopStrategy<T>(cfg?: any): CdStrategy<T> {
   return {
@@ -116,13 +125,23 @@ export function createNoopStrategy<T>(cfg?: any): CdStrategy<T> {
  *
  * Global Strategy
  *
- * This strategy is leveraging the bottom up rendering approach.
+ * This strategy is rendering the application root and
+ * all it's children that are on a path
+ * that is marked as dirty or has components with `ChangeDetectionStrategy.Default`.
+ *
+ * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
+ * |-------------| --------------| ------------ ------ | ---------------- |
+ * | `global`    | ❌/✔️         | mFC / ɵMD           | ❌               |
+ *
+ * @param config { StrategyFactoryConfig } - The values this strategy needs to get calculated.
+ * @return {CdStrategy<T>} - The calculated strategy
  *
  */
 export function createGlobalStrategy<T>(
   cfg: StrategyFactoryConfig
 ): CdStrategy<T> {
   const inIvy = isViewEngineIvy();
+
   function render() {
     if (!inIvy) {
       cfg.cdRef.markForCheck();
@@ -143,16 +162,28 @@ export function createGlobalStrategy<T>(
 /**
  *  Local Strategy
  *
- * This strategy is leveraging the top down rendering approach.
+ * This strategy is rendering the actual component and
+ * all it's children that are on a path
+ * that is marked as dirty or has components with `ChangeDetectionStrategy.Default`.
+ *
+ * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
+ * |-------------| --------------| ------------ ------ | ---------------- |
+ * | `local`     | ✔️/✔️          | dC / ɵDC            | ✔️ + C/ LV       |
+ *
+ * @param config { StrategyFactoryConfig } - The values this strategy needs to get calculated.
+ * @return {CdStrategy<T>} - The calculated strategy
  *
  */
 export function createLocalStrategy<T>(
   cfg: StrategyFactoryConfig
 ): CdStrategy<T> {
   const inIvy = isViewEngineIvy();
-  const inZone = envZonePatched();
-  const durationSelector = getSaveDurationSelector();
-  const coalesceConfig = { context: cfg.component as any };
+  const durationSelector = getZoneUnPatchedDurationSelector();
+  const coalesceConfig: any /*CoalesceConfig*/ = {
+    context: (inIvy
+      ? (cfg.cdRef as any)._lView
+      : (cfg.cdRef as any).context) as any,
+  };
 
   function render() {
     if (!inIvy) {
@@ -163,13 +194,11 @@ export function createLocalStrategy<T>(
   }
 
   const behaviour = () => (o$: Observable<T>): Observable<T> => {
-    return !inZone && !inIvy
-      ? o$
-          .pipe
-          // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
-          // coalesce(durationSelector, coalesceConfig)
-          ()
-      : o$;
+    return o$
+      .pipe
+      // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
+      // coalesce(durationSelector, coalesceConfig)
+      ();
   };
 
   return {
