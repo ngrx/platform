@@ -1,11 +1,14 @@
 import { Data, Params } from '@angular/router';
+import { MemoizedSelector } from '@ngrx/store';
 
 export interface RouterStateSelectors<V> {
-  selectCurrentRoute: (state: V) => any;
-  selectQueryParams: (state: V) => Params;
-  selectQueryParam: (param: string) => (state: V) => string | undefined;
-  selectRouteParams: (state: V) => Params;
-  selectRouteParam: (param: string) => (state: V) => string | undefined;
-  selectRouteData: (state: V) => Data;
-  selectUrl: (state: V) => string;
+  selectCurrentRoute: MemoizedSelector<V, any>;
+  selectQueryParams: MemoizedSelector<V, Params>;
+  selectQueryParam: (param: string) => MemoizedSelector<V, string | undefined>;
+  selectRouteParams: (state: V) => MemoizedSelector<V, Params>;
+  selectRouteParam: (
+    param: string
+  ) => (state: V) => MemoizedSelector<V, string | undefined>;
+  selectRouteData: (state: V) => MemoizedSelector<V, Data>;
+  selectUrl: (state: V) => MemoizedSelector<V, string>;
 }
