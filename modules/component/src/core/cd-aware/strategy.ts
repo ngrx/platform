@@ -26,7 +26,6 @@ export function getZoneUnPatchedDurationSelector(): () => Observable<number> {
 }
 
 export interface StrategyFactoryConfig {
-  component: any;
   cdRef: ChangeDetectorRef;
 }
 
@@ -146,7 +145,7 @@ export function createGlobalStrategy<T>(
     if (!inIvy) {
       cfg.cdRef.markForCheck();
     } else {
-      markDirty(cfg.component);
+      markDirty((cfg.cdRef as any).context);
     }
   }
 
@@ -199,7 +198,7 @@ export function createLocalStrategy<T>(
     if (!inIvy) {
       cfg.cdRef.detectChanges();
     } else {
-      detectChanges(cfg.component);
+      detectChanges((cfg.cdRef as any).context);
     }
   }
 

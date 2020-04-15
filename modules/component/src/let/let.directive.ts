@@ -162,10 +162,7 @@ export class LetDirective<U> implements OnDestroy {
     private readonly viewContainerRef: ViewContainerRef
   ) {
     this.cdAware = createCdAware<U>({
-      strategies: getStrategies<U>({
-        component: (cdRef as any).context,
-        cdRef,
-      }),
+      strategies: getStrategies<U>({ cdRef }),
       resetContextObserver: this.resetContextObserver,
       updateViewContextObserver: this.updateViewContextObserver,
     });
