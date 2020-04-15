@@ -32,9 +32,7 @@ const coalescingContextPropertiesMap = createPropertiesWeakMap<
   isCoalescing: false,
 }));
 
-const defaultCoalesceConfig: Pick<CoalesceConfig, 'leading' | 'trailing'> & {
-  context: undefined;
-} = {
+const defaultCoalesceConfig: CoalesceConfig = {
   leading: false,
   trailing: true,
   context: undefined,
@@ -42,9 +40,7 @@ const defaultCoalesceConfig: Pick<CoalesceConfig, 'leading' | 'trailing'> & {
 
 function getCoalesceConfig(
   config: CoalesceConfig = defaultCoalesceConfig
-): Pick<CoalesceConfig, 'leading' | 'trailing'> & {
-  context: object | undefined;
-} {
+): CoalesceConfig {
   return {
     ...defaultCoalesceConfig,
     ...config,
@@ -57,7 +53,7 @@ export const defaultCoalesceDurationSelector = <T>(value: T) =>
 /**
  * @description
  * Limits the number of synchronous emitted a value from the source Observable to
- * one emitted value per [`AnimationFrame`](https://developer.mozilla.org/en-US/search?q=AnimationFrame),
+ * one emitted value per [`AnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame),
  * then repeats this process for every tick of the browsers event loop.
  *
  * The coalesce operator is based on the [throttle](https://rxjs-dev.firebaseapp.com/api/operators/throttle) operator.
