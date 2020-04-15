@@ -1,7 +1,7 @@
 import { PushPipe } from '../../src/push';
 import { async, TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { getGlobalThis, isIvy, hasZone } from '../../src/core/utils';
+import { getGlobalThis } from '../../src/core/utils';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
 
 let pushPipe: PushPipe<unknown>;
@@ -68,8 +68,6 @@ const setupPushPipeComponentZoneFull = () => {
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
     ],
   });
-  pushPipe = TestBed.inject(PushPipe);
-  ngZone = TestBed.inject(NgZone);
   pushPipe = TestBed.get(PushPipe);
 };
 
@@ -197,46 +195,6 @@ describe('PushPipe', () => {
           wrapWithSpace('undefined')
         );
       });
-    });
-  });
-
-  xdescribe('when used in zone-less', () => {
-    beforeEach(async(setupPushPipeComponentZoneLess));
-
-    it('should call dcRef.detectChanges in ViewEngine', () => {
-      getGlobalThis().ng = { probe: true };
-      getGlobalThis().Zone = {};
-
-      expect(!hasZone()).toBe(true);
-      expect(isIvy()).toBe(false);
-      // TODO(LayZeeDK) no method by that name, @BioPhoton
-      // expect(pushPipe.handleChangeDetection.name).toBe('detectChanges');
-    });
-
-    it('should call detectChanges in Ivy', () => {
-      getGlobalThis().ng = undefined;
-      // @TODO
-      expect(false).toBe('detectChanges');
-    });
-  });
-
-  xdescribe('when used in zone-full mode', () => {
-    beforeEach(async(setupPushPipeComponentZoneFull));
-
-    it('should call dcRef.markForCheck in ViewEngine', () => {
-      getGlobalThis().ng = { probe: true };
-      expect(!hasZone()).toBe(false);
-      expect(isIvy()).toBe(false);
-      // TODO(LayZeeDK) no method by that name, @BioPhoton
-      // expect(pushPipe.handleChangeDetection()).toBe('markForCheck');
-    });
-
-    it('should call markDirty in Ivy', () => {
-      getGlobalThis().ng = undefined;
-      expect(!hasZone()).toBe(false);
-      expect(isIvy()).toBe(true);
-      // @TODO
-      expect(false).toBe('markDirty');
     });
   });
 });
