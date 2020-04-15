@@ -76,9 +76,7 @@ function getCoalesceConfig(
  * ```
  */
 export function coalesce<T>(
-  durationSelector: (
-    value: T
-  ) => SubscribableOrPromise<any> = defaultCoalesceDurationSelector,
+  durationSelector: (value: T) => SubscribableOrPromise<any>,
   config?: CoalesceConfig
 ): MonoTypeOperatorFunction<T> {
   return (source: Observable<T>) =>

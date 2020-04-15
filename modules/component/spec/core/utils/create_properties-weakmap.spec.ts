@@ -1,16 +1,11 @@
-import {
-  createPropertiesWeakMap,
-  getChangeDetectionHandler,
-  getGlobalThis,
-} from '../../../src/core/utils';
-import { Injector } from '@angular/core';
+import { createPropertiesWeakMap } from '../../../src/core/utils';
 
 const propertyNameString = 'flag';
 const propertyNameSymbol = Symbol('flag');
 interface ManagedProperties {
   flag: boolean;
 }
-let contextObject: any & object;
+let contextObject: any;
 const initialContextObjectState = {
   flag: 'original value',
 };
