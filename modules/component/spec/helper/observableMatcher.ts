@@ -1,4 +1,4 @@
-import _ = require('lodash');
+import * as _ from 'lodash';
 
 function stringify(x: any): string {
   return JSON.stringify(x, function(key: string, value: any) {
