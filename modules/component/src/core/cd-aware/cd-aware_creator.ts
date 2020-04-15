@@ -38,7 +38,7 @@ export interface CdAware<U> extends Subscribable<U> {
  */
 export function createCdAware<U>(cfg: {
   strategies: StrategySelection<U>;
-  resetContextObserver: NextObserver<undefined>;
+  resetContextObserver: NextObserver<void>;
   updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
 }): CdAware<U | undefined | null> {
   const strategyNameSubject = new BehaviorSubject<string>(
@@ -70,7 +70,7 @@ export function createCdAware<U>(cfg: {
 
       // If a new Observable arrives, reset the value to render
       // We do this because we don't know when the next value arrives and want to get rid of the old value
-      cfg.resetContextObserver.next(undefined);
+      cfg.resetContextObserver.next();
       // Render the view
       strategy.render();
 
