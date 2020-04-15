@@ -13,6 +13,7 @@ import { tap } from 'rxjs/operators';
  * @param strategy
  */
 export function renderChanges<T>(
+  // @TODO replace strategy with string (the strategy name)
   strategy: CdStrategy<T>
 ): MonoTypeOperatorFunction<T> {
   return (s: Observable<T>): Observable<T> => {

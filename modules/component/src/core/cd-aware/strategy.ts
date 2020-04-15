@@ -22,6 +22,7 @@ export interface CdStrategy<T> {
 }
 
 export const DEFAULT_STRATEGY_NAME = 'native';
+export const IS_VIEW_ENGINE_IVY = isViewEngineIvy();
 
 export interface StrategySelection<U> {
   [DEFAULT_STRATEGY_NAME]: CdStrategy<U>;
@@ -124,10 +125,8 @@ export function createNoopStrategy<T>(cfg?: any): CdStrategy<T> {
 export function createGlobalStrategy<T>(
   cfg: StrategyFactoryConfig
 ): CdStrategy<T> {
-  const inIvy = isViewEngineIvy();
-
   function render() {
-    if (!inIvy) {
+    if (!IS_VIEW_ENGINE_IVY) {
       cfg.cdRef.markForCheck();
     } else {
       markDirty((cfg.cdRef as any).context);
@@ -171,18 +170,21 @@ export function createGlobalStrategy<T>(
 export function createLocalStrategy<T>(
   cfg: StrategyFactoryConfig
 ): CdStrategy<T> {
-  const inIvy = isViewEngineIvy();
   const durationSelector = getZoneUnPatchedDurationSelector();
   // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
   //const coalesceConfig: CoalesceConfig
   const coalesceConfig: any = {
-    context: (inIvy
+    // @TODO ensure that context is === to _lView across class and template (all cases!!!)
+    // If yes, kick out _lView
+    context: (IS_VIEW_ENGINE_IVY
       ? (cfg.cdRef as any)._lView
       : (cfg.cdRef as any).context) as any,
   };
 
   function render() {
-    if (!inIvy) {
+    // @TODO ensure that detectChanges is behaves identical to ɵdetectChanges
+    // If yes, kick out ɵdetectChanges
+    if (!IS_VIEW_ENGINE_IVY) {
       cfg.cdRef.detectChanges();
     } else {
       detectChanges((cfg.cdRef as any).context);
