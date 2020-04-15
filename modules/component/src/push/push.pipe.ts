@@ -4,7 +4,12 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { NextObserver, ObservableInput, Unsubscribable } from 'rxjs';
+import {
+  NextObserver,
+  Observable,
+  ObservableInput,
+  Unsubscribable,
+} from 'rxjs';
 import { CdAware, createCdAware, getStrategies } from '../core';
 
 /**
@@ -74,12 +79,21 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     this.subscription = this.cdAware.subscribe();
   }
 
-  transform<T>(potentialObservable: null, config?: string): null;
-  transform<T>(potentialObservable: undefined, config?: string): undefined;
-  transform<T>(potentialObservable: ObservableInput<T>, config?: string): T;
+  transform<T>(
+    potentialObservable: null,
+    config?: string | Observable<string>
+  ): null;
+  transform<T>(
+    potentialObservable: undefined,
+    config?: string | Observable<string>
+  ): undefined;
+  transform<T>(
+    potentialObservable: ObservableInput<T>,
+    config?: string | Observable<string>
+  ): T;
   transform<T>(
     potentialObservable: ObservableInput<T> | null | undefined,
-    config: string | undefined
+    config: string | Observable<string> | undefined
   ): T | null | undefined {
     if (config) {
       this.cdAware.nextStrategy(config);

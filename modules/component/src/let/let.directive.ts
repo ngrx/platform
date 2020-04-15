@@ -7,7 +7,13 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-import { NextObserver, ObservableInput, Observer, Unsubscribable } from 'rxjs';
+import {
+  NextObserver,
+  Observable,
+  ObservableInput,
+  Observer,
+  Unsubscribable,
+} from 'rxjs';
 import { CdAware, createCdAware, getStrategies } from '../core';
 
 export interface LetViewContext<T> {
@@ -150,7 +156,7 @@ export class LetDirective<U> implements OnDestroy {
   }
 
   @Input()
-  set ngrxLetConfig(config: string | undefined) {
+  set ngrxLetConfig(config: string | Observable<string> | undefined) {
     if (config) {
       this.cdAware.nextStrategy(config);
     }

@@ -2,6 +2,7 @@ import {
   BehaviorSubject,
   combineLatest,
   EMPTY,
+  isObservable,
   NextObserver,
   Observable,
   PartialObserver,
@@ -12,6 +13,7 @@ import {
 import {
   catchError,
   distinctUntilChanged,
+  mergeAll,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -24,7 +26,7 @@ import { nameToStrategy } from './nameToStrategy';
 
 export interface CdAware<U> extends Subscribable<U> {
   nextPotentialObservable: (value: any) => void;
-  nextStrategy: (config: string) => void;
+  nextStrategy: (config: string | Observable<string>) => void;
 }
 
 /**
@@ -41,10 +43,14 @@ export function createCdAware<U>(cfg: {
   resetContextObserver: NextObserver<void>;
   updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
 }): CdAware<U | undefined | null> {
-  const strategyNameSubject = new BehaviorSubject<string>(
+  const strategyNameSubject = new BehaviorSubject<string | Observable<string>>(
     DEFAULT_STRATEGY_NAME
   );
   const strategy$: Observable<CdStrategy<U>> = strategyNameSubject.pipe(
+    stringOrObservable =>
+      typeof stringOrObservable === 'string'
+        ? stringOrObservable
+        : stringOrObservable.pipe(mergeAll()),
     nameToStrategy(cfg.strategies)
   );
 
@@ -95,7 +101,7 @@ export function createCdAware<U>(cfg: {
     nextPotentialObservable(value: any): void {
       potentialObservablesSubject.next(value);
     },
-    nextStrategy(nextConfig: string): void {
+    nextStrategy(nextConfig: string | Observable<string>): void {
       strategyNameSubject.next(nextConfig);
     },
     subscribe(): Subscription {
