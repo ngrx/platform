@@ -9,21 +9,7 @@ import {
 } from '@angular/core';
 import { apiZonePatched, getGlobalThis, isViewEngineIvy } from '../utils';
 import { mapTo } from 'rxjs/operators';
-
-/** A shared promise instance to cause a delay of one microtask */
-let resolvedPromise: Promise<void> | null = null;
-
-function getResolvedPromise(): Promise<void> {
-  resolvedPromise =
-    resolvedPromise || apiZonePatched('Promise')
-      ? (getGlobalThis().__zone_symbol__Promise.resolve() as Promise<void>)
-      : Promise.resolve();
-  return resolvedPromise;
-}
-
-export function getZoneUnPatchedDurationSelector(): () => Observable<number> {
-  return () => defer(() => from(getResolvedPromise()).pipe(mapTo(1)));
-}
+import { getZoneUnPatchedDurationSelector } from './duration-selector';
 
 export interface StrategyFactoryConfig {
   cdRef: ChangeDetectorRef;
@@ -38,8 +24,7 @@ export interface CdStrategy<T> {
 export const DEFAULT_STRATEGY_NAME = 'native';
 
 export interface StrategySelection<U> {
-  native: CdStrategy<U>;
-
+  [DEFAULT_STRATEGY_NAME]: CdStrategy<U>;
   [key: string]: CdStrategy<U>;
 }
 
@@ -47,7 +32,7 @@ export function getStrategies<T>(
   cfg: StrategyFactoryConfig
 ): StrategySelection<T> {
   return {
-    native: createNativeStrategy<T>(cfg),
+    [DEFAULT_STRATEGY_NAME]: createNativeStrategy<T>(cfg),
     noop: createNoopStrategy<T>(),
     global: createGlobalStrategy<T>(cfg),
     local: createLocalStrategy<T>(cfg),
@@ -188,7 +173,9 @@ export function createLocalStrategy<T>(
 ): CdStrategy<T> {
   const inIvy = isViewEngineIvy();
   const durationSelector = getZoneUnPatchedDurationSelector();
-  const coalesceConfig: any /*CoalesceConfig*/ = {
+  // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
+  //const coalesceConfig: CoalesceConfig
+  const coalesceConfig: any = {
     context: (inIvy
       ? (cfg.cdRef as any)._lView
       : (cfg.cdRef as any).context) as any,

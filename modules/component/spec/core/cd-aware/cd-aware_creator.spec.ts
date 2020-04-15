@@ -1,5 +1,9 @@
 import { OnDestroy } from '@angular/core';
-import { CdAware, createCdAware } from '../../../src/core';
+import {
+  CdAware,
+  createCdAware,
+  DEFAULT_STRATEGY_NAME,
+} from '../../../src/core';
 import {
   concat,
   EMPTY,
@@ -28,10 +32,10 @@ class CdAwareImplementation<U> implements OnDestroy {
   constructor() {
     this.cdAware = createCdAware<U>({
       strategies: {
-        asyncLike: {
+        [DEFAULT_STRATEGY_NAME]: {
           render: () => {},
           behaviour: () => o => o,
-          name: 'asyncLike',
+          name: DEFAULT_STRATEGY_NAME,
         },
       },
       updateViewContextObserver: this.updateViewContextObserver,
