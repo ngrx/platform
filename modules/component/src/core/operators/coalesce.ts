@@ -12,7 +12,6 @@ import {
   OuterSubscriber,
   subscribeToResult,
 } from 'rxjs/internal-compatibility';
-import { generateFrames } from '../projections';
 import { createPropertiesWeakMap } from '../utils/create_properties-weakmap';
 
 export interface CoalesceConfig {
@@ -46,9 +45,6 @@ function getCoalesceConfig(
     ...config,
   };
 }
-
-export const defaultCoalesceDurationSelector = <T>(value: T) =>
-  generateFrames();
 
 /**
  * @description
