@@ -30,13 +30,13 @@ export interface StrategySelection<U> {
 }
 
 export function getStrategies<T>(
-  cfg: StrategyFactoryConfig
+  config: StrategyFactoryConfig
 ): StrategySelection<T> {
   return {
-    [DEFAULT_STRATEGY_NAME]: createNativeStrategy<T>(cfg),
+    [DEFAULT_STRATEGY_NAME]: createNativeStrategy<T>(config),
     noop: createNoopStrategy<T>(),
-    global: createGlobalStrategy<T>(cfg),
-    local: createLocalStrategy<T>(cfg),
+    global: createGlobalStrategy<T>(config),
+    local: createLocalStrategy<T>(config),
   };
 }
 
@@ -98,7 +98,7 @@ export function createNativeStrategy<T>(
  * @return {CdStrategy<T>} - The calculated strategy
  *
  */
-export function createNoopStrategy<T>(cfg?: any): CdStrategy<T> {
+export function createNoopStrategy<T>(): CdStrategy<T> {
   return {
     render: (): void => {},
     behaviour: () => o => o,
@@ -123,13 +123,13 @@ export function createNoopStrategy<T>(cfg?: any): CdStrategy<T> {
  *
  */
 export function createGlobalStrategy<T>(
-  cfg: StrategyFactoryConfig
+  config: StrategyFactoryConfig
 ): CdStrategy<T> {
   function render() {
     if (!IS_VIEW_ENGINE_IVY) {
-      cfg.cdRef.markForCheck();
+      config.cdRef.markForCheck();
     } else {
-      markDirty((cfg.cdRef as any).context);
+      markDirty((config.cdRef as any).context);
     }
   }
 
@@ -168,7 +168,7 @@ export function createGlobalStrategy<T>(
  *
  */
 export function createLocalStrategy<T>(
-  cfg: StrategyFactoryConfig
+  config: StrategyFactoryConfig
 ): CdStrategy<T> {
   const durationSelector = getZoneUnPatchedDurationSelector();
   // @Notice this part of the code is in the coalescing PR https://github.com/ngrx/platform/pull/2456
@@ -177,17 +177,17 @@ export function createLocalStrategy<T>(
     // @TODO ensure that context is === to _lView across class and template (all cases!!!)
     // If yes, kick out _lView
     context: (IS_VIEW_ENGINE_IVY
-      ? (cfg.cdRef as any)._lView
-      : (cfg.cdRef as any).context) as any,
+      ? (config.cdRef as any)._lView
+      : (config.cdRef as any).context) as any,
   };
 
   function render() {
     // @TODO ensure that detectChanges is behaves identical to ɵdetectChanges
     // If yes, kick out ɵdetectChanges
     if (!IS_VIEW_ENGINE_IVY) {
-      cfg.cdRef.detectChanges();
+      config.cdRef.detectChanges();
     } else {
-      detectChanges((cfg.cdRef as any).context);
+      detectChanges((config.cdRef as any).context);
     }
   }
 
