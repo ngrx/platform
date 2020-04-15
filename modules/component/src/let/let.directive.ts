@@ -52,7 +52,7 @@ export interface LetViewContext<T> {
  * @usageNotes
  *
  * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
- * `<ng-container *let="observableNumber$ as c"></ng-container>`
+ * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
  *
  * ```html
  * <ng-container *ngrxLet="observableNumber$ as n">
