@@ -3,7 +3,7 @@ import { mergeMapTo, share } from 'rxjs/operators';
 import { concat, defer, from, of, timer } from 'rxjs';
 import { jestMatcher } from '../../helper/jest.observable-matcher';
 
-import { generateFrames, coalesce, CoalesceConfig } from '../../../src/core';
+import { coalesce, CoalesceConfig } from '../../../src/core';
 
 /** @test {coalesce} */
 describe('coalesce operator additional logic', () => {
@@ -12,6 +12,22 @@ describe('coalesce operator additional logic', () => {
 
   beforeEach(() => {
     testScheduler = new TestScheduler(jestMatcher);
+  });
+
+  it('should handle booleans values', () => {
+    testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
+      const values = { a: false };
+      const s1 = cold('---a---------|', values);
+      const s1Subs = '^------------!';
+      const n1 = cold('   ------|   ');
+      const n1Subs = ['---^-----!'];
+      const exp = '---------a---|';
+
+      const result = s1.pipe(coalesce(() => n1));
+      expectObservable(result).toBe(exp, values);
+      expectSubscriptions(s1.subscriptions).toBe(s1Subs);
+      expectSubscriptions(n1.subscriptions).toBe(n1Subs);
+    });
   });
 
   it('should emit last value if source completes before durationSelector', () => {
@@ -79,9 +95,9 @@ describe('coalesce operator additional logic', () => {
       });
     });
 
-    it('should emit last for sync values when durationSelector is generateFrames', () => {
+    it('should emit last for sync values when durationSelector is a Promise', () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        const durationSelector = () => generateFrames();
+        const durationSelector = () => from(Promise.resolve());
         const s1 = cold('(abcdef)|');
         const exp = '--------(f|)';
 
@@ -90,8 +106,8 @@ describe('coalesce operator additional logic', () => {
       });
     });
 
-    it('should emit last for multiple sync values when durationSelector is generateFrames', () => {
-      const durationSelector = () => generateFrames();
+    it('should emit last for multiple sync values when durationSelector is a Promise', () => {
+      const durationSelector = () => of();
       const e1 = concat(
         of(1, 2, 3),
         timer(10).pipe(mergeMapTo(of(4, 5, 6))),
@@ -131,7 +147,7 @@ describe('coalesce operator additional logic', () => {
       let microRes: any;
       let syncRes: any;
       const s1 = of(1);
-      const s2 = generateFrames();
+      const s2 = from(Promise.resolve());
       expect(microRes).toBe(undefined);
       expect(sync).toBe(undefined);
       sync = 'test';
@@ -190,9 +206,9 @@ describe('coalesce operator additional logic', () => {
       });
     });
 
-    it('should emit first and last for sync values when durationSelector is generateFrames', () => {
+    it('should emit first and last for sync values when durationSelector is a Promise', () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        const durationSelector = () => generateFrames();
+        const durationSelector = () => from(Promise.resolve());
         const s1 = cold('(abcdef)|');
         const exp = 'a-------(f|)';
 
@@ -201,8 +217,8 @@ describe('coalesce operator additional logic', () => {
       });
     });
 
-    it('should emit first and last for multiple sync values when durationSelector is generateFrames', () => {
-      const durationSelector = () => generateFrames();
+    it('should emit first and last for multiple sync values when durationSelector is a Promise', () => {
+      const durationSelector = () => from(Promise.resolve());
       const e1 = concat(
         of(1, 2, 3),
         timer(10).pipe(mergeMapTo(of(4, 5, 6))),

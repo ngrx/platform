@@ -147,7 +147,7 @@ class CoalesceSubscriber<T, R> extends OuterSubscriber<T, R> {
 
   private exhaustLastValue() {
     const { _hasValue, _sendValue } = this;
-    if (_hasValue && _sendValue) {
+    if (_hasValue) {
       this.destination.next(_sendValue!);
       this._hasValue = false;
       this._sendValue = null;
