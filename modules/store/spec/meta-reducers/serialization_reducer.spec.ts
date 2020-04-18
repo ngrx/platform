@@ -1,6 +1,10 @@
+import { Component } from '@angular/core';
 import { serializationCheckMetaReducer } from '../../src/meta-reducers';
 
 describe('serializationCheckMetaReducer:', () => {
+  class AComponent {}
+  Object.defineProperty(AComponent, 'ɵcmp', {});
+
   const serializables: Record<string, any> = {
     number: { value: 4 },
     boolean: { value: true },
@@ -10,6 +14,7 @@ describe('serializationCheckMetaReducer:', () => {
     nested: { value: { number: 7, array: ['n', 'g', 'r', 'x'] } },
     null: { value: null },
     undefined: { value: undefined },
+    component: AComponent, // components should not throw (because these are ignored)
   };
 
   const unSerializables: Record<string, any> = {

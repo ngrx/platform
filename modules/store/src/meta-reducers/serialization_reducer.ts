@@ -8,6 +8,7 @@ import {
   isString,
   isArray,
   RUNTIME_CHECK_URL,
+  isComponent,
 } from './utils';
 
 export function serializationCheckMetaReducer(
@@ -50,6 +51,11 @@ function getUnserializable(
     }
 
     const value = (target as any)[key];
+
+    // Ignore Ivy components
+    if (isComponent(value)) {
+      return result;
+    }
 
     if (
       isUndefined(value) ||
