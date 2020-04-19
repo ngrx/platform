@@ -48,12 +48,20 @@ function getCoalesceConfig(
 
 /**
  * @description
- * Limits the number of synchronous emitted a value from the source Observable to
- * one emitted value per [`AnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame),
- * then repeats this process for every tick of the browsers event loop.
+ * Collects all synchronous emitted value from the source Observable
+ * and forwards only the last of these collected values.
+ *
+ * The collection of values is happening in a certain duration specified by the passed `durationSelector`.
+ * The `durationSelector` collects all synchronous emitted values within the task stack.
+ * When the duration selector finishes the last collected event is passed to the output, as a microtask.
+ * `durationSelector` can be based on:
+ * - [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) - Emitting exactly after the sync code is executed
+ * - [`AnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) - Emitting before next Browser paint event is executed
+ *
+ * The described processes repeated for every tick of the browsers event loop.
  *
  * The coalesce operator is based on the [throttle](https://rxjs-dev.firebaseapp.com/api/operators/throttle) operator.
- * In addition to that is provides emitted values for the trailing end only, as well as maintaining a context to scope coalescing.
+ * In addition to that, is provides emitted values for the trailing end only, as well as maintaining a context to scope coalescing.
  *
  * @param {function(value: T): SubscribableOrPromise} durationSelector - A function
  * that receives a value from the source Observable, for computing the silencing
