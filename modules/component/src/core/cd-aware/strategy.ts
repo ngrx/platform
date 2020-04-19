@@ -94,7 +94,6 @@ export function createNativeStrategy<T>(
  * |-------------| --------------| ------------ ------ | ---------------- |
  * | `noop`      | ❌/❌         | no rendering        | ❌               |
  *
- * @param config { StrategyFactoryConfig } - The values this strategy needs to get calculated.
  * @return {CdStrategy<T>} - The calculated strategy
  *
  */
