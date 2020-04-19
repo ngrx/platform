@@ -12,9 +12,7 @@ export function nameToStrategy<U>(strategies: StrategySelection<U>) {
       distinctUntilChanged(),
       map(
         (strategy: string): CdStrategy<U> =>
-          strategies[strategy]
-            ? strategies[strategy]
-            : strategies[DEFAULT_STRATEGY_NAME]
+          strategies[strategy] || strategies[DEFAULT_STRATEGY_NAME]
       )
     );
   };
