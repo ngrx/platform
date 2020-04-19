@@ -126,10 +126,10 @@ export function createGlobalStrategy<T>(
   config: StrategyFactoryConfig
 ): CdStrategy<T> {
   function render() {
-    if (!IS_VIEW_ENGINE_IVY) {
-      config.cdRef.markForCheck();
-    } else {
+    if (IS_VIEW_ENGINE_IVY) {
       markDirty((config.cdRef as any).context);
+    } else {
+      config.cdRef.markForCheck();
     }
   }
 
@@ -184,11 +184,9 @@ export function createLocalStrategy<T>(
   function render() {
     // @TODO ensure that detectChanges is behaves identical to ɵdetectChanges
     // If yes, kick out ɵdetectChanges
-    if (!IS_VIEW_ENGINE_IVY) {
-      config.cdRef.detectChanges();
-    } else {
+    if (IS_VIEW_ENGINE_IVY) {
       detectChanges((config.cdRef as any).context);
-    }
+    } else config.cdRef.detectChanges();
   }
 
   const behaviour = () => (o$: Observable<T>): Observable<T> => {
