@@ -16,7 +16,6 @@ Rendering happens in the template only:
 
 **RxJS Operators**
 To render observable values, or fix change detection this package provides a set of helpers operators trigger rendering:
-  - [generateFrames](guide/component/rxjs/generateFrames)
   - [coalesce](guide/component/rxjs/operators/coalesce)
 
 ## Installation
