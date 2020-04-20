@@ -224,7 +224,7 @@ describe('Effects ng-add Schematic', () => {
     );
 
     expect(content).toMatch(
-      /effects = TestBed\.get<FooEffects>\(FooEffects\);/
+      /effects = TestBed\.inject\(FooEffects\);/
     );
   });
 });
