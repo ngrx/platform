@@ -10,7 +10,7 @@ version: 2.1
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.9
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.11
 var_2: &run_in_node
   docker:
     - image: circleci/node:12.9.1
@@ -47,10 +47,9 @@ jobs:
       - run: yarn --frozen-lockfile --non-interactive
       - save_cache:
           key: *cache_key
-          root: ~/
           paths:
-            - .cache/yarn
-            - .cache/Cypress
+            - ~/.cache/yarn
+            - ~/.cache/Cypress
             - node_modules
 
   # Enforce some static analysis invariants.
@@ -108,12 +107,6 @@ jobs:
           root: dist
           paths:
             - bin/*
-      - save_cache:
-          key: *cache_key
-          paths:
-            - ~/.cache/yarn
-            - ~/.cache/Cypress
-            - node_modules
 
   update-master-hash:
     <<: *run_in_node
@@ -152,7 +145,6 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn cypress install
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
 
