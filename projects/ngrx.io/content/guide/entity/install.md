@@ -10,7 +10,7 @@ npm install @ngrx/entity --save
 
 ## Installing with `yarn`
 
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/docs/usage" target="_blank">here</a>.
+For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
 
 ```sh
 yarn add @ngrx/entity
