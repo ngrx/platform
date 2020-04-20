@@ -152,6 +152,7 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
+      - run: yarn cypress install
       - run: yarn run example:build:prod
       - run: yarn run example:cypress:ci
 
