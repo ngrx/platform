@@ -117,7 +117,7 @@ describe('EntityDataService', () => {
         { provide: HttpUrlGenerator, useClass: TestHttpUrlGenerator },
       ],
     });
-    entityDataService = TestBed.get(EntityDataService);
+    entityDataService = TestBed.inject(EntityDataService);
   });
 
   describe('#getService', () => {

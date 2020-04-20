@@ -77,12 +77,10 @@ describe('EntityCollectionReducerRegistry', () => {
 
   /** Sets the test variables with injected values. Closes TestBed configuration. */
   function setup() {
-    collectionCreator = TestBed.get(EntityCollectionCreator);
-    const entityCacheReducerFactory = TestBed.get(
-      EntityCacheReducerFactory
-    ) as EntityCacheReducerFactory;
+    collectionCreator = TestBed.inject(EntityCollectionCreator);
+    const entityCacheReducerFactory = TestBed.inject(EntityCacheReducerFactory);
     entityCacheReducer = entityCacheReducerFactory.create();
-    entityCollectionReducerRegistry = TestBed.get(
+    entityCollectionReducerRegistry = TestBed.inject(
       EntityCollectionReducerRegistry
     );
   }

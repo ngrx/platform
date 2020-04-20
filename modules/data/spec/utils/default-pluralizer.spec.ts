@@ -10,7 +10,7 @@ describe('DefaultPluralizer', () => {
         providers: [{ provide: Pluralizer, useClass: DefaultPluralizer }],
       });
 
-      pluralizer = TestBed.get(Pluralizer);
+      pluralizer = TestBed.inject(Pluralizer);
     });
     it('should turn "Hero" to "Heros" because no plural names map', () => {
       // No map so 'Hero' gets default pluralization
@@ -70,7 +70,7 @@ describe('DefaultPluralizer', () => {
         ],
       });
 
-      pluralizer = TestBed.get(Pluralizer);
+      pluralizer = TestBed.inject(Pluralizer);
     });
 
     it('should pluralize "Villain" which is not in plural names', () => {

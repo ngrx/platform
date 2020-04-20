@@ -20,7 +20,7 @@ describe('Effects Root Module', () => {
       ],
     });
 
-    const store = TestBed.get(Store);
+    const store = TestBed.inject(Store);
 
     expect(reducer).toHaveBeenCalledWith(foo, {
       type: INIT,
@@ -37,7 +37,7 @@ describe('Effects Root Module', () => {
       ],
     });
 
-    const store = TestBed.get(Store);
+    const store = TestBed.inject(Store);
 
     expect(reducer).toHaveBeenCalledWith(foo, {
       type: INIT,

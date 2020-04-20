@@ -66,9 +66,9 @@ describe('EntityEffects (normal testing)', () => {
       ],
     });
 
-    actions$ = TestBed.get(Actions);
-    effects = TestBed.get(EntityEffects);
-    dataService = TestBed.get(EntityDataService);
+    actions$ = TestBed.inject<unknown>(Actions) as ReplaySubject<Action>;
+    effects = TestBed.inject(EntityEffects);
+    dataService = TestBed.inject<unknown>(EntityDataService) as TestDataService;
   });
 
   it('cancel$ should emit correlation id for CANCEL_PERSIST', (done: any) => {

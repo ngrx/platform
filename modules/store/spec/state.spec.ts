@@ -15,7 +15,7 @@ describe('ngRx State', () => {
       ],
     });
 
-    TestBed.get(Store);
+    TestBed.inject(Store);
 
     expect(reducer).toHaveBeenCalledWith(initialState, {
       type: INIT,
@@ -37,7 +37,7 @@ describe('ngRx State', () => {
         imports: [StoreModule.forRoot({ reducer })],
       });
 
-      const store = TestBed.get(Store) as Store<any>;
+      const store = TestBed.inject(Store);
       expect(() => {
         store.dispatch({ type: 'THROW_ERROR' });
         flush();

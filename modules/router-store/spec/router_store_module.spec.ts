@@ -36,9 +36,9 @@ describe('Router Store Module', () => {
         },
       });
 
-      store = TestBed.get(Store);
-      router = TestBed.get(Router);
-      storeRouterConnectingModule = TestBed.get(StoreRouterConnectingModule);
+      store = TestBed.inject(Store);
+      router = TestBed.inject(Router);
+      storeRouterConnectingModule = TestBed.inject(StoreRouterConnectingModule);
     });
 
     it('should have custom state key as own property', () => {
@@ -98,9 +98,9 @@ describe('Router Store Module', () => {
         },
       });
 
-      store = TestBed.get(Store);
-      router = TestBed.get(Router);
-      storeRouterConnectingModule = TestBed.get(StoreRouterConnectingModule);
+      store = TestBed.inject(Store);
+      router = TestBed.inject(Router);
+      storeRouterConnectingModule = TestBed.inject(StoreRouterConnectingModule);
     });
 
     it('should have same state selector as own property', () => {
@@ -151,9 +151,9 @@ describe('Router Store Module', () => {
       });
 
       return {
-        actions: TestBed.get(ActionsSubject) as ActionsSubject,
-        router: TestBed.get(Router) as Router,
-        serializer: TestBed.get(RouterStateSerializer) as RouterStateSerializer,
+        actions: TestBed.inject(ActionsSubject),
+        router: TestBed.inject(Router),
+        serializer: TestBed.inject(RouterStateSerializer),
       };
     }
 

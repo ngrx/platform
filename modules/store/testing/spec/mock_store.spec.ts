@@ -53,7 +53,7 @@ describe('Mock Store', () => {
       ],
     });
 
-    mockStore = TestBed.get(Store);
+    mockStore = TestBed.inject(MockStore);
   });
 
   afterEach(() => {
@@ -64,8 +64,8 @@ describe('Mock Store', () => {
   });
 
   it('should provide the same instance with Store and MockStore', () => {
-    const fromStore = TestBed.get(Store);
-    const fromMockStore = TestBed.get(MockStore);
+    const fromStore = TestBed.inject(Store);
+    const fromMockStore = TestBed.inject(MockStore);
     expect(fromStore).toBe(fromMockStore);
   });
 
@@ -316,7 +316,7 @@ describe('Refreshing state', () => {
       providers: [provideMockStore()],
     }).compileComponents();
 
-    mockStore = TestBed.get(Store);
+    mockStore = TestBed.inject(MockStore);
     mockSelector = mockStore.overrideSelector(todos, initialTodos);
 
     fixture = TestBed.createComponent(TodosComponent);
@@ -375,7 +375,7 @@ describe('Cleans up after each test', () => {
       ],
     });
 
-    const store = TestBed.get<Store<any>>(Store) as Store<any>;
+    const store = TestBed.inject(Store);
     store.pipe(select(selectData)).subscribe(v => {
       expect(v).toBe(200);
       done();
@@ -393,7 +393,7 @@ describe('Cleans up after each test', () => {
       ],
     });
 
-    const store = TestBed.get<Store<any>>(Store) as Store<any>;
+    const store = TestBed.inject(Store);
     store.pipe(select(selectData)).subscribe(v => {
       expect(v).toBe(300);
       done();
@@ -441,7 +441,7 @@ describe('Resets selectors after each test', () => {
    */
   it('should reset selector - attempt one', (done: any) => {
     setupModules(shouldSetMockStore);
-    const store: Store<{}> = TestBed.get<Store<{}>>(Store);
+    const store: Store<{}> = TestBed.inject(Store);
     store.select(selectorUnderTest).subscribe(v => {
       expect(v).toBe(shouldSetMockStore ? 200 : 300);
       shouldSetMockStore = false;
@@ -451,7 +451,7 @@ describe('Resets selectors after each test', () => {
 
   it('should reset selector - attempt two', (done: any) => {
     setupModules(shouldSetMockStore);
-    const store: Store<{}> = TestBed.get<Store<{}>>(Store);
+    const store: Store<{}> = TestBed.inject(Store);
     store.select(selectorUnderTest).subscribe(v => {
       expect(v).toBe(shouldSetMockStore ? 200 : 300);
       shouldSetMockStore = false;

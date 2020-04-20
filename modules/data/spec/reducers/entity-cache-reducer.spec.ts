@@ -76,10 +76,8 @@ describe('EntityCacheReducer', () => {
       ],
     });
 
-    collectionCreator = TestBed.get(EntityCollectionCreator);
-    const entityCacheReducerFactory = TestBed.get(
-      EntityCacheReducerFactory
-    ) as EntityCacheReducerFactory;
+    collectionCreator = TestBed.inject(EntityCollectionCreator);
+    const entityCacheReducerFactory = TestBed.inject(EntityCacheReducerFactory);
     entityCacheReducer = entityCacheReducerFactory.create();
   });
 

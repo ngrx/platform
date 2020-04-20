@@ -50,12 +50,12 @@ describe('EffectSources', () => {
       ],
     });
 
-    const effectsRunner = TestBed.get(EffectsRunner);
+    const effectsRunner = TestBed.inject(EffectsRunner);
     effectsRunner.start();
 
-    mockErrorReporter = TestBed.get(ErrorHandler);
-    effectSources = TestBed.get(EffectSources);
-    effectsErrorHandler = TestBed.get(EFFECTS_ERROR_HANDLER);
+    mockErrorReporter = TestBed.inject(ErrorHandler);
+    effectSources = TestBed.inject(EffectSources);
+    effectsErrorHandler = TestBed.inject(EFFECTS_ERROR_HANDLER);
 
     spyOn(mockErrorReporter, 'handleError');
   });

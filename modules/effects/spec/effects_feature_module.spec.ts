@@ -40,11 +40,13 @@ describe('Effects Feature Module', () => {
         ],
       });
 
-      mockEffectSources = TestBed.get(EffectsRootModule);
+      mockEffectSources = TestBed.inject<unknown>(EffectsRootModule) as {
+        addEffects: jasmine.Spy;
+      };
     });
 
     it('should add all effects when instantiated', () => {
-      TestBed.get(EffectsFeatureModule);
+      TestBed.inject(EffectsFeatureModule);
 
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceA);
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceB);
@@ -61,8 +63,8 @@ describe('Effects Feature Module', () => {
         imports: [AppModule],
       });
 
-      effects = TestBed.get(FeatureEffects);
-      store = TestBed.get(Store);
+      effects = TestBed.inject(FeatureEffects);
+      store = TestBed.inject(Store);
     });
 
     it('should have the feature state defined to select from the effect', (done: any) => {

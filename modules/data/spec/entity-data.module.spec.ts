@@ -96,10 +96,10 @@ describe('EntityDataModule', () => {
         ],
       });
 
-      actions$ = TestBed.get(Actions);
-      store = TestBed.get(Store);
+      actions$ = TestBed.inject(Actions);
+      store = TestBed.inject(Store);
 
-      testEffects = TestBed.get(EntityEffects);
+      testEffects = TestBed.inject<unknown>(EntityEffects) as TestEntityEffects;
       spyOn(testEffects, 'testHook').and.callThrough();
     });
 
@@ -173,9 +173,9 @@ describe('EntityDataModule', () => {
         ],
       });
 
-      store = TestBed.get(Store);
+      store = TestBed.inject(Store);
       cacheSelector$ = <any>store.select(state => state.entityCache);
-      eaFactory = TestBed.get(EntityActionFactory);
+      eaFactory = TestBed.inject(EntityActionFactory);
     });
 
     it('should log an ordinary entity action', () => {

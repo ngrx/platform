@@ -17,7 +17,7 @@ describe('FileNotFoundSearchComponent', () => {
   beforeEach(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ FileNotFoundSearchComponent, SearchResultsComponent ],
+      declarations: [FileNotFoundSearchComponent, SearchResultsComponent],
       providers: [
         { provide: LocationService, useValue: new MockLocationService('base/initial-url?some-query') },
         SearchService
@@ -25,7 +25,7 @@ describe('FileNotFoundSearchComponent', () => {
     });
 
     fixture = TestBed.createComponent(FileNotFoundSearchComponent);
-    searchService = TestBed.get(SearchService);
+    searchService = TestBed.inject(SearchService);
     searchResultSubject = new Subject<SearchResults>();
     spyOn(searchService, 'search').and.callFake(() => searchResultSubject.asObservable());
     fixture.detectChanges();
@@ -39,7 +39,7 @@ describe('FileNotFoundSearchComponent', () => {
     const searchResultsComponent = fixture.debugElement.query(By.directive(SearchResultsComponent)).componentInstance;
     expect(searchResultsComponent.searchResults).toBe(null);
 
-    const results = { query: 'base initial url', results: []};
+    const results = { query: 'base initial url', results: [] };
     searchResultSubject.next(results);
     fixture.detectChanges();
     expect(searchResultsComponent.searchResults).toEqual(results);
