@@ -9,8 +9,11 @@ export function createSelectorsFactory<T>() {
   function getSelectors(
     selectState?: (state: any) => EntityState<T>
   ): EntitySelectors<T, any> {
-    const selectIds = (state: any) => state.ids;
-    const selectEntities = (state: EntityState<T>) => state.entities;
+    const selectIds = createSelector((state: any) => state, state => state.ids);
+    const selectEntities = createSelector(
+      (state: EntityState<T>) => state,
+      state => state.entities
+    );
     const selectAll = createSelector(
       selectIds,
       selectEntities,
