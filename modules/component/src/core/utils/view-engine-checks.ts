@@ -1,7 +1,6 @@
 import { getGlobalThis } from './get-global-this';
 
 /**
- * envRunsIvy
  *
  * @description
  * Determines the used view engine of an Angular project is Ivy or not.
