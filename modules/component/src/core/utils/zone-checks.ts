@@ -1,7 +1,6 @@
 import { getGlobalThis } from './get-global-this';
 
 /**
- * apiZonePatched
  *
  * @description
  *
