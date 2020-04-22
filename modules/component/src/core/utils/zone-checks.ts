@@ -5,7 +5,7 @@ import { getGlobalThis } from './get-global-this';
  *
  * @description
  *
- * This function checks the a specific Browser API is patched by `zone.js`.
+ * This function checks if a specific Browser API is patched by `zone.js`.
  *
  * @param name {string} - The name of the API to check.
  * @return {boolean} - true if `zone.js` patched the API in question.
