@@ -1,15 +1,15 @@
 import { getGlobalThis } from './get-global-this';
 
 /**
+ * envZonePatched
  *
  * @description
  *
- * This function checks if a specific Browser API is patched by `zone.js`.
+ * This function checks if the Browser API is patched by `zone.js`.
  *
- * @param name {string} - The name of the API to check.
- * @return {boolean} - true if `zone.js` patched the API in question.
+ * @return {boolean} - true if `zone.js` patched the API.
  *
  */
-export function apiZonePatched(name: string): boolean {
-  return getGlobalThis()['__zone_symbol__' + name] !== undefined;
+export function envZonePatched(): boolean {
+  return getGlobalThis().Zone !== undefined;
 }

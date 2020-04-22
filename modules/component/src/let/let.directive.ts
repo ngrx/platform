@@ -156,7 +156,7 @@ export class LetDirective<U> implements OnDestroy {
   }
 
   @Input()
-  set ngrxLetConfig(config: string | Observable<string> | undefined) {
+  set ngrxLetConfig(config: string | undefined) {
     if (config) {
       this.cdAware.nextStrategy(config);
     }

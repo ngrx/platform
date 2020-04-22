@@ -10,7 +10,7 @@ export const mockPromise = {
   then: () => {},
 };
 
-export function getMockNativeStrategyConfig() {
+export function getMockOptimizedStrategyConfig() {
   return {
     component: {},
     cdRef: (new MockChangeDetectorRef() as any) as ChangeDetectorRef,

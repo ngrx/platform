@@ -1,8 +1,6 @@
 import {
   BehaviorSubject,
-  combineLatest,
   EMPTY,
-  isObservable,
   NextObserver,
   Observable,
   PartialObserver,
@@ -13,16 +11,10 @@ import {
 import {
   catchError,
   distinctUntilChanged,
-  mergeAll,
   switchMap,
   tap,
 } from 'rxjs/operators';
-import {
-  CdStrategy,
-  DEFAULT_STRATEGY_NAME,
-  StrategySelection,
-} from './strategy';
-import { nameToStrategy } from './nameToStrategy';
+import { CdStrategy, DEFAULT_STRATEGY_NAME, StrategySet } from './strategy';
 
 export interface CdAware<U> extends Subscribable<U> {
   nextPotentialObservable: (value: any) => void;
@@ -39,29 +31,23 @@ export interface CdAware<U> extends Subscribable<U> {
  * Also custom behaviour is something you need to implement in the extending class
  */
 export function createCdAware<U>(cfg: {
-  strategies: StrategySelection<U>;
+  strategies: StrategySet<U>;
   resetContextObserver: NextObserver<void>;
   updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
 }): CdAware<U | undefined | null> {
   const strategyNameSubject = new BehaviorSubject<string | Observable<string>>(
     DEFAULT_STRATEGY_NAME
   );
-  const strategy$: Observable<CdStrategy<U>> = strategyNameSubject.pipe(
-    stringOrObservable =>
-      typeof stringOrObservable === 'string'
-        ? stringOrObservable
-        : stringOrObservable.pipe(mergeAll()),
-    nameToStrategy(cfg.strategies)
-  );
+  let strategy: CdStrategy<U> = cfg.strategies[DEFAULT_STRATEGY_NAME];
 
   const potentialObservablesSubject = new Subject<Observable<U>>();
   const observablesFromTemplate$ = potentialObservablesSubject.pipe(
     distinctUntilChanged()
   );
 
-  const rendering$ = combineLatest([observablesFromTemplate$, strategy$]).pipe(
+  const rendering$ = observablesFromTemplate$.pipe(
     // Compose the observables from the template and the strategy
-    switchMap(([observable$, strategy]) => {
+    switchMap(observable$ => {
       // If the passed observable is:
       // - undefined - No value set
       // - null - null passed directly or no value set over `async` pipe
@@ -77,18 +63,12 @@ export function createCdAware<U>(cfg: {
       // If a new Observable arrives, reset the value to render
       // We do this because we don't know when the next value arrives and want to get rid of the old value
       cfg.resetContextObserver.next();
-      // Render the view
       strategy.render();
 
       return observable$.pipe(
         distinctUntilChanged(),
-        // Update the value to render with the new emission
         tap(cfg.updateViewContextObserver),
-        // apply behavior of passed strategy
-        strategy.behaviour(),
-        // Render the view
         tap(() => strategy.render()),
-        // Swallow errors and log them
         catchError(e => {
           console.error(e);
           return EMPTY;
@@ -101,8 +81,9 @@ export function createCdAware<U>(cfg: {
     nextPotentialObservable(value: any): void {
       potentialObservablesSubject.next(value);
     },
-    nextStrategy(nextConfig: string | Observable<string>): void {
-      strategyNameSubject.next(nextConfig);
+    nextStrategy(nextConfig: string): void {
+      strategy =
+        cfg.strategies[nextConfig] || cfg.strategies[DEFAULT_STRATEGY_NAME];
     },
     subscribe(): Subscription {
       return rendering$.subscribe();

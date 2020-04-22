@@ -34,7 +34,6 @@ class CdAwareImplementation<U> implements OnDestroy {
       strategies: {
         [DEFAULT_STRATEGY_NAME]: {
           render: () => {},
-          behaviour: () => o => o,
           name: DEFAULT_STRATEGY_NAME,
         },
       },
