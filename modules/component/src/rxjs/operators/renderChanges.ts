@@ -3,7 +3,6 @@ import { CdStrategy } from '../../core';
 import { tap } from 'rxjs/operators';
 
 /**
- * renderChanges
  *
  * This operator is useful in situations where the developer can't code reactively everywhere, but wants the component to rerender on emission.
  *
