@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
  *
  * This operator is useful in situations where the developer can't code reactively everywhere, but wants the component to rerender on emission.
  *
- * A good example would be assigning the value arrived over a Observable to a class property and rerender the component.
+ * A good example would be assigning the value arrived over an Observable to a class property and rerender the component.
  *
  *
  * @param strategy
