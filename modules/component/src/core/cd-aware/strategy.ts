@@ -110,7 +110,7 @@ export function createNoopStrategy<T>(): CdStrategy<T> {
  * Global Strategy
  *
  * This strategy is rendering the application root and
- * all it's children that are on a path
+ * all its children that are on a path
  * that is marked as dirty or has components with `ChangeDetectionStrategy.Default`.
  *
  * | Name        | ZoneLess VE/I | Render Method VE/I  | Coalescing VE/I  |
