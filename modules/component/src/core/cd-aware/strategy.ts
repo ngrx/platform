@@ -145,7 +145,7 @@ export function createGlobalStrategy<T>(
  *  Local Strategy
  *
  * This strategy is rendering the actual component and
- * all it's children that are on a path
+ * all its children that are on a path
  * that is marked as dirty or has components with `ChangeDetectionStrategy.Default`.
  *
  * As detectChanges has no coalescing of render calls
