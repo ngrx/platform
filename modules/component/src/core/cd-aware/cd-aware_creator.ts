@@ -33,7 +33,7 @@ export interface CdAware<U> extends Subscribable<U> {
 export function createCdAware<U>(cfg: {
   strategies: StrategySet<U>;
   resetContextObserver: NextObserver<void>;
-  updateViewContextObserver: PartialObserver<U> & NextObserver<U>;
+  updateViewContextObserver: NextObserver<U>;
 }): CdAware<U | undefined | null> {
   const strategyNameSubject = new BehaviorSubject<string | Observable<string>>(
     DEFAULT_STRATEGY_NAME
