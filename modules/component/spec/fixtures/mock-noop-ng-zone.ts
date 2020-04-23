@@ -37,7 +37,7 @@ export class MockNoopNgZone {
     applyArgs?: any[],
     name?: string
   ): T {
-    return undefined;
+    return {} as any;
   }
 
   runGuarded<T>(
@@ -45,7 +45,7 @@ export class MockNoopNgZone {
     applyThis?: any,
     applyArgs?: any[]
   ): T {
-    return undefined;
+    return {} as any;
   }
 
   runOutsideAngular(fn: Function): any {
