@@ -3,7 +3,6 @@ import {
   EMPTY,
   NextObserver,
   Observable,
-  PartialObserver,
   Subject,
   Subscribable,
   Subscription,
@@ -33,14 +32,13 @@ export interface CdAware<U> extends Subscribable<U> {
 export function createCdAware<U>(cfg: {
   strategies: StrategySet<U>;
   resetContextObserver: NextObserver<void>;
-  updateViewContextObserver: NextObserver<U>;
+  updateViewContextObserver: NextObserver<U | undefined | null>;
 }): CdAware<U | undefined | null> {
-  const strategyNameSubject = new BehaviorSubject<string | Observable<string>>(
-    DEFAULT_STRATEGY_NAME
-  );
   let strategy: CdStrategy<U> = cfg.strategies[DEFAULT_STRATEGY_NAME];
 
-  const potentialObservablesSubject = new Subject<Observable<U>>();
+  const potentialObservablesSubject = new Subject<
+    Observable<U> | undefined | null
+  >();
   const observablesFromTemplate$ = potentialObservablesSubject.pipe(
     distinctUntilChanged()
   );
@@ -78,7 +76,7 @@ export function createCdAware<U>(cfg: {
   );
 
   return {
-    nextPotentialObservable(value: any): void {
+    nextPotentialObservable(value: Observable<U> | undefined | null): void {
       potentialObservablesSubject.next(value);
     },
     nextStrategy(nextConfig: string): void {
