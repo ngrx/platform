@@ -1,5 +1,4 @@
 import {
-  BehaviorSubject,
   EMPTY,
   NextObserver,
   Observable,
