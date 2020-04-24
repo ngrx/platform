@@ -85,7 +85,7 @@ describe('Runtime checks:', () => {
         ],
       });
 
-      const _store = TestBed.get<Store<any>>(Store);
+      const _store = TestBed.inject(Store);
       expect(serializationCheckMetaReducerSpy).toHaveBeenCalled();
     });
 
@@ -112,7 +112,7 @@ describe('Runtime checks:', () => {
         ],
       });
 
-      const _store = TestBed.get<Store<any>>(Store);
+      const _store = TestBed.inject(Store);
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
       expect(inNgZoneAssertMetaReducerSpy).not.toHaveBeenCalled();
     });
@@ -137,7 +137,7 @@ describe('Runtime checks:', () => {
         ],
       });
 
-      const _store = TestBed.get<Store<any>>(Store);
+      const _store = TestBed.inject(Store);
       expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
       expect(immutabilityCheckMetaReducerSpy).toHaveBeenCalled();
     });
@@ -178,7 +178,7 @@ describe('Runtime checks:', () => {
         ],
       });
 
-      const store: Store<any> = TestBed.get(Store);
+      const store = TestBed.inject(Store);
       const expected = ['internal-single-one', 'internal-single-two', 'user'];
 
       expect(logs).toEqual(expected);
@@ -396,7 +396,7 @@ function setupStore(runtimeChecks?: Partial<RuntimeChecks>): Store<any> {
     ],
   });
 
-  return TestBed.get(Store);
+  return TestBed.inject(Store);
 }
 
 enum ErrorTypes {

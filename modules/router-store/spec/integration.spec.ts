@@ -38,7 +38,7 @@ describe('integration spec', () => {
 
     createTestModule({ reducers: { reducer } });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -113,7 +113,7 @@ describe('integration spec', () => {
       ) => state.url !== 'next',
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     const hasRouterState = (action: RouterAction<any>) =>
@@ -148,7 +148,7 @@ describe('integration spec', () => {
 
     createTestModule({ reducers: { reducer } });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -192,7 +192,7 @@ describe('integration spec', () => {
       canActivate: () => false,
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -271,8 +271,8 @@ describe('integration spec', () => {
       config: { stateKey: 'reducer' },
     });
 
-    const router: Router = TestBed.get(Router);
-    const store: Store<any> = TestBed.get(Store);
+    const router = TestBed.inject(Router);
+    const store = TestBed.inject(Store);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -330,7 +330,7 @@ describe('integration spec', () => {
       },
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -417,8 +417,8 @@ describe('integration spec', () => {
       config: { stateKey: 'reducer' },
     });
 
-    const router: Router = TestBed.get(Router);
-    const store: Store<any> = TestBed.get(Store);
+    const router = TestBed.inject(Router);
+    const store = TestBed.inject(Store);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -460,8 +460,8 @@ describe('integration spec', () => {
 
     createTestModule({ reducers: { router: routerReducer, reducer } });
 
-    const router = TestBed.get(Router);
-    const store = TestBed.get(Store);
+    const router = TestBed.inject(Router);
+    const store = TestBed.inject(Store);
     const log = logOfRouterAndActionsAndStore();
 
     const routerReducerStates: any[] = [];
@@ -565,7 +565,7 @@ describe('integration spec', () => {
       canLoad: () => false,
     });
 
-    const router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router.navigateByUrl('/load').then((r: boolean) => {
@@ -597,7 +597,7 @@ describe('integration spec', () => {
       canLoad: () => Promise.reject('boom'),
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -670,7 +670,7 @@ describe('integration spec', () => {
       createTestModule({ reducers: { routerReducer, reducer }, providers });
     }
 
-    const router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -728,8 +728,8 @@ describe('integration spec', () => {
       },
     });
 
-    const router: Router = TestBed.get(Router);
-    const store: Store<any> = TestBed.get(Store);
+    const router = TestBed.inject(Router);
+    const store = TestBed.inject(Store);
     const log = logOfRouterAndActionsAndStore();
 
     router
@@ -776,7 +776,7 @@ describe('integration spec', () => {
       config: { stateKey: 'router-reducer' },
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore({ stateKey: 'router-reducer' });
 
     router
@@ -838,7 +838,7 @@ describe('integration spec', () => {
       config: { stateKey: (state: any) => state.routerReducer },
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore({
       stateKey: (state: any) => state.routerReducer,
     });
@@ -902,8 +902,8 @@ describe('integration spec', () => {
       config: { stateKey: 'reducer' },
     });
 
-    const router: Router = TestBed.get(Router);
-    const store = TestBed.get(Store);
+    const router = TestBed.inject(Router);
+    const store = TestBed.inject(Store);
     const log = logOfRouterAndActionsAndStore();
 
     store.dispatch({
@@ -959,7 +959,7 @@ describe('integration spec', () => {
       config: { navigationActionTiming: NavigationActionTiming.PostActivation },
     });
 
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     const log = logOfRouterAndActionsAndStore();
 
     router.navigateByUrl('/').then(() => {
@@ -1005,10 +1005,10 @@ function logOfRouterAndActionsAndStore(
     stateKey: 'reducer',
   }
 ): any[] {
-  const router: Router = TestBed.get(Router);
-  const store: Store<any> = TestBed.get(Store);
+  const router = TestBed.inject(Router);
+  const store = TestBed.inject(Store);
   // Not using effects' Actions to avoid @ngrx/effects dependency
-  const actions$: ScannedActionsSubject = TestBed.get(ScannedActionsSubject);
+  const actions$ = TestBed.inject(ScannedActionsSubject);
   const log: any[] = [];
   router.events.subscribe(e => {
     if (e.hasOwnProperty('url')) {

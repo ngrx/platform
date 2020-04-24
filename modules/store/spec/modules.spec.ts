@@ -91,7 +91,7 @@ describe(`Store Modules`, () => {
         imports: [RootModule],
       });
 
-      store = TestBed.get(Store);
+      store = TestBed.inject(Store);
     });
 
     it(`should accept configurations`, () => {
@@ -132,7 +132,7 @@ describe(`Store Modules`, () => {
           ],
         });
 
-        store = TestBed.get(Store);
+        store = TestBed.inject(Store);
       });
 
       it('should have initial state', () => {
@@ -196,7 +196,7 @@ describe(`Store Modules`, () => {
         imports: [RootModule],
       });
 
-      store = TestBed.get(Store);
+      store = TestBed.inject(Store);
     });
 
     it('should nest the child module in the root store object', () => {

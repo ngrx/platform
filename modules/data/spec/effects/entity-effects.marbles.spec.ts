@@ -54,10 +54,10 @@ describe('EntityEffects (marble testing)', () => {
         },
       ],
     });
-    actions = TestBed.get(Actions);
-    dataService = TestBed.get(EntityDataService);
-    entityActionFactory = TestBed.get(EntityActionFactory);
-    effects = TestBed.get(EntityEffects);
+    actions = TestBed.inject(Actions);
+    dataService = TestBed.inject<unknown>(EntityDataService) as TestDataService;
+    entityActionFactory = TestBed.inject(EntityActionFactory);
+    effects = TestBed.inject(EntityEffects);
   });
 
   it('should return a QUERY_ALL_SUCCESS with the heroes on success', () => {

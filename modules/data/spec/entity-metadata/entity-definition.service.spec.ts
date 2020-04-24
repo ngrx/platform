@@ -37,7 +37,7 @@ describe('EntityDefinitionService', () => {
         { provide: ENTITY_METADATA_TOKEN, multi: true, useValue: metadataMap },
       ],
     });
-    service = TestBed.get(EntityDefinitionService);
+    service = TestBed.inject(EntityDefinitionService);
   });
 
   describe('#getDefinition', () => {

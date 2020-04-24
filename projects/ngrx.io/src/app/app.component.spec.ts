@@ -55,48 +55,55 @@ describe('AppComponent', () => {
         BrowserAnimationsModule
       ],
       providers: [
-        { provide: Deployment,
+        {
+          provide: Deployment,
           useClass: MockDeployment
         },
-        { provide: DocumentService,
+        {
+          provide: DocumentService,
           useClass: MockDocumentService
         },
-        { provide: ElementRef,
+        {
+          provide: ElementRef,
           useClass: MockElementRef
         },
         {
           provide: LocationService,
           useClass: MockLocationService,
         },
-        { provide: NavigationService,
+        {
+          provide: NavigationService,
           useClass: MockNavigationService
         },
-        { provide: ScrollService,
+        {
+          provide: ScrollService,
           useClass: MockScrollService
         },
-        { provide: SearchService,
+        {
+          provide: SearchService,
           useClass: MockSearchService
         },
-        { provide: TocService,
+        {
+          provide: TocService,
           useClass: MockTocService
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     component.notification = { showNotification: 'show' } as NotificationComponent;
-    component.sidenav = { opened: true, toggle: () => {}} as MatSidenav;
+    component.sidenav = { opened: true, toggle: () => { } } as MatSidenav;
     spyOn(component, 'onResize').and.callThrough();
-    searchService = TestBed.get(SearchService);
-    deployment = TestBed.get(Deployment);
-    locationService = TestBed.get(LocationService);
+    searchService = TestBed.inject(SearchService);
+    deployment = TestBed.inject(Deployment);
+    locationService = TestBed.inject(LocationService);
     locationServiceReplaceSpy = spyOn(locationService, 'replace');
-    scrollService = TestBed.get(ScrollService);
-    tocService = TestBed.get(TocService);
+    scrollService = TestBed.inject(ScrollService);
+    tocService = TestBed.inject(TocService);
     fixture.detectChanges();
   });
 
@@ -119,45 +126,45 @@ describe('AppComponent', () => {
 
     describe('archive redirection', () => {
 
-    it('should redirect to docs if we are in archive mode and are not hitting a docs, api, guide, or tutorial page', () => {
-      deployment.mode = 'archive';
-      locationService.currentPath = of('events');
-      component.ngOnInit();
-      expect(locationService.replace).toHaveBeenCalledWith('docs');
-    });
+      it('should redirect to docs if we are in archive mode and are not hitting a docs, api, guide, or tutorial page', () => {
+        deployment.mode = 'archive';
+        locationService.currentPath = of('events');
+        component.ngOnInit();
+        expect(locationService.replace).toHaveBeenCalledWith('docs');
+      });
 
-    it('should not redirect to docs if we are hitting a docs page', () => {
-      deployment.mode = 'archive';
-      locationService.currentPath = of('docs');
-      locationServiceReplaceSpy.calls.reset();
-      component.ngOnInit();
-      expect(locationService.replace).not.toHaveBeenCalled();
-    });
+      it('should not redirect to docs if we are hitting a docs page', () => {
+        deployment.mode = 'archive';
+        locationService.currentPath = of('docs');
+        locationServiceReplaceSpy.calls.reset();
+        component.ngOnInit();
+        expect(locationService.replace).not.toHaveBeenCalled();
+      });
 
-    it('should not redirect to docs if we are hitting a api page', () => {
-      deployment.mode = 'archive';
-      locationService.currentPath = of('api');
-      locationServiceReplaceSpy.calls.reset();
-      component.ngOnInit();
-      expect(locationService.replace).not.toHaveBeenCalled();
-    });
+      it('should not redirect to docs if we are hitting a api page', () => {
+        deployment.mode = 'archive';
+        locationService.currentPath = of('api');
+        locationServiceReplaceSpy.calls.reset();
+        component.ngOnInit();
+        expect(locationService.replace).not.toHaveBeenCalled();
+      });
 
-    it('should not redirect to docs if we are hitting a guide page', () => {
-      deployment.mode = 'archive';
-      locationService.currentPath = of('guide');
-      locationServiceReplaceSpy.calls.reset();
-      component.ngOnInit();
-      expect(locationService.replace).not.toHaveBeenCalled();
-    });
+      it('should not redirect to docs if we are hitting a guide page', () => {
+        deployment.mode = 'archive';
+        locationService.currentPath = of('guide');
+        locationServiceReplaceSpy.calls.reset();
+        component.ngOnInit();
+        expect(locationService.replace).not.toHaveBeenCalled();
+      });
 
-    it('should not redirect to docs if we are hitting a tutorial page', () => {
-      deployment.mode = 'archive';
-      locationService.currentPath = of('tutorial');
-      locationServiceReplaceSpy.calls.reset();
-      component.ngOnInit();
-      expect(locationService.replace).not.toHaveBeenCalled();
+      it('should not redirect to docs if we are hitting a tutorial page', () => {
+        deployment.mode = 'archive';
+        locationService.currentPath = of('tutorial');
+        locationServiceReplaceSpy.calls.reset();
+        component.ngOnInit();
+        expect(locationService.replace).not.toHaveBeenCalled();
+      });
     });
-  });
 
     it('should auto scroll if the path changes while on the current page', () => {
       component.currentPath = 'docs';
@@ -184,7 +191,7 @@ describe('AppComponent', () => {
       it('should add the current version if in archive mode', () => {
         deployment.mode = 'archive';
         component.ngOnInit();
-        expect(component.docVersions).toContain({ title: 'v6 (v6.3)'});
+        expect(component.docVersions).toContain({ title: 'v6 (v6.3)' });
       });
 
       it('should find the current version by deployment mode and append the raw version info to the title', () => {
@@ -263,7 +270,7 @@ describe('AppComponent', () => {
   describe('onDocVersionChange', () => {
     it('should navigate to the new version url', () => {
       component.docVersions = [
-        { title: 'next', url: 'https://next.ngrx.io'},
+        { title: 'next', url: 'https://next.ngrx.io' },
         { title: 'stable (v6.3)', url: 'https://ngrx.io' }
       ];
       spyOn(locationService, 'go');
@@ -272,9 +279,9 @@ describe('AppComponent', () => {
     });
     it('should not navigate to new version if it does not define a Url', () => {
       component.docVersions = [
-        { title: 'next', url: 'https://next.ngrx.io'},
+        { title: 'next', url: 'https://next.ngrx.io' },
         { title: 'stable (v6.3)', url: 'https://ngrx.io' },
-        { title: 'v1'}
+        { title: 'v1' }
       ];
       spyOn(locationService, 'go');
       component.onDocVersionChange(2);
@@ -308,13 +315,13 @@ describe('AppComponent', () => {
     });
 
     it('should toggle the sidenav closed if it is not a doc page and the screen is wide enough to display menu items '
-    + 'in the top-bar', () => {
-      const sideNavToggleSpy = spyOn(component.sidenav, 'toggle');
-      sideNavToggleSpy.calls.reset();
-      component.updateSideNav();
-      component.onResize(993);
-      expect(component.sidenav.toggle).toHaveBeenCalledWith(false);
-    });
+      + 'in the top-bar', () => {
+        const sideNavToggleSpy = spyOn(component.sidenav, 'toggle');
+        sideNavToggleSpy.calls.reset();
+        component.updateSideNav();
+        component.onResize(993);
+        expect(component.sidenav.toggle).toHaveBeenCalledWith(false);
+      });
   });
 
   // describe('click handler', () => {
@@ -431,7 +438,7 @@ describe('AppComponent', () => {
       const scrollUpEvent = {
         deltaY: -1,
         currentTarget: { scrollTop: 0 },
-        preventDefault: () => {}
+        preventDefault: () => { }
       } as any;
       spyOn(scrollUpEvent, 'preventDefault');
       component.restrainScrolling(scrollUpEvent);
@@ -446,7 +453,7 @@ describe('AppComponent', () => {
           scrollHeight: 20,
           clientHeight: 10
         },
-        preventDefault: () => {}
+        preventDefault: () => { }
       } as any;
       spyOn(scrollUpEvent, 'preventDefault');
       component.restrainScrolling(scrollUpEvent);
@@ -491,11 +498,11 @@ describe('AppComponent', () => {
 
 class MockLocationService {
   currentPath = of('path');
-  replace = () => {};
-  go = () => {};
+  replace = () => { };
+  go = () => { };
   handleAnchorClick = () => true;
-  setSearch = () => {};
-  search = () => {};
+  setSearch = () => { };
+  search = () => { };
 }
 
 
@@ -512,9 +519,9 @@ class MockElementRef {
 }
 
 class MockNavigationService {
-  currentNodes: Observable<CurrentNodes> = of({ 'view': { url: 'path', view: 'view', nodes: []}})
-  versionInfo: Observable<VersionInfo> = of(<VersionInfo>{ major: 6, raw: '6.3'});
-  navigationViews: Observable<NavigationViews> = of({ 'docVersions' : [{ title: 'v5'}]});
+  currentNodes: Observable<CurrentNodes> = of({ 'view': { url: 'path', view: 'view', nodes: [] } })
+  versionInfo: Observable<VersionInfo> = of(<VersionInfo>{ major: 6, raw: '6.3' });
+  navigationViews: Observable<NavigationViews> = of({ 'docVersions': [{ title: 'v5' }] });
 }
 
 export class MockTocService {
@@ -524,8 +531,8 @@ export class MockTocService {
 }
 
 class MockScrollService {
-  scroll = () => {};
-  scrollToTop = () => {};
+  scroll = () => { };
+  scrollToTop = () => { };
 }
 
 // Mock Child Components
@@ -621,4 +628,4 @@ class MockAioFooterComponent {
   selector: 'aio-search-box',
   template: ''
 })
-class MockAioSearchBoxComponent {}
+class MockAioSearchBoxComponent { }

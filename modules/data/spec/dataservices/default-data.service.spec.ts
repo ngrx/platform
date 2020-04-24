@@ -39,8 +39,8 @@ describe('DefaultDataService', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
 
     httpUrlGenerator = new DefaultHttpUrlGenerator(null as any);
     httpUrlGenerator.registerHttpResourceUrls({

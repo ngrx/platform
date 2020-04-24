@@ -29,13 +29,13 @@ describe('Devtools Integration', () => {
       imports: [RootModule],
     });
 
-    const store = TestBed.get(Store) as Store<any>;
-    const devtools = TestBed.get(StoreDevtools) as StoreDevtools;
+    const store = TestBed.inject(Store);
+    const devtools = TestBed.inject(StoreDevtools);
     return { store, devtools };
   }
 
   afterEach(() => {
-    const devtools = TestBed.get(StoreDevtools) as StoreDevtools;
+    const devtools = TestBed.inject(StoreDevtools);
     devtools.reset();
   });
 

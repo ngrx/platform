@@ -34,9 +34,10 @@ describe('Effects Error Handler', () => {
       ],
     });
 
-    globalErrorHandler = TestBed.get(ErrorHandler).handleError;
-    const store = TestBed.get(Store);
-    storeNext = store.next;
+    globalErrorHandler = TestBed.inject(ErrorHandler)
+      .handleError as jasmine.Spy;
+    const store = TestBed.inject(Store);
+    storeNext = store.next as jasmine.Spy;
   }
 
   it('should retry on infinite error up to 10 times', () => {
@@ -76,7 +77,7 @@ describe('Effects Error Handler', () => {
 
     expect(effectsErrorHandlerSpy).toHaveBeenCalledWith(
       jasmine.any(Observable),
-      TestBed.get(ErrorHandler)
+      TestBed.inject(ErrorHandler)
     );
     expect(globalErrorHandler).toHaveBeenCalledWith(
       new Error('inside custom handler: effectError')

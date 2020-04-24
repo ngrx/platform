@@ -47,9 +47,9 @@ describe('Related-entity Selectors', () => {
       ],
     });
 
-    store = TestBed.get(Store);
-    eaFactory = TestBed.get(EntityActionFactory);
-    entitySelectorsFactory = TestBed.get(EntitySelectorsFactory);
+    store = TestBed.inject(Store);
+    eaFactory = TestBed.inject(EntityActionFactory);
+    entitySelectorsFactory = TestBed.inject(EntitySelectorsFactory);
     initializeCache(eaFactory, store);
   });
 

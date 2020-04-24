@@ -54,7 +54,7 @@ describe('TocComponent', () => {
       fixture = TestBed.createComponent(HostEmbeddedTocComponent);
       tocComponentDe = fixture.debugElement.children[0];
       tocComponent = tocComponentDe.componentInstance;
-      tocService = TestBed.get(TocService);
+      tocService = TestBed.inject<unknown>(TocService) as TestTocService;
     });
 
     it('should create tocComponent', () => {
@@ -160,7 +160,7 @@ describe('TocComponent', () => {
       beforeEach(() => {
         fixture.detectChanges();
         page = setPage();
-        scrollToTopSpy = TestBed.get(ScrollService).scrollToTop;
+        scrollToTopSpy = TestBed.inject(ScrollService).scrollToTop as jasmine.Spy;
       });
 
       it('should have more than 4 displayed items', () => {
@@ -276,7 +276,7 @@ describe('TocComponent', () => {
 
       tocComponentDe = fixture.debugElement.children[0];
       tocComponent = tocComponentDe.componentInstance;
-      tocService = TestBed.get(TocService);
+      tocService = TestBed.inject<unknown>(TocService) as TestTocService;
 
       fixture.detectChanges();
       page = setPage();
@@ -479,13 +479,13 @@ describe('TocComponent', () => {
   selector: 'aio-embedded-host',
   template: '<aio-toc class="embedded"></aio-toc>',
 })
-class HostEmbeddedTocComponent {}
+class HostEmbeddedTocComponent { }
 
 @Component({
   selector: 'aio-not-embedded-host',
   template: '<aio-toc></aio-toc>',
 })
-class HostNotEmbeddedTocComponent {}
+class HostNotEmbeddedTocComponent { }
 
 class TestScrollService {
   scrollToTop = jasmine.createSpy('scrollToTop');

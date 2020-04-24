@@ -92,10 +92,11 @@ function createStore<T>(
   });
 
   const testbed: TestBed = getTestBed();
-  const store: Store<T> = testbed.get(Store);
-  const devtools: StoreDevtools = testbed.get(StoreDevtools);
-  const state: StateObservable = testbed.get(StateObservable);
-  const reducerManager: ReducerManager = testbed.get(ReducerManager);
+  const store = testbed.inject(Store);
+
+  const devtools = testbed.inject(StoreDevtools);
+  const state = testbed.inject(StateObservable);
+  const reducerManager = testbed.inject(ReducerManager);
   let liftedValue: LiftedState;
   let value: any;
 

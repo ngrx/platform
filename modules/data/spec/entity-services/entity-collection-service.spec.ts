@@ -478,21 +478,23 @@ function entityServicesSetup() {
     ],
   });
 
-  const actions$: Observable<Action> = TestBed.get(Actions);
-  const dataService: TestDataService = TestBed.get(EntityDataService);
-  const entityActionFactory: EntityActionFactory = TestBed.get(
+  const actions$: Observable<Action> = TestBed.inject(Actions);
+  const dataService: TestDataService = TestBed.inject<unknown>(
+    EntityDataService
+  ) as TestDataService;
+  const entityActionFactory: EntityActionFactory = TestBed.inject(
     EntityActionFactory
   );
-  const entityDispatcherFactory: EntityDispatcherFactory = TestBed.get(
+  const entityDispatcherFactory: EntityDispatcherFactory = TestBed.inject(
     EntityDispatcherFactory
   );
-  const entityServices: EntityServices = TestBed.get(EntityServices);
+  const entityServices: EntityServices = TestBed.inject(EntityServices);
   const heroCollectionService = entityServices.getEntityCollectionService<Hero>(
     'Hero'
   );
   const reducedActions$: Observable<Action> =
     entityDispatcherFactory.reducedActions$;
-  const store: Store<EntityCache> = TestBed.get(Store);
+  const store: Store<EntityCache> = TestBed.inject(Store);
   const successActions$: Observable<EntityAction> = reducedActions$.pipe(
     filter(
       (act: any) => act.payload && act.payload.entityOp.endsWith(OP_SUCCESS)

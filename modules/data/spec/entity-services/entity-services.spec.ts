@@ -205,15 +205,15 @@ function entityServicesSetup() {
     ],
   });
 
-  const actions$: Observable<Action> = TestBed.get(Actions);
-  const entityActionFactory: EntityActionFactory = TestBed.get(
+  const actions$: Observable<Action> = TestBed.inject(Actions);
+  const entityActionFactory: EntityActionFactory = TestBed.inject(
     EntityActionFactory
   );
-  const entityDispatcherFactory: EntityDispatcherFactory = TestBed.get(
+  const entityDispatcherFactory: EntityDispatcherFactory = TestBed.inject(
     EntityDispatcherFactory
   );
-  const entityServices: EntityServices = TestBed.get(EntityServices);
-  const store: Store<EntityCache> = TestBed.get(Store);
+  const entityServices: EntityServices = TestBed.inject(EntityServices);
+  const store: Store<EntityCache> = TestBed.inject(Store);
 
   return {
     actions$,

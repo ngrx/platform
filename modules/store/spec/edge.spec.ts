@@ -27,7 +27,7 @@ describe('ngRx Store', () => {
         ],
       });
 
-      store = TestBed.get(Store);
+      store = TestBed.inject(Store);
     });
 
     it('should provide an Observable Store', () => {

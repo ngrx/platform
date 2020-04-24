@@ -69,9 +69,11 @@ describe('EntityCacheEffects (normal testing)', () => {
       ],
     });
 
-    actions$ = TestBed.get(Actions);
-    effects = TestBed.get(EntityCacheEffects);
-    dataService = TestBed.get(EntityCacheDataService);
+    actions$ = TestBed.inject(Actions) as ReplaySubject<Action>;
+    effects = TestBed.inject(EntityCacheEffects);
+    dataService = TestBed.inject<unknown>(
+      EntityCacheDataService
+    ) as TestEntityCacheDataService;
   });
 
   it('should return a SAVE_ENTITIES_SUCCESS with the expected ChangeSet on success', (done: any) => {
