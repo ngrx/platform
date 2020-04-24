@@ -1,7 +1,8 @@
-import { ChangeDetectorRef } from '@angular/core';
-import { envZonePatched } from '../utils';
+import { ChangeDetectorRef, NgZone } from '@angular/core';
+import { isNgZone } from '../utils';
 
 export interface StrategyFactoryConfig {
+  ngZone: NgZone;
   cdRef: ChangeDetectorRef;
 }
 
@@ -17,6 +18,7 @@ export interface StrategySet<U> {
 }
 export function getStrategies<T>(config: {
   cdRef: ChangeDetectorRef;
+  ngZone: NgZone;
 }): StrategySet<T> {
   return {
     native: createNativeStrategy<T>(config),
@@ -59,7 +61,7 @@ export function createOptimizedStrategy<T>(
   config: StrategyFactoryConfig
 ): CdStrategy<T> {
   function render() {
-    if (envZonePatched()) {
+    if (isNgZone(config.ngZone)) {
       config.cdRef.markForCheck();
     } else {
       config.cdRef.detectChanges();
