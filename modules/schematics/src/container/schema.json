@@ -27,13 +27,11 @@
     "inlineStyle": {
       "description": "Specifies if the style will be in the ts file.",
       "type": "boolean",
-      "default": false,
       "alias": "s"
     },
     "inlineTemplate": {
       "description": "Specifies if the template will be in the ts file.",
       "type": "boolean",
-      "default": false,
       "alias": "t"
     },
     "viewEncapsulation": {
@@ -46,7 +44,6 @@
       "description": "Specifies the change detection strategy.",
       "enum": ["Default", "OnPush"],
       "type": "string",
-      "default": "Default",
       "alias": "c"
     },
     "prefix": {
@@ -58,23 +55,19 @@
     "style": {
       "description":
         "The file extension or preprocessor to use for style files.",
-      "type": "string",
-      "default": "css"
+      "type": "string"
     },
     "skipTest": {
       "type": "boolean",
-      "description": "When true, does not create test files.",
-      "default": false
+      "description": "When true, does not create test files."
     },
     "flat": {
       "type": "boolean",
-      "description": "Flag to indicate if a dir is created.",
-      "default": false
+      "description": "Flag to indicate if a dir is created."
     },
     "skipImport": {
       "type": "boolean",
-      "description": "Flag to skip the module import.",
-      "default": false
+      "description": "Flag to skip the module import."
     },
     "selector": {
       "type": "string",
@@ -88,7 +81,6 @@
     },
     "export": {
       "type": "boolean",
-      "default": false,
       "description": "Specifies if declaring module exports the component."
     },
     "state": {

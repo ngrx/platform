@@ -29,7 +29,7 @@ import {
 } from '@ngrx/schematics/schematics-core';
 import { Schema as ContainerOptions } from './schema';
 
-function addStateToComponent(options: ContainerOptions) {
+function addStateToComponent(options: Partial<ContainerOptions>) {
   return (host: Tree) => {
     if (!options.state && !options.stateInterface) {
       return host;
@@ -152,10 +152,15 @@ export default function(options: ContainerOptions): Rule {
       ]
     );
 
+    // Remove all undefined values to use the schematic defaults (in angular.json or the Angular schema)
+    (Object.keys(opts) as (keyof ContainerOptions)[]).forEach(
+      key => (opts[key] === undefined ? delete opts[key] : {})
+    );
+
     return chain([
       externalSchematic('@schematics/angular', 'component', {
         ...opts,
-        skipTests: true
+        skipTests: true,
       }),
       addStateToComponent(options),
       mergeWith(templateSource),
