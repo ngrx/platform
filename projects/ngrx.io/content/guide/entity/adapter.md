@@ -85,7 +85,7 @@ state if no changes were made.
 
 - `addOne`: Add one entity to the collection
 - `addMany`: Add multiple entities to the collection
-- `addAll`: Replace current collection with provided collection
+- `setAll`: Replace current collection with provided collection
 - `setOne`: Add or Replace one entity in the collection
 - `removeOne`: Remove one entity from the collection
 - `removeMany`: Remove multiple entities from the collection, by id or by predicate
