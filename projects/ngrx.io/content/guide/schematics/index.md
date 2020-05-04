@@ -4,7 +4,7 @@ Scaffolding library for Angular applications using NgRx libraries.
 
 Schematics provides Angular CLI commands for generating files when building new NgRx feature areas and expanding existing ones. Built on top of [`Schematics`](https://blog.angular.io/schematics-an-introduction-dc1dfbc2a2b2), this tool integrates with the [`Angular CLI`](https://cli.angular.io/).
 
-## Installation 
+## Installation
 
 Detailed installation instructions can be found on the [Installation](guide/schematics/install) page.
 
@@ -50,13 +50,3 @@ ng config cli.defaultCollection @ngrx/schematics
 ```
 
 The [collection schema](https://github.com/ngrx/platform/tree/master/modules/schematics/collection.json) also has aliases to the most common schematics used to generate files.
-
-The `@ngrx/schematics` extend the default `@schematics/angular` collection. If you want to set defaults for schematics such as generating components with scss file, you must change the schematics package name from `@schematics/angular` to `@ngrx/schematics` in `angular.json`:
-
-```json
-"schematics": {
-  "@ngrx/schematics:component": {
-    "style": "scss"
-  }
-}
-```
