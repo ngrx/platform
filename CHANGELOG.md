@@ -1,3 +1,13 @@
+<a name="9.1.1"></a>
+
+## [9.1.1](https://github.com/ngrx/platform/compare/9.1.0...9.1.1) (2020-05-05)
+
+### Bug Fixes
+
+- **router-store:** selectors should return MemoizedSelector ([#2492](https://github.com/ngrx/platform/issues/2492)) ([39a4b91](https://github.com/ngrx/platform/commit/39a4b91))
+- **schematics:** use Angular default properties when not defined ([#2507](https://github.com/ngrx/platform/issues/2507)) ([7cd0624](https://github.com/ngrx/platform/commit/7cd0624)), closes [#1036](https://github.com/ngrx/platform/issues/1036)
+- **store:** ignore Ivy in runtime checks ([#2491](https://github.com/ngrx/platform/issues/2491)) ([46d752f](https://github.com/ngrx/platform/commit/46d752f)), closes [#2404](https://github.com/ngrx/platform/issues/2404)
+
 <a name="9.1.0"></a>
 
 # [9.1.0](https://github.com/ngrx/platform/compare/9.0.0...9.1.0) (2020-04-07)
