@@ -6,7 +6,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 describe('<%= classify(name) %>Component', () => {
   let component: <%= classify(name) %>Component;
   let fixture: ComponentFixture<<%= classify(name) %>Component>;
-  let store: MockStore<any>;
+  let store: MockStore;
 
   beforeEach(async() => {
     TestBed.configureTestingModule({

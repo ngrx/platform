@@ -103,9 +103,8 @@ describe('Container Schematic', () => {
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
-    expect(content).toMatch(
-      /constructor\(private store\: Store\<fromStore\.State\>\) { }\n\n/
-    );
+
+    expect(content).toMatch(/constructor\(private store\: Store\) { }\n\n/);
   });
 
   it('should update the component spec', async () => {
