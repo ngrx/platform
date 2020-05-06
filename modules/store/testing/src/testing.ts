@@ -6,6 +6,7 @@ import {
   ReducerManager,
   StateObservable,
   Store,
+  setNgrxMockEnvironment,
 } from '@ngrx/store';
 import { MockStore } from './mock_store';
 import { MockReducerManager } from './mock_reducer_manager';
@@ -20,6 +21,7 @@ export interface MockStoreConfig<T> {
 export function provideMockStore<T = any>(
   config: MockStoreConfig<T> = {}
 ): Provider[] {
+  setNgrxMockEnvironment(true);
   return [
     ActionsSubject,
     MockState,

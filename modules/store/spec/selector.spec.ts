@@ -9,6 +9,7 @@ import {
   MemoizedProjection,
 } from '@ngrx/store';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+import { setNgrxMockEnvironment } from '../src';
 
 describe('Selectors', () => {
   let countOne: number;
@@ -513,8 +514,8 @@ describe('Selectors', () => {
         });
       });
 
-      describe('should log when: ', () => {
-        it('feature key does not exist', () => {
+      describe('warning will ', () => {
+        it('be logged when not in mock environment', () => {
           spyOn(ngCore, 'isDevMode').and.returnValue(true);
           const selector = createFeatureSelector('featureB');
 
@@ -524,6 +525,15 @@ describe('Selectors', () => {
           expect(warnSpy.calls.mostRecent().args[0]).toMatch(
             /The feature name "featureB" does not exist/
           );
+        });
+
+        it('not be logged when in mock environment', () => {
+          setNgrxMockEnvironment(true);
+          const selector = createFeatureSelector('featureB');
+
+          selector({ featureA: {} });
+
+          expect(warnSpy).not.toHaveBeenCalled();
         });
       });
     });
