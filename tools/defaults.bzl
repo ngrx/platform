@@ -18,6 +18,7 @@ NGRX_SCOPED_PACKAGES = ["@ngrx/%s" % p for p in [
     "router-store",
     "data",
     "component",
+    "component-store",
     "schematics",
     "store-devtools",
 ]]

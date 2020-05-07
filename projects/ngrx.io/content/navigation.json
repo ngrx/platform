@@ -337,6 +337,15 @@
       ]
     },
     {
+      "title": "@ngrx/component-store",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/component-store"
+        }
+      ]
+    },
+    {
       "title": "@ngrx/schematics",
       "children": [
         {
