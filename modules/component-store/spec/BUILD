@@ -10,6 +10,7 @@ ts_test_library(
     deps = [
         "//modules/component-store",
         "@npm//rxjs",
+        "@npm//rxjs-marbles",
     ],
 )
 
