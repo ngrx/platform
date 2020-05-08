@@ -1,4 +1,3 @@
-
 load("//tools:defaults.bzl", "jasmine_node_test", "ts_test_library")
 
 ts_test_library(
