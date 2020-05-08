@@ -12,6 +12,7 @@ ts_test_library(
         "//modules/store",
         "@npm//@angular/router",
         "@npm//rxjs",
+        "@npm//ts-snippet",
     ],
 )
 
