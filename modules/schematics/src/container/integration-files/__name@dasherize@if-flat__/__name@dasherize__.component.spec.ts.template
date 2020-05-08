@@ -6,7 +6,7 @@ import { Store, StoreModule } from '@ngrx/store';
 describe('<%= classify(name) %>Component', () => {
   let component: <%= classify(name) %>Component;
   let fixture: ComponentFixture<<%= classify(name) %>Component>;
-  let store: Store<any>;
+  let store: Store;
 
   beforeEach(async() => {
     TestBed.configureTestingModule({

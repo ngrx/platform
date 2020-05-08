@@ -90,13 +90,9 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
     );
     const cmpCtr = componentConstructor as ts.ConstructorDeclaration;
     const { pos } = cmpCtr;
-    const stateType = options.state
-      ? `fromStore.${options.stateInterface}`
-      : 'any';
     const constructorText = cmpCtr.getText();
     const [start, end] = constructorText.split('()');
-    const storeText = `private store: Store<${stateType}>`;
-    const storeConstructor = [start, `(${storeText})`, end].join('');
+    const storeConstructor = [start, `(private store: Store)`, end].join('');
     const constructorUpdate = new ReplaceChange(
       componentPath,
       pos,
