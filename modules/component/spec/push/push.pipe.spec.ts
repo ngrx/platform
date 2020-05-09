@@ -3,21 +3,12 @@ import { async, TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { getGlobalThis } from '../../src/core/utils';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
+import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
 let pushPipe: PushPipe<unknown>;
 
 function wrapWithSpace(str: string): string {
   return ' ' + str + ' ';
-}
-
-class MockChangeDetectorRef {
-  public markForCheck(): string {
-    return 'markForCheck';
-  }
-
-  public detectChanges(): string {
-    return 'detectChanges';
-  }
 }
 
 @Component({
@@ -68,7 +59,7 @@ const setupPushPipeComponentZoneFull = () => {
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
     ],
   });
-  pushPipe = TestBed.get(PushPipe);
+  pushPipe = TestBed.inject(PushPipe);
 };
 
 describe('PushPipe', () => {

@@ -1,9 +1,8 @@
-export class MockEventEmitter<T> {
+import { EventEmitter } from '@angular/core';
+
+export class MockEventEmitter<T> extends EventEmitter<T> {
   next(value: any) {}
   error(error: any) {}
   complete() {}
-  subscribe() {
-    unsubscribe: () => {};
-  }
-  constructor(async: boolean) {}
+  emit() {}
 }

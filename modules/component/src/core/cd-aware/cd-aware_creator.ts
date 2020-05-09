@@ -1,5 +1,6 @@
 import {
   EMPTY,
+  isObservable,
   NextObserver,
   Observable,
   Subject,
@@ -9,14 +10,13 @@ import {
 import {
   catchError,
   distinctUntilChanged,
+  filter,
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { CdStrategy, DEFAULT_STRATEGY_NAME, StrategySet } from './strategy';
 
 export interface CdAware<U> extends Subscribable<U> {
   nextPotentialObservable: (value: any) => void;
-  nextStrategy: (config: string | Observable<string>) => void;
 }
 
 /**
@@ -29,12 +29,10 @@ export interface CdAware<U> extends Subscribable<U> {
  * Also custom behaviour is something you need to implement in the extending class
  */
 export function createCdAware<U>(cfg: {
-  strategies: StrategySet<U>;
+  render: () => void;
   resetContextObserver: NextObserver<void>;
   updateViewContextObserver: NextObserver<U | undefined | null>;
 }): CdAware<U | undefined | null> {
-  let strategy: CdStrategy<U> = cfg.strategies[DEFAULT_STRATEGY_NAME];
-
   const potentialObservablesSubject = new Subject<
     Observable<U> | undefined | null
   >();
@@ -49,23 +47,25 @@ export function createCdAware<U>(cfg: {
       // - undefined - No value set
       // - null - null passed directly or no value set over `async` pipe
       if (observable$ == null) {
-        // Update the value to render with null/undefined
+        // Update the value to render_creator with null/undefined
         cfg.updateViewContextObserver.next(observable$);
         // Render the view
-        strategy.render();
+        cfg.render();
         // Stop further processing
         return EMPTY;
       }
 
-      // If a new Observable arrives, reset the value to render
+      // If a new Observable arrives, reset the value to render_creator
       // We do this because we don't know when the next value arrives and want to get rid of the old value
       cfg.resetContextObserver.next();
-      strategy.render();
+      cfg.render();
 
       return observable$.pipe(
+        // forward only observable values
+        filter(o$ => isObservable(o$)),
         distinctUntilChanged(),
         tap(cfg.updateViewContextObserver),
-        tap(() => strategy.render()),
+        tap(() => cfg.render()),
         catchError(e => {
           console.error(e);
           return EMPTY;
@@ -77,10 +77,6 @@ export function createCdAware<U>(cfg: {
   return {
     nextPotentialObservable(value: Observable<U> | undefined | null): void {
       potentialObservablesSubject.next(value);
-    },
-    nextStrategy(nextConfig: string): void {
-      strategy =
-        cfg.strategies[nextConfig] || cfg.strategies[DEFAULT_STRATEGY_NAME];
     },
     subscribe(): Subscription {
       return rendering$.subscribe();

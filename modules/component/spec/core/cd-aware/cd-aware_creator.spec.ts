@@ -1,9 +1,5 @@
 import { OnDestroy } from '@angular/core';
-import {
-  CdAware,
-  createCdAware,
-  DEFAULT_STRATEGY_NAME,
-} from '../../../src/core';
+import { CdAware, createCdAware, createRender } from '../../../src/core';
 import {
   concat,
   EMPTY,
@@ -13,6 +9,10 @@ import {
   of,
   Unsubscribable,
 } from 'rxjs';
+import {
+  manualInstanceNgZone,
+  MockChangeDetectorRef,
+} from '../../fixtures/fixtures';
 
 class CdAwareImplementation<U> implements OnDestroy {
   public renderedValue: any = undefined;
@@ -31,12 +31,10 @@ class CdAwareImplementation<U> implements OnDestroy {
 
   constructor() {
     this.cdAware = createCdAware<U>({
-      strategies: {
-        [DEFAULT_STRATEGY_NAME]: {
-          render: () => {},
-          name: DEFAULT_STRATEGY_NAME,
-        },
-      },
+      render: createRender({
+        ngZone: manualInstanceNgZone,
+        cdRef: new MockChangeDetectorRef(),
+      }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
     });
@@ -70,42 +68,42 @@ describe('CdAware', () => {
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
-    it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
+    it('should render_creator undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(undefined);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
-    it('should render null as value when initially null was passed (as no value ever was emitted)', () => {
+    it('should render_creator null as value when initially null was passed (as no value ever was emitted)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(null);
       expect(cdAwareImplementation.renderedValue).toBe(null);
     });
 
-    it('should render undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
+    it('should render_creator undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(of(undefined));
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
-    it('should render null as value when initially of(null) was passed (as null was emitted)', () => {
+    it('should render_creator null as value when initially of(null) was passed (as null was emitted)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(of(null));
       expect(cdAwareImplementation.renderedValue).toBe(null);
     });
 
-    it('should render undefined as value when initially EMPTY was passed (as no value ever was emitted)', () => {
+    it('should render_creator undefined as value when initially EMPTY was passed (as no value ever was emitted)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(EMPTY);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
 
-    it('should render undefined as value when initially NEVER was passed (as no value ever was emitted)', () => {
+    it('should render_creator undefined as value when initially NEVER was passed (as no value ever was emitted)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(NEVER);
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
     });
     // Also: 'should keep last emitted value in the view until a new observable NEVER was passed (as no value ever was emitted from new observable)'
-    it('should render emitted value from passed observable without changing it', () => {
+    it('should render_creator emitted value from passed observable without changing it', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(of(42));
       expect(cdAwareImplementation.renderedValue).toBe(42);
     });
 
-    it('should render undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
+    it('should render_creator undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
       cdAwareImplementation.cdAware.nextPotentialObservable(of(42));
       expect(cdAwareImplementation.renderedValue).toBe(42);
       cdAwareImplementation.cdAware.nextPotentialObservable(NEVER);

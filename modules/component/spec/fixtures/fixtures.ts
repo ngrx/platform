@@ -25,6 +25,9 @@ export const manualInstanceNoopNgZone = new NoopNgZone({
 export class MockChangeDetectorRef {
   markForCheck = createSpy('markForCheck');
   detectChanges = createSpy('detectChanges');
+  checkNoChanges = createSpy('checkNoChanges');
+  detach = createSpy('detach');
+  reattach = createSpy('reattach');
 }
 
 export const mockPromise = {

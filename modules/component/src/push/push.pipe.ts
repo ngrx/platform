@@ -5,13 +5,8 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import {
-  NextObserver,
-  Observable,
-  ObservableInput,
-  Unsubscribable,
-} from 'rxjs';
-import { CdAware, createCdAware, getStrategies } from '../core';
+import { NextObserver, ObservableInput, Unsubscribable } from 'rxjs';
+import { CdAware, createCdAware, createRender } from '../core';
 
 /**
  * @Pipe PushPipe
@@ -30,7 +25,7 @@ import { CdAware, createCdAware, getStrategies } from '../core';
  * ```
  *
  * The problem is `async` pipe just marks the component and all its ancestors as dirty.
- * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked
+ * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked
  *     components.
  *
  * Heavy dynamic and interactive UIs suffer from zones change detection a lot and can
@@ -39,7 +34,7 @@ import { CdAware, createCdAware, getStrategies } from '../core';
  * `ngrxPush` pipe solves that problem.
  *
  * Included Features:
- *  - Take observables or promises, retrieve their values and render the value to the template
+ *  - Take observables or promises, retrieve their values and render_creator the value to the template
  *  - Handling null and undefined values in a clean unified/structured way
  *  - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
  *  - Distinct same values in a row to increase performance
@@ -73,23 +68,19 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
 
   constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
     this.cdAware = createCdAware<S>({
-      strategies: getStrategies<S>({ cdRef, ngZone }),
+      render: createRender({ cdRef, ngZone }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
     });
     this.subscription = this.cdAware.subscribe();
   }
 
-  transform<T>(potentialObservable: null, config?: string): null;
-  transform<T>(potentialObservable: undefined, config?: string): undefined;
-  transform<T>(potentialObservable: ObservableInput<T>, config?: string): T;
+  transform<T>(potentialObservable: null): null;
+  transform<T>(potentialObservable: undefined): undefined;
+  transform<T>(potentialObservable: ObservableInput<T>): T;
   transform<T>(
-    potentialObservable: ObservableInput<T> | null | undefined,
-    config: string | undefined
+    potentialObservable: ObservableInput<T> | null | undefined
   ): T | null | undefined {
-    if (config) {
-      this.cdAware.nextStrategy(config);
-    }
     this.cdAware.nextPotentialObservable(potentialObservable);
     return this.renderedValue as T | null | undefined;
   }

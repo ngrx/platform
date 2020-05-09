@@ -8,14 +8,8 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-import {
-  NextObserver,
-  Observable,
-  ObservableInput,
-  Observer,
-  Unsubscribable,
-} from 'rxjs';
-import { CdAware, createCdAware, getStrategies } from '../core';
+import { NextObserver, ObservableInput, Observer, Unsubscribable } from 'rxjs';
+import { CdAware, createCdAware, createRender } from '../core';
 
 export interface LetViewContext<T> {
   // to enable `let` syntax we have to use $implicit (var; let v = var)
@@ -156,13 +150,6 @@ export class LetDirective<U> implements OnDestroy {
     this.cdAware.nextPotentialObservable(potentialObservable);
   }
 
-  @Input()
-  set ngrxLetConfig(config: string | undefined) {
-    if (config) {
-      this.cdAware.nextStrategy(config);
-    }
-  }
-
   constructor(
     cdRef: ChangeDetectorRef,
     ngZone: NgZone,
@@ -170,7 +157,7 @@ export class LetDirective<U> implements OnDestroy {
     private readonly viewContainerRef: ViewContainerRef
   ) {
     this.cdAware = createCdAware<U>({
-      strategies: getStrategies<U>({ cdRef, ngZone }),
+      render: createRender({ cdRef, ngZone }),
       resetContextObserver: this.resetContextObserver,
       updateViewContextObserver: this.updateViewContextObserver,
     });
