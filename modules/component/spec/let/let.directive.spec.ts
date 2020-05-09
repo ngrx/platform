@@ -16,7 +16,9 @@ let letDirective: any;
   template: `
     <ng-container
       *ngrxLet="value$ as value; $error as error; $complete as complete"
-      >{{ (value | json) || 'undefined' }}</ng-container
+      >{{
+        value === null ? 'null' : (value | json) || 'undefined'
+      }}</ng-container
     >
   `,
 })
@@ -64,7 +66,6 @@ class LetDirectiveTestCompleteComponent {
 
 let fixtureLetDirectiveTestComponent: any;
 let letDirectiveTestComponent: {
-  strategy: any;
   value$: Observable<any> | undefined | null;
 };
 let componentNativeElement: any;
@@ -231,22 +232,6 @@ describe('LetDirective', () => {
       // Remains at 2, since that was the last value.
       expect(componentNativeElement.textContent).toBe('2');
     }));
-  });
-
-  describe('when error', () => {
-    beforeEach(async(setupLetDirectiveTestComponentError));
-
-    it('should render_creator the error to false if next or complete', () => {
-      letDirectiveTestComponent.value$ = of(1);
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('false');
-    });
-
-    it('should render_creator the error to true if one occurs', () => {
-      letDirectiveTestComponent.value$ = throwError(new Error('error message'));
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('true');
-    });
 
     it('should render new value as value when a new observable was passed', () => {
       letDirectiveTestComponent.value$ = of(42);
@@ -265,7 +250,7 @@ describe('LetDirective', () => {
     it('should render values over time when a new observable was passed', fakeAsync(() => {
       letDirectiveTestComponent.value$ = interval(1000).pipe(take(3));
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
+      expect(componentNativeElement.textContent).toBe('');
       tick(1000);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('0');
@@ -283,6 +268,22 @@ describe('LetDirective', () => {
     }));
   });
 
+  describe('when error', () => {
+    beforeEach(async(setupLetDirectiveTestComponentError));
+
+    it('should render_creator the error to false if next or complete', () => {
+      letDirectiveTestComponent.value$ = of(1);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('false');
+    });
+
+    it('should render_creator the error to true if one occurs', () => {
+      letDirectiveTestComponent.value$ = throwError(new Error('error message'));
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('true');
+    });
+  });
+
   describe('when complete', () => {
     beforeEach(async(setupLetDirectiveTestComponentComplete));
 
@@ -290,17 +291,6 @@ describe('LetDirective', () => {
       letDirectiveTestComponent.value$ = EMPTY;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
-    });
-  });
-
-  describe('when using strategy', () => {
-    beforeEach(async(setupLetDirectiveTestComponentStrategy));
-
-    it('should work with different if a strategy other than the default', () => {
-      letDirectiveTestComponent.value$ = of(1, 2, 3, 4, 5);
-      letDirectiveTestComponent.strategy = 'local';
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('5');
     });
   });
 });

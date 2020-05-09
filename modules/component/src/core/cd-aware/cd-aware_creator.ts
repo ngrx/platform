@@ -1,6 +1,5 @@
 import {
   EMPTY,
-  isObservable,
   NextObserver,
   Observable,
   Subject,
@@ -61,8 +60,6 @@ export function createCdAware<U>(cfg: {
       cfg.render();
 
       return observable$.pipe(
-        // forward only observable values
-        filter(o$ => isObservable(o$)),
         distinctUntilChanged(),
         tap(cfg.updateViewContextObserver),
         tap(() => cfg.render()),
