@@ -1,9 +1,16 @@
 import * as ngCore from '@angular/core';
 import { TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { Store, StoreModule, META_REDUCERS, USER_RUNTIME_CHECKS } from '..';
+import {
+  Store,
+  StoreModule,
+  META_REDUCERS,
+  USER_RUNTIME_CHECKS,
+  createAction,
+} from '..';
 import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks, Action } from '../src/models';
 import * as metaReducers from '../src/meta-reducers';
+import { REGISTERED_ACTION_TYPES } from '../src/globals';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
@@ -14,6 +21,7 @@ describe('Runtime checks:', () => {
         strictActionImmutability: true,
         strictStateImmutability: true,
         strictActionWithinNgZone: false,
+        strictActionTypeUniqueness: false,
       });
     });
 
@@ -25,6 +33,7 @@ describe('Runtime checks:', () => {
           strictActionImmutability: false,
           strictStateImmutability: false,
           strictActionWithinNgZone: true,
+          strictActionTypeUniqueness: true,
         })
       ).toEqual({
         strictStateSerializability: true,
@@ -32,6 +41,7 @@ describe('Runtime checks:', () => {
         strictActionImmutability: false,
         strictStateImmutability: false,
         strictActionWithinNgZone: true,
+        strictActionTypeUniqueness: true,
       });
     });
 
@@ -44,6 +54,7 @@ describe('Runtime checks:', () => {
         strictActionImmutability: false,
         strictStateImmutability: false,
         strictActionWithinNgZone: false,
+        strictActionTypeUniqueness: false,
       });
     });
 
@@ -55,6 +66,7 @@ describe('Runtime checks:', () => {
           strictStateSerializability: true,
           strictActionSerializability: true,
           strictActionWithinNgZone: true,
+          strictActionTypeUniqueness: true,
         })
       ).toEqual({
         strictStateSerializability: false,
@@ -62,6 +74,7 @@ describe('Runtime checks:', () => {
         strictActionImmutability: false,
         strictStateImmutability: false,
         strictActionWithinNgZone: false,
+        strictActionTypeUniqueness: false,
       });
     });
   });
@@ -381,6 +394,51 @@ describe('Runtime checks:', () => {
         expect(ngCore.NgZone.isInAngularZone).not.toHaveBeenCalled();
       })
     );
+  });
+});
+
+describe('ActionType uniqueness', () => {
+  beforeEach(() => {
+    REGISTERED_ACTION_TYPES.length = 0;
+  });
+
+  it('should throw when having no duplicate action types', () => {
+    createAction('action 1');
+    createAction('action 1');
+
+    expect(() => {
+      const store = setupStore({ strictActionTypeUniqueness: true });
+    }).toThrowError(/Action types are registered more than once/);
+  });
+
+  it('should not throw when having no duplicate action types', () => {
+    createAction('action 1');
+    createAction('action 2');
+
+    expect(() => {
+      const store = setupStore({ strictActionTypeUniqueness: true });
+    }).not.toThrowError();
+  });
+
+  it('should not register action types if devMode is false', () => {
+    spyOn(ngCore, 'isDevMode').and.returnValue(false);
+
+    createAction('action 1');
+    createAction('action 1');
+
+    expect(REGISTERED_ACTION_TYPES.length).toBe(0);
+
+    expect(() => {
+      const store = setupStore({ strictActionTypeUniqueness: false });
+    }).not.toThrowError();
+  });
+
+  it('should not throw when disabled', () => {
+    createAction('action 1');
+    createAction('action 1');
+    expect(() => {
+      const store = setupStore({ strictActionTypeUniqueness: false });
+    }).not.toThrowError();
   });
 });
 

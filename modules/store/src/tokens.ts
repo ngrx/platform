@@ -86,3 +86,7 @@ export const _USER_RUNTIME_CHECKS = new InjectionToken<RuntimeChecks>(
 export const _ACTIVE_RUNTIME_CHECKS = new InjectionToken<RuntimeChecks>(
   '@ngrx/store Internal Runtime Checks'
 );
+
+export const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken<void>(
+  '@ngrx/store Check if Action types are unique'
+);

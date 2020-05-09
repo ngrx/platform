@@ -37,6 +37,8 @@ import {
   USER_PROVIDED_META_REDUCERS,
   _RESOLVED_META_REDUCERS,
   _ROOT_STORE_GUARD,
+  _ACTIVE_RUNTIME_CHECKS,
+  _ACTION_TYPE_UNIQUENESS_CHECK,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -50,7 +52,10 @@ import {
 } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS, Store } from './store';
-import { provideRuntimeChecks } from './runtime_checks';
+import {
+  provideRuntimeChecks,
+  checkForActionTypeUniqueness,
+} from './runtime_checks';
 
 @NgModule({})
 export class StoreRootModule {
@@ -61,7 +66,10 @@ export class StoreRootModule {
     store: Store<any>,
     @Optional()
     @Inject(_ROOT_STORE_GUARD)
-    guard: any
+    guard: any,
+    @Optional()
+    @Inject(_ACTION_TYPE_UNIQUENESS_CHECK)
+    actionCheck: any
   ) {}
 }
 
@@ -71,7 +79,10 @@ export class StoreFeatureModule implements OnDestroy {
     @Inject(_STORE_FEATURES) private features: StoreFeature<any, any>[],
     @Inject(FEATURE_REDUCERS) private featureReducers: ActionReducerMap<any>[],
     private reducerManager: ReducerManager,
-    root: StoreRootModule
+    root: StoreRootModule,
+    @Optional()
+    @Inject(_ACTION_TYPE_UNIQUENESS_CHECK)
+    actionCheck: any
   ) {
     const feats = features.map((feature, index) => {
       const featureReducerCollection = featureReducers.shift();
@@ -166,6 +177,7 @@ export class StoreModule {
         STATE_PROVIDERS,
         STORE_PROVIDERS,
         provideRuntimeChecks(config.runtimeChecks),
+        checkForActionTypeUniqueness(),
       ],
     };
   }
@@ -238,6 +250,7 @@ export class StoreModule {
           ],
           useFactory: _createFeatureReducers,
         },
+        checkForActionTypeUniqueness(),
       ],
     };
   }

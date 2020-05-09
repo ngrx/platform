@@ -10,7 +10,10 @@ import {
   _ACTIVE_RUNTIME_CHECKS,
   META_REDUCERS,
   USER_RUNTIME_CHECKS,
+  _ACTION_TYPE_UNIQUENESS_CHECK,
 } from './tokens';
+import { REGISTERED_ACTION_TYPES } from './globals';
+import { RUNTIME_CHECK_URL } from './meta-reducers/utils';
 
 export function createActiveRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
@@ -22,6 +25,7 @@ export function createActiveRuntimeChecks(
       strictStateImmutability: true,
       strictActionImmutability: true,
       strictActionWithinNgZone: false,
+      strictActionTypeUniqueness: false,
       ...runtimeChecks,
     };
   }
@@ -32,6 +36,7 @@ export function createActiveRuntimeChecks(
     strictStateImmutability: false,
     strictActionImmutability: false,
     strictActionWithinNgZone: false,
+    strictActionTypeUniqueness: false,
   };
 }
 
@@ -118,8 +123,37 @@ export function provideRuntimeChecks(
   ];
 }
 
+export function checkForActionTypeUniqueness(): Provider[] {
+  return [
+    {
+      provide: _ACTION_TYPE_UNIQUENESS_CHECK,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: _actionTypeUniquenessCheck,
+    },
+  ];
+}
+
 export function _runtimeChecksFactory(
   runtimeChecks: RuntimeChecks
 ): RuntimeChecks {
   return runtimeChecks;
+}
+
+export function _actionTypeUniquenessCheck(config: RuntimeChecks) {
+  if (!config.strictActionTypeUniqueness) {
+    return;
+  }
+
+  const duplicates = REGISTERED_ACTION_TYPES.filter(
+    (type, index, arr) => arr.indexOf(type) !== index
+  );
+
+  if (duplicates.length) {
+    throw new Error(
+      `Action types are registered more than once, ${duplicates
+        .map(type => `"${type}"`)
+        .join(', ')}. ${RUNTIME_CHECK_URL}#strictactiontypeuniqueness`
+    );
+  }
 }
