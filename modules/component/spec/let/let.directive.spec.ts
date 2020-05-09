@@ -247,6 +247,40 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
     });
+
+    it('should render new value as value when a new observable was passed', () => {
+      letDirectiveTestComponent.value$ = of(42);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('42');
+      letDirectiveTestComponent.value$ = of(45);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('45');
+    });
+    it('should render the last value when a new observable was passed', () => {
+      letDirectiveTestComponent.value$ = of(42, 45);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('45');
+    });
+
+    it('should render values over time when a new observable was passed', fakeAsync(() => {
+      letDirectiveTestComponent.value$ = interval(1000).pipe(take(3));
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('undefined');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('0');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('1');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('2');
+
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      // Remains at 2, since that was the last value.
+      expect(componentNativeElement.textContent).toBe('2');
+    }));
   });
 
   describe('when complete', () => {
