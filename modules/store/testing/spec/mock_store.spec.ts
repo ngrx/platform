@@ -75,7 +75,6 @@ describe('Mock Store', () => {
     const fromStore = TestBed.inject(Store);
     const fromMockStore = TestBed.inject(MockStore);
     expect(fromStore).toBe(fromMockStore);
-    expect(store.setNgrxMockEnvironment).toHaveBeenCalled();
   });
 
   it('should set the initial state to a mocked one', (done: any) => {
