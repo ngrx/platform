@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { skip, take, tap } from 'rxjs/operators';
+import { skip, take } from 'rxjs/operators';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
   Store,
@@ -10,9 +10,11 @@ import {
   createFeatureSelector,
 } from '@ngrx/store';
 import { INCREMENT } from '../../spec/fixtures/counter';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
+
+import * as store from '@ngrx/store';
 
 interface TestAppSchema {
   counter1: number;
@@ -40,6 +42,8 @@ describe('Mock Store', () => {
   );
 
   beforeEach(() => {
+    spyOn(store, 'setNgrxMockEnvironment').and.callThrough();
+
     TestBed.configureTestingModule({
       providers: [
         provideMockStore({
@@ -63,10 +67,15 @@ describe('Mock Store', () => {
     mockStore.resetSelectors();
   });
 
+  it('should set NgrxMockEnvironment', () => {
+    expect(store.setNgrxMockEnvironment).toHaveBeenCalledWith(true);
+  });
+
   it('should provide the same instance with Store and MockStore', () => {
     const fromStore = TestBed.inject(Store);
     const fromMockStore = TestBed.inject(MockStore);
     expect(fromStore).toBe(fromMockStore);
+    expect(store.setNgrxMockEnvironment).toHaveBeenCalled();
   });
 
   it('should set the initial state to a mocked one', (done: any) => {
