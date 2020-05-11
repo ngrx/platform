@@ -16,7 +16,7 @@ export default function(options: FeatureOptions): Rule {
         name: options.name,
         path: options.path,
         project: options.project,
-        skipTest: true,
+        skipTest: options.skipTest,
         api: options.api,
         creators: options.creators,
       }),

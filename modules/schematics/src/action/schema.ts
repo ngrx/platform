@@ -17,7 +17,7 @@ export interface Schema {
   /**
    * When true, does not create test files.
    */
-  skipTests?: boolean;
+  skipTest?: boolean;
 
   /**
    * Flag to indicate if a dir is created.
