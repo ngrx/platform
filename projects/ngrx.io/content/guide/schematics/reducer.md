@@ -68,7 +68,7 @@ Specifies if api success and failure actions should be added to the reducer.
 
 Generate a spec file alongside the reducer file.
 
-- `--skipTest`
+- `--skipTests`
   - Type: `boolean`
   - Default: `false`
 

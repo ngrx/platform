@@ -51,7 +51,7 @@ export default function(options: EntityOptions): Rule {
     };
 
     const commonTemplates = apply(url('./common-files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates(templateOptions),

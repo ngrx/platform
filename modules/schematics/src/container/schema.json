@@ -57,7 +57,7 @@
         "The file extension or preprocessor to use for style files.",
       "type": "string"
     },
-    "skipTest": {
+    "skipTests": {
       "type": "boolean",
       "description": "When true, does not create test files."
     },

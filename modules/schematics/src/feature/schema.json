@@ -34,7 +34,7 @@
       "description": "Specifies the declaring module.",
       "aliases": ["m"]
     },
-    "skipTest": {
+    "skipTests": {
       "type": "boolean",
       "default": false,
       "description": "When true, does not create test files."

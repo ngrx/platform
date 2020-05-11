@@ -24,7 +24,7 @@
       "description": "The name of the project.",
       "aliases": ["p"]
     },
-    "skipTest": {
+    "skipTests": {
       "type": "boolean",
       "description": "When true, does not create test files.",
       "default": false

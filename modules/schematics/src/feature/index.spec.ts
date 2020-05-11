@@ -63,7 +63,7 @@ describe('Feature Schematic', () => {
   });
 
   it('should not create test files', () => {
-    const options = { ...defaultOptions, skipTest: true };
+    const options = { ...defaultOptions, skipTests: true };
 
     const tree = schematicRunner.runSchematic('feature', options, appTree);
     const files = tree.files;

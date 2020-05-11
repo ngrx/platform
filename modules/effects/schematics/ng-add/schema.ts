@@ -3,7 +3,7 @@ export interface Schema {
   skipPackageJson?: boolean;
   path?: string;
   flat?: boolean;
-  skipTest?: boolean;
+  skipTests?: boolean;
   project?: string;
   module?: string;
   group?: boolean;

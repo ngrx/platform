@@ -22,7 +22,7 @@ export interface Schema {
   /**
    * When true, does not create test files.
    */
-  skipTest?: boolean;
+  skipTests?: boolean;
 
   /**
    * Allows specification of the declaring module.

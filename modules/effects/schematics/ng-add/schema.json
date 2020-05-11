@@ -26,7 +26,7 @@
       "default": true,
       "description": "Flag to indicate if a dir is created."
     },
-    "skipTest": {
+    "skipTests": {
       "type": "boolean",
       "default": false,
       "description": "When true, does not create test files."

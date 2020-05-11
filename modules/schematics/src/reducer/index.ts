@@ -50,7 +50,7 @@ export default function(options: ReducerOptions): Rule {
     };
 
     const commonTemplate = apply(url('./common-files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates(templateOptions),

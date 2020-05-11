@@ -59,7 +59,7 @@ describe('Data Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create two files if skipTest is false(as it is by default)', () => {
+  it('should create two files if skipTests is false(as it is by default)', () => {
     const options = {
       ...defaultOptions,
     };

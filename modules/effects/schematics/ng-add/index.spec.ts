@@ -124,8 +124,8 @@ describe('Effects ng-add Schematic', () => {
     expect(thrownError).toBeDefined();
   });
 
-  it('should respect the skipTest flag', () => {
-    const options = { ...defaultOptions, skipTest: true };
+  it('should respect the skipTests flag', () => {
+    const options = { ...defaultOptions, skipTests: true };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
@@ -203,7 +203,7 @@ describe('Effects ng-add Schematic', () => {
     const options = {
       ...defaultOptions,
       flat: true,
-      skipTest: true,
+      skipTests: true,
       group: true,
     };
 
@@ -215,7 +215,7 @@ describe('Effects ng-add Schematic', () => {
   });
 
   it('should inject the effect service correctly', async () => {
-    const options = { ...defaultOptions, skipTest: false };
+    const options = { ...defaultOptions, skipTests: false };
     const tree = await schematicRunner
       .runSchematicAsync('ng-add', options, appTree)
       .toPromise();
@@ -223,8 +223,6 @@ describe('Effects ng-add Schematic', () => {
       `${projectPath}/src/app/foo/foo.effects.spec.ts`
     );
 
-    expect(content).toMatch(
-      /effects = TestBed\.inject\(FooEffects\);/
-    );
+    expect(content).toMatch(/effects = TestBed\.inject\(FooEffects\);/);
   });
 });
