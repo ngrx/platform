@@ -23,6 +23,10 @@ export default function(options: SelectorOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     const parsedPath = parseName(options.path, options.name || '');
     options.name = parsedPath.name;
     options.path = parsedPath.path;

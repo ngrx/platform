@@ -34,6 +34,11 @@
       "description": "Specifies the declaring module.",
       "aliases": ["m"]
     },
+    "skipTest": {
+      "type": "boolean",
+      "description": "(Deprecated) Use skipTests instead",
+      "default": false
+    },
     "skipTests": {
       "type": "boolean",
       "default": false,

@@ -121,6 +121,10 @@ export default function(options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
