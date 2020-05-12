@@ -17,7 +17,7 @@ var_2: &run_in_node
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
-var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.3
+var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.4
 var_5: &run_in_browser
   docker:
     - image: circleci/node:12.9.1-browsers
@@ -156,6 +156,7 @@ jobs:
           path: ~/docs
       - restore_cache:
           key: *docs_cache_key
+      - run: yarn --ignore-engines --frozen-lockfile --non-interactive
       - run: yarn test --watch=false
 
   docs:
