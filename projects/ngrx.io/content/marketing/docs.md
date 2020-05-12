@@ -36,7 +36,7 @@ NgRx is also powered by memoized selector functions which optimize state query c
 
 In particular, you might use NgRx when you build an application with a lot of user interactions and multiple data sources, when managing state in services are no longer sufficient.
 
-A good substance that might answer the question "Do I need NgRx", is the 
+A good substance that might answer the question "Do I need NgRx", is the
 <a href="https://youtu.be/omnwu_etHTY" target="_blank">**SHARI**</a> principle:
 
 * **S**hared: state that is accessed by many components and services.
@@ -63,4 +63,5 @@ It is also often require a steep learning curve, including some good understandi
 - [Entity](guide/entity) - Entity State adapter for managing record collections.
 - [NgRx Data](guide/data) - Extension for simplified entity data management.
 - [NgRx Component](guide/component) - Extension for fully reactive, fully zone-less applications.
+- [ComponentStore](guide/component-store) - Standalone library for managing local/component state.
 - [Schematics](guide/schematics) - Scaffolding library for Angular applications using NgRx libraries.

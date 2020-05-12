@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "strict": true,
+    "outDir": "../../dist/packages/component-store",
+    "paths": {},
+    "rootDir": ".",
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2015", "dom"],
+    "target": "es2015",
+    "skipLibCheck": true
+  },
+  "files": ["public_api.ts"],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@ngrx/component-store",
+    "enableIvy": false
+  }
+}

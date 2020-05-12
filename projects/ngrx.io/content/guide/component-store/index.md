@@ -1,0 +1,3 @@
+# @ngrx/component-store
+
+Placeholder
