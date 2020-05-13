@@ -423,19 +423,6 @@ describe('ActionType uniqueness', () => {
     }).not.toThrowError();
   });
 
-  it('should not register action types if devMode is false', () => {
-    spyOn(ngCore, 'isDevMode').and.returnValue(false);
-
-    createAction('action 1');
-    createAction('action 1');
-
-    expect(REGISTERED_ACTION_TYPES).toEqual({});
-
-    expect(() => {
-      setupStore({ strictActionTypeUniqueness: false });
-    }).not.toThrowError();
-  });
-
   it('should not throw when disabled', () => {
     createAction('action 1');
     createAction('action 1');
