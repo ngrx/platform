@@ -41,6 +41,7 @@ import { AppComponent } from '@example-app/core/containers';
         strictStateSerializability: true,
         strictActionSerializability: true,
         strictActionWithinNgZone: true,
+        strictActionTypeUniqueness: true,
       },
     }),
 

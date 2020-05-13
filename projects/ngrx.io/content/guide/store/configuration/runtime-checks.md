@@ -11,6 +11,7 @@ Runtime checks are here to guide developers to follow the NgRx and Redux core co
   - [`strictStateSerializability`](#strictstateserializability): verifies if the state is serializable
   - [`strictActionSerializability`](#strictactionserializability): verifies if the actions are serializable
   - [`strictActionWithinNgZone`](#strictactionwithinngzone): verifies if actions are dispatched within NgZone
+  - [`strictActionTypeUniqueness`](#strictactiontypeuniqueness): verifies if registered action types are unique
 
 All checks will automatically be disabled in production builds.
 
@@ -27,7 +28,8 @@ It's possible to override the default configuration of runtime checks. To do so,
         strictActionImmutability: true,
         strictStateSerializability: true,
         strictActionSerializability: true,
-        strictActionWithinNgZone: true
+        strictActionWithinNgZone: true,
+        strictActionTypeUniqueness: true,
       },
     }),
   ],
@@ -38,7 +40,7 @@ export class AppModule {}
 <div class="alert is-important">
 
 The serializability runtime checks cannot be enabled if you use `@ngrx/router-store` with the `DefaultRouterStateSerializer`. The [default serializer](guide/router-store/configuration) has an unserializable router state and actions that are not serializable. To use the serializability runtime checks either use the `MinimalRouterStateSerializer` or implement a custom router state serializer.
-This also applies to Ivy with immutability runtime checks. 
+This also applies to Ivy with immutability runtime checks.
 
 </div>
 
@@ -62,11 +64,12 @@ export const reducer = createReducer(initialState,
 To fix the above violation, a new reference to the state has to be created:
 
 ```ts
-export const reducer = createReducer(initialState,
+export const reducer = createReducer(
+  initialState,
   on(addTodo, (state, { todo }) => ({
     ...state,
     todoInput: '',
-    todos: [...state.todos, todo]
+    todos: [...state.todos, todo],
   }))
 );
 ```
@@ -95,12 +98,13 @@ To fix the above violation, the todo's id should be set in the action creator or
 ```ts
 export const addTodo = createAction(
   '[Todo List] Add Todo',
-  (description: string) => ({ id: generateUniqueId(), description})
+  (description: string) => ({ id: generateUniqueId(), description })
 );
-export const reducer = createReducer(initialState,
+export const reducer = createReducer(
+  initialState,
   on(addTodo, (state, { todo }) => ({
     ...state,
-    todos: [...state.todos, todo]
+    todos: [...state.todos, todo],
   }))
 );
 ```
@@ -112,7 +116,8 @@ This check verifies if the state is serializable. A serializable state is import
 Example violation of the rule:
 
 ```ts
-export const reducer = createReducer(initialState,
+export const reducer = createReducer(
+  initialState,
   on(completeTodo, (state, { id }) => ({
     ...state,
     todos: {
@@ -122,7 +127,7 @@ export const reducer = createReducer(initialState,
         // Violation, Date is not serializable
         completedOn: new Date(),
       },
-    }
+    },
   }))
 );
 ```
@@ -130,16 +135,17 @@ export const reducer = createReducer(initialState,
 As a fix of the above violation the `Date` object must be made serializable:
 
 ```ts
-export const reducer = createReducer(initialState,
+export const reducer = createReducer(
+  initialState,
   on(completeTodo, (state, { id }) => ({
     ...state,
     todos: {
       ...state.todos,
       [id]: {
         ...state.todos[id],
-        completedOn: new Date().toJSON()
-      }
-    }
+        completedOn: new Date().toJSON(),
+      },
+    },
   }))
 );
 ```
@@ -155,17 +161,20 @@ const createTodo = createAction('[Todo List] Add new todo', todo => ({
   todo,
   // Violation, a function is not serializable
   logTodo: () => {
-    console.log(todo)
+    console.log(todo);
   },
-}))
+}));
 ```
 
 The fix for this violation is to not add functions on actions, as a replacement a function can be created:
 
 ```ts
-const createTodo = createAction('[Todo List] Add new todo', props<{ todo: Todo }>());
+const createTodo = createAction(
+  '[Todo List] Add new todo',
+  props<{ todo: Todo }>()
+);
 
-function logTodo (todo: Todo) {
+function logTodo(todo: Todo) {
   console.log(todo);
 }
 ```
@@ -184,7 +193,7 @@ Example violation of the rule:
 
 ```ts
 // Callback running outside of NgZone
-function callbackOutsideNgZone(){
+function callbackOutsideNgZone() {
   this.store.dispatch(clearTodos());
 }
 ```
@@ -202,4 +211,22 @@ function callbackOutsideNgZone(){
     this.store.dispatch(clearTodos());
   }
 }
+```
+
+## strictActionTypeUniqueness
+
+The `strictActionTypeUniqueness` guards you against registering the same action type more than once.
+
+Example violation of the rule:
+
+```ts
+export const customerPageLoaded = createAction('[Customers Page] Loaded');
+export const customerPageRefreshed = createAction('[Customers Page] Loaded');
+```
+
+The fix of the violation is to create unique action types:
+
+```ts
+export const customerPageLoaded = createAction('[Customers Page] Loaded');
+export const customerPageRefreshed = createAction('[Customers Page] Refreshed');
 ```
