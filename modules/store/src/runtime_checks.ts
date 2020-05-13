@@ -145,9 +145,9 @@ export function _actionTypeUniquenessCheck(config: RuntimeChecks) {
     return;
   }
 
-  const duplicates = REGISTERED_ACTION_TYPES.filter(
-    (type, index, arr) => arr.indexOf(type) !== index
-  );
+  const duplicates = Object.entries(REGISTERED_ACTION_TYPES)
+    .filter(([_type, registrations]) => registrations > 1)
+    .map(([type]) => type);
 
   if (duplicates.length) {
     throw new Error(

@@ -104,7 +104,7 @@ export function createAction<T extends string, C extends Creator>(
   config?: { _as: 'props' } | C
 ): ActionCreator<T> {
   if (isDevMode()) {
-    REGISTERED_ACTION_TYPES.push(type);
+    REGISTERED_ACTION_TYPES[type] = (REGISTERED_ACTION_TYPES[type] || 0) + 1;
   }
 
   if (typeof config === 'function') {

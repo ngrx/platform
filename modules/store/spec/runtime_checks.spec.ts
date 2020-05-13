@@ -10,7 +10,10 @@ import {
 import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks, Action } from '../src/models';
 import * as metaReducers from '../src/meta-reducers';
-import { REGISTERED_ACTION_TYPES } from '../src/globals';
+import {
+  REGISTERED_ACTION_TYPES,
+  resetRegisteredActionTypes,
+} from '../src/globals';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
@@ -399,7 +402,7 @@ describe('Runtime checks:', () => {
 
 describe('ActionType uniqueness', () => {
   beforeEach(() => {
-    REGISTERED_ACTION_TYPES.length = 0;
+    resetRegisteredActionTypes();
   });
 
   it('should throw when having no duplicate action types', () => {
@@ -407,7 +410,7 @@ describe('ActionType uniqueness', () => {
     createAction('action 1');
 
     expect(() => {
-      const store = setupStore({ strictActionTypeUniqueness: true });
+      setupStore({ strictActionTypeUniqueness: true });
     }).toThrowError(/Action types are registered more than once/);
   });
 
@@ -416,7 +419,7 @@ describe('ActionType uniqueness', () => {
     createAction('action 2');
 
     expect(() => {
-      const store = setupStore({ strictActionTypeUniqueness: true });
+      setupStore({ strictActionTypeUniqueness: true });
     }).not.toThrowError();
   });
 
@@ -426,18 +429,19 @@ describe('ActionType uniqueness', () => {
     createAction('action 1');
     createAction('action 1');
 
-    expect(REGISTERED_ACTION_TYPES.length).toBe(0);
+    expect(REGISTERED_ACTION_TYPES).toEqual({});
 
     expect(() => {
-      const store = setupStore({ strictActionTypeUniqueness: false });
+      setupStore({ strictActionTypeUniqueness: false });
     }).not.toThrowError();
   });
 
   it('should not throw when disabled', () => {
     createAction('action 1');
     createAction('action 1');
+
     expect(() => {
-      const store = setupStore({ strictActionTypeUniqueness: false });
+      setupStore({ strictActionTypeUniqueness: false });
     }).not.toThrowError();
   });
 });
