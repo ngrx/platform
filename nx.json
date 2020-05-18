@@ -49,6 +49,10 @@
     },
     "component-store": {
       "tags": []
+    },
+    "example-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["example-app"]
     }
   }
 }
