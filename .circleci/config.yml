@@ -98,7 +98,7 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - run: yarn affected:test
+      - run: yarn test
 
   build:
     <<: *run_in_node
@@ -110,7 +110,7 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn affected:build
+      - run: yarn build
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
