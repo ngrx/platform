@@ -75,38 +75,67 @@ jobs:
       - run: 'yarn bazel:format --lint=warn ||
           (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
+  # test:
+  #   <<: *run_in_node
+  #   steps:
+  #     - checkout
+  #     - *set_bazel_options
+
+  #     - restore_cache:
+  #         keys:
+  #           - *cache_key
+
+      # Build and Test
+      # - run: yarn test --maxWorkers=1 --ci
+
   test:
     <<: *run_in_node
     steps:
       - checkout
-      - *set_bazel_options
 
       - restore_cache:
           keys:
             - *cache_key
 
       # Build and Test
-      - run: yarn test --maxWorkers=1 --ci
+      - run: yarn affected:test
 
   build:
     <<: *run_in_node
     steps:
       - checkout
-      - *set_bazel_options
-      - write_master_hash
       - restore_cache:
           keys:
-            - *bazel_cache_key
             - *cache_key
 
       # Build
       - run: yarn
-      - run: yarn bazel build //modules/...
+      - run: yarn affected:build
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
           paths:
-            - bin/*
+            - modules/*
+
+  # build:
+  #   <<: *run_in_node
+  #   steps:
+  #     - checkout
+  #     - *set_bazel_options
+  #     - write_master_hash
+  #     - restore_cache:
+  #         keys:
+  #           - *bazel_cache_key
+  #           - *cache_key
+
+  #     # Build
+  #     - run: yarn
+  #     - run: yarn build //modules/...
+  #     # Store artifacts from build
+  #     - persist_to_workspace:
+  #         root: dist
+  #         paths:
+  #           - bin/*
 
   update-master-hash:
     <<: *run_in_node
@@ -145,8 +174,7 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn run example:build:prod
-      - run: yarn run example:cypress:ci
+      - run: yarn example:e2e --headless
 
   docs-tests:
     <<: *docs_in_browser

@@ -41,7 +41,7 @@ export async function copySchematicsCore(config: Config) {
  */
 export async function publishToRepo(config: Config) {
   for (let pkg of util.getTopLevelPackages(config)) {
-    const SOURCE_DIR = `./dist/bin/modules/${pkg}/npm_package`;
+    const SOURCE_DIR = `./dist/modules/${pkg}/npm_package`;
     const REPO_URL = `git@github.com:ngrx/${pkg}-builds.git`;
     const REPO_DIR = `./tmp/${pkg}`;
 
