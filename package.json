@@ -9,7 +9,7 @@
     "deploy:preview": "ts-node ./build/deploy-preview.ts",
     "cleanup:previews": "ts-node ./build/cleanup-previews.ts",
     "test:unit": "node ./tests.js",
-    "test": "nx run-many --target=test --all --parallel --maxParallel=2",
+    "test": "nx affected:test",
     "test:bazel": "bazel test //modules/...",
     "clean": "git clean -xdf",
     "clean:bazel": "bazel clean",

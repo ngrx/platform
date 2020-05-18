@@ -98,7 +98,7 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - run: yarn test
+      - run: yarn nx affected:test
 
   build:
     <<: *run_in_node
