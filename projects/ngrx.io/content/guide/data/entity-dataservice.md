@@ -83,7 +83,7 @@ The `QUERY_ALL` action to get all heroes would result in an HTTP GET request to 
 The `DefaultDataService` doesn't know how to pluralize the entity type name.
 It doesn't even know how to create the base resource names.
 
-It relies on an injected `HttpUrlGenerator` service produce the appropriate endpoints.
+It relies on an injected `HttpUrlGenerator` service to produce the appropriate endpoints.
 And the default implementation of the `HttpUrlGenerator` relies on the
 `Pluralizer` service to produce the plural collection resource names.
 
