@@ -100,7 +100,7 @@ jobs:
       # Build and Test
       - write_master_hash
       - run: mkdir -p ~/circleci/project/node_modules/.cache/nx
-      - run: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel
+      - run: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
