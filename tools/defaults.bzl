@@ -128,11 +128,12 @@ def ts_jest_test(name, srcs, deps = [], **kwargs):
     _jest_test(
         name = name,
         data = [
-          "@npm//typescript",
-          "@npm//jest-preset-angular",
-          "//:setup-jest.ts",
-          "//:tsconfig.json",
-        jest_config] + deps + srcs,
+            "@npm//typescript",
+            "@npm//jest-preset-angular",
+            "//:setup-jest.ts",
+            "//:tsconfig.json",
+            jest_config,
+        ] + deps + srcs,
         args = args,
         **kwargs
     )
