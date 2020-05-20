@@ -24,9 +24,9 @@ describe('Utilities (utils)', () => {
       const id1 = generator1.next();
       const id2 = generator1.next();
       const id3 = generator2.next();
-      expect(id1).toBe(prefix + 1, 'gen1 first');
-      expect(id2).toBe(prefix + 2, 'gen1 second');
-      expect(id3).toBe(prefix + 1, 'gen2 first');
+      expect(id1).toBe(prefix + 1);
+      expect(id2).toBe(prefix + 2);
+      expect(id3).toBe(prefix + 1);
     });
   });
 });

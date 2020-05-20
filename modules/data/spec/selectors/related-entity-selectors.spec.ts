@@ -145,10 +145,7 @@ describe('Related-entity Selectors', () => {
         .pipe(skip(1))
         .subscribe(sk => {
           expect(sk.name).toBe('Bob');
-          expect(alphaCount).toEqual(
-            1,
-            'should only callback for Hero #1 once'
-          );
+          expect(alphaCount).toEqual(1);
           done();
         });
 
@@ -260,7 +257,7 @@ describe('Related-entity Selectors', () => {
 
     it('should get Alpha Hero battles', (done: any) => {
       createHeroBattlesSelector$(1).subscribe(battles => {
-        expect(battles.length).toBe(3, 'Alpha should have 3 battles');
+        expect(battles.length).toBe(3);
         done();
       });
     });
@@ -285,7 +282,7 @@ describe('Related-entity Selectors', () => {
 
     it('Gamma Hero should have no battles', (done: any) => {
       createHeroBattlesSelector$(3).subscribe(battles => {
-        expect(battles.length).toBe(0, 'Gamma should have no battles');
+        expect(battles.length).toBe(0);
         done();
       });
     });
@@ -359,14 +356,14 @@ describe('Related-entity Selectors', () => {
 
     it('should get Alpha Hero powers', (done: any) => {
       createHeroPowersSelector$(1).subscribe(powers => {
-        expect(powers.length).toBe(3, 'Alpha should have 3 powers');
+        expect(powers.length).toBe(3);
         done();
       });
     });
 
     it('should get Beta Hero power', (done: any) => {
       createHeroPowersSelector$(2).subscribe(powers => {
-        expect(powers.length).toBe(1, 'Beta should have 1 power');
+        expect(powers.length).toBe(1);
         expect(powers[0].name).toBe('Invisibility');
         done();
       });
@@ -376,7 +373,7 @@ describe('Related-entity Selectors', () => {
       createHeroPowersSelector$(2)
         .pipe(skip(1))
         .subscribe(powers => {
-          expect(powers.length).toBe(0, 'Beta should have no powers');
+          expect(powers.length).toBe(0);
           done();
         });
 
@@ -391,7 +388,7 @@ describe('Related-entity Selectors', () => {
 
     it('Gamma Hero should have no powers', (done: any) => {
       createHeroPowersSelector$(3).subscribe(powers => {
-        expect(powers.length).toBe(0, 'Gamma should have no powers');
+        expect(powers.length).toBe(0);
         done();
       });
     });

@@ -98,7 +98,7 @@ describe('EntityCollectionReducerRegistry', () => {
       // Must initialize the state by hand
       const state = entityCacheReducer({}, action);
       const collection = state['Foo'];
-      expect(collection.ids.length).toBe(0, 'ADD_ONE should not add');
+      expect(collection.ids.length).toBe(0);
     });
 
     it('can replace existing reducer by registering with same name', () => {
@@ -114,7 +114,7 @@ describe('EntityCollectionReducerRegistry', () => {
       );
       const state = entityCacheReducer({}, action);
       const collection = state['Hero'];
-      expect(collection.ids.length).toBe(0, 'ADD_ONE should not add');
+      expect(collection.ids.length).toBe(0);
     });
   });
 
@@ -143,8 +143,8 @@ describe('EntityCollectionReducerRegistry', () => {
       let state = entityCacheReducer({}, fooAction);
       state = entityCacheReducer(state, barAction);
 
-      expect(state['Foo'].ids.length).toBe(0, 'ADD_ONE Foo should not add');
-      expect(state['Bar'].ids.length).toBe(0, 'ADD_ONE Bar should not add');
+      expect(state['Foo'].ids.length).toBe(0);
+      expect(state['Bar'].ids.length).toBe(0);
     });
 
     it('can register several reducers that may override.', () => {
@@ -169,8 +169,8 @@ describe('EntityCollectionReducerRegistry', () => {
       let state = entityCacheReducer({}, fooAction);
       state = entityCacheReducer(state, heroAction);
 
-      expect(state['Foo'].ids.length).toBe(0, 'ADD_ONE Foo should not add');
-      expect(state['Hero'].ids.length).toBe(0, 'ADD_ONE Hero should not add');
+      expect(state['Foo'].ids.length).toBe(0);
+      expect(state['Hero'].ids.length).toBe(0);
     });
   });
 
@@ -241,8 +241,8 @@ describe('EntityCollectionReducerRegistry', () => {
 
       // inner default reducer worked as expected
       const collection = state['Hero'];
-      expect(collection.ids.length).toBe(1, 'should have added one');
-      expect(collection.entities[42]).toEqual(hero, 'should be added hero');
+      expect(collection.ids.length).toBe(1);
+      expect(collection.entities[42]).toEqual(hero);
     });
 
     it('should call meta reducers for inner default reducer as expected', () => {

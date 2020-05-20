@@ -92,8 +92,8 @@ describe('EntityCacheReducer', () => {
 
       const state = entityCacheReducer({}, action);
       const collection = state['Hero'];
-      expect(collection.ids.length).toBe(1, 'should have added one');
-      expect(collection.entities[42]).toEqual(hero, 'should be added hero');
+      expect(collection.ids.length).toBe(1);
+      expect(collection.entities[42]).toEqual(hero);
     });
 
     it('throws when ask for reducer of unknown entity type', () => {
@@ -142,21 +142,18 @@ describe('EntityCacheReducer', () => {
         const collections = ['Hero'];
         const action = new ClearCollections(collections);
         const state = entityCacheReducer(initialCache, action);
-        expect(state['Hero'].ids).toEqual([], 'empty Hero collection');
-        expect(state['Fool'].ids.length).toBeGreaterThan(0, 'Fools remain');
-        expect(state['Villain'].ids.length).toBeGreaterThan(
-          0,
-          'Villains remain'
-        );
+        expect(state['Hero'].ids).toEqual([]);
+        expect(state['Fool'].ids.length).toBeGreaterThan(0);
+        expect(state['Villain'].ids.length).toBeGreaterThan(0);
       });
 
       it('should clear multiple existing cached collections', () => {
         const collections = ['Hero', 'Villain'];
         const action = new ClearCollections(collections);
         const state = entityCacheReducer(initialCache, action);
-        expect(state['Hero'].ids).toEqual([], 'empty Hero collection');
-        expect(state['Villain'].ids).toEqual([], 'empty Villain collection');
-        expect(state['Fool'].ids.length).toBeGreaterThan(0, 'Fools remain');
+        expect(state['Hero'].ids).toEqual([]);
+        expect(state['Villain'].ids).toEqual([]);
+        expect(state['Fool'].ids.length).toBeGreaterThan(0);
       });
 
       it('should initialize an empty cache with the collections', () => {
@@ -165,12 +162,9 @@ describe('EntityCacheReducer', () => {
         const action = new ClearCollections(collections);
 
         const state = entityCacheReducer({}, action);
-        expect(Object.keys(state)).toEqual(
-          ['Hero', 'Villain'],
-          'created collections'
-        );
-        expect(state['Villain'].ids).toEqual([], 'Hero id');
-        expect(state['Hero'].ids).toEqual([], 'Villain ids');
+        expect(Object.keys(state)).toEqual(['Hero', 'Villain']);
+        expect(state['Villain'].ids).toEqual([]);
+        expect(state['Hero'].ids).toEqual([]);
       });
 
       it('should return cache matching existing cache for empty collections array', () => {
@@ -183,25 +177,22 @@ describe('EntityCacheReducer', () => {
       it('should clear every collection in an existing cache when collections is falsy', () => {
         const action = new ClearCollections(undefined);
         const state = entityCacheReducer(initialCache, action);
-        expect(Object.keys(state).sort()).toEqual(
-          ['Fool', 'Hero', 'Villain'],
-          'collections still exist'
-        );
-        expect(state['Fool'].ids).toEqual([], 'no Fool ids');
-        expect(state['Hero'].ids).toEqual([], 'no Villain ids');
-        expect(state['Villain'].ids).toEqual([], 'no Hero id');
+        expect(Object.keys(state).sort()).toEqual(['Fool', 'Hero', 'Villain']);
+        expect(state['Fool'].ids).toEqual([]);
+        expect(state['Hero'].ids).toEqual([]);
+        expect(state['Villain'].ids).toEqual([]);
       });
     });
 
     describe('LOAD_COLLECTIONS', () => {
       function shouldHaveExpectedHeroes(entityCache: EntityCache) {
         const heroCollection = entityCache['Hero'];
-        expect(heroCollection.ids).toEqual([2, 1], 'Hero ids');
+        expect(heroCollection.ids).toEqual([2, 1]);
         expect(heroCollection.entities).toEqual({
           1: initialHeroes[1],
           2: initialHeroes[0],
         });
-        expect(heroCollection.loaded).toBe(true, 'Heroes loaded');
+        expect(heroCollection.loaded).toBe(true);
       }
 
       it('should initialize an empty cache with the collections', () => {
@@ -214,8 +205,8 @@ describe('EntityCacheReducer', () => {
 
         const state = entityCacheReducer({}, action);
         shouldHaveExpectedHeroes(state);
-        expect(state['Villain'].ids).toEqual(['DE'], 'Villain ids');
-        expect(state['Villain'].loaded).toBe(true, 'Villains loaded');
+        expect(state['Villain'].ids).toEqual(['DE']);
+        expect(state['Villain'].loaded).toBe(true);
       });
 
       it('should return cache matching existing cache when collections set is empty', () => {
@@ -230,8 +221,8 @@ describe('EntityCacheReducer', () => {
         };
         const action = new LoadCollections(collections);
         const state = entityCacheReducer(initialCache, action);
-        expect(state['Knave'].ids).toEqual([96], 'Knave ids');
-        expect(state['Knave'].loaded).toBe(true, 'Knave loaded');
+        expect(state['Knave'].ids).toEqual([96]);
+        expect(state['Knave'].loaded).toBe(true);
       });
 
       it('should replace an existing cached collection', () => {
@@ -241,17 +232,14 @@ describe('EntityCacheReducer', () => {
         const action = new LoadCollections(collections);
         const state = entityCacheReducer(initialCache, action);
         const heroCollection = state['Hero'];
-        expect(heroCollection.ids).toEqual([42], 'only the loaded hero');
-        expect(heroCollection.entities[42]).toEqual(
-          { id: 42, name: 'Bobby' },
-          'loaded hero'
-        );
+        expect(heroCollection.ids).toEqual([42]);
+        expect(heroCollection.entities[42]).toEqual({ id: 42, name: 'Bobby' });
       });
     });
 
     describe('MERGE_QUERY_SET', () => {
       function shouldHaveExpectedHeroes(entityCache: EntityCache) {
-        expect(entityCache['Hero'].ids).toEqual([2, 1], 'Hero ids');
+        expect(entityCache['Hero'].ids).toEqual([2, 1]);
         expect(entityCache['Hero'].entities).toEqual({
           1: initialHeroes[1],
           2: initialHeroes[0],
@@ -268,7 +256,7 @@ describe('EntityCacheReducer', () => {
 
         const state = entityCacheReducer({}, action);
         shouldHaveExpectedHeroes(state);
-        expect(state['Villain'].ids).toEqual(['DE'], 'Villain ids');
+        expect(state['Villain'].ids).toEqual(['DE']);
       });
 
       it('should return cache matching existing cache when query set is empty', () => {
@@ -284,7 +272,7 @@ describe('EntityCacheReducer', () => {
         const action = new MergeQuerySet(querySet);
         const state = entityCacheReducer(initialCache, action);
         shouldHaveExpectedHeroes(state);
-        expect(state['Villain'].ids).toEqual(['DE'], 'Villain ids');
+        expect(state['Villain'].ids).toEqual(['DE']);
       });
 
       it('should merge into an existing cached collection', () => {
@@ -295,11 +283,8 @@ describe('EntityCacheReducer', () => {
         const state = entityCacheReducer(initialCache, action);
         const heroCollection = state['Hero'];
         const expectedIds = initialHeroes.map(h => h.id).concat(42);
-        expect(heroCollection.ids).toEqual(expectedIds, 'merged ids');
-        expect(heroCollection.entities[42]).toEqual(
-          { id: 42, name: 'Bobby' },
-          'merged hero'
-        );
+        expect(heroCollection.ids).toEqual(expectedIds);
+        expect(heroCollection.entities[42]).toEqual({ id: 42, name: 'Bobby' });
       });
     });
 
@@ -317,12 +302,12 @@ describe('EntityCacheReducer', () => {
         // };
 
         const state = entityCacheReducer(cache, action);
-        expect(state['Hero'].ids).toEqual([2, 1], 'Hero ids');
+        expect(state['Hero'].ids).toEqual([2, 1]);
         expect(state['Hero'].entities).toEqual({
           1: initialHeroes[1],
           2: initialHeroes[0],
         });
-        expect(state['Villain'].ids).toEqual(['DE'], 'Villain ids');
+        expect(state['Villain'].ids).toEqual(['DE']);
       });
 
       it('should clear the cache when set with empty object', () => {
@@ -345,8 +330,8 @@ describe('EntityCacheReducer', () => {
         expect(state['Villain']).toBeUndefined();
 
         const heroCollection = state['Hero'];
-        expect(heroCollection.ids).toEqual([42], 'hero ids');
-        expect(heroCollection.entities[42]).toEqual(newHeroes[0], 'heroes');
+        expect(heroCollection.ids).toEqual([42]);
+        expect(heroCollection.entities[42]).toEqual(newHeroes[0]);
       });
     });
 
@@ -359,10 +344,10 @@ describe('EntityCacheReducer', () => {
 
         const entityCache = entityCacheReducer({}, action);
 
-        expect(entityCache['Fool'].ids).toEqual([], 'Fool ids');
-        expect(entityCache['Hero'].ids).toEqual([], 'Hero ids');
-        expect(entityCache['Knave'].ids).toEqual([], 'Knave ids');
-        expect(entityCache['Villain'].ids).toEqual([], 'Villain ids');
+        expect(entityCache['Fool'].ids).toEqual([]);
+        expect(entityCache['Hero'].ids).toEqual([]);
+        expect(entityCache['Knave'].ids).toEqual([]);
+        expect(entityCache['Villain'].ids).toEqual([]);
         expectLoadingFlags(entityCache, true);
       });
 
@@ -374,13 +359,10 @@ describe('EntityCacheReducer', () => {
 
         const entityCache = entityCacheReducer({}, action);
 
-        expect(entityCache['Fool'].ids).toEqual([], 'Fool ids');
-        expect(entityCache['Hero'].ids).toEqual([42, 43], 'added Hero ids');
-        expect(entityCache['Knave'].ids).toEqual([6, 66], 'Knave ids');
-        expect(entityCache['Villain'].ids).toEqual(
-          ['44', '45'],
-          'added Villain ids'
-        );
+        expect(entityCache['Fool'].ids).toEqual([]);
+        expect(entityCache['Hero'].ids).toEqual([42, 43]);
+        expect(entityCache['Knave'].ids).toEqual([6, 66]);
+        expect(entityCache['Villain'].ids).toEqual(['44', '45']);
         expectLoadingFlags(entityCache, true);
       });
 
@@ -395,17 +377,14 @@ describe('EntityCacheReducer', () => {
 
         entityCache = entityCacheReducer(entityCache, action);
 
-        expect(entityCache['Fool'].ids).toEqual([1, 2], 'Fool ids');
+        expect(entityCache['Fool'].ids).toEqual([1, 2]);
         expect(entityCache['Fool'].entities[1].skill).toEqual(
           'Updated Skill 1'
         );
 
-        expect(entityCache['Hero'].ids).toEqual(
-          [4, 42, 43],
-          'Hero ids - 2 new, {3,5} deleted'
-        );
+        expect(entityCache['Hero'].ids).toEqual([4, 42, 43]);
 
-        expect(entityCache['Knave'].ids).toEqual([6, 66], 'Knave ids');
+        expect(entityCache['Knave'].ids).toEqual([6, 66]);
         expect(entityCache['Knave'].entities[6].name).toEqual(
           'Upsert Update Knave 6'
         );
@@ -413,10 +392,13 @@ describe('EntityCacheReducer', () => {
           'Upsert Add Knave 66'
         );
 
-        expect(entityCache['Villain'].ids).toEqual(
-          ['7', '8', '10', '44', '45'],
-          'Villain ids'
-        );
+        expect(entityCache['Villain'].ids).toEqual([
+          '7',
+          '8',
+          '10',
+          '44',
+          '45',
+        ]);
 
         expectLoadingFlags(entityCache, true);
       });
@@ -468,13 +450,10 @@ describe('EntityCacheReducer', () => {
 
         const entityCache = entityCacheReducer({}, action);
 
-        expect(entityCache['Fool'].ids).toEqual([], 'Fool ids');
-        expect(entityCache['Hero'].ids).toEqual([42, 43], 'added Hero ids');
-        expect(entityCache['Knave'].ids).toEqual([6, 66], 'Knave ids');
-        expect(entityCache['Villain'].ids).toEqual(
-          ['44', '45'],
-          'added Villain ids'
-        );
+        expect(entityCache['Fool'].ids).toEqual([]);
+        expect(entityCache['Hero'].ids).toEqual([42, 43]);
+        expect(entityCache['Knave'].ids).toEqual([6, 66]);
+        expect(entityCache['Villain'].ids).toEqual(['44', '45']);
         expectLoadingFlags(entityCache, false);
       });
 
@@ -489,17 +468,14 @@ describe('EntityCacheReducer', () => {
 
         entityCache = entityCacheReducer(entityCache, action);
 
-        expect(entityCache['Fool'].ids).toEqual([1, 2], 'Fool ids');
+        expect(entityCache['Fool'].ids).toEqual([1, 2]);
         expect(entityCache['Fool'].entities[1].skill).toEqual(
           'Updated Skill 1'
         );
 
-        expect(entityCache['Hero'].ids).toEqual(
-          [4, 42, 43],
-          'Hero ids - 2 new, {3,5} deleted'
-        );
+        expect(entityCache['Hero'].ids).toEqual([4, 42, 43]);
 
-        expect(entityCache['Knave'].ids).toEqual([6, 66], 'Knave ids');
+        expect(entityCache['Knave'].ids).toEqual([6, 66]);
         expect(entityCache['Knave'].entities[6].name).toEqual(
           'Upsert Update Knave 6'
         );
@@ -507,10 +483,13 @@ describe('EntityCacheReducer', () => {
           'Upsert Add Knave 66'
         );
 
-        expect(entityCache['Villain'].ids).toEqual(
-          ['7', '8', '10', '44', '45'],
-          'Villain ids'
-        );
+        expect(entityCache['Villain'].ids).toEqual([
+          '7',
+          '8',
+          '10',
+          '44',
+          '45',
+        ]);
 
         expectLoadingFlags(entityCache, false);
       });
@@ -526,17 +505,14 @@ describe('EntityCacheReducer', () => {
 
         entityCache = entityCacheReducer(entityCache, action);
 
-        expect(entityCache['Fool'].ids).toEqual([1, 2], 'Fool ids');
+        expect(entityCache['Fool'].ids).toEqual([1, 2]);
         expect(entityCache['Fool'].entities[1].skill).toEqual(
           'Updated Skill 1'
         );
 
-        expect(entityCache['Hero'].ids).toEqual(
-          [4, 42, 43],
-          'Hero ids - 2 new, {3,5} deleted'
-        );
+        expect(entityCache['Hero'].ids).toEqual([4, 42, 43]);
 
-        expect(entityCache['Knave'].ids).toEqual([6, 66], 'Knave ids');
+        expect(entityCache['Knave'].ids).toEqual([6, 66]);
         expect(entityCache['Knave'].entities[6].name).toEqual(
           'Upsert Update Knave 6'
         );
@@ -544,10 +520,13 @@ describe('EntityCacheReducer', () => {
           'Upsert Add Knave 66'
         );
 
-        expect(entityCache['Villain'].ids).toEqual(
-          ['7', '8', '10', '44', '45'],
-          'Villain ids'
-        );
+        expect(entityCache['Villain'].ids).toEqual([
+          '7',
+          '8',
+          '10',
+          '44',
+          '45',
+        ]);
 
         expectLoadingFlags(entityCache, false);
       });
@@ -573,7 +552,7 @@ describe('EntityCacheReducer', () => {
         expectLoadingFlags(entityCache, false);
 
         // Added entities remain in cache (if not on the server), with pending changeState
-        expect(entityCache['Hero'].ids).toEqual([42, 43], 'added Hero ids');
+        expect(entityCache['Hero'].ids).toEqual([42, 43]);
         const heroChangeState = entityCache['Hero'].changeState;
         expect(heroChangeState[42]).toBeDefined();
         expect(heroChangeState[43]).toBeDefined();
@@ -691,10 +670,7 @@ describe('EntityCacheReducer', () => {
   ) {
     entityNames = entityNames ? [] : Object.keys(entityCache);
     entityNames.forEach(name => {
-      expect(entityCache[name].loading).toBe(
-        flag,
-        `${name}${flag ? '' : ' not'} loading`
-      );
+      expect(entityCache[name].loading).toBe(flag);
     });
   }
   // #endregion helpers

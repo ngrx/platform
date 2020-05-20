@@ -113,7 +113,7 @@ describe('EntityAction Operators', () => {
     actions.pipe(ofEntityType('hero')).subscribe(ea => results.push(ea));
 
     dispatchTestActions();
-    expect(results).toEqual([], 'should not match anything');
+    expect(results).toEqual([]);
   });
 
   ///////////////

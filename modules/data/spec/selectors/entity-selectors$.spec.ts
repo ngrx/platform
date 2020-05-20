@@ -122,7 +122,7 @@ describe('EntitySelectors$', () => {
       let selectorCollection: EntityCollection<HeroCollection>;
       selectors$.collection$.subscribe(c => (selectorCollection = c));
       expect(selectorCollection!).toBeDefined();
-      expect(selectorCollection!.entities).toEqual({}, 'entities');
+      expect(selectorCollection!.entities).toEqual({});
 
       // Important: the selector is returning these values;
       // They are not actually in the store's entity cache collection!
@@ -137,11 +137,11 @@ describe('EntitySelectors$', () => {
 
       subscribeToSelectors(selectors$);
 
-      expect(heroes).toEqual([], 'no heroes by default');
-      expect(loaded).toBe(false, 'loaded is false by default');
-      expect(loading).toBe(false, 'loading is false by default');
-      expect(foo).toBe('foo', 'default foo value is "foo"');
-      expect(bar).toBe(3.14, 'no default bar value is 3.14');
+      expect(heroes).toEqual([]);
+      expect(loaded).toBe(false);
+      expect(loading).toBe(false);
+      expect(foo).toBe('foo');
+      expect(bar).toBe(3.14);
     });
 
     it('selectors$ emit updated hero values', () => {
@@ -170,11 +170,11 @@ describe('EntitySelectors$', () => {
       nextCacheState({ ...emptyCache, Hero: collection });
 
       // Selectors$ should have emitted the updated values.
-      expect(heroes).toEqual([{ id: 42, name: 'Bob' }], 'added a hero');
-      expect(loaded).toBe(true, 'loaded'); // as if had QueryAll
-      expect(loading).toBe(false, 'loading'); // didn't change
-      expect(foo).toEqual('FooDoo', 'updated foo value');
-      expect(bar).toEqual(3.14, 'still the initial value'); // didn't change
+      expect(heroes).toEqual([{ id: 42, name: 'Bob' }]);
+      expect(loaded).toBe(true); // as if had QueryAll
+      expect(loading).toBe(false); // didn't change
+      expect(foo).toEqual('FooDoo');
+      expect(bar).toEqual(3.14); // didn't change
     });
 
     it('selectors$ emit supplied defaultCollectionState when collection is undefined', () => {
@@ -198,9 +198,9 @@ describe('EntitySelectors$', () => {
 
       subscribeToSelectors(selectors$);
 
-      expect(heroes).toEqual([{ id: 1, name: 'A' }], 'default state heroes');
-      expect(foo).toEqual('foo foo', 'has default foo');
-      expect(bar).toEqual(42, 'has default bar');
+      expect(heroes).toEqual([{ id: 1, name: 'A' }]);
+      expect(foo).toEqual('foo foo');
+      expect(bar).toEqual(42);
 
       // Important: the selector is returning these values;
       // They are not actually in the store's entity cache collection!
@@ -214,8 +214,8 @@ describe('EntitySelectors$', () => {
       // prime the store for Hero first use as the EntityReducer would
       nextCacheState(initializedHeroCache);
 
-      expect(entityCacheValues.length).toEqual(2, 'set the cache twice');
-      expect(entityCacheValues[0]).toEqual({}, 'empty at first');
+      expect(entityCacheValues.length).toEqual(2);
+      expect(entityCacheValues[0]).toEqual({});
       expect(entityCacheValues[1].Hero).toBeDefined();
     });
 
@@ -236,8 +236,8 @@ describe('EntitySelectors$', () => {
       const heroAction = eaFactory.create('Hero', EntityOp.QUERY_ALL);
       actions$.next(heroAction);
 
-      expect(actionsReceived.length).toBe(1, 'only one hero action');
-      expect(actionsReceived[0]).toBe(heroAction, 'expected hero action');
+      expect(actionsReceived.length).toBe(1);
+      expect(actionsReceived[0]).toBe(heroAction);
     });
 
     it('`errors$` emits hero collection EntityAction errors and no other actions', () => {
@@ -261,11 +261,8 @@ describe('EntitySelectors$', () => {
         EntityOp.QUERY_ALL_ERROR
       );
       actions$.next(heroErrorAction);
-      expect(actionsReceived.length).toBe(1, 'only one hero action');
-      expect(actionsReceived[0]).toBe(
-        heroErrorAction,
-        'expected error hero action'
-      );
+      expect(actionsReceived.length).toBe(1);
+      expect(actionsReceived[0]).toBe(heroErrorAction);
     });
   });
 });

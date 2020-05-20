@@ -138,7 +138,7 @@ describe('EntityDefinitionService', () => {
 
       const def = service.getDefinition('Hero');
       expect(def).toBeDefined();
-      expect(def.selectId).toBe(testSelectId, 'updated w/ new selectId');
+      expect(def.selectId).toBe(testSelectId);
     });
   });
 });

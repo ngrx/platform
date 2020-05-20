@@ -50,8 +50,8 @@ describe('EntitySelectors', () => {
       >('Hero');
       const state = { entityCache: {} }; // ngrx store with empty cache
       const collection = selectors(state);
-      expect(collection.entities).toEqual(initialState.entities, 'entities');
-      expect(collection.foo).toEqual('foo foo', 'foo');
+      expect(collection.entities).toEqual(initialState.entities);
+      expect(collection.foo).toEqual('foo foo');
       expect(collectionCreator.create).toHaveBeenCalled();
     });
 
@@ -77,11 +77,8 @@ describe('EntitySelectors', () => {
       };
 
       const collection = selectors(state);
-      expect(collection.entities[42]).toEqual(
-        { id: 42, name: 'The Answer' },
-        'entities'
-      );
-      expect(collection.foo).toBe('towel', 'foo');
+      expect(collection.entities[42]).toEqual({ id: 42, name: 'The Answer' });
+      expect(collection.foo).toBe('towel');
       expect(collectionCreator.create).not.toHaveBeenCalled();
     });
   });
@@ -115,18 +112,14 @@ describe('EntitySelectors', () => {
       );
 
       expect(selectors.selectEntities).toBeDefined();
-      expect(selectors.selectEntities(store)).toEqual(
-        heroEntities,
-        'selectEntities'
-      );
+      expect(selectors.selectEntities(store)).toEqual(heroEntities);
 
       expect(selectors.selectFilteredEntities(store)).toEqual(
-        heroEntities.filter(h => h.name === 'B'),
-        'filtered B heroes'
+        heroEntities.filter(h => h.name === 'B')
       );
 
       expect(selectors.selectFoo).toBeDefined();
-      expect(selectors.selectFoo(store)).toBe('Foo', 'execute `selectFoo`');
+      expect(selectors.selectFoo(store)).toBe('Foo');
     });
 
     it('should have all Hero when create EntitySelectorFactory directly', () => {
@@ -142,18 +135,14 @@ describe('EntitySelectors', () => {
       const selectors = eaFactory.create<Hero, HeroSelectors>(heroMetadata);
 
       expect(selectors.selectEntities).toBeDefined();
-      expect(selectors.selectEntities(store)).toEqual(
-        heroEntities,
-        'selectEntities'
-      );
+      expect(selectors.selectEntities(store)).toEqual(heroEntities);
 
       expect(selectors.selectFilteredEntities(store)).toEqual(
-        heroEntities.filter(h => h.name === 'B'),
-        'filtered B heroes'
+        heroEntities.filter(h => h.name === 'B')
       );
 
       expect(selectors.selectFoo).toBeDefined();
-      expect(selectors.selectFoo(store)).toBe('Foo', 'execute `selectFoo`');
+      expect(selectors.selectFoo(store)).toBe('Foo');
     });
 
     it('should create default selectors (no filter, no extras) when create with "Hero" instead of hero metadata', () => {
@@ -164,10 +153,7 @@ describe('EntitySelectors', () => {
       const selectors = entitySelectorsFactory.create<Hero>('Hero');
       expect(selectors.selectEntities).toBeDefined();
       expect(selectors.selectFoo).not.toBeDefined();
-      expect(selectors.selectFilteredEntities(store)).toEqual(
-        heroEntities,
-        'filtered same as all hero entities'
-      );
+      expect(selectors.selectFilteredEntities(store)).toEqual(heroEntities);
     });
 
     it('should have expected Villain selectors', () => {
@@ -182,15 +168,9 @@ describe('EntitySelectors', () => {
       const expectedEntities: Villain[] = [{ key: 'evil', name: 'A' }];
 
       expect(selectors.selectEntities).toBeDefined();
-      expect(selectors.selectEntities(store)).toEqual(
-        expectedEntities,
-        'try selectAll'
-      );
+      expect(selectors.selectEntities(store)).toEqual(expectedEntities);
 
-      expect(selectors.selectFilteredEntities(store)).toEqual(
-        expectedEntities,
-        'all villains because no filter fn'
-      );
+      expect(selectors.selectFilteredEntities(store)).toEqual(expectedEntities);
     });
   });
 });

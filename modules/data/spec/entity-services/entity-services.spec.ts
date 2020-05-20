@@ -78,11 +78,8 @@ describe('EntityServices', () => {
       );
       store.dispatch(heroAction);
 
-      expect(entityCacheValues.length).toEqual(
-        2,
-        'entityCache$ callback twice'
-      );
-      expect(entityCacheValues[0]).toEqual({}, 'empty at first');
+      expect(entityCacheValues.length).toEqual(2);
+      expect(entityCacheValues[0]).toEqual({});
       expect(entityCacheValues[1].Hero).toBeDefined();
     });
   });
@@ -108,15 +105,11 @@ describe('EntityServices', () => {
       entityServices.entityCache$.subscribe(cache => {
         entityCacheValues.push(cache);
         if (entityCacheValues.length === 3) {
-          expect(entityCacheValues[0]).toEqual({}, '#1 empty at first');
-          expect(entityCacheValues[1]['Hero'].ids).toEqual(
-            [1, 2],
-            '#2 has heroes'
-          );
+          expect(entityCacheValues[0]).toEqual({});
+          expect(entityCacheValues[1]['Hero'].ids).toEqual([1, 2]);
           expect(entityCacheValues[1]['Villain']).toBeUndefined();
           expect(entityCacheValues[2]['Villain'].entities['DE']).toEqual(
-            villain,
-            '#3 has villain'
+            villain
           );
           done();
         }
@@ -149,11 +142,8 @@ describe('EntityServices', () => {
 
       // Skip initial value. Want the first one after merge is dispatched
       entityServices.entityCache$.pipe(skip(1), first()).subscribe(cache => {
-        expect(cache['Hero'].ids).toEqual([1, 2], 'has merged heroes');
-        expect(cache['Villain'].entities['DE']).toEqual(
-          villain,
-          'has merged villain'
-        );
+        expect(cache['Hero'].ids).toEqual([1, 2]);
+        expect(cache['Villain'].entities['DE']).toEqual(villain);
         done();
       });
       entityServices.dispatch(action);
