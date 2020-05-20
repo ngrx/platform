@@ -98,7 +98,7 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - run: yarn nx affected:test
+      - run: yarn nx affected:test --base=master --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
@@ -330,66 +330,66 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build:
-          requires:
-            - test
-      - example-e2e-tests:
-          requires:
-            - install
-      - docs-tests:
-          requires:
-            - install
-      - docs:
-          requires:
-            - install
-      - docs-preview:
-          requires:
-            - install
-      - schematics-core-check:
-          requires:
-            - install
-      - deploy:
-          requires:
-            - docs
-            - example-e2e-tests
-            - docs-tests
-            - build
-          filters:
-            branches:
-              only: master
-      - cleanup-previews:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
-      - update-master-hash:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
-      - publish-stable:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(?!-\w+\.\d)/
-            branches:
-              ignore: /.*/
-      - deploy-docs-stable:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(?!-\w+\.\d)/
-            branches:
-              ignore: /.*/
-      - publish-next:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(-\w+\.\d)/
-            branches:
-              ignore: /.*/
+      # - build:
+      #     requires:
+      #       - test
+      # - example-e2e-tests:
+      #     requires:
+      #       - install
+      # - docs-tests:
+      #     requires:
+      #       - install
+      # - docs:
+      #     requires:
+      #       - install
+      # - docs-preview:
+      #     requires:
+      #       - install
+      # - schematics-core-check:
+      #     requires:
+      #       - install
+      # - deploy:
+      #     requires:
+      #       - docs
+      #       - example-e2e-tests
+      #       - docs-tests
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
+      # - cleanup-previews:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         only: master
+      # - update-master-hash:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         only: master
+      # - publish-stable:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /9\.\d+\.\d+(?!-\w+\.\d)/
+      #       branches:
+      #         ignore: /.*/
+      # - deploy-docs-stable:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /9\.\d+\.\d+(?!-\w+\.\d)/
+      #       branches:
+      #         ignore: /.*/
+      # - publish-next:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /9\.\d+\.\d+(-\w+\.\d)/
+      #       branches:
+      #         ignore: /.*/
