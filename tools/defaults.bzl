@@ -1,10 +1,10 @@
 """Re-export of some bazel rules with repository-wide defaults."""
 
 load("@build_bazel_rules_nodejs//:index.bzl", _pkg_npm = "pkg_npm")
+load("@npm//jest-cli:index.bzl", _jest_test = "jest_test")
 load("@npm_angular_bazel//:index.bzl", _ng_module = "ng_module", _ng_package = "ng_package")
 load("@npm_bazel_jasmine//:index.bzl", _jasmine_node_test = "jasmine_node_test")
 load("@npm_bazel_typescript//:index.bzl", _ts_library = "ts_library")
-load("@npm//jest-cli:index.bzl", _jest_test = "jest_test")
 
 DEFAULT_TSCONFIG = "//:tsconfig.json"
 NG_VERSION = "^9.0.0"
