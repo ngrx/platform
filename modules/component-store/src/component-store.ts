@@ -94,14 +94,15 @@ export class ComponentStore<T extends object> {
    * Initializes state. If it was already initialized then it resets the
    * state.
    */
-  initState(state: T): void {
+  private initState(state: T): void {
     this.isInitialized = true;
     this.stateSubject$.next(state);
   }
 
   /**
    * Sets the state specific value.
-   * @param stateOrUpdaterFn
+   * @param stateOrUpdaterFn object of the same type as the state or an
+   * updaterFn, returning such object.
    */
   setState(stateOrUpdaterFn: T | ((state: T) => T)): void {
     if (typeof stateOrUpdaterFn !== 'function') {

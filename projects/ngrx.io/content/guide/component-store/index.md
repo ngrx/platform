@@ -20,9 +20,8 @@ ComponentStore is a standalone library that helps managing local/component state
 
 ## Initialization
 
-ComponentStore can be intialized in 3 ways:
+ComponentStore can be initialized in 2 ways:
 - through constructor - it would have the initial state
-- by calling `initState`
 - by calling `setState` and passing an object that matches the state interface.
 
 <code-example header="movies-page.component.ts">
@@ -35,12 +34,16 @@ ComponentStore can be intialized in 3 ways:
   providers: [ComponentStore],
 })
 export class MoviesPageComponent {
-  movies$: this.componentStore.state$;
+  movies$: this.componentStore.state$.pipe(
+    map(state => state.movies),
+  );
 
-  constructor(private readonly componentStore: ComponentStore<Movie[]>) {}
+  constructor(
+    private readonly componentStore: ComponentStore<{movies: Movie[]}>
+  ) {}
 
   ngOnInit() {
-    this.componentStore.initState([]);
+    this.componentStore.setState({movies: []});
   }
 }
 </code-example>

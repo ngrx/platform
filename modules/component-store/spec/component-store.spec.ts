@@ -28,20 +28,6 @@ describe('Component Store', () => {
     );
 
     it(
-      'through initState method',
-      marbles(m => {
-        const componentStore = new ComponentStore();
-        const INIT_STATE = { initState: 'passed' };
-
-        componentStore.initState(INIT_STATE);
-
-        m.expect(componentStore.state$).toBeObservable(
-          m.hot('i', { i: INIT_STATE })
-        );
-      })
-    );
-
-    it(
       'through setState method',
       marbles(m => {
         const componentStore = new ComponentStore();
@@ -161,7 +147,7 @@ describe('Component Store', () => {
         }).not.toThrow();
 
         // Trigger initial state.
-        componentStore.initState(INIT_STATE);
+        componentStore.setState(INIT_STATE);
 
         expect(results).toEqual([INIT_STATE, UPDATED_STATE, UPDATED_STATE]);
       }
