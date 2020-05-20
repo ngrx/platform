@@ -75,20 +75,20 @@ jobs:
       - run: 'yarn bazel:format --lint=warn ||
           (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
-  # test:
-  #   <<: *run_in_node
-  #   steps:
-  #     - checkout
-  #     - *set_bazel_options
-
-  #     - restore_cache:
-  #         keys:
-  #           - *cache_key
-
-      # Build and Test
-      # - run: yarn test --maxWorkers=1 --ci
-
   test:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - *set_bazel_options
+
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Test
+      - run: yarn test --maxWorkers=1 --ci
+
+  test-affected:
     <<: *run_in_node
     steps:
       - checkout
@@ -99,7 +99,6 @@ jobs:
 
       # Build and Test
       - write_master_hash
-      - run: mkdir -p ~/circleci/project/node_modules/.cache/nx
       - run: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build:
@@ -118,6 +117,19 @@ jobs:
           root: dist
           paths:
             - modules/*
+
+  build-affected:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Build
+      - run: yarn
+      - write_master_hash
+      - run: yarn nx affected:build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   # build:
   #   <<: *run_in_node
@@ -326,7 +338,13 @@ workflows:
       - lint:
           requires:
             - install
-      - test:
+      # - test:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      - test-affected:
           requires:
             - install
           filters:
@@ -335,6 +353,9 @@ workflows:
       # - build:
       #     requires:
       #       - test
+      - build-affected:
+          requires:
+            - test-affected
       # - example-e2e-tests:
       #     requires:
       #       - install
