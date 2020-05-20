@@ -98,7 +98,8 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - run: yarn nx affected:test --base=master --head=$CIRCLE_SHA1
+      - write_master_hash
+      - run: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
