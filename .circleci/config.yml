@@ -147,7 +147,7 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn build //modules/...
+      - run: yarn bazel build //modules/...
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -345,8 +345,8 @@ workflows:
           requires:
             - install
           filters:
-            tags:
-              only: /.*/
+            branches:
+              only: master
       - test-affected:
           requires:
             - install
@@ -401,27 +401,27 @@ workflows:
           filters:
             branches:
               only: master
-      # - publish-stable:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /9\.\d+\.\d+(?!-\w+\.\d)/
-      #       branches:
-      #         ignore: /.*/
-      # - deploy-docs-stable:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /9\.\d+\.\d+(?!-\w+\.\d)/
-      #       branches:
-      #         ignore: /.*/
-      # - publish-next:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /9\.\d+\.\d+(-\w+\.\d)/
-      #       branches:
-      #         ignore: /.*/
+      - publish-stable:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /9\.\d+\.\d+(?!-\w+\.\d)/
+            branches:
+              ignore: /.*/
+      - deploy-docs-stable:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /9\.\d+\.\d+(?!-\w+\.\d)/
+            branches:
+              ignore: /.*/
+      - publish-next:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /9\.\d+\.\d+(-\w+\.\d)/
+            branches:
+              ignore: /.*/
