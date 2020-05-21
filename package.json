@@ -4,7 +4,8 @@
   "description": "monorepo for ngrx development",
   "scripts": {
     "ng": "ng",
-    "build": "nx run-many --target=build --all",
+    "build": "nx run-many --target=build-release --all",
+    "build:bazel": "bazel build //modules/...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "deploy:preview": "ts-node ./build/deploy-preview.ts",
     "cleanup:previews": "ts-node ./build/cleanup-previews.ts",

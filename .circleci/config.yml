@@ -134,25 +134,25 @@ jobs:
       - write_master_hash
       - run: yarn nx affected:build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
-  # build:
-  #   <<: *run_in_node
-  #   steps:
-  #     - checkout
-  #     - *set_bazel_options
-  #     - write_master_hash
-  #     - restore_cache:
-  #         keys:
-  #           - *bazel_cache_key
-  #           - *cache_key
+  build-bazel:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - *set_bazel_options
+      - write_master_hash
+      - restore_cache:
+          keys:
+            - *bazel_cache_key
+            - *cache_key
 
-  #     # Build
-  #     - run: yarn
-  #     - run: yarn build //modules/...
-  #     # Store artifacts from build
-  #     - persist_to_workspace:
-  #         root: dist
-  #         paths:
-  #           - bin/*
+      # Build
+      - run: yarn
+      - run: yarn build //modules/...
+      # Store artifacts from build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - bin/*
 
   update-master-hash:
     <<: *run_in_node
@@ -338,63 +338,66 @@ workflows:
           filters:
             tags:
               only: /.*/
-      # - lint:
-      #     requires:
-      #       - install
-      # - test:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - test-affected:
           requires:
             - install
           filters:
             tags:
               only: /.*/
-      # - build:
-      #     requires:
-      #       - test
+      - build:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
       - build-affected:
           requires:
             - test-affected
-      # - example-e2e-tests:
-      #     requires:
-      #       - install
-      # - docs-tests:
-      #     requires:
-      #       - install
-      # - docs:
-      #     requires:
-      #       - install
-      # - docs-preview:
-      #     requires:
-      #       - install
-      # - schematics-core-check:
-      #     requires:
-      #       - install
-      # - deploy:
-      #     requires:
-      #       - docs
-      #       - example-e2e-tests
-      #       - docs-tests
-      #       - build
-      #     filters:
-      #       branches:
-      #         only: master
-      # - cleanup-previews:
-      #     requires:
-      #       - install
-      #     filters:
-      #       branches:
-      #         only: master
-      # - update-master-hash:
-      #     requires:
-      #       - install
-      #     filters:
-      #       branches:
-      #         only: master
+      - example-e2e-tests:
+          requires:
+            - install
+      - docs-tests:
+          requires:
+            - install
+      - docs:
+          requires:
+            - install
+      - docs-preview:
+          requires:
+            - install
+      - schematics-core-check:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - docs
+            - example-e2e-tests
+            - docs-tests
+            - build
+          filters:
+            branches:
+              only: master
+      - cleanup-previews:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - update-master-hash:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
       # - publish-stable:
       #     requires:
       #       - build

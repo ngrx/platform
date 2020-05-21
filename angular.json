@@ -495,6 +495,17 @@
             "project": "modules/component/ng-package.json"
           }
         },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build component"
+              }
+            ]
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -528,6 +539,17 @@
           "options": {
             "tsConfig": "modules/component-store/tsconfig-build.json",
             "project": "modules/component-store/ng-package.json"
+          }
+        },
+        "build-release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng build component-store"
+              }
+            ]
           }
         },
         "lint": {
