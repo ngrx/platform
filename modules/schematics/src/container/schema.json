@@ -59,7 +59,8 @@
     },
     "skipTest": {
       "type": "boolean",
-      "description": "(Deprecated) Use skipTests instead",
+      "description": "When true, does not create test files.",
+      "x-deprecated": "Use skipTests instead.",
       "default": false
     },
     "skipTests": {
