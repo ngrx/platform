@@ -101,7 +101,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --runInBand
           no_output_timeout: 30m
 
   build:
