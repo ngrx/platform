@@ -1,7 +1,7 @@
-load("//tools:defaults.bzl", "jasmine_node_test", "ts_test_library")
+load("//tools:defaults.bzl", "ts_jest_test")
 
-ts_test_library(
-    name = "test_lib",
+ts_jest_test(
+    name = "test",
     srcs = glob(
         [
             "**/*.ts",
@@ -10,12 +10,5 @@ ts_test_library(
     deps = [
         "//modules/component-store",
         "@npm//rxjs",
-    ],
-)
-
-jasmine_node_test(
-    name = "test",
-    deps = [
-        ":test_lib",
     ],
 )
