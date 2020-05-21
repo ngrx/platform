@@ -202,9 +202,8 @@ export function on(
  * @usageNotes
  *
  * - Must be used with `ActionCreator`'s (returned by `createAction`).  Cannot be used with class-based action creators.
- * - An action can be associated with multiple state change functions. In this case the functions will be executed in the specified order.
- * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function.
- * This is because [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
+ * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function, if you are using View Engine.
+ * In case you are using Ivy the extra function `reducer` is not required.
  *
  * **Declaring a reducer creator with an exported reducer function**
  *
