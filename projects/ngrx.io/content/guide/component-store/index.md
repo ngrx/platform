@@ -1,6 +1,6 @@
 # @ngrx/component-store
 
-ComponentStore is a standalone library that helps managing local/component state. It's an alternative to push-based "Service with a Subject".
+ComponentStore is a standalone library that helps to manage local/component state. It's an alternative to push-based "Service with a Subject".
 
 ## Introduction
 
@@ -47,5 +47,4 @@ export class MoviesPageComponent {
   }
 }
 </code-example>
-
 
