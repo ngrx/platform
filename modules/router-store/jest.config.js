@@ -1,5 +1,6 @@
 module.exports = {
   name: 'router-store',
+  displayName: 'Router Store',
   preset: '../../jest.config.js',
   coverageDirectory: '../../coverage/modules/router-store',
   snapshotSerializers: [

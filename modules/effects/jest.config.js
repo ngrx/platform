@@ -1,5 +1,6 @@
 module.exports = {
   name: 'effects',
+  displayName: 'Effects',
   preset: '../../jest.config.js',
   coverageDirectory: '../../coverage/modules/effects',
   snapshotSerializers: [

@@ -1,5 +1,6 @@
 module.exports = {
   name: 'store-devtools',
+  displayName: 'Store DevTools',
   preset: '../../jest.config.js',
   coverageDirectory: '../../coverage/modules/store-devtools',
   snapshotSerializers: [

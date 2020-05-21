@@ -1,5 +1,6 @@
 module.exports = {
   name: 'component',
+  displayName: 'Component',
   preset: '../../jest.config.js',
   coverageDirectory: '../../coverage/modules/component',
   snapshotSerializers: [
