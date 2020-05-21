@@ -84,6 +84,7 @@ export { platformVersion } from './utility/libs-version';
 export {
   visitTSSourceFiles,
   visitNgModuleImports,
+  visitNgModuleExports,
   visitComponents,
   visitDecorator,
   visitNgModules,

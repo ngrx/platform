@@ -97,12 +97,33 @@ export function visitNgModuleImports(
     elementExpressions: ts.NodeArray<ts.Expression>
   ) => void
 ) {
+  visitNgModuleProperty(sourceFile, callback, 'imports');
+}
+
+export function visitNgModuleExports(
+  sourceFile: ts.SourceFile,
+  callback: (
+    exportNode: ts.PropertyAssignment,
+    elementExpressions: ts.NodeArray<ts.Expression>
+  ) => void
+) {
+  visitNgModuleProperty(sourceFile, callback, 'exports');
+}
+
+function visitNgModuleProperty(
+  sourceFile: ts.SourceFile,
+  callback: (
+    nodes: ts.PropertyAssignment,
+    elementExpressions: ts.NodeArray<ts.Expression>
+  ) => void,
+  property: string
+) {
   visitNgModules(sourceFile, (_, decoratorExpressionNode) => {
     ts.forEachChild(decoratorExpressionNode, function findTemplates(n) {
       if (
         ts.isPropertyAssignment(n) &&
         ts.isIdentifier(n.name) &&
-        n.name.text === 'imports' &&
+        n.name.text === property &&
         ts.isArrayLiteralExpression(n.initializer)
       ) {
         callback(n, n.initializer.elements);
@@ -113,7 +134,6 @@ export function visitNgModuleImports(
     });
   });
 }
-
 export function visitComponents(
   sourceFile: ts.SourceFile,
   callback: (
