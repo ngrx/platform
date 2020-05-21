@@ -10,5 +10,6 @@ ts_jest_test(
     deps = [
         "//modules/component-store",
         "@npm//rxjs",
+        "@npm//rxjs-marbles",
     ],
 )

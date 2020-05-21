@@ -1,1 +1,1 @@
-export * from './placeholder';
+export * from './component-store';
