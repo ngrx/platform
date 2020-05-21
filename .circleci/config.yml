@@ -132,7 +132,7 @@ jobs:
       # Build
       - run: yarn
       - write_master_hash
-      - run: yarn nx affected:build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+      - run: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build-bazel:
     <<: *run_in_node
