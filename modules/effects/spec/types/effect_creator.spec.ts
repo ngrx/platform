@@ -27,17 +27,18 @@ describe('createEffect()', () => {
     });
 
     it('should help with action creator that is not called', () => {
-      // action creator is called with parentheses
+      // Action creator is called with parentheses.
       expectSnippet(`
       const action = createAction('action without props');
       const effect = createEffect(() => of(action()));
       `).toSucceed();
 
+      // Action creator is not called (no parentheses).
       expectSnippet(`
       const action = createAction('action without props');
       const effect = createEffect(() => of(action));
       `).toFail(
-        /ActionCreator cannot be dispatched. Did you forget to call action creator function/
+        /ActionCreator cannot be dispatched. Did you forget to call the action creator function/
       );
     });
 
@@ -68,7 +69,7 @@ describe('createEffect()', () => {
     });
 
     it('should allow action creator even if it is not called', () => {
-      // action creator is called with parentheses
+      // Action creator is not called (no parentheses), but we have no-dispatch.
       expectSnippet(`
       const action = createAction('action without props');
       const effect = createEffect(() => of(action), { dispatch: false });

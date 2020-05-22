@@ -15,7 +15,7 @@ type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
   ? unknown // If DT (DispatchType is false, then we don't enforce any return types)
   : Result extends EffectResult<infer OT>
     ? OT extends ActionCreator
-      ? 'ActionCreator cannot be dispatched. Did you forget to call action creator function?'
+      ? 'ActionCreator cannot be dispatched. Did you forget to call the action creator function?'
       : unknown
     : unknown;
 
