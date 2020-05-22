@@ -64,7 +64,10 @@ export function createCdAware<U>(cfg: {
       cfg.work();
     }),
     map(value$ =>
-      value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver))
+      value$.pipe(
+        distinctUntilChanged(),
+        tap(cfg.updateViewContextObserver)
+      )
     ),
     cfg.configurableBehaviour,
     switchAll(),
