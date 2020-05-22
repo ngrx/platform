@@ -6,6 +6,7 @@ describe('createEffect()', () => {
     code => `
       import { Action } from '@ngrx/store';
       import { createEffect } from '@ngrx/effects';
+      import { createAction } from '@ngrx/store';
       import { of } from 'rxjs';
 
       ${code}`,
@@ -21,7 +22,22 @@ describe('createEffect()', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }));
       `).toFail(
-        /Type 'Observable<{ foo: string; }>' is not assignable to type 'Observable<Action> | ((...args: any[]) => Observable<Action>)'./
+        /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action>'./
+      );
+    });
+
+    it('should help with action creator that is not called', () => {
+      // action creator is called with parentheses
+      expectSnippet(`
+      const action = createAction('action without props');
+      const effect = createEffect(() => of(action()));
+      `).toSucceed();
+
+      expectSnippet(`
+      const action = createAction('action without props');
+      const effect = createEffect(() => of(action));
+      `).toFail(
+        /ActionCreator cannot be dispatched. Did you forget to call action creator function/
       );
     });
 
@@ -33,7 +49,7 @@ describe('createEffect()', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }), { dispatch: true });
       `).toFail(
-        /Type 'Observable<{ foo: string; }>' is not assignable to type 'Observable<Action> | ((...args: any[]) => Observable<Action>)'./
+        /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action>'./
       );
     });
   });
@@ -47,8 +63,16 @@ describe('createEffect()', () => {
       expectSnippet(`
         const effect = createEffect(() => ({ foo: 'a' }), { dispatch: false });
       `).toFail(
-        /Type '{ foo: string; }' is not assignable to type 'Observable<unknown> | ((...args: any[]) => Observable<unknown>)'./
+        /Type '{ foo: string; }' is not assignable to type 'EffectResult<unknown>'./
       );
+    });
+
+    it('should allow action creator even if it is not called', () => {
+      // action creator is called with parentheses
+      expectSnippet(`
+      const action = createAction('action without props');
+      const effect = createEffect(() => of(action), { dispatch: false });
+      `).toSucceed();
     });
   });
 });
