@@ -223,8 +223,6 @@ describe('Effects ng-add Schematic', () => {
       `${projectPath}/src/app/foo/foo.effects.spec.ts`
     );
 
-    expect(content).toMatch(
-      /effects = TestBed\.inject\(FooEffects\);/
-    );
+    expect(content).toMatch(/effects = TestBed\.inject\(FooEffects\);/);
   });
 });
