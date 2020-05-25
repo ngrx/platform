@@ -153,9 +153,10 @@ export class ComponentStore<T extends object> {
   ): Observable<R>;
   select<R>(...args: any[]): Observable<R> {
     let observable$: Observable<R>;
+    // project is always the last argument, so `pop` it from args.
     const projector: (...args: any[]) => R = args.pop();
-    if (!args.length) {
-      // If there's only one argument, it's just a map function.
+    if (args.length === 0) {
+      // If projector was the only argument then we'll use map operator.
       observable$ = this.stateSubject$.pipe(map(projector));
     } else {
       // If there are multiple arguments, we're chaining selectors, so we need
