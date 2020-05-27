@@ -10,7 +10,10 @@ import {
   _ACTIVE_RUNTIME_CHECKS,
   META_REDUCERS,
   USER_RUNTIME_CHECKS,
+  _ACTION_TYPE_UNIQUENESS_CHECK,
 } from './tokens';
+import { REGISTERED_ACTION_TYPES } from './globals';
+import { RUNTIME_CHECK_URL } from './meta-reducers/utils';
 
 export function createActiveRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
@@ -22,6 +25,7 @@ export function createActiveRuntimeChecks(
       strictStateImmutability: true,
       strictActionImmutability: true,
       strictActionWithinNgZone: false,
+      strictActionTypeUniqueness: false,
       ...runtimeChecks,
     };
   }
@@ -32,6 +36,7 @@ export function createActiveRuntimeChecks(
     strictStateImmutability: false,
     strictActionImmutability: false,
     strictActionWithinNgZone: false,
+    strictActionTypeUniqueness: false,
   };
 }
 
@@ -39,10 +44,10 @@ export function createSerializationCheckMetaReducer({
   strictActionSerializability,
   strictStateSerializability,
 }: RuntimeChecks): MetaReducer {
-  return reducer =>
+  return (reducer) =>
     strictActionSerializability || strictStateSerializability
       ? serializationCheckMetaReducer(reducer, {
-          action: action =>
+          action: (action) =>
             strictActionSerializability && !ignoreNgrxAction(action),
           state: () => strictStateSerializability,
         })
@@ -53,10 +58,10 @@ export function createImmutabilityCheckMetaReducer({
   strictActionImmutability,
   strictStateImmutability,
 }: RuntimeChecks): MetaReducer {
-  return reducer =>
+  return (reducer) =>
     strictActionImmutability || strictStateImmutability
       ? immutabilityCheckMetaReducer(reducer, {
-          action: action =>
+          action: (action) =>
             strictActionImmutability && !ignoreNgrxAction(action),
           state: () => strictStateImmutability,
         })
@@ -70,10 +75,10 @@ function ignoreNgrxAction(action: Action) {
 export function createInNgZoneCheckMetaReducer({
   strictActionWithinNgZone,
 }: RuntimeChecks): MetaReducer {
-  return reducer =>
+  return (reducer) =>
     strictActionWithinNgZone
       ? inNgZoneAssertMetaReducer(reducer, {
-          action: action =>
+          action: (action) =>
             strictActionWithinNgZone && !ignoreNgrxAction(action),
         })
       : reducer;
@@ -118,8 +123,37 @@ export function provideRuntimeChecks(
   ];
 }
 
+export function checkForActionTypeUniqueness(): Provider[] {
+  return [
+    {
+      provide: _ACTION_TYPE_UNIQUENESS_CHECK,
+      multi: true,
+      deps: [_ACTIVE_RUNTIME_CHECKS],
+      useFactory: _actionTypeUniquenessCheck,
+    },
+  ];
+}
+
 export function _runtimeChecksFactory(
   runtimeChecks: RuntimeChecks
 ): RuntimeChecks {
   return runtimeChecks;
+}
+
+export function _actionTypeUniquenessCheck(config: RuntimeChecks): void {
+  if (!config.strictActionTypeUniqueness) {
+    return;
+  }
+
+  const duplicates = Object.entries(REGISTERED_ACTION_TYPES)
+    .filter(([, registrations]) => registrations > 1)
+    .map(([type]) => type);
+
+  if (duplicates.length) {
+    throw new Error(
+      `Action types are registered more than once, ${duplicates
+        .map((type) => `"${type}"`)
+        .join(', ')}. ${RUNTIME_CHECK_URL}#strictactiontypeuniqueness`
+    );
+  }
 }

@@ -24,7 +24,7 @@ export interface ActionReducer<T, V extends Action = Action> {
 }
 
 export type ActionReducerMap<T, V extends Action = Action> = {
-  [p in keyof T]: ActionReducer<T[p], V>
+  [p in keyof T]: ActionReducer<T[p], V>;
 };
 
 export interface ActionReducerFactory<T, V extends Action = Action> {
@@ -75,7 +75,9 @@ export type Creator<
 
 export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
-  : T extends { type: any } ? TypePropertyIsNotAllowed : unknown;
+  : T extends { type: any }
+  ? TypePropertyIsNotAllowed
+  : unknown;
 
 /**
  * See `Creator`.
@@ -120,4 +122,9 @@ export interface RuntimeChecks {
    * Verifies that actions are dispatched within NgZone
    */
   strictActionWithinNgZone: boolean;
+
+  /**
+   * Verifies that action types are not registered more than once
+   */
+  strictActionTypeUniqueness?: boolean;
 }

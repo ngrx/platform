@@ -6,6 +6,7 @@ import {
   NotAllowedCheck,
   Props,
 } from './models';
+import { REGISTERED_ACTION_TYPES } from './globals';
 
 // Action creators taken from ts-action library and modified a bit to better
 // fit current NgRx usage. Thank you Nicholas Jamieson (@cartant).
@@ -101,6 +102,8 @@ export function createAction<T extends string, C extends Creator>(
   type: T,
   config?: { _as: 'props' } | C
 ): ActionCreator<T> {
+  REGISTERED_ACTION_TYPES[type] = (REGISTERED_ACTION_TYPES[type] || 0) + 1;
+
   if (typeof config === 'function') {
     return defineType(type, (...args: any[]) => ({
       ...config(...args),
