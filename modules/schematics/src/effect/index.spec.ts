@@ -103,8 +103,8 @@ describe('Effect Schematic', () => {
     expect(thrownError).toBeDefined();
   });
 
-  it('should respect the skipTest flag', () => {
-    const options = { ...defaultOptions, skipTest: true };
+  it('should respect the skipTests flag', () => {
+    const options = { ...defaultOptions, skipTests: true };
 
     const tree = schematicRunner.runSchematic('effect', options, appTree);
     const files = tree.files;
@@ -243,7 +243,7 @@ describe('Effect Schematic', () => {
     const options = {
       ...defaultOptions,
       flat: true,
-      skipTest: true,
+      skipTests: true,
       group: true,
     };
 
@@ -257,7 +257,7 @@ describe('Effect Schematic', () => {
   it('should group and nest the effect within a feature', () => {
     const options = {
       ...defaultOptions,
-      skipTest: true,
+      skipTests: true,
       group: true,
       flat: false,
       feature: true,

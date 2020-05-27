@@ -41,7 +41,7 @@ Group the data entity files within an `data` folder.
 
 Generate a spec file alongside the data entity files.
 
-- `--skipTest`
+- `--skipTests`
   - Type: `boolean`
   - Default: `false`
 

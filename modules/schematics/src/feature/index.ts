@@ -8,6 +8,10 @@ import {
 import { Schema as FeatureOptions } from './schema';
 
 export default function(options: FeatureOptions): Rule {
+  if (!options.skipTests && options.skipTest) {
+    options.skipTests = options.skipTest;
+  }
+
   return (host: Tree, context: SchematicContext) => {
     return chain([
       schematic('action', {
@@ -16,7 +20,7 @@ export default function(options: FeatureOptions): Rule {
         name: options.name,
         path: options.path,
         project: options.project,
-        skipTest: true,
+        skipTests: options.skipTests,
         api: options.api,
         creators: options.creators,
       }),
@@ -27,7 +31,7 @@ export default function(options: FeatureOptions): Rule {
         name: options.name,
         path: options.path,
         project: options.project,
-        skipTest: options.skipTest,
+        skipTests: options.skipTests,
         reducers: options.reducers,
         feature: true,
         api: options.api,
@@ -40,7 +44,7 @@ export default function(options: FeatureOptions): Rule {
         name: options.name,
         path: options.path,
         project: options.project,
-        skipTest: options.skipTest,
+        skipTests: options.skipTests,
         feature: true,
         api: options.api,
         creators: options.creators,
@@ -51,7 +55,7 @@ export default function(options: FeatureOptions): Rule {
         name: options.name,
         path: options.path,
         project: options.project,
-        skipTest: options.skipTest,
+        skipTests: options.skipTests,
         feature: true,
       }),
     ])(host, context);

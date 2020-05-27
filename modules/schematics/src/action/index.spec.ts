@@ -73,15 +73,15 @@ describe('Action Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not create two files test files when skipTests is set to true', () => {
+  it('should not create test files when skipTests is set to true', () => {
     const options = {
       ...defaultOptions,
-      skipTests: false,
+      skipTests: true,
     };
     const tree = schematicRunner.runSchematic('action', options, appTree);
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+    ).toEqual(-1);
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);

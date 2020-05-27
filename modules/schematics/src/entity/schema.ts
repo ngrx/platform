@@ -19,8 +19,13 @@ export interface Schema {
   flat?: boolean;
   /**
    * When true, does not create test files.
+   * @deprecated Use skipTests instead
    */
   skipTest?: boolean;
+  /**
+   * When true, does not create test files.
+   */
+  skipTests?: boolean;
   /**
    * Allows specification of the declaring module.
    */

@@ -23,12 +23,16 @@ export default function(options: DataOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     const parsedPath = parseName(options.path, options.name);
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates({

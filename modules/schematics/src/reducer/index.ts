@@ -34,6 +34,10 @@ export default function(options: ReducerOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     const parsedPath = parseName(options.path, options.name);
     options.name = parsedPath.name;
     options.path = parsedPath.path;
@@ -50,7 +54,7 @@ export default function(options: ReducerOptions): Rule {
     };
 
     const commonTemplate = apply(url('./common-files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates(templateOptions),

@@ -272,7 +272,7 @@ describe('Reducer Schematic', () => {
   it('should group and nest the reducer within a feature', () => {
     const options = {
       ...defaultOptions,
-      skipTest: true,
+      skipTests: true,
       group: true,
       flat: false,
       feature: true,

@@ -61,7 +61,7 @@ describe('Selector Schematic', () => {
   it('should not create a spec file if spec is false', () => {
     const options = {
       ...defaultOptions,
-      skipTest: true,
+      skipTests: true,
     };
     const tree = schematicRunner.runSchematic('selector', options, appTree);
 

@@ -40,6 +40,9 @@ describe('Feature Schematic', () => {
       files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
     expect(
+      files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
       files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
     ).toBeGreaterThanOrEqual(0);
     expect(
@@ -59,6 +62,37 @@ describe('Feature Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
+  it('should not create test files', () => {
+    const options = { ...defaultOptions, skipTests: true };
+
+    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const files = tree.files;
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)).toEqual(
+      -1
+    );
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(files.indexOf(`${projectPath}/src/app/foo.reducer.spec.ts`)).toEqual(
+      -1
+    );
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.effects.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(files.indexOf(`${projectPath}/src/app/foo.effects.spec.ts`)).toEqual(
+      -1
+    );
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.selectors.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${projectPath}/src/app/foo.selectors.spec.ts`)
+    ).toEqual(-1);
+  });
+
   it('should create all files of a feature to specified project if provided', () => {
     const options = {
       ...defaultOptions,
@@ -74,6 +108,9 @@ describe('Feature Schematic', () => {
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)

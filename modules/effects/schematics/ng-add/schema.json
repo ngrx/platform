@@ -28,6 +28,12 @@
     },
     "skipTest": {
       "type": "boolean",
+      "description": "When true, does not create test files.",
+      "x-deprecated": "Use skipTests instead.",
+      "default": false
+    },
+    "skipTests": {
+      "type": "boolean",
       "default": false,
       "description": "When true, does not create test files."
     },

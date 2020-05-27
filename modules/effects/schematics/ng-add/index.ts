@@ -124,12 +124,16 @@ export default function(options: EffectOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     const parsedPath = parseName(options.path, options.name || '');
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       options.minimal ? filter(_ => false) : noop(),

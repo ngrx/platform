@@ -33,6 +33,10 @@ export default function(options: EntityOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
@@ -51,7 +55,7 @@ export default function(options: EntityOptions): Rule {
     };
 
     const commonTemplates = apply(url('./common-files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates(templateOptions),

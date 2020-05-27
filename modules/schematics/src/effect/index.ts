@@ -121,6 +121,10 @@ export default function(options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
+    if (!options.skipTests && options.skipTest) {
+      options.skipTests = options.skipTest;
+    }
+
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
@@ -130,7 +134,7 @@ export default function(options: EffectOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.skipTest
+      options.skipTests
         ? filter(path => !path.endsWith('.spec.ts.template'))
         : noop(),
       options.root && options.minimal ? filter(_ => false) : noop(),
