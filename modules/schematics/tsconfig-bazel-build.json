@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
@@ -16,8 +14,6 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["**/*.spec.ts", "test-setup.ts"],
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
     "enableSummariesForJit": false,

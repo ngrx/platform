@@ -14,7 +14,7 @@ ts_library(
         ],
     ),
     module_name = "@ngrx/schematics",
-    tsconfig = ":tsconfig-build.json",
+    tsconfig = ":tsconfig-bazel-build.json",
     deps = [
         "//modules/schematics/schematics-core",
         "@npm//@angular-devkit/core",

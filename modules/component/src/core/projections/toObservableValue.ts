@@ -15,8 +15,6 @@ import { from, of, Observable, ObservableInput } from 'rxjs';
  *  .subscribe((n) => console.log(n););
  * ```
  */
-export function toObservableValue<T>(
-  p: ObservableInput<any>
-): Observable<T | undefined | null> {
+export function toObservableValue<T>(p: any): Observable<T | undefined | null> {
   return p ? from(p) : of(p);
 }

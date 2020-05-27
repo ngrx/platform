@@ -58,7 +58,7 @@ export function createCdAware<U>(cfg: {
   > = observablesSubject.pipe(
     distinctUntilChanged(),
     // Try to convert it to values, throw if not possible
-    map(toObservableValue),
+    map((v) => toObservableValue(v)),
     tap((v: any) => {
       cfg.resetContextObserver.next(v);
       cfg.work();
