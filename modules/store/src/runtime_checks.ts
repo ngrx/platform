@@ -44,10 +44,10 @@ export function createSerializationCheckMetaReducer({
   strictActionSerializability,
   strictStateSerializability,
 }: RuntimeChecks): MetaReducer {
-  return reducer =>
+  return (reducer) =>
     strictActionSerializability || strictStateSerializability
       ? serializationCheckMetaReducer(reducer, {
-          action: action =>
+          action: (action) =>
             strictActionSerializability && !ignoreNgrxAction(action),
           state: () => strictStateSerializability,
         })
@@ -58,10 +58,10 @@ export function createImmutabilityCheckMetaReducer({
   strictActionImmutability,
   strictStateImmutability,
 }: RuntimeChecks): MetaReducer {
-  return reducer =>
+  return (reducer) =>
     strictActionImmutability || strictStateImmutability
       ? immutabilityCheckMetaReducer(reducer, {
-          action: action =>
+          action: (action) =>
             strictActionImmutability && !ignoreNgrxAction(action),
           state: () => strictStateImmutability,
         })
@@ -75,10 +75,10 @@ function ignoreNgrxAction(action: Action) {
 export function createInNgZoneCheckMetaReducer({
   strictActionWithinNgZone,
 }: RuntimeChecks): MetaReducer {
-  return reducer =>
+  return (reducer) =>
     strictActionWithinNgZone
       ? inNgZoneAssertMetaReducer(reducer, {
-          action: action =>
+          action: (action) =>
             strictActionWithinNgZone && !ignoreNgrxAction(action),
         })
       : reducer;
@@ -140,19 +140,19 @@ export function _runtimeChecksFactory(
   return runtimeChecks;
 }
 
-export function _actionTypeUniquenessCheck(config: RuntimeChecks) {
+export function _actionTypeUniquenessCheck(config: RuntimeChecks): void {
   if (!config.strictActionTypeUniqueness) {
     return;
   }
 
   const duplicates = Object.entries(REGISTERED_ACTION_TYPES)
-    .filter(([_type, registrations]) => registrations > 1)
+    .filter(([, registrations]) => registrations > 1)
     .map(([type]) => type);
 
   if (duplicates.length) {
     throw new Error(
       `Action types are registered more than once, ${duplicates
-        .map(type => `"${type}"`)
+        .map((type) => `"${type}"`)
         .join(', ')}. ${RUNTIME_CHECK_URL}#strictactiontypeuniqueness`
     );
   }
