@@ -375,7 +375,7 @@ describe('EffectSources', () => {
       }
 
       class SourceError {
-        e$ = createEffect(() => throwError(error));
+        e$ = createEffect(() => throwError(error) as any);
       }
 
       class SourceH {

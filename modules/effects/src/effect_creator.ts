@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, ActionCreator } from '@ngrx/store';
 import {
   EffectMetadata,
   EffectConfig,
@@ -10,6 +10,15 @@ import {
 
 type DispatchType<T> = T extends { dispatch: infer U } ? U : true;
 type ObservableType<T, OriginalType> = T extends false ? OriginalType : Action;
+type EffectResult<OT> = Observable<OT> | ((...args: any[]) => Observable<OT>);
+type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
+  ? unknown // If DT (DispatchType is false, then we don't enforce any return types)
+  : Result extends EffectResult<infer OT>
+    ? OT extends ActionCreator
+      ? 'ActionCreator cannot be dispatched. Did you forget to call the action creator function?'
+      : unknown
+    : unknown;
+
 /**
  * @description
  * Creates an effect from an `Observable` and an `EffectConfig`.
@@ -46,8 +55,11 @@ export function createEffect<
   C extends EffectConfig,
   DT extends DispatchType<C>,
   OT extends ObservableType<DT, OT>,
-  R extends Observable<OT> | ((...args: any[]) => Observable<OT>)
->(source: () => R, config?: Partial<C>): R & CreateEffectMetadata {
+  R extends EffectResult<OT>
+>(
+  source: () => R & ConditionallyDisallowActionCreator<DT, R>,
+  config?: Partial<C>
+): R & CreateEffectMetadata {
   const effect = source();
   const value: EffectConfig = {
     ...DEFAULT_EFFECT_CONFIG,

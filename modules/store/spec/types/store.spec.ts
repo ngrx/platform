@@ -16,7 +16,7 @@ describe('Store', () => {
 
   it('should not allow passing action creator function without calling it', () => {
     expectSnippet(`store.dispatch(fooAction);`).toFail(
-      /is not assignable to type '"Functions are not allowed to be dispatched. Did you forget to call action creator function/
+      /is not assignable to type '"Functions are not allowed to be dispatched. Did you forget to call the action creator function/
     );
   });
 });

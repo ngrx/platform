@@ -98,7 +98,7 @@ export class Store<T = object> extends Observable<T>
     action: V &
       FunctionIsNotAllowed<
         V,
-        'Functions are not allowed to be dispatched. Did you forget to call action creator function?'
+        'Functions are not allowed to be dispatched. Did you forget to call the action creator function?'
       >
   ) {
     this.actionsObserver.next(action);
