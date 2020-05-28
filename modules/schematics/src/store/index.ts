@@ -27,6 +27,7 @@ import {
   findModuleFromOptions,
   addImportToModule,
   parseName,
+  visitNgModuleImports,
 } from '@ngrx/schematics/schematics-core';
 import { Schema as StoreOptions } from './schema';
 
@@ -63,25 +64,14 @@ function addImportToNgModule(options: StoreOptions): Rule {
       `${options.path}/environments/environment`
     );
 
-    const runtimeChecks = `
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-      }
-   `;
-
     const rootStoreReducers = options.minimal ? `{}` : `reducers`;
-
-    const rootStoreConfig = options.minimal
-      ? `{ ${runtimeChecks} }`
-      : `{
-      metaReducers, ${runtimeChecks} }`;
+    const rootStoreConfig = options.minimal ? `` : `, { metaReducers }`;
 
     const storeNgModuleImport = addImportToModule(
       source,
       modulePath,
       options.root
-        ? `StoreModule.forRoot(${rootStoreReducers}, ${rootStoreConfig})`
+        ? `StoreModule.forRoot(${rootStoreReducers}${rootStoreConfig})`
         : `StoreModule.forFeature(from${stringUtils.classify(
             options.name
           )}.${stringUtils.camelize(
@@ -123,10 +113,20 @@ function addImportToNgModule(options: StoreOptions): Rule {
     let rootImports: (Change | undefined)[] = [];
 
     if (options.root) {
+      let hasImports = false;
+      visitNgModuleImports(source, (_, importNodes) => {
+        hasImports = importNodes.length > 0;
+      });
+
+      // `addImportToModule` adds a comma to imports when there are already imports present
+      // because at this time the store import hasn't been committed yet, `addImportToModule` wont add a comma
+      // so we have to add it here for empty import arrays
+      let adjectiveComma = hasImports ? '' : ', ';
+
       const storeDevtoolsNgModuleImport = addImportToModule(
         source,
         modulePath,
-        `!environment.production ? StoreDevtoolsModule.instrument() : []`,
+        `${adjectiveComma}!environment.production ? StoreDevtoolsModule.instrument() : []`,
         relativePath
       ).shift();
 
