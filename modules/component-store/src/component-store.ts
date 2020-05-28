@@ -6,6 +6,7 @@ import {
   Subscription,
   throwError,
   combineLatest,
+  Subject,
 } from 'rxjs';
 import {
   concatMap,
@@ -16,6 +17,15 @@ import {
   shareReplay,
 } from 'rxjs/operators';
 import { debounceSync } from './debounceSync';
+
+/**
+ * Return type of the effect, that behaves differently based on whether the
+ * argument is passed to the callback.
+ */
+interface EffectReturnFn<T> {
+  (): void;
+  (t: T | Observable<T>): Subscription;
+}
 
 export class ComponentStore<T extends object> {
   // Should be used only in ngOnDestroy.
@@ -177,5 +187,34 @@ export class ComponentStore<T extends object> {
       takeUntil(this.destroy$)
     );
     return distinctSharedObservable$;
+  }
+
+  /**
+   * Creates an effect.
+   *
+   * This effect is subscribed to for the life of the @Component.
+   * @param generator A function that takes an origin Observable input and
+   *     returns an Observable. The Observable that is returned will be
+   *     subscribed to for the life of the component.
+   * @return A function that, when called, will trigger the origin Observable.
+   */
+  effect<V, R = unknown>(
+    generator: (origin$: Observable<V>) => Observable<R>
+  ): EffectReturnFn<V> {
+    const origin$ = new Subject<V>();
+    generator(origin$)
+      // tied to the lifecycle 👇 of ComponentStore
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+
+    return (observableOrValue?: V | Observable<V>): Subscription => {
+      const observable$ = isObservable(observableOrValue)
+        ? observableOrValue
+        : of(observableOrValue);
+      return observable$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+        // any new 👇 value is pushed into a stream
+        origin$.next(value);
+      });
+    };
   }
 }
