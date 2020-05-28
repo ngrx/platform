@@ -463,10 +463,25 @@
                 "command": "yarn tsc -p modules/schematics/tsconfig.schematics.json"
               },
               {
-                "command": "cp modules/schematics/collection.json dist/modules/schematics/collection.json"
+                "command": "cpy modules/schematics/collection.json dist/modules/schematics"
               },
               {
-                "command": "cp modules/schematics/migrations/migration.json dist/modules/schematics/migrations/migration.json"
+                "command": "cpy modules/schematics/migrations/migration.json dist/modules/schematics/migrations"
+              },
+              {
+                "command": "cpy modules/schematics/src/**/files/**/* dist/ --parents"
+              },
+              {
+                "command": "cpy modules/schematics/src/**/creator-files/**/* dist/ --parents"
+              },
+              {
+                "command": "cpy modules/schematics/src/**/common-files/**/* dist/ --parents"
+              },
+              {
+                "command": "cpy modules/schematics/src/**/integration-files/**/* dist/ --parents"
+              },
+              {
+                "command": "cpy modules/schematics/src/**/schema.json dist/ --parents"
               }
             ]
           }
