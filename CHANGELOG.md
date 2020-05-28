@@ -1,3 +1,23 @@
+<a name="9.2.0"></a>
+
+# [9.2.0](https://github.com/ngrx/platform/compare/9.1.2...9.2.0) (2020-05-28)
+
+### Bug Fixes
+
+- **router-store:** selects should return selectors ([#2517](https://github.com/ngrx/platform/issues/2517)) ([831e1e4](https://github.com/ngrx/platform/commit/831e1e4)), closes [#2516](https://github.com/ngrx/platform/issues/2516)
+- **schematics:** components should inject the store without generic ([#2512](https://github.com/ngrx/platform/issues/2512)) ([4f7dcdc](https://github.com/ngrx/platform/commit/4f7dcdc))
+- **schematics:** use skipTests flag consistently, deprecate skipTest option ([#2522](https://github.com/ngrx/platform/issues/2522)) ([83033d7](https://github.com/ngrx/platform/commit/83033d7)), closes [#2521](https://github.com/ngrx/platform/issues/2521)
+- **store:** remove circular dependency for mock import ([#2540](https://github.com/ngrx/platform/issues/2540)) ([4892fa2](https://github.com/ngrx/platform/commit/4892fa2))
+
+### Features
+
+- **component:** add ngrxPush migration ([#2452](https://github.com/ngrx/platform/issues/2452)) ([0775093](https://github.com/ngrx/platform/commit/0775093)), closes [#2450](https://github.com/ngrx/platform/issues/2450)
+- **component-store:** add initial setup ([#2519](https://github.com/ngrx/platform/issues/2519)) ([a2657ac](https://github.com/ngrx/platform/commit/a2657ac))
+- **component-store:** initialization + updater/setState ([#2528](https://github.com/ngrx/platform/issues/2528)) ([3545df2](https://github.com/ngrx/platform/commit/3545df2))
+- **effects:** catch action creators being returned in effect without being called ([#2536](https://github.com/ngrx/platform/issues/2536)) ([100970b](https://github.com/ngrx/platform/commit/100970b))
+- **store:** add ngrxMockEnvironment function to control output during testing ([#2513](https://github.com/ngrx/platform/issues/2513)) ([da1a0c0](https://github.com/ngrx/platform/commit/da1a0c0)), closes [#2363](https://github.com/ngrx/platform/issues/2363)
+- **store:** add runtime check for action type uniqueness ([#2520](https://github.com/ngrx/platform/issues/2520)) ([2972980](https://github.com/ngrx/platform/commit/2972980))
+
 <a name="9.1.2"></a>
 
 ## [9.1.2](https://github.com/ngrx/platform/compare/9.1.1...9.1.2) (2020-05-06)
