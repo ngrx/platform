@@ -105,6 +105,7 @@
     "@angular-devkit/build-angular": "~0.900.0",
     "@bazel/bazel": "1.1.0",
     "@bazel/buildifier": "^0.29.0",
+    "@babel/core": "7.9.0",
     "@bazel/ibazel": "0.10.3",
     "@bazel/jasmine": "1.0.0",
     "@bazel/typescript": "1.2.4",
