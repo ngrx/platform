@@ -5,18 +5,28 @@ import {
   ReplaySubject,
   Subscription,
   throwError,
+  combineLatest,
 } from 'rxjs';
-import { concatMap, takeUntil, withLatestFrom } from 'rxjs/operators';
+import {
+  concatMap,
+  takeUntil,
+  withLatestFrom,
+  map,
+  distinctUntilChanged,
+  shareReplay,
+} from 'rxjs/operators';
+import { debounceSync } from './debounceSync';
 
 export class ComponentStore<T extends object> {
-  private readonly stateSubject$ = new ReplaySubject<T>(1);
-  private isInitialized = false;
-  readonly state$: Observable<T> = this.stateSubject$.asObservable();
-
   // Should be used only in ngOnDestroy.
   private readonly destroySubject$ = new ReplaySubject<void>(1);
   // Exposed to any extending Store to be used for the teardowns.
   readonly destroy$ = this.destroySubject$.asObservable();
+
+  private readonly stateSubject$ = new ReplaySubject<T>(1);
+  private isInitialized = false;
+  // Needs to be after destroy$ is declared because it's used in select.
+  readonly state$: Observable<T> = this.select(s => s);
 
   constructor(defaultState?: T) {
     // State can be initialized either through constructor, or initState or
@@ -110,5 +120,62 @@ export class ComponentStore<T extends object> {
     } else {
       this.updater(stateOrUpdaterFn as (state: T) => T)();
     }
+  }
+
+  /**
+   * Creates a selector.
+   *
+   * This supports chaining up to 4 selectors. More could be added as needed.
+   *
+   * @param projector A pure projection function that takes the current state and
+   *   returns some new slice/projection of that state.
+   * @return An observable of the projector results.
+   */
+  select<R>(projector: (s: T) => R): Observable<R>;
+  select<R, S1>(s1: Observable<S1>, projector: (s1: S1) => R): Observable<R>;
+  select<R, S1, S2>(
+    s1: Observable<S1>,
+    s2: Observable<S2>,
+    projector: (s1: S1, s2: S2) => R
+  ): Observable<R>;
+  select<R, S1, S2, S3>(
+    s1: Observable<S1>,
+    s2: Observable<S2>,
+    s3: Observable<S3>,
+    projector: (s1: S1, s2: S2, s3: S3) => R
+  ): Observable<R>;
+  select<R, S1, S2, S3, S4>(
+    s1: Observable<S1>,
+    s2: Observable<S2>,
+    s3: Observable<S3>,
+    s4: Observable<S4>,
+    projector: (s1: S1, s2: S2, s3: S3, s4: S4) => R
+  ): Observable<R>;
+  select<R>(...args: any[]): Observable<R> {
+    let observable$: Observable<R>;
+    // project is always the last argument, so `pop` it from args.
+    const projector: (...args: any[]) => R = args.pop();
+    if (args.length === 0) {
+      // If projector was the only argument then we'll use map operator.
+      observable$ = this.stateSubject$.pipe(map(projector));
+    } else {
+      // If there are multiple arguments, we're chaining selectors, so we need
+      // to take the combineLatest of them before calling the map function.
+      observable$ = combineLatest(args).pipe(
+        // The most performant way to combine Observables avoiding unnecessary
+        // emissions and projector calls.
+        debounceSync(),
+        map((args: any[]) => projector(...args))
+      );
+    }
+    const distinctSharedObservable$ = observable$.pipe(
+      distinctUntilChanged(),
+      shareReplay({
+        refCount: true,
+        bufferSize: 1,
+      }),
+      takeUntil(this.destroy$)
+    );
+    return distinctSharedObservable$;
   }
 }

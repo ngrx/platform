@@ -149,7 +149,7 @@ describe('Component Store', () => {
         // Trigger initial state.
         componentStore.setState(INIT_STATE);
 
-        expect(results).toEqual([INIT_STATE, UPDATED_STATE, UPDATED_STATE]);
+        expect(results).toEqual([INIT_STATE, UPDATED_STATE]);
       }
     );
   });
@@ -400,5 +400,231 @@ describe('Component Store', () => {
         ]);
       })
     );
+  });
+
+  describe('selectors', () => {
+    interface State {
+      value: string;
+      updated?: boolean;
+    }
+
+    const INIT_STATE: State = { value: 'init' };
+    let componentStore: ComponentStore<State>;
+
+    beforeEach(() => {
+      componentStore = new ComponentStore<State>(INIT_STATE);
+    });
+
+    it(
+      'uninitialized Component Store does not emit values',
+      marbles(m => {
+        const uninitializedComponentStore = new ComponentStore();
+        m.expect(uninitializedComponentStore.select(s => s)).toBeObservable(
+          m.hot('-')
+        );
+      })
+    );
+
+    it(
+      'selects component root state',
+      marbles(m => {
+        m.expect(componentStore.select(s => s)).toBeObservable(
+          m.hot('i', { i: INIT_STATE })
+        );
+      })
+    );
+
+    it(
+      'selects component property from the state',
+      marbles(m => {
+        m.expect(componentStore.select(s => s.value)).toBeObservable(
+          m.hot('i', { i: INIT_STATE.value })
+        );
+      })
+    );
+
+    it(
+      'can be combined with other selectors',
+      marbles(m => {
+        const selector1 = componentStore.select(s => s.value);
+        const selector2 = componentStore.select(s => s.updated);
+        const selector3 = componentStore.select(
+          selector1,
+          selector2,
+          // Returning an object to make sure that distinctUntilChanged does
+          // not hold it
+          (s1, s2) => ({ result: s2 ? s1 : 'empty' })
+        );
+
+        const selectorResults: Array<{ result: string }> = [];
+        selector3.subscribe(s3 => {
+          selectorResults.push(s3);
+        });
+
+        m.flush();
+        componentStore.setState(() => ({ value: 'new value', updated: true }));
+        m.flush();
+
+        expect(selectorResults).toEqual([
+          { result: 'empty' },
+          { result: 'new value' },
+        ]);
+      })
+    );
+
+    it(
+      'can combine with other Observables',
+      marbles(m => {
+        const observableValues = {
+          '1': 'one',
+          '2': 'two',
+          '3': 'three',
+        };
+
+        const observable$ = m.hot('      1-2---3', observableValues);
+        const updater$ = m.cold('        a--b--c|');
+        const expectedSelector$ = m.hot('w-xy--z-', {
+          w: 'one a',
+          x: 'two a',
+          y: 'two b',
+          z: 'three c',
+        });
+
+        const selectorValue$ = componentStore.select(s => s.value);
+        const selector$ = componentStore.select(
+          selectorValue$,
+          observable$,
+          (s1, o) => o + ' ' + s1
+        );
+
+        componentStore.updater((state, newValue: string) => ({
+          value: newValue,
+        }))(updater$);
+
+        m.expect(selector$).toBeObservable(expectedSelector$);
+      })
+    );
+
+    it(
+      'would emit a single value even when all 4 selectors produce values',
+      marbles(m => {
+        const s1$ = componentStore.select(s => `fromS1(${s.value})`);
+        const s2$ = componentStore.select(s => `fromS2(${s.value})`);
+        const s3$ = componentStore.select(s => `fromS3(${s.value})`);
+        const s4$ = componentStore.select(s => `fromS4(${s.value})`);
+
+        const selector$ = componentStore.select(
+          s1$,
+          s2$,
+          s3$,
+          s4$,
+          (s1, s2, s3, s4) => `${s1} & ${s2} & ${s3} & ${s4}`
+        );
+
+        const updater$ = m.cold('        -----e-|');
+        const expectedSelector$ = m.hot('i----c--', {
+          //                     initial👆   👆 combined single value
+          i: 'fromS1(init) & fromS2(init) & fromS3(init) & fromS4(init)',
+          c: 'fromS1(e) & fromS2(e) & fromS3(e) & fromS4(e)',
+        });
+
+        componentStore.updater((_, newValue: string) => ({
+          value: newValue,
+        }))(updater$);
+
+        m.expect(selector$).toBeObservable(expectedSelector$);
+      })
+    );
+
+    it(
+      'can combine with Observables that complete',
+      marbles(m => {
+        const observableValues = {
+          '1': 'one',
+          '2': 'two',
+          '3': 'three',
+        };
+
+        const observable$ = m.cold('     1-2---3|', observableValues);
+        const updater$ = m.cold('        a--b--c|');
+        const expectedSelector$ = m.hot('w-xy--z-', {
+          w: 'one a',
+          x: 'two a',
+          y: 'two b',
+          z: 'three c',
+        });
+
+        const selectorValue$ = componentStore.select(s => s.value);
+        const selector$ = componentStore.select(
+          selectorValue$,
+          observable$,
+          (s1, o) => o + ' ' + s1
+        );
+
+        componentStore.updater((state, newValue: string) => ({
+          value: newValue,
+        }))(updater$);
+
+        m.expect(selector$).toBeObservable(expectedSelector$);
+      })
+    );
+
+    it(
+      'does not emit the same value if it did not change',
+      marbles(m => {
+        const selector1 = componentStore.select(s => s.value);
+        const selector2 = componentStore.select(s => s.updated);
+        const selector3 = componentStore.select(
+          selector1,
+          selector2,
+          // returning the same value, which should be caught by
+          // distinctUntilChanged
+          () => 'selector3 result'
+        );
+
+        const selectorResults: string[] = [];
+        selector3.subscribe(s3 => {
+          selectorResults.push(s3);
+        });
+
+        m.flush();
+        componentStore.setState(() => ({ value: 'new value', updated: true }));
+
+        m.flush();
+        expect(selectorResults).toEqual(['selector3 result']);
+      })
+    );
+
+    it(
+      'are shared between subscribers',
+      marbles(m => {
+        const projectorCallback = jest.fn(s => s.value);
+        const selector = componentStore.select(projectorCallback);
+
+        const resultsArray: string[] = [];
+        selector.subscribe(value => resultsArray.push('subscriber1: ' + value));
+        selector.subscribe(value => resultsArray.push('subscriber2: ' + value));
+
+        m.flush();
+        componentStore.setState(() => ({ value: 'new value', updated: true }));
+        m.flush();
+
+        // Even though we have 2 subscribers for 2 values, the projector
+        // function is called only twice - once for each new value.
+        expect(projectorCallback.mock.calls.length).toBe(2);
+      })
+    );
+
+    it('complete when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
+      const selector = componentStore.select(() => ({}));
+
+      selector.subscribe({
+        complete: () => {
+          doneFn();
+        },
+      });
+
+      componentStore.ngOnDestroy();
+    });
   });
 });
