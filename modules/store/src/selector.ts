@@ -1,6 +1,6 @@
 import { Selector, SelectorWithProps } from './models';
 import { isDevMode } from '@angular/core';
-import { isNgrxMockEnvironment } from '../public_api';
+import { isNgrxMockEnvironment } from './flags';
 
 export type AnyFn = (...args: any[]) => any;
 
