@@ -22,6 +22,10 @@ export function getSelectors<V>(
     }
     return route;
   });
+  const selectFragment = createSelector(
+    selectCurrentRoute,
+    route => route && route.fragment
+  );
   const selectQueryParams = createSelector(
     selectCurrentRoute,
     route => route && route.queryParams
@@ -45,6 +49,7 @@ export function getSelectors<V>(
 
   return {
     selectCurrentRoute,
+    selectFragment,
     selectQueryParams,
     selectQueryParam,
     selectRouteParams,

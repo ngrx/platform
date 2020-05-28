@@ -69,6 +69,7 @@ const mockData = {
               ref: 'ngrx.io',
             },
           },
+          fragment: 'test-fragment',
           children: [],
         },
         fragment: null,
@@ -139,6 +140,14 @@ describe('Router State Selectors', () => {
       const result = selectors.selectCurrentRoute(state);
 
       expect(result).toEqual(undefined);
+    });
+
+    it('should create a selector for selecting the fragment', () => {
+      const result = selectors.selectFragment(state);
+
+      expect(result).toEqual(
+        state.router.state.root.firstChild.firstChild.fragment
+      );
     });
 
     it('should create a selector for selecting the query params', () => {
