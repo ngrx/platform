@@ -97,7 +97,6 @@
   },
   "dependencies": {
     "@angular/animations": "^9.1.0",
-    "@angular/bazel": "^9.1.0",
     "@angular/cdk": "^9.1.0",
     "@angular/common": "^9.1.0",
     "@angular/compiler": "^9.1.0",
@@ -123,7 +122,6 @@
     "@angular/cli": "^9.1.5",
     "@angular/compiler-cli": "^9.1.0",
     "@babel/core": "7.9.0",
-    "@bazel/bazel": "1.1.0",
     "@bazel/bazelisk": "1.4.0",
     "@bazel/buildifier": "^2.2.1",
     "@bazel/ibazel": "0.12.4",
