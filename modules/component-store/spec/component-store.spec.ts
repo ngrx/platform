@@ -506,6 +506,37 @@ describe('Component Store', () => {
     );
 
     it(
+      'would emit a single value even when all 4 selectors produce values',
+      marbles(m => {
+        const s1$ = componentStore.select(s => `fromS1(${s.value})`);
+        const s2$ = componentStore.select(s => `fromS2(${s.value})`);
+        const s3$ = componentStore.select(s => `fromS3(${s.value})`);
+        const s4$ = componentStore.select(s => `fromS4(${s.value})`);
+
+        const selector$ = componentStore.select(
+          s1$,
+          s2$,
+          s3$,
+          s4$,
+          (s1, s2, s3, s4) => `${s1} & ${s2} & ${s3} & ${s4}`
+        );
+
+        const updater$ = m.cold('        -----e-|');
+        const expectedSelector$ = m.hot('i----c--', {
+          //                     initial👆   👆 combined single value
+          i: 'fromS1(init) & fromS2(init) & fromS3(init) & fromS4(init)',
+          c: 'fromS1(e) & fromS2(e) & fromS3(e) & fromS4(e)',
+        });
+
+        componentStore.updater((_, newValue: string) => ({
+          value: newValue,
+        }))(updater$);
+
+        m.expect(selector$).toBeObservable(expectedSelector$);
+      })
+    );
+
+    it(
       'can combine with Observables that complete',
       marbles(m => {
         const observableValues = {
