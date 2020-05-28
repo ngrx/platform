@@ -5,8 +5,8 @@
   "defaultProject": "example-app",
   "projects": {
     "example-app": {
-      "root": "apps/example-app",
-      "sourceRoot": "apps/example-app/src",
+      "root": "projects/example-app",
+      "sourceRoot": "projects/example-app/src",
       "projectType": "application",
       "prefix": "bc",
       "schematics": {},
@@ -15,16 +15,16 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist/apps/example-app",
-            "index": "apps/example-app/src/index.html",
-            "main": "apps/example-app/src/main.ts",
-            "polyfills": "apps/example-app/src/polyfills.ts",
-            "tsConfig": "apps/example-app/tsconfig.app.json",
+            "outputPath": "dist/projects/example-app",
+            "index": "projects/example-app/src/index.html",
+            "main": "projects/example-app/src/main.ts",
+            "polyfills": "projects/example-app/src/polyfills.ts",
+            "tsConfig": "projects/example-app/tsconfig.app.json",
             "assets": [
-              "apps/example-app/src/favicon.ico",
-              "apps/example-app/src/assets"
+              "projects/example-app/src/favicon.ico",
+              "projects/example-app/src/assets"
             ],
-            "styles": ["apps/example-app/src/styles.css"],
+            "styles": ["projects/example-app/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -37,8 +37,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "apps/example-app/src/environments/environment.ts",
-                  "with": "apps/example-app/src/environments/environment.prod.ts"
+                  "replace": "projects/example-app/src/environments/environment.ts",
+                  "with": "projects/example-app/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -73,8 +73,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/example-app/tsconfig.app.json",
-              "apps/example-app/tsconfig.spec.json"
+              "projects/example-app/tsconfig.app.json",
+              "projects/example-app/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }
@@ -82,23 +82,23 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/example-app/jest.config.js",
-            "tsConfig": "apps/example-app/tsconfig.spec.json",
-            "setupFile": "apps/example-app/src/setup-jest.ts"
+            "jestConfig": "projects/example-app/jest.config.js",
+            "tsConfig": "projects/example-app/tsconfig.spec.json",
+            "setupFile": "projects/example-app/src/setup-jest.ts"
           }
         }
       }
     },
     "example-app-e2e": {
-      "root": "apps/example-app-e2e",
-      "sourceRoot": "apps/example-app-e2e/src",
+      "root": "projects/example-app-e2e",
+      "sourceRoot": "projects/example-app-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/example-app-e2e/cypress.json",
-            "tsConfig": "apps/example-app-e2e/tsconfig.e2e.json",
+            "cypressConfig": "projects/example-app-e2e/cypress.json",
+            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
             "devServerTarget": "example-app:serve"
           },
           "configurations": {
@@ -110,8 +110,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/example-app-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/example-app-e2e/**"]
+            "tsConfig": ["projects/example-app-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!projects/example-app-e2e/**"]
           }
         }
       }
@@ -490,8 +490,8 @@
     },
     "schematics-e2e": {
       "projectType": "application",
-      "root": "apps/schematics-e2e",
-      "sourceRoot": "apps/schematics-e2e/src",
+      "root": "projects/schematics-e2e",
+      "sourceRoot": "projects/schematics-e2e/src",
       "architect": {
         "e2e": {
           "builder": "@nrwl/nx-plugin:e2e",
@@ -499,8 +499,8 @@
             "target": "schematics:build",
             "npmPackageName": "@ngrx/schematics",
             "pluginOutputPath": "dist/modules/schematics",
-            "jestConfig": "apps/schematics-e2e/jest.config.js",
-            "tsSpecConfig": "apps/schematics-e2e/tsconfig.spec.json"
+            "jestConfig": "projects/schematics-e2e/jest.config.js",
+            "tsSpecConfig": "projects/schematics-e2e/tsconfig.spec.json"
           }
         }
       }

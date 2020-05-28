@@ -40,7 +40,7 @@
       "@ngrx/schematics/schematics-core": [
         "./modules/schematics/schematics-core"
       ],
-      "@example-app/*": ["./apps/example-app/src/app/*"]
+      "@example-app/*": ["./projects/example-app/src/app/*"]
     },
     "typeRoots": ["node_modules/@types"]
   },
