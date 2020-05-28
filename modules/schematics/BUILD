@@ -1,6 +1,6 @@
-package(default_visibility = ["//visibility:public"])
-
 load("//tools:defaults.bzl", "jasmine_node_test", "pkg_npm", "ts_library", "ts_test_library")
+
+package(default_visibility = ["//visibility:public"])
 
 ts_library(
     name = "schematics",
