@@ -16,7 +16,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     class="mat-dialog-actions"
   >
     <button
-      class="mat-button mat-button-base"
+      class="mat-focus-indicator mat-button mat-button-base"
       mat-button=""
       type="button"
     >
@@ -34,7 +34,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       />
     </button>
     <button
-      class="mat-button mat-button-base"
+      class="mat-focus-indicator mat-button mat-button-base"
       mat-button=""
       type="button"
     >

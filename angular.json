@@ -78,6 +78,14 @@
             ],
             "exclude": ["**/node_modules/**"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/example-app/jest.config.js",
+            "tsConfig": "apps/example-app/tsconfig.spec.json",
+            "setupFile": "apps/example-app/src/setup-jest.ts"
+          }
         }
       }
     },

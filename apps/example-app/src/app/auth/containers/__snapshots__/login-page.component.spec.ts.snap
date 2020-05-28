@@ -8,7 +8,7 @@ exports[`Login Page should compile 1`] = `
 >
   <bc-login-form>
     <mat-card
-      class="mat-card _mat-animation-noopable"
+      class="mat-card mat-focus-indicator _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -177,7 +177,7 @@ exports[`Login Page should compile 1`] = `
             class="loginButtons"
           >
             <button
-              class="mat-button mat-button-base _mat-animation-noopable"
+              class="mat-focus-indicator mat-button mat-button-base _mat-animation-noopable"
               mat-button=""
               type="submit"
             >

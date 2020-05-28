@@ -10,7 +10,7 @@ exports[`Find Book Page should compile 1`] = `
 >
   <bc-book-search>
     <mat-card
-      class="mat-card _mat-animation-noopable"
+      class="mat-card mat-focus-indicator _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
