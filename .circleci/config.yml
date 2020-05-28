@@ -184,15 +184,6 @@ jobs:
       - run: yarn copy:schematics
       - run: git diff --name-only --exit-code ./modules
 
-  example-unit-tests:
-    <<: *run_in_browser
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - *cache_key
-      - run: yarn example:test
-
   example-e2e-tests:
     <<: *run_in_browser
     steps:
@@ -373,10 +364,7 @@ workflows:
             - install
           filters:
             tags:
-              only: /.*/
-      - example-unit-tests:
-          requires:
-            - install              
+              only: /.*/            
       - example-e2e-tests:
           requires:
             - install
