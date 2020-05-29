@@ -101,7 +101,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --runInBand
+          command: yarn nx affected:test --all --parallel
           no_output_timeout: 30m
 
   build:
@@ -338,90 +338,90 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - lint:
-          requires:
-            - install
-      - test:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
+      # - lint:
+      #     requires:
+      #       - install
+      # - test:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         only: master
       - test-affected:
           requires:
             - install
           filters:
             tags:
               only: /.*/
-      - build:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
-      - build-affected:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/            
-      - example-e2e-tests:
-          requires:
-            - install
-      - docs-tests:
-          requires:
-            - install
-      - docs:
-          requires:
-            - install
-      - docs-preview:
-          requires:
-            - install
-      - schematics-core-check:
-          requires:
-            - install
-      - deploy:
-          requires:
-            - docs
-            - example-e2e-tests
-            - docs-tests
-            - build
-          filters:
-            branches:
-              only: master
-      - cleanup-previews:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
-      - update-master-hash:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
-      - publish-stable:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(?!-\w+\.\d)/
-            branches:
-              ignore: /.*/
-      - deploy-docs-stable:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(?!-\w+\.\d)/
-            branches:
-              ignore: /.*/
-      - publish-next:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(-\w+\.\d)/
-            branches:
-              ignore: /.*/
+      # - build:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build-affected:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/            
+      # - example-e2e-tests:
+      #     requires:
+      #       - install
+      # - docs-tests:
+      #     requires:
+      #       - install
+      # - docs:
+      #     requires:
+      #       - install
+      # - docs-preview:
+      #     requires:
+      #       - install
+      # - schematics-core-check:
+      #     requires:
+      #       - install
+      # - deploy:
+      #     requires:
+      #       - docs
+      #       - example-e2e-tests
+      #       - docs-tests
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
+      # - cleanup-previews:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         only: master
+      # - update-master-hash:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         only: master
+      # - publish-stable:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /9\.\d+\.\d+(?!-\w+\.\d)/
+      #       branches:
+      #         ignore: /.*/
+      # - deploy-docs-stable:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /9\.\d+\.\d+(?!-\w+\.\d)/
+      #       branches:
+      #         ignore: /.*/
+      # - publish-next:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /9\.\d+\.\d+(-\w+\.\d)/
+      #       branches:
+      #         ignore: /.*/
