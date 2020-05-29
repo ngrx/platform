@@ -119,6 +119,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.5",
     "@angular-devkit/build-ng-packagr": "~0.901.5",
+    "@angular/bazel": "^9.1.5",
     "@angular/cli": "^9.1.5",
     "@angular/compiler-cli": "^9.1.0",
     "@babel/core": "7.9.0",
