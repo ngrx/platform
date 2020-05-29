@@ -1,20 +1,20 @@
-/*
-Client-side id-generators
+/**
+  Client-side id-generators
 
-These GUID utility functions are not used by @ngrx/data itself at this time.
-They are included as candidates for generating persistable correlation ids if that becomes desirable.
-They are also safe for generating unique entity ids on the client.
+  These GUID utility functions are not used by @ngrx/data itself at this time.
+  They are included as candidates for generating persistable correlation ids if that becomes desirable.
+  They are also safe for generating unique entity ids on the client.
 
-Note they produce 32-character hexadecimal UUID strings,
-not the 128-bit representation found in server-side languages and databases.
+  Note they produce 32-character hexadecimal UUID strings,
+  not the 128-bit representation found in server-side languages and databases.
 
-These utilities are experimental and may be withdrawn or replaced in future.
+  These utilities are experimental and may be withdrawn or replaced in future.
 */
 
 /**
  * Creates a Universally Unique Identifier (AKA GUID)
  */
-export function getUuid() {
+function getUuid() {
   // The original implementation is based on this SO answer:
   // http://stackoverflow.com/a/2117523/200253
   return 'xxxxxxxxxx4xxyxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -72,6 +72,6 @@ export function guidComparer(l: string, r: string) {
       ? -1
       : +(l_low !== r_low)
     : l < r
-      ? -1
-      : +(l !== r);
+    ? -1
+    : +(l !== r);
 }

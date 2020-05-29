@@ -3,7 +3,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'bc-sidenav',
   template: `
-    <mat-sidenav #sidenav [opened]="open" (keydown.escape)="sidenav.close()" (closedStart)="closeMenu.emit()" disableClose>
+    <mat-sidenav
+      #sidenav
+      [opened]="open"
+      (keydown.escape)="sidenav.close()"
+      (closedStart)="closeMenu.emit()"
+      disableClose
+    >
       <mat-nav-list>
         <ng-content></ng-content>
       </mat-nav-list>

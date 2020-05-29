@@ -22,14 +22,14 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(CollectionPageActions.enter, state => ({
+  on(CollectionPageActions.enter, (state) => ({
     ...state,
     loading: true,
   })),
   on(CollectionApiActions.loadBooksSuccess, (state, { books }) => ({
     loaded: true,
     loading: false,
-    ids: books.map(book => book.id),
+    ids: books.map((book) => book.id),
   })),
   /**
    * Optimistically add book to collection.
@@ -60,7 +60,7 @@ export const reducer = createReducer(
     CollectionApiActions.addBookFailure,
     (state, { book }) => ({
       ...state,
-      ids: state.ids.filter(id => id !== book.id),
+      ids: state.ids.filter((id) => id !== book.id),
     })
   )
 );

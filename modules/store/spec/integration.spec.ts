@@ -194,27 +194,22 @@ describe('ngRx Integration spec', () => {
         );
 
         const todo$ = store.select(getTodosById, 2);
-        todo$
-          .pipe(
-            take(3),
-            toArray()
-          )
-          .subscribe(res => {
-            expect(res).toEqual([
-              undefined,
-              {
-                id: 2,
-                text: 'second todo',
-                completed: false,
-              },
-              {
-                id: 2,
-                text: 'second todo',
-                completed: true,
-              },
-            ]);
-            done();
-          });
+        todo$.pipe(take(3), toArray()).subscribe(res => {
+          expect(res).toEqual([
+            undefined,
+            {
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            },
+            {
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            },
+          ]);
+          done();
+        });
 
         store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
         store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
@@ -236,19 +231,14 @@ describe('ngRx Integration spec', () => {
         );
 
         const todo$ = store.select(getTodosById, 2);
-        todo$
-          .pipe(
-            take(3),
-            toArray()
-          )
-          .subscribe(res => {
-            expect(res).toEqual([
-              undefined,
-              { id: 2, text: 'second todo', completed: false },
-              { id: 2, text: 'second todo', completed: true },
-            ]);
-            done();
-          });
+        todo$.pipe(take(3), toArray()).subscribe(res => {
+          expect(res).toEqual([
+            undefined,
+            { id: 2, text: 'second todo', completed: false },
+            { id: 2, text: 'second todo', completed: true },
+          ]);
+          done();
+        });
 
         store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
         store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
@@ -334,19 +324,14 @@ describe('ngRx Integration spec', () => {
         );
 
         const todo$ = store.pipe(select(getTodosById, 2));
-        todo$
-          .pipe(
-            take(3),
-            toArray()
-          )
-          .subscribe(res => {
-            expect(res).toEqual([
-              undefined,
-              { id: 2, text: 'second todo', completed: false },
-              { id: 2, text: 'second todo', completed: true },
-            ]);
-            done();
-          });
+        todo$.pipe(take(3), toArray()).subscribe(res => {
+          expect(res).toEqual([
+            undefined,
+            { id: 2, text: 'second todo', completed: false },
+            { id: 2, text: 'second todo', completed: true },
+          ]);
+          done();
+        });
 
         store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
         store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
@@ -368,27 +353,22 @@ describe('ngRx Integration spec', () => {
         );
 
         const todo$ = store.pipe(select(getTodosById, { id: 2 }));
-        todo$
-          .pipe(
-            take(3),
-            toArray()
-          )
-          .subscribe(res => {
-            expect(res).toEqual([
-              undefined,
-              {
-                id: 2,
-                text: 'second todo',
-                completed: false,
-              },
-              {
-                id: 2,
-                text: 'second todo',
-                completed: true,
-              },
-            ]);
-            done();
-          });
+        todo$.pipe(take(3), toArray()).subscribe(res => {
+          expect(res).toEqual([
+            undefined,
+            {
+              id: 2,
+              text: 'second todo',
+              completed: false,
+            },
+            {
+              id: 2,
+              text: 'second todo',
+              completed: true,
+            },
+          ]);
+          done();
+        });
 
         store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
         store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });

@@ -23,43 +23,37 @@ describe('UserEffects', () => {
   });
 
   describe('idle$', () => {
-    it(
-      'should trigger idleTimeout action after 5 minutes',
-      fakeAsync(() => {
-        let action: Action | undefined;
-        effects.idle$.subscribe(res => (action = res));
+    it('should trigger idleTimeout action after 5 minutes', fakeAsync(() => {
+      let action: Action | undefined;
+      effects.idle$.subscribe((res) => (action = res));
 
-        // Initial action to trigger the effect
-        eventsMap['click']();
+      // Initial action to trigger the effect
+      eventsMap['click']();
 
-        tick(2 * 60 * 1000);
-        expect(action).toBeUndefined();
+      tick(2 * 60 * 1000);
+      expect(action).toBeUndefined();
 
-        tick(3 * 60 * 1000);
-        expect(action).toBeDefined();
-        expect(action!.type).toBe(UserActions.idleTimeout.type);
-      })
-    );
+      tick(3 * 60 * 1000);
+      expect(action).toBeDefined();
+      expect(action!.type).toBe(UserActions.idleTimeout.type);
+    }));
 
-    it(
-      'should reset timeout on user activity',
-      fakeAsync(() => {
-        let action: Action | undefined;
-        effects.idle$.subscribe(res => (action = res));
+    it('should reset timeout on user activity', fakeAsync(() => {
+      let action: Action | undefined;
+      effects.idle$.subscribe((res) => (action = res));
 
-        // Initial action to trigger the effect
-        eventsMap['keydown']();
+      // Initial action to trigger the effect
+      eventsMap['keydown']();
 
-        tick(4 * 60 * 1000);
-        eventsMap['mousemove']();
+      tick(4 * 60 * 1000);
+      eventsMap['mousemove']();
 
-        tick(4 * 60 * 1000);
-        expect(action).toBeUndefined();
+      tick(4 * 60 * 1000);
+      expect(action).toBeUndefined();
 
-        tick(1 * 60 * 1000);
-        expect(action).toBeDefined();
-        expect(action!.type).toBe(UserActions.idleTimeout.type);
-      })
-    );
+      tick(1 * 60 * 1000);
+      expect(action).toBeDefined();
+      expect(action!.type).toBe(UserActions.idleTimeout.type);
+    }));
   });
 });

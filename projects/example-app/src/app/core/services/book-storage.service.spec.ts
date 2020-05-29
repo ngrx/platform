@@ -14,7 +14,7 @@ describe('BookStorageService', () => {
   let localStorageFake: Storage & any = {
     removeItem: jest.fn(),
     setItem: jest.fn(),
-    getItem: jest.fn(_ => JSON.stringify(persistedCollection)),
+    getItem: jest.fn((_) => JSON.stringify(persistedCollection)),
   };
 
   const book1 = { id: '111', volumeInfo: {} } as Book;
@@ -98,7 +98,7 @@ describe('BookStorageService', () => {
   describe('removeFromCollection', () => {
     it('should remove item from collection', () => {
       const filterCollection = persistedCollection.filter(
-        f => f.id !== book2.id
+        (f) => f.id !== book2.id
       );
       const expected = cold('(-a|)', { a: filterCollection });
       expect(fixture.removeFromCollection([book2.id])).toBeObservable(expected);
@@ -114,7 +114,7 @@ describe('BookStorageService', () => {
 
     it('should remove multiple items from collection', () => {
       const filterCollection = persistedCollection.filter(
-        f => f.id !== book4.id
+        (f) => f.id !== book4.id
       );
       const expected = cold('(-a|)', { a: filterCollection });
       expect(fixture.removeFromCollection([book4.id])).toBeObservable(expected);

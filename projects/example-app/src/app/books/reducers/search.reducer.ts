@@ -38,7 +38,7 @@ export const reducer = createReducer(
         };
   }),
   on(BooksApiActions.searchSuccess, (state, { books }) => ({
-    ids: books.map(book => book.id),
+    ids: books.map((book) => book.id),
     loading: false,
     error: '',
     query: state.query,

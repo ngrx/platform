@@ -66,7 +66,7 @@ export const selectBooksState = createFeatureSelector<State, BooksState>(
  */
 export const selectBookEntitiesState = createSelector(
   selectBooksState,
-  state => state.books
+  (state) => state.books
 );
 
 export const selectSelectedBookId = createSelector(
@@ -103,7 +103,7 @@ export const selectSelectedBook = createSelector(
  */
 export const selectSearchState = createSelector(
   selectBooksState,
-  state => state.search
+  (state) => state.search
 );
 
 export const selectSearchBookIds = createSelector(
@@ -132,14 +132,14 @@ export const selectSearchResults = createSelector(
   selectSearchBookIds,
   (books, searchIds) => {
     return searchIds
-      .map(id => books[id])
+      .map((id) => books[id])
       .filter((book): book is Book => book != null);
   }
 );
 
 export const selectCollectionState = createSelector(
   selectBooksState,
-  state => state.collection
+  (state) => state.collection
 );
 
 export const selectCollectionLoaded = createSelector(
@@ -160,7 +160,7 @@ export const selectBookCollection = createSelector(
   selectCollectionBookIds,
   (entities, ids) => {
     return ids
-      .map(id => entities[id])
+      .map((id) => entities[id])
       .filter((book): book is Book => book != null);
   }
 );

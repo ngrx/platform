@@ -11,15 +11,15 @@ export class RouterEffects {
   updateTitle$ = createEffect(
     () =>
       this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         map(() => {
           let route = this.activatedRoute;
           while (route.firstChild) route = route.firstChild;
           return route;
         }),
-        mergeMap(route => route.data),
-        map(data => `Book Collection - ${data['title']}`),
-        tap(title => this.titleService.setTitle(title))
+        mergeMap((route) => route.data),
+        map((data) => `Book Collection - ${data['title']}`),
+        tap((title) => this.titleService.setTitle(title))
       ),
     {
       dispatch: false,

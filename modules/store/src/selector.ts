@@ -519,11 +519,11 @@ export function defaultStateFn(
   memoizedProjector: MemoizedProjection
 ): any {
   if (props === undefined) {
-    const args = (<Selector<any, any>[]>selectors).map(fn => fn(state));
+    const args = (<Selector<any, any>[]>selectors).map((fn) => fn(state));
     return memoizedProjector.memoized.apply(null, args);
   }
 
-  const args = (<SelectorWithProps<any, any, any>[]>selectors).map(fn =>
+  const args = (<SelectorWithProps<any, any, any>[]>selectors).map((fn) =>
     fn(state, props)
   );
   return memoizedProjector.memoized.apply(null, [...args, props]);
@@ -558,7 +558,7 @@ export function createSelectorFactory(
     stateFn: defaultStateFn,
   }
 ) {
-  return function(
+  return function (
     ...input: any[]
   ): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
     let args = input;
@@ -574,11 +574,11 @@ export function createSelectorFactory(
         selector.release && typeof selector.release === 'function'
     );
 
-    const memoizedProjector = memoize(function(...selectors: any[]) {
+    const memoizedProjector = memoize(function (...selectors: any[]) {
       return projector.apply(null, selectors);
     });
 
-    const memoizedState = defaultMemoize(function(state: any, props: any) {
+    const memoizedState = defaultMemoize(function (state: any, props: any) {
       return options.stateFn.apply(null, [
         state,
         selectors,
@@ -591,7 +591,7 @@ export function createSelectorFactory(
       memoizedState.reset();
       memoizedProjector.reset();
 
-      memoizedSelectors.forEach(selector => selector.release());
+      memoizedSelectors.forEach((selector) => selector.release());
     }
 
     return Object.assign(memoizedState.memoized, {
@@ -612,19 +612,22 @@ export function createFeatureSelector<T, V>(
 export function createFeatureSelector(
   featureName: any
 ): MemoizedSelector<any, any> {
-  return createSelector((state: any) => {
-    const featureState = state[featureName];
-    if (!isNgrxMockEnvironment() && isDevMode() && !(featureName in state)) {
-      console.warn(
-        `@ngrx/store: The feature name \"${featureName}\" does ` +
-          'not exist in the state, therefore createFeatureSelector ' +
-          'cannot access it.  Be sure it is imported in a loaded module ' +
-          `using StoreModule.forRoot('${featureName}', ...) or ` +
-          `StoreModule.forFeature('${featureName}', ...).  If the default ` +
-          'state is intended to be undefined, as is the case with router ' +
-          'state, this development-only warning message can be ignored.'
-      );
-    }
-    return featureState;
-  }, (featureState: any) => featureState);
+  return createSelector(
+    (state: any) => {
+      const featureState = state[featureName];
+      if (!isNgrxMockEnvironment() && isDevMode() && !(featureName in state)) {
+        console.warn(
+          `@ngrx/store: The feature name \"${featureName}\" does ` +
+            'not exist in the state, therefore createFeatureSelector ' +
+            'cannot access it.  Be sure it is imported in a loaded module ' +
+            `using StoreModule.forRoot('${featureName}', ...) or ` +
+            `StoreModule.forFeature('${featureName}', ...).  If the default ` +
+            'state is intended to be undefined, as is the case with router ' +
+            'state, this development-only warning message can be ignored.'
+        );
+      }
+      return featureState;
+    },
+    (featureState: any) => featureState
+  );
 }

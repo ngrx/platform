@@ -32,17 +32,17 @@ export const selectAuthState = createFeatureSelector<State, AuthState>(
 
 export const selectAuthStatusState = createSelector(
   selectAuthState,
-  state => state.status
+  (state) => state.status
 );
 export const selectUser = createSelector(
   selectAuthStatusState,
   fromAuth.getUser
 );
-export const selectLoggedIn = createSelector(selectUser, user => !!user);
+export const selectLoggedIn = createSelector(selectUser, (user) => !!user);
 
 export const selectLoginPageState = createSelector(
   selectAuthState,
-  state => state.loginPage
+  (state) => state.loginPage
 );
 export const selectLoginPageError = createSelector(
   selectLoginPageState,

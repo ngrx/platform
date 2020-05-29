@@ -31,7 +31,7 @@ export class BookExistsGuard implements CanActivate {
   waitForCollectionToLoad(): Observable<boolean> {
     return this.store.pipe(
       select(fromBooks.selectCollectionLoaded),
-      filter(loaded => loaded),
+      filter((loaded) => loaded),
       take(1)
     );
   }
@@ -43,7 +43,7 @@ export class BookExistsGuard implements CanActivate {
   hasBookInStore(id: string): Observable<boolean> {
     return this.store.pipe(
       select(fromBooks.selectBookEntities),
-      map(entities => !!entities[id]),
+      map((entities) => !!entities[id]),
       take(1)
     );
   }
@@ -54,9 +54,9 @@ export class BookExistsGuard implements CanActivate {
    */
   hasBookInApi(id: string): Observable<boolean> {
     return this.googleBooks.retrieveBook(id).pipe(
-      map(bookEntity => BookActions.loadBook({ book: bookEntity })),
-      tap(action => this.store.dispatch(action)),
-      map(book => !!book),
+      map((bookEntity) => BookActions.loadBook({ book: bookEntity })),
+      tap((action) => this.store.dispatch(action)),
+      map((book) => !!book),
       catchError(() => {
         this.router.navigate(['/404']);
         return of(false);
@@ -71,7 +71,7 @@ export class BookExistsGuard implements CanActivate {
    */
   hasBook(id: string): Observable<boolean> {
     return this.hasBookInStore(id).pipe(
-      switchMap(inStore => {
+      switchMap((inStore) => {
         if (inStore) {
           return of(inStore);
         }

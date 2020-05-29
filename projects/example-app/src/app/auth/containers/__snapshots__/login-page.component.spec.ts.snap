@@ -6,11 +6,9 @@ exports[`Login Page should compile 1`] = `
   pending$={[Function Store]}
   store={[Function MockStore]}
 >
-  <bc-login-form
-    ng-reflect-pending="false"
-  >
+  <bc-login-form>
     <mat-card
-      class="mat-card _mat-animation-noopable"
+      class="mat-card mat-focus-indicator _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -22,7 +20,6 @@ exports[`Login Page should compile 1`] = `
       >
         <form
           class="ng-untouched ng-pristine ng-valid"
-          ng-reflect-form="[object Object]"
           novalidate=""
         >
           <p>
@@ -47,9 +44,6 @@ exports[`Login Page should compile 1`] = `
                       formcontrolname="username"
                       id="mat-input-0"
                       matinput=""
-                      ng-reflect-name="username"
-                      ng-reflect-placeholder="Username"
-                      ng-reflect-type="text"
                       placeholder="Username"
                       type="text"
                     />
@@ -62,8 +56,6 @@ exports[`Login Page should compile 1`] = `
                         class="mat-form-field-label ng-tns-c1-0 ng-star-inserted"
                         for="mat-input-0"
                         id="mat-form-field-label-1"
-                        ng-reflect-disabled="true"
-                        ng-reflect-ng-switch="false"
                       >
                         
                         
@@ -89,7 +81,6 @@ exports[`Login Page should compile 1`] = `
                 </div>
                 <div
                   class="mat-form-field-subscript-wrapper"
-                  ng-reflect-ng-switch="hint"
                 >
                   
                   
@@ -128,9 +119,6 @@ exports[`Login Page should compile 1`] = `
                       formcontrolname="password"
                       id="mat-input-1"
                       matinput=""
-                      ng-reflect-name="password"
-                      ng-reflect-placeholder="Password"
-                      ng-reflect-type="password"
                       placeholder="Password"
                       type="password"
                     />
@@ -143,8 +131,6 @@ exports[`Login Page should compile 1`] = `
                         class="mat-form-field-label ng-tns-c1-1 mat-empty mat-form-field-empty ng-star-inserted"
                         for="mat-input-1"
                         id="mat-form-field-label-3"
-                        ng-reflect-disabled="true"
-                        ng-reflect-ng-switch="false"
                       >
                         
                         
@@ -170,7 +156,6 @@ exports[`Login Page should compile 1`] = `
                 </div>
                 <div
                   class="mat-form-field-subscript-wrapper"
-                  ng-reflect-ng-switch="hint"
                 >
                   
                   
@@ -192,7 +177,7 @@ exports[`Login Page should compile 1`] = `
             class="loginButtons"
           >
             <button
-              class="mat-button mat-button-base _mat-animation-noopable"
+              class="mat-focus-indicator mat-button mat-button-base _mat-animation-noopable"
               mat-button=""
               type="submit"
             >
@@ -204,9 +189,6 @@ exports[`Login Page should compile 1`] = `
               <div
                 class="mat-button-ripple mat-ripple"
                 matripple=""
-                ng-reflect-centered="false"
-                ng-reflect-disabled="false"
-                ng-reflect-trigger="[object HTMLButtonElement]"
               />
               <div
                 class="mat-button-focus-overlay"

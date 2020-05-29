@@ -16,11 +16,10 @@ import * as fromBooks from '@example-app/books/reducers';
       [query]="searchQuery$ | async"
       [searching]="loading$ | async"
       [error]="error$ | async"
-      (search)="search($event)">
+      (search)="search($event)"
+    >
     </bc-book-search>
-    <bc-book-preview-list
-      [books]="books$ | async">
-    </bc-book-preview-list>
+    <bc-book-preview-list [books]="books$ | async"> </bc-book-preview-list>
   `,
 })
 export class FindBookPageComponent {

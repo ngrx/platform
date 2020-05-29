@@ -15,7 +15,8 @@ import * as fromBooks from '@example-app/books/reducers';
       [book]="book$ | async"
       [inCollection]="isSelectedBookInCollection$ | async"
       (add)="addToCollection($event)"
-      (remove)="removeFromCollection($event)">
+      (remove)="removeFromCollection($event)"
+    >
     </bc-book-detail>
   `,
 })

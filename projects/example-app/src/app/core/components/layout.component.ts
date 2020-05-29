@@ -4,9 +4,7 @@ import { Component } from '@angular/core';
   selector: 'bc-layout',
   template: `
     <mat-sidenav-container fullscreen>
-
       <ng-content></ng-content>
-
     </mat-sidenav-container>
   `,
   styles: [

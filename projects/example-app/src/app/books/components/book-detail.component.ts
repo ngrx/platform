@@ -9,7 +9,7 @@ import { Book } from '@example-app/books/models';
       <mat-card-title-group>
         <mat-card-title>{{ title }}</mat-card-title>
         <mat-card-subtitle *ngIf="subtitle">{{ subtitle }}</mat-card-subtitle>
-        <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
+        <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail" />
       </mat-card-title-group>
       <mat-card-content>
         <p [innerHtml]="description"></p>
@@ -18,16 +18,25 @@ import { Book } from '@example-app/books/models';
         <bc-book-authors [book]="book"></bc-book-authors>
       </mat-card-footer>
       <mat-card-actions align="start">
-        <button mat-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(book)">
-        Remove Book from Collection
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="inCollection"
+          (click)="remove.emit(book)"
+        >
+          Remove Book from Collection
         </button>
 
-        <button mat-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(book)">
-        Add Book to Collection
+        <button
+          mat-raised-button
+          color="primary"
+          *ngIf="!inCollection"
+          (click)="add.emit(book)"
+        >
+          Add Book to Collection
         </button>
       </mat-card-actions>
     </mat-card>
-
   `,
   styles: [
     `

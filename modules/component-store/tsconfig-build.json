@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "../../",
     "declaration": true,
     "stripInternal": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "es2015",
     "moduleResolution": "node",
-    "strict": true,
-    "outDir": "../../dist/packages/component-store",
+    "noEmitOnError": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "downlevelIteration": true,
+    "outDir": "../../dist/modules/component-store",
     "paths": {},
     "rootDir": ".",
     "sourceMap": true,
@@ -20,6 +23,8 @@
   "files": ["public_api.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
+    // Work around for issue: https://github.com/angular/angular/issues/22210
+    "strictMetadataEmit": false,
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/component-store",
     "enableIvy": false

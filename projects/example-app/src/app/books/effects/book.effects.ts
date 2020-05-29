@@ -49,7 +49,7 @@ export class BookEffects {
           return this.googleBooks.searchBooks(query).pipe(
             takeUntil(nextSearch$),
             map((books: Book[]) => BooksApiActions.searchSuccess({ books })),
-            catchError(err =>
+            catchError((err) =>
               of(BooksApiActions.searchFailure({ errorMsg: err.message }))
             )
           );

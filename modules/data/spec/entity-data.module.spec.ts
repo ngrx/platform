@@ -116,7 +116,7 @@ describe('EntityDataModule', () => {
 
       const action = entityActionFactory.create('Hero', EntityOp.QUERY_ALL);
       store.dispatch(action);
-      expect(actions.length).toBe(1, 'expect one effect action');
+      expect(actions.length).toBe(1);
       expect(actions[0].type).toBe('test-action');
     });
 
@@ -181,10 +181,7 @@ describe('EntityDataModule', () => {
     it('should log an ordinary entity action', () => {
       const action = eaFactory.create('Hero', EntityOp.SET_LOADING);
       store.dispatch(action);
-      expect(metaReducerLog.join('|')).toContain(
-        EntityOp.SET_LOADING,
-        'logged entity action'
-      );
+      expect(metaReducerLog.join('|')).toContain(EntityOp.SET_LOADING);
     });
 
     it('should respond to action handled by custom EntityCacheMetaReducer', () => {
@@ -202,18 +199,9 @@ describe('EntityDataModule', () => {
       store.dispatch(action);
       cacheSelector$.subscribe(cache => {
         try {
-          expect(cache.Hero.entities[1]).toEqual(
-            data.Hero[1],
-            'has expected hero'
-          );
-          expect(cache.Villain.entities[30]).toEqual(
-            data.Villain[0],
-            'has expected hero'
-          );
-          expect(metaReducerLog.join('|')).toContain(
-            TEST_ACTION,
-            'logged test action'
-          );
+          expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
+          expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
+          expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
         } catch (error) {
           fail(error);
         }
@@ -253,13 +241,10 @@ function entityCacheMetaReducerFactory(
     return {
       ...collectionCreator.create<T>(entityName),
       ids: data.map(e => e.id),
-      entities: data.reduce(
-        (acc, e) => {
-          acc[e.id] = e;
-          return acc;
-        },
-        {} as any
-      ),
+      entities: data.reduce((acc, e) => {
+        acc[e.id] = e;
+        return acc;
+      }, {} as any),
     } as EntityCollection<T>;
   }
 }

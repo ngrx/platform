@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "../../",
     "declaration": true,
     "stripInternal": true,
     "emitDecoratorMetadata": true,
@@ -11,11 +11,11 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "downlevelIteration": true,
-    "outDir": "../../dist/packages/data",
+    "outDir": "../../dist/modules/data",
     "paths": {
-      "@ngrx/store": ["../../dist/packages/store"],
-      "@ngrx/effects": ["../../dist/packages/effects"],
-      "@ngrx/entity": ["../../dist/packages/entity"]
+      "@ngrx/store": ["../../dist/modules/store"],
+      "@ngrx/effects": ["../../dist/modules/effects"],
+      "@ngrx/entity": ["../../dist/modules/entity"]
     },
     "rootDir": ".",
     "sourceMap": true,

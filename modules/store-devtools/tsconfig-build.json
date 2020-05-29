@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "../../",
     "declaration": true,
     "stripInternal": true,
     "emitDecoratorMetadata": true,
@@ -11,9 +11,9 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "downlevelIteration": true,
-    "outDir": "../../dist/packages/store-devtools",
+    "outDir": "../../dist/modules/store-devtools",
     "paths": {
-      "@ngrx/store": ["../../dist/packages/store"]
+      "@ngrx/store": ["../../dist/modules/store"]
     },
     "rootDir": ".",
     "sourceMap": true,

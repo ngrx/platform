@@ -36,9 +36,7 @@ context('Full round trip', () => {
   });
 
   it('is possible to login', () => {
-    cy.get('[placeholder=Username]')
-      .clear()
-      .type('test');
+    cy.get('[placeholder=Username]').clear().type('test');
     cy.get('[type="submit"]').click();
   });
 
@@ -50,15 +48,11 @@ context('Full round trip', () => {
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to search for books');
     cy.get('[placeholder="Search for a book"]').type('The Alchemist');
-    cy.get('bc-book-preview')
-      .its('length')
-      .should('be.gte', 1);
+    cy.get('bc-book-preview').its('length').should('be.gte', 1);
   });
 
   it('is possible to add books', () => {
-    cy.get('bc-book-preview')
-      .eq(2)
-      .click();
+    cy.get('bc-book-preview').eq(2).click();
 
     cy.contains('Add Book to Collection').click();
     // TODO: uncomment once Applitools work properly
@@ -69,9 +63,7 @@ context('Full round trip', () => {
   it('is possible to remove books', () => {
     cy.go('back');
 
-    cy.get('bc-book-preview')
-      .eq(4)
-      .click();
+    cy.get('bc-book-preview').eq(4).click();
 
     cy.contains('Add Book to Collection').click();
     cy.contains('Remove Book from Collection').click();
@@ -87,9 +79,7 @@ context('Full round trip', () => {
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to show the collection');
-    cy.get('bc-book-preview')
-      .its('length')
-      .should('be', 1);
+    cy.get('bc-book-preview').its('length').should('be', 1);
   });
 
   it('is possible to sign out', () => {

@@ -235,7 +235,7 @@ export function commandDispatchTest(
       } = dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_MANY);
       expect(entityName).toBe('Hero');
-      expect(data).toEqual({ name: 'B' }, 'params');
+      expect(data).toEqual({ name: 'B' });
       expect(mergeStrategy).toBeUndefined();
     });
 
@@ -250,7 +250,7 @@ export function commandDispatchTest(
       } = dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_MANY);
       expect(entityName).toBe('Hero');
-      expect(data).toEqual('name=B', 'params');
+      expect(data).toEqual('name=B');
       expect(mergeStrategy).toBeUndefined();
     });
 
@@ -267,7 +267,7 @@ export function commandDispatchTest(
       } = dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_MANY);
       expect(entityName).toBe('Hero');
-      expect(data).toEqual('name=B', 'params');
+      expect(data).toEqual('name=B');
       expect(mergeStrategy).toBe(MergeStrategy.PreserveChanges);
     });
 

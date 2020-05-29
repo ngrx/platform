@@ -28,7 +28,7 @@ export class BookStorageService {
 
   getCollection(): Observable<Book[]> {
     return this.supported().pipe(
-      map(_ => this.storage.getItem(this.collectionKey)),
+      map((_) => this.storage.getItem(this.collectionKey)),
       map((value: string | null) => (value ? JSON.parse(value) : []))
     );
   }
@@ -44,7 +44,7 @@ export class BookStorageService {
 
   removeFromCollection(ids: Array<string>): Observable<Book[]> {
     return this.getCollection().pipe(
-      map((value: Book[]) => value.filter(item => !ids.includes(item.id))),
+      map((value: Book[]) => value.filter((item) => !ids.includes(item.id))),
       tap((value: Book[]) =>
         this.storage.setItem(this.collectionKey, JSON.stringify(value))
       )

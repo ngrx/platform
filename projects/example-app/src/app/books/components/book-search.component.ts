@@ -7,11 +7,22 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
       <mat-card-title>Find a Book</mat-card-title>
       <mat-card-content>
         <mat-form-field>
-          <input matInput placeholder="Search for a book" [value]="query" (keyup)="search.emit($event.target.value)">
+          <input
+            matInput
+            placeholder="Search for a book"
+            [value]="query"
+            (keyup)="search.emit($event.target.value)"
+          />
         </mat-form-field>
-        <mat-spinner [class.show]="searching" [diameter]="30" [strokeWidth]="3"></mat-spinner>
+        <mat-spinner
+          [class.show]="searching"
+          [diameter]="30"
+          [strokeWidth]="3"
+        ></mat-spinner>
       </mat-card-content>
-      <mat-card-footer><span *ngIf="error">{{error}}</span></mat-card-footer>
+      <mat-card-footer
+        ><span *ngIf="error">{{ error }}</span></mat-card-footer
+      >
     </mat-card>
   `,
   styles: [

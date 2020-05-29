@@ -8,13 +8,9 @@ exports[`Find Book Page should compile 1`] = `
   searchQuery$={[Function Store]}
   store={[Function MockStore]}
 >
-  <bc-book-search
-    ng-reflect-error=""
-    ng-reflect-query=""
-    ng-reflect-searching="false"
-  >
+  <bc-book-search>
     <mat-card
-      class="mat-card _mat-animation-noopable"
+      class="mat-card mat-focus-indicator _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -44,8 +40,6 @@ exports[`Find Book Page should compile 1`] = `
                   class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
                   id="mat-input-0"
                   matinput=""
-                  ng-reflect-placeholder="Search for a book"
-                  ng-reflect-value=""
                   placeholder="Search for a book"
                 />
                 <span
@@ -57,8 +51,6 @@ exports[`Find Book Page should compile 1`] = `
                     class="mat-form-field-label ng-tns-c1-0 mat-empty mat-form-field-empty ng-star-inserted"
                     for="mat-input-0"
                     id="mat-form-field-label-1"
-                    ng-reflect-disabled="true"
-                    ng-reflect-ng-switch="false"
                   >
                     
                     
@@ -84,7 +76,6 @@ exports[`Find Book Page should compile 1`] = `
             </div>
             <div
               class="mat-form-field-subscript-wrapper"
-              ng-reflect-ng-switch="hint"
             >
               
               
@@ -103,14 +94,11 @@ exports[`Find Book Page should compile 1`] = `
         <mat-spinner
           class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation _mat-animation-noopable"
           mode="indeterminate"
-          ng-reflect-diameter="30"
-          ng-reflect-stroke-width="3"
           role="progressbar"
           style="width: 30px; height: 30px;"
         >
           <svg
             focusable="false"
-            ng-reflect-ng-switch="true"
             preserveAspectRatio="xMidYMid meet"
             style="width: 30px; height: 30px;"
             viewBox="0 0 23 23"
@@ -133,9 +121,7 @@ exports[`Find Book Page should compile 1`] = `
         
       </mat-card-footer>
     </mat-card>
-  </bc-book-search><bc-book-preview-list
-    ng-reflect-books=""
-  >
+  </bc-book-search><bc-book-preview-list>
     
   </bc-book-preview-list>
 </bc-find-book-page>

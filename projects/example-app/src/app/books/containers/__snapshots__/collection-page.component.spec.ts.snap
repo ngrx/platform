@@ -6,16 +6,14 @@ exports[`Collection Page should compile 1`] = `
   store={[Function MockStore]}
 >
   <mat-card
-    class="mat-card _mat-animation-noopable"
+    class="mat-card mat-focus-indicator _mat-animation-noopable"
   >
     <mat-card-title
       class="mat-card-title"
     >
       My Collection
     </mat-card-title>
-  </mat-card><bc-book-preview-list
-    ng-reflect-books=""
-  >
+  </mat-card><bc-book-preview-list>
     
   </bc-book-preview-list>
 </bc-collection-page>

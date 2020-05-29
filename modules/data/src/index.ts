@@ -45,17 +45,11 @@ export { UpdateResponseData } from './actions/update-response-data';
 
 // // dataservices
 export { DataServiceError } from './dataservices/data-service-error';
-export {
-  EntityActionDataServiceError,
-} from './dataservices/data-service-error';
-export {
-  DefaultDataServiceConfig,
-} from './dataservices/default-data-service-config';
+export { EntityActionDataServiceError } from './dataservices/data-service-error';
+export { DefaultDataServiceConfig } from './dataservices/default-data-service-config';
 export { DefaultDataService } from './dataservices/default-data.service';
 export { DefaultDataServiceFactory } from './dataservices/default-data.service';
-export {
-  EntityCacheDataService,
-} from './dataservices/entity-cache-data.service';
+export { EntityCacheDataService } from './dataservices/entity-cache-data.service';
 export { EntityDataService } from './dataservices/entity-data.service';
 export { EntityHttpResourceUrls } from './dataservices/http-url-generator';
 export { HttpResourceUrls } from './dataservices/http-url-generator';
@@ -81,12 +75,8 @@ export {
   EntityCommands,
 } from './dispatchers/entity-commands';
 export { EntityDispatcherBase } from './dispatchers/entity-dispatcher-base';
-export {
-  EntityDispatcherDefaultOptions,
-} from './dispatchers/entity-dispatcher-default-options';
-export {
-  EntityDispatcherFactory,
-} from './dispatchers/entity-dispatcher-factory';
+export { EntityDispatcherDefaultOptions } from './dispatchers/entity-dispatcher-default-options';
+export { EntityDispatcherFactory } from './dispatchers/entity-dispatcher-factory';
 export {
   EntityDispatcher,
   PersistanceCanceled,
@@ -116,23 +106,15 @@ export {
 } from './entity-metadata/entity-metadata';
 
 // // entity-services
-export {
-  EntityCollectionServiceBase,
-} from './entity-services/entity-collection-service-base';
+export { EntityCollectionServiceBase } from './entity-services/entity-collection-service-base';
 export {
   EntityCollectionServiceElements,
   EntityCollectionServiceElementsFactory,
 } from './entity-services/entity-collection-service-elements-factory';
-export {
-  EntityCollectionServiceFactory,
-} from './entity-services/entity-collection-service-factory';
-export {
-  EntityCollectionService,
-} from './entity-services/entity-collection-service';
+export { EntityCollectionServiceFactory } from './entity-services/entity-collection-service-factory';
+export { EntityCollectionService } from './entity-services/entity-collection-service';
 export { EntityServicesBase } from './entity-services/entity-services-base';
-export {
-  EntityServicesElements,
-} from './entity-services/entity-services-elements';
+export { EntityServicesElements } from './entity-services/entity-services-elements';
 export {
   EntityServices,
   EntityCollectionServiceMap,
@@ -195,7 +177,7 @@ export {
 export { CorrelationIdGenerator } from './utils/correlation-id-generator';
 export { DefaultLogger } from './utils/default-logger';
 export { DefaultPluralizer } from './utils/default-pluralizer';
-export { getUuid, getGuid, getGuidComb, guidComparer } from './utils/guid-fns';
+export { getGuid, getGuidComb, guidComparer } from './utils/guid-fns';
 export {
   Logger,
   EntityPluralNames,

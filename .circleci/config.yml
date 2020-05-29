@@ -85,10 +85,56 @@ jobs:
           keys:
             - *cache_key
 
-      # Build and Test
+      # Test
       - run: yarn test --maxWorkers=1 --ci
 
+  test-affected:
+    <<: *run_in_node
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Build and Test
+      - write_master_hash
+      - run:
+          name: Run Unit Tests
+          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --runInBand
+          no_output_timeout: 30m
+
   build:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Build
+      - run: yarn
+      - run: yarn build
+      # Store artifacts from build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - modules/*
+
+  build-affected:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Build
+      - run: yarn
+      - write_master_hash
+      - run: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+
+  build-bazel:
     <<: *run_in_node
     steps:
       - checkout
@@ -145,8 +191,7 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn run example:build:prod
-      - run: yarn run example:cypress:ci
+      - run: yarn example:e2e --headless
 
   docs-tests:
     <<: *docs_in_browser
@@ -300,11 +345,26 @@ workflows:
           requires:
             - install
           filters:
+            branches:
+              only: master
+      - test-affected:
+          requires:
+            - install
+          filters:
             tags:
               only: /.*/
       - build:
           requires:
             - test
+          filters:
+            branches:
+              only: master
+      - build-affected:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/            
       - example-e2e-tests:
           requires:
             - install

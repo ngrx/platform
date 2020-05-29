@@ -186,10 +186,7 @@ describe('EntityCollectionService', () => {
       heroCollectionService.getAll(options).subscribe(
         data => fail('should not have data but got data'),
         error => {
-          expect(error instanceof PersistanceCanceled).toBe(
-            true,
-            'is PersistanceCanceled'
-          );
+          expect(error instanceof PersistanceCanceled).toBe(true);
           expect(error.message).toBe('Test cancel');
           done();
         }
@@ -315,8 +312,7 @@ describe('EntityCollectionService', () => {
       successActions$.subscribe(
         (act: EntityAction) => (wasSkipped = act.payload.skip === true)
       );
-      const extra = () =>
-        expect(wasSkipped).toBe(true, 'expected to be skipped');
+      const extra = () => expect(wasSkipped).toBe(true);
 
       const hero = { id: 1, name: 'A' } as Hero;
       heroCollectionService.addOneToCache(hero);
@@ -384,7 +380,7 @@ describe('EntityCollectionService', () => {
         successActionCount += 1;
         if (successActionCount === 2) {
           // Confirm hero2 actually saved before hero1
-          expect(savedHeroes).toEqual([hero2, hero1], 'savedHeroes');
+          expect(savedHeroes).toEqual([hero2, hero1]);
           done();
         }
       });
@@ -404,11 +400,11 @@ describe('EntityCollectionService', () => {
       // Confirm that each add returns with its own hero
       heroCollectionService
         .add(hero1)
-        .subscribe(data => expect(data).toEqual(hero1, 'first hero'));
+        .subscribe(data => expect(data).toEqual(hero1));
 
       heroCollectionService
         .add(hero2)
-        .subscribe(data => expect(data).toEqual(hero2, 'second hero'));
+        .subscribe(data => expect(data).toEqual(hero2));
     });
   }
 
@@ -508,7 +504,7 @@ function entityServicesSetup() {
     successActions$.subscribe(
       (act: EntityAction) => (wasOptimistic = act.payload.isOptimistic === true)
     );
-    return () => expect(wasOptimistic).toBe(expected, msg);
+    return () => expect(wasOptimistic).toBe(expected);
   }
 
   /** Snoop on reducedActions$ while debugging a test */
@@ -540,7 +536,7 @@ function expectDataToBe(
 ) {
   return {
     next: (data: any) => {
-      expect(data).toEqual(expected, message);
+      expect(data).toEqual(expected);
       if (extra) {
         extra(); // extra expectations before done
       }
@@ -557,7 +553,7 @@ function expectErrorToBe(expected: any, done: any, message?: string) {
       done();
     },
     error: (error: any) => {
-      expect(error).toEqual(expected, message);
+      expect(error).toEqual(expected);
       done();
     },
   };

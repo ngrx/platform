@@ -15,13 +15,13 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(LoginPageActions.login, state => ({
+  on(LoginPageActions.login, (state) => ({
     ...state,
     error: null,
     pending: true,
   })),
 
-  on(AuthApiActions.loginSuccess, state => ({
+  on(AuthApiActions.loginSuccess, (state) => ({
     ...state,
     error: null,
     pending: false,

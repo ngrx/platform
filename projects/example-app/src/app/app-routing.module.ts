@@ -9,7 +9,7 @@ export const routes: Routes = [
   {
     path: 'books',
     loadChildren: () =>
-      import('@example-app/books/books.module').then(m => m.BooksModule),
+      import('@example-app/books/books.module').then((m) => m.BooksModule),
     canActivate: [AuthGuard],
   },
   {

@@ -6,6 +6,19 @@
     "no-internal-module": true,
     "no-var-keyword": true,
     "triple-equals": [false, "allow-null-check"],
-    "variable-name": [true, "ban-keywords", "allow-leading-underscore"]
-  }
+    "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
+    "nx-enforce-module-boundaries": [
+      true,
+      {
+        "allow": [],
+        "depConstraints": [
+          {
+            "sourceTag": "*",
+            "onlyDependOnLibsWithTags": ["*"]
+          }
+        ]
+      }
+    ]
+  },
+  "rulesDirectory": ["node_modules/@nrwl/workspace/src/tslint"]
 }

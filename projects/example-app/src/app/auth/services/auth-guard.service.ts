@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.store.pipe(
       select(fromAuth.selectLoggedIn),
-      map(authed => {
+      map((authed) => {
         if (!authed) {
           this.store.dispatch(AuthApiActions.loginRedirect());
           return false;

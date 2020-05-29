@@ -19,11 +19,11 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
-      map(action => action.credentials),
+      map((action) => action.credentials),
       exhaustMap((auth: Credentials) =>
         this.authService.login(auth).pipe(
-          map(user => AuthApiActions.loginSuccess({ user })),
-          catchError(error => of(AuthApiActions.loginFailure({ error })))
+          map((user) => AuthApiActions.loginSuccess({ user })),
+          catchError((error) => of(AuthApiActions.loginFailure({ error })))
         )
       )
     )
@@ -42,7 +42,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthApiActions.loginRedirect, AuthActions.logout),
-        tap(authed => {
+        tap((authed) => {
           this.router.navigate(['/login']);
         })
       ),
@@ -61,11 +61,8 @@ export class AuthEffects {
 
         return dialogRef.afterClosed();
       }),
-      map(
-        result =>
-          result
-            ? AuthActions.logout()
-            : AuthActions.logoutConfirmationDismiss()
+      map((result) =>
+        result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
       )
     )
   );

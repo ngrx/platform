@@ -43,7 +43,7 @@ describe('CollectionEffects', () => {
           useValue: {
             removeItem: jest.fn(),
             setItem: jest.fn(),
-            getItem: jest.fn(_ => JSON.stringify([])),
+            getItem: jest.fn((_) => JSON.stringify([])),
           },
         },
         provideMockActions(() => actions$),

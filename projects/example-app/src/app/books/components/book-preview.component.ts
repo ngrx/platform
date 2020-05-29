@@ -8,9 +8,11 @@ import { Book } from '@example-app/books/models';
     <a [routerLink]="['/books', id]">
       <mat-card>
         <mat-card-title-group>
-          <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
-          <mat-card-title>{{ title | bcEllipsis:35 }}</mat-card-title>
-          <mat-card-subtitle *ngIf="subtitle">{{ subtitle | bcEllipsis:40 }}</mat-card-subtitle>
+          <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail" />
+          <mat-card-title>{{ title | bcEllipsis: 35 }}</mat-card-title>
+          <mat-card-subtitle *ngIf="subtitle">{{
+            subtitle | bcEllipsis: 40
+          }}</mat-card-subtitle>
         </mat-card-title-group>
         <mat-card-content>
           <p *ngIf="description">{{ description | bcEllipsis }}</p>

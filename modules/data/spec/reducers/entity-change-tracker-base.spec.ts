@@ -47,16 +47,10 @@ describe('EntityChangeTrackerBase', () => {
   describe('#commitAll', () => {
     it('should clear all tracked changes', () => {
       let { collection } = createTestTrackedEntities();
-      expect(Object.keys(collection.changeState).length).toBe(
-        3,
-        'tracking 3 entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(3);
 
       collection = tracker.commitAll(collection);
-      expect(Object.keys(collection.changeState).length).toBe(
-        0,
-        'tracking zero entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(0);
     });
   });
 
@@ -108,16 +102,11 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
-      expect(collection.entities[updatedHero.id]).toEqual(
-        locallyUpdatedHero,
-        'Preserves the current value for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(locallyUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        serverUpdatedHero,
-        'Overwrites the originalValue with the merge entity'
+        serverUpdatedHero
       );
     });
 
@@ -134,13 +123,9 @@ describe('EntityChangeTrackerBase', () => {
         MergeStrategy.IgnoreChanges // manually provide strategy
       );
 
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Update the collection entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        updatedHero,
-        'changeState is untouched'
+        updatedHero
       );
     });
 
@@ -161,16 +146,11 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
-      expect(collection.entities[updatedHero.id]).toEqual(
-        locallyUpdatedHero,
-        'Preserves the current value for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(locallyUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        serverUpdatedHero,
-        'Overwrites the originalValue with the merge entity'
+        serverUpdatedHero
       );
     });
 
@@ -190,14 +170,10 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
       expect(collection.changeState[unchangedHero.id]).toBeUndefined();
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Replace the current collection entity for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
   });
@@ -217,14 +193,10 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
       expect(collection.changeState[unchangedHero.id]).toBeUndefined();
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Replace the current collection entity for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
 
@@ -241,13 +213,9 @@ describe('EntityChangeTrackerBase', () => {
         MergeStrategy.IgnoreChanges // manually provide strategy
       );
 
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Update the collection entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        updatedHero,
-        'changeState is untouched'
+        updatedHero
       );
     });
 
@@ -268,16 +236,11 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
-      expect(collection.entities[updatedHero.id]).toEqual(
-        locallyUpdatedHero,
-        'Preserves the current value for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(locallyUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        serverUpdatedHero,
-        'Overwrites the originalValue with the merge entity'
+        serverUpdatedHero
       );
     });
 
@@ -297,14 +260,10 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
       expect(collection.changeState[unchangedHero.id]).toBeUndefined();
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Replace the current collection entity for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
   });
@@ -332,14 +291,10 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
       expect(collection.changeState[unchangedHero.id]).toBeUndefined();
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Replace the current collection entity for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
 
@@ -356,13 +311,9 @@ describe('EntityChangeTrackerBase', () => {
         MergeStrategy.IgnoreChanges // manually provide strategy
       );
 
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Update the collection entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        updatedHero,
-        'changeState is untouched'
+        updatedHero
       );
     });
 
@@ -383,16 +334,11 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
-      expect(collection.entities[updatedHero.id]).toEqual(
-        locallyUpdatedHero,
-        'Preserves the current value for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(locallyUpdatedHero);
       expect(collection.changeState[updatedHero.id]!.originalValue).toEqual(
-        serverUpdatedHero,
-        'Overwrites the originalValue with the merge entity'
+        serverUpdatedHero
       );
     });
 
@@ -412,14 +358,10 @@ describe('EntityChangeTrackerBase', () => {
       );
 
       expect(collection.entities[unchangedHero.id]).toEqual(
-        unchangedHeroServerUpdated,
-        'Replace the current collection entity for unchanged entity'
+        unchangedHeroServerUpdated
       );
       expect(collection.changeState[unchangedHero.id]).toBeUndefined();
-      expect(collection.entities[updatedHero.id]).toEqual(
-        serverUpdatedHero,
-        'Replace the current collection entity for changed entity'
-      );
+      expect(collection.entities[updatedHero.id]).toEqual(serverUpdatedHero);
       expect(collection.changeState[updatedHero.id]).toBeUndefined();
     });
   });
@@ -480,7 +422,7 @@ describe('EntityChangeTrackerBase', () => {
       const collection = tracker.trackAddMany(newEntities, origCollection);
       expect(collection).not.toBe(origCollection);
       const trackKeys = Object.keys(collection.changeState);
-      expect(trackKeys).toEqual(['42', '84'], 'tracking new entities');
+      expect(trackKeys).toEqual(['42', '84']);
 
       trackKeys.forEach((key, ix) => {
         const change = collection.changeState[key];
@@ -511,10 +453,7 @@ describe('EntityChangeTrackerBase', () => {
       const change = collection.changeState[existingEntity!.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
-      expect(change!.originalValue).toBe(
-        existingEntity,
-        'originalValue is the existing entity'
-      );
+      expect(change!.originalValue).toBe(existingEntity);
     });
 
     it('should return a new collection with tracked "deleted" entity, deleted by key', () => {
@@ -527,10 +466,7 @@ describe('EntityChangeTrackerBase', () => {
       const change = collection.changeState[existingEntity!.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
-      expect(change!.originalValue).toBe(
-        existingEntity,
-        'originalValue is the existing entity'
-      );
+      expect(change!.originalValue).toBe(existingEntity);
     });
 
     it('should untrack (commit) an added entity when it is removed', () => {
@@ -572,10 +508,7 @@ describe('EntityChangeTrackerBase', () => {
       change = collection.changeState[updatedEntity.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted, 'after delete');
-      expect(change!.originalValue).toEqual(
-        existingEntity,
-        'tracking original value'
-      );
+      expect(change!.originalValue).toEqual(existingEntity);
     });
 
     it('should leave deleted entity tracked as deleted when try to update', () => {
@@ -597,10 +530,7 @@ describe('EntityChangeTrackerBase', () => {
       change = collection.changeState[updatedEntity.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Deleted);
-      expect(change!.originalValue).toEqual(
-        existingEntity,
-        'still tracking original value'
-      );
+      expect(change!.originalValue).toEqual(existingEntity);
     });
 
     it('should return same collection if called with null entity', () => {
@@ -638,10 +568,7 @@ describe('EntityChangeTrackerBase', () => {
         const change = collection.changeState[existingEntities[ix]!.id];
         expect(change).toBeDefined();
         expectChangeType(change, ChangeType.Deleted, `entity #${ix}`);
-        expect(change!.originalValue).toBe(
-          existingEntities[ix],
-          `entity #${ix} originalValue`
-        );
+        expect(change!.originalValue).toBe(existingEntities[ix]);
       });
     });
 
@@ -668,10 +595,7 @@ describe('EntityChangeTrackerBase', () => {
       const change = collection.changeState[existingEntity!.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
-      expect(change!.originalValue).toBe(
-        existingEntity,
-        'originalValue is the existing entity'
-      );
+      expect(change!.originalValue).toBe(existingEntity);
     });
 
     it('should return a new collection with tracked updated entity, updated by key', () => {
@@ -685,10 +609,7 @@ describe('EntityChangeTrackerBase', () => {
       const change = collection.changeState[existingEntity!.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
-      expect(change!.originalValue).toBe(
-        existingEntity,
-        'originalValue is the existing entity'
-      );
+      expect(change!.originalValue).toBe(existingEntity);
     });
 
     it('should leave updated entity tracked as updated if try to add', () => {
@@ -711,10 +632,7 @@ describe('EntityChangeTrackerBase', () => {
       change = collection.changeState[addedEntity.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
-      expect(change!.originalValue).toEqual(
-        existingEntity,
-        'still tracking original value'
-      );
+      expect(change!.originalValue).toEqual(existingEntity);
     });
 
     it('should return same collection if called with null entity', () => {
@@ -760,10 +678,7 @@ describe('EntityChangeTrackerBase', () => {
         const change = collection.changeState[existingEntities[ix]!.id];
         expect(change).toBeDefined();
         expectChangeType(change, ChangeType.Updated, `entity #${ix}`);
-        expect(change!.originalValue).toBe(
-          existingEntities[ix],
-          `entity #${ix} originalValue`
-        );
+        expect(change!.originalValue).toBe(existingEntities[ix]);
       });
     });
 
@@ -806,10 +721,7 @@ describe('EntityChangeTrackerBase', () => {
       const change = collection.changeState[existingEntity!.id];
       expect(change).toBeDefined();
       expectChangeType(change, ChangeType.Updated);
-      expect(change!.originalValue).toBe(
-        existingEntity,
-        'originalValue is the existing entity'
-      );
+      expect(change!.originalValue).toBe(existingEntity);
     });
 
     it('should not change orig value of updated entity that is updated again', () => {
@@ -839,10 +751,7 @@ describe('EntityChangeTrackerBase', () => {
         ChangeType.Updated,
         'still updated after attempted add'
       );
-      expect(change!.originalValue).toEqual(
-        existingEntity,
-        'still tracking original value'
-      );
+      expect(change!.originalValue).toEqual(existingEntity);
     });
 
     it('should return same collection if called with null entity', () => {
@@ -888,10 +797,7 @@ describe('EntityChangeTrackerBase', () => {
           `entity #${ix}`
         );
         if (change!.changeType === ChangeType.Updated) {
-          expect(change!.originalValue).toBe(
-            exitingEntities[ix],
-            `entity #${ix} originalValue`
-          );
+          expect(change!.originalValue).toBe(exitingEntities[ix]);
         } else {
           expect(change!.originalValue).toBeUndefined();
         }
@@ -907,16 +813,10 @@ describe('EntityChangeTrackerBase', () => {
   describe('#undoAll', () => {
     it('should clear all tracked changes', () => {
       let { collection } = createTestTrackedEntities();
-      expect(Object.keys(collection.changeState).length).toBe(
-        3,
-        'tracking 3 entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(3);
 
       collection = tracker.undoAll(collection);
-      expect(Object.keys(collection.changeState).length).toBe(
-        0,
-        'tracking zero entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(0);
     });
 
     it('should restore the collection to the pre-change state', () => {
@@ -932,10 +832,7 @@ describe('EntityChangeTrackerBase', () => {
       // Before undo
       expect(collection.entities[addedEntity.id]).toBeDefined();
       expect(collection.entities[deletedEntity!.id]).toBeUndefined();
-      expect(updatedEntity.name).not.toEqual(
-        preUpdatedEntity!.name,
-        'updated entity should be changed'
-      );
+      expect(updatedEntity.name).not.toEqual(preUpdatedEntity!.name);
 
       collection = tracker.undoAll(collection);
 
@@ -943,10 +840,7 @@ describe('EntityChangeTrackerBase', () => {
       expect(collection.entities[addedEntity.id]).toBeUndefined();
       expect(collection.entities[deletedEntity!.id]).toBeDefined();
       const revertedUpdate = collection.entities[updatedEntity.id];
-      expect(revertedUpdate!.name).toEqual(
-        preUpdatedEntity!.name,
-        'updated entity should be restored'
-      );
+      expect(revertedUpdate!.name).toEqual(preUpdatedEntity!.name);
     });
   });
 
@@ -954,17 +848,11 @@ describe('EntityChangeTrackerBase', () => {
     it('should clear one tracked change', () => {
       let { collection, deletedEntity } = createTestTrackedEntities();
 
-      expect(Object.keys(collection.changeState).length).toBe(
-        3,
-        'tracking 3 entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(3);
 
       collection = tracker.undoOne(deletedEntity as Hero, collection);
 
-      expect(Object.keys(collection.changeState).length).toBe(
-        2,
-        'tracking 2 entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(2);
     });
 
     it('should restore the collection to the pre-change state for the given entity', () => {
@@ -981,10 +869,7 @@ describe('EntityChangeTrackerBase', () => {
 
       expect(collection.entities[deletedEntity!.id]).toBeDefined();
       expect(collection.entities[addedEntity.id]).toBeDefined();
-      expect(updatedEntity.name).not.toEqual(
-        preUpdatedEntity!.name,
-        'updated entity should be changed'
-      );
+      expect(updatedEntity.name).not.toEqual(preUpdatedEntity!.name);
     });
 
     it('should do nothing when the given entity is null', () => {
@@ -1000,10 +885,7 @@ describe('EntityChangeTrackerBase', () => {
       collection = tracker.undoOne(null as any, collection);
       expect(collection.entities[addedEntity.id]).toBeDefined();
       expect(collection.entities[deletedEntity!.id]).toBeUndefined();
-      expect(updatedEntity.name).not.toEqual(
-        preUpdatedEntity!.name,
-        'updated entity should be changed'
-      );
+      expect(updatedEntity.name).not.toEqual(preUpdatedEntity!.name);
     });
   });
 
@@ -1018,20 +900,14 @@ describe('EntityChangeTrackerBase', () => {
         updatedEntity,
       } = createTestTrackedEntities();
 
-      expect(Object.keys(collection.changeState).length).toBe(
-        3,
-        'tracking 3 entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(3);
 
       collection = tracker.undoMany(
         [addedEntity, deletedEntity, updatedEntity],
         collection
       );
 
-      expect(Object.keys(collection.changeState).length).toBe(
-        0,
-        'tracking 2 entities'
-      );
+      expect(Object.keys(collection.changeState).length).toBe(0);
     });
 
     it('should restore the collection to the pre-change state for the given entities', () => {
@@ -1051,10 +927,7 @@ describe('EntityChangeTrackerBase', () => {
       expect(collection.entities[addedEntity.id]).toBeUndefined();
       expect(collection.entities[deletedEntity!.id]).toBeDefined();
       const revertedUpdate = collection.entities[updatedEntity.id];
-      expect(revertedUpdate!.name).toEqual(
-        preUpdatedEntity!.name,
-        'updated entity should be restored'
-      );
+      expect(revertedUpdate!.name).toEqual(preUpdatedEntity!.name);
     });
 
     it('should do nothing when there are no entities to undo', () => {
@@ -1070,10 +943,7 @@ describe('EntityChangeTrackerBase', () => {
       collection = tracker.undoMany([], collection);
       expect(collection.entities[addedEntity.id]).toBeDefined();
       expect(collection.entities[deletedEntity!.id]).toBeUndefined();
-      expect(updatedEntity.name).not.toEqual(
-        preUpdatedEntity!.name,
-        'updated entity should be changed'
-      );
+      expect(updatedEntity.name).not.toEqual(preUpdatedEntity!.name);
     });
   });
 
@@ -1172,8 +1042,7 @@ describe('EntityChangeTrackerBase', () => {
     msg?: string
   ) {
     expect(ChangeType[change!.changeType]).toEqual(
-      ChangeType[expectedChangeType],
-      msg
+      ChangeType[expectedChangeType]
     );
   }
 

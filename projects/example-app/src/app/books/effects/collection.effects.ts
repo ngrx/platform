@@ -37,7 +37,7 @@ export class CollectionEffects {
           map((books: Book[]) =>
             CollectionApiActions.loadBooksSuccess({ books })
           ),
-          catchError(error =>
+          catchError((error) =>
             of(CollectionApiActions.loadBooksFailure({ error }))
           )
         )
