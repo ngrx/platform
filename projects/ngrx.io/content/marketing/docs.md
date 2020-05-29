@@ -51,7 +51,7 @@ A good substance that might answer the question "Do I need NgRx", is the
 
 
 However, realizing that using NgRx comes with some tradeoffs is also crucial. It is not meant to be the shortest or quickest way to write code and encourage its users the usage of many files.
-It is also often require a steep learning curve, including some good understanding of [`RxJs`](https://rxjs-dev.firebaseapp.com/) and [`Redux`](https://redux.js.org/).
+It also often requires a steep learning curve, including some good understanding of [`RxJs`](https://rxjs-dev.firebaseapp.com/) and [`Redux`](https://redux.js.org/).
 
 
 ## Packages
