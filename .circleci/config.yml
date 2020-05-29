@@ -93,12 +93,13 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-            - *cache_key
+      # - restore_cache:
+      #     keys:
+      #       - *cache_key
 
       # Build and Test
       - write_master_hash
+      - run: yarn
       - run:
           name: Run Unit Tests
           command: yarn nx affected:test --all --parallel
