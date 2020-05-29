@@ -49,6 +49,6 @@ export class MockNgZone {
   }
 
   runOutsideAngular(fn: Function): any {
-    return fn();
+    return fn.apply(null);
   }
 }
