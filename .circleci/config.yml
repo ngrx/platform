@@ -335,10 +335,10 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - install:
-          filters:
-            tags:
-              only: /.*/
+      # - install:
+      #     filters:
+      #       tags:
+      #         only: /.*/
       # - lint:
       #     requires:
       #       - install
@@ -349,8 +349,8 @@ workflows:
       #       branches:
       #         only: master
       - test-affected:
-          requires:
-            - install
+          # requires:
+          #   - install
           filters:
             tags:
               only: /.*/
