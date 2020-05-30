@@ -135,7 +135,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build store"
+                "command": "nx build store"
               },
               {
                 "command": "yarn tsc -p modules/store/tsconfig.schematics.json"
@@ -183,7 +183,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build effects"
+                "command": "nx build effects"
               },
               {
                 "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
@@ -231,7 +231,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build data"
+                "command": "nx build data"
               },
               {
                 "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
@@ -279,7 +279,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build entity"
+                "command": "nx build entity"
               },
               {
                 "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
@@ -327,7 +327,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build store-devtools"
+                "command": "nx build store-devtools"
               },
               {
                 "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
@@ -375,7 +375,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build router-store"
+                "command": "nx build router-store"
               },
               {
                 "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
@@ -457,7 +457,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build schematics"
+                "command": "nx build schematics"
               },
               {
                 "command": "yarn tsc -p modules/schematics/tsconfig.schematics.json"
@@ -524,7 +524,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build component"
+                "command": "nx build component"
               }
             ]
           }
@@ -570,7 +570,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build component-store"
+                "command": "nx build component-store"
               }
             ]
           }
