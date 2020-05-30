@@ -63,7 +63,7 @@ jobs:
       # Test
       - run:
           name: Run All Lint Checks
-          command: yarn nx run-many --target=link --all
+          command: yarn nx run-many --target=lint --all
 
   lint-affected:
     <<: *run_in_node
@@ -249,7 +249,6 @@ jobs:
           path: ~/docs
       - restore_cache:
           keys:
-            - *cache_key
             - *docs_cache_key
       - run:
           name: Setup Environment Variables
@@ -266,6 +265,7 @@ jobs:
           key: *docs_cache_key
           paths:
             - ~/docs/projects/ngrx.io/node_modules
+            - ~/docs/node_modules
 
   deploy-docs-stable:
     <<: *docs_in_node
