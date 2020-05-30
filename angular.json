@@ -424,8 +424,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/schematics/jest.config.js",
-            "tsConfig": "modules/schematics/tsconfig.spec.json",
-            "passWithNoTests": true
+            "tsConfig": "modules/schematics/tsconfig.spec.json"
           }
         },
         "build": {
@@ -544,7 +543,6 @@
           "options": {
             "jestConfig": "modules/component/jest.config.js",
             "tsConfig": "modules/component/tsconfig.spec.json",
-            "passWithNoTests": true,
             "setupFile": "modules/component/test-setup.ts"
           }
         }
@@ -590,7 +588,6 @@
           "options": {
             "jestConfig": "modules/component-store/jest.config.js",
             "tsConfig": "modules/component-store/tsconfig.spec.json",
-            "passWithNoTests": true,
             "setupFile": "modules/component-store/test-setup.ts"
           }
         }
