@@ -104,7 +104,7 @@ jobs:
           (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
   test:
-    <<: *run_in_node
+    <<: *run_in_browser
     steps:
       - checkout
       - restore_cache:
@@ -117,7 +117,7 @@ jobs:
           command: yarn nx run-many --target=test --all
 
   test-affected:
-    <<: *run_in_node
+    <<: *run_in_browser
     steps:
       - checkout
 
