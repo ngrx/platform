@@ -52,12 +52,40 @@ jobs:
             - ~/.cache/Cypress
             - node_modules
 
+  lint:
+    <<: *run_in_node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Test
+      - run:
+          name: Run All Lint Checks
+          command: yarn nx run-many --target=lint --all
+
+  lint-affected:
+    <<: *run_in_node
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Build and Test
+      - write_master_hash
+      - run:
+          name: Run Affected Lint Checks
+          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+
   # Enforce some static analysis invariants.
   # Note that generally, these should be checked only on the delta in each change,
   # otherwise any change to the static analysis config requires updating all the
   # code in the repo.
   # Also analyzing everything makes the lint job slow.
-  lint:
+  lint-bazel:
     <<: *run_in_node
     steps:
       - checkout
@@ -76,20 +104,20 @@ jobs:
           (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
   test:
-    <<: *run_in_node
+    <<: *run_in_browser
     steps:
       - checkout
-      - *set_bazel_options
-
       - restore_cache:
           keys:
             - *cache_key
 
       # Test
-      - run: yarn test --maxWorkers=1 --ci
+      - run:
+          name: Run All Unit Tests
+          command: yarn nx run-many --target=test --all
 
   test-affected:
-    <<: *run_in_node
+    <<: *run_in_browser
     steps:
       - checkout
 
@@ -100,9 +128,8 @@ jobs:
       # Build and Test
       - write_master_hash
       - run:
-          name: Run Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --runInBand
-          no_output_timeout: 30m
+          name: Run Affected Unit Tests
+          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
@@ -114,7 +141,9 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn build
+      - run:
+          name: Build All Packages
+          command: yarn build
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -132,7 +161,13 @@ jobs:
       # Build
       - run: yarn
       - write_master_hash
-      - run: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+      - run:
+          name: Run Affected Release Builds
+          command: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+      # Build docs if necessary
+      - run:
+          name: Run Affected Builds
+          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build-bazel:
     <<: *run_in_node
@@ -147,7 +182,9 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn bazel build //modules/...
+      - run:
+          name: Build All Packages with Bazel
+          command: yarn bazel build //modules/...
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -166,7 +203,9 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn bazel build //modules/...
+      - run:
+          name: Build All Packages with Bazel
+          command: yarn bazel build //modules/...
       - save_cache:
           key: *bazel_cache_key
           paths:
@@ -182,49 +221,22 @@ jobs:
           keys:
             - *cache_key
       - run: yarn copy:schematics
-      - run: git diff --name-only --exit-code ./modules
+      - run:
+          name: Check schematics-core for consistency
+          command: git diff --name-only --exit-code ./modules
 
-  example-e2e-tests:
+  e2e-affected:
     <<: *run_in_browser
     steps:
       - checkout
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn example:e2e --headless
-
-  docs-tests:
-    <<: *docs_in_browser
-    working_directory: ~/docs/projects/ngrx.io
-    steps:
-      - checkout:
-          path: ~/docs
-      - restore_cache:
-          key: *docs_cache_key
-      - run: yarn --ignore-engines --frozen-lockfile --non-interactive
-      - run: yarn test --watch=false
-
-  docs:
-    <<: *docs_in_node
-    working_directory: ~/docs/projects/ngrx.io
-    steps:
-      - checkout:
-          path: ~/docs
-      - restore_cache:
-          key: *docs_cache_key
-      - run: yarn setup
-      - run: npm rebuild node-sass
-      - run: yarn build-for next --progress false && yarn copy-404-page
-      - run: cp -rf src/extra-files/next/. dist/ngrx.io/
-      # Store artifacts from build
-      - persist_to_workspace:
-          root: ~/docs/projects/ngrx.io/dist
-          paths:
-            - ngrx.io/*
-      - save_cache:
-          key: *docs_cache_key
-          paths:
-            - ~/docs/projects/ngrx.io/node_modules
+      - run: yarn
+      - write_master_hash
+      - run:
+          name: Run Affected E2E Tests
+          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless
 
   docs-preview:
     <<: *docs_in_node
@@ -232,12 +244,11 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout:
           path: ~/docs
       - restore_cache:
           keys:
-            - *cache_key
             - *docs_cache_key
       - run:
           name: Setup Environment Variables
@@ -254,6 +265,7 @@ jobs:
           key: *docs_cache_key
           paths:
             - ~/docs/projects/ngrx.io/node_modules
+            - ~/docs/node_modules
 
   deploy-docs-stable:
     <<: *docs_in_node
@@ -277,14 +289,16 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout
       - restore_cache:
           keys:
             - *cache_key
       - attach_workspace:
           at: dist
-      - run: yarn run deploy:builds
+      - run:
+          name: Deploy Rolling Release Builds
+          command: yarn run deploy:builds
 
   publish-stable:
     <<: *run_in_node
@@ -323,12 +337,14 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn run cleanup:previews
+      - run:
+          name: Cleanup old PR previews
+          command: yarn run cleanup:previews
 
 workflows:
   version: 2
@@ -341,37 +357,37 @@ workflows:
       - lint:
           requires:
             - install
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /.*/
+      - lint-affected:
+          requires:
+            - install
       - test:
           requires:
             - install
           filters:
             branches:
               only: master
+            tags:
+              only: /.*/
       - test-affected:
           requires:
             - install
-          filters:
-            tags:
-              only: /.*/
       - build:
           requires:
             - test
           filters:
             branches:
               only: master
+            tags:
+              only: /.*/
       - build-affected:
           requires:
             - install
-          filters:
-            tags:
-              only: /.*/            
-      - example-e2e-tests:
-          requires:
-            - install
-      - docs-tests:
-          requires:
-            - install
-      - docs:
+      - e2e-affected:
           requires:
             - install
       - docs-preview:
@@ -382,9 +398,6 @@ workflows:
             - install
       - deploy:
           requires:
-            - docs
-            - example-e2e-tests
-            - docs-tests
             - build
           filters:
             branches:

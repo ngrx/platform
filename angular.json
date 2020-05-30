@@ -84,7 +84,8 @@
           "options": {
             "jestConfig": "projects/example-app/jest.config.js",
             "tsConfig": "projects/example-app/tsconfig.spec.json",
-            "setupFile": "projects/example-app/src/setup-jest.ts"
+            "setupFile": "projects/example-app/src/setup-jest.ts",
+            "runInBand": true
           }
         }
       }
@@ -135,7 +136,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build store"
+                "command": "nx build store"
               },
               {
                 "command": "yarn tsc -p modules/store/tsconfig.schematics.json"
@@ -158,7 +159,8 @@
           "options": {
             "jestConfig": "modules/store/jest.config.js",
             "tsConfig": "modules/store/tsconfig.spec.json",
-            "setupFile": "modules/store/test-setup.ts"
+            "setupFile": "modules/store/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -183,7 +185,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build effects"
+                "command": "nx build effects"
               },
               {
                 "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
@@ -206,7 +208,8 @@
           "options": {
             "jestConfig": "modules/effects/jest.config.js",
             "tsConfig": "modules/effects/tsconfig.spec.json",
-            "setupFile": "modules/effects/test-setup.ts"
+            "setupFile": "modules/effects/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -231,7 +234,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build data"
+                "command": "nx build data"
               },
               {
                 "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
@@ -254,7 +257,8 @@
           "options": {
             "jestConfig": "modules/data/jest.config.js",
             "tsConfig": "modules/data/tsconfig.spec.json",
-            "setupFile": "modules/data/test-setup.ts"
+            "setupFile": "modules/data/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -279,7 +283,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build entity"
+                "command": "nx build entity"
               },
               {
                 "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
@@ -302,7 +306,8 @@
           "options": {
             "jestConfig": "modules/entity/jest.config.js",
             "tsConfig": "modules/entity/tsconfig.spec.json",
-            "setupFile": "modules/entity/test-setup.ts"
+            "setupFile": "modules/entity/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -327,7 +332,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build store-devtools"
+                "command": "nx build store-devtools"
               },
               {
                 "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
@@ -350,7 +355,8 @@
           "options": {
             "jestConfig": "modules/store-devtools/jest.config.js",
             "tsConfig": "modules/store-devtools/tsconfig.spec.json",
-            "setupFile": "modules/store-devtools/test-setup.ts"
+            "setupFile": "modules/store-devtools/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -375,7 +381,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build router-store"
+                "command": "nx build router-store"
               },
               {
                 "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
@@ -398,7 +404,8 @@
           "options": {
             "jestConfig": "modules/router-store/jest.config.js",
             "tsConfig": "modules/router-store/tsconfig.spec.json",
-            "setupFile": "modules/router-store/test-setup.ts"
+            "setupFile": "modules/router-store/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -414,7 +421,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "modules/schematics/tsconfig.lib.json",
+              "modules/schematics/tsconfig-build.json",
               "modules/schematics/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**", "!modules/schematics/**"]
@@ -425,7 +432,7 @@
           "options": {
             "jestConfig": "modules/schematics/jest.config.js",
             "tsConfig": "modules/schematics/tsconfig.spec.json",
-            "passWithNoTests": true
+            "runInBand": true
           }
         },
         "build": {
@@ -457,7 +464,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build schematics"
+                "command": "nx build schematics"
               },
               {
                 "command": "yarn tsc -p modules/schematics/tsconfig.schematics.json"
@@ -488,23 +495,6 @@
         }
       }
     },
-    "schematics-e2e": {
-      "projectType": "application",
-      "root": "projects/schematics-e2e",
-      "sourceRoot": "projects/schematics-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "schematics:build",
-            "npmPackageName": "@ngrx/schematics",
-            "pluginOutputPath": "dist/modules/schematics",
-            "jestConfig": "projects/schematics-e2e/jest.config.js",
-            "tsSpecConfig": "projects/schematics-e2e/tsconfig.spec.json"
-          }
-        }
-      }
-    },
     "component": {
       "projectType": "library",
       "root": "modules/component",
@@ -524,7 +514,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build component"
+                "command": "nx build component"
               }
             ]
           }
@@ -544,8 +534,8 @@
           "options": {
             "jestConfig": "modules/component/jest.config.js",
             "tsConfig": "modules/component/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "modules/component/test-setup.ts"
+            "setupFile": "modules/component/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -570,7 +560,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng build component-store"
+                "command": "nx build component-store"
               }
             ]
           }
@@ -590,12 +580,57 @@
           "options": {
             "jestConfig": "modules/component-store/jest.config.js",
             "tsConfig": "modules/component-store/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "modules/component-store/test-setup.ts"
+            "setupFile": "modules/component-store/test-setup.ts",
+            "runInBand": true
           }
         }
       },
       "schematics": {}
+    },
+    "docs-app": {
+      "root": "projects/ngrx.io",
+      "sourceRoot": "projects/ngrx.io/src",
+      "projectType": "application",
+      "prefix": "aio",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "projects/ngrx.io",
+            "parallel": false,
+            "commands": [
+              {
+                "command": "yarn setup"
+              },
+              {
+                "command": "npm rebuild node-sass"
+              },
+              {
+                "command": "yarn build-for next --progress false && yarn copy-404-page"
+              },
+              {
+                "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/*.* projects/ngrx.io/dist/ngrx.io/"
+              }
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "projects/ngrx.io",
+            "parallel": false,
+            "commands": [
+              {
+                "command": "yarn --ignore-engines --frozen-lockfile --non-interactive"
+              },
+              {
+                "command": "yarn test --watch=false"
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "schematics": {

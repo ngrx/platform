@@ -11,6 +11,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
+        "strictlyOrderedTargets": ["build-release"],
         "cacheableOperations": ["build", "build-release", "test", "lint", "e2e"]
       }
     }
@@ -40,10 +41,6 @@
     "schematics": {
       "tags": []
     },
-    "schematics-e2e": {
-      "tags": [],
-      "implicitDependencies": ["schematics"]
-    },
     "component": {
       "tags": []
     },
@@ -53,6 +50,20 @@
     "example-app-e2e": {
       "tags": [],
       "implicitDependencies": ["example-app"]
+    },
+    "docs-app": {
+      "tags": [],
+      "implicitDependencies": [
+        "store",
+        "effects",
+        "router-store",
+        "store-devtools",
+        "entity",
+        "data",
+        "schematics",
+        "component",
+        "component-store"
+      ]
     }
   }
 }
