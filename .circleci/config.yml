@@ -52,6 +52,21 @@ jobs:
             - ~/.cache/Cypress
             - node_modules
 
+  lint-affected:
+    <<: *run_in_node
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - *cache_key
+
+      # Build and Test
+      - write_master_hash
+      - run:
+          name: Run Unit Tests
+          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+
   # Enforce some static analysis invariants.
   # Note that generally, these should be checked only on the delta in each change,
   # otherwise any change to the static analysis config requires updating all the
@@ -307,6 +322,15 @@ workflows:
       - lint:
           requires:
             - install
+          filters:
+            branches:
+              only: master
+      - lint-affected:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - test:
           requires:
             - install
@@ -334,12 +358,6 @@ workflows:
       - example-e2e-tests:
           requires:
             - install
-      - docs-tests:
-          requires:
-            - install
-      - docs:
-          requires:
-            - install
       - docs-preview:
           requires:
             - install
@@ -348,9 +366,6 @@ workflows:
             - install
       - deploy:
           requires:
-            - docs
-            - example-e2e-tests
-            - docs-tests
             - build
           filters:
             branches:
