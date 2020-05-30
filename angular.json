@@ -84,7 +84,8 @@
           "options": {
             "jestConfig": "projects/example-app/jest.config.js",
             "tsConfig": "projects/example-app/tsconfig.spec.json",
-            "setupFile": "projects/example-app/src/setup-jest.ts"
+            "setupFile": "projects/example-app/src/setup-jest.ts",
+            "runInBand": true
           }
         }
       }
@@ -158,7 +159,8 @@
           "options": {
             "jestConfig": "modules/store/jest.config.js",
             "tsConfig": "modules/store/tsconfig.spec.json",
-            "setupFile": "modules/store/test-setup.ts"
+            "setupFile": "modules/store/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -206,7 +208,8 @@
           "options": {
             "jestConfig": "modules/effects/jest.config.js",
             "tsConfig": "modules/effects/tsconfig.spec.json",
-            "setupFile": "modules/effects/test-setup.ts"
+            "setupFile": "modules/effects/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -254,7 +257,8 @@
           "options": {
             "jestConfig": "modules/data/jest.config.js",
             "tsConfig": "modules/data/tsconfig.spec.json",
-            "setupFile": "modules/data/test-setup.ts"
+            "setupFile": "modules/data/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -302,7 +306,8 @@
           "options": {
             "jestConfig": "modules/entity/jest.config.js",
             "tsConfig": "modules/entity/tsconfig.spec.json",
-            "setupFile": "modules/entity/test-setup.ts"
+            "setupFile": "modules/entity/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -350,7 +355,8 @@
           "options": {
             "jestConfig": "modules/store-devtools/jest.config.js",
             "tsConfig": "modules/store-devtools/tsconfig.spec.json",
-            "setupFile": "modules/store-devtools/test-setup.ts"
+            "setupFile": "modules/store-devtools/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -398,7 +404,8 @@
           "options": {
             "jestConfig": "modules/router-store/jest.config.js",
             "tsConfig": "modules/router-store/tsconfig.spec.json",
-            "setupFile": "modules/router-store/test-setup.ts"
+            "setupFile": "modules/router-store/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -424,7 +431,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/schematics/jest.config.js",
-            "tsConfig": "modules/schematics/tsconfig.spec.json"
+            "tsConfig": "modules/schematics/tsconfig.spec.json",
+            "runInBand": true
           }
         },
         "build": {
@@ -526,7 +534,8 @@
           "options": {
             "jestConfig": "modules/component/jest.config.js",
             "tsConfig": "modules/component/tsconfig.spec.json",
-            "setupFile": "modules/component/test-setup.ts"
+            "setupFile": "modules/component/test-setup.ts",
+            "runInBand": true
           }
         }
       },
@@ -571,7 +580,8 @@
           "options": {
             "jestConfig": "modules/component-store/jest.config.js",
             "tsConfig": "modules/component-store/tsconfig.spec.json",
-            "setupFile": "modules/component-store/test-setup.ts"
+            "setupFile": "modules/component-store/test-setup.ts",
+            "runInBand": true
           }
         }
       },

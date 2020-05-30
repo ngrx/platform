@@ -99,7 +99,7 @@ jobs:
             - *cache_key
 
       # Test
-      - run: yarn test --maxWorkers=1 --ci
+      - run: yarn nx run-many --target=test --all
 
   test-affected:
     <<: *run_in_node
@@ -331,12 +331,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - test:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
       - test-affected:
           requires:
             - install
