@@ -17,7 +17,7 @@ var_2: &run_in_node
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
-var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.4
+var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/project/projects/ngrx.io/yarn.lock" }}-0.4
 var_5: &run_in_browser
   docker:
     - image: circleci/node:12.9.1-browsers
@@ -79,8 +79,6 @@ jobs:
     <<: *run_in_node
     steps:
       - checkout
-      - *set_bazel_options
-
       - restore_cache:
           keys:
             - *cache_key
@@ -132,6 +130,8 @@ jobs:
       - run: yarn
       - write_master_hash
       - run: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+      # Build docs if necessary
+      - run: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build-bazel:
     <<: *run_in_node
@@ -191,39 +191,6 @@ jobs:
           keys:
             - *cache_key
       - run: yarn example:e2e --headless
-
-  docs-tests:
-    <<: *docs_in_browser
-    working_directory: ~/docs/projects/ngrx.io
-    steps:
-      - checkout:
-          path: ~/docs
-      - restore_cache:
-          key: *docs_cache_key
-      - run: yarn --ignore-engines --frozen-lockfile --non-interactive
-      - run: yarn test --watch=false
-
-  docs:
-    <<: *docs_in_node
-    working_directory: ~/docs/projects/ngrx.io
-    steps:
-      - checkout:
-          path: ~/docs
-      - restore_cache:
-          key: *docs_cache_key
-      - run: yarn setup
-      - run: npm rebuild node-sass
-      - run: yarn build-for next --progress false && yarn copy-404-page
-      - run: cp -rf src/extra-files/next/. dist/ngrx.io/
-      # Store artifacts from build
-      - persist_to_workspace:
-          root: ~/docs/projects/ngrx.io/dist
-          paths:
-            - ngrx.io/*
-      - save_cache:
-          key: *docs_cache_key
-          paths:
-            - ~/docs/projects/ngrx.io/node_modules
 
   docs-preview:
     <<: *docs_in_node
