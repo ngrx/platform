@@ -69,6 +69,10 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
     selector: 'ngrx-store-animation',
     loadChildren: () => import('./ngrx/store-animation.module').then(m => m.StoreAnimationModule),
   },
+  {
+    selector: 'ngrx-mff',
+    loadChildren: () => import('./ngrx/mff.module').then(m => m.MffModule),
+  }
 ];
 
 /**
