@@ -41,10 +41,6 @@
     "schematics": {
       "tags": []
     },
-    "schematics-e2e": {
-      "tags": [],
-      "implicitDependencies": ["schematics"]
-    },
     "component": {
       "tags": []
     },

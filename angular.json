@@ -487,23 +487,6 @@
         }
       }
     },
-    "schematics-e2e": {
-      "projectType": "application",
-      "root": "projects/schematics-e2e",
-      "sourceRoot": "projects/schematics-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "schematics:build",
-            "npmPackageName": "@ngrx/schematics",
-            "pluginOutputPath": "dist/modules/schematics",
-            "jestConfig": "projects/schematics-e2e/jest.config.js",
-            "tsSpecConfig": "projects/schematics-e2e/tsconfig.spec.json"
-          }
-        }
-      }
-    },
     "component": {
       "projectType": "library",
       "root": "modules/component",
