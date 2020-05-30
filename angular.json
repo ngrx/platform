@@ -414,7 +414,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "modules/schematics/tsconfig.lib.json",
+              "modules/schematics/tsconfig-build.json",
               "modules/schematics/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**", "!modules/schematics/**"]
