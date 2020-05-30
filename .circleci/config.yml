@@ -64,7 +64,7 @@ jobs:
       # Build and Test
       - write_master_hash
       - run:
-          name: Run Unit Tests
+          name: Run Affected Lint Checks
           command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   # Enforce some static analysis invariants.
@@ -99,7 +99,9 @@ jobs:
             - *cache_key
 
       # Test
-      - run: yarn nx run-many --target=test --all
+      - run:
+          name: Run All Unit Tests
+          command: yarn nx run-many --target=test --all
 
   test-affected:
     <<: *run_in_node
@@ -113,8 +115,8 @@ jobs:
       # Build and Test
       - write_master_hash
       - run:
-          name: Run Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --runInBand
+          name: Run Affected Unit Tests
+          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
@@ -126,7 +128,9 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn build
+      - run:
+          name: Build All Packages
+          command: yarn build
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -144,9 +148,13 @@ jobs:
       # Build
       - run: yarn
       - write_master_hash
-      - run: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+      - run:
+          name: Run Affected Release Builds
+          command: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
       # Build docs if necessary
-      - run: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+      - run:
+          name: Run Affected Builds
+          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build-bazel:
     <<: *run_in_node
@@ -161,7 +169,9 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn bazel build //modules/...
+      - run:
+          name: Build All Packages with Bazel
+          command: yarn bazel build //modules/...
       # Store artifacts from build
       - persist_to_workspace:
           root: dist
@@ -180,7 +190,9 @@ jobs:
 
       # Build
       - run: yarn
-      - run: yarn bazel build //modules/...
+      - run:
+          name: Build All Packages with Bazel
+          command: yarn bazel build //modules/...
       - save_cache:
           key: *bazel_cache_key
           paths:
@@ -196,7 +208,9 @@ jobs:
           keys:
             - *cache_key
       - run: yarn copy:schematics
-      - run: git diff --name-only --exit-code ./modules
+      - run:
+          name: Check schematics-core for consistency
+          command: git diff --name-only --exit-code ./modules
 
   e2e-affected:
     <<: *run_in_browser
@@ -207,7 +221,9 @@ jobs:
             - *cache_key
       - run: yarn
       - write_master_hash
-      - run: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless
+      - run:
+          name: Run Affected E2E Tests
+          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless
 
   docs-preview:
     <<: *docs_in_node
@@ -267,7 +283,9 @@ jobs:
             - *cache_key
       - attach_workspace:
           at: dist
-      - run: yarn run deploy:builds
+      - run:
+          name: Deploy Rolling Release Builds
+          command: yarn run deploy:builds
 
   publish-stable:
     <<: *run_in_node
@@ -311,7 +329,9 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn run cleanup:previews
+      - run:
+          name: Cleanup old PR previews
+          command: yarn run cleanup:previews
 
 workflows:
   version: 2
