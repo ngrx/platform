@@ -26,7 +26,7 @@ export async function copySchematicsCore(config: Config) {
         `${modulesDir}/schematics-core`,
         `${modulesDir}/${pkg}/schematics-core`,
         { filter },
-        function(err: any) {
+        function (err: any) {
           if (err) {
             return console.error(err);
           }
@@ -149,7 +149,7 @@ export async function postGithubComment() {
     });
 
     const ngrxBotComment = comments.data
-      .filter(comment => comment.user.login === 'ngrxbot')
+      .filter((comment) => comment.user.login === 'ngrxbot')
       .pop();
 
     const body = `Preview docs changes for ${SHORT_SHA} at https://previews.ngrx.io/pr${PR_NUMBER}-${SHORT_SHA}/`;
