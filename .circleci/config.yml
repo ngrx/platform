@@ -10,7 +10,7 @@ version: 2.1
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.11
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.12.12
 var_2: &run_in_node
   docker:
     - image: circleci/node:12.9.1
@@ -45,12 +45,14 @@ jobs:
           keys:
             - *cache_key
       - run: yarn --frozen-lockfile --non-interactive
+      - run: yarn --cwd projects/ngrx.io --ignore-engines install
       - save_cache:
           key: *cache_key
           paths:
             - ~/.cache/yarn
             - ~/.cache/Cypress
             - node_modules
+            - projects/ngrx.io/node_modules
 
   lint:
     <<: *run_in_node
@@ -142,13 +144,21 @@ jobs:
       # Build
       - run: yarn
       - run:
-          name: Build All Packages
+          name: Build All Release Packages
           command: yarn build
-      # Store artifacts from build
+      # Store artifacts from packages build
       - persist_to_workspace:
           root: dist
           paths:
             - modules/*
+      - run:
+          name: Build Docs
+          command: yarn nx run-many --target=build --projects=docs-app
+      # Store artifacts from docs build
+      - persist_to_workspace:
+          root: projects/ngrx.io/dist
+          paths:
+            - ngrx.io/*
 
   build-affected:
     <<: *run_in_node
@@ -365,6 +375,9 @@ workflows:
       - lint-affected:
           requires:
             - install
+          filters:
+            branches:
+              ignore: master
       - test:
           requires:
             - install
@@ -376,9 +389,12 @@ workflows:
       - test-affected:
           requires:
             - install
+          filters:
+            branches:
+              ignore: master
       - build:
           requires:
-            - test
+            - install
           filters:
             branches:
               only: master
@@ -387,15 +403,27 @@ workflows:
       - build-affected:
           requires:
             - install
+          filters:
+            branches:
+              ignore: master
       - e2e-affected:
           requires:
             - install
+          filters:
+            branches:
+              ignore: master
       - docs-preview:
           requires:
             - install
+          filters:
+            branches:
+              ignore: master
       - schematics-core-check:
           requires:
             - install
+          filters:
+            branches:
+              ignore: master
       - deploy:
           requires:
             - build
@@ -408,12 +436,12 @@ workflows:
           filters:
             branches:
               only: master
-      - update-master-hash:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
+      # - update-master-hash:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         only: master
       - publish-stable:
           requires:
             - build
