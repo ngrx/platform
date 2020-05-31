@@ -14,7 +14,7 @@ export class AuthService {
      * Simulate a failed login to display the error
      * message for the login form.
      */
-    if (username !== 'test' && username !== 'ngrx') {
+    if (password !== 'test' && username !== 'ngrx') {
       return throwError('Invalid username or password');
     }
 
