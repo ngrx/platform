@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "rxjs": "RXJS_VERSION"
+    "rxjs": "^6.5.3"
   },
   "sideEffects": false
 }
