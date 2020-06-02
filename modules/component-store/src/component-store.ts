@@ -22,7 +22,7 @@ import { debounceSync } from './debounceSync';
  * Return type of the effect, that behaves differently based on whether the
  * argument is passed to the callback.
  */
-interface EffectReturnFn<T> {
+export interface EffectReturnFn<T> {
   (): void;
   (t: T | Observable<T>): Subscription;
 }
@@ -36,7 +36,7 @@ export class ComponentStore<T extends object> {
   private readonly stateSubject$ = new ReplaySubject<T>(1);
   private isInitialized = false;
   // Needs to be after destroy$ is declared because it's used in select.
-  readonly state$: Observable<T> = this.select(s => s);
+  readonly state$: Observable<T> = this.select((s) => s);
 
   constructor(defaultState?: T) {
     // State can be initialized either through constructor, or initState or
@@ -80,14 +80,13 @@ export class ComponentStore<T extends object> {
         : of(observableOrValue);
       const subscription = observable$
         .pipe(
-          concatMap(
-            value =>
-              this.isInitialized
-                ? of(value).pipe(withLatestFrom(this.stateSubject$))
-                : // If state was not initialized, we'll throw an error.
-                  throwError(
-                    Error(`${this.constructor.name} has not been initialized`)
-                  )
+          concatMap((value) =>
+            this.isInitialized
+              ? of(value).pipe(withLatestFrom(this.stateSubject$))
+              : // If state was not initialized, we'll throw an error.
+                throwError(
+                  Error(`${this.constructor.name} has not been initialized`)
+                )
           ),
           takeUntil(this.destroy$)
         )
@@ -95,7 +94,7 @@ export class ComponentStore<T extends object> {
           next: ([value, currentState]) => {
             this.stateSubject$.next(updaterFn(currentState, value!));
           },
-          error: error => {
+          error: (error) => {
             initializationError = error;
             this.stateSubject$.error(error);
           },
@@ -211,7 +210,7 @@ export class ComponentStore<T extends object> {
       const observable$ = isObservable(observableOrValue)
         ? observableOrValue
         : of(observableOrValue);
-      return observable$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      return observable$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
         // any new 👇 value is pushed into a stream
         origin$.next(value);
       });
