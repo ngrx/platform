@@ -7,6 +7,10 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
+  "workspaceLayout": {
+    "appsDir": "projects",
+    "libsDir": "modules"
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
