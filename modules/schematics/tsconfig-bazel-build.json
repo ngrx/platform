@@ -10,7 +10,7 @@
     },
     "sourceMap": true,
     "inlineSources": true,
-    "lib": ["es2017", "dom"],
+    "lib": ["es2018", "dom"],
     "skipLibCheck": true,
     "strict": true
   },

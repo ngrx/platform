@@ -124,7 +124,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/store/tsconfig-build.json",
             "project": "modules/store/ng-package.json"
@@ -136,10 +136,16 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build store"
+                "command": "ng build store"
               },
               {
                 "command": "yarn tsc -p modules/store/tsconfig.schematics.json"
+              },
+              {
+                "command": "yarn mkdirp node_modules/@ngrx/store"
+              },
+              {
+                "command": "ncp dist/modules/store node_modules/@ngrx/store"
               }
             ]
           }
@@ -173,7 +179,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/effects/tsconfig-build.json",
             "project": "modules/effects/ng-package.json"
@@ -185,10 +191,16 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build effects"
+                "command": "ng build effects"
               },
               {
                 "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
+              },
+              {
+                "command": "yarn mkdirp node_modules/@ngrx/effects"
+              },
+              {
+                "command": "ncp dist/modules/effects node_modules/@ngrx/effects"
               }
             ]
           }
@@ -222,7 +234,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/data/tsconfig-build.json",
             "project": "modules/data/ng-package.json"
@@ -234,7 +246,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build data"
+                "command": "ng build data"
               },
               {
                 "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
@@ -271,7 +283,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/entity/tsconfig-build.json",
             "project": "modules/entity/ng-package.json"
@@ -283,10 +295,16 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build entity"
+                "command": "ng build entity"
               },
               {
                 "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
+              },
+              {
+                "command": "yarn mkdirp node_modules/@ngrx/entity"
+              },
+              {
+                "command": "ncp dist/modules/entity node_modules/@ngrx/entity"
               }
             ]
           }
@@ -320,7 +338,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/store-devtools/tsconfig-build.json",
             "project": "modules/store-devtools/ng-package.json"
@@ -332,7 +350,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build store-devtools"
+                "command": "ng build store-devtools"
               },
               {
                 "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
@@ -369,7 +387,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/router-store/tsconfig-build.json",
             "project": "modules/router-store/ng-package.json"
@@ -381,7 +399,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build router-store"
+                "command": "ng build router-store"
               },
               {
                 "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
@@ -502,7 +520,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/component/tsconfig-build.json",
             "project": "modules/component/ng-package.json"
@@ -514,7 +532,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build component"
+                "command": "ng build component"
               }
             ]
           }
@@ -548,7 +566,7 @@
       "prefix": "ngrx",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "modules/component-store/tsconfig-build.json",
             "project": "modules/component-store/ng-package.json"
@@ -560,7 +578,7 @@
             "parallel": false,
             "commands": [
               {
-                "command": "nx build component-store"
+                "command": "ng build component-store"
               }
             ]
           }

@@ -12,13 +12,11 @@
     "noImplicitReturns": true,
     "downlevelIteration": true,
     "outDir": "../../dist/modules/store-devtools",
-    "paths": {
-      "@ngrx/store": ["../../dist/modules/store"]
-    },
+    "paths": {},
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
-    "lib": ["es2015", "dom"],
+    "lib": ["es2018", "dom"],
     "target": "es2015",
     "skipLibCheck": true
   },
