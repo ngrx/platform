@@ -94,14 +94,15 @@ export class ComponentStore<T extends object> {
           next: ([value, currentState]) => {
             this.stateSubject$.next(updaterFn(currentState, value!));
           },
-          error: (error) => {
+          error: (error: Error) => {
             initializationError = error;
             this.stateSubject$.error(error);
           },
         });
 
       if (initializationError) {
-        throw initializationError;
+        // prettier-ignore
+        throw /** @type {!Error} */ (initializationError);
       }
       return subscription;
     }) as unknown extends V
