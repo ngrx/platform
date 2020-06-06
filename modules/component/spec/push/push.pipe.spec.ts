@@ -1,13 +1,9 @@
 import { PushPipe } from '../../src/push';
 import { async, TestBed } from '@angular/core/testing';
-import {
-  ChangeDetectorRef,
-  Component,
-  NgZone as OriginalNgZone,
-} from '@angular/core';
-import { getGlobalThis, isIvy, hasZone } from '../../src/core/utils';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { getGlobalThis } from '../../src/core/utils';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
-import { CoalescingConfig } from '../../src/core';
+import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
 let pushPipe: PushPipe<unknown>;
 
@@ -15,52 +11,25 @@ function wrapWithSpace(str: string): string {
   return ' ' + str + ' ';
 }
 
-class NgZone extends OriginalNgZone {
-  constructor() {
-    super({ enableLongStackTrace: false });
-  }
-}
-
-class NoopNgZone {
-  constructor() {
-    // super({enableLongStackTrace: false});
-  }
-}
-
-class MockChangeDetectorRef {
-  public markForCheck(): string {
-    return 'markForCheck';
-  }
-
-  public detectChanges(): string {
-    return 'detectChanges';
-  }
-}
-
 @Component({
   template: `
-    {{ (value$ | ngrxPush: cfg | json) || 'undefined' }}
+    {{ (value$ | ngrxPush | json) || 'undefined' }}
   `,
 })
 class PushPipeTestComponent {
-  cfg: CoalescingConfig = { optimized: false };
   value$: Observable<number> = of(42);
 }
 
 let fixturePushPipeTestComponent: any;
 let pushPipeTestComponent: {
-  cfg: CoalescingConfig;
   value$: Observable<any> | undefined | null;
 };
 let componentNativeElement: any;
-let noopNgZone: NoopNgZone;
-let ngZone: NgZone;
 
 const setupPushPipeComponent = () => {
   TestBed.configureTestingModule({
     providers: [
       PushPipe,
-      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
     ],
   });
@@ -71,17 +40,15 @@ const setupPushPipeComponentZoneLess = () => {
 
   TestBed.configureTestingModule({
     providers: [
-      { provide: NgZone, useClass: NoopNgZone },
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       {
         provide: PushPipe,
         useClass: PushPipe,
-        depths: [ChangeDetectorRef, NgZone],
+        depths: [ChangeDetectorRef],
       },
     ],
   });
-  pushPipe = TestBed.inject(PushPipe);
-  noopNgZone = TestBed.inject(NgZone);
+  pushPipe = TestBed.get(PushPipe);
 };
 
 const setupPushPipeComponentZoneFull = () => {
@@ -89,13 +56,12 @@ const setupPushPipeComponentZoneFull = () => {
   TestBed.configureTestingModule({
     providers: [
       PushPipe,
-      NgZone,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
     ],
   });
   pushPipe = TestBed.inject(PushPipe);
-  ngZone = TestBed.inject(NgZone);
 };
+
 describe('PushPipe', () => {
   describe('used as a Service', () => {
     beforeEach(async(setupPushPipeComponent));
@@ -204,7 +170,7 @@ describe('PushPipe', () => {
         );
       });
 
-      it('should return emitted value from passed observable without changing it', () => {
+      it('should emitted value from passed observable without changing it', () => {
         pushPipeTestComponent.value$ = of(42);
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
@@ -220,49 +186,6 @@ describe('PushPipe', () => {
           wrapWithSpace('undefined')
         );
       });
-    });
-  });
-
-  xdescribe('when used in zone-less', () => {
-    beforeEach(async(setupPushPipeComponentZoneLess));
-
-    it('should call dcRef.detectChanges in ViewEngine', () => {
-      getGlobalThis().ng = { probe: true };
-      const ngZone = (pushPipe as any).ngZone;
-      expect(!hasZone(noopNgZone as NgZone)).toBe(true);
-      expect(noopNgZone).toBe(ngZone);
-      expect(!hasZone(ngZone)).toBe(true);
-      expect(isIvy()).toBe(false);
-      // TODO(LayZeeDK) no method by that name, @BioPhoton
-      // expect(pushPipe.handleChangeDetection.name).toBe('detectChanges');
-    });
-
-    it('should call detectChanges in Ivy', () => {
-      getGlobalThis().ng = undefined;
-      expect(!hasZone(noopNgZone as NgZone)).toBe(true);
-      expect(isIvy()).toBe(true);
-      // @TODO
-      expect(false).toBe('detectChanges');
-    });
-  });
-
-  xdescribe('when used in zone-full mode', () => {
-    beforeEach(async(setupPushPipeComponentZoneFull));
-
-    it('should call dcRef.markForCheck in ViewEngine', () => {
-      getGlobalThis().ng = { probe: true };
-      expect(!hasZone(ngZone)).toBe(false);
-      expect(isIvy()).toBe(false);
-      // TODO(LayZeeDK) no method by that name, @BioPhoton
-      // expect(pushPipe.handleChangeDetection()).toBe('markForCheck');
-    });
-
-    it('should call markDirty in Ivy', () => {
-      getGlobalThis().ng = undefined;
-      expect(!hasZone(ngZone)).toBe(false);
-      expect(isIvy()).toBe(true);
-      // @TODO
-      expect(false).toBe('markDirty');
     });
   });
 });

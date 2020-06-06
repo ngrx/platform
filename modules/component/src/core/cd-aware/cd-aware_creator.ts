@@ -1,36 +1,21 @@
-import { ChangeDetectorRef, NgZone } from '@angular/core';
 import {
+  EMPTY,
   NextObserver,
   Observable,
-  PartialObserver,
   Subject,
   Subscribable,
   Subscription,
 } from 'rxjs';
-import { distinctUntilChanged, map, switchAll, tap } from 'rxjs/operators';
-import { toObservableValue } from '../projections';
-import { getChangeDetectionHandler } from './get-change-detection-handling';
-
-export interface CoalescingConfig {
-  optimized: boolean;
-}
+import {
+  catchError,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 
 export interface CdAware<U> extends Subscribable<U> {
-  next: (value: Observable<U> | Promise<U> | null | undefined) => void;
-}
-
-export interface WorkConfig {
-  context: any;
-  ngZone: NgZone;
-  cdRef: ChangeDetectorRef;
-}
-
-export function setUpWork(cfg: WorkConfig): () => void {
-  const render: (component?: any) => void = getChangeDetectionHandler(
-    cfg.ngZone,
-    cfg.cdRef
-  );
-  return () => render(cfg.context);
+  nextPotentialObservable: (value: any) => void;
 }
 
 /**
@@ -43,43 +28,55 @@ export function setUpWork(cfg: WorkConfig): () => void {
  * Also custom behaviour is something you need to implement in the extending class
  */
 export function createCdAware<U>(cfg: {
-  work: () => void;
-  resetContextObserver: NextObserver<unknown>;
-  configurableBehaviour: (
-    o: Observable<Observable<U | null | undefined>>
-  ) => Observable<Observable<U | null | undefined>>;
-  updateViewContextObserver: PartialObserver<U | null | undefined>;
+  render: () => void;
+  resetContextObserver: NextObserver<void>;
+  updateViewContextObserver: NextObserver<U | undefined | null>;
 }): CdAware<U | undefined | null> {
-  const observablesSubject = new Subject<
-    Observable<U> | Promise<U> | null | undefined
+  const potentialObservablesSubject = new Subject<
+    Observable<U> | undefined | null
   >();
-  const observables$: Observable<
-    U | undefined | null
-  > = observablesSubject.pipe(
-    distinctUntilChanged(),
-    // Try to convert it to values, throw if not possible
-    map((v) => toObservableValue(v)),
-    tap((v: any) => {
-      cfg.resetContextObserver.next(v);
-      cfg.work();
-    }),
-    map(value$ =>
-      value$.pipe(
+  const observablesFromTemplate$ = potentialObservablesSubject.pipe(
+    distinctUntilChanged()
+  );
+
+  const rendering$ = observablesFromTemplate$.pipe(
+    // Compose the observables from the template and the strategy
+    switchMap((observable$) => {
+      // If the passed observable is:
+      // - undefined - No value set
+      // - null - null passed directly or no value set over `async` pipe
+      if (observable$ == null) {
+        // Update the value to render_creator with null/undefined
+        cfg.updateViewContextObserver.next(observable$ as any);
+        // Render the view
+        cfg.render();
+        // Stop further processing
+        return EMPTY;
+      }
+
+      // If a new Observable arrives, reset the value to render_creator
+      // We do this because we don't know when the next value arrives and want to get rid of the old value
+      cfg.resetContextObserver.next();
+      cfg.render();
+
+      return observable$.pipe(
         distinctUntilChanged(),
-        tap(cfg.updateViewContextObserver)
-      )
-    ),
-    cfg.configurableBehaviour,
-    switchAll(),
-    tap(() => cfg.work())
+        tap(cfg.updateViewContextObserver),
+        tap(() => cfg.render()),
+        catchError((e) => {
+          console.error(e);
+          return EMPTY;
+        })
+      );
+    })
   );
 
   return {
-    next(value: any): void {
-      observablesSubject.next(value);
+    nextPotentialObservable(value: Observable<U> | undefined | null): void {
+      potentialObservablesSubject.next(value);
     },
     subscribe(): Subscription {
-      return observables$.subscribe();
+      return rendering$.subscribe();
     },
   } as CdAware<U | undefined | null>;
 }
