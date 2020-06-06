@@ -13,8 +13,8 @@
  * Consider the situation of a Angular element configured for ZoneLess
  * environments is used in an Angular application relining on the zone mechanism.
  *
- * @param instance {Class Instance} - The instance to check for constructor name of `NgZone`.
- * @return {boolean} - true if instance is of type `NgZone`.
+ * @param instance - The instance to check for constructor name of `NgZone`.
+ * @return boolean - true if instance is of type `NgZone`.
  *
  */
 export function isNgZone(instance: any): boolean {

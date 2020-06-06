@@ -41,13 +41,13 @@ export function createCdAware<U>(cfg: {
 
   const rendering$ = observablesFromTemplate$.pipe(
     // Compose the observables from the template and the strategy
-    switchMap(observable$ => {
+    switchMap((observable$) => {
       // If the passed observable is:
       // - undefined - No value set
       // - null - null passed directly or no value set over `async` pipe
       if (observable$ == null) {
         // Update the value to render_creator with null/undefined
-        cfg.updateViewContextObserver.next(observable$);
+        cfg.updateViewContextObserver.next(observable$ as any);
         // Render the view
         cfg.render();
         // Stop further processing
@@ -63,7 +63,7 @@ export function createCdAware<U>(cfg: {
         distinctUntilChanged(),
         tap(cfg.updateViewContextObserver),
         tap(() => cfg.render()),
-        catchError(e => {
+        catchError((e) => {
           console.error(e);
           return EMPTY;
         })

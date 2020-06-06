@@ -8,7 +8,7 @@
  *  - Tests
  *  - Browser
  *
- *  @return {globalThis} - A reference to globalThis. `window` in the Browser.
+ *  @return - A reference to globalThis. `window` in the Browser.
  */
 export function getGlobalThis(): any {
   return ((globalThis as any) || (self as any) || (window as any)) as any;

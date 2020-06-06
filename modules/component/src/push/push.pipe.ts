@@ -82,7 +82,7 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     potentialObservable: ObservableInput<T> | null | undefined
   ): T | null | undefined {
     this.cdAware.nextPotentialObservable(potentialObservable);
-    return this.renderedValue as T | null | undefined;
+    return this.renderedValue as any;
   }
 
   ngOnDestroy(): void {

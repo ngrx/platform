@@ -2,6 +2,7 @@ import { createRender } from '../../../src/core/cd-aware';
 import {
   manualInstanceNgZone,
   MockChangeDetectorRef,
+  manualInstanceNoopNgZone,
 } from '../../fixtures/fixtures';
 
 describe('renderCreator', () => {
@@ -21,9 +22,9 @@ describe('renderCreator', () => {
     expect(cdRef.markForCheck).toHaveBeenCalledTimes(1);
   });
 
-  it('should call markForCheck', () => {
+  it('should call detectChanges', () => {
     const cdRef = new MockChangeDetectorRef();
-    const render = createRender({ ngZone: manualInstanceNgZone, cdRef });
+    const render = createRender({ ngZone: manualInstanceNoopNgZone, cdRef });
     render();
     expect(cdRef.detectChanges).toHaveBeenCalledTimes(1);
     expect(cdRef.markForCheck).toHaveBeenCalledTimes(0);
