@@ -188,7 +188,7 @@ export class EntityCacheReducerFactory {
     let { mergeStrategy, querySet, tag } = action.payload;
     mergeStrategy =
       mergeStrategy === null ? MergeStrategy.PreserveChanges : mergeStrategy;
-    const entityOp = EntityOp.UPSERT_MANY;
+    const entityOp = EntityOp.QUERY_MANY_SUCCESS;
 
     const entityNames = Object.keys(querySet);
     entityCache = entityNames.reduce((newCache, entityName) => {
