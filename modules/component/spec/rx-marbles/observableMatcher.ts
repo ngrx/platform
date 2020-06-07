@@ -1,11 +1,11 @@
 import { isEqual } from 'lodash';
 
 function stringify(x: any): string {
-  return JSON.stringify(x, function(key: string, value: any) {
+  return JSON.stringify(x, function (key: string, value: any) {
     if (Array.isArray(value)) {
       return (
         '[' +
-        value.map(function(i) {
+        value.map(function (i) {
           return '\n\t' + stringify(i);
         }) +
         '\n]'

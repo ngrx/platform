@@ -30,8 +30,8 @@ import {
 } from 'rxjs';
 
 export function debounceSync<T>(): MonoTypeOperatorFunction<T> {
-  return source =>
-    new Observable<T>(observer => {
+  return (source) =>
+    new Observable<T>((observer) => {
       let actionSubscription: Subscription | undefined;
       let actionValue: T | undefined;
       const rootSubscription = new Subscription();
@@ -43,8 +43,8 @@ export function debounceSync<T>(): MonoTypeOperatorFunction<T> {
             }
             observer.complete();
           },
-          error: error => observer.error(error),
-          next: value => {
+          error: (error) => observer.error(error),
+          next: (value) => {
             actionValue = value;
             if (!actionSubscription) {
               actionSubscription = asapScheduler.schedule(() => {

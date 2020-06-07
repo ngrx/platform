@@ -42,7 +42,7 @@ class Villain {
 
 const metadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: villain => villain.key },
+  Villain: { selectId: (villain) => villain.key },
 };
 
 describe('EntityCollectionReducer', () => {
@@ -1148,7 +1148,7 @@ describe('EntityCollectionReducer', () => {
 
   describe('SAVE_DELETE_MANY (Optimistic)', () => {
     it('should immediately remove the heroes by id ', () => {
-      const ids = initialHeroes.map(h => h.id);
+      const ids = initialHeroes.map((h) => h.id);
       expect(initialCache['Hero'].entities[ids[0]]).toBe(initialHeroes[0]);
       expect(initialCache['Hero'].entities[ids[1]]).toBe(initialHeroes[1]);
 
@@ -1295,7 +1295,7 @@ describe('EntityCollectionReducer', () => {
   describe('SAVE_DELETE_MANY_SUCCESS (Pessimistic)', () => {
     it('should remove heroes by id', () => {
       const heroes = initialHeroes;
-      const ids = heroes.map(h => h.id);
+      const ids = heroes.map((h) => h.id);
 
       expect(initialCache['Hero'].entities[ids[0]]).toBe(heroes[0]);
       expect(initialCache['Hero'].entities[ids[1]]).toBe(heroes[1]);
@@ -1488,7 +1488,7 @@ describe('EntityCollectionReducer', () => {
       const collection = entityReducer(entityCache, action)['Hero'];
 
       // Should have replaced updatedEntity.id with 13
-      const newIds = ids.map(i => (i === id ? 13 : i));
+      const newIds = ids.map((i) => (i === id ? 13 : i));
 
       expect(collection.ids).toEqual(newIds);
       expect(collection.entities[13].name).toBe(serverEntity.name);
@@ -1589,7 +1589,7 @@ describe('EntityCollectionReducer', () => {
         { id: 2, name: 'B+' },
         { id: 1, power: 'Updated Power' },
       ];
-      const action = createTestAction(heroes.map(h => toHeroUpdate(h)));
+      const action = createTestAction(heroes.map((h) => toHeroUpdate(h)));
       const state = entityReducer(initialCache, action);
       const collection = state['Hero'];
 
@@ -1647,7 +1647,7 @@ describe('EntityCollectionReducer', () => {
     }
 
     it('should update existing entities when server adds its own changes', () => {
-      const updates = initialHeroes.map(h => {
+      const updates = initialHeroes.map((h) => {
         return { id: h.id, changes: { ...h, name: 'Updated ' + h.name } };
       });
 
@@ -1679,7 +1679,7 @@ describe('EntityCollectionReducer', () => {
       const collection = entityReducer(entityCache, action)['Hero'];
 
       // Should have replaced updatedEntity.id with 13
-      const newIds = ids.map(i => (i === id ? 13 : i));
+      const newIds = ids.map((i) => (i === id ? 13 : i));
 
       expect(collection.ids).toEqual(newIds);
       expect(collection.entities[13].name).toBe(serverEntity.name);
@@ -1707,7 +1707,7 @@ describe('EntityCollectionReducer', () => {
     }
 
     it('should update existing entities in collection', () => {
-      const updates = initialHeroes.map(h => {
+      const updates = initialHeroes.map((h) => {
         return { id: h.id, changes: { ...h, name: 'Updated ' + h.name } };
       });
 
@@ -2195,7 +2195,7 @@ describe('EntityCollectionReducer', () => {
 
     it('should not add new hero to collection', () => {
       const heroes: Hero[] = [{ id: 3, name: 'New One' }];
-      const updates = heroes.map(h => toHeroUpdate(h));
+      const updates = heroes.map((h) => toHeroUpdate(h));
       const action = createTestAction(updates);
       const state = entityReducer(initialCache, action);
       const collection = state['Hero'];
@@ -2205,7 +2205,7 @@ describe('EntityCollectionReducer', () => {
 
     it('should update existing entity in collection', () => {
       const heroes: Hero[] = [{ id: 2, name: 'B+' }];
-      const updates = heroes.map(h => toHeroUpdate(h));
+      const updates = heroes.map((h) => toHeroUpdate(h));
       const action = createTestAction(updates);
       const state = entityReducer(initialCache, action);
       const collection = state['Hero'];
@@ -2222,7 +2222,7 @@ describe('EntityCollectionReducer', () => {
         { id: 2, name: 'B+' },
         { id: 3, name: 'New One' },
       ];
-      const updates = heroes.map(h => toHeroUpdate(h));
+      const updates = heroes.map((h) => toHeroUpdate(h));
       const action = createTestAction(updates);
       const state = entityReducer(initialCache, action);
       const collection = state['Hero'];
@@ -2549,7 +2549,7 @@ describe('EntityCollectionReducer', () => {
   ) {
     return {
       ...collectionCreator.create<T>(entityName),
-      ids: data.map(e => selectId(e)) as string[] | number[],
+      ids: data.map((e) => selectId(e)) as string[] | number[],
       entities: data.reduce((acc, e) => {
         acc[selectId(e)] = e;
         return acc;

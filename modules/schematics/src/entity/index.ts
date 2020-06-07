@@ -25,7 +25,7 @@ import {
 } from '@ngrx/schematics/schematics-core';
 import { Schema as EntityOptions } from './schema';
 
-export default function(options: EntityOptions): Rule {
+export default function (options: EntityOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -56,7 +56,7 @@ export default function(options: EntityOptions): Rule {
 
     const commonTemplates = apply(url('./common-files'), [
       options.skipTests
-        ? filter(path => !path.endsWith('.spec.ts.template'))
+        ? filter((path) => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates(templateOptions),
       move(parsedPath.path),

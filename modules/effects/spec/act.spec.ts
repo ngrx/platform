@@ -18,15 +18,12 @@ describe('act operator', () => {
    * }
    */
   function genActions(marbles: string): { [marble: string]: Action } {
-    return marbles.split('').reduce(
-      (acc, marble) => {
-        return {
-          ...acc,
-          [marble]: createAction(marble)(),
-        };
-      },
-      {} as { [marble: string]: Action }
-    );
+    return marbles.split('').reduce((acc, marble) => {
+      return {
+        ...acc,
+        [marble]: createAction(marble)(),
+      };
+    }, {} as { [marble: string]: Action });
   }
 
   it('should call project functon', () => {

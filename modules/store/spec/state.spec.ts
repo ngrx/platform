@@ -22,26 +22,23 @@ describe('ngRx State', () => {
     });
   });
 
-  it(
-    'should fail synchronously',
-    fakeAsync(() => {
-      function reducer(state: any, action: Action) {
-        if (action.type === 'THROW_ERROR') {
-          throw new Error('(╯°□°）╯︵ ┻━┻');
-        }
-
-        return state;
+  it('should fail synchronously', fakeAsync(() => {
+    function reducer(state: any, action: Action) {
+      if (action.type === 'THROW_ERROR') {
+        throw new Error('(╯°□°）╯︵ ┻━┻');
       }
 
-      TestBed.configureTestingModule({
-        imports: [StoreModule.forRoot({ reducer })],
-      });
+      return state;
+    }
 
-      const store = TestBed.inject(Store);
-      expect(() => {
-        store.dispatch({ type: 'THROW_ERROR' });
-        flush();
-      }).toThrow();
-    })
-  );
+    TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot({ reducer })],
+    });
+
+    const store = TestBed.inject(Store);
+    expect(() => {
+      store.dispatch({ type: 'THROW_ERROR' });
+      flush();
+    }).toThrow();
+  }));
 });

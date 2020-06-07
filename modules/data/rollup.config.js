@@ -8,5 +8,5 @@ export default {
     '@ngrx/store': 'ngrx.store',
     '@ngrx/effects': 'ngrx.effects',
     '@ngrx/entity': 'ngrx.entity',
-  }
-}
+  },
+};

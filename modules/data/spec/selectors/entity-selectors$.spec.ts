@@ -33,7 +33,7 @@ describe('EntitySelectors$', () => {
 
   const villainMetadata: EntityMetadata<Villain> = {
     entityName: 'Villain',
-    selectId: villain => villain.key,
+    selectId: (villain) => villain.key,
   };
 
   // Hero has a super-set of EntitySelectors$
@@ -107,11 +107,11 @@ describe('EntitySelectors$', () => {
     });
 
     function subscribeToSelectors(selectors$: HeroSelectors$) {
-      selectors$.entities$.subscribe(h => (heroes = h));
-      selectors$.loaded$.subscribe(l => (loaded = l));
-      selectors$.loading$.subscribe(l => (loading = l));
-      selectors$.foo$.subscribe(f => (foo = f));
-      selectors$.bar$.subscribe(b => (bar = b));
+      selectors$.entities$.subscribe((h) => (heroes = h));
+      selectors$.loaded$.subscribe((l) => (loaded = l));
+      selectors$.loading$.subscribe((l) => (loading = l));
+      selectors$.foo$.subscribe((f) => (foo = f));
+      selectors$.bar$.subscribe((b) => (bar = b));
     }
 
     it('can select$ the default empty collection when store collection is undefined ', () => {
@@ -120,7 +120,7 @@ describe('EntitySelectors$', () => {
         heroCollectionSelectors
       );
       let selectorCollection: EntityCollection<HeroCollection>;
-      selectors$.collection$.subscribe(c => (selectorCollection = c));
+      selectors$.collection$.subscribe((c) => (selectorCollection = c));
       expect(selectorCollection!).toBeDefined();
       expect(selectorCollection!.entities).toEqual({});
 
@@ -209,7 +209,7 @@ describe('EntitySelectors$', () => {
 
     it('`entityCache$` should observe the entire entity cache', () => {
       const entityCacheValues: any = [];
-      factory.entityCache$.subscribe(ec => entityCacheValues.push(ec));
+      factory.entityCache$.subscribe((ec) => entityCacheValues.push(ec));
 
       // prime the store for Hero first use as the EntityReducer would
       nextCacheState(initializedHeroCache);
@@ -226,7 +226,7 @@ describe('EntitySelectors$', () => {
         heroCollectionSelectors
       );
       const entityActions$ = selectors$.entityActions$;
-      entityActions$.subscribe(action => actionsReceived.push(action));
+      entityActions$.subscribe((action) => actionsReceived.push(action));
 
       const eaFactory = new EntityActionFactory();
       actions$.next({ type: 'Generic action' });
@@ -247,7 +247,7 @@ describe('EntitySelectors$', () => {
         heroCollectionSelectors
       );
       const errors$ = selectors$.errors$;
-      errors$.subscribe(action => actionsReceived.push(action));
+      errors$.subscribe((action) => actionsReceived.push(action));
 
       const eaFactory = new EntityActionFactory();
       actions$.next({ type: 'Generic action' });

@@ -163,7 +163,7 @@ export class DevtoolsExtension {
       return empty();
     }
 
-    return new Observable(subscriber => {
+    return new Observable((subscriber) => {
       const connection = this.devtoolsExtension.connect(
         this.getExtensionConfig(this.config)
       );
@@ -191,8 +191,8 @@ export class DevtoolsExtension {
 
     // Listen for lifted actions
     const liftedActions$ = changes$.pipe(
-      filter(change => change.type === ExtensionActionTypes.DISPATCH),
-      map(change => this.unwrapAction(change.payload)),
+      filter((change) => change.type === ExtensionActionTypes.DISPATCH),
+      map((change) => this.unwrapAction(change.payload)),
       concatMap((action: any) => {
         if (action.type === IMPORT_STATE) {
           // State imports may happen in two situations:
@@ -204,7 +204,7 @@ export class DevtoolsExtension {
           // As soon as there is no UPDATE action within 1 second,
           // it is assumed that all reducers are loaded.
           return this.dispatcher.pipe(
-            filter(action => action.type === UPDATE),
+            filter((action) => action.type === UPDATE),
             timeout(1000),
             debounceTime(1000),
             map(() => action),
@@ -219,8 +219,8 @@ export class DevtoolsExtension {
 
     // Listen for unlifted actions
     const actions$ = changes$.pipe(
-      filter(change => change.type === ExtensionActionTypes.ACTION),
-      map(change => this.unwrapAction(change.payload))
+      filter((change) => change.type === ExtensionActionTypes.ACTION),
+      map((change) => this.unwrapAction(change.payload))
     );
 
     const actionsUntilStop$ = actions$.pipe(takeUntil(stop$));

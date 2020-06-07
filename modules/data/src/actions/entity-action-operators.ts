@@ -39,12 +39,10 @@ export function ofEntityOp<T extends EntityAction>(
           action.payload && op === action.payload.entityOp
       );
     default:
-      return filter(
-        (action: EntityAction): action is T => {
-          const entityOp = action.payload && action.payload.entityOp;
-          return entityOp && ops.some(o => o === entityOp);
-        }
-      );
+      return filter((action: EntityAction): action is T => {
+        const entityOp = action.payload && action.payload.entityOp;
+        return entityOp && ops.some((o) => o === entityOp);
+      });
   }
 }
 
@@ -83,11 +81,9 @@ export function ofEntityType<T extends EntityAction>(
           action.payload && name === action.payload.entityName
       );
     default:
-      return filter(
-        (action: EntityAction): action is T => {
-          const entityName = action.payload && action.payload.entityName;
-          return !!entityName && names.some(n => n === entityName);
-        }
-      );
+      return filter((action: EntityAction): action is T => {
+        const entityName = action.payload && action.payload.entityName;
+        return !!entityName && names.some((n) => n === entityName);
+      });
   }
 }

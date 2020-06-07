@@ -8,6 +8,6 @@ export default {
     '@ngrx/store': 'ngrx.store',
     '@angular/core': 'ng.core',
     '@angular/router': 'ng.router',
-    'rxjs': 'Rx'
-  }
-}
+    rxjs: 'Rx',
+  },
+};

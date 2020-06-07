@@ -44,9 +44,7 @@ export function findModuleFromOptions(
     return normalize(findModule(host, pathToCheck));
   } else {
     const modulePath = normalize('/' + options.path + '/' + options.module);
-    const moduleBaseName = normalize(modulePath)
-      .split('/')
-      .pop();
+    const moduleBaseName = normalize(modulePath).split('/').pop();
 
     if (host.exists(modulePath)) {
       return normalize(modulePath);
@@ -73,7 +71,7 @@ export function findModule(host: Tree, generateDir: string): Path {
 
   while (dir) {
     const matches = dir.subfiles.filter(
-      p => moduleRe.test(p) && !routingModuleRe.test(p)
+      (p) => moduleRe.test(p) && !routingModuleRe.test(p)
     );
 
     if (matches.length == 1) {

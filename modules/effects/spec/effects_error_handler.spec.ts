@@ -61,7 +61,7 @@ describe('Effects Error Handler', () => {
       .createSpy()
       .and.callFake((effect$: Observable<any>, errorHandler: ErrorHandler) => {
         return effect$.pipe(
-          catchError(err => {
+          catchError((err) => {
             errorHandler.handleError(
               new Error('inside custom handler: ' + err.message)
             );
@@ -101,7 +101,7 @@ describe('Effects Error Handler', () => {
    * error. All subsequent subscribers will just get an observable that does not emit.
    */
   function errorFirstSubscriber(): Observable<Action> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       subscriptionCount++;
 
       if (subscriptionCount === 1) {

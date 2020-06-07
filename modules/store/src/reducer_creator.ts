@@ -241,7 +241,7 @@ export function createReducer<S, A extends Action = Action>(
     }
   }
 
-  return function(state: S = initialState, action: A): S {
+  return function (state: S = initialState, action: A): S {
     const reducer = map.get(action.type);
     return reducer ? reducer(state, action) : state;
   };

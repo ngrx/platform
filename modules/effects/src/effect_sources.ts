@@ -49,18 +49,18 @@ export class EffectSources extends Subject<any> {
   toActions(): Observable<Action> {
     return this.pipe(
       groupBy(getSourceForInstance),
-      mergeMap(source$ => {
+      mergeMap((source$) => {
         return source$.pipe(groupBy(effectsInstance));
       }),
-      mergeMap(source$ => {
+      mergeMap((source$) => {
         const effect$ = source$.pipe(
-          exhaustMap(sourceInstance => {
+          exhaustMap((sourceInstance) => {
             return resolveEffectSource(
               this.errorHandler,
               this.effectsErrorHandler
             )(sourceInstance);
           }),
-          map(output => {
+          map((output) => {
             reportInvalidActions(output, this.errorHandler);
             return output.notification;
           }),
@@ -76,7 +76,7 @@ export class EffectSources extends Subject<any> {
         const init$ = source$.pipe(
           take(1),
           filter(isOnInitEffects),
-          map(instance => instance.ngrxOnInitEffects())
+          map((instance) => instance.ngrxOnInitEffects())
         );
 
         return merge(effect$, init$);
@@ -97,7 +97,7 @@ function resolveEffectSource(
   errorHandler: ErrorHandler,
   effectsErrorHandler: EffectsErrorHandler
 ): (sourceInstance: any) => Observable<EffectNotification> {
-  return sourceInstance => {
+  return (sourceInstance) => {
     const mergedEffects$ = mergeEffects(
       sourceInstance,
       errorHandler,

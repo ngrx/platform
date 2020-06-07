@@ -61,14 +61,8 @@ describe(`Store utils`, () => {
     const addTwo = (n: number) => n + 2;
 
     it(`should compose functions`, () => {
-      const add2AndMultiply5 = compose(
-        multiplyByFive,
-        addTwo
-      );
-      const add2AndMultiply5Cubed = compose(
-        cube,
-        add2AndMultiply5
-      );
+      const add2AndMultiply5 = compose(multiplyByFive, addTwo);
+      const add2AndMultiply5Cubed = compose(cube, add2AndMultiply5);
 
       expect(add2AndMultiply5(1)).toBe(15);
       expect(add2AndMultiply5Cubed(2)).toBe(8000);
@@ -84,7 +78,7 @@ describe(`Store utils`, () => {
     it('should compose a reducer factory from the provided meta reducers', () => {
       const metaReducer = jasmine
         .createSpy('metaReducer')
-        .and.callFake(red => (s: any, a: any) => red(s, a));
+        .and.callFake((red) => (s: any, a: any) => red(s, a));
       const reducer = (state: any, action: any) => state;
 
       const featureReducerFactory = createFeatureReducerFactory([metaReducer]);

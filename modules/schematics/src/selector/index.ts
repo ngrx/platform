@@ -19,7 +19,7 @@ import {
 } from '@ngrx/schematics/schematics-core';
 import { Schema as SelectorOptions } from './schema';
 
-export default function(options: SelectorOptions): Rule {
+export default function (options: SelectorOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -33,7 +33,7 @@ export default function(options: SelectorOptions): Rule {
 
     const templateSource = apply(url('./files'), [
       options.skipTests
-        ? filter(path => !path.endsWith('.spec.ts.template'))
+        ? filter((path) => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates({
         ...stringUtils,

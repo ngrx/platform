@@ -4,7 +4,7 @@ export function findNgImports(
   node: ts.Node,
   callback: (importNode: ts.PropertyAssignment) => void
 ) {
-  ts.forEachChild(node, n => {
+  ts.forEachChild(node, (n) => {
     if (
       ts.isPropertyAssignment(n) &&
       ts.isArrayLiteralExpression(n.initializer) &&

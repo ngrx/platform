@@ -12,7 +12,7 @@ export type BaseFn = (command: string) => string;
 
 export function copy(target: string, destination: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    fsExtra.copy(target, path.resolve(destination), err => {
+    fsExtra.copy(target, path.resolve(destination), (err) => {
       if (err) return reject(err);
       resolve();
     });
@@ -21,7 +21,7 @@ export function copy(target: string, destination: string): Promise<void> {
 
 export function remove(target: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    fsExtra.remove(target, err => {
+    fsExtra.remove(target, (err) => {
       if (err) return reject(err);
       resolve();
     });
@@ -30,7 +30,7 @@ export function remove(target: string): Promise<void> {
 
 export function writeFile(target: string, contents: string) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(target, contents, err => {
+    fs.writeFile(target, contents, (err) => {
       if (err) return reject(err);
       resolve();
     });
@@ -56,7 +56,7 @@ export function getListOfFiles(
 
 export function removeRecursively(glob: string) {
   return new Promise((resolve, reject) => {
-    rimraf(glob, err => {
+    rimraf(glob, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -126,7 +126,7 @@ async function runTask(name: string, taskFn: () => Promise<any>) {
 }
 
 export function createBuilder(tasks: TaskDef[]) {
-  return async function(config: Config) {
+  return async function (config: Config) {
     for (let [name, runner] of tasks) {
       await runTask(name, () => runner(config));
     }
@@ -134,16 +134,13 @@ export function createBuilder(tasks: TaskDef[]) {
 }
 
 export function flatMap<K, J>(list: K[], mapFn: (item: K) => J[]): J[] {
-  return list.reduce(
-    function(newList, nextItem) {
-      return [...newList, ...mapFn(nextItem)];
-    },
-    [] as J[]
-  );
+  return list.reduce(function (newList, nextItem) {
+    return [...newList, ...mapFn(nextItem)];
+  }, [] as J[]);
 }
 
 export function getTopLevelPackages(config: Config) {
-  return config.packages.map(packageDescription => packageDescription.name);
+  return config.packages.map((packageDescription) => packageDescription.name);
 }
 
 export function baseDir(...dirs: string[]): string {
@@ -151,7 +148,7 @@ export function baseDir(...dirs: string[]): string {
 }
 
 export async function sleep(ms: number) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }

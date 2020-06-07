@@ -560,7 +560,7 @@ describe('EntityChangeTrackerBase', () => {
     it('should return a new collection with tracked "deleted" entities', () => {
       const existingEntities = getSomeExistingEntities(2);
       const collection = tracker.trackDeleteMany(
-        existingEntities.map(e => e!.id),
+        existingEntities.map((e) => e!.id),
         origCollection
       );
       expect(collection).not.toBe(origCollection);
@@ -666,7 +666,7 @@ describe('EntityChangeTrackerBase', () => {
   describe('#trackUpdateMany', () => {
     it('should return a new collection with tracked updated entities', () => {
       const existingEntities = getSomeExistingEntities(2);
-      const updateEntities = existingEntities.map(e =>
+      const updateEntities = existingEntities.map((e) =>
         toUpdate({ ...e, name: e!.name + ' updated' })
       );
       const collection = tracker.trackUpdateMany(
@@ -777,7 +777,7 @@ describe('EntityChangeTrackerBase', () => {
     it('should return a new collection with tracked upserted entities', () => {
       const addedEntity = { id: 42, name: 'Ted', power: 'Chatty' };
       const exitingEntities = getSomeExistingEntities(2);
-      const updatedEntities = exitingEntities.map(e => ({
+      const updatedEntities = exitingEntities.map((e) => ({
         ...e,
         name: e!.name + 'test',
       }));
@@ -1065,6 +1065,6 @@ describe('EntityChangeTrackerBase', () => {
   }
 
   function getExistingEntitiesById(ids: string[]) {
-    return ids.map(id => origCollection.entities[id]);
+    return ids.map((id) => origCollection.entities[id]);
   }
 });

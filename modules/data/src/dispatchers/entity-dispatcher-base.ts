@@ -69,7 +69,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
 
     const collectionSelector = createSelector(
       entityCacheSelector,
-      cache => cache[entityName] as EntityCollection<T>
+      (cache) => cache[entityName] as EntityCollection<T>
     );
     this.entityCollection$ = store.select(collectionSelector);
   }
@@ -229,16 +229,13 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // because of unsaved changes (deletes or updates).
       withLatestFrom(this.entityCollection$),
       map(([entities, collection]) =>
-        entities.reduce(
-          (acc, e) => {
-            const entity = collection.entities[this.selectId(e)];
-            if (entity) {
-              acc.push(entity); // only return an entity found in the collection
-            }
-            return acc;
-          },
-          [] as T[]
-        )
+        entities.reduce((acc, e) => {
+          const entity = collection.entities[this.selectId(e)];
+          if (entity) {
+            acc.push(entity); // only return an entity found in the collection
+          }
+          return acc;
+        }, [] as T[])
       ),
       shareReplay(1)
     );
@@ -291,16 +288,13 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // because of unsaved changes (deletes or updates).
       withLatestFrom(this.entityCollection$),
       map(([entities, collection]) =>
-        entities.reduce(
-          (acc, e) => {
-            const entity = collection.entities[this.selectId(e)];
-            if (entity) {
-              acc.push(entity); // only return an entity found in the collection
-            }
-            return acc;
-          },
-          [] as T[]
-        )
+        entities.reduce((acc, e) => {
+          const entity = collection.entities[this.selectId(e)];
+          if (entity) {
+            acc.push(entity); // only return an entity found in the collection
+          }
+          return acc;
+        }, [] as T[])
       ),
       shareReplay(1)
     );
@@ -353,7 +347,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       // Use the update entity data id to get the entity from the collection
       // as might be different from the entity returned from the server
       // because the id changed or there are unsaved changes.
-      map(updateData => updateData.changes),
+      map((updateData) => updateData.changes),
       withLatestFrom(this.entityCollection$),
       map(([e, collection]) => collection.entities[this.selectId(e as T)]!),
       shareReplay(1)
@@ -477,7 +471,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
     const keys =
       typeof args[0] === 'object'
         ? // if array[0] is a key, assume they're all keys
-          (<T[]>args).map(arg => this.getKey(arg))
+          (<T[]>args).map((arg) => this.getKey(arg))
         : args;
     this.createAndDispatch(EntityOp.REMOVE_MANY, keys, options);
   }
@@ -510,7 +504,9 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
     if (!entities || entities.length === 0) {
       return;
     }
-    const updates: Update<T>[] = entities.map(entity => this.toUpdate(entity));
+    const updates: Update<T>[] = entities.map((entity) =>
+      this.toUpdate(entity)
+    );
     this.createAndDispatch(EntityOp.UPDATE_MANY, updates, options);
   }
 
@@ -591,13 +587,13 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
         );
       }),
       take(1),
-      mergeMap(act => {
+      mergeMap((act) => {
         const { entityOp } = act.payload;
         return entityOp === EntityOp.CANCEL_PERSIST
           ? throwError(new PersistanceCanceled(act.payload.data))
           : entityOp.endsWith(OP_SUCCESS)
-            ? of(act.payload.data as D)
-            : throwError(act.payload.data.error);
+          ? of(act.payload.data as D)
+          : throwError(act.payload.data.error);
       })
     );
   }

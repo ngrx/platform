@@ -25,7 +25,7 @@ const ngModulesToFind = (node: ts.Node) =>
 
 export function migrateToNgrxPush(): Rule {
   return (host: Tree) =>
-    visitTemplates(host, template => {
+    visitTemplates(host, (template) => {
       let match: RegExpMatchArray | null;
       let changes: Change[] = [];
       while ((match = ASYNC_REGEXP.exec(template.content)) !== null) {
@@ -47,7 +47,7 @@ export function migrateToNgrxPush(): Rule {
 
 export function importReactiveComponentModule(): Rule {
   return (host: Tree) => {
-    visitTSSourceFiles(host, sourceFile => {
+    visitTSSourceFiles(host, (sourceFile) => {
       let hasCommonModuleOrBrowserModule = false;
       let hasReactiveComponentModule = false;
 
@@ -71,7 +71,7 @@ export function importReactiveComponentModule(): Rule {
 
 export function exportReactiveComponentModule(): Rule {
   return (host: Tree) => {
-    visitTSSourceFiles(host, sourceFile => {
+    visitTSSourceFiles(host, (sourceFile) => {
       let hasCommonModuleOrBrowserModule = false;
       let hasReactiveComponentModule = false;
 
@@ -93,7 +93,7 @@ export function exportReactiveComponentModule(): Rule {
   };
 }
 
-export default function(): Rule {
+export default function (): Rule {
   return chain([
     migrateToNgrxPush(),
     importReactiveComponentModule(),

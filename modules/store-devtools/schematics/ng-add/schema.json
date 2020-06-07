@@ -7,8 +7,7 @@
     "skipPackageJson": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
+      "description": "Do not add @ngrx/store as dependency to package.json (e.g., --skipPackageJson)."
     },
     "path": {
       "type": "string",
@@ -31,8 +30,7 @@
     "maxAge": {
       "type": "number",
       "default": 25,
-      "description":
-        "number (>1) | 0 - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Default is 25 for performance reasons."
+      "description": "number (>1) | 0 - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Default is 25 for performance reasons."
     }
   },
   "required": []

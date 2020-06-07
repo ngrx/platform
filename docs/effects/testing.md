@@ -69,7 +69,8 @@ import * as MyActions from '../actions/my-actions';
 
 describe('My Effects', () => {
   let effects: MyEffects;
-  let actions: ReplaySubject&lt;any&gt;;
+  let actions: ReplaySubject & lt;
+  any & gt;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -90,7 +91,7 @@ describe('My Effects', () => {
     actions = new ReplaySubject(1);
     actions.next(new MyActions.ExampleAction());
 
-    effects.someSource$.subscribe(result => {
+    effects.someSource$.subscribe((result) => {
       expect(result).toEqual(new MyActions.ExampleActionSuccess());
     });
   });

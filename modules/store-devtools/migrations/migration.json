@@ -1,6 +1,5 @@
 {
-  "$schema":
-    "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "ngrx-store-devtools-migration-01": {
       "description": "The road to v6",

@@ -35,5 +35,5 @@ export interface EffectMetadata<T extends Object>
 }
 
 export type EffectsMetadata<T> = {
-  [key in EffectPropertyKey<T>]?: EffectConfig
+  [key in EffectPropertyKey<T>]?: EffectConfig;
 };

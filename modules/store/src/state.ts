@@ -32,9 +32,10 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
     const actionsOnQueue$: Observable<Action> = actions$.pipe(
       observeOn(queueScheduler)
     );
-    const withLatestReducer$: Observable<
-      [Action, ActionReducer<any, Action>]
-    > = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+    const withLatestReducer$: Observable<[
+      Action,
+      ActionReducer<any, Action>
+    ]> = actionsOnQueue$.pipe(withLatestFrom(reducer$));
 
     const seed: StateActionPair<T> = { state: initialState };
     const stateAndAction$: Observable<{

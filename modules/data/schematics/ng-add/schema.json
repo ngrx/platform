@@ -7,14 +7,12 @@
     "effect": {
       "type": "boolean",
       "default": true,
-      "description":
-        "When false use the EntityDataModuleWithoutEffects module instead of EntityDataModule."
+      "description": "When false use the EntityDataModuleWithoutEffects module instead of EntityDataModule."
     },
     "skipPackageJson": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Do not add @ngrx/data as dependency to package.json (e.g., --skipPackageJson)."
+      "description": "Do not add @ngrx/data as dependency to package.json (e.g., --skipPackageJson)."
     },
     "path": {
       "type": "string",

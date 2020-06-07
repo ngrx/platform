@@ -66,8 +66,7 @@
     "minimal": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Setup root state management without registering initial reducers."
+      "description": "Setup root state management without registering initial reducers."
     }
   },
   "required": []

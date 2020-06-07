@@ -136,11 +136,11 @@ export class EntityServicesBase implements EntityServices {
       | EntityCollectionService<any>[]
   ): void {
     if (Array.isArray(entityCollectionServices)) {
-      entityCollectionServices.forEach(service =>
+      entityCollectionServices.forEach((service) =>
         this.registerEntityCollectionService(service)
       );
     } else {
-      Object.keys(entityCollectionServices || {}).forEach(serviceName => {
+      Object.keys(entityCollectionServices || {}).forEach((serviceName) => {
         this.registerEntityCollectionService(
           entityCollectionServices[serviceName],
           serviceName

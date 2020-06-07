@@ -53,7 +53,8 @@
     "lint": "nx workspace-lint && ng lint",
     "dep-graph": "nx dep-graph",
     "workspace-schematic": "nx workspace-schematic",
-    "help": "nx help"
+    "help": "nx help",
+    "pret": "prettier **/*.ts --write"
   },
   "engines": {
     "node": ">=10.9.0 <13.0.0",

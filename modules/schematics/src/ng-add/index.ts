@@ -33,7 +33,7 @@ function setAsDefaultSchematics() {
   };
 }
 
-export default function(options: SchematicOptions): Rule {
+export default function (options: SchematicOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     return chain([
       options && options.defaultCollection ? setAsDefaultSchematics() : noop(),

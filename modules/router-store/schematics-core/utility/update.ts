@@ -21,7 +21,7 @@ export function updatePackage(name: string): Rule {
 
     const dependencyCategories = ['dependencies', 'devDependencies'];
 
-    dependencyCategories.forEach(category => {
+    dependencyCategories.forEach((category) => {
       const packageName = `@ngrx/${name}`;
 
       if (pkg[category] && pkg[category][packageName]) {

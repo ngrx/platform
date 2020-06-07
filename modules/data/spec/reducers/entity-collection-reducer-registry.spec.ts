@@ -41,7 +41,7 @@ class Villain {
 
 const metadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: villain => villain.key },
+  Villain: { selectId: (villain) => villain.key },
 };
 describe('EntityCollectionReducerRegistry', () => {
   let collectionCreator: EntityCollectionCreator;
@@ -310,7 +310,7 @@ describe('EntityCollectionReducerRegistry', () => {
   ) {
     return {
       ...collectionCreator.create<T>(entityName),
-      ids: data.map(e => selectId(e)) as string[] | number[],
+      ids: data.map((e) => selectId(e)) as string[] | number[],
       entities: data.reduce((acc, e) => {
         acc[selectId(e)] = e;
         return acc;

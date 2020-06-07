@@ -254,11 +254,11 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
     function filterChanged(responseData: UpdateResponseData<T>[]): Update<T>[] {
       if (skipUnchanged === true) {
         // keep only those updates that the server changed (knowable if is UpdateResponseData<T>)
-        responseData = responseData.filter(r => r.changed === true);
+        responseData = responseData.filter((r) => r.changed === true);
       }
       // Strip unchanged property from responseData, leaving just the pure Update<T>
       // TODO: Remove? probably not necessary as the Update isn't stored and adapter will ignore `changed`.
-      return responseData.map(r => ({ id: r.id as any, changes: r.changes }));
+      return responseData.map((r) => ({ id: r.id as any, changes: r.changes }));
     }
   }
 

@@ -21,12 +21,12 @@ describe('serializationCheckMetaReducer:', () => {
     date: { value: new Date() },
     map: { value: new Map() },
     set: { value: new Set() },
-    class: { value: new class {}() },
+    class: { value: new (class {})() },
     function: { value: () => {} },
   };
 
   describe('serializable:', () => {
-    Object.keys(serializables).forEach(key => {
+    Object.keys(serializables).forEach((key) => {
       it(`action with ${key} should not throw`, () => {
         expect(() =>
           invokeActionReducer({ type: 'valid', payload: serializables[key] })
@@ -40,7 +40,7 @@ describe('serializationCheckMetaReducer:', () => {
   });
 
   describe('unserializable:', () => {
-    Object.keys(unSerializables).forEach(key => {
+    Object.keys(unSerializables).forEach((key) => {
       it(`action with ${key} should throw`, () => {
         expect(() =>
           invokeActionReducer({ type: 'valid', payload: unSerializables[key] })
@@ -99,7 +99,7 @@ describe('serializationCheckMetaReducer:', () => {
   });
 
   function invokeActionReducer(action: any, checkIsOn = true) {
-    serializationCheckMetaReducer(state => state, {
+    serializationCheckMetaReducer((state) => state, {
       action: () => checkIsOn,
       state: () => false,
     })(undefined, action);

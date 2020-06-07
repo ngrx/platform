@@ -81,7 +81,7 @@ export function addReducerToStateInterface(
   options: { name: string; plural: boolean }
 ): Change {
   const stateInterface = source.statements.find(
-    stm => stm.kind === ts.SyntaxKind.InterfaceDeclaration
+    (stm) => stm.kind === ts.SyntaxKind.InterfaceDeclaration
   );
   let node = stateInterface as ts.Statement;
 
@@ -132,7 +132,7 @@ export function addReducerToActionReducerMap(
 ): Change {
   let initializer: any;
   const actionReducerMap: any = source.statements
-    .filter(stm => stm.kind === ts.SyntaxKind.VariableStatement)
+    .filter((stm) => stm.kind === ts.SyntaxKind.VariableStatement)
     .filter((stm: any) => !!stm.declarationList)
     .map((stm: any) => {
       const {
@@ -147,7 +147,7 @@ export function addReducerToActionReducerMap(
 
       return { initializer: variable.initializer, type };
     })
-    .filter(initWithType => initWithType.type !== undefined)
+    .filter((initWithType) => initWithType.type !== undefined)
     .find(({ type }) => type.typeName.text === 'ActionReducerMap');
 
   if (!actionReducerMap || !actionReducerMap.initializer) {
@@ -265,6 +265,6 @@ export function omit<T extends { [key: string]: any }>(
   keyToRemove: keyof T
 ): Partial<T> {
   return Object.keys(object)
-    .filter(key => key !== keyToRemove)
+    .filter((key) => key !== keyToRemove)
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
 }

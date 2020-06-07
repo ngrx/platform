@@ -14,10 +14,10 @@ type EffectResult<OT> = Observable<OT> | ((...args: any[]) => Observable<OT>);
 type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
   ? unknown // If DT (DispatchType is false, then we don't enforce any return types)
   : Result extends EffectResult<infer OT>
-    ? OT extends ActionCreator
-      ? 'ActionCreator cannot be dispatched. Did you forget to call the action creator function?'
-      : unknown
-    : unknown;
+  ? OT extends ActionCreator
+    ? 'ActionCreator cannot be dispatched. Did you forget to call the action creator function?'
+    : unknown
+  : unknown;
 
 /**
  * @description
@@ -78,11 +78,11 @@ export function getCreateEffectMetadata<
 
   const metadata: EffectMetadata<T>[] = propertyNames
     .filter(
-      propertyName =>
+      (propertyName) =>
         instance[propertyName] &&
         instance[propertyName].hasOwnProperty(CREATE_EFFECT_METADATA_KEY)
     )
-    .map(propertyName => {
+    .map((propertyName) => {
       const metaData = (instance[propertyName] as any)[
         CREATE_EFFECT_METADATA_KEY
       ];

@@ -135,13 +135,14 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
   function updateManyMutably(updates: any[], state: any): DidMutate {
     const newKeys: { [id: string]: string } = {};
 
-    updates = updates.filter(update => update.id in state.entities);
+    updates = updates.filter((update) => update.id in state.entities);
 
     const didMutateEntities = updates.length > 0;
 
     if (didMutateEntities) {
       const didMutateIds =
-        updates.filter(update => takeNewKey(newKeys, update, state)).length > 0;
+        updates.filter((update) => takeNewKey(newKeys, update, state)).length >
+        0;
 
       if (didMutateIds) {
         state.ids = state.ids.map((id: any) => newKeys[id] || id);

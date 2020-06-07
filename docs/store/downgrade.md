@@ -30,7 +30,7 @@ export default ngModule('appName').controller('AngularJSController', [
   '$scope',
   '$controller',
   'ngrxStoreService',
-  function($scope, $controller, ngrxStoreService) {
+  function ($scope, $controller, ngrxStoreService) {
     // ...
     ngrxStoreService.dispatch(new MyActionClass(myPayload));
     ngrxStoreService.pipe(select(mySelectorFunction)).subscribe(/*...*/);

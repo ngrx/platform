@@ -11,7 +11,7 @@ import { getSourceForInstance } from './utils';
 const METADATA_KEY = '__@ngrx/effects__';
 
 export function Effect(config: EffectConfig = {}) {
-  return function<T extends Object, K extends EffectPropertyKey<T>>(
+  return function <T extends Object, K extends EffectPropertyKey<T>>(
     target: T,
     propertyName: K
   ) {

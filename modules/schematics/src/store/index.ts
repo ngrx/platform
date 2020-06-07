@@ -155,7 +155,7 @@ function addImportToNgModule(options: StoreOptions): Rule {
   };
 }
 
-export default function(options: StoreOptions): Rule {
+export default function (options: StoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     if (!options.name && !options.root) {
       throw new Error(`Please provide a name for the feature state`);
@@ -187,7 +187,7 @@ export default function(options: StoreOptions): Rule {
     }
 
     const templateSource = apply(url('./files'), [
-      options.root && options.minimal ? filter(_ => false) : noop(),
+      options.root && options.minimal ? filter((_) => false) : noop(),
       applyTemplates({
         ...stringUtils,
         ...(options as object),

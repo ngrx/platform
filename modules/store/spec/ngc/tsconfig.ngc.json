@@ -1,20 +1,18 @@
 {
-	"compilerOptions": {
-		"target": "ES5",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"outDir": "./output",
+  "compilerOptions": {
+    "target": "ES5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./output",
     "lib": ["es2015", "dom"],
-		"baseUrl": ".",
-		"paths": {
+    "baseUrl": ".",
+    "paths": {
       "@ngrx/store": ["../../../store"]
-		}
-	},
-	"files": [
-    "main.ts"
-	],
+    }
+  },
+  "files": ["main.ts"],
   "angularCompilerOptions": {
     "genDir": "ngfactory"
   }

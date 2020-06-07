@@ -1,4 +1,3 @@
-
 export default {
   entry: './dist/store/@ngrx/store.es5.js',
   dest: './dist/store/bundles/store.umd.js',
@@ -7,6 +6,6 @@ export default {
   moduleName: 'ngrx.store',
   globals: {
     '@angular/core': 'ng.core',
-    'rxjs': 'Rx'
-  }
-}
+    rxjs: 'Rx',
+  },
+};

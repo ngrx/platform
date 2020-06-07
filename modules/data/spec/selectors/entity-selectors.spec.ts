@@ -21,7 +21,7 @@ describe('EntitySelectors', () => {
 
   const villainMetadata: EntityMetadata<Villain> = {
     entityName: 'Villain',
-    selectId: villain => villain.key,
+    selectId: (villain) => villain.key,
   };
 
   let collectionCreator: any;
@@ -115,7 +115,7 @@ describe('EntitySelectors', () => {
       expect(selectors.selectEntities(store)).toEqual(heroEntities);
 
       expect(selectors.selectFilteredEntities(store)).toEqual(
-        heroEntities.filter(h => h.name === 'B')
+        heroEntities.filter((h) => h.name === 'B')
       );
 
       expect(selectors.selectFoo).toBeDefined();
@@ -138,7 +138,7 @@ describe('EntitySelectors', () => {
       expect(selectors.selectEntities(store)).toEqual(heroEntities);
 
       expect(selectors.selectFilteredEntities(store)).toEqual(
-        heroEntities.filter(h => h.name === 'B')
+        heroEntities.filter((h) => h.name === 'B')
       );
 
       expect(selectors.selectFoo).toBeDefined();

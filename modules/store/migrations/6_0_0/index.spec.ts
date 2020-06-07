@@ -19,7 +19,7 @@ describe('Store Migration 6_0_0', () => {
   let appTree;
   const pkgName = 'store';
 
-  versionPrefixes.forEach(prefix => {
+  versionPrefixes.forEach((prefix) => {
     it(`should install version ${prefix}6.0.0`, () => {
       appTree = new UnitTestTree(Tree.empty());
       const runner = new SchematicTestRunner('schematics', collectionPath);

@@ -84,7 +84,7 @@ export class SomeEffectsClass {
   @Effect()
   authActions$ = this.actions$.pipe(
     ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
-    tap(action => console.log(action))
+    tap((action) => console.log(action))
   );
 }
 ```
@@ -107,7 +107,7 @@ export class SomeEffectsClass {
   constructor(private actions$: Actions) {}
 
   @Effect({ dispatch: false })
-  logActions$ = this.actions$.pipe(tap(action => console.log(action)));
+  logActions$ = this.actions$.pipe(tap((action) => console.log(action)));
 }
 ```
 
@@ -147,7 +147,7 @@ export class SomeEffectsClass {
   @Effect({ dispatch: false })
   authActions$ = this.actions$.pipe(
     ofType<LoginAction | LogoutAction>('LOGIN', 'LOGOUT'),
-    tap(action => console.log(action))
+    tap((action) => console.log(action))
   );
 
   // Should be your last effect
@@ -186,7 +186,7 @@ export class UserEffects implements OnRunEffects {
   @Effect()
   updateUser$: Observable<Action> = this.actions$.pipe(
     ofType('UPDATE_USER'),
-    tap(action => {
+    tap((action) => {
       console.log(action);
     })
   );
@@ -217,7 +217,7 @@ import { mergeEffects } from '@ngrx/effects';
 
 export class MyService {
   constructor(effects: SomeEffectsClass) {
-    mergeEffects(effects).subscribe(result => {
+    mergeEffects(effects).subscribe((result) => {
       console.log(result);
     });
   }

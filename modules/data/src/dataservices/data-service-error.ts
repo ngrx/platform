@@ -34,8 +34,8 @@ function extractMessage(sourceError: any): string | null {
   return typeof errMessage === 'string'
     ? errMessage
     : errMessage
-      ? JSON.stringify(errMessage)
-      : null;
+    ? JSON.stringify(errMessage)
+    : null;
 }
 
 /** Payload for an EntityAction data service error such as QUERY_ALL_ERROR */

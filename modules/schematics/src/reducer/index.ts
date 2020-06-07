@@ -26,7 +26,7 @@ import {
 } from '@ngrx/schematics/schematics-core';
 import { Schema as ReducerOptions } from './schema';
 
-export default function(options: ReducerOptions): Rule {
+export default function (options: ReducerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -55,7 +55,7 @@ export default function(options: ReducerOptions): Rule {
 
     const commonTemplate = apply(url('./common-files'), [
       options.skipTests
-        ? filter(path => !path.endsWith('.spec.ts.template'))
+        ? filter((path) => !path.endsWith('.spec.ts.template'))
         : noop(),
       applyTemplates(templateOptions),
       move(parsedPath.path),

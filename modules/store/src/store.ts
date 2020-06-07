@@ -224,7 +224,7 @@ export function select<T, Props, K>(
       mapped$ = source$.pipe(pluck(pathOrMapFn, ...pathSlices));
     } else if (typeof pathOrMapFn === 'function') {
       mapped$ = source$.pipe(
-        map(source => pathOrMapFn(source, <Props>propsOrPath))
+        map((source) => pathOrMapFn(source, <Props>propsOrPath))
       );
     } else {
       throw new TypeError(

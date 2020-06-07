@@ -42,9 +42,11 @@ describe('Selectors', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
 
-      const selector = createSelector(incrementOne, incrementTwo, projectFn)(
-        {}
-      );
+      const selector = createSelector(
+        incrementOne,
+        incrementTwo,
+        projectFn
+      )({});
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
@@ -124,7 +126,10 @@ describe('Selectors', () => {
         .createSpy('projectorFn', (s: any) => (s.ok ? s.ok : fail()))
         .and.callThrough();
       const selectorFn = jasmine
-        .createSpy('selectorFn', createSelector(state => state, projectorFn))
+        .createSpy(
+          'selectorFn',
+          createSelector((state) => state, projectorFn)
+        )
         .and.callThrough();
 
       selectorFn(firstState);
@@ -152,9 +157,9 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector(incrementOne, a => a);
-      const parent = createSelector(grandparent, a => a);
-      const child = createSelector(parent, a => a);
+      const grandparent = createSelector(incrementOne, (a) => a);
+      const parent = createSelector(grandparent, (a) => a);
+      const child = createSelector(parent, (a) => a);
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -270,9 +275,10 @@ describe('Selectors', () => {
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
       const projectFn = jasmine.createSpy('projectionFn');
-      const selector = createSelector([incrementOne, incrementTwo], projectFn)(
-        {}
-      );
+      const selector = createSelector(
+        [incrementOne, incrementTwo],
+        projectFn
+      )({});
 
       expect(projectFn).toHaveBeenCalledWith(countOne, countTwo);
     });
@@ -341,9 +347,9 @@ describe('Selectors', () => {
     });
 
     it('should recursively release ancestor selectors', () => {
-      const grandparent = createSelector([incrementOne], a => a);
-      const parent = createSelector([grandparent], a => a);
-      const child = createSelector([parent], a => a);
+      const grandparent = createSelector([incrementOne], (a) => a);
+      const parent = createSelector([grandparent], (a) => a);
+      const child = createSelector([parent], (a) => a);
       spyOn(grandparent, 'release').and.callThrough();
       spyOn(parent, 'release').and.callThrough();
 
@@ -601,7 +607,7 @@ describe('Selectors', () => {
     // on their content.
     function isResultEqual(a: any, b: any) {
       if (a instanceof Array) {
-        return a.length === b.length && a.every(fromA => b.includes(fromA));
+        return a.length === b.length && a.every((fromA) => b.includes(fromA));
       }
       // Default comparison
       return a === b;
@@ -611,7 +617,7 @@ describe('Selectors', () => {
       projectionFnSpy = jasmine
         .createSpy('projectionFn')
         .and.callFake((arr: string[], filter: { by: string }) =>
-          arr.filter(item => item.startsWith(filter.by))
+          arr.filter((item) => item.startsWith(filter.by))
         );
 
       arrayMemoizer = resultMemoize(projectionFnSpy, isResultEqual);

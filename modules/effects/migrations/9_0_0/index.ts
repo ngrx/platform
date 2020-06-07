@@ -16,7 +16,7 @@ import * as ts from 'typescript';
 
 function renameErrorHandlerConfig(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
-    visitTSSourceFiles(tree, sourceFile => {
+    visitTSSourceFiles(tree, (sourceFile) => {
       const changes: ReplaceChange[] = replaceEffectConfigKeys(
         sourceFile,
         'resubscribeOnError',
@@ -41,15 +41,15 @@ function replaceEffectConfigKeys(
 ): ReplaceChange[] {
   const changes: ReplaceChange[] = [];
 
-  ts.forEachChild(sourceFile, node => {
-    visitCreateEffectFunctionCreator(node, createEffectNode => {
+  ts.forEachChild(sourceFile, (node) => {
+    visitCreateEffectFunctionCreator(node, (createEffectNode) => {
       const [effectDeclaration, configNode] = createEffectNode.arguments;
       if (configNode) {
         findAndReplaceText(configNode);
       }
     });
 
-    visitEffectDecorator(node, effectDecoratorNode => {
+    visitEffectDecorator(node, (effectDecoratorNode) => {
       findAndReplaceText(effectDecoratorNode);
     });
   });
@@ -57,7 +57,7 @@ function replaceEffectConfigKeys(
   return changes;
 
   function findAndReplaceText(node: ts.Node): void {
-    visitIdentifierWithText(node, oldText, match => {
+    visitIdentifierWithText(node, oldText, (match) => {
       changes.push(createReplaceChange(sourceFile, match, oldText, newText));
     });
   }
@@ -72,7 +72,7 @@ function visitIdentifierWithText(
     visitor(node);
   }
 
-  ts.forEachChild(node, childNode =>
+  ts.forEachChild(node, (childNode) =>
     visitIdentifierWithText(childNode, text, visitor)
   );
 }
@@ -87,7 +87,9 @@ function visitEffectDecorator(node: ts.Node, visitor: (node: ts.Node) => void) {
     visitor(node);
   }
 
-  ts.forEachChild(node, childNode => visitEffectDecorator(childNode, visitor));
+  ts.forEachChild(node, (childNode) =>
+    visitEffectDecorator(childNode, visitor)
+  );
 }
 
 function visitCreateEffectFunctionCreator(
@@ -102,11 +104,11 @@ function visitCreateEffectFunctionCreator(
     visitor(node);
   }
 
-  ts.forEachChild(node, childNode =>
+  ts.forEachChild(node, (childNode) =>
     visitCreateEffectFunctionCreator(childNode, visitor)
   );
 }
 
-export default function(): Rule {
+export default function (): Rule {
   return chain([renameErrorHandlerConfig()]);
 }

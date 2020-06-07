@@ -104,9 +104,9 @@ export class EntityCacheEffects {
       // Cancellation: returns Observable<SaveEntitiesCanceled> for a saveEntities action
       // whose correlationId matches the cancellation correlationId
       const c = this.saveEntitiesCancel$.pipe(
-        filter(a => correlationId === a.payload.correlationId),
+        filter((a) => correlationId === a.payload.correlationId),
         map(
-          a =>
+          (a) =>
             new SaveEntitiesCanceled(
               correlationId,
               a.payload.reason,
@@ -117,10 +117,11 @@ export class EntityCacheEffects {
 
       // Data: SaveEntities result as a SaveEntitiesSuccess action
       const d = this.dataService.saveEntities(changeSet, url).pipe(
-        concatMap(result =>
-          this.handleSaveEntitiesSuccess$(action, this.entityActionFactory)(
-            result
-          )
+        concatMap((result) =>
+          this.handleSaveEntitiesSuccess$(
+            action,
+            this.entityActionFactory
+          )(result)
         ),
         catchError(this.handleSaveEntitiesError$(action))
       );
@@ -156,7 +157,7 @@ export class EntityCacheEffects {
     const { url, correlationId, mergeStrategy, tag } = action.payload;
     const options = { correlationId, mergeStrategy, tag };
 
-    return changeSet => {
+    return (changeSet) => {
       // DataService returned a ChangeSet with possible updates to the saved entities
       if (changeSet) {
         return of(new SaveEntitiesSuccess(changeSet, url, options));
@@ -182,7 +183,7 @@ export class EntityCacheEffects {
         [] as string[]
       );
       return merge(
-        entityNames.map(name =>
+        entityNames.map((name) =>
           entityActionFactory.create(name, EntityOp.SET_LOADING, false)
         )
       );

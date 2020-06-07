@@ -21,7 +21,7 @@ describe('Component Store', () => {
   describe('initialization', () => {
     it(
       'through constructor',
-      marbles(m => {
+      marbles((m) => {
         const INIT_STATE = { init: 'state' };
         const componentStore = new ComponentStore(INIT_STATE);
 
@@ -33,7 +33,7 @@ describe('Component Store', () => {
 
     it(
       'stays uninitialized if initial state is not provided',
-      marbles(m => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
 
         // No values emitted.
@@ -43,7 +43,7 @@ describe('Component Store', () => {
 
     it(
       'through setState method',
-      marbles(m => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
         const INIT_STATE = { setState: 'passed' };
 
@@ -58,7 +58,7 @@ describe('Component Store', () => {
     it(
       'throws an Error when setState with a function/callback is called' +
         ' before initialization',
-      marbles(m => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
 
         m.expect(componentStore.state$).toBeObservable(
@@ -73,7 +73,7 @@ describe('Component Store', () => {
 
     it(
       'throws an Error when updater is called before initialization',
-      marbles(m => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
 
         m.expect(componentStore.state$).toBeObservable(
@@ -91,7 +91,7 @@ describe('Component Store', () => {
     it(
       'throws an Error when updater is called with sync Observable' +
         ' before initialization',
-      marbles(m => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
         const syncronousObservable$ = of({
           updater: 'new state',
@@ -113,7 +113,7 @@ describe('Component Store', () => {
       'does not throw an Error when updater is called with async Observable' +
         ' before initialization, however closes the subscription and does not' +
         ' update the state and sends error in state$',
-      marbles(m => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
         const asyncronousObservable$ = m.cold('-u', {
           u: { updater: 'new state' },
@@ -147,7 +147,7 @@ describe('Component Store', () => {
 
         // Record all the values that go through state$ into an array
         const results: object[] = [];
-        componentStore.state$.subscribe(state => results.push(state));
+        componentStore.state$.subscribe((state) => results.push(state));
 
         const asyncronousObservable$ = of(UPDATED_STATE).pipe(
           // Delays until the state gets the init value.
@@ -182,7 +182,7 @@ describe('Component Store', () => {
 
     it(
       'with setState to a specific value',
-      marbles(m => {
+      marbles((m) => {
         const SET_STATE: State = { value: 'new state' };
         componentStore.setState(SET_STATE);
         m.expect(componentStore.state$).toBeObservable(
@@ -193,9 +193,9 @@ describe('Component Store', () => {
 
     it(
       'with setState to a value based on the previous state',
-      marbles(m => {
+      marbles((m) => {
         const UPDATE_STATE: Partial<State> = { updated: true };
-        componentStore.setState(state => ({
+        componentStore.setState((state) => ({
           ...state,
           ...UPDATE_STATE,
         }));
@@ -212,7 +212,7 @@ describe('Component Store', () => {
 
     it(
       'with updater to a value based on the previous state and passed values',
-      marbles(m => {
+      marbles((m) => {
         const UPDATED: Partial<State> = { updated: true };
         const UPDATE_VALUE: Partial<State> = { value: 'updated' };
         const updater = componentStore.updater(
@@ -224,7 +224,7 @@ describe('Component Store', () => {
 
         // Record all the values that go through state$ into an array
         const results: object[] = [];
-        componentStore.state$.subscribe(state => results.push(state));
+        componentStore.state$.subscribe((state) => results.push(state));
 
         // Update twice with different values
         updater(UPDATED);
@@ -257,7 +257,7 @@ describe('Component Store', () => {
     it(
       'with updater to a value based on the previous state and passed' +
         ' Observable',
-      marbles(m => {
+      marbles((m) => {
         const updater = componentStore.updater(
           (state, value: Partial<State>) => ({
             ...state,
@@ -317,7 +317,7 @@ describe('Component Store', () => {
 
     it(
       'by unsubscribing with returned Subscriber',
-      fakeSchedulers(advance => {
+      fakeSchedulers((advance) => {
         const updater = componentStore.updater(
           (state, value: Partial<State>) => ({
             ...state,
@@ -327,12 +327,12 @@ describe('Component Store', () => {
 
         // Record all the values that go through state$ into an array
         const results: State[] = [];
-        componentStore.state$.subscribe(state => results.push(state));
+        componentStore.state$.subscribe((state) => results.push(state));
 
         // Update with Observable.
         const subsription = updater(
           interval(10).pipe(
-            map(v => ({ value: String(v) })),
+            map((v) => ({ value: String(v) })),
             take(10) // just in case
           )
         );
@@ -360,7 +360,7 @@ describe('Component Store', () => {
 
     it(
       'and cancels the correct one',
-      fakeSchedulers(advance => {
+      fakeSchedulers((advance) => {
         const updater = componentStore.updater(
           (state, value: Partial<State>) => ({
             ...state,
@@ -370,12 +370,12 @@ describe('Component Store', () => {
 
         // Record all the values that go through state$ into an array
         const results: State[] = [];
-        componentStore.state$.subscribe(state => results.push(state));
+        componentStore.state$.subscribe((state) => results.push(state));
 
         // Update with Observable.
         const subsription = updater(
           interval(10).pipe(
-            map(v => ({ value: 'a' + v })),
+            map((v) => ({ value: 'a' + v })),
             take(10) // just in case
           )
         );
@@ -383,7 +383,7 @@ describe('Component Store', () => {
         // Create the second Observable that updates the state
         updater(
           timer(15, 10).pipe(
-            map(v => ({ value: 'b' + v })),
+            map((v) => ({ value: 'b' + v })),
             take(10)
           )
         );
@@ -431,9 +431,9 @@ describe('Component Store', () => {
 
     it(
       'uninitialized Component Store does not emit values',
-      marbles(m => {
+      marbles((m) => {
         const uninitializedComponentStore = new ComponentStore();
-        m.expect(uninitializedComponentStore.select(s => s)).toBeObservable(
+        m.expect(uninitializedComponentStore.select((s) => s)).toBeObservable(
           m.hot('-')
         );
       })
@@ -441,8 +441,8 @@ describe('Component Store', () => {
 
     it(
       'selects component root state',
-      marbles(m => {
-        m.expect(componentStore.select(s => s)).toBeObservable(
+      marbles((m) => {
+        m.expect(componentStore.select((s) => s)).toBeObservable(
           m.hot('i', { i: INIT_STATE })
         );
       })
@@ -450,8 +450,8 @@ describe('Component Store', () => {
 
     it(
       'selects component property from the state',
-      marbles(m => {
-        m.expect(componentStore.select(s => s.value)).toBeObservable(
+      marbles((m) => {
+        m.expect(componentStore.select((s) => s.value)).toBeObservable(
           m.hot('i', { i: INIT_STATE.value })
         );
       })
@@ -459,9 +459,9 @@ describe('Component Store', () => {
 
     it(
       'can be combined with other selectors',
-      marbles(m => {
-        const selector1 = componentStore.select(s => s.value);
-        const selector2 = componentStore.select(s => s.updated);
+      marbles((m) => {
+        const selector1 = componentStore.select((s) => s.value);
+        const selector2 = componentStore.select((s) => s.updated);
         const selector3 = componentStore.select(
           selector1,
           selector2,
@@ -471,7 +471,7 @@ describe('Component Store', () => {
         );
 
         const selectorResults: Array<{ result: string }> = [];
-        selector3.subscribe(s3 => {
+        selector3.subscribe((s3) => {
           selectorResults.push(s3);
         });
 
@@ -488,7 +488,7 @@ describe('Component Store', () => {
 
     it(
       'can combine with other Observables',
-      marbles(m => {
+      marbles((m) => {
         const observableValues = {
           '1': 'one',
           '2': 'two',
@@ -504,7 +504,7 @@ describe('Component Store', () => {
           z: 'three c',
         });
 
-        const selectorValue$ = componentStore.select(s => s.value);
+        const selectorValue$ = componentStore.select((s) => s.value);
         const selector$ = componentStore.select(
           selectorValue$,
           observable$,
@@ -521,11 +521,11 @@ describe('Component Store', () => {
 
     it(
       'would emit a single value even when all 4 selectors produce values',
-      marbles(m => {
-        const s1$ = componentStore.select(s => `fromS1(${s.value})`);
-        const s2$ = componentStore.select(s => `fromS2(${s.value})`);
-        const s3$ = componentStore.select(s => `fromS3(${s.value})`);
-        const s4$ = componentStore.select(s => `fromS4(${s.value})`);
+      marbles((m) => {
+        const s1$ = componentStore.select((s) => `fromS1(${s.value})`);
+        const s2$ = componentStore.select((s) => `fromS2(${s.value})`);
+        const s3$ = componentStore.select((s) => `fromS3(${s.value})`);
+        const s4$ = componentStore.select((s) => `fromS4(${s.value})`);
 
         const selector$ = componentStore.select(
           s1$,
@@ -552,7 +552,7 @@ describe('Component Store', () => {
 
     it(
       'can combine with Observables that complete',
-      marbles(m => {
+      marbles((m) => {
         const observableValues = {
           '1': 'one',
           '2': 'two',
@@ -568,7 +568,7 @@ describe('Component Store', () => {
           z: 'three c',
         });
 
-        const selectorValue$ = componentStore.select(s => s.value);
+        const selectorValue$ = componentStore.select((s) => s.value);
         const selector$ = componentStore.select(
           selectorValue$,
           observable$,
@@ -585,9 +585,9 @@ describe('Component Store', () => {
 
     it(
       'does not emit the same value if it did not change',
-      marbles(m => {
-        const selector1 = componentStore.select(s => s.value);
-        const selector2 = componentStore.select(s => s.updated);
+      marbles((m) => {
+        const selector1 = componentStore.select((s) => s.value);
+        const selector2 = componentStore.select((s) => s.updated);
         const selector3 = componentStore.select(
           selector1,
           selector2,
@@ -597,7 +597,7 @@ describe('Component Store', () => {
         );
 
         const selectorResults: string[] = [];
-        selector3.subscribe(s3 => {
+        selector3.subscribe((s3) => {
           selectorResults.push(s3);
         });
 
@@ -611,13 +611,17 @@ describe('Component Store', () => {
 
     it(
       'are shared between subscribers',
-      marbles(m => {
-        const projectorCallback = jest.fn(s => s.value);
+      marbles((m) => {
+        const projectorCallback = jest.fn((s) => s.value);
         const selector = componentStore.select(projectorCallback);
 
         const resultsArray: string[] = [];
-        selector.subscribe(value => resultsArray.push('subscriber1: ' + value));
-        selector.subscribe(value => resultsArray.push('subscriber2: ' + value));
+        selector.subscribe((value) =>
+          resultsArray.push('subscriber1: ' + value)
+        );
+        selector.subscribe((value) =>
+          resultsArray.push('subscriber2: ' + value)
+        );
 
         m.flush();
         componentStore.setState(() => ({ value: 'new value', updated: true }));
@@ -651,10 +655,10 @@ describe('Component Store', () => {
 
     it(
       'is run when value is provided',
-      marbles(m => {
+      marbles((m) => {
         const results: string[] = [];
         const mockGenerator = jest.fn((origin$: Observable<string>) =>
-          origin$.pipe(tap(v => results.push(v)))
+          origin$.pipe(tap((v) => results.push(v)))
         );
         const effect = componentStore.effect(mockGenerator);
         effect('value 1');
@@ -666,10 +670,10 @@ describe('Component Store', () => {
 
     it(
       'is run when undefined value is provided',
-      marbles(m => {
+      marbles((m) => {
         const results: string[] = [];
         const mockGenerator = jest.fn((origin$: Observable<undefined>) =>
-          origin$.pipe(tap(v => results.push(typeof v)))
+          origin$.pipe(tap((v) => results.push(typeof v)))
         );
         const effect = componentStore.effect(mockGenerator);
         effect(undefined);
@@ -681,8 +685,8 @@ describe('Component Store', () => {
 
     it(
       'is run when observable is provided',
-      marbles(m => {
-        const mockGenerator = jest.fn(origin$ => origin$);
+      marbles((m) => {
+        const mockGenerator = jest.fn((origin$) => origin$);
         const effect = componentStore.effect(mockGenerator);
 
         effect(m.cold('-a-b-c|'));
@@ -694,8 +698,8 @@ describe('Component Store', () => {
     );
     it(
       'is run with multiple Observables',
-      marbles(m => {
-        const mockGenerator = jest.fn(origin$ => origin$);
+      marbles((m) => {
+        const mockGenerator = jest.fn((origin$) => origin$);
         const effect = componentStore.effect(mockGenerator);
 
         effect(m.cold('-a-b-c|'));
@@ -711,14 +715,14 @@ describe('Component Store', () => {
       beforeEach(() => jest.useFakeTimers());
       it(
         'by unsubscribing with returned Subscription',
-        fakeSchedulers(advance => {
+        fakeSchedulers((advance) => {
           const results: string[] = [];
           const effect = componentStore.effect((origin$: Observable<string>) =>
-            origin$.pipe(tap(v => results.push(v)))
+            origin$.pipe(tap((v) => results.push(v)))
           );
 
           const observable$ = interval(10).pipe(
-            map(v => String(v)),
+            map((v) => String(v)),
             take(10) // just in case
           );
 
@@ -740,18 +744,18 @@ describe('Component Store', () => {
       it(
         'could be unsubscribed from the specific Observable when multiple' +
           ' are provided',
-        fakeSchedulers(advance => {
+        fakeSchedulers((advance) => {
           // Record all the values that go through state$ into an array
           const results: Array<{ value: string }> = [];
           const effect = componentStore.effect(
             (origin$: Observable<{ value: string }>) =>
-              origin$.pipe(tap(v => results.push(v)))
+              origin$.pipe(tap((v) => results.push(v)))
           );
 
           // Pass the first Observable to the effect.
           const subsription = effect(
             interval(10).pipe(
-              map(v => ({ value: 'a' + v })),
+              map((v) => ({ value: 'a' + v })),
               take(10) // just in case
             )
           );
@@ -759,7 +763,7 @@ describe('Component Store', () => {
           // Pass the second Observable that pushes values to effect
           effect(
             timer(15, 10).pipe(
-              map(v => ({ value: 'b' + v })),
+              map((v) => ({ value: 'b' + v })),
               take(10)
             )
           );
@@ -789,7 +793,7 @@ describe('Component Store', () => {
       );
 
       it('completes when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
-        componentStore.effect(origin$ =>
+        componentStore.effect((origin$) =>
           origin$.pipe(
             finalize(() => {
               doneFn();
@@ -802,7 +806,7 @@ describe('Component Store', () => {
       });
 
       it('observable argument completes when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
-        componentStore.effect(origin$ => origin$)(
+        componentStore.effect((origin$) => origin$)(
           interval(10).pipe(
             finalize(() => {
               doneFn();

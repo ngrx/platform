@@ -67,7 +67,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   }
 
   removeFeatures(features: StoreFeature<any, any>[]) {
-    this.removeReducers(features.map(p => p.key));
+    this.removeReducers(features.map((p) => p.key));
   }
 
   addReducer(key: string, reducer: ActionReducer<any, any>) {
@@ -84,7 +84,7 @@ export class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>
   }
 
   removeReducers(featureKeys: string[]) {
-    featureKeys.forEach(key => {
+    featureKeys.forEach((key) => {
       this.reducers = omit(this.reducers, key) /*TODO(#823)*/ as any;
     });
     this.updateReducers(featureKeys);

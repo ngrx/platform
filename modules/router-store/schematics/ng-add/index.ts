@@ -90,7 +90,7 @@ function addNgRxRouterStoreToPackageJson() {
   };
 }
 
-export default function(options: RouterStoreOptions): Rule {
+export default function (options: RouterStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 

@@ -175,16 +175,19 @@ export class EntitySelectorsFactory {
     const selectKeys = (c: EntityCollection<T>) => c.ids;
     const selectEntityMap = (c: EntityCollection<T>) => c.entities;
 
-    const selectEntities: Selector<EntityCollection<T>, T[]> = createSelector(
+    const selectEntities: Selector<
+      EntityCollection<T>,
+      T[]
+    > = createSelector(
       selectKeys,
       selectEntityMap,
       (keys: (number | string)[], entities: Dictionary<T>): T[] =>
-        keys.map(key => entities[key] as T)
+        keys.map((key) => entities[key] as T)
     );
 
     const selectCount: Selector<EntityCollection<T>, number> = createSelector(
       selectKeys,
-      keys => keys.length
+      (keys) => keys.length
     );
 
     // EntityCollection selectors that go beyond the ngrx/entity/EntityState selectors
@@ -209,7 +212,7 @@ export class EntitySelectorsFactory {
     const extraSelectors: {
       [name: string]: Selector<EntityCollection<T>, any>;
     } = {};
-    Object.keys(extra).forEach(k => {
+    Object.keys(extra).forEach((k) => {
       extraSelectors['select' + k[0].toUpperCase() + k.slice(1)] = (
         c: EntityCollection<T>
       ) => (<any>c)[k];
@@ -282,7 +285,7 @@ export class EntitySelectorsFactory {
     const entitySelectors: {
       [name: string]: Selector<EntityCollection<T>, any>;
     } = {};
-    Object.keys(collectionSelectors).forEach(k => {
+    Object.keys(collectionSelectors).forEach((k) => {
       entitySelectors[k] = createSelector(
         selectCollection,
         collectionSelectors[k]

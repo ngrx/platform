@@ -1,6 +1,6 @@
 import { on, createReducer, createAction, props, union } from '@ngrx/store';
 
-describe('classes/reducer', function(): void {
+describe('classes/reducer', function (): void {
   describe('base', () => {
     const bar = createAction('[foobar] BAR', props<{ bar: number }>());
     const foo = createAction('[foobar] FOO', props<{ foo: number }>());
@@ -65,8 +65,8 @@ describe('classes/reducer', function(): void {
 
         const counterReducer = createReducer(
           0,
-          on(increase, state => state + 1),
-          on(increase, state => state + 1)
+          on(increase, (state) => state + 1),
+          on(increase, (state) => state + 1)
         );
 
         expect(typeof counterReducer).toEqual('function');

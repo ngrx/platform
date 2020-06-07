@@ -178,9 +178,6 @@ describe('Selector Schematic', () => {
 
   function cleanString(value: string) {
     // ** to mark an empty line (VSCode removes whitespace lines)
-    return value
-      .replace(/\r\n/g, '\n')
-      .replace(/\*\*/g, '')
-      .trim();
+    return value.replace(/\r\n/g, '\n').replace(/\*\*/g, '').trim();
   }
 });

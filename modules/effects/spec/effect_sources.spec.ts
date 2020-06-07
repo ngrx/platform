@@ -264,7 +264,7 @@ describe('EffectSources', () => {
         class Eff {
           @Effect()
           b$ = hot('a--e--b--e--c--e--d').pipe(
-            map(v => {
+            map((v) => {
               if (v == 'e') throw new Error('An Error');
               return v;
             })
@@ -282,7 +282,7 @@ describe('EffectSources', () => {
         class Eff {
           @Effect({ useEffectsErrorHandler: false })
           b$ = hot('a--b--c--d').pipe(
-            map(v => {
+            map((v) => {
               if (v == 'b') throw new Error('An Error');
               return v;
             })
@@ -590,16 +590,16 @@ describe('EffectSources', () => {
 
       it('should resubscribe on error by default', () => {
         const sources$ = of(
-          new class {
+          new (class {
             b$ = createEffect(() =>
               hot('a--e--b--e--c--e--d').pipe(
-                map(v => {
+                map((v) => {
                   if (v == 'e') throw new Error('An Error');
                   return v;
                 })
               )
             );
-          }()
+          })()
         );
 
         //                       👇 'e' is ignored.
@@ -610,18 +610,18 @@ describe('EffectSources', () => {
 
       it('should resubscribe on error by default when dispatch is false', () => {
         const sources$ = of(
-          new class {
+          new (class {
             b$ = createEffect(
               () =>
                 hot('a--b--c--d').pipe(
-                  map(v => {
+                  map((v) => {
                     if (v == 'b') throw new Error('An Error');
                     return v;
                   })
                 ),
               { dispatch: false }
             );
-          }()
+          })()
         );
         //                    👇 doesn't complete and doesn't dispatch
         const expected = cold('----------');
@@ -631,18 +631,18 @@ describe('EffectSources', () => {
 
       it('should not resubscribe on error when useEffectsErrorHandler is false', () => {
         const sources$ = of(
-          new class {
+          new (class {
             b$ = createEffect(
               () =>
                 hot('a--b--c--d').pipe(
-                  map(v => {
+                  map((v) => {
                     if (v == 'b') throw new Error('An Error');
                     return v;
                   })
                 ),
               { dispatch: false, useEffectsErrorHandler: false }
             );
-          }()
+          })()
         );
         //                       👇 errors with dispatch false
         const expected = cold('---#', undefined, new Error('An Error'));

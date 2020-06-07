@@ -9,7 +9,7 @@ import * as shelljs from 'shelljs';
 export async function publishToNpm(config: Config) {
   const publishablePackages = util
     .getTopLevelPackages(config)
-    .filter(pkg => !pkg.includes('component'));
+    .filter((pkg) => !pkg.includes('component'));
 
   for (let pkg of publishablePackages) {
     console.log(`Publishing @ngrx/${pkg}`);
@@ -33,7 +33,7 @@ const publishLatest = createBuilder([
 publishLatest({
   scope: '@ngrx',
   packages,
-}).catch(err => {
+}).catch((err) => {
   console.error(err);
   process.exit(1);
 });

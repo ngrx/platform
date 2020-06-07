@@ -110,7 +110,7 @@ describe('My Component', () => {
 
     store.dispatch(action);
 
-    component.items$.subscribe(data => {
+    component.items$.subscribe((data) => {
       expect(data.length).toBe(items.length);
     });
   });
@@ -131,11 +131,11 @@ export interface State {
 
 export const selectSumEvenNums = createSelector(
   (state: State) => state.evenNums,
-  evenNums => evenNums.reduce((prev, curr) => prev + curr)
+  (evenNums) => evenNums.reduce((prev, curr) => prev + curr)
 );
 export const selectSumOddNums = createSelector(
   (state: State) => state.oddNums,
-  oddNums => oddNums.reduce((prev, curr) => prev + curr)
+  (oddNums) => oddNums.reduce((prev, curr) => prev + curr)
 );
 export const selectTotal = createSelector(
   selectSumEvenNums,

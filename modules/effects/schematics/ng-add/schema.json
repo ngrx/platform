@@ -12,8 +12,7 @@
     "skipPackageJson": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Do not add @ngrx/effects as dependency to package.json (e.g., --skipPackageJson)."
+      "description": "Do not add @ngrx/effects as dependency to package.json (e.g., --skipPackageJson)."
     },
     "path": {
       "type": "string",
@@ -58,8 +57,7 @@
     "minimal": {
       "type": "boolean",
       "default": true,
-      "description":
-        "Setup root effects module without registering initial effects."
+      "description": "Setup root effects module without registering initial effects."
     }
   },
   "required": []

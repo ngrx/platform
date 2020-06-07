@@ -138,7 +138,10 @@ describe('Unsorted State Adapter', () => {
       state
     );
 
-    const withoutMany = adapter.removeMany(p => p.id.startsWith('a'), withAll);
+    const withoutMany = adapter.removeMany(
+      (p) => p.id.startsWith('a'),
+      withAll
+    );
 
     expect(withoutMany).toEqual({
       ids: [TheGreatGatsby.id],
@@ -273,12 +276,12 @@ describe('Unsorted State Adapter', () => {
     );
 
     const withUpdates = adapter.map(
-      book =>
+      (book) =>
         book.title === TheGreatGatsby.title
           ? firstChange
           : book.title === AClockworkOrange.title
-            ? secondChange
-            : book,
+          ? secondChange
+          : book,
       withMany
     );
 

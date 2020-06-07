@@ -20,7 +20,7 @@ import { RECOMPUTE } from '../src/reducer';
 
 const counter = jasmine
   .createSpy('counter')
-  .and.callFake(function(state = 0, action: Action) {
+  .and.callFake(function (state = 0, action: Action) {
     switch (action.type) {
       case 'INCREMENT':
         return state + 1;
@@ -100,8 +100,10 @@ function createStore<T>(
   let liftedValue: LiftedState;
   let value: any;
 
-  const liftedStateSub = devtools.liftedState.subscribe(s => (liftedValue = s));
-  const stateSub = devtools.state.subscribe(s => (value = s));
+  const liftedStateSub = devtools.liftedState.subscribe(
+    (s) => (liftedValue = s)
+  );
+  const stateSub = devtools.state.subscribe((s) => (value = s));
 
   const getState = (): T => value.state;
   const getLiftedState = (): LiftedState => liftedValue;
@@ -723,7 +725,7 @@ describe('Store Devtools', () => {
 
     it('should support a function to return devtools options', () => {
       expect(() => {
-        createStore(counter, function() {
+        createStore(counter, function () {
           return { maxAge: 1 };
         });
       }).toThrowError(/cannot be less than/);

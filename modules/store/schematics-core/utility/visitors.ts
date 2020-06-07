@@ -30,7 +30,7 @@ export function visitTemplates(
     tree: Tree
   ) => void
 ): void {
-  visitTSSourceFiles(tree, source => {
+  visitTSSourceFiles(tree, (source) => {
     visitComponents(source, (_, decoratorExpressionNode) => {
       ts.forEachChild(decoratorExpressionNode, function findTemplates(n) {
         if (ts.isPropertyAssignment(n) && ts.isIdentifier(n.name)) {
@@ -55,9 +55,7 @@ export function visitTemplates(
             n.name.text === 'templateUrl' &&
             ts.isStringLiteralLike(n.initializer)
           ) {
-            const parts = normalize(source.fileName)
-              .split('/')
-              .slice(0, -1);
+            const parts = normalize(source.fileName).split('/').slice(0, -1);
             const templatePath = resolve(
               normalize(parts.join('/')),
               normalize(n.initializer.text)
@@ -176,7 +174,7 @@ export function visitDecorator(
       return;
     }
 
-    const componentDecorator = classDeclarationNode.decorators.find(d => {
+    const componentDecorator = classDeclarationNode.decorators.find((d) => {
       return (
         ts.isCallExpression(d.expression) &&
         ts.isIdentifier(d.expression.expression) &&

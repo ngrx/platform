@@ -38,7 +38,8 @@ export interface AppConfig {
          * The output path (relative to the outDir).
          */
         output?: string;
-      })[];
+      }
+  )[];
   /**
    * URL where files will be deployed.
    */
@@ -91,7 +92,8 @@ export interface AppConfig {
     | {
         input?: string;
         [name: string]: any; // tslint:disable-line:no-any
-      })[];
+      }
+  )[];
   /**
    * Options to pass to style preprocessors
    */
@@ -109,7 +111,8 @@ export interface AppConfig {
     | {
         input: string;
         [name: string]: any; // tslint:disable-line:no-any
-      })[];
+      }
+  )[];
   /**
    * Source file for environment config.
    */
@@ -130,7 +133,7 @@ export type WorkspaceSchema = experimental.workspace.WorkspaceSchema;
 
 export function getWorkspacePath(host: Tree): string {
   const possibleFiles = ['/angular.json', '/.angular.json'];
-  const path = possibleFiles.filter(path => host.exists(path))[0];
+  const path = possibleFiles.filter((path) => host.exists(path))[0];
 
   return path;
 }

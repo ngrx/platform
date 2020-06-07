@@ -3,7 +3,7 @@ import { compilerOptions } from './utils';
 
 describe('Store', () => {
   const expectSnippet = expecter(
-    code => `
+    (code) => `
       import { Store, createAction } '@ngrx/store';
 
       const store = {} as Store<{}>;

@@ -4,6 +4,5 @@ export default {
   format: 'umd',
   exports: 'named',
   moduleName: 'ngrx.component-store',
-  globals: {
-  },
+  globals: {},
 };

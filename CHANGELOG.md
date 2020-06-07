@@ -110,7 +110,7 @@
 
 ### Bug Fixes
 
-- **data:** allow additional selectors in entitySelectors$ ([#2332](https://github.com/ngrx/platform/issues/2332)) ([900bf75](https://github.com/ngrx/platform/commit/900bf75))
+- **data:** allow additional selectors in entitySelectors\$ ([#2332](https://github.com/ngrx/platform/issues/2332)) ([900bf75](https://github.com/ngrx/platform/commit/900bf75))
 - **effects:** dispatch init action once ([#2164](https://github.com/ngrx/platform/issues/2164)) ([a528320](https://github.com/ngrx/platform/commit/a528320)), closes [#2106](https://github.com/ngrx/platform/issues/2106)
 - **effects:** fix specs for ng-add tests ([#2314](https://github.com/ngrx/platform/issues/2314)) ([98d6606](https://github.com/ngrx/platform/commit/98d6606))
 - **schematics:** migrate spec to skipTest to be in line with Angular CLI ([#2253](https://github.com/ngrx/platform/issues/2253)) ([714ae5f](https://github.com/ngrx/platform/commit/714ae5f)), closes [#2242](https://github.com/ngrx/platform/issues/2242)
@@ -484,12 +484,12 @@ login$ = createEffect(() =>
     ofType(LoginPageActions.login),
     mapToAction(
       // Happy path callback
-      action =>
+      (action) =>
         this.authService
           .login(action.credentials)
-          .pipe(map(user => AuthApiActions.loginSuccess({ user }))),
+          .pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
       // error callback
-      error => AuthApiActions.loginFailure({ error })
+      (error) => AuthApiActions.loginFailure({ error })
     )
   )
 );
@@ -504,12 +504,12 @@ login$ = createEffect(
       ofType(LoginPageActions.login),
       mapToAction(
         // Happy path callback
-        action =>
+        (action) =>
           this.authService
             .login(action.credentials)
-            .pipe(map(user => AuthApiActions.loginSuccess({ user }))),
+            .pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
         // error callback
-        error => AuthApiActions.loginFailure({ error })
+        (error) => AuthApiActions.loginFailure({ error })
       )
       // Errors are handled and it is safe to disable resubscription
     ),

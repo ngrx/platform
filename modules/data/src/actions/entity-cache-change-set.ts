@@ -74,8 +74,8 @@ export class ChangeSetItemFactory {
     const ids = Array.isArray(keys)
       ? keys
       : keys
-        ? ([keys] as string[] | number[])
-        : [];
+      ? ([keys] as string[] | number[])
+      : [];
     return { entityName, op: ChangeSetOperation.Delete, entities: ids };
   }
 
@@ -107,7 +107,7 @@ export const changeSetItemFactory = new ChangeSetItemFactory();
 export function excludeEmptyChangeSetItems(changeSet: ChangeSet): ChangeSet {
   changeSet = changeSet && changeSet.changes ? changeSet : { changes: [] };
   const changes = changeSet.changes.filter(
-    c => c != null && c.entities && c.entities.length > 0
+    (c) => c != null && c.entities && c.entities.length > 0
   );
   return { ...changeSet, changes };
 }
