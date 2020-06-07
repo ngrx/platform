@@ -46,7 +46,7 @@ const metadata: EntityMetadataMap = {
   Fool: {},
   Hero: {},
   Knave: {},
-  Villain: { selectId: villain => villain.key },
+  Villain: { selectId: (villain) => villain.key },
 };
 
 describe('EntityCacheReducer', () => {
@@ -284,7 +284,7 @@ describe('EntityCacheReducer', () => {
         const action = new MergeQuerySet(querySet);
         const state = entityCacheReducer(initialCache, action);
         const heroCollection = state['Hero'];
-        const expectedIds = initialHeroes.map(h => h.id).concat(42);
+        const expectedIds = initialHeroes.map((h) => h.id).concat(42);
         expect(heroCollection.ids).toEqual(expectedIds);
         expect(heroCollection.entities[42]).toEqual({ id: 42, name: 'Bobby' });
       });
@@ -305,19 +305,14 @@ describe('EntityCacheReducer', () => {
 
         const state = entityCacheReducer(initialCache, action);
         expect(state['Hero'].entities[unchangedHero.id]).toEqual(
-          unchangedHeroServerUpdated,
-          'Updates current value for unchanged entity'
+          unchangedHeroServerUpdated
         );
         expect(state['Hero'].entities[updatedHero.id]).toEqual(
-          locallyUpdatedHero,
-          'Preserves the current value for changed entity'
+          locallyUpdatedHero
         );
         expect(
           state['Hero'].changeState[updatedHero.id]!.originalValue
-        ).toEqual(
-          serverUpdatedHero,
-          'Overwrites the originalValue with the merge entity'
-        );
+        ).toEqual(serverUpdatedHero);
       });
 
       it('should be able to use ignore changes merge strategy', () => {
@@ -333,12 +328,11 @@ describe('EntityCacheReducer', () => {
 
         const state = entityCacheReducer(initialCache, action);
         expect(state['Hero'].entities[updatedHero.id]).toEqual(
-          serverUpdatedHero,
-          'Update the collection entity'
+          serverUpdatedHero
         );
         expect(
           state['Hero'].changeState[updatedHero.id]!.originalValue
-        ).toEqual(updatedHero, 'changeState is untouched');
+        ).toEqual(updatedHero);
       });
 
       it('should be able to use preserve changes merge strategy', () => {
@@ -360,19 +354,14 @@ describe('EntityCacheReducer', () => {
 
         const state = entityCacheReducer(initialCache, action);
         expect(state['Hero'].entities[unchangedHero.id]).toEqual(
-          unchangedHeroServerUpdated,
-          'Updates current value for unchanged entity'
+          unchangedHeroServerUpdated
         );
         expect(state['Hero'].entities[updatedHero.id]).toEqual(
-          locallyUpdatedHero,
-          'Preserves the current value for changed entity'
+          locallyUpdatedHero
         );
         expect(
           state['Hero'].changeState[updatedHero.id]!.originalValue
-        ).toEqual(
-          serverUpdatedHero,
-          'Overwrites the originalValue with the merge entity'
-        );
+        ).toEqual(serverUpdatedHero);
       });
 
       it('should be able to use overwrite changes merge strategy', () => {
@@ -393,13 +382,11 @@ describe('EntityCacheReducer', () => {
 
         const state = entityCacheReducer(initialCache, action);
         expect(state['Hero'].entities[unchangedHero.id]).toEqual(
-          unchangedHeroServerUpdated,
-          'Replace the current collection entity for unchanged entity'
+          unchangedHeroServerUpdated
         );
         expect(state['Hero'].changeState[unchangedHero.id]).toBeUndefined();
         expect(state['Hero'].entities[updatedHero.id]).toEqual(
-          serverUpdatedHero,
-          'Replace the current collection entity for changed entity'
+          serverUpdatedHero
         );
         expect(state['Hero'].changeState[updatedHero.id]).toBeUndefined();
       });
@@ -685,7 +672,7 @@ describe('EntityCacheReducer', () => {
   ) {
     return {
       ...collectionCreator.create<T>(entityName),
-      ids: data.map(e => selectId(e)) as string[] | number[],
+      ids: data.map((e) => selectId(e)) as string[] | number[],
       entities: data.reduce((acc, e) => {
         acc[selectId(e)] = e;
         return acc;
@@ -841,7 +828,7 @@ describe('EntityCacheReducer', () => {
     entityNames?: string[]
   ) {
     entityNames = entityNames ? [] : Object.keys(entityCache);
-    entityNames.forEach(name => {
+    entityNames.forEach((name) => {
       expect(entityCache[name].loading).toBe(flag);
     });
   }
