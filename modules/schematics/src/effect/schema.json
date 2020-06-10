@@ -51,8 +51,7 @@
     "root": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Flag to indicate whether the effects are registered as root."
+      "description": "Flag to indicate whether the effects are registered as root."
     },
     "feature": {
       "type": "boolean",
@@ -68,24 +67,21 @@
     "api": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Specifies if effect has api success and failure actions wired up",
+      "description": "Specifies if effect has api success and failure actions wired up",
       "aliases": ["a"],
       "x-prompt": "Should we wire up success and failure actions?"
     },
     "creators": {
       "type": "boolean",
       "default": true,
-      "description":
-        "Specifies whether to use creator functions for handling actions, reducers, and effects.",
+      "description": "Specifies whether to use creator functions for handling actions, reducers, and effects.",
       "aliases": ["c"],
       "x-prompt": "Do you want to use the create function?"
     },
     "minimal": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Setup root effects module without registering initial effects."
+      "description": "Setup root effects module without registering initial effects."
     }
   },
   "required": []

@@ -5,6 +5,6 @@ export default {
   exports: 'named',
   moduleName: 'ngrx.entity',
   globals: {
-    '@ngrx/store': 'ngrx.store'
-  }
-}
+    '@ngrx/store': 'ngrx.store',
+  },
+};

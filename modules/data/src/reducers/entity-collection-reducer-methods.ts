@@ -572,10 +572,10 @@ export class EntityCollectionReducerMethods<T> {
     collection: EntityCollection<T>,
     action: EntityAction<(number | string | T)[]>
   ): EntityCollection<T> {
-    const deleteIds = this.extractData(action).map(
-      d => (typeof d === 'object' ? this.selectId(d) : (d as string | number))
+    const deleteIds = this.extractData(action).map((d) =>
+      typeof d === 'object' ? this.selectId(d) : (d as string | number)
     );
-    deleteIds.forEach(deleteId => {
+    deleteIds.forEach((deleteId) => {
       const change = collection.changeState[deleteId];
       // If entity is already tracked ...
       if (change) {

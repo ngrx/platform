@@ -8,9 +8,7 @@ import { todos } from '../fixtures/todos';
 
 @Component({
   selector: 'ngc-spec-child-component',
-  template: `
-
-  `,
+  template: ``,
 })
 export class NgcSpecChildComponent {}
 
@@ -30,9 +28,9 @@ export const reducerToken = new InjectionToken('Reducers');
 @Component({
   selector: 'ngc-spec-component',
   template: `
-    <button (click)="increment()"> + </button>
-    <span>  Count : {{ count | async }}  </span>
-    <button (click)="decrement()"> + </button>
+    <button (click)="increment()">+</button>
+    <span> Count : {{ count | async }} </span>
+    <button (click)="decrement()">+</button>
 
     <ngc-spec-child-component></ngc-spec-child-component>
   `,
@@ -40,7 +38,7 @@ export const reducerToken = new InjectionToken('Reducers');
 export class NgcSpecComponent {
   count: Observable<number>;
   constructor(public store: Store<AppState>) {
-    this.count = store.pipe(select(state => state.count));
+    this.count = store.pipe(select((state) => state.count));
   }
   increment() {
     this.store.dispatch({ type: INCREMENT });

@@ -3,7 +3,7 @@ import { compilerOptions } from './utils';
 
 describe('router selectors', () => {
   const expectSnippet = expecter(
-    code => `
+    (code) => `
       import * as fromRouter from '@ngrx/router-store';
       import { createSelector, createFeatureSelector } from '@ngrx/store';
 

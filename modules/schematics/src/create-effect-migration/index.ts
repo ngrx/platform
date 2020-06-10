@@ -10,7 +10,7 @@ import {
 
 export function migrateToCreators(): Rule {
   return (host: Tree) =>
-    host.visit(path => {
+    host.visit((path) => {
       if (!path.endsWith('.ts')) {
         return;
       }
@@ -27,11 +27,11 @@ export function migrateToCreators(): Rule {
 
       const effectsPerClass = sourceFile.statements
         .filter(ts.isClassDeclaration)
-        .map(clas =>
+        .map((clas) =>
           clas.members
             .filter(ts.isPropertyDeclaration)
             .filter(
-              property =>
+              (property) =>
                 property.decorators &&
                 property.decorators.some(isEffectDecorator)
             )
@@ -64,8 +64,8 @@ function replaceEffectDecorators(
   effects: ts.PropertyDeclaration[]
 ) {
   const inserts = effects
-    .filter(effect => !!effect.initializer)
-    .map(effect => {
+    .filter((effect) => !!effect.initializer)
+    .map((effect) => {
       const decorator = (effect.decorators || []).find(isEffectDecorator)!;
       const effectArguments = getDispatchProperties(host, path, decorator);
       const end = effectArguments ? `, ${effectArguments})` : ')';
@@ -78,11 +78,11 @@ function replaceEffectDecorators(
     .reduce((acc, inserts) => acc.concat(inserts), []);
 
   const removes = effects
-    .map(effect => effect.decorators)
-    .filter(decorators => decorators)
-    .map(decorators => {
+    .map((effect) => effect.decorators)
+    .filter((decorators) => decorators)
+    .map((decorators) => {
       const effectDecorators = decorators!.filter(isEffectDecorator);
-      return effectDecorators.map(decorator => {
+      return effectDecorators.map((decorator) => {
         return new RemoveChange(
           path,
           decorator.expression.pos - 1, // also get the @ sign
@@ -123,6 +123,6 @@ function getDispatchProperties(
   return args;
 }
 
-export default function(): Rule {
+export default function (): Rule {
   return chain([migrateToCreators()]);
 }

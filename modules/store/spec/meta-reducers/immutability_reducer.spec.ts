@@ -65,7 +65,7 @@ describe('immutabilityCheckMetaReducer:', () => {
         {
           type: 'invoke',
           numbers: [1, 2, 3],
-          fun: function() {},
+          fun: function () {},
           ɵIvyProperty: { value: 1 },
         }
       );

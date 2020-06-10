@@ -288,7 +288,7 @@ export function _createFeatureReducers(
   injector: Injector,
   reducerCollection: ActionReducerMap<any, any>[]
 ) {
-  const reducers = reducerCollection.map(reducer => {
+  const reducers = reducerCollection.map((reducer) => {
     return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
   });
 

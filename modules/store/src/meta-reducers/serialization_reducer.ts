@@ -15,7 +15,7 @@ export function serializationCheckMetaReducer(
   reducer: ActionReducer<any, any>,
   checks: { action: (action: Action) => boolean; state: () => boolean }
 ): ActionReducer<any, any> {
-  return function(state, action) {
+  return function (state, action) {
     if (checks.action(action)) {
       const unserializableAction = getUnserializable(action);
       throwIfUnserializable(unserializableAction, 'action');

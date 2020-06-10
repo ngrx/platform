@@ -17,7 +17,7 @@ const META_REDUCERS = 'META_REDUCERS';
 
 function updateMetaReducersToken(): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    visitTSSourceFiles(tree, sourceFile => {
+    visitTSSourceFiles(tree, (sourceFile) => {
       const createChange = (node: ts.Node) =>
         createReplaceChange(
           sourceFile,
@@ -41,7 +41,7 @@ function updateMetaReducersToken(): Rule {
   };
 }
 
-export default function(): Rule {
+export default function (): Rule {
   return chain([updateMetaReducersToken()]);
 }
 
@@ -55,7 +55,7 @@ function findMetaReducersImportStatements(
   const metaReducerImports = sourceFile.statements
     .filter(ts.isImportDeclaration)
     .filter(isNgRxStoreImport)
-    .filter(p => {
+    .filter((p) => {
       canRunSchematics = Boolean(
         p.importClause &&
           p.importClause.namedBindings &&
@@ -63,7 +63,7 @@ function findMetaReducersImportStatements(
       );
       return canRunSchematics;
     })
-    .map(p =>
+    .map((p) =>
       (p.importClause!.namedBindings! as ts.NamedImports).elements.filter(
         isMetaReducersImportSpecifier
       )
@@ -105,7 +105,7 @@ function findMetaReducersAssignment(
   createChange: (node: ts.Node) => ReplaceChange
 ) {
   let changes: ReplaceChange[] = [];
-  ts.forEachChild(sourceFile, node => findMetaReducers(node, changes));
+  ts.forEachChild(sourceFile, (node) => findMetaReducers(node, changes));
   return changes;
 
   function findMetaReducers(node: ts.Node, changes: ReplaceChange[]) {
@@ -116,6 +116,6 @@ function findMetaReducersAssignment(
       changes.push(createChange(node.initializer));
     }
 
-    ts.forEachChild(node, childNode => findMetaReducers(childNode, changes));
+    ts.forEachChild(node, (childNode) => findMetaReducers(childNode, changes));
   }
 }

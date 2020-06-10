@@ -222,7 +222,7 @@ export class EntityCacheReducerFactory {
     } = action.payload;
 
     try {
-      changeSet.changes.forEach(item => {
+      changeSet.changes.forEach((item) => {
         const entityName = item.entityName;
         const payload = {
           entityName,
@@ -283,7 +283,9 @@ export class EntityCacheReducerFactory {
 
     // This implementation can only clear the loading flag for the collections involved
     // If the save was optimistic, you'll have to compensate to fix the cache as you think necessary
-    const entityNames = originalChangeSet.changes.map(item => item.entityName);
+    const entityNames = originalChangeSet.changes.map(
+      (item) => item.entityName
+    );
     return this.clearLoadingFlags(entityCache, entityNames);
   }
 
@@ -299,7 +301,7 @@ export class EntityCacheReducerFactory {
       tag,
     } = action.payload;
 
-    changeSet.changes.forEach(item => {
+    changeSet.changes.forEach((item) => {
       const entityName = item.entityName;
       const payload = {
         entityName,
@@ -364,7 +366,7 @@ export class EntityCacheReducerFactory {
   /** Ensure loading is false for every collection in entityNames */
   private clearLoadingFlags(entityCache: EntityCache, entityNames: string[]) {
     let isMutated = false;
-    entityNames.forEach(entityName => {
+    entityNames.forEach((entityName) => {
       const collection = entityCache[entityName];
       if (collection.loading) {
         if (!isMutated) {

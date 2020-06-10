@@ -26,7 +26,7 @@ export function PropsFilterFnFactory<T = any>(
     const regExp =
       typeof pattern === 'string' ? new RegExp(pattern, 'i') : pattern;
     if (regExp) {
-      const predicate = (e: any) => props.some(prop => regExp.test(e[prop]));
+      const predicate = (e: any) => props.some((prop) => regExp.test(e[prop]));
       return entities.filter(predicate);
     }
     return entities;

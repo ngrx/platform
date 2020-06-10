@@ -48,10 +48,7 @@ describe('Router Store Module', () => {
     it('should call navigateIfNeeded with args selected by custom state key', (done: any) => {
       let logs: any[] = [];
       store
-        .pipe(
-          select(customStateKey),
-          withLatestFrom(store)
-        )
+        .pipe(select(customStateKey), withLatestFrom(store))
         .subscribe(([routerStoreState, storeState]) => {
           logs.push([routerStoreState, storeState]);
         });
@@ -112,10 +109,7 @@ describe('Router Store Module', () => {
     it('should call navigateIfNeeded with args selected by custom state selector', (done: any) => {
       let logs: any[] = [];
       store
-        .pipe(
-          select(customStateSelector),
-          withLatestFrom(store)
-        )
+        .pipe(select(customStateSelector), withLatestFrom(store))
         .subscribe(([routerStoreState, storeState]) => {
           logs.push([routerStoreState, storeState]);
         });

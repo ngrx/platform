@@ -27,7 +27,7 @@ const EXAMPLE_FILES = [
   const dependencies = packageJson.dependencies;
   const version = packageJson.version;
   const ngrxDependencies = ngrxPackages
-    .map(pkg => pkg.name)
+    .map((pkg) => pkg.name)
     .reduce((packages, packageName) => {
       return { ...packages, [`@ngrx/${packageName}`]: version };
     }, {});

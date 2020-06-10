@@ -140,7 +140,7 @@ describe('Store Migration 8_0_0 beta', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
     let logs: string[] = [];
-    runner.logger.subscribe(log => logs.push(log.message));
+    runner.logger.subscribe((log) => logs.push(log.message));
 
     const newTree = runner.runSchematic(
       `ngrx-${pkgName}-migration-02`,

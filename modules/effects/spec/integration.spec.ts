@@ -282,7 +282,7 @@ describe('NgRx Effects Integration spec', () => {
       resolvedEffects$: Observable<EffectNotification>
     ): Observable<EffectNotification> {
       return this.actions$.pipe(
-        tap(action => this.actionsLog.push(action.type)),
+        tap((action) => this.actionsLog.push(action.type)),
         exhaustMap(() => resolvedEffects$)
       );
     }

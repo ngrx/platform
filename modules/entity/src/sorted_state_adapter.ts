@@ -29,7 +29,7 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
   function addManyMutably(newModels: T[], state: R): DidMutate;
   function addManyMutably(newModels: any[], state: any): DidMutate {
     const models = newModels.filter(
-      model => !(selectIdValue(model, selectId) in state.entities)
+      (model) => !(selectIdValue(model, selectId) in state.entities)
     );
 
     if (models.length === 0) {
@@ -89,8 +89,8 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     const models: T[] = [];
 
     const didMutateIds =
-      updates.filter(update => takeUpdatedModel(models, update, state)).length >
-      0;
+      updates.filter((update) => takeUpdatedModel(models, update, state))
+        .length > 0;
 
     if (models.length === 0) {
       return DidMutate.None;

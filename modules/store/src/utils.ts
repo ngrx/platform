@@ -49,7 +49,7 @@ export function omit<T extends { [key: string]: any }>(
   keyToRemove: keyof T
 ): Partial<T> {
   return Object.keys(object)
-    .filter(key => key !== keyToRemove)
+    .filter((key) => key !== keyToRemove)
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
 }
 
@@ -76,7 +76,7 @@ export function compose<A, B, C, D, E, F>(
 ): (i: A) => F;
 export function compose<A = any, F = any>(...functions: any[]): (i: A) => F;
 export function compose(...functions: any[]) {
-  return function(arg: any) {
+  return function (arg: any) {
     if (functions.length === 0) {
       return arg;
     }

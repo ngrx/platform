@@ -157,7 +157,7 @@ describe('integration spec', () => {
         log.splice(0);
         return router.navigateByUrl('next');
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.message).toEqual('You shall not pass!');
         expect(log).toEqual([
           { type: 'router', event: 'NavigationStart', url: '/next' },
@@ -201,7 +201,7 @@ describe('integration spec', () => {
         log.splice(0);
         return router.navigateByUrl('next');
       })
-      .then(r => {
+      .then((r) => {
         expect(r).toEqual(false);
 
         expect(log).toEqual([
@@ -339,7 +339,7 @@ describe('integration spec', () => {
         log.splice(0);
         return router.navigateByUrl('next');
       })
-      .catch(e => {
+      .catch((e) => {
         expect(e.message).toEqual('BOOM!');
 
         expect(log).toEqual([
@@ -605,7 +605,7 @@ describe('integration spec', () => {
       .then(() => {
         fail(`Shouldn't be called`);
       })
-      .catch(err => {
+      .catch((err) => {
         expect(err).toBe('boom');
 
         expect(log).toEqual([
@@ -721,10 +721,7 @@ describe('integration spec', () => {
       reducers: { routerReducer },
       canActivate: () => {
         store.dispatch({ type: 'USER_EVENT' });
-        return store.pipe(
-          take(1),
-          mapTo(true)
-        );
+        return store.pipe(take(1), mapTo(true));
       },
     });
 
@@ -987,7 +984,7 @@ describe('integration spec', () => {
 function waitForNavigation(router: Router, event: any = NavigationEnd) {
   return router.events
     .pipe(
-      filter(e => e instanceof event),
+      filter((e) => e instanceof event),
       first()
     )
     .toPromise();
@@ -1010,7 +1007,7 @@ function logOfRouterAndActionsAndStore(
   // Not using effects' Actions to avoid @ngrx/effects dependency
   const actions$ = TestBed.inject(ScannedActionsSubject);
   const log: any[] = [];
-  router.events.subscribe(e => {
+  router.events.subscribe((e) => {
     if (e.hasOwnProperty('url')) {
       log.push({
         type: 'router',
@@ -1019,10 +1016,10 @@ function logOfRouterAndActionsAndStore(
       });
     }
   });
-  actions$.subscribe(action =>
+  actions$.subscribe((action) =>
     log.push({ type: 'action', action: action.type })
   );
-  store.subscribe(store => {
+  store.subscribe((store) => {
     if (typeof options.stateKey === 'function') {
       log.push({ type: 'store', state: options.stateKey(store) });
     } else {

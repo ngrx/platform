@@ -3,7 +3,7 @@ import { compilerOptions } from './utils';
 
 describe('createEffect()', () => {
   const expectSnippet = expecter(
-    code => `
+    (code) => `
       import { Action } from '@ngrx/store';
       import { createEffect } from '@ngrx/effects';
       import { createAction } from '@ngrx/store';

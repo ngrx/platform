@@ -41,7 +41,7 @@ export function findNodes(
   }
   if (max > 0) {
     for (const child of node.getChildren()) {
-      findNodes(child, kind, max).forEach(node => {
+      findNodes(child, kind, max).forEach((node) => {
         if (max > 0) {
           arr.push(node);
         }
@@ -113,9 +113,7 @@ export function insertAfterLastOccurrence(
     throw new Error();
   }
   if (syntaxKind) {
-    lastItem = findNodes(lastItem, syntaxKind)
-      .sort(nodesByPosition)
-      .pop();
+    lastItem = findNodes(lastItem, syntaxKind).sort(nodesByPosition).pop();
   }
   if (!lastItem && fallbackPos == undefined) {
     throw new Error(
@@ -174,9 +172,8 @@ function _angularImportsFromNode(
         const namedImports = nb as ts.NamedImports;
 
         return namedImports.elements
-          .map(
-            (is: ts.ImportSpecifier) =>
-              is.propertyName ? is.propertyName.text : is.name.text
+          .map((is: ts.ImportSpecifier) =>
+            is.propertyName ? is.propertyName.text : is.name.text
           )
           .reduce((acc: { [name: string]: string }, curr: string) => {
             acc[curr] = modulePath;
@@ -202,7 +199,9 @@ export function getDecoratorMetadata(
     source,
     ts.SyntaxKind.ImportDeclaration
   )
-    .map(node => _angularImportsFromNode(node as ts.ImportDeclaration, source))
+    .map((node) =>
+      _angularImportsFromNode(node as ts.ImportDeclaration, source)
+    )
     .reduce(
       (
         acc: { [name: string]: string },
@@ -218,14 +217,14 @@ export function getDecoratorMetadata(
     );
 
   return getSourceNodes(source)
-    .filter(node => {
+    .filter((node) => {
       return (
         node.kind == ts.SyntaxKind.Decorator &&
         (node as ts.Decorator).expression.kind == ts.SyntaxKind.CallExpression
       );
     })
-    .map(node => (node as ts.Decorator).expression as ts.CallExpression)
-    .filter(expr => {
+    .map((node) => (node as ts.Decorator).expression as ts.CallExpression)
+    .filter((expr) => {
       if (expr.expression.kind == ts.SyntaxKind.Identifier) {
         const id = expr.expression as ts.Identifier;
 
@@ -252,11 +251,11 @@ export function getDecoratorMetadata(
       return false;
     })
     .filter(
-      expr =>
+      (expr) =>
         expr.arguments[0] &&
         expr.arguments[0].kind == ts.SyntaxKind.ObjectLiteralExpression
     )
-    .map(expr => expr.arguments[0] as ts.ObjectLiteralExpression);
+    .map((expr) => expr.arguments[0] as ts.ObjectLiteralExpression);
 }
 
 function _addSymbolToNgModuleMetadata(
@@ -276,7 +275,7 @@ function _addSymbolToNgModuleMetadata(
 
   // Get all the children property assignment of object literals.
   const matchingProperties: ts.ObjectLiteralElement[] = (node as ts.ObjectLiteralExpression).properties
-    .filter(prop => prop.kind == ts.SyntaxKind.PropertyAssignment)
+    .filter((prop) => prop.kind == ts.SyntaxKind.PropertyAssignment)
     // Filter out every fields that's not "metadataField". Also handles string literals
     // (but not expressions).
     .filter((prop: any) => {
@@ -355,7 +354,7 @@ function _addSymbolToNgModuleMetadata(
 
   if (Array.isArray(node)) {
     const nodeArray = (node as {}) as Array<ts.Node>;
-    const symbolsArray = nodeArray.map(node => node.getText());
+    const symbolsArray = nodeArray.map((node) => node.getText());
     if (symbolsArray.includes(symbolName)) {
       return [];
     }
@@ -363,7 +362,7 @@ function _addSymbolToNgModuleMetadata(
     node = node[node.length - 1];
 
     const effectsModule = nodeArray.find(
-      node =>
+      (node) =>
         (node.getText().includes('EffectsModule.forRoot') &&
           symbolName.includes('EffectsModule.forRoot')) ||
         (node.getText().includes('EffectsModule.forFeature') &&
@@ -567,21 +566,21 @@ export function insertImport(
   const allImports = findNodes(rootNode, ts.SyntaxKind.ImportDeclaration);
 
   // get nodes that map to import statements from the file fileName
-  const relevantImports = allImports.filter(node => {
+  const relevantImports = allImports.filter((node) => {
     // StringLiteral of the ImportDeclaration is the import file (fileName in this case).
     const importFiles = node
       .getChildren()
-      .filter(child => child.kind === ts.SyntaxKind.StringLiteral)
-      .map(n => (n as ts.StringLiteral).text);
+      .filter((child) => child.kind === ts.SyntaxKind.StringLiteral)
+      .map((n) => (n as ts.StringLiteral).text);
 
-    return importFiles.filter(file => file === fileName).length === 1;
+    return importFiles.filter((file) => file === fileName).length === 1;
   });
 
   if (relevantImports.length > 0) {
     let importsAsterisk = false;
     // imports from import file
     const imports: ts.Node[] = [];
-    relevantImports.forEach(n => {
+    relevantImports.forEach((n) => {
       Array.prototype.push.apply(
         imports,
         findNodes(n, ts.SyntaxKind.Identifier)
@@ -597,7 +596,7 @@ export function insertImport(
     }
 
     const importTextNodes = imports.filter(
-      n => (n as ts.Identifier).text === symbolName
+      (n) => (n as ts.Identifier).text === symbolName
     );
 
     // insert import if it's not there
@@ -622,7 +621,7 @@ export function insertImport(
 
   // no such import declaration exists
   const useStrict = findNodes(rootNode, ts.SyntaxKind.StringLiteral).filter(
-    n => n.getText() === 'use strict'
+    (n) => n.getText() === 'use strict'
   );
   let fallbackPos = 0;
   if (useStrict.length > 0) {
@@ -678,7 +677,7 @@ export function replaceImport(
     return '';
   };
 
-  const changes = imports.map(p => {
+  const changes = imports.map((p) => {
     const importSpecifiers = (p.importClause!.namedBindings! as ts.NamedImports)
       .elements;
 
@@ -737,7 +736,7 @@ export function containsProperty(
   return (
     objectLiteral &&
     objectLiteral.properties.some(
-      prop =>
+      (prop) =>
         ts.isPropertyAssignment(prop) &&
         ts.isIdentifier(prop.name) &&
         prop.name.text === propertyName

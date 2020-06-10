@@ -120,7 +120,7 @@ export function ofType(
   ...allowedTypes: Array<string | ActionCreator<string, Creator>>
 ): OperatorFunction<Action, Action> {
   return filter((action: Action) =>
-    allowedTypes.some(typeOrActionCreator => {
+    allowedTypes.some((typeOrActionCreator) => {
       if (typeof typeOrActionCreator === 'string') {
         // Comparing the string to type
         return typeOrActionCreator === action.type;

@@ -48,10 +48,10 @@ export function todos(
         },
       ];
     case COMPLETE_ALL_TODOS:
-      return state.map(todo => ({ ...todo, completed: true }));
+      return state.map((todo) => ({ ...todo, completed: true }));
     case COMPLETE_TODO:
-      return state.map(
-        todo => (todo.id === payload.id ? { ...todo, completed: true } : todo)
+      return state.map((todo) =>
+        todo.id === payload.id ? { ...todo, completed: true } : todo
       );
     default:
       return state;

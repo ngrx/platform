@@ -25,7 +25,7 @@ function addNgRxEntityToPackageJson() {
   };
 }
 
-export default function(options: EntityOptions): Rule {
+export default function (options: EntityOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     return chain([
       options && options.skipPackageJson

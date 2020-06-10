@@ -18,20 +18,20 @@ import {
 function addDefaultSerializer(): Rule {
   const SERIALIZER_PROPERTY = 'serializer: DefaultRouterStateSerializer';
   return (tree: Tree, ctx: SchematicContext) => {
-    visitTSSourceFiles(tree, sourceFile => {
+    visitTSSourceFiles(tree, (sourceFile) => {
       let changes: Change[] = [];
 
       visitNgModuleImports(sourceFile, (importsNode, elementsNode) => {
         elementsNode
           .filter(
-            element =>
+            (element) =>
               ts.isCallExpression(element) &&
               ts.isPropertyAccessExpression(element.expression) &&
               ts.isIdentifier(element.expression.expression) &&
               element.expression.expression.text ===
                 'StoreRouterConnectingModule'
           )
-          .forEach(element => {
+          .forEach((element) => {
             const callExpression = element as ts.CallExpression;
             const callArgument = callExpression.arguments[0];
 
@@ -92,6 +92,6 @@ function addDefaultSerializer(): Rule {
   };
 }
 
-export default function(): Rule {
+export default function (): Rule {
   return chain([addDefaultSerializer()]);
 }

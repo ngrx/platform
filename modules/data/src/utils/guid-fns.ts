@@ -17,7 +17,7 @@
 function getUuid() {
   // The original implementation is based on this SO answer:
   // http://stackoverflow.com/a/2117523/200253
-  return 'xxxxxxxxxx4xxyxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxxxx4xxyxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     // tslint:disable-next-line:no-bitwise
     const r = (Math.random() * 16) | 0,
       // tslint:disable-next-line:no-bitwise
@@ -54,7 +54,7 @@ export function getGuidComb(seed?: number) {
     -12
   );
   return (
-    'xxxxxxxxxx4xxyxxx'.replace(/[xy]/g, function(c) {
+    'xxxxxxxxxx4xxyxxx'.replace(/[xy]/g, function (c) {
       // tslint:disable:no-bitwise
       const r = (Math.random() * 16) | 0,
         v = c === 'x' ? r : (r & 0x3) | 0x8;

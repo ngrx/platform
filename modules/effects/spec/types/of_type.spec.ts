@@ -4,7 +4,7 @@ import { compilerOptions } from './utils';
 describe('ofType()', () => {
   describe('action creators', () => {
     const expectSnippet = expecter(
-      code => `
+      (code) => `
       import { Action, createAction, props } from '@ngrx/store';
       import { Actions, ofType } from '@ngrx/effects';
       import { of } from 'rxjs';
@@ -62,7 +62,7 @@ describe('ofType()', () => {
 
   describe('strings with typed Actions', () => {
     const expectSnippet = expecter(
-      code => `
+      (code) => `
       import { Action } from '@ngrx/store';
       import { Actions, ofType } from '@ngrx/effects';
       import { of } from 'rxjs';
@@ -119,7 +119,7 @@ describe('ofType()', () => {
 
   describe('strings ofType generic', () => {
     const expectSnippet = expecter(
-      code => `
+      (code) => `
       import { Action } from '@ngrx/store';
       import { Actions, ofType } from '@ngrx/effects';
       import { of } from 'rxjs';

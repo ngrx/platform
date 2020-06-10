@@ -49,16 +49,14 @@
     "api": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Specifies if api success and failure actions should be generated.",
+      "description": "Specifies if api success and failure actions should be generated.",
       "aliases": ["a"],
       "x-prompt": "Should we generate success and failure actions?"
     },
     "creators": {
       "type": "boolean",
       "default": true,
-      "description":
-        "Specifies whether to use creator functions for handling actions and reducers.",
+      "description": "Specifies whether to use creator functions for handling actions and reducers.",
       "aliases": ["c"],
       "x-prompt": "Do you want to use the create function?"
     }

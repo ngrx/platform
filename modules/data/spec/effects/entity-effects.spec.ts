@@ -33,11 +33,11 @@ describe('EntityEffects (normal testing)', () => {
 
   function expectCompletion(completion: EntityAction, done: any) {
     effects.persist$.subscribe(
-      result => {
+      (result) => {
         expect(result).toEqual(completion);
         done();
       },
-      error => {
+      (error) => {
         fail(error);
       }
     );
@@ -474,8 +474,8 @@ describe('EntityEffects (normal testing)', () => {
     )
       .pipe(first())
       .subscribe(
-        result => expect(result).toEqual(sentinel),
-        err => {
+        (result) => expect(result).toEqual(sentinel),
+        (err) => {
           fail(err);
           done();
         },

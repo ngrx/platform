@@ -5,7 +5,7 @@ export function immutabilityCheckMetaReducer(
   reducer: ActionReducer<any, any>,
   checks: { action: (action: Action) => boolean; state: () => boolean }
 ): ActionReducer<any, any> {
-  return function(state, action) {
+  return function (state, action) {
     const act = checks.action(action) ? freeze(action) : action;
 
     const nextState = reducer(state, act);
@@ -19,7 +19,7 @@ function freeze(target: any) {
 
   const targetIsFunction = isFunction(target);
 
-  Object.getOwnPropertyNames(target).forEach(prop => {
+  Object.getOwnPropertyNames(target).forEach((prop) => {
     // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
     if (prop.startsWith('ɵ')) {
       return;

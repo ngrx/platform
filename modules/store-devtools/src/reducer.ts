@@ -183,8 +183,7 @@ export function liftReducerWith(
       computedStates,
       isLocked,
       isPaused,
-    } =
-      liftedState || initialLiftedState;
+    } = liftedState || initialLiftedState;
 
     if (!liftedState) {
       // Prevent mutating initialLiftedState
@@ -208,7 +207,7 @@ export function liftReducerWith(
       }
 
       skippedActionIds = skippedActionIds.filter(
-        id => idsToDelete.indexOf(id) === -1
+        (id) => idsToDelete.indexOf(id) === -1
       );
       stagedActionIds = [0, ...stagedActionIds.slice(excess + 1)];
       committedState = computedStates[excess].state;
@@ -302,7 +301,7 @@ export function liftReducerWith(
         if (index === -1) {
           skippedActionIds = [actionId, ...skippedActionIds];
         } else {
-          skippedActionIds = skippedActionIds.filter(id => id !== actionId);
+          skippedActionIds = skippedActionIds.filter((id) => id !== actionId);
         }
         // Optimization: we know history before this action hasn't changed
         minInvalidatedStateIndex = stagedActionIds.indexOf(actionId);
@@ -449,7 +448,7 @@ export function liftReducerWith(
       }
       case UPDATE: {
         const stateHasErrors =
-          computedStates.filter(state => state.error).length > 0;
+          computedStates.filter((state) => state.error).length > 0;
 
         if (stateHasErrors) {
           // Recompute all states
@@ -506,7 +505,7 @@ export function liftReducerWith(
           }
 
           // Recompute state history with latest reducer and update action
-          computedStates = computedStates.map(cmp => ({
+          computedStates = computedStates.map((cmp) => ({
             ...cmp,
             state: reducer(cmp.state, RECOMPUTE_ACTION),
           }));

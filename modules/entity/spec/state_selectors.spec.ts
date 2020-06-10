@@ -95,7 +95,7 @@ describe('Entity State Selectors', () => {
       const singleEntity: MemoizedSelector<
         EntityState<BookModel>,
         BookModel | undefined
-      > = createSelector(selectors.selectEntities, enitites => enitites[0]);
+      > = createSelector(selectors.selectEntities, (enitites) => enitites[0]);
     });
 
     it('should create a selector for selecting the list of models', () => {

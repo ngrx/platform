@@ -53,8 +53,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       getDelay = 0,
       saveDelay = 0,
       timeout: to = 0,
-    } =
-      config || {};
+    } = config || {};
     this.delete404OK = delete404OK;
     this.entityUrl = httpUrlGenerator.entityResource(entityName, root);
     this.entitiesUrl = httpUrlGenerator.collectionResource(entityName, root);
@@ -76,7 +75,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
     }
     return this.execute('DELETE', this.entityUrl + key, err).pipe(
       // forward the id of deleted entity as the result of the HTTP DELETE
-      map(result => key as number | string)
+      map((result) => key as number | string)
     );
   }
 

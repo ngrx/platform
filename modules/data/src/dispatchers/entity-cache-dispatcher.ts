@@ -203,7 +203,7 @@ export class EntityCacheDispatcher {
       ),
       filter((act: Action) => crid === (act as any).payload.correlationId),
       take(1),
-      mergeMap(act => {
+      mergeMap((act) => {
         return act.type === EntityCacheAction.SAVE_ENTITIES_CANCEL
           ? throwError(
               new PersistanceCanceled(
@@ -211,8 +211,8 @@ export class EntityCacheDispatcher {
               )
             )
           : act.type === EntityCacheAction.SAVE_ENTITIES_SUCCESS
-            ? of((act as SaveEntitiesSuccess).payload.changeSet)
-            : throwError((act as SaveEntitiesError).payload);
+          ? of((act as SaveEntitiesSuccess).payload.changeSet)
+          : throwError((act as SaveEntitiesError).payload);
       })
     );
   }

@@ -84,6 +84,6 @@ export class EntityCollectionReducerRegistry {
    */
   registerReducers(reducers: EntityCollectionReducers) {
     const keys = reducers ? Object.keys(reducers) : [];
-    keys.forEach(key => this.registerReducer(key, reducers[key]));
+    keys.forEach((key) => this.registerReducer(key, reducers[key]));
   }
 }

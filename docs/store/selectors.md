@@ -212,11 +212,11 @@ export interface State {
 
 export const selectSumEvenNums = createSelector(
   (state: State) => state.evenNums,
-  evenNums => evenNums.reduce((prev, curr) => prev + curr)
+  (evenNums) => evenNums.reduce((prev, curr) => prev + curr)
 );
 export const selectSumOddNums = createSelector(
   (state: State) => state.oddNums,
-  oddNums => oddNums.reduce((prev, curr) => prev + curr)
+  (oddNums) => oddNums.reduce((prev, curr) => prev + curr)
 );
 export const selectTotal = createSelector(
   selectSumEvenNums,
@@ -262,9 +262,7 @@ import * as fromRoot from './reducers';
 
 @Component({
   selector: 'my-app',
-  template: `
-    <div>Current Count: {{ counter | async }}</div>
-  `,
+  template: ` <div>Current Count: {{ counter | async }}</div> `,
 })
 class MyAppComponent {
   counter: Observable<number>;
@@ -296,8 +294,8 @@ import { map, filter } from 'rxjs/operators';
 
 store
   .pipe(
-    map(state => selectValues(state)),
-    filter(val => val !== undefined)
+    map((state) => selectValues(state)),
+    filter((val) => val !== undefined)
   )
   .subscribe(/* .. */);
 ```
@@ -311,7 +309,7 @@ import { map, filter } from 'rxjs/operators';
 store
   .pipe(
     select(selectValues(state)),
-    filter(val => val !== undefined)
+    filter((val) => val !== undefined)
   )
   .subscribe(/* .. */);
 ```
@@ -327,7 +325,7 @@ import { filter } from 'rxjs/operators';
 
 export const selectFilteredValues = pipe(
   select(selectValues),
-  filter(val => val !== undefined)
+  filter((val) => val !== undefined)
 );
 
 store.pipe(selectFilteredValues).subscribe(/* .. */);

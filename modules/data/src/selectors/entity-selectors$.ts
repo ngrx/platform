@@ -111,7 +111,7 @@ export class EntitySelectors$Factory {
       entityName,
     };
 
-    Object.keys(selectors).forEach(name => {
+    Object.keys(selectors).forEach((name) => {
       if (name.startsWith('select')) {
         // strip 'select' prefix from the selector fn name and append `$`
         // Ex: 'selectEntities' => 'entities$'

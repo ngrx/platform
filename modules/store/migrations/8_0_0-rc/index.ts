@@ -36,7 +36,7 @@ function removeNgRxStoreFreezePackage(): Rule {
 
     const dependencyCategories = ['dependencies', 'devDependencies'];
 
-    dependencyCategories.forEach(category => {
+    dependencyCategories.forEach((category) => {
       if (pkg[category] && pkg[category]['ngrx-store-freeze']) {
         delete pkg[category]['ngrx-store-freeze'];
       }
@@ -47,7 +47,7 @@ function removeNgRxStoreFreezePackage(): Rule {
   };
 }
 
-export default function(): Rule {
+export default function (): Rule {
   return chain([removeNgRxStoreFreezePackage(), replaceWithRuntimeChecks()]);
 }
 
@@ -96,7 +96,7 @@ function findStoreFreezeImportsToRemove(sourceFile: ts.SourceFile) {
     });
 
   const removements = imports.map(
-    i =>
+    (i) =>
       new RemoveChange(sourceFile.fileName, i.getStart(sourceFile), i.getEnd())
   );
   return removements;
@@ -112,9 +112,9 @@ function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile) {
 
     if (!ts.isArrayLiteralExpression(node)) return;
 
-    const elements = node.elements.map(elem => elem.getText(sourceFile));
+    const elements = node.elements.map((elem) => elem.getText(sourceFile));
     const elementsWithoutStoreFreeze = elements.filter(
-      elemText => elemText !== 'storeFreeze'
+      (elemText) => elemText !== 'storeFreeze'
     );
 
     if (elements.length !== elementsWithoutStoreFreeze.length) {
@@ -137,7 +137,7 @@ function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile) {
 }
 
 function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile) {
-  let changes: (InsertChange)[] = [];
+  let changes: InsertChange[] = [];
   ts.forEachChild(sourceFile, crawl);
   return changes;
 

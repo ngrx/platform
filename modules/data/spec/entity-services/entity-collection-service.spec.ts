@@ -68,7 +68,7 @@ describe('EntityCollectionService', () => {
       // N.B.: This technique does not detect errors
       heroCollectionService.loading$
         .pipe(
-          filter(loading => !loading),
+          filter((loading) => !loading),
           withLatestFrom(heroCollectionService.entities$)
         )
         .subscribe(([loading, data]) => {
@@ -184,8 +184,8 @@ describe('EntityCollectionService', () => {
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
       heroCollectionService.getAll(options).subscribe(
-        data => fail('should not have data but got data'),
-        error => {
+        (data) => fail('should not have data but got data'),
+        (error) => {
           expect(error instanceof PersistanceCanceled).toBe(true);
           expect(error.message).toBe('Test cancel');
           done();
@@ -203,7 +203,7 @@ describe('EntityCollectionService', () => {
 
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe(data => {
+      heroCollectionService.getAll(options).subscribe((data) => {
         expect(data).toEqual(heroes);
         done();
       }, fail);
@@ -221,7 +221,7 @@ describe('EntityCollectionService', () => {
       const options: EntityActionOptions = { correlationId };
       heroCollectionService
         .getAll(options)
-        .subscribe(data => expect(data).toEqual(heroes), fail);
+        .subscribe((data) => expect(data).toEqual(heroes), fail);
 
       setTimeout(
         () => heroCollectionService.cancel(correlationId),
@@ -376,7 +376,7 @@ describe('EntityCollectionService', () => {
       let responseDelay = delayMs;
       const savedHeroes: Hero[] = [];
 
-      successActions$.pipe(delay(1)).subscribe(act => {
+      successActions$.pipe(delay(1)).subscribe((act) => {
         successActionCount += 1;
         if (successActionCount === 2) {
           // Confirm hero2 actually saved before hero1
@@ -390,7 +390,7 @@ describe('EntityCollectionService', () => {
       dataService['add'].and.callFake((data: Hero) => {
         const result = of(data).pipe(
           delay(responseDelay),
-          tap(h => savedHeroes.push(h))
+          tap((h) => savedHeroes.push(h))
         );
         responseDelay = delayMs === responseDelay ? 1 : responseDelay;
         return result;
@@ -400,11 +400,11 @@ describe('EntityCollectionService', () => {
       // Confirm that each add returns with its own hero
       heroCollectionService
         .add(hero1)
-        .subscribe(data => expect(data).toEqual(hero1));
+        .subscribe((data) => expect(data).toEqual(hero1));
 
       heroCollectionService
         .add(hero2)
-        .subscribe(data => expect(data).toEqual(hero2));
+        .subscribe((data) => expect(data).toEqual(hero2));
     });
   }
 
@@ -428,7 +428,7 @@ describe('EntityCollectionService', () => {
         { id: 1, name: 'A' },
       ]);
       store.dispatch(action);
-      heroCollectionService.collection$.subscribe(collection => {
+      heroCollectionService.collection$.subscribe((collection) => {
         expect(collection.ids).toEqual([1]);
       });
     });
@@ -448,7 +448,7 @@ class Villain {
 
 const entityMetadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: villain => villain.key },
+  Villain: { selectId: (villain) => villain.key },
 };
 
 function entityServicesSetup() {
@@ -509,7 +509,7 @@ function entityServicesSetup() {
 
   /** Snoop on reducedActions$ while debugging a test */
   function reducedActions$Snoop() {
-    reducedActions$.subscribe(act => {
+    reducedActions$.subscribe((act) => {
       console.log('scannedActions$', act);
     });
   }

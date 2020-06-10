@@ -30,7 +30,7 @@ export class MinimalRouterStateSerializer
   private serializeRoute(
     route: ActivatedRouteSnapshot
   ): MinimalActivatedRouteSnapshot {
-    const children = route.children.map(c => this.serializeRoute(c));
+    const children = route.children.map((c) => this.serializeRoute(c));
     return {
       params: route.params,
       data: route.data,

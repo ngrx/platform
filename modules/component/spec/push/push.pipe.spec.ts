@@ -12,9 +12,7 @@ function wrapWithSpace(str: string): string {
 }
 
 @Component({
-  template: `
-    {{ (value$ | ngrxPush | json) || 'undefined' }}
-  `,
+  template: ` {{ (value$ | ngrxPush | json) || 'undefined' }} `,
 })
 class PushPipeTestComponent {
   value$: Observable<number> = of(42);

@@ -41,7 +41,7 @@ export class EntityEffects {
       this.actions.pipe(
         ofEntityOp(EntityOp.CANCEL_PERSIST),
         map((action: EntityAction) => action.payload.correlationId),
-        filter(id => id != null)
+        filter((id) => id != null)
       ),
     { dispatch: false }
   );
@@ -50,7 +50,7 @@ export class EntityEffects {
   persist$: Observable<Action> = createEffect(() =>
     this.actions.pipe(
       ofEntityOp(persistOps),
-      mergeMap(action => this.persist(action))
+      mergeMap((action) => this.persist(action))
     )
   );
 
@@ -86,8 +86,8 @@ export class EntityEffects {
       // Cancellation: returns Observable of CANCELED_PERSIST for a persistence EntityAction
       // whose correlationId matches cancellation correlationId
       const c = this.cancel$.pipe(
-        filter(id => action.payload.correlationId === id),
-        map(id =>
+        filter((id) => action.payload.correlationId === id),
+        map((id) =>
           this.entityActionFactory.createFromAction(action, {
             entityOp: EntityOp.CANCELED_PERSIST,
           })

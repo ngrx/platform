@@ -53,15 +53,13 @@
     "group": {
       "type": "boolean",
       "default": false,
-      "description":
-        "Group actions, reducers and effects within relative subfolders",
+      "description": "Group actions, reducers and effects within relative subfolders",
       "aliases": ["g"]
     },
     "creators": {
       "type": "boolean",
       "default": true,
-      "description":
-        "Specifies whether to use creator functions for handling actions and reducers.",
+      "description": "Specifies whether to use creator functions for handling actions and reducers.",
       "aliases": ["c"],
       "x-prompt": "Do you want to use the create function?"
     }

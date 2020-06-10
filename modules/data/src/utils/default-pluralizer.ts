@@ -25,7 +25,7 @@ export class DefaultPluralizer {
   ) {
     // merge each plural names object
     if (pluralNames) {
-      pluralNames.forEach(pn => this.registerPluralNames(pn));
+      pluralNames.forEach((pn) => this.registerPluralNames(pn));
     }
   }
 

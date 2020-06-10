@@ -15,7 +15,7 @@ import {
 } from './reducer';
 
 export function difference(first: any[], second: any[]) {
-  return first.filter(item => second.indexOf(item) < 0);
+  return first.filter((item) => second.indexOf(item) < 0);
 }
 
 /**
@@ -55,18 +55,11 @@ export function sanitizeActions(
   actionSanitizer: ActionSanitizer,
   actions: LiftedActions
 ): LiftedActions {
-  return Object.keys(actions).reduce(
-    (sanitizedActions, actionIdx) => {
-      const idx = Number(actionIdx);
-      sanitizedActions[idx] = sanitizeAction(
-        actionSanitizer,
-        actions[idx],
-        idx
-      );
-      return sanitizedActions;
-    },
-    <LiftedActions>{}
-  );
+  return Object.keys(actions).reduce((sanitizedActions, actionIdx) => {
+    const idx = Number(actionIdx);
+    sanitizedActions[idx] = sanitizeAction(actionSanitizer, actions[idx], idx);
+    return sanitizedActions;
+  }, <LiftedActions>{});
 }
 
 /**
@@ -166,10 +159,10 @@ export function isActionFiltered(
   const predicateMatch = predicate && !predicate(state, action.action);
   const safelistMatch =
     safelist &&
-    !action.action.type.match(safelist.map(s => escapeRegExp(s)).join('|'));
+    !action.action.type.match(safelist.map((s) => escapeRegExp(s)).join('|'));
   const blocklistMatch =
     blockedlist &&
-    action.action.type.match(blockedlist.map(s => escapeRegExp(s)).join('|'));
+    action.action.type.match(blockedlist.map((s) => escapeRegExp(s)).join('|'));
   return predicateMatch || safelistMatch || blocklistMatch;
 }
 

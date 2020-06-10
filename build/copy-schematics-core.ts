@@ -9,7 +9,7 @@ const copySchematics = createBuilder([
 copySchematics({
   scope: '@ngrx',
   packages,
-}).catch(err => {
+}).catch((err) => {
   console.error(err);
   process.exit(1);
 });

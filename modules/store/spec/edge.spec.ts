@@ -38,12 +38,12 @@ describe('ngRx Store', () => {
       let todosNextCount = 0;
       let todosCountNextCount = 0;
 
-      store.pipe(select('todos')).subscribe(todos => {
+      store.pipe(select('todos')).subscribe((todos) => {
         todosNextCount++;
         store.dispatch({ type: 'SET_COUNT', payload: todos.length });
       });
 
-      store.pipe(select('todoCount')).subscribe(count => {
+      store.pipe(select('todoCount')).subscribe((count) => {
         todosCountNextCount++;
       });
 

@@ -20,7 +20,7 @@ import {
 
 const originalConfigureTestingModule = TestBed.configureTestingModule;
 
-TestBed.configureTestingModule = function() {
+TestBed.configureTestingModule = function () {
   TestBed.resetTestingModule();
 
   return originalConfigureTestingModule.apply(null, arguments as any);

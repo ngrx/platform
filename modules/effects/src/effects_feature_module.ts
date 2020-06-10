@@ -11,8 +11,8 @@ export class EffectsFeatureModule {
     @Optional() storeRootModule: StoreRootModule,
     @Optional() storeFeatureModule: StoreFeatureModule
   ) {
-    effectSourceGroups.forEach(group =>
-      group.forEach(effectSourceInstance =>
+    effectSourceGroups.forEach((group) =>
+      group.forEach((effectSourceInstance) =>
         root.addEffects(effectSourceInstance)
       )
     );

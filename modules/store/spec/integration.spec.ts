@@ -41,7 +41,7 @@ interface TodoAppSchema {
 }
 
 describe('ngRx Integration spec', () => {
-  describe('todo integration spec', function() {
+  describe('todo integration spec', function () {
     let store: Store<TodoAppSchema>;
     let state: State<TodoAppSchema>;
 
@@ -149,7 +149,7 @@ describe('ngRx Integration spec', () => {
           store.select('visibilityFilter'),
           store.select('todos'),
           filterVisibleTodos
-        ).subscribe(visibleTodos => {
+        ).subscribe((visibleTodos) => {
           currentlyVisibleTodos = visibleTodos;
         });
 
@@ -189,12 +189,12 @@ describe('ngRx Integration spec', () => {
         const getTodosById = createSelector(
           (state: TodoAppSchema) => state.todos,
           (todos: Todo[], id: number) => {
-            return todos.find(p => p.id === id);
+            return todos.find((p) => p.id === id);
           }
         );
 
         const todo$ = store.select(getTodosById, 2);
-        todo$.pipe(take(3), toArray()).subscribe(res => {
+        todo$.pipe(take(3), toArray()).subscribe((res) => {
           expect(res).toEqual([
             undefined,
             {
@@ -223,15 +223,15 @@ describe('ngRx Integration spec', () => {
         const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
           'todos'
         );
-        const getTodos = createSelector(getTodosState, todos => todos);
+        const getTodos = createSelector(getTodosState, (todos) => todos);
         const getTodosById = createSelector(
           getTodos,
           (state: TodoAppSchema, id: number) => id,
-          (todos, id) => todos.find(todo => todo.id === id)
+          (todos, id) => todos.find((todo) => todo.id === id)
         );
 
         const todo$ = store.select(getTodosById, 2);
-        todo$.pipe(take(3), toArray()).subscribe(res => {
+        todo$.pipe(take(3), toArray()).subscribe((res) => {
           expect(res).toEqual([
             undefined,
             { id: 2, text: 'second todo', completed: false },
@@ -276,7 +276,7 @@ describe('ngRx Integration spec', () => {
           store.pipe(select('visibilityFilter')),
           store.pipe(select('todos')),
           filterVisibleTodos
-        ).subscribe(visibleTodos => {
+        ).subscribe((visibleTodos) => {
           currentlyVisibleTodos = visibleTodos;
         });
 
@@ -316,15 +316,15 @@ describe('ngRx Integration spec', () => {
         const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
           'todos'
         );
-        const getTodos = createSelector(getTodosState, todos => todos);
+        const getTodos = createSelector(getTodosState, (todos) => todos);
         const getTodosById = createSelector(
           getTodos,
           (state: TodoAppSchema, id: number) => id,
-          (todos, id) => todos.find(todo => todo.id === id)
+          (todos, id) => todos.find((todo) => todo.id === id)
         );
 
         const todo$ = store.pipe(select(getTodosById, 2));
-        todo$.pipe(take(3), toArray()).subscribe(res => {
+        todo$.pipe(take(3), toArray()).subscribe((res) => {
           expect(res).toEqual([
             undefined,
             { id: 2, text: 'second todo', completed: false },
@@ -349,11 +349,11 @@ describe('ngRx Integration spec', () => {
         const getTodosById = createSelector(
           getTodosState,
           (todos: Todo[], { id }: { id: number }) =>
-            todos.find(todo => todo.id === id)
+            todos.find((todo) => todo.id === id)
         );
 
         const todo$ = store.pipe(select(getTodosById, { id: 2 }));
-        todo$.pipe(take(3), toArray()).subscribe(res => {
+        todo$.pipe(take(3), toArray()).subscribe((res) => {
           expect(res).toEqual([
             undefined,
             {
@@ -419,7 +419,7 @@ describe('ngRx Integration spec', () => {
         },
       ];
 
-      store.pipe(select(state => state)).subscribe(state => {
+      store.pipe(select((state) => state)).subscribe((state) => {
         expect(state).toEqual(expected.shift());
       });
     });
@@ -454,7 +454,7 @@ describe('ngRx Integration spec', () => {
         items: [{ id: 1, completed: false, text: 'Item' }],
       };
 
-      store.pipe(select(state => state)).subscribe(state => {
+      store.pipe(select((state) => state)).subscribe((state) => {
         expect(state).toEqual(expected);
       });
     });

@@ -51,9 +51,7 @@ function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
     const [instrumentNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `StoreDevtoolsModule.instrument({ maxAge: ${
-        options.maxAge
-      }, logOnly: environment.production })`,
+      `StoreDevtoolsModule.instrument({ maxAge: ${options.maxAge}, logOnly: environment.production })`,
       modulePath
     );
 
@@ -99,7 +97,7 @@ function addNgRxStoreDevToolsToPackageJson() {
   };
 }
 
-export default function(options: StoreDevtoolsOptions): Rule {
+export default function (options: StoreDevtoolsOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 

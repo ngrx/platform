@@ -3,7 +3,7 @@ import { compilerOptions } from './utils';
 
 describe('createAction()', () => {
   const expectSnippet = expecter(
-    code => `
+    (code) => `
       import {createAction, props, union} from '@ngrx/store';
 
       ${code}

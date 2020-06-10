@@ -39,7 +39,9 @@ describe('EntityAction Operators', () => {
   };
 
   function dispatchTestActions() {
-    Object.keys(testActions).forEach(a => actions.next((<any>testActions)[a]));
+    Object.keys(testActions).forEach((a) =>
+      actions.next((<any>testActions)[a])
+    );
   }
 
   beforeEach(() => {
@@ -51,7 +53,7 @@ describe('EntityAction Operators', () => {
 
   it('#ofEntityType()', () => {
     // EntityActions of any kind
-    actions.pipe(ofEntityType()).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityType()).subscribe((ea) => results.push(ea));
 
     const expectedActions = [
       testActions.hero_query_all,
@@ -64,7 +66,7 @@ describe('EntityAction Operators', () => {
 
   it(`#ofEntityType('SomeType')`, () => {
     // EntityActions of one type
-    actions.pipe(ofEntityType('Hero')).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityType('Hero')).subscribe((ea) => results.push(ea));
 
     const expectedActions = [
       testActions.hero_query_all,
@@ -78,7 +80,7 @@ describe('EntityAction Operators', () => {
     // n.b. 'Bar' is not an EntityType even though it is an action type
     actions
       .pipe(ofEntityType('Hero', 'Villain', 'Bar'))
-      .subscribe(ea => results.push(ea));
+      .subscribe((ea) => results.push(ea));
 
     ofEntityTypeTest();
   });
@@ -86,14 +88,14 @@ describe('EntityAction Operators', () => {
   it('#ofEntityType(...arrayOfTypeNames)', () => {
     const types = ['Hero', 'Villain', 'Bar'];
 
-    actions.pipe(ofEntityType(...types)).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityType(...types)).subscribe((ea) => results.push(ea));
     ofEntityTypeTest();
   });
 
   it('#ofEntityType(arrayOfTypeNames)', () => {
     const types = ['Hero', 'Villain', 'Bar'];
 
-    actions.pipe(ofEntityType(types)).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityType(types)).subscribe((ea) => results.push(ea));
     ofEntityTypeTest();
   });
 
@@ -110,7 +112,7 @@ describe('EntityAction Operators', () => {
 
   it('#ofEntityType(...) is case sensitive', () => {
     // EntityActions of the 'hero' type, but it's lowercase so shouldn't match
-    actions.pipe(ofEntityType('hero')).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityType('hero')).subscribe((ea) => results.push(ea));
 
     dispatchTestActions();
     expect(results).toEqual([]);
@@ -121,7 +123,7 @@ describe('EntityAction Operators', () => {
   it('#ofEntityOp with string args', () => {
     actions
       .pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY))
-      .subscribe(ea => results.push(ea));
+      .subscribe((ea) => results.push(ea));
 
     ofEntityOpTest();
   });
@@ -129,20 +131,20 @@ describe('EntityAction Operators', () => {
   it('#ofEntityOp with ...rest args', () => {
     const ops = [EntityOp.QUERY_ALL, EntityOp.QUERY_MANY];
 
-    actions.pipe(ofEntityOp(...ops)).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityOp(...ops)).subscribe((ea) => results.push(ea));
     ofEntityOpTest();
   });
 
   it('#ofEntityOp with array args', () => {
     const ops = [EntityOp.QUERY_ALL, EntityOp.QUERY_MANY];
 
-    actions.pipe(ofEntityOp(ops)).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityOp(ops)).subscribe((ea) => results.push(ea));
     ofEntityOpTest();
   });
 
   it('#ofEntityOp()', () => {
     // EntityOps of any kind
-    actions.pipe(ofEntityOp()).subscribe(ea => results.push(ea));
+    actions.pipe(ofEntityOp()).subscribe((ea) => results.push(ea));
 
     const expectedActions = [
       testActions.hero_query_all,

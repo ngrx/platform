@@ -11,7 +11,7 @@ import { map, toArray, switchMap } from 'rxjs/operators';
 import { hot, cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 
-describe('Actions', function() {
+describe('Actions', function () {
   let actions$: Actions<AddAction | SubtractAction>;
   let dispatcher: ScannedActionsSubject;
 
@@ -33,7 +33,7 @@ describe('Actions', function() {
   // Class-based Action types
   const actions = [ADD, ADD, SUBTRACT, ADD, SUBTRACT];
 
-  beforeEach(function() {
+  beforeEach(function () {
     const injector = Injector.create([
       {
         provide: ScannedActionsSubject,
@@ -48,7 +48,7 @@ describe('Actions', function() {
     dispatcher = injector.get(ScannedActionsSubject);
   });
 
-  it('should be an observable of actions', function() {
+  it('should be an observable of actions', function () {
     const actions = [
       { type: ADD },
       { type: SUBTRACT },
@@ -65,17 +65,17 @@ describe('Actions', function() {
       },
     });
 
-    actions.forEach(action => dispatcher.next(action));
+    actions.forEach((action) => dispatcher.next(action));
     dispatcher.complete();
   });
 
   it('should filter out actions', () => {
-    const expected = actions.filter(type => type === ADD);
+    const expected = actions.filter((type) => type === ADD);
 
     actions$
       .pipe(
         ofType(ADD),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -84,17 +84,17 @@ describe('Actions', function() {
         },
       });
 
-    actions.forEach(action => dispatcher.next({ type: action }));
+    actions.forEach((action) => dispatcher.next({ type: action }));
     dispatcher.complete();
   });
 
   it('should filter out actions and ofType can take an explicit type argument', () => {
-    const expected = actions.filter(type => type === ADD);
+    const expected = actions.filter((type) => type === ADD);
 
     actions$
       .pipe(
         ofType<AddAction>(ADD),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -103,17 +103,19 @@ describe('Actions', function() {
         },
       });
 
-    actions.forEach(action => dispatcher.next({ type: action }));
+    actions.forEach((action) => dispatcher.next({ type: action }));
     dispatcher.complete();
   });
 
   it('should let you filter out multiple action types with explicit type argument', () => {
-    const expected = actions.filter(type => type === ADD || type === SUBTRACT);
+    const expected = actions.filter(
+      (type) => type === ADD || type === SUBTRACT
+    );
 
     actions$
       .pipe(
         ofType<AddAction | SubtractAction>(ADD, SUBTRACT),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -122,7 +124,7 @@ describe('Actions', function() {
         },
       });
 
-    actions.forEach(action => dispatcher.next({ type: action }));
+    actions.forEach((action) => dispatcher.next({ type: action }));
     dispatcher.complete();
   });
 
@@ -130,7 +132,7 @@ describe('Actions', function() {
     actions$
       .pipe(
         ofType(square),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -139,7 +141,7 @@ describe('Actions', function() {
         },
       });
 
-    [...actions, square.type].forEach(action =>
+    [...actions, square.type].forEach((action) =>
       dispatcher.next({ type: action })
     );
     dispatcher.complete();
@@ -151,7 +153,7 @@ describe('Actions', function() {
     actions$
       .pipe(
         ofType(multiply),
-        map(update => update.by),
+        map((update) => update.by),
         toArray()
       )
       .subscribe({
@@ -161,7 +163,7 @@ describe('Actions', function() {
       });
 
     // Unrelated Actions
-    actions.forEach(action => dispatcher.next({ type: action }));
+    actions.forEach((action) => dispatcher.next({ type: action }));
     // Action under test
     dispatcher.next(multiply({ by: MULTYPLY_BY }));
     dispatcher.complete();
@@ -176,7 +178,7 @@ describe('Actions', function() {
       .pipe(
         ofType(multiply),
         // Type is infered, even though untypedActions$ is Actions<Action>
-        map(update => update.by),
+        map((update) => update.by),
         toArray()
       )
       .subscribe({
@@ -186,7 +188,7 @@ describe('Actions', function() {
       });
 
     // Unrelated Actions
-    actions.forEach(action => dispatcher.next({ type: action }));
+    actions.forEach((action) => dispatcher.next({ type: action }));
     // Action under test
     dispatcher.next(multiply({ by: MULTYPLY_BY }));
     dispatcher.complete();
@@ -201,7 +203,7 @@ describe('Actions', function() {
       .pipe(
         ofType(divide, multiply),
         // Both have 'by' property
-        map(update => update.by),
+        map((update) => update.by),
         toArray()
       )
       .subscribe({
@@ -211,7 +213,7 @@ describe('Actions', function() {
       });
 
     // Unrelated Actions
-    actions.forEach(action => dispatcher.next({ type: action }));
+    actions.forEach((action) => dispatcher.next({ type: action }));
     // Actions under test, in specific order
     dispatcher.next(divide({ by: DIVIDE_BY }));
     dispatcher.next(divide({ by: MULTYPLY_BY }));
@@ -219,12 +221,12 @@ describe('Actions', function() {
   });
 
   it('should filter out actions by action creator and type string', () => {
-    const expected = [...actions.filter(type => type === ADD), square.type];
+    const expected = [...actions.filter((type) => type === ADD), square.type];
 
     actions$
       .pipe(
         ofType(ADD, square),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -233,7 +235,7 @@ describe('Actions', function() {
         },
       });
 
-    [...actions, square.type].forEach(action =>
+    [...actions, square.type].forEach((action) =>
       dispatcher.next({ type: action })
     );
 
@@ -241,13 +243,13 @@ describe('Actions', function() {
   });
 
   it('should filter out actions by action creator and type string, with explicit type argument', () => {
-    const expected = [...actions.filter(type => type === ADD), square.type];
+    const expected = [...actions.filter((type) => type === ADD), square.type];
 
     actions$
       .pipe(
         // Provided type overrides any inference from arguments
         ofType<AddAction | ReturnType<typeof square>>(ADD, square),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -256,7 +258,7 @@ describe('Actions', function() {
         },
       });
 
-    [...actions, square.type].forEach(action =>
+    [...actions, square.type].forEach((action) =>
       dispatcher.next({ type: action })
     );
 
@@ -270,7 +272,7 @@ describe('Actions', function() {
     actions$
       .pipe(
         ofType(divide, ADD, square, SUBTRACT, multiply),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({
@@ -303,7 +305,7 @@ describe('Actions', function() {
       .pipe(
         // Mixing all of them, more than 5. It still works, but we loose the type info
         ofType(divide, ADD, square, SUBTRACT, multiply, log),
-        map(update => update.type),
+        map((update) => update.type),
         toArray()
       )
       .subscribe({

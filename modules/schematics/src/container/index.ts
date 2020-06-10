@@ -82,11 +82,11 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
       : new NoopChange();
 
     const componentClass = source.statements.find(
-      stm => stm.kind === ts.SyntaxKind.ClassDeclaration
+      (stm) => stm.kind === ts.SyntaxKind.ClassDeclaration
     );
     const component = componentClass as ts.ClassDeclaration;
     const componentConstructor = component.members.find(
-      member => member.kind === ts.SyntaxKind.Constructor
+      (member) => member.kind === ts.SyntaxKind.Constructor
     );
     const cmpCtr = componentConstructor as ts.ConstructorDeclaration;
     const { pos } = cmpCtr;
@@ -118,7 +118,7 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
   };
 }
 
-export default function(options: ContainerOptions): Rule {
+export default function (options: ContainerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -141,7 +141,7 @@ export default function(options: ContainerOptions): Rule {
       url(options.testDepth === 'unit' ? './files' : './integration-files'),
       [
         options.skipTests
-          ? filter(path => !path.endsWith('.spec.ts.template'))
+          ? filter((path) => !path.endsWith('.spec.ts.template'))
           : noop(),
         applyTemplates({
           'if-flat': (s: string) => (options.flat ? '' : s),
@@ -153,8 +153,8 @@ export default function(options: ContainerOptions): Rule {
     );
 
     // Remove all undefined values to use the schematic defaults (in angular.json or the Angular schema)
-    (Object.keys(opts) as (keyof ContainerOptions)[]).forEach(
-      key => (opts[key] === undefined ? delete opts[key] : {})
+    (Object.keys(opts) as (keyof ContainerOptions)[]).forEach((key) =>
+      opts[key] === undefined ? delete opts[key] : {}
     );
 
     return chain([

@@ -12,7 +12,7 @@ export interface Config {
 export const modulesDir = './modules/';
 export const packages: PackageDescription[] = fs
   .readdirSync(modulesDir)
-  .filter(path => {
+  .filter((path) => {
     const stat = fs.statSync(`${modulesDir}${path}`);
     const isDir = stat.isDirectory();
 
@@ -24,4 +24,4 @@ export const packages: PackageDescription[] = fs
 
     return hasBuild;
   })
-  .map(pkg => ({ name: pkg }));
+  .map((pkg) => ({ name: pkg }));

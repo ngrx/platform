@@ -36,7 +36,7 @@ describe('EntityCacheEffects (normal testing)', () => {
   };
 
   function expectCompletion(completion: any, done: any) {
-    effects.saveEntities$.subscribe(result => {
+    effects.saveEntities$.subscribe((result) => {
       expect(result).toEqual(completion);
       done();
     }, fail);
@@ -92,7 +92,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     const action = new SaveEntities(cs, 'test/save', options);
     const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
 
-    effects.saveEntities$.subscribe(result => {
+    effects.saveEntities$.subscribe((result) => {
       expect(result instanceof SaveEntitiesSuccess).toBe(false);
       expect(result instanceof SaveEntitiesCanceled).toBe(true); // instead
       done();
@@ -108,7 +108,7 @@ describe('EntityCacheEffects (normal testing)', () => {
     const action = new SaveEntities(cs, 'test/save', options);
     const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
 
-    effects.saveEntities$.subscribe(result => {
+    effects.saveEntities$.subscribe((result) => {
       expect(result instanceof SaveEntitiesSuccess).toBe(true);
       done();
     }, done.fail);
@@ -120,7 +120,7 @@ describe('EntityCacheEffects (normal testing)', () => {
 
   it('should emit SAVE_ENTITIES_SUCCESS immediately if no changes to save', (done: any) => {
     const action = new SaveEntities({ changes: [] }, 'test/save', options);
-    effects.saveEntities$.subscribe(result => {
+    effects.saveEntities$.subscribe((result) => {
       expect(result instanceof SaveEntitiesSuccess).toBe(true);
       expect(dataService.saveEntities).not.toHaveBeenCalled();
       done();

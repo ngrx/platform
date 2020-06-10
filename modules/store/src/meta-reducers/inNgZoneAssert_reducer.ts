@@ -6,12 +6,10 @@ export function inNgZoneAssertMetaReducer(
   reducer: ActionReducer<any, Action>,
   checks: { action: (action: Action) => boolean }
 ) {
-  return function(state: any, action: Action) {
+  return function (state: any, action: Action) {
     if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
       throw new Error(
-        `Action '${
-          action.type
-        }' running outside NgZone. ${RUNTIME_CHECK_URL}#strictactionwithinngzone`
+        `Action '${action.type}' running outside NgZone. ${RUNTIME_CHECK_URL}#strictactionwithinngzone`
       );
     }
     return reducer(state, action);

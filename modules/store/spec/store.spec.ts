@@ -150,7 +150,7 @@ describe('ngRx Store', () => {
         g: { type: 'OTHER' },
       };
       const counterSteps = hot(actionSequence, actionValues);
-      counterSteps.subscribe(action => store.dispatch(action));
+      counterSteps.subscribe((action) => store.dispatch(action));
 
       const counterStateWithString = feature
         ? (store as any).select(feature, 'counter1')
@@ -195,7 +195,7 @@ describe('ngRx Store', () => {
     it('should let you select state with a key name', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe(action => store.dispatch(action));
+      counterSteps.subscribe((action) => store.dispatch(action));
 
       const counterStateWithString = store.pipe(select('counter1'));
 
@@ -210,9 +210,9 @@ describe('ngRx Store', () => {
     it('should let you select state with a selector function', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe(action => store.dispatch(action));
+      counterSteps.subscribe((action) => store.dispatch(action));
 
-      const counterStateWithFunc = store.pipe(select(s => s.counter1));
+      const counterStateWithFunc = store.pipe(select((s) => s.counter1));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -231,7 +231,7 @@ describe('ngRx Store', () => {
     it('should increment and decrement counter1', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe(action => store.dispatch(action));
+      counterSteps.subscribe((action) => store.dispatch(action));
 
       const counterState = store.pipe(select('counter1'));
 
@@ -244,7 +244,7 @@ describe('ngRx Store', () => {
     it('should increment and decrement counter1 using the dispatcher', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe(action => dispatcher.next(action));
+      counterSteps.subscribe((action) => dispatcher.next(action));
 
       const counterState = store.pipe(select('counter1'));
 
@@ -257,7 +257,7 @@ describe('ngRx Store', () => {
     it('should increment and decrement counter2 separately', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
-      counterSteps.subscribe(action => store.dispatch(action));
+      counterSteps.subscribe((action) => store.dispatch(action));
 
       const counter1State = store.pipe(select('counter1'));
       const counter2State = store.pipe(select('counter2'));
@@ -328,13 +328,13 @@ describe('ngRx Store', () => {
 
     it(`should work with added / removed reducers`, () => {
       store.addReducer(key, counterReducer);
-      store.pipe(take(1)).subscribe(val => {
+      store.pipe(take(1)).subscribe((val) => {
         expect(val.counter4).toBe(0);
       });
 
       store.removeReducer(key);
       store.dispatch({ type: INCREMENT });
-      store.pipe(take(1)).subscribe(val => {
+      store.pipe(take(1)).subscribe((val) => {
         expect(val.counter4).toBeUndefined();
       });
     });
@@ -449,15 +449,15 @@ describe('ngRx Store', () => {
     let metaReducerSpy2: Spy;
 
     beforeEach(() => {
-      metaReducerContainer = (function() {
+      metaReducerContainer = (function () {
         function metaReducer1(reducer: ActionReducer<any, any>) {
-          return function(state: any, action: Action) {
+          return function (state: any, action: Action) {
             return reducer(state, action);
           };
         }
 
         function metaReducer2(reducer: ActionReducer<any, any>) {
-          return function(state: any, action: Action) {
+          return function (state: any, action: Action) {
             return reducer(state, action);
           };
         }
@@ -640,15 +640,15 @@ describe('ngRx Store', () => {
     });
 
     it('should create a meta reducer with config injection token and call it with the expected reducer', () => {
-      const metaReducerContainer = (function() {
+      const metaReducerContainer = (function () {
         function metaReducer1(reducer: ActionReducer<any, any>) {
-          return function(state: any, action: Action) {
+          return function (state: any, action: Action) {
             return reducer(state, action);
           };
         }
 
         function metaReducer2(reducer: ActionReducer<any, any>) {
-          return function(state: any, action: Action) {
+          return function (state: any, action: Action) {
             return reducer(state, action);
           };
         }

@@ -54,7 +54,8 @@ export interface EntityDataModuleConfig {
   entityMetadata?: EntityMetadataMap;
   entityCacheMetaReducers?: (
     | MetaReducer<EntityCache, Action>
-    | InjectionToken<MetaReducer<EntityCache, Action>>)[];
+    | InjectionToken<MetaReducer<EntityCache, Action>>
+  )[];
   entityCollectionMetaReducers?: MetaReducer<EntityCollection, EntityAction>[];
   // Initial EntityCache state or a function that returns that state
   initialEntityCacheState?: EntityCache | (() => EntityCache);
@@ -139,7 +140,8 @@ export class EntityDataModuleWithoutEffects implements OnDestroy {
     @Inject(ENTITY_CACHE_META_REDUCERS)
     private metaReducers: (
       | MetaReducer<EntityCache, Action>
-      | InjectionToken<MetaReducer<EntityCache, Action>>)[]
+      | InjectionToken<MetaReducer<EntityCache, Action>>
+    )[]
   ) {
     // Add the @ngrx/data feature to the Store's features
     // as Store.forFeature does for StoreFeatureModule
@@ -150,7 +152,7 @@ export class EntityDataModuleWithoutEffects implements OnDestroy {
 
     const reducers: MetaReducer<EntityCache, Action>[] = (
       metaReducers || []
-    ).map(mr => {
+    ).map((mr) => {
       return mr instanceof InjectionToken ? injector.get(mr) : mr;
     });
 

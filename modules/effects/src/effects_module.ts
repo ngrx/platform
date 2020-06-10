@@ -111,7 +111,7 @@ export function createEffectInstances(
   injector: Injector,
   effects: Type<any>[]
 ): any[] {
-  return effects.map(effect => injector.get(effect));
+  return effects.map((effect) => injector.get(effect));
 }
 
 export function _provideForRootGuard(runner: EffectsRunner): any {

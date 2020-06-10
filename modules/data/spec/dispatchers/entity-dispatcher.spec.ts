@@ -396,7 +396,7 @@ export function commandDispatchTest(
         { id: 42, name: 'test 42' },
         { id: 84, name: 'test 84', saying: 'howdy' },
       ];
-      const keys = heroes.map(h => h.id);
+      const keys = heroes.map((h) => h.id);
       dispatcher.removeManyFromCache(heroes);
       const { entityOp, data } = dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.REMOVE_MANY);

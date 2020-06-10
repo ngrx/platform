@@ -169,8 +169,8 @@ export class StoreRouterConnectingModule {
           useClass: config.serializer
             ? config.serializer
             : config.routerState === RouterState.Full
-              ? DefaultRouterStateSerializer
-              : MinimalRouterStateSerializer,
+            ? DefaultRouterStateSerializer
+            : MinimalRouterStateSerializer,
         },
       ],
     };
@@ -198,10 +198,7 @@ export class StoreRouterConnectingModule {
 
   private setUpStoreStateListener(): void {
     this.store
-      .pipe(
-        select(this.stateKey as any),
-        withLatestFrom(this.store)
-      )
+      .pipe(select(this.stateKey as any), withLatestFrom(this.store))
       .subscribe(([routerStoreState, storeState]) => {
         this.navigateIfNeeded(routerStoreState, storeState);
       });
@@ -225,7 +222,7 @@ export class StoreRouterConnectingModule {
     if (this.router.url !== url) {
       this.storeState = storeState;
       this.trigger = RouterTrigger.STORE;
-      this.router.navigateByUrl(url).catch(error => {
+      this.router.navigateByUrl(url).catch((error) => {
         this.errorHandler.handleError(error);
       });
     }

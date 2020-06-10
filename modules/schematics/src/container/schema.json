@@ -53,8 +53,7 @@
       "alias": "p"
     },
     "style": {
-      "description":
-        "The file extension or preprocessor to use for style files.",
+      "description": "The file extension or preprocessor to use for style files.",
       "type": "string"
     },
     "skipTest": {
@@ -99,8 +98,7 @@
       "description": "Specifies the interface for the state."
     },
     "testDepth": {
-      "description":
-        "Specifies whether to create a unit test or an integration test.",
+      "description": "Specifies whether to create a unit test or an integration test.",
       "enum": ["unit", "integration"],
       "type": "string",
       "default": "integration"

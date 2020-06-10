@@ -23,7 +23,7 @@ export class EntityDefinitionService {
     entityMetadataMaps: EntityMetadataMap[]
   ) {
     if (entityMetadataMaps) {
-      entityMetadataMaps.forEach(map => this.registerMetadataMap(map));
+      entityMetadataMaps.forEach((map) => this.registerMetadataMap(map));
     }
   }
 
@@ -76,7 +76,7 @@ export class EntityDefinitionService {
    */
   registerMetadataMap(metadataMap: EntityMetadataMap = {}) {
     // The entity type name should be the same as the map key
-    Object.keys(metadataMap || {}).forEach(entityName =>
+    Object.keys(metadataMap || {}).forEach((entityName) =>
       this.registerMetadata({ entityName, ...metadataMap[entityName] })
     );
   }

@@ -28,7 +28,7 @@ export class EffectsRootModule {
   ) {
     runner.start();
 
-    rootEffects.forEach(effectSourceInstance =>
+    rootEffects.forEach((effectSourceInstance) =>
       sources.addEffects(effectSourceInstance)
     );
 

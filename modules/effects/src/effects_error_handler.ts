@@ -16,7 +16,7 @@ export function defaultEffectsErrorHandler<T extends Action>(
   retryAttemptLeft: number = MAX_NUMBER_OF_RETRY_ATTEMPTS
 ): Observable<T> {
   return observable$.pipe(
-    catchError(error => {
+    catchError((error) => {
       if (errorHandler) errorHandler.handleError(error);
       if (retryAttemptLeft <= 1) {
         return observable$; // last attempt

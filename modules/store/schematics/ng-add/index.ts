@@ -115,7 +115,7 @@ function addNgRxStoreToPackageJson() {
   };
 }
 
-export default function(options: RootStoreOptions): Rule {
+export default function (options: RootStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
@@ -142,7 +142,7 @@ export default function(options: RootStoreOptions): Rule {
     }
 
     const templateSource = apply(url('./files'), [
-      filter(_ => (options.minimal ? false : true)),
+      filter((_) => (options.minimal ? false : true)),
       applyTemplates({
         ...stringUtils,
         ...options,

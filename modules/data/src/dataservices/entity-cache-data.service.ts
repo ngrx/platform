@@ -60,7 +60,7 @@ export class EntityCacheDataService {
     let result$: Observable<ChangeSet> = this.http
       .post<ChangeSet>(url, changeSet)
       .pipe(
-        map(result => this.restoreUpdates(result)),
+        map((result) => this.restoreUpdates(result)),
         catchError(this.handleError({ method: 'POST', url, data: changeSet }))
       );
 
@@ -102,12 +102,12 @@ export class EntityCacheDataService {
       return changeSet;
     }
     let hasMutated = false;
-    changes = changes.map(item => {
+    changes = changes.map((item) => {
       if (item.op === updateOp && item.entities.length > 0) {
         hasMutated = true;
         return {
           ...item,
-          entities: (item as ChangeSetUpdate).entities.map(u => u.changes),
+          entities: (item as ChangeSetUpdate).entities.map((u) => u.changes),
         };
       } else {
         return item;
@@ -130,7 +130,7 @@ export class EntityCacheDataService {
       return changeSet;
     }
     let hasMutated = false;
-    changes = changes.map(item => {
+    changes = changes.map((item) => {
       if (item.op === updateOp) {
         // These are entities, not Updates; convert back to Updates
         hasMutated = true;

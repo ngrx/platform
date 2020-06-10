@@ -21,11 +21,11 @@ class CdAwareImplementation<U> implements OnDestroy {
   private readonly subscription: Unsubscribable;
   public cdAware: CdAware<U | undefined | null>;
   resetContextObserver: NextObserver<any> = {
-    next: _ => (this.renderedValue = undefined),
+    next: (_) => (this.renderedValue = undefined),
   };
   updateViewContextObserver: Observer<U | undefined | null> = {
     next: (n: U | undefined | null) => (this.renderedValue = n),
-    error: e => (this.error = e),
+    error: (e) => (this.error = e),
     complete: () => (this.completed = true),
   };
 

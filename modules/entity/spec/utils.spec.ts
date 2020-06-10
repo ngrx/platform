@@ -7,7 +7,7 @@ describe('Entity utils', () => {
     it('should not warn when key does exist', () => {
       const spy = spyOn(console, 'warn');
 
-      const key = selectIdValue(AClockworkOrange, book => book.id);
+      const key = selectIdValue(AClockworkOrange, (book) => book.id);
 
       expect(spy).not.toHaveBeenCalled();
     });

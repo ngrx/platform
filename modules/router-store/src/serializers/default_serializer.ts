@@ -18,7 +18,7 @@ export class DefaultRouterStateSerializer
   private serializeRoute(
     route: ActivatedRouteSnapshot
   ): ActivatedRouteSnapshot {
-    const children = route.children.map(c => this.serializeRoute(c));
+    const children = route.children.map((c) => this.serializeRoute(c));
     return {
       params: route.params,
       paramMap: route.paramMap,

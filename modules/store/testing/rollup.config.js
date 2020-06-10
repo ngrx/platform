@@ -7,6 +7,6 @@ export default {
   globals: {
     '@angular/core': 'ng.core',
     '@ngrx/store': 'ngrx.store',
-    'rxjs': 'Rx',
-  }
-}
+    rxjs: 'Rx',
+  },
+};

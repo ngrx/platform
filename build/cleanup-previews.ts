@@ -9,7 +9,7 @@ const cleanup = createBuilder([
 cleanup({
   scope: '',
   packages,
-}).catch(err => {
+}).catch((err) => {
   console.error(err);
   process.exit(1);
 });

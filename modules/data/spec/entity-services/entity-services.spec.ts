@@ -27,7 +27,9 @@ describe('EntityServices', () => {
     it('should emit EntityAction errors for multiple entity types', () => {
       const errors: EntityAction[] = [];
       const { entityActionFactory, entityServices } = entityServicesSetup();
-      entityServices.entityActionErrors$.subscribe(error => errors.push(error));
+      entityServices.entityActionErrors$.subscribe((error) =>
+        errors.push(error)
+      );
 
       entityServices.dispatch({ type: 'not-an-entity-action' });
       entityServices.dispatch(
@@ -66,7 +68,7 @@ describe('EntityServices', () => {
       } = entityServicesSetup();
 
       // entityCache$.subscribe() callback invoked immediately. The cache is empty at first.
-      entityServices.entityCache$.subscribe(ec => entityCacheValues.push(ec));
+      entityServices.entityCache$.subscribe((ec) => entityCacheValues.push(ec));
 
       // This first action to go through the Hero's EntityCollectionReducer
       // creates the collection in the EntityCache as a side-effect,
@@ -102,7 +104,7 @@ describe('EntityServices', () => {
       >('Villain');
 
       const entityCacheValues: any = [];
-      entityServices.entityCache$.subscribe(cache => {
+      entityServices.entityCache$.subscribe((cache) => {
         entityCacheValues.push(cache);
         if (entityCacheValues.length === 3) {
           expect(entityCacheValues[0]).toEqual({});
@@ -141,7 +143,7 @@ describe('EntityServices', () => {
       const { entityServices } = entityServicesSetup();
 
       // Skip initial value. Want the first one after merge is dispatched
-      entityServices.entityCache$.pipe(skip(1), first()).subscribe(cache => {
+      entityServices.entityCache$.pipe(skip(1), first()).subscribe((cache) => {
         expect(cache['Hero'].ids).toEqual([1, 2]);
         expect(cache['Villain'].entities['DE']).toEqual(villain);
         done();
@@ -164,7 +166,7 @@ class Villain {
 
 const entityMetadata: EntityMetadataMap = {
   Hero: {},
-  Villain: { selectId: villain => villain.key },
+  Villain: { selectId: (villain) => villain.key },
 };
 
 function entityServicesSetup() {

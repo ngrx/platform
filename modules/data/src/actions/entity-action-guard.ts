@@ -60,8 +60,9 @@ export class EntityActionGuard<T> {
     }
     data.forEach((id, i) => {
       if (this.isNotKeyType(id)) {
-        const msg = `${this.entityName} ', item ${i +
-          1}, is not a valid entity key (id)`;
+        const msg = `${this.entityName} ', item ${
+          i + 1
+        }, is not a valid entity key (id)`;
         this.throwError(action, msg);
       }
     });
@@ -149,9 +150,7 @@ export class EntityActionGuard<T> {
 
   private throwError(action: EntityAction, msg: string): never {
     throw new Error(
-      `${this.entityName} EntityAction guard for "${
-        action.type
-      }": payload ${msg}`
+      `${this.entityName} EntityAction guard for "${action.type}": payload ${msg}`
     );
   }
 }
