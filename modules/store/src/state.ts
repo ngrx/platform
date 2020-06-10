@@ -50,7 +50,7 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
 
     this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
       this.next(state);
-      scannedActions.next(action);
+      scannedActions.next(action!);
     });
   }
 
