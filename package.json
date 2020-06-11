@@ -34,6 +34,7 @@
     "bazel:lint-fix": "yarn bazel:format --lint=fix",
     "copy:schematics": "ts-node ./build/copy-schematics-core.ts",
     "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html",
+    "update:versions": "ts-node ./build/update-version-numbers.ts",
     "publish:next": "ts-node ./build/publish-next.ts",
     "publish:latest": "ts-node ./build/publish-latest.ts",
     "nx": "nx",
