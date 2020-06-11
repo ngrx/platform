@@ -60,8 +60,7 @@ describe('Store Schematic', () => {
     expect(content).not.toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
     );
-    expect(content).toMatch(/StoreModule.forRoot\({}/);
-
+    expect(content).toMatch(/StoreModule.forRoot\({}\),/);
     expect(files.indexOf(`${projectPath}/src/app/reducers/index.ts`)).toBe(-1);
   });
 
@@ -301,13 +300,32 @@ describe('Store Schematic', () => {
     expect(content).not.toMatch(/fooFeatureKey = 'foo'/);
   });
 
-  it('should add store runtime checks', () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+  it('should add the initial config correctly into an empty module', async () => {
+    const options = {
+      ...defaultOptions,
+      module: 'empty.module.ts',
+    };
 
-    const tree = schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(/runtimeChecks: {/);
-    expect(content).toMatch(/strictStateImmutability: true,/);
-    expect(content).toMatch(/strictActionImmutability: true/);
+    appTree.create(
+      `${projectPath}/src/app/empty.module.ts`,
+      `
+        import { NgModule } from '@angular/core';
+
+        @NgModule({
+          declarations: [],
+          imports: [],
+        })
+        export class EmptyModule {}
+      `
+    );
+
+    const tree = await schematicRunner
+      .runSchematicAsync('store', options, appTree)
+      .toPromise();
+    const content = tree.readContent(`${projectPath}/src/app/empty.module.ts`);
+
+    expect(content).toMatch(
+      /imports: \[StoreModule.forRoot\(reducers, { metaReducers }\), !environment.production \? StoreDevtoolsModule.instrument\(\) : \[\]\]/
+    );
   });
 });
