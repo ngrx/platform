@@ -17,12 +17,5 @@ import { NgZone } from '@angular/core';
  * ```
  */
 export function hasZone(z: NgZone): boolean {
-  let isNgZone = false;
-
-  function fn() {}
-  fn.apply = () => (isNgZone = true);
-
-  z.runOutsideAngular(fn);
-
-  return isNgZone;
+  return z instanceof NgZone;
 }
