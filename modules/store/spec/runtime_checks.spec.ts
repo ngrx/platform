@@ -82,7 +82,7 @@ describe('Runtime checks:', () => {
     });
   });
 
-  describe('USER_RUNTIME_CHECKS Token', () => {
+  xdescribe('USER_RUNTIME_CHECKS Token', () => {
     it('should be possible to toggle runtime reducers via the Injection Token', () => {
       const serializationCheckMetaReducerSpy = spyOn(
         metaReducers,

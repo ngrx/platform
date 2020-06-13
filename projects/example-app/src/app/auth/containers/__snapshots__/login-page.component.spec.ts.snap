@@ -24,7 +24,7 @@ exports[`Login Page should compile 1`] = `
         >
           <p>
             <mat-form-field
-              class="mat-form-field ng-tns-c1-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+              class="mat-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
             >
               <div
                 class="mat-form-field-wrapper"
@@ -42,7 +42,6 @@ exports[`Login Page should compile 1`] = `
                       aria-required="false"
                       class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
                       formcontrolname="username"
-                      id="mat-input-0"
                       matinput=""
                       placeholder="Username"
                       type="text"
@@ -52,16 +51,11 @@ exports[`Login Page should compile 1`] = `
                     >
                       
                       <label
-                        aria-owns="mat-input-0"
-                        class="mat-form-field-label ng-tns-c1-0 ng-star-inserted"
-                        for="mat-input-0"
-                        id="mat-form-field-label-1"
+                        class="mat-form-field-label"
                       >
                         
                         
-                        <span
-                          class="ng-tns-c1-0 ng-star-inserted"
-                        >
+                        <span>
                           Username
                         </span>
                         
@@ -73,7 +67,7 @@ exports[`Login Page should compile 1`] = `
                 </div>
                 
                 <div
-                  class="mat-form-field-underline ng-tns-c1-0 ng-star-inserted"
+                  class="mat-form-field-underline"
                 >
                   <span
                     class="mat-form-field-ripple"
@@ -85,7 +79,7 @@ exports[`Login Page should compile 1`] = `
                   
                   
                   <div
-                    class="mat-form-field-hint-wrapper ng-tns-c1-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                    class="mat-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
                     style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
                   >
                     
@@ -99,7 +93,7 @@ exports[`Login Page should compile 1`] = `
           </p>
           <p>
             <mat-form-field
-              class="mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+              class="mat-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
             >
               <div
                 class="mat-form-field-wrapper"
@@ -117,7 +111,6 @@ exports[`Login Page should compile 1`] = `
                       aria-required="false"
                       class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
                       formcontrolname="password"
-                      id="mat-input-1"
                       matinput=""
                       placeholder="Password"
                       type="password"
@@ -127,16 +120,11 @@ exports[`Login Page should compile 1`] = `
                     >
                       
                       <label
-                        aria-owns="mat-input-1"
-                        class="mat-form-field-label ng-tns-c1-1 mat-empty mat-form-field-empty ng-star-inserted"
-                        for="mat-input-1"
-                        id="mat-form-field-label-3"
+                        class="mat-form-field-label mat-empty mat-form-field-empty"
                       >
                         
                         
-                        <span
-                          class="ng-tns-c1-1 ng-star-inserted"
-                        >
+                        <span>
                           Password
                         </span>
                         
@@ -148,7 +136,7 @@ exports[`Login Page should compile 1`] = `
                 </div>
                 
                 <div
-                  class="mat-form-field-underline ng-tns-c1-1 ng-star-inserted"
+                  class="mat-form-field-underline"
                 >
                   <span
                     class="mat-form-field-ripple"
@@ -160,7 +148,7 @@ exports[`Login Page should compile 1`] = `
                   
                   
                   <div
-                    class="mat-form-field-hint-wrapper ng-tns-c1-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                    class="mat-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
                     style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
                   >
                     

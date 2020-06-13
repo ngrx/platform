@@ -22,11 +22,13 @@ import {
   findModuleFromOptions,
   parseName,
   isIvyEnabled,
+  getProject,
 } from '@ngrx/schematics/schematics-core';
 import { Schema as EntityOptions } from './schema';
 
 export default function (options: EntityOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
+    const projectConfig = getProject(host, options);
     options.path = getProjectPath(host, options);
 
     const parsedPath = parseName(options.path, options.name);
@@ -50,7 +52,9 @@ export default function (options: EntityOptions): Rule {
         stringUtils.group(name, options.group ? 'models' : ''),
       'group-reducers': (s: string) =>
         stringUtils.group(s, options.group ? 'reducers' : ''),
-      isIvyEnabled: isIvyEnabled(host, 'tsconfig.json'),
+      isIvyEnabled:
+        isIvyEnabled(host, 'tsconfig.json') &&
+        isIvyEnabled(host, `${projectConfig.root}/tsconfig.app.json`),
       ...(options as object),
     };
 

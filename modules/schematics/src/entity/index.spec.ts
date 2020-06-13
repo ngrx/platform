@@ -240,9 +240,15 @@ describe('Entity Schematic', () => {
 
   describe('View engine', () => {
     beforeEach(() => {
-      const tsConfig = JSON.parse(appTree.readContent('./tsconfig.json'));
+      const tsConfig = JSON.parse(
+        appTree.readContent('./projects/bar/tsconfig.app.json')
+      );
+      tsConfig.angularCompilerOptions = tsConfig.angularCompilerOptions || {};
       tsConfig.angularCompilerOptions.enableIvy = false;
-      appTree.overwrite('./tsconfig.json', JSON.stringify(tsConfig));
+      appTree.overwrite(
+        './projects/bar/tsconfig.app.json',
+        JSON.stringify(tsConfig)
+      );
     });
 
     it('should create and export a reducer as a function', () => {

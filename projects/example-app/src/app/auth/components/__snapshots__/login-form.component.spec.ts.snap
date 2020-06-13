@@ -3,7 +3,7 @@
 exports[`Login Page should compile 1`] = `
 <bc-login-form
   form={[Function FormGroup]}
-  submitted={[Function EventEmitter]}
+  submitted={[Function EventEmitter_]}
 >
   <mat-card>
     <mat-card-title>
@@ -56,7 +56,7 @@ exports[`Login Page should compile 1`] = `
 exports[`Login Page should disable the form if pending 1`] = `
 <bc-login-form
   form={[Function FormGroup]}
-  submitted={[Function EventEmitter]}
+  submitted={[Function EventEmitter_]}
 >
   <mat-card>
     <mat-card-title>
@@ -112,7 +112,7 @@ exports[`Login Page should display an error message if provided 1`] = `
 <bc-login-form
   errorMessage={[Function String]}
   form={[Function FormGroup]}
-  submitted={[Function EventEmitter]}
+  submitted={[Function EventEmitter_]}
 >
   <mat-card>
     <mat-card-title>
