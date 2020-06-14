@@ -17,6 +17,13 @@ import {
   shareReplay,
 } from 'rxjs/operators';
 import { debounceSync } from './debounceSync';
+import {
+  Injectable,
+  OnDestroy,
+  Optional,
+  InjectionToken,
+  Inject,
+} from '@angular/core';
 
 /**
  * Return type of the effect, that behaves differently based on whether the
@@ -27,7 +34,10 @@ export interface EffectReturnFn<T> {
   (t: T | Observable<T>): Subscription;
 }
 
-export class ComponentStore<T extends object> {
+export const initialStateToken = new InjectionToken('ComponentStore InitState');
+
+@Injectable()
+export class ComponentStore<T extends object> implements OnDestroy {
   // Should be used only in ngOnDestroy.
   private readonly destroySubject$ = new ReplaySubject<void>(1);
   // Exposed to any extending Store to be used for the teardowns.
@@ -38,7 +48,7 @@ export class ComponentStore<T extends object> {
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
 
-  constructor(defaultState?: T) {
+  constructor(@Optional() @Inject(initialStateToken) defaultState?: T) {
     // State can be initialized either through constructor, or initState or
     // setState.
     if (defaultState) {
