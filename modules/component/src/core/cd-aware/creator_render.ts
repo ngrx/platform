@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, NgZone } from '@angular/core';
-import { isNgZone } from '../utils';
+import { hasZone } from '../utils';
 
 export interface RenderConfig {
   ngZone: NgZone;
@@ -8,7 +8,7 @@ export interface RenderConfig {
 
 export function createRender<T>(config: RenderConfig): () => void {
   function render() {
-    if (isNgZone(config.ngZone)) {
+    if (hasZone(config.ngZone)) {
       config.cdRef.markForCheck();
     } else {
       config.cdRef.detectChanges();
