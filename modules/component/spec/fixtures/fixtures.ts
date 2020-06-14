@@ -1,6 +1,5 @@
 import createSpy = jasmine.createSpy;
 import { ChangeDetectorRef, NgZone } from '@angular/core';
-import { MockNgZone } from './mock-ng-zone';
 import { MockNoopNgZone } from './mock-noop-ng-zone';
 
 /**
