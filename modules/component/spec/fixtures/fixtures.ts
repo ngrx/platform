@@ -1,12 +1,6 @@
 import createSpy = jasmine.createSpy;
-import { ChangeDetectorRef } from '@angular/core';
-import { MockNgZone } from './mock-ng-zone';
+import { ChangeDetectorRef, NgZone } from '@angular/core';
 import { MockNoopNgZone } from './mock-noop-ng-zone';
-
-/**
- * this is not exposed as NgZone should never be exposed to get miss matched with the real one
- */
-class NgZone extends MockNgZone {}
 
 /**
  * this is not exposed as NgZone should never be exposed to get miss matched with the real one
