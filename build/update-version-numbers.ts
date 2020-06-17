@@ -23,7 +23,9 @@ if (newVersion) {
 }
 
 function updateVersions(version: string) {
-  [updatePackageJson, updateAddSchematic].forEach((m) => m(version));
+  [updatePackageJson, updateAddSchematic, archivePreviousDocs].forEach((m) =>
+    m(version)
+  );
 }
 
 function updatePackageJson(version: string) {
@@ -32,20 +34,52 @@ function updatePackageJson(version: string) {
     const pkg = JSON.parse(content);
     if (pkg?.version && pkg?.name?.startsWith('@ngrx')) {
       pkg.version = version;
-      const updatedContent = JSON.stringify(pkg, null, 2);
-      writeFileSync(file, `${updatedContent}${EOL}`);
+      writeAsJson(file, pkg);
     }
   });
+
+  console.log('✔ Version updated in package.json files.');
 }
 
 function updateAddSchematic(version: string) {
   glob
     .sync('**/libs-version.ts', { ignore: '**/node_modules/**' })
     .map((file) => {
-      const content = readFileSync(file, 'utf-8');
       writeFileSync(
         file,
         `export const platformVersion = '^${version}';${EOL}`
       );
     });
+
+  console.log('✔ Version updated for ng-add schematics.');
+}
+
+function archivePreviousDocs(version: string) {
+  // only deprecate previous version on MAJOR releases
+  if (!version.endsWith('.0.0')) {
+    return;
+  }
+  const path = './projects/ngrx.io/content/navigation.json';
+
+  const [major] = version.split('.');
+  const prevousVersion = Number(major) - 1;
+  const content = readFileSync(path, 'utf-8');
+  const navigation = JSON.parse(content);
+  navigation['docVersions'] = [
+    {
+      title: `v${prevousVersion}`,
+      url: `https://v${prevousVersion}.ngrx.io`,
+    },
+    ...navigation['docVersions'],
+  ];
+  writeAsJson(path, navigation);
+
+  console.log(
+    '⚠ Previous version added to website doc versions but site needs to be archived manually.'
+  );
+}
+
+function writeAsJson(path: string, json: object) {
+  const content = JSON.stringify(json, null, 2);
+  writeFileSync(path, `${content}${EOL}`);
 }
