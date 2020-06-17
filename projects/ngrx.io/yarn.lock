@@ -221,10 +221,12 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-10.0.0-rc.6.tgz#635bd45d985e012e46e7fe58e7d409bbdf686f7a"
   integrity sha512-d1QKT9aeD5/0pYpHTYa878GiRMOox8qCwM51zZMeyVwhUtT3H5LxLqZBtBBOnXE4THtk8o7RhXUiGR84toX04w==
 
-"@angular/material@^9.2.4":
-  version "9.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-9.2.4.tgz#2666ef606fbb88d60f8e2f18c5e4f94a3dd572d8"
-  integrity sha512-LkoTXE6B0slvMhvfZDdPWaz4yaYLkaAp5VSPunI9pxGsPxzqEV9e210wC1/sjG/76Nk8Ep7/2z9XKac8Q9bMwA==
+"@angular/material@^10.0.0-rc.2":
+  version "10.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-10.0.0-rc.2.tgz#fa0e4a7899bc20c8563fea037d50aedebe243968"
+  integrity sha512-knE7t3z6Y9iDnXLX2JqsWwm1UnJHoLkZECqUJ7oh8k5asOnaPbbtLnrjqEe9QUh5Hjk9jKVYkEQdRosIIJSJ9A==
+  dependencies:
+    tslib "^2.0.0"
 
 "@angular/platform-browser-dynamic@^10.0.0-rc.6":
   version "10.0.0-rc.6"
