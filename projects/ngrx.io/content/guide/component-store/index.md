@@ -34,7 +34,7 @@ ComponentStore can be initialized in 2 ways:
   providers: [ComponentStore],
 })
 export class MoviesPageComponent {
-  movies$: this.componentStore.state$.pipe(
+  movies$ = this.componentStore.state$.pipe(
     map(state => state.movies),
   );
 
