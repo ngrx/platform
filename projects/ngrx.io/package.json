@@ -79,7 +79,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^10.0.0-rc.6",
-    "@angular/cdk": "^9.2.4",
+    "@angular/cdk": "^10.0.0-rc.2",
     "@angular/common": "^10.0.0-rc.6",
     "@angular/core": "^10.0.0-rc.6",
     "@angular/elements": "^10.0.0-rc.6",
