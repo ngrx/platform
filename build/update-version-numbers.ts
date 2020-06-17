@@ -22,14 +22,30 @@ if (newVersion) {
   });
 }
 
-function updateVersions(updatedVersion: string) {
+function updateVersions(version: string) {
+  [updatePackageJson, updateAddSchematic].forEach((m) => m(version));
+}
+
+function updatePackageJson(version: string) {
   glob.sync('**/package.json', { ignore: '**/node_modules/**' }).map((file) => {
     const content = readFileSync(file, 'utf-8');
     const pkg = JSON.parse(content);
     if (pkg?.version && pkg?.name?.startsWith('@ngrx')) {
-      pkg.version = updatedVersion;
+      pkg.version = version;
       const updatedContent = JSON.stringify(pkg, null, 2);
       writeFileSync(file, `${updatedContent}${EOL}`);
     }
   });
+}
+
+function updateAddSchematic(version: string) {
+  glob
+    .sync('**/libs-version.ts', { ignore: '**/node_modules/**' })
+    .map((file) => {
+      const content = readFileSync(file, 'utf-8');
+      writeFileSync(
+        file,
+        `export const platformVersion = '^${version}';${EOL}`
+      );
+    });
 }
