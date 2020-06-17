@@ -7,6 +7,7 @@ import {
   interval,
   timer,
   Observable,
+  asapScheduler,
 } from 'rxjs';
 import {
   delayWhen,
@@ -15,6 +16,7 @@ import {
   map,
   tap,
   finalize,
+  observeOn,
 } from 'rxjs/operators';
 
 describe('Component Store', () => {
@@ -140,14 +142,17 @@ describe('Component Store', () => {
     it(
       'does not throws an Error when updater is called with async Observable' +
         ' before initialization, that emits the value after initialization',
-      () => {
+      marbles((m) => {
         const componentStore = new ComponentStore();
         const INIT_STATE = { initState: 'passed' };
         const UPDATED_STATE = { updatedState: 'proccessed' };
 
-        // Record all the values that go through state$ into an array
-        const results: object[] = [];
-        componentStore.state$.subscribe((state) => results.push(state));
+        // Record all the values that go through state$.
+        const recordedStateValues$ = componentStore.state$.pipe(
+          publishReplay()
+        );
+        // Need to "connect" to start getting notifications.
+        (recordedStateValues$ as ConnectableObservable<object>).connect();
 
         const asyncronousObservable$ = of(UPDATED_STATE).pipe(
           // Delays until the state gets the init value.
@@ -163,8 +168,10 @@ describe('Component Store', () => {
         // Trigger initial state.
         componentStore.setState(INIT_STATE);
 
-        expect(results).toEqual([INIT_STATE, UPDATED_STATE]);
-      }
+        m.expect(recordedStateValues$).toBeObservable(
+          m.hot('(iu)', { i: INIT_STATE, u: UPDATED_STATE })
+        );
+      })
     );
   });
 
@@ -228,7 +235,9 @@ describe('Component Store', () => {
 
         // Update twice with different values
         updater(UPDATED);
+        m.flush(); // flushed after each update
         updater(UPDATE_VALUE);
+        m.flush(); // flushed after each update
 
         expect(results).toEqual([
           { value: 'init' },
@@ -236,6 +245,52 @@ describe('Component Store', () => {
             value: 'init',
             updated: true,
           },
+          {
+            value: 'updated',
+            updated: true,
+          },
+        ]);
+
+        // New subsriber gets the latest value only.
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('s', {
+            s: {
+              value: 'updated',
+              updated: true,
+            },
+          })
+        );
+      })
+    );
+
+    it(
+      'with latest value within the same microtask',
+      marbles((m) => {
+        const UPDATED: Partial<State> = { updated: true };
+        const UPDATE_VALUE: Partial<State> = { value: 'updated' };
+        const updater = componentStore.updater(
+          (state, value: Partial<State>) => ({
+            ...state,
+            ...value,
+          })
+        );
+
+        // Record all the values that go through state$ into an array
+        const results: object[] = [];
+        componentStore.state$.subscribe((state) => results.push(state));
+
+        // Update twice with different values
+        updater(UPDATED);
+        updater(UPDATE_VALUE);
+
+        // 👆👆👆
+        // Notice there is no "flush" until this point - all synchronous
+        m.flush();
+
+        expect(results).toEqual([
+          { value: 'init' },
+          // Notice there is no "intermediary" value of
+          // {value: 'init', updated: true,},
           {
             value: 'updated',
             updated: true,
@@ -497,10 +552,48 @@ describe('Component Store', () => {
 
         const observable$ = m.hot('      1-2---3', observableValues);
         const updater$ = m.cold('        a--b--c|');
+        const expectedSelector$ = m.hot('v-wx--(yz)-', {
+          v: 'one a',
+          w: 'two a',
+          x: 'two b',
+          y: 'three b', // 👈 different scheduler then 'select'
+          z: 'three c',
+        });
+
+        const selectorValue$ = componentStore.select((s) => s.value);
+        const selector$ = componentStore.select(
+          selectorValue$,
+          observable$,
+          (s1, o) => o + ' ' + s1
+        );
+
+        componentStore.updater((state, newValue: string) => ({
+          value: newValue,
+        }))(updater$);
+
+        m.expect(selector$).toBeObservable(expectedSelector$);
+      })
+    );
+
+    it(
+      'can combine with other Observables and skip intermediary values on' +
+        ' asapScheduler',
+      marbles((m) => {
+        const observableValues = {
+          '1': 'one',
+          '2': 'two',
+          '3': 'three',
+        };
+
+        const observable$ = m
+          .hot('                         1-2---3', observableValues)
+          .pipe(observeOn(asapScheduler));
+        const updater$ = m.cold('        a--b--c|');
         const expectedSelector$ = m.hot('w-xy--z-', {
           w: 'one a',
           x: 'two a',
           y: 'two b',
+          // 'three b', // 👈 same scheduler as 'select'
           z: 'three c',
         });
 
@@ -559,12 +652,13 @@ describe('Component Store', () => {
           '3': 'three',
         };
 
-        const observable$ = m.cold('     1-2---3|', observableValues);
+        const observable$ = m.hot('      1-2---3', observableValues);
         const updater$ = m.cold('        a--b--c|');
-        const expectedSelector$ = m.hot('w-xy--z-', {
-          w: 'one a',
-          x: 'two a',
-          y: 'two b',
+        const expectedSelector$ = m.hot('v-wx--(yz)-', {
+          v: 'one a',
+          w: 'two a',
+          x: 'two b',
+          y: 'three b', // 👈 different scheduler then 'select'
           z: 'three c',
         });
 
