@@ -10,7 +10,7 @@ interface NonIdClass {
   something: any;
 }
 
-const sorter = <T>(a: T, b: T) => 'foo';
+const sorter = <T>(a: T, b: T) => 1;
 
 const filter = <T>(entities: T[], pattern?: any) => entities;
 
