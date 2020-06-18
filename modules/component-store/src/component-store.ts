@@ -8,6 +8,7 @@ import {
   combineLatest,
   Subject,
   queueScheduler,
+  scheduled,
 } from 'rxjs';
 import {
   concatMap,
@@ -16,7 +17,6 @@ import {
   map,
   distinctUntilChanged,
   shareReplay,
-  observeOn,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -94,7 +94,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
           concatMap((value) =>
             this.isInitialized
               ? // Push the value into queueScheduler
-                of(value, queueScheduler).pipe(
+                scheduled([value], queueScheduler).pipe(
                   withLatestFrom(this.stateSubject$)
                 )
               : // If state was not initialized, we'll throw an error.

@@ -6,12 +6,9 @@ import {
   flushMicrotasks,
   fakeAsync,
   tick,
-  flush,
-  discardPeriodicTasks,
 } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { interval, Observable } from 'rxjs';
-import { fakeSchedulers } from 'rxjs-marbles/jest';
 import { tap } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 
