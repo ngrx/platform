@@ -1,87 +1,91 @@
 import { Component, Type, Injectable } from '@angular/core';
 import { ComponentStore } from '../src';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import {
+  TestBed,
+  ComponentFixture,
+  flushMicrotasks,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { interval, Observable } from 'rxjs';
-import { fakeSchedulers } from 'rxjs-marbles/jest';
 import { tap } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 
 describe('ComponentStore integration', () => {
-  jest.useFakeTimers();
-
   // The same set of tests is run against different versions of how
   // ComponentStore may be used - making sure all of them work.
   function testWith(setup: () => Promise<SetupData<Child>>) {
-    it('does not emit until state is initialized', async () => {
-      const state = await setup();
+    let state: SetupData<Child>;
+    beforeEach(async () => {
+      state = await setup();
+    });
 
+    it('does not emit until state is initialized', fakeAsync(() => {
       expect(state.parent.isChildVisible).toBe(true);
       expect(state.hasChild()).toBe(true);
 
       state.fixture.detectChanges();
+      flushMicrotasks();
+
       // No values emitted,             👇 no initial state
       expect(state.propChanges).toEqual([]);
       expect(state.prop2Changes).toEqual([]);
-    });
+    }));
 
-    it('gets initial value when state is initialized', async () => {
-      const state = await setup();
-
+    it('gets initial value when state is initialized', fakeAsync(() => {
       state.child.init();
+      flushMicrotasks();
       //                            init state👇
       expect(state.propChanges).toEqual(['initial Value']);
       expect(state.prop2Changes).toEqual([undefined]);
-    });
 
-    it(
-      'effect updates values',
-      fakeSchedulers(async (advance) => {
-        const state = await setup();
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
 
-        state.child.init();
-
-        advance(40);
-        // New value pushed every 10 ms.
-        expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
-      })
-    );
-
-    it('updates values imperatively', async () => {
-      const state = await setup();
-
+    it('effect updates values', fakeAsync(() => {
       state.child.init();
 
-      state.child.updateProp('new value');
-      state.child.updateProp('yay!!!');
+      tick(40);
+      // New value pushed every 10 ms.
+      expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
 
-      expect(state.propChanges).toContain('new value');
-      expect(state.propChanges).toContain('yay!!!');
-    });
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
 
-    it(
-      'stops observables when destroyed',
-      fakeSchedulers(async (advance) => {
-        const state = await setup();
+    it('updates values imperatively', fakeAsync(() => {
+      state!.child.init();
 
-        state.child.init();
+      state!.child.updateProp('new value');
+      flushMicrotasks();
+      state!.child.updateProp('yay!!!');
+      flushMicrotasks();
 
-        advance(40);
-        // New value pushed every 10 ms.
-        expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
+      expect(state!.propChanges).toContain('new value');
+      expect(state!.propChanges).toContain('yay!!!');
 
-        state.parent.isChildVisible = false;
-        state.fixture.detectChanges();
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
 
-        advance(20);
-        // Still at the same values, so effect stopped running
-        expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
-      })
-    );
+    it('stops observables when destroyed', fakeAsync(() => {
+      state.child.init();
 
-    it('ComponentStore is destroyed', async () => {
-      const state = await setup();
+      tick(40);
+      // New value pushed every 10 ms.
+      expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
 
+      state.parent.isChildVisible = false;
+      state.fixture.detectChanges();
+
+      tick(20);
+      // Still at the same values, so effect stopped running
+      expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
+    }));
+
+    it('ComponentStore is destroyed', () => {
       state.child.init();
 
       state.parent.isChildVisible = false;
@@ -130,6 +134,7 @@ describe('ComponentStore integration', () => {
     hasChild: () => boolean;
     propChanges: string[];
     prop2Changes: Array<number | undefined>;
+    destroy: () => void;
     componentStoreDestroySpy: jest.SpyInstance;
   }
 
@@ -143,7 +148,7 @@ describe('ComponentStore integration', () => {
 
   async function setupTestBed<T extends Child>(
     childClass: Type<T>
-  ): Promise<Omit<SetupData<T>, 'componentStoreDestroySpy'>> {
+  ): Promise<Omit<SetupData<T>, 'componentStoreDestroySpy' | 'destroy'>> {
     await TestBed.configureTestingModule({
       declarations: [ParentComponent, childClass],
       imports: [CommonModule],
@@ -218,6 +223,7 @@ describe('ComponentStore integration', () => {
     );
     return {
       ...setup,
+      destroy: () => setup.child.componentStore.ngOnDestroy(),
       componentStoreDestroySpy,
     };
   }
@@ -257,6 +263,7 @@ describe('ComponentStore integration', () => {
     const componentStoreDestroySpy = jest.spyOn(setup.child, 'ngOnDestroy');
     return {
       ...setup,
+      destroy: () => setup.child.ngOnDestroy(),
       componentStoreDestroySpy,
     };
   }
@@ -314,6 +321,7 @@ describe('ComponentStore integration', () => {
     );
     return {
       ...setup,
+      destroy: () => setup.child.propsStore.ngOnDestroy(),
       componentStoreDestroySpy,
     };
   }
@@ -363,6 +371,7 @@ describe('ComponentStore integration', () => {
     const componentStoreDestroySpy = jest.spyOn(setup.child, 'ngOnDestroy');
     return {
       ...setup,
+      destroy: () => setup.child.ngOnDestroy(),
       componentStoreDestroySpy,
     };
   }

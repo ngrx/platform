@@ -7,6 +7,8 @@ import {
   throwError,
   combineLatest,
   Subject,
+  queueScheduler,
+  scheduled,
 } from 'rxjs';
 import {
   concatMap,
@@ -16,7 +18,7 @@ import {
   distinctUntilChanged,
   shareReplay,
 } from 'rxjs/operators';
-import { debounceSync } from './debounceSync';
+import { debounceSync } from './debounce-sync';
 import {
   Injectable,
   OnDestroy,
@@ -49,8 +51,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   readonly state$: Observable<T> = this.select((s) => s);
 
   constructor(@Optional() @Inject(initialStateToken) defaultState?: T) {
-    // State can be initialized either through constructor, or initState or
-    // setState.
+    // State can be initialized either through constructor or setState.
     if (defaultState) {
       this.initState(defaultState);
     }
@@ -92,7 +93,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
         .pipe(
           concatMap((value) =>
             this.isInitialized
-              ? of(value).pipe(withLatestFrom(this.stateSubject$))
+              ? // Push the value into queueScheduler
+                scheduled([value], queueScheduler).pipe(
+                  withLatestFrom(this.stateSubject$)
+                )
               : // If state was not initialized, we'll throw an error.
                 throwError(
                   Error(`${this.constructor.name} has not been initialized`)
@@ -177,7 +181,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     const projector: (...args: any[]) => R = args.pop();
     if (args.length === 0) {
       // If projector was the only argument then we'll use map operator.
-      observable$ = this.stateSubject$.pipe(map(projector));
+      observable$ = this.stateSubject$.pipe(debounceSync(), map(projector));
     } else {
       // If there are multiple arguments, we're chaining selectors, so we need
       // to take the combineLatest of them before calling the map function.
