@@ -50,6 +50,7 @@
     "format:check": "nx format:check",
     "update": "ng update @nrwl/workspace",
     "update:check": "ng update",
+    "update:versions": "ts-node ./build/update-version-numbers.ts",
     "lint": "nx workspace-lint && ng lint",
     "dep-graph": "nx dep-graph",
     "workspace-schematic": "nx workspace-schematic",
