@@ -23,7 +23,7 @@ var_5: &run_in_browser
     - image: circleci/node:12.9.1-browsers
 var_6: &docs_in_node
   docker:
-    - image: circleci/node:10.16
+    - image: circleci/node:12.9.1
 var_7: &docs_in_browser
   docker:
     - image: circleci/node:10.13-browsers
