@@ -55,7 +55,8 @@
     "dep-graph": "nx dep-graph",
     "workspace-schematic": "nx workspace-schematic",
     "help": "nx help",
-    "pret": "prettier **/*.ts --write"
+    "pret": "prettier **/*.ts --write",
+    "generate-module": "ts-node ./build/generate-module"
   },
   "engines": {
     "node": ">=10.9.0 <13.0.0",

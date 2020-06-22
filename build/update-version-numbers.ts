@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { EOL } from 'os';
 import * as readline from 'readline';
 import * as glob from 'glob';
-import { createBuilder } from './util';
+import { createBuilder, writeAsJson, findAllModulePackageJsons } from './util';
 import { packages } from './config';
 
 // get the version from the command
@@ -25,13 +25,13 @@ if (newVersion) {
 }
 
 function updateVersions(version: string) {
-  const publishNext = createBuilder([
+  const update = createBuilder([
     ['Update package.json', createPackageJsonBuilder(version)],
     ['Update ng-add schematic', createUpdateAddSchematicBuilder(version)],
     ['Update docs version picker', createArchivePreviousDocsBuilder(version)],
   ]);
 
-  publishNext({
+  update({
     scope: '@ngrx',
     packages,
   }).catch((err) => {
@@ -42,16 +42,11 @@ function updateVersions(version: string) {
 
 function createPackageJsonBuilder(version: string) {
   return async () => {
-    glob
-      .sync('**/package.json', { ignore: '**/node_modules/**' })
-      .map((file) => {
-        const content = readFileSync(file, 'utf-8');
-        const pkg = JSON.parse(content);
-        if (pkg?.version && pkg?.name?.startsWith('@ngrx')) {
-          pkg.version = version;
-          writeAsJson(file, pkg);
-        }
-      });
+    const packages = findAllModulePackageJsons();
+    packages.map(({ pkg, path }) => {
+      pkg.version = version;
+      writeAsJson(path, pkg);
+    });
   };
 }
 
@@ -93,9 +88,4 @@ function createArchivePreviousDocsBuilder(version: string) {
       '\r\n⚠ Previous version added to website doc versions but site needs to be archived manually.'
     );
   };
-}
-
-function writeAsJson(path: string, json: object) {
-  const content = JSON.stringify(json, null, 2);
-  writeFileSync(path, `${content}${EOL}`);
 }

@@ -5,6 +5,7 @@ import * as fsExtra from 'fs-extra';
 import * as path from 'path';
 import * as rimraf from 'rimraf';
 import { Config } from './config';
+import { EOL } from 'os';
 
 export type RunnerFn = (config: Config) => Promise<any>;
 export type TaskDef = [string, RunnerFn];
@@ -161,4 +162,22 @@ export function getPrNumber(prNumber: string, circlePR: string): string {
   }
 
   return PR_NUMBER;
+}
+
+export function writeAsJson(path: string, json: object) {
+  const content = JSON.stringify(json, null, 2);
+  fs.writeFileSync(path, `${content}${EOL}`);
+}
+
+export function findAllModulePackageJsons() {
+  return glob
+    .sync('**/package.json', { ignore: '**/node_modules/**' })
+    .map((path) => {
+      const content = fs.readFileSync(path, 'utf-8');
+      const pkg = JSON.parse(content);
+      return { path, pkg };
+    })
+    .filter(({ pkg }) => {
+      return pkg?.version && pkg?.name?.startsWith('@ngrx');
+    });
 }

@@ -1,0 +1,38 @@
+{
+  "name": "@ngrx/{{MODULE_NAME_KEBAB}}",
+  "version": "9.2.0",
+  "description": "{{MODULE_DESCRIPTION}}",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "Angular",
+    "NgRx",
+    "Schematics"
+  ],
+  "author": "NgRx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "peerDependencies": {
+    "rxjs": "RXJS_VERSION"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-update": {
+    "packageGroup": [
+      "@ngrx/{{MODULE_NAME_KEBAB}}",
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools"
+    ],
+    "migrations": "./migrations/migration.json"
+  },
+  "sideEffects": false
+}

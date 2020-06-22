@@ -21,7 +21,6 @@ export const packages: PackageDescription[] = fs
     }
 
     const hasBuild = fs.existsSync(`${modulesDir}${path}/BUILD`);
-
     return hasBuild;
   })
   .map((pkg) => ({ name: pkg }));

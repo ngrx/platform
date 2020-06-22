@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRx{{MODULE_NAME_KEBAB}}",
+  "title": "NgRx {{MODULE_NAME_KEBAB}} Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add @ngrx/{{MODULE_NAME_KEBAB}} as dependency to package.json (e.g., --skipPackageJson)."
+    }
+  },
+  "required": []
+}
