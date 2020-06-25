@@ -1,3 +1,55 @@
+<a name="10.0.0-beta.0"></a>
+
+# [10.0.0-beta.0](https://github.com/ngrx/platform/compare/9.2.0...10.0.0-beta.0) (2020-06-25)
+
+### Bug Fixes
+
+- **component:** detect zone.js using instanceof comparison ([#2547](https://github.com/ngrx/platform/issues/2547)) ([7128667](https://github.com/ngrx/platform/commit/7128667))
+- **component:** removed ivy checks as obsolete ([#2579](https://github.com/ngrx/platform/issues/2579)) ([e239950](https://github.com/ngrx/platform/commit/e239950))
+- **component-store:** export EffectReturnFn interface ([#2555](https://github.com/ngrx/platform/issues/2555)) ([f2a2212](https://github.com/ngrx/platform/commit/f2a2212))
+- **data:** mergeQuerySet uses mergeStrategy ([#2430](https://github.com/ngrx/platform/issues/2430)) ([e1720b4](https://github.com/ngrx/platform/commit/e1720b4)), closes [#2368](https://github.com/ngrx/platform/issues/2368)
+- **entity:** remove incorrect ComparerStr type ([#2584](https://github.com/ngrx/platform/issues/2584)) ([4796c97](https://github.com/ngrx/platform/commit/4796c97))
+- **schematics:** add comma before devtools for empty imports ([#2542](https://github.com/ngrx/platform/issues/2542)) ([f2d4ebc](https://github.com/ngrx/platform/commit/f2d4ebc))
+
+### Chores
+
+- update Angular dependencies to latest v10 RC ([#2573](https://github.com/ngrx/platform/issues/2573)) ([ed28449](https://github.com/ngrx/platform/commit/ed28449))
+
+### Features
+
+- **component-store:** add support for selectors ([#2539](https://github.com/ngrx/platform/issues/2539)) ([47e7ba3](https://github.com/ngrx/platform/commit/47e7ba3))
+- **component-store:** add support for side effects ([#2544](https://github.com/ngrx/platform/issues/2544)) ([f892cc8](https://github.com/ngrx/platform/commit/f892cc8))
+- **component-store:** make library compatible with ViewEngine ([#2580](https://github.com/ngrx/platform/issues/2580)) ([ba0818e](https://github.com/ngrx/platform/commit/ba0818e))
+- **router-store:** add route fragment selector ([#2543](https://github.com/ngrx/platform/issues/2543)) ([aba7368](https://github.com/ngrx/platform/commit/aba7368))
+
+### Performance Improvements
+
+- **component-store:** push updates to queueScheduler and single selectors to asapSchedulers ([#2586](https://github.com/ngrx/platform/issues/2586)) ([58073ab](https://github.com/ngrx/platform/commit/58073ab))
+
+### BREAKING CHANGES
+
+- **entity:** The compare function is used in two places, neither of which expect it to be able to return a string:
+  The first caller is the Array prototype sort function, and there it "should return a negative, zero, or positive value, depending on the arguments".
+  The second caller does a numerical comparison with the result.
+
+Even though an id can be a string, the result of a comparison shouldn't be.
+
+BEFORE:
+
+The sortComparer types allow for a string to be returned
+
+AFTER:
+
+The sortComparer types only allow a number to be returned
+
+- BEFORE:
+
+Angular v9 are minimum dependencies
+
+AFTER:
+
+Angular v10 are minimum dependencies
+
 <a name="9.2.0"></a>
 
 # [9.2.0](https://github.com/ngrx/platform/compare/9.1.2...9.2.0) (2020-05-28)
@@ -195,13 +247,17 @@ The init action is now dispatched based on the identifier of the effect (via ngr
 BEFORE:
 
 ```sh
+
 ng generate action User --spec
+
 ```
 
 AFTER:
 
 ```sh
+
 ng generate action User
+
 ```
 
 - **store:** BEFORE:
