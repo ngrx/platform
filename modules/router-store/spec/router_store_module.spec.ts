@@ -66,7 +66,7 @@ describe('Router Store Module', () => {
           storeRouterConnectingModule
         )).navigateIfNeeded.calls.allArgs();
 
-        expect(actual.length).toBe(1);
+        expect(actual.length).toBe(2);
         expect(actual[0]).toEqual(logs[0]);
         done();
       });
@@ -127,7 +127,7 @@ describe('Router Store Module', () => {
           storeRouterConnectingModule
         )).navigateIfNeeded.calls.allArgs();
 
-        expect(actual.length).toBe(1);
+        expect(actual.length).toBe(2);
         expect(actual[0]).toEqual(logs[0]);
         done();
       });

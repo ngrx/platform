@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import {
   ROUTER_CANCEL,
   ROUTER_ERROR,
+  ROUTER_NAVIGATED,
   ROUTER_NAVIGATION,
   RouterAction,
 } from './actions';
@@ -27,6 +28,7 @@ export function routerReducer<
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:
     case ROUTER_CANCEL:
+    case ROUTER_NAVIGATED:
       return {
         state: routerAction.payload.routerState,
         navigationId: routerAction.payload.event.id,

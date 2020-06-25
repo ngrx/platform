@@ -491,7 +491,7 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
           { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: null }, // ROUTER_NAVIGATED event in the store
+          { type: 'store', state: { url: '/next', navigationId: 2 } }, // ROUTER_NAVIGATED event in the store
           { type: 'action', action: ROUTER_NAVIGATED },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
@@ -699,7 +699,14 @@ describe('integration spec', () => {
           { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
           { type: 'router', event: 'ResolveStart', url: '/next' },
           { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: null }, // ROUTER_NAVIGATED event in the store
+          {
+            type: 'store',
+            state: {
+              url: '/next-custom',
+              navigationId: 2,
+              params: { test: 1 },
+            },
+          }, // ROUTER_NAVIGATED event in the store
           { type: 'action', action: ROUTER_NAVIGATED },
           { type: 'router', event: 'NavigationEnd', url: '/next' },
         ]);
