@@ -240,9 +240,14 @@ describe('Entity Schematic', () => {
 
   describe('View engine', () => {
     beforeEach(() => {
-      const tsConfig = JSON.parse(
-        appTree.readContent('./projects/bar/tsconfig.app.json')
-      );
+      // remove the first line comment from the json file
+      const json = appTree
+        .readContent('./projects/bar/tsconfig.app.json')
+        .split('\n')
+        .slice(1)
+        .join('\n');
+      const tsConfig = JSON.parse(json);
+
       tsConfig.angularCompilerOptions = tsConfig.angularCompilerOptions || {};
       tsConfig.angularCompilerOptions.enableIvy = false;
       appTree.overwrite(
