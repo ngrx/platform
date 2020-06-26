@@ -151,9 +151,6 @@ jobs:
           root: dist
           paths:
             - modules/*
-      - run:
-          name: Build Docs
-          command: yarn nx run-many --target=build --projects=docs-app
       # Store artifacts from docs build
       - persist_to_workspace:
           root: projects/ngrx.io/dist
@@ -171,10 +168,6 @@ jobs:
       # Build
       - run: yarn
       - write_master_hash
-      - run:
-          name: Run Affected Release Builds
-          command: yarn nx affected --target=build-release --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
-      # Build docs if necessary
       - run:
           name: Run Affected Builds
           command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1

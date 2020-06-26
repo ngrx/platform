@@ -15,7 +15,6 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "strictlyOrderedTargets": ["build-release"],
         "cacheableOperations": ["build", "build-release", "test", "lint", "e2e"]
       }
     }
