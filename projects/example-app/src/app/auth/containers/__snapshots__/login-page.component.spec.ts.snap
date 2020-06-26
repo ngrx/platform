@@ -40,7 +40,7 @@ exports[`Login Page should compile 1`] = `
                     <input
                       aria-invalid="false"
                       aria-required="false"
-                      class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
+                      class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
                       formcontrolname="username"
                       matinput=""
                       placeholder="Username"
@@ -109,7 +109,7 @@ exports[`Login Page should compile 1`] = `
                     <input
                       aria-invalid="false"
                       aria-required="false"
-                      class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
+                      class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
                       formcontrolname="password"
                       matinput=""
                       placeholder="Password"
