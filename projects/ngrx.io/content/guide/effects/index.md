@@ -114,12 +114,9 @@ export class MovieEffects {
 
   loadMovies$ = createEffect(() => this.actions$.pipe(
     ofType('[Movies Page] Load Movies'),
-    mergeMap(() => this.moviesService.getAll()
-      .pipe(
-        map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
-        catchError(() => EMPTY)
-      ))
-    )
+    mergeMap(() => this.moviesService.getAll()),
+    map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
+    catchError(() => EMPTY)
   );
 
   constructor(
@@ -161,12 +158,9 @@ export class MovieEffects {
   loadMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
-      mergeMap(() => this.moviesService.getAll()
-        .pipe(
-          map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
-          catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        )
-      )
+      mergeMap(() => this.moviesService.getAll()),
+      map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
+      catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
     )
   );
 
