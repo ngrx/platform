@@ -12,7 +12,7 @@ import {
   defaultAppOptions,
 } from '../../../schematics-core/testing';
 
-fdescribe('Reducer Schematic', () => {
+describe('Reducer Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')
