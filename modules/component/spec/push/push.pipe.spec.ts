@@ -1,7 +1,6 @@
 import { PushPipe } from '../../src/push';
 import { async, TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { getGlobalThis } from '../../src/core/utils';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
@@ -25,32 +24,6 @@ let pushPipeTestComponent: {
 let componentNativeElement: any;
 
 const setupPushPipeComponent = () => {
-  TestBed.configureTestingModule({
-    providers: [
-      PushPipe,
-      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-    ],
-  });
-  pushPipe = TestBed.inject(PushPipe);
-};
-const setupPushPipeComponentZoneLess = () => {
-  getGlobalThis().ng = undefined;
-
-  TestBed.configureTestingModule({
-    providers: [
-      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      {
-        provide: PushPipe,
-        useClass: PushPipe,
-        depths: [ChangeDetectorRef],
-      },
-    ],
-  });
-  pushPipe = TestBed.get(PushPipe);
-};
-
-const setupPushPipeComponentZoneFull = () => {
-  getGlobalThis().ng = undefined;
   TestBed.configureTestingModule({
     providers: [
       PushPipe,
