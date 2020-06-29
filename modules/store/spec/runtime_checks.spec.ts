@@ -1,19 +1,9 @@
 import * as ngCore from '@angular/core';
 import { TestBed, fakeAsync, flush } from '@angular/core/testing';
-import {
-  Store,
-  StoreModule,
-  META_REDUCERS,
-  USER_RUNTIME_CHECKS,
-  createAction,
-} from '..';
+import { Store, StoreModule, META_REDUCERS, createAction } from '..';
 import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks, Action } from '../src/models';
-import * as metaReducers from '../src/meta-reducers';
-import {
-  REGISTERED_ACTION_TYPES,
-  resetRegisteredActionTypes,
-} from '../src/globals';
+import { resetRegisteredActionTypes } from '../src/globals';
 
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
@@ -79,83 +69,6 @@ describe('Runtime checks:', () => {
         strictActionWithinNgZone: false,
         strictActionTypeUniqueness: false,
       });
-    });
-  });
-
-  xdescribe('USER_RUNTIME_CHECKS Token', () => {
-    it('should be possible to toggle runtime reducers via the Injection Token', () => {
-      const serializationCheckMetaReducerSpy = spyOn(
-        metaReducers,
-        'serializationCheckMetaReducer'
-      ).and.callThrough();
-
-      TestBed.configureTestingModule({
-        imports: [StoreModule.forRoot({})],
-        providers: [
-          {
-            provide: USER_RUNTIME_CHECKS,
-            useValue: {
-              strictStateSerializability: true,
-            },
-          },
-        ],
-      });
-
-      const _store = TestBed.inject(Store);
-      expect(serializationCheckMetaReducerSpy).toHaveBeenCalled();
-    });
-
-    it('should not create a meta reducer if not desired', () => {
-      const serializationCheckMetaReducerSpy = spyOn(
-        metaReducers,
-        'serializationCheckMetaReducer'
-      ).and.callThrough();
-      const inNgZoneAssertMetaReducerSpy = spyOn(
-        metaReducers,
-        'inNgZoneAssertMetaReducer'
-      ).and.callThrough();
-
-      TestBed.configureTestingModule({
-        imports: [StoreModule.forRoot({})],
-        providers: [
-          {
-            provide: USER_RUNTIME_CHECKS,
-            useValue: {
-              strictStateSerializability: false,
-              strictActionWithinNgZone: false,
-            },
-          },
-        ],
-      });
-
-      const _store = TestBed.inject(Store);
-      expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
-      expect(inNgZoneAssertMetaReducerSpy).not.toHaveBeenCalled();
-    });
-
-    it('should create immutability meta reducer without config', () => {
-      const serializationCheckMetaReducerSpy = spyOn(
-        metaReducers,
-        'serializationCheckMetaReducer'
-      ).and.callThrough();
-      const immutabilityCheckMetaReducerSpy = spyOn(
-        metaReducers,
-        'immutabilityCheckMetaReducer'
-      ).and.callThrough();
-
-      TestBed.configureTestingModule({
-        imports: [StoreModule.forRoot({})],
-        providers: [
-          {
-            provide: USER_RUNTIME_CHECKS,
-            useValue: {},
-          },
-        ],
-      });
-
-      const _store = TestBed.inject(Store);
-      expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
-      expect(immutabilityCheckMetaReducerSpy).toHaveBeenCalled();
     });
   });
 
