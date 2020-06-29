@@ -24,12 +24,6 @@
       "description": "The name of the project.",
       "aliases": ["p"]
     },
-    "skipTest": {
-      "type": "boolean",
-      "description": "When true, does not create test files.",
-      "x-deprecated": "Use skipTests instead.",
-      "default": false
-    },
     "skipTests": {
       "type": "boolean",
       "description": "When true, does not create test files.",

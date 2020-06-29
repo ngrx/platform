@@ -34,12 +34,6 @@
       "description": "Specifies the declaring module.",
       "aliases": ["m"]
     },
-    "skipTest": {
-      "type": "boolean",
-      "description": "When true, does not create test files.",
-      "x-deprecated": "Use skipTests instead.",
-      "default": false
-    },
     "skipTests": {
       "type": "boolean",
       "default": false,

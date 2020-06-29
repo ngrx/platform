@@ -16,11 +16,6 @@ export interface Schema {
 
   /**
    * When true, does not create test files.
-   * @deprecated use skipTests instead
-   */
-  skipTest?: boolean;
-  /**
-   * When true, does not create test files.
    */
   skipTests?: boolean;
 
