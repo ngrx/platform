@@ -170,7 +170,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --with-deps
 
   build-bazel:
     <<: *run_in_node
