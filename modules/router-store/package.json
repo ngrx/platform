@@ -35,7 +35,8 @@
       "@ngrx/router-store",
       "@ngrx/data",
       "@ngrx/schematics",
-      "@ngrx/store-devtools"
+      "@ngrx/store-devtools",
+      "@ngrx/component-store"
     ],
     "migrations": "./migrations/migration.json"
   },

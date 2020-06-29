@@ -25,5 +25,18 @@
     "@angular/core": "^10.0.0",
     "rxjs": "^6.5.3"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "ng-update": {
+    "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools",
+      "@ngrx/component-store"
+    ],
+    "migrations": "./migrations/migration.json"
+  }
 }
