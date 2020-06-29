@@ -629,6 +629,9 @@
               },
               {
                 "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/*.* projects/ngrx.io/dist/ngrx.io/"
+              },
+              {
+                "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/CNAME projects/ngrx.io/dist/ngrx.io/"
               }
             ]
           }
