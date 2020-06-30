@@ -56,12 +56,6 @@
       "description": "The file extension or preprocessor to use for style files.",
       "type": "string"
     },
-    "skipTest": {
-      "type": "boolean",
-      "description": "When true, does not create test files.",
-      "x-deprecated": "Use skipTests instead.",
-      "default": false
-    },
     "skipTests": {
       "type": "boolean",
       "description": "When true, does not create test files."

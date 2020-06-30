@@ -124,10 +124,6 @@ export default function (options: EffectOptions): Rule {
       options.module = findModuleFromOptions(host, options);
     }
 
-    if (!options.skipTests && options.skipTest) {
-      options.skipTests = options.skipTest;
-    }
-
     const parsedPath = parseName(options.path, options.name || '');
     options.name = parsedPath.name;
     options.path = parsedPath.path;

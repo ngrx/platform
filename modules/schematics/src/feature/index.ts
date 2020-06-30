@@ -8,10 +8,6 @@ import {
 import { Schema as FeatureOptions } from './schema';
 
 export default function (options: FeatureOptions): Rule {
-  if (!options.skipTests && options.skipTest) {
-    options.skipTests = options.skipTest;
-  }
-
   return (host: Tree, context: SchematicContext) => {
     return chain([
       schematic('action', {

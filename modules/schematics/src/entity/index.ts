@@ -35,10 +35,6 @@ export default function (options: EntityOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
-    if (!options.skipTests && options.skipTest) {
-      options.skipTests = options.skipTest;
-    }
-
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
