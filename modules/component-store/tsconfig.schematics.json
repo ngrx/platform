@@ -7,7 +7,9 @@
     "moduleResolution": "node",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/component-store",
-    "paths": {},
+    "paths": {
+      "@ngrx/component-store/schematics-core": ["./schematics-core"]
+    },
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2018", "dom"],
