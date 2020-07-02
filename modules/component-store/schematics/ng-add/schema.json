@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxComponentStore",
+  "title": "NgRx Component Store Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add @ngrx/component-store as dependency to package.json (e.g., --skipPackageJson)."
+    }
+  },
+  "required": []
+}
