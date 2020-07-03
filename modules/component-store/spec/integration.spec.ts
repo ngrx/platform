@@ -70,6 +70,19 @@ describe('ComponentStore integration', () => {
       state.destroy();
     }));
 
+    it('updates the same property immediately', fakeAsync(() => {
+      state!.child.init();
+
+      state!.child.updateProp('new value'); // no flushing in between
+      state!.child.updateProp('yay!!!');
+      flushMicrotasks();
+
+      expect(state!.propChanges).toEqual(['yay!!!']);
+
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
+
     it('stops observables when destroyed', fakeAsync(() => {
       state.child.init();
 

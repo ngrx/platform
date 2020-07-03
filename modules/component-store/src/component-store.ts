@@ -7,8 +7,6 @@ import {
   throwError,
   combineLatest,
   Subject,
-  queueScheduler,
-  scheduled,
 } from 'rxjs';
 import {
   concatMap,
@@ -93,10 +91,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
         .pipe(
           concatMap((value) =>
             this.isInitialized
-              ? // Push the value into queueScheduler
-                scheduled([value], queueScheduler).pipe(
-                  withLatestFrom(this.stateSubject$)
-                )
+              ? of(value).pipe(withLatestFrom(this.stateSubject$))
               : // If state was not initialized, we'll throw an error.
                 throwError(
                   Error(`${this.constructor.name} has not been initialized`)

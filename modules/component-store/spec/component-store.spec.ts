@@ -151,13 +151,11 @@ describe('Component Store', () => {
         const recordedStateValues$ = componentStore.state$.pipe(
           publishReplay()
         );
+
         // Need to "connect" to start getting notifications.
         (recordedStateValues$ as ConnectableObservable<object>).connect();
 
-        const asyncronousObservable$ = of(UPDATED_STATE).pipe(
-          // Delays until the state gets the init value.
-          delayWhen(() => componentStore.state$)
-        );
+        const asyncronousObservable$ = m.cold('-u', { u: UPDATED_STATE });
 
         expect(() => {
           componentStore.updater<object>((state, value) => value)(
@@ -165,11 +163,17 @@ describe('Component Store', () => {
           );
         }).not.toThrow();
 
-        // Trigger initial state.
+        // Trigger initial state before flushing
         componentStore.setState(INIT_STATE);
 
         m.expect(recordedStateValues$).toBeObservable(
-          m.hot('(iu)', { i: INIT_STATE, u: UPDATED_STATE })
+          m.hot('iu', { i: INIT_STATE, u: UPDATED_STATE })
+        );
+
+        m.flush();
+
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('-u', { u: UPDATED_STATE })
         );
       })
     );
@@ -233,6 +237,7 @@ describe('Component Store', () => {
         const results: object[] = [];
         componentStore.state$.subscribe((state) => results.push(state));
 
+        m.flush(); // flushed after init state
         // Update twice with different values
         updater(UPDATED);
         m.flush(); // flushed after each update
@@ -288,9 +293,10 @@ describe('Component Store', () => {
         m.flush();
 
         expect(results).toEqual([
-          { value: 'init' },
+          // Notice there is no "init" value of
+          // { value: 'init' },
           // Notice there is no "intermediary" value of
-          // {value: 'init', updated: true,},
+          // {value: 'init', updated: true},
           {
             value: 'updated',
             updated: true,
@@ -303,6 +309,60 @@ describe('Component Store', () => {
             s: {
               value: 'updated',
               updated: true,
+            },
+          })
+        );
+      })
+    );
+
+    it(
+      'with latest value within the same microtask from different updaters',
+      marbles((m) => {
+        const UPDATED: Partial<State> = { updated: true };
+        const UPDATE_VALUE: Partial<State> = { value: 'updated' };
+        const updater = componentStore.updater(
+          (state, value: Partial<State>) => ({
+            ...state,
+            ...value,
+          })
+        );
+
+        const updater2 = componentStore.updater(
+          (state, value: Partial<State>) => ({
+            ...state,
+            ...value,
+          })
+        );
+
+        // Record all the values that go through state$ into an array
+        const results: object[] = [];
+        componentStore.state$.subscribe((state) => results.push(state));
+
+        // Update three times with different values from two different updaters.
+        updater(UPDATED);
+        updater2(UPDATE_VALUE);
+        updater({ updated: false });
+
+        // Notice there is no "flush" until this point - all synchronous
+        m.flush();
+
+        expect(results).toEqual([
+          // Notice there is no "init" value of
+          // { value: 'init' },
+          // Notice there is no "intermediary" value of
+          // {value: 'init', updated: true}, and // {value: 'updated', updated: true},
+          {
+            value: 'updated',
+            updated: false,
+          },
+        ]);
+
+        // New subsriber gets the latest value only.
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('s', {
+            s: {
+              value: 'updated',
+              updated: false,
             },
           })
         );
@@ -552,11 +612,10 @@ describe('Component Store', () => {
 
         const observable$ = m.hot('      1-2---3', observableValues);
         const updater$ = m.cold('        a--b--c|');
-        const expectedSelector$ = m.hot('v-wx--(yz)-', {
+        const expectedSelector$ = m.hot('v-wx--z-', {
           v: 'one a',
           w: 'two a',
           x: 'two b',
-          y: 'three b', // 👈 different scheduler then 'select'
           z: 'three c',
         });
 
@@ -654,11 +713,10 @@ describe('Component Store', () => {
 
         const observable$ = m.hot('      1-2---3', observableValues);
         const updater$ = m.cold('        a--b--c|');
-        const expectedSelector$ = m.hot('v-wx--(yz)-', {
+        const expectedSelector$ = m.hot('v-wx--z)-', {
           v: 'one a',
           w: 'two a',
           x: 'two b',
-          y: 'three b', // 👈 different scheduler then 'select'
           z: 'three c',
         });
 
