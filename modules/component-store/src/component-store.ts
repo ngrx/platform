@@ -36,6 +36,10 @@ export interface EffectReturnFn<T> {
   (t: T | Observable<T>): Subscription;
 }
 
+export interface SelectConfig {
+  debounce?: boolean;
+}
+
 export const initialStateToken = new InjectionToken('ComponentStore InitState');
 
 @Injectable()
@@ -99,7 +103,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
                 )
               : // If state was not initialized, we'll throw an error.
                 throwError(
-                  Error(`${this.constructor.name} has not been initialized`)
+                  new Error(`${this.constructor.name} has not been initialized`)
                 )
           ),
           takeUntil(this.destroy$)
@@ -129,8 +133,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
    * state.
    */
   private initState(state: T): void {
-    this.isInitialized = true;
-    this.stateSubject$.next(state);
+    scheduled([state], queueScheduler).subscribe((s) => {
+      this.isInitialized = true;
+      this.stateSubject$.next(s);
+    });
   }
 
   /**
@@ -149,50 +155,64 @@ export class ComponentStore<T extends object> implements OnDestroy {
   /**
    * Creates a selector.
    *
-   * This supports chaining up to 4 selectors. More could be added as needed.
+   * This supports combining up to 4 selectors. More could be added as needed.
    *
    * @param projector A pure projection function that takes the current state and
    *   returns some new slice/projection of that state.
+   * @param config SelectConfig that changes the behavoir of selector, including
+   *   the debouncing of the values until the state is settled.
    * @return An observable of the projector results.
    */
-  select<R>(projector: (s: T) => R): Observable<R>;
-  select<R, S1>(s1: Observable<S1>, projector: (s1: S1) => R): Observable<R>;
+  select<R>(projector: (s: T) => R, config?: SelectConfig): Observable<R>;
+  select<R, S1>(
+    s1: Observable<S1>,
+    projector: (s1: S1) => R,
+    config?: SelectConfig
+  ): Observable<R>;
   select<R, S1, S2>(
     s1: Observable<S1>,
     s2: Observable<S2>,
-    projector: (s1: S1, s2: S2) => R
+    projector: (s1: S1, s2: S2) => R,
+    config?: SelectConfig
   ): Observable<R>;
   select<R, S1, S2, S3>(
     s1: Observable<S1>,
     s2: Observable<S2>,
     s3: Observable<S3>,
-    projector: (s1: S1, s2: S2, s3: S3) => R
+    projector: (s1: S1, s2: S2, s3: S3) => R,
+    config?: SelectConfig
   ): Observable<R>;
   select<R, S1, S2, S3, S4>(
     s1: Observable<S1>,
     s2: Observable<S2>,
     s3: Observable<S3>,
     s4: Observable<S4>,
-    projector: (s1: S1, s2: S2, s3: S3, s4: S4) => R
+    projector: (s1: S1, s2: S2, s3: S3, s4: S4) => R,
+    config?: SelectConfig
   ): Observable<R>;
-  select<R>(...args: any[]): Observable<R> {
-    let observable$: Observable<R>;
-    // project is always the last argument, so `pop` it from args.
-    const projector: (...args: any[]) => R = args.pop();
-    if (args.length === 0) {
-      // If projector was the only argument then we'll use map operator.
-      observable$ = this.stateSubject$.pipe(debounceSync(), map(projector));
+  select<
+    O extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+    R,
+    ProjectorFn = (...a: unknown[]) => R
+  >(...args: O): Observable<R> {
+    const { observables, projector, config } = processSelectorArgs(args);
+
+    let observable$: Observable<unknown>;
+    // If there are no Observables to combine, then we'll just map the value.
+    if (observables.length === 0) {
+      observable$ = this.stateSubject$.pipe(
+        config.debounce ? debounceSync() : (source$) => source$,
+        map(projector)
+      );
     } else {
-      // If there are multiple arguments, we're chaining selectors, so we need
+      // If there are multiple arguments, then we're aggregating selectors, so we need
       // to take the combineLatest of them before calling the map function.
-      observable$ = combineLatest(args).pipe(
-        // The most performant way to combine Observables avoiding unnecessary
-        // emissions and projector calls.
-        debounceSync(),
-        map((args: any[]) => projector(...args))
+      observable$ = combineLatest(observables).pipe(
+        config.debounce ? debounceSync() : (source$) => source$,
+        map((projectorArgs) => projector(...projectorArgs))
       );
     }
-    const distinctSharedObservable$ = observable$.pipe(
+    return (observable$ as Observable<R>).pipe(
       distinctUntilChanged(),
       shareReplay({
         refCount: true,
@@ -200,7 +220,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
       }),
       takeUntil(this.destroy$)
     );
-    return distinctSharedObservable$;
   }
 
   /**
@@ -231,4 +250,39 @@ export class ComponentStore<T extends object> implements OnDestroy {
       });
     };
   }
+}
+
+function processSelectorArgs<
+  O extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+  R,
+  ProjectorFn = (...a: unknown[]) => R
+>(
+  args: O
+): {
+  observables: Observable<unknown>[];
+  projector: ProjectorFn;
+  config: Required<SelectConfig>;
+} {
+  const selectorArgs = Array.from(args);
+  // Assign default values.
+  let config: Required<SelectConfig> = { debounce: false };
+  let projector: ProjectorFn;
+  // Last argument is either projector or config
+  const projectorOrConfig = selectorArgs.pop() as ProjectorFn | SelectConfig;
+
+  if (typeof projectorOrConfig !== 'function') {
+    // We got the config as the last argument, replace any default values with it.
+    config = { ...config, ...projectorOrConfig };
+    // Pop the next args, which would be the projector fn.
+    projector = selectorArgs.pop() as ProjectorFn;
+  } else {
+    projector = projectorOrConfig;
+  }
+  // The Observables to combine, if there are any.
+  const observables = selectorArgs as Observable<unknown>[];
+  return {
+    observables,
+    projector,
+    config,
+  };
 }
