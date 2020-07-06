@@ -10,7 +10,7 @@ An Effect subscribes to the `Actions` Observable to perform side effects.
 <code-example header="my.effects.spec.ts">
 import { provideMockActions } from '@ngrx/effects/testing';
 
-let actions$: Observable&lt;Action&gt;;
+let actions$ = new Observable&lt;Action&gt;();
 
 TestBed.configureTestingModule({
   providers: [provideMockActions(() => actions$)],
