@@ -533,6 +533,9 @@
             "commands": [
               {
                 "command": "ng run component:build-package"
+              },
+              {
+                "command": "yarn tsc -p modules/component/tsconfig.schematics.json"
               }
             ]
           }
