@@ -15,7 +15,6 @@ import {
   map,
   tap,
   finalize,
-  observeOn,
 } from 'rxjs/operators';
 
 describe('Component Store', () => {
@@ -1219,6 +1218,48 @@ describe('Component Store', () => {
 
         jest.advanceTimersByTime(20);
       });
+    });
+  });
+
+  describe('get', () => {
+    interface State {
+      value: string;
+    }
+
+    class ExposedGetComponentStore extends ComponentStore<State> {
+      get = super.get;
+    }
+
+    let componentStore: ExposedGetComponentStore;
+
+    it('throws an Error if called before the state is initialized', () => {
+      componentStore = new ExposedGetComponentStore();
+
+      expect(() => {
+        componentStore.get((state) => state.value);
+      }).toThrow(
+        new Error('ExposedGetComponentStore has not been initialized')
+      );
+    });
+
+    it('does not throw an Error when initialized', () => {
+      componentStore = new ExposedGetComponentStore();
+      componentStore.setState({ value: 'init' });
+
+      expect(() => {
+        componentStore.get((state) => state.value);
+      }).not.toThrow();
+    });
+
+    it('provides values from the state', () => {
+      componentStore = new ExposedGetComponentStore();
+      componentStore.setState({ value: 'init' });
+
+      expect(componentStore.get((state) => state.value)).toBe('init');
+
+      componentStore.updater((state, value: string) => ({ value }))('updated');
+
+      expect(componentStore.get((state) => state.value)).toBe('updated');
     });
   });
 });
