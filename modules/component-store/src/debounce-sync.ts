@@ -43,7 +43,9 @@ export function debounceSync<T>(): MonoTypeOperatorFunction<T> {
             }
             observer.complete();
           },
-          error: (error) => observer.error(error),
+          error: (error) => {
+            observer.error(error);
+          },
           next: (value) => {
             actionValue = value;
             if (!actionSubscription) {
