@@ -26,7 +26,6 @@ describe('ComponentStore integration', () => {
       expect(state.hasChild()).toBe(true);
 
       state.fixture.detectChanges();
-      flushMicrotasks();
 
       // No values emitted,             👇 no initial state
       expect(state.propChanges).toEqual([]);
@@ -35,7 +34,6 @@ describe('ComponentStore integration', () => {
 
     it('gets initial value when state is initialized', fakeAsync(() => {
       state.child.init();
-      flushMicrotasks();
       //                            init state👇
       expect(state.propChanges).toEqual(['initial Value']);
       expect(state.prop2Changes).toEqual([undefined]);
@@ -56,15 +54,44 @@ describe('ComponentStore integration', () => {
     }));
 
     it('updates values imperatively', fakeAsync(() => {
-      state!.child.init();
+      state.child.init();
 
-      state!.child.updateProp('new value');
-      flushMicrotasks();
-      state!.child.updateProp('yay!!!');
-      flushMicrotasks();
+      state.child.updateProp('new value');
+      state.child.updateProp('yay!!!');
 
-      expect(state!.propChanges).toContain('new value');
-      expect(state!.propChanges).toContain('yay!!!');
+      expect(state.propChanges).toContain('new value');
+      expect(state.propChanges).toContain('yay!!!');
+
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
+
+    it('selector emits values on any changes', fakeAsync(() => {
+      state.child.init();
+
+      state.child.updateProp('new value'); // no flushing in between
+      state.child.updateProp('yay!!!');
+
+      expect(state.propChanges).toEqual([
+        'initial Value',
+        'new value',
+        'yay!!!',
+      ]);
+
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
+
+    it('selector with debounce emits value when microtasks are flushed', fakeAsync(() => {
+      state.child.init();
+
+      state.child.updateProp('new value'); // no flushing in between
+      state.child.updateProp('yay!!!');
+
+      expect(state.propChangesDebounce).toEqual([]);
+
+      flushMicrotasks();
+      expect(state.propChangesDebounce).toEqual(['yay!!!']);
 
       // clear "Periodic timers in queue"
       state.destroy();
@@ -123,6 +150,7 @@ describe('ComponentStore integration', () => {
   interface Child {
     prop$: Observable<string>;
     prop2$: Observable<number | undefined>;
+    propDebounce$: Observable<string>;
     init: () => void;
     updateProp(value: string): void;
   }
@@ -134,6 +162,7 @@ describe('ComponentStore integration', () => {
     hasChild: () => boolean;
     propChanges: string[];
     prop2Changes: Array<number | undefined>;
+    propChangesDebounce: Array<string | undefined>;
     destroy: () => void;
     componentStoreDestroySpy: jest.SpyInstance;
   }
@@ -167,9 +196,11 @@ describe('ComponentStore integration', () => {
 
     const propChanges: string[] = [];
     const prop2Changes: Array<number | undefined> = [];
+    const propChangesDebounce: Array<string | undefined> = [];
     const child = getChild()!;
     child.prop$.subscribe((v) => propChanges.push(v));
     child.prop2$.subscribe((v) => prop2Changes.push(v));
+    child.propDebounce$.subscribe((v) => propChangesDebounce.push(v));
 
     return {
       fixture,
@@ -178,6 +209,7 @@ describe('ComponentStore integration', () => {
       hasChild: () => !!getChild(),
       propChanges,
       prop2Changes,
+      propChangesDebounce,
     };
   }
 
@@ -190,6 +222,9 @@ describe('ComponentStore integration', () => {
     class ChildComponent implements Child {
       prop$ = this.componentStore.select((state) => state.prop);
       prop2$ = this.componentStore.select((state) => state.prop2);
+      propDebounce$ = this.componentStore.select((state) => state.prop, {
+        debounce: true,
+      });
 
       intervalToProp2Effect = this.componentStore.effect(
         (numbers$: Observable<number>) =>
@@ -236,6 +271,7 @@ describe('ComponentStore integration', () => {
     class ChildComponent extends ComponentStore<State> implements Child {
       prop$ = this.select((state) => state.prop);
       prop2$ = this.select((state) => state.prop2);
+      propDebounce$ = this.select((state) => state.prop, { debounce: true });
 
       intervalToProp2Effect = this.effect((numbers$: Observable<number>) =>
         numbers$.pipe(
@@ -273,6 +309,7 @@ describe('ComponentStore integration', () => {
     class PropsStore extends ComponentStore<State> {
       prop$ = this.select((state) => state.prop);
       prop2$ = this.select((state) => state.prop2);
+      propDebounce$ = this.select((state) => state.prop, { debounce: true });
 
       propUpdater = this.updater((state, value: string) => ({
         ...state,
@@ -300,6 +337,7 @@ describe('ComponentStore integration', () => {
     class ChildComponent implements Child {
       prop$ = this.propsStore.prop$;
       prop2$ = this.propsStore.prop2$;
+      propDebounce$ = this.propsStore.propDebounce$;
       interval$ = interval(10);
 
       constructor(readonly propsStore: PropsStore) {}
@@ -331,6 +369,7 @@ describe('ComponentStore integration', () => {
     class PropsStore extends ComponentStore<State> {
       prop$ = this.select((state) => state.prop);
       prop2$ = this.select((state) => state.prop2);
+      propDebounce$ = this.select((state) => state.prop, { debounce: true });
 
       propUpdater = this.updater((state, value: string) => ({
         ...state,
