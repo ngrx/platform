@@ -134,6 +134,7 @@
     "@nrwl/cypress": "9.4.0",
     "@nrwl/jest": "9.4.0",
     "@nrwl/node": "9.4.0",
+    "@nrwl/nx-cloud": "^9.3.5",
     "@nrwl/nx-plugin": "9.4.0",
     "@nrwl/workspace": "9.4.0",
     "@octokit/rest": "^15.17.0",
