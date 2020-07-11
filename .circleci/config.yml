@@ -145,7 +145,7 @@ jobs:
       - run: yarn
       - run:
           name: Build All Release Packages
-          command: yarn build
+          command: yarn build --skip-nx-cache
       # Store artifacts from packages build
       - persist_to_workspace:
           root: dist
