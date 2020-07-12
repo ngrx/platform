@@ -15,7 +15,6 @@ import {
   map,
   tap,
   finalize,
-  observeOn,
 } from 'rxjs/operators';
 
 describe('Component Store', () => {
@@ -63,12 +62,24 @@ describe('Component Store', () => {
         const componentStore = new ComponentStore();
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
           componentStore.setState(() => ({ setState: 'new state' }));
-        }).toThrow(new Error('ComponentStore has not been initialized'));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
       })
     );
 
@@ -78,14 +89,26 @@ describe('Component Store', () => {
         const componentStore = new ComponentStore();
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
           componentStore.updater((state, value: object) => value)({
             updater: 'new state',
           });
-        }).toThrow(new Error('ComponentStore has not been initialized'));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
       })
     );
 
@@ -99,14 +122,26 @@ describe('Component Store', () => {
         });
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
           componentStore.updater<object>((state, value) => value)(
             syncronousObservable$
           );
-        }).toThrow(new Error('ComponentStore has not been initialized'));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
       })
     );
 
@@ -123,7 +158,14 @@ describe('Component Store', () => {
         let subscription: Subscription | undefined;
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('-#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '-#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
@@ -1219,6 +1261,62 @@ describe('Component Store', () => {
 
         jest.advanceTimersByTime(20);
       });
+    });
+  });
+
+  describe('get', () => {
+    interface State {
+      value: string;
+    }
+
+    class ExposedGetComponentStore extends ComponentStore<State> {
+      get = super.get;
+    }
+
+    let componentStore: ExposedGetComponentStore;
+
+    it('throws an Error if called before the state is initialized', () => {
+      componentStore = new ExposedGetComponentStore();
+
+      expect(() => {
+        componentStore.get((state) => state.value);
+      }).toThrow(
+        new Error(
+          'ExposedGetComponentStore has not been initialized yet. ' +
+            'Please make sure it is initialized before updating/getting.'
+        )
+      );
+    });
+
+    it('does not throw an Error when initialized', () => {
+      componentStore = new ExposedGetComponentStore();
+      componentStore.setState({ value: 'init' });
+
+      expect(() => {
+        componentStore.get((state) => state.value);
+      }).not.toThrow();
+    });
+
+    it('provides values from the state', () => {
+      componentStore = new ExposedGetComponentStore();
+      componentStore.setState({ value: 'init' });
+
+      expect(componentStore.get((state) => state.value)).toBe('init');
+
+      componentStore.updater((state, value: string) => ({ value }))('updated');
+
+      expect(componentStore.get((state) => state.value)).toBe('updated');
+    });
+
+    it('provides the entire state when projector fn is not provided', () => {
+      componentStore = new ExposedGetComponentStore();
+      componentStore.setState({ value: 'init' });
+
+      expect(componentStore.get()).toEqual({ value: 'init' });
+
+      componentStore.updater((state, value: string) => ({ value }))('updated');
+
+      expect(componentStore.get()).toEqual({ value: 'updated' });
     });
   });
 });

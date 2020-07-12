@@ -8,8 +8,8 @@ import {
   tick,
 } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { interval, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { interval, Observable, of, EMPTY } from 'rxjs';
+import { tap, concatMap, catchError } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 
 describe('ComponentStore integration', () => {
@@ -136,6 +136,34 @@ describe('ComponentStore integration', () => {
 
   describe('Component extends a Service that extends ComponentStore', () => {
     testWith(setupComponentExtendsService);
+  });
+
+  describe('ComponentStore getter', () => {
+    let state: ReturnType<typeof setupComponentProvidesService> extends Promise<
+      infer P
+    >
+      ? P
+      : never;
+    beforeEach(async () => {
+      state = await setupComponentProvidesService();
+    });
+
+    it('provides correct instant values within effect', fakeAsync(() => {
+      state.child.init();
+
+      tick(40); // Prop2 should be at value '3' now
+      state.child.call('test one:');
+
+      expect(state.serviceCallSpy).toHaveBeenCalledWith('test one:3');
+
+      tick(20); // Prop2 should be at value '5' now
+      state.child.call('test two:');
+
+      expect(state.serviceCallSpy).toHaveBeenCalledWith('test two:5');
+
+      // clear "Periodic timers in queue"
+      state.destroy();
+    }));
   });
 
   interface State {
@@ -305,10 +333,22 @@ describe('ComponentStore integration', () => {
   }
 
   async function setupComponentProvidesService() {
+    @Injectable({ providedIn: 'root' })
+    class Service {
+      call(arg: string) {
+        return of('result');
+      }
+    }
+
+    function getProp2(state: State): number | undefined {
+      return state.prop2;
+    }
+
     @Injectable()
     class PropsStore extends ComponentStore<State> {
       prop$ = this.select((state) => state.prop);
-      prop2$ = this.select((state) => state.prop2);
+      // projector function 👇 reused in selector and getter
+      prop2$ = this.select(getProp2);
       propDebounce$ = this.select((state) => state.prop, { debounce: true });
 
       propUpdater = this.updater((state, value: string) => ({
@@ -327,6 +367,28 @@ describe('ComponentStore integration', () => {
           })
         )
       );
+
+      callService = this.effect((strings$: Observable<string>) => {
+        return strings$.pipe(
+          //       getting value from State imperatively 👇
+          concatMap((str) =>
+            this.service.call(str + this.get(getProp2)).pipe(
+              tap({
+                next: (v) => this.propUpdater(v),
+                error: () => {
+                  /* handle error */
+                },
+              }),
+              // make sure to catch errors
+              catchError((e) => EMPTY)
+            )
+          )
+        );
+      });
+
+      constructor(private readonly service: Service) {
+        super();
+      }
     }
 
     @Component({
@@ -350,6 +412,10 @@ describe('ComponentStore integration', () => {
       updateProp(value: string): void {
         this.propsStore.propUpdater(value);
       }
+
+      call(str: string) {
+        this.propsStore.callService(str);
+      }
     }
 
     const setup = await setupTestBed(ChildComponent);
@@ -357,10 +423,13 @@ describe('ComponentStore integration', () => {
       setup.child.propsStore,
       'ngOnDestroy'
     );
+
+    const serviceCallSpy = jest.spyOn(TestBed.get(Service), 'call');
     return {
       ...setup,
       destroy: () => setup.child.propsStore.ngOnDestroy(),
       componentStoreDestroySpy,
+      serviceCallSpy,
     };
   }
 
