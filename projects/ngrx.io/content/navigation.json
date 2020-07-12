@@ -66,330 +66,345 @@
       "title": "Introduction"
     },
     {
-      "title": "@ngrx/store",
+      "title": "State",
       "children": [
         {
-          "title": "Getting Started",
-          "url": "guide/store"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/store/install"
-        },
-        {
-          "title": "Architecture",
+          "title": "@ngrx/store",
           "children": [
             {
-              "title": "Actions",
-              "url": "guide/store/actions"
+              "title": "Getting Started",
+              "url": "guide/store"
             },
             {
-              "title": "Reducers",
-              "url": "guide/store/reducers"
+              "title": "Installation",
+              "url": "guide/store/install"
             },
             {
-              "title": "Selectors",
-              "url": "guide/store/selectors"
-            }
-          ]
-        },
-        {
-          "title": "Advanced",
-          "children": [
-            {
-              "title": "Meta-Reducers",
-              "url": "guide/store/metareducers"
-            }
-          ]
-        },
-        {
-          "title": "Recipes",
-          "children": [
-            {
-              "title": "Injecting Reducers",
-              "url": "guide/store/recipes/injecting"
+              "title": "Architecture",
+              "children": [
+                {
+                  "title": "Actions",
+                  "url": "guide/store/actions"
+                },
+                {
+                  "title": "Reducers",
+                  "url": "guide/store/reducers"
+                },
+                {
+                  "title": "Selectors",
+                  "url": "guide/store/selectors"
+                }
+              ]
             },
             {
-              "title": "Downgrade for AngularJS",
-              "url": "guide/store/recipes/downgrade"
-            }
-          ]
-        },
-        {
-          "title": "Configuration",
-          "children": [
+              "title": "Advanced",
+              "children": [
+                {
+                  "title": "Meta-Reducers",
+                  "url": "guide/store/metareducers"
+                }
+              ]
+            },
             {
-              "title": "Runtime checks",
-              "url": "guide/store/configuration/runtime-checks"
-            }
-          ]
-        },
-        {
-          "title": "Testing",
-          "url": "guide/store/testing"
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/store-devtools",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/store-devtools"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/store-devtools/install"
-        },
-        {
-          "title": "Instrumentation",
-          "url": "guide/store-devtools/config"
-        },
-        {
-          "title": "Recipes",
-          "children": [
+              "title": "Recipes",
+              "children": [
+                {
+                  "title": "Injecting Reducers",
+                  "url": "guide/store/recipes/injecting"
+                },
+                {
+                  "title": "Downgrade for AngularJS",
+                  "url": "guide/store/recipes/downgrade"
+                }
+              ]
+            },
             {
-              "title": "Exclude from Production",
-              "url": "guide/store-devtools/recipes/exclude"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/effects",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/effects"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/effects/install"
-        },
-        {
-          "title": "Testing",
-          "url": "guide/effects/testing"
-        },
-        {
-          "title": "Lifecycle",
-          "url": "guide/effects/lifecycle"
-        },
-        {
-          "title": "Operators",
-          "url": "guide/effects/operators"
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/router-store",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/router-store"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/router-store/install"
-        },
-        {
-          "title": "Actions",
-          "url": "guide/router-store/actions"
-        },
-        {
-          "title": "Selectors",
-          "url": "guide/router-store/selectors"
-        },
-        {
-          "title": "Configuration",
-          "url": "guide/router-store/configuration"
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/entity",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/entity"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/entity/install"
-        },
-        {
-          "title": "Entity Interfaces",
-          "url": "guide/entity/interfaces"
-        },
-        {
-          "title": "Entity Adapter",
-          "url": "guide/entity/adapter"
-        },
-        {
-          "title": "Recipes",
-          "children": [
+              "title": "Configuration",
+              "children": [
+                {
+                  "title": "Runtime checks",
+                  "url": "guide/store/configuration/runtime-checks"
+                }
+              ]
+            },
             {
-              "title": "Additional State Properties",
-              "url": "guide/entity/recipes/additional-state-properties"
+              "title": "Testing",
+              "url": "guide/store/testing"
             }
           ]
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/data",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/data"
         },
         {
-          "title": "Installation",
-          "url": "guide/data/install"
-        },
-        {
-          "title": "Architecture",
+          "title": "@ngrx/store-devtools",
           "children": [
             {
               "title": "Overview",
-              "url": "guide/data/architecture-overview"
+              "url": "guide/store-devtools"
             },
             {
-              "title": "Entity Metadata",
-              "url": "guide/data/entity-metadata"
+              "title": "Installation",
+              "url": "guide/store-devtools/install"
             },
             {
-              "title": "Entity Actions",
-              "url": "guide/data/entity-actions"
+              "title": "Instrumentation",
+              "url": "guide/store-devtools/config"
             },
             {
-              "title": "Entity Collection",
-              "url": "guide/data/entity-collection"
-            },
-            {
-              "title": "Entity Collection Service",
-              "url": "guide/data/entity-collection-service"
-            },
-            {
-              "title": "Entity Dataservice",
-              "url": "guide/data/entity-dataservice"
-            },
-            {
-              "title": "Entity Effects",
-              "url": "guide/data/entity-effects"
-            },
-            {
-              "title": "Entity Reducer",
-              "url": "guide/data/entity-reducer"
-            },
-            {
-              "title": "Entity Services",
-              "url": "guide/data/entity-services"
+              "title": "Recipes",
+              "children": [
+                {
+                  "title": "Exclude from Production",
+                  "url": "guide/store-devtools/recipes/exclude"
+                }
+              ]
             }
           ]
         },
         {
-          "title": "Advanced",
+          "title": "@ngrx/effects",
           "children": [
             {
-              "title": "Save Multiple Entities",
-              "url": "guide/data/save-entities"
+              "title": "Overview",
+              "url": "guide/effects"
             },
             {
-              "title": "Entity Change Tracking",
-              "url": "guide/data/entity-change-tracker"
+              "title": "Installation",
+              "url": "guide/effects/install"
             },
             {
-              "title": "Extension Points",
-              "url": "guide/data/extension-points"
+              "title": "Testing",
+              "url": "guide/effects/testing"
+            },
+            {
+              "title": "Lifecycle",
+              "url": "guide/effects/lifecycle"
+            },
+            {
+              "title": "Operators",
+              "url": "guide/effects/operators"
             }
           ]
         },
         {
-          "title": "FAQ",
-          "url": "guide/data/faq"
-        },
-        {
-          "title": "Limitations",
-          "url": "guide/data/limitations"
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/component",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/component"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/component/install"
-        },
-        {
-          "title": "Let Directive",
-          "url": "guide/component/let"
-        },
-        {
-          "title": "Push Pipe",
-          "url": "guide/component/push"
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/component-store",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/component-store"
-        }
-      ]
-    },
-    {
-      "title": "@ngrx/schematics",
-      "children": [
-        {
-          "title": "Overview",
-          "url": "guide/schematics"
-        },
-        {
-          "title": "Installation",
-          "url": "guide/schematics/install"
-        },
-        {
-          "title": "Schematics",
+          "title": "@ngrx/router-store",
           "children": [
             {
-              "title": "Store",
-              "url": "guide/schematics/store"
+              "title": "Overview",
+              "url": "guide/router-store"
             },
             {
-              "title": "Action",
-              "url": "guide/schematics/action"
+              "title": "Installation",
+              "url": "guide/router-store/install"
             },
             {
-              "title": "Reducer",
-              "url": "guide/schematics/reducer"
+              "title": "Actions",
+              "url": "guide/router-store/actions"
             },
             {
-              "title": "Selector",
-              "url": "guide/schematics/selector"
+              "title": "Selectors",
+              "url": "guide/router-store/selectors"
             },
             {
-              "title": "Container",
-              "url": "guide/schematics/container"
+              "title": "Configuration",
+              "url": "guide/router-store/configuration"
+            }
+          ]
+        },
+        {
+          "title": "@ngrx/entity",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/entity"
             },
             {
-              "title": "Effect",
-              "url": "guide/schematics/effect"
+              "title": "Installation",
+              "url": "guide/entity/install"
             },
             {
-              "title": "Entity",
-              "url": "guide/schematics/entity"
+              "title": "Entity Interfaces",
+              "url": "guide/entity/interfaces"
             },
             {
-              "title": "Feature",
-              "url": "guide/schematics/feature"
+              "title": "Entity Adapter",
+              "url": "guide/entity/adapter"
+            },
+            {
+              "title": "Recipes",
+              "children": [
+                {
+                  "title": "Additional State Properties",
+                  "url": "guide/entity/recipes/additional-state-properties"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "@ngrx/schematics",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/schematics"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/schematics/install"
+            },
+            {
+              "title": "Schematics",
+              "children": [
+                {
+                  "title": "Store",
+                  "url": "guide/schematics/store"
+                },
+                {
+                  "title": "Action",
+                  "url": "guide/schematics/action"
+                },
+                {
+                  "title": "Reducer",
+                  "url": "guide/schematics/reducer"
+                },
+                {
+                  "title": "Selector",
+                  "url": "guide/schematics/selector"
+                },
+                {
+                  "title": "Container",
+                  "url": "guide/schematics/container"
+                },
+                {
+                  "title": "Effect",
+                  "url": "guide/schematics/effect"
+                },
+                {
+                  "title": "Entity",
+                  "url": "guide/schematics/entity"
+                },
+                {
+                  "title": "Feature",
+                  "url": "guide/schematics/feature"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "@ngrx/component-store",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/component-store"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Data",
+      "children": [
+        {
+          "title": "@ngrx/data",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/data"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/data/install"
+            },
+            {
+              "title": "Architecture",
+              "children": [
+                {
+                  "title": "Overview",
+                  "url": "guide/data/architecture-overview"
+                },
+                {
+                  "title": "Entity Metadata",
+                  "url": "guide/data/entity-metadata"
+                },
+                {
+                  "title": "Entity Actions",
+                  "url": "guide/data/entity-actions"
+                },
+                {
+                  "title": "Entity Collection",
+                  "url": "guide/data/entity-collection"
+                },
+                {
+                  "title": "Entity Collection Service",
+                  "url": "guide/data/entity-collection-service"
+                },
+                {
+                  "title": "Entity Dataservice",
+                  "url": "guide/data/entity-dataservice"
+                },
+                {
+                  "title": "Entity Effects",
+                  "url": "guide/data/entity-effects"
+                },
+                {
+                  "title": "Entity Reducer",
+                  "url": "guide/data/entity-reducer"
+                },
+                {
+                  "title": "Entity Services",
+                  "url": "guide/data/entity-services"
+                }
+              ]
+            },
+            {
+              "title": "Advanced",
+              "children": [
+                {
+                  "title": "Save Multiple Entities",
+                  "url": "guide/data/save-entities"
+                },
+                {
+                  "title": "Entity Change Tracking",
+                  "url": "guide/data/entity-change-tracker"
+                },
+                {
+                  "title": "Extension Points",
+                  "url": "guide/data/extension-points"
+                }
+              ]
+            },
+            {
+              "title": "FAQ",
+              "url": "guide/data/faq"
+            },
+            {
+              "title": "Limitations",
+              "url": "guide/data/limitations"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "View",
+      "children": [
+        {
+          "title": "@ngrx/component",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/component"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/component/install"
+            },
+            {
+              "title": "Let Directive",
+              "url": "guide/component/let"
+            },
+            {
+              "title": "Push Pipe",
+              "url": "guide/component/push"
             }
           ]
         }
