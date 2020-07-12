@@ -62,12 +62,24 @@ describe('Component Store', () => {
         const componentStore = new ComponentStore();
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
           componentStore.setState(() => ({ setState: 'new state' }));
-        }).toThrow(new Error('ComponentStore has not been initialized'));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
       })
     );
 
@@ -77,14 +89,26 @@ describe('Component Store', () => {
         const componentStore = new ComponentStore();
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
           componentStore.updater((state, value: object) => value)({
             updater: 'new state',
           });
-        }).toThrow(new Error('ComponentStore has not been initialized'));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
       })
     );
 
@@ -98,14 +122,26 @@ describe('Component Store', () => {
         });
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
           componentStore.updater<object>((state, value) => value)(
             syncronousObservable$
           );
-        }).toThrow(new Error('ComponentStore has not been initialized'));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
       })
     );
 
@@ -122,7 +158,14 @@ describe('Component Store', () => {
         let subscription: Subscription | undefined;
 
         m.expect(componentStore.state$).toBeObservable(
-          m.hot('-#', {}, new Error('ComponentStore has not been initialized'))
+          m.hot(
+            '-#',
+            {},
+            new Error(
+              'ComponentStore has not been initialized yet. ' +
+                'Please make sure it is initialized before updating/getting.'
+            )
+          )
         );
 
         expect(() => {
@@ -1238,7 +1281,10 @@ describe('Component Store', () => {
       expect(() => {
         componentStore.get((state) => state.value);
       }).toThrow(
-        new Error('ExposedGetComponentStore has not been initialized')
+        new Error(
+          'ExposedGetComponentStore has not been initialized yet. ' +
+            'Please make sure it is initialized before updating/getting.'
+        )
       );
     });
 
@@ -1260,6 +1306,17 @@ describe('Component Store', () => {
       componentStore.updater((state, value: string) => ({ value }))('updated');
 
       expect(componentStore.get((state) => state.value)).toBe('updated');
+    });
+
+    it('provides the entire state when projector fn is not provided', () => {
+      componentStore = new ExposedGetComponentStore();
+      componentStore.setState({ value: 'init' });
+
+      expect(componentStore.get()).toEqual({ value: 'init' });
+
+      componentStore.updater((state, value: string) => ({ value }))('updated');
+
+      expect(componentStore.get()).toEqual({ value: 'updated' });
     });
   });
 });

@@ -52,7 +52,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
 
   private readonly stateSubject$ = new ReplaySubject<T>(1);
   private isInitialized = false;
-  private notInitializedErrorMessage = `${this.constructor.name} has not been initialized`;
+  private notInitializedErrorMessage =
+    `${this.constructor.name} has not been initialized yet. ` +
+    `Please make sure it is initialized before updating/getting.`;
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
 
@@ -152,13 +154,16 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
   }
 
-  protected get<R>(projector: (s: T) => R): R {
+  protected get(): T;
+  protected get<R>(projector: (s: T) => R): R;
+  protected get<R>(projector?: (s: T) => R): R | T {
     if (!this.isInitialized) {
       throw new Error(this.notInitializedErrorMessage);
     }
-    let value: R;
+    let value: R | T;
+
     this.stateSubject$.pipe(take(1)).subscribe((state) => {
-      value = projector(state);
+      value = projector ? projector(state) : state;
     });
     return value!;
   }
