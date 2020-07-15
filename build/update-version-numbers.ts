@@ -47,8 +47,23 @@ function createPackageJsonBuilder(version: string) {
       .map((file) => {
         const content = readFileSync(file, 'utf-8');
         const pkg = JSON.parse(content);
+        let saveFile = false;
+
         if (pkg?.version && pkg?.name?.startsWith('@ngrx')) {
           pkg.version = version;
+          saveFile = true;
+        }
+
+        if (pkg?.peerDependencies) {
+          Object.keys(pkg.peerDependencies).forEach((key) => {
+            if (key.startsWith('@ngrx')) {
+              pkg.peerDependencies[key] = version;
+              saveFile = true;
+            }
+          });
+        }
+
+        if (saveFile) {
           writeAsJson(file, pkg);
         }
       });
