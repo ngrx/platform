@@ -1,3 +1,35 @@
+<a name="10.0.0-beta.1"></a>
+
+# [10.0.0-beta.1](https://github.com/ngrx/platform/compare/10.0.0-beta.0...10.0.0-beta.1) (2020-07-20)
+
+### Bug Fixes
+
+- **example-app:** update snapshot ([f2af688](https://github.com/ngrx/platform/commit/f2af688))
+- **schematics:** fix unit tests for JSON with comments ([155ec1c](https://github.com/ngrx/platform/commit/155ec1c))
+
+### Features
+
+- **component:** add ng-add and ng-update schematics ([#2611](https://github.com/ngrx/platform/issues/2611)) ([3f2bea4](https://github.com/ngrx/platform/commit/3f2bea4))
+- **component-store:** add config for debounce selectors ([#2606](https://github.com/ngrx/platform/issues/2606)) ([ddf0271](https://github.com/ngrx/platform/commit/ddf0271))
+- **component-store:** add imperative reads ([#2614](https://github.com/ngrx/platform/issues/2614)) ([2146774](https://github.com/ngrx/platform/commit/2146774))
+- **component-store:** add ng-add and ng-update schematics ([#2598](https://github.com/ngrx/platform/issues/2598)) ([af7b2cc](https://github.com/ngrx/platform/commit/af7b2cc)), closes [#2569](https://github.com/ngrx/platform/issues/2569)
+
+### schematics
+
+- remove skipTest option ([#2596](https://github.com/ngrx/platform/issues/2596)) ([60cd5cc](https://github.com/ngrx/platform/commit/60cd5cc)), closes [#2561](https://github.com/ngrx/platform/issues/2561)
+
+### BREAKING CHANGES
+
+- The skipTest option has been renamed to skipTests
+
+BEFORE:
+
+ng generate container UsersPage --skipTest
+
+AFTER:
+
+ng generate container UsersPage --skipTests
+
 <a name="10.0.0-beta.0"></a>
 
 # [10.0.0-beta.0](https://github.com/ngrx/platform/compare/9.2.0...10.0.0-beta.0) (2020-06-25)
