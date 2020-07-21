@@ -46,21 +46,59 @@ The following tutorial shows you how to manage the state of a counter, and how t
 <code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
 </code-example>
 
-6.  Create a new _Component_ named `my-counter` in the `app` folder. Inject the `Store` service into your component to dispatch the counter actions, and use the `select` operator to _select_ data from the state.
+6.  Create a new file called `my-counter.component.ts` in the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state.
 
-Update the `MyCounterComponent` template with buttons to call the increment, decrement, and reset methods. Use the async pipe to subscribe to the _count$_ observable.
+<code-example header="src/app/my-counter/my-counter.component.ts">
+import { Component } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { increment, decrement, reset } from '../counter.actions';
 
-<code-example header="src/app/my-counter/my-counter.component.html" path="store/src/app/my-counter/my-counter.component.html">
+@Component({
+  selector: 'app-my-counter',
+  template: `
+    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt; 
+
+    &lt;div&gt;Current Count: {{ count$ | async }}&lt;/div&gt;
+
+    &lt;button (click)="decrement()"&gt;Decrement&lt;/button&gt;
+
+    &lt;button (click)="reset()"&gt;Reset Counter&lt;/button&gt;
+  `
+})
+export class MyCounterComponent {
+  count$: Observable&lt;number&gt;
+
+  constructor(private store: Store&lt;{ count: number }&gt;) {
+    // TODO: This stream will connect to the current store `count` state
+    this.count$ = store.pipe(select('count'));
+  }
+
+  increment() {
+    // TODO: Dispatch an increment action
+  }
+
+  decrement() {
+    // TODO: Dispatch a decrement action
+  }
+
+  reset() {
+    // TODO: Dispatch a reset action
+  }
+}
 </code-example>
 
-Update the `MyCounterComponent` class with a selector for the _count_, and methods to dispatch the Increment, Decrement, and Reset actions.
-
-<code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
-</code-example>
-
-7.  Add the `MyCounter` component to your `AppComponent` template.
+7.  Add the new component to your AppModule's declarations and declare it in the template:
 
 <code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
+</code-example>
+
+<code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
+</code-example>
+
+8.  Inject the store into `MyCounterComponent` and connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
+
+<code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
 </code-example>
 
 And that's it! Click the increment, decrement, and reset buttons to change the state of the counter.
