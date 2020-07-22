@@ -21,7 +21,7 @@ yarn add @ngrx/store
 If your project is using the Angular CLI 6+ then you can install the Store to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/store
+ng add @ngrx/store@latest
 ```
 
 ### Optional `ng add` flags
@@ -40,7 +40,7 @@ This command will automate the following steps:
 3. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot({})`.
 
 ```sh
-ng add @ngrx/store --minimal false
+ng add @ngrx/store@latest --minimal false
 ```
 
 This command will automate the following steps:
