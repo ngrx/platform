@@ -361,6 +361,29 @@ describe('Sorted State Adapter', () => {
     });
   });
 
+  it('should let you map over one entity by id in the state', () => {
+    const withMany = adapter.setAll([TheGreatGatsby, AClockworkOrange], state);
+
+    const withUpdates = adapter.mapOne(
+      {
+        id: TheGreatGatsby.id,
+        map: (entity) => ({ ...entity, title: 'Updated ' + entity.title }),
+      },
+      withMany
+    );
+
+    expect(withUpdates).toEqual({
+      ids: [AClockworkOrange.id, TheGreatGatsby.id],
+      entities: {
+        [TheGreatGatsby.id]: {
+          ...TheGreatGatsby,
+          title: 'Updated ' + TheGreatGatsby.title,
+        },
+        [AClockworkOrange.id]: AClockworkOrange,
+      },
+    });
+  });
+
   it('should let you add one entity to the state with upsert()', () => {
     const withOneEntity = adapter.upsertOne(TheGreatGatsby, state);
     expect(withOneEntity).toEqual({

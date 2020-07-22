@@ -5,6 +5,8 @@ import {
   EntityStateAdapter,
   Update,
   EntityMap,
+  EntityMapOneNum,
+  EntityMapOneStr,
 } from './models';
 import { createStateOperator, DidMutate } from './state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
@@ -135,6 +137,24 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     return updateManyMutably(updates, state);
   }
 
+  function mapOneMutably(map: EntityMapOneNum<T>, state: R): DidMutate;
+  function mapOneMutably(map: EntityMapOneStr<T>, state: R): DidMutate;
+  function mapOneMutably({ map, id }: any, state: any): DidMutate {
+    const entity = state.entities[id];
+    if (!entity) {
+      return DidMutate.None;
+    }
+
+    const updatedEntity = map(entity);
+    return updateOneMutably(
+      {
+        id: id,
+        changes: updatedEntity,
+      },
+      state
+    );
+  }
+
   function upsertOneMutably(entity: T, state: R): DidMutate;
   function upsertOneMutably(entity: any, state: any): DidMutate {
     return upsertManyMutably([entity], state);
@@ -218,5 +238,6 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     updateMany: createStateOperator(updateManyMutably),
     upsertMany: createStateOperator(upsertManyMutably),
     map: createStateOperator(mapMutably),
+    mapOne: createStateOperator(mapOneMutably),
   };
 }
