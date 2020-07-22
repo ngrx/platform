@@ -1,9 +1,9 @@
 {
-  "$schema":
-    "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "yarn",
+    "analytics": false
   },
   "newProjectRoot": "content/examples",
   "projects": {
@@ -47,7 +47,9 @@
                 "output": "/assets/js"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -117,7 +119,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "assets": [
               "src/assets",
               "src/generated",
@@ -140,7 +144,10 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
             "exclude": []
           }
         }
@@ -162,7 +169,9 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["tests/e2e/tsconfig.e2e.json"],
+            "tsConfig": [
+              "tests/e2e/tsconfig.e2e.json"
+            ],
             "exclude": []
           }
         }
