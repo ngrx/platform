@@ -21,7 +21,7 @@ yarn add @ngrx/data
 If your project is using the Angular CLI 6+ then you can install the Data package to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/data
+ng add @ngrx/data@latest
 ```
 
 ### Optional `ng add` flags

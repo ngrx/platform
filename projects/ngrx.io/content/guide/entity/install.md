@@ -21,7 +21,7 @@ yarn add @ngrx/entity
 If your project is using the Angular CLI 6+ then you can install the Entity to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/entity
+ng add @ngrx/entity@latest
 ```
 
 This command will automate the following steps:

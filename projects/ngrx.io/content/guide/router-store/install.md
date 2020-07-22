@@ -21,7 +21,7 @@ yarn add @ngrx/router-store
 If your project is using the Angular CLI 6+ then you can install the Router Store to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/router-store
+ng add @ngrx/router-store@latest
 ```
 
 ### Optional `ng add` flags

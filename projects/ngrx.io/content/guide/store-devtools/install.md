@@ -20,7 +20,7 @@ yarn add @ngrx/store-devtools
 If your project is using the Angular CLI 6+ then you can install the Store Devtools to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/store-devtools
+ng add @ngrx/store-devtools@latest
 ```
 
 ### Optional `ng add` flags
