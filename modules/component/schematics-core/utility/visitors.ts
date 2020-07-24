@@ -192,7 +192,7 @@ export function visitDecorator(
     }
 
     const [arg] = expression.arguments;
-    if (!ts.isObjectLiteralExpression(arg)) {
+    if (!arg || !ts.isObjectLiteralExpression(arg)) {
       return;
     }
 
