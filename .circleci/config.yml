@@ -170,7 +170,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --with-deps
+          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --with-deps --skip-nx-cache
 
   build-bazel:
     <<: *run_in_node
@@ -247,7 +247,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout:
           path: ~/docs
       - restore_cache:
@@ -292,7 +292,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
       - restore_cache:
           keys:
@@ -340,7 +340,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
+            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
       - checkout
       - restore_cache:
           keys:

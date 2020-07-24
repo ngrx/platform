@@ -29,6 +29,18 @@ export type Predicate<T> = (entity: T) => boolean;
 
 export type EntityMap<T> = (entity: T) => T;
 
+export interface EntityMapOneNum<T> {
+  id: number;
+  map: EntityMap<T>;
+}
+
+export interface EntityMapOneStr<T> {
+  id: string;
+  map: EntityMap<T>;
+}
+
+export type EntityMapOne<T> = EntityMapOneNum<T> | EntityMapOneStr<T>;
+
 export interface EntityState<T> {
   ids: string[] | number[];
   entities: Dictionary<T>;
@@ -64,6 +76,7 @@ export interface EntityStateAdapter<T> {
   upsertOne<S extends EntityState<T>>(entity: T, state: S): S;
   upsertMany<S extends EntityState<T>>(entities: T[], state: S): S;
 
+  mapOne<S extends EntityState<T>>(map: EntityMapOne<T>, state: S): S;
   map<S extends EntityState<T>>(map: EntityMap<T>, state: S): S;
 }
 

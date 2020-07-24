@@ -5,6 +5,7 @@ export {
   EntityAdapter,
   Update,
   EntityMap,
+  EntityMapOne,
   Predicate,
   IdSelector,
   Comparer,
