@@ -1,0 +1,4412 @@
+[
+  {
+    "kind": "ClassDeclaration",
+    "module": "component",
+    "name": "PushPipe",
+    "overloads": [
+      {
+        "signature": "class PushPipe<S> implements PipeTransform, OnDestroy {\n  transform<T>(\n    potentialObservable: ObservableInput<T> | null | undefined\n  ): T | null | undefined;\n  ngOnDestroy(): void;\n}",
+        "info": [
+          ["Pipe", "PushPipe"],
+          [
+            "description",
+            "The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.\nIt contains intelligent handling of change detection to enable us\nrunning in zone-full as well as zone-less mode without any changes to the code.\nThe current way of binding an observable to the view looks like that:\n\n```html\n{{observable$ | async}}\n<ng-container *ngIf=\"observable$ | async as o\">{{o}}</ng-container>\n<component [value]=\"observable$ | async\"></component>\n```\n\nThe problem is `async` pipe just marks the component and all its ancestors as dirty.\nIt needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked\ncomponents.\nHeavy dynamic and interactive UIs suffer from zones change detection a lot and can\nlean to bad performance or even unusable applications, but the `async` pipe does not work in zone-less mode.\n`ngrxPush` pipe solves that problem.\nIncluded Features:\n\n- Take observables or promises, retrieve their values and render_creator the value to the template\n- Handling null and undefined values in a clean unified/structured way\n- Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)\n- Distinct same values in a row to increase performance\n- Coalescing of change detection calls to boost performance"
+          ],
+          [
+            "usageNotes",
+            "`ngrxPush` pipe solves that problem. It can be used like shown here:\n\n```html\n{{observable$ | ngrxPush}}\n<ng-container *ngIf=\"observable$ | ngrxPush as o\">{{o}}</ng-container>\n<component [value]=\"observable$ | ngrxPush\"></component>\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "component",
+    "name": "LetDirective",
+    "overloads": [
+      {
+        "signature": "class LetDirective<U> implements OnDestroy {\n  static ngTemplateGuard_ngrxLet: 'binding';\n\n  static ngTemplateContextGuard<U>(\n    dir: LetDirective<U>,\n    ctx: unknown | null | undefined\n  ): ctx is LetViewContext<U>;\n  createEmbeddedView();\n  ngOnDestroy();\n}",
+        "info": [
+          ["Directive", "LetDirective"],
+          [
+            "description",
+            "The `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).\nIt also helps with several internal processing under the hood.\nThe current way of binding an observable to the view looks like that:\n\n```html\n<ng-container *ngIf=\"observableNumber$ as n\">\n  <app-number [number]=\"n\"> </app-number>\n  <app-number-special [number]=\"n\"> </app-number-special>\n</ng-container>\n```\n\nThe problem is `*ngIf` is also interfering with rendering and in case of a `0` the component would be hidden\nIncluded Features:\n\n- binding is always present. (`*ngIf=\"truthy$\"`)\n- it takes away the multiple usages of the `async` or `ngrxPush` pipe\n- a unified/structured way of handling null and undefined\n- triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)\n- triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)\n- distinct same values in a row (distinctUntilChanged operator),"
+          ],
+          [
+            "usageNotes",
+            "The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template\n`<ng-container *ngrxLet=\"observableNumber$ as c\"></ng-container>`\n\n```html\n<ng-container *ngrxLet=\"observableNumber$ as n\">\n  <app-number [number]=\"n\"> </app-number>\n</ng-container>\n<ng-container *ngrxLet=\"observableNumber$; let n\">\n  <app-number [number]=\"n\"> </app-number>\n</ng-container>\n```\n\nIn addition to that it provides us information from the whole observable context.\nWe can track the observables:\n\n- next value\n- error value\n- complete state\n\n```html\n<ng-container\n  *ngrxLet=\"observableNumber$; let n; let e = $error, let c = $complete\"\n>\n  <app-number [number]=\"n\" *ngIf=\"!e && !c\"> </app-number>\n  <ng-container *ngIf=\"e\">\n    There is an error: {{e}}\n  </ng-container>\n  <ng-container *ngIf=\"c\">\n    Observable completed: {{c}}\n  </ng-container>\n</ng-container>\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "component",
+    "name": "ReactiveComponentModule",
+    "overloads": [
+      { "signature": "class ReactiveComponentModule {}", "info": [] }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "component-store",
+    "name": "SelectConfig",
+    "overloads": [
+      {
+        "signature": "interface SelectConfig {\n  debounce?: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "component-store",
+    "name": "initialStateToken",
+    "overloads": [
+      {
+        "signature": "const initialStateToken: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "component-store",
+    "name": "ComponentStore",
+    "overloads": [
+      {
+        "signature": "class ComponentStore<T extends object> implements OnDestroy {\n  readonly destroy$ = this.destroySubject$.asObservable();\n  readonly state$: Observable<T> = this.select((s) => s);\n\n  ngOnDestroy();\n  updater<V>(\n    updaterFn: (state: T, value: V) => T\n  ): unknown extends V ? () => void : (t: V | Observable<V>) => Subscription;\n  setState(stateOrUpdaterFn: T | ((state: T) => T)): void;\n  select<\n    O extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,\n    R,\n    ProjectorFn = (...a: unknown[]) => R\n  >(...args: O): Observable<R>;\n  effect<\n    ProvidedType = void,\n    OriginType extends Observable<ProvidedType> | unknown = Observable<\n      ProvidedType\n    >,\n    ObservableType = OriginType extends Observable<infer A> ? A : never,\n    ReturnType = ProvidedType | ObservableType extends void\n      ? () => void\n      : (\n          observableOrValue: ObservableType | Observable<ObservableType>\n        ) => Subscription\n  >(generator: (origin$: OriginType) => Observable<unknown>): ReturnType;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityActionFactory",
+    "overloads": [
+      {
+        "signature": "class EntityActionFactory {\n  create<P = any>(\n    nameOrPayload: EntityActionPayload<P> | string,\n    entityOp?: EntityOp,\n    data?: P,\n    options?: EntityActionOptions\n  ): EntityAction<P>;\n  createFromAction<P = any>(\n    from: EntityAction,\n    newProperties: Partial<EntityActionPayload<P>>\n  ): EntityAction<P>;\n  formatActionType(op: string, tag: string);\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityActionGuard",
+    "overloads": [
+      {
+        "signature": "class EntityActionGuard<T> {\n  mustBeEntity(action: EntityAction<T>): T;\n  mustBeEntities(action: EntityAction<T[]>): T[];\n  mustBeKey(action: EntityAction<string | number>): string | number | never;\n  mustBeKeys(action: EntityAction<(string | number)[]>): (string | number)[];\n  mustBeUpdate(action: EntityAction<Update<T>>): Update<T>;\n  mustBeUpdates(action: EntityAction<Update<T>[]>): Update<T>[];\n  mustBeUpdateResponse(\n    action: EntityAction<UpdateResponseData<T>>\n  ): UpdateResponseData<T>;\n  mustBeUpdateResponses(\n    action: EntityAction<UpdateResponseData<T>[]>\n  ): UpdateResponseData<T>[];\n}",
+        "info": [
+          [
+            "description",
+            "Guard methods that ensure EntityAction payload is as expected.\nEach method returns that payload if it passes the guard or\nthrows an error."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "ofEntityOp",
+    "overloads": [
+      {
+        "signature": "function ofEntityOp<T extends EntityAction>(\n  ...allowedEntityOps: any[]\n): OperatorFunction<EntityAction, T>;",
+        "info": []
+      },
+      {
+        "signature": "function ofEntityOp<T extends EntityAction>(\n  allowedOps: string[] | EntityOp[]\n): OperatorFunction<EntityAction, T>;",
+        "info": [
+          [
+            "description",
+            "Select actions concerning one of the allowed Entity operations"
+          ],
+          [
+            "param",
+            "allowedEntityOps Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected\nExample:\n\n```\nthis.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)\nthis.actions.pipe(ofEntityOp(...queryOps), ...)\nthis.actions.pipe(ofEntityOp(queryOps), ...)\nthis.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property\n```"
+          ]
+        ]
+      },
+      {
+        "signature": "function ofEntityOp<T extends EntityAction>(\n  ...allowedOps: (string | EntityOp)[]\n): OperatorFunction<EntityAction, T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "ofEntityType",
+    "overloads": [
+      {
+        "signature": "function ofEntityType<T extends EntityAction>(\n  ...allowedEntityNames: any[]\n): OperatorFunction<EntityAction, T>;",
+        "info": []
+      },
+      {
+        "signature": "function ofEntityType<T extends EntityAction>(\n  allowedEntityNames?: string[]\n): OperatorFunction<EntityAction, T>;",
+        "info": [
+          [
+            "description",
+            "Select actions concerning one of the allowed Entity types"
+          ],
+          [
+            "param",
+            "allowedEntityNames Entity-type names (e.g, 'Hero') whose actions should be selected\nExample:\n\n```\nthis.actions.pipe(ofEntityType(), ...) // ayn EntityAction with a defined entity type property\nthis.actions.pipe(ofEntityType('Hero'), ...) // EntityActions for the Hero entity\nthis.actions.pipe(ofEntityType('Hero', 'Villain', 'Sidekick'), ...)\nthis.actions.pipe(ofEntityType(...theChosen), ...)\nthis.actions.pipe(ofEntityType(theChosen), ...)\n```"
+          ]
+        ]
+      },
+      {
+        "signature": "function ofEntityType<T extends EntityAction>(\n  ...allowedEntityNames: string[]\n): OperatorFunction<EntityAction, T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityAction",
+    "overloads": [
+      {
+        "signature": "interface EntityAction<P = any> {\n  readonly type: string;\n  readonly payload: EntityActionPayload<P>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityActionOptions",
+    "overloads": [
+      {
+        "signature": "interface EntityActionOptions {\n  readonly correlationId?: any;\n  readonly isOptimistic?: boolean;\n  readonly mergeStrategy?: MergeStrategy;\n  readonly tag?: string;\n  error?: Error;\n  skip?: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityActionPayload",
+    "overloads": [
+      {
+        "signature": "interface EntityActionPayload<P = any> {\n  readonly entityName: string;\n  readonly entityOp: EntityOp;\n  readonly data?: P;\n\n  // inherited from EntityActionOptions\n  readonly correlationId?: any;\n  readonly isOptimistic?: boolean;\n  readonly mergeStrategy?: MergeStrategy;\n  readonly tag?: string;\n  error?: Error;\n  skip?: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "data",
+    "name": "EntityCacheAction",
+    "overloads": [
+      {
+        "signature": "export enum EntityCacheAction {\n  CLEAR_COLLECTIONS = '@ngrx/data/entity-cache/clear-collections',\n  LOAD_COLLECTIONS = '@ngrx/data/entity-cache/load-collections',\n  MERGE_QUERY_SET = '@ngrx/data/entity-cache/merge-query-set',\n  SET_ENTITY_CACHE = '@ngrx/data/entity-cache/set-cache',\n\n  SAVE_ENTITIES = '@ngrx/data/entity-cache/save-entities',\n  SAVE_ENTITIES_CANCEL = '@ngrx/data/entity-cache/save-entities-cancel',\n  SAVE_ENTITIES_CANCELED = '@ngrx/data/entity-cache/save-entities-canceled',\n  SAVE_ENTITIES_ERROR = '@ngrx/data/entity-cache/save-entities-error',\n  SAVE_ENTITIES_SUCCESS = '@ngrx/data/entity-cache/save-entities-success',\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCacheQuerySet",
+    "overloads": [
+      {
+        "signature": "interface EntityCacheQuerySet {}",
+        "info": [
+          [
+            "description",
+            "Hash of entities keyed by EntityCollection name,\ntypically the result of a query that returned results from a multi-collection query\nthat will be merged into an EntityCache via the `MergeQuerySet` action."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "ClearCollections",
+    "overloads": [
+      {
+        "signature": "class ClearCollections implements Action {\n  readonly payload: { collections?: string[]; tag?: string };\n  readonly type = EntityCacheAction.CLEAR_COLLECTIONS;\n}",
+        "info": [
+          [
+            "description",
+            "Clear the collections identified in the collectionSet."
+          ],
+          [
+            "param",
+            "[collections] Array of names of the collections to clear.\nIf empty array, does nothing. If no array, clear all collections."
+          ],
+          [
+            "param",
+            "[tag] Optional tag to identify the operation from the app perspective."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "LoadCollections",
+    "overloads": [
+      {
+        "signature": "class LoadCollections implements Action {\n  readonly payload: { collections: EntityCacheQuerySet; tag?: string };\n  readonly type = EntityCacheAction.LOAD_COLLECTIONS;\n}",
+        "info": [
+          [
+            "description",
+            "Create entity cache action that loads multiple entity collections at the same time.\nbefore any selectors\\$ observables emit."
+          ],
+          [
+            "param",
+            "querySet The collections to load, typically the result of a query."
+          ],
+          [
+            "param",
+            "[tag] Optional tag to identify the operation from the app perspective.\nin the form of a map of entity collections."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "MergeQuerySet",
+    "overloads": [
+      {
+        "signature": "class MergeQuerySet implements Action {\n  readonly payload: {\n    querySet: EntityCacheQuerySet;\n    mergeStrategy?: MergeStrategy;\n    tag?: string;\n  };\n  readonly type = EntityCacheAction.MERGE_QUERY_SET;\n}",
+        "info": [
+          [
+            "description",
+            "Create entity cache action that merges entities from a query result\nthat returned entities from multiple collections.\nCorresponding entity cache reducer should add and update all collections\nat the same time, before any selectors\\$ observables emit."
+          ],
+          [
+            "param",
+            "querySet The result of the query in the form of a map of entity collections.\nThese are the entity data to merge into the respective collections."
+          ],
+          [
+            "param",
+            "mergeStrategy How to merge a queried entity when it is already in the collection.\nThe default is MergeStrategy.PreserveChanges"
+          ],
+          [
+            "param",
+            "[tag] Optional tag to identify the operation from the app perspective."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "SetEntityCache",
+    "overloads": [
+      {
+        "signature": "class SetEntityCache implements Action {\n  readonly payload: { cache: EntityCache; tag?: string };\n  readonly type = EntityCacheAction.SET_ENTITY_CACHE;\n}",
+        "info": [
+          [
+            "description",
+            "Create entity cache action for replacing the entire entity cache.\nDangerous because brute force but useful as when re-hydrating an EntityCache\nfrom local browser storage when the application launches."
+          ],
+          ["param", "cache New state of the entity cache"],
+          [
+            "param",
+            "[tag] Optional tag to identify the operation from the app perspective."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "SaveEntities",
+    "overloads": [
+      {
+        "signature": "class SaveEntities implements Action {\n  readonly payload: {\n    readonly changeSet: ChangeSet;\n    readonly url: string;\n    readonly correlationId?: any;\n    readonly isOptimistic?: boolean;\n    readonly mergeStrategy?: MergeStrategy;\n    readonly tag?: string;\n    error?: Error;\n    skip?: boolean;\n  };\n  readonly type = EntityCacheAction.SAVE_ENTITIES;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "SaveEntitiesCancel",
+    "overloads": [
+      {
+        "signature": "class SaveEntitiesCancel implements Action {\n  readonly payload: {\n    readonly correlationId: any;\n    readonly reason?: string;\n    readonly entityNames?: string[];\n    readonly tag?: string;\n  };\n  readonly type = EntityCacheAction.SAVE_ENTITIES_CANCEL;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "SaveEntitiesCanceled",
+    "overloads": [
+      {
+        "signature": "class SaveEntitiesCanceled implements Action {\n  readonly payload: {\n    readonly correlationId: any;\n    readonly reason?: string;\n    readonly tag?: string;\n  };\n  readonly type = EntityCacheAction.SAVE_ENTITIES_CANCEL;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "SaveEntitiesError",
+    "overloads": [
+      {
+        "signature": "class SaveEntitiesError {\n  readonly payload: {\n    readonly error: DataServiceError;\n    readonly originalAction: SaveEntities;\n    readonly correlationId: any;\n  };\n  readonly type = EntityCacheAction.SAVE_ENTITIES_ERROR;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "SaveEntitiesSuccess",
+    "overloads": [
+      {
+        "signature": "class SaveEntitiesSuccess implements Action {\n  readonly payload: {\n    readonly changeSet: ChangeSet;\n    readonly url: string;\n    readonly correlationId?: any;\n    readonly isOptimistic?: boolean;\n    readonly mergeStrategy?: MergeStrategy;\n    readonly tag?: string;\n    error?: Error;\n    skip?: boolean;\n  };\n  readonly type = EntityCacheAction.SAVE_ENTITIES_SUCCESS;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "data",
+    "name": "ChangeSetOperation",
+    "overloads": [
+      {
+        "signature": "export enum ChangeSetOperation {\n  Add = 'Add',\n  Delete = 'Delete',\n  Update = 'Update',\n  Upsert = 'Upsert',\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "ChangeSetAdd",
+    "overloads": [
+      {
+        "signature": "interface ChangeSetAdd<T = any> {\n  op: ChangeSetOperation.Add;\n  entityName: string;\n  entities: T[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "ChangeSetDelete",
+    "overloads": [
+      {
+        "signature": "interface ChangeSetDelete {\n  op: ChangeSetOperation.Delete;\n  entityName: string;\n  entities: string[] | number[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "ChangeSetUpdate",
+    "overloads": [
+      {
+        "signature": "interface ChangeSetUpdate<T = any> {\n  op: ChangeSetOperation.Update;\n  entityName: string;\n  entities: Update<T>[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "ChangeSetUpsert",
+    "overloads": [
+      {
+        "signature": "interface ChangeSetUpsert<T = any> {\n  op: ChangeSetOperation.Upsert;\n  entityName: string;\n  entities: T[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "data",
+    "name": "ChangeSetItem",
+    "overloads": [
+      {
+        "signature": "export type ChangeSetItem =\n  | ChangeSetAdd\n  | ChangeSetDelete\n  | ChangeSetUpdate\n  | ChangeSetUpsert;",
+        "info": [
+          [
+            "description",
+            "A entities of a single entity type, which are changed in the same way by a ChangeSetOperation"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "ChangeSet",
+    "overloads": [
+      {
+        "signature": "interface ChangeSet<T = any> {\n  changes: ChangeSetItem[];\n  extras?: T;\n  tag?: string;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "ChangeSetItemFactory",
+    "overloads": [
+      {
+        "signature": "class ChangeSetItemFactory {\n  add<T>(entityName: string, entities: T | T[]): ChangeSetAdd<T>;\n  delete(\n    entityName: string,\n    keys: number | number[] | string | string[]\n  ): ChangeSetDelete;\n  update<T extends { id: string | number }>(\n    entityName: string,\n    updates: Update<T> | Update<T>[]\n  ): ChangeSetUpdate<T>;\n  upsert<T>(entityName: string, entities: T | T[]): ChangeSetUpsert<T>;\n}",
+        "info": [
+          [
+            "description",
+            "Factory to create a ChangeSetItem for a ChangeSetOperation"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "changeSetItemFactory",
+    "overloads": [
+      {
+        "signature": "const changeSetItemFactory: ChangeSetItemFactory;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "excludeEmptyChangeSetItems",
+    "overloads": [
+      {
+        "signature": "function excludeEmptyChangeSetItems(changeSet: ChangeSet): ChangeSet;",
+        "info": [
+          [
+            "description",
+            "Return ChangeSet after filtering out null and empty ChangeSetItems."
+          ],
+          ["param", "changeSet ChangeSet with changes to filter"]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "data",
+    "name": "EntityOp",
+    "overloads": [
+      {
+        "signature": "export enum EntityOp {\n  // Persistance operations\n  CANCEL_PERSIST = '@ngrx/data/cancel-persist',\n  CANCELED_PERSIST = '@ngrx/data/canceled-persist',\n\n  QUERY_ALL = '@ngrx/data/query-all',\n  QUERY_ALL_SUCCESS = '@ngrx/data/query-all/success',\n  QUERY_ALL_ERROR = '@ngrx/data/query-all/error',\n\n  QUERY_LOAD = '@ngrx/data/query-load',\n  QUERY_LOAD_SUCCESS = '@ngrx/data/query-load/success',\n  QUERY_LOAD_ERROR = '@ngrx/data/query-load/error',\n\n  QUERY_MANY = '@ngrx/data/query-many',\n  QUERY_MANY_SUCCESS = '@ngrx/data/query-many/success',\n  QUERY_MANY_ERROR = '@ngrx/data/query-many/error',\n\n  QUERY_BY_KEY = '@ngrx/data/query-by-key',\n  QUERY_BY_KEY_SUCCESS = '@ngrx/data/query-by-key/success',\n  QUERY_BY_KEY_ERROR = '@ngrx/data/query-by-key/error',\n\n  SAVE_ADD_MANY = '@ngrx/data/save/add-many',\n  SAVE_ADD_MANY_ERROR = '@ngrx/data/save/add-many/error',\n  SAVE_ADD_MANY_SUCCESS = '@ngrx/data/save/add-many/success',\n\n  SAVE_ADD_ONE = '@ngrx/data/save/add-one',\n  SAVE_ADD_ONE_ERROR = '@ngrx/data/save/add-one/error',\n  SAVE_ADD_ONE_SUCCESS = '@ngrx/data/save/add-one/success',\n\n  SAVE_DELETE_MANY = '@ngrx/data/save/delete-many',\n  SAVE_DELETE_MANY_SUCCESS = '@ngrx/data/save/delete-many/success',\n  SAVE_DELETE_MANY_ERROR = '@ngrx/data/save/delete-many/error',\n\n  SAVE_DELETE_ONE = '@ngrx/data/save/delete-one',\n  SAVE_DELETE_ONE_SUCCESS = '@ngrx/data/save/delete-one/success',\n  SAVE_DELETE_ONE_ERROR = '@ngrx/data/save/delete-one/error',\n\n  SAVE_UPDATE_MANY = '@ngrx/data/save/update-many',\n  SAVE_UPDATE_MANY_SUCCESS = '@ngrx/data/save/update-many/success',\n  SAVE_UPDATE_MANY_ERROR = '@ngrx/data/save/update-many/error',\n\n  SAVE_UPDATE_ONE = '@ngrx/data/save/update-one',\n  SAVE_UPDATE_ONE_SUCCESS = '@ngrx/data/save/update-one/success',\n  SAVE_UPDATE_ONE_ERROR = '@ngrx/data/save/update-one/error',\n\n  // Use only if the server supports upsert;\n  SAVE_UPSERT_MANY = '@ngrx/data/save/upsert-many',\n  SAVE_UPSERT_MANY_SUCCESS = '@ngrx/data/save/upsert-many/success',\n  SAVE_UPSERT_MANY_ERROR = '@ngrx/data/save/upsert-many/error',\n\n  // Use only if the server supports upsert;\n  SAVE_UPSERT_ONE = '@ngrx/data/save/upsert-one',\n  SAVE_UPSERT_ONE_SUCCESS = '@ngrx/data/save/upsert-one/success',\n  SAVE_UPSERT_ONE_ERROR = '@ngrx/data/save/upsert-one/error',\n\n  // Cache operations\n  ADD_ALL = '@ngrx/data/add-all',\n  ADD_MANY = '@ngrx/data/add-many',\n  ADD_ONE = '@ngrx/data/add-one',\n  REMOVE_ALL = '@ngrx/data/remove-all',\n  REMOVE_MANY = '@ngrx/data/remove-many',\n  REMOVE_ONE = '@ngrx/data/remove-one',\n  UPDATE_MANY = '@ngrx/data/update-many',\n  UPDATE_ONE = '@ngrx/data/update-one',\n  UPSERT_MANY = '@ngrx/data/upsert-many',\n  UPSERT_ONE = '@ngrx/data/upsert-one',\n\n  COMMIT_ALL = '@ngrx/data/commit-all',\n  COMMIT_MANY = '@ngrx/data/commit-many',\n  COMMIT_ONE = '@ngrx/data/commit-one',\n  UNDO_ALL = '@ngrx/data/undo-all',\n  UNDO_MANY = '@ngrx/data/undo-many',\n  UNDO_ONE = '@ngrx/data/undo-one',\n\n  SET_CHANGE_STATE = '@ngrx/data/set-change-state',\n  SET_COLLECTION = '@ngrx/data/set-collection',\n  SET_FILTER = '@ngrx/data/set-filter',\n  SET_LOADED = '@ngrx/data/set-loaded',\n  SET_LOADING = '@ngrx/data/set-loading',\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "OP_SUCCESS",
+    "overloads": [{ "signature": "const OP_SUCCESS: '/success';", "info": [] }]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "OP_ERROR",
+    "overloads": [{ "signature": "const OP_ERROR: '/error';", "info": [] }]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "makeErrorOp",
+    "overloads": [
+      {
+        "signature": "function makeErrorOp(op: EntityOp): EntityOp;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "makeSuccessOp",
+    "overloads": [
+      {
+        "signature": "function makeSuccessOp(op: EntityOp): EntityOp;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "data",
+    "name": "MergeStrategy",
+    "overloads": [
+      {
+        "signature": "export enum MergeStrategy {\n  /**\n   * Update the collection entities and ignore all change tracking for this operation.\n   * Each entity's `changeState` is untouched.\n   */\n  IgnoreChanges,\n  /**\n   * Updates current values for unchanged entities.\n   * For each changed entity it preserves the current value and overwrites the `originalValue` with the merge entity.\n   * This is the query-success default.\n   */\n  PreserveChanges,\n  /**\n   * Replace the current collection entities.\n   * For each merged entity it discards the `changeState` and sets the `changeType` to \"unchanged\".\n   * This is the save-success default.\n   */\n  OverwriteChanges,\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "UpdateResponseData",
+    "overloads": [
+      {
+        "signature": "interface UpdateResponseData<T> {\n  id: number | string;\n  changes: Partial<T>;\n  changed?: boolean;\n}",
+        "info": [
+          [
+            "description",
+            "Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS.\nEffectively extends Update<T> with a 'changed' flag.\nThe is true if the server sent back changes to the entity data after update.\nSuch changes must be in the entity data in changes property.\nDefault is false (server did not return entity data; assume it changed nothing).\nSee EntityEffects."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DataServiceError",
+    "overloads": [
+      {
+        "signature": "class DataServiceError {\n  message: string | null;\n}",
+        "info": [
+          [
+            "description",
+            "Error from a DataService\nThe source error either comes from a failed HTTP response or was thrown within the service."
+          ],
+          [
+            "param",
+            "error the HttpErrorResponse or the error thrown by the service"
+          ],
+          [
+            "param",
+            "requestData the HTTP request information such as the method and the url."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityActionDataServiceError",
+    "overloads": [
+      {
+        "signature": "interface EntityActionDataServiceError {\n  error: DataServiceError;\n  originalAction: EntityAction;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultDataServiceConfig",
+    "overloads": [
+      {
+        "signature": "class DefaultDataServiceConfig {\n  root?: string;\n  entityHttpResourceUrls?: EntityHttpResourceUrls;\n  delete404OK?: boolean;\n  getDelay?: number;\n  saveDelay?: number;\n  timeout?: number;\n}",
+        "info": [
+          [
+            "description",
+            "Optional configuration settings for an entity collection data service\nsuch as the `DefaultDataService<T>`."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultDataService",
+    "overloads": [
+      {
+        "signature": "class DefaultDataService<T> implements EntityCollectionDataService<T> {\n  add(entity: T): Observable<T>;\n  delete(key: number | string): Observable<number | string>;\n  getAll(): Observable<T[]>;\n  getById(key: number | string): Observable<T>;\n  getWithQuery(queryParams: QueryParams | string): Observable<T[]>;\n  update(update: Update<T>): Observable<T>;\n  upsert(entity: T): Observable<T>;\n}",
+        "info": [
+          [
+            "description",
+            "A basic, generic entity data service\nsuitable for persistence of most entities.\nAssumes a common REST-y web API"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultDataServiceFactory",
+    "overloads": [
+      {
+        "signature": "class DefaultDataServiceFactory {\n  create<T>(entityName: string): EntityCollectionDataService<T>;\n}",
+        "info": [
+          [
+            "description",
+            "Create a basic, generic entity data service\nsuitable for persistence of most entities.\nAssumes a common REST-y web API"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCacheDataService",
+    "overloads": [
+      {
+        "signature": "class EntityCacheDataService {\n  saveEntities(changeSet: ChangeSet, url: string): Observable<ChangeSet>;\n}",
+        "info": [
+          [
+            "description",
+            "Default data service for making remote service calls targeting the entire EntityCache.\nSee EntityDataService for services that target a single EntityCollection"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDataService",
+    "overloads": [
+      {
+        "signature": "class EntityDataService {\n  getService<T>(entityName: string): EntityCollectionDataService<T>;\n  registerService<T>(\n    entityName: string,\n    service: EntityCollectionDataService<T>\n  );\n  registerServices(services: {\n    [name: string]: EntityCollectionDataService<any>;\n  });\n}",
+        "info": [
+          [
+            "description",
+            "Registry of EntityCollection data services that make REST-like CRUD calls\nto entity collection endpoints."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityHttpResourceUrls",
+    "overloads": [
+      {
+        "signature": "class EntityHttpResourceUrls {}",
+        "info": [
+          [
+            "description",
+            "Known resource URLS for specific entity types.\nEach entity's resource URLS are endpoints that\ntarget single entity and multi-entity HTTP operations.\nUsed by the `DefaultHttpUrlGenerator`."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "HttpResourceUrls",
+    "overloads": [
+      {
+        "signature": "interface HttpResourceUrls {\n  entityResourceUrl: string;\n  collectionResourceUrl: string;\n}",
+        "info": [
+          [
+            "description",
+            "Resource URLS for HTTP operations that target single entity\nand multi-entity endpoints."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "HttpUrlGenerator",
+    "overloads": [
+      {
+        "signature": "class HttpUrlGenerator {\n  abstract entityResource(entityName: string, root: string): string;\n  abstract collectionResource(entityName: string, root: string): string;\n  abstract registerHttpResourceUrls(\n    entityHttpResourceUrls?: EntityHttpResourceUrls\n  ): void;\n}",
+        "info": [
+          [
+            "description",
+            "Generate the base part of an HTTP URL for\nsingle entity or entity collection resource"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultHttpUrlGenerator",
+    "overloads": [
+      {
+        "signature": "class DefaultHttpUrlGenerator implements HttpUrlGenerator {\n  entityResource(entityName: string, root: string): string;\n  collectionResource(entityName: string, root: string): string;\n  registerHttpResourceUrls(\n    entityHttpResourceUrls: EntityHttpResourceUrls\n  ): void;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "normalizeRoot",
+    "overloads": [
+      { "signature": "function normalizeRoot(root: string);", "info": [] }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollectionDataService",
+    "overloads": [
+      {
+        "signature": "interface EntityCollectionDataService<T> {\n  readonly name: string;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "data",
+    "name": "HttpMethods",
+    "overloads": [
+      {
+        "signature": "export type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "RequestData",
+    "overloads": [
+      {
+        "signature": "interface RequestData {\n  method: HttpMethods;\n  url: string;\n  data?: any;\n  options?: any;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "QueryParams",
+    "overloads": [
+      {
+        "signature": "interface QueryParams {}",
+        "info": [
+          [
+            "description",
+            "A key/value map of parameters to be turned into an HTTP query string\nSame as HttpClient's HttpParamsOptions which is NOT exported at package level\nhttps://github.com/angular/angular/issues/22013"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "PersistenceResultHandler",
+    "overloads": [
+      {
+        "signature": "class PersistenceResultHandler {\n  abstract handleSuccess(originalAction: EntityAction): (data: any) => Action;\n  abstract handleError(\n    originalAction: EntityAction\n  ): (\n    error: DataServiceError | Error\n  ) => EntityAction<EntityActionDataServiceError>;\n}",
+        "info": [
+          ["description", "Handling of responses from persistence operation"]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultPersistenceResultHandler",
+    "overloads": [
+      {
+        "signature": "class DefaultPersistenceResultHandler implements PersistenceResultHandler {\n  handleSuccess(originalAction: EntityAction): (data: any) => Action;\n  handleError(\n    originalAction: EntityAction\n  ): (\n    error: DataServiceError | Error\n  ) => EntityAction<EntityActionDataServiceError>;\n}",
+        "info": [
+          [
+            "description",
+            "Default handling of responses from persistence operation,\nspecifically an EntityDataService"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCacheDispatcher",
+    "overloads": [
+      {
+        "signature": "class EntityCacheDispatcher {\n  reducedActions$: Observable<Action>;\n\n  dispatch(action: Action): Action;\n  cancelSaveEntities(\n    correlationId: any,\n    reason?: string,\n    entityNames?: string[],\n    tag?: string\n  ): void;\n  clearCollections(collections?: string[], tag?: string);\n  loadCollections(collections: EntityCacheQuerySet, tag?: string);\n  mergeQuerySet(\n    querySet: EntityCacheQuerySet,\n    mergeStrategy?: MergeStrategy,\n    tag?: string\n  );\n  setEntityCache(cache: EntityCache, tag?: string);\n  saveEntities(\n    changes: ChangeSetItem[] | ChangeSet,\n    url: string,\n    options?: EntityActionOptions\n  ): Observable<ChangeSet>;\n}",
+        "info": [
+          [
+            "description",
+            "Dispatches Entity Cache actions to the EntityCache reducer"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityServerCommands",
+    "overloads": [
+      { "signature": "interface EntityServerCommands<T> {}", "info": [] }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCacheCommands",
+    "overloads": [
+      { "signature": "interface EntityCacheCommands<T> {}", "info": [] }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCommands",
+    "overloads": [
+      {
+        "signature": "interface EntityCommands<T> {\n  // inherited from EntityServerCommands\n  // inherited from EntityCacheCommands\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDispatcherBase",
+    "overloads": [
+      {
+        "signature": "class EntityDispatcherBase<T> implements EntityDispatcher<T> {\n  guard: EntityActionGuard<T>;\n  toUpdate: (entity: Partial<T>) => Update<T>;\n\n  createEntityAction<P = any>(\n    entityOp: EntityOp,\n    data?: P,\n    options?: EntityActionOptions\n  ): EntityAction<P>;\n  createAndDispatch<P = any>(\n    op: EntityOp,\n    data?: P,\n    options?: EntityActionOptions\n  ): EntityAction<P>;\n  dispatch(action: Action): Action;\n  add(entity: T, options?: EntityActionOptions): Observable<T>;\n  cancel(\n    correlationId: any,\n    reason?: string,\n    options?: EntityActionOptions\n  ): void;\n  delete(\n    arg: number | string | T,\n    options?: EntityActionOptions\n  ): Observable<number | string>;\n  getAll(options?: EntityActionOptions): Observable<T[]>;\n  getByKey(key: any, options?: EntityActionOptions): Observable<T>;\n  getWithQuery(\n    queryParams: QueryParams | string,\n    options?: EntityActionOptions\n  ): Observable<T[]>;\n  load(options?: EntityActionOptions): Observable<T[]>;\n  update(entity: Partial<T>, options?: EntityActionOptions): Observable<T>;\n  upsert(entity: T, options?: EntityActionOptions): Observable<T>;\n  addAllToCache(entities: T[], options?: EntityActionOptions): void;\n  addOneToCache(entity: T, options?: EntityActionOptions): void;\n  addManyToCache(entities: T[], options?: EntityActionOptions): void;\n  clearCache(options?: EntityActionOptions): void;\n  removeOneFromCache(\n    arg: (number | string) | T,\n    options?: EntityActionOptions\n  ): void;\n  removeManyFromCache(\n    args: (number | string)[] | T[],\n    options?: EntityActionOptions\n  ): void;\n  updateOneInCache(entity: Partial<T>, options?: EntityActionOptions): void;\n  updateManyInCache(\n    entities: Partial<T>[],\n    options?: EntityActionOptions\n  ): void;\n  upsertOneInCache(entity: Partial<T>, options?: EntityActionOptions): void;\n  upsertManyInCache(\n    entities: Partial<T>[],\n    options?: EntityActionOptions\n  ): void;\n  setFilter(pattern: any): void;\n  setLoaded(isLoaded: boolean): void;\n  setLoading(isLoading: boolean): void;\n}",
+        "info": [
+          [
+            "description",
+            "Dispatches EntityCollection actions to their reducers and effects (default implementation).\nAll save commands rely on an Ngrx Effect such as `EntityEffects.persist$`."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDispatcherDefaultOptions",
+    "overloads": [
+      {
+        "signature": "class EntityDispatcherDefaultOptions {\n  optimisticAdd = false;\n  optimisticDelete = true;\n  optimisticUpdate = false;\n  optimisticUpsert = false;\n  optimisticSaveEntities = false;\n}",
+        "info": [
+          [
+            "description",
+            "Default options for EntityDispatcher behavior\nsuch as whether `add()` is optimistic or pessimistic by default.\nAn optimistic save modifies the collection immediately and before saving to the server.\nA pessimistic save modifies the collection after the server confirms the save was successful.\nThis class initializes the defaults to the safest values.\nProvide an alternative to change the defaults for all entity collections."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDispatcherFactory",
+    "overloads": [
+      {
+        "signature": "class EntityDispatcherFactory implements OnDestroy {\n  reducedActions$: Observable<Action>;\n\n  create<T>(\n    /** Name of the entity type */\n    entityName: string,\n    /**\n     * Function that returns the primary key for an entity `T`.\n     * Usually acquired from `EntityDefinition` metadata.\n     */\n    selectId: IdSelector<T> = defaultSelectId,\n    /** Defaults for options that influence dispatcher behavior such as whether\n     * `add()` is optimistic or pessimistic;\n     */\n    defaultOptions: Partial<EntityDispatcherDefaultOptions> = {}\n  ): EntityDispatcher<T>;\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityDispatcher",
+    "overloads": [
+      {
+        "signature": "interface EntityDispatcher<T> {\n  readonly entityName: string;\n  readonly guard: EntityActionGuard<T>;\n  readonly selectId: IdSelector<T>;\n  readonly store: Store<EntityCache>;\n\n  // inherited from EntityCommands\n}",
+        "info": [
+          [
+            "description",
+            "Dispatches EntityCollection actions to their reducers and effects.\nThe substance of the interface is in EntityCommands."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "PersistanceCanceled",
+    "overloads": [
+      {
+        "signature": "class PersistanceCanceled {}",
+        "info": [["description", "Persistence operation canceled"]]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCacheEffects",
+    "overloads": [
+      {
+        "signature": "class EntityCacheEffects {\n  saveEntitiesCancel$: Observable<SaveEntitiesCancel> = createEffect(\n    () =>\n      this.actions.pipe(\n        ofType(EntityCacheAction.SAVE_ENTITIES_CANCEL),\n        filter((a: SaveEntitiesCancel) => a.payload.correlationId != null)\n      ),\n    { dispatch: false }\n  );\n  saveEntities$: Observable<Action> = createEffect(() =>\n    this.actions.pipe(\n      ofType(EntityCacheAction.SAVE_ENTITIES),\n      mergeMap((action: SaveEntities) => this.saveEntities(action))\n    )\n  );\n\n  saveEntities(action: SaveEntities): Observable<Action>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "persistOps",
+    "overloads": [{ "signature": "const persistOps: EntityOp[];", "info": [] }]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityEffects",
+    "overloads": [
+      {
+        "signature": "class EntityEffects {\n  cancel$: Observable<any> = createEffect(\n    () =>\n      this.actions.pipe(\n        ofEntityOp(EntityOp.CANCEL_PERSIST),\n        map((action: EntityAction) => action.payload.correlationId),\n        filter((id) => id != null)\n      ),\n    { dispatch: false }\n  );\n  persist$: Observable<Action> = createEffect(() =>\n    this.actions.pipe(\n      ofEntityOp(persistOps),\n      mergeMap((action) => this.persist(action))\n    )\n  );\n\n  persist(action: EntityAction): Observable<Action>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityDefinitions",
+    "overloads": [{ "signature": "interface EntityDefinitions {}", "info": [] }]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDefinitionService",
+    "overloads": [
+      {
+        "signature": "class EntityDefinitionService {\n  getDefinition<T>(entityName: string, shouldThrow = true): EntityDefinition<T>;\n  registerMetadata(metadata: EntityMetadata);\n  registerMetadataMap(metadataMap: EntityMetadataMap = {});\n  registerDefinition<T>(definition: EntityDefinition<T>);\n  registerDefinitions(definitions: EntityDefinitions);\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityDefinition",
+    "overloads": [
+      {
+        "signature": "interface EntityDefinition<T = any> {\n  entityName: string;\n  entityAdapter: EntityAdapter<T>;\n  entityDispatcherOptions?: Partial<EntityDispatcherDefaultOptions>;\n  initialState: EntityCollection<T>;\n  metadata: EntityMetadata<T>;\n  noChangeTracking: boolean;\n  selectId: IdSelector<T>;\n  sortComparer: false | Comparer<T>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "createEntityDefinition",
+    "overloads": [
+      {
+        "signature": "function createEntityDefinition<T, S extends object>(\n  metadata: EntityMetadata<T, S>\n): EntityDefinition<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "data",
+    "name": "EntityFilterFn",
+    "overloads": [
+      {
+        "signature": "export type EntityFilterFn<T> = (entities: T[], pattern?: any) => T[];",
+        "info": [
+          [
+            "description",
+            "Filters the `entities` array argument and returns the original `entities`,\nor a new filtered array of entities.\nNEVER mutate the original `entities` array itself.\n/"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "PropsFilterFnFactory",
+    "overloads": [
+      {
+        "signature": "function PropsFilterFnFactory<T = any>(\n  props: (keyof T)[] = []\n): EntityFilterFn<T>;",
+        "info": [
+          [
+            "description",
+            "Creates an {EntityFilterFn} that matches RegExp or RegExp string pattern\nanywhere in any of the given props of an entity.\nIf pattern is a string, spaces are significant and ignores case."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "ENTITY_METADATA_TOKEN",
+    "overloads": [
+      {
+        "signature": "const ENTITY_METADATA_TOKEN: InjectionToken<EntityMetadataMap>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityMetadata",
+    "overloads": [
+      {
+        "signature": "interface EntityMetadata<T = any, S extends object = {}> {\n  entityName: string;\n  entityDispatcherOptions?: Partial<EntityDispatcherDefaultOptions>;\n  filterFn?: EntityFilterFn<T>;\n  noChangeTracking?: boolean;\n  selectId?: IdSelector<T>;\n  sortComparer?: false | Comparer<T>;\n  additionalCollectionState?: S;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityMetadataMap",
+    "overloads": [{ "signature": "interface EntityMetadataMap {}", "info": [] }]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionServiceBase",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionServiceBase<\n  T,\n  S$ extends EntitySelectors$<T> = EntitySelectors$<T>\n> implements EntityCollectionService<T> {\n  readonly dispatcher: EntityDispatcher<T>;\n  readonly selectors: EntitySelectors<T>;\n  readonly selectors$: S$;\n  guard: EntityActionGuard<T>;\n  selectId: IdSelector<T>;\n  toUpdate: (entity: Partial<T>) => Update<T>;\n  collection$: Observable<EntityCollection<T>> | Store<EntityCollection<T>>;\n  count$: Observable<number> | Store<number>;\n  entities$: Observable<T[]> | Store<T[]>;\n  entityActions$: Observable<EntityAction>;\n  entityMap$: Observable<Dictionary<T>> | Store<Dictionary<T>>;\n  errors$: Observable<EntityAction>;\n  filter$: Observable<any> | Store<any>;\n  filteredEntities$: Observable<T[]> | Store<T[]>;\n  keys$: Observable<string[] | number[]> | Store<string[] | number[]>;\n  loaded$: Observable<boolean> | Store<boolean>;\n  loading$: Observable<boolean> | Store<boolean>;\n  changeState$: Observable<ChangeStateMap<T>> | Store<ChangeStateMap<T>>;\n\n  createEntityAction<P = any>(\n    op: EntityOp,\n    data?: P,\n    options?: EntityActionOptions\n  ): EntityAction<P>;\n  createAndDispatch<P = any>(\n    op: EntityOp,\n    data?: P,\n    options?: EntityActionOptions\n  ): EntityAction<P>;\n  dispatch(action: Action): Action;\n  add(entity: T, options?: EntityActionOptions): Observable<T>;\n  cancel(\n    correlationId: any,\n    reason?: string,\n    options?: EntityActionOptions\n  ): void;\n  delete(\n    arg: number | string | T,\n    options?: EntityActionOptions\n  ): Observable<number | string>;\n  getAll(options?: EntityActionOptions): Observable<T[]>;\n  getByKey(key: any, options?: EntityActionOptions): Observable<T>;\n  getWithQuery(\n    queryParams: QueryParams | string,\n    options?: EntityActionOptions\n  ): Observable<T[]>;\n  load(options?: EntityActionOptions): Observable<T[]>;\n  update(entity: Partial<T>, options?: EntityActionOptions): Observable<T>;\n  upsert(entity: T, options?: EntityActionOptions): Observable<T>;\n  addAllToCache(entities: T[], options?: EntityActionOptions): void;\n  addOneToCache(entity: T, options?: EntityActionOptions): void;\n  addManyToCache(entities: T[], options?: EntityActionOptions): void;\n  clearCache(): void;\n  removeOneFromCache(\n    arg: (number | string) | T,\n    options?: EntityActionOptions\n  ): void;\n  removeManyFromCache(\n    args: (number | string)[] | T[],\n    options?: EntityActionOptions\n  ): void;\n  updateOneInCache(entity: Partial<T>, options?: EntityActionOptions): void;\n  updateManyInCache(\n    entities: Partial<T>[],\n    options?: EntityActionOptions\n  ): void;\n  upsertOneInCache(entity: Partial<T>, options?: EntityActionOptions): void;\n  upsertManyInCache(\n    entities: Partial<T>[],\n    options?: EntityActionOptions\n  ): void;\n  setFilter(pattern: any): void;\n  setLoaded(isLoaded: boolean): void;\n  setLoading(isLoading: boolean): void;\n}",
+        "info": [
+          [
+            "description",
+            "Base class for a concrete EntityCollectionService<T>.\nCan be instantiated. Cannot be injected. Use EntityCollectionServiceFactory to create."
+          ],
+          [
+            "param",
+            "EntityCollectionServiceElements The ingredients for this service\nas a source of supporting services for creating an EntityCollectionService<T> instance."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollectionServiceElements",
+    "overloads": [
+      {
+        "signature": "interface EntityCollectionServiceElements<\n  T,\n  S$ extends EntitySelectors$<T> = EntitySelectors$<T>\n> {\n  readonly dispatcher: EntityDispatcher<T>;\n  readonly entityName: string;\n  readonly selectors: EntitySelectors<T>;\n  readonly selectors$: S$;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionServiceElementsFactory",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionServiceElementsFactory {\n  create<T, S$ extends EntitySelectors$<T> = EntitySelectors$<T>>(\n    entityName: string\n  ): EntityCollectionServiceElements<T, S$>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionServiceFactory",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionServiceFactory {\n  create<T, S$ extends EntitySelectors$<T> = EntitySelectors$<T>>(\n    entityName: string\n  ): EntityCollectionService<T>;\n}",
+        "info": [
+          [
+            "description",
+            "Creates EntityCollectionService instances for\na cached collection of T entities in the ngrx store."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollectionService",
+    "overloads": [
+      {
+        "signature": "interface EntityCollectionService<T> {\n  readonly dispatcher: EntityDispatcher<T>;\n  readonly entityName: string;\n  readonly selectors: EntitySelectors<T>;\n  readonly selectors$: EntitySelectors$<T>;\n\n  // inherited from EntityCommands\n\n  // inherited from EntitySelectors$\n  readonly entityName: string;\n  readonly collection$: Observable<EntityCollection> | Store<EntityCollection>;\n  readonly count$: Observable<number> | Store<number>;\n  readonly entities$: Observable<T[]> | Store<T[]>;\n  readonly entityActions$: Observable<EntityAction>;\n  readonly entityMap$: Observable<Dictionary<T>> | Store<Dictionary<T>>;\n  readonly errors$: Observable<EntityAction>;\n  readonly filter$: Observable<string> | Store<string>;\n  readonly filteredEntities$: Observable<T[]> | Store<T[]>;\n  readonly keys$: Observable<string[] | number[]> | Store<string[] | number[]>;\n  readonly loaded$: Observable<boolean> | Store<boolean>;\n  readonly loading$: Observable<boolean> | Store<boolean>;\n  readonly changeState$:\n    | Observable<ChangeStateMap<T>>\n    | Store<ChangeStateMap<T>>;\n}",
+        "info": [
+          [
+            "description",
+            "A facade for managing\na cached collection of T entities in the ngrx store."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityServicesBase",
+    "overloads": [
+      {
+        "signature": "class EntityServicesBase implements EntityServices {\n  dispatch(action: Action);\n  getEntityCollectionService<\n    T,\n    S$ extends EntitySelectors$<T> = EntitySelectors$<T>\n  >(entityName: string): EntityCollectionService<T>;\n  registerEntityCollectionService<T>(\n    service: EntityCollectionService<T>,\n    serviceName?: string\n  );\n  registerEntityCollectionServices(\n    entityCollectionServices:\n      | EntityCollectionServiceMap\n      | EntityCollectionService<any>[]\n  ): void;\n}",
+        "info": [
+          [
+            "description",
+            "Base/default class of a central registry of EntityCollectionServices for all entity types.\nCreate your own subclass to add app-specific members for an improved developer experience."
+          ],
+          [
+            "example",
+            "export class EntityServices extends EntityServicesBase {\nconstructor(entityServicesElements: EntityServicesElements) {\nsuper(entityServicesElements);\n}\n// Extend with well-known, app entity collection services\n// Convenience property to return a typed custom entity collection service\nget companyService() {\nreturn this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n}\n// Convenience dispatch methods\nclearCompany(companyId: string) {\nthis.dispatch(new ClearCompanyAction(companyId));\n}\n}"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityServicesElements",
+    "overloads": [
+      {
+        "signature": "class EntityServicesElements {\n  readonly entityActionErrors$: Observable<EntityAction>;\n  readonly entityCache$: Observable<EntityCache> | Store<EntityCache>;\n  readonly reducedActions$: Observable<Action>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityServices",
+    "overloads": [
+      {
+        "signature": "class EntityServices {\n  abstract readonly entityActionErrors$: Observable<EntityAction>;\n  abstract readonly entityCache$: Observable<EntityCache> | Store<EntityCache>;\n  abstract readonly reducedActions$: Observable<Action>;\n\n  abstract dispatch(action: Action): void;\n  abstract getEntityCollectionService<T = any>(\n    entityName: string\n  ): EntityCollectionService<T>;\n  abstract registerEntityCollectionService<T>(\n    service: EntityCollectionService<T>\n  ): void;\n  abstract registerEntityCollectionServices(\n    entityCollectionServices: EntityCollectionService<any>[]\n  ): void;\n  abstract registerEntityCollectionServices(\n    entityCollectionServiceMap: EntityCollectionServiceMap\n  ): void;\n}",
+        "info": [
+          [
+            "description",
+            "Class-Interface for EntityCache and EntityCollection services.\nServes as an Angular provider token for this service class.\nIncludes a registry of EntityCollectionServices for all entity types.\nCreates a new default EntityCollectionService for any entity type not in the registry.\nOptionally register specialized EntityCollectionServices for individual types"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollectionServiceMap",
+    "overloads": [
+      {
+        "signature": "interface EntityCollectionServiceMap {}",
+        "info": [
+          [
+            "description",
+            "A map of service or entity names to their corresponding EntityCollectionServices."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "ENTITY_CACHE_NAME",
+    "overloads": [
+      { "signature": "const ENTITY_CACHE_NAME: 'entityCache';", "info": [] }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "ENTITY_CACHE_NAME_TOKEN",
+    "overloads": [
+      {
+        "signature": "const ENTITY_CACHE_NAME_TOKEN: InjectionToken<string>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "ENTITY_CACHE_META_REDUCERS",
+    "overloads": [
+      {
+        "signature": "const ENTITY_CACHE_META_REDUCERS: InjectionToken<any[]>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "ENTITY_COLLECTION_META_REDUCERS",
+    "overloads": [
+      {
+        "signature": "const ENTITY_COLLECTION_META_REDUCERS: InjectionToken<any[]>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "INITIAL_ENTITY_CACHE_STATE",
+    "overloads": [
+      {
+        "signature": "const INITIAL_ENTITY_CACHE_STATE: InjectionToken<\n  EntityCache | (() => EntityCache)\n>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCacheReducerFactory",
+    "overloads": [
+      {
+        "signature": "class EntityCacheReducerFactory {\n  create(): ActionReducer<EntityCache, Action>;\n}",
+        "info": [
+          [
+            "description",
+            "Creates the EntityCacheReducer via its create() method"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCache",
+    "overloads": [{ "signature": "interface EntityCache {}", "info": [] }]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityChangeTrackerBase",
+    "overloads": [
+      {
+        "signature": "class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {\n  commitAll(collection: EntityCollection<T>): EntityCollection<T>;\n  commitMany(\n    entityOrIdList: (number | string | T)[],\n    collection: EntityCollection<T>\n  ): EntityCollection<T>;\n  commitOne(\n    entityOrId: number | string | T,\n    collection: EntityCollection<T>\n  ): EntityCollection<T>;\n  mergeQueryResults(\n    entities: T[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  mergeSaveAdds(\n    entities: T[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  mergeSaveDeletes(\n    keys: (number | string)[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  mergeSaveUpdates(\n    updateResponseData: UpdateResponseData<T>[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy,\n    skipUnchanged = false\n  ): EntityCollection<T>;\n  mergeSaveUpserts(\n    entities: T[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackAddMany(\n    entities: T[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackAddOne(\n    entity: T,\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackDeleteMany(\n    keys: (number | string)[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackDeleteOne(\n    key: number | string,\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackUpdateMany(\n    updates: Update<T>[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackUpdateOne(\n    update: Update<T>,\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackUpsertMany(\n    entities: T[],\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  trackUpsertOne(\n    entity: T,\n    collection: EntityCollection<T>,\n    mergeStrategy?: MergeStrategy\n  ): EntityCollection<T>;\n  undoAll(collection: EntityCollection<T>): EntityCollection<T>;\n  undoMany(\n    entityOrIdList: (number | string | T)[],\n    collection: EntityCollection<T>\n  ): EntityCollection<T>;\n  undoOne(\n    entityOrId: number | string | T,\n    collection: EntityCollection<T>\n  ): EntityCollection<T>;\n}",
+        "info": [
+          [
+            "description",
+            "The default implementation of EntityChangeTracker with\nmethods for tracking, committing, and reverting/undoing unsaved entity changes.\nUsed by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.\nSee EntityChangeTracker docs."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityChangeTracker",
+    "overloads": [
+      {
+        "signature": "interface EntityChangeTracker<T> {}",
+        "info": [
+          [
+            "description",
+            "Methods for tracking, committing, and reverting/undoing unsaved entity changes.\nUsed by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.\nSee EntityChangeTracker docs."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionCreator",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionCreator {\n  create<T = any, S extends EntityCollection<T> = EntityCollection<T>>(\n    entityName: string\n  ): S;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "createEmptyEntityCollection",
+    "overloads": [
+      {
+        "signature": "function createEmptyEntityCollection<T>(\n  entityName?: string\n): EntityCollection<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducerMethodMap",
+    "overloads": [
+      {
+        "signature": "interface EntityCollectionReducerMethodMap<T> {}",
+        "info": [
+          [
+            "description",
+            "Map of {EntityOp} to reducer method for the operation.\nIf an operation is missing, caller should return the collection for that reducer."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducerMethods",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionReducerMethods<T> {\n  selectId: IdSelector<T>;\n  entityChangeTracker: EntityChangeTracker<T>;\n  readonly methods: EntityCollectionReducerMethodMap<T> = {\n    [EntityOp.CANCEL_PERSIST]: this.cancelPersist.bind(this),\n\n    [EntityOp.QUERY_ALL]: this.queryAll.bind(this),\n    [EntityOp.QUERY_ALL_ERROR]: this.queryAllError.bind(this),\n    [EntityOp.QUERY_ALL_SUCCESS]: this.queryAllSuccess.bind(this),\n\n    [EntityOp.QUERY_BY_KEY]: this.queryByKey.bind(this),\n    [EntityOp.QUERY_BY_KEY_ERROR]: this.queryByKeyError.bind(this),\n    [EntityOp.QUERY_BY_KEY_SUCCESS]: this.queryByKeySuccess.bind(this),\n\n    [EntityOp.QUERY_LOAD]: this.queryLoad.bind(this),\n    [EntityOp.QUERY_LOAD_ERROR]: this.queryLoadError.bind(this),\n    [EntityOp.QUERY_LOAD_SUCCESS]: this.queryLoadSuccess.bind(this),\n\n    [EntityOp.QUERY_MANY]: this.queryMany.bind(this),\n    [EntityOp.QUERY_MANY_ERROR]: this.queryManyError.bind(this),\n    [EntityOp.QUERY_MANY_SUCCESS]: this.queryManySuccess.bind(this),\n\n    [EntityOp.SAVE_ADD_MANY]: this.saveAddMany.bind(this),\n    [EntityOp.SAVE_ADD_MANY_ERROR]: this.saveAddManyError.bind(this),\n    [EntityOp.SAVE_ADD_MANY_SUCCESS]: this.saveAddManySuccess.bind(this),\n\n    [EntityOp.SAVE_ADD_ONE]: this.saveAddOne.bind(this),\n    [EntityOp.SAVE_ADD_ONE_ERROR]: this.saveAddOneError.bind(this),\n    [EntityOp.SAVE_ADD_ONE_SUCCESS]: this.saveAddOneSuccess.bind(this),\n\n    [EntityOp.SAVE_DELETE_MANY]: this.saveDeleteMany.bind(this),\n    [EntityOp.SAVE_DELETE_MANY_ERROR]: this.saveDeleteManyError.bind(this),\n    [EntityOp.SAVE_DELETE_MANY_SUCCESS]: this.saveDeleteManySuccess.bind(this),\n\n    [EntityOp.SAVE_DELETE_ONE]: this.saveDeleteOne.bind(this),\n    [EntityOp.SAVE_DELETE_ONE_ERROR]: this.saveDeleteOneError.bind(this),\n    [EntityOp.SAVE_DELETE_ONE_SUCCESS]: this.saveDeleteOneSuccess.bind(this),\n\n    [EntityOp.SAVE_UPDATE_MANY]: this.saveUpdateMany.bind(this),\n    [EntityOp.SAVE_UPDATE_MANY_ERROR]: this.saveUpdateManyError.bind(this),\n    [EntityOp.SAVE_UPDATE_MANY_SUCCESS]: this.saveUpdateManySuccess.bind(this),\n\n    [EntityOp.SAVE_UPDATE_ONE]: this.saveUpdateOne.bind(this),\n    [EntityOp.SAVE_UPDATE_ONE_ERROR]: this.saveUpdateOneError.bind(this),\n    [EntityOp.SAVE_UPDATE_ONE_SUCCESS]: this.saveUpdateOneSuccess.bind(this),\n\n    [EntityOp.SAVE_UPSERT_MANY]: this.saveUpsertMany.bind(this),\n    [EntityOp.SAVE_UPSERT_MANY_ERROR]: this.saveUpsertManyError.bind(this),\n    [EntityOp.SAVE_UPSERT_MANY_SUCCESS]: this.saveUpsertManySuccess.bind(this),\n\n    [EntityOp.SAVE_UPSERT_ONE]: this.saveUpsertOne.bind(this),\n    [EntityOp.SAVE_UPSERT_ONE_ERROR]: this.saveUpsertOneError.bind(this),\n    [EntityOp.SAVE_UPSERT_ONE_SUCCESS]: this.saveUpsertOneSuccess.bind(this),\n\n    [EntityOp.ADD_ALL]: this.addAll.bind(this),\n    [EntityOp.ADD_MANY]: this.addMany.bind(this),\n    [EntityOp.ADD_ONE]: this.addOne.bind(this),\n\n    [EntityOp.REMOVE_ALL]: this.removeAll.bind(this),\n    [EntityOp.REMOVE_MANY]: this.removeMany.bind(this),\n    [EntityOp.REMOVE_ONE]: this.removeOne.bind(this),\n\n    [EntityOp.UPDATE_MANY]: this.updateMany.bind(this),\n    [EntityOp.UPDATE_ONE]: this.updateOne.bind(this),\n\n    [EntityOp.UPSERT_MANY]: this.upsertMany.bind(this),\n    [EntityOp.UPSERT_ONE]: this.upsertOne.bind(this),\n\n    [EntityOp.COMMIT_ALL]: this.commitAll.bind(this),\n    [EntityOp.COMMIT_MANY]: this.commitMany.bind(this),\n    [EntityOp.COMMIT_ONE]: this.commitOne.bind(this),\n    [EntityOp.UNDO_ALL]: this.undoAll.bind(this),\n    [EntityOp.UNDO_MANY]: this.undoMany.bind(this),\n    [EntityOp.UNDO_ONE]: this.undoOne.bind(this),\n\n    [EntityOp.SET_CHANGE_STATE]: this.setChangeState.bind(this),\n    [EntityOp.SET_COLLECTION]: this.setCollection.bind(this),\n    [EntityOp.SET_FILTER]: this.setFilter.bind(this),\n    [EntityOp.SET_LOADED]: this.setLoaded.bind(this),\n    [EntityOp.SET_LOADING]: this.setLoading.bind(this),\n  };\n}",
+        "info": [
+          [
+            "description",
+            "Base implementation of reducer methods for an entity collection."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducerMethodsFactory",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionReducerMethodsFactory {\n  create<T>(entityName: string): EntityCollectionReducerMethodMap<T>;\n}",
+        "info": [
+          [
+            "description",
+            "Creates {EntityCollectionReducerMethods} for a given entity type."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducers",
+    "overloads": [
+      { "signature": "interface EntityCollectionReducers {}", "info": [] }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducerRegistry",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionReducerRegistry {\n  getOrCreateReducer<T>(entityName: string): EntityCollectionReducer<T>;\n  registerReducer<T>(\n    entityName: string,\n    reducer: EntityCollectionReducer<T>\n  ): EntityCollectionReducer<T>;\n  registerReducers(reducers: EntityCollectionReducers);\n}",
+        "info": [
+          [
+            "description",
+            "Registry of entity types and their previously-constructed reducers.\nCan create a new CollectionReducer, which it registers for subsequent use."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducer",
+    "overloads": [
+      {
+        "signature": "export type EntityCollectionReducer<T = any> = (\n  collection: EntityCollection<T>,\n  action: EntityAction\n) => EntityCollection<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityCollectionReducerFactory",
+    "overloads": [
+      {
+        "signature": "class EntityCollectionReducerFactory {\n  create<T = any>(entityName: string): EntityCollectionReducer<T>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "data",
+    "name": "ChangeType",
+    "overloads": [
+      {
+        "signature": "export enum ChangeType {\n  /** The entity has not changed from its last known server state. */\n  Unchanged = 0,\n  /** The entity was added to the collection */\n  Added,\n  /** The entity is scheduled for delete and was removed from the collection */\n  Deleted,\n  /** The entity in the collection was updated */\n  Updated,\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "ChangeState",
+    "overloads": [
+      {
+        "signature": "interface ChangeState<T> {\n  changeType: ChangeType;\n  originalValue?: T | undefined;\n}",
+        "info": [
+          [
+            "description",
+            "Change state for an entity with unsaved changes;\nan entry in an EntityCollection.changeState map"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "data",
+    "name": "ChangeStateMap",
+    "overloads": [
+      {
+        "signature": "export type ChangeStateMap<T> = Dictionary<ChangeState<T>>;",
+        "info": [
+          [
+            "description",
+            "Map of entity primary keys to entity ChangeStates.\nEach entry represents an entity with unsaved changes."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityCollection",
+    "overloads": [
+      {
+        "signature": "interface EntityCollection<T = any> {\n  entityName: string;\n  changeState: ChangeStateMap<T>;\n  filter?: string;\n  loaded: boolean;\n  loading: boolean;\n}",
+        "info": [
+          [
+            "description",
+            "Data and information about a collection of entities of a single type.\nEntityCollections are maintained in the EntityCache within the ngrx store."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "ENTITY_CACHE_SELECTOR_TOKEN",
+    "overloads": [
+      {
+        "signature": "const ENTITY_CACHE_SELECTOR_TOKEN: InjectionToken<any>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "entityCacheSelectorProvider",
+    "overloads": [
+      {
+        "signature": "const entityCacheSelectorProvider: FactoryProvider;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "data",
+    "name": "EntityCacheSelector",
+    "overloads": [
+      {
+        "signature": "export type EntityCacheSelector = MemoizedSelector<Object, EntityCache>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "createEntityCacheSelector",
+    "overloads": [
+      {
+        "signature": "function createEntityCacheSelector(\n  entityCacheName?: string\n): MemoizedSelector<Object, EntityCache>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "CollectionSelectors",
+    "overloads": [
+      {
+        "signature": "interface CollectionSelectors<T> {\n  readonly selectCount: Selector<EntityCollection<T>, number>;\n  readonly selectEntities: Selector<EntityCollection<T>, T[]>;\n  readonly selectEntityMap: Selector<EntityCollection<T>, Dictionary<T>>;\n  readonly selectFilter: Selector<EntityCollection<T>, string>;\n  readonly selectFilteredEntities: Selector<EntityCollection<T>, T[]>;\n  readonly selectKeys: Selector<EntityCollection<T>, string[] | number[]>;\n  readonly selectLoaded: Selector<EntityCollection<T>, boolean>;\n  readonly selectLoading: Selector<EntityCollection<T>, boolean>;\n  readonly selectChangeState: Selector<EntityCollection<T>, ChangeStateMap<T>>;\n}",
+        "info": [
+          [
+            "description",
+            "The selector functions for entity collection members,\nSelects from the entity collection to the collection member\nContrast with {EntitySelectors}."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntitySelectors",
+    "overloads": [
+      {
+        "signature": "interface EntitySelectors<T> {\n  readonly entityName: string;\n  readonly selectCollection: MemoizedSelector<Object, EntityCollection<T>>;\n  readonly selectCount: MemoizedSelector<Object, number>;\n  readonly selectEntities: MemoizedSelector<Object, T[]>;\n  readonly selectEntityCache: MemoizedSelector<Object, EntityCache>;\n  readonly selectEntityMap: MemoizedSelector<Object, Dictionary<T>>;\n  readonly selectFilter: MemoizedSelector<Object, string>;\n  readonly selectFilteredEntities: MemoizedSelector<Object, T[]>;\n  readonly selectKeys: MemoizedSelector<Object, string[] | number[]>;\n  readonly selectLoaded: MemoizedSelector<Object, boolean>;\n  readonly selectLoading: MemoizedSelector<Object, boolean>;\n  readonly selectChangeState: MemoizedSelector<Object, ChangeStateMap<T>>;\n}",
+        "info": [
+          [
+            "description",
+            "The selector functions for entity collection members,\nSelects from store root, through EntityCache, to the entity collection member\nContrast with {CollectionSelectors}."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntitySelectorsFactory",
+    "overloads": [
+      {
+        "signature": "class EntitySelectorsFactory {\n  createCollectionSelector<\n    T = any,\n    C extends EntityCollection<T> = EntityCollection<T>\n  >(entityName: string);\n  createCollectionSelectors<\n    T,\n    S extends CollectionSelectors<T> = CollectionSelectors<T>\n  >(metadataOrName: EntityMetadata<T> | string): S;\n  create<T, S extends EntitySelectors<T> = EntitySelectors<T>>(\n    metadataOrName: EntityMetadata<T> | string\n  ): S;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntitySelectors$",
+    "overloads": [
+      {
+        "signature": "interface EntitySelectors$<T> {\n  readonly entityName: string;\n  readonly collection$: Observable<EntityCollection> | Store<EntityCollection>;\n  readonly count$: Observable<number> | Store<number>;\n  readonly entities$: Observable<T[]> | Store<T[]>;\n  readonly entityActions$: Observable<EntityAction>;\n  readonly entityMap$: Observable<Dictionary<T>> | Store<Dictionary<T>>;\n  readonly errors$: Observable<EntityAction>;\n  readonly filter$: Observable<string> | Store<string>;\n  readonly filteredEntities$: Observable<T[]> | Store<T[]>;\n  readonly keys$: Observable<string[] | number[]> | Store<string[] | number[]>;\n  readonly loaded$: Observable<boolean> | Store<boolean>;\n  readonly loading$: Observable<boolean> | Store<boolean>;\n  readonly changeState$:\n    | Observable<ChangeStateMap<T>>\n    | Store<ChangeStateMap<T>>;\n}",
+        "info": [
+          [
+            "description",
+            "The selector observable functions for entity collection members."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntitySelectors$Factory",
+    "overloads": [
+      {
+        "signature": "class EntitySelectors$Factory {\n  entityCache$: Observable<EntityCache>;\n  entityActionErrors$: Observable<EntityAction>;\n\n  create<T, S$ extends EntitySelectors$<T> = EntitySelectors$<T>>(\n    entityName: string,\n    selectors: EntitySelectors<T>\n  ): S$;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "CorrelationIdGenerator",
+    "overloads": [
+      {
+        "signature": "class CorrelationIdGenerator {\n  next();\n}",
+        "info": [
+          [
+            "description",
+            "Generates a string id beginning 'CRID',\nfollowed by a monotonically increasing integer for use as a correlation id.\nAs they are produced locally by a singleton service,\nthese ids are guaranteed to be unique only\nfor the duration of a single client browser instance.\nNgrx entity dispatcher query and save methods call this service to generate default correlation ids.\nDo NOT use for entity keys."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultLogger",
+    "overloads": [
+      {
+        "signature": "class DefaultLogger implements Logger {\n  error(message?: any, extra?: any);\n  log(message?: any, extra?: any);\n  warn(message?: any, extra?: any);\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "DefaultPluralizer",
+    "overloads": [
+      {
+        "signature": "class DefaultPluralizer {\n  pluralNames: EntityPluralNames = {};\n\n  pluralize(name: string);\n  registerPluralNames(pluralNames: EntityPluralNames): void;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "getGuid",
+    "overloads": [{ "signature": "function getGuid();", "info": [] }]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "getGuidComb",
+    "overloads": [
+      {
+        "signature": "function getGuidComb(seed?: number);",
+        "info": [
+          [
+            "description",
+            "Creates a sortable, pseudo-GUID (globally unique identifier)\nwhose trailing 6 bytes (12 hex digits) are time-based\nStart either with the given getTime() value, seedTime,\nor get the current time in ms."
+          ],
+          ["param", "seed {number} - optional seed for reproducible time-part"]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "guidComparer",
+    "overloads": [
+      {
+        "signature": "function guidComparer(l: string, r: string);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "Logger",
+    "overloads": [
+      {
+        "signature": "class Logger {\n  abstract error(message?: any, ...optionalParams: any[]): void;\n  abstract log(message?: any, ...optionalParams: any[]): void;\n  abstract warn(message?: any, ...optionalParams: any[]): void;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityPluralNames",
+    "overloads": [
+      {
+        "signature": "interface EntityPluralNames {}",
+        "info": [["description", "Mapping of entity type name to its plural"]]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "data",
+    "name": "PLURAL_NAMES_TOKEN",
+    "overloads": [
+      {
+        "signature": "const PLURAL_NAMES_TOKEN: InjectionToken<EntityPluralNames>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "Pluralizer",
+    "overloads": [
+      {
+        "signature": "class Pluralizer {\n  abstract pluralize(name: string): string;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "defaultSelectId",
+    "overloads": [
+      {
+        "signature": "function defaultSelectId(entity: any);",
+        "info": [
+          [
+            "description",
+            "Default function that returns the entity's primary key (pkey).\nAssumes that the entity has an `id` pkey property.\nReturns `undefined` if no entity or `id`.\nEvery selectId fn must return `undefined` when it cannot produce a full pkey."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "flattenArgs",
+    "overloads": [
+      {
+        "signature": "function flattenArgs<T>(args?: any[]): T[];",
+        "info": [
+          [
+            "description",
+            "Flatten first arg if it is an array\nAllows fn with ...rest signature to be called with an array instead of spread\nExample:\n\n```\n// See entity-action-operators.ts\nconst persistOps = [EntityOp.QUERY_ALL, EntityOp.ADD, ...];\nactions.pipe(ofEntityOp(...persistOps)) // works\nactions.pipe(ofEntityOp(persistOps)) // also works\n```\n\n\\*/"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "data",
+    "name": "toUpdateFactory",
+    "overloads": [
+      {
+        "signature": "function toUpdateFactory<T>(selectId?: IdSelector<T>);",
+        "info": [
+          [
+            "description",
+            "Return a function that converts an entity (or partial entity) into the `Update<T>`\nwhose `id` is the primary key and\n`changes` is the entity (or partial entity of changes)."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "data",
+    "name": "EntityDataModuleConfig",
+    "overloads": [
+      {
+        "signature": "interface EntityDataModuleConfig {\n  entityMetadata?: EntityMetadataMap;\n  entityCacheMetaReducers?: (\n    | MetaReducer<EntityCache, Action>\n    | InjectionToken<MetaReducer<EntityCache, Action>>\n  )[];\n  entityCollectionMetaReducers?: MetaReducer<EntityCollection, EntityAction>[];\n  initialEntityCacheState?: EntityCache | (() => EntityCache);\n  pluralNames?: { [name: string]: string };\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDataModuleWithoutEffects",
+    "overloads": [
+      {
+        "signature": "class EntityDataModuleWithoutEffects implements OnDestroy {\n  static forRoot(\n    config: EntityDataModuleConfig\n  ): ModuleWithProviders<EntityDataModuleWithoutEffects>;\n  ngOnDestroy();\n}",
+        "info": [
+          [
+            "description",
+            "Module without effects or dataservices which means no HTTP calls\nThis module helpful for internal testing.\nAlso helpful for apps that handle server access on their own and\ntherefore opt-out of @ngrx/effects for entities"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "data",
+    "name": "EntityDataModule",
+    "overloads": [
+      {
+        "signature": "class EntityDataModule {\n  static forRoot(\n    config: EntityDataModuleConfig\n  ): ModuleWithProviders<EntityDataModule>;\n  addEffects(effectSourceInstance: any);\n}",
+        "info": [
+          [
+            "description",
+            "entity-data main module includes effects and HTTP data services\nConfigure with `forRoot`.\nNo `forFeature` yet."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "createEffect",
+    "overloads": [
+      {
+        "signature": "function createEffect<\n  C extends EffectConfig,\n  DT extends DispatchType<C>,\n  OT extends ObservableType<DT, OT>,\n  R extends EffectResult<OT>\n>(\n  source: () => R & ConditionallyDisallowActionCreator<DT, R>,\n  config?: Partial<C>\n): R & CreateEffectMetadata;",
+        "info": [
+          [
+            "description",
+            "Creates an effect from an `Observable` and an `EffectConfig`."
+          ],
+          ["param", "source A function which returns an `Observable`."],
+          [
+            "param",
+            "config A `Partial<EffectConfig>` to configure the effect. By default, `dispatch` is true and `useEffectsErrorHandler` is true."
+          ],
+          [
+            "returns",
+            "If `EffectConfig`#`dispatch` is true, returns `Observable<Action>`. Else, returns `Observable<unknown>`."
+          ],
+          [
+            "usageNotes",
+            "** Mapping to a different action **\n\n```ts\neffectName$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(FeatureActions.actionOne),\n    map(() => FeatureActions.actionTwo())\n  )\n);\n```\n\n** Non-dispatching effects **\n\n```ts\neffectName$ = createEffect(\n  () =>\n    this.actions$.pipe(\n      ofType(FeatureActions.actionOne),\n      tap(() => console.log('Action One Dispatched'))\n    ),\n  { dispatch: false }\n  // FeatureActions.actionOne is not dispatched\n);\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "effects",
+    "name": "EffectConfig",
+    "overloads": [
+      {
+        "signature": "interface EffectConfig {\n  dispatch?: boolean;\n  useEffectsErrorHandler?: boolean;\n}",
+        "info": [
+          ["description", "Configures an effect created by `createEffect`."]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "Effect",
+    "overloads": [
+      { "signature": "function Effect(config: EffectConfig = {});", "info": [] }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "getEffectsMetadata",
+    "overloads": [
+      {
+        "signature": "function getEffectsMetadata<T>(instance: T): EffectsMetadata<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "mergeEffects",
+    "overloads": [
+      {
+        "signature": "function mergeEffects(\n  sourceInstance: any,\n  globalErrorHandler: ErrorHandler,\n  effectsErrorHandler: EffectsErrorHandler\n): Observable<EffectNotification>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "effects",
+    "name": "EffectsErrorHandler",
+    "overloads": [
+      {
+        "signature": "export type EffectsErrorHandler = <T extends Action>(\n  observable$: Observable<T>,\n  errorHandler: ErrorHandler\n) => Observable<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "defaultEffectsErrorHandler",
+    "overloads": [
+      {
+        "signature": "function defaultEffectsErrorHandler<T extends Action>(\n  observable$: Observable<T>,\n  errorHandler: ErrorHandler,\n  retryAttemptLeft: number = MAX_NUMBER_OF_RETRY_ATTEMPTS\n): Observable<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "effects",
+    "name": "EffectsMetadata",
+    "overloads": [
+      {
+        "signature": "export type EffectsMetadata<T> = {\n  [key in EffectPropertyKey<T>]?: EffectConfig;\n};",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "effects",
+    "name": "CreateEffectMetadata",
+    "overloads": [
+      {
+        "signature": "interface CreateEffectMetadata {\n  [CREATE_EFFECT_METADATA_KEY]: EffectConfig;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "effects",
+    "name": "Actions",
+    "overloads": [
+      {
+        "signature": "class Actions<V = Action> extends Observable<V> {\n  lift<R>(operator: Operator<V, R>): Observable<R>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "ofType",
+    "overloads": [
+      {
+        "signature": "function ofType(\n  ...allowedTypes: Array<string | ActionCreator<string, Creator>>\n): OperatorFunction<Action, Action>;",
+        "info": []
+      },
+      {
+        "signature": "function ofType<\n  AC extends ActionCreator<string, Creator>[],\n  U extends Action = Action,\n  V = ReturnType<AC[number]>\n>(...allowedTypes: AC): OperatorFunction<U, V>;",
+        "info": [
+          [
+            "description",
+            "'ofType' filters an Observable of Actions into an observable of the actions\nwhose type strings are passed to it.\nFor example, if `actions` has type `Actions<AdditionAction|SubstractionAction>`, and\nthe type of the `Addition` action is `add`, then\n`actions.pipe(ofType('add'))` returns an `Observable<AdditionAction>`.\nProperly typing this function is hard and requires some advanced TS tricks\nbelow.\nType narrowing automatically works, as long as your `actions` object\nstarts with a `Actions<SomeUnionOfActions>` instead of generic `Actions`.\nFor backwards compatibility, when one passes a single type argument\n`ofType<T>('something')` the result is an `Observable<T>`. Note, that `T`\ncompletely overrides any possible inference from 'something'.\nUnfortunately, for unknown 'actions: Actions' these types will produce\n'Observable<never>'. In such cases one has to manually set the generic type\nlike `actions.ofType<AdditionAction>('add')`."
+          ]
+        ]
+      },
+      {
+        "signature": "function ofType<\n  E extends Extract<U, { type: T1 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  U extends Action = Action,\n  V = T1 extends string ? E : ReturnType<Extract<T1, AC>>\n>(t1: T1): OperatorFunction<U, V>;",
+        "info": []
+      },
+      {
+        "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2, AC, E>\n>(t1: T1, t2: T2): OperatorFunction<U, V>;",
+        "info": []
+      },
+      {
+        "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 | T3 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  T3 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2 | T3, AC, E>\n>(t1: T1, t2: T2, t3: T3): OperatorFunction<U, V>;",
+        "info": []
+      },
+      {
+        "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 | T3 | T4 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  T3 extends string | AC,\n  T4 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2 | T3 | T4, AC, E>\n>(t1: T1, t2: T2, t3: T3, t4: T4): OperatorFunction<U, V>;",
+        "info": []
+      },
+      {
+        "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 | T3 | T4 | T5 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  T3 extends string | AC,\n  T4 extends string | AC,\n  T5 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2 | T3 | T4 | T5, AC, E>\n>(t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): OperatorFunction<U, V>;",
+        "info": []
+      },
+      {
+        "signature": "function ofType<V extends Action>(\n  ...allowedTypes: Array<string | ActionCreator<string, Creator>>\n): OperatorFunction<Action, V>;",
+        "info": [
+          [
+            "description",
+            "Fallback for more than 5 arguments.\nThere is no inference, so the return type is the same as the input -\nObservable<Action>.\nWe provide a type parameter, even though TS will not infer it from the\narguments, to preserve backwards compatibility with old versions of ngrx."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "effects",
+    "name": "EffectsModule",
+    "overloads": [
+      {
+        "signature": "class EffectsModule {\n  static forFeature(\n    featureEffects: Type<any>[] = []\n  ): ModuleWithProviders<EffectsFeatureModule>;\n  static forRoot(\n    rootEffects: Type<any>[] = []\n  ): ModuleWithProviders<EffectsRootModule>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "effects",
+    "name": "EffectSources",
+    "overloads": [
+      {
+        "signature": "class EffectSources extends Subject<any> {\n  addEffects(effectSourceInstance: any): void;\n  toActions(): Observable<Action>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "effects",
+    "name": "EffectsRunner",
+    "overloads": [
+      {
+        "signature": "class EffectsRunner implements OnDestroy {\n  start();\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "effects",
+    "name": "EffectNotification",
+    "overloads": [
+      {
+        "signature": "interface EffectNotification {\n  effect: Observable<any> | (() => Observable<any>);\n  propertyName: PropertyKey;\n  sourceName: string;\n  sourceInstance: any;\n  notification: Notification<Action | null | undefined>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "effects",
+    "name": "EffectsFeatureModule",
+    "overloads": [{ "signature": "class EffectsFeatureModule {}", "info": [] }]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "effects",
+    "name": "ROOT_EFFECTS_INIT",
+    "overloads": [
+      {
+        "signature": "const ROOT_EFFECTS_INIT: '@ngrx/effects/init';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "effects",
+    "name": "rootEffectsInit",
+    "overloads": [{ "signature": "const rootEffectsInit: any;", "info": [] }]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "effects",
+    "name": "EffectsRootModule",
+    "overloads": [
+      {
+        "signature": "class EffectsRootModule {\n  addEffects(effectSourceInstance: any);\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "effects",
+    "name": "EFFECTS_ERROR_HANDLER",
+    "overloads": [
+      {
+        "signature": "const EFFECTS_ERROR_HANDLER: InjectionToken<EffectsErrorHandler>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "effects",
+    "name": "act",
+    "overloads": [
+      {
+        "signature": "function act<\n  Input,\n  OutputAction extends Action,\n  ErrorAction extends Action,\n  CompleteAction extends Action = never,\n  UnsubscribeAction extends Action = never\n>(\n  /** Allow to take either config object or project/error functions */\n  configOrProject:\n    | ActConfig<\n        Input,\n        OutputAction,\n        ErrorAction,\n        CompleteAction,\n        UnsubscribeAction\n      >\n    | ((input: Input, index: number) => Observable<OutputAction>),\n  errorFn?: (error: any, input: Input) => ErrorAction\n): (\n  source: Observable<Input>\n) => Observable<\n  OutputAction | ErrorAction | CompleteAction | UnsubscribeAction\n>;",
+        "info": []
+      },
+      {
+        "signature": "function act<Input, OutputAction extends Action, ErrorAction extends Action>(\n  project: (input: Input, index: number) => Observable<OutputAction>,\n  error: (error: any, input: Input) => ErrorAction\n): (source: Observable<Input>) => Observable<OutputAction | ErrorAction>;",
+        "info": [
+          [
+            "description",
+            "Wraps project fn with error handling making it safe to use in Effects.\nTakes either config with named properties that represent different possible\ncallbacks or project/error callbacks that are required."
+          ]
+        ]
+      },
+      {
+        "signature": "function act<\n  Input,\n  OutputAction extends Action,\n  ErrorAction extends Action,\n  CompleteAction extends Action = never,\n  UnsubscribeAction extends Action = never\n>(\n  config: ActConfig<\n    Input,\n    OutputAction,\n    ErrorAction,\n    CompleteAction,\n    UnsubscribeAction\n  >\n): (\n  source: Observable<Input>\n) => Observable<\n  OutputAction | ErrorAction | CompleteAction | UnsubscribeAction\n>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "effects",
+    "name": "OnIdentifyEffects",
+    "overloads": [
+      {
+        "signature": "interface OnIdentifyEffects {}",
+        "info": [
+          [
+            "description",
+            "Interface to set an identifier for effect instances.\nBy default, each Effects class is registered\nonce regardless of how many times the Effect class\nis loaded. By implementing this interface, you define\na unique identifier to register an Effects class instance\nmultiple times."
+          ],
+          [
+            "usageNotes",
+            "### Set an identifier for an Effects class\n\n```ts\nclass EffectWithIdentifier implements OnIdentifyEffects {\nconstructor(private effectIdentifier: string) {}\nngrxOnIdentifyEffects() {\nreturn this.effectIdentifier;\n}\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "effects",
+    "name": "OnRunEffects",
+    "overloads": [
+      {
+        "signature": "interface OnRunEffects {}",
+        "info": [
+          [
+            "description",
+            "Interface to control the lifecycle of effects.\nBy default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects."
+          ],
+          [
+            "usageNotes",
+            "### Implement the OnRunEffects interface on an Effects class\n\n```ts\nexport class UserEffects implements OnRunEffects {\n  constructor(private actions$: Actions) {}\n  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\n    return this.actions$.pipe(\n      ofType('LOGGED_IN'),\n      exhaustMap(() =>\n        resolvedEffects$.pipe(\n          takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n        )\n      )\n    );\n  }\n}\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "effects",
+    "name": "OnInitEffects",
+    "overloads": [
+      {
+        "signature": "interface OnInitEffects {}",
+        "info": [
+          [
+            "description",
+            "Interface to dispatch an action after effect registration.\nImplement this interface to dispatch a custom action after\nthe effect has been added. You can listen to this action\nin the rest of the application to execute something after\nthe effect is registered."
+          ],
+          [
+            "usageNotes",
+            "### Set an identifier for an Effects class\n\n```ts\nclass EffectWithInitAction implements OnInitEffects {\nngrxOnInitEffects() {\nreturn { type: '[EffectWithInitAction] Init' };\n}\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "effects",
+    "name": "USER_PROVIDED_EFFECTS",
+    "overloads": [
+      {
+        "signature": "const USER_PROVIDED_EFFECTS: InjectionToken<Type<any>[][]>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "entity",
+    "name": "createEntityAdapter",
+    "overloads": [
+      {
+        "signature": "function createEntityAdapter<T>(\n  options: {\n    selectId?: IdSelector<T>;\n    sortComparer?: false | Comparer<T>;\n  } = {}\n): EntityAdapter<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "entity",
+    "name": "Dictionary",
+    "overloads": [
+      {
+        "signature": "class Dictionary<T> implements DictionaryNum<T> {}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "entity",
+    "name": "EntityState",
+    "overloads": [
+      {
+        "signature": "interface EntityState<T> {\n  ids: string[] | number[];\n  entities: Dictionary<T>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "entity",
+    "name": "EntityAdapter",
+    "overloads": [
+      {
+        "signature": "interface EntityAdapter<T> {\n  selectId: IdSelector<T>;\n  sortComparer: false | Comparer<T>;\n\n  // inherited from EntityStateAdapter\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "entity",
+    "name": "Update",
+    "overloads": [
+      {
+        "signature": "export type Update<T> = UpdateStr<T> | UpdateNum<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "entity",
+    "name": "EntityMap",
+    "overloads": [
+      {
+        "signature": "export type EntityMap<T> = (entity: T) => T;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "entity",
+    "name": "EntityMapOne",
+    "overloads": [
+      {
+        "signature": "export type EntityMapOne<T> = EntityMapOneNum<T> | EntityMapOneStr<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "entity",
+    "name": "Predicate",
+    "overloads": [
+      {
+        "signature": "export type Predicate<T> = (entity: T) => boolean;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "entity",
+    "name": "IdSelector",
+    "overloads": [
+      {
+        "signature": "export type IdSelector<T> = IdSelectorStr<T> | IdSelectorNum<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "entity",
+    "name": "Comparer",
+    "overloads": [
+      {
+        "signature": "export type Comparer<T> = (a: T, b: T) => number;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "ROUTER_ERROR",
+    "overloads": [
+      {
+        "signature": "const ROUTER_ERROR: '@ngrx/router-store/error';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "ROUTER_CANCEL",
+    "overloads": [
+      {
+        "signature": "const ROUTER_CANCEL: '@ngrx/router-store/cancel';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "ROUTER_NAVIGATION",
+    "overloads": [
+      {
+        "signature": "const ROUTER_NAVIGATION: '@ngrx/router-store/navigation';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "ROUTER_NAVIGATED",
+    "overloads": [
+      {
+        "signature": "const ROUTER_NAVIGATED: '@ngrx/router-store/navigated';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "ROUTER_REQUEST",
+    "overloads": [
+      {
+        "signature": "const ROUTER_REQUEST: '@ngrx/router-store/request';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterAction",
+    "overloads": [
+      {
+        "signature": "export type RouterAction<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> =\n  | RouterRequestAction<V>\n  | RouterNavigationAction<V>\n  | RouterCancelAction<T, V>\n  | RouterErrorAction<T, V>\n  | RouterNavigatedAction<V>;",
+        "info": [["description", "A union type of router actions."]]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterCancelAction",
+    "overloads": [
+      {
+        "signature": "export type RouterCancelAction<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_CANCEL;\n  payload: RouterCancelPayload<T, V>;\n};",
+        "info": [
+          [
+            "description",
+            "An action dispatched when the router cancels navigation."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterCancelPayload",
+    "overloads": [
+      {
+        "signature": "export type RouterCancelPayload<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: V;\n  storeState: T;\n  event: NavigationCancel;\n};",
+        "info": [["description", "Payload of ROUTER_CANCEL."]]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterErrorAction",
+    "overloads": [
+      {
+        "signature": "export type RouterErrorAction<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_ERROR;\n  payload: RouterErrorPayload<T, V>;\n};",
+        "info": [
+          ["description", "An action dispatched when the router errors."]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterErrorPayload",
+    "overloads": [
+      {
+        "signature": "export type RouterErrorPayload<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: V;\n  storeState: T;\n  event: NavigationError;\n};",
+        "info": [["description", "Payload of ROUTER_ERROR."]]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterNavigatedAction",
+    "overloads": [
+      {
+        "signature": "export type RouterNavigatedAction<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_NAVIGATED;\n  payload: RouterNavigatedPayload<T>;\n};",
+        "info": [
+          [
+            "description",
+            "An action dispatched after navigation has ended and new route is active."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterNavigatedPayload",
+    "overloads": [
+      {
+        "signature": "export type RouterNavigatedPayload<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: T;\n  event: NavigationEnd;\n};",
+        "info": [["description", "Payload of ROUTER_NAVIGATED."]]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterNavigationAction",
+    "overloads": [
+      {
+        "signature": "export type RouterNavigationAction<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_NAVIGATION;\n  payload: RouterNavigationPayload<T>;\n};",
+        "info": [
+          ["description", "An action dispatched when the router navigates."]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterNavigationPayload",
+    "overloads": [
+      {
+        "signature": "export type RouterNavigationPayload<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: T;\n  event: RoutesRecognized;\n};",
+        "info": [["description", "Payload of ROUTER_NAVIGATION."]]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterRequestAction",
+    "overloads": [
+      {
+        "signature": "export type RouterRequestAction<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_REQUEST;\n  payload: RouterRequestPayload<T>;\n};",
+        "info": [
+          [
+            "description",
+            "An action dispatched when a router navigation request is fired."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterRequestPayload",
+    "overloads": [
+      {
+        "signature": "export type RouterRequestPayload<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: T;\n  event: NavigationStart;\n};",
+        "info": [["description", "Payload of ROUTER_REQUEST"]]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "routerCancelAction",
+    "overloads": [{ "signature": "const routerCancelAction: any;", "info": [] }]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "routerErrorAction",
+    "overloads": [{ "signature": "const routerErrorAction: any;", "info": [] }]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "routerNavigatedAction",
+    "overloads": [
+      { "signature": "const routerNavigatedAction: any;", "info": [] }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "routerNavigationAction",
+    "overloads": [
+      { "signature": "const routerNavigationAction: any;", "info": [] }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "routerRequestAction",
+    "overloads": [
+      { "signature": "const routerRequestAction: any;", "info": [] }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "router-store",
+    "name": "routerReducer",
+    "overloads": [
+      {
+        "signature": "function routerReducer<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n>(\n  state: RouterReducerState<T> | undefined,\n  action: Action\n): RouterReducerState<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "RouterReducerState",
+    "overloads": [
+      {
+        "signature": "export type RouterReducerState<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  state: T;\n  navigationId: number;\n};",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "router-store",
+    "name": "StateKeyOrSelector",
+    "overloads": [
+      {
+        "signature": "export type StateKeyOrSelector<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = string | Selector<any, RouterReducerState<T>>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "router-store",
+    "name": "StoreRouterConnectingModule",
+    "overloads": [
+      {
+        "signature": "class StoreRouterConnectingModule {\n  static forRoot<\n    T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n  >(\n    config: StoreRouterConfig<T> = {}\n  ): ModuleWithProviders<StoreRouterConnectingModule>;\n}",
+        "info": [
+          [
+            "description",
+            "Connects RouterModule with StoreModule.\nDuring the navigation, before any guards or resolvers run, the router will dispatch\na ROUTER_NAVIGATION action, which has the following signature:\n\n```\nexport type RouterNavigationPayload = {\nrouterState: SerializedRouterStateSnapshot,\nevent: RoutesRecognized\n}\n```\n\nEither a reducer or an effect can be invoked in response to this action.\nIf the invoked reducer throws, the navigation will be canceled.\nIf navigation gets canceled because of a guard, a ROUTER_CANCEL action will be\ndispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\nBoth ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation\nwhich can be used to restore the consistency of the store.\nUsage:\n\n```typescript\n```"
+          ],
+          [
+            "NgModule({",
+            "declarations: [AppCmp, SimpleCmp],\nimports: [\nBrowserModule,\nStoreModule.forRoot(mapOfReducers),\nRouterModule.forRoot([\n{ path: '', component: SimpleCmp },\n{ path: 'next', component: SimpleCmp }\n]),\nStoreRouterConnectingModule.forRoot()\n],\nbootstrap: [AppCmp]\n})\nexport class AppModule {\n}\n\n```\n\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "router-store",
+    "name": "StoreRouterConfig",
+    "overloads": [
+      {
+        "signature": "interface StoreRouterConfig<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> {\n  stateKey?: StateKeyOrSelector<T>;\n  serializer?: new (...args: any[]) => RouterStateSerializer;\n  navigationActionTiming?: NavigationActionTiming;\n  routerState?: RouterState;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "router-store",
+    "name": "NavigationActionTiming",
+    "overloads": [
+      {
+        "signature": "export enum NavigationActionTiming {\n  PreActivation = 1,\n  PostActivation = 2,\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "ROUTER_CONFIG",
+    "overloads": [
+      {
+        "signature": "const ROUTER_CONFIG: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "router-store",
+    "name": "DEFAULT_ROUTER_FEATURENAME",
+    "overloads": [
+      { "signature": "const DEFAULT_ROUTER_FEATURENAME: 'router';", "info": [] }
+    ]
+  },
+  {
+    "kind": "EnumDeclaration",
+    "module": "router-store",
+    "name": "RouterState",
+    "overloads": [
+      {
+        "signature": "export const enum RouterState {\n  Full,\n  Minimal,\n}",
+        "info": [
+          [
+            "description",
+            "Full = Serializes the router event with DefaultRouterStateSerializer\nMinimal = Serializes the router event with MinimalRouterStateSerializer"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "router-store",
+    "name": "RouterStateSerializer",
+    "overloads": [
+      {
+        "signature": "class RouterStateSerializer<\n  T extends BaseRouterStoreState = BaseRouterStoreState\n> {\n  abstract serialize(routerState: RouterStateSnapshot): T;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "router-store",
+    "name": "BaseRouterStoreState",
+    "overloads": [
+      {
+        "signature": "interface BaseRouterStoreState {\n  url: string;\n}",
+        "info": [
+          [
+            "description",
+            "Simple router state.\nAll custom router states / state serializers should have at least\nthe properties of this interface."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "router-store",
+    "name": "DefaultRouterStateSerializer",
+    "overloads": [
+      {
+        "signature": "class DefaultRouterStateSerializer\n  implements RouterStateSerializer<SerializedRouterStateSnapshot> {\n  serialize(routerState: RouterStateSnapshot): SerializedRouterStateSnapshot;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "router-store",
+    "name": "SerializedRouterStateSnapshot",
+    "overloads": [
+      {
+        "signature": "interface SerializedRouterStateSnapshot {\n  root: ActivatedRouteSnapshot;\n  url: string;\n\n  // inherited from BaseRouterStoreState\n  url: string;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "router-store",
+    "name": "MinimalActivatedRouteSnapshot",
+    "overloads": [
+      {
+        "signature": "interface MinimalActivatedRouteSnapshot {\n  routeConfig: ActivatedRouteSnapshot['routeConfig'];\n  url: ActivatedRouteSnapshot['url'];\n  params: ActivatedRouteSnapshot['params'];\n  queryParams: ActivatedRouteSnapshot['queryParams'];\n  fragment: ActivatedRouteSnapshot['fragment'];\n  data: ActivatedRouteSnapshot['data'];\n  outlet: ActivatedRouteSnapshot['outlet'];\n  firstChild?: MinimalActivatedRouteSnapshot;\n  children: MinimalActivatedRouteSnapshot[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "router-store",
+    "name": "MinimalRouterStateSnapshot",
+    "overloads": [
+      {
+        "signature": "interface MinimalRouterStateSnapshot {\n  root: MinimalActivatedRouteSnapshot;\n  url: string;\n\n  // inherited from BaseRouterStoreState\n  url: string;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "router-store",
+    "name": "MinimalRouterStateSerializer",
+    "overloads": [
+      {
+        "signature": "class MinimalRouterStateSerializer\n  implements RouterStateSerializer<MinimalRouterStateSnapshot> {\n  serialize(routerState: RouterStateSnapshot): MinimalRouterStateSnapshot;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "router-store",
+    "name": "getSelectors",
+    "overloads": [
+      {
+        "signature": "function getSelectors<V>(\n  selectState: (state: V) => RouterReducerState<any>\n): RouterStateSelectors<V>;",
+        "info": []
+      },
+      {
+        "signature": "function getSelectors<V>(\n  selectState: (state: V) => RouterReducerState<any>\n): RouterStateSelectors<V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "isIvyEnabled",
+    "overloads": [
+      {
+        "signature": "function isIvyEnabled(tree: Tree, tsConfigPath: string): boolean;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "findNodes",
+    "overloads": [
+      {
+        "signature": "function findNodes(\n  node: ts.Node,\n  kind: ts.SyntaxKind,\n  max = Infinity\n): ts.Node[];",
+        "info": [
+          [
+            "description",
+            "Find all nodes from the AST in the subtree of node of SyntaxKind kind."
+          ],
+          ["param", "node"],
+          ["param", "kind"],
+          ["param", "max The maximum number of items to return."],
+          ["return", "all nodes of kind, or [] if none is found"]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getSourceNodes",
+    "overloads": [
+      {
+        "signature": "function getSourceNodes(sourceFile: ts.SourceFile): ts.Node[];",
+        "info": [
+          ["description", "Get all the nodes from a source."],
+          ["param", "sourceFile The source file object."],
+          [
+            "returns",
+            "{Observable<ts.Node>} An observable of all the nodes in the source."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getDecoratorMetadata",
+    "overloads": [
+      {
+        "signature": "function getDecoratorMetadata(\n  source: ts.SourceFile,\n  identifier: string,\n  module: string\n): ts.Node[];",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getContentOfKeyLiteral",
+    "overloads": [
+      {
+        "signature": "function getContentOfKeyLiteral(\n  _source: ts.SourceFile,\n  node: ts.Node\n): string | null;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "insertAfterLastOccurrence",
+    "overloads": [
+      {
+        "signature": "function insertAfterLastOccurrence(\n  nodes: ts.Node[],\n  toInsert: string,\n  file: string,\n  fallbackPos: number,\n  syntaxKind?: ts.SyntaxKind\n): Change;",
+        "info": [
+          [
+            "description",
+            "Insert `toInsert` after the last occurence of `ts.SyntaxKind[nodes[i].kind]`\nor after the last of occurence of `syntaxKind` if the last occurence is a sub child\nof ts.SyntaxKind[nodes[i].kind] and save the changes in file."
+          ],
+          ["param", "nodes insert after the last occurence of nodes"],
+          ["param", "toInsert string to insert"],
+          ["param", "file file to insert changes into"],
+          [
+            "param",
+            "fallbackPos position to insert if toInsert happens to be the first occurence"
+          ],
+          [
+            "param",
+            "syntaxKind the ts.SyntaxKind of the subchildren to insert after"
+          ],
+          ["return", "Change instance"],
+          [
+            "throw",
+            "Error if toInsert is first occurence but fall back is not set"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "insertImport",
+    "overloads": [
+      {
+        "signature": "function insertImport(\n  source: ts.SourceFile,\n  fileToEdit: string,\n  symbolName: string,\n  fileName: string,\n  isDefault = false\n): Change;",
+        "info": [
+          [
+            "description",
+            "Add Import `import { symbolName } from fileName` if the import doesn't exit\nalready. Assumes fileToEdit can be resolved and accessed."
+          ],
+          ["param", "fileToEdit (file we want to add import to)"],
+          ["param", "symbolName (item to import)"],
+          ["param", "fileName (path to the file)"],
+          [
+            "param",
+            "isDefault (if true, import follows style for importing default exports)"
+          ],
+          ["return", "Change"]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addBootstrapToModule",
+    "overloads": [
+      {
+        "signature": "function addBootstrapToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
+        "info": [
+          [
+            "description",
+            "Custom function to insert an export into NgModule. It also imports it."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addDeclarationToModule",
+    "overloads": [
+      {
+        "signature": "function addDeclarationToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
+        "info": [
+          [
+            "description",
+            "Custom function to insert a declaration (component, pipe, directive)\ninto NgModule declarations. It also imports the component."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addExportToModule",
+    "overloads": [
+      {
+        "signature": "function addExportToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
+        "info": [
+          [
+            "description",
+            "Custom function to insert an export into NgModule. It also imports it."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addImportToModule",
+    "overloads": [
+      {
+        "signature": "function addImportToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
+        "info": [
+          [
+            "description",
+            "Custom function to insert a declaration (component, pipe, directive)\ninto NgModule declarations. It also imports the component."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addProviderToModule",
+    "overloads": [
+      {
+        "signature": "function addProviderToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
+        "info": [
+          [
+            "description",
+            "Custom function to insert a provider into NgModule. It also imports it."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "replaceImport",
+    "overloads": [
+      {
+        "signature": "function replaceImport(\n  sourceFile: ts.SourceFile,\n  path: Path,\n  importFrom: string,\n  importAsIs: string,\n  importToBe: string\n): (ReplaceChange | RemoveChange)[];",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "containsProperty",
+    "overloads": [
+      {
+        "signature": "function containsProperty(\n  objectLiteral: ts.ObjectLiteralExpression,\n  propertyName: string\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "schematics-core",
+    "name": "Host",
+    "overloads": [
+      {
+        "signature": "interface Host {}",
+        "info": [
+          [
+            "license",
+            "Copyright Google Inc. All Rights Reserved.\nUse of this source code is governed by an MIT-style license that can be\nfound in the LICENSE file at https://angular.io/license"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "schematics-core",
+    "name": "Change",
+    "overloads": [
+      {
+        "signature": "interface Change {\n  readonly path: string | null;\n  readonly order: number;\n  readonly description: string;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "schematics-core",
+    "name": "NoopChange",
+    "overloads": [
+      {
+        "signature": "class NoopChange implements Change {\n  description = 'No operation.';\n  order = Infinity;\n  path = null;\n\n  apply();\n}",
+        "info": [["description", "An operation that does nothing."]]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "schematics-core",
+    "name": "InsertChange",
+    "overloads": [
+      {
+        "signature": "class InsertChange implements Change {\n  order: number;\n  description: string;\n\n  apply(host: Host);\n}",
+        "info": [["description", "Will add text to the source code."]]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "schematics-core",
+    "name": "RemoveChange",
+    "overloads": [
+      {
+        "signature": "class RemoveChange implements Change {\n  order: number;\n  description: string;\n\n  apply(host: Host): Promise<void>;\n}",
+        "info": [["description", "Will remove text from the source code."]]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "schematics-core",
+    "name": "ReplaceChange",
+    "overloads": [
+      {
+        "signature": "class ReplaceChange implements Change {\n  order: number;\n  description: string;\n\n  apply(host: Host): Promise<void>;\n}",
+        "info": [["description", "Will replace text from the source code."]]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "createReplaceChange",
+    "overloads": [
+      {
+        "signature": "function createReplaceChange(\n  sourceFile: ts.SourceFile,\n  node: ts.Node,\n  oldText: string,\n  newText: string\n): ReplaceChange;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "createChangeRecorder",
+    "overloads": [
+      {
+        "signature": "function createChangeRecorder(\n  tree: Tree,\n  path: string,\n  changes: Change[]\n): UpdateRecorder;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "commitChanges",
+    "overloads": [
+      {
+        "signature": "function commitChanges(tree: Tree, path: string, changes: Change[]);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "schematics-core",
+    "name": "AppConfig",
+    "overloads": [
+      {
+        "signature": "interface AppConfig {\n  name?: string;\n  appRoot?: string;\n  root?: string;\n  outDir?: string;\n  assets?: (\n    | string\n    | {\n        /**\n         * The pattern to match.\n         */\n        glob?: string;\n        /**\n         * The dir to search within.\n         */\n        input?: string;\n        /**\n         * The output path (relative to the outDir).\n         */\n        output?: string;\n      }\n  )[];\n  deployUrl?: string;\n  baseHref?: string;\n  platform?: 'browser' | 'server';\n  index?: string;\n  main?: string;\n  polyfills?: string;\n  test?: string;\n  tsconfig?: string;\n  testTsconfig?: string;\n  prefix?: string;\n  serviceWorker?: boolean;\n  styles?: (\n    | string\n    | {\n        input?: string;\n        [name: string]: any; // tslint:disable-line:no-any\n      }\n  )[];\n  stylePreprocessorOptions?: {\n    /**\n     * Paths to include. Paths will be resolved to project root.\n     */\n    includePaths?: string[];\n  };\n  scripts?: (\n    | string\n    | {\n        input: string;\n        [name: string]: any; // tslint:disable-line:no-any\n      }\n  )[];\n  environmentSource?: string;\n  environments?: {\n    [name: string]: any; // tslint:disable-line:no-any\n  };\n  appShell?: {\n    app: string;\n    route: string;\n  };\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getWorkspace",
+    "overloads": [
+      {
+        "signature": "function getWorkspace(host: Tree): WorkspaceSchema;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getWorkspacePath",
+    "overloads": [
+      {
+        "signature": "function getWorkspacePath(host: Tree): string;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "findModule",
+    "overloads": [
+      {
+        "signature": "function findModule(host: Tree, generateDir: string): Path;",
+        "info": [
+          [
+            "description",
+            "Function to find the \"closest\" module to a generated file's path."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "findModuleFromOptions",
+    "overloads": [
+      {
+        "signature": "function findModuleFromOptions(\n  host: Tree,\n  options: ModuleOptions\n): Path | undefined;",
+        "info": [
+          [
+            "description",
+            "Find the module referred by a set of options passed to the schematics."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "buildRelativePath",
+    "overloads": [
+      {
+        "signature": "function buildRelativePath(from: string, to: string): string;",
+        "info": [
+          [
+            "description",
+            "Build a relative path from one file path to another file path."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "schematics-core",
+    "name": "ModuleOptions",
+    "overloads": [
+      {
+        "signature": "interface ModuleOptions {\n  module?: string;\n  name: string;\n  flat?: boolean;\n  path?: string;\n  skipImport?: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "findPropertyInAstObject",
+    "overloads": [
+      {
+        "signature": "function findPropertyInAstObject(\n  node: JsonAstObject,\n  propertyName: string\n): JsonAstNode | null;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addReducerToState",
+    "overloads": [
+      {
+        "signature": "function addReducerToState(options: any): Rule;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addReducerToStateInterface",
+    "overloads": [
+      {
+        "signature": "function addReducerToStateInterface(\n  source: ts.SourceFile,\n  reducersPath: string,\n  options: { name: string; plural: boolean }\n): Change;",
+        "info": [
+          [
+            "description",
+            "Insert the reducer into the first defined top level interface"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addReducerImportToNgModule",
+    "overloads": [
+      {
+        "signature": "function addReducerImportToNgModule(options: any): Rule;",
+        "info": [["description", "Add reducer feature to NgModule"]]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addReducerToActionReducerMap",
+    "overloads": [
+      {
+        "signature": "function addReducerToActionReducerMap(\n  source: ts.SourceFile,\n  reducersPath: string,\n  options: { name: string; plural: boolean }\n): Change;",
+        "info": [
+          ["description", "Insert the reducer into the ActionReducerMap"]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "omit",
+    "overloads": [
+      {
+        "signature": "function omit<T extends { [key: string]: any }>(\n  object: T,\n  keyToRemove: keyof T\n): Partial<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getProjectPath",
+    "overloads": [
+      {
+        "signature": "function getProjectPath(\n  host: Tree,\n  options: { project?: string | undefined; path?: string | undefined }\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "getProject",
+    "overloads": [
+      {
+        "signature": "function getProject(\n  host: Tree,\n  options: { project?: string | undefined; path?: string | undefined }\n): WorkspaceProject;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "isLib",
+    "overloads": [
+      {
+        "signature": "function isLib(\n  host: Tree,\n  options: { project?: string | undefined; path?: string | undefined }\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "schematics-core",
+    "name": "stringUtils",
+    "overloads": [
+      {
+        "signature": "const stringUtils: {\n  dasherize: typeof dasherize;\n  decamelize: typeof decamelize;\n  camelize: typeof camelize;\n  classify: typeof classify;\n  underscore: typeof underscore;\n  group: typeof group;\n  capitalize: typeof capitalize;\n  featurePath: typeof featurePath;\n  pluralize: typeof pluralize;\n};",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "updatePackage",
+    "overloads": [
+      { "signature": "function updatePackage(name: string): Rule;", "info": [] }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "parseName",
+    "overloads": [
+      {
+        "signature": "function parseName(path: string, name: string): Location;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "addPackageToPackageJson",
+    "overloads": [
+      {
+        "signature": "function addPackageToPackageJson(\n  host: Tree,\n  type: string,\n  pkg: string,\n  version: string\n): Tree;",
+        "info": [["description", "Adds a package to the package.json"]]
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "schematics-core",
+    "name": "platformVersion",
+    "overloads": [
+      { "signature": "const platformVersion: '^10.0.0';", "info": [] }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitTSSourceFiles",
+    "overloads": [
+      {
+        "signature": "function visitTSSourceFiles<Result = void>(\n  tree: Tree,\n  visitor: (\n    sourceFile: ts.SourceFile,\n    tree: Tree,\n    result?: Result\n  ) => Result | undefined\n): Result | undefined;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitNgModuleImports",
+    "overloads": [
+      {
+        "signature": "function visitNgModuleImports(\n  sourceFile: ts.SourceFile,\n  callback: (\n    importNode: ts.PropertyAssignment,\n    elementExpressions: ts.NodeArray<ts.Expression>\n  ) => void\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitNgModuleExports",
+    "overloads": [
+      {
+        "signature": "function visitNgModuleExports(\n  sourceFile: ts.SourceFile,\n  callback: (\n    exportNode: ts.PropertyAssignment,\n    elementExpressions: ts.NodeArray<ts.Expression>\n  ) => void\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitComponents",
+    "overloads": [
+      {
+        "signature": "function visitComponents(\n  sourceFile: ts.SourceFile,\n  callback: (\n    classDeclarationNode: ts.ClassDeclaration,\n    decoratorExpressionNode: ts.ObjectLiteralExpression\n  ) => void\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitDecorator",
+    "overloads": [
+      {
+        "signature": "function visitDecorator(\n  sourceFile: ts.SourceFile,\n  decoratorName: string,\n  callback: (\n    classDeclarationNode: ts.ClassDeclaration,\n    decoratorExpressionNode: ts.ObjectLiteralExpression\n  ) => void\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitNgModules",
+    "overloads": [
+      {
+        "signature": "function visitNgModules(\n  sourceFile: ts.SourceFile,\n  callback: (\n    classDeclarationNode: ts.ClassDeclaration,\n    decoratorExpressionNode: ts.ObjectLiteralExpression\n  ) => void\n);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "schematics-core",
+    "name": "visitTemplates",
+    "overloads": [
+      {
+        "signature": "function visitTemplates(\n  tree: Tree,\n  visitor: (\n    template: {\n      fileName: string;\n      content: string;\n      inline: boolean;\n      start: number;\n    },\n    tree: Tree\n  ) => void\n): void;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "Action",
+    "overloads": [
+      { "signature": "interface Action {\n  type: string;\n}", "info": [] }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "ActionCreator",
+    "overloads": [
+      {
+        "signature": "export type ActionCreator<\n  T extends string = string,\n  C extends Creator = Creator\n> = C & TypedAction<T>;",
+        "info": [["description", "See `Creator`."]]
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "ActionReducer",
+    "overloads": [
+      {
+        "signature": "interface ActionReducer<T, V extends Action = Action> {}",
+        "info": [
+          [
+            "description",
+            "A function that takes an `Action` and a `State`, and returns a `State`.\nSee `createReducer`."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "ActionReducerMap",
+    "overloads": [
+      {
+        "signature": "export type ActionReducerMap<T, V extends Action = Action> = {\n  [p in keyof T]: ActionReducer<T[p], V>;\n};",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "ActionReducerFactory",
+    "overloads": [
+      {
+        "signature": "interface ActionReducerFactory<T, V extends Action = Action> {}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "ActionType",
+    "overloads": [
+      {
+        "signature": "export type ActionType<A> = A extends ActionCreator<infer T, infer C>\n  ? ReturnType<C> & { type: T }\n  : never;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "Creator",
+    "overloads": [
+      {
+        "signature": "export type Creator<\n  P extends any[] = any[],\n  R extends object = object\n> = FunctionWithParametersType<P, R>;",
+        "info": [
+          [
+            "description",
+            "A function that returns an object in the shape of the `Action` interface. Configured using `createAction`."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "MetaReducer",
+    "overloads": [
+      {
+        "signature": "export type MetaReducer<T = any, V extends Action = Action> = (\n  reducer: ActionReducer<T, V>\n) => ActionReducer<T, V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "Selector",
+    "overloads": [
+      {
+        "signature": "export type Selector<T, V> = (state: T) => V;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "SelectorWithProps",
+    "overloads": [
+      {
+        "signature": "export type SelectorWithProps<State, Props, Result> = (\n  state: State,\n  props: Props\n) => Result;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "RuntimeChecks",
+    "overloads": [
+      {
+        "signature": "interface RuntimeChecks {\n  strictStateSerializability: boolean;\n  strictActionSerializability: boolean;\n  strictStateImmutability: boolean;\n  strictActionImmutability: boolean;\n  strictActionWithinNgZone: boolean;\n  strictActionTypeUniqueness?: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "createAction",
+    "overloads": [
+      {
+        "signature": "function createAction<T extends string, C extends Creator>(\n  type: T,\n  config?: { _as: 'props' } | C\n): ActionCreator<T>;",
+        "info": [
+          [
+            "description",
+            "Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.\nAction creators reduce the explicitness of class-based action creators."
+          ],
+          ["param", "type Describes the action that will be dispatched"],
+          [
+            "param",
+            "config Additional metadata needed for the handling of the action. See {@link createAction#usage-notes Usage Notes}."
+          ],
+          [
+            "usageNotes",
+            "**Declaring an action creator**\nWithout additional metadata:\n\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\n\nWith additional metadata:\n\n```ts\nexport const loginSuccess = createAction(\n  '[Auth/API] Login Success',\n  props<{ user: User }>()\n);\n```\n\nWith a function:\n\n```ts\nexport const loginSuccess = createAction(\n  '[Auth/API] Login Success',\n  (response: Response) => response.user\n);\n```\n\n**Dispatching an action**\nWithout additional metadata:\n\n```ts\nstore.dispatch(increment());\n```\n\nWith additional metadata:\n\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\n**Referencing an action in a reducer**\nUsing a switch statement:\n\n```ts\nswitch (action.type) {\n  // ...\n  case AuthApiActions.loginSuccess.type: {\n    return {\n      ...state,\n      user: action.user,\n    };\n  }\n}\n```\n\nUsing a reducer creator:\n\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }));\n```\n\n**Referencing an action in an effect**\n\n```ts\neffectName$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(AuthApiActions.loginSuccess)\n    // ...\n  )\n);\n```"
+          ]
+        ]
+      },
+      {
+        "signature": "function createAction<T extends string>(\n  type: T\n): ActionCreator<T, () => TypedAction<T>>;",
+        "info": []
+      },
+      {
+        "signature": "function createAction<T extends string, P extends object>(\n  type: T,\n  config: Props<P> & NotAllowedCheck<P>\n): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;",
+        "info": []
+      },
+      {
+        "signature": "function createAction<T extends string, P extends any[], R extends object>(\n  type: T,\n  creator: Creator<P, R> & NotAllowedCheck<R>\n): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "props",
+    "overloads": [
+      {
+        "signature": "function props<P extends object>(): Props<P>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "union",
+    "overloads": [
+      {
+        "signature": "function union<C extends { [key: string]: ActionCreator<string, Creator> }>(\n  creators: C\n): ReturnType<C[keyof C]>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "Store",
+    "overloads": [
+      {
+        "signature": "class Store<T = object> extends Observable<T> implements Observer<Action> {\n  select<Props = any, K = any>(\n    pathOrMapFn: ((state: T, props?: Props) => K) | string,\n    ...paths: string[]\n  ): Observable<any>;\n  lift<R>(operator: Operator<T, R>): Store<R>;\n  dispatch<V extends Action = Action>(\n    action: V &\n      FunctionIsNotAllowed<\n        V,\n        'Functions are not allowed to be dispatched. Did you forget to call the action creator function?'\n      >\n  );\n  next(action: Action);\n  error(err: any);\n  complete();\n  addReducer<State, Actions extends Action = Action>(\n    key: string,\n    reducer: ActionReducer<State, Actions>\n  );\n  removeReducer<Key extends Extract<keyof T, string>>(key: Key);\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "select",
+    "overloads": [
+      {
+        "signature": "function select<T, Props, K>(\n  pathOrMapFn: ((state: T, props?: Props) => any) | string,\n  propsOrPath?: Props | string,\n  ...paths: string[]\n);",
+        "info": []
+      },
+      {
+        "signature": "function select<T, Props, K>(\n  mapFn: (state: T, props: Props) => K,\n  props?: Props\n): (source$: Observable<T>) => Observable<K>;",
+        "info": []
+      },
+      {
+        "signature": "function select<T, a extends keyof T>(\n  key: a\n): (source$: Observable<T>) => Observable<T[a]>;",
+        "info": []
+      },
+      {
+        "signature": "function select<T, a extends keyof T, b extends keyof T[a]>(\n  key1: a,\n  key2: b\n): (source$: Observable<T>) => Observable<T[a][b]>;",
+        "info": []
+      },
+      {
+        "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b]\n>(\n  key1: a,\n  key2: b,\n  key3: c\n): (source$: Observable<T>) => Observable<T[a][b][c]>;",
+        "info": []
+      },
+      {
+        "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c]\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d\n): (source$: Observable<T>) => Observable<T[a][b][c][d]>;",
+        "info": []
+      },
+      {
+        "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c],\n  e extends keyof T[a][b][c][d]\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d,\n  key5: e\n): (source$: Observable<T>) => Observable<T[a][b][c][d][e]>;",
+        "info": []
+      },
+      {
+        "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c],\n  e extends keyof T[a][b][c][d],\n  f extends keyof T[a][b][c][d][e]\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d,\n  key5: e,\n  key6: f\n): (source$: Observable<T>) => Observable<T[a][b][c][d][e][f]>;",
+        "info": []
+      },
+      {
+        "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c],\n  e extends keyof T[a][b][c][d],\n  f extends keyof T[a][b][c][d][e],\n  K = any\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d,\n  key5: e,\n  key6: f,\n  ...paths: string[]\n): (source$: Observable<T>) => Observable<K>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "combineReducers",
+    "overloads": [
+      {
+        "signature": "function combineReducers(\n  reducers: any,\n  initialState: any = {}\n): ActionReducer<any, Action>;",
+        "info": []
+      },
+      {
+        "signature": "function combineReducers<T, V extends Action = Action>(\n  reducers: ActionReducerMap<T, V>,\n  initialState?: Partial<T>\n): ActionReducer<T, V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "compose",
+    "overloads": [
+      { "signature": "function compose(...functions: any[]);", "info": [] },
+      { "signature": "function compose<A>(): (i: A) => A;", "info": [] },
+      {
+        "signature": "function compose<A, B>(b: (i: A) => B): (i: A) => B;",
+        "info": []
+      },
+      {
+        "signature": "function compose<A, B, C>(c: (i: B) => C, b: (i: A) => B): (i: A) => C;",
+        "info": []
+      },
+      {
+        "signature": "function compose<A, B, C, D>(\n  d: (i: C) => D,\n  c: (i: B) => C,\n  b: (i: A) => B\n): (i: A) => D;",
+        "info": []
+      },
+      {
+        "signature": "function compose<A, B, C, D, E>(\n  e: (i: D) => E,\n  d: (i: C) => D,\n  c: (i: B) => C,\n  b: (i: A) => B\n): (i: A) => E;",
+        "info": []
+      },
+      {
+        "signature": "function compose<A, B, C, D, E, F>(\n  f: (i: E) => F,\n  e: (i: D) => E,\n  d: (i: C) => D,\n  c: (i: B) => C,\n  b: (i: A) => B\n): (i: A) => F;",
+        "info": []
+      },
+      {
+        "signature": "function compose<A = any, F = any>(...functions: any[]): (i: A) => F;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "createReducerFactory",
+    "overloads": [
+      {
+        "signature": "function createReducerFactory<T, V extends Action = Action>(\n  reducerFactory: ActionReducerFactory<T, V>,\n  metaReducers?: MetaReducer<T, V>[]\n): ActionReducerFactory<T, V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "ActionsSubject",
+    "overloads": [
+      {
+        "signature": "class ActionsSubject extends BehaviorSubject<Action> implements OnDestroy {\n  next(action: Action): void;\n  complete();\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "INIT",
+    "overloads": [
+      { "signature": "const INIT: '@ngrx/store/init';", "info": [] }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "setNgrxMockEnvironment",
+    "overloads": [
+      {
+        "signature": "function setNgrxMockEnvironment(value: boolean): void;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "isNgrxMockEnvironment",
+    "overloads": [
+      { "signature": "function isNgrxMockEnvironment(): boolean;", "info": [] }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "ReducerManager",
+    "overloads": [
+      {
+        "signature": "class ReducerManager extends BehaviorSubject<ActionReducer<any, any>>\n  implements OnDestroy {\n  addFeature(feature: StoreFeature<any, any>);\n  addFeatures(features: StoreFeature<any, any>[]);\n  removeFeature(feature: StoreFeature<any, any>);\n  removeFeatures(features: StoreFeature<any, any>[]);\n  addReducer(key: string, reducer: ActionReducer<any, any>);\n  addReducers(reducers: { [key: string]: ActionReducer<any, any> });\n  removeReducer(featureKey: string);\n  removeReducers(featureKeys: string[]);\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "ReducerObservable",
+    "overloads": [
+      {
+        "signature": "class ReducerObservable extends Observable<ActionReducer<any, any>> {}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "ReducerManagerDispatcher",
+    "overloads": [
+      {
+        "signature": "class ReducerManagerDispatcher extends ActionsSubject {}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "UPDATE",
+    "overloads": [
+      {
+        "signature": "const UPDATE: '@ngrx/store/update-reducers';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "ScannedActionsSubject",
+    "overloads": [
+      {
+        "signature": "class ScannedActionsSubject extends Subject<Action> implements OnDestroy {\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "createSelector",
+    "overloads": [
+      {
+        "signature": "function createSelector(\n  ...input: any[]\n): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, Result>(\n  s1: Selector<State, S1>,\n  projector: (s1: S1) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  projector: (s1: S1, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, Result>(\n  selectors: [Selector<State, S1>],\n  projector: (s1: S1) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, Result>(\n  selectors: [SelectorWithProps<State, Props, S1>],\n  projector: (s1: S1, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  projector: (s1: S1, s2: S2) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  projector: (s1: S1, s2: S2, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, Result>(\n  selectors: [Selector<State, S1>, Selector<State, S2>],\n  projector: (s1: S1, s2: S2) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>\n  ],\n  projector: (s1: S1, s2: S2, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  projector: (s1: S1, s2: S2, s3: S3) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  projector: (s1: S1, s2: S2, s3: S3, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, Result>(\n  selectors: [Selector<State, S1>, Selector<State, S2>, Selector<State, S3>],\n  projector: (s1: S1, s2: S2, s3: S3) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>,\n    Selector<State, S5>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  s6: Selector<State, S6>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  s6: SelectorWithProps<State, Props, S6>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n\n    Selector<State, S4>,\n    Selector<State, S5>,\n    Selector<State, S6>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>,\n    SelectorWithProps<State, Props, S6>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  s6: Selector<State, S6>,\n  s7: Selector<State, S7>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  s6: SelectorWithProps<State, Props, S6>,\n  s7: SelectorWithProps<State, Props, S7>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>,\n    Selector<State, S5>,\n    Selector<State, S6>,\n    Selector<State, S7>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>,\n    SelectorWithProps<State, Props, S6>,\n    SelectorWithProps<State, Props, S7>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  s6: Selector<State, S6>,\n  s7: Selector<State, S7>,\n  s8: Selector<State, S8>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8\n  ) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  s6: SelectorWithProps<State, Props, S6>,\n  s7: SelectorWithProps<State, Props, S7>,\n  s8: SelectorWithProps<State, Props, S8>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>,\n    Selector<State, S5>,\n    Selector<State, S6>,\n    Selector<State, S7>,\n    Selector<State, S8>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8\n  ) => Result\n): MemoizedSelector<State, Result>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>,\n    SelectorWithProps<State, Props, S6>,\n    SelectorWithProps<State, Props, S7>,\n    SelectorWithProps<State, Props, S8>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "createSelectorFactory",
+    "overloads": [
+      {
+        "signature": "function createSelectorFactory(\n  memoize: MemoizeFn,\n  options: SelectorFactoryConfig<any, any> = {\n    stateFn: defaultStateFn,\n  }\n);",
+        "info": []
+      },
+      {
+        "signature": "function createSelectorFactory<T = any, V = any>(\n  memoize: MemoizeFn\n): (...input: any[]) => MemoizedSelector<T, V>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelectorFactory<T = any, V = any>(\n  memoize: MemoizeFn,\n  options: SelectorFactoryConfig<T, V>\n): (...input: any[]) => MemoizedSelector<T, V>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelectorFactory<T = any, Props = any, V = any>(\n  memoize: MemoizeFn\n): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;",
+        "info": []
+      },
+      {
+        "signature": "function createSelectorFactory<T = any, Props = any, V = any>(\n  memoize: MemoizeFn,\n  options: SelectorFactoryConfig<T, V>\n): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "createFeatureSelector",
+    "overloads": [
+      {
+        "signature": "function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;",
+        "info": []
+      },
+      {
+        "signature": "function createFeatureSelector<T>(\n  featureName: string\n): MemoizedSelector<object, T>;",
+        "info": []
+      },
+      {
+        "signature": "function createFeatureSelector<T, V>(\n  featureName: keyof T\n): MemoizedSelector<T, V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "defaultMemoize",
+    "overloads": [
+      {
+        "signature": "function defaultMemoize(\n  projectionFn: AnyFn,\n  isArgumentsEqual = isEqualCheck,\n  isResultEqual = isEqualCheck\n): MemoizedProjection;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "defaultStateFn",
+    "overloads": [
+      {
+        "signature": "function defaultStateFn(\n  state: any,\n  selectors: Selector<any, any>[] | SelectorWithProps<any, any, any>[],\n  props: any,\n  memoizedProjector: MemoizedProjection\n): any;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "MemoizeFn",
+    "overloads": [
+      {
+        "signature": "export type MemoizeFn = (t: AnyFn) => MemoizedProjection;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "MemoizedProjection",
+    "overloads": [
+      {
+        "signature": "export type MemoizedProjection = {\n  memoized: AnyFn;\n  reset: () => void;\n  setResult: (result?: any) => void;\n  clearResult: () => void;\n};",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "MemoizedSelector",
+    "overloads": [
+      {
+        "signature": "interface MemoizedSelector<\n  State,\n  Result,\n  ProjectorFn = DefaultProjectorFn<Result>\n> {\n  projector: ProjectorFn;\n  setResult: (result?: Result) => void;\n  clearResult: () => void;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "MemoizedSelectorWithProps",
+    "overloads": [
+      {
+        "signature": "interface MemoizedSelectorWithProps<\n  State,\n  Props,\n  Result,\n  ProjectorFn = DefaultProjectorFn<Result>\n> {\n  projector: ProjectorFn;\n  setResult: (result?: Result) => void;\n  clearResult: () => void;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "resultMemoize",
+    "overloads": [
+      {
+        "signature": "function resultMemoize(projectionFn: AnyFn, isResultEqual: ComparatorFn);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store",
+    "name": "DefaultProjectorFn",
+    "overloads": [
+      {
+        "signature": "export type DefaultProjectorFn<T> = (...args: any[]) => T;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "State",
+    "overloads": [
+      {
+        "signature": "class State<T> extends BehaviorSubject<any> implements OnDestroy {\n  static readonly INIT = INIT;\n\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "StateObservable",
+    "overloads": [
+      {
+        "signature": "class StateObservable extends Observable<any> {}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "reduceState",
+    "overloads": [
+      {
+        "signature": "function reduceState<T, V extends Action = Action>(\n  stateActionPair: StateActionPair<T, V> = { state: undefined },\n  [action, reducer]: [V, ActionReducer<T, V>]\n): StateActionPair<T, V>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "INITIAL_STATE",
+    "overloads": [
+      {
+        "signature": "const INITIAL_STATE: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "REDUCER_FACTORY",
+    "overloads": [
+      {
+        "signature": "const REDUCER_FACTORY: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "INITIAL_REDUCERS",
+    "overloads": [
+      {
+        "signature": "const INITIAL_REDUCERS: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "STORE_FEATURES",
+    "overloads": [
+      {
+        "signature": "const STORE_FEATURES: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "META_REDUCERS",
+    "overloads": [
+      {
+        "signature": "const META_REDUCERS: InjectionToken<\n  MetaReducer<\n    any,\n    import('C:/Users/tdeschryver/dev/platform/modules/store/src/models').Action\n  >[]\n>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "FEATURE_REDUCERS",
+    "overloads": [
+      {
+        "signature": "const FEATURE_REDUCERS: InjectionToken<unknown>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "USER_PROVIDED_META_REDUCERS",
+    "overloads": [
+      {
+        "signature": "const USER_PROVIDED_META_REDUCERS: InjectionToken<\n  MetaReducer<\n    any,\n    import('C:/Users/tdeschryver/dev/platform/modules/store/src/models').Action\n  >[]\n>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store",
+    "name": "USER_RUNTIME_CHECKS",
+    "overloads": [
+      {
+        "signature": "const USER_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "StoreModule",
+    "overloads": [
+      {
+        "signature": "class StoreModule {\n  static forRoot(\n    reducers:\n      | ActionReducerMap<any, any>\n      | InjectionToken<ActionReducerMap<any, any>>,\n    config: RootStoreConfig<any, any> = {}\n  ): ModuleWithProviders<StoreRootModule>;\n  static forFeature(\n    featureName: string,\n    reducers:\n      | ActionReducerMap<any, any>\n      | InjectionToken<ActionReducerMap<any, any>>\n      | ActionReducer<any, any>\n      | InjectionToken<ActionReducer<any, any>>,\n    config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}\n  ): ModuleWithProviders<StoreFeatureModule>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "StoreRootModule",
+    "overloads": [{ "signature": "class StoreRootModule {}", "info": [] }]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store",
+    "name": "StoreFeatureModule",
+    "overloads": [
+      {
+        "signature": "class StoreFeatureModule implements OnDestroy {\n  ngOnDestroy();\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "RootStoreConfig",
+    "overloads": [
+      {
+        "signature": "interface RootStoreConfig<T, V extends Action = Action> {\n  runtimeChecks?: Partial<RuntimeChecks>;\n\n  // inherited from StoreConfig\n  initialState?: InitialState<T>;\n  reducerFactory?: ActionReducerFactory<T, V>;\n  metaReducers?: MetaReducer<T, V>[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "StoreConfig",
+    "overloads": [
+      {
+        "signature": "interface StoreConfig<T, V extends Action = Action> {\n  initialState?: InitialState<T>;\n  reducerFactory?: ActionReducerFactory<T, V>;\n  metaReducers?: MetaReducer<T, V>[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store",
+    "name": "On",
+    "overloads": [
+      {
+        "signature": "interface On<S> {\n  reducer: ActionReducer<S>;\n  types: string[];\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "on",
+    "overloads": [
+      {
+        "signature": "function on(\n  ...args: (ActionCreator | Function)[]\n): { reducer: Function; types: string[] };",
+        "info": [
+          [
+            "description",
+            "Associates actions with a given state change function.\nA state change function must be provided as the last parameter."
+          ],
+          [
+            "param",
+            "args `ActionCreator`'s followed by a state change function.\n**To maintain type-safety**: pass 10 or less `ActionCreator`'s."
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function."
+          ]
+        ]
+      },
+      {
+        "signature": "function on<C1 extends ActionCreator, S>(\n  creator1: C1,\n  reducer: OnReducer<S, [C1]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<C1 extends ActionCreator, C2 extends ActionCreator, S>(\n  creator1: C1,\n  creator2: C2,\n  reducer: OnReducer<S, [C1, C2]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  reducer: OnReducer<S, [C1, C2, C3]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  reducer: OnReducer<S, [C1, C2, C3, C4]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  C8 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  creator8: C8,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  C8 extends ActionCreator,\n  C9 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  creator8: C8,\n  creator9: C9,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8, C9]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  C8 extends ActionCreator,\n  C9 extends ActionCreator,\n  C10 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  creator8: C8,\n  creator9: C9,\n  creator10: C10,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8, C9, C10]>\n): On<S>;",
+        "info": []
+      },
+      {
+        "signature": "function on<S>(\n  creator: ActionCreator,\n  ...rest: (ActionCreator | OnReducer<S, [ActionCreator]>)[]\n): On<S>;",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "FunctionDeclaration",
+    "module": "store",
+    "name": "createReducer",
+    "overloads": [
+      {
+        "signature": "function createReducer<S, A extends Action = Action>(\n  initialState: S,\n  ...ons: On<S>[]\n): ActionReducer<S, A>;",
+        "info": [
+          [
+            "description",
+            "Creates a reducer function to handle state transitions.\nReducer creators reduce the explicitness of reducer functions with switch statements."
+          ],
+          [
+            "param",
+            "initialState Provides a state value if the current state is `undefined`, as it is initially."
+          ],
+          ["param", "ons Associations between actions and state changes."],
+          ["returns", "A reducer function."],
+          [
+            "usageNotes",
+            "- Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.\n- The returned `ActionReducer` should additionally be wrapped with another function, if you are using View Engine AOT.\n  In case you are using Ivy (or only JIT View Engine) the extra wrapper function is not required.\n  **Declaring a reducer creator**\n\n```ts\nexport const reducer = createReducer(\ninitialState,\non(\nfeatureActions.actionOne,\nfeatureActions.actionTwo,\n(state, { updatedValue }) => ({ ...state, prop: updatedValue })\n),\non(featureActions.actionThree, () => initialState);\n);\n```\n\n**Declaring a reducer creator using a wrapper function (Only needed if using View Engine AOT)**\n\n```ts\nconst featureReducer = createReducer(\ninitialState,\non(\nfeatureActions.actionOne,\nfeatureActions.actionTwo,\n(state, { updatedValue }) => ({ ...state, prop: updatedValue })\n),\non(featureActions.actionThree, () => initialState);\n);\nexport function reducer(state: State | undefined, action: Action) {\nreturn featureReducer(state, action);\n}\n```"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store-devtools",
+    "name": "StoreDevtoolsModule",
+    "overloads": [
+      {
+        "signature": "class StoreDevtoolsModule {\n  static instrument(\n    options: StoreDevtoolsOptions = {}\n  ): ModuleWithProviders<StoreDevtoolsModule>;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store-devtools",
+    "name": "LiftedState",
+    "overloads": [
+      {
+        "signature": "interface LiftedState {\n  monitorState: any;\n  nextActionId: number;\n  actionsById: LiftedActions;\n  stagedActionIds: number[];\n  skippedActionIds: number[];\n  committedState: any;\n  currentStateIndex: number;\n  computedStates: ComputedState[];\n  isLocked: boolean;\n  isPaused: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store-devtools",
+    "name": "RECOMPUTE",
+    "overloads": [
+      {
+        "signature": "const RECOMPUTE: '@ngrx/store-devtools/recompute';",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store-devtools",
+    "name": "StoreDevtools",
+    "overloads": [
+      {
+        "signature": "class StoreDevtools implements Observer<any> {\n  public dispatcher: ActionsSubject;\n  public liftedState: Observable<LiftedState>;\n  public state: Observable<any>;\n\n  dispatch(action: Action);\n  next(action: any);\n  error(error: any);\n  complete();\n  performAction(action: any);\n  refresh();\n  reset();\n  rollback();\n  commit();\n  sweep();\n  toggleAction(id: number);\n  jumpToAction(actionId: number);\n  jumpToState(index: number);\n  importState(nextLiftedState: any);\n  lockChanges(status: boolean);\n  pauseRecording(status: boolean);\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "ClassDeclaration",
+    "module": "store-devtools",
+    "name": "StoreDevtoolsConfig",
+    "overloads": [
+      {
+        "signature": "class StoreDevtoolsConfig {\n  maxAge: number | false = false;\n  monitor?: ActionReducer<any, any>;\n  actionSanitizer?: ActionSanitizer;\n  stateSanitizer?: StateSanitizer;\n  name?: string;\n  serialize?: boolean | SerializationOptions;\n  logOnly?: boolean;\n  features?: DevToolsFeatureOptions;\n  actionsBlocklist?: string[];\n  actionsSafelist?: string[];\n  predicate?: Predicate;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "TypeAliasDeclaration",
+    "module": "store-devtools",
+    "name": "StoreDevtoolsOptions",
+    "overloads": [
+      {
+        "signature": "export type StoreDevtoolsOptions =\n  | Partial<StoreDevtoolsConfig>\n  | (() => Partial<StoreDevtoolsConfig>);",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "InterfaceDeclaration",
+    "module": "store-devtools",
+    "name": "DevToolsFeatureOptions",
+    "overloads": [
+      {
+        "signature": "interface DevToolsFeatureOptions {\n  pause?: boolean;\n  lock?: boolean;\n  persist?: boolean;\n  export?: boolean;\n  import?: 'custom' | boolean;\n  jump?: boolean;\n  skip?: boolean;\n  reorder?: boolean;\n  dispatch?: boolean;\n  test?: boolean;\n}",
+        "info": []
+      }
+    ]
+  },
+  {
+    "kind": "VariableDeclaration",
+    "module": "store-devtools",
+    "name": "INITIAL_OPTIONS",
+    "overloads": [
+      {
+        "signature": "const INITIAL_OPTIONS: InjectionToken<StoreDevtoolsConfig>;",
+        "info": []
+      }
+    ]
+  }
+]
