@@ -21,7 +21,7 @@ yarn add @ngrx/effects
 If your project is using the Angular CLI 6+ then you can install the Effects to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/effects
+ng add @ngrx/effects@latest
 ```
 
 ### Optional `ng add` flags

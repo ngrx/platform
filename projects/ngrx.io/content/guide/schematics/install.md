@@ -21,7 +21,7 @@ yarn add @ngrx/schematics --dev
 If your project is using the Angular CLI 6+ then you can make `@ngrx/schematics` the default collection for your application with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
-ng add @ngrx/schematics
+ng add @ngrx/schematics@latest
 ```
 
 ### Optional `ng add` flags
