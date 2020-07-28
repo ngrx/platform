@@ -49,7 +49,7 @@ describe('Migration to version 8.0.0 rc', () => {
 
     const reducerPath = normalize('reducers/index.ts');
 
-    fixtures.forEach(async ({ description, input, expected }) => {
+    for (const { description, input, expected } of fixtures) {
       it(description, async () => {
         const tree = new UnitTestTree(new EmptyTree());
         // we need a package.json, it will throw otherwise because we're trying to remove ngrx-store-freeze as a dep
@@ -57,13 +57,13 @@ describe('Migration to version 8.0.0 rc', () => {
         tree.create(reducerPath, input);
 
         const schematicRunner = createSchematicsRunner();
-        schematicRunner.runSchematicAsync('ngrx-store-migration-03', {}, tree);
+        schematicRunner.runSchematic('ngrx-store-migration-03', {}, tree);
         await schematicRunner.engine.executePostTasks().toPromise();
 
         const actual = tree.readContent(reducerPath);
         expect(actual).toBe(expected);
       });
-    });
+    }
   });
 
   describe('StoreModule.forRoot()', () => {
@@ -117,7 +117,7 @@ describe('Migration to version 8.0.0 rc', () => {
         input: `
         @NgModule({
           imports: [
-            StoreModule.forRoot(ROOT_REDUCERS, { 
+            StoreModule.forRoot(ROOT_REDUCERS, {
               metaReducers,
             }),
           ],
@@ -128,7 +128,7 @@ describe('Migration to version 8.0.0 rc', () => {
         expected: `
         @NgModule({
           imports: [
-            StoreModule.forRoot(ROOT_REDUCERS, { 
+            StoreModule.forRoot(ROOT_REDUCERS, {
               metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true },
             }),
           ],
@@ -183,34 +183,33 @@ describe('Migration to version 8.0.0 rc', () => {
 
     const appModulePath = normalize('app.module.ts');
 
-    fixtures.forEach(
-      async ({ description, input, isStoreFreezeUsed, expected }) => {
-        it(description, async () => {
-          const tree = new UnitTestTree(new EmptyTree());
-          // we need a package.json, it will throw otherwise because we're trying to remove ngrx-store-freeze as a dep
-          tree.create('/package.json', JSON.stringify({}));
-          if (isStoreFreezeUsed) {
-            // we need this file to "trigger" the runtime additions
-            tree.create(
-              'reducer.ts',
-              'import { storeFreeze } from "ngrx-store-freeze";'
-            );
-          }
-          tree.create(appModulePath, input);
-
-          const schematicRunner = createSchematicsRunner();
-          schematicRunner.runSchematicAsync(
-            'ngrx-store-migration-03',
-            {},
-            tree
+    for (const {
+      description,
+      input,
+      isStoreFreezeUsed,
+      expected,
+    } of fixtures) {
+      it(description, async () => {
+        const tree = new UnitTestTree(new EmptyTree());
+        // we need a package.json, it will throw otherwise because we're trying to remove ngrx-store-freeze as a dep
+        tree.create('/package.json', JSON.stringify({}));
+        if (isStoreFreezeUsed) {
+          // we need this file to "trigger" the runtime additions
+          tree.create(
+            'reducer.ts',
+            'import { storeFreeze } from "ngrx-store-freeze";'
           );
-          await schematicRunner.engine.executePostTasks().toPromise();
+        }
+        tree.create(appModulePath, input);
 
-          const actual = tree.readContent(appModulePath);
-          expect(actual).toBe(expected);
-        });
-      }
-    );
+        const schematicRunner = createSchematicsRunner();
+        schematicRunner.runSchematic('ngrx-store-migration-03', {}, tree);
+        await schematicRunner.engine.executePostTasks().toPromise();
+
+        const actual = tree.readContent(appModulePath);
+        expect(actual).toBe(expected);
+      });
+    }
   });
 
   describe('package.json', () => {
@@ -244,19 +243,19 @@ describe('Migration to version 8.0.0 rc', () => {
 
     const packageJsonPath = normalize('package.json');
 
-    fixtures.forEach(async ({ description, input }) => {
+    for (const { description, input } of fixtures) {
       it(description, async () => {
         const tree = new UnitTestTree(new EmptyTree());
         tree.create(packageJsonPath, input);
 
         const schematicRunner = createSchematicsRunner();
-        schematicRunner.runSchematicAsync('ngrx-store-migration-03', {}, tree);
+        schematicRunner.runSchematic('ngrx-store-migration-03', {}, tree);
         await schematicRunner.engine.executePostTasks().toPromise();
 
         const actual = tree.readContent(packageJsonPath);
         expect(actual).not.toMatch(/ngrx-store-freeze/);
       });
-    });
+    }
   });
 });
 

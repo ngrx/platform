@@ -74,11 +74,11 @@ describe('Router Store ng-add Schematic', () => {
     );
   });
 
-  it('should fail if specified module does not exist', () => {
+  it('should fail if specified module does not exist', async () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
-      schematicRunner.runSchematicAsync('ng-add', options, appTree);
+      await schematicRunner.runSchematicAsync('ng-add', options, appTree);
     } catch (err) {
       thrownError = err;
     }

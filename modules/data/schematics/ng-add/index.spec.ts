@@ -67,7 +67,7 @@ describe('Data ng-add Schematic', () => {
     };
     let thrownError: Error | null = null;
     try {
-      schematicRunner.runSchematicAsync('data', options, appTree);
+      await schematicRunner.runSchematicAsync('data', options, appTree);
     } catch (err) {
       thrownError = err;
     }
