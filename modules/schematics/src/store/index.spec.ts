@@ -198,7 +198,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
-      schematicRunner.runSchematicAsync('store', options, appTree);
+      await schematicRunner.runSchematicAsync('store', options, appTree);
     } catch (err) {
       thrownError = err;
     }

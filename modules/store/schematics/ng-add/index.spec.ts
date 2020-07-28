@@ -110,7 +110,7 @@ describe('Store ng-add Schematic', () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
-      schematicRunner.runSchematicAsync('ng-add', options, appTree);
+      await schematicRunner.runSchematicAsync('ng-add', options, appTree);
     } catch (err) {
       thrownError = err;
     }
