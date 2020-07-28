@@ -23,7 +23,7 @@ describe('Store Migration 8_0_0 beta', () => {
     createPackageJson('', pkgName, appTree);
   });
 
-  it(`should replace the meta reducer imports`, () => {
+  it(`should replace the meta reducer imports`, async () => {
     const contents = `
       import {
         RuntimeChecks,
@@ -46,17 +46,15 @@ describe('Store Migration 8_0_0 beta', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = runner.runSchematic(
-      `ngrx-${pkgName}-migration-02`,
-      {},
-      appTree
-    );
+    const newTree = await runner
+      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
+      .toPromise();
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(expected);
   });
 
-  it(`should replace the meta reducer assignments`, () => {
+  it(`should replace the meta reducer assignments`, async () => {
     const contents = `
       @NgModule({
         imports: [
@@ -101,17 +99,15 @@ describe('Store Migration 8_0_0 beta', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = runner.runSchematic(
-      `ngrx-${pkgName}-migration-02`,
-      {},
-      appTree
-    );
+    const newTree = await runner
+      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
+      .toPromise();
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(expected);
   });
 
-  it(`should not run schematics when not using named imports`, () => {
+  it(`should not run schematics when not using named imports`, async () => {
     const contents = `
       import * as store from '@ngrx/store';
 
@@ -142,11 +138,9 @@ describe('Store Migration 8_0_0 beta', () => {
     let logs: string[] = [];
     runner.logger.subscribe((log) => logs.push(log.message));
 
-    const newTree = runner.runSchematic(
-      `ngrx-${pkgName}-migration-02`,
-      {},
-      appTree
-    );
+    const newTree = await runner
+      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
+      .toPromise();
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(contents);

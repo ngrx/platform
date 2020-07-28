@@ -29,12 +29,10 @@ describe('Entity Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create 3 files', () => {
-    const tree = schematicRunner.runSchematic(
-      'entity',
-      defaultOptions,
-      appTree
-    );
+  it('should create 3 files', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', defaultOptions, appTree)
+      .toPromise();
 
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
@@ -47,7 +45,7 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create 3 files of an entity to specified project if provided', () => {
+  it('should create 3 files of an entity to specified project if provided', async () => {
     const options = {
       ...defaultOptions,
       project: 'baz',
@@ -58,7 +56,9 @@ describe('Entity Schematic', () => {
       name: 'baz',
     });
 
-    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
@@ -71,15 +71,17 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create a folder if flat is false', () => {
-    const tree = schematicRunner.runSchematic(
-      'entity',
-      {
-        ...defaultOptions,
-        flat: false,
-      },
-      appTree
-    );
+  it('should create a folder if flat is false', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync(
+        'entity',
+        {
+          ...defaultOptions,
+          flat: false,
+        },
+        appTree
+      )
+      .toPromise();
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -91,11 +93,13 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create 4 files if spec is true', () => {
+  it('should create 4 files if spec is true', async () => {
     const options = {
       ...defaultOptions,
     };
-    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', options, appTree)
+      .toPromise();
 
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
@@ -111,19 +115,23 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should import into a specified module', () => {
+  it('should import into a specified module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', options, appTree)
+      .toPromise();
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
     expect(content).toMatch(/import \* as fromFoo from '\.\/foo.reducer';/);
   });
 
-  it('should create all files of an entity within grouped and nested folders', () => {
+  it('should create all files of an entity within grouped and nested folders', async () => {
     const options = { ...defaultOptions, flat: false, group: true };
 
-    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', options, appTree)
+      .toPromise();
     const files = tree.files;
 
     expect(
@@ -140,10 +148,12 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create all files of an entity within grouped folders if group is set', () => {
+  it('should create all files of an entity within grouped folders if group is set', async () => {
     const options = { ...defaultOptions, group: true };
 
-    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', options, appTree)
+      .toPromise();
     const files = tree.files;
 
     expect(
@@ -160,15 +170,19 @@ describe('Entity Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should update the state to plural', () => {
+  it('should update the state to plural', async () => {
     const options = {
       ...defaultOptions,
       name: 'user',
       reducers: 'reducers/index.ts',
     };
 
-    const reducerTree = schematicRunner.runSchematic('store', options, appTree);
-    const tree = schematicRunner.runSchematic('entity', options, appTree);
+    const reducerTree = await schematicRunner
+      .runSchematicAsync('store', options, appTree)
+      .toPromise();
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', options, appTree)
+      .toPromise();
     const files = tree.files;
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
@@ -189,12 +203,10 @@ describe('Entity Schematic', () => {
     expect(content).toMatch(/\[fromUser.usersFeatureKey\]\: fromUser.reducer/);
   });
 
-  it('should create a plural featureKey', () => {
-    const tree = schematicRunner.runSchematic(
-      'entity',
-      defaultOptions,
-      appTree
-    );
+  it('should create a plural featureKey', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', defaultOptions, appTree)
+      .toPromise();
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.reducer.ts`
     );
@@ -205,12 +217,10 @@ describe('Entity Schematic', () => {
   describe('action creators', () => {
     const creatorOptions = { ...defaultOptions, creators: true };
 
-    it('should create a const for the action creator', () => {
-      const tree = schematicRunner.runSchematic(
-        'entity',
-        creatorOptions,
-        appTree
-      );
+    it('should create a const for the action creator', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('entity', creatorOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -219,12 +229,10 @@ describe('Entity Schematic', () => {
       expect(fileContent).toMatch(/props\<\{ foos\: Foo\[\] }>\(\)/);
     });
 
-    it('should use action creator types in the reducer', () => {
-      const tree = schematicRunner.runSchematic(
-        'entity',
-        creatorOptions,
-        appTree
-      );
+    it('should use action creator types in the reducer', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('entity', creatorOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.reducer.ts`
       );
@@ -256,12 +264,10 @@ describe('Entity Schematic', () => {
       );
     });
 
-    it('should create and export a reducer as a function', () => {
-      const tree = schematicRunner.runSchematic(
-        'reducer',
-        defaultOptions,
-        appTree
-      );
+    it('should create and export a reducer as a function', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('reducer', defaultOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.reducer.ts`
       );
@@ -275,12 +281,10 @@ describe('Entity Schematic', () => {
   });
 
   describe('Ivy', () => {
-    it('should create and export a reducer', () => {
-      const tree = schematicRunner.runSchematic(
-        'reducer',
-        defaultOptions,
-        appTree
-      );
+    it('should create and export a reducer', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('reducer', defaultOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.reducer.ts`
       );

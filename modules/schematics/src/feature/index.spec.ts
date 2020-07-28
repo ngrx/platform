@@ -31,10 +31,12 @@ describe('Feature Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create all files of a feature', () => {
+  it('should create all files of a feature', async () => {
     const options = { ...defaultOptions };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
@@ -62,10 +64,12 @@ describe('Feature Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not create test files', () => {
+  it('should not create test files', async () => {
     const options = { ...defaultOptions, skipTests: true };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
@@ -93,7 +97,7 @@ describe('Feature Schematic', () => {
     ).toEqual(-1);
   });
 
-  it('should create all files of a feature to specified project if provided', () => {
+  it('should create all files of a feature to specified project if provided', async () => {
     const options = {
       ...defaultOptions,
       project: 'baz',
@@ -104,7 +108,9 @@ describe('Feature Schematic', () => {
       name: 'baz',
     });
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
@@ -132,10 +138,12 @@ describe('Feature Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create all files of a feature within grouped folders if group is set', () => {
+  it('should create all files of a feature within grouped folders if group is set', async () => {
     const options = { ...defaultOptions, group: true };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
@@ -160,7 +168,7 @@ describe('Feature Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should respect the path provided for the feature name', () => {
+  it('should respect the path provided for the feature name', async () => {
     const options = {
       ...defaultOptions,
       name: 'foo/Foo',
@@ -168,7 +176,9 @@ describe('Feature Schematic', () => {
       module: 'app',
     };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const moduleFileContent = tree.readContent(
       `${projectPath}/src/app/app.module.ts`
     );
@@ -181,14 +191,16 @@ describe('Feature Schematic', () => {
     );
   });
 
-  it('should have all three api actions in actions type union if api flag enabled and creators=false', () => {
+  it('should have all three api actions in actions type union if api flag enabled and creators=false', async () => {
     const options = {
       ...defaultOptions,
       api: true,
       creators: false,
     };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.actions.ts`
     );
@@ -198,13 +210,15 @@ describe('Feature Schematic', () => {
     );
   });
 
-  it('should have all api effect if api flag enabled', () => {
+  it('should have all api effect if api flag enabled', async () => {
     const options = {
       ...defaultOptions,
       api: true,
     };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.effects.ts`
     );
@@ -234,13 +248,15 @@ describe('Feature Schematic', () => {
     );
   });
 
-  it('should have all api actions in reducer if api flag enabled', () => {
+  it('should have all api actions in reducer if api flag enabled', async () => {
     const options = {
       ...defaultOptions,
       api: true,
     };
 
-    const tree = schematicRunner.runSchematic('feature', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.reducer.ts`
     );

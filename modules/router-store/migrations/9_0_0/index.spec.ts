@@ -125,15 +125,13 @@ describe('Router Store Migration 9_0_0', () => {
       test(input, expected);
     });
 
-    function test(input: string, expected: string) {
+    async function test(input: string, expected: string) {
       appTree.create('./app.module.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = runner.runSchematic(
-        `ngrx-${pkgName}-migration-03`,
-        {},
-        appTree
-      );
+      const newTree = await runner
+        .runSchematicAsync(`ngrx-${pkgName}-migration-03`, {}, appTree)
+        .toPromise();
       const file = newTree.readContent('app.module.ts');
 
       expect(file).toBe(expected);

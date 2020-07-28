@@ -129,15 +129,13 @@ export class LogEffects {
       });
     });
 
-    function test(input: string, expected: string) {
+    async function test(input: string, expected: string) {
       appTree.create('./app.module.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = runner.runSchematic(
-        `ngrx-${pkgName}-migration-02`,
-        {},
-        appTree
-      );
+      const newTree = await runner
+        .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
+        .toPromise();
       const file = newTree.readContent('app.module.ts');
 
       expect(file).toBe(expected);
