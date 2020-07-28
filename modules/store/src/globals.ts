@@ -1,5 +1,7 @@
-export let REGISTERED_ACTION_TYPES: { [actionType: string]: number } = {};
+export const REGISTERED_ACTION_TYPES: { [actionType: string]: number } = {};
 
 export function resetRegisteredActionTypes() {
-  REGISTERED_ACTION_TYPES = {};
+  for (const key of Object.keys(REGISTERED_ACTION_TYPES)) {
+    delete REGISTERED_ACTION_TYPES[key];
+  }
 }
