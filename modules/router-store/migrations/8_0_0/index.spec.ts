@@ -24,7 +24,7 @@ describe('Router Store Migration 8_0_0', () => {
     createPackageJson('', pkgName, appTree);
   });
 
-  it(`should import StoreRouterConnectingModule as StoreRouterConnectingModule.forRoot()`, () => {
+  it(`should import StoreRouterConnectingModule as StoreRouterConnectingModule.forRoot()`, async () => {
     const contents = `
       import { StoreRouterConnectingModule } from '@ngrx/router-store';
       @NgModule({
@@ -61,17 +61,15 @@ describe('Router Store Migration 8_0_0', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = runner.runSchematic(
-      `ngrx-${pkgName}-migration-02`,
-      {},
-      appTree
-    );
+    const newTree = await runner
+      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
+      .toPromise();
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(expected);
   });
 
-  it(`should not replace StoreRouterConnectingModule.forRoot()`, () => {
+  it(`should not replace StoreRouterConnectingModule.forRoot()`, async () => {
     const contents = `
       import { StoreRouterConnectingModule } from '@ngrx/router-store';
       @NgModule({
@@ -108,11 +106,9 @@ describe('Router Store Migration 8_0_0', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = runner.runSchematic(
-      `ngrx-${pkgName}-migration-02`,
-      {},
-      appTree
-    );
+    const newTree = await runner
+      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
+      .toPromise();
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(expected);

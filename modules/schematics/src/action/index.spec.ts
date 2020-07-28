@@ -31,7 +31,7 @@ describe('Action Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create an action to specified project if provided', () => {
+  it('should create an action to specified project if provided', async () => {
     const options = {
       ...defaultOptions,
       project: 'baz',
@@ -42,29 +42,31 @@ describe('Action Schematic', () => {
       name: 'baz',
     });
 
-    const tree = schematicRunner.runSchematic('action', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('action', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create one file', () => {
-    const tree = schematicRunner.runSchematic(
-      'action',
-      defaultOptions,
-      appTree
-    );
+  it('should create one file', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('action', defaultOptions, appTree)
+      .toPromise();
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create two files test files by default', () => {
+  it('should create two files test files by default', async () => {
     const options = {
       ...defaultOptions,
     };
-    const tree = schematicRunner.runSchematic('action', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('action', options, appTree)
+      .toPromise();
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -73,12 +75,14 @@ describe('Action Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not create test files when skipTests is set to true', () => {
+  it('should not create test files when skipTests is set to true', async () => {
     const options = {
       ...defaultOptions,
       skipTests: true,
     };
-    const tree = schematicRunner.runSchematic('action', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('action', options, appTree)
+      .toPromise();
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
     ).toEqual(-1);
@@ -90,12 +94,10 @@ describe('Action Schematic', () => {
   describe('action classes', () => {
     const actionClassesDefaultOptions = { ...defaultOptions, creators: false };
 
-    it('should create an enum named "Foo"', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        actionClassesDefaultOptions,
-        appTree
-      );
+    it('should create an enum named "Foo"', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('action', actionClassesDefaultOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -103,12 +105,10 @@ describe('Action Schematic', () => {
       expect(fileContent).toMatch(/export enum FooActionTypes/);
     });
 
-    it('should create a class based on the provided name', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        actionClassesDefaultOptions,
-        appTree
-      );
+    it('should create a class based on the provided name', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('action', actionClassesDefaultOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -116,12 +116,10 @@ describe('Action Schematic', () => {
       expect(fileContent).toMatch(/export class LoadFoos implements Action/);
     });
 
-    it('should create the union type based on the provided name', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        actionClassesDefaultOptions,
-        appTree
-      );
+    it('should create the union type based on the provided name', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('action', actionClassesDefaultOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -129,9 +127,11 @@ describe('Action Schematic', () => {
       expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
     });
 
-    it('should create spec class with right imports', () => {
+    it('should create spec class with right imports', async () => {
       const options = { ...actionClassesDefaultOptions };
-      const tree = schematicRunner.runSchematic('action', options, appTree);
+      const tree = await schematicRunner
+        .runSchematicAsync('action', options, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.spec.ts`
       );
@@ -143,12 +143,10 @@ describe('Action Schematic', () => {
   describe('action creators', () => {
     const creatorDefaultOptions = { ...defaultOptions };
 
-    it('should create a const for the action creator', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        creatorDefaultOptions,
-        appTree
-      );
+    it('should create a const for the action creator', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync('action', creatorDefaultOptions, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -157,12 +155,14 @@ describe('Action Schematic', () => {
       expect(fileContent).toMatch(/\[Foo\] Load Foos'/);
     });
 
-    it('should create success/error actions when the api flag is set', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        { ...creatorDefaultOptions, api: true },
-        appTree
-      );
+    it('should create success/error actions when the api flag is set', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync(
+          'action',
+          { ...creatorDefaultOptions, api: true },
+          appTree
+        )
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -176,29 +176,33 @@ describe('Action Schematic', () => {
   });
 
   describe('api', () => {
-    it('should group within an "actions" folder if group is set', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        {
-          ...defaultOptions,
-          group: true,
-        },
-        appTree
-      );
+    it('should group within an "actions" folder if group is set', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync(
+          'action',
+          {
+            ...defaultOptions,
+            group: true,
+          },
+          appTree
+        )
+        .toPromise();
       expect(
         tree.files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
       ).toBeGreaterThanOrEqual(0);
     });
 
-    it('should create a success class based on the provided name, given api', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        {
-          ...defaultOptions,
-          api: true,
-        },
-        appTree
-      );
+    it('should create a success class based on the provided name, given api', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync(
+          'action',
+          {
+            ...defaultOptions,
+            api: true,
+          },
+          appTree
+        )
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -208,15 +212,17 @@ describe('Action Schematic', () => {
       );
     });
 
-    it('should create a failure class based on the provided name, given api', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        {
-          ...defaultOptions,
-          api: true,
-        },
-        appTree
-      );
+    it('should create a failure class based on the provided name, given api', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync(
+          'action',
+          {
+            ...defaultOptions,
+            api: true,
+          },
+          appTree
+        )
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
@@ -226,16 +232,18 @@ describe('Action Schematic', () => {
       );
     });
 
-    it('should create the union type with success and failure based on the provided name, given api and creators false', () => {
-      const tree = schematicRunner.runSchematic(
-        'action',
-        {
-          ...defaultOptions,
-          api: true,
-          creators: false,
-        },
-        appTree
-      );
+    it('should create the union type with success and failure based on the provided name, given api and creators false', async () => {
+      const tree = await schematicRunner
+        .runSchematicAsync(
+          'action',
+          {
+            ...defaultOptions,
+            api: true,
+            creators: false,
+          },
+          appTree
+        )
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );

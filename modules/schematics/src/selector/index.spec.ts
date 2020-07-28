@@ -28,12 +28,10 @@ describe('Selector Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create selector files', () => {
-    const tree = schematicRunner.runSchematic(
-      'selector',
-      defaultOptions,
-      appTree
-    );
+  it('should create selector files', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('selector', defaultOptions, appTree)
+      .toPromise();
 
     const selectorsContent = tree.readContent(
       `${projectPath}/src/app/foo.selectors.ts`
@@ -58,24 +56,28 @@ describe('Selector Schematic', () => {
     );
   });
 
-  it('should not create a spec file if spec is false', () => {
+  it('should not create a spec file if spec is false', async () => {
     const options = {
       ...defaultOptions,
       skipTests: true,
     };
-    const tree = schematicRunner.runSchematic('selector', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('selector', options, appTree)
+      .toPromise();
 
     expect(
       tree.files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
     ).toBeFalsy();
   });
 
-  it('should group selectors if group is true', () => {
+  it('should group selectors if group is true', async () => {
     const options = {
       ...defaultOptions,
       group: true,
     };
-    const tree = schematicRunner.runSchematic('selector', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('selector', options, appTree)
+      .toPromise();
 
     expect(
       tree.files.includes(`${projectPath}/src/app/selectors/foo.selectors.ts`)
@@ -87,12 +89,14 @@ describe('Selector Schematic', () => {
     ).toBeTruthy();
   });
 
-  it('should not flatten selectors if flat is false', () => {
+  it('should not flatten selectors if flat is false', async () => {
     const options = {
       ...defaultOptions,
       flat: false,
     };
-    const tree = schematicRunner.runSchematic('selector', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('selector', options, appTree)
+      .toPromise();
 
     expect(
       tree.files.includes(`${projectPath}/src/app/foo/foo.selectors.ts`)
@@ -103,13 +107,15 @@ describe('Selector Schematic', () => {
   });
 
   describe('With feature flag', () => {
-    it('should create a selector', () => {
+    it('should create a selector', async () => {
       const options = {
         ...defaultOptions,
         feature: true,
       };
 
-      const tree = schematicRunner.runSchematic('selector', options, appTree);
+      const tree = await schematicRunner
+        .runSchematicAsync('selector', options, appTree)
+        .toPromise();
       const selectorsContent = tree.readContent(
         `${projectPath}/src/app/foo.selectors.ts`
       );
@@ -146,7 +152,7 @@ describe('Selector Schematic', () => {
       );
     });
 
-    it('should group and nest the selectors within a feature', () => {
+    it('should group and nest the selectors within a feature', async () => {
       const options = {
         ...defaultOptions,
         feature: true,
@@ -154,7 +160,9 @@ describe('Selector Schematic', () => {
         flat: false,
       };
 
-      const tree = schematicRunner.runSchematic('selector', options, appTree);
+      const tree = await schematicRunner
+        .runSchematicAsync('selector', options, appTree)
+        .toPromise();
       const selectorPath = `${projectPath}/src/app/selectors/foo/foo.selectors.ts`;
       const specPath = `${projectPath}/src/app/selectors/foo/foo.selectors.spec.ts`;
 

@@ -31,7 +31,7 @@ describe('Data Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should create the data service to a specified project if provided', () => {
+  it('should create the data service to a specified project if provided', async () => {
     const options = { ...defaultOptions, project: 'baz' };
 
     const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
@@ -39,7 +39,9 @@ describe('Data Schematic', () => {
       name: 'baz',
     });
 
-    const tree = schematicRunner.runSchematic('data', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('data', options, appTree)
+      .toPromise();
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.service.ts`)
@@ -49,8 +51,10 @@ describe('Data Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create the service and model files', () => {
-    const tree = schematicRunner.runSchematic('data', defaultOptions, appTree);
+  it('should create the service and model files', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('data', defaultOptions, appTree)
+      .toPromise();
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.service.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -59,11 +63,13 @@ describe('Data Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create two files if skipTests is false(as it is by default)', () => {
+  it('should create two files if skipTests is false(as it is by default)', async () => {
     const options = {
       ...defaultOptions,
     };
-    const tree = schematicRunner.runSchematic('data', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('data', options, appTree)
+      .toPromise();
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.service.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -73,9 +79,11 @@ describe('Data Schematic', () => {
   });
 
   describe('service class', () => {
-    it('should import the correct model', () => {
+    it('should import the correct model', async () => {
       const options = { ...defaultOptions };
-      const tree = schematicRunner.runSchematic('data', options, appTree);
+      const tree = await schematicRunner
+        .runSchematicAsync('data', options, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.service.ts`
       );
@@ -83,9 +91,11 @@ describe('Data Schematic', () => {
       expect(fileContent).toMatch(/import { Foo } from '.\/foo';/);
     });
 
-    it('should extending EntityCollectionServiceBase', () => {
+    it('should extending EntityCollectionServiceBase', async () => {
       const options = { ...defaultOptions };
-      const tree = schematicRunner.runSchematic('data', options, appTree);
+      const tree = await schematicRunner
+        .runSchematicAsync('data', options, appTree)
+        .toPromise();
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.service.ts`
       );
@@ -98,18 +108,22 @@ describe('Data Schematic', () => {
     });
   });
 
-  it('should create model', () => {
+  it('should create model', async () => {
     const options = { ...defaultOptions };
-    const tree = schematicRunner.runSchematic('data', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('data', options, appTree)
+      .toPromise();
     const fileContent = tree.readContent(`${projectPath}/src/app/foo.ts`);
 
     expect(fileContent).toMatch(/export interface Foo {/);
     expect(fileContent).toMatch(/id\?: any;/);
   });
 
-  it('should create spec class with right imports', () => {
+  it('should create spec class with right imports', async () => {
     const options = { ...defaultOptions };
-    const tree = schematicRunner.runSchematic('data', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('data', options, appTree)
+      .toPromise();
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.service.spec.ts`
     );
