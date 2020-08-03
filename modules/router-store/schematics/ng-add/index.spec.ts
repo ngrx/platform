@@ -7,7 +7,7 @@ import { Schema as RouterStoreOptions } from './schema';
 import {
   getTestProjectPath,
   createWorkspace,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Router Store ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

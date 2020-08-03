@@ -4,7 +4,7 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { createPackageJson } from '../../../schematics-core/testing/create-package';
+import { createPackageJson } from '@ngrx/schematics-core/testing/create-package';
 
 describe('Store Migration 8_0_0 beta', () => {
   let appTree: UnitTestTree;

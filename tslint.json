@@ -1,6 +1,9 @@
 {
   "rules": {
     "class-name": true,
+    "deprecation": {
+      "severity": "warning"
+    },
     "no-duplicate-variable": true,
     "no-eval": false,
     "no-internal-module": true,

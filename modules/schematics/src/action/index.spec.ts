@@ -9,7 +9,7 @@ import {
   createWorkspace,
   defaultWorkspaceOptions,
   defaultAppOptions,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

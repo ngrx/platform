@@ -23,7 +23,7 @@ interface TestAppSchema {
   counter4?: number;
 }
 
-describe('Mock Store', () => {
+xdescribe('Mock Store', () => {
   let mockStore: MockStore<TestAppSchema>;
   const initialState = { counter1: 0, counter2: 1, counter4: 3 };
   const stringSelector = 'counter4';

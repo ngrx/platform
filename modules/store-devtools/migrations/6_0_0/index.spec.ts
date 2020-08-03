@@ -7,11 +7,11 @@ import * as path from 'path';
 import {
   createPackageJson,
   packagePath,
-} from '../../../schematics-core/testing/create-package';
+} from '@ngrx/schematics-core/testing/create-package';
 import {
   upgradeVersion,
   versionPrefixes,
-} from '../../../schematics-core/testing/update';
+} from '@ngrx/schematics-core/testing/update';
 
 const collectionPath = path.join(__dirname, '../migration.json');
 

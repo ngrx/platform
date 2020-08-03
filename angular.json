@@ -83,8 +83,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "projects/example-app/jest.config.js",
-            "tsConfig": "projects/example-app/tsconfig.spec.json",
-            "setupFile": "projects/example-app/src/setup-jest.ts",
             "runInBand": true
           }
         }
@@ -164,8 +162,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/store/jest.config.js",
-            "tsConfig": "modules/store/tsconfig.spec.json",
-            "setupFile": "modules/store/test-setup.ts",
             "runInBand": true
           }
         }
@@ -219,8 +215,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/effects/jest.config.js",
-            "tsConfig": "modules/effects/tsconfig.spec.json",
-            "setupFile": "modules/effects/test-setup.ts",
             "runInBand": true
           }
         }
@@ -268,8 +262,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/data/jest.config.js",
-            "tsConfig": "modules/data/tsconfig.spec.json",
-            "setupFile": "modules/data/test-setup.ts",
             "runInBand": true
           }
         }
@@ -323,8 +315,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/entity/jest.config.js",
-            "tsConfig": "modules/entity/tsconfig.spec.json",
-            "setupFile": "modules/entity/test-setup.ts",
             "runInBand": true
           }
         }
@@ -372,8 +362,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/store-devtools/jest.config.js",
-            "tsConfig": "modules/store-devtools/tsconfig.spec.json",
-            "setupFile": "modules/store-devtools/test-setup.ts",
             "runInBand": true
           }
         }
@@ -421,8 +409,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/router-store/jest.config.js",
-            "tsConfig": "modules/router-store/tsconfig.spec.json",
-            "setupFile": "modules/router-store/test-setup.ts",
             "runInBand": true
           }
         }
@@ -449,7 +435,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/schematics/jest.config.js",
-            "tsConfig": "modules/schematics/tsconfig.spec.json",
             "runInBand": true
           }
         },
@@ -554,8 +539,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/component/jest.config.js",
-            "tsConfig": "modules/component/tsconfig.spec.json",
-            "setupFile": "modules/component/test-setup.ts",
             "runInBand": true
           }
         }
@@ -603,8 +586,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "modules/component-store/jest.config.js",
-            "tsConfig": "modules/component-store/tsconfig.spec.json",
-            "setupFile": "modules/component-store/test-setup.ts",
             "runInBand": true
           }
         }
@@ -658,6 +639,32 @@
           }
         }
       }
+    },
+    "schematics-core": {
+      "projectType": "library",
+      "root": "modules/schematics-core",
+      "sourceRoot": "modules/schematics-core/src",
+      "prefix": "ngrx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/schematics-core/tsconfig.lib.json",
+              "modules/schematics-core/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/schematics-core/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/schematics-core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "schematics": {
@@ -665,7 +672,7 @@
       "inlineStyle": true,
       "inlineTemplate": true,
       "flat": true,
-      "spec": false,
+      "skipTests": true,
       "prefix": "bc",
       "style": "css"
     },

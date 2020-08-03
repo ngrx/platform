@@ -3,9 +3,9 @@
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",
-    "tsconfig.json": "*",
     "tslint.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    "tsconfig.base.json": "*"
   },
   "workspaceLayout": {
     "appsDir": "projects",
@@ -76,6 +76,12 @@
         "component",
         "component-store"
       ]
+    },
+    "schematics-core": {
+      "tags": []
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }

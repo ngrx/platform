@@ -540,6 +540,7 @@ describe('Selectors', () => {
           selector({ featureA: {} });
 
           expect(warnSpy).not.toHaveBeenCalled();
+          setNgrxMockEnvironment(false);
         });
       });
     });

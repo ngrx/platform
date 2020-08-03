@@ -8,7 +8,7 @@ import { Schema as SelectorOptions } from './schema';
 import {
   getTestProjectPath,
   createWorkspace,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Selector Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -42,7 +42,7 @@ describe('Selector Schematic', () => {
 
     expect(cleanString(selectorsContent)).toBe(
       cleanString(
-        tags.stripIndent`import { createFeatureSelector, createSelector } from '@ngrx/store';`
+        tags.stripIndent`import { createFeatureSelector, createSelector } from '@ngrx/${'store'}';`
       )
     );
 
@@ -125,7 +125,7 @@ describe('Selector Schematic', () => {
 
       expect(cleanString(selectorsContent)).toBe(
         cleanString(tags.stripIndent`
-        import { createFeatureSelector, createSelector } from '@ngrx/store';
+        import { createFeatureSelector, createSelector } from '@ngrx/${'store'}';
         import * as fromFoo from './foo.reducer';
 
         export const selectFooState = createFeatureSelector<fromFoo.State>(

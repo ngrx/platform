@@ -9,7 +9,7 @@ import {
   getTestProjectPath,
   createWorkspace,
   createAppModuleWithEffects,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Effects ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

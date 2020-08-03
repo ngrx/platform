@@ -14,7 +14,7 @@ export function createReducers(
       createFeatureSelector,
       createSelector,
       MetaReducer
-    } from '@ngrx/store';
+    } from '@ngrx/${'store'}';
     import { environment } from '../../environments/environment';
     
     export interface State {

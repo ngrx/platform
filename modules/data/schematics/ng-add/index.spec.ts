@@ -7,7 +7,7 @@ import { Schema as DataEntityOptions } from './schema';
 import {
   createWorkspace,
   getTestProjectPath,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Data ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
