@@ -145,7 +145,8 @@
               {
                 "command": "ncp dist/modules/store node_modules/@ngrx/store"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/store", "node_modules/@ngrx/store"]
           }
         },
         "lint": {
@@ -198,7 +199,8 @@
               {
                 "command": "ncp dist/modules/effects node_modules/@ngrx/effects"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/effects", "node_modules/@ngrx/effects"]
           }
         },
         "lint": {
@@ -245,7 +247,8 @@
               {
                 "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/data"]
           }
         },
         "lint": {
@@ -298,7 +301,8 @@
               {
                 "command": "ncp dist/modules/entity node_modules/@ngrx/entity"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/entity", "node_modules/@ngrx/entity"]
           }
         },
         "lint": {
@@ -345,7 +349,8 @@
               {
                 "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/store-devtools"]
           }
         },
         "lint": {
@@ -392,7 +397,8 @@
               {
                 "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/router-store"]
           }
         },
         "lint": {
@@ -493,7 +499,8 @@
               {
                 "command": "cpy modules/schematics/src/**/schema.json dist/ --parents"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/schematics"]
           }
         }
       }
@@ -522,7 +529,8 @@
               {
                 "command": "yarn tsc -p modules/component/tsconfig.schematics.json"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/component"]
           }
         },
         "lint": {
@@ -569,7 +577,8 @@
               {
                 "command": "yarn tsc -p modules/component-store/tsconfig.schematics.json"
               }
-            ]
+            ],
+            "outputPath": ["dist/modules/component-store"]
           }
         },
         "lint": {
@@ -620,7 +629,8 @@
               {
                 "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/CNAME projects/ngrx.io/dist/ngrx.io/"
               }
-            ]
+            ],
+            "outputPath": ["projects/ngrx.io/dist/ngrx.io"]
           }
         },
         "test": {
