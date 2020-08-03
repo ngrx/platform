@@ -10,7 +10,7 @@ import {
   createWorkspace,
   defaultWorkspaceOptions,
   defaultAppOptions,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Reducer Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

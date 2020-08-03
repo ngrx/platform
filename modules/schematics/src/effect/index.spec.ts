@@ -10,7 +10,7 @@ import {
   createAppModuleWithEffects,
   defaultWorkspaceOptions,
   defaultAppOptions,
-} from '../../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

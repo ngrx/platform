@@ -39,5 +39,8 @@
     ],
     "migrations": "./migrations/migration.json"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
 }

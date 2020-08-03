@@ -145,7 +145,7 @@ jobs:
       - run: yarn
       - run:
           name: Build All Release Packages
-          command: yarn build --skip-nx-cache
+          command: yarn build
       # Store artifacts from packages build
       - persist_to_workspace:
           root: dist
@@ -170,7 +170,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --with-deps --skip-nx-cache
+          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build-bazel:
     <<: *run_in_node

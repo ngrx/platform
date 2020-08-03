@@ -4,7 +4,7 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { Schema as SchemaOptions } from './schema';
-import { createWorkspace } from '../../../schematics-core/testing';
+import { createWorkspace } from '@ngrx/schematics-core/testing';
 
 describe('Component store ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(

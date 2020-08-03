@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ReactiveComponentModule } from '../';
+import { ReactiveComponentModule } from '../src/reactive-component.module';
 
 describe('Component Module', () => {
   let componentModule: ReactiveComponentModule;

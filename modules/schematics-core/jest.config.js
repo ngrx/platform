@@ -1,13 +1,7 @@
 module.exports = {
-  name: 'data',
-  displayName: 'Data',
+  name: 'schematics-core',
+  displayName: 'Schematics Core',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/modules/data',
-  snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
-  ],
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -19,4 +13,10 @@ module.exports = {
       ],
     },
   },
+  coverageDirectory: '../../coverage/modules/schematics-core',
+  snapshotSerializers: [
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
+    'jest-preset-angular/build/AngularSnapshotSerializer.js',
+    'jest-preset-angular/build/HTMLCommentSerializer.js',
+  ],
 };

@@ -6,7 +6,7 @@ import * as path from 'path';
 import {
   getTestProjectPath,
   createWorkspace,
-} from '../../schematics-core/testing';
+} from '@ngrx/schematics-core/testing';
 
 describe('CLI Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
