@@ -27,7 +27,11 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 In some cases developers do not want for selectors to return any state until there's some meaningful data in the ComponentStore. The solution
 would be to initialize the state lazily by calling `setState` and passing the full state to it. The same approach can be taken to reset the state.
 
+<div class="alert is-important">
+
 **Note:** Initialization has to be done prior to updating the state, otherwise an Error would be thrown.
+
+</div>
 
 <code-example header="movies-page.component.ts">
 @Component({
