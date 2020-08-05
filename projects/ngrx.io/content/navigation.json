@@ -295,6 +295,35 @@
             {
               "title": "Overview",
               "url": "guide/component-store"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/component-store/install"
+            },
+            {
+              "title": "Architecture",
+              "children": [
+                {
+                  "title": "Initialization",
+                  "url": "guide/component-store/initialization"
+                },
+                {
+                  "title": "Read",
+                  "url": "guide/component-store/read"
+                },
+                {
+                  "title": "Write",
+                  "url": "guide/component-store/write"
+                },
+                {
+                  "title": "Effects",
+                  "url": "guide/component-store/effect"
+                }
+              ]
+            },
+            {
+              "title": "ComponentStore vs Store",
+              "url": "guide/component-store/comparison"
             }
           ]
         }

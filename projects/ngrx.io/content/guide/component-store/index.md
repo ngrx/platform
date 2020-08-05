@@ -1,50 +1,24 @@
 # @ngrx/component-store
 
-ComponentStore is a standalone library that helps to manage local/component state. It's an alternative to push-based "Service with a Subject".
-
-## Introduction
-
-// TODO(alex-okrushko): fill-up the intro
+ComponentStore is a stand-alone library that helps to manage local/component state. It's an alternative to reactive push-based "Service with a Subject" approach.
 
 ## Key Concepts
 
-- Local state can be initialized lazily
+- Local state has to be initialized, but it can be done lazily.
 - Local state is typically tied to the life-cycle of a particular component and is cleaned up when that component is destroyed.
 - Users of ComponentStore can update the state through `setState` or `updater`, either imperatively or by providing an Observable.
-- Users of ComponentStore can read the state through `select` or a top-level `state$`. Selectors are extremely performant.
+- Users of ComponentStore can read the state through `select` or a top-level `state$`. Selectors are very performant.
 - Users of ComponentStore may start side-effects with `effect`, both sync and async, and feed the data both imperatively or reactively.
+
+The details about [initialization](guide/component-store/initialization), [writing](guide/component-store/write) and [reading](guide/component-store/read) from state, 
+and [side-effects](guide/component-store/effect) management can be found in the corresponding sections.
+of the Architecture.
 
 ## Installation
 
-// TODO(alex-okrushko): fill-up the installation, including pros/cons of extending the service vs Component-scoped providers
+Detailed installation instructions can be found on the [Installation](guide/component-store/install) page.
 
-## Initialization
+## @ngrx/store or @ngrx/component-store?
 
-ComponentStore can be initialized in 2 ways:
-- through constructor - it would have the initial state
-- by calling `setState` and passing an object that matches the state interface.
-
-<code-example header="movies-page.component.ts">
-@Component({
-  template: `
-    &lt;li *ngFor="let movie of (movies$ | async)"&gt;
-      {{ movie.name }}
-    &lt;/li&gt;
-  `,
-  providers: [ComponentStore],
-})
-export class MoviesPageComponent {
-  movies$ = this.componentStore.state$.pipe(
-    map(state => state.movies),
-  );
-
-  constructor(
-    private readonly componentStore: ComponentStore<{movies: Movie[]}>
-  ) {}
-
-  ngOnInit() {
-    this.componentStore.setState({movies: []});
-  }
-}
-</code-example>
-
+The Global Store and Component Store are designed to solve different problems and can be used independently from each other. The detailed comparison can
+be found at [Store vs ComponentStore](guide/component-store/comparison) section.
