@@ -456,6 +456,6 @@ workflows:
             - build
           filters:
             tags:
-              only: /9\.\d+\.\d+(-\w+\.\d)/
+              only: /10\.\d+\.\d+(-\w+\.\d)/
             branches:
               ignore: /.*/
