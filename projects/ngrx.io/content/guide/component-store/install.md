@@ -16,6 +16,14 @@ For more information on using `yarn` check out the docs <a href="https://yarnpkg
 yarn add @ngrx/component-store
 ```
 
+## Installing with `ng add`
+
+If your project is using the Angular CLI 6+ then you can install the Store to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+
+```sh
+ng add @ngrx/component-store@latest
+```
+
 ## Installing the latest from GitHub
 
 [Nightly builds](guide/nightlies) are available.

@@ -25,7 +25,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 ## Lazy initialization
 
 In some cases developers do not want for selectors to return any state until there's some meaningful data in the ComponentStore. The solution
-would to initialize the state lazily by calling `setState` and passing the full state to it. The same approach can be taken to reset the state.
+would be to initialize the state lazily by calling `setState` and passing the full state to it. The same approach can be taken to reset the state.
 
 **Note:** Initialization has to be done prior to updating the state, otherwise an Error would be thrown.
 
