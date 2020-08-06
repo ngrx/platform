@@ -11,8 +11,7 @@ ComponentStore is a stand-alone library that helps to manage local/component sta
 - Users of ComponentStore may start side-effects with `effect`, both sync and async, and feed the data both imperatively or reactively.
 
 The details about [initialization](guide/component-store/initialization), [writing](guide/component-store/write) and [reading](guide/component-store/read) from state, 
-and [side-effects](guide/component-store/effect) management can be found in the corresponding sections.
-of the Architecture.
+and [side-effects](guide/component-store/effect) management can be found in the corresponding sections of the Architecture.
 
 ## Installation
 
