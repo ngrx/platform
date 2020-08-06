@@ -22,55 +22,86 @@ The following diagram represents the overall general flow of application state i
 
 ## Tutorial
 
-The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload></live-example>.
+The following tutorial shows you how to manage the state of book list, and how the user can add a book to and remove it from their collection within an Angular component. Try the <live-example name="store" noDownload></live-example>.
 
 1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example>.
 
-2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
+2.  Right click on the `app` folder in StackBlitz. Create a state management folder `state`, and within the new folder, name a new file `allBooks.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
 
-<code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
+<code-example header="src/app/state/allBooks.actions.ts" path="store/src/app/state/allBooks.actions.ts">
 </code-example>
 
-3.  Define a reducer function to handle changes in the counter value based on the provided actions.
+3.  Right click on the `state` folder and create a new file labeled `books.reducer.ts`. Within this file, define a reducer function to handle the retrieval of the book list from the state and consequently, send an update to the state.
 
-<code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
+<code-example header="src/app/state/books.reducer.ts" path="store/src/app/state/books.reducer.ts">
 </code-example>
 
-4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file.
+4. Create another file named `collection.reducer.ts` in the `state` folder to handle actions that alter the user's book collection. Define a reducer function that handles the add action by returning the state when the book ID already exists in the collection, and appends the book ID to the collection array if it does not. Define the same reducer to handle the remove action by filtering the collection array with the book ID.
+
+<code-example header="src/app/state/collection.reducer.ts" path="store/src/app/state/collection.reducer.ts">
+</code-example>
+
+5.  Import the `StoreModule` from `@ngrx/store` and the `books.reducer` and `collection.reducer` file.
 
 <code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
 </code-example>
 
-5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
+6.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `books` and `booksReducer`, as well as the `collection` and `collectionReducer` that manage the state of book list and collection. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
+<code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.ts">
 </code-example>
 
-6.  Create a new _Component_ named `my-counter` in the `app` folder. Inject the `Store` service into your component to dispatch the counter actions, and use the `select` operator to _select_ data from the state.
+7. Create a new file in `state` named `state.ts`. Define the state as as a list of books and a list of collection books' IDs. 
 
-Update the `MyCounterComponent` template with buttons to call the increment, decrement, and reset methods. Use the async pipe to subscribe to the _count$_ observable.
-
-<code-example header="src/app/my-counter/my-counter.component.html" path="store/src/app/my-counter/my-counter.component.html">
+<code-example header="src/app/state/state.ts" path="store/src/app/state/state.ts">
 </code-example>
 
-Update the `MyCounterComponent` class with a selector for the _count_, and methods to dispatch the Increment, Decrement, and Reset actions.
+8. Create another file in `state` named `allBooks.selectors.ts`. Create book list and collection selectors that pass corresponding parts of the state as parameters. 
 
-<code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
+<code-example header="src/app/state/allBooks.selectors.ts" path="store/src/app/state/allBooks.selectors.ts">
 </code-example>
 
-7.  Add the `MyCounter` component to your `AppComponent` template.
+9.  Create a new _Component_ named `book-list` in the `app` folder. Create a new file in the same folder named `books.service.ts`, which will call the Google Books API and return a list of books. 
 
-<code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
+<code-example header="src/app/book-list/books.service.ts" path="store/src/app/book-list/books.service.ts">
 </code-example>
 
-And that's it! Click the increment, decrement, and reset buttons to change the state of the counter.
+10. Update the `BookListComponent` template with a button to handle the `add` method. Similarly, update the `BookListComponent` class to dispatch the `add` event.
+
+<code-example header="src/app/book-list/book-list.component.html" path="store/src/app/book-list/book-list.component.html">
+</code-example>
+
+<code-example header="src/app/book-list/book-list.component.ts" path="store/src/app/book-list/book-list.component.ts">
+</code-example>
+
+11. Create a new _Component_ named `book-collection` in the `app` folder. As with `BookListComponent`, update the `BookCollectionComponent` template and class in order to handle and dispatch the `remove` event.
+
+<code-example header="src/app/book-collection/book-collection.component.html" path="store/src/app/book-collection/book-collection.component.html">
+</code-example>
+
+<code-example header="src/app/book-collection/book-collection.component.ts" path="store/src/app/book-collection/book-collection.component.ts">
+</code-example>
+
+12.  Add `BookListComponents` and `BookCollectionComponent` to your `AppComponent` template. 
+
+<code-example header="src/app/app.component.html" path="store/src/app/app.component.html">
+</code-example>
+
+In the `AppComponent` class, add the selectors and corresponding actions to dispatch on add or remove. Subscribe to the Google Books API in order to update the state.
+
+<code-example header="src/app/app.component.ts" path="store/src/app/app.component.ts">
+</code-example>
+
+And that's it! Click the add and remove buttons to change the state.
 
 Let's cover what you did:
 
 - Defined actions to express events.
-- Defined a reducer function to manage the state of the counter.
+- Defined two reducer functions to manage different parts of the state.
 - Registered the global state container that is available throughout your application.
-- Injected the `Store` service to dispatch actions and select the current state of the counter.
+- Defined the state, as well as selectors that retrieve specific parts of the state.
+- Created two  distinct components, as well as a service that fetches from the Google Books API. 
+- Injected the `Store` and Google Books API services to dispatch actions and select the current state.
 
 ## Next Steps
 

@@ -83,44 +83,16 @@ Try the <live-example name="testing-store"></live-example>.
 
 ### Integration Testing
 
-An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is an example of an integration test for the `MyCounterComponent` introduced in the [getting started tutorial](guide/store#tutorial).
+An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is an example of an integration test for the `AppComponent` introduced in the [getting started tutorial](guide/store#tutorial).
 
 <code-example header="src/app/tests/integration.spec.ts" path="store/src/app/tests/integration.spec.ts">
 </code-example>
 
-The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking a button dispatches an action that causes the state to be updated with an incremented, decremented, or reset counter value, which is correctly emitted by the selector.
+The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking the `add` button dispatches the corresponding action and is correctly emitted by the `collection` selector. Similarly, the `remove` button dispatches the `remove` and the `collection` selector displays the updated state.
 
 ### Testing selectors
 
-You can use the projector function used by the selector by accessing the `.projector` property.
+You can use the projector function used by the selector by accessing the `.projector` property. The following example tests the `allBooks` selector from the [getting started tutorial](guide/store#tutorial).
 
-<code-example header="my.selectors.ts">
-export interface State {
-  evenNums: number[];
-  oddNums: number[];
-}
-
-export const selectSumEvenNums = createSelector(
-  (state: State) => state.evenNums,
-  evenNums => evenNums.reduce((prev, curr) => prev + curr)
-);
-export const selectSumOddNums = createSelector(
-  (state: State) => state.oddNums,
-  oddNums => oddNums.reduce((prev, curr) => prev + curr)
-);
-export const selectTotal = createSelector(
-  selectSumEvenNums,
-  selectSumOddNums,
-  (evenSum, oddSum) => evenSum + oddSum
-);
-</code-example>
-
-<code-example header="my.selectors.spec.ts">
-import * as fromMyReducers from './my-reducers';
-
-describe('My Selectors', () => {
-  it('should calc selectTotal', () => {
-    expect(fromMyReducers.selectTotal.projector(2, 3)).toBe(5);
-  });
-});
+<code-example header="src/app/state/allBooks.selectors.spec.ts" path="testing-store/src/app/state/allBooks.selectors.spec.ts">
 </code-example>
