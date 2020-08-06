@@ -1,3 +1,31 @@
+<a name="10.0.0-rc.0"></a>
+
+# [10.0.0-rc.0](https://github.com/ngrx/platform/compare/10.0.0-beta.1...10.0.0-rc.0) (2020-08-06)
+
+### Bug Fixes
+
+- **router-store:** add safety check to schematic ([#2632](https://github.com/ngrx/platform/issues/2632)) ([255e9e8](https://github.com/ngrx/platform/commit/255e9e8))
+
+### Code Refactoring
+
+- **component-store:** fine-tune effect types ([#2645](https://github.com/ngrx/platform/issues/2645)) ([ee92912](https://github.com/ngrx/platform/commit/ee92912))
+
+### Features
+
+- **entity:** add mapOne adapter method ([#2628](https://github.com/ngrx/platform/issues/2628)) ([d1891ad](https://github.com/ngrx/platform/commit/d1891ad)), closes [#2538](https://github.com/ngrx/platform/issues/2538)
+
+### BREAKING CHANGES
+
+- **component-store:** EffectReturnFn has been removed and the effect type is stricter and more predictable.
+
+BEFORE:
+
+If effect was const e = effect((o: Observable<string>) => ....) it was still possible to call e() without passing any strings
+
+AFTER:
+
+If effect was const e = effect((o: Observable<string>) => ....) its not allowed to call e() without passing any strings
+
 <a name="10.0.0-beta.1"></a>
 
 # [10.0.0-beta.1](https://github.com/ngrx/platform/compare/10.0.0-beta.0...10.0.0-beta.1) (2020-07-20)
