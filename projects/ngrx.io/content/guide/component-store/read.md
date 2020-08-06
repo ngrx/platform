@@ -30,7 +30,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
       {{ movie.name }}
     &lt;/li&gt;
   `,
-  providers: [ComponentStore],
+  providers: [MoviesStore],
 })
 export class MoviesPageComponent {
   movies$ = this.moviesStore.movies$;

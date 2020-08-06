@@ -25,7 +25,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 ## Lazy initialization
 
 In some cases developers do not want for selectors to return any state until there's some meaningful data in the ComponentStore. The solution
-would be to initialize the state lazily by calling `setState` and passing the full state to it. The same approach can be taken to reset the state.
+would be to initialize the state lazily by calling [`setState`](guide/component-store/write#setstate-method) and passing the full state to it. The same approach can be taken to reset the state.
 
 <div class="alert is-important">
 
@@ -43,7 +43,7 @@ would be to initialize the state lazily by calling `setState` and passing the fu
   providers: [ComponentStore],
 })
 export class MoviesPageComponent {
-  movies$ = this.componentStore.state$.pipe(
+  readonly movies$ = this.componentStore.state$.pipe(
     map(state => state.movies),
   );
 
