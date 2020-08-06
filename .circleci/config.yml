@@ -314,7 +314,7 @@ jobs:
           at: dist
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
       - run:
           name: Publish stable to npm
           command: ./node_modules/.bin/ts-node ./build/publish-stable.ts
@@ -330,7 +330,7 @@ jobs:
           at: dist
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
       - run:
           name: Publish next to npm
           command: ./node_modules/.bin/ts-node ./build/publish-next.ts
