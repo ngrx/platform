@@ -10,12 +10,12 @@ import {
   HttpTestingController
 } from "@angular/common/http/testing";
 
-import { BookListComponent } from "../book-list/book-list.component";
-import { GoogleBooksService } from "../book-list/books.service";
-import { BookCollectionComponent } from "../book-collection/book-collection.component";
-import { AppComponent } from "../app.component";
-import { collectionReducer } from "../state/collection.reducer";
-import { booksReducer } from "../state/books.reducer";
+import { BookListComponent } from "./book-list/book-list.component";
+import { GoogleBooksService } from "./book-list/books.service";
+import { BookCollectionComponent } from "./book-collection/book-collection.component";
+import { AppComponent } from "./app.component";
+import { collectionReducer } from "./state/collection.reducer";
+import { booksReducer } from "./state/books.reducer";
 
 describe("AppComponent Integration Test", () => {
   let component: AppComponent;
