@@ -2,8 +2,8 @@
 
 ## `select` method
 
-Reading state is done with `select` function, that takes a projector which describes HOW the state is retrieved and/or transformed.
-Selectors emit new values whenever those values "change" - the new value is no longer distinct by comparison from the previous value.
+Reading state is done with the `select` method, which takes a projector that describes HOW the state is retrieved and/or transformed.
+Selectors emit new values when those values "change" - the new value is no longer distinct by comparison from the previous value.
 
 Another performance benefit of selectors is that they are "shared" - they multicast the value to each subscriber.
 
@@ -41,7 +41,7 @@ export class MoviesPageComponent {
 
 ## Combining selectors
 
-Selectors can also be used to combine other Selectors or Observables.
+Selectors can be used to combine other Selectors or Observables.
 
 <code-example header="movies.store.ts">
 export interface MoviesState {
@@ -69,13 +69,13 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 
 ## Debounce selectors
 
-Selectors are synchronous by default, meaning that emit the value immediately when subscribed to, and on every state change.
-Sometimes the preferred behavior would be to wait (or debounce) until the state "settles" (meaning all the changes within current microtask occur)
+Selectors are synchronous by default, meaning that they emit the value immediately when subscribed to, and on every state change.
+Sometimes the preferred behavior would be to wait (or debounce) until the state "settles" (meaning all the changes within the current microtask occur)
 and only then emit the final value.
-In many cases, this would be the most perfomant way to read data from the ComponentStore, however its behavior might be surprising sometimes, as it won't emit a value until later on.
-It is also harder to test such selectors.
+In many cases, this would be the most performant way to read data from the ComponentStore, however its behavior might be surprising sometimes, as it won't emit a value until later on.
+This makes it harder to test such selectors.
 
-Adding debounce to a selector is done by passing `{debounce: true}` as the last argument.
+Adding the debounce to a selector is done by passing `{debounce: true}` as the last argument.
 
 <code-example header="movies.store.ts">
 @Injectable()
@@ -94,13 +94,13 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
     })(fetchMoviesData$) // 👈 effect is triggered whenever debounced data is changed
   }
 
-  // Updates how many movies per page user should be displayed
+  // Updates how many movies per page should be displayed
   readonly updateMoviesPerPage = this.updater((state, moviesPerPage: number) => ({
     ...state,
     moviesPerPage, // updates with new value
   }));
 
-  // Updates which page of movies the User is currently on
+  // Updates which page of movies that the user is currently on
   readonly updateMoviesPerPage = this.updater((state, currentPageIndex: number) => ({
     ...state,
     currentPageIndex, // updates with new page index
@@ -122,12 +122,12 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 
 ## Selecting from global `@ngrx/store`
 
-ComponentStore is an independent library, however it can easily consume data from `@ngrx/store` or any other global state management libraries.
+ComponentStore is an independent library, however it can easily consume data from `@ngrx/store` or from any other global state management library.
 
 <code-example header="movies.store.ts">
 
   private readonly fetchMoviesData$ = this.select(
-    this.store.select(getUserId), // 👈 store.select returns an Observable, which could be easily mixed within selector
+    this.store.select(getUserId), // 👈 store.select returns an Observable, which is easily mixed within selector
     moviesPerPage$,
     currentPageIndex$,
     (userId, moviesPerPage, currentPageIndex) => ({userId, moviesPerPage, currentPageIndex}),
@@ -137,8 +137,12 @@ ComponentStore is an independent library, however it can easily consume data fro
 
 ## `get` method
 
-While selector provides a reactive way to read the state from ComponentStore via Observable, sometimes imperative reading is needed.
-One of such use cases is accessing the state within `effect`s and that's where `get` method could be used.
+While a selector provides a reactive way to read the state from ComponentStore via Observable, sometimes an imperative read is needed.
+One of such use cases is accessing the state within an `effect`s and that's where `get` method could be used.
 
-`get` method is ComponentStore-private, meaning it's accessible only within ComponentStore. It's done to discourage frequent imperative reads 
+<div class="alert is-critical">
+
+The `get` method is ComponentStore-private, meaning it's accessible only within the ComponentStore. It's done to discourage frequent imperative reads 
 from the state as the NgRx team is in a consensus that such reads promote further potentially harmful architectural decisions.
+
+</div>

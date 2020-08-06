@@ -2,17 +2,21 @@
 
 ComponentStore can be updated in 2 ways:
 - by calling `setState`.
-- by calling creating an `updater` and passing inputs through it.
+- by creating an `updater` and passing inputs through it.
 
 ## `updater` method
 
-Updater describes HOW the state changes. It takes a pure function with the current state and the value as arguments,
-and should return the new new state, updated immutably.
+The `updater` method describes HOW the state changes. It takes a pure function with the current state and the value as arguments,
+and should return the new state, updated immutably.
 
-There could be many updaters within ComponentStore. They are analogous to "CASE" statements or "on()" functions in `@ngrx/store` reducer.
+There could be many updaters within a ComponentStore. They are analogous to "CASE" statements or `on()` functions in `@ngrx/store` reducer.
 
-Using `updater` method allows developers to extract business logic out of components into services,
+<div class="alert is-helpful">
+
+Using the `updater` method allows developers to extract business logic out of components into services,
 which makes components easier to read and test.
+
+</div>
 
 <code-example header="movies.store.ts">
 @Injectable()
@@ -49,12 +53,12 @@ export class MoviesPageComponent {
 
 ## `setState` method
 
-This method can be called with either providing the object of state type, or as a callback.
+The `setState` method can be called by either providing the object of state type or as a callback.
 
-When the object is provided it reset the entire state to that value. This is also how lazy
+When the object is provided it resets the entire state to the provided value. This is also how lazy
 initialization is performed.
 
-Callback approach allows developers to change the state partially.
+The callback approach allows developers to change the state partially.
 
 <code-example header="movies-page.component.ts">
 @Component({
