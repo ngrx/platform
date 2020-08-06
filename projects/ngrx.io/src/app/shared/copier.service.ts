@@ -1,3 +1,4 @@
+import { Injectable } from "@angular/core";
 /**
  * This class is based on the code in the following projects:
  *
@@ -7,6 +8,7 @@
  * Both released under MIT license - © Zeno Rocha
  */
 
+@Injectable()
 export class CopierService {
   private fakeElem: HTMLTextAreaElement | null;
 

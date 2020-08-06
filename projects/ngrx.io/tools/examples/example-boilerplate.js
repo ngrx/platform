@@ -15,7 +15,7 @@ const BOILERPLATE_PATHS = {
     'src/environments/environment.prod.ts',
     'src/environments/environment.ts',
     'src/assets/.gitkeep',
-    'src/browserslist',
+    'src/.browserslistrc',
     'src/favicon.ico',
     'src/karma.conf.js',
     'src/polyfills.ts',

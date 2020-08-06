@@ -13,7 +13,7 @@ aio-shell.page-home {
   }
 
   header {
-    background-image: url('assets/images/header.svg');
+    background-image: url('/assets/images/header.svg');
     background-size: cover;
     background-position: center center;
     height: 80vh;
@@ -164,7 +164,7 @@ aio-shell.page-home {
   }
 
   .final-ngrx-callout {
-    background-image: url('assets/images/header.svg');
+    background-image: url('/assets/images/header.svg');
     background-size: cover;
     background-position: bottom center;
     height: 180px;

@@ -94,7 +94,7 @@ class ExampleZipper {
       'tsconfig.json',
       'src/testing/**/*',
       'src/.babelrc',
-      'src/browserslist',
+      'src/.browserslistrc',
       'src/favicon.ico',
       'src/karma.conf.js',
       'src/polyfills.ts',
