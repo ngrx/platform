@@ -10,9 +10,9 @@ handle potential race conditions.
 * Those inputs can either be values or Observables of values.
 * Effects perform tasks, which are synchronous or asynchronous.
 
-## Writing effects
+## `effect` method
 
-`effect` method takes a callback with an Observable of values, which describes HOW exactly new 
+The `effect` method takes a callback with an Observable of values, that describes HOW new 
 incoming values should be handled. Each new call of the effect would push the value into that
 Observable.
 
@@ -25,7 +25,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   }
 
   // Each new call of getMovie(id) pushed that id into movieId$ stream.
-  readonly getMovie = this.effect((movieId$: Observable<string>) => {
+  readonly getMovie = this.effect((movieId$: Observable&lt;string&gt;) => {
     return movieId$.pipe(
       // 👇 Handle race condition with the proper choice of the flattening operator.
       switchMap((id) => this.moviesService.fetchMovie(id).pipe(
@@ -50,7 +50,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 }
 </code-example>
 
-Such `getMovie` effect could then be used within a component.
+The `getMovie` effect could then be used within a component.
 
 <code-example header="movie.component.ts">
 @Component({
@@ -58,7 +58,7 @@ Such `getMovie` effect could then be used within a component.
   // ❗️MoviesStore is provided higher up the component tree
 })
 export class MovieComponent {
-  movie$: Observable<Movie>;
+  movie$: Observable&lt;Movie&gt;;
 
   @Input()
   set movieId(value: string) {
