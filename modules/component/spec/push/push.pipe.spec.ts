@@ -1,7 +1,8 @@
-import { PushPipe } from '../../src/push';
-import { async, TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
 import { EMPTY, NEVER, Observable, of } from 'rxjs';
+
+import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
 let pushPipe: PushPipe<unknown>;

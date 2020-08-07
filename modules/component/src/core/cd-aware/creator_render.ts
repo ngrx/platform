@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, NgZone } from '@angular/core';
-import { hasZone } from '../utils';
+
+import { hasZone } from '../utils/has-zone';
 
 export interface RenderConfig {
   ngZone: NgZone;

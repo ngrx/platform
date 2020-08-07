@@ -9,7 +9,9 @@ import {
 } from '@angular/core';
 
 import { NextObserver, ObservableInput, Observer, Unsubscribable } from 'rxjs';
-import { CdAware, createCdAware, createRender } from '../core';
+
+import { CdAware, createCdAware } from '../core/cd-aware/cd-aware_creator';
+import { createRender } from '../core/cd-aware/creator_render';
 
 export interface LetViewContext<T> {
   // to enable `let` syntax we have to use $implicit (var; let v = var)

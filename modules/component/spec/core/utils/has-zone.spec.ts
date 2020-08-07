@@ -1,7 +1,8 @@
-import { hasZone } from '../../../src/core/utils/has-zone';
 import { ApplicationRef, Component, NgModule, NgZone } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getTestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { hasZone } from '../../../src/core/utils/has-zone';
 
 describe('hasZone', () => {
   async function setup({ defaultZone }: { defaultZone: boolean }) {
