@@ -6,7 +6,9 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { NextObserver, ObservableInput, Unsubscribable } from 'rxjs';
-import { CdAware, createCdAware, createRender } from '../core';
+
+import { CdAware, createCdAware } from '../core/cd-aware/cd-aware_creator';
+import { createRender } from '../core/cd-aware/creator_render';
 
 /**
  * @Pipe PushPipe

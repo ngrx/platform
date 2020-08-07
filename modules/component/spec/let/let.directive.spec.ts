@@ -4,10 +4,11 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { EMPTY, interval, NEVER, Observable, of, throwError } from 'rxjs';
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { LetDirective } from '../../src/let';
+import { EMPTY, interval, NEVER, Observable, of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
+
+import { LetDirective } from '../../src/let/let.directive';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
 let letDirective: any;

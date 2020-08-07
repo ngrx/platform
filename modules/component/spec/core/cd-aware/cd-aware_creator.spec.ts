@@ -1,5 +1,4 @@
 import { OnDestroy } from '@angular/core';
-import { CdAware, createCdAware, createRender } from '../../../src/core';
 import {
   concat,
   EMPTY,
@@ -9,6 +8,12 @@ import {
   of,
   Unsubscribable,
 } from 'rxjs';
+
+import {
+  CdAware,
+  createCdAware,
+} from '../../../src/core/cd-aware/cd-aware_creator';
+import { createRender } from '../../../src/core/cd-aware/creator_render';
 import {
   manualInstanceNgZone,
   MockChangeDetectorRef,

@@ -1,8 +1,9 @@
-import { createRender } from '../../../src/core/cd-aware';
+import { createRender } from '../../../src/core/cd-aware/creator_render';
+
 import {
   manualInstanceNgZone,
-  MockChangeDetectorRef,
   manualInstanceNoopNgZone,
+  MockChangeDetectorRef,
 } from '../../fixtures/fixtures';
 
 describe('renderCreator', () => {
