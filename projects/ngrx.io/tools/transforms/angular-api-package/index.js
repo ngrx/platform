@@ -75,7 +75,7 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
     readTypeScriptModules.ignoreExportsMatching = [/^[_ɵ]|^VERSION$/];
     readTypeScriptModules.hidePrivateMembers = true;
 
-    // NOTE: This list shold be in sync with tools/public_api_guard/BUILD.bazel
+    // NOTE: This list should be in sync with tools/public_api_guard/BUILD.bazel
     readTypeScriptModules.sourceFiles = [
       'store/index.ts',
       'store/testing/index.ts',
@@ -85,7 +85,8 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
       'entity/index.ts',
       'router-store/index.ts',
       'data/index.ts',
-      'schematics/index.ts'
+      'schematics/index.ts',
+      'component-store/index.ts'
     ];
 
     readFilesProcessor.fileReaders.push(packageContentFileReader);
