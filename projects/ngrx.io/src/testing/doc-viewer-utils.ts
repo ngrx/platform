@@ -1,4 +1,4 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, ViewChild, Injectable } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs';
@@ -46,20 +46,24 @@ export class TestParentComponent {
 }
 
 // Mock services.
+@Injectable()
 export class MockTitle {
   setTitle = jasmine.createSpy('Title#reset');
 }
 
+@Injectable()
 export class MockMeta {
   addTag = jasmine.createSpy('Meta#addTag');
   removeTag = jasmine.createSpy('Meta#removeTag');
 }
 
+@Injectable()
 export class MockTocService {
   genToc = jasmine.createSpy('TocService#genToc');
   reset = jasmine.createSpy('TocService#reset');
 }
 
+@Injectable()
 export class MockElementsLoader {
   loadContainedCustomElements = jasmine.createSpy(
     'MockElementsLoader#loadContainedCustomElements'

@@ -32,7 +32,7 @@ From `dummy` you can replace the following files into `aio/tools/examples/shared
 - e2e/tsconfig.e2e.json
 - src/environments/environment.prod.ts
 - src/environments/environment.ts
-- src/browserslist
+- src/.browserslistrc
 - src/favicon.ico
 - src/karma.conf.js
 - src/polyfills.js
