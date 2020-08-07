@@ -19,7 +19,6 @@ export async function publishNextToNpm() {
     const cmd = [
       'npm publish',
       `./dist/modules/${pkg}`,
-      '--',
       '--access=public',
       '--tag=next',
     ];
