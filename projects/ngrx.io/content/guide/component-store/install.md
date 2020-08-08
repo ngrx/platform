@@ -24,10 +24,7 @@ If your project is using the Angular CLI 6+ then you can install the ComponentSt
 ng add @ngrx/component-store@latest
 ```
 
-## Installing the latest from GitHub
+This command will automate the following steps:
 
-[Nightly builds](guide/nightlies) are available.
-
-```sh
-yarn add github:ngrx/component-store-builds
-```
+1. Update `package.json` > `dependencies` with `@ngrx/component-store`.
+2. Run the package manager to install the added dependency. 

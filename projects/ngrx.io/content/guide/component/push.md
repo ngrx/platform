@@ -6,6 +6,23 @@ running in zone-full as well as zone-less mode without any changes to the code.
 
 Same as [LetDirective](guide/component/let), it also respects ViewEngine as well as Ivy's new rendering API.
 
+## Usage
+
+The `ngrxPush` pipe is provided through the `ReactiveComponentModule`. The use it, add the `ReactiveComponentModule` to the `imports` of your NgModule.
+
+```typescript
+import { NgModule } from '@angular/core';
+import { ReactiveComponentModule } from '@ngrx/component';
+
+@NgModule({
+  imports: [
+    // other imports
+    ReactiveComponentModule
+  ]
+})
+export class MyFeatureModule {}
+```
+
 ## Comparison with Async Pipe
 
 The current way of binding an observable to the view looks like that:
@@ -36,8 +53,8 @@ lean to bad performance or even unusable applications, but the `async` pipe does
 
 ## Included Features
 
- - Take observables or promises, retrieve their values and render_creator the value to the template
- - Handling null and undefined values in a clean unified/structured way
- - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
- - Distinct same values in a row to increase performance
- - Coalescing of change detection calls to boost performance
+ - Take observables or promises, retrieves their values, and passes the value to the template.
+ - Handles `null` and `undefined` values in a clean unified/structured way.
+ - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`).
+ - Distinct same values in a row to increase performance.
+ - Coalescing of change detection calls to boost performance.

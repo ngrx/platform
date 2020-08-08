@@ -1,6 +1,6 @@
 # @ngrx/store
 
-Store is RxJS powered state management for Angular applications, inspired by Redux. Store is a controlled state container designed to help write performant, consistent applications on top of Angular.
+Store is RxJS powered global state management for Angular applications, inspired by Redux. Store is a controlled state container designed to help write performant, consistent applications on top of Angular.
 
 ## Key concepts
 
@@ -9,6 +9,10 @@ Store is RxJS powered state management for Angular applications, inspired by Red
 - [Selectors](guide/store/selectors) are pure functions used to select, derive and compose pieces of state.
 - State is accessed with the `Store`, an observable of state and an observer of actions.
 
+## Local state management
+
+NgRx Store is mainly for managing global state across an entire application. In cases where you need to manage temporary or local component state, consider using [NgRx ComponentStore](guide/component-store). 
+
 ## Installation
 
 Detailed installation instructions can be found on the [Installation](guide/store/install) page.
@@ -16,6 +20,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 ## Diagram
 
 The following diagram represents the overall general flow of application state in NgRx. 
+
 <figure>
   <img src="generated/images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle Diagram" width="100%" height="100%" />
 </figure>

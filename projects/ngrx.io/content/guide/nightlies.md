@@ -72,7 +72,7 @@ npm install github:ngrx/component-builds
 yarn add github:ngrx/component-builds
 ```
 
-### Component Store
+### ComponentStore
 
 ```sh
 npm install github:ngrx/component-store-builds

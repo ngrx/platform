@@ -72,6 +72,10 @@
           "title": "@ngrx/store",
           "children": [
             {
+              "title": "Why use Store?",
+              "url": "guide/store/why"
+            },
+            {
               "title": "Getting Started",
               "url": "guide/store"
             },
