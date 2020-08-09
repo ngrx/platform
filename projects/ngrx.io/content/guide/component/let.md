@@ -5,6 +5,23 @@ It also helps with several internal processing under the hood.
 
 Same as [PushPipe](guide/component/push), it also respects ViewEngine as well as Ivy's new rendering API.
 
+## Usage
+
+The `*ngrxLet` directive is provided through the `ReactiveComponentModule`. The use it, add the `ReactiveComponentModule` to the `imports` of your NgModule.
+
+```typescript
+import { NgModule } from '@angular/core';
+import { ReactiveComponentModule } from '@ngrx/component';
+
+@NgModule({
+  imports: [
+    // other imports
+    ReactiveComponentModule
+  ]
+})
+export class MyFeatureModule {}
+```
+
 ## Comparison with Async Pipe
 
 The current way of binding an observable to the view looks like that:
@@ -37,11 +54,11 @@ The `*ngrxLet` directive takes over several things while making it more convenie
 ```
 
 In addition to that it provides us information from the whole observable context.
-We can track the observables:
+We can track the observable notifications:
 
 - next value
 - error value
-- complete state
+- completion state
 
 ```html
 <ng-container *ngrxLet="observableNumber$; let n; let e = $error, let c = $complete">
@@ -58,10 +75,10 @@ We can track the observables:
 
 ## Included Features
 
-- binding is always present. (`*ngIf="truthy$"`)
-- it takes away the multiple usages of the `async` or `ngrxPush` pipe
-- a unified/structured way of handling null and undefined
-- triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)
-- triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)
-- distinct same values in a row (distinctUntilChanged operator),
+- Binding is always present. (`*ngIf="truthy$"`)
+- Takes away the multiple usages of the `async` or `ngrxPush` pipe
+- Provides a unified/structured way of handling `null` and `undefined`
+- Triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)
+- Triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)
+- Distinct same values in a row (distinctUntilChanged operator),
                                                                  

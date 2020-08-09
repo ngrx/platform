@@ -31,7 +31,7 @@ them.
 
 ## Benefits and Trade-offs
 
-ComponentStore and Global Store have many benefits, some of which are listed in the [introduction](docs#why-ngrx-for-state-management). They help organize state, make migrations to new APIs easier,
+ComponentStore and Global Store have many benefits, some of which are listed in the [introduction](guide/store/why#why-use-ngrx-store-for-state-management). They help organize state, make migrations to new APIs easier,
 encapsulate changes and side-effects, make our components smaller, easier to test and more 
 performant, but they are also introducing code complexity with **indirections**. 
 
