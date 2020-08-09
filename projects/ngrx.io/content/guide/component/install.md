@@ -18,7 +18,7 @@ yarn add github:ngrx/component-builds.git
 
 ## Installing with `ng add`
 
-If your project is using the Angular CLI 6+ then you can install the ComponentStore to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+If your project is using the Angular CLI 6+ then you can install the Component package to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/component@latest
