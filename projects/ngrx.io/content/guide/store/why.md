@@ -21,7 +21,7 @@ A good substance that might answer the question "Do I need NgRx", is the
 
 However, realizing that using NgRx comes with some tradeoffs is also crucial. It is not meant to be the shortest or quickest way to write code and encourage its users the usage of many files.
 
-It's also important to consider the patterns implemented with NgRx Store. A solid understand of [`RxJS`](https://rxjs.dev) and [`Redux`](https://redux.js.org/) will be very beneficial before learning to use NgRx Store and the other state management libraries.
+It's also important to consider the patterns implemented with NgRx Store. A solid understanding of [`RxJS`](https://rxjs.dev) and [`Redux`](https://redux.js.org/) will be very beneficial before learning to use NgRx Store and the other state management libraries.
 
 ## Key Concepts
 
