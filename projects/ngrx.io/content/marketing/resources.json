@@ -137,7 +137,7 @@
           "ngrx-enums": {
             "title": "ngrx-enums",
             "desc":
-              "A small library that provides the base classes for for implementing ngrx actions and reducers with ts-enums",
+              "A small library that provides the base classes for implementing ngrx actions and reducers with ts-enums",
             "url": "https://github.com/LMFinney/ngrx-enums",
             "rev": true
           },
