@@ -5,7 +5,7 @@
 For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
 
 ```sh
-npm install github:ngrx/component-builds.git --save
+npm install @ngrx/component --save
 ```
 
 ## Installing with `yarn`
@@ -13,7 +13,7 @@ npm install github:ngrx/component-builds.git --save
 For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
 
 ```sh
-yarn add github:ngrx/component-builds.git
+yarn add @ngrx/component
 ```
 
 ## Installing with `ng add`
