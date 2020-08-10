@@ -1,3 +1,7 @@
+<a name="10.0.0"></a>
+
+# [10.0.0](https://github.com/ngrx/platform/compare/10.0.0-rc.0...10.0.0) (2020-08-10)
+
 <a name="10.0.0-rc.0"></a>
 
 # [10.0.0-rc.0](https://github.com/ngrx/platform/compare/10.0.0-beta.1...10.0.0-rc.0) (2020-08-06)

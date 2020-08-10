@@ -520,8 +520,7 @@
         {
           "url": "https://stackoverflow.com/questions/tagged/ngrx",
           "title": "Stack Overflow",
-          "tooltip":
-            "Stack Overflow: where the community answers your technical NgRx questions."
+          "tooltip": "Stack Overflow: where the community answers your technical NgRx questions."
         },
         {
           "url": "https://gitter.im/ngrx/platform",
@@ -557,6 +556,10 @@
     }
   ],
   "docVersions": [
+    {
+      "title": "v9",
+      "url": "https://v9.ngrx.io"
+    },
     {
       "title": "v8",
       "url": "https://v8.ngrx.io"
