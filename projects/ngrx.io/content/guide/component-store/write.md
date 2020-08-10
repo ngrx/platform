@@ -81,11 +81,9 @@ export class MoviesPageComponent {
 
   addMovie(movie: Movie) {
     this.componentStore.setState((state) => {
-      const newMoviesList = [...state, movies];
-      newMoviesList.concat(movie); 
       return {
         ...state,
-        movies: newMoviesList,
+        movies: [...state.movies, movie],
       };
     })
   }
