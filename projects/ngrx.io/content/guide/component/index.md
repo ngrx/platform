@@ -20,7 +20,7 @@ Detailed installation instructions can be found on the [Installation](guide/comp
 
 ## Usage
 
-Both the `*ngrxLet` directive, and `ngrxPush` pipe are provided through the `ReactiveComponentModule`. The use them, add the `ReactiveComponentModule` to the `imports` of your NgModule.
+Both the `*ngrxLet` directive, and `ngrxPush` pipe are provided through the `ReactiveComponentModule`. To use them, add the `ReactiveComponentModule` to the `imports` of your NgModule.
 
 ```typescript
 import { NgModule } from '@angular/core';
