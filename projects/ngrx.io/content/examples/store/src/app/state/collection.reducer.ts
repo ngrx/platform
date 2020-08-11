@@ -1,5 +1,4 @@
 import { createReducer, on, Action } from '@ngrx/store';
-
 import { addBook, removeBook } from './allBooks.actions';
 
 export const initialState = [];
