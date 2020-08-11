@@ -25,7 +25,7 @@ export const extModules = [];
 
 ## Step 2: Import extModules
 
-Modify `app.module.ts` to include `extModules` in the `imports` array.
+Modify `app.module.ts` to include `extModules` in the `imports` array using the spread syntax.
 
 <code-example header="app.module.ts">
 import { extModules } from './build-specifics';
@@ -34,7 +34,7 @@ import { extModules } from './build-specifics';
     imports: [
         StoreModule.forRoot(reducers),
         // Instrumentation must be imported after importing StoreModule
-        extModules,
+        ...extModules,
     ],
 })
 </code-example>
