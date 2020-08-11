@@ -33,59 +33,58 @@ describe('AppComponent', () => {
     
     mockBooksSelector = store.overrideSelector(selectBooks, [
       {
-        id: 'string1',
+        id: 'firstId',
         volumeInfo: {
-          title: 'First title',
+          title: 'First Title',
           authors: ['First Author']
         }
       },
       {
-        id: 'string2',
+        id: 'secondId',
         volumeInfo: {
-          title: 'Second title',
+          title: 'Second Title',
           authors: ['Second Author']
         }
       },
       {
-        id: 'string3',
+        id: 'thirdId',
         volumeInfo: {
-          title: 'Third title',
+          title: 'Third Title',
             authors: ['Third Author']
         }
       },
       {
-        id: 'string4',
+        id: 'fourthId',
         volumeInfo: {
-          title: 'Fourth title',
+          title: 'Fourth Title',
           authors: ['Fourth Author']
         }
       }
     ])
 
     mockBookCollectionSelector = store.overrideSelector(selectBookCollection, [{
-      id: 'string3',
+      id: 'thirdId',
       volumeInfo: {
-        title: 'Third title',
+        title: 'Third Title',
         authors: ['Third Author']
       }
     }]);
 
     fixture.detectChanges();
-
     spyOn(store, 'dispatch').and.callFake(() => {});
   });
 
   it('add method should dispatch add action', () => {
-    component.add('string1');
+    component.add('firstId');
     expect(store.dispatch).toHaveBeenCalledWith(
-      addAction({ bookId: 'string1' })
+      addAction({ bookId: 'firstId' })
     );
   });
 
   it('remove method should dispatch remove action', () => {
-    component.remove('string3');
+    component.remove('thirdId');
     expect(store.dispatch).toHaveBeenCalledWith(
-      removeAction({ bookId: 'string3' })
+      removeAction({ bookId: 'thirdId' })
     );
   });
 
@@ -98,24 +97,24 @@ describe('AppComponent', () => {
     mockBooksSelector.setResult(
       [
         {
-          id: 'stringA',
+          id: 'firstId',
           volumeInfo: {
-            title: 'Title A',
-            authors: ['Author A']
+            title: 'First Title',
+            authors: ['First Author']
           }
         },
         {
-          id: 'stringB',
+          id: 'secondId',
           volumeInfo: {
-            title: 'Title B',
-            authors: ['Author B']
+            title: 'Second Title',
+            authors: ['Second Author']
           }
         },
         {
-          id: 'stringC',
+          id: 'thirdId',
           volumeInfo: {
-            title: 'Title C',
-            authors: ['Author C']
+            title: 'Third Title',
+            authors: ['Third Author']
           }
         },
       ]
@@ -124,17 +123,17 @@ describe('AppComponent', () => {
     mockBookCollectionSelector.setResult(
       [
         {
-          id: 'stringA',
+          id: 'firstId',
           volumeInfo: {
-            title: 'Title A',
-            authors: ['Author A']
+            title: 'First Title',
+            authors: ['First Author']
           }
         },
         {
-          id: 'stringB',
+          id: 'secondId',
           volumeInfo: {
-            title: 'Title B',
-            authors: ['Author B']
+            title: 'Second Title',
+            authors: ['Second Author']
           }
         },
       ]

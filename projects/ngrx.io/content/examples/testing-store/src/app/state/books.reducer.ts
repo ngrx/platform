@@ -7,5 +7,5 @@ export const initialState = [];
 
 export const booksReducer = createReducer<Array<Book>>(
   initialState,
-  on(retrievedBookList, (state, { books }) => [...books])
+  on(retrievedBookList, (state, { Book }) => [...Book ])
 )
