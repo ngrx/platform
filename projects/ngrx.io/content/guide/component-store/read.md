@@ -19,7 +19,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
     super({movies:[]});
   }
 
-  readonly movies$:&lt;Movie[]&gt Observable = this.select(state => state.movies);
+  readonly movies$: Observable&lt;Movie[]&gt; = this.select(state => state.movies);
 }
 </code-example>
 
