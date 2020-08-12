@@ -1,0 +1,79 @@
+<div class="mat-paginator-outer-container" *ngIf="vm$ | async as vm">
+  <div class="mat-paginator-container">
+    <div class="mat-paginator-page-size">
+      <div class="mat-paginator-page-size-label">
+        Items per page
+      </div>
+
+      <mat-form-field
+        *ngIf="vm.pageSizeOptions.length > 1"
+        class="mat-paginator-page-size-select">
+        <mat-select
+          [value]="vm.pageSize"
+          (selectionChange)="changePageSize($any($event).value)">
+          <mat-option *ngFor="let pageSizeOption of vm.pageSizeOptions" [value]="pageSizeOption">
+            {{pageSizeOption}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div
+        class="mat-paginator-page-size-value"
+        *ngIf="vm.pageSizeOptions.length <= 1">{{vm.pageSize}}</div>
+    </div>
+
+    <div class="mat-paginator-range-actions">
+      <div class="mat-paginator-range-label">
+        {{vm.rangeLabel}}
+      </div>
+
+      <button mat-icon-button type="button"
+              class="mat-paginator-navigation-first"
+              (click)="setPageIndex(0)"
+              matTooltip="First page"
+              [matTooltipDisabled]="!vm.hasPreviousPage"
+              [matTooltipPosition]="'above'"
+              [disabled]="!vm.hasPreviousPage">
+        <svg class="mat-paginator-icon" viewBox="0 0 24 24" focusable="false">
+          <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"/>
+        </svg>
+      </button>
+      <button mat-icon-button type="button"
+              class="mat-paginator-navigation-previous"
+              (click)="setPageIndex(vm.pageIndex - 1)"
+              [attr.aria-label]="'Previous Page'"
+              [matTooltip]="'Previous Page'"
+              [matTooltipDisabled]="!vm.hasPreviousPage"
+              [matTooltipPosition]="'above'"
+              [disabled]="!vm.hasPreviousPage">
+        <svg class="mat-paginator-icon" viewBox="0 0 24 24" focusable="false">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </button>
+      <button mat-icon-button type="button"
+              class="mat-paginator-navigation-next"
+              (click)="setPageIndex(vm.pageIndex + 1)"
+              [attr.aria-label]="'Next Page'"
+              [matTooltip]="'Next Page'"
+              [matTooltipDisabled]="!vm.hasNextPage"
+              [matTooltipPosition]="'above'"
+              [disabled]="!vm.hasNextPage">
+        <svg class="mat-paginator-icon" viewBox="0 0 24 24" focusable="false">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </button>
+      <button mat-icon-button type="button"
+              class="mat-paginator-navigation-last"
+              (click)="lastPage()"
+              [attr.aria-label]="'Last Page'"
+              [matTooltip]="'Last Page'"
+              [matTooltipDisabled]="!vm.hasNextPage"
+              [matTooltipPosition]="'above'"
+              [disabled]="!vm.hasNextPage">
+        <svg class="mat-paginator-icon" viewBox="0 0 24 24" focusable="false">
+          <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

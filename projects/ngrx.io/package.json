@@ -66,7 +66,8 @@
     "~~build": "ng build",
     "post~~build": "yarn build-404-page",
     "~~http-server": "http-server",
-    "copy-404-page": "node scripts/copy-404-page"
+    "copy-404-page": "node scripts/copy-404-page",
+    "prettier": "prettier --write \"content/examples/**/*.ts\""
   },
   "engines": {
     "node": ">=10.9.0 <=13.0.0",

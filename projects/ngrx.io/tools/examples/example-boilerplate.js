@@ -6,57 +6,36 @@ const yargs = require('yargs');
 
 const SHARED_PATH = path.resolve(__dirname, 'shared');
 const SHARED_NODE_MODULES_PATH = path.resolve(SHARED_PATH, 'node_modules');
+
 const BOILERPLATE_BASE_PATH = path.resolve(SHARED_PATH, 'boilerplate');
-const BOILERPLATE_COMMON_BASE_PATH = path.resolve(BOILERPLATE_BASE_PATH, 'common');
+const BOILERPLATE_CLI_PATH = path.resolve(BOILERPLATE_BASE_PATH, 'cli');
+const BOILERPLATE_COMMON_PATH = path.resolve(BOILERPLATE_BASE_PATH, 'common');
+const BOILERPLATE_VIEWENGINE_PATH = path.resolve(BOILERPLATE_BASE_PATH, 'viewengine');
+
 const EXAMPLES_BASE_PATH = path.resolve(__dirname, '../../content/examples');
-
-const BOILERPLATE_PATHS = {
-  cli: [
-    'src/environments/environment.prod.ts',
-    'src/environments/environment.ts',
-    'src/assets/.gitkeep',
-    'src/.browserslistrc',
-    'src/favicon.ico',
-    'src/karma.conf.js',
-    'src/polyfills.ts',
-    'src/test.ts',
-    'src/tsconfig.app.json',
-    'src/tsconfig.spec.json',
-    'src/tslint.json',
-    'e2e/src/app.po.ts',
-    'e2e/protractor.conf.js',
-    'e2e/tsconfig.e2e.json',
-    '.editorconfig',
-    'angular.json',
-    'package.json',
-    'tsconfig.json',
-    'tslint.json'
-  ],
-  common: [
-    'src/styles.css'
-  ]
-};
-
-// All paths in this tool are relative to the current boilerplate folder, i.e boilerplate/i18n
-// This maps the CLI files that exists in a parent folder
-const cliRelativePath = BOILERPLATE_PATHS.cli.map(file => `../cli/${file}`);
-
 const EXAMPLE_CONFIG_FILENAME = 'example-config.json';
 
 class ExampleBoilerPlate {
   /**
    * Add boilerplate files to all the examples
    */
-  add() {
+  add(viewengine = false) {
     // Get all the examples folders, indicated by those that contain a `example-config.json` file
-    const exampleFolders = this.getFoldersContaining(EXAMPLES_BASE_PATH, EXAMPLE_CONFIG_FILENAME, 'node_modules');
+    const exampleFolders =
+        this.getFoldersContaining(EXAMPLES_BASE_PATH, EXAMPLE_CONFIG_FILENAME, 'node_modules');
+
+    if (!fs.existsSync(SHARED_NODE_MODULES_PATH)) {
+      throw new Error(
+          `The shared node_modules folder for the examples (${SHARED_NODE_MODULES_PATH}) is missing.\n` +
+          'Perhaps you need to run "yarn example-use-npm" or "yarn example-use-local" to install the dependencies?');
+    }
+
+    if (!viewengine) {
+      shelljs.exec(`yarn --cwd ${SHARED_PATH} ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points`);
+    }
+
     exampleFolders.forEach(exampleFolder => {
       const exampleConfig = this.loadJsonFile(path.resolve(exampleFolder, EXAMPLE_CONFIG_FILENAME));
-
-      if (!fs.existsSync(SHARED_NODE_MODULES_PATH)) {
-        throw new Error(`The shared node_modules folder for the examples (${SHARED_NODE_MODULES_PATH}) is missing.\n` +
-        `Perhaps you need to run "yarn example-use-npm" or "yarn example-use-local" to install the dependencies?`);
-      }
 
       // Link the node modules - requires admin access (on Windows) because it adds symlinks
       const destinationNodeModules = path.resolve(exampleFolder, 'node_modules');
@@ -65,54 +44,71 @@ class ExampleBoilerPlate {
       const boilerPlateType = exampleConfig.projectType || 'cli';
       const boilerPlateBasePath = path.resolve(BOILERPLATE_BASE_PATH, boilerPlateType);
 
-      // Copy the boilerplate specific files
-      BOILERPLATE_PATHS[boilerPlateType].forEach(filePath => this.copyFile(boilerPlateBasePath, exampleFolder, filePath));
+      // All example types other than `cli` and `systemjs` are based on `cli`. Copy over the `cli`
+      // boilerplate files first.
+      // (Some of these files might be later overwritten by type-specific files.)
+      if (boilerPlateType !== 'cli' && boilerPlateType !== 'systemjs') {
+        this.copyDirectoryContents(BOILERPLATE_CLI_PATH, exampleFolder);
+      }
 
-      // Copy the boilerplate common files
-      BOILERPLATE_PATHS.common.forEach(filePath => this.copyFile(BOILERPLATE_COMMON_BASE_PATH, exampleFolder, filePath));
+      // Copy the type-specific boilerplate files.
+      this.copyDirectoryContents(boilerPlateBasePath, exampleFolder);
+
+      // Copy the common boilerplate files (unless explicitly not used).
+      if (exampleConfig.useCommonBoilerplate !== false) {
+        this.copyDirectoryContents(BOILERPLATE_COMMON_PATH, exampleFolder);
+      }
+
+      // Copy ViewEngine (pre-Ivy) specific files
+      if (viewengine) {
+        const veBoilerPlateType = boilerPlateType === 'systemjs' ? 'systemjs' : 'cli';
+        const veBoilerPlateBasePath = path.resolve(BOILERPLATE_VIEWENGINE_PATH, veBoilerPlateType);
+        this.copyDirectoryContents(veBoilerPlateBasePath, exampleFolder);
+      }
     });
   }
 
   /**
    * Remove all the boilerplate files from all the examples
    */
-  remove() {
-    shelljs.exec('git clean -xdfq', {cwd: EXAMPLES_BASE_PATH});
-  }
+  remove() { shelljs.exec('git clean -xdfq', {cwd: EXAMPLES_BASE_PATH}); }
 
   main() {
-    yargs
-      .usage('$0 <cmd> [args]')
-      .command('add', 'add the boilerplate to each example', () => this.add())
-      .command('remove', 'remove the boilerplate from each example', () => this.remove())
-      .demandCommand(1, 'Please supply a command from the list above')
-      .argv;
+    yargs.usage('$0 <cmd> [args]')
+        .command('add', 'add the boilerplate to each example', yrgs => this.add(yrgs.argv.viewengine))
+        .command('remove', 'remove the boilerplate from each example', () => this.remove())
+        .demandCommand(1, 'Please supply a command from the list above')
+        .argv;
   }
 
   getFoldersContaining(basePath, filename, ignore) {
     const pattern = path.resolve(basePath, '**', filename);
     const ignorePattern = path.resolve(basePath, '**', ignore, '**');
-    return glob.sync(pattern, { ignore: [ignorePattern] }).map(file => path.dirname(file));
+    return glob.sync(pattern, {ignore: [ignorePattern]}).map(file => path.dirname(file));
   }
 
-  copyFile(sourceFolder, destinationFolder, filePath) {
-    const sourcePath = path.resolve(sourceFolder, filePath);
+  loadJsonFile(filePath) { return fs.readJsonSync(filePath, {throws: false}) || {}; }
 
-    // normalize path if needed
-    filePath = this.normalizePath(filePath);
+  copyDirectoryContents(srcDir, dstDir) {
+    shelljs.ls('-Al', srcDir).forEach(stat => {
+      const srcPath = path.resolve(srcDir, stat.name);
+      const dstPath = path.resolve(dstDir, stat.name);
 
-    const destinationPath = path.resolve(destinationFolder, filePath);
-    fs.copySync(sourcePath, destinationPath, { overwrite: true });
-    fs.chmodSync(destinationPath, 444);
-  }
-
-  loadJsonFile(filePath) {
-    return fs.readJsonSync(filePath, {throws: false}) || {};
-  }
-
-  normalizePath(filePath) {
-    // transform for example ../cli/src/tsconfig.app.json to src/tsconfig.app.json
-    return filePath.replace(/\.{2}\/\w+\//, '');
+      if (stat.isDirectory()) {
+        // `srcPath` is a directory: Recursively copy it to `dstDir`.
+        shelljs.mkdir('-p', dstPath);
+        return this.copyDirectoryContents(srcPath, dstPath);
+      } else {
+        // `srcPath` is a file: Copy it to `dstDir`.
+        // (Also make the file non-writable to avoid accidental editing of boilerplate files).
+        if (shelljs.test('-f', dstPath)) {
+          // If the file already exists, ensure it is writable (so it can be overwritten).
+          shelljs.chmod(666, dstPath);
+        }
+        shelljs.cp(srcPath, dstDir);
+        shelljs.chmod(444, dstPath);
+      }
+    });
   }
 }
 
