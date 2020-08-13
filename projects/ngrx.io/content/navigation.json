@@ -523,6 +523,11 @@
           "tooltip": "Stack Overflow: where the community answers your technical NgRx questions."
         },
         {
+          "url": "https://discord.gg/gCEj4zC",
+          "title": "Discord Server",
+          "tooltip": "NgRx Community Discord Server - chat with other members of the community."
+        },
+        {
           "url": "https://gitter.im/ngrx/platform",
           "title": "Gitter",
           "tooltip": "Chat about NgRx with other members of the community."
@@ -551,6 +556,11 @@
           "url": "contributing",
           "title": "Contribute",
           "tooltip": "Contribute to NgRx"
+        },
+        {
+          "url": "https://ngrx.threadless.com/",
+          "title": "Swag Store",
+          "tooltip": "Get NgRx-branded swag"
         }
       ]
     }
