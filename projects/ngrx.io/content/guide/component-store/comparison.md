@@ -15,7 +15,7 @@ nodes of the components tree?
 some pages are displayed and we want to automatically clean it up when the user navigates somewhere
 else?
 * **Business Requirements**. How well are all of the business requirements understood and finalized before the
-implementation of the app starts? Would the be changing frequently?
+implementation of the app starts? Would it be changing frequently?
 * **Lifespan of the app**. Is this a short-lived Minimum Viable Product (MVP) that would be discarded, a solution that won't need much support or changes once it's released, or is it a long-term product
 that would be constantly changing, based on changing business needs?
 * **Backend APIs**. Does the team have influence over backend(s) and the APIs that they provide?
