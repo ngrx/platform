@@ -165,8 +165,8 @@ What we can see is that while *"PaginatorComponent providing ComponentStore"* ex
 <div class="alert is-helpful">
 
 You can see the examples at Stackblitz:
-* "PaginatorComponent providing ComponentStore" example: <live-example name="component-store-paginator" noDownload></live-example>
-* "PaginatorComponent with PaginatorStore Service" example: <live-example name="component-store-paginator-service" noDownload></live-example>
+* "PaginatorComponent providing ComponentStore" <live-example name="component-store-paginator" noDownload></live-example>
+* "PaginatorComponent with PaginatorStore Service" <live-example name="component-store-paginator-service" noDownload></live-example>
 
 </div>
 
