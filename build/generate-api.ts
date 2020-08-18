@@ -1,16 +1,21 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
 import {
   Project,
   ExportedDeclarations,
   SourceFile,
   Node,
   JSDoc,
+  FunctionDeclaration,
 } from 'ts-morph';
 import {
   format as prettier,
   resolveConfig,
   Options as PrettierOptions,
 } from 'prettier';
+import { stripIndents } from 'common-tags';
+
+const OUTPUT_DIRECTORY = join('docs', 'api');
 
 generateApi();
 
@@ -19,13 +24,15 @@ function generateApi() {
   const output = files
     .map(generateApiForFile)
     .reduce((acc, file) => acc.concat(file), []);
-  const formattedOutput = format(JSON.stringify(output), 'json');
-  writeFileSync('./output.json', formattedOutput, 'utf-8');
+
+  writeFile(OUTPUT_DIRECTORY, 'output.json', JSON.stringify(output), 'json');
+  createMarkdown(output);
 }
 
 function getBarrelFiles() {
   const project = new Project();
-  project.addSourceFilesAtPaths('./modules/*/index.ts');
+  const excludedModules = ['schematics-core'].join('|');
+  project.addSourceFilesAtPaths(`./modules/!(${excludedModules})/index.ts`);
   const files = project.getSourceFiles();
   return files;
 }
@@ -69,6 +76,82 @@ function generateApiForFile(sourceFile: SourceFile) {
   return fileOutput;
 }
 
+function createMarkdown(output: Output[]) {
+  for (const out of output) {
+    const directory = join(OUTPUT_DIRECTORY, toFileName(out.module));
+    const file = toFileName(out.name);
+
+    const overloadToText = (
+      overload: Output['overloads'][0],
+      heading = '##'
+    ) => {
+      const sections = overload.info.reduce((section, [title, value]) => {
+        if (typeof value === 'string') {
+          section[title] = stripIndents`
+            ## ${title}
+
+            ${value}
+          `;
+        } else {
+          section[title] =
+            section[title] ||
+            stripIndents`
+              ${heading} Parameters
+
+              | Name  | Type | Description  |
+              | ----- |----- | ------------ |`;
+          section[
+            title
+          ] += `\n| ${value.label} | \`${value.type}\` | ${value.description} |`;
+        }
+        return section;
+      }, {} as { [title: string]: string });
+
+      const { description, ...sectionsToDocs } = sections;
+      const sectionsText = Object.values(sectionsToDocs).join('\n');
+      const text = stripIndents`
+        ${description || ''}
+
+        \`\`\`ts
+        ${implementation.signature}
+        \`\`\`
+
+        ${sectionsText}
+      `;
+      return text;
+    };
+
+    const implementationToText = (overload: Output['overloads'][0]) => {
+      return overloadToText(overload);
+    };
+
+    const overloadsToText = (overloads: Output['overloads'][0][]) => {
+      if (overloads.length === 0) return '';
+
+      return stripIndents`
+        ## Overloads
+
+        ${overloads.map((o) => overloadToText(o, '###')).join('\n')}
+      `;
+    };
+    const [implementation, ...overloads] = out.overloads;
+
+    const md = stripIndents`
+      ---
+      kind: ${out.kind}
+      name: ${out.name}
+      module: ${out.module}
+      ---
+
+      # ${out.name}
+
+      ${implementationToText(implementation)}
+      ${overloadsToText(overloads)}`;
+
+    writeFile(directory, file + '.md', md, 'markdown');
+  }
+}
+
 function formatFunctionDeclaration(
   declaration: ExportedDeclarations
 ): Output['overloads'] {
@@ -79,14 +162,45 @@ function formatFunctionDeclaration(
   const implementation = declaration.getImplementation();
   const overloads = declaration.getOverloads();
 
+  const appendParametersToInfo = (functionDeclaration: FunctionDeclaration) => {
+    const info = getInformation(implementation.getJsDocs());
+
+    const params = functionDeclaration.getParameters();
+    for (const param of params) {
+      const paramName = param.getName();
+      const type = param.getType().getText(param);
+      const existingInfo = info.find(
+        ([tag, value]) =>
+          tag === 'param' &&
+          typeof value !== 'string' &&
+          value.label === paramName
+      );
+
+      if (existingInfo) {
+        (existingInfo[1] as any).type = type;
+      } else {
+        info.push([
+          'param',
+          {
+            label: paramName,
+            description: '',
+            type,
+          },
+        ]);
+      }
+    }
+
+    return info;
+  };
+
   return [
     {
       signature: format(implementation.removeBody().getText().substr(7)),
-      info: getInformation(implementation.getJsDocs()),
+      info: appendParametersToInfo(implementation),
     },
-    ...overloads.map((o) => ({
-      signature: format(o.getText().substr(7)),
-      info: getInformation(o.getJsDocs()),
+    ...overloads.map((overload) => ({
+      signature: format(overload.getText().substr(7)),
+      info: appendParametersToInfo(overload),
     })),
   ];
 }
@@ -229,14 +343,14 @@ function formatClassDeclaration(
   ];
 }
 
-function getInformation(docs: JSDoc[]) {
+function getInformation(docs: JSDoc[]): Output['overloads'][0]['info'] {
   if (!docs.length) {
     return [];
   }
 
   const infos = docs.map((doc) => {
     let tagIndex = -1;
-    const information: [string, string][] = [];
+    const information: Output['overloads'][0]['info'] = [];
 
     // manually parse the jsDoc tags
     // ts-morph doesn't handle multi line tag text?
@@ -247,20 +361,34 @@ function getInformation(docs: JSDoc[]) {
       // remove the first line: /**
       .filter((_, i) => i > 0)
       // remove the leading astrerix (*)
-      .map((l) => l.trim().substr(2).trim());
+      .map((l) => l.trim().substr(2).trimLeft());
 
     for (const line of lines) {
       // we hit a tag, create a new entry
       if (line.startsWith('@')) {
         let [tagName, ...lineText] = line.substr(1).split(' ');
-        information[++tagIndex] = [tagName, lineText.join(' ')];
+        if (tagName === 'param') {
+          const [param, ...description] = lineText;
+          information[++tagIndex] = [
+            tagName,
+            {
+              label: param,
+              description: (description || []).join(' '),
+              type: '',
+            },
+          ];
+        } else {
+          information[++tagIndex] = [tagName, lineText.join(' ')];
+        }
       } else if (information[tagIndex]) {
         // append text to the current tag
-        information[tagIndex][1] = (
-          information[tagIndex][1] +
-          '\n' +
-          line
-        ).trim();
+        const current = information[tagIndex];
+        if (typeof current[1] == 'string') {
+          current[1] += '\n' + line;
+        } else {
+          // TODO: what to do here?
+          // current[1].description += '\n' + line;
+        }
       } else {
         // doc without tag, or text above the first tag
         information[++tagIndex] = ['description', line];
@@ -280,7 +408,7 @@ function getInformation(docs: JSDoc[]) {
   return infos
     .reduce((a, b) => [...a, ...b])
     .filter(([_, value]) => !!value)
-    .map(([label, value]) => [label, format(value, 'markdown')]);
+    .map(([label, value]) => [label, value]);
 }
 
 /**
@@ -324,6 +452,30 @@ interface Output {
   name: string;
   overloads: {
     signature: string;
-    info: [string, string][];
+    info: [
+      string,
+      string | { label: string; description: string; type: string }
+    ][];
   }[];
+}
+
+function toFileName(s: string): string {
+  return s
+    .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+    .toLowerCase()
+    .replace(/[ _]/g, '-');
+}
+
+function writeFile(
+  directory: string,
+  fileName: string,
+  content: string,
+  type: PrettierOptions['parser']
+) {
+  if (!existsSync(directory)) {
+    mkdirSync(directory, { recursive: true });
+  }
+
+  const contentFormatted = format(content, type) + '\n';
+  writeFileSync(join(directory, fileName), contentFormatted, 'utf-8');
 }

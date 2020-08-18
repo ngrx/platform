@@ -215,7 +215,7 @@ export function on(
  *     featureActions.actionTwo,
  *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
  *   ),
- *   on(featureActions.actionThree, () => initialState);
+ *   on(featureActions.actionThree, () => initialState)
  * );
  * ```
  *
@@ -229,7 +229,7 @@ export function on(
  *     featureActions.actionTwo,
  *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
  *   ),
- *   on(featureActions.actionThree, () => initialState);
+ *   on(featureActions.actionThree, () => initialState)
  * );
  *
  * export function reducer(state: State | undefined, action: Action) {

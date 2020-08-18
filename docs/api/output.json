@@ -7,15 +7,16 @@
       {
         "signature": "class PushPipe<S> implements PipeTransform, OnDestroy {\n  transform<T>(\n    potentialObservable: ObservableInput<T> | null | undefined\n  ): T | null | undefined;\n  ngOnDestroy(): void;\n}",
         "info": [
-          ["Pipe", "PushPipe"],
+          ["Pipe", "PushPipe\n"],
           [
             "description",
-            "The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.\nIt contains intelligent handling of change detection to enable us\nrunning in zone-full as well as zone-less mode without any changes to the code.\nThe current way of binding an observable to the view looks like that:\n\n```html\n{{observable$ | async}}\n<ng-container *ngIf=\"observable$ | async as o\">{{o}}</ng-container>\n<component [value]=\"observable$ | async\"></component>\n```\n\nThe problem is `async` pipe just marks the component and all its ancestors as dirty.\nIt needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked\ncomponents.\nHeavy dynamic and interactive UIs suffer from zones change detection a lot and can\nlean to bad performance or even unusable applications, but the `async` pipe does not work in zone-less mode.\n`ngrxPush` pipe solves that problem.\nIncluded Features:\n\n- Take observables or promises, retrieve their values and render_creator the value to the template\n- Handling null and undefined values in a clean unified/structured way\n- Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)\n- Distinct same values in a row to increase performance\n- Coalescing of change detection calls to boost performance"
+            "\n\nThe `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.\nIt contains intelligent handling of change detection to enable us\nrunning in zone-full as well as zone-less mode without any changes to the code.\n\nThe current way of binding an observable to the view looks like that:\n```html\n{{observable$ | async}}\n<ng-container *ngIf=\"observable$ | async as o\">{{o}}</ng-container>\n<component [value]=\"observable$ | async\"></component>\n```\n\nThe problem is `async` pipe just marks the component and all its ancestors as dirty.\nIt needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked\ncomponents.\n\nHeavy dynamic and interactive UIs suffer from zones change detection a lot and can\nlean to bad performance or even unusable applications, but the `async` pipe does not work in zone-less mode.\n\n`ngrxPush` pipe solves that problem.\n\nIncluded Features:\n- Take observables or promises, retrieve their values and render_creator the value to the template\n- Handling null and undefined values in a clean unified/structured way\n- Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)\n- Distinct same values in a row to increase performance\n- Coalescing of change detection calls to boost performance\n"
           ],
           [
             "usageNotes",
-            "`ngrxPush` pipe solves that problem. It can be used like shown here:\n\n```html\n{{observable$ | ngrxPush}}\n<ng-container *ngIf=\"observable$ | ngrxPush as o\">{{o}}</ng-container>\n<component [value]=\"observable$ | ngrxPush\"></component>\n```"
-          ]
+            "\n\n`ngrxPush` pipe solves that problem. It can be used like shown here:\n```html\n{{observable$ | ngrxPush}}\n<ng-container *ngIf=\"observable$ | ngrxPush as o\">{{o}}</ng-container>\n<component [value]=\"observable$ | ngrxPush\"></component>\n```\n"
+          ],
+          ["publicApi", "\n"]
         ]
       }
     ]
@@ -28,15 +29,16 @@
       {
         "signature": "class LetDirective<U> implements OnDestroy {\n  static ngTemplateGuard_ngrxLet: 'binding';\n\n  static ngTemplateContextGuard<U>(\n    dir: LetDirective<U>,\n    ctx: unknown | null | undefined\n  ): ctx is LetViewContext<U>;\n  createEmbeddedView();\n  ngOnDestroy();\n}",
         "info": [
-          ["Directive", "LetDirective"],
+          ["Directive", "LetDirective\n"],
           [
             "description",
-            "The `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).\nIt also helps with several internal processing under the hood.\nThe current way of binding an observable to the view looks like that:\n\n```html\n<ng-container *ngIf=\"observableNumber$ as n\">\n  <app-number [number]=\"n\"> </app-number>\n  <app-number-special [number]=\"n\"> </app-number-special>\n</ng-container>\n```\n\nThe problem is `*ngIf` is also interfering with rendering and in case of a `0` the component would be hidden\nIncluded Features:\n\n- binding is always present. (`*ngIf=\"truthy$\"`)\n- it takes away the multiple usages of the `async` or `ngrxPush` pipe\n- a unified/structured way of handling null and undefined\n- triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)\n- triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)\n- distinct same values in a row (distinctUntilChanged operator),"
+            "\n\nThe `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).\nIt also helps with several internal processing under the hood.\n\nThe current way of binding an observable to the view looks like that:\n```html\n<ng-container *ngIf=\"observableNumber$ as n\">\n<app-number [number]=\"n\">\n</app-number>\n<app-number-special [number]=\"n\">\n</app-number-special>\n</ng-container>\n```\n\nThe problem is `*ngIf` is also interfering with rendering and in case of a `0` the component would be hidden\n\nIncluded Features:\n- binding is always present. (`*ngIf=\"truthy$\"`)\n- it takes away the multiple usages of the `async` or `ngrxPush` pipe\n- a unified/structured way of handling null and undefined\n- triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)\n- triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)\n- distinct same values in a row (distinctUntilChanged operator),\n"
           ],
           [
             "usageNotes",
-            "The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template\n`<ng-container *ngrxLet=\"observableNumber$ as c\"></ng-container>`\n\n```html\n<ng-container *ngrxLet=\"observableNumber$ as n\">\n  <app-number [number]=\"n\"> </app-number>\n</ng-container>\n<ng-container *ngrxLet=\"observableNumber$; let n\">\n  <app-number [number]=\"n\"> </app-number>\n</ng-container>\n```\n\nIn addition to that it provides us information from the whole observable context.\nWe can track the observables:\n\n- next value\n- error value\n- complete state\n\n```html\n<ng-container\n  *ngrxLet=\"observableNumber$; let n; let e = $error, let c = $complete\"\n>\n  <app-number [number]=\"n\" *ngIf=\"!e && !c\"> </app-number>\n  <ng-container *ngIf=\"e\">\n    There is an error: {{e}}\n  </ng-container>\n  <ng-container *ngIf=\"c\">\n    Observable completed: {{c}}\n  </ng-container>\n</ng-container>\n```"
-          ]
+            "\n\nThe `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template\n`<ng-container *ngrxLet=\"observableNumber$ as c\"></ng-container>`\n\n```html\n<ng-container *ngrxLet=\"observableNumber$ as n\">\n<app-number [number]=\"n\">\n</app-number>\n</ng-container>\n\n<ng-container *ngrxLet=\"observableNumber$; let n\">\n<app-number [number]=\"n\">\n</app-number>\n</ng-container>\n```\n\nIn addition to that it provides us information from the whole observable context.\nWe can track the observables:\n- next value\n- error value\n- complete state\n\n```html\n<ng-container *ngrxLet=\"observableNumber$; let n; let e = $error, let c = $complete\">\n<app-number [number]=\"n\"  *ngIf=\"!e && !c\">\n</app-number>\n<ng-container *ngIf=\"e\">\nThere is an error: {{e}}\n</ng-container>\n<ng-container *ngIf=\"c\">\nObservable completed: {{c}}\n</ng-container>\n</ng-container>\n```\n"
+          ],
+          ["publicApi", "\n"]
         ]
       }
     ]
@@ -103,7 +105,7 @@
         "info": [
           [
             "description",
-            "Guard methods that ensure EntityAction payload is as expected.\nEach method returns that payload if it passes the guard or\nthrows an error."
+            "Guard methods that ensure EntityAction payload is as expected.\nEach method returns that payload if it passes the guard or\nthrows an error.\n"
           ]
         ]
       }
@@ -116,24 +118,34 @@
     "overloads": [
       {
         "signature": "function ofEntityOp<T extends EntityAction>(\n  ...allowedEntityOps: any[]\n): OperatorFunction<EntityAction, T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "allowedEntityOps", "description": "", "type": "any[]" }
+          ]
+        ]
       },
       {
         "signature": "function ofEntityOp<T extends EntityAction>(\n  allowedOps: string[] | EntityOp[]\n): OperatorFunction<EntityAction, T>;",
         "info": [
           [
-            "description",
-            "Select actions concerning one of the allowed Entity operations"
-          ],
-          [
             "param",
-            "allowedEntityOps Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected\nExample:\n\n```\nthis.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)\nthis.actions.pipe(ofEntityOp(...queryOps), ...)\nthis.actions.pipe(ofEntityOp(queryOps), ...)\nthis.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property\n```"
+            {
+              "label": "allowedOps",
+              "description": "",
+              "type": "string[] | EntityOp[]"
+            }
           ]
         ]
       },
       {
         "signature": "function ofEntityOp<T extends EntityAction>(\n  ...allowedOps: (string | EntityOp)[]\n): OperatorFunction<EntityAction, T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "allowedOps", "description": "", "type": "string[]" }
+          ]
+        ]
       }
     ]
   },
@@ -144,24 +156,42 @@
     "overloads": [
       {
         "signature": "function ofEntityType<T extends EntityAction>(\n  ...allowedEntityNames: any[]\n): OperatorFunction<EntityAction, T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "allowedEntityNames",
+              "description": "",
+              "type": "any[]"
+            }
+          ]
+        ]
       },
       {
         "signature": "function ofEntityType<T extends EntityAction>(\n  allowedEntityNames?: string[]\n): OperatorFunction<EntityAction, T>;",
         "info": [
           [
-            "description",
-            "Select actions concerning one of the allowed Entity types"
-          ],
-          [
             "param",
-            "allowedEntityNames Entity-type names (e.g, 'Hero') whose actions should be selected\nExample:\n\n```\nthis.actions.pipe(ofEntityType(), ...) // ayn EntityAction with a defined entity type property\nthis.actions.pipe(ofEntityType('Hero'), ...) // EntityActions for the Hero entity\nthis.actions.pipe(ofEntityType('Hero', 'Villain', 'Sidekick'), ...)\nthis.actions.pipe(ofEntityType(...theChosen), ...)\nthis.actions.pipe(ofEntityType(theChosen), ...)\n```"
+            {
+              "label": "allowedEntityNames",
+              "description": "",
+              "type": "string[]"
+            }
           ]
         ]
       },
       {
         "signature": "function ofEntityType<T extends EntityAction>(\n  ...allowedEntityNames: string[]\n): OperatorFunction<EntityAction, T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "allowedEntityNames",
+              "description": "",
+              "type": "string[]"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -219,7 +249,7 @@
         "info": [
           [
             "description",
-            "Hash of entities keyed by EntityCollection name,\ntypically the result of a query that returned results from a multi-collection query\nthat will be merged into an EntityCache via the `MergeQuerySet` action."
+            "Hash of entities keyed by EntityCollection name,\ntypically the result of a query that returned results from a multi-collection query\nthat will be merged into an EntityCache via the `MergeQuerySet` action.\n"
           ]
         ]
       }
@@ -239,11 +269,19 @@
           ],
           [
             "param",
-            "[collections] Array of names of the collections to clear.\nIf empty array, does nothing. If no array, clear all collections."
+            {
+              "label": "[collections]",
+              "description": "Array of names of the collections to clear.",
+              "type": ""
+            }
           ],
           [
             "param",
-            "[tag] Optional tag to identify the operation from the app perspective."
+            {
+              "label": "[tag]",
+              "description": "Optional tag to identify the operation from the app perspective.",
+              "type": ""
+            }
           ]
         ]
       }
@@ -259,15 +297,23 @@
         "info": [
           [
             "description",
-            "Create entity cache action that loads multiple entity collections at the same time.\nbefore any selectors\\$ observables emit."
+            "Create entity cache action that loads multiple entity collections at the same time.\nbefore any selectors$ observables emit."
           ],
           [
             "param",
-            "querySet The collections to load, typically the result of a query."
+            {
+              "label": "querySet",
+              "description": "The collections to load, typically the result of a query.",
+              "type": ""
+            }
           ],
           [
             "param",
-            "[tag] Optional tag to identify the operation from the app perspective.\nin the form of a map of entity collections."
+            {
+              "label": "[tag]",
+              "description": "Optional tag to identify the operation from the app perspective.",
+              "type": ""
+            }
           ]
         ]
       }
@@ -283,19 +329,31 @@
         "info": [
           [
             "description",
-            "Create entity cache action that merges entities from a query result\nthat returned entities from multiple collections.\nCorresponding entity cache reducer should add and update all collections\nat the same time, before any selectors\\$ observables emit."
+            "Create entity cache action that merges entities from a query result\nthat returned entities from multiple collections.\nCorresponding entity cache reducer should add and update all collections\nat the same time, before any selectors$ observables emit."
           ],
           [
             "param",
-            "querySet The result of the query in the form of a map of entity collections.\nThese are the entity data to merge into the respective collections."
+            {
+              "label": "querySet",
+              "description": "The result of the query in the form of a map of entity collections.",
+              "type": ""
+            }
           ],
           [
             "param",
-            "mergeStrategy How to merge a queried entity when it is already in the collection.\nThe default is MergeStrategy.PreserveChanges"
+            {
+              "label": "mergeStrategy",
+              "description": "How to merge a queried entity when it is already in the collection.",
+              "type": ""
+            }
           ],
           [
             "param",
-            "[tag] Optional tag to identify the operation from the app perspective."
+            {
+              "label": "[tag]",
+              "description": "Optional tag to identify the operation from the app perspective.",
+              "type": ""
+            }
           ]
         ]
       }
@@ -313,10 +371,21 @@
             "description",
             "Create entity cache action for replacing the entire entity cache.\nDangerous because brute force but useful as when re-hydrating an EntityCache\nfrom local browser storage when the application launches."
           ],
-          ["param", "cache New state of the entity cache"],
           [
             "param",
-            "[tag] Optional tag to identify the operation from the app perspective."
+            {
+              "label": "cache",
+              "description": "New state of the entity cache",
+              "type": ""
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "[tag]",
+              "description": "Optional tag to identify the operation from the app perspective.",
+              "type": ""
+            }
           ]
         ]
       }
@@ -442,7 +511,7 @@
         "info": [
           [
             "description",
-            "A entities of a single entity type, which are changed in the same way by a ChangeSetOperation"
+            "A entities of a single entity type, which are changed in the same way by a ChangeSetOperation\n"
           ]
         ]
       }
@@ -469,7 +538,7 @@
         "info": [
           [
             "description",
-            "Factory to create a ChangeSetItem for a ChangeSetOperation"
+            "Factory to create a ChangeSetItem for a ChangeSetOperation\n"
           ]
         ]
       }
@@ -498,7 +567,14 @@
             "description",
             "Return ChangeSet after filtering out null and empty ChangeSetItems."
           ],
-          ["param", "changeSet ChangeSet with changes to filter"]
+          [
+            "param",
+            {
+              "label": "changeSet",
+              "description": "ChangeSet with changes to filter",
+              "type": "ChangeSet<any>"
+            }
+          ]
         ]
       }
     ]
@@ -533,7 +609,9 @@
     "overloads": [
       {
         "signature": "function makeErrorOp(op: EntityOp): EntityOp;",
-        "info": []
+        "info": [
+          ["param", { "label": "op", "description": "", "type": "EntityOp" }]
+        ]
       }
     ]
   },
@@ -544,7 +622,9 @@
     "overloads": [
       {
         "signature": "function makeSuccessOp(op: EntityOp): EntityOp;",
-        "info": []
+        "info": [
+          ["param", { "label": "op", "description": "", "type": "EntityOp" }]
+        ]
       }
     ]
   },
@@ -569,7 +649,7 @@
         "info": [
           [
             "description",
-            "Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS.\nEffectively extends Update<T> with a 'changed' flag.\nThe is true if the server sent back changes to the entity data after update.\nSuch changes must be in the entity data in changes property.\nDefault is false (server did not return entity data; assume it changed nothing).\nSee EntityEffects."
+            "Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS.\nEffectively extends Update<T> with a 'changed' flag.\nThe is true if the server sent back changes to the entity data after update.\nSuch changes must be in the entity data in changes property.\nDefault is false (server did not return entity data; assume it changed nothing).\nSee EntityEffects.\n"
           ]
         ]
       }
@@ -589,11 +669,19 @@
           ],
           [
             "param",
-            "error the HttpErrorResponse or the error thrown by the service"
+            {
+              "label": "error",
+              "description": "the HttpErrorResponse or the error thrown by the service",
+              "type": ""
+            }
           ],
           [
             "param",
-            "requestData the HTTP request information such as the method and the url."
+            {
+              "label": "requestData",
+              "description": "the HTTP request information such as the method and the url.",
+              "type": ""
+            }
           ]
         ]
       }
@@ -620,7 +708,7 @@
         "info": [
           [
             "description",
-            "Optional configuration settings for an entity collection data service\nsuch as the `DefaultDataService<T>`."
+            "Optional configuration settings for an entity collection data service\nsuch as the `DefaultDataService<T>`.\n"
           ]
         ]
       }
@@ -636,7 +724,7 @@
         "info": [
           [
             "description",
-            "A basic, generic entity data service\nsuitable for persistence of most entities.\nAssumes a common REST-y web API"
+            "A basic, generic entity data service\nsuitable for persistence of most entities.\nAssumes a common REST-y web API\n"
           ]
         ]
       }
@@ -652,7 +740,7 @@
         "info": [
           [
             "description",
-            "Create a basic, generic entity data service\nsuitable for persistence of most entities.\nAssumes a common REST-y web API"
+            "Create a basic, generic entity data service\nsuitable for persistence of most entities.\nAssumes a common REST-y web API\n"
           ]
         ]
       }
@@ -668,7 +756,7 @@
         "info": [
           [
             "description",
-            "Default data service for making remote service calls targeting the entire EntityCache.\nSee EntityDataService for services that target a single EntityCollection"
+            "Default data service for making remote service calls targeting the entire EntityCache.\nSee EntityDataService for services that target a single EntityCollection\n"
           ]
         ]
       }
@@ -684,7 +772,7 @@
         "info": [
           [
             "description",
-            "Registry of EntityCollection data services that make REST-like CRUD calls\nto entity collection endpoints."
+            "Registry of EntityCollection data services that make REST-like CRUD calls\nto entity collection endpoints.\n"
           ]
         ]
       }
@@ -700,7 +788,7 @@
         "info": [
           [
             "description",
-            "Known resource URLS for specific entity types.\nEach entity's resource URLS are endpoints that\ntarget single entity and multi-entity HTTP operations.\nUsed by the `DefaultHttpUrlGenerator`."
+            "Known resource URLS for specific entity types.\nEach entity's resource URLS are endpoints that\ntarget single entity and multi-entity HTTP operations.\nUsed by the `DefaultHttpUrlGenerator`.\n"
           ]
         ]
       }
@@ -716,7 +804,7 @@
         "info": [
           [
             "description",
-            "Resource URLS for HTTP operations that target single entity\nand multi-entity endpoints."
+            "Resource URLS for HTTP operations that target single entity\nand multi-entity endpoints.\n"
           ]
         ]
       }
@@ -732,7 +820,7 @@
         "info": [
           [
             "description",
-            "Generate the base part of an HTTP URL for\nsingle entity or entity collection resource"
+            "Generate the base part of an HTTP URL for\nsingle entity or entity collection resource\n"
           ]
         ]
       }
@@ -754,7 +842,12 @@
     "module": "data",
     "name": "normalizeRoot",
     "overloads": [
-      { "signature": "function normalizeRoot(root: string);", "info": [] }
+      {
+        "signature": "function normalizeRoot(root: string);",
+        "info": [
+          ["param", { "label": "root", "description": "", "type": "string" }]
+        ]
+      }
     ]
   },
   {
@@ -800,7 +893,7 @@
         "info": [
           [
             "description",
-            "A key/value map of parameters to be turned into an HTTP query string\nSame as HttpClient's HttpParamsOptions which is NOT exported at package level\nhttps://github.com/angular/angular/issues/22013"
+            "A key/value map of parameters to be turned into an HTTP query string\nSame as HttpClient's HttpParamsOptions which is NOT exported at package level\nhttps://github.com/angular/angular/issues/22013\n"
           ]
         ]
       }
@@ -814,7 +907,7 @@
       {
         "signature": "class PersistenceResultHandler {\n  abstract handleSuccess(originalAction: EntityAction): (data: any) => Action;\n  abstract handleError(\n    originalAction: EntityAction\n  ): (\n    error: DataServiceError | Error\n  ) => EntityAction<EntityActionDataServiceError>;\n}",
         "info": [
-          ["description", "Handling of responses from persistence operation"]
+          ["description", "Handling of responses from persistence operation\n"]
         ]
       }
     ]
@@ -829,7 +922,7 @@
         "info": [
           [
             "description",
-            "Default handling of responses from persistence operation,\nspecifically an EntityDataService"
+            "Default handling of responses from persistence operation,\nspecifically an EntityDataService\n"
           ]
         ]
       }
@@ -845,7 +938,7 @@
         "info": [
           [
             "description",
-            "Dispatches Entity Cache actions to the EntityCache reducer"
+            "Dispatches Entity Cache actions to the EntityCache reducer\n"
           ]
         ]
       }
@@ -888,7 +981,7 @@
         "info": [
           [
             "description",
-            "Dispatches EntityCollection actions to their reducers and effects (default implementation).\nAll save commands rely on an Ngrx Effect such as `EntityEffects.persist$`."
+            "Dispatches EntityCollection actions to their reducers and effects (default implementation).\nAll save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n"
           ]
         ]
       }
@@ -904,7 +997,7 @@
         "info": [
           [
             "description",
-            "Default options for EntityDispatcher behavior\nsuch as whether `add()` is optimistic or pessimistic by default.\nAn optimistic save modifies the collection immediately and before saving to the server.\nA pessimistic save modifies the collection after the server confirms the save was successful.\nThis class initializes the defaults to the safest values.\nProvide an alternative to change the defaults for all entity collections."
+            "Default options for EntityDispatcher behavior\nsuch as whether `add()` is optimistic or pessimistic by default.\nAn optimistic save modifies the collection immediately and before saving to the server.\nA pessimistic save modifies the collection after the server confirms the save was successful.\nThis class initializes the defaults to the safest values.\nProvide an alternative to change the defaults for all entity collections.\n"
           ]
         ]
       }
@@ -931,7 +1024,7 @@
         "info": [
           [
             "description",
-            "Dispatches EntityCollection actions to their reducers and effects.\nThe substance of the interface is in EntityCommands."
+            "Dispatches EntityCollection actions to their reducers and effects.\nThe substance of the interface is in EntityCommands.\n"
           ]
         ]
       }
@@ -944,7 +1037,7 @@
     "overloads": [
       {
         "signature": "class PersistanceCanceled {}",
-        "info": [["description", "Persistence operation canceled"]]
+        "info": [["description", "Persistence operation canceled\n"]]
       }
     ]
   },
@@ -1011,7 +1104,16 @@
     "overloads": [
       {
         "signature": "function createEntityDefinition<T, S extends object>(\n  metadata: EntityMetadata<T, S>\n): EntityDefinition<T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "metadata",
+              "description": "",
+              "type": "EntityMetadata<T, S>"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -1041,7 +1143,11 @@
         "info": [
           [
             "description",
-            "Creates an {EntityFilterFn} that matches RegExp or RegExp string pattern\nanywhere in any of the given props of an entity.\nIf pattern is a string, spaces are significant and ignores case."
+            "Creates an {EntityFilterFn} that matches RegExp or RegExp string pattern\nanywhere in any of the given props of an entity.\nIf pattern is a string, spaces are significant and ignores case.\n"
+          ],
+          [
+            "param",
+            { "label": "props", "description": "", "type": "(keyof T)[]" }
           ]
         ]
       }
@@ -1089,7 +1195,11 @@
           ],
           [
             "param",
-            "EntityCollectionServiceElements The ingredients for this service\nas a source of supporting services for creating an EntityCollectionService<T> instance."
+            {
+              "label": "EntityCollectionServiceElements",
+              "description": "The ingredients for this service",
+              "type": ""
+            }
           ]
         ]
       }
@@ -1127,7 +1237,7 @@
         "info": [
           [
             "description",
-            "Creates EntityCollectionService instances for\na cached collection of T entities in the ngrx store."
+            "Creates EntityCollectionService instances for\na cached collection of T entities in the ngrx store.\n"
           ]
         ]
       }
@@ -1143,7 +1253,7 @@
         "info": [
           [
             "description",
-            "A facade for managing\na cached collection of T entities in the ngrx store."
+            "A facade for managing\na cached collection of T entities in the ngrx store.\n"
           ]
         ]
       }
@@ -1159,11 +1269,11 @@
         "info": [
           [
             "description",
-            "Base/default class of a central registry of EntityCollectionServices for all entity types.\nCreate your own subclass to add app-specific members for an improved developer experience."
+            "Base/default class of a central registry of EntityCollectionServices for all entity types.\nCreate your own subclass to add app-specific members for an improved developer experience.\n"
           ],
           [
             "example",
-            "export class EntityServices extends EntityServicesBase {\nconstructor(entityServicesElements: EntityServicesElements) {\nsuper(entityServicesElements);\n}\n// Extend with well-known, app entity collection services\n// Convenience property to return a typed custom entity collection service\nget companyService() {\nreturn this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n}\n// Convenience dispatch methods\nclearCompany(companyId: string) {\nthis.dispatch(new ClearCompanyAction(companyId));\n}\n}"
+            "\nexport class EntityServices extends EntityServicesBase {\nconstructor(entityServicesElements: EntityServicesElements) {\nsuper(entityServicesElements);\n}\n// Extend with well-known, app entity collection services\n// Convenience property to return a typed custom entity collection service\nget companyService() {\nreturn this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n}\n// Convenience dispatch methods\nclearCompany(companyId: string) {\nthis.dispatch(new ClearCompanyAction(companyId));\n}\n}\n"
           ]
         ]
       }
@@ -1190,7 +1300,7 @@
         "info": [
           [
             "description",
-            "Class-Interface for EntityCache and EntityCollection services.\nServes as an Angular provider token for this service class.\nIncludes a registry of EntityCollectionServices for all entity types.\nCreates a new default EntityCollectionService for any entity type not in the registry.\nOptionally register specialized EntityCollectionServices for individual types"
+            "Class-Interface for EntityCache and EntityCollection services.\nServes as an Angular provider token for this service class.\nIncludes a registry of EntityCollectionServices for all entity types.\nCreates a new default EntityCollectionService for any entity type not in the registry.\nOptionally register specialized EntityCollectionServices for individual types\n"
           ]
         ]
       }
@@ -1206,7 +1316,7 @@
         "info": [
           [
             "description",
-            "A map of service or entity names to their corresponding EntityCollectionServices."
+            "A map of service or entity names to their corresponding EntityCollectionServices.\n"
           ]
         ]
       }
@@ -1274,7 +1384,7 @@
         "info": [
           [
             "description",
-            "Creates the EntityCacheReducer via its create() method"
+            "Creates the EntityCacheReducer via its create() method\n"
           ]
         ]
       }
@@ -1296,7 +1406,7 @@
         "info": [
           [
             "description",
-            "The default implementation of EntityChangeTracker with\nmethods for tracking, committing, and reverting/undoing unsaved entity changes.\nUsed by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.\nSee EntityChangeTracker docs."
+            "The default implementation of EntityChangeTracker with\nmethods for tracking, committing, and reverting/undoing unsaved entity changes.\nUsed by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.\nSee EntityChangeTracker docs.\n"
           ]
         ]
       }
@@ -1312,7 +1422,7 @@
         "info": [
           [
             "description",
-            "Methods for tracking, committing, and reverting/undoing unsaved entity changes.\nUsed by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.\nSee EntityChangeTracker docs."
+            "Methods for tracking, committing, and reverting/undoing unsaved entity changes.\nUsed by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.\nSee EntityChangeTracker docs.\n"
           ]
         ]
       }
@@ -1336,7 +1446,12 @@
     "overloads": [
       {
         "signature": "function createEmptyEntityCollection<T>(\n  entityName?: string\n): EntityCollection<T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "entityName", "description": "", "type": "string" }
+          ]
+        ]
       }
     ]
   },
@@ -1350,7 +1465,7 @@
         "info": [
           [
             "description",
-            "Map of {EntityOp} to reducer method for the operation.\nIf an operation is missing, caller should return the collection for that reducer."
+            "Map of {EntityOp} to reducer method for the operation.\nIf an operation is missing, caller should return the collection for that reducer.\n"
           ]
         ]
       }
@@ -1366,7 +1481,7 @@
         "info": [
           [
             "description",
-            "Base implementation of reducer methods for an entity collection."
+            "Base implementation of reducer methods for an entity collection.\n"
           ]
         ]
       }
@@ -1382,7 +1497,7 @@
         "info": [
           [
             "description",
-            "Creates {EntityCollectionReducerMethods} for a given entity type."
+            "Creates {EntityCollectionReducerMethods} for a given entity type.\n"
           ]
         ]
       }
@@ -1406,7 +1521,7 @@
         "info": [
           [
             "description",
-            "Registry of entity types and their previously-constructed reducers.\nCan create a new CollectionReducer, which it registers for subsequent use."
+            "Registry of entity types and their previously-constructed reducers.\nCan create a new CollectionReducer, which it registers for subsequent use.\n"
           ]
         ]
       }
@@ -1455,7 +1570,7 @@
         "info": [
           [
             "description",
-            "Change state for an entity with unsaved changes;\nan entry in an EntityCollection.changeState map"
+            "Change state for an entity with unsaved changes;\nan entry in an EntityCollection.changeState map\n"
           ]
         ]
       }
@@ -1471,7 +1586,7 @@
         "info": [
           [
             "description",
-            "Map of entity primary keys to entity ChangeStates.\nEach entry represents an entity with unsaved changes."
+            "Map of entity primary keys to entity ChangeStates.\nEach entry represents an entity with unsaved changes.\n"
           ]
         ]
       }
@@ -1487,7 +1602,7 @@
         "info": [
           [
             "description",
-            "Data and information about a collection of entities of a single type.\nEntityCollections are maintained in the EntityCache within the ngrx store."
+            "Data and information about a collection of entities of a single type.\nEntityCollections are maintained in the EntityCache within the ngrx store.\n"
           ]
         ]
       }
@@ -1533,7 +1648,12 @@
     "overloads": [
       {
         "signature": "function createEntityCacheSelector(\n  entityCacheName?: string\n): MemoizedSelector<Object, EntityCache>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "entityCacheName", "description": "", "type": "string" }
+          ]
+        ]
       }
     ]
   },
@@ -1547,7 +1667,7 @@
         "info": [
           [
             "description",
-            "The selector functions for entity collection members,\nSelects from the entity collection to the collection member\nContrast with {EntitySelectors}."
+            "The selector functions for entity collection members,\nSelects from the entity collection to the collection member\nContrast with {EntitySelectors}.\n"
           ]
         ]
       }
@@ -1563,7 +1683,7 @@
         "info": [
           [
             "description",
-            "The selector functions for entity collection members,\nSelects from store root, through EntityCache, to the entity collection member\nContrast with {CollectionSelectors}."
+            "The selector functions for entity collection members,\nSelects from store root, through EntityCache, to the entity collection member\nContrast with {CollectionSelectors}.\n"
           ]
         ]
       }
@@ -1590,7 +1710,7 @@
         "info": [
           [
             "description",
-            "The selector observable functions for entity collection members."
+            "The selector observable functions for entity collection members.\n"
           ]
         ]
       }
@@ -1617,7 +1737,7 @@
         "info": [
           [
             "description",
-            "Generates a string id beginning 'CRID',\nfollowed by a monotonically increasing integer for use as a correlation id.\nAs they are produced locally by a singleton service,\nthese ids are guaranteed to be unique only\nfor the duration of a single client browser instance.\nNgrx entity dispatcher query and save methods call this service to generate default correlation ids.\nDo NOT use for entity keys."
+            "Generates a string id beginning 'CRID',\nfollowed by a monotonically increasing integer for use as a correlation id.\nAs they are produced locally by a singleton service,\nthese ids are guaranteed to be unique only\nfor the duration of a single client browser instance.\nNgrx entity dispatcher query and save methods call this service to generate default correlation ids.\nDo NOT use for entity keys.\n"
           ]
         ]
       }
@@ -1661,9 +1781,16 @@
         "info": [
           [
             "description",
-            "Creates a sortable, pseudo-GUID (globally unique identifier)\nwhose trailing 6 bytes (12 hex digits) are time-based\nStart either with the given getTime() value, seedTime,\nor get the current time in ms."
+            "Creates a sortable, pseudo-GUID (globally unique identifier)\nwhose trailing 6 bytes (12 hex digits) are time-based\nStart either with the given getTime() value, seedTime,\nor get the current time in ms.\n"
           ],
-          ["param", "seed {number} - optional seed for reproducible time-part"]
+          [
+            "param",
+            {
+              "label": "seed",
+              "description": "{number} - optional seed for reproducible time-part",
+              "type": "number"
+            }
+          ]
         ]
       }
     ]
@@ -1675,7 +1802,10 @@
     "overloads": [
       {
         "signature": "function guidComparer(l: string, r: string);",
-        "info": []
+        "info": [
+          ["param", { "label": "l", "description": "", "type": "string" }],
+          ["param", { "label": "r", "description": "", "type": "string" }]
+        ]
       }
     ]
   },
@@ -1697,7 +1827,7 @@
     "overloads": [
       {
         "signature": "interface EntityPluralNames {}",
-        "info": [["description", "Mapping of entity type name to its plural"]]
+        "info": [["description", "Mapping of entity type name to its plural\n"]]
       }
     ]
   },
@@ -1733,8 +1863,9 @@
         "info": [
           [
             "description",
-            "Default function that returns the entity's primary key (pkey).\nAssumes that the entity has an `id` pkey property.\nReturns `undefined` if no entity or `id`.\nEvery selectId fn must return `undefined` when it cannot produce a full pkey."
-          ]
+            "Default function that returns the entity's primary key (pkey).\nAssumes that the entity has an `id` pkey property.\nReturns `undefined` if no entity or `id`.\nEvery selectId fn must return `undefined` when it cannot produce a full pkey.\n"
+          ],
+          ["param", { "label": "entity", "description": "", "type": "any" }]
         ]
       }
     ]
@@ -1749,8 +1880,9 @@
         "info": [
           [
             "description",
-            "Flatten first arg if it is an array\nAllows fn with ...rest signature to be called with an array instead of spread\nExample:\n\n```\n// See entity-action-operators.ts\nconst persistOps = [EntityOp.QUERY_ALL, EntityOp.ADD, ...];\nactions.pipe(ofEntityOp(...persistOps)) // works\nactions.pipe(ofEntityOp(persistOps)) // also works\n```\n\n\\*/"
-          ]
+            "Flatten first arg if it is an array\nAllows fn with ...rest signature to be called with an array instead of spread\nExample:\n```\n// See entity-action-operators.ts\nconst persistOps = [EntityOp.QUERY_ALL, EntityOp.ADD, ...];\nactions.pipe(ofEntityOp(...persistOps)) // works\nactions.pipe(ofEntityOp(persistOps)) // also works\n```\n*/"
+          ],
+          ["param", { "label": "args", "description": "", "type": "any[]" }]
         ]
       }
     ]
@@ -1765,8 +1897,9 @@
         "info": [
           [
             "description",
-            "Return a function that converts an entity (or partial entity) into the `Update<T>`\nwhose `id` is the primary key and\n`changes` is the entity (or partial entity of changes)."
-          ]
+            "Return a function that converts an entity (or partial entity) into the `Update<T>`\nwhose `id` is the primary key and\n`changes` is the entity (or partial entity of changes).\n"
+          ],
+          ["param", { "label": "selectId", "description": "", "type": "any" }]
         ]
       }
     ]
@@ -1792,7 +1925,7 @@
         "info": [
           [
             "description",
-            "Module without effects or dataservices which means no HTTP calls\nThis module helpful for internal testing.\nAlso helpful for apps that handle server access on their own and\ntherefore opt-out of @ngrx/effects for entities"
+            "Module without effects or dataservices which means no HTTP calls\nThis module helpful for internal testing.\nAlso helpful for apps that handle server access on their own and\ntherefore opt-out of @ngrx/effects for entities\n"
           ]
         ]
       }
@@ -1808,7 +1941,7 @@
         "info": [
           [
             "description",
-            "entity-data main module includes effects and HTTP data services\nConfigure with `forRoot`.\nNo `forFeature` yet."
+            "entity-data main module includes effects and HTTP data services\nConfigure with `forRoot`.\nNo `forFeature` yet.\n"
           ]
         ]
       }
@@ -1824,20 +1957,31 @@
         "info": [
           [
             "description",
-            "Creates an effect from an `Observable` and an `EffectConfig`."
+            "\nCreates an effect from an `Observable` and an `EffectConfig`.\n"
           ],
-          ["param", "source A function which returns an `Observable`."],
           [
             "param",
-            "config A `Partial<EffectConfig>` to configure the effect. By default, `dispatch` is true and `useEffectsErrorHandler` is true."
+            {
+              "label": "source",
+              "description": "A function which returns an `Observable`.",
+              "type": "() => R & ConditionallyDisallowActionCreator<DT, R>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "config",
+              "description": "A `Partial<EffectConfig>` to configure the effect.  By default, `dispatch` is true and `useEffectsErrorHandler` is true.",
+              "type": "Partial<C>"
+            }
           ],
           [
             "returns",
-            "If `EffectConfig`#`dispatch` is true, returns `Observable<Action>`. Else, returns `Observable<unknown>`."
+            "If `EffectConfig`#`dispatch` is true, returns `Observable<Action>`.  Else, returns `Observable<unknown>`.\n"
           ],
           [
             "usageNotes",
-            "** Mapping to a different action **\n\n```ts\neffectName$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(FeatureActions.actionOne),\n    map(() => FeatureActions.actionTwo())\n  )\n);\n```\n\n** Non-dispatching effects **\n\n```ts\neffectName$ = createEffect(\n  () =>\n    this.actions$.pipe(\n      ofType(FeatureActions.actionOne),\n      tap(() => console.log('Action One Dispatched'))\n    ),\n  { dispatch: false }\n  // FeatureActions.actionOne is not dispatched\n);\n```"
+            "\n\n** Mapping to a different action **\n```ts\neffectName$ = createEffect(\n() => this.actions$.pipe(\nofType(FeatureActions.actionOne),\nmap(() => FeatureActions.actionTwo())\n)\n);\n```\n\n** Non-dispatching effects **\n```ts\neffectName$ = createEffect(\n() => this.actions$.pipe(\nofType(FeatureActions.actionOne),\ntap(() => console.log('Action One Dispatched'))\n),\n{ dispatch: false }\n// FeatureActions.actionOne is not dispatched\n);\n```\n"
           ]
         ]
       }
@@ -1851,7 +1995,7 @@
       {
         "signature": "interface EffectConfig {\n  dispatch?: boolean;\n  useEffectsErrorHandler?: boolean;\n}",
         "info": [
-          ["description", "Configures an effect created by `createEffect`."]
+          ["description", "Configures an effect created by `createEffect`.\n"]
         ]
       }
     ]
@@ -1861,7 +2005,15 @@
     "module": "effects",
     "name": "Effect",
     "overloads": [
-      { "signature": "function Effect(config: EffectConfig = {});", "info": [] }
+      {
+        "signature": "function Effect(config: EffectConfig = {});",
+        "info": [
+          [
+            "param",
+            { "label": "config", "description": "", "type": "EffectConfig" }
+          ]
+        ]
+      }
     ]
   },
   {
@@ -1871,7 +2023,9 @@
     "overloads": [
       {
         "signature": "function getEffectsMetadata<T>(instance: T): EffectsMetadata<T>;",
-        "info": []
+        "info": [
+          ["param", { "label": "instance", "description": "", "type": "T" }]
+        ]
       }
     ]
   },
@@ -1882,7 +2036,28 @@
     "overloads": [
       {
         "signature": "function mergeEffects(\n  sourceInstance: any,\n  globalErrorHandler: ErrorHandler,\n  effectsErrorHandler: EffectsErrorHandler\n): Observable<EffectNotification>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "sourceInstance", "description": "", "type": "any" }
+          ],
+          [
+            "param",
+            {
+              "label": "globalErrorHandler",
+              "description": "",
+              "type": "ErrorHandler"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "effectsErrorHandler",
+              "description": "",
+              "type": "EffectsErrorHandler"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -1904,7 +2079,28 @@
     "overloads": [
       {
         "signature": "function defaultEffectsErrorHandler<T extends Action>(\n  observable$: Observable<T>,\n  errorHandler: ErrorHandler,\n  retryAttemptLeft: number = MAX_NUMBER_OF_RETRY_ATTEMPTS\n): Observable<T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "observable$",
+              "description": "",
+              "type": "Observable<T>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "errorHandler",
+              "description": "",
+              "type": "ErrorHandler"
+            }
+          ],
+          [
+            "param",
+            { "label": "retryAttemptLeft", "description": "", "type": "number" }
+          ]
+        ]
       }
     ]
   },
@@ -1948,43 +2144,66 @@
     "overloads": [
       {
         "signature": "function ofType(\n  ...allowedTypes: Array<string | ActionCreator<string, Creator>>\n): OperatorFunction<Action, Action>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "allowedTypes", "description": "", "type": "any[]" }
+          ]
+        ]
       },
       {
         "signature": "function ofType<\n  AC extends ActionCreator<string, Creator>[],\n  U extends Action = Action,\n  V = ReturnType<AC[number]>\n>(...allowedTypes: AC): OperatorFunction<U, V>;",
         "info": [
           [
-            "description",
-            "'ofType' filters an Observable of Actions into an observable of the actions\nwhose type strings are passed to it.\nFor example, if `actions` has type `Actions<AdditionAction|SubstractionAction>`, and\nthe type of the `Addition` action is `add`, then\n`actions.pipe(ofType('add'))` returns an `Observable<AdditionAction>`.\nProperly typing this function is hard and requires some advanced TS tricks\nbelow.\nType narrowing automatically works, as long as your `actions` object\nstarts with a `Actions<SomeUnionOfActions>` instead of generic `Actions`.\nFor backwards compatibility, when one passes a single type argument\n`ofType<T>('something')` the result is an `Observable<T>`. Note, that `T`\ncompletely overrides any possible inference from 'something'.\nUnfortunately, for unknown 'actions: Actions' these types will produce\n'Observable<never>'. In such cases one has to manually set the generic type\nlike `actions.ofType<AdditionAction>('add')`."
+            "param",
+            { "label": "allowedTypes", "description": "", "type": "AC" }
           ]
         ]
       },
       {
         "signature": "function ofType<\n  E extends Extract<U, { type: T1 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  U extends Action = Action,\n  V = T1 extends string ? E : ReturnType<Extract<T1, AC>>\n>(t1: T1): OperatorFunction<U, V>;",
-        "info": []
+        "info": [["param", { "label": "t1", "description": "", "type": "T1" }]]
       },
       {
         "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2, AC, E>\n>(t1: T1, t2: T2): OperatorFunction<U, V>;",
-        "info": []
+        "info": [
+          ["param", { "label": "t1", "description": "", "type": "T1" }],
+          ["param", { "label": "t2", "description": "", "type": "T2" }]
+        ]
       },
       {
         "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 | T3 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  T3 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2 | T3, AC, E>\n>(t1: T1, t2: T2, t3: T3): OperatorFunction<U, V>;",
-        "info": []
+        "info": [
+          ["param", { "label": "t1", "description": "", "type": "T1" }],
+          ["param", { "label": "t2", "description": "", "type": "T2" }],
+          ["param", { "label": "t3", "description": "", "type": "T3" }]
+        ]
       },
       {
         "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 | T3 | T4 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  T3 extends string | AC,\n  T4 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2 | T3 | T4, AC, E>\n>(t1: T1, t2: T2, t3: T3, t4: T4): OperatorFunction<U, V>;",
-        "info": []
+        "info": [
+          ["param", { "label": "t1", "description": "", "type": "T1" }],
+          ["param", { "label": "t2", "description": "", "type": "T2" }],
+          ["param", { "label": "t3", "description": "", "type": "T3" }],
+          ["param", { "label": "t4", "description": "", "type": "T4" }]
+        ]
       },
       {
         "signature": "function ofType<\n  E extends Extract<U, { type: T1 | T2 | T3 | T4 | T5 }>,\n  AC extends ActionCreator<string, Creator>,\n  T1 extends string | AC,\n  T2 extends string | AC,\n  T3 extends string | AC,\n  T4 extends string | AC,\n  T5 extends string | AC,\n  U extends Action = Action,\n  V = ActionExtractor<T1 | T2 | T3 | T4 | T5, AC, E>\n>(t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): OperatorFunction<U, V>;",
-        "info": []
+        "info": [
+          ["param", { "label": "t1", "description": "", "type": "T1" }],
+          ["param", { "label": "t2", "description": "", "type": "T2" }],
+          ["param", { "label": "t3", "description": "", "type": "T3" }],
+          ["param", { "label": "t4", "description": "", "type": "T4" }],
+          ["param", { "label": "t5", "description": "", "type": "T5" }]
+        ]
       },
       {
         "signature": "function ofType<V extends Action>(\n  ...allowedTypes: Array<string | ActionCreator<string, Creator>>\n): OperatorFunction<Action, V>;",
         "info": [
           [
-            "description",
-            "Fallback for more than 5 arguments.\nThere is no inference, so the return type is the same as the input -\nObservable<Action>.\nWe provide a type parameter, even though TS will not infer it from the\narguments, to preserve backwards compatibility with old versions of ngrx."
+            "param",
+            { "label": "allowedTypes", "description": "", "type": "any[]" }
           ]
         ]
       }
@@ -2086,20 +2305,58 @@
     "overloads": [
       {
         "signature": "function act<\n  Input,\n  OutputAction extends Action,\n  ErrorAction extends Action,\n  CompleteAction extends Action = never,\n  UnsubscribeAction extends Action = never\n>(\n  /** Allow to take either config object or project/error functions */\n  configOrProject:\n    | ActConfig<\n        Input,\n        OutputAction,\n        ErrorAction,\n        CompleteAction,\n        UnsubscribeAction\n      >\n    | ((input: Input, index: number) => Observable<OutputAction>),\n  errorFn?: (error: any, input: Input) => ErrorAction\n): (\n  source: Observable<Input>\n) => Observable<\n  OutputAction | ErrorAction | CompleteAction | UnsubscribeAction\n>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "configOrProject",
+              "description": "",
+              "type": "ActConfig<Input, OutputAction, ErrorAction, CompleteAction, UnsubscribeAction> | ((input: Input, index: number) => Observable<OutputAction>)"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "errorFn",
+              "description": "",
+              "type": "(error: any, input: Input) => ErrorAction"
+            }
+          ]
+        ]
       },
       {
         "signature": "function act<Input, OutputAction extends Action, ErrorAction extends Action>(\n  project: (input: Input, index: number) => Observable<OutputAction>,\n  error: (error: any, input: Input) => ErrorAction\n): (source: Observable<Input>) => Observable<OutputAction | ErrorAction>;",
         "info": [
           [
-            "description",
-            "Wraps project fn with error handling making it safe to use in Effects.\nTakes either config with named properties that represent different possible\ncallbacks or project/error callbacks that are required."
+            "param",
+            {
+              "label": "project",
+              "description": "",
+              "type": "(input: Input, index: number) => Observable<OutputAction>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "error",
+              "description": "",
+              "type": "(error: any, input: Input) => ErrorAction"
+            }
           ]
         ]
       },
       {
         "signature": "function act<\n  Input,\n  OutputAction extends Action,\n  ErrorAction extends Action,\n  CompleteAction extends Action = never,\n  UnsubscribeAction extends Action = never\n>(\n  config: ActConfig<\n    Input,\n    OutputAction,\n    ErrorAction,\n    CompleteAction,\n    UnsubscribeAction\n  >\n): (\n  source: Observable<Input>\n) => Observable<\n  OutputAction | ErrorAction | CompleteAction | UnsubscribeAction\n>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "config",
+              "description": "",
+              "type": "ActConfig<Input, OutputAction, ErrorAction, CompleteAction, UnsubscribeAction>"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -2113,11 +2370,11 @@
         "info": [
           [
             "description",
-            "Interface to set an identifier for effect instances.\nBy default, each Effects class is registered\nonce regardless of how many times the Effect class\nis loaded. By implementing this interface, you define\na unique identifier to register an Effects class instance\nmultiple times."
+            "\nInterface to set an identifier for effect instances.\n\nBy default, each Effects class is registered\nonce regardless of how many times the Effect class\nis loaded. By implementing this interface, you define\na unique identifier to register an Effects class instance\nmultiple times.\n"
           ],
           [
             "usageNotes",
-            "### Set an identifier for an Effects class\n\n```ts\nclass EffectWithIdentifier implements OnIdentifyEffects {\nconstructor(private effectIdentifier: string) {}\nngrxOnIdentifyEffects() {\nreturn this.effectIdentifier;\n}\n```"
+            "\n\n### Set an identifier for an Effects class\n\n```ts\nclass EffectWithIdentifier implements OnIdentifyEffects {\nconstructor(private effectIdentifier: string) {}\n\nngrxOnIdentifyEffects() {\nreturn this.effectIdentifier;\n}\n\n```\n"
           ]
         ]
       }
@@ -2133,11 +2390,11 @@
         "info": [
           [
             "description",
-            "Interface to control the lifecycle of effects.\nBy default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects."
+            "\nInterface to control the lifecycle of effects.\n\nBy default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects.\n"
           ],
           [
             "usageNotes",
-            "### Implement the OnRunEffects interface on an Effects class\n\n```ts\nexport class UserEffects implements OnRunEffects {\n  constructor(private actions$: Actions) {}\n  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\n    return this.actions$.pipe(\n      ofType('LOGGED_IN'),\n      exhaustMap(() =>\n        resolvedEffects$.pipe(\n          takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n        )\n      )\n    );\n  }\n}\n```"
+            "\n\n### Implement the OnRunEffects interface on an Effects class\n\n```ts\nexport class UserEffects implements OnRunEffects {\nconstructor(private actions$: Actions) {}\n\nngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\nreturn this.actions$.pipe(\nofType('LOGGED_IN'),\nexhaustMap(() =>\nresolvedEffects$.pipe(\ntakeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n)\n)\n);\n}\n}\n```\n"
           ]
         ]
       }
@@ -2153,11 +2410,11 @@
         "info": [
           [
             "description",
-            "Interface to dispatch an action after effect registration.\nImplement this interface to dispatch a custom action after\nthe effect has been added. You can listen to this action\nin the rest of the application to execute something after\nthe effect is registered."
+            "\nInterface to dispatch an action after effect registration.\n\nImplement this interface to dispatch a custom action after\nthe effect has been added. You can listen to this action\nin the rest of the application to execute something after\nthe effect is registered.\n"
           ],
           [
             "usageNotes",
-            "### Set an identifier for an Effects class\n\n```ts\nclass EffectWithInitAction implements OnInitEffects {\nngrxOnInitEffects() {\nreturn { type: '[EffectWithInitAction] Init' };\n}\n```"
+            "\n\n### Set an identifier for an Effects class\n\n```ts\nclass EffectWithInitAction implements OnInitEffects {\nngrxOnInitEffects() {\nreturn { type: '[EffectWithInitAction] Init' };\n}\n```\n"
           ]
         ]
       }
@@ -2181,7 +2438,16 @@
     "overloads": [
       {
         "signature": "function createEntityAdapter<T>(\n  options: {\n    selectId?: IdSelector<T>;\n    sortComparer?: false | Comparer<T>;\n  } = {}\n): EntityAdapter<T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "options",
+              "description": "",
+              "type": "{ selectId?: IdSelector<T>; sortComparer?: false | Comparer<T>; }"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -2346,7 +2612,7 @@
     "overloads": [
       {
         "signature": "export type RouterAction<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> =\n  | RouterRequestAction<V>\n  | RouterNavigationAction<V>\n  | RouterCancelAction<T, V>\n  | RouterErrorAction<T, V>\n  | RouterNavigatedAction<V>;",
-        "info": [["description", "A union type of router actions."]]
+        "info": [["description", "A union type of router actions.\n"]]
       }
     ]
   },
@@ -2360,7 +2626,7 @@
         "info": [
           [
             "description",
-            "An action dispatched when the router cancels navigation."
+            "An action dispatched when the router cancels navigation.\n"
           ]
         ]
       }
@@ -2373,7 +2639,7 @@
     "overloads": [
       {
         "signature": "export type RouterCancelPayload<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: V;\n  storeState: T;\n  event: NavigationCancel;\n};",
-        "info": [["description", "Payload of ROUTER_CANCEL."]]
+        "info": [["description", "Payload of ROUTER_CANCEL.\n"]]
       }
     ]
   },
@@ -2385,7 +2651,7 @@
       {
         "signature": "export type RouterErrorAction<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_ERROR;\n  payload: RouterErrorPayload<T, V>;\n};",
         "info": [
-          ["description", "An action dispatched when the router errors."]
+          ["description", "An action dispatched when the router errors.\n"]
         ]
       }
     ]
@@ -2397,7 +2663,7 @@
     "overloads": [
       {
         "signature": "export type RouterErrorPayload<\n  T,\n  V extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: V;\n  storeState: T;\n  event: NavigationError;\n};",
-        "info": [["description", "Payload of ROUTER_ERROR."]]
+        "info": [["description", "Payload of ROUTER_ERROR.\n"]]
       }
     ]
   },
@@ -2411,7 +2677,7 @@
         "info": [
           [
             "description",
-            "An action dispatched after navigation has ended and new route is active."
+            "An action dispatched after navigation has ended and new route is active.\n"
           ]
         ]
       }
@@ -2424,7 +2690,7 @@
     "overloads": [
       {
         "signature": "export type RouterNavigatedPayload<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: T;\n  event: NavigationEnd;\n};",
-        "info": [["description", "Payload of ROUTER_NAVIGATED."]]
+        "info": [["description", "Payload of ROUTER_NAVIGATED.\n"]]
       }
     ]
   },
@@ -2436,7 +2702,7 @@
       {
         "signature": "export type RouterNavigationAction<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  type: typeof ROUTER_NAVIGATION;\n  payload: RouterNavigationPayload<T>;\n};",
         "info": [
-          ["description", "An action dispatched when the router navigates."]
+          ["description", "An action dispatched when the router navigates.\n"]
         ]
       }
     ]
@@ -2448,7 +2714,7 @@
     "overloads": [
       {
         "signature": "export type RouterNavigationPayload<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: T;\n  event: RoutesRecognized;\n};",
-        "info": [["description", "Payload of ROUTER_NAVIGATION."]]
+        "info": [["description", "Payload of ROUTER_NAVIGATION.\n"]]
       }
     ]
   },
@@ -2462,7 +2728,7 @@
         "info": [
           [
             "description",
-            "An action dispatched when a router navigation request is fired."
+            "An action dispatched when a router navigation request is fired.\n"
           ]
         ]
       }
@@ -2475,7 +2741,7 @@
     "overloads": [
       {
         "signature": "export type RouterRequestPayload<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n> = {\n  routerState: T;\n  event: NavigationStart;\n};",
-        "info": [["description", "Payload of ROUTER_REQUEST"]]
+        "info": [["description", "Payload of ROUTER_REQUEST\n"]]
       }
     ]
   },
@@ -2522,7 +2788,17 @@
     "overloads": [
       {
         "signature": "function routerReducer<\n  T extends BaseRouterStoreState = SerializedRouterStateSnapshot\n>(\n  state: RouterReducerState<T> | undefined,\n  action: Action\n): RouterReducerState<T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "state",
+              "description": "",
+              "type": "RouterReducerState<T>"
+            }
+          ],
+          ["param", { "label": "action", "description": "", "type": "any" }]
+        ]
       }
     ]
   },
@@ -2558,11 +2834,11 @@
         "info": [
           [
             "description",
-            "Connects RouterModule with StoreModule.\nDuring the navigation, before any guards or resolvers run, the router will dispatch\na ROUTER_NAVIGATION action, which has the following signature:\n\n```\nexport type RouterNavigationPayload = {\nrouterState: SerializedRouterStateSnapshot,\nevent: RoutesRecognized\n}\n```\n\nEither a reducer or an effect can be invoked in response to this action.\nIf the invoked reducer throws, the navigation will be canceled.\nIf navigation gets canceled because of a guard, a ROUTER_CANCEL action will be\ndispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\nBoth ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation\nwhich can be used to restore the consistency of the store.\nUsage:\n\n```typescript\n```"
+            "Connects RouterModule with StoreModule.\n\nDuring the navigation, before any guards or resolvers run, the router will dispatch\na ROUTER_NAVIGATION action, which has the following signature:\n\n```\nexport type RouterNavigationPayload = {\nrouterState: SerializedRouterStateSnapshot,\nevent: RoutesRecognized\n}\n```\n\nEither a reducer or an effect can be invoked in response to this action.\nIf the invoked reducer throws, the navigation will be canceled.\n\nIf navigation gets canceled because of a guard, a ROUTER_CANCEL action will be\ndispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\n\nBoth ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation\nwhich can be used to restore the consistency of the store.\n\nUsage:\n\n```typescript"
           ],
           [
             "NgModule({",
-            "declarations: [AppCmp, SimpleCmp],\nimports: [\nBrowserModule,\nStoreModule.forRoot(mapOfReducers),\nRouterModule.forRoot([\n{ path: '', component: SimpleCmp },\n{ path: 'next', component: SimpleCmp }\n]),\nStoreRouterConnectingModule.forRoot()\n],\nbootstrap: [AppCmp]\n})\nexport class AppModule {\n}\n\n```\n\n```"
+            "\ndeclarations: [AppCmp, SimpleCmp],\nimports: [\nBrowserModule,\nStoreModule.forRoot(mapOfReducers),\nRouterModule.forRoot([\n{ path: '', component: SimpleCmp },\n{ path: 'next', component: SimpleCmp }\n]),\nStoreRouterConnectingModule.forRoot()\n],\nbootstrap: [AppCmp]\n})\nexport class AppModule {\n}\n```\n"
           ]
         ]
       }
@@ -2619,7 +2895,7 @@
         "info": [
           [
             "description",
-            "Full = Serializes the router event with DefaultRouterStateSerializer\nMinimal = Serializes the router event with MinimalRouterStateSerializer"
+            "Full = Serializes the router event with DefaultRouterStateSerializer\nMinimal = Serializes the router event with MinimalRouterStateSerializer\n"
           ]
         ]
       }
@@ -2646,7 +2922,7 @@
         "info": [
           [
             "description",
-            "Simple router state.\nAll custom router states / state serializers should have at least\nthe properties of this interface."
+            "Simple router state.\nAll custom router states / state serializers should have at least\nthe properties of this interface.\n"
           ]
         ]
       }
@@ -2714,668 +2990,29 @@
     "overloads": [
       {
         "signature": "function getSelectors<V>(\n  selectState: (state: V) => RouterReducerState<any>\n): RouterStateSelectors<V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectState",
+              "description": "",
+              "type": "(state: V) => RouterReducerState<any>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function getSelectors<V>(\n  selectState: (state: V) => RouterReducerState<any>\n): RouterStateSelectors<V>;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "isIvyEnabled",
-    "overloads": [
-      {
-        "signature": "function isIvyEnabled(tree: Tree, tsConfigPath: string): boolean;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "findNodes",
-    "overloads": [
-      {
-        "signature": "function findNodes(\n  node: ts.Node,\n  kind: ts.SyntaxKind,\n  max = Infinity\n): ts.Node[];",
         "info": [
-          [
-            "description",
-            "Find all nodes from the AST in the subtree of node of SyntaxKind kind."
-          ],
-          ["param", "node"],
-          ["param", "kind"],
-          ["param", "max The maximum number of items to return."],
-          ["return", "all nodes of kind, or [] if none is found"]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getSourceNodes",
-    "overloads": [
-      {
-        "signature": "function getSourceNodes(sourceFile: ts.SourceFile): ts.Node[];",
-        "info": [
-          ["description", "Get all the nodes from a source."],
-          ["param", "sourceFile The source file object."],
-          [
-            "returns",
-            "{Observable<ts.Node>} An observable of all the nodes in the source."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getDecoratorMetadata",
-    "overloads": [
-      {
-        "signature": "function getDecoratorMetadata(\n  source: ts.SourceFile,\n  identifier: string,\n  module: string\n): ts.Node[];",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getContentOfKeyLiteral",
-    "overloads": [
-      {
-        "signature": "function getContentOfKeyLiteral(\n  _source: ts.SourceFile,\n  node: ts.Node\n): string | null;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "insertAfterLastOccurrence",
-    "overloads": [
-      {
-        "signature": "function insertAfterLastOccurrence(\n  nodes: ts.Node[],\n  toInsert: string,\n  file: string,\n  fallbackPos: number,\n  syntaxKind?: ts.SyntaxKind\n): Change;",
-        "info": [
-          [
-            "description",
-            "Insert `toInsert` after the last occurence of `ts.SyntaxKind[nodes[i].kind]`\nor after the last of occurence of `syntaxKind` if the last occurence is a sub child\nof ts.SyntaxKind[nodes[i].kind] and save the changes in file."
-          ],
-          ["param", "nodes insert after the last occurence of nodes"],
-          ["param", "toInsert string to insert"],
-          ["param", "file file to insert changes into"],
           [
             "param",
-            "fallbackPos position to insert if toInsert happens to be the first occurence"
-          ],
-          [
-            "param",
-            "syntaxKind the ts.SyntaxKind of the subchildren to insert after"
-          ],
-          ["return", "Change instance"],
-          [
-            "throw",
-            "Error if toInsert is first occurence but fall back is not set"
+            {
+              "label": "selectState",
+              "description": "",
+              "type": "(state: V) => RouterReducerState<any>"
+            }
           ]
         ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "insertImport",
-    "overloads": [
-      {
-        "signature": "function insertImport(\n  source: ts.SourceFile,\n  fileToEdit: string,\n  symbolName: string,\n  fileName: string,\n  isDefault = false\n): Change;",
-        "info": [
-          [
-            "description",
-            "Add Import `import { symbolName } from fileName` if the import doesn't exit\nalready. Assumes fileToEdit can be resolved and accessed."
-          ],
-          ["param", "fileToEdit (file we want to add import to)"],
-          ["param", "symbolName (item to import)"],
-          ["param", "fileName (path to the file)"],
-          [
-            "param",
-            "isDefault (if true, import follows style for importing default exports)"
-          ],
-          ["return", "Change"]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addBootstrapToModule",
-    "overloads": [
-      {
-        "signature": "function addBootstrapToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
-        "info": [
-          [
-            "description",
-            "Custom function to insert an export into NgModule. It also imports it."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addDeclarationToModule",
-    "overloads": [
-      {
-        "signature": "function addDeclarationToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
-        "info": [
-          [
-            "description",
-            "Custom function to insert a declaration (component, pipe, directive)\ninto NgModule declarations. It also imports the component."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addExportToModule",
-    "overloads": [
-      {
-        "signature": "function addExportToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
-        "info": [
-          [
-            "description",
-            "Custom function to insert an export into NgModule. It also imports it."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addImportToModule",
-    "overloads": [
-      {
-        "signature": "function addImportToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
-        "info": [
-          [
-            "description",
-            "Custom function to insert a declaration (component, pipe, directive)\ninto NgModule declarations. It also imports the component."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addProviderToModule",
-    "overloads": [
-      {
-        "signature": "function addProviderToModule(\n  source: ts.SourceFile,\n  modulePath: string,\n  classifiedName: string,\n  importPath: string\n): Change[];",
-        "info": [
-          [
-            "description",
-            "Custom function to insert a provider into NgModule. It also imports it."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "replaceImport",
-    "overloads": [
-      {
-        "signature": "function replaceImport(\n  sourceFile: ts.SourceFile,\n  path: Path,\n  importFrom: string,\n  importAsIs: string,\n  importToBe: string\n): (ReplaceChange | RemoveChange)[];",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "containsProperty",
-    "overloads": [
-      {
-        "signature": "function containsProperty(\n  objectLiteral: ts.ObjectLiteralExpression,\n  propertyName: string\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "InterfaceDeclaration",
-    "module": "schematics-core",
-    "name": "Host",
-    "overloads": [
-      {
-        "signature": "interface Host {}",
-        "info": [
-          [
-            "license",
-            "Copyright Google Inc. All Rights Reserved.\nUse of this source code is governed by an MIT-style license that can be\nfound in the LICENSE file at https://angular.io/license"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "InterfaceDeclaration",
-    "module": "schematics-core",
-    "name": "Change",
-    "overloads": [
-      {
-        "signature": "interface Change {\n  readonly path: string | null;\n  readonly order: number;\n  readonly description: string;\n}",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "ClassDeclaration",
-    "module": "schematics-core",
-    "name": "NoopChange",
-    "overloads": [
-      {
-        "signature": "class NoopChange implements Change {\n  description = 'No operation.';\n  order = Infinity;\n  path = null;\n\n  apply();\n}",
-        "info": [["description", "An operation that does nothing."]]
-      }
-    ]
-  },
-  {
-    "kind": "ClassDeclaration",
-    "module": "schematics-core",
-    "name": "InsertChange",
-    "overloads": [
-      {
-        "signature": "class InsertChange implements Change {\n  order: number;\n  description: string;\n\n  apply(host: Host);\n}",
-        "info": [["description", "Will add text to the source code."]]
-      }
-    ]
-  },
-  {
-    "kind": "ClassDeclaration",
-    "module": "schematics-core",
-    "name": "RemoveChange",
-    "overloads": [
-      {
-        "signature": "class RemoveChange implements Change {\n  order: number;\n  description: string;\n\n  apply(host: Host): Promise<void>;\n}",
-        "info": [["description", "Will remove text from the source code."]]
-      }
-    ]
-  },
-  {
-    "kind": "ClassDeclaration",
-    "module": "schematics-core",
-    "name": "ReplaceChange",
-    "overloads": [
-      {
-        "signature": "class ReplaceChange implements Change {\n  order: number;\n  description: string;\n\n  apply(host: Host): Promise<void>;\n}",
-        "info": [["description", "Will replace text from the source code."]]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "createReplaceChange",
-    "overloads": [
-      {
-        "signature": "function createReplaceChange(\n  sourceFile: ts.SourceFile,\n  node: ts.Node,\n  oldText: string,\n  newText: string\n): ReplaceChange;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "createChangeRecorder",
-    "overloads": [
-      {
-        "signature": "function createChangeRecorder(\n  tree: Tree,\n  path: string,\n  changes: Change[]\n): UpdateRecorder;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "commitChanges",
-    "overloads": [
-      {
-        "signature": "function commitChanges(tree: Tree, path: string, changes: Change[]);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "InterfaceDeclaration",
-    "module": "schematics-core",
-    "name": "AppConfig",
-    "overloads": [
-      {
-        "signature": "interface AppConfig {\n  name?: string;\n  appRoot?: string;\n  root?: string;\n  outDir?: string;\n  assets?: (\n    | string\n    | {\n        /**\n         * The pattern to match.\n         */\n        glob?: string;\n        /**\n         * The dir to search within.\n         */\n        input?: string;\n        /**\n         * The output path (relative to the outDir).\n         */\n        output?: string;\n      }\n  )[];\n  deployUrl?: string;\n  baseHref?: string;\n  platform?: 'browser' | 'server';\n  index?: string;\n  main?: string;\n  polyfills?: string;\n  test?: string;\n  tsconfig?: string;\n  testTsconfig?: string;\n  prefix?: string;\n  serviceWorker?: boolean;\n  styles?: (\n    | string\n    | {\n        input?: string;\n        [name: string]: any; // tslint:disable-line:no-any\n      }\n  )[];\n  stylePreprocessorOptions?: {\n    /**\n     * Paths to include. Paths will be resolved to project root.\n     */\n    includePaths?: string[];\n  };\n  scripts?: (\n    | string\n    | {\n        input: string;\n        [name: string]: any; // tslint:disable-line:no-any\n      }\n  )[];\n  environmentSource?: string;\n  environments?: {\n    [name: string]: any; // tslint:disable-line:no-any\n  };\n  appShell?: {\n    app: string;\n    route: string;\n  };\n}",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getWorkspace",
-    "overloads": [
-      {
-        "signature": "function getWorkspace(host: Tree): WorkspaceSchema;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getWorkspacePath",
-    "overloads": [
-      {
-        "signature": "function getWorkspacePath(host: Tree): string;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "findModule",
-    "overloads": [
-      {
-        "signature": "function findModule(host: Tree, generateDir: string): Path;",
-        "info": [
-          [
-            "description",
-            "Function to find the \"closest\" module to a generated file's path."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "findModuleFromOptions",
-    "overloads": [
-      {
-        "signature": "function findModuleFromOptions(\n  host: Tree,\n  options: ModuleOptions\n): Path | undefined;",
-        "info": [
-          [
-            "description",
-            "Find the module referred by a set of options passed to the schematics."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "buildRelativePath",
-    "overloads": [
-      {
-        "signature": "function buildRelativePath(from: string, to: string): string;",
-        "info": [
-          [
-            "description",
-            "Build a relative path from one file path to another file path."
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "InterfaceDeclaration",
-    "module": "schematics-core",
-    "name": "ModuleOptions",
-    "overloads": [
-      {
-        "signature": "interface ModuleOptions {\n  module?: string;\n  name: string;\n  flat?: boolean;\n  path?: string;\n  skipImport?: boolean;\n}",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "findPropertyInAstObject",
-    "overloads": [
-      {
-        "signature": "function findPropertyInAstObject(\n  node: JsonAstObject,\n  propertyName: string\n): JsonAstNode | null;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addReducerToState",
-    "overloads": [
-      {
-        "signature": "function addReducerToState(options: any): Rule;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addReducerToStateInterface",
-    "overloads": [
-      {
-        "signature": "function addReducerToStateInterface(\n  source: ts.SourceFile,\n  reducersPath: string,\n  options: { name: string; plural: boolean }\n): Change;",
-        "info": [
-          [
-            "description",
-            "Insert the reducer into the first defined top level interface"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addReducerImportToNgModule",
-    "overloads": [
-      {
-        "signature": "function addReducerImportToNgModule(options: any): Rule;",
-        "info": [["description", "Add reducer feature to NgModule"]]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addReducerToActionReducerMap",
-    "overloads": [
-      {
-        "signature": "function addReducerToActionReducerMap(\n  source: ts.SourceFile,\n  reducersPath: string,\n  options: { name: string; plural: boolean }\n): Change;",
-        "info": [
-          ["description", "Insert the reducer into the ActionReducerMap"]
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "omit",
-    "overloads": [
-      {
-        "signature": "function omit<T extends { [key: string]: any }>(\n  object: T,\n  keyToRemove: keyof T\n): Partial<T>;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getProjectPath",
-    "overloads": [
-      {
-        "signature": "function getProjectPath(\n  host: Tree,\n  options: { project?: string | undefined; path?: string | undefined }\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "getProject",
-    "overloads": [
-      {
-        "signature": "function getProject(\n  host: Tree,\n  options: { project?: string | undefined; path?: string | undefined }\n): WorkspaceProject;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "isLib",
-    "overloads": [
-      {
-        "signature": "function isLib(\n  host: Tree,\n  options: { project?: string | undefined; path?: string | undefined }\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "VariableDeclaration",
-    "module": "schematics-core",
-    "name": "stringUtils",
-    "overloads": [
-      {
-        "signature": "const stringUtils: {\n  dasherize: typeof dasherize;\n  decamelize: typeof decamelize;\n  camelize: typeof camelize;\n  classify: typeof classify;\n  underscore: typeof underscore;\n  group: typeof group;\n  capitalize: typeof capitalize;\n  featurePath: typeof featurePath;\n  pluralize: typeof pluralize;\n};",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "updatePackage",
-    "overloads": [
-      { "signature": "function updatePackage(name: string): Rule;", "info": [] }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "parseName",
-    "overloads": [
-      {
-        "signature": "function parseName(path: string, name: string): Location;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "addPackageToPackageJson",
-    "overloads": [
-      {
-        "signature": "function addPackageToPackageJson(\n  host: Tree,\n  type: string,\n  pkg: string,\n  version: string\n): Tree;",
-        "info": [["description", "Adds a package to the package.json"]]
-      }
-    ]
-  },
-  {
-    "kind": "VariableDeclaration",
-    "module": "schematics-core",
-    "name": "platformVersion",
-    "overloads": [
-      { "signature": "const platformVersion: '^10.0.0';", "info": [] }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitTSSourceFiles",
-    "overloads": [
-      {
-        "signature": "function visitTSSourceFiles<Result = void>(\n  tree: Tree,\n  visitor: (\n    sourceFile: ts.SourceFile,\n    tree: Tree,\n    result?: Result\n  ) => Result | undefined\n): Result | undefined;",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitNgModuleImports",
-    "overloads": [
-      {
-        "signature": "function visitNgModuleImports(\n  sourceFile: ts.SourceFile,\n  callback: (\n    importNode: ts.PropertyAssignment,\n    elementExpressions: ts.NodeArray<ts.Expression>\n  ) => void\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitNgModuleExports",
-    "overloads": [
-      {
-        "signature": "function visitNgModuleExports(\n  sourceFile: ts.SourceFile,\n  callback: (\n    exportNode: ts.PropertyAssignment,\n    elementExpressions: ts.NodeArray<ts.Expression>\n  ) => void\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitComponents",
-    "overloads": [
-      {
-        "signature": "function visitComponents(\n  sourceFile: ts.SourceFile,\n  callback: (\n    classDeclarationNode: ts.ClassDeclaration,\n    decoratorExpressionNode: ts.ObjectLiteralExpression\n  ) => void\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitDecorator",
-    "overloads": [
-      {
-        "signature": "function visitDecorator(\n  sourceFile: ts.SourceFile,\n  decoratorName: string,\n  callback: (\n    classDeclarationNode: ts.ClassDeclaration,\n    decoratorExpressionNode: ts.ObjectLiteralExpression\n  ) => void\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitNgModules",
-    "overloads": [
-      {
-        "signature": "function visitNgModules(\n  sourceFile: ts.SourceFile,\n  callback: (\n    classDeclarationNode: ts.ClassDeclaration,\n    decoratorExpressionNode: ts.ObjectLiteralExpression\n  ) => void\n);",
-        "info": []
-      }
-    ]
-  },
-  {
-    "kind": "FunctionDeclaration",
-    "module": "schematics-core",
-    "name": "visitTemplates",
-    "overloads": [
-      {
-        "signature": "function visitTemplates(\n  tree: Tree,\n  visitor: (\n    template: {\n      fileName: string;\n      content: string;\n      inline: boolean;\n      start: number;\n    },\n    tree: Tree\n  ) => void\n): void;",
-        "info": []
       }
     ]
   },
@@ -3394,7 +3031,7 @@
     "overloads": [
       {
         "signature": "export type ActionCreator<\n  T extends string = string,\n  C extends Creator = Creator\n> = C & TypedAction<T>;",
-        "info": [["description", "See `Creator`."]]
+        "info": [["description", "See `Creator`.\n"]]
       }
     ]
   },
@@ -3408,7 +3045,7 @@
         "info": [
           [
             "description",
-            "A function that takes an `Action` and a `State`, and returns a `State`.\nSee `createReducer`."
+            "A function that takes an `Action` and a `State`, and returns a `State`.\nSee `createReducer`.\n"
           ]
         ]
       }
@@ -3457,7 +3094,7 @@
         "info": [
           [
             "description",
-            "A function that returns an object in the shape of the `Action` interface. Configured using `createAction`."
+            "A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.\n"
           ]
         ]
       }
@@ -3517,30 +3154,124 @@
         "info": [
           [
             "description",
-            "Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.\nAction creators reduce the explicitness of class-based action creators."
+            "\nCreates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.\n\nAction creators reduce the explicitness of class-based action creators.\n"
           ],
-          ["param", "type Describes the action that will be dispatched"],
           [
             "param",
-            "config Additional metadata needed for the handling of the action. See {@link createAction#usage-notes Usage Notes}."
+            {
+              "label": "type",
+              "description": "Describes the action that will be dispatched",
+              "type": "T"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "config",
+              "description": "Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.",
+              "type": "{ _as: 'props'; } | C"
+            }
           ],
           [
             "usageNotes",
-            "**Declaring an action creator**\nWithout additional metadata:\n\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\n\nWith additional metadata:\n\n```ts\nexport const loginSuccess = createAction(\n  '[Auth/API] Login Success',\n  props<{ user: User }>()\n);\n```\n\nWith a function:\n\n```ts\nexport const loginSuccess = createAction(\n  '[Auth/API] Login Success',\n  (response: Response) => response.user\n);\n```\n\n**Dispatching an action**\nWithout additional metadata:\n\n```ts\nstore.dispatch(increment());\n```\n\nWith additional metadata:\n\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\n**Referencing an action in a reducer**\nUsing a switch statement:\n\n```ts\nswitch (action.type) {\n  // ...\n  case AuthApiActions.loginSuccess.type: {\n    return {\n      ...state,\n      user: action.user,\n    };\n  }\n}\n```\n\nUsing a reducer creator:\n\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }));\n```\n\n**Referencing an action in an effect**\n\n```ts\neffectName$ = createEffect(() =>\n  this.actions$.pipe(\n    ofType(AuthApiActions.loginSuccess)\n    // ...\n  )\n);\n```"
+            "\n\n**Declaring an action creator**\n\nWithout additional metadata:\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\nWith additional metadata:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\nprops<{ user: User }>()\n);\n```\nWith a function:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\n(response: Response) => response.user\n);\n```\n\n**Dispatching an action**\n\nWithout additional metadata:\n```ts\nstore.dispatch(increment());\n```\nWith additional metadata:\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\n**Referencing an action in a reducer**\n\nUsing a switch statement:\n```ts\nswitch (action.type) {\n// ...\ncase AuthApiActions.loginSuccess.type: {\nreturn {\n...state,\nuser: action.user\n};\n}\n}\n```\nUsing a reducer creator:\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\n**Referencing an action in an effect**\n```ts\neffectName$ = createEffect(\n() => this.actions$.pipe(\nofType(AuthApiActions.loginSuccess),\n// ...\n)\n);\n```\n"
           ]
         ]
       },
       {
         "signature": "function createAction<T extends string>(\n  type: T\n): ActionCreator<T, () => TypedAction<T>>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nCreates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.\n\nAction creators reduce the explicitness of class-based action creators.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "type",
+              "description": "Describes the action that will be dispatched",
+              "type": "T"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "config",
+              "description": "Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.",
+              "type": ""
+            }
+          ],
+          [
+            "usageNotes",
+            "\n\n**Declaring an action creator**\n\nWithout additional metadata:\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\nWith additional metadata:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\nprops<{ user: User }>()\n);\n```\nWith a function:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\n(response: Response) => response.user\n);\n```\n\n**Dispatching an action**\n\nWithout additional metadata:\n```ts\nstore.dispatch(increment());\n```\nWith additional metadata:\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\n**Referencing an action in a reducer**\n\nUsing a switch statement:\n```ts\nswitch (action.type) {\n// ...\ncase AuthApiActions.loginSuccess.type: {\nreturn {\n...state,\nuser: action.user\n};\n}\n}\n```\nUsing a reducer creator:\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\n**Referencing an action in an effect**\n```ts\neffectName$ = createEffect(\n() => this.actions$.pipe(\nofType(AuthApiActions.loginSuccess),\n// ...\n)\n);\n```\n"
+          ]
+        ]
       },
       {
         "signature": "function createAction<T extends string, P extends object>(\n  type: T,\n  config: Props<P> & NotAllowedCheck<P>\n): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nCreates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.\n\nAction creators reduce the explicitness of class-based action creators.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "type",
+              "description": "Describes the action that will be dispatched",
+              "type": "T"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "config",
+              "description": "Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.",
+              "type": "Props<P> & NotAllowedCheck<P>"
+            }
+          ],
+          [
+            "usageNotes",
+            "\n\n**Declaring an action creator**\n\nWithout additional metadata:\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\nWith additional metadata:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\nprops<{ user: User }>()\n);\n```\nWith a function:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\n(response: Response) => response.user\n);\n```\n\n**Dispatching an action**\n\nWithout additional metadata:\n```ts\nstore.dispatch(increment());\n```\nWith additional metadata:\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\n**Referencing an action in a reducer**\n\nUsing a switch statement:\n```ts\nswitch (action.type) {\n// ...\ncase AuthApiActions.loginSuccess.type: {\nreturn {\n...state,\nuser: action.user\n};\n}\n}\n```\nUsing a reducer creator:\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\n**Referencing an action in an effect**\n```ts\neffectName$ = createEffect(\n() => this.actions$.pipe(\nofType(AuthApiActions.loginSuccess),\n// ...\n)\n);\n```\n"
+          ]
+        ]
       },
       {
         "signature": "function createAction<T extends string, P extends any[], R extends object>(\n  type: T,\n  creator: Creator<P, R> & NotAllowedCheck<R>\n): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nCreates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.\n\nAction creators reduce the explicitness of class-based action creators.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "type",
+              "description": "Describes the action that will be dispatched",
+              "type": "T"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "config",
+              "description": "Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.",
+              "type": ""
+            }
+          ],
+          [
+            "usageNotes",
+            "\n\n**Declaring an action creator**\n\nWithout additional metadata:\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\nWith additional metadata:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\nprops<{ user: User }>()\n);\n```\nWith a function:\n```ts\nexport const loginSuccess = createAction(\n'[Auth/API] Login Success',\n(response: Response) => response.user\n);\n```\n\n**Dispatching an action**\n\nWithout additional metadata:\n```ts\nstore.dispatch(increment());\n```\nWith additional metadata:\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\n**Referencing an action in a reducer**\n\nUsing a switch statement:\n```ts\nswitch (action.type) {\n// ...\ncase AuthApiActions.loginSuccess.type: {\nreturn {\n...state,\nuser: action.user\n};\n}\n}\n```\nUsing a reducer creator:\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\n**Referencing an action in an effect**\n```ts\neffectName$ = createEffect(\n() => this.actions$.pipe(\nofType(AuthApiActions.loginSuccess),\n// ...\n)\n);\n```\n"
+          ],
+          [
+            "param",
+            {
+              "label": "creator",
+              "description": "",
+              "type": "FunctionWithParametersType<P, R> & NotAllowedCheck<R>"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -3562,7 +3293,9 @@
     "overloads": [
       {
         "signature": "function union<C extends { [key: string]: ActionCreator<string, Creator> }>(\n  creators: C\n): ReturnType<C[keyof C]>;",
-        "info": []
+        "info": [
+          ["param", { "label": "creators", "description": "", "type": "C" }]
+        ]
       }
     ]
   },
@@ -3584,39 +3317,100 @@
     "overloads": [
       {
         "signature": "function select<T, Props, K>(\n  pathOrMapFn: ((state: T, props?: Props) => any) | string,\n  propsOrPath?: Props | string,\n  ...paths: string[]\n);",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "pathOrMapFn",
+              "description": "",
+              "type": "string | ((state: T, props?: Props) => any)"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "propsOrPath",
+              "description": "",
+              "type": "string | Props"
+            }
+          ],
+          ["param", { "label": "paths", "description": "", "type": "string[]" }]
+        ]
       },
       {
         "signature": "function select<T, Props, K>(\n  mapFn: (state: T, props: Props) => K,\n  props?: Props\n): (source$: Observable<T>) => Observable<K>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "mapFn",
+              "description": "",
+              "type": "(state: T, props: Props) => K"
+            }
+          ],
+          ["param", { "label": "props", "description": "", "type": "Props" }]
+        ]
       },
       {
         "signature": "function select<T, a extends keyof T>(\n  key: a\n): (source$: Observable<T>) => Observable<T[a]>;",
-        "info": []
+        "info": [["param", { "label": "key", "description": "", "type": "a" }]]
       },
       {
         "signature": "function select<T, a extends keyof T, b extends keyof T[a]>(\n  key1: a,\n  key2: b\n): (source$: Observable<T>) => Observable<T[a][b]>;",
-        "info": []
+        "info": [
+          ["param", { "label": "key1", "description": "", "type": "a" }],
+          ["param", { "label": "key2", "description": "", "type": "b" }]
+        ]
       },
       {
         "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b]\n>(\n  key1: a,\n  key2: b,\n  key3: c\n): (source$: Observable<T>) => Observable<T[a][b][c]>;",
-        "info": []
+        "info": [
+          ["param", { "label": "key1", "description": "", "type": "a" }],
+          ["param", { "label": "key2", "description": "", "type": "b" }],
+          ["param", { "label": "key3", "description": "", "type": "c" }]
+        ]
       },
       {
         "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c]\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d\n): (source$: Observable<T>) => Observable<T[a][b][c][d]>;",
-        "info": []
+        "info": [
+          ["param", { "label": "key1", "description": "", "type": "a" }],
+          ["param", { "label": "key2", "description": "", "type": "b" }],
+          ["param", { "label": "key3", "description": "", "type": "c" }],
+          ["param", { "label": "key4", "description": "", "type": "d" }]
+        ]
       },
       {
         "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c],\n  e extends keyof T[a][b][c][d]\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d,\n  key5: e\n): (source$: Observable<T>) => Observable<T[a][b][c][d][e]>;",
-        "info": []
+        "info": [
+          ["param", { "label": "key1", "description": "", "type": "a" }],
+          ["param", { "label": "key2", "description": "", "type": "b" }],
+          ["param", { "label": "key3", "description": "", "type": "c" }],
+          ["param", { "label": "key4", "description": "", "type": "d" }],
+          ["param", { "label": "key5", "description": "", "type": "e" }]
+        ]
       },
       {
         "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c],\n  e extends keyof T[a][b][c][d],\n  f extends keyof T[a][b][c][d][e]\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d,\n  key5: e,\n  key6: f\n): (source$: Observable<T>) => Observable<T[a][b][c][d][e][f]>;",
-        "info": []
+        "info": [
+          ["param", { "label": "key1", "description": "", "type": "a" }],
+          ["param", { "label": "key2", "description": "", "type": "b" }],
+          ["param", { "label": "key3", "description": "", "type": "c" }],
+          ["param", { "label": "key4", "description": "", "type": "d" }],
+          ["param", { "label": "key5", "description": "", "type": "e" }],
+          ["param", { "label": "key6", "description": "", "type": "f" }]
+        ]
       },
       {
         "signature": "function select<\n  T,\n  a extends keyof T,\n  b extends keyof T[a],\n  c extends keyof T[a][b],\n  d extends keyof T[a][b][c],\n  e extends keyof T[a][b][c][d],\n  f extends keyof T[a][b][c][d][e],\n  K = any\n>(\n  key1: a,\n  key2: b,\n  key3: c,\n  key4: d,\n  key5: e,\n  key6: f,\n  ...paths: string[]\n): (source$: Observable<T>) => Observable<K>;",
-        "info": []
+        "info": [
+          ["param", { "label": "key1", "description": "", "type": "a" }],
+          ["param", { "label": "key2", "description": "", "type": "b" }],
+          ["param", { "label": "key3", "description": "", "type": "c" }],
+          ["param", { "label": "key4", "description": "", "type": "d" }],
+          ["param", { "label": "key5", "description": "", "type": "e" }],
+          ["param", { "label": "key6", "description": "", "type": "f" }],
+          ["param", { "label": "paths", "description": "", "type": "string[]" }]
+        ]
       }
     ]
   },
@@ -3627,11 +3421,30 @@
     "overloads": [
       {
         "signature": "function combineReducers(\n  reducers: any,\n  initialState: any = {}\n): ActionReducer<any, Action>;",
-        "info": []
+        "info": [
+          ["param", { "label": "reducers", "description": "", "type": "any" }],
+          [
+            "param",
+            { "label": "initialState", "description": "", "type": "any" }
+          ]
+        ]
       },
       {
         "signature": "function combineReducers<T, V extends Action = Action>(\n  reducers: ActionReducerMap<T, V>,\n  initialState?: Partial<T>\n): ActionReducer<T, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "reducers",
+              "description": "",
+              "type": "ActionReducerMap<T, V>"
+            }
+          ],
+          [
+            "param",
+            { "label": "initialState", "description": "", "type": "Partial<T>" }
+          ]
+        ]
       }
     ]
   },
@@ -3640,31 +3453,64 @@
     "module": "store",
     "name": "compose",
     "overloads": [
-      { "signature": "function compose(...functions: any[]);", "info": [] },
+      {
+        "signature": "function compose(...functions: any[]);",
+        "info": [
+          [
+            "param",
+            { "label": "functions", "description": "", "type": "any[]" }
+          ]
+        ]
+      },
       { "signature": "function compose<A>(): (i: A) => A;", "info": [] },
       {
         "signature": "function compose<A, B>(b: (i: A) => B): (i: A) => B;",
-        "info": []
+        "info": [
+          ["param", { "label": "b", "description": "", "type": "(i: A) => B" }]
+        ]
       },
       {
         "signature": "function compose<A, B, C>(c: (i: B) => C, b: (i: A) => B): (i: A) => C;",
-        "info": []
+        "info": [
+          ["param", { "label": "c", "description": "", "type": "(i: B) => C" }],
+          ["param", { "label": "b", "description": "", "type": "(i: A) => B" }]
+        ]
       },
       {
         "signature": "function compose<A, B, C, D>(\n  d: (i: C) => D,\n  c: (i: B) => C,\n  b: (i: A) => B\n): (i: A) => D;",
-        "info": []
+        "info": [
+          ["param", { "label": "d", "description": "", "type": "(i: C) => D" }],
+          ["param", { "label": "c", "description": "", "type": "(i: B) => C" }],
+          ["param", { "label": "b", "description": "", "type": "(i: A) => B" }]
+        ]
       },
       {
         "signature": "function compose<A, B, C, D, E>(\n  e: (i: D) => E,\n  d: (i: C) => D,\n  c: (i: B) => C,\n  b: (i: A) => B\n): (i: A) => E;",
-        "info": []
+        "info": [
+          ["param", { "label": "e", "description": "", "type": "(i: D) => E" }],
+          ["param", { "label": "d", "description": "", "type": "(i: C) => D" }],
+          ["param", { "label": "c", "description": "", "type": "(i: B) => C" }],
+          ["param", { "label": "b", "description": "", "type": "(i: A) => B" }]
+        ]
       },
       {
         "signature": "function compose<A, B, C, D, E, F>(\n  f: (i: E) => F,\n  e: (i: D) => E,\n  d: (i: C) => D,\n  c: (i: B) => C,\n  b: (i: A) => B\n): (i: A) => F;",
-        "info": []
+        "info": [
+          ["param", { "label": "f", "description": "", "type": "(i: E) => F" }],
+          ["param", { "label": "e", "description": "", "type": "(i: D) => E" }],
+          ["param", { "label": "d", "description": "", "type": "(i: C) => D" }],
+          ["param", { "label": "c", "description": "", "type": "(i: B) => C" }],
+          ["param", { "label": "b", "description": "", "type": "(i: A) => B" }]
+        ]
       },
       {
         "signature": "function compose<A = any, F = any>(...functions: any[]): (i: A) => F;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "functions", "description": "", "type": "any[]" }
+          ]
+        ]
       }
     ]
   },
@@ -3675,7 +3521,24 @@
     "overloads": [
       {
         "signature": "function createReducerFactory<T, V extends Action = Action>(\n  reducerFactory: ActionReducerFactory<T, V>,\n  metaReducers?: MetaReducer<T, V>[]\n): ActionReducerFactory<T, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "reducerFactory",
+              "description": "",
+              "type": "ActionReducerFactory<T, V>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "metaReducers",
+              "description": "",
+              "type": "MetaReducer<T, V>[]"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -3705,7 +3568,9 @@
     "overloads": [
       {
         "signature": "function setNgrxMockEnvironment(value: boolean): void;",
-        "info": []
+        "info": [
+          ["param", { "label": "value", "description": "", "type": "boolean" }]
+        ]
       }
     ]
   },
@@ -3779,135 +3644,985 @@
     "overloads": [
       {
         "signature": "function createSelector(\n  ...input: any[]\n): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any>;",
-        "info": []
+        "info": [
+          ["param", { "label": "input", "description": "", "type": "any[]" }]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, Result>(\n  s1: Selector<State, S1>,\n  projector: (s1: S1) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  projector: (s1: S1, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, Result>(\n  selectors: [Selector<State, S1>],\n  projector: (s1: S1) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, Result>(\n  selectors: [SelectorWithProps<State, Props, S1>],\n  projector: (s1: S1, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  projector: (s1: S1, s2: S2) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  projector: (s1: S1, s2: S2, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, Result>(\n  selectors: [Selector<State, S1>, Selector<State, S2>],\n  projector: (s1: S1, s2: S2) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>\n  ],\n  projector: (s1: S1, s2: S2, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  projector: (s1: S1, s2: S2, s3: S3) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            { "label": "s3", "description": "", "type": "Selector<State, S3>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  projector: (s1: S1, s2: S2, s3: S3, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s3",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S3>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, Result>(\n  selectors: [Selector<State, S1>, Selector<State, S2>, Selector<State, S3>],\n  projector: (s1: S1, s2: S2, s3: S3) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>, Selector<State, S3>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>, SelectorWithProps<State, Props, S3>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            { "label": "s3", "description": "", "type": "Selector<State, S3>" }
+          ],
+          [
+            "param",
+            { "label": "s4", "description": "", "type": "Selector<State, S4>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s3",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S3>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s4",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S4>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>, Selector<State, S3>, Selector<State, S4>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>, SelectorWithProps<State, Props, S3>, SelectorWithProps<State, Props, S4>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            { "label": "s3", "description": "", "type": "Selector<State, S3>" }
+          ],
+          [
+            "param",
+            { "label": "s4", "description": "", "type": "Selector<State, S4>" }
+          ],
+          [
+            "param",
+            { "label": "s5", "description": "", "type": "Selector<State, S5>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s3",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S3>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s4",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S4>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s5",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S5>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>,\n    Selector<State, S5>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>, Selector<State, S3>, Selector<State, S4>, Selector<State, S5>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>, SelectorWithProps<State, Props, S3>, SelectorWithProps<State, Props, S4>, SelectorWithProps<State, Props, S5>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  s6: Selector<State, S6>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            { "label": "s3", "description": "", "type": "Selector<State, S3>" }
+          ],
+          [
+            "param",
+            { "label": "s4", "description": "", "type": "Selector<State, S4>" }
+          ],
+          [
+            "param",
+            { "label": "s5", "description": "", "type": "Selector<State, S5>" }
+          ],
+          [
+            "param",
+            { "label": "s6", "description": "", "type": "Selector<State, S6>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  s6: SelectorWithProps<State, Props, S6>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s3",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S3>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s4",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S4>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s5",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S5>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s6",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S6>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n\n    Selector<State, S4>,\n    Selector<State, S5>,\n    Selector<State, S6>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>, Selector<State, S3>, Selector<State, S4>, Selector<State, S5>, Selector<State, S6>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>,\n    SelectorWithProps<State, Props, S6>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>, SelectorWithProps<State, Props, S3>, SelectorWithProps<State, Props, S4>, SelectorWithProps<State, Props, S5>, SelectorWithProps<State, Props, S6>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  s6: Selector<State, S6>,\n  s7: Selector<State, S7>,\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            { "label": "s3", "description": "", "type": "Selector<State, S3>" }
+          ],
+          [
+            "param",
+            { "label": "s4", "description": "", "type": "Selector<State, S4>" }
+          ],
+          [
+            "param",
+            { "label": "s5", "description": "", "type": "Selector<State, S5>" }
+          ],
+          [
+            "param",
+            { "label": "s6", "description": "", "type": "Selector<State, S6>" }
+          ],
+          [
+            "param",
+            { "label": "s7", "description": "", "type": "Selector<State, S7>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  s6: SelectorWithProps<State, Props, S6>,\n  s7: SelectorWithProps<State, Props, S7>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s3",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S3>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s4",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S4>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s5",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S5>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s6",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S6>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s7",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S7>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>,\n    Selector<State, S5>,\n    Selector<State, S6>,\n    Selector<State, S7>\n  ],\n  projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>, Selector<State, S3>, Selector<State, S4>, Selector<State, S5>, Selector<State, S6>, Selector<State, S7>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>,\n    SelectorWithProps<State, Props, S6>,\n    SelectorWithProps<State, Props, S7>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>, SelectorWithProps<State, Props, S3>, SelectorWithProps<State, Props, S4>, SelectorWithProps<State, Props, S5>, SelectorWithProps<State, Props, S6>, SelectorWithProps<State, Props, S7>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  s1: Selector<State, S1>,\n  s2: Selector<State, S2>,\n  s3: Selector<State, S3>,\n  s4: Selector<State, S4>,\n  s5: Selector<State, S5>,\n  s6: Selector<State, S6>,\n  s7: Selector<State, S7>,\n  s8: Selector<State, S8>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8\n  ) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "s1", "description": "", "type": "Selector<State, S1>" }
+          ],
+          [
+            "param",
+            { "label": "s2", "description": "", "type": "Selector<State, S2>" }
+          ],
+          [
+            "param",
+            { "label": "s3", "description": "", "type": "Selector<State, S3>" }
+          ],
+          [
+            "param",
+            { "label": "s4", "description": "", "type": "Selector<State, S4>" }
+          ],
+          [
+            "param",
+            { "label": "s5", "description": "", "type": "Selector<State, S5>" }
+          ],
+          [
+            "param",
+            { "label": "s6", "description": "", "type": "Selector<State, S6>" }
+          ],
+          [
+            "param",
+            { "label": "s7", "description": "", "type": "Selector<State, S7>" }
+          ],
+          [
+            "param",
+            { "label": "s8", "description": "", "type": "Selector<State, S8>" }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7, s8: S8) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  s1: SelectorWithProps<State, Props, S1>,\n  s2: SelectorWithProps<State, Props, S2>,\n  s3: SelectorWithProps<State, Props, S3>,\n  s4: SelectorWithProps<State, Props, S4>,\n  s5: SelectorWithProps<State, Props, S5>,\n  s6: SelectorWithProps<State, Props, S6>,\n  s7: SelectorWithProps<State, Props, S7>,\n  s8: SelectorWithProps<State, Props, S8>,\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "s1",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S1>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s2",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S2>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s3",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S3>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s4",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S4>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s5",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S5>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s6",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S6>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s7",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S7>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "s8",
+              "description": "",
+              "type": "SelectorWithProps<State, Props, S8>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7, s8: S8, props: Props) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  selectors: [\n    Selector<State, S1>,\n    Selector<State, S2>,\n    Selector<State, S3>,\n    Selector<State, S4>,\n    Selector<State, S5>,\n    Selector<State, S6>,\n    Selector<State, S7>,\n    Selector<State, S8>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8\n  ) => Result\n): MemoizedSelector<State, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[Selector<State, S1>, Selector<State, S2>, Selector<State, S3>, Selector<State, S4>, Selector<State, S5>, Selector<State, S6>, Selector<State, S7>, Selector<State, S8>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7, s8: S8) => Result"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(\n  selectors: [\n    SelectorWithProps<State, Props, S1>,\n    SelectorWithProps<State, Props, S2>,\n    SelectorWithProps<State, Props, S3>,\n    SelectorWithProps<State, Props, S4>,\n    SelectorWithProps<State, Props, S5>,\n    SelectorWithProps<State, Props, S6>,\n    SelectorWithProps<State, Props, S7>,\n    SelectorWithProps<State, Props, S8>\n  ],\n  projector: (\n    s1: S1,\n    s2: S2,\n    s3: S3,\n    s4: S4,\n    s5: S5,\n    s6: S6,\n    s7: S7,\n    s8: S8,\n    props: Props\n  ) => Result\n): MemoizedSelectorWithProps<State, Props, Result>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "[SelectorWithProps<State, Props, S1>, SelectorWithProps<State, Props, S2>, SelectorWithProps<State, Props, S3>, SelectorWithProps<State, Props, S4>, SelectorWithProps<State, Props, S5>, SelectorWithProps<State, Props, S6>, SelectorWithProps<State, Props, S7>, SelectorWithProps<State, Props, S8>]"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "projector",
+              "description": "",
+              "type": "(s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7, s8: S8, props: Props) => Result"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -3918,23 +4633,72 @@
     "overloads": [
       {
         "signature": "function createSelectorFactory(\n  memoize: MemoizeFn,\n  options: SelectorFactoryConfig<any, any> = {\n    stateFn: defaultStateFn,\n  }\n);",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "memoize", "description": "", "type": "MemoizeFn" }
+          ],
+          [
+            "param",
+            {
+              "label": "options",
+              "description": "",
+              "type": "SelectorFactoryConfig<any, any>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelectorFactory<T = any, V = any>(\n  memoize: MemoizeFn\n): (...input: any[]) => MemoizedSelector<T, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "memoize", "description": "", "type": "MemoizeFn" }
+          ]
+        ]
       },
       {
         "signature": "function createSelectorFactory<T = any, V = any>(\n  memoize: MemoizeFn,\n  options: SelectorFactoryConfig<T, V>\n): (...input: any[]) => MemoizedSelector<T, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "memoize", "description": "", "type": "MemoizeFn" }
+          ],
+          [
+            "param",
+            {
+              "label": "options",
+              "description": "",
+              "type": "SelectorFactoryConfig<T, V>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function createSelectorFactory<T = any, Props = any, V = any>(\n  memoize: MemoizeFn\n): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "memoize", "description": "", "type": "MemoizeFn" }
+          ]
+        ]
       },
       {
         "signature": "function createSelectorFactory<T = any, Props = any, V = any>(\n  memoize: MemoizeFn,\n  options: SelectorFactoryConfig<T, V>\n): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "memoize", "description": "", "type": "MemoizeFn" }
+          ],
+          [
+            "param",
+            {
+              "label": "options",
+              "description": "",
+              "type": "SelectorFactoryConfig<T, V>"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -3945,15 +4709,30 @@
     "overloads": [
       {
         "signature": "function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "featureName", "description": "", "type": "any" }
+          ]
+        ]
       },
       {
         "signature": "function createFeatureSelector<T>(\n  featureName: string\n): MemoizedSelector<object, T>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "featureName", "description": "", "type": "string" }
+          ]
+        ]
       },
       {
         "signature": "function createFeatureSelector<T, V>(\n  featureName: keyof T\n): MemoizedSelector<T, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "featureName", "description": "", "type": "keyof T" }
+          ]
+        ]
       }
     ]
   },
@@ -3964,7 +4743,28 @@
     "overloads": [
       {
         "signature": "function defaultMemoize(\n  projectionFn: AnyFn,\n  isArgumentsEqual = isEqualCheck,\n  isResultEqual = isEqualCheck\n): MemoizedProjection;",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "projectionFn", "description": "", "type": "AnyFn" }
+          ],
+          [
+            "param",
+            {
+              "label": "isArgumentsEqual",
+              "description": "",
+              "type": "typeof isEqualCheck"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "isResultEqual",
+              "description": "",
+              "type": "typeof isEqualCheck"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -3975,7 +4775,26 @@
     "overloads": [
       {
         "signature": "function defaultStateFn(\n  state: any,\n  selectors: Selector<any, any>[] | SelectorWithProps<any, any, any>[],\n  props: any,\n  memoizedProjector: MemoizedProjection\n): any;",
-        "info": []
+        "info": [
+          ["param", { "label": "state", "description": "", "type": "any" }],
+          [
+            "param",
+            {
+              "label": "selectors",
+              "description": "",
+              "type": "Selector<any, any>[] | SelectorWithProps<any, any, any>[]"
+            }
+          ],
+          ["param", { "label": "props", "description": "", "type": "any" }],
+          [
+            "param",
+            {
+              "label": "memoizedProjector",
+              "description": "",
+              "type": "MemoizedProjection"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -4030,7 +4849,20 @@
     "overloads": [
       {
         "signature": "function resultMemoize(projectionFn: AnyFn, isResultEqual: ComparatorFn);",
-        "info": []
+        "info": [
+          [
+            "param",
+            { "label": "projectionFn", "description": "", "type": "AnyFn" }
+          ],
+          [
+            "param",
+            {
+              "label": "isResultEqual",
+              "description": "",
+              "type": "ComparatorFn"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -4074,7 +4906,24 @@
     "overloads": [
       {
         "signature": "function reduceState<T, V extends Action = Action>(\n  stateActionPair: StateActionPair<T, V> = { state: undefined },\n  [action, reducer]: [V, ActionReducer<T, V>]\n): StateActionPair<T, V>;",
-        "info": []
+        "info": [
+          [
+            "param",
+            {
+              "label": "stateActionPair",
+              "description": "",
+              "type": "StateActionPair<T, V>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "[action, reducer]",
+              "description": "",
+              "type": "[V, ActionReducer<T, V>]"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -4237,61 +5086,403 @@
         "info": [
           [
             "description",
-            "Associates actions with a given state change function.\nA state change function must be provided as the last parameter."
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
           ],
           [
             "param",
-            "args `ActionCreator`'s followed by a state change function.\n**To maintain type-safety**: pass 10 or less `ActionCreator`'s."
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": "(Function | ActionCreator<string, import(\"C:/Users/tdeschryver/dev/platform/modules/store/src/models\").FunctionWithParametersType<any[], object>>)[]"
+            }
           ],
           [
             "returns",
-            "an association of action types with a state change function."
+            "an association of action types with a state change function.\n"
           ]
         ]
       },
       {
         "signature": "function on<C1 extends ActionCreator, S>(\n  creator1: C1,\n  reducer: OnReducer<S, [C1]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<C1 extends ActionCreator, C2 extends ActionCreator, S>(\n  creator1: C1,\n  creator2: C2,\n  reducer: OnReducer<S, [C1, C2]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  reducer: OnReducer<S, [C1, C2, C3]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  reducer: OnReducer<S, [C1, C2, C3, C4]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          ["param", { "label": "creator5", "description": "", "type": "C5" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4, C5]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          ["param", { "label": "creator5", "description": "", "type": "C5" }],
+          ["param", { "label": "creator6", "description": "", "type": "C6" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4, C5, C6]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          ["param", { "label": "creator5", "description": "", "type": "C5" }],
+          ["param", { "label": "creator6", "description": "", "type": "C6" }],
+          ["param", { "label": "creator7", "description": "", "type": "C7" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4, C5, C6, C7]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  C8 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  creator8: C8,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          ["param", { "label": "creator5", "description": "", "type": "C5" }],
+          ["param", { "label": "creator6", "description": "", "type": "C6" }],
+          ["param", { "label": "creator7", "description": "", "type": "C7" }],
+          ["param", { "label": "creator8", "description": "", "type": "C8" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  C8 extends ActionCreator,\n  C9 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  creator8: C8,\n  creator9: C9,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8, C9]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          ["param", { "label": "creator5", "description": "", "type": "C5" }],
+          ["param", { "label": "creator6", "description": "", "type": "C6" }],
+          ["param", { "label": "creator7", "description": "", "type": "C7" }],
+          ["param", { "label": "creator8", "description": "", "type": "C8" }],
+          ["param", { "label": "creator9", "description": "", "type": "C9" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8, C9]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<\n  C1 extends ActionCreator,\n  C2 extends ActionCreator,\n  C3 extends ActionCreator,\n  C4 extends ActionCreator,\n  C5 extends ActionCreator,\n  C6 extends ActionCreator,\n  C7 extends ActionCreator,\n  C8 extends ActionCreator,\n  C9 extends ActionCreator,\n  C10 extends ActionCreator,\n  S\n>(\n  creator1: C1,\n  creator2: C2,\n  creator3: C3,\n  creator4: C4,\n  creator5: C5,\n  creator6: C6,\n  creator7: C7,\n  creator8: C8,\n  creator9: C9,\n  creator10: C10,\n  reducer: OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8, C9, C10]>\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          ["param", { "label": "creator1", "description": "", "type": "C1" }],
+          ["param", { "label": "creator2", "description": "", "type": "C2" }],
+          ["param", { "label": "creator3", "description": "", "type": "C3" }],
+          ["param", { "label": "creator4", "description": "", "type": "C4" }],
+          ["param", { "label": "creator5", "description": "", "type": "C5" }],
+          ["param", { "label": "creator6", "description": "", "type": "C6" }],
+          ["param", { "label": "creator7", "description": "", "type": "C7" }],
+          ["param", { "label": "creator8", "description": "", "type": "C8" }],
+          ["param", { "label": "creator9", "description": "", "type": "C9" }],
+          ["param", { "label": "creator10", "description": "", "type": "C10" }],
+          [
+            "param",
+            {
+              "label": "reducer",
+              "description": "",
+              "type": "OnReducer<S, [C1, C2, C3, C4, C5, C6, C7, C8, C9, C10]>"
+            }
+          ]
+        ]
       },
       {
         "signature": "function on<S>(\n  creator: ActionCreator,\n  ...rest: (ActionCreator | OnReducer<S, [ActionCreator]>)[]\n): On<S>;",
-        "info": []
+        "info": [
+          [
+            "description",
+            "\nAssociates actions with a given state change function.\nA state change function must be provided as the last parameter.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "args",
+              "description": "`ActionCreator`'s followed by a state change function.",
+              "type": ""
+            }
+          ],
+          [
+            "returns",
+            "an association of action types with a state change function.\n"
+          ],
+          [
+            "param",
+            {
+              "label": "creator",
+              "description": "",
+              "type": "ActionCreator<string, import(\"C:/Users/tdeschryver/dev/platform/modules/store/src/models\").FunctionWithParametersType<any[], object>>"
+            }
+          ],
+          [
+            "param",
+            {
+              "label": "rest",
+              "description": "",
+              "type": "(ActionCreator<string, import(\"C:/Users/tdeschryver/dev/platform/modules/store/src/models\").FunctionWithParametersType<any[], object>> | OnReducer<S, [ActionCreator<string, import(\"C:/Users/tdeschryver/dev/platform/modules/store/src/models\").FunctionWithParametersType<any[], object>>]>)[]"
+            }
+          ]
+        ]
       }
     ]
   },
@@ -4305,17 +5496,28 @@
         "info": [
           [
             "description",
-            "Creates a reducer function to handle state transitions.\nReducer creators reduce the explicitness of reducer functions with switch statements."
+            "\nCreates a reducer function to handle state transitions.\n\nReducer creators reduce the explicitness of reducer functions with switch statements.\n"
           ],
           [
             "param",
-            "initialState Provides a state value if the current state is `undefined`, as it is initially."
+            {
+              "label": "initialState",
+              "description": "Provides a state value if the current state is `undefined`, as it is initially.",
+              "type": "S"
+            }
           ],
-          ["param", "ons Associations between actions and state changes."],
-          ["returns", "A reducer function."],
+          [
+            "param",
+            {
+              "label": "ons",
+              "description": "Associations between actions and state changes.",
+              "type": "On<S>[]"
+            }
+          ],
+          ["returns", "A reducer function.\n"],
           [
             "usageNotes",
-            "- Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.\n- The returned `ActionReducer` should additionally be wrapped with another function, if you are using View Engine AOT.\n  In case you are using Ivy (or only JIT View Engine) the extra wrapper function is not required.\n  **Declaring a reducer creator**\n\n```ts\nexport const reducer = createReducer(\ninitialState,\non(\nfeatureActions.actionOne,\nfeatureActions.actionTwo,\n(state, { updatedValue }) => ({ ...state, prop: updatedValue })\n),\non(featureActions.actionThree, () => initialState);\n);\n```\n\n**Declaring a reducer creator using a wrapper function (Only needed if using View Engine AOT)**\n\n```ts\nconst featureReducer = createReducer(\ninitialState,\non(\nfeatureActions.actionOne,\nfeatureActions.actionTwo,\n(state, { updatedValue }) => ({ ...state, prop: updatedValue })\n),\non(featureActions.actionThree, () => initialState);\n);\nexport function reducer(state: State | undefined, action: Action) {\nreturn featureReducer(state, action);\n}\n```"
+            "\n\n- Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.\n- The returned `ActionReducer` should additionally be wrapped with another function, if you are using View Engine AOT.\nIn case you are using Ivy (or only JIT View Engine) the extra wrapper function is not required.\n\n**Declaring a reducer creator**\n\n```ts\nexport const reducer = createReducer(\ninitialState,\non(\nfeatureActions.actionOne,\nfeatureActions.actionTwo,\n(state, { updatedValue }) => ({ ...state, prop: updatedValue })\n),\non(featureActions.actionThree, () => initialState)\n);\n```\n\n**Declaring a reducer creator using a wrapper function (Only needed if using View Engine AOT)**\n\n```ts\nconst featureReducer = createReducer(\ninitialState,\non(\nfeatureActions.actionOne,\nfeatureActions.actionTwo,\n(state, { updatedValue }) => ({ ...state, prop: updatedValue })\n),\non(featureActions.actionThree, () => initialState)\n);\n\nexport function reducer(state: State | undefined, action: Action) {\nreturn featureReducer(state, action);\n}\n```\n"
           ]
         ]
       }
