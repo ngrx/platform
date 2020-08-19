@@ -19,7 +19,7 @@ import {
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-// Spec files to include in the Stackblitz tests
+// Spec files to include in the StackBlitz tests
 import './test-files.ts';
 
 //
