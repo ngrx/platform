@@ -246,7 +246,7 @@ class StackblitzBuilder {
       var config = (configSrc && configSrc.trim().length) ? JSON.parse(configSrc) : {};
       config.basePath = configDir; // assumes 'stackblitz.json' is at `/src` level.
     } catch (e) {
-      throw new Error(`Stackblitz config - unable to parse json file: ${configFileName}\n${e}`);
+      throw new Error(`StackBlitz config - unable to parse JSON file: ${configFileName}\n${e}`);
     }
 
     var defaultIncludes = ['**/*.ts', '**/*.js', '**/*.css', '**/*.scss', '**/*.html', '**/*.md', '**/*.json', '**/*.png'];
