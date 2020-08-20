@@ -26,7 +26,7 @@ Synchronizing these states is one of the most complex tasks that developers have
 Here is a small example to demonstrate how even a simple task might involve all of them:
 
 1. The user opens the page at a specific URL, "https://TheBestMoviesOfAllTimeEver.com/favorites". That changes the ***URL State***. 
-1. The URL had a path for a specific tab, "favorites". That selection becomes part of the ***Client State***. 
+1. The URL has a path for a specific tab, "favorites". That selection becomes part of the ***Client State***. 
 1. This results in API calls to the backend to get the data of the movies that the user marked as "favorites". We receive a snapshot of ***Persisted State***.
 1. The Toggle Component that lives next to the *"is favorite"* label is turned ON. The "ON" state is derived from the data that the application received and passed to the Toggle Component through `@Input() isEnabled: boolean`. The component itself is not aware of *Persisted State* or what it even means to be ON in the context of the rest of the application. All it knows is that it needs to be visually displayed as ON. The `isEnabled` state is ***Local UI State***.
 1. The user might decide that this movie is no longer their favorite and would click the Toggle button to turn it OFF. The *Local UI State* of the component is then changed, the `@Output() changed` event is emitted and picked up by a container component which would then call the backend to update the *Persisted State*.
