@@ -2,13 +2,13 @@
 
 ## Types of State
 
-There are multiple types of state that exist in the application, and state management libraries are there to help manage/synchronize/update them. The topic of which one, ComponentStore or the Global Store you should choose, or maybe both would be helpful, is described at [ComponentStore vs Store](guide/component-store/comparison) section.
+There are multiple types of state that exist in the application, and state management libraries are there to help manage/synchronize/update them. The topic of which one to choose, ComponentStore or the Global Store, or maybe both would be helpful, is described at [ComponentStore vs Store](guide/component-store/comparison) section.
 
 The types of state that developers typically deal with in applications are:
 * **Server/Backend(s) State**. This is the ultimate source of truth of all the data.
 * **Persisted State**. The "snapshots" of backend data transferred *to* and *from* application. E.g. Movies data passed as a JSON response, or user's rating for a particular Movie passed as an update request.
-* **URL State**. The state of the URL itself. Depending on which URL use navigates to, the app would open specific pages and thus might request for *Persisted State*.
-* **Client State**. The state within application that is not persisted to the backend. E.g. The info about which Tab is open in the application.
+* **URL State**. This is the state of the URL itself. Depending on which URL the user navigates to, the app would open specific pages and thus might request for *Persisted State*.
+* **Client State**. The state within the application that is not persisted to the backend. E.g. The info about which Tab is open in the application.
 * **Local UI State**. The state within a component itself. E.g. `isEnabled` toggle state of Toggle Component.
 
 <figure>
@@ -25,7 +25,7 @@ Synchronizing these states is one of the most complex tasks that developers have
 
 Here is a small example to demonstrate how even a simple task might involve all of them:
 
-1. The user opens the page at a specific URL, "https://TheBestMoviesOfAllTimeEver.com/favorites". That changes the ***URL State***. 
+1. The user opens the page at a specific URL, "https://www.TheBestMoviesOfAllTimeEver.com/favorites". That changes the ***URL State***. 
 1. The URL has a path for a specific tab, "favorites". That selection becomes part of the ***Client State***. 
 1. This results in API calls to the backend to get the data of the movies that the user marked as "favorites". We receive a snapshot of ***Persisted State***.
 1. The Toggle Component that lives next to the *"is favorite"* label is turned ON. The "ON" state is derived from the data that the application received and passed to the Toggle Component through `@Input() isEnabled: boolean`. The component itself is not aware of *Persisted State* or what it even means to be ON in the context of the rest of the application. All it knows is that it needs to be visually displayed as ON. The `isEnabled` state is ***Local UI State***.
@@ -54,10 +54,14 @@ This means that common presentational (aka dumb) components that interact with t
 </div>
 
 Having said that, in most cases making *Local UI State* **reactive** is beneficial:
-* For Zoneless application so that the `async` pipe can easily be substituted with a Zoneless alternative such as the [`ngrxPush` pipe](guide/component/push)
+* For Zoneless application, the `async` pipe can easily be substituted with a Zoneless alternative such as the [`ngrxPush` pipe](guide/component/push)
 * For components with non-trivial business logic, reactivity can organize the state better by clearly separating actual state from derived values and identifying side-effects.
 
+<div class="alert is-helpful">
+
 ComponentStore is not the only reactive *Local UI State* holder - sometimes `FormControl`s are good enough. They contain the state and they have reactive APIs.
+
+</div>
 
 Here's the simplified `SlideToggleComponent` example which uses `ComponentStore` for *Local UI State*. In this example, the `ComponentStore` is provided directly by the component itself, which might not be the best choice for most of the use cases of `ComponentStore`. Instead, consider a service that `extends ComponentStore`.
 
