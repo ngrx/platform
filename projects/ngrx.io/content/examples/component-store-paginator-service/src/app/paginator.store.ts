@@ -28,6 +28,15 @@ export interface PageEvent
 
 @Injectable()
 export class PaginatorStore extends ComponentStore<PaginatorState> {
+  constructor() {
+    // set defaults
+    super({
+      pageIndex: 0,
+      pageSize: 50,
+      length: 0,
+      pageSizeOptions: new Set<number>([50]),
+    });
+  }
   // *********** Updaters *********** //
 
   readonly setPageIndex = this.updater((state, value: string | number) => ({

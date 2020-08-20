@@ -19,7 +19,7 @@ import { PaginatorStore } from './paginator.store';
   providers: [PaginatorStore],
 })
 export class PaginatorComponent {
-  // #docregion updating-state
+  // #docregion inputs
   @Input() set pageIndex(value: string | number) {
     this.paginatorStore.setPageIndex(value);
   }
@@ -35,7 +35,7 @@ export class PaginatorComponent {
   @Input() set pageSizeOptions(value: readonly number[]) {
     this.paginatorStore.setPageSizeOptions(value);
   }
-  // #enddocregion updating-state
+  // #enddocregion inputs
 
   // #docregion selectors
   // Outputing the event directly from the page$ Observable<PageEvent> property.
@@ -46,15 +46,7 @@ export class PaginatorComponent {
   readonly vm$ = this.paginatorStore.vm$;
   // #enddocregion selectors
 
-  constructor(private readonly paginatorStore: PaginatorStore) {
-    // set defaults
-    this.paginatorStore.setState({
-      pageIndex: 0,
-      pageSize: 50,
-      length: 0,
-      pageSizeOptions: new Set<number>([50]),
-    });
-  }
+  constructor(private readonly paginatorStore: PaginatorStore) {}
 
   // #docregion updating-state
   changePageSize(newPageSize: number) {

@@ -45,8 +45,13 @@ Understanding these types of state helps us define our usage of ComponentStore.
 
 The simplest example usage of `ComponentStore` is **reactive *Local UI State***.
 
+<div class="callout is-helpful">
+<header>A note about component reactivity</header>
+
 One of the ways to improve the performance of the application is to use the `OnPush` change detection strategy. However, contrary to the popular belief, we do not always need to tell Angular's change detection to `markForCheck()` or `detectChanges()` (or the Angular Ivy alternatives). As pointed out in [this article on change detection](https://indepth.dev/the-last-guide-for-angular-change-detection-youll-ever-need/), if the event originates from the component itself, the component will be dirty checked.
 This means that common presentational (aka dumb) components that interact with the rest of the application with Input(s)/Output(s) do not have to be overcomplicated with reactive state, even though we did it to the Toggle Component mentioned above.
+
+</div>
 
 Having said that, in most cases making *Local UI State* **reactive** is beneficial:
 * For Zoneless application so that the `async` pipe can easily be substituted with a Zoneless alternative such as the [`ngrxPush` pipe](guide/component/push)
@@ -64,11 +69,11 @@ You can see the full example at StackBlitz: <live-example name="component-store-
 
 <code-tabs linenums="true">
   <code-pane
-    header="slide-toggle.component.ts"
+    header="src/app/slide-toggle.component.ts"
     path="component-store-slide-toggle/src/app/slide-toggle.component.ts">
   </code-pane>
   <code-pane
-    header="slide-toggle.html"
+    header="src/app/slide-toggle.html"
     path="component-store-slide-toggle/src/app/slide-toggle.html">
   </code-pane>
 </code-tabs>
@@ -80,6 +85,7 @@ Below are the steps of integrating `ComponentStore` into a component.
 First, the state for the component needs to be identified. In `SlideToggleComponent` only the state of whether the toggle is turned ON or OFF is stored.
 
 <code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="state"></code-example>
 
@@ -91,7 +97,8 @@ In this example `ComponentStore` is provided directly in the component. This wor
 
 </div>
 
-<code-example
+<code-example linenums="false"
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="providers"></code-example>
 
@@ -110,6 +117,7 @@ When it is called with a callback, the state is updated.
 </div>
 
 <code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="init"></code-example>
 
@@ -121,7 +129,8 @@ In the slide-toggle example, the state is updated either through `@Input` or by 
 
 When a user clicks the toggle, instead of calling the same updater directly, the `onChangeEvent` effect is called. This is done because we also need to have the side-effect of `event.stopPropagation()` and only after that the `setChecked` updater is called with the value of the input element.
 
-<code-example
+<code-example linenums="false"
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="updater"></code-example>
 
@@ -132,15 +141,11 @@ Finally, the state is aggregated with selectors into two properties:
 * `change` is the `@Output` of `SlideToggleComponent`. Instead of creating an `EventEmitter`, here the output is connected to the Observable source directly.
 
 <code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="selector"></code-example>
 
 This example does not have a lot of business logic, however it is still fully reactive.
-
-#### Zoneless
-
-In the template of `SlideToggleComponent` we used `async` pipe to unwrap the Observable, however in the Zoneless environment it will not work. In such cases, [`ngrxPush` pipe](guide/component/push) can be used instead. 
-
 
 ### Example 2: Service extending ComponentStore
 
@@ -154,7 +159,7 @@ A Service that extends ComponentStore and contains business logic of the compone
 
 </div>
 
-`ComponentStore` was designed with such an approach in mind. The main APIs of `ComponentStore` (`updater`, `effect` and `select`) are meant to wrap the **HOW** state is changed, extracted or effected, and then provided with inputs.
+`ComponentStore` was designed with such an approach in mind. The main APIs of `ComponentStore` (`updater`, `select` and `effect`) are meant to wrap the **HOW** state is changed, extracted or effected, and then called with arguments.
 
 Below are the two examples of a re-implemented [Paginator component](https://material.angular.io/components/paginator/overview) from Angular Material (a UI component library). These re-implementations are very functionally close alternatives.
 
@@ -180,16 +185,26 @@ You can see the examples at StackBlitz:
     path="component-store-paginator/src/app/paginator.component.ts">
   </code-pane>
   <code-pane
-    header="paginator.store.ts"
+    header="src/app/paginator.store.ts"
     path="component-store-paginator-service/src/app/paginator.store.ts">
   </code-pane>
 </code-tabs>
 
 #### Updating the state
 
-With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. Effects are used to perform additional validation and get extra information from sources with derived data (i.e. selectors).
+With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. `@Input` values are passed directly into `updater`s as their arguments.
 
 <code-example
+  header="src/app/paginator.store.ts"
+  path="component-store-paginator-service/src/app/paginator.component.ts"
+  region="inputs"></code-example>
+
+  Not all `updater`s have to be called in the `@Input`. For example, `changePageSize` is called from the template. 
+  
+  Effects are used to perform additional validation and get extra information from sources with derived data (i.e. selectors).
+
+  <code-example
+  header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="updating-state"></code-example>
 
@@ -199,13 +214,13 @@ With `ComponentStore` extracted into `PaginatorStore`, the developer is now usin
 
 <code-tabs>
   <code-pane
-    header="paginator.component.ts"
+    header="src/app/paginator.component.ts"
     path="component-store-paginator-service/src/app/paginator.component.ts"
     region="selectors"
     >
   </code-pane>
   <code-pane
-    header="paginator.store.ts"
+    header="src/app/paginator.store.ts"
     path="component-store-paginator-service/src/app/paginator.store.ts"
     region="selectors">
   </code-pane>
@@ -213,7 +228,7 @@ With `ComponentStore` extracted into `PaginatorStore`, the developer is now usin
 
 <div class="alert is-helpful">
 
-`page$` would emit `PageEvent` when page size or page index changes, however in some cases updater would update both of these properties at the same time. To avoid "intermediary" emissions, `page$` selector is using **`{debounce: true}`** configuration. This schedules a microtask, which allows the state to "settle", meaning all the synchronous changes to happen, and then it would emit a value. All of this happens before Angular's Change Detection runs. More about debouncing can be found in [selector section](guide/component-store/read#debounce-selectors).
+`page$` would emit `PageEvent` when page size or page index changes, however in some cases updater would update both of these properties at the same time. To avoid "intermediary" emissions, `page$` selector is using **`{debounce: true}`** configuration. More about debouncing can be found in [selector section](guide/component-store/read#debounce-selectors).
 
 </div>
 
@@ -234,6 +249,12 @@ A *ViewModel* for the component is also composed from `selector`s.
 
 ## Use Case 2: Complex Common Component State
 
+The use case is in the process of being added - check back later
+
 ## Use Case 3: Complex Independent Component Store
 
+The use case is in the process of being added - check back later
+
 ## Use Case 4: Application-wide Singleton Service
+
+The use case is in the process of being added - check back later
