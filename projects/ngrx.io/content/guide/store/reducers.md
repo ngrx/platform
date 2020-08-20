@@ -84,7 +84,7 @@ export function reducer(state: State | undefined, action: Action) {
 
 <div class="alert is-important">
 
-**Note:** The exported `reducer` function is necessary as [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
+**Note:** The exported `reducer` function is necessary as [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) the View Engine AOT compiler. It is no longer required if you use the default Ivy AOT compiler (or JIT).
 
 </div>
 
