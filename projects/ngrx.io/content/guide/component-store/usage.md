@@ -41,15 +41,15 @@ Understanding these types of state helps us define our usage of ComponentStore.
 
 ## Use Case 1: Local UI State
 
-### Example 1: ComponentStore as part of component
+### Example 1: ComponentStore as part of the component
 
 The simplest example usage of `ComponentStore` is **reactive *Local UI State***.
 
-One of the ways to improve the performance of the application is to use the `OnPush` change detection strategy. However, contrary to the popular belief, we do not always need to tell Angular's change detection to `markForCheck()` or `detectChanges()` (or the Angular Ivy alternatives). As pointed out in [this article on change detection](https://indepth.dev/the-last-guide-for-angular-change-detection-youll-ever-need/), if the event originates from the component itself, it will be dirty checked.
-This means that common presentational (aka dumb) components which interact with the rest of the application with Input(s)/Output(s) might not need to be overcomplicated with reactive state even though we did it to the Toggle Component mentioned above.
+One of the ways to improve the performance of the application is to use the `OnPush` change detection strategy. However, contrary to the popular belief, we do not always need to tell Angular's change detection to `markForCheck()` or `detectChanges()` (or the Angular Ivy alternatives). As pointed out in [this article on change detection](https://indepth.dev/the-last-guide-for-angular-change-detection-youll-ever-need/), if the event originates from the component itself, the component will be dirty checked.
+This means that common presentational (aka dumb) components that interact with the rest of the application with Input(s)/Output(s) do not have to be overcomplicated with reactive state, even though we did it to the Toggle Component mentioned above.
 
 Having said that, in most cases making *Local UI State* **reactive** is beneficial:
-* For Zoneless application so that the `async` pipe can easily be substituted with a Zoneless alternative such as [ngrxPush pipe](guide/component/push)
+* For Zoneless application so that the `async` pipe can easily be substituted with a Zoneless alternative such as the [`ngrxPush` pipe](guide/component/push)
 * For components with non-trivial business logic, reactivity can organize the state better by clearly separating actual state from derived values and identifying side-effects.
 
 ComponentStore is not the only reactive *Local UI State* holder - sometimes `FormControl`s are good enough. They contain the state and they have reactive APIs.
@@ -115,7 +115,7 @@ When it is called with a callback, the state is updated.
 
 #### Step 2. Updating state
 
-In the slide-toggle example, the state is updated either through `@Input` or by a user interaction, which results in `onChangeEvent($event)` call in the template. Both of them change the same piece of state - `checked: boolean`, thus we have `setChecked` updater that is reused in two places. This updater describes **HOW** the state changes - it takes the current state and a value and returns the new state.
+In the slide-toggle example, the state is updated either through `@Input` or by a user interaction, which results in a `onChangeEvent($event)` call in the template. Both of them change the same piece of state - `checked: boolean`, thus we have the `setChecked` updater that is reused in two places. This updater describes **HOW** the state changes - it takes the current state and a value and returns the new state.
 
 `@Input` here is a setter function that passes the value to the `setChecked` updater.
 
@@ -128,8 +128,8 @@ When a user clicks the toggle, instead of calling the same updater directly, the
 #### Step 3. Reading the state
 
 Finally, the state is aggregated with selectors into two properties:
-* `vm$` property collects all the data needed for the template - this is *ViewModel* of `SlideToggleComponent`. 
-* `change` is the `@Output` of `SlideToggleComponent`. Instead of creating `EventEmitter` and push the data through it, here the output is connected to the Observable source directly.
+* `vm$` property collects all the data needed for the template - this is the *ViewModel* of `SlideToggleComponent`. 
+* `change` is the `@Output` of `SlideToggleComponent`. Instead of creating an `EventEmitter`, here the output is connected to the Observable source directly.
 
 <code-example
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
@@ -139,7 +139,7 @@ This example does not have a lot of business logic, however it is still fully re
 
 #### Zoneless
 
-In the template of `SlideToggleComponent` we used `async` pipe to unwrap the Observable, however in the Zoneless environment it will not work. In such cases, [ngrxPush pipe](guide/component/push) can be used instead. 
+In the template of `SlideToggleComponent` we used `async` pipe to unwrap the Observable, however in the Zoneless environment it will not work. In such cases, [`ngrxPush` pipe](guide/component/push) can be used instead. 
 
 
 ### Example 2: Service extending ComponentStore
@@ -154,13 +154,13 @@ A Service that extends ComponentStore and contains business logic of the compone
 
 </div>
 
-`ComponentStore` was designed with such approach in mind. The main APIs of `ComponentStore` (`updater`, `effect` and `select`) are meant to wrap the **HOW** state is changed, extracted or effected, and then provided with inputs.
+`ComponentStore` was designed with such an approach in mind. The main APIs of `ComponentStore` (`updater`, `effect` and `select`) are meant to wrap the **HOW** state is changed, extracted or effected, and then provided with inputs.
 
-Below are the two examples of re-implemented [Paginator component](https://material.angular.io/components/paginator/overview) from Angular Material library of UI components. These re-implementations are very functionally close alternatives.
+Below are the two examples of a re-implemented [Paginator component](https://material.angular.io/components/paginator/overview) from Angular Material (a UI component library). These re-implementations are very functionally close alternatives.
 
-Here's the source code of the [Material's paginator.ts](https://github.com/angular/components/blob/23d3c216c65b327e0acfb48b53302b8fda326e7f/src/material/paginator/paginator.ts#L112) for the reference.
+Here's the source code of the [Material's paginator.ts](https://github.com/angular/components/blob/23d3c216c65b327e0acfb48b53302b8fda326e7f/src/material/paginator/paginator.ts#L112) as a reference.
 
-What we can see is that while the *"PaginatorComponent providing ComponentStore"* example already makes the component a lot smaller, reactive, removes `this._changeDetectorRef.markForCheck()` and organizes it into distinct "read"/"write"/"effect" buckets, it still could be harder to read. *"PaginatorComponent with PaginatorStore"* example adds readability and further improves testability of behaviors and business logic.
+What we can see is that while the *"PaginatorComponent providing ComponentStore"* example already makes the component a lot smaller, reactive, removes `this._changeDetectorRef.markForCheck()` and organizes it into distinct "read"/"write"/"effect" buckets, it still could be hard to read. The *"PaginatorComponent with PaginatorStore"* example adds readability and further improves the testability of behaviors and business logic.
 
 <div class="alert is-helpful">
 
@@ -226,7 +226,7 @@ Effects can also be used when:
 * derived data (from selectors) is needed to influence the new state
 * they are orchestrating a number of well-defined updaters
 
-The last point can sometimes be refactored into another `updater`. Use your best judgement.
+The last point can sometimes be refactored into another `updater`. Use your best judgment.
 
 `@Output()`s and derived data are **reacting** to these state changes and are generated using `selector`s.
 
