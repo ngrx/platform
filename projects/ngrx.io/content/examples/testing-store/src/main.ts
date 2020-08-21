@@ -16,10 +16,10 @@ import 'zone.js/dist/jasmine-patch';
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
+  platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-// Spec files to include in the Stackblitz tests
+// Spec files to include in the StackBlitz tests
 import './test-files.ts';
 
 //
@@ -28,7 +28,7 @@ bootstrap();
 
 //
 
-function bootstrap () {
+function bootstrap() {
   if (window['jasmineRef']) {
     location.reload();
     return;

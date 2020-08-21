@@ -1,0 +1,4 @@
+{
+  "description": "ComponentStore - slide-toggle",
+  "files": ["!**/*.d.ts", "!**/*.js", "!**/*.[0-9].*"]
+}

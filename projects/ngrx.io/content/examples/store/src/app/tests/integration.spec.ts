@@ -10,10 +10,8 @@ describe('MyCounterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyCounterComponent ],
-      imports: [
-        StoreModule.forRoot({ count: counterReducer })
-      ]
+      declarations: [MyCounterComponent],
+      imports: [StoreModule.forRoot({ count: counterReducer })],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MyCounterComponent);
@@ -28,26 +26,20 @@ describe('MyCounterComponent', () => {
   it('should increment the counter value when increment is clicked', () => {
     clickByCSS('#increment');
 
-    expect(getCounterText()).toBe(
-      'Current Count: 1'
-    );
+    expect(getCounterText()).toBe('Current Count: 1');
   });
 
   it('should decrement the counter value when decrement is clicked', () => {
     clickByCSS('#decrement');
 
-    expect(getCounterText()).toBe(
-      'Current Count: -1'
-    );
+    expect(getCounterText()).toBe('Current Count: -1');
   });
 
   it('should reset the counter value when reset is clicked', () => {
     clickByCSS('#increment');
     clickByCSS('#reset');
 
-    expect(getCounterText()).toBe(
-      'Current Count: 0'
-    );
+    expect(getCounterText()).toBe('Current Count: 0');
   });
 
   function clickByCSS(selector: string) {

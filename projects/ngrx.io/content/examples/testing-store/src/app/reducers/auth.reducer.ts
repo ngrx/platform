@@ -6,13 +6,13 @@ export interface State {
 }
 
 export const initialState: State = {
-  username: ''
+  username: '',
 };
 
 export const reducer = createReducer<State>(
   initialState,
   on(AuthActions.login, ({ username }): State => ({ username })),
-  on(AuthActions.logout, (): State => ({ username: initialState.username })),
+  on(AuthActions.logout, (): State => ({ username: initialState.username }))
 );
 
 export const getUsername = (state: State) => state.username;

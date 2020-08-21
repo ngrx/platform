@@ -1,0 +1,35 @@
+<div class="mat-slide-toggle mat-slide-toggle-label-before" 
+     *ngIf="vm$ | async as vm"
+     [class.mat-checked]="vm.checked">
+  <label class="mat-slide-toggle-label" #label>
+    <div #toggleBar class="mat-slide-toggle-bar"
+        [class.mat-slide-toggle-bar-no-side-margin]="!labelContent.textContent || !labelContent.textContent.trim()">
+
+      <input #input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox"
+            role="switch"
+            [checked]="vm.checked"
+            [attr.aria-checked]="vm.checked.toString()"
+            (change)="onChangeEvent($event)"
+            >
+
+      <div class="mat-slide-toggle-thumb-container" #thumbContainer>
+        <div class="mat-slide-toggle-thumb"></div>
+        <div class="mat-slide-toggle-ripple mat-focus-indicator" mat-ripple
+            [matRippleTrigger]="label"
+            [matRippleCentered]="true"
+            [matRippleRadius]="20"
+            [matRippleAnimation]="{enterDuration: 150}">
+
+          <div class="mat-ripple-element mat-slide-toggle-persistent-ripple"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <span class="mat-slide-toggle-content" #labelContent>
+      <!-- Add an invisible span so JAWS can read the label -->
+      <span style="display:none">&nbsp;</span>
+      <ng-content></ng-content>
+    </span>
+  </label>
+</div>

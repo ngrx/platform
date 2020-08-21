@@ -12,6 +12,9 @@
 **/src/test.ts
 **/src/tsconfig.app.json
 **/src/tsconfig.spec.json
+**/tsconfig.app.json
+**/tsconfig.spec.json
+**/tsconfig.base.json
 **/src/typings.d.ts
 **/e2e/src/app.po.ts
 **/e2e/tsconfig.e2e.json
@@ -26,7 +29,7 @@
 **/tslint.json
 **/karma-test-shim.js
 **/browser-test-shim.js
-**/browserslistrc
+**/.browserslistrc
 **/node_modules
 
 # built files

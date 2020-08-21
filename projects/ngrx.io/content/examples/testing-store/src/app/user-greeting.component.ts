@@ -4,9 +4,7 @@ import * as fromAuth from './reducers';
 
 @Component({
   selector: 'user-greeting',
-  template: `
-    <div>Greetings, {{ username$ | async }}!</div>
-  `,
+  template: ` <div>Greetings, {{ username$ | async }}!</div> `,
 })
 export class UserGreetingComponent {
   username$ = this.store.pipe(select(fromAuth.getUsername));
