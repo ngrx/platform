@@ -16,6 +16,8 @@ By default, effects are merged and subscribed to the store. Implement the OnRunE
 interface OnRunEffects {}
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/effects/src/lifecycle_hooks.ts#L73-L81)
+
 ## usageNotes
 
 ### Implement the OnRunEffects interface on an Effects class

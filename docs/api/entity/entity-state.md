@@ -12,3 +12,5 @@ interface EntityState<T> {
   entities: Dictionary<T>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/entity/src/models.ts#L44-L47)

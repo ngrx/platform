@@ -15,6 +15,8 @@ function routerReducer<
 ): RouterReducerState<T>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/reducer.ts#L18-L37)
+
 ## Parameters
 
 | Name   | Type                    | Description |

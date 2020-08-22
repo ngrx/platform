@@ -18,3 +18,5 @@ export type RouterNavigatedPayload<
   event: NavigationEnd;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L146-L151)

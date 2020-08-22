@@ -14,3 +14,5 @@ export type MemoizedProjection = {
   clearResult: () => void;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts#L7-L12)

@@ -25,6 +25,8 @@ actions.pipe(ofEntityOp(persistOps)) // also works
 function flattenArgs<T>(args?: any[]): T[];
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/utilities.ts#L24-L33)
+
 ## Parameters
 
 | Name | Type    | Description |

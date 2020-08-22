@@ -20,3 +20,5 @@ interface DevToolsFeatureOptions {
   test?: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store-devtools/src/config.ts#L14-L25)

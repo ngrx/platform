@@ -28,3 +28,5 @@ interface EntitySelectors<T> {
   readonly selectChangeState: MemoizedSelector<Object, ChangeStateMap<T>>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/selectors/entity-selectors.ts#L63-L101)

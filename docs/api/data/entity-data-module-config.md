@@ -18,3 +18,5 @@ interface EntityDataModuleConfig {
   pluralNames?: { [name: string]: string };
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-data-without-effects.module.ts#L53-L63)

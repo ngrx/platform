@@ -15,3 +15,5 @@ interface EffectNotification {
   notification: Notification<Action | null | undefined>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/effects/src/effect_notification.ts#L5-L11)

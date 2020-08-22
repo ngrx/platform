@@ -13,3 +13,5 @@ interface ChangeSetUpdate<T = any> {
   entities: Update<T>[];
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-cache-change-set.ts#L21-L25)

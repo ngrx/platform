@@ -1,5 +1,5 @@
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { join, relative } from 'path';
 import {
   Project,
   ExportedDeclarations,
@@ -7,6 +7,10 @@ import {
   Node,
   JSDoc,
   FunctionDeclaration,
+  ClassDeclaration,
+  MethodDeclaration,
+  ClassMemberTypes,
+  PropertyDeclaration,
 } from 'ts-morph';
 import {
   format as prettier,
@@ -14,19 +18,24 @@ import {
   Options as PrettierOptions,
 } from 'prettier';
 import { stripIndents } from 'common-tags';
+import * as rimraf from 'rimraf';
+import { git } from './util';
 
 const OUTPUT_DIRECTORY = join('docs', 'api');
 
-generateApi();
+(async () => {
+  generateApi();
+})();
 
-function generateApi() {
+async function generateApi() {
   const files = getBarrelFiles();
   const output = files
     .map(generateApiForFile)
     .reduce((acc, file) => acc.concat(file), []);
 
+  rimraf.sync(OUTPUT_DIRECTORY);
   writeFile(OUTPUT_DIRECTORY, 'output.json', JSON.stringify(output), 'json');
-  createMarkdown(output);
+  await createMarkdown(output);
 }
 
 function getBarrelFiles() {
@@ -62,13 +71,13 @@ function generateApiForFile(sourceFile: SourceFile) {
       TypeAliasDeclaration: formatTypeAliasDeclaration,
       EnumDeclaration: formatEnumDeclaration,
     };
-    const overloadSignatures = kindToFormatter[kind];
-    if (overloadSignatures) {
+    const declarationFormatter = kindToFormatter[kind];
+    if (declarationFormatter) {
       fileOutput.push({
         kind,
         module,
         name,
-        overloads: overloadSignatures(declaration),
+        overloads: declarationFormatter(declaration),
       });
     }
   }
@@ -76,33 +85,54 @@ function generateApiForFile(sourceFile: SourceFile) {
   return fileOutput;
 }
 
-function createMarkdown(output: Output[]) {
+async function createMarkdown(output: Output[]) {
+  let repoUrl = await git(['config --get remote.origin.url']);
+  repoUrl = repoUrl.trim().replace('.git', '') + '/blob/master/';
   for (const out of output) {
     const directory = join(OUTPUT_DIRECTORY, toFileName(out.module));
     const file = toFileName(out.name);
 
     const overloadToText = (
       overload: Output['overloads'][0],
-      heading = '##'
+      headerLevel = 2,
+      parent = ''
     ) => {
+      const createHeader = (title: string, headerlevelOverride = headerLevel) =>
+        parent
+          ? `${'#'.repeat(
+              headerlevelOverride
+            )} ${title} (#${parent}-${toFileName(title)})`
+          : `${'#'.repeat(headerlevelOverride)} ${title}`;
       const sections = overload.info.reduce((section, [title, value]) => {
-        if (typeof value === 'string') {
+        if (value.__kind === 'heading') {
           section[title] = stripIndents`
-            ## ${title}
+            ${createHeader(title)}
 
-            ${value}
+            ${value.description}
           `;
-        } else {
+        } else if (value.__kind === 'table') {
           section[title] =
             section[title] ||
             stripIndents`
-              ${heading} Parameters
+              ${createHeader('Parameters')}
 
               | Name  | Type | Description  |
               | ----- |----- | ------------ |`;
           section[
             title
           ] += `\n| ${value.label} | \`${value.type}\` | ${value.description} |`;
+        } else if (value.__kind === 'info') {
+          // must be unique, otherwise it will get appended
+          section[title] = section[title] || createHeader('Methods');
+          const infoMd = overloadToText(
+            value.info,
+            headerLevel + 2,
+            value.header
+          );
+          section[title] += `\n ${createHeader(
+            value.header,
+            headerLevel + 1
+          )}\n${infoMd}`;
         }
         return section;
       }, {} as { [title: string]: string });
@@ -113,8 +143,10 @@ function createMarkdown(output: Output[]) {
         ${description || ''}
 
         \`\`\`ts
-        ${implementation.signature}
+        ${overload.signature}
         \`\`\`
+
+        [Link to repo](${repoUrl}${overload.file})
 
         ${sectionsText}
       `;
@@ -131,11 +163,11 @@ function createMarkdown(output: Output[]) {
       return stripIndents`
         ## Overloads
 
-        ${overloads.map((o) => overloadToText(o, '###')).join('\n')}
+        ${overloads.map((o) => overloadToText(o, 3)).join('\n')}
       `;
     };
-    const [implementation, ...overloads] = out.overloads;
 
+    const [implementation, ...overloads] = out.overloads;
     const md = stripIndents`
       ---
       kind: ${out.kind}
@@ -161,46 +193,16 @@ function formatFunctionDeclaration(
 
   const implementation = declaration.getImplementation();
   const overloads = declaration.getOverloads();
-
-  const appendParametersToInfo = (functionDeclaration: FunctionDeclaration) => {
-    const info = getInformation(implementation.getJsDocs());
-
-    const params = functionDeclaration.getParameters();
-    for (const param of params) {
-      const paramName = param.getName();
-      const type = param.getType().getText(param);
-      const existingInfo = info.find(
-        ([tag, value]) =>
-          tag === 'param' &&
-          typeof value !== 'string' &&
-          value.label === paramName
-      );
-
-      if (existingInfo) {
-        (existingInfo[1] as any).type = type;
-      } else {
-        info.push([
-          'param',
-          {
-            label: paramName,
-            description: '',
-            type,
-          },
-        ]);
-      }
-    }
-
-    return info;
-  };
-
   return [
     {
-      signature: format(implementation.removeBody().getText().substr(7)),
-      info: appendParametersToInfo(implementation),
+      file: fileWithLineNumbers(implementation),
+      signature: format(getSignature(implementation).substr(7)),
+      info: getInformationWithParemetersInfo(implementation),
     },
     ...overloads.map((overload) => ({
+      file: fileWithLineNumbers(overload),
       signature: format(overload.getText().substr(7)),
-      info: appendParametersToInfo(overload),
+      info: getInformationWithParemetersInfo(overload),
     })),
   ];
 }
@@ -218,6 +220,7 @@ function formatVariableDeclaration(
 
   return [
     {
+      file: fileWithLineNumbers(declaration),
       signature: format(signature),
       info: [],
     },
@@ -233,6 +236,7 @@ function formatTypeAliasDeclaration(
 
   return [
     {
+      file: fileWithLineNumbers(declaration),
       signature: format(declaration.getText()),
       info: getInformation(declaration.getJsDocs()),
     },
@@ -248,6 +252,7 @@ function formatEnumDeclaration(
 
   return [
     {
+      file: fileWithLineNumbers(declaration),
       signature: format(declaration.getText()),
       info: getInformation(declaration.getJsDocs()),
     },
@@ -288,6 +293,7 @@ function formatInterfaceDeclaration(
 
   return [
     {
+      file: fileWithLineNumbers(declaration),
       signature: format(signature),
       info: getInformation(declaration.getJsDocs()),
     },
@@ -301,46 +307,107 @@ function formatClassDeclaration(
     throw Error('Declaration is not a class');
   }
 
-  let name = declaration.getName();
-  const types = declaration.getTypeParameters().map((p) => p.getText());
-  const extend = declaration.getExtends()?.getText();
-  const implement = declaration.getImplements().map((p) => p.getText());
-  const publicProperties = declaration
-    .getProperties()
-    .filter((p) => p.getScope() === 'public')
-    .map((p) => p.getText())
-    .map(removeComments);
-  const publicMethods = declaration
-    .getMethods()
-    .filter((p) => p.getScope() === 'public')
-    .map((p) => p.removeBody().getText())
-    .map(removeComments);
+  const isPublic = (
+    n: MethodDeclaration | ClassMemberTypes | PropertyDeclaration
+  ) => n.getScope() === 'public';
+  const getPublicMethods = (classDeclaration: ClassDeclaration) =>
+    classDeclaration
+      .getMethods()
+      .filter(isPublic)
+      .map((method) => [method.getImplementation(), ...method.getOverloads()])
+      .reduce((a, b) => [...a, ...b], [])
+      .filter(Boolean);
+  const getPublicProperties = (classDeclaration: ClassDeclaration) =>
+    classDeclaration.getProperties().filter(isPublic);
 
-  let signature = `class ${name}`;
+  const createSignature = () => {
+    let name = declaration.getName();
+    const types = declaration.getTypeParameters().map((p) => p.getText());
+    const extend = declaration.getExtends()?.getText();
+    const implement = declaration.getImplements().map((p) => p.getText());
+    const publicProperties = getPublicProperties(declaration)
+      .map((p) => p.getText())
+      .map(removeComments);
+    const publicMethods = getPublicMethods(declaration).map(getSignature);
 
-  if (types.length) {
-    signature += `<${types.join(', ')}>`;
-  }
+    let signature = `class ${name}`;
 
-  if (extend) {
-    signature += ` extends ${extend}`;
-  }
+    if (types.length) {
+      signature += `<${types.join(', ')}>`;
+    }
 
-  if (implement.length) {
-    signature += ` implements ${implement.join(', ')}`;
-  }
+    if (extend) {
+      signature += ` extends ${extend}`;
+    }
 
-  signature += `{`;
-  signature += `\n${publicProperties.join('\n')}\n`;
-  signature += `\n${publicMethods.join('\n')}\n`;
-  signature += '}';
+    if (implement.length) {
+      signature += ` implements ${implement.join(', ')}`;
+    }
+
+    signature += `{`;
+    signature += `\n${publicProperties.join('\n')}\n`;
+    signature += `\n${publicMethods.join('\n')}\n`;
+    signature += '}';
+    return signature;
+  };
+
+  const appendClassMembersInfo = (classDeclaration: ClassDeclaration) => {
+    const info = getInformation(classDeclaration.getJsDocs());
+
+    const methods = getPublicMethods(classDeclaration);
+    const properties = getPublicProperties(classDeclaration);
+
+    for (const method of methods) {
+      const methodName = method.getName();
+      info.push([
+        'method',
+        {
+          __kind: 'info',
+          header: methodName,
+          info: {
+            file: fileWithLineNumbers(method),
+            info: getInformationWithParemetersInfo(method),
+            signature: getSignature(method)
+              .replace(/\r\n/g, '\n')
+              .replace(/\n/g, '')
+              .replace(/  /g, ' '),
+          },
+        },
+      ]);
+    }
+
+    for (const prop of properties) {
+      const propName = prop.getName();
+      info.push([
+        'property',
+        {
+          __kind: 'table',
+          label: propName,
+          type: prop.getType().getText(prop),
+          description: prop.getJsDocs()[0]?.getText() || '',
+        },
+      ]);
+    }
+
+    return info;
+  };
 
   return [
     {
-      signature: format(signature),
-      info: getInformation(declaration.getJsDocs()),
+      file: fileWithLineNumbers(declaration),
+      info: appendClassMembersInfo(declaration),
+      signature: format(createSignature()),
     },
   ];
+}
+
+function getSignature(declaration: FunctionDeclaration | MethodDeclaration) {
+  const bt = declaration.getBodyText();
+  const signature = declaration.removeBody().getText();
+  if (bt) {
+    declaration.setBodyText(bt);
+  }
+  return removeComments(signature).trim();
 }
 
 function getInformation(docs: JSDoc[]): Output['overloads'][0]['info'] {
@@ -372,26 +439,38 @@ function getInformation(docs: JSDoc[]): Output['overloads'][0]['info'] {
           information[++tagIndex] = [
             tagName,
             {
+              __kind: 'table',
               label: param,
               description: (description || []).join(' '),
               type: '',
             },
           ];
         } else {
-          information[++tagIndex] = [tagName, lineText.join(' ')];
+          information[++tagIndex] = [
+            tagName,
+            {
+              __kind: 'heading',
+              description: lineText.join(' '),
+            },
+          ];
         }
       } else if (information[tagIndex]) {
         // append text to the current tag
         const current = information[tagIndex];
-        if (typeof current[1] == 'string') {
-          current[1] += '\n' + line;
+        if (current[1].__kind === 'heading') {
+          current[1].description += '\n' + line;
         } else {
           // TODO: what to do here?
-          // current[1].description += '\n' + line;
         }
       } else {
         // doc without tag, or text above the first tag
-        information[++tagIndex] = ['description', line];
+        information[++tagIndex] = [
+          'description',
+          {
+            __kind: 'heading',
+            description: line || '',
+          },
+        ];
       }
     }
 
@@ -407,7 +486,7 @@ function getInformation(docs: JSDoc[]): Output['overloads'][0]['info'] {
 
   return infos
     .reduce((a, b) => [...a, ...b])
-    .filter(([_, value]) => !!value)
+    .filter(([_, value]) => value)
     .map(([label, value]) => [label, value]);
 }
 
@@ -425,6 +504,37 @@ function removeComments(text: string) {
       return comment === -1 ? p : p.substr(0, comment);
     })
     .join('\n');
+}
+
+function getInformationWithParemetersInfo(
+  functionDeclaration: FunctionDeclaration | MethodDeclaration
+) {
+  const info = getInformation(functionDeclaration.getJsDocs());
+  const params = functionDeclaration.getParameters();
+  for (const param of params) {
+    const paramName = param.getName();
+    const type = param.getType().getText(param);
+    const existingInfo = info.find(
+      ([tag, value]) =>
+        tag === 'param' && value.__kind === 'table' && value.label === paramName
+    );
+
+    if (existingInfo) {
+      (existingInfo[1] as any).type = type;
+    } else {
+      info.push([
+        'param',
+        {
+          __kind: 'table',
+          label: paramName,
+          description: '',
+          type,
+        },
+      ]);
+    }
+  }
+
+  return info;
 }
 
 /**
@@ -451,12 +561,30 @@ interface Output {
   kind: string;
   name: string;
   overloads: {
+    file: string;
     signature: string;
     info: [
       string,
-      string | { label: string; description: string; type: string }
+      (
+        | { __kind: 'heading'; description: string }
+        | { __kind: 'table'; label: string; description: string; type: string }
+        | {
+            __kind: 'info';
+            header: string;
+            info: Output['overloads'][0];
+          }
+      )
     ][];
   }[];
+}
+
+function fileWithLineNumbers(node: Node) {
+  const file = node.getSourceFile();
+  const filePath = relative(process.cwd(), file.getFilePath()).replace(
+    /\\/g,
+    '/'
+  );
+  return `${filePath}#L${node.getStartLineNumber()}-L${node.getEndLineNumber()}`;
 }
 
 function toFileName(s: string): string {

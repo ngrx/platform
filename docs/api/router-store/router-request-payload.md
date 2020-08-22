@@ -18,3 +18,5 @@ export type RouterRequestPayload<
   event: NavigationStart;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L21-L26)

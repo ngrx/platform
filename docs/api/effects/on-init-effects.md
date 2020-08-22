@@ -19,6 +19,8 @@ the effect is registered.
 interface OnInitEffects {}
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/effects/src/lifecycle_hooks.ts#L109-L115)
+
 ## usageNotes
 
 ### Set an identifier for an Effects class

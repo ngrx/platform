@@ -20,6 +20,8 @@ multiple times.
 interface OnIdentifyEffects {}
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/effects/src/lifecycle_hooks.ts#L29-L35)
+
 ## usageNotes
 
 ### Set an identifier for an Effects class

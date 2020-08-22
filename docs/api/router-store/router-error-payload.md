@@ -20,3 +20,5 @@ export type RouterErrorPayload<
   event: NavigationError;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L113-L120)

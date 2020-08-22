@@ -15,3 +15,5 @@ See EntityChangeTracker docs.
 ```ts
 interface EntityChangeTracker<T> {}
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/entity-change-tracker.ts#L11-L262)

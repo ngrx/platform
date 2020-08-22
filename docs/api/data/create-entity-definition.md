@@ -12,6 +12,8 @@ function createEntityDefinition<T, S extends object>(
 ): EntityDefinition<T>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-metadata/entity-definition.ts#L20-L57)
+
 ## Parameters
 
 | Name     | Type                   | Description |

@@ -94,3 +94,20 @@ class EntityCollectionReducerMethods<T> {
   };
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/entity-collection-reducer-methods.ts#L34-L1221)
+
+## Parameters
+
+| Name                | Type                     | Description                                           |
+| ------------------- | ------------------------ | ----------------------------------------------------- |
+| selectId            | `any`                    | /\*_ Extract the primary key (id); default to `id` _/ |
+| entityChangeTracker | `EntityChangeTracker<T>` | /\*\*                                                 |
+
+- Track changes to entities since the last query or save
+- Can revert some or all of those changes
+  \*/ |
+  | methods | `EntityCollectionReducerMethodMap<T>` | /\*\*
+- Dictionary of the {EntityCollectionReducerMethods} for this entity type,
+- keyed by the {EntityOp}
+  \*/ |

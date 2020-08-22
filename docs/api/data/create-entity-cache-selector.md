@@ -12,6 +12,8 @@ function createEntityCacheSelector(
 ): MemoizedSelector<Object, EntityCache>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/selectors/entity-cache-selector.ts#L21-L26)
+
 ## Parameters
 
 | Name            | Type     | Description |

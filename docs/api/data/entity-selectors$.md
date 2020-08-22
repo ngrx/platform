@@ -29,3 +29,5 @@ interface EntitySelectors$<T> {
     | Store<ChangeStateMap<T>>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/selectors/entity-selectors$.ts#L26-L70)

@@ -10,6 +10,8 @@ module: store
 function compose(...functions: any[]);
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L78-L89)
+
 ## Parameters
 
 | Name      | Type    | Description |
@@ -19,12 +21,16 @@ function compose(...functions: any[]);
 ## Overloads
 
 ```ts
-function compose(...functions: any[]);
+function compose<A>(): (i: A) => A;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L56-L56)
+
 ```ts
-function compose(...functions: any[]);
+function compose<A, B>(b: (i: A) => B): (i: A) => B;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L57-L57)
 
 ### Parameters
 
@@ -33,8 +39,10 @@ function compose(...functions: any[]);
 | b    | `(i: A) => B` |             |
 
 ```ts
-function compose(...functions: any[]);
+function compose<A, B, C>(c: (i: B) => C, b: (i: A) => B): (i: A) => C;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L58-L58)
 
 ### Parameters
 
@@ -44,8 +52,14 @@ function compose(...functions: any[]);
 | b    | `(i: A) => B` |             |
 
 ```ts
-function compose(...functions: any[]);
+function compose<A, B, C, D>(
+  d: (i: C) => D,
+  c: (i: B) => C,
+  b: (i: A) => B
+): (i: A) => D;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L59-L63)
 
 ### Parameters
 
@@ -56,8 +70,15 @@ function compose(...functions: any[]);
 | b    | `(i: A) => B` |             |
 
 ```ts
-function compose(...functions: any[]);
+function compose<A, B, C, D, E>(
+  e: (i: D) => E,
+  d: (i: C) => D,
+  c: (i: B) => C,
+  b: (i: A) => B
+): (i: A) => E;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L64-L69)
 
 ### Parameters
 
@@ -69,8 +90,16 @@ function compose(...functions: any[]);
 | b    | `(i: A) => B` |             |
 
 ```ts
-function compose(...functions: any[]);
+function compose<A, B, C, D, E, F>(
+  f: (i: E) => F,
+  e: (i: D) => E,
+  d: (i: C) => D,
+  c: (i: B) => C,
+  b: (i: A) => B
+): (i: A) => F;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L70-L76)
 
 ### Parameters
 
@@ -83,8 +112,10 @@ function compose(...functions: any[]);
 | b    | `(i: A) => B` |             |
 
 ```ts
-function compose(...functions: any[]);
+function compose<A = any, F = any>(...functions: any[]): (i: A) => F;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L77-L77)
 
 ### Parameters
 

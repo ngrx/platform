@@ -16,3 +16,5 @@ interface StoreRouterConfig<
   routerState?: RouterState;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_store_module.ts#L52-L71)

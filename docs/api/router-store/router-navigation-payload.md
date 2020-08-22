@@ -18,3 +18,5 @@ export type RouterNavigationPayload<
   event: RoutesRecognized;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L50-L55)

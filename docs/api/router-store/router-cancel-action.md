@@ -9,3 +9,5 @@ module: router-store
 ```ts
 const routerCancelAction: any;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L100-L103)

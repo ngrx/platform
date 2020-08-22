@@ -25,3 +25,5 @@ interface CollectionSelectors<T> {
   readonly selectChangeState: Selector<EntityCollection<T>, ChangeStateMap<T>>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/selectors/entity-selectors.ts#L27-L56)

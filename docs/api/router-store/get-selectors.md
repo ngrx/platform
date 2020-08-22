@@ -12,6 +12,8 @@ function getSelectors<V>(
 ): RouterStateSelectors<V>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_selectors.ts#L8-L63)
+
 ## Parameters
 
 | Name        | Type                                    | Description |
@@ -25,6 +27,8 @@ function getSelectors<V>(
   selectState: (state: V) => RouterReducerState<any>
 ): RouterStateSelectors<V>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_selectors.ts#L5-L7)
 
 ### Parameters
 

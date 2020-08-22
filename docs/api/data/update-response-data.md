@@ -22,3 +22,5 @@ interface UpdateResponseData<T> {
   changed?: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/update-response-data.ts#L9-L20)

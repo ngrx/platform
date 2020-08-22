@@ -12,3 +12,5 @@ export enum NavigationActionTiming {
   PostActivation = 2,
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_store_module.ts#L79-L82)

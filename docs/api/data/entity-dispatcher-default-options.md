@@ -24,3 +24,15 @@ class EntityDispatcherDefaultOptions {
   optimisticSaveEntities = false;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/dispatchers/entity-dispatcher-default-options.ts#L10-L22)
+
+## Parameters
+
+| Name                   | Type      | Description                                                                                                        |
+| ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
+| optimisticAdd          | `boolean` | /\*_ True if added entities are saved optimistically; false if saved pessimistically. _/                           |
+| optimisticDelete       | `boolean` | /\*_ True if deleted entities are saved optimistically; false if saved pessimistically. _/                         |
+| optimisticUpdate       | `boolean` | /\*_ True if updated entities are saved optimistically; false if saved pessimistically. _/                         |
+| optimisticUpsert       | `boolean` | /\*_ True if upsert entities are saved optimistically; false if saved pessimistically. _/                          |
+| optimisticSaveEntities | `boolean` | /\*_ True if entities in a cache saveEntities request are saved optimistically; false if saved pessimistically. _/ |

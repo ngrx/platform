@@ -43,6 +43,8 @@ config: StoreRouterConfig<T> = {}
 }
 ````
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_store_module.ts#L151-L343)
+
 ## NgModule({
 
 declarations: [AppCmp, SimpleCmp],
@@ -60,6 +62,17 @@ bootstrap: [AppCmp]
 export class AppModule {
 }
 
-```
+````
+## Methods
+### forRoot
+```ts
+static forRoot<  T extends BaseRouterStoreState = SerializedRouterStateSnapshot >(  config: StoreRouterConfig<T> = {} ): ModuleWithProviders<StoreRouterConnectingModule>;
+````
 
-```
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_store_module.ts#L153-L177)
+
+#### Parameters (#forRoot-parameters)
+
+| Name   | Type                   | Description |
+| ------ | ---------------------- | ----------- |
+| config | `StoreRouterConfig<T>` |             |

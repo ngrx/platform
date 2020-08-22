@@ -16,3 +16,5 @@ interface EffectConfig {
   useEffectsErrorHandler?: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/effects/src/models.ts#L4-L14)

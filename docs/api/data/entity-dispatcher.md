@@ -21,3 +21,5 @@ interface EntityDispatcher<T> {
   // inherited from EntityCommands
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/dispatchers/entity-dispatcher.ts#L14-L68)

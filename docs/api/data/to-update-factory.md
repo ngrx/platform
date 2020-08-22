@@ -16,6 +16,8 @@ whose `id` is the primary key and
 function toUpdateFactory<T>(selectId?: IdSelector<T>);
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/utilities.ts#L40-L55)
+
 ## Parameters
 
 | Name     | Type  | Description |

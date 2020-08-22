@@ -20,3 +20,5 @@ interface LiftedState {
   isPaused: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store-devtools/src/reducer.ts#L39-L50)

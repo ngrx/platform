@@ -13,6 +13,8 @@ function createReducerFactory<T, V extends Action = Action>(
 ): ActionReducerFactory<T, V>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/utils.ts#L91-L109)
+
 ## Parameters
 
 | Name           | Type                         | Description |

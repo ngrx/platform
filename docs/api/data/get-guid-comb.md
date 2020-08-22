@@ -17,6 +17,8 @@ or get the current time in ms.
 function getGuidComb(seed?: number);
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/guid-fns.ts#L42-L64)
+
 ## Parameters
 
 | Name | Type     | Description                                         |

@@ -16,3 +16,5 @@ interface EntityActionOptions {
   skip?: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-action.ts#L13-L37)

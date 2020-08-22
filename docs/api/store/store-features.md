@@ -9,3 +9,5 @@ module: store
 ```ts
 const STORE_FEATURES: InjectionToken<unknown>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/tokens.ts#L23-L23)

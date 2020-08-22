@@ -9,3 +9,5 @@ module: router-store
 ```ts
 const DEFAULT_ROUTER_FEATURENAME: 'router';
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_store_module.ts#L90-L90)

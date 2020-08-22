@@ -17,3 +17,5 @@ interface ChangeState<T> {
   originalValue?: T | undefined;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/entity-collection.ts#L19-L22)

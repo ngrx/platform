@@ -18,3 +18,5 @@ export enum ChangeType {
   Updated,
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/entity-collection.ts#L4-L13)

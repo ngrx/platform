@@ -38,3 +38,5 @@ interface EntityCollectionService<T> {
     | Store<ChangeStateMap<T>>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-services/entity-collection-service.ts#L14-L55)

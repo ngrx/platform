@@ -10,6 +10,8 @@ module: store
 function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts#L612-L633)
+
 ## Parameters
 
 | Name        | Type  | Description |
@@ -19,8 +21,12 @@ function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;
 ## Overloads
 
 ```ts
-function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;
+function createFeatureSelector<T>(
+  featureName: string
+): MemoizedSelector<object, T>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts#L606-L608)
 
 ### Parameters
 
@@ -29,8 +35,12 @@ function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;
 | featureName | `string` |             |
 
 ```ts
-function createFeatureSelector(featureName: any): MemoizedSelector<any, any>;
+function createFeatureSelector<T, V>(
+  featureName: keyof T
+): MemoizedSelector<T, V>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts#L609-L611)
 
 ### Parameters
 

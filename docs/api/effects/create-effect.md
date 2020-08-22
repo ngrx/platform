@@ -22,6 +22,8 @@ function createEffect<
 ): R & CreateEffectMetadata;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/effects/src/effect_creator.ts#L54-L72)
+
 ## Parameters
 
 | Name   | Type                                                  | Description                                                                                                             |

@@ -13,3 +13,5 @@ interface StoreConfig<T, V extends Action = Action> {
   metaReducers?: MetaReducer<T, V>[];
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/store_module.ts#L106-L110)

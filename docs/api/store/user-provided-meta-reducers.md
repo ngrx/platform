@@ -14,3 +14,5 @@ const USER_PROVIDED_META_REDUCERS: InjectionToken<
   >[]
 >;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/tokens.ts#L49-L51)

@@ -14,3 +14,5 @@ export enum ChangeSetOperation {
   Upsert = 'Upsert',
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-cache-change-set.ts#L3-L8)

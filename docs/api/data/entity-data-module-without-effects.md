@@ -21,3 +21,29 @@ class EntityDataModuleWithoutEffects implements OnDestroy {
   ngOnDestroy();
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-data-without-effects.module.ts#L71-L172)
+
+## Methods
+
+### forRoot
+
+```ts
+static forRoot(  config: EntityDataModuleConfig ): ModuleWithProviders<EntityDataModuleWithoutEffects>;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-data-without-effects.module.ts#L101-L126)
+
+#### Parameters (#forRoot-parameters)
+
+| Name   | Type                     | Description |
+| ------ | ------------------------ | ----------- |
+| config | `EntityDataModuleConfig` |             |
+
+### ngOnDestroy
+
+```ts
+ngOnDestroy();
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-data-without-effects.module.ts#L169-L171)

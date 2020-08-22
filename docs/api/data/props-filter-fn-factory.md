@@ -18,6 +18,8 @@ function PropsFilterFnFactory<T = any>(
 ): EntityFilterFn<T>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-metadata/entity-filters.ts#L13-L34)
+
 ## Parameters
 
 | Name  | Type          | Description |

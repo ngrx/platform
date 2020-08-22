@@ -88,3 +88,5 @@ export enum EntityOp {
   SET_LOADING = '@ngrx/data/set-loading',
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-op.ts#L5-L84)

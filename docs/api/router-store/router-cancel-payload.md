@@ -20,3 +20,5 @@ export type RouterCancelPayload<
   event: NavigationCancel;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L80-L87)

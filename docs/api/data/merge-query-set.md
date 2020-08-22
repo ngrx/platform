@@ -24,6 +24,8 @@ class MergeQuerySet implements Action {
 }
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-cache-action.ts#L78-L99)
+
 ## Parameters
 
 | Name          | Type                                                                     | Description |
@@ -31,3 +33,10 @@ class MergeQuerySet implements Action {
 | querySet      | `` | The result of the query in the form of a map of entity collections. |
 | mergeStrategy | `` | How to merge a queried entity when it is already in the collection. |
 | [tag]         | `` | Optional tag to identify the operation from the app perspective.    |
+
+## Parameters
+
+| Name    | Type                                                                              | Description |
+| ------- | --------------------------------------------------------------------------------- | ----------- |
+| payload | `{ querySet: EntityCacheQuerySet; mergeStrategy?: MergeStrategy; tag?: string; }` |             |
+| type    | `EntityCacheAction.MERGE_QUERY_SET`                                               |             |

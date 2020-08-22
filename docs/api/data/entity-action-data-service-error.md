@@ -12,3 +12,5 @@ interface EntityActionDataServiceError {
   originalAction: EntityAction;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/data-service-error.ts#L42-L45)

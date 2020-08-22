@@ -14,3 +14,5 @@ export type RouterReducerState<
   navigationId: number;
 };
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/reducer.ts#L11-L16)

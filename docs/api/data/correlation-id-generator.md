@@ -21,3 +21,15 @@ class CorrelationIdGenerator {
   next();
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/correlation-id-generator.ts#L12-L23)
+
+## Methods
+
+### next
+
+```ts
+next();
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/correlation-id-generator.ts#L19-L22)

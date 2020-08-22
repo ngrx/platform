@@ -17,3 +17,5 @@ interface EntityCollectionServiceElements<
   readonly selectors$: S$;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-services/entity-collection-service-elements-factory.ts#L15-L23)

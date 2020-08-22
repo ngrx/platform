@@ -9,3 +9,5 @@ module: data
 ```ts
 const ENTITY_CACHE_NAME: 'entityCache';
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/constants.ts#L5-L5)

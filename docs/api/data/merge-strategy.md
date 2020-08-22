@@ -27,3 +27,5 @@ export enum MergeStrategy {
   OverwriteChanges,
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/merge-strategy.ts#L2-L20)

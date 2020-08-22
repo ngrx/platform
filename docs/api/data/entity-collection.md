@@ -20,3 +20,5 @@ interface EntityCollection<T = any> {
   loading: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/entity-collection.ts#L34-L45)

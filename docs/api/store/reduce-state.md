@@ -13,6 +13,8 @@ function reduceState<T, V extends Action = Action>(
 ): StateActionPair<T, V>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/state.ts#L67-L73)
+
 ## Parameters
 
 | Name              | Type                       | Description |

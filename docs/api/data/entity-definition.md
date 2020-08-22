@@ -18,3 +18,5 @@ interface EntityDefinition<T = any> {
   sortComparer: false | Comparer<T>;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-metadata/entity-definition.ts#L9-L18)

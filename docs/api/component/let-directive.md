@@ -44,6 +44,8 @@ class LetDirective<U> implements OnDestroy {
 }
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/let/let.directive.ts#L93-L180)
+
 ## Directive
 
 LetDirective
@@ -85,3 +87,42 @@ We can track the observables:
 ```
 
 ## publicApi
+
+## Methods
+
+### ngTemplateContextGuard
+
+```ts
+static ngTemplateContextGuard<U>(  dir: LetDirective<U>,  ctx: unknown | null | undefined ): ctx is LetViewContext<U>;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/let/let.directive.ts#L141-L146)
+
+#### Parameters (#ngTemplateContextGuard-parameters)
+
+| Name | Type              | Description |
+| ---- | ----------------- | ----------- |
+| dir  | `LetDirective<U>` |             |
+| ctx  | `unknown`         |             |
+
+### createEmbeddedView
+
+```ts
+createEmbeddedView();
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/let/let.directive.ts#L169-L174)
+
+### ngOnDestroy
+
+```ts
+ngOnDestroy();
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/let/let.directive.ts#L176-L179)
+
+## Parameters
+
+| Name                    | Type        | Description |
+| ----------------------- | ----------- | ----------- |
+| ngTemplateGuard_ngrxLet | `"binding"` |             |

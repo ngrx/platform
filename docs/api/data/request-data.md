@@ -14,3 +14,5 @@ interface RequestData {
   options?: any;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/interfaces.ts#L18-L23)

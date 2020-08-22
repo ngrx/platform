@@ -12,3 +12,5 @@ export type EntityCollectionReducer<T = any> = (
   action: EntityAction
 ) => EntityCollection<T>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/reducers/entity-collection-reducer.ts#L7-L10)

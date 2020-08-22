@@ -16,3 +16,5 @@ export type ActionCreator<
   C extends Creator = Creator
 > = C & TypedAction<T>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/models.ts#L85-L88)

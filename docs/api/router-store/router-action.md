@@ -21,3 +21,5 @@ export type RouterAction<
   | RouterErrorAction<T, V>
   | RouterNavigatedAction<V>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/actions.ts#L171-L179)

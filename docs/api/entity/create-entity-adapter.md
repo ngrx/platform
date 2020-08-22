@@ -15,6 +15,8 @@ function createEntityAdapter<T>(
 ): EntityAdapter<T>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/entity/src/create_adapter.ts#L13-L38)
+
 ## Parameters
 
 | Name    | Type                                                                | Description |

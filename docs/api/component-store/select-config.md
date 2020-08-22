@@ -11,3 +11,5 @@ interface SelectConfig {
   debounce?: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component-store/src/component-store.ts#L31-L33)

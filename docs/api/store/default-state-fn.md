@@ -15,6 +15,8 @@ function defaultStateFn(
 ): any;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts#L515-L530)
+
 ## Parameters
 
 | Name              | Type                                                        | Description |

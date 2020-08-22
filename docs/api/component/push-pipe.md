@@ -42,9 +42,14 @@ class PushPipe<S> implements PipeTransform, OnDestroy {
   transform<T>(
     potentialObservable: ObservableInput<T> | null | undefined
   ): T | null | undefined;
+  transform<T>(potentialObservable: null): null;
+  transform<T>(potentialObservable: undefined): undefined;
+  transform<T>(potentialObservable: ObservableInput<T>): T;
   ngOnDestroy(): void;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/push/push.pipe.ts#L56-L93)
 
 ## Pipe
 
@@ -61,3 +66,69 @@ PushPipe
 ```
 
 ## publicApi
+
+## Methods
+
+### transform
+
+```ts
+transform<T>(  potentialObservable: ObservableInput<T> | null | undefined ): T | null | undefined;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/push/push.pipe.ts#L83-L88)
+
+#### Parameters (#transform-parameters)
+
+| Name                | Type                 | Description |
+| ------------------- | -------------------- | ----------- |
+| potentialObservable | `ObservableInput<T>` |             |
+
+### transform
+
+```ts
+transform<T>(potentialObservable: null): null;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/push/push.pipe.ts#L80-L80)
+
+#### Parameters (#transform-parameters)
+
+| Name                | Type   | Description |
+| ------------------- | ------ | ----------- |
+| potentialObservable | `null` |             |
+
+### transform
+
+```ts
+transform<T>(potentialObservable: undefined): undefined;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/push/push.pipe.ts#L81-L81)
+
+#### Parameters (#transform-parameters)
+
+| Name                | Type        | Description |
+| ------------------- | ----------- | ----------- |
+| potentialObservable | `undefined` |             |
+
+### transform
+
+```ts
+transform<T>(potentialObservable: ObservableInput<T>): T;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/push/push.pipe.ts#L82-L82)
+
+#### Parameters (#transform-parameters)
+
+| Name                | Type                 | Description |
+| ------------------- | -------------------- | ----------- |
+| potentialObservable | `ObservableInput<T>` |             |
+
+### ngOnDestroy
+
+```ts
+ngOnDestroy(): void;
+```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/push/push.pipe.ts#L90-L92)

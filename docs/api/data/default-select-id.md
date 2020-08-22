@@ -17,6 +17,8 @@ Every selectId fn must return `undefined` when it cannot produce a full pkey.
 function defaultSelectId(entity: any);
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/utilities.ts#L9-L11)
+
 ## Parameters
 
 | Name   | Type  | Description |

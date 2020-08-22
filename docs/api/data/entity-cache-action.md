@@ -20,3 +20,5 @@ export enum EntityCacheAction {
   SAVE_ENTITIES_SUCCESS = '@ngrx/data/entity-cache/save-entities-success',
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-cache-action.ts#L14-L25)

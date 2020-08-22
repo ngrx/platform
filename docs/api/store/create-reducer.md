@@ -19,6 +19,8 @@ function createReducer<S, A extends Action = Action>(
 ): ActionReducer<S, A>;
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/reducer_creator.ts#L240-L262)
+
 ## Parameters
 
 | Name         | Type      | Description                                                                     |

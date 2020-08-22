@@ -15,3 +15,5 @@ interface SerializedRouterStateSnapshot {
   url: string;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/serializers/default_serializer.ts#L4-L7)

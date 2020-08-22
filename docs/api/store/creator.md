@@ -16,3 +16,5 @@ export type Creator<
   R extends object = object
 > = FunctionWithParametersType<P, R>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/models.ts#L71-L74)

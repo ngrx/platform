@@ -9,3 +9,5 @@ module: component
 ```ts
 class ReactiveComponentModule {}
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/component/src/reactive-component.module.ts#L9-L13)

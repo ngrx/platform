@@ -18,3 +18,5 @@ interface MemoizedSelectorWithProps<
   clearResult: () => void;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts#L31-L41)

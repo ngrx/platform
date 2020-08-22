@@ -9,3 +9,5 @@ module: data
 ```ts
 const PLURAL_NAMES_TOKEN: InjectionToken<EntityPluralNames>;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/utils/interfaces.ts#L16-L18)

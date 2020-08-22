@@ -15,3 +15,5 @@ that will be merged into an EntityCache via the `MergeQuerySet` action.
 ```ts
 interface EntityCacheQuerySet {}
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-cache-action.ts#L32-L34)

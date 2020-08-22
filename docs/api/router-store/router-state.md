@@ -17,3 +17,5 @@ export const enum RouterState {
   Minimal,
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/router-store/src/router_store_module.ts#L47-L50)

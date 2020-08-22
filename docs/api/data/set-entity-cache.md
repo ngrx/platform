@@ -19,9 +19,18 @@ class SetEntityCache implements Action {
 }
 ```
 
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-cache-action.ts#L108-L115)
+
 ## Parameters
 
 | Name  | Type                                                                  | Description |
 | ----- | --------------------------------------------------------------------- | ----------- |
 | cache | `` | New state of the entity cache                                    |
 | [tag] | `` | Optional tag to identify the operation from the app perspective. |
+
+## Parameters
+
+| Name    | Type                                    | Description |
+| ------- | --------------------------------------- | ----------- |
+| payload | `{ cache: EntityCache; tag?: string; }` |             |
+| type    | `EntityCacheAction.SET_ENTITY_CACHE`    |             |

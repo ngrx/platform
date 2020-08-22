@@ -14,3 +14,5 @@ See `createReducer`.
 ```ts
 interface ActionReducer<T, V extends Action = Action> {}
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/models.ts#L22-L24)

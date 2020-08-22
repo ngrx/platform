@@ -15,3 +15,5 @@ https://github.com/angular/angular/issues/22013
 ```ts
 interface QueryParams {}
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/interfaces.ts#L30-L32)

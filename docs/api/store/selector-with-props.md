@@ -12,3 +12,5 @@ export type SelectorWithProps<State, Props, Result> = (
   props: Props
 ) => Result;
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/store/src/models.ts#L51-L54)

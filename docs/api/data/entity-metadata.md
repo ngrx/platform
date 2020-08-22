@@ -17,3 +17,5 @@ interface EntityMetadata<T = any, S extends object = {}> {
   additionalCollectionState?: S;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/entity-metadata/entity-metadata.ts#L13-L21)

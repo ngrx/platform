@@ -21,3 +21,5 @@ interface EntityActionPayload<P = any> {
   skip?: boolean;
 }
 ```
+
+[Link to repo](https://github.com/ngrx/platform/blob/master/modules/data/src/actions/entity-action.ts#L40-L44)
