@@ -213,7 +213,7 @@ function callbackOutsideNgZone(){
 }
 ```
 
-## strictActionTypeUniqueness
+### strictActionTypeUniqueness
 
 The `strictActionTypeUniqueness` guards you against registering the same action type more than once.
 
