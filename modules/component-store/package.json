@@ -25,6 +25,7 @@
     "@angular/core": "^10.0.0",
     "rxjs": "^6.5.3"
   },
+  "schematics": "./schematics/collection.json",
   "sideEffects": false,
   "ng-update": {
     "packageGroup": [
