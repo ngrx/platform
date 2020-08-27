@@ -13,8 +13,6 @@ export interface Book {
   };
 }
 
-let books = [];
-
 @Injectable({ providedIn: 'root' })
 
 export class GoogleBooksService {
