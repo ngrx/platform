@@ -12,11 +12,6 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   }
   window['ngRef'] = ref;
 
-<<<<<<< HEAD
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
-=======
+
   // Otherwise, log the boot error
 }).catch(err => console.error(err));
->>>>>>> Update store and testing-store examples in docs

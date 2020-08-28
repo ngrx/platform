@@ -13,12 +13,6 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 
 @NgModule({
-<<<<<<< HEAD
-  declarations: [AppComponent, MyCounterComponent],
-  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
-  providers: [],
-  bootstrap: [AppComponent],
-=======
   imports:      [
       BrowserModule,
       StoreModule.forRoot({ books: booksReducer, collection: collectionReducer }),
@@ -26,7 +20,6 @@ import { BookCollectionComponent } from './book-collection/book-collection.compo
     ],
   declarations: [ AppComponent, BookListComponent, BookCollectionComponent ],
   bootstrap:    [ AppComponent ]
->>>>>>> Update store and testing-store examples in docs
 })
 
 export class AppModule { }
