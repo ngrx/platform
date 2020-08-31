@@ -101,7 +101,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   }));
 
   // Updates which page of movies that the user is currently on
-  readonly updateMoviesPerPage = this.updater((state, currentPageIndex: number) => ({
+  readonly updateCurrentPageIndex = this.updater((state, currentPageIndex: number) => ({
     ...state,
     currentPageIndex, // updates with new page index
   }));
