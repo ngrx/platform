@@ -7,7 +7,7 @@ Same as [PushPipe](guide/component/push), it also respects ViewEngine as well as
 
 ## Usage
 
-The `*ngrxLet` directive is provided through the `ReactiveComponentModule`. The use it, add the `ReactiveComponentModule` to the `imports` of your NgModule.
+The `*ngrxLet` directive is provided through the `ReactiveComponentModule`. To use it, add the `ReactiveComponentModule` to the `imports` of your NgModule.
 
 ```typescript
 import { NgModule } from '@angular/core';
