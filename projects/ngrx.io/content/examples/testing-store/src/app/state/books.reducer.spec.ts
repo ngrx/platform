@@ -7,7 +7,7 @@ describe('BooksReducer', () => {
     it('should return the default state', () => {
       const { initialState } = fromReducer;
       const action = {
-        type: 'Unknown'
+        type: 'Unknown',
       };
       const state = fromReducer.booksReducer(initialState, action);
 
@@ -23,9 +23,9 @@ describe('BooksReducer', () => {
           id: 'firstId',
           volumeInfo: {
             title: 'First Title',
-            authors: ['First Author']
-          }
-        }
+            authors: ['First Author'],
+          },
+        },
       ];
       const action = retrievedBookList({ Book: newState });
       const state = fromReducer.booksReducer(initialState, action);

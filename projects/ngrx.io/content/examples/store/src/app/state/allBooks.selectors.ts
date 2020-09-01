@@ -13,6 +13,6 @@ export const selectBookCollection = createSelector(
   selectBooks,
   selectCollectionIds,
   (books: Array<Book>, collection: Array<string>) => {
-    return collection.map(id => books.find(book => book.id === id))
+    return collection.map((id) => books.find((book) => book.id === id));
   }
 );

@@ -3,43 +3,41 @@ import {
   async,
   ComponentFixture,
   fakeAsync,
-  tick
-} from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { of } from "rxjs";
-import { StoreModule } from "@ngrx/store";
+  tick,
+} from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
 import {
   HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
-import { BookListComponent } from "./book-list/book-list.component";
-import { GoogleBooksService } from "./book-list/books.service";
-import { retrievedBookList } from "./state/allBooks.actions";
-import { BookCollectionComponent } from "./book-collection/book-collection.component";
-import { AppComponent } from "./app.component";
-import { collectionReducer } from "./state/collection.reducer";
-import { booksReducer } from "./state/books.reducer";
+import { BookListComponent } from './book-list/book-list.component';
+import { GoogleBooksService } from './book-list/books.service';
+import { retrievedBookList } from './state/allBooks.actions';
+import { BookCollectionComponent } from './book-collection/book-collection.component';
+import { AppComponent } from './app.component';
+import { collectionReducer } from './state/collection.reducer';
+import { booksReducer } from './state/books.reducer';
 
-describe("AppComponent Integration Test", () => {
+describe('AppComponent Integration Test', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let booksService: GoogleBooksService;
   let httpMock: HttpTestingController;
 
-  beforeEach(async(done => {
+  beforeEach(async((done) => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, BookListComponent, BookCollectionComponent],
       imports: [
         HttpClientTestingModule,
-        StoreModule.forRoot(
-          {
-            books: booksReducer,
-            collection: collectionReducer
-          }
-        )
+        StoreModule.forRoot({
+          books: booksReducer,
+          collection: collectionReducer,
+        }),
       ],
-      providers: [GoogleBooksService]
+      providers: [GoogleBooksService],
     }).compileComponents();
 
     booksService = TestBed.get(GoogleBooksService);
@@ -51,25 +49,25 @@ describe("AppComponent Integration Test", () => {
     fixture.detectChanges();
 
     const req = httpMock.expectOne(
-      "https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=oliver%20sacks"
+      'https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=oliver%20sacks'
     );
     req.flush({
       items: [
         {
-          id: "firstId",
+          id: 'firstId',
           volumeInfo: {
-            title: "First Title",
-            authors: ["First Author"]
-          }
+            title: 'First Title',
+            authors: ['First Author'],
+          },
         },
         {
-          id: "secondId",
+          id: 'secondId',
           volumeInfo: {
-            title: "Second Title",
-            authors: ["Second Author"]
-          }
-        }
-      ]
+            title: 'Second Title',
+            authors: ['Second Author'],
+          },
+        },
+      ],
     });
 
     fixture.detectChanges();
@@ -79,22 +77,22 @@ describe("AppComponent Integration Test", () => {
     httpMock.verify();
   });
 
-  it("should create the component", () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  describe("buttons should work as expected", () => {
-    it("should add to collection when add button is clicked and remove from collection when remove button is clicked", () => {
+  describe('buttons should work as expected', () => {
+    it('should add to collection when add button is clicked and remove from collection when remove button is clicked', () => {
       const addButton = getBookList()[1].query(
-        By.css("[data-test=add-button]")
+        By.css('[data-test=add-button]')
       );
 
       click(addButton);
 
-      expect(getBookTitle(getCollection()[0])).toBe("Second Title");
+      expect(getBookTitle(getCollection()[0])).toBe('Second Title');
 
       const removeButton = getCollection()[0].query(
-        By.css("[data-test=remove-button]")
+        By.css('[data-test=remove-button]')
       );
 
       click(removeButton);
@@ -104,15 +102,15 @@ describe("AppComponent Integration Test", () => {
   });
 
   function getCollection() {
-    return fixture.debugElement.queryAll(By.css(".book-collection .book-item"));
+    return fixture.debugElement.queryAll(By.css('.book-collection .book-item'));
   }
 
   function getBookList() {
-    return fixture.debugElement.queryAll(By.css(".book-list .book-item"));
+    return fixture.debugElement.queryAll(By.css('.book-list .book-item'));
   }
 
   function getBookTitle(element) {
-    return element.query(By.css("p")).nativeElement.textContent;
+    return element.query(By.css('p')).nativeElement.textContent;
   }
 
   function click(element) {

@@ -4,10 +4,9 @@ import { Book } from './books.service';
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.css']
+  styleUrls: ['./book-list.component.css'],
 })
-
-export class BookListComponent  {
+export class BookListComponent {
   @Input() books: Array<Book>;
   @Output() add = new EventEmitter();
 }

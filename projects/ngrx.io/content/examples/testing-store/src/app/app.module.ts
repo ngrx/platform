@@ -13,13 +13,12 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 
 @NgModule({
-  imports:      [
-      BrowserModule,
-      StoreModule.forRoot({ books: booksReducer, collection: collectionReducer }),
-      HttpClientModule
-    ],
-  declarations: [ AppComponent, BookListComponent, BookCollectionComponent ],
-  bootstrap:    [ AppComponent ]
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({ books: booksReducer, collection: collectionReducer }),
+    HttpClientModule,
+  ],
+  declarations: [AppComponent, BookListComponent, BookCollectionComponent],
+  bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}
