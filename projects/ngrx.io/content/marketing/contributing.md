@@ -132,7 +132,7 @@ yarn test
 - We value keeping the API surface small and concise, which factors into whether new features are accepted.
 - Submit an issue with the prefix `RFC:` with your feature request.
 - The feature will be discussed and considered.
-- If the feature is large in scope, the Design Doc might be requested.
+- If the feature is large in scope, the [Design Doc](https://hackmd.io/-l58MEAIT9qJKpm0su3Kow?view) might be requested.
 - Once the Design Doc is approved, small-sized PRs could be submitted.
 - Finally, they will be reviewed and merged once approved.
 
