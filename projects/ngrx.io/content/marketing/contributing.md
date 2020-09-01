@@ -56,7 +56,8 @@ Live examples is the best way to provide code snippets in the guide, for the fol
 * it's easier to maintain them
 * they prove that the code example is working
 * a developer can open the full example in the StackBlitz to follow along
-* the formatting of all of the example is kept consistent
+* the formatting of all of the examples is kept consistent
+
 
 To keep the formatting consistent, run the following command after any of the live examples are added or modified: 
 
