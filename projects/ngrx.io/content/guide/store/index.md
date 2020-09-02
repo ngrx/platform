@@ -51,9 +51,9 @@ The following tutorial shows you how to manage the state of a counter, and how t
 <code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
 </code-example>
 
-6.  Create a new file called `my-counter.component.ts` in the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state.
+6.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state. Also, create the `my-counter.component.html` file within this same folder.
 
-<code-example header="src/app/my-counter/my-counter.component.ts">
+<code-example header="src/app/my-counter/my-counter.component.ts" >
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -61,15 +61,7 @@ import { increment, decrement, reset } from '../counter.actions';
 
 @Component({
   selector: 'app-my-counter',
-  template: `
-    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt; 
-
-    &lt;div&gt;Current Count: {{ count$ | async }}&lt;/div&gt;
-
-    &lt;button (click)="decrement()"&gt;Decrement&lt;/button&gt;
-
-    &lt;button (click)="reset()"&gt;Reset Counter&lt;/button&gt;
-  `
+  templateUrl: './my-counter.component.html',
 })
 export class MyCounterComponent {
   count$: Observable&lt;number&gt;
@@ -92,6 +84,17 @@ export class MyCounterComponent {
   }
 }
 </code-example>
+
+<code-example header="src/app/my-counter/my-counter.component.html" >
+    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt; 
+
+    &lt;div&gt;Current Count: {{ count$ | async }}&lt;/div&gt;
+
+    &lt;button (click)="decrement()"&gt;Decrement&lt;/button&gt;
+
+    &lt;button (click)="reset()"&gt;Reset Counter&lt;/button&gt;
+</code-example>
+
 
 7.  Add the new component to your AppModule's declarations and declare it in the template:
 
