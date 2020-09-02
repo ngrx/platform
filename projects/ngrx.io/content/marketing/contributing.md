@@ -50,6 +50,21 @@ yarn serve-and-sync
 
 After running this command, an instance of the website and docs will be available at `http://localhost:4200`
 
+### Adding live examples
+
+Live examples is the best way to provide code snippets in the guide, for the following reasons:
+* it's easier to maintain them
+* they prove that the code example is working
+* a developer can open the full example in the StackBlitz to follow along
+* the formatting of all of the examples is kept consistent
+
+
+To keep the formatting consistent, run the following command after any of the live examples are added or modified: 
+
+```sh
+yarn prettier
+```
+
 ## Contributing to the Library Modules
 
 ### Folder Structure
@@ -118,7 +133,9 @@ yarn test
 - We value keeping the API surface small and concise, which factors into whether new features are accepted.
 - Submit an issue with the prefix `RFC:` with your feature request.
 - The feature will be discussed and considered.
-- Once the PR is submitted, it will be reviewed and merged once approved.
+- If the feature is large in scope, the [Design Doc](https://hackmd.io/-l58MEAIT9qJKpm0su3Kow?view) might be requested.
+- Once the Design Doc is approved, small-sized PRs could be submitted.
+- Finally, they will be reviewed and merged once approved.
 
 ## Commit Message Guidelines
 
