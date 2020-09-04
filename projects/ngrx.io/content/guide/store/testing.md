@@ -71,7 +71,7 @@ Usage:
 
 <code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store/src/app/tests/app.component.1.spec.ts" region="mockSelector"></code-example>
 
-In this example based on the [getting started tutorial](guide/store#tutorial), we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with a default mocked return value of an array of books. Similarly, we mock the `selectBookCollection` selector and pass the selector together with another array. In the fourth test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
+In this example based on the [getting started tutorial](guide/store#tutorial), we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with a default mocked return value of an array of books. Similarly, we mock the `selectBookCollection` selector and pass the selector together with another array. In the test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
 
 <div class="alert is-helpful">
 
@@ -83,12 +83,15 @@ Try the <live-example name="testing-store"></live-example>.
 
 ### Integration Testing
 
-An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is an example of an integration test for the `AppComponent` introduced in the [getting started tutorial](guide/store#tutorial).
+An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is part of an integration test for the `AppComponent` introduced in the [getting started tutorial](guide/store#tutorial).
 
-<code-example header="src/app/tests/integration.spec.ts" path="store/src/app/tests/integration.spec.ts">
+<code-example header="src/app/tests/integration.spec.ts (Integrate Store)" path="store/src/app/tests/integration.spec.ts" region="integrate">
 </code-example>
 
-The integration test sets up the dependent `Store` by importing the `StoreModule`. In this example, we assert that clicking the `add` button dispatches the corresponding action and is correctly emitted by the `collection` selector. Similarly, the `remove` button dispatches the `remove` and the `collection` selector displays the updated state.
+The integration test sets up the dependent `Store` by importing the `StoreModule`. In this part of the example, we assert that clicking the `add` button dispatches the corresponding action and is correctly emitted by the `collection` selector.
+
+<code-example header="src/app/tests/integration.spec.ts (addButton Test)" path="store/src/app/tests/integration.spec.ts" region="addTest">
+</code-example>
 
 ### Testing selectors
 
