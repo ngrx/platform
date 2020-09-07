@@ -15,15 +15,15 @@ yarn test
 ### Testing for a specific library
 
 ```shell
-nx test effects --watchAll
-nx test <library name that matches angular.json entry> --watchAll
+yarn nx test effects --watchAll
+yarn nx test <library name that matches angular.json entry> --watchAll
 ```
 
 ### Testing for a specific schematic unit test
 
 ```shell
-jest modules/schematics/src/effect/index.spec.ts --watch
-jest <relative path> --watch
+yarn jest modules/schematics/src/effect/index.spec.ts --watch
+yarn jest <relative path> --watch
 ```
 
 ## Submitting Pull Requests
