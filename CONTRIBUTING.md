@@ -12,6 +12,20 @@ yarn
 yarn test
 ```
 
+### Testing for a specific library
+
+```shell
+yarn nx test effects --watchAll
+yarn nx test <library name that matches angular.json entry> --watchAll
+```
+
+### Testing for a specific schematic unit test
+
+```shell
+yarn jest modules/schematics/src/effect/index.spec.ts --watch
+yarn jest <relative path> --watch
+```
+
 ## Submitting Pull Requests
 
 **Please follow these basic steps to simplify pull request reviews. If you don't you'll probably just be asked to anyway.**
