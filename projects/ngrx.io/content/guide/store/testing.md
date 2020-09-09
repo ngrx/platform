@@ -102,6 +102,6 @@ You can use the projector function used by the selector by accessing the `.proje
 
 ### Testing reducers
 
-The following example tests the `booksReducer` from the [getting started tutorial](guide/store#tutorial). We run the first test to check that the initial state is returned when the reducer is called with an unknown action. The second test checks that this specific reducer updates the state when the corresponding action is passed which, in this case, is `retrievedBookList`.
+The following example tests the `booksReducer` from the [getting started tutorial](guide/store#tutorial). In the first test we check that the state returns the same reference when the reducer is not supposed to handle the action (unknown action). The second test checks that `retrievedBookList` action updates the state and returns the new instance of it.
 
 <code-example header="src/app/state/books.reducer.spec.ts" path="testing-store/src/app/state/books.reducer.spec.ts"></code-example>
