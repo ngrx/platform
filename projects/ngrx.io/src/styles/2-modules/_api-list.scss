@@ -106,9 +106,11 @@ aio-api-list {
   .material-icons {
     color: $purple-grey-100;
     @include typescale-large;
+    // must match input line-height;
+    line-height: 32px;
+    height: 100%;
     left: 8px;
     position: absolute;
-    top: 6px;
     z-index: $layer-1;
   }
 }
@@ -152,10 +154,6 @@ aio-api-list {
     .symbol {
       margin-right: 8px;
     }
-  }
-
-  .form-search {
-    float: left;
   }
 }
 
