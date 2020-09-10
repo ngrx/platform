@@ -1,3 +1,5 @@
+@import '../mixins';
+
 // FEATURES MARKETING PAGE SPECIFIC STYLES
 
 .feature-section {
@@ -12,7 +14,7 @@
   }
 
   .feature-title {
-    font-size: 16px;
+    @include typescale-default;
     font-weight: 500;
     margin: 8px 0px;
     clear: both;
@@ -28,8 +30,8 @@
 
     .feature {
       max-width: 300px;
-      margin: 0 16px;  
-      
+      margin: 0 16px;
+
       @media (max-width: 768px) {
         max-width: 100%;
       }

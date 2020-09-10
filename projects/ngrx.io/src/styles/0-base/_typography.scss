@@ -1,15 +1,18 @@
+@import '../mixins';
+
 body {
+  @include typescale-default;
   font-family: $main-font;
   margin: 0;
   color: $darkgray;
-  font-size: 14px;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
   display: inline-block;
-  font-size: 24px;
+  @include typescale-display;
   font-weight: 500;
   margin: 8px 0px;
 
@@ -19,37 +22,37 @@ h1 {
 }
 
 h2 {
-  font-size: 22px;
+  @include typescale-xlarge;
   font-weight: 500;
   margin: 32px 0px 24px;
   clear: both;
 }
 
 h3 {
-  font-size: 20px;
-  font-weight: 400;
+  @include typescale-large;
+  font-weight: 500;
   margin: 24px 0px 12px;
   clear: both;
 }
 
 h4 {
-  font-size: 18px;
-  font-weight: 400;
+  @include typescale-default;
+  font-weight: 500;
   margin: 8px 0px;
   clear: both;
 }
 
 h5 {
-  font-size: 16px;
-  font-weight: 500;
+  @include typescale-default;
+  font-weight: 400;
   margin: 8px 0px;
   clear: both;
 }
 
 h6 {
   color: $mediumgray;
-  font-size: 16px;
-  font-weight: 500;
+  @include typescale-default;
+  font-weight: 400;
   margin: 8px 0px;
   clear: both;
 }
@@ -69,8 +72,7 @@ h2, h3, h4, h5, h6 {
 }
 
 p, ol, ul, ol, li, input, a  {
-  font-size: 14px;
-  line-height: 24px;
+  @include typescale-default;
   letter-spacing: 0.30px;
   font-weight: 400;
   & > em {
@@ -93,7 +95,7 @@ a {
 }
 
 .app-toolbar a {
-  font-size: 16px;
+  @include typescale-large;
   font-weight: 400;
   color: $white;
   font-family: $main-font;
@@ -133,13 +135,13 @@ td {
 }
 
 th {
-  font-size: 16px;
+  @include typescale-default;
   font-weight: 500;
   padding: 13px 32px;
   text-align: left;
 }
 
-p > code, li > code, td > code, th > c ode {
+p > code, li > code, td > code, th > code {
   font-family: $code-font;
   font-size: 85%;
   color: $darkgray;

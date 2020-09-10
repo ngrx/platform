@@ -1,6 +1,8 @@
+@import '../mixins';
+
 .edit-page-cta {
     font-weight: 400;
-    font-size: 14px;
+    @include typescale-default;
     color: $purple;
     text-align: right;
     margin-right: 32px;

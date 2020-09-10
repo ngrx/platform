@@ -73,3 +73,28 @@
     text-decoration: none;
   }
 }
+
+@mixin typescale-display {
+  font-size: 26px;
+  line-height: 32px;
+}
+
+@mixin typescale-xlarge {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+@mixin typescale-large {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+@mixin typescale-default {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@mixin typescale-small {
+  font-size: 14px;
+  line-height: 20px;
+}

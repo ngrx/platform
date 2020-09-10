@@ -1,13 +1,14 @@
 // import global themes
 @import '~@angular/material/theming';
+
+// import global mixins
+@import './mixins';
+
 @import './ngrx';
 @import './ngrx-io-theme';
 
 // import global variables
 @import './constants';
-
-// import global mixins
-@import './mixins';
 
 // import directories
 @import './0-base/base-dir';

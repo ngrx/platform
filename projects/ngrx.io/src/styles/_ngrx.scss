@@ -1,3 +1,5 @@
+@import './mixins';
+
 $dull-magenta: (
   50: #f6e7f9,
   100: #eac3f1,
@@ -94,7 +96,7 @@ aio-shell.page-home {
       }
     }
   }
-  
+
   pre .nocode {
     background-color: none;
     color: #000;

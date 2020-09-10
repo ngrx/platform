@@ -1,7 +1,9 @@
+@import '../mixins';
+
 .alert {
     padding: 16px;
     margin: 24px 0px;
-    font-size: 14px;
+    @include typescale-default;
     color: $darkgray;
     width: 100%;
     box-sizing: border-box;

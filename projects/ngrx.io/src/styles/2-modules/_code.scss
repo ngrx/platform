@@ -1,3 +1,5 @@
+@import '../mixins';
+
 code-example, code-tabs {
     clear: both;
     display: block;
@@ -48,7 +50,7 @@ code-example header {
   background-color: $purple;
   border-radius: 5px 5px 0 0;
   color: $offwhite;
-  font-size: 16px;
+  @include typescale-default;
   padding: 8px 16px;
 }
 
