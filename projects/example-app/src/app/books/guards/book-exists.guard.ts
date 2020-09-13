@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -29,8 +29,7 @@ export class BookExistsGuard implements CanActivate {
    * has finished.
    */
   waitForCollectionToLoad(): Observable<boolean> {
-    return this.store.pipe(
-      select(fromBooks.selectCollectionLoaded),
+    return this.store.select(fromBooks.selectCollectionLoaded).pipe(
       filter((loaded) => loaded),
       take(1)
     );
@@ -41,8 +40,7 @@ export class BookExistsGuard implements CanActivate {
    * in the Store
    */
   hasBookInStore(id: string): Observable<boolean> {
-    return this.store.pipe(
-      select(fromBooks.selectBookEntities),
+    return this.store.select(fromBooks.selectBookEntities).pipe(
       map((entities) => !!entities[id]),
       take(1)
     );

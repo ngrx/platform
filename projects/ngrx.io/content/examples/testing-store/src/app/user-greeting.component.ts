@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromAuth from './reducers';
 
 @Component({
@@ -7,7 +7,7 @@ import * as fromAuth from './reducers';
   template: ` <div>Greetings, {{ username$ | async }}!</div> `,
 })
 export class UserGreetingComponent {
-  username$ = this.store.pipe(select(fromAuth.getUsername));
+  username$ = this.store.select(fromAuth.getUsername);
 
   constructor(private store: Store<fromAuth.State>) {}
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -29,13 +29,10 @@ export class FindBookPageComponent {
   error$: Observable<string>;
 
   constructor(private store: Store<fromBooks.State>) {
-    this.searchQuery$ = store.pipe(
-      select(fromBooks.selectSearchQuery),
-      take(1)
-    );
-    this.books$ = store.pipe(select(fromBooks.selectSearchResults));
-    this.loading$ = store.pipe(select(fromBooks.selectSearchLoading));
-    this.error$ = store.pipe(select(fromBooks.selectSearchError));
+    this.searchQuery$ = store.select(fromBooks.selectSearchQuery).pipe(take(1));
+    this.books$ = store.select(fromBooks.selectSearchResults);
+    this.loading$ = store.select(fromBooks.selectSearchLoading);
+    this.error$ = store.select(fromBooks.selectSearchError);
   }
 
   search(query: string) {

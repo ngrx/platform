@@ -10,7 +10,7 @@ state, you will need to downgrade the Store service to use it in the AngularJS
 parts of your application.
 
 <code-example header="app.module.js">
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { downgradeInjectable } from '@angular/upgrade/static';
 import { module as ngModule } from 'angular';
 // app
@@ -28,7 +28,7 @@ export default ngModule('appName').controller('AngularJSController', [
   function($scope, $controller, ngrxStoreService) {
     // ...
     ngrxStoreService.dispatch(new MyActionClass(myPayload));
-    ngrxStoreService.pipe(select(mySelectorFunction)).subscribe(/*...*/);
+    ngrxStoreService.select(mySelectorFunction).subscribe(/*...*/);
     // ...
   },
 ]);

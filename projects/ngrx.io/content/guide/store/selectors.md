@@ -100,7 +100,7 @@ Inside the component we can define the `props`:
 
 <code-example header="app.component.ts">
 ngOnInit() {
-  this.counter = this.store.pipe(select(fromRoot.getCount, { multiply: 2 }))
+  this.counter = this.store.select(fromRoot.getCount, { multiply: 2 })
 }
 </code-example>
 
@@ -120,9 +120,9 @@ The component's selectors are now calling the factory function to create differe
 
 <code-example header="app.component.ts">
 ngOnInit() {
-  this.counter2 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter2', multiply: 2 }));
-  this.counter4 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter4', multiply: 4 }));
-  this.counter6 = this.store.pipe(select(fromRoot.getCount(), { id: 'counter6', multiply: 6 }));
+  this.counter2 = this.store.select(fromRoot.getCount(), { id: 'counter2', multiply: 2 });
+  this.counter4 = this.store.select(fromRoot.getCount(), { id: 'counter4', multiply: 4 });
+  this.counter6 = this.store.select(fromRoot.getCount(), { id: 'counter6', multiply: 6 });
 }
 </code-example>
 
