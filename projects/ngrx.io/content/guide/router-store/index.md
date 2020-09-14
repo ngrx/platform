@@ -28,3 +28,5 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}
 </code-example>
+
+> :warning: **@ngrx/router-store does not compatible with `ngrx-store-freeze`. Using together may cause unexpected behaviours**
