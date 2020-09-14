@@ -264,7 +264,7 @@ export class AppComponent {
 
 Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
 In terms of the CQRS architectural pattern, NgRx separates the read model (selectors) from the write model (reducers).
-An advanced technique is to combine selectors with [RxJS pipeable operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md).
+An advanced technique is to combine selectors with [RxJS pipeable operators](https://rxjs.dev/guide/v6/pipeable-operators).
 
 This section covers some basics of how selectors compare to pipeable operators and demonstrates how `createSelector` and `scan` are utilized to display a history of state transitions.
 
