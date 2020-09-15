@@ -3,6 +3,7 @@
 /modules/**/schematics/**/files/*
 /tmp
 /projects/ngrx.io
+!/projects/ngrx.io/content/examples
 package-lock.json
 package.json
 yarn.lock
