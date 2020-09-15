@@ -1,3 +1,5 @@
+@import '../mixins';
+
 /* SELECT MENU */
 
 .form-select-menu {
@@ -10,10 +12,10 @@
   box-sizing: border-box;
   border: 1px solid $white;
   color: $purple-grey-600;
-  font-size: 12px;
+  @include typescale-small;
+  line-height: 32px;
   font-weight: 400;
   height: 32px;
-  line-height: 32px;
   outline: none;
   padding: 0 16px;
   text-align: left;
@@ -46,7 +48,7 @@
 
   li {
     cursor: pointer;
-    font-size: 14px;
+    @include typescale-default;
     line-height: 32px;
     margin: 0;
     padding: 0 16px 0 40px;

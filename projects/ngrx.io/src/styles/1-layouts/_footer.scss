@@ -1,3 +1,5 @@
+@import '../mixins';
+
 footer {
   position: relative;
   line-height: 24px;
@@ -35,7 +37,7 @@ footer {
     cursor: pointer;
   }
   h3 {
-    font-size: 16px;
+    @include typescale-default;
     text-transform: uppercase;
     font-weight: 400;
     margin: 0 0 16px;
@@ -84,12 +86,12 @@ footer {
 
   @media (max-width: 700px) {
     h3 {
-      font-size: 110%;
+      @include typescale-large;
     }
   }
   @media (max-width: 600px) {
     h3 {
-      font-size: 100%;
+      @include typescale-default;
     }
   }
 }

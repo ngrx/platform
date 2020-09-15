@@ -1,3 +1,5 @@
+@import '../mixins';
+
 $notificationHeight: 56px;
 
 // we need to override some of the toolbar styling
@@ -59,7 +61,7 @@ aio-notification {
       border-radius: 15px;
       text-transform: uppercase;
       padding: 0 10px;
-      font-size: 12px;
+      @include typescale-small;
       @media (max-width: 780px) {
         display: none;
       }

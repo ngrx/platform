@@ -1,3 +1,5 @@
+@import '../mixins';
+
 .api-body {
 
     max-width: 1200px;
@@ -7,7 +9,7 @@
 
         th {
             text-transform: none;
-            font-size: 16px;
+            @include typescale-default;
             font-weight: bold;
         }
 

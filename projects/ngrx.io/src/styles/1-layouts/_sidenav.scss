@@ -1,3 +1,5 @@
+@import '../mixins';
+
 // Disable sidenav animations for the initial render.
 .starting.mat-drawer-transition .mat-drawer-content {
   transition: none;
@@ -6,7 +8,7 @@
 aio-nav-menu {
   display: block;
   margin: 0 auto;
-  font-size: 13px;
+  @include typescale-small;
   ul, a {
     padding: 0;
     margin: 0;
@@ -52,18 +54,25 @@ mat-sidenav-container div.mat-sidenav-content {
   height: auto;
 }
 
+.heading-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .vertical-menu-item {
   box-sizing: border-box;
   color: $darkgray;
   cursor: pointer;
-  display: block;
+  flex: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
   max-width: 260px;
   overflow-wrap: break-word;
   padding-top: 4px;
   padding-bottom: 4px;
   text-decoration: none;
   text-align: left;
-  width: 93%;
   word-wrap: break-word;
 
   &:hover {
@@ -76,11 +85,12 @@ mat-sidenav-container div.mat-sidenav-content {
     outline: $accentblue auto 2px;
   }
 
+  .node-title {
+    flex: 1;
+  }
+
   //icons _within_ nav
   .mat-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
     margin: 4px;
   }
 }
@@ -93,9 +103,6 @@ button.vertical-menu-item {
   border: none;
   background-color: transparent;
   margin-right: 0;
-  padding-left: 6px;
-  padding-top: 8px;
-  padding-bottom: 10px;
 }
 
 .heading {
@@ -130,7 +137,7 @@ button.vertical-menu-item {
 
 .level-1 {
   font-family: $main-font;
-  font-size: 14px;
+  @include typescale-default;
   font-weight: 400;
   margin-left: 14px;
   transition: background-color 0.2s;
@@ -139,7 +146,7 @@ button.vertical-menu-item {
 .level-2 {
   color: $mediumgray;
   font-family: $main-font;
-  font-size: 14px;
+  @include typescale-default;
   font-weight: 400;
   margin-left: 12px;
   text-transform: none;
@@ -148,8 +155,15 @@ button.vertical-menu-item {
 .level-3 {
   color: $mediumgray;
   font-family: $main-font;
-  font-size: 14px;
+  @include typescale-default;
   margin-left: 10px;
+}
+
+.level-4 {
+  color: $mediumgray;
+  font-family: $main-font;
+  @include typescale-default;
+  margin-left: 8px;
 }
 
 .level-1.expanded .mat-icon, .level-2.expanded .mat-icon {
@@ -187,7 +201,7 @@ mat-sidenav .doc-version {
 
     option {
       font-family: $main-font;
-      font-size: 14px;
+      @include typescale-default;
     }
   }
 }

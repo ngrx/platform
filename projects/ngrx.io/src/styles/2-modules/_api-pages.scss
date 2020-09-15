@@ -1,9 +1,11 @@
+@import '../mixins';
+
 .github-links {
   float: right;
   .material-icons {
     border-radius: 4px;
     padding: 4px;
-    font-size: 20px;
+    @include typescale-large;
     &:hover {
       background-color: $mist;
     }
@@ -54,7 +56,7 @@
     }
 
     h4 {
-      font-size: 14px;
+      @include typescale-small;
       font-weight: bold;
       margin-top: 12px;
     }
@@ -62,7 +64,7 @@
 
   .api-heading {
     padding: 5px 0;
-    font-size: 16px;
+    @include typescale-default;
     font-weight: bold;
   }
 
@@ -71,7 +73,7 @@
   }
 
   .properties-table {
-    font-size: 14px;
+    @include typescale-small;
 
     thead th {
       &:nth-child(1) {
@@ -85,7 +87,7 @@
 
   .parameters-table {
     margin-top: 0;
-    font-size: 14px;
+    @include typescale-small;
     td:nth-child(1) {
       width: 20%;
     }

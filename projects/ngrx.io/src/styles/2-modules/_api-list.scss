@@ -1,3 +1,5 @@
+@import '../mixins';
+
 /* API EDIT ICON */
 #api {
   .api-filter .material-icons {
@@ -70,7 +72,7 @@ aio-api-list {
     box-sizing: border-box;
     border: 1px solid $white;
     color: $purple-600;
-    font-size: 16px;
+    @include typescale-default;
     height: 32px;
     line-height: 32px;
     outline: none;
@@ -80,19 +82,19 @@ aio-api-list {
     // PLACEHOLDER TEXT
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
       color: $purple-grey-100;
-      font-size: 14px;
+      @include typescale-small;
     }
     &::-moz-placeholder { /* Firefox 19+ */
       color: $purple-grey-100;
-      font-size: 14px;
+      @include typescale-small;
     }
     &:-ms-input-placeholder { /* IE 10+ */
       color: $purple-grey-100;
-      font-size: 14px;
+      @include typescale-small;
     }
     &:-moz-placeholder { /* Firefox 18- */
       color: $purple-grey-100;
-      font-size: 14px;
+      @include typescale-small;
     }
 
     &:focus {
@@ -103,10 +105,12 @@ aio-api-list {
 
   .material-icons {
     color: $purple-grey-100;
-    font-size: 20px;
+    @include typescale-large;
+    // must match input line-height;
+    line-height: 32px;
+    height: 100%;
     left: 8px;
     position: absolute;
-    top: 6px;
     z-index: $layer-1;
   }
 }
@@ -150,10 +154,6 @@ aio-api-list {
     .symbol {
       margin-right: 8px;
     }
-  }
-
-  .form-search {
-    float: left;
   }
 }
 
@@ -288,7 +288,7 @@ p {
 }
 
 .api-doc-code {
-  font-size: 14px;
+  @include typescale-default;
   color: #1a2326;
 
   // the last .pln (white space) creates additional spacing between sections of the api doc. Remove it.
