@@ -9,15 +9,15 @@ In particular, you might use NgRx when you build an application with a lot of us
 A good guideline that might help answer the question, "Do I need NgRx?" is the
 <a href="https://youtu.be/omnwu_etHTY" target="_blank">**SHARI**</a> principle:
 
-* **S**hared: state that is accessed by many components and services.
+- **S**hared: state that is accessed by many components and services.
 
-* **H**ydrated: state that is persisted and rehydrated from external storage.
+- **H**ydrated: state that is persisted and rehydrated from external storage.
 
-* **A**vailable: state that needs to be available when re-entering routes.
+- **A**vailable: state that needs to be available when re-entering routes.
 
-* **R**etrieved: state that must be retrieved with a side-effect.
+- **R**etrieved: state that must be retrieved with a side-effect.
 
-* **I**mpacted: state that is impacted by actions from other sources.
+- **I**mpacted: state that is impacted by actions from other sources.
 
 However, realizing that using NgRx comes with some tradeoffs is also crucial. It is not meant to be the shortest or quickest way to write code. It also encourages the usage of many files.
 
@@ -27,7 +27,7 @@ It's also important to consider the patterns implemented with NgRx Store. A soli
 
 ### Type Safety
 
-Type safety is promoted throughout the architecture via the use of TypeScript.
+Type safety is promoted throughout the architecture via the use of TypeScript. In addition to this, NgRx's strictness of type-safety and use of patterns lends itself well to the creation of higher quality code.
 
 ### Immutability and Performance
 
