@@ -11,7 +11,7 @@ Store is RxJS powered global state management for Angular applications, inspired
 
 ## Local state management
 
-NgRx Store is mainly for managing global state across an entire application. In cases where you need to manage temporary or local component state, consider using [NgRx ComponentStore](guide/component-store). 
+NgRx Store is mainly for managing global state across an entire application. In cases where you need to manage temporary or local component state, consider using [NgRx ComponentStore](guide/component-store).
 
 ## Installation
 
@@ -19,7 +19,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 
 ## Diagram
 
-The following diagram represents the overall general flow of application state in NgRx. 
+The following diagram represents the overall general flow of application state in NgRx.
 
 <figure>
   <img src="generated/images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle Diagram" width="100%" height="100%" />
@@ -55,7 +55,7 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 <code-example header="src/app/my-counter/my-counter.component.ts" >
 import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { increment, decrement, reset } from '../counter.actions';
 
@@ -68,7 +68,7 @@ export class MyCounterComponent {
 
   constructor(private store: Store&lt;{ count: number }&gt;) {
     // TODO: This stream will connect to the current store `count` state
-    this.count$ = store.pipe(select('count'));
+    this.count$ = store.select('count');
   }
 
   increment() {
@@ -86,7 +86,7 @@ export class MyCounterComponent {
 </code-example>
 
 <code-example header="src/app/my-counter/my-counter.component.html" >
-    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt; 
+    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt;
 
     &lt;div&gt;Current Count: {{ count$ | async }}&lt;/div&gt;
 

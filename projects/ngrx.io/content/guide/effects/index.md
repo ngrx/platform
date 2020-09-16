@@ -303,7 +303,7 @@ The example below shows the `addBookToCollectionSuccess$` effect displaying a di
 
 <code-example header="collection.effects.ts">
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { tap, concatMap, withLatestFrom } from 'rxjs/operators';
@@ -317,7 +317,7 @@ export class CollectionEffects {
       this.actions$.pipe(
         ofType(CollectionApiActions.addBookSuccess),
         concatMap(action => of(action).pipe(
-          withLatestFrom(this.store.pipe(select(fromBooks.getCollectionBookIds)))
+          withLatestFrom(this.store.select(fromBooks.getCollectionBookIds))
         )),
         tap(([action, bookCollection]) => {
           if (bookCollection.length === 1) {
