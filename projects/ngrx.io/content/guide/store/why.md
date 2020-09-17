@@ -39,7 +39,7 @@ Using NgRx [Effects](guide/effects) and [Store](guide/store), any interaction wi
 
 ### Serializability
 
-By normalizing state changes and passing them through Observables, NgRx provides serializability and ensures state is predictably stored. This allows state to be saved to external storage such as `localStorage`.
+By normalizing state changes and passing them through observables, NgRx provides serializability and ensures the state is predictably stored. This allows the state to be saved to external storage such as `localStorage`.
 
 This also allows the inspection, download, upload, and the dispatch of actions all from the [Store Devtools](guide/store-devtools).
 
