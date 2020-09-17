@@ -27,7 +27,7 @@ It's also important to consider the patterns implemented with NgRx Store. A soli
 
 ### Type Safety
 
-Type safety is promoted throughout the architecture via the use of TypeScript. In addition to this, NgRx's strictness of type safety and the use of patterns lends itself well to the creation of higher quality code.
+Type safety is promoted throughout the architecture with reliance on the TypeScript compiler for program correctness. In addition to this, NgRx's strictness of type safety and the use of patterns lends itself well to the creation of higher quality code.
 
 ### Immutability and Performance
 
