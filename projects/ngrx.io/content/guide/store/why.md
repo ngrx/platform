@@ -6,7 +6,7 @@ NgRx Store provides state management for creating maintainable, explicit applica
 
 In particular, you might use NgRx when you build an application with a lot of user interactions and multiple data sources, or when managing state in services are no longer sufficient.
 
-A good guideline that might help answer the question, "Do I need NgRx?" is the
+A good guideline that might help answer the question, "Do I need NgRx Store?" is the
 <a href="https://youtu.be/omnwu_etHTY" target="_blank">**SHARI**</a> principle:
 
 - **S**hared: state that is accessed by many components and services.
