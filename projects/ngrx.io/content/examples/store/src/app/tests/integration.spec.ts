@@ -15,7 +15,6 @@ import {
 
 import { BookListComponent } from './book-list/book-list.component';
 import { GoogleBooksService } from './book-list/books.service';
-import { retrievedBookList } from './state/allBooks.actions';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { AppComponent } from './app.component';
 import { collectionReducer } from './state/collection.reducer';

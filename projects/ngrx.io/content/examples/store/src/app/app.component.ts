@@ -1,34 +1,33 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
-import { selectBookCollection, selectBooks } from './state/allBooks.selectors';
+import { selectBookCollection, selectBooks } from './state/books.selectors';
 import {
   retrievedBookList,
   addBook,
   removeBook,
-} from './state/allBooks.actions';
-import { AppState } from './state/state';
-import { GoogleBooksService, Book } from './book-list/books.service';
+} from './state/books.actions';
+import { GoogleBooksService } from './book-list/books.service';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html',
 })
 export class AppComponent {
   books$ = this.store.pipe(select(selectBooks));
   bookCollection$ = this.store.pipe(select(selectBookCollection));
 
-  add(bookId) {
+  onAdd(bookId) {
     this.store.dispatch(addBook({ bookId }));
   }
 
-  remove(bookId) {
+  onRemove(bookId) {
     this.store.dispatch(removeBook({ bookId }));
   }
 
   constructor(
     private booksService: GoogleBooksService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit() {

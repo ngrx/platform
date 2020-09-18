@@ -31,9 +31,9 @@ The following tutorial shows you how to manage the state of book list, and how t
 
 1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example>.
 
-2.  Right click on the `app` folder in StackBlitz. Create a state management folder `state`, and within the new folder, name a new file `allBooks.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
+2.  Right click on the `app` folder in StackBlitz. Create a state management folder `state`, and within the new folder, name a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
 
-<code-example header="src/app/state/allBooks.actions.ts" path="store/src/app/state/allBooks.actions.ts">
+<code-example header="src/app/state/books.actions.ts" path="store/src/app/state/books.actions.ts">
 </code-example>
 
 3.  Right click on the `state` folder and create a new file labeled `books.reducer.ts`. Within this file, define a reducer function to handle the retrieval of the book list from the state and consequently, update the state.
@@ -56,22 +56,27 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
 </code-example>
 
-7. Create a new file in `state` named `state.ts`. Define the state as a list of books and a list of collection books' IDs. 
+7. Create a new file in `state` named `app.state.ts`. Define the state as a list of books and a list of collection books' IDs. 
 
-<code-example header="src/app/state/state.ts" path="store/src/app/state/state.ts">
+<code-example header="src/app/state/app.state.ts" path="store/src/app/state/app.state.ts">
 </code-example>
 
 8. Create the book list and collection selectors to ensure we get the correct information from the store. As you can see, the `selectBookCollection`  selector combines two other selectors in order to build its return value.
 
-<code-example header="src/app/state/allBooks.selectors.ts" path="store/src/app/state/allBooks.selectors.ts">
+<code-example header="src/app/state/books.selectors.ts" path="store/src/app/state/books.selectors.ts">
 </code-example>
 
-9.  Create a folder named `book-list`, which we will be using soon to hold our book list component. For now, let's start with adding a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
+9.  Create a folder named `book-list`, which we will be using soon to hold our book list component. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
+
+<code-example header="src/app/book-list/books.model.ts" path="store/src/app/book-list/books.model.ts">
+</code-example>
+
+10. In the same folder, we will have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
 
 <code-example header="src/app/book-list/books.service.ts" path="store/src/app/book-list/books.service.ts">
 </code-example>
 
-10. In the `book-list` folder, create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
+11. In the `book-list` folder, create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
 
 <code-example header="src/app/book-list/book-list.component.html" path="store/src/app/book-list/book-list.component.html">
 </code-example>
@@ -79,7 +84,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/book-list/book-list.component.ts" path="store/src/app/book-list/book-list.component.ts">
 </code-example>
 
-11. Create a new _Component_ named `book-collection` in the `app` folder. Update the `BookCollectionComponent` template and class.
+12. Create a new _Component_ named `book-collection` in the `app` folder. Update the `BookCollectionComponent` template and class.
 
 <code-example header="src/app/book-collection/book-collection.component.html" path="store/src/app/book-collection/book-collection.component.html">
 </code-example>
@@ -87,7 +92,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/book-collection/book-collection.component.ts" path="store/src/app/book-collection/book-collection.component.ts">
 </code-example>
 
-12.  Add `BookListComponents` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
+13.  Add `BookListComponents` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
 
 <code-example header="src/app/app.component.html (Components)" path="store/src/app/app.component.html" region="components">
 </code-example>
@@ -95,7 +100,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts" region="declareComponents">
 </code-example>
 
-13. In the `AppComponent` class, add the selectors and corresponding actions to dispatch on `add` or `remove` method calls. Then subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included).
+14. In the `AppComponent` class, add the selectors and corresponding actions to dispatch on `add` or `remove` method calls. Then subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included).
 
 <code-example header="src/app/app.component.ts" path="store/src/app/app.component.ts">
 </code-example>

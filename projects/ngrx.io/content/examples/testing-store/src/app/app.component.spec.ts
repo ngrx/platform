@@ -1,15 +1,15 @@
 import { MemoizedSelector } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { AppState } from './state/state';
+import { AppState } from './state/app.state';
 import { AppComponent } from './app.component';
 import {
-  addBook as addAction,
-  removeBook as removeAction,
+  addBook,
+  removeBook,
   retrievedBookList,
-} from './state/allBooks.actions';
+} from './state/books.actions';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -18,7 +18,7 @@ import {
   selectBooks,
   selectCollectionIds,
   selectBookCollection,
-} from './state/allBooks.selectors';
+} from './state/books.selectors';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -30,7 +30,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideMockStore()],
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
       declarations: [BookListComponent, BookCollectionComponent, AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
@@ -85,16 +85,16 @@ describe('AppComponent', () => {
   });
 
   it('add method should dispatch add action', () => {
-    component.add('firstId');
+    component.onAdd('firstId');
     expect(store.dispatch).toHaveBeenCalledWith(
-      addAction({ bookId: 'firstId' })
+      addBook({ bookId: 'firstId' })
     );
   });
 
   it('remove method should dispatch remove action', () => {
-    component.remove('thirdId');
+    component.onRemove('thirdId');
     expect(store.dispatch).toHaveBeenCalledWith(
-      removeAction({ bookId: 'thirdId' })
+      removeBook({ bookId: 'thirdId' })
     );
   });
 

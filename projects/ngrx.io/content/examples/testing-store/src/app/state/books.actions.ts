@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Book } from '../book-list/books.service';
 
 export const addBook = createAction(
   '[Book List] Add Book',
@@ -12,6 +11,6 @@ export const removeBook = createAction(
 );
 
 export const retrievedBookList = createAction(
-  '[Book List] Get all books success',
+  '[Book List/API] Retrieve Books Success',
   props<{ Book }>()
 );

@@ -1,6 +1,6 @@
 import * as fromReducer from './books.reducer';
-import { retrievedBookList } from './allBooks.actions';
-import { Book } from '../book-list/books.service';
+import { retrievedBookList } from './books.actions';
+import { Book } from '../book-list/books.model';
 
 describe('BooksReducer', () => {
   describe('unknown action', () => {
