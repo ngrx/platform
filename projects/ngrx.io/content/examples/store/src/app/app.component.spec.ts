@@ -1,7 +1,7 @@
 import { MemoizedSelector } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AppState } from './state/app.state';
 import { AppComponent } from './app.component';
@@ -30,7 +30,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideMockStore()],
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
       declarations: [BookListComponent, BookCollectionComponent, AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
