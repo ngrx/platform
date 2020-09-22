@@ -60,10 +60,10 @@ export class MoviesService {
 The component has multiple responsibilities:
 
 - Managing the _state_ of the movies.
-- Using the service to perform a _side effect_, reaching out to an external API to fetch the movies
+- Using the service to perform a _side effect_, reaching out to an external API to fetch the movies.
 - Changing the _state_ of the movies within the component.
 
-`Effects` when used along with `Store`, decrease the responsibility of the component.  In a larger application, this becomes more important because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
+`Effects` when used along with `Store`, decrease the responsibility of the component. In a larger application, this becomes more important because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
 
 Effects handle external data and interactions, allowing your services to be less stateful and only perform tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
@@ -129,7 +129,7 @@ export class MovieEffects {
 }
 </code-example>
 
-The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `mergeMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. Its also important to [handle errors](#handling-errors) when dealing with observable streams so that the effects continue running.
+The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `mergeMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. It's also important to [handle errors](#handling-errors) when dealing with observable streams so that the effects continue running.
 
 <div class="alert is-important">
 
