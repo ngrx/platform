@@ -124,14 +124,12 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 ComponentStore is an independent library, however it can easily consume data from `@ngrx/store` or from any other global state management library.
 
 <code-example header="movies.store.ts">
-
-  private readonly fetchMoviesData$ = this.select(
-    this.store.select(getUserId), // 👈 store.select returns an Observable, which is easily mixed within selector
-    moviesPerPage$,
-    currentPageIndex$,
-    (userId, moviesPerPage, currentPageIndex) => ({userId, moviesPerPage, currentPageIndex}),
-  );
-}
+private readonly fetchMoviesData$ = this.select(
+  this.store.select(getUserId), // 👈 store.select returns an Observable, which is easily mixed within selector
+  moviesPerPage$,
+  currentPageIndex$,
+  (userId, moviesPerPage, currentPageIndex) => ({userId, moviesPerPage, currentPageIndex}),
+);
 </code-example>
 
 ## `get` method
