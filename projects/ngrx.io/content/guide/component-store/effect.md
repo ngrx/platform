@@ -36,9 +36,9 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
         }),
         // 👇 Handle potential error within inner pipe.
         catchError(() => EMPTY),
-      ))
+      )),
     );
-  })
+  });
 
   readonly addMovie = this.updater((state, movie: Movie) => ({
     movies: [...state.movies, movie],

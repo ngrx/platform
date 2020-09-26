@@ -37,7 +37,7 @@ Updater then can be called with the values imperatively or could take an Observa
 <code-example header="movies-page.component.ts">
 @Component({
   template: `
-    <div (click)="add('New Movie')">Add a Movie</div>
+    &lt;button (click)="add('New Movie')"&gt;Add a Movie&lt;/button&gt;
   `,
   providers: [MoviesStore],
 })
@@ -85,7 +85,7 @@ export class MoviesPageComponent {
         ...state,
         movies: [...state.movies, movie],
       };
-    })
+    });
   }
 }
 </code-example>

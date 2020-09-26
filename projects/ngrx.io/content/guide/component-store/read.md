@@ -86,12 +86,11 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 
     this.effect((moviePageData$: Observable<{moviesPerPage: number, currentPageIndex: number}>) => {
       return moviePageData$.pipe(
-        concatMap(({moviesPerPage, currentPageIndex}) => 
-            this.movieService.loadMovies(moviesPerPage, currentPageIndex)).pipe(
-              tap(results => this.updateMovieResults(results)),
-            ),
+        concatMap(({moviesPerPage, currentPageIndex}) =>
+          this.movieService.loadMovies(moviesPerPage, currentPageIndex),
+        ).pipe(tap(results => this.updateMovieResults(results))),
       );
-    })(fetchMoviesData$) // 👈 effect is triggered whenever debounced data is changed
+    })(fetchMoviesData$); // 👈 effect is triggered whenever debounced data is changed
   }
 
   // Updates how many movies per page should be displayed
@@ -115,7 +114,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
     currentPageIndex$,
     (moviesPerPage, currentPageIndex) => ({moviesPerPage, currentPageIndex}),
     {debounce: true}, // 👈 setting this selector to debounce
-    );
+  );
 }
 </code-example>
 
@@ -131,7 +130,7 @@ ComponentStore is an independent library, however it can easily consume data fro
     moviesPerPage$,
     currentPageIndex$,
     (userId, moviesPerPage, currentPageIndex) => ({userId, moviesPerPage, currentPageIndex}),
-    );
+  );
 }
 </code-example>
 
