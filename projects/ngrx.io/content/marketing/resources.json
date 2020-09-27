@@ -150,7 +150,7 @@
           },
           "ngrx-handlers": {
             "title": "ngrx-handlers",
-            "desc": "A plugin for boilerplate reduction",
+            "desc": "A plugin for generating actions and reducer based on the handler map",
             "url": "https://github.com/markostanimirovic/ngrx-handlers",
             "rev": true
           },
