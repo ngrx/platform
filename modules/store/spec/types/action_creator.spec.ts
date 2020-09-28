@@ -43,11 +43,19 @@ describe('createAction()', () => {
       );
     });
 
-    it('should not allow ararys', () => {
+    it('should not allow arrays', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<[]>());
       `).toFail(
         /Type 'Props<\[\]>' is not assignable to type '"arrays are not allowed in action creators"'/
+      );
+    });
+
+    it('should not allow empty objects', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<{}>());
+      `).toFail(
+        /Type 'Props<\{\}>' is not assignable to type '"empty objects are not allowed in action creators"'/
       );
     });
   });
