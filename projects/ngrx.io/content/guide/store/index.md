@@ -53,7 +53,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 
 6.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `books` and `booksReducer`, as well as the `collection` and `collectionReducer` that manage the state of the book list and the collection. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
+<code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.ts">
 </code-example>
 
 7. Create a new file in `state` named `state.ts`. Define the state as a list of books and a list of collection books' IDs. 
@@ -89,10 +89,10 @@ The following tutorial shows you how to manage the state of book list, and how t
 
 12.  Add `BookListComponents` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
 
-<code-example header="src/app/app.component.html (Components)" path="store/src/app/app.component.html" region="components">
+<code-example header="src/app/app.component.html" path="store/src/app/app.component.html">
 </code-example>
 
-<code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts" region="declareComponents">
+<code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
 </code-example>
 
 13. In the `AppComponent` class, add the selectors and corresponding actions to dispatch on `add` or `remove` method calls. Then subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included).

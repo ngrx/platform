@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 
-// #docregion declareComponents
 @NgModule({
   imports: [
     BrowserModule,
@@ -23,4 +22,3 @@ import { BookCollectionComponent } from './book-collection/book-collection.compo
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-// #enddocregion declareComponents
