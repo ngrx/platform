@@ -1,0 +1,10 @@
+<h1>Oliver Sacks Books Collection</h1>
+
+<!-- #docregion components -->
+<h2>Books</h2>
+<app-book-list class="book-list" [books]="books$ | async" (add)="onAdd($event)"></app-book-list>
+
+<h2>My Collection</h2>
+<app-book-collection class="book-collection" [books]="bookCollection$ | async" (remove)="onRemove($event)">
+</app-book-collection>
+<!-- #enddocregion components-->
