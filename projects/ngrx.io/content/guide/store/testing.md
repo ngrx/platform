@@ -67,11 +67,11 @@ describe('Auth Guard', () => {
 
 Usage:
 
-<code-example header="src/app/state/allBooks.selectors.ts" path="testing-store/src/app/state/allBooks.selectors.ts"></code-example>
+<code-example header="user-greeting.component.ts" path="testing-store/src/app/user-greeting.component.ts"></code-example>
 
-<code-example header="src/app/app.component.spec.ts" path="testing-store/src/app/app.component.spec.ts"></code-example>
+<code-example header="user-greeting.component.spec.ts" path="testing-store/src/app/user-greeting.component.spec.ts"></code-example>
 
-In this example, we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with default mocked return values in an array. Similarly, we mock the `selectBookCollection` selector and pass the selector with another array. In the fourth test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
+In this example, we mock the `getUsername` selector by using `overrideSelector`, passing in the `getUsername` selector with a default mocked return value of `'John'`. In the second test, we use `setResult()` to update the mock selector to return `'Brandon'`, then we use `MockStore.refreshState()` to trigger an emission from the `getUsername` selector.
 
 <div class="alert is-helpful">
 
