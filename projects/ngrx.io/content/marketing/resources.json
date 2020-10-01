@@ -148,6 +148,12 @@
               "url": "https://co-it.gitbook.io/ngrx-ducks/",
               "rev": true
           },
+          "ngrx-handlers": {
+            "title": "ngrx-handlers",
+            "desc": "A plugin for generating actions and reducer based on the handler map",
+            "url": "https://github.com/markostanimirovic/ngrx-handlers",
+            "rev": true
+          },
           "ngrx-wieder": {
             "title": "ngrx-wieder",
             "desc": "Lightweight & configurable solution for implementing undo-redo based on NgRx and immer",
