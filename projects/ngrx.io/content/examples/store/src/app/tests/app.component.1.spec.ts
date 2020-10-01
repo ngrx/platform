@@ -20,6 +20,7 @@ import {
   selectBookCollection,
 } from '../state/allBooks.selectors';
 
+//#docregion mockSelector
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
@@ -27,34 +28,38 @@ describe('AppComponent', () => {
   let mockBookCollectionSelector;
   let mockBooksSelector;
 
-  TestBed.configureTestingModule({
-    providers: [provideMockStore()],
-    imports: [HttpClientModule],
-    declarations: [BookListComponent, BookCollectionComponent, AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideMockStore()],
+      imports: [HttpClientModule],
+      declarations: [BookListComponent, BookCollectionComponent, AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    });
+
+    store = TestBed.inject(MockStore);
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+
+    mockBooksSelector = store.overrideSelector(selectBooks, [
+      {
+        id: 'firstId',
+        volumeInfo: {
+          title: 'First Title',
+          authors: ['First Author'],
+        },
+      },
+    ]);
+
+    mockBookCollectionSelector = store.overrideSelector(
+      selectBookCollection,
+      []
+    );
+
+    fixture.detectChanges();
+    spyOn(store, 'dispatch').and.callFake(() => {});
   });
 
-  store = TestBed.inject(MockStore);
-  fixture = TestBed.createComponent(AppComponent);
-  component = fixture.componentInstance;
-
-  mockBooksSelector = store.overrideSelector(selectBooks, [
-    {
-      id: 'firstId',
-      volumeInfo: {
-        title: 'First Title',
-        authors: ['First Author'],
-      },
-    },
-  ]);
-
-  mockBookCollectionSelector = store.overrideSelector(selectBookCollection, []);
-
-  fixture.detectChanges();
-  spyOn(store, 'dispatch').and.callFake(() => {});
-
   it('should update the UI when the store changes', () => {
-    //#docregion mockSelector
     mockBooksSelector.setResult([
       {
         id: 'firstId',
@@ -93,6 +98,6 @@ describe('AppComponent', () => {
       fixture.debugElement.queryAll(By.css('.book-collection .book-item'))
         .length
     ).toBe(1);
-    //#enddocregion mockSelector
   });
 });
+//#enddocregion mockSelector
