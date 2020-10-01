@@ -41,7 +41,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/state/books.reducer.ts" path="store/src/app/state/books.reducer.ts">
 </code-example>
 
-4. Create another file named `collection.reducer.ts` in the `state` folder to handle actions that alter the user's book collection. Define a reducer function that handles the add action by appending the book's ID to the collection, including a condition to avoid duplicate book IDs. Define the same reducer to handle the remove action by filtering the collection array with the book ID.
+4. Create another file named `collection.reducer.ts` in the `state` folder to handle actions that alter the user's book collection. Define a reducer function than handles the add action by appending the book's ID to the collection, including a condition to avoid duplicate book ID's. Define the same reducer to handle the remove action by filtering the collection array with the book ID.
 
 <code-example header="src/app/state/collection.reducer.ts" path="store/src/app/state/collection.reducer.ts">
 </code-example>
@@ -71,7 +71,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/book-list/books.service.ts" path="store/src/app/book-list/books.service.ts">
 </code-example>
 
-10. In the `book-list` folder, create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
+10. In the `book-list` foler, create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
 
 <code-example header="src/app/book-list/book-list.component.html" path="store/src/app/book-list/book-list.component.html">
 </code-example>
@@ -95,7 +95,7 @@ The following tutorial shows you how to manage the state of book list, and how t
 <code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
 </code-example>
 
-13. In the `AppComponent` class, add the selectors and corresponding actions to dispatch on `add` or `remove` method calls. Then subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included).
+In the `AppComponent` class, add the selectors and corresponding actions to dispatch on add or remove. Then, subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included.)
 
 <code-example header="src/app/app.component.ts" path="store/src/app/app.component.ts">
 </code-example>
@@ -108,7 +108,7 @@ Let's cover what you did:
 - Defined two reducer functions to manage different parts of the state.
 - Registered the global state container that is available throughout your application.
 - Defined the state, as well as selectors that retrieve specific parts of the state.
-- Created two distinct components, as well as a service that fetches from the Google Books API. 
+- Created two  distinct components, as well as a service that fetches from the Google Books API. 
 - Injected the `Store` and Google Books API services to dispatch actions and select the current state.
 
 ## Next Steps

@@ -3,9 +3,9 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { retrievedBookList } from './allBooks.actions';
 import { Book } from '../book-list/books.service';
 
-export const initialState: ReadonlyArray<Book> = [];
+export const initialState = [];
 
-export const booksReducer = createReducer(
+export const booksReducer = createReducer<Array<Book>>(
   initialState,
   on(retrievedBookList, (state, { Book }) => [...Book])
 );
