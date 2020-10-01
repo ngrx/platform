@@ -1,4 +1,4 @@
-import './global-jasmine';
+import './global-jasmine'
 import 'jasmine-core/lib/jasmine-core/jasmine-html.js';
 import 'jasmine-core/lib/jasmine-core/boot.js';
 
@@ -20,16 +20,17 @@ import {
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-import './app/state/books.reducer.spec.ts';
-import './app/state/collection.reducer.spec.ts';
-import './app/state/allBooks.selectors.spec.ts';
-import './app/app.component.spec.ts';
-import './app/integration.spec.ts';
 
-jasmine.getEnv().configure({ random: false });
+import './app/state/books.reducer.spec.ts'
+import './app/state/collection.reducer.spec.ts'
+import './app/state/allBooks.selectors.spec.ts'
+import './app/app.component.spec.ts'
+import './app/integration.spec.ts'
+
+jasmine.getEnv().configure({random: false});
 bootstrap();
 
-function bootstrap() {
+function bootstrap () {
   if (window.jasmineRef) {
     location.reload();
     return;

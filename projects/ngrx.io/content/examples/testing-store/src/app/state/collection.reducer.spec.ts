@@ -8,7 +8,7 @@ describe('CollectionReducer', () => {
     it('should return the default state', () => {
       const { initialState } = fromReducer;
       const action = {
-        type: 'Unknown',
+        type: 'Unknown'
       };
       const state = fromReducer.collectionReducer(initialState, action);
 

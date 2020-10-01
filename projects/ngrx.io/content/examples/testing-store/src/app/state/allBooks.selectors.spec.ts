@@ -1,8 +1,4 @@
-import {
-  selectBooks,
-  selectCollectionIds,
-  selectBookCollection,
-} from './allBooks.selectors';
+import { selectBooks, selectCollectionIds, selectBookCollection } from './allBooks.selectors';
 import { AppState } from './state';
 
 describe('Selectors', () => {
@@ -12,19 +8,19 @@ describe('Selectors', () => {
         id: 'firstId',
         volumeInfo: {
           title: 'First Title',
-          authors: ['First Author'],
-        },
+          authors: ['First Author']
+        }
       },
       {
         id: 'secondId',
         volumeInfo: {
           title: 'Second Title',
-          authors: ['Second Author'],
-        },
+          authors: ['Second Author']
+        }
       },
     ],
-    collection: ['firstId'],
-  };
+    collection: ['firstId']
+  }
 
   it('should select the book list', () => {
     const result = selectBooks.projector(initialState.books);
@@ -33,11 +29,9 @@ describe('Selectors', () => {
   });
 
   it('should select the book collection', () => {
-    const result = selectBookCollection.projector(
-      initialState.books,
-      initialState.collection
-    );
+    const result = selectBookCollection.projector(initialState.books, initialState.collection);
     expect(result.length).toEqual(1);
     expect(result[0].id).toEqual('firstId');
   });
+
 });

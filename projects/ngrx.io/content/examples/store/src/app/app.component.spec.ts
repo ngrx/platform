@@ -5,20 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppState } from './state/state';
 import { AppComponent } from './app.component';
-import {
-  addBook as addAction,
-  removeBook as removeAction,
-  retrievedBookList,
-} from './state/allBooks.actions';
+import { addBook as addAction, removeBook as removeAction, retrievedBookList } from './state/allBooks.actions';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import {
-  selectBooks,
-  selectCollectionIds,
-  selectBookCollection,
-} from './state/allBooks.selectors';
+import { selectBooks, selectCollectionIds, selectBookCollection } from './state/allBooks.selectors';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -30,55 +22,53 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideMockStore()],
-      imports: [HttpClientModule],
+      imports : [HttpClientModule],
       declarations: [BookListComponent, BookCollectionComponent, AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-
+    
     mockBooksSelector = store.overrideSelector(selectBooks, [
       {
         id: 'firstId',
         volumeInfo: {
           title: 'First Title',
-          authors: ['First Author'],
-        },
+          authors: ['First Author']
+        }
       },
       {
         id: 'secondId',
         volumeInfo: {
           title: 'Second Title',
-          authors: ['Second Author'],
-        },
+          authors: ['Second Author']
+        }
       },
       {
         id: 'thirdId',
         volumeInfo: {
           title: 'Third Title',
-          authors: ['Third Author'],
-        },
+            authors: ['Third Author']
+        }
       },
       {
         id: 'fourthId',
         volumeInfo: {
           title: 'Fourth Title',
-          authors: ['Fourth Author'],
-        },
-      },
-    ]);
+          authors: ['Fourth Author']
+        }
+      }
+    ])
 
-    mockBookCollectionSelector = store.overrideSelector(selectBookCollection, [
-      {
-        id: 'thirdId',
-        volumeInfo: {
-          title: 'Third Title',
-          authors: ['Third Author'],
-        },
-      },
-    ]);
+    mockBookCollectionSelector = store.overrideSelector(selectBookCollection, [{
+      id: 'thirdId',
+      volumeInfo: {
+        title: 'Third Title',
+        authors: ['Third Author']
+      }
+    }]);
 
     fixture.detectChanges();
 
@@ -100,67 +90,61 @@ describe('AppComponent', () => {
   });
 
   it('should render a book list and a book collection', () => {
-    expect(
-      fixture.debugElement.queryAll(By.css('.book-list .book-item')).length
-    ).toBe(4);
-    expect(
-      fixture.debugElement.queryAll(By.css('.book-collection .book-item'))
-        .length
-    ).toBe(1);
+    expect(fixture.debugElement.queryAll(By.css('.book-list .book-item')).length).toBe(4);
+    expect(fixture.debugElement.queryAll(By.css('.book-collection .book-item')).length).toBe(1);
   });
 
   it('should update the UI when the store changes', () => {
-    mockBooksSelector.setResult([
-      {
-        id: 'stringA',
-        volumeInfo: {
-          title: 'Title A',
-          authors: ['Author A'],
+    mockBooksSelector.setResult(
+      [
+        {
+          id: 'stringA',
+          volumeInfo: {
+            title: 'Title A',
+            authors: ['Author A']
+          }
         },
-      },
-      {
-        id: 'stringB',
-        volumeInfo: {
-          title: 'Title B',
-          authors: ['Author B'],
+        {
+          id: 'stringB',
+          volumeInfo: {
+            title: 'Title B',
+            authors: ['Author B']
+          }
         },
-      },
-      {
-        id: 'stringC',
-        volumeInfo: {
-          title: 'Title C',
-          authors: ['Author C'],
+        {
+          id: 'stringC',
+          volumeInfo: {
+            title: 'Title C',
+            authors: ['Author C']
+          }
         },
-      },
-    ]);
+      ]
+    );
 
-    mockBookCollectionSelector.setResult([
-      {
-        id: 'stringA',
-        volumeInfo: {
-          title: 'Title A',
-          authors: ['Author A'],
+    mockBookCollectionSelector.setResult(
+      [
+        {
+          id: 'stringA',
+          volumeInfo: {
+            title: 'Title A',
+            authors: ['Author A']
+          }
         },
-      },
-      {
-        id: 'stringB',
-        volumeInfo: {
-          title: 'Title B',
-          authors: ['Author B'],
+        {
+          id: 'stringB',
+          volumeInfo: {
+            title: 'Title B',
+            authors: ['Author B']
+          }
         },
-      },
-    ]);
+      ]
+    );
 
     store.refreshState();
     fixture.detectChanges();
 
-    expect(
-      fixture.debugElement.queryAll(By.css('.book-list .book-item')).length
-    ).toBe(3);
+    expect(fixture.debugElement.queryAll(By.css('.book-list .book-item')).length).toBe(3);
 
-    expect(
-      fixture.debugElement.queryAll(By.css('.book-collection .book-item'))
-        .length
-    ).toBe(2);
+    expect(fixture.debugElement.queryAll(By.css('.book-collection .book-item')).length).toBe(2);
   });
 });
