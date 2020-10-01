@@ -27,7 +27,7 @@ export class AppComponent  {
   constructor(private booksService: GoogleBooksService, private store: Store<AppState>) {}
   
   ngOnInit() {
-      this.booksService.getBooks().subscribe(Book => this.store.dispatch(retrievedBookList({Book})));
+      this.booksService.getBooks().subscribe(books => this.store.dispatch(retrievedBookList({books})));
   }
 
 }

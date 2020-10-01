@@ -20,14 +20,14 @@ describe('BooksReducer', () => {
       const { initialState } = fromReducer;
       const newState: Array<Book> = [
         {
-          id: 'firstId',
+          id: 'testString',
           volumeInfo: {
-            title: 'First Title',
-            authors: ['First Author']
+            title: 'testBook',
+            authors: ['FirstName LastName']
           }
         }
       ];
-      const action = retrievedBookList({ Book: newState });
+      const action = retrievedBookList({ books: newState });
       const state = fromReducer.booksReducer(initialState, action);
 
       expect(state).toEqual(newState);

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { Book } from '../book-list/books.service';
 
 @Component({
@@ -8,6 +9,11 @@ import { Book } from '../book-list/books.service';
 })
 
 export class BookCollectionComponent  {
-  @Input() books: Array<Book>;
-  @Output() remove = new EventEmitter();
+
+  @Input()
+    books: Array<Book>;
+
+  @Output() 
+    remove = new EventEmitter();
+
 }
