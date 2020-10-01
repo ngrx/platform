@@ -71,7 +71,7 @@ Usage:
 
 <code-example header="src/app/app.component.spec.ts" path="testing-store/src/app/app.component.spec.ts"></code-example>
 
-In this example based on the [getting started tutorial](guide/store#tutorial), we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with default mocked return values in an array. Similarly, we mock the `selectBookCollection` selector and pass the selector with another array. In the fourth test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
+In this example, we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with default mocked return values in an array. Similarly, we mock the `selectBookCollection` selector and pass the selector with another array. In the fourth test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
 
 <div class="alert is-helpful">
 
@@ -96,9 +96,3 @@ You can use the projector function used by the selector by accessing the `.proje
 
 <code-example header="src/app/state/allBooks.selectors.spec.ts" path="testing-store/src/app/state/allBooks.selectors.spec.ts">
 </code-example>
-
-### Testing reducers
-
-The following example tests the `booksReducer` from the [getting started tutorial](guide/store#tutorial). We run the first test to check the initial state. The second test checks that this specific reducer updates the state when the corresponding action is passed which, in this case, is `retrievedBookList`.
-
-<code-example header="src/app/state/books.reducer.spec.ts" path="testing-store/src/app/state/books.reducer.spec.ts"></code-example>
