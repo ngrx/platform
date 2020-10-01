@@ -22,7 +22,7 @@ import {
 
 import './app/state/books.reducer.spec.ts';
 import './app/state/collection.reducer.spec.ts';
-import './app/state/books.selectors.spec.ts';
+import './app/state/allBooks.selectors.spec.ts';
 import './app/app.component.spec.ts';
 import './app/integration.spec.ts';
 

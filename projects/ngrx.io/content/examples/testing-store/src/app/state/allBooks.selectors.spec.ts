@@ -2,8 +2,8 @@ import {
   selectBooks,
   selectCollectionIds,
   selectBookCollection,
-} from './books.selectors';
-import { AppState } from './app.state';
+} from './allBooks.selectors';
+import { AppState } from './state';
 
 describe('Selectors', () => {
   const initialState: AppState = {

@@ -3,7 +3,14 @@ import { Injectable } from '@angular/core';
 
 import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Book } from './books.model';
+
+export interface Book {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors: Array<string>;
+  };
+}
 
 @Injectable({ providedIn: 'root' })
 export class GoogleBooksService {

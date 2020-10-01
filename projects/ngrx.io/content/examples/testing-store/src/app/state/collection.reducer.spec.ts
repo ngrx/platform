@@ -1,9 +1,11 @@
 import * as fromReducer from './collection.reducer';
-import { addBook, removeBook } from './books.actions';
+import { addBook, removeBook } from './allBooks.actions';
+import { Book } from '../book-list/books.service';
+import { AppState } from './state';
 
 describe('CollectionReducer', () => {
   describe('unknown action', () => {
-    it('should return the previous state', () => {
+    it('should return the default state', () => {
       const { initialState } = fromReducer;
       const action = {
         type: 'Unknown',

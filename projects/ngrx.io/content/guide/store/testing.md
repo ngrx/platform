@@ -67,7 +67,7 @@ describe('Auth Guard', () => {
 
 Usage:
 
-<code-example header="src/app/state/books.selectors.ts" path="testing-store/src/app/state/books.selectors.ts"></code-example>
+<code-example header="src/app/state/allBooks.selectors.ts" path="testing-store/src/app/state/allBooks.selectors.ts"></code-example>
 
 <code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store/src/app/tests/app.component.1.spec.ts" region="mockSelector"></code-example>
 
@@ -95,9 +95,9 @@ The integration test sets up the dependent `Store` by importing the `StoreModule
 
 ### Testing selectors
 
-You can use the projector function used by the selector by accessing the `.projector` property. The following example tests the `books` selector from the [getting started tutorial](guide/store#tutorial).
+You can use the projector function used by the selector by accessing the `.projector` property. The following example tests the `allBooks` selector from the [getting started tutorial](guide/store#tutorial).
 
-<code-example header="src/app/state/books.selectors.spec.ts" path="testing-store/src/app/state/books.selectors.spec.ts">
+<code-example header="src/app/state/allBooks.selectors.spec.ts" path="testing-store/src/app/state/allBooks.selectors.spec.ts">
 </code-example>
 
 ### Testing reducers

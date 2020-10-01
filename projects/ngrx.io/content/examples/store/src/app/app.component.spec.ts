@@ -3,13 +3,13 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppState } from './state/app.state';
+import { AppState } from './state/state';
 import { AppComponent } from './app.component';
 import {
-  addBook ,
-  removeBook,
+  addBook as addAction,
+  removeBook as removeAction,
   retrievedBookList,
-} from './state/books.actions';
+} from './state/allBooks.actions';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -18,7 +18,7 @@ import {
   selectBooks,
   selectCollectionIds,
   selectBookCollection,
-} from './state/books.selectors';
+} from './state/allBooks.selectors';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -86,16 +86,16 @@ describe('AppComponent', () => {
   });
 
   it('add method should dispatch add action', () => {
-    component.onAdd('firstId');
+    component.add('firstId');
     expect(store.dispatch).toHaveBeenCalledWith(
-      addBook({ bookId: 'firstId' })
+      addAction({ bookId: 'firstId' })
     );
   });
 
   it('remove method should dispatch remove action', () => {
-    component.onRemove('thirdId');
+    component.remove('thirdId');
     expect(store.dispatch).toHaveBeenCalledWith(
-      removeBook({ bookId: 'thirdId' })
+      removeAction({ bookId: 'thirdId' })
     );
   });
 
