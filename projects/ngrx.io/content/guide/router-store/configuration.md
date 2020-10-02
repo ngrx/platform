@@ -71,7 +71,7 @@ export class CustomSerializer implements RouterStateSerializer&lt;RouterStateUrl
 
 <code-example header="index.ts">
 export interface State {
-  router: RouterReducerState<any>;
+  router: RouterReducerState&lt;any&gt;;
 }
   
 export const reducers: ActionReducerMap&lt;State&gt; = {
