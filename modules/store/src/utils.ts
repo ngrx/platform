@@ -11,6 +11,79 @@ export function combineReducers<T, V extends Action = Action>(
   reducers: ActionReducerMap<T, V>,
   initialState?: Partial<T>
 ): ActionReducer<T, V>;
+/**
+ * @description
+ * Combines reducers for individual features into a single reducer.
+ *
+ * You can use this function to delegate handling of state transitions to multiple reducers, each acting on their
+ * own sub-state within the root state.
+ *
+ * @param reducers An object mapping keys of the root state to their corresponding feature reducer.
+ * @param initialState Provides a state value if the current state is `undefined`, as it is initially.
+ * @returns A reducer function.
+ *
+ * @usageNotes
+ *
+ * **Example combining two feature reducers into one "root" reducer**
+ *
+ * Feature A:
+ * ```ts
+ * export const featureKey = 'featureA';
+ * export interface State {
+ *   counterA: number;
+ * }
+ * const initialState: State = {
+ *   counterA: 0
+ * };
+ * export const featureAIncrement = createAction('[FeatureA] increment');
+ * export const reducer = createReducer(
+ *   initialState,
+ *   on(featureAIncrement, state => ({ counterA: state.counterA + 1 }))
+ * );
+ * ```
+ *
+ * Feature B:
+ * ```ts
+ * export const featureKey = 'featureB';
+ * export interface State {
+ *   counterB: number;
+ * }
+ * const initialState: State = {
+ *   counterB: 0
+ * };
+ * export const featureBIncrement = createAction('[FeatureB] increment');
+ * export const reducer = createReducer(
+ *   initialState,
+ *   on(featureBIncrement, state => ({ counterB: state.counterB + 1 }))
+ * );
+ * ```
+ *
+ * Combining the feature reducers using `combineReducers`:
+ * ```ts
+ * import * as fromFeatureA from './featureA';
+ * import * as fromFeatureB from './featureB';
+ *
+ * export interface State {
+ *   [fromFeatureA.featureKey]: fromFeatureA.State;
+ *   [fromFeatureB.featureKey]: fromFeatureB.State;
+ * }
+ * export const reducer = combineReducers({
+ *   [fromFeatureA.featureKey]: fromFeatureA.reducer,
+ *   [fromFeatureB.featureKey]: fromFeatureB.reducer
+ * });
+ * ```
+ *
+ * You can also override the initial states of the sub-features:
+ * ```ts
+ * export const reducer = combineReducers({
+ *   [fromFeatureA.featureKey]: fromFeatureA.reducer,
+ *   [fromFeatureB.featureKey]: fromFeatureB.reducer
+ * }, {
+ *   [fromFeatureA.featureKey]: { counterA: 13 },
+ *   [fromFeatureB.featureKey]: { counterB: 37 }
+ * });
+ * ```
+ */
 export function combineReducers(
   reducers: any,
   initialState: any = {}
