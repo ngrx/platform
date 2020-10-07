@@ -38,6 +38,4 @@ This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/effects`.
 2. Run `npm install` to install those dependencies. 
-3. By default will create a `src/app/app.effects.ts` file with an empty `AppEffects` class that has the `actions$: Actions` observable injected into it. If group flag is set to true then this file will be created under an `effects` folder.
-4. Create a `src/app/app.effects.spec.ts` spec file with a basic unit test. If group flag is set to true then this file will be created under an `effects` folder.
-5. Update your `src/app/app.module.ts` > `imports` array with `EffectsModule.forRoot([AppEffects])`. If you provided flags then the command will attempt to locate and update module found by the flags.
+3. Update your `src/app/app.module.ts` > `imports` array with `EffectsModule.forRoot([AppEffects])`. If you provided flags then the command will attempt to locate and update module found by the flags.
