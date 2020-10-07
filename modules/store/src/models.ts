@@ -61,6 +61,10 @@ export const typePropertyIsNotAllowedMsg =
   'type property is not allowed in action creators';
 type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 
+export const emptyObjectsAreNotAllowedMsg =
+  'empty objects are not allowed in action creators';
+type EmptyObjectsAreNotAllowed = typeof emptyObjectsAreNotAllowedMsg;
+
 export type FunctionIsNotAllowed<
   T,
   ErrorMessage extends string
@@ -77,6 +81,8 @@ export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
   : T extends { type: any }
   ? TypePropertyIsNotAllowed
+  : keyof T extends never
+  ? EmptyObjectsAreNotAllowed
   : unknown;
 
 /**
