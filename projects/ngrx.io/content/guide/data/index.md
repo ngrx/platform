@@ -8,7 +8,7 @@ Many applications have substantial _domain models_ with 10s or 100s of entity ty
 
 Such applications typically create, retrieve, update, and delete entity data that are "persisted" in a database of some sort, hosted on a remote server.
 
-Developers who build these app with the NgRx [Store](guide/store), [Effects](guide/effects), and [Entity](guide/entity) libraries alone tend to write a large number of _actions_, _action-creators_, _reducers_, _effects_, _dispatchers_, and _selectors_ as well as the HTTP GET, PUT, POST, and DELETE methods _for each entity type_.
+Developers who build these apps with the NgRx [Store](guide/store), [Effects](guide/effects), and [Entity](guide/entity) libraries alone tend to write a large number of _actions_, _action-creators_, _reducers_, _effects_, _dispatchers_, and _selectors_ as well as the HTTP GET, PUT, POST, and DELETE methods _for each entity type_.
 There will be a lot of repetitive code to create, maintain, and test.
 The more entities in your model, the bigger the challenge.
 
@@ -36,7 +36,7 @@ NgRx Data targets management of *persisted entity data*, like _Customers_ and _O
 
 It is ill-suited to _non-entity_ data.
 Value types, enumerations, session data and highly idiosyncratic data are better managed with standard NgRx.
-Real world apps will benefit from a combination of NgRx techniques, all sharing a common store.
+Real-world apps will benefit from a combination of NgRx techniques, all sharing a common store.
 
 #### Entity
 
@@ -46,7 +46,7 @@ An **entity** is a specific kind of data, an object defined by its _thread of co
 
 We experience its "continuity" by storing and retrieving ("persisting") entity objects in a permanent store on a server, a store such as a database. Whether we retrieve the "Sally" entity today or tomorrow or next week, we "mean" that we're getting the same conceptual "Sally" no matter how her data attributes have changed.
 
-In Ngrx Data we maintain the entity object's identity by means of its **primary key**. Every entity in NgRx Data must have a _primary key_. The primary key is usually a single attribute of the object. For example, that "Sally" entity object might be an instance of the "Customer" entity type, an instance whose permanent, unchanging primary key is the `id` property with a value of `42`.
+In NgRx Data we maintain the entity object's identity by means of its **primary key**. Every entity in NgRx Data must have a _primary key_. The primary key is usually a single attribute of the object. For example, that "Sally" entity object might be an instance of the "Customer" entity type, an instance whose permanent, unchanging primary key is the `id` property with a value of `42`.
 
 The primary key doesn't have to be a single attribute. It can consist of multiple attributes of the object if you need that feature. What matters is that the primary key _uniquely_ identifies that object within a permanent collection of entities of the same type. There can be exactly one `Customer` entity with `id: 42` and that entity is "Sally".
 
@@ -168,6 +168,6 @@ export class HeroesComponent implements OnInit {
 }
 </code-example>
 
-In this example, you need to listen for the stream of heroes. The `heroes$` property references the `heroeService.entities$` Observable.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the heroes$ property will emit the latest Hero array.
+In this example, you need to listen for the stream of heroes. The `heroes$` property references the `heroService.entities$` Observable.  When state is changed as a result of a successful HTTP request (initiated by `getAll()`, for example), the `heroes$` property will emit the latest Hero array.
 
 By default, the service includes the `loading$` Observable to indicate whether an HTTP request is in progress.  This helps applications manage loading states.
