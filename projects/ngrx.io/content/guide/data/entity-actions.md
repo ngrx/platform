@@ -74,7 +74,7 @@ The optional `tag` appears in the generated `type` text when the `EntityActionFa
 The `entityName` is the default tag that appears between brackets in the formatted `type`,
 e.g., `'[Hero] NgRx Data/query-all'`. 
 You can set this tag to identify the purpose of the operation and "who" dispatched it.
-Ngrx Data will put your tag between the brackets in the formatted `type`.
+NgRx Data will put your tag between the brackets in the formatted `type`.
 
 The `error` property indicates that something went wrong while processing the action. [See more below](#action-error).
 

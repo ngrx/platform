@@ -307,7 +307,7 @@ and the `EntityCollection.changeState` property remains an empty object.
 
 You can opt-out of change tracking for a _specific_ entity action by supplying the  `mergeStrategy` in the optional `EntityActionOptions` that you can pass in the action payload.
 
-> If you don't specify a `MergeStrategy`, Ngrx Data uses the default for that action.
+> If you don't specify a `MergeStrategy`, NgRx Data uses the default for that action.
 
 If you are dispatching an action with `EntityDispatcher` and you don't want that action to be change-tracked, you might write something like this:
 

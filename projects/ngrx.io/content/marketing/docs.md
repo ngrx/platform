@@ -6,7 +6,7 @@ NgRx is a framework for building reactive applications in Angular. NgRx provides
 - Isolation of side effects to promote a cleaner component architecture.
 - Entity collection management.
 - Integration with the Angular Router.
-- Developer tooling that enhance developers experience when building many different types of applications.
+- Developer tooling that enhances developer experience when building many different types of applications.
 
 ## Packages
 
