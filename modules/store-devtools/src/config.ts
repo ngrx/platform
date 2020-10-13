@@ -39,10 +39,10 @@ export class StoreDevtoolsConfig {
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
-  '@ngrx/devtools Options'
+  '@ngrx/store-devtools Options'
 );
 export const INITIAL_OPTIONS = new InjectionToken<StoreDevtoolsConfig>(
-  '@ngrx/devtools Initial Config'
+  '@ngrx/store-devtools Initial Config'
 );
 
 export type StoreDevtoolsOptions =

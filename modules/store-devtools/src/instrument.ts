@@ -19,7 +19,7 @@ import {
 import { DevtoolsDispatcher } from './devtools-dispatcher';
 
 export const IS_EXTENSION_OR_MONITOR_PRESENT = new InjectionToken<boolean>(
-  'Is Devtools Extension or Monitor Present'
+  '@ngrx/store-devtools Is Devtools Extension or Monitor Present'
 );
 
 export function createIsExtensionOrMonitorPresent(
