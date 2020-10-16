@@ -80,6 +80,10 @@
               "url": "guide/store"
             },
             {
+              "title": "Walkthrough",
+              "url": "guide/store/walkthrough"
+            },
+            {
               "title": "Installation",
               "url": "guide/store/install"
             },
