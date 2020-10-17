@@ -65,7 +65,7 @@ jobs:
       # Test
       - run:
           name: Run All Lint Checks
-          command: yarn nx run-many --target=lint --all
+          command: yarn nx run-many --target=lint --all --parallel
 
   lint-affected:
     <<: *run_in_node
@@ -80,7 +80,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Lint Checks
-          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel
 
   # Enforce some static analysis invariants.
   # Note that generally, these should be checked only on the delta in each change,
@@ -116,7 +116,7 @@ jobs:
       # Test
       - run:
           name: Run All Unit Tests
-          command: yarn nx run-many --target=test --all
+          command: yarn nx run-many --target=test --all --parallel
 
   test-affected:
     <<: *run_in_browser
@@ -131,7 +131,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel
 
   build:
     <<: *run_in_node
@@ -142,10 +142,15 @@ jobs:
             - *cache_key
 
       # Build
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export NX_CLOUD_AUTH_TOKEN=$NX_CLOUD_TOKEN' >> $BASH_ENV
+            source $BASH_ENV
       - run: yarn
       - run:
           name: Build All Release Packages
-          command: yarn build
+          command: yarn build --parallel --skip-nx-cache
       # Store artifacts from packages build
       - persist_to_workspace:
           root: dist
@@ -170,7 +175,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel
 
   build-bazel:
     <<: *run_in_node
@@ -239,7 +244,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected E2E Tests
-          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless
+          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless --parallel
 
   docs-preview:
     <<: *docs_in_node
