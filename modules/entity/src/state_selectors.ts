@@ -1,21 +1,26 @@
 import { createSelector } from '@ngrx/store';
-import { EntityState, EntitySelectors, Dictionary } from './models';
+import {
+  EntityState,
+  EntitySelectors,
+  Dictionary,
+  MemoizedEntitySelectors,
+} from './models';
 
 export function createSelectorsFactory<T>() {
   function getSelectors(): EntitySelectors<T, EntityState<T>>;
   function getSelectors<V>(
     selectState: (state: V) => EntityState<T>
-  ): EntitySelectors<T, V>;
-  function getSelectors(
-    selectState?: (state: any) => EntityState<T>
-  ): EntitySelectors<T, any> {
-    const selectIds = (state: any) => state.ids;
+  ): MemoizedEntitySelectors<T, V>;
+  function getSelectors<V>(
+    selectState?: (state: V) => EntityState<T>
+  ): EntitySelectors<T, EntityState<T>> | MemoizedEntitySelectors<T, V> {
+    const selectIds = (state: EntityState<T>) => state.ids;
     const selectEntities = (state: EntityState<T>) => state.entities;
     const selectAll = createSelector(
       selectIds,
       selectEntities,
-      (ids: T[], entities: Dictionary<T>): any =>
-        ids.map((id: any) => (entities as any)[id])
+      (ids: (string | number)[], entities: Dictionary<T>): T[] =>
+        ids.map((id) => entities[id] as T)
     );
 
     const selectTotal = createSelector(selectIds, (ids) => ids.length);
