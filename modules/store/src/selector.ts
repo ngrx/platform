@@ -532,8 +532,8 @@ export function defaultStateFn(
 export type SelectorFactoryConfig<T = any, V = any> = {
   stateFn: (
     state: T,
-    props: any,
     selectors: Selector<any, any>[],
+    props: any,
     memoizedProjector: MemoizedProjection
   ) => V;
 };
