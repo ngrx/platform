@@ -7,6 +7,8 @@ export {
   ActionType,
   Creator,
   MetaReducer,
+  NotAllowedCheck,
+  Props,
   Selector,
   SelectorWithProps,
   RuntimeChecks,
