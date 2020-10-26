@@ -8,13 +8,12 @@ import {
   StoreModule,
   MemoizedSelector,
   createFeatureSelector,
+  isNgrxMockEnvironment,
 } from '@ngrx/store';
 import { INCREMENT } from '../../spec/fixtures/counter';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
-
-import * as store from '@ngrx/store';
 
 interface TestAppSchema {
   counter1: number;
@@ -23,7 +22,7 @@ interface TestAppSchema {
   counter4?: number;
 }
 
-xdescribe('Mock Store', () => {
+describe('Mock Store', () => {
   let mockStore: MockStore<TestAppSchema>;
   const initialState = { counter1: 0, counter2: 1, counter4: 3 };
   const stringSelector = 'counter4';
@@ -42,8 +41,6 @@ xdescribe('Mock Store', () => {
   );
 
   beforeEach(() => {
-    spyOn(store, 'setNgrxMockEnvironment').and.callThrough();
-
     TestBed.configureTestingModule({
       providers: [
         provideMockStore({
@@ -67,8 +64,8 @@ xdescribe('Mock Store', () => {
     mockStore.resetSelectors();
   });
 
-  it('should set NgrxMockEnvironment', () => {
-    expect(store.setNgrxMockEnvironment).toHaveBeenCalledWith(true);
+  it('should set NgrxMockEnvironment to true', () => {
+    expect(isNgrxMockEnvironment()).toBe(true);
   });
 
   it('should provide the same instance with Store and MockStore', () => {
