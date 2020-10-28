@@ -97,4 +97,8 @@ export const selectRouteNestedParam = (param: string) =>
   createSelector(selectRouteNestedParams, (params) => params && params[param]);
 ```
 
-**Note:** Beware using this accumulation technique when two params with the same name exist in the route (e.g. `my/:route/:id/with/another/:id`). Only the rightmost value is accessible because leftmost values are overwritten by the rightmost one in the traversal.
+<div class="alert is-important">
+
+Beware of using this accumulation technique when two params with the same name exist in the route (e.g. `my/:route/:id/with/another/:id`). Only the rightmost value is accessible because leftmost values are overwritten by the rightmost one in the traversal.
+
+</div>
