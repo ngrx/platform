@@ -4,16 +4,16 @@ import { EntityCache } from './entity-cache';
 
 export const ENTITY_CACHE_NAME = 'entityCache';
 export const ENTITY_CACHE_NAME_TOKEN = new InjectionToken<string>(
-  '@ngrx/data/entity-cache-name'
+  '@ngrx/data Entity Cache Name'
 );
 
 export const ENTITY_CACHE_META_REDUCERS = new InjectionToken<
   MetaReducer<any, any>[]
->('@ngrx/data/entity-cache-meta-reducers');
+>('@ngrx/data Entity Cache Meta Reducers');
 export const ENTITY_COLLECTION_META_REDUCERS = new InjectionToken<
   MetaReducer<any, any>[]
->('@ngrx/data/entity-collection-meta-reducers');
+>('@ngrx/data Entity Collection Meta Reducers');
 
 export const INITIAL_ENTITY_CACHE_STATE = new InjectionToken<
   EntityCache | (() => EntityCache)
->('@ngrx/data/initial-entity-cache-state');
+>('@ngrx/data Initial Entity Cache State');

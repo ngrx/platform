@@ -41,7 +41,7 @@ export const ExtensionActionTypes = {
 
 export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<
   ReduxDevtoolsExtension
->('Redux Devtools Extension');
+>('@ngrx/store-devtools Redux Devtools Extension');
 
 export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;

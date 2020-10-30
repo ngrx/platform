@@ -14,7 +14,7 @@ export interface EntityPluralNames {
 }
 
 export const PLURAL_NAMES_TOKEN = new InjectionToken<EntityPluralNames>(
-  '@ngrx/data/plural-names'
+  '@ngrx/data Plural Names'
 );
 
 export abstract class Pluralizer {
