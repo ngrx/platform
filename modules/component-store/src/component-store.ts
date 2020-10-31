@@ -79,10 +79,21 @@ export class ComponentStore<T extends object> implements OnDestroy {
    *     second argument to `updaterFn`. Every time this function is called
    *     subscribers will be notified of the state change.
    */
-  updater<V>(
-    updaterFn: (state: T, value: V) => T
-  ): unknown extends V ? () => void : (t: V | Observable<V>) => Subscription {
-    return ((observableOrValue?: V | Observable<V>): Subscription => {
+  updater<
+    // Allow to force-provide the type
+    ProvidedType = void,
+    // This type is derived from the `value` property, defaulting to void if it's missing
+    OriginType = ProvidedType,
+    // The Value type is assigned from the Origin
+    ValueType = OriginType,
+    // Return either an empty callback or a function requiring specific types as inputs
+    ReturnType = OriginType extends void
+      ? () => void
+      : (observableOrValue: ValueType | Observable<ValueType>) => Subscription
+  >(updaterFn: (state: T, value: OriginType) => T): ReturnType {
+    return (((
+      observableOrValue?: OriginType | Observable<OriginType>
+    ): Subscription => {
       let initializationError: Error | undefined;
       // We can receive either the value or an observable. In case it's a
       // simple value, we'll wrap it with `of` operator to turn it into
@@ -118,9 +129,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
         throw /** @type {!Error} */ (initializationError);
       }
       return subscription;
-    }) as unknown extends V
-      ? () => void
-      : (t: V | Observable<V>) => Subscription;
+    }) as unknown) as ReturnType;
   }
 
   /**
