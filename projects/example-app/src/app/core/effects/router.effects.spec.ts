@@ -1,10 +1,12 @@
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 
 import { RouterEffects } from '@example-app/core/effects';
+import { provideMockStore } from '@ngrx/store/testing';
+import * as fromRoot from '@example-app/reducers';
 
 describe('RouterEffects', () => {
   let effects: RouterEffects;
@@ -18,10 +20,11 @@ describe('RouterEffects', () => {
           provide: Router,
           useValue: { events: of(new NavigationEnd(1, '', '')) },
         },
-        {
-          provide: ActivatedRoute,
-          useValue: { data: of({ title: 'Search' }) },
-        },
+        provideMockStore({
+          selectors: [
+            { selector: fromRoot.selectRouteData, value: { title: 'Search' } },
+          ],
+        }),
         { provide: Title, useValue: { setTitle: jest.fn() } },
       ],
     });

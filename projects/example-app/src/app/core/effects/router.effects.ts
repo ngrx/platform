@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { tap, filter, map, mergeMap } from 'rxjs/operators';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { createEffect } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '@example-app/reducers';
 
 @Injectable()
 export class RouterEffects {
@@ -12,13 +14,8 @@ export class RouterEffects {
     () =>
       this.router.events.pipe(
         filter((event) => event instanceof NavigationEnd),
-        map(() => {
-          let route = this.activatedRoute;
-          while (route.firstChild) route = route.firstChild;
-          return route;
-        }),
-        mergeMap((route) => route.data),
-        map((data) => `Book Collection - ${data['title']}`),
+        withLatestFrom(this.store.select(fromRoot.selectRouteData)),
+        map(([, data]) => `Book Collection - ${data['title']}`),
         tap((title) => this.titleService.setTitle(title))
       ),
     {
@@ -29,6 +26,6 @@ export class RouterEffects {
   constructor(
     private router: Router,
     private titleService: Title,
-    private activatedRoute: ActivatedRoute
+    private store: Store<fromRoot.State>
   ) {}
 }
