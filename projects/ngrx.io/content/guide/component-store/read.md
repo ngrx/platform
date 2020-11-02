@@ -60,9 +60,9 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   readonly userPreferredMovieIds$ = this.select(state => state.userPreferredMoviesIds);
 
   readonly userPreferredMovies$ = this.select(
-    movies$,
-    userPreferredMovieIds$,
-    (movies, ids) => movies.filter(id => ids.includes(id)),
+        this.movies$,
+        this.userPreferredMovieIds$,
+        (movies, ids) => movies.filter(movie => ids.includes(movie.id))
   );
 }
 </code-example>
