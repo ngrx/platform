@@ -1,11 +1,13 @@
-import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 
-import { RouterEffects } from '@example-app/core/effects';
+import { Actions } from '@ngrx/effects';
+import { routerNavigatedAction } from '@ngrx/router-store';
 import { provideMockStore } from '@ngrx/store/testing';
+
+import { RouterEffects } from '@example-app/core/effects';
 import * as fromRoot from '@example-app/reducers';
 
 describe('RouterEffects', () => {
@@ -17,8 +19,8 @@ describe('RouterEffects', () => {
       providers: [
         RouterEffects,
         {
-          provide: Router,
-          useValue: { events: of(new NavigationEnd(1, '', '')) },
+          provide: Actions,
+          useValue: of(routerNavigatedAction),
         },
         provideMockStore({
           selectors: [
