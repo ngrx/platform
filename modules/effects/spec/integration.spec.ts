@@ -20,7 +20,7 @@ import { mapTo, exhaustMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 describe('NgRx Effects Integration spec', () => {
-  it('throws if forRoot() is used more than once', (done: any) => {
+  it('throws if forRoot() with Effects is used more than once', (done: any) => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
@@ -41,6 +41,30 @@ describe('NgRx Effects Integration spec', () => {
       expect(err.message).toBe(
         'EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.'
       );
+      done();
+    });
+  });
+
+  it('does not throw if forRoot() is used more than once with empty effects', (done: any) => {
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
+        RouterTestingModule.withRoutes([]),
+      ],
+    });
+
+    let router: Router = TestBed.inject(Router);
+    const loader: SpyNgModuleFactoryLoader = TestBed.inject(
+      NgModuleFactoryLoader
+    ) as SpyNgModuleFactoryLoader;
+
+    //                       empty forRoot([]) 👇
+    loader.stubbedModules = { feature: FeatModuleWithEmptyForRoot };
+    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+
+    router.navigateByUrl('/feature-path').then(() => {
+      // success
       done();
     });
   });
@@ -386,10 +410,18 @@ describe('NgRx Effects Integration spec', () => {
     }
   }
 
+  @Injectable()
+  class SomeEffect {}
+
   @NgModule({
-    imports: [EffectsModule.forRoot()],
+    imports: [EffectsModule.forRoot([SomeEffect])],
   })
   class FeatModuleWithForRoot {}
+
+  @NgModule({
+    imports: [EffectsModule.forRoot([])],
+  })
+  class FeatModuleWithEmptyForRoot {}
 
   @NgModule({
     imports: [
