@@ -3,7 +3,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 /**
- * Maps the response in ComponentStore effects in a safe way, without
+ * Handles the response in ComponentStore effects in a safe way, without
  * additional boilerplate.
  * It enforces that the error case is handled and that the effect would still be
  * running should an error occur.
@@ -15,14 +15,14 @@ import { catchError, tap } from 'rxjs/operators';
  *  return alert$.pipe(
  *      concatMap(
  *          (alert) => this.alertsService.dismissAlert(alert).pipe(
- *              mapResponse(
+ *              tapResponse(
  *                 (dismissedAlert) => this.alertDismissed(dismissedAlert),
  *                 (error) => this.logError(error),
  *              ))));
  *   });
  * ```
  */
-export function mapResponse<T>(
+export function tapResponse<T>(
   nextFn: (next: T) => void,
   errorFn: (error: unknown) => void,
   completeFn?: () => void

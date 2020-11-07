@@ -1,2 +1,2 @@
 export * from './component-store';
-export * from './map-response';
+export * from './tap-response';
