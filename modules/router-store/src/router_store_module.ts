@@ -327,7 +327,13 @@ export class StoreRouterConnectingModule {
           event:
             this.config.routerState === RouterState.Full
               ? payload.event
-              : { id: payload.event.id, url: payload.event.url },
+              : {
+                  id: payload.event.id,
+                  url: payload.event.url,
+                  // safe, as it will just be `undefined` for non-NavigationEnd router events
+                  urlAfterRedirects: (payload.event as NavigationEnd)
+                    .urlAfterRedirects,
+                },
         },
       });
     } finally {
