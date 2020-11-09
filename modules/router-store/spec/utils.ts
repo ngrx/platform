@@ -42,6 +42,11 @@ export function createTestModule(
           loadChildren: 'test',
           canLoad: ['CanLoadNext'],
         },
+        {
+          path: 'redirect',
+          pathMatch: 'full',
+          redirectTo: 'next',
+        },
       ]),
       StoreRouterConnectingModule.forRoot(opts.config),
     ],

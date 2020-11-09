@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router, RouterEvent } from '@angular/router';
+import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import {
   routerReducer,
   RouterReducerState,
@@ -11,7 +11,7 @@ import {
   DefaultRouterStateSerializer,
 } from '@ngrx/router-store';
 import { select, Store, ActionsSubject } from '@ngrx/store';
-import { withLatestFrom, filter } from 'rxjs/operators';
+import { withLatestFrom, filter, skip } from 'rxjs/operators';
 
 import { createTestModule } from './utils';
 
@@ -155,13 +155,12 @@ describe('Router Store Module', () => {
       a.payload && a.payload.event;
 
     describe('Full', () => {
-      it('should dispatch the full event', async () => {
+      it('should dispatch the full event', async (done) => {
         const { actions, router } = setup(RouterState.Full);
-        actions
-          .pipe(filter(onlyRouterActions))
-          .subscribe(({ payload }) =>
-            expect(payload.event instanceof RouterEvent).toBe(true)
-          );
+        actions.pipe(filter(onlyRouterActions)).subscribe(({ payload }) => {
+          expect(payload.event instanceof RouterEvent).toBe(true);
+          done();
+        });
 
         await router.navigateByUrl('/');
       });
@@ -191,16 +190,41 @@ describe('Router Store Module', () => {
     });
 
     describe('Minimal', () => {
-      it('should dispatch the navigation id with url', async () => {
+      it('should dispatch the navigation id with url', async (done) => {
         const { actions, router } = setup(RouterState.Minimal);
         actions
           .pipe(filter(onlyRouterActions))
           .subscribe(({ payload }: any) => {
             expect(payload.event instanceof RouterEvent).toBe(false);
             expect(payload.event).toEqual({ id: 1, url: '/' });
+            done();
           });
 
         await router.navigateByUrl('/');
+      });
+
+      it('should dispatch the navigation with urlAfterRedirects', async (done) => {
+        const { actions, router } = setup(RouterState.Minimal);
+        actions
+          .pipe(
+            filter(onlyRouterActions),
+            // wait until NavigationEnd router event
+            filter(
+              ({ payload }) =>
+                !!(payload.event as NavigationEnd).urlAfterRedirects
+            )
+          )
+          .subscribe(({ payload }: any) => {
+            expect(payload.event instanceof RouterEvent).toBe(false);
+            expect(payload.event).toEqual({
+              id: 1,
+              url: '/redirect',
+              urlAfterRedirects: '/next',
+            });
+            done();
+          });
+
+        await router.navigateByUrl('/redirect');
       });
 
       it('should use the minimal router serializer', () => {
