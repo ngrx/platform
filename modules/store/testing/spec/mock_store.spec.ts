@@ -1,7 +1,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { skip, take } from 'rxjs/operators';
 import {
-  MockSelector,
+  getMockStore,
+  MockReducerManager,
   MockState,
   MockStore,
   provideMockStore,
@@ -292,97 +293,146 @@ describe('Mock Store with TestBed', () => {
 });
 
 describe('Mock Store with Injector', () => {
-  let injector: Injector;
-  const initialState = { counter: 0 };
-  const mockSelector: MockSelector = { selector: 'counter', value: 10 };
+  const initialState = { counter: 0 } as const;
+  const mockSelector = { selector: 'counter', value: 10 } as const;
 
-  beforeEach(() => {
-    injector = Injector.create({
-      providers: [
-        provideMockStore({ initialState, selectors: [mockSelector] }),
-      ],
+  describe('Injector.create', () => {
+    let injector: Injector;
+
+    beforeEach(() => {
+      injector = Injector.create({
+        providers: [
+          provideMockStore({ initialState, selectors: [mockSelector] }),
+        ],
+      });
     });
-  });
 
-  it('should set NgrxMockEnvironment to true', () => {
-    expect(isNgrxMockEnvironment()).toBe(true);
-  });
-
-  it('should provide Store', (done) => {
-    const store: Store<typeof initialState> = injector.get(Store);
-
-    store.pipe(take(1)).subscribe((state) => {
-      expect(state).toBe(initialState);
-      done();
+    it('should set NgrxMockEnvironment to true', () => {
+      expect(isNgrxMockEnvironment()).toBe(true);
     });
-  });
 
-  it('should provide MockStore', (done) => {
-    const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
+    it('should provide Store', (done) => {
+      const store: Store<typeof initialState> = injector.get(Store);
 
-    mockStore.pipe(take(1)).subscribe((state) => {
-      expect(state).toBe(initialState);
-      done();
-    });
-  });
-
-  it('should provide the same instance for Store and MockStore', () => {
-    const store: Store<typeof initialState> = injector.get(Store);
-    const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
-
-    expect(store).toBe(mockStore);
-  });
-
-  it('should use a mock selector', (done) => {
-    const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
-
-    mockStore
-      .select(mockSelector.selector)
-      .pipe(take(1))
-      .subscribe((selectedValue) => {
-        expect(selectedValue).toBe(mockSelector.value);
+      store.pipe(take(1)).subscribe((state) => {
+        expect(state).toBe(initialState);
         done();
       });
-  });
+    });
 
-  it('should provide INITIAL_STATE', () => {
-    const providedInitialState = injector.get(INITIAL_STATE);
+    it('should provide MockStore', (done) => {
+      const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
 
-    expect(providedInitialState).toBe(initialState);
-  });
+      mockStore.pipe(take(1)).subscribe((state) => {
+        expect(state).toBe(initialState);
+        done();
+      });
+    });
 
-  it('should provide ActionsSubject', (done) => {
-    const actionsSubject = injector.get(ActionsSubject);
+    it('should provide the same instance for Store and MockStore', () => {
+      const store: Store<typeof initialState> = injector.get(Store);
+      const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
 
-    actionsSubject.pipe(take(1)).subscribe((action) => {
-      expect(action.type).toBe(INIT);
-      done();
+      expect(store).toBe(mockStore);
+    });
+
+    it('should use a mock selector', (done) => {
+      const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
+
+      mockStore
+        .select(mockSelector.selector)
+        .pipe(take(1))
+        .subscribe((selectedValue) => {
+          expect(selectedValue).toBe(mockSelector.value);
+          done();
+        });
+    });
+
+    it('should provide INITIAL_STATE', () => {
+      const providedInitialState = injector.get(INITIAL_STATE);
+
+      expect(providedInitialState).toBe(initialState);
+    });
+
+    it('should provide ActionsSubject', (done) => {
+      const actionsSubject = injector.get(ActionsSubject);
+
+      actionsSubject.pipe(take(1)).subscribe((action) => {
+        expect(action.type).toBe(INIT);
+        done();
+      });
+    });
+
+    it('should provide MockState', (done) => {
+      const mockState: MockState<typeof initialState> = injector.get(MockState);
+
+      mockState.pipe(take(1)).subscribe((state) => {
+        expect(state).toEqual({});
+        done();
+      });
+    });
+
+    it('should provide StateObservable', (done) => {
+      const stateObservable = injector.get(StateObservable);
+
+      stateObservable.pipe(take(1)).subscribe((state) => {
+        expect(state).toEqual({});
+        done();
+      });
+    });
+
+    it('should provide the same instance for MockState and StateObservable', () => {
+      const mockState: MockState<typeof initialState> = injector.get(MockState);
+      const stateObservable: StateObservable = injector.get(StateObservable);
+
+      expect(mockState).toBe(stateObservable);
+    });
+
+    it('should provide ReducerManager', () => {
+      const reducerManager = injector.get(ReducerManager);
+
+      expect(reducerManager.addFeature).toEqual(expect.any(Function));
+      expect(reducerManager.addFeatures).toEqual(expect.any(Function));
+    });
+
+    it('should provide MockReducerManager', () => {
+      const mockReducerManager = injector.get(MockReducerManager);
+
+      expect(mockReducerManager.addFeature).toEqual(expect.any(Function));
+      expect(mockReducerManager.addFeatures).toEqual(expect.any(Function));
+    });
+
+    it('should provide the same instance for ReducerManager and MockReducerManager', () => {
+      const reducerManager = injector.get(ReducerManager);
+      const mockReducerManager = injector.get(MockReducerManager);
+
+      expect(reducerManager).toBe(mockReducerManager);
     });
   });
 
-  it('should provide MockState', (done) => {
-    const mockState: MockState<typeof initialState> = injector.get(MockState);
+  describe('getMockStore', () => {
+    let mockStore: MockStore<typeof initialState>;
 
-    mockState.pipe(take(1)).subscribe((state) => {
-      expect(state).toEqual({});
-      done();
+    beforeEach(() => {
+      mockStore = getMockStore({ initialState, selectors: [mockSelector] });
     });
-  });
 
-  it('should provide StateObservable', (done) => {
-    const stateObservable = injector.get(StateObservable);
-
-    stateObservable.pipe(take(1)).subscribe((state) => {
-      expect(state).toEqual({});
-      done();
+    it('should create MockStore', (done) => {
+      mockStore.pipe(take(1)).subscribe((state) => {
+        expect(state).toBe(initialState);
+        done();
+      });
     });
-  });
 
-  it('should provide ReducerManager', () => {
-    const reducerManager = injector.get(ReducerManager);
-
-    expect(reducerManager.addFeature).toEqual(expect.any(Function));
-    expect(reducerManager.addFeatures).toEqual(expect.any(Function));
+    it('should use a mock selector', (done) => {
+      mockStore
+        .select(mockSelector.selector)
+        .pipe(take(1))
+        .subscribe((selectedValue) => {
+          expect(selectedValue).toBe(mockSelector.value);
+          done();
+        });
+    });
   });
 });
 
