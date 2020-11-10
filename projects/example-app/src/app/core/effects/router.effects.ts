@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { map, tap, withLatestFrom } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { concatMap, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -15,7 +16,11 @@ export class RouterEffects {
     () =>
       this.actions$.pipe(
         ofType(routerNavigatedAction),
-        withLatestFrom(this.store.select(fromRoot.selectRouteData)),
+        concatMap((action) =>
+          of(action).pipe(
+            withLatestFrom(this.store.select(fromRoot.selectRouteData))
+          )
+        ),
         map(([, data]) => `Book Collection - ${data['title']}`),
         tap((title) => this.titleService.setTitle(title))
       ),
