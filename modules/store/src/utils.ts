@@ -26,61 +26,21 @@ export function combineReducers<T, V extends Action = Action>(
  *
  * **Example combining two feature reducers into one "root" reducer**
  *
- * Feature A:
  * ```ts
- * export const featureKey = 'featureA';
- * export interface State {
- *   counterA: number;
- * }
- * const initialState: State = {
- *   counterA: 0
- * };
- * export const featureAIncrement = createAction('[FeatureA] increment');
- * export const reducer = createReducer(
- *   initialState,
- *   on(featureAIncrement, state => ({ counterA: state.counterA + 1 }))
- * );
- * ```
- *
- * Feature B:
- * ```ts
- * export const featureKey = 'featureB';
- * export interface State {
- *   counterB: number;
- * }
- * const initialState: State = {
- *   counterB: 0
- * };
- * export const featureBIncrement = createAction('[FeatureB] increment');
- * export const reducer = createReducer(
- *   initialState,
- *   on(featureBIncrement, state => ({ counterB: state.counterB + 1 }))
- * );
- * ```
- *
- * Combining the feature reducers using `combineReducers`:
- * ```ts
- * import * as fromFeatureA from './featureA';
- * import * as fromFeatureB from './featureB';
- *
- * export interface State {
- *   [fromFeatureA.featureKey]: fromFeatureA.State;
- *   [fromFeatureB.featureKey]: fromFeatureB.State;
- * }
  * export const reducer = combineReducers({
- *   [fromFeatureA.featureKey]: fromFeatureA.reducer,
- *   [fromFeatureB.featureKey]: fromFeatureB.reducer
+ *   featureA: featureAReducer,
+ *   featureB: featureBReducer
  * });
  * ```
  *
  * You can also override the initial states of the sub-features:
  * ```ts
  * export const reducer = combineReducers({
- *   [fromFeatureA.featureKey]: fromFeatureA.reducer,
- *   [fromFeatureB.featureKey]: fromFeatureB.reducer
+ *   featureA: featureAReducer,
+ *   featureB: featureBReducer
  * }, {
- *   [fromFeatureA.featureKey]: { counterA: 13 },
- *   [fromFeatureB.featureKey]: { counterB: 37 }
+ *   featureA: { counterA: 13 },
+ *   featureB: { counterB: 37 }
  * });
  * ```
  */
