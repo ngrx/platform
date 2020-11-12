@@ -55,9 +55,6 @@ export interface EntityStateAdapter<T> {
   addOne<S extends EntityState<T>>(entity: T, state: S): S;
   addMany<S extends EntityState<T>>(entities: T[], state: S): S;
 
-  /** @deprecated addAll has been renamed. Use setAll instead. */
-  addAll<S extends EntityState<T>>(entities: T[], state: S): S;
-
   setAll<S extends EntityState<T>>(entities: T[], state: S): S;
   setOne<S extends EntityState<T>>(entity: T, state: S): S;
 

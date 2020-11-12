@@ -231,7 +231,6 @@ export function createSortedStateAdapter<T>(selectId: any, sort: any): any {
     addOne: createStateOperator(addOneMutably),
     updateOne: createStateOperator(updateOneMutably),
     upsertOne: createStateOperator(upsertOneMutably),
-    addAll: createStateOperator(setAllMutably),
     setAll: createStateOperator(setAllMutably),
     setOne: createStateOperator(setOneMutably),
     addMany: createStateOperator(addManyMutably),

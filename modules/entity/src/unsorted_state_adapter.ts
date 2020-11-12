@@ -230,7 +230,6 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     removeAll,
     addOne: createStateOperator(addOneMutably),
     addMany: createStateOperator(addManyMutably),
-    addAll: createStateOperator(setAllMutably),
     setAll: createStateOperator(setAllMutably),
     setOne: createStateOperator(setOneMutably),
     updateOne: createStateOperator(updateOneMutably),
