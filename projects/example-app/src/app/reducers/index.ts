@@ -66,7 +66,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   : [];
 
 /**
- * Layout Reducers
+ * Layout Selectors
  */
 export const selectLayoutState = createFeatureSelector<State, fromLayout.State>(
   fromLayout.layoutFeatureKey
@@ -76,3 +76,13 @@ export const selectShowSidenav = createSelector(
   selectLayoutState,
   fromLayout.selectShowSidenav
 );
+
+/**
+ * Router Selectors
+ */
+export const selectRouter = createFeatureSelector<
+  State,
+  fromRouter.RouterReducerState
+>('router');
+
+export const { selectRouteData } = fromRouter.getSelectors(selectRouter);
