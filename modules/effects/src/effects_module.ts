@@ -3,6 +3,7 @@ import {
   ModuleWithProviders,
   NgModule,
   Optional,
+  Self,
   SkipSelf,
   Type,
 } from '@angular/core';
@@ -58,11 +59,6 @@ export class EffectsModule {
       ngModule: EffectsRootModule,
       providers: [
         {
-          provide: _ROOT_EFFECTS_GUARD,
-          useFactory: _provideForRootGuard,
-          deps: [[EffectsRunner, new Optional(), new SkipSelf()]],
-        },
-        {
           provide: EFFECTS_ERROR_HANDLER,
           useValue: defaultEffectsErrorHandler,
         },
@@ -73,6 +69,14 @@ export class EffectsModule {
         {
           provide: _ROOT_EFFECTS,
           useValue: [rootEffects],
+        },
+        {
+          provide: _ROOT_EFFECTS_GUARD,
+          useFactory: _provideForRootGuard,
+          deps: [
+            [EffectsRunner, new Optional(), new SkipSelf()],
+            [_ROOT_EFFECTS, new Self()],
+          ],
         },
         {
           provide: USER_PROVIDED_EFFECTS,
@@ -114,8 +118,13 @@ export function createEffectInstances(
   return effects.map((effect) => injector.get(effect));
 }
 
-export function _provideForRootGuard(runner: EffectsRunner): any {
-  if (runner) {
+export function _provideForRootGuard(
+  runner: EffectsRunner,
+  rootEffects: any[][]
+): any {
+  // check whether any effects are actually passed
+  const hasEffects = !(rootEffects.length === 1 && rootEffects[0].length === 0);
+  if (hasEffects && runner) {
     throw new TypeError(
       `EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.`
     );
