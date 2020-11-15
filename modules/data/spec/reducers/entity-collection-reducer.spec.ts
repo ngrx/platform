@@ -2520,7 +2520,7 @@ describe('EntityCollectionReducer', () => {
 
           case EntityOp.QUERY_LOAD_SUCCESS:
             return {
-              ...adapter.addAll(action.payload.data, collection),
+              ...adapter.setAll(action.payload.data, collection),
               loaded: true,
               loading: false,
               changeState: {},

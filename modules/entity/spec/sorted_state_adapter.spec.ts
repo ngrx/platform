@@ -86,23 +86,6 @@ describe('Sorted State Adapter', () => {
     });
   });
 
-  it('should remove existing and add new ones on addAll (deprecated)', () => {
-    const withOneEntity = adapter.addOne(TheGreatGatsby, state);
-
-    const withAll = adapter.setAll(
-      [AClockworkOrange, AnimalFarm],
-      withOneEntity
-    );
-
-    expect(withAll).toEqual({
-      ids: [AClockworkOrange.id, AnimalFarm.id],
-      entities: {
-        [AClockworkOrange.id]: AClockworkOrange,
-        [AnimalFarm.id]: AnimalFarm,
-      },
-    });
-  });
-
   it('should let you add remove an entity from the state', () => {
     const withOneEntity = adapter.addOne(TheGreatGatsby, state);
 

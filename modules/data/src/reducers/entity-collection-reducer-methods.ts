@@ -257,7 +257,7 @@ export class EntityCollectionReducerMethods<T> {
   ): EntityCollection<T> {
     const data = this.extractData(action);
     return {
-      ...this.adapter.addAll(data, collection),
+      ...this.adapter.setAll(data, collection),
       loading: false,
       loaded: true,
       changeState: {},
@@ -943,7 +943,7 @@ export class EntityCollectionReducerMethods<T> {
   ): EntityCollection<T> {
     const entities = this.guard.mustBeEntities(action);
     return {
-      ...this.adapter.addAll(entities, collection),
+      ...this.adapter.setAll(entities, collection),
       loading: false,
       loaded: true,
       changeState: {},
