@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "schematics": "./collection.json",
+  "ng-add": {
+    "save": "devDependencies"
+  },
   "ng-update": {
     "packageGroup": [
       "@ngrx/store",
