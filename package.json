@@ -9,7 +9,6 @@
     "deploy:builds": "ts-node ./build/deploy-build.ts",
     "deploy:preview": "ts-node ./build/deploy-preview.ts",
     "cleanup:previews": "ts-node ./build/cleanup-previews.ts",
-    "test:unit": "node ./tests.js",
     "test": "nx affected:test",
     "test:all": "nx run-many --target=test --all",
     "test:bazel": "bazel test //modules/...",
@@ -26,7 +25,6 @@
     "example:build:prod": "yarn example:build --no-progress --base-href \"/platform/example-app/\"",
     "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write \"**/*.ts\"",
-    "watch:tests": "chokidar \"modules/**/*.ts\" --initial --command \"yarn run test:unit\"",
     "postinstall": "opencollective postinstall && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "prepublish": "ngc -p angular-metadata.tsconfig.json",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
@@ -55,8 +53,7 @@
     "lint": "nx workspace-lint && ng lint",
     "dep-graph": "nx dep-graph",
     "workspace-schematic": "nx workspace-schematic",
-    "help": "nx help",
-    "pret": "prettier **/*.ts --write"
+    "help": "nx help"
   },
   "engines": {
     "node": ">=10.9.0 <13.0.0",
