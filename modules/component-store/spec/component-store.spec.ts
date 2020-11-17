@@ -569,11 +569,13 @@ describe('Component Store', () => {
     it(
       'with a value based on the previous state',
       marbles((m) => {
-        componentStore.patchState(() => ({ value2: { foo: 'fooBar' } }));
+        componentStore.patchState((state) => ({
+          value2: { foo: `${state.value2.foo}2` },
+        }));
 
         m.expect(componentStore.state$).toBeObservable(
           m.hot('s', {
-            s: { ...INIT_STATE, value2: { foo: 'fooBar' } },
+            s: { ...INIT_STATE, value2: { foo: 'bar2' } },
           })
         );
       })

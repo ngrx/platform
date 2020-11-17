@@ -166,17 +166,17 @@ export class ComponentStore<T extends object> implements OnDestroy {
   patchState(
     partialStateOrUpdaterFn: Partial<T> | ((state: T) => Partial<T>)
   ): void {
-    if (!this.isInitialized) {
-      throw new Error(this.notInitializedErrorMessage);
-    }
+    this.setState((state) => {
+      const patchedState =
+        typeof partialStateOrUpdaterFn === 'function'
+          ? partialStateOrUpdaterFn(state)
+          : partialStateOrUpdaterFn;
 
-    const updaterFn = (state: T) => ({
-      ...state,
-      ...(typeof partialStateOrUpdaterFn === 'function'
-        ? partialStateOrUpdaterFn(state)
-        : partialStateOrUpdaterFn),
+      return {
+        ...state,
+        ...patchedState,
+      };
     });
-    this.updater(updaterFn)();
   }
 
   protected get(): T;
