@@ -55,9 +55,7 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 <code-example header="src/app/my-counter/my-counter.component.ts" >
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { increment, decrement, reset } from '../counter.actions';
 
 @Component({
   selector: 'app-my-counter',
@@ -66,9 +64,8 @@ import { increment, decrement, reset } from '../counter.actions';
 export class MyCounterComponent {
   count$: Observable&lt;number&gt;
 
-  constructor(private store: Store&lt;{ count: number }&gt;) {
-    // TODO: This stream will connect to the current store `count` state
-    this.count$ = store.select('count');
+  constructor() {
+    // TODO: Connect `this.count$` stream to the current store `count` state
   }
 
   increment() {
