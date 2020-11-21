@@ -14,6 +14,7 @@ import {
   EntityDataService,
   EntityCollectionDataService,
   QueryParams,
+  DefaultDataServiceConfig,
 } from '../../';
 
 // region Test Helpers
@@ -72,7 +73,7 @@ export class BazingaDataService
 }
 
 @NgModule({
-  providers: [BazingaDataService],
+  providers: [BazingaDataService, DefaultDataServiceConfig],
 })
 export class CustomDataServiceModule {
   constructor(

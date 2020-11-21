@@ -42,7 +42,7 @@ describe('DefaultDataService', () => {
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
 
-    httpUrlGenerator = new DefaultHttpUrlGenerator(null as any);
+    httpUrlGenerator = new DefaultHttpUrlGenerator(null as any, null as any);
     httpUrlGenerator.registerHttpResourceUrls({
       Hero: {
         entityResourceUrl: heroUrl,
@@ -50,7 +50,7 @@ describe('DefaultDataService', () => {
       },
     });
 
-    service = new DefaultDataService('Hero', httpClient, httpUrlGenerator);
+    service = new DefaultDataService('Hero', httpClient, httpUrlGenerator, {});
   });
 
   afterEach(() => {
@@ -76,7 +76,7 @@ describe('DefaultDataService', () => {
 
     beforeEach(() => {
       // use test wrapper class to get to protected properties
-      service = new TestService('Hero', httpClient, httpUrlGenerator);
+      service = new TestService('Hero', httpClient, httpUrlGenerator, {});
     });
 
     it('has expected name', () => {
@@ -468,7 +468,7 @@ describe('DefaultDataServiceFactory', () => {
   let httpUrlGenerator: HttpUrlGenerator;
 
   beforeEach(() => {
-    httpUrlGenerator = new DefaultHttpUrlGenerator(null as any);
+    httpUrlGenerator = new DefaultHttpUrlGenerator(null as any, {});
     httpUrlGenerator.registerHttpResourceUrls({
       Hero: {
         entityResourceUrl: heroUrl,
@@ -486,13 +486,13 @@ describe('DefaultDataServiceFactory', () => {
 
   describe('(no config)', () => {
     it('can create factory', () => {
-      const factory = new DefaultDataServiceFactory(http, httpUrlGenerator);
+      const factory = new DefaultDataServiceFactory(http, httpUrlGenerator, {});
       const heroDS = factory.create<Hero>('Hero');
       expect(heroDS.name).toBe('Hero DefaultDataService');
     });
 
     it('should produce hero data service that gets all heroes with expected URL', () => {
-      const factory = new DefaultDataServiceFactory(http, httpUrlGenerator);
+      const factory = new DefaultDataServiceFactory(http, httpUrlGenerator, {});
       const heroDS = factory.create<Hero>('Hero');
       heroDS.getAll();
       expect(http.get).toHaveBeenCalledWith('api/heroes', undefined);

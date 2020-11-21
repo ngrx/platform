@@ -43,7 +43,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
     entityName: string,
     protected http: HttpClient,
     protected httpUrlGenerator: HttpUrlGenerator,
-    config?: DefaultDataServiceConfig
+    config: DefaultDataServiceConfig
   ) {
     this._name = `${entityName} DefaultDataService`;
     this.entityName = entityName;
@@ -53,7 +53,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       getDelay = 0,
       saveDelay = 0,
       timeout: to = 0,
-    } = config || {};
+    } = config;
     this.delete404OK = delete404OK;
     this.entityUrl = httpUrlGenerator.entityResource(entityName, root);
     this.entitiesUrl = httpUrlGenerator.collectionResource(entityName, root);
@@ -204,9 +204,8 @@ export class DefaultDataServiceFactory {
   constructor(
     protected http: HttpClient,
     protected httpUrlGenerator: HttpUrlGenerator,
-    @Optional() protected config?: DefaultDataServiceConfig
+    protected config: DefaultDataServiceConfig
   ) {
-    config = config || {};
     httpUrlGenerator.registerHttpResourceUrls(config.entityHttpResourceUrls);
   }
 

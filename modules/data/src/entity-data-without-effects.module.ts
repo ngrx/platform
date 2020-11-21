@@ -49,6 +49,7 @@ import { EntitySelectors$Factory } from './selectors/entity-selectors$';
 import { EntityServicesBase } from './entity-services/entity-services-base';
 import { EntityServicesElements } from './entity-services/entity-services-elements';
 import { Logger, PLURAL_NAMES_TOKEN } from './utils/interfaces';
+import { DefaultDataServiceConfig } from './dataservices/default-data-service-config';
 
 export interface EntityDataModuleConfig {
   entityMetadata?: EntityMetadataMap;
@@ -60,6 +61,7 @@ export interface EntityDataModuleConfig {
   // Initial EntityCache state or a function that returns that state
   initialEntityCacheState?: EntityCache | (() => EntityCache);
   pluralNames?: { [name: string]: string };
+  dataServiceConfig?: DefaultDataServiceConfig;
 }
 
 /**

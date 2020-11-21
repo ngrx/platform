@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pluralizer } from '../utils/interfaces';
+import { DefaultDataServiceConfig } from './default-data-service-config';
 
 /**
  * Known resource URLS for specific entity types.
@@ -68,7 +69,10 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
    */
   protected knownHttpResourceUrls: EntityHttpResourceUrls = {};
 
-  constructor(private pluralizer: Pluralizer) {}
+  constructor(
+    private pluralizer: Pluralizer,
+    private defaultDataServiceConfig: DefaultDataServiceConfig
+  ) {}
 
   /**
    * Get or generate the entity and collection resource URLs for the given entity type name
@@ -82,11 +86,14 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
     let resourceUrls = this.knownHttpResourceUrls[entityName];
     if (!resourceUrls) {
       const nRoot = normalizeRoot(root);
+      let pluralUrl = `${nRoot}/${this.pluralizer.pluralize(
+        entityName
+      )}/`.toLowerCase();
       resourceUrls = {
-        entityResourceUrl: `${nRoot}/${entityName}/`.toLowerCase(),
-        collectionResourceUrl: `${nRoot}/${this.pluralizer.pluralize(
-          entityName
-        )}/`.toLowerCase(),
+        entityResourceUrl: this.defaultDataServiceConfig.pluralizeSingle
+          ? pluralUrl
+          : `${nRoot}/${entityName}/`.toLowerCase(),
+        collectionResourceUrl: pluralUrl,
       };
       this.registerHttpResourceUrls({ [entityName]: resourceUrls });
     }

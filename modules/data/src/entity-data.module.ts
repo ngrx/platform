@@ -32,6 +32,7 @@ import {
   EntityDataModuleConfig,
   EntityDataModuleWithoutEffects,
 } from './entity-data-without-effects.module';
+import { DefaultDataServiceConfig } from './dataservices/default-data-service-config';
 
 /**
  * entity-data main module includes effects and HTTP data services
@@ -89,6 +90,13 @@ export class EntityDataModule {
           provide: PLURAL_NAMES_TOKEN,
           multi: true,
           useValue: config.pluralNames ? config.pluralNames : {},
+        },
+        {
+          provide: DefaultDataServiceConfig,
+          useValue: {
+            ...new DefaultDataServiceConfig(),
+            ...config.dataServiceConfig,
+          } as DefaultDataServiceConfig,
         },
       ],
     };
