@@ -41,9 +41,9 @@ exports[`Login Page should compile 1`] = `
                       aria-invalid="false"
                       aria-required="false"
                       class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                      data-placeholder="Username"
                       formcontrolname="username"
                       matinput=""
-                      placeholder="Username"
                       type="text"
                     />
                     <span
@@ -110,9 +110,9 @@ exports[`Login Page should compile 1`] = `
                       aria-invalid="false"
                       aria-required="false"
                       class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                      data-placeholder="Password"
                       formcontrolname="password"
                       matinput=""
-                      placeholder="Password"
                       type="password"
                     />
                     <span
@@ -174,11 +174,11 @@ exports[`Login Page should compile 1`] = `
               >
                 Login
               </span>
-              <div
+              <span
                 class="mat-button-ripple mat-ripple"
                 matripple=""
               />
-              <div
+              <span
                 class="mat-button-focus-overlay"
               />
             </button>

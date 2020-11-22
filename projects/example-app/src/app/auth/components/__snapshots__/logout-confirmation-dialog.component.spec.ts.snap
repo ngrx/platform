@@ -24,11 +24,11 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       >
         Cancel
       </span>
-      <div
+      <span
         class="mat-button-ripple mat-ripple"
         matripple=""
       />
-      <div
+      <span
         class="mat-button-focus-overlay"
       />
     </button>
@@ -42,11 +42,11 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       >
         OK
       </span>
-      <div
+      <span
         class="mat-button-ripple mat-ripple"
         matripple=""
       />
-      <div
+      <span
         class="mat-button-focus-overlay"
       />
     </button>

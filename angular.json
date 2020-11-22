@@ -44,7 +44,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -122,7 +121,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/store/tsconfig-build.json",
             "project": "modules/store/ng-package.json"
@@ -176,7 +175,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/effects/tsconfig-build.json",
             "project": "modules/effects/ng-package.json"
@@ -230,7 +229,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/data/tsconfig-build.json",
             "project": "modules/data/ng-package.json"
@@ -278,7 +277,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/entity/tsconfig-build.json",
             "project": "modules/entity/ng-package.json"
@@ -332,7 +331,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/store-devtools/tsconfig-build.json",
             "project": "modules/store-devtools/ng-package.json"
@@ -380,7 +379,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/router-store/tsconfig-build.json",
             "project": "modules/router-store/ng-package.json"
@@ -512,7 +511,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/component/tsconfig-build.json",
             "project": "modules/component/ng-package.json"
@@ -560,7 +559,7 @@
       "prefix": "ngrx",
       "architect": {
         "build-package": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "modules/component-store/tsconfig-build.json",
             "project": "modules/component-store/ng-package.json"
