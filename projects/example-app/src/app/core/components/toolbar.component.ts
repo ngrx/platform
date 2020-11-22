@@ -4,7 +4,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   selector: 'bc-toolbar',
   template: `
     <mat-toolbar color="primary">
-      <button mat-icon-button (click)="openMenu.emit()">
+      <button mat-icon-button (click)="openMenu.emit()" aria-label="menu">
         <mat-icon>menu</mat-icon>
       </button>
       <ng-content></ng-content>

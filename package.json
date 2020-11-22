@@ -135,6 +135,7 @@
     "@nrwl/nx-plugin": "10.0.7",
     "@nrwl/workspace": "10.0.7",
     "@octokit/rest": "^15.17.0",
+    "@testing-library/cypress": "^7.0.1",
     "@types/fs-extra": "^2.1.0",
     "@types/glob": "^5.0.33",
     "@types/globby": "^8.0.0",
