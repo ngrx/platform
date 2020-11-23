@@ -675,6 +675,60 @@
         }
       },
       "schematics": {}
+    },
+    "selectors": {
+      "projectType": "library",
+      "root": "modules/selectors",
+      "sourceRoot": "modules/selectors/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build-package": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "modules/selectors/tsconfig-build.json",
+            "project": "modules/selectors/ng-package.json"
+          }
+        },
+        "build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng run selectors:build-package"
+              },
+              {
+                "command": "yarn tsc -p modules/selectors/tsconfig.schematics.json"
+              },
+              {
+                "command": "yarn mkdirp node_modules/@ngrx/selectors"
+              },
+              {
+                "command": "ncp dist/modules/selectors node_modules/@ngrx/selectors"
+              }
+            ],
+            "outputPath": ["dist/modules/selectors", "node_modules/@ngrx/selectors"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "modules/selectors/tsconfig-build.json",
+              "modules/selectors/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!modules/selectors/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/selectors/jest.config.js",
+            "runInBand": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "schematics": {

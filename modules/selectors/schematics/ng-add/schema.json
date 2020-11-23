@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxselectors",
+  "title": "NgRx selectors Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add @ngrx/selectors as dependency to package.json (e.g., --skipPackageJson)."
+    }
+  },
+  "required": []
+}

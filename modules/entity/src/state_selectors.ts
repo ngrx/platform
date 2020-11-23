@@ -1,4 +1,4 @@
-import { createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/selectors';
 import { EntityState, EntitySelectors, Dictionary } from './models';
 
 export function createSelectorsFactory<T>() {

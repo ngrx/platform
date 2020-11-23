@@ -15,7 +15,8 @@ import {
   Event,
   RouterEvent,
 } from '@angular/router';
-import { select, Selector, Store } from '@ngrx/store';
+import { Selector } from '@ngrx/selectors';
+import { Store, select } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
 
 import {

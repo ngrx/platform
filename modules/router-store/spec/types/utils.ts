@@ -6,5 +6,6 @@ export const compilerOptions = () => ({
   paths: {
     '@ngrx/store': ['./modules/store'],
     '@ngrx/router-store': ['./modules/router-store'],
+    '@ngrx/selectors': ['./modules/selectors'],
   },
 });

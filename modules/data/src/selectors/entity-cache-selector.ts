@@ -1,5 +1,5 @@
 import { InjectionToken, Optional, FactoryProvider } from '@angular/core';
-import { createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createFeatureSelector, MemoizedSelector } from '@ngrx/selectors';
 import { EntityCache } from '../reducers/entity-cache';
 import {
   ENTITY_CACHE_NAME,

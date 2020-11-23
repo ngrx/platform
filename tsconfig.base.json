@@ -44,6 +44,10 @@
       "@ngrx/schematics/schematics-core": [
         "./modules/schematics/schematics-core"
       ],
+      "@ngrx/selectors": ["./modules/selectors"],
+      "@ngrx/selectors/schematics-core": [
+        "./modules/selectors/schematics-core"
+      ],
       "@ngrx/schematics-core/*": ["./modules/schematics-core/*"],
       "@example-app/*": ["./projects/example-app/src/app/*"]
     },

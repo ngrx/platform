@@ -75,10 +75,14 @@
         "data",
         "schematics",
         "component",
-        "component-store"
+        "component-store",
+        "selectors"
       ]
     },
     "schematics-core": {
+      "tags": []
+    },
+    "selectors": {
       "tags": []
     }
   },

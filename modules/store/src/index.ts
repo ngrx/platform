@@ -9,15 +9,12 @@ export {
   MetaReducer,
   NotAllowedCheck,
   Props,
-  Selector,
-  SelectorWithProps,
   RuntimeChecks,
 } from './models';
 export { createAction, props, union } from './action_creator';
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
-export { setNgrxMockEnvironment, isNgrxMockEnvironment } from './flags';
 export {
   ReducerManager,
   ReducerObservable,
@@ -25,19 +22,7 @@ export {
   UPDATE,
 } from './reducer_manager';
 export { ScannedActionsSubject } from './scanned_actions_subject';
-export {
-  createSelector,
-  createSelectorFactory,
-  createFeatureSelector,
-  defaultMemoize,
-  defaultStateFn,
-  MemoizeFn,
-  MemoizedProjection,
-  MemoizedSelector,
-  MemoizedSelectorWithProps,
-  resultMemoize,
-  DefaultProjectorFn,
-} from './selector';
+
 export { State, StateObservable, reduceState } from './state';
 export {
   INITIAL_STATE,
@@ -57,3 +42,20 @@ export {
   StoreConfig,
 } from './store_module';
 export { On, on, createReducer } from './reducer_creator';
+export {
+  Selector,
+  SelectorWithProps,
+  createSelector,
+  createSelectorFactory,
+  createFeatureSelector,
+  defaultMemoize,
+  defaultStateFn,
+  MemoizeFn,
+  MemoizedProjection,
+  MemoizedSelector,
+  MemoizedSelectorWithProps,
+  resultMemoize,
+  DefaultProjectorFn,
+  setNgrxMockEnvironment,
+  isNgrxMockEnvironment,
+} from '@ngrx/selectors';

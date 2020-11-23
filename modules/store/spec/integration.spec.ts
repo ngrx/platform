@@ -5,9 +5,8 @@ import {
   select,
   Store,
   StoreModule,
-  createFeatureSelector,
-  createSelector,
 } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/selectors';
 import { combineLatest } from 'rxjs';
 import { first, toArray, take } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import { Params, Data } from '@angular/router';
-import { MemoizedSelector } from '@ngrx/store';
+import { MemoizedSelector } from '@ngrx/selectors';
 
 export interface RouterStateSelectors<V> {
   selectCurrentRoute: MemoizedSelector<V, any>;

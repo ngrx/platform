@@ -46,13 +46,6 @@ export interface StoreFeature<T, V extends Action = Action> {
   metaReducers?: MetaReducer<T, V>[];
 }
 
-export type Selector<T, V> = (state: T) => V;
-
-export type SelectorWithProps<State, Props, Result> = (
-  state: State,
-  props: Props
-) => Result;
-
 export const arraysAreNotAllowedMsg =
   'arrays are not allowed in action creators';
 type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;

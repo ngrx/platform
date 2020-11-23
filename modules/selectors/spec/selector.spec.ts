@@ -7,9 +7,9 @@ import {
   createSelectorFactory,
   resultMemoize,
   MemoizedProjection,
-} from '@ngrx/store';
+  setNgrxMockEnvironment,
+} from '../src';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { setNgrxMockEnvironment } from '../src';
 
 describe('Selectors', () => {
   let countOne: number;

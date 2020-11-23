@@ -1,8 +1,8 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 
 // Prod build requires `MemoizedSelector even though not used.
-import { MemoizedSelector } from '@ngrx/store';
-import { createSelector, Selector } from '@ngrx/store';
+import { MemoizedSelector } from '@ngrx/selectors';
+import { createSelector, Selector } from '@ngrx/selectors';
 import { Dictionary } from '@ngrx/entity';
 
 import { EntityCache } from '../reducers/entity-cache';
