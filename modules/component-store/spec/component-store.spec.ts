@@ -83,6 +83,36 @@ describe('Component Store', () => {
       })
     );
 
+    it('throws an Error when patchState with an object is called before initialization', () => {
+      const componentStore = new ComponentStore();
+
+      expect(() => {
+        componentStore.patchState({ foo: 'bar' });
+      }).toThrow(
+        new Error(
+          'ComponentStore has not been initialized yet. ' +
+            'Please make sure it is initialized before updating/getting.'
+        )
+      );
+    });
+
+    it(
+      'throws an Error when patchState with a function/callback is called' +
+        ' before initialization',
+      () => {
+        const componentStore = new ComponentStore();
+
+        expect(() => {
+          componentStore.patchState(() => ({ foo: 'bar' }));
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
+      }
+    );
+
     it(
       'throws an Error when updater is called before initialization',
       marbles((m) => {
@@ -507,6 +537,47 @@ describe('Component Store', () => {
           { value: 'b4' },
           { value: 'b5' }, // second Observable continues to emit values
         ]);
+      })
+    );
+  });
+
+  describe('patches the state', () => {
+    interface State {
+      value1: string;
+      value2: { foo: string };
+    }
+    const INIT_STATE: State = { value1: 'value1', value2: { foo: 'bar' } };
+    let componentStore: ComponentStore<State>;
+
+    beforeEach(() => {
+      componentStore = new ComponentStore(INIT_STATE);
+    });
+
+    it(
+      'with a specific value',
+      marbles((m) => {
+        componentStore.patchState({ value1: 'val1' });
+
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('s', {
+            s: { ...INIT_STATE, value1: 'val1' },
+          })
+        );
+      })
+    );
+
+    it(
+      'with a value based on the previous state',
+      marbles((m) => {
+        componentStore.patchState((state) => ({
+          value2: { foo: `${state.value2.foo}2` },
+        }));
+
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('s', {
+            s: { ...INIT_STATE, value2: { foo: 'bar2' } },
+          })
+        );
       })
     );
   });

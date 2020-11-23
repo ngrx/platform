@@ -156,6 +156,29 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
   }
 
+  /**
+   * Patches the state with provided partial state.
+   *
+   * @param partialStateOrUpdaterFn a partial state or a partial updater
+   * function that accepts the state and returns the partial state.
+   * @throws Error if the state is not initialized.
+   */
+  patchState(
+    partialStateOrUpdaterFn: Partial<T> | ((state: T) => Partial<T>)
+  ): void {
+    this.setState((state) => {
+      const patchedState =
+        typeof partialStateOrUpdaterFn === 'function'
+          ? partialStateOrUpdaterFn(state)
+          : partialStateOrUpdaterFn;
+
+      return {
+        ...state,
+        ...patchedState,
+      };
+    });
+  }
+
   protected get(): T;
   protected get<R>(projector: (s: T) => R): R;
   protected get<R>(projector?: (s: T) => R): R | T {
