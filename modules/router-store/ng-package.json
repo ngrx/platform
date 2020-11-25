@@ -3,6 +3,9 @@
   "dest": "../../dist/modules/router-store",
   "assets": ["migrations/**/*.json", "schematics/**/*.json", "**/files"],
   "lib": {
-    "entryFile": "index.ts"
+    "entryFile": "index.ts",
+    "umdModuleIds": {
+      "@ngrx/store": "ngrx.store"
+    }
   }
 }

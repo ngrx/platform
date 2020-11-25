@@ -3,6 +3,9 @@
   "dest": "../../dist/modules/effects",
   "assets": ["migrations/**/*.json", "schematics/**/*.json", "**/files"],
   "lib": {
-    "entryFile": "index.ts"
+    "entryFile": "index.ts",
+    "umdModuleIds": {
+      "@ngrx/store": "ngrx.store"
+    }
   }
 }
