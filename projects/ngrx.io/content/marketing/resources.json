@@ -184,6 +184,17 @@
             "rev": true
           }
         }
+      },
+      "Books": {
+        "order": 2,
+        "resources": {
+          "ngrx-reactive-state-management-book": {
+            "title": "NgRx: Reactive State Management for Angular (Nils Mehlhorn)",
+            "desc": "Comprehensive learning resource with step-by-step example app",
+            "url": "https://gumroad.com/l/angular-ngrx-book",
+            "rev": "true"
+          }
+        }
       }
     }
   }
