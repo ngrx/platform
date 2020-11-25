@@ -1,3 +1,34 @@
+<a name="10.1.0"></a>
+
+# [10.1.0](https://github.com/ngrx/platform/compare/10.0.1...10.1.0) (2020-11-25)
+
+### Bug Fixes
+
+- **component-store:** adjust updater to accept partials ([#2765](https://github.com/ngrx/platform/issues/2765)) ([52c47e3](https://github.com/ngrx/platform/commit/52c47e3)), closes [#2754](https://github.com/ngrx/platform/issues/2754)
+- **schematics:** add schematics to devDependencies ([#2784](https://github.com/ngrx/platform/issues/2784)) ([0ae271b](https://github.com/ngrx/platform/commit/0ae271b))
+- **store:** add noop for all methods in MockReducerManager ([#2777](https://github.com/ngrx/platform/issues/2777)) ([6251c32](https://github.com/ngrx/platform/commit/6251c32)), closes [#2776](https://github.com/ngrx/platform/issues/2776)
+- **store:** correct types for SelectorFactoryConfig ([#2752](https://github.com/ngrx/platform/issues/2752)) ([aa9bf1a](https://github.com/ngrx/platform/commit/aa9bf1a))
+
+### Features
+
+- **component-store:** add patchState method ([#2788](https://github.com/ngrx/platform/issues/2788)) ([3316771](https://github.com/ngrx/platform/commit/3316771))
+- **component-store:** add tapResponse operator ([#2763](https://github.com/ngrx/platform/issues/2763)) ([7591b82](https://github.com/ngrx/platform/commit/7591b82))
+- **effects:** add support for provideMockActions outside of the TestBed ([#2762](https://github.com/ngrx/platform/issues/2762)) ([ec123f3](https://github.com/ngrx/platform/commit/ec123f3))
+- **effects:** allow usage of empty forRoot array multiple times ([#2774](https://github.com/ngrx/platform/issues/2774)) ([edc89f6](https://github.com/ngrx/platform/commit/edc89f6))
+- **router-store:** Add urlAfterRedirects ([#2775](https://github.com/ngrx/platform/issues/2775)) ([45ee1c2](https://github.com/ngrx/platform/commit/45ee1c2))
+- **store:** add support for provideMockStore outside of the TestBed ([#2759](https://github.com/ngrx/platform/issues/2759)) ([8447ffc](https://github.com/ngrx/platform/commit/8447ffc)), closes [#2745](https://github.com/ngrx/platform/issues/2745)
+
+<a name="10.0.1"></a>
+
+## [10.0.1](https://github.com/ngrx/platform/compare/10.0.0...10.0.1) (2020-10-07)
+
+### Bug Fixes
+
+- **component:** add entry point for schematic ([#2688](https://github.com/ngrx/platform/issues/2688)) ([d937275](https://github.com/ngrx/platform/commit/d937275)), closes [#2683](https://github.com/ngrx/platform/issues/2683)
+- **component-store:** add entry point for schematic ([#2687](https://github.com/ngrx/platform/issues/2687)) ([f8928e3](https://github.com/ngrx/platform/commit/f8928e3)), closes [#2682](https://github.com/ngrx/platform/issues/2682)
+- **schematics:** prevent ng-add from rewriting other workspace cli options ([#2731](https://github.com/ngrx/platform/issues/2731)) ([37354aa](https://github.com/ngrx/platform/commit/37354aa))
+- **store:** prevent unexpected behavior of {} as a props type ([#2728](https://github.com/ngrx/platform/issues/2728)) ([63510a8](https://github.com/ngrx/platform/commit/63510a8))
+
 <a name="10.0.0"></a>
 
 # [10.0.0](https://github.com/ngrx/platform/compare/10.0.0-rc.0...10.0.0) (2020-08-10)
