@@ -8,7 +8,7 @@ describe('classes/reducer', function (): void {
     describe('on', () => {
       it('should support reducers with multiple actions', () => {
         const both = union({ bar, foo });
-        const func = (state: {}, action: typeof both) => ({});
+        const func = (state: unknown, action: typeof both) => ({});
         const result = on(foo, bar, func);
         expect(result.types).toContain(bar.type);
         expect(result.types).toContain(foo.type);
