@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { merge, Notification, Observable } from 'rxjs';
+import { merge, Observable } from 'rxjs';
 import { ignoreElements, map, materialize } from 'rxjs/operators';
 
 import { EffectNotification } from './effect_notification';
@@ -34,11 +34,11 @@ export function mergeEffects(
         return effectAction$.pipe(ignoreElements());
       }
 
-      const materialized$ = effectAction$.pipe(materialize());
+      const materialized$ = effectAction$.pipe(materialize<Action>());
 
       return materialized$.pipe(
         map(
-          (notification: Notification<Action>): EffectNotification => ({
+          (notification): EffectNotification => ({
             effect: sourceInstance[propertyName],
             notification,
             propertyName,

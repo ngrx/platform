@@ -16,7 +16,7 @@ import {
   materialize,
 } from 'rxjs/operators';
 
-/** Represents config with named paratemeters for act */
+/** Represents config with named parameters for act */
 export interface ActConfig<
   Input,
   OutputAction extends Action,
@@ -129,28 +129,40 @@ export function act<
                 return project(input, index).pipe(
                   materialize(),
                   map((notification):
-                    | Notification<ResultAction>
+                    | (Notification<
+                        ErrorAction | CompleteAction | OutputAction
+                      > & {
+                        kind: 'N';
+                        value: ErrorAction | CompleteAction | OutputAction;
+                      })
                     | undefined => {
                     switch (notification.kind) {
                       case 'E':
                         errored = true;
                         return new Notification(
-                          // TODO: remove any in RxJS 6.5
-                          'N' as any,
+                          'N',
                           error(notification.error, input)
-                        );
+                        ) as Notification<ErrorAction> & {
+                          kind: 'N';
+                          value: ErrorAction;
+                        };
                       case 'C':
                         completed = true;
                         return complete
-                          ? new Notification(
-                              // TODO: remove any in RxJS 6.5
-                              'N' as any,
+                          ? (new Notification(
+                              'N',
                               complete(projectedCount, input)
-                            )
+                            ) as Notification<CompleteAction> & {
+                              kind: 'N';
+                              value: CompleteAction;
+                            })
                           : undefined;
                       default:
                         ++projectedCount;
-                        return notification;
+                        return notification as Notification<OutputAction> & {
+                          kind: 'N';
+                          value: OutputAction;
+                        };
                     }
                   }),
                   filter((n): n is NonNullable<typeof n> => n != null),

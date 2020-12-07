@@ -65,8 +65,12 @@ export class EffectSources extends Subject<any> {
             return output.notification;
           }),
           filter(
-            (notification): notification is Notification<Action> =>
-              notification.kind === 'N'
+            (
+              notification
+            ): notification is Notification<Action> & {
+              kind: 'N';
+              value: Action;
+            } => notification.kind === 'N' && notification.value != null
           ),
           dematerialize()
         );
