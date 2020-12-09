@@ -1,7 +1,8 @@
 # Updating state
 
-ComponentStore can be updated in 2 ways:
+ComponentStore can be updated in 3 ways:
 - by calling `setState`.
+- by calling `patchState`.
 - by creating an `updater` and passing inputs through it.
 
 ## `updater` method
@@ -65,7 +66,7 @@ The callback approach allows developers to change the state partially.
   template: `...`,
   providers: [ComponentStore],
 })
-export class MoviesPageComponent {
+export class MoviesPageComponent implements OnInit {
   constructor(
     private readonly componentStore: ComponentStore&lt;MoviesState&gt;
   ) {}
@@ -86,6 +87,51 @@ export class MoviesPageComponent {
         movies: [...state.movies, movie],
       };
     });
+  }
+}
+</code-example>
+
+## `patchState` method
+
+The `patchState` method can be called by providing a partial state object or a partial updater callback.
+
+When the partial state is provided it patches the state with the provided value.
+
+When the partial updater is provided it patches the state with the value returned from the callback.
+
+<div class="alert is-important">
+
+**Note:** The state has to be initialized before any of `patchState` calls, otherwise "not initialized" error will be thrown.
+
+</div>
+
+<code-example header="movies-page.component.ts">
+interface MoviesState {
+  movies: Movie[];
+  selectedMovieId: string | null;
+}
+
+@Component({
+  template: `...`,
+  providers: [ComponentStore],
+})
+export class MoviesPageComponent implements OnInit {
+  constructor(
+    private readonly componentStore: ComponentStore&lt;MoviesState&gt;
+  ) {}
+
+  ngOnInit() {
+    this.componentStore.setState({movies: [], selectedMovieId: null});
+  }
+
+  updateSelectedMovie(selectedMovieId: string) {
+    this.componentStore.patchState({selectedMovieId});
+  }
+
+  addMovie(movie: Movie) {
+    this.componentStore.patchState((state) => ({
+      movies: [...state.movies, movie]
+    }));
   }
 }
 </code-example>
