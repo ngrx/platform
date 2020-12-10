@@ -120,7 +120,7 @@ describe('ComponentStore types', () => {
         expectSnippet(
           `componentStore.effect((e: Observable<string>) => number$)(5);`
         ).toFail(
-          /Argument of type '5' is not assignable to parameter of type 'string \| Observable<string>'./
+          /Argument of type 'number' is not assignable to parameter of type 'string \| Observable<string>'./
         );
       });
 
@@ -142,7 +142,7 @@ describe('ComponentStore types', () => {
         expectSnippet(
           `componentStore.effect<string>((e) => number$)(5);`
         ).toFail(
-          /Argument of type '5' is not assignable to parameter of type 'string \| Observable<string>'/
+          /Argument of type 'number' is not assignable to parameter of type 'string \| Observable<string>'/
         );
       });
 

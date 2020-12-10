@@ -24,10 +24,11 @@ context('Full round trip', () => {
   });
 
   it('shows a message when the credentials are wrong', () => {
-    cy.get('[placeholder=Username]').type('wronguser');
-    cy.get('[placeholder=Password]').type('supersafepassword');
-    cy.get('[type="submit"]').click();
-
+    cy.findByRole('textbox', { name: /username/i })
+      .clear()
+      .type('wronguser');
+    cy.findByLabelText(/password/i).type('supersafepassword');
+    cy.findByRole('button', { name: /login/i }).click();
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow(
     //   'show a message when the credentials are wrong'
@@ -36,28 +37,33 @@ context('Full round trip', () => {
   });
 
   it('is possible to login', () => {
-    cy.get('[placeholder=Username]').clear().type('test');
-    cy.get('[type="submit"]').click();
+    cy.findByRole('textbox', { name: /username/i })
+      .clear()
+      .type('test{enter}');
   });
 
   it('is possible to search for books', () => {
     cy.contains('My Collection');
-    cy.contains('menu').click();
-    cy.contains('Browse Books').click();
+    cy.findByRole('button', { name: /menu/i }).click();
+    cy.findByText(/browse books/i).click();
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to search for books');
-    cy.get('[placeholder="Search for a book"]').type('The Alchemist');
+    cy.findByRole('textbox', { name: /search for a book/i }).type(
+      'The Alchemist'
+    );
     cy.get('bc-book-preview').its('length').should('be.gte', 1);
   });
 
   it('is possible to add books', () => {
     cy.get('bc-book-preview').eq(2).click();
 
-    cy.contains('Add Book to Collection').click();
+    cy.findByRole('button', { name: /add book to collection/i }).click();
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to add books');
-    cy.contains('Add Book to Collection').should('not.exist');
+    cy.findByRole('button', { name: /add book to collection/i }).should(
+      'not.exist'
+    );
   });
 
   it('is possible to remove books', () => {
@@ -65,17 +71,19 @@ context('Full round trip', () => {
 
     cy.get('bc-book-preview').eq(4).click();
 
-    cy.contains('Add Book to Collection').click();
-    cy.contains('Remove Book from Collection').click();
+    cy.findByRole('button', { name: /add book to collection/i }).click();
+    cy.findByRole('button', { name: /remove book from collection/i }).click();
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to remove books');
-    cy.contains('Remove Book from Collection').should('not.exist');
+    cy.findByRole('button', { name: /remove book from collection/i }).should(
+      'not.exist'
+    );
   });
 
   it('is possible to show the collection', () => {
-    cy.contains('menu').click();
-    cy.contains('My Collection').click();
+    cy.findByRole('button', { name: /menu/i }).click();
+    cy.findByText(/my collection/i).click();
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to show the collection');
@@ -83,13 +91,13 @@ context('Full round trip', () => {
   });
 
   it('is possible to sign out', () => {
-    cy.contains('menu').click();
-    cy.contains('Sign Out').click();
-    cy.contains('OK').click();
+    cy.findByRole('button', { name: /menu/i }).click();
+    cy.findByText(/sign out/i).click();
+    cy.findByRole('button', { name: /ok/i }).click();
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to sign out');
-    cy.get('[placeholder=Username]').should('exist');
-    cy.get('[placeholder=Password]').should('exist');
+    cy.findByRole('textbox', { name: /username/i }).should('exist');
+    cy.findByLabelText(/password/i).should('exist');
   });
 });
