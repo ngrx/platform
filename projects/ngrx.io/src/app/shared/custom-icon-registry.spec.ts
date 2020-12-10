@@ -1,11 +1,13 @@
 import { MatIconRegistry } from '@angular/material/icon';
 import { CustomIconRegistry, SvgIconInfo } from './custom-icon-registry';
+import { ErrorHandler } from '@angular/core';
 
 describe('CustomIconRegistry', () => {
   it('should get the SVG element for a preloaded icon from the cache', () => {
     const mockHttp: any = {};
     const mockSanitizer: any = {};
     const mockDocument: any = {};
+    const mockErrorHandler: ErrorHandler = { handleError() {} };
     const svgSrc =
       '<svg xmlns="http://www.w3.org/2000/svg" focusable="false" ' +
       'viewBox="0 0 24 24"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/></svg>';
@@ -14,7 +16,8 @@ describe('CustomIconRegistry', () => {
       mockHttp,
       mockSanitizer,
       mockDocument,
-      svgIcons
+      svgIcons,
+      mockErrorHandler,
     );
     let svgElement: SVGElement | undefined;
     registry.getNamedSvgIcon('test_icon').subscribe(el => (svgElement = el));
@@ -25,6 +28,7 @@ describe('CustomIconRegistry', () => {
     const mockHttp: any = {};
     const mockSanitizer: any = {};
     const mockDocument: any = {};
+    const mockErrorHandler: ErrorHandler = { handleError() {} };
     const svgSrc =
       '<svg xmlns="http://www.w3.org/2000/svg" focusable="false" ' +
       'viewBox="0 0 24 24"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/></svg>';
@@ -35,7 +39,8 @@ describe('CustomIconRegistry', () => {
       mockHttp,
       mockSanitizer,
       mockDocument,
-      svgIcons
+      svgIcons,
+      mockErrorHandler,
     );
 
     registry.getNamedSvgIcon('other_icon');

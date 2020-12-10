@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { Deployment } from './shared/deployment.service';
 import { DocumentService, DocumentContents } from './documents/document.service';
@@ -31,7 +31,7 @@ describe('AppComponent', () => {
   let scrollService: ScrollService;
   let tocService: TocService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
