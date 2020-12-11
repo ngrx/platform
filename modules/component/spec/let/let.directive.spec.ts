@@ -4,14 +4,12 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { EMPTY, interval, NEVER, Observable, of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { LetDirective } from '../../src/let/let.directive';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
-
-let letDirective: any;
 
 @Component({
   template: `
@@ -140,7 +138,7 @@ const setupLetDirectiveTestComponentComplete = (): void => {
 
 describe('LetDirective', () => {
   describe('when nexting values', () => {
-    beforeEach(async(setupLetDirectiveTestComponent));
+    beforeEach(waitForAsync(setupLetDirectiveTestComponent));
 
     it('should be instantiable', () => {
       expect(fixtureLetDirectiveTestComponent).toBeDefined();
@@ -270,7 +268,7 @@ describe('LetDirective', () => {
   });
 
   describe('when error', () => {
-    beforeEach(async(setupLetDirectiveTestComponentError));
+    beforeEach(waitForAsync(setupLetDirectiveTestComponentError));
 
     it('should render_creator the error to false if next or complete', () => {
       letDirectiveTestComponent.value$ = of(1);
@@ -286,7 +284,7 @@ describe('LetDirective', () => {
   });
 
   describe('when complete', () => {
-    beforeEach(async(setupLetDirectiveTestComponentComplete));
+    beforeEach(waitForAsync(setupLetDirectiveTestComponentComplete));
 
     it('should render_creator true if completed', () => {
       letDirectiveTestComponent.value$ = EMPTY;
