@@ -88,7 +88,7 @@ export class TestModule {}
 
 export class ObservableWithSubscriptionSpies<T = void> extends Observable<T> {
   unsubscribeSpies: jasmine.Spy[] = [];
-  subscribeSpy = spyOn(this, 'subscribe').and.callFake((...args: any[]) => {
+  subscribeSpy = spyOn(this as Observable<T>, 'subscribe').and.callFake((...args: any[]) => {
     const subscription = super.subscribe(...args);
     const unsubscribeSpy = spyOn(subscription, 'unsubscribe').and.callThrough();
     this.unsubscribeSpies.push(unsubscribeSpy);

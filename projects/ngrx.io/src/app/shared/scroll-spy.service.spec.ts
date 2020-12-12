@@ -45,7 +45,7 @@ describe('ScrollSpiedElementGroup', () => {
       const spy = spyOn(
         ScrollSpiedElement.prototype,
         'calculateTop'
-      ).and.returnValue(0);
+      );
       const elems = [{}, {}, {}] as Element[];
       const group = new ScrollSpiedElementGroup(elems);
 

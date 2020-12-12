@@ -25,7 +25,6 @@
             "outputHashing": "all",
             "sourceMap": true,
             "statsJson": true,
-            "extractCss": true,
             "extractLicenses": true,
             "namedChunks": true,
             "vendorChunk": false,
