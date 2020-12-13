@@ -157,7 +157,7 @@ function createMigrationDocs(version: string) {
       console.log('\r\n ⚠ Not able to find Migrations in SideNav');
     }
 
-    const migrationDocPath = join(CONFIG.migrationDirectory, `V${newMajor}.md`);
+    const migrationDocPath = join(CONFIG.migrationDirectory, `v${newMajor}.md`);
 
     console.log(
       `\r\n ✍   Please write a migration guide at ${migrationDocPath}`
