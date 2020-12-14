@@ -217,7 +217,7 @@ describe(`Store Modules`, () => {
     });
   });
 
-  describe(`: Slice-Like paramter`, () => {
+  describe(`: With slice object`, () => {
     @NgModule({
       imports: [
         StoreModule.forFeature({ name: 'a', reducer: featureAReducer }),

@@ -115,11 +115,11 @@ export interface RootStoreConfig<T, V extends Action = Action>
 }
 
 /**
- * A pair of reducer and name for the feature.
+ * An object with the name and the reducer for the feature.
  */
 export interface FeatureSlice<T, V extends Action = Action> {
   name: string;
-  reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>;
+  reducer: ActionReducer<T, V>;
 }
 
 @NgModule({})
