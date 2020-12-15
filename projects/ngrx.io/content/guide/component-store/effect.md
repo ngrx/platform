@@ -71,3 +71,23 @@ export class MovieComponent {
 
 }
 </code-example>
+
+## tapResponse
+An easy way to handle the response in ComponentStore effects in a safe way, without additional boilerplate is to use the `tapResponse` operator. It enforces that the error case is handled and that the effect would still be running should an error occur. It is essentially a simple wrapper around two operators:
+- `tap` that handles success and error
+- `catchError(() => EMPTY)` that ensures that the effect continues to run after the error.  
+
+<code-example header="movies.store.ts">
+  readonly getMovie = this.effect((movieId$: Observable&lt;string&gt;) => {
+    return movieId$.pipe(
+      // 👇 Handle race condition with the proper choice of the flattening operator.
+      switchMap((id) => this.moviesService.fetchMovie(id).pipe(
+        //👇 Act on the result within inner pipe.
+        tapResponse(
+          (movie) => this.addMovie(movie),
+          (error) => this.logError(e),
+        ),
+      )),
+    );
+  });
+</code-example>
