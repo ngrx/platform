@@ -1,3 +1,12 @@
+<a name="10.1.1"></a>
+
+## [10.1.1](https://github.com/ngrx/platform/compare/10.1.0...10.1.1) (2020-12-15)
+
+### Bug Fixes
+
+- **component:** add schematic assets to ng-package.json ([6962850](https://github.com/ngrx/platform/commit/6962850)), closes [#2819](https://github.com/ngrx/platform/issues/2819)
+- **component-store:** add schematic assets to ng-package.json ([956bd44](https://github.com/ngrx/platform/commit/956bd44)), closes [#2819](https://github.com/ngrx/platform/issues/2819)
+
 <a name="10.1.0"></a>
 
 # [10.1.0](https://github.com/ngrx/platform/compare/10.0.1...10.1.0) (2020-11-25)
