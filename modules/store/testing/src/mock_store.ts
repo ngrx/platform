@@ -103,7 +103,7 @@ export class MockStore<T = object> extends Store<T> {
   }
 
   select(selector: any, prop?: any) {
-    if (typeof selector === 'string' && this.selectors.has(selector)) {
+    if (this.selectors.has(selector)) {
       return new BehaviorSubject<any>(
         this.selectors.get(selector)
       ).asObservable();
