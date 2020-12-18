@@ -8,7 +8,7 @@ Same as [LetDirective](guide/component/let), it also respects ViewEngine as well
 
 ## Usage
 
-The `ngrxPush` pipe is provided through the `ReactiveComponentModule`. The use it, add the `ReactiveComponentModule` to the `imports` of your NgModule.
+The `ngrxPush` pipe is provided through the `ReactiveComponentModule`. To use it, add the `ReactiveComponentModule` to the `imports` of your NgModule.
 
 ```typescript
 import { NgModule } from '@angular/core';
