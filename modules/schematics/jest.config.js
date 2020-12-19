@@ -8,5 +8,5 @@ module.exports = {
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
     'jest-preset-angular/build/HTMLCommentSerializer.js',
   ],
-  globals: { 'ts-jest': { tsConfig: '<rootDir>/tsconfig.spec.json' } },
+  globals: { 'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' } },
 };

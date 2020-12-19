@@ -5,12 +5,14 @@ module.exports = {
   coverageDirectory: '../../coverage/modules/component',
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.spec.json',
+      tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
-      astTransformers: [
-        'jest-preset-angular/build/InlineFilesTransformer',
-        'jest-preset-angular/build/StripStylesTransformer',
-      ],
+      astTransformers: {
+        before: [
+          'jest-preset-angular/build/InlineFilesTransformer',
+          'jest-preset-angular/build/StripStylesTransformer',
+        ],
+      },
     },
   },
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
