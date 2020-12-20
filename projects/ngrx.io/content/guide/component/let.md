@@ -39,8 +39,6 @@ The problem is `*ngIf` is also interfering with rendering and in case of a falsy
 
 The `*ngrxLet` directive takes over several things while making it more convenient and safe to work with streams in the template.
 
-`<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
-
 ```html
 <ng-container *ngrxLet="observableNumber$ as n">
   <app-number [number]="n">
