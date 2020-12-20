@@ -4,6 +4,13 @@ import * as readline from 'readline';
 import * as glob from 'glob';
 import { createBuilder } from './util';
 import { packages } from './config';
+import { join } from 'path';
+
+const CONFIG = {
+  navigationFile: './projects/ngrx.io/content/navigation.json',
+  migrationDirectory: './projects/ngrx.io/content/guide/migration',
+  currentVersion: JSON.parse(readFileSync('./package.json', 'utf-8')).version,
+};
 
 // get the version from the command
 // e.g. ts-node ./build/update-version-numbers.ts 10.0.0
@@ -29,6 +36,7 @@ function updateVersions(version: string) {
     ['Update package.json', createPackageJsonBuilder(version)],
     ['Update ng-add schematic', createUpdateAddSchematicBuilder(version)],
     ['Update docs version picker', createArchivePreviousDocsBuilder(version)],
+    ['Create migration docs', createMigrationDocs(version)],
   ]);
 
   publishNext({
@@ -40,6 +48,10 @@ function updateVersions(version: string) {
   });
 }
 
+/**
+ * Updates package versions in package.json files
+ * Updates peerDependencies versions of NgRx packages in package.json files
+ */
 function createPackageJsonBuilder(version: string) {
   return async () => {
     glob
@@ -70,6 +82,9 @@ function createPackageJsonBuilder(version: string) {
   };
 }
 
+/**
+ * Updates the platform version for our schematics
+ */
 function createUpdateAddSchematicBuilder(version: string) {
   return async () => {
     glob
@@ -83,30 +98,98 @@ function createUpdateAddSchematicBuilder(version: string) {
   };
 }
 
+/**
+ * Creates an archive version (in the dropdown) on a major release
+ */
 function createArchivePreviousDocsBuilder(version: string) {
   return async () => {
     // only deprecate previous version on MAJOR releases
     if (!version.endsWith('.0.0')) {
       return;
     }
-    const path = './projects/ngrx.io/content/navigation.json';
-
     const [major] = version.split('.');
-    const prevousVersion = Number(major) - 1;
-    const content = readFileSync(path, 'utf-8');
+    const previousVersion = Number(major) - 1;
+    const content = readFileSync(CONFIG.navigationFile, 'utf-8');
     const navigation = JSON.parse(content);
     navigation['docVersions'] = [
       {
-        title: `v${prevousVersion}`,
-        url: `https://v${prevousVersion}.ngrx.io`,
+        title: `v${previousVersion}`,
+        url: `https://v${previousVersion}.ngrx.io`,
       },
       ...navigation['docVersions'],
     ];
-    writeAsJson(path, navigation);
+    writeAsJson(CONFIG.navigationFile, navigation);
 
     console.log(
       '\r\n⚠ Previous version added to website doc versions but site needs to be archived manually.'
     );
+  };
+}
+
+/**
+ * Creates a migration file when the major version changes
+ * Also adds the new migration to the side navigation
+ */
+function createMigrationDocs(version: string) {
+  return async () => {
+    const [newMajor] = version.split('.');
+    const [currentMajor] = CONFIG.currentVersion.split('.');
+
+    if (newMajor === currentMajor) {
+      return;
+    }
+
+    const navigationContent = readFileSync(CONFIG.navigationFile, 'utf-8');
+    const navigation = JSON.parse(navigationContent);
+    const migrationsNav = navigation['SideNav'].find(
+      (nav) => nav.title === 'Migrations'
+    );
+    if (migrationsNav) {
+      migrationsNav.children = [
+        {
+          title: `V${newMajor}`,
+          url: `guide/migration/v${newMajor}`,
+        },
+        ...migrationsNav.children,
+      ];
+      writeAsJson(CONFIG.navigationFile, navigation);
+    } else {
+      console.log('\r\n ⚠ Not able to find Migrations in SideNav');
+    }
+
+    const migrationDocPath = join(CONFIG.migrationDirectory, `v${newMajor}.md`);
+
+    console.log(
+      `\r\n ✍   Please write a migration guide at ${migrationDocPath}`
+    );
+    const migrationPlaceholder = `# V${newMajor} Update Guide
+
+## Angular CLI update
+
+NgRx supports using the Angular CLI \`ng update\` command to update your dependencies. Migration schematics are run to make the upgrade smoother. These schematics will fix some of the breaking changes.
+
+To update your packages to the latest released version, run the command below.
+
+\`\`\`sh
+ng update @ngrx/store
+\`\`\`
+
+## Dependencies
+
+Version ${newMajor} has the minimum version requirements:
+
+- Angular version TK
+- Angular CLI version TK
+- TypeScript version TK
+- RxJS version TK
+
+## Breaking changes
+
+### @ngrx/store
+
+TK
+`;
+    writeFileSync(migrationDocPath, migrationPlaceholder);
   };
 }
 
