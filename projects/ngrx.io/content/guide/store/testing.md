@@ -105,3 +105,42 @@ You can use the projector function used by the selector by accessing the `.proje
 The following example tests the `booksReducer` from the [walkthrough](guide/store/walkthrough). In the first test we check that the state returns the same reference when the reducer is not supposed to handle the action (unknown action). The second test checks that `retrievedBookList` action updates the state and returns the new instance of it.
 
 <code-example header="src/app/state/books.reducer.spec.ts" path="testing-store/src/app/state/books.reducer.spec.ts"></code-example>
+
+### Testing without `TestBed`
+
+The `provideMockStore()` function can be also used with `Injector.create`:
+
+<code-example header="books.component.ts">
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Injector } from '@angular/core';
+
+describe('Books Component', () => {
+  let store: MockStore;
+  const initialState = { books: ['Book 1', 'Book 2', 'Book 3'] };
+
+  beforeEach(() => {
+    const injector = Injector.create({
+      providers: [
+        provideMockStore({ initialState }),
+      ],
+    });
+    
+    store = injector.get(MockStore);
+  });
+});
+</code-example>
+
+Another option to create the `MockStore` without `TestBed` is by calling the `getMockStore()` function:
+
+<code-example header="books.component.ts">
+import { MockStore, getMockStore } from '@ngrx/store/testing';
+
+describe('Books Component', () => {
+  let store: MockStore;
+  const initialState = { books: ['Book 1', 'Book 2', 'Book 3'] };
+
+  beforeEach(() => {    
+    store = getMockStore({ initialState });
+  });
+});
+</code-example>
