@@ -583,7 +583,7 @@ export function createSelectorFactory<T = any, Props = any, V = any>(
  *       return false;
  *     }
  *     if (tempB.includes(arrayMember)) {
- *       tempB = removeMatch(tempB, curr);
+ *       tempB = removeMatch(tempB, arrayMember);
  *       return true;
  *     }
  *     return false;
