@@ -219,7 +219,7 @@ export class StoreRouterConnectingModule {
     }
 
     const url = routerStoreState.state.url;
-    if (this.router.url !== url) {
+    if (!isSameUrl(this.router.url, url)) {
       this.storeState = storeState;
       this.trigger = RouterTrigger.STORE;
       this.router.navigateByUrl(url).catch((error) => {
@@ -346,4 +346,18 @@ export class StoreRouterConnectingModule {
     this.storeState = null;
     this.routerState = null;
   }
+}
+
+/**
+ * Check if the URLs are matching. Accounts for the possibility of trailing "/" in url.
+ */
+function isSameUrl(first: string, second: string): boolean {
+  return stripTrailingSlash(first) === stripTrailingSlash(second);
+}
+
+function stripTrailingSlash(text: string): string {
+  if (text.length > 0 && text[text.length - 1] === '/') {
+    return text.substring(0, text.length - 1);
+  }
+  return text;
 }
