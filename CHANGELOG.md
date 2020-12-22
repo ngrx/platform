@@ -1,3 +1,11 @@
+<a name="10.1.2"></a>
+
+## [10.1.2](https://github.com/ngrx/platform/compare/10.1.1...10.1.2) (2020-12-22)
+
+### Bug Fixes
+
+- **router-store:** ignore trailing slash when comparing routes ([#2834](https://github.com/ngrx/platform/issues/2834)) ([1086de4](https://github.com/ngrx/platform/commit/1086de4)), closes [#2829](https://github.com/ngrx/platform/issues/2829) [#1781](https://github.com/ngrx/platform/issues/1781)
+
 <a name="10.1.1"></a>
 
 ## [10.1.1](https://github.com/ngrx/platform/compare/10.1.0...10.1.1) (2020-12-15)
