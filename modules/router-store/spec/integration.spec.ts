@@ -18,6 +18,7 @@ import {
   ROUTER_NAVIGATED,
   ROUTER_NAVIGATION,
   ROUTER_REQUEST,
+  routerNavigationAction,
   RouterAction,
   routerReducer,
   RouterReducerState,
@@ -167,6 +168,32 @@ describe('integration spec', () => {
 
         done();
       });
+  });
+
+  it('should ignore routing actions for the URL that is currently open', async () => {
+    createTestModule({
+      reducers: { router: routerReducer },
+    });
+
+    const router = TestBed.inject(Router);
+    const store = TestBed.inject(Store);
+    const navigateByUrlSpy = jest.spyOn(router, 'navigateByUrl');
+
+    await router.navigateByUrl('/');
+
+    const SAME_URL_WITHOUT_SLASH = '';
+
+    store.dispatch(
+      routerNavigationAction({
+        payload: {
+          routerState: { url: SAME_URL_WITHOUT_SLASH, root: {} as any },
+          event: { id: 123 } as any,
+        },
+      })
+    );
+
+    //                         Navigates only ONCE 👇
+    expect(navigateByUrlSpy.mock.calls.length).toBe(1);
   });
 
   it('should support rolling back if navigation gets canceled (navigation initialized through router)', (done: any) => {
@@ -573,7 +600,7 @@ describe('integration spec', () => {
 
       expect(log).toEqual([
         { type: 'store', state: null }, // initial state
-        { type: 'store', state: null }, // ROUTER_REQEST event in the store
+        { type: 'store', state: null }, // ROUTER_REQUEST event in the store
         { type: 'action', action: ROUTER_REQUEST },
         { type: 'router', event: 'NavigationStart', url: '/load' },
         { type: 'store', state: { url: '', navigationId: 1 } },
