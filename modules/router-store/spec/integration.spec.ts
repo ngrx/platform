@@ -175,8 +175,8 @@ describe('integration spec', () => {
       reducers: { router: routerReducer },
     });
 
-    const router = TestBed.inject(Router);
-    const store = TestBed.inject(Store);
+    const router = TestBed.get(Router);
+    const store = TestBed.get(Store);
     const navigateByUrlSpy = jest.spyOn(router, 'navigateByUrl');
 
     await router.navigateByUrl('/');
