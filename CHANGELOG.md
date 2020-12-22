@@ -1,3 +1,11 @@
+<a name="8.6.1"></a>
+
+## [8.6.1](https://github.com/ngrx/platform/compare/8.6.0...8.6.1) (2020-12-22)
+
+### Bug Fixes
+
+- **router-store:** ingore slash when comparing routes ([#2834](https://github.com/ngrx/platform/issues/2834)) ([aa58096](https://github.com/ngrx/platform/commit/aa58096)), closes [#2829](https://github.com/ngrx/platform/issues/2829) [#1781](https://github.com/ngrx/platform/issues/1781)
+
 <a name="8.6.0"></a>
 
 # [8.6.0](https://github.com/ngrx/platform/compare/8.5.2...8.6.0) (2019-12-18)
@@ -151,8 +159,8 @@
 
 ### Bug Fixes
 
-- **store:** adjust mock store to handle selectors with props ([#1878](https://github.com/ngrx/platform/issues/1878)) ([a7ded00](https://github.com/ngrx/platform/commit/a7ded00)), closes [#1864](https://github.com/ngrx/platform/issues/1864) [#1873](https://github.com/ngrx/platform/issues/1873)
 - update signature for createSelectorFactory and createSelector to return a MemoizedSelector ([#1883](https://github.com/ngrx/platform/issues/1883)) ([8b31da7](https://github.com/ngrx/platform/commit/8b31da7))
+- **store:** adjust mock store to handle selectors with props ([#1878](https://github.com/ngrx/platform/issues/1878)) ([a7ded00](https://github.com/ngrx/platform/commit/a7ded00)), closes [#1864](https://github.com/ngrx/platform/issues/1864) [#1873](https://github.com/ngrx/platform/issues/1873)
 
 ### Features
 
@@ -262,6 +270,10 @@ login$ = createEffect(
 
 ### Features
 
+- **schematics:** add support for action creators to schematics ([#1765](https://github.com/ngrx/platform/issues/1765)) ([876f80a](https://github.com/ngrx/platform/commit/876f80a)), closes [#1670](https://github.com/ngrx/platform/issues/1670)
+- **store:** add createReducer function ([#1746](https://github.com/ngrx/platform/issues/1746)) ([f954e14](https://github.com/ngrx/platform/commit/f954e14)), closes [#1724](https://github.com/ngrx/platform/issues/1724)
+- introduce [@ngrx](https://github.com/ngrx)/data library to the platform ([#1733](https://github.com/ngrx/platform/issues/1733)) ([5d569c3](https://github.com/ngrx/platform/commit/5d569c3))
+- introduce [@ngrx](https://github.com/ngrx)/data library to the platform ([#1754](https://github.com/ngrx/platform/issues/1754)) ([dbfdbaf](https://github.com/ngrx/platform/commit/dbfdbaf))
 - **effects:** add createEffect function ([#1667](https://github.com/ngrx/platform/issues/1667)) ([ced2d3d](https://github.com/ngrx/platform/commit/ced2d3d)), closes [#1368](https://github.com/ngrx/platform/issues/1368)
 - **effects:** allow non-dispatching effects to not return an action ([#1689](https://github.com/ngrx/platform/issues/1689)) ([04e07a6](https://github.com/ngrx/platform/commit/04e07a6))
 - **effects:** allow ofType to handle ActionCreator ([#1676](https://github.com/ngrx/platform/issues/1676)) ([a41d1d6](https://github.com/ngrx/platform/commit/a41d1d6))
@@ -269,12 +281,8 @@ login$ = createEffect(
 - **example:** update ofType in effects per [#1676](https://github.com/ngrx/platform/issues/1676) ([#1691](https://github.com/ngrx/platform/issues/1691)) ([c9c9a0e](https://github.com/ngrx/platform/commit/c9c9a0e))
 - **router-store:** add v8 migration schematic ([#1699](https://github.com/ngrx/platform/issues/1699)) ([0b794ce](https://github.com/ngrx/platform/commit/0b794ce))
 - **router-store:** Make usage of forRoot required ([#1662](https://github.com/ngrx/platform/issues/1662)) ([#1672](https://github.com/ngrx/platform/issues/1672)) ([c7e1406](https://github.com/ngrx/platform/commit/c7e1406))
-- **schematics:** add support for action creators to schematics ([#1765](https://github.com/ngrx/platform/issues/1765)) ([876f80a](https://github.com/ngrx/platform/commit/876f80a)), closes [#1670](https://github.com/ngrx/platform/issues/1670)
-- introduce [@ngrx](https://github.com/ngrx)/data library to the platform ([#1733](https://github.com/ngrx/platform/issues/1733)) ([5d569c3](https://github.com/ngrx/platform/commit/5d569c3))
-- introduce [@ngrx](https://github.com/ngrx)/data library to the platform ([#1754](https://github.com/ngrx/platform/issues/1754)) ([dbfdbaf](https://github.com/ngrx/platform/commit/dbfdbaf))
 - **schematics:** add support for effect creators to schematics ([#1725](https://github.com/ngrx/platform/issues/1725)) ([8901abd](https://github.com/ngrx/platform/commit/8901abd)), closes [#1682](https://github.com/ngrx/platform/issues/1682)
 - **store:** add API to mock selectors ([#1688](https://github.com/ngrx/platform/issues/1688)) ([2a9b067](https://github.com/ngrx/platform/commit/2a9b067)), closes [#1504](https://github.com/ngrx/platform/issues/1504)
-- **store:** add createReducer function ([#1746](https://github.com/ngrx/platform/issues/1746)) ([f954e14](https://github.com/ngrx/platform/commit/f954e14)), closes [#1724](https://github.com/ngrx/platform/issues/1724)
 - **store:** add immutability and serializability runtime checks ([#1613](https://github.com/ngrx/platform/issues/1613)) ([60633b7](https://github.com/ngrx/platform/commit/60633b7)), closes [#857](https://github.com/ngrx/platform/issues/857)
 - **store:** add META_REDUCERS replacement migration ([#1640](https://github.com/ngrx/platform/issues/1640)) ([57bacf5](https://github.com/ngrx/platform/commit/57bacf5))
 - **store:** run migration schema for v8 beta ([#1716](https://github.com/ngrx/platform/issues/1716)) ([0abc948](https://github.com/ngrx/platform/commit/0abc948))
@@ -455,6 +463,7 @@ StoreDevtoolsModule.instrument({
 
 ### Features
 
+- update angular dependencies to V7 ([e6048bd](https://github.com/ngrx/platform/commit/e6048bd)), closes [#1340](https://github.com/ngrx/platform/issues/1340)
 - **effects:** add smarter type inference for ofType operator. ([#1183](https://github.com/ngrx/platform/issues/1183)) ([8d56a6f](https://github.com/ngrx/platform/commit/8d56a6f))
 - **effects:** add support for effects of different instances of same class ([#1249](https://github.com/ngrx/platform/issues/1249)) ([518e561](https://github.com/ngrx/platform/commit/518e561)), closes [#1246](https://github.com/ngrx/platform/issues/1246)
 - **effects:** dispatch feature effects action on init ([#1305](https://github.com/ngrx/platform/issues/1305)) ([15a4b58](https://github.com/ngrx/platform/commit/15a4b58)), closes [#683](https://github.com/ngrx/platform/issues/683)
@@ -473,7 +482,6 @@ StoreDevtoolsModule.instrument({
 - **store-devtools:** add support for persist, lock, pause ([#955](https://github.com/ngrx/platform/issues/955)) ([93fcf56](https://github.com/ngrx/platform/commit/93fcf56)), closes [#853](https://github.com/ngrx/platform/issues/853) [#919](https://github.com/ngrx/platform/issues/919)
 - **store-devtools:** use different action when recomputing state history ([#1353](https://github.com/ngrx/platform/issues/1353)) ([1448a0e](https://github.com/ngrx/platform/commit/1448a0e)), closes [#1255](https://github.com/ngrx/platform/issues/1255)
 - **StoreDevtools:** implement actionsBlacklist/Whitelist & predicate ([#970](https://github.com/ngrx/platform/issues/970)) ([7ee46d2](https://github.com/ngrx/platform/commit/7ee46d2)), closes [#938](https://github.com/ngrx/platform/issues/938)
-- update angular dependencies to V7 ([e6048bd](https://github.com/ngrx/platform/commit/e6048bd)), closes [#1340](https://github.com/ngrx/platform/issues/1340)
 
 ### BREAKING CHANGES
 
@@ -629,7 +637,6 @@ AFTER:
 
 ### Bug Fixes
 
-- Update minimum node version to 8.9.0 ([#989](https://github.com/ngrx/platform/issues/989)) ([0baaad8](https://github.com/ngrx/platform/commit/0baaad8))
 - **build:** Fix UMD global names ([#1005](https://github.com/ngrx/platform/issues/1005)) ([413efd4](https://github.com/ngrx/platform/commit/413efd4)), closes [#1004](https://github.com/ngrx/platform/issues/1004)
 - **RouterStore:** Reset dispatch-tracking booleans after navigation end ([#968](https://github.com/ngrx/platform/issues/968)) ([48305aa](https://github.com/ngrx/platform/commit/48305aa))
 - **Schematics:** Add check for app/lib to project helper function ([5942885](https://github.com/ngrx/platform/commit/5942885))
@@ -639,12 +646,13 @@ AFTER:
 - **Schematics:** Upgrade schematics to new CLI structure ([b99d9ff](https://github.com/ngrx/platform/commit/b99d9ff))
 - **Store:** Fix type annotations for select methods ([#953](https://github.com/ngrx/platform/issues/953)) ([4d74bd2](https://github.com/ngrx/platform/commit/4d74bd2))
 - **StoreDevtools:** Refresh devtools when extension is started ([#1017](https://github.com/ngrx/platform/issues/1017)) ([c6e33d9](https://github.com/ngrx/platform/commit/c6e33d9)), closes [#508](https://github.com/ngrx/platform/issues/508)
+- Update minimum node version to 8.9.0 ([#989](https://github.com/ngrx/platform/issues/989)) ([0baaad8](https://github.com/ngrx/platform/commit/0baaad8))
 
 ### Features
 
+- Add ng update support to ngrx packages ([#1053](https://github.com/ngrx/platform/issues/1053)) ([4f91e9e](https://github.com/ngrx/platform/commit/4f91e9e))
 - **Schematics:** Rename default action type for action blueprint ([#1047](https://github.com/ngrx/platform/issues/1047)) ([4c4e6a9](https://github.com/ngrx/platform/commit/4c4e6a9)), closes [#1040](https://github.com/ngrx/platform/issues/1040)
 - **Store:** Add support ng update ([#1032](https://github.com/ngrx/platform/issues/1032)) ([5b4f067](https://github.com/ngrx/platform/commit/5b4f067))
-- Add ng update support to ngrx packages ([#1053](https://github.com/ngrx/platform/issues/1053)) ([4f91e9e](https://github.com/ngrx/platform/commit/4f91e9e))
 
 ### BREAKING CHANGES
 
@@ -694,13 +702,13 @@ export type UserActions = LoadUsers;
 
 ### Bug Fixes
 
-- Add support for Angular 6 and RxJS 6 ([d1286d2](https://github.com/ngrx/platform/commit/d1286d2))
 - **Entity:** Change EntityAdapter upsertOne/upsertMany to accept an entity ([a0f45ff](https://github.com/ngrx/platform/commit/a0f45ff))
 - **RouterStore:** Allow strict mode with router reducer ([#903](https://github.com/ngrx/platform/issues/903)) ([f17a032](https://github.com/ngrx/platform/commit/f17a032))
 - **RouterStore:** change the default serializer to work around cycles in RouterStateSnapshot ([7917a27](https://github.com/ngrx/platform/commit/7917a27))
 - **RouterStore:** Replace RouterStateSnapshot with SerializedRouterStateSnapshot ([bd415a1](https://github.com/ngrx/platform/commit/bd415a1))
 - **StoreDevtools:** pass timestamp to actions ([df2411f](https://github.com/ngrx/platform/commit/df2411f))
 - **StoreDevtools:** report errors to ErrorHandler instead of console ([32df3f0](https://github.com/ngrx/platform/commit/32df3f0))
+- Add support for Angular 6 and RxJS 6 ([d1286d2](https://github.com/ngrx/platform/commit/d1286d2))
 
 ### Features
 
@@ -898,8 +906,8 @@ Minimum peer dependency of RxJS ^5.5.0
 
 ### Bug Fixes
 
-- **Entity:** Fix type error for id selectors ([#533](https://github.com/ngrx/platform/issues/533)) ([88f672c](https://github.com/ngrx/platform/commit/88f672c)), closes [#525](https://github.com/ngrx/platform/issues/525)
 - Add support for Angular 5 ([30a8c56](https://github.com/ngrx/platform/commit/30a8c56))
+- **Entity:** Fix type error for id selectors ([#533](https://github.com/ngrx/platform/issues/533)) ([88f672c](https://github.com/ngrx/platform/commit/88f672c)), closes [#525](https://github.com/ngrx/platform/issues/525)
 
 ### Features
 
