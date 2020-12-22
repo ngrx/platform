@@ -1,3 +1,11 @@
+<a name="9.2.1"></a>
+
+## [9.2.1](https://github.com/ngrx/platform/compare/9.2.0...9.2.1) (2020-12-22)
+
+### Bug Fixes
+
+- **router-store:** ingore slash when comparing routes ([#2834](https://github.com/ngrx/platform/issues/2834)) ([72d8aa9](https://github.com/ngrx/platform/commit/72d8aa9)), closes [#2829](https://github.com/ngrx/platform/issues/2829) [#1781](https://github.com/ngrx/platform/issues/1781)
+
 <a name="9.2.0"></a>
 
 # [9.2.0](https://github.com/ngrx/platform/compare/9.1.2...9.2.0) (2020-05-28)
