@@ -554,7 +554,7 @@ export function createSelectorFactory<T = any, Props = any, V = any>(
 ): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 /**
  *
- * @param memoize The the function used to memoize selectors
+ * @param memoize The function used to memoize selectors
  * @param options Config Object that may include a stateFn function defining how to return the selector's value, given the entire `Store`'s state, parent `Selector`s, `Props`, and a `MemoizedProjection`
  *
  * @usageNotes
