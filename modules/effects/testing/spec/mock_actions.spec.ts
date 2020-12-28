@@ -6,7 +6,7 @@ import { Injector } from '@angular/core';
 
 describe('Mock Actions', () => {
   describe('with TestBed', () => {
-    it('should provide Actions from source', (done) => {
+    it('should provide Actions from source', (done: any) => {
       TestBed.configureTestingModule({
         providers: [provideMockActions(of({ type: 'foo' }))],
       });
@@ -18,7 +18,7 @@ describe('Mock Actions', () => {
       });
     });
 
-    it('should provide Actions from factory', (done) => {
+    it('should provide Actions from factory', (done: any) => {
       TestBed.configureTestingModule({
         providers: [provideMockActions(() => of({ type: 'bar' }))],
       });
@@ -32,7 +32,7 @@ describe('Mock Actions', () => {
   });
 
   describe('with Injector', () => {
-    it('should provide Actions from source', (done) => {
+    it('should provide Actions from source', (done: any) => {
       const injector = Injector.create({
         providers: [provideMockActions(of({ type: 'foo' }))],
       });
@@ -44,7 +44,7 @@ describe('Mock Actions', () => {
       });
     });
 
-    it('should provide Actions from factory', (done) => {
+    it('should provide Actions from factory', (done: any) => {
       const injector = Injector.create({
         providers: [provideMockActions(() => of({ type: 'bar' }))],
       });

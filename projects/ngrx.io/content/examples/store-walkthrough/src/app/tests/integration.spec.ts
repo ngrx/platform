@@ -26,7 +26,7 @@ describe('AppComponent Integration Test', () => {
   let booksService: GoogleBooksService;
   let httpMock: HttpTestingController;
 
-  beforeEach(async((done) => {
+  beforeEach(async((done: any) => {
     //#docregion integrate
     TestBed.configureTestingModule({
       declarations: [AppComponent, BookListComponent, BookCollectionComponent],

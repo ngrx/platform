@@ -155,7 +155,7 @@ describe('Router Store Module', () => {
       a.payload && a.payload.event;
 
     describe('Full', () => {
-      it('should dispatch the full event', async (done) => {
+      it('should dispatch the full event', async (done: any) => {
         const { actions, router } = setup(RouterState.Full);
         actions.pipe(filter(onlyRouterActions)).subscribe(({ payload }) => {
           expect(payload.event instanceof RouterEvent).toBe(true);
@@ -190,7 +190,7 @@ describe('Router Store Module', () => {
     });
 
     describe('Minimal', () => {
-      it('should dispatch the navigation id with url', async (done) => {
+      it('should dispatch the navigation id with url', async (done: any) => {
         const { actions, router } = setup(RouterState.Minimal);
         actions
           .pipe(filter(onlyRouterActions))
@@ -203,7 +203,7 @@ describe('Router Store Module', () => {
         await router.navigateByUrl('/');
       });
 
-      it('should dispatch the navigation with urlAfterRedirects', async (done) => {
+      it('should dispatch the navigation with urlAfterRedirects', async (done: any) => {
         const { actions, router } = setup(RouterState.Minimal);
         actions
           .pipe(
