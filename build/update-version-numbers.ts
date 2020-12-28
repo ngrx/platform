@@ -53,6 +53,7 @@ function updateVersions(version: string) {
  * Updates peerDependencies versions of NgRx packages in package.json files
  */
 function createPackageJsonBuilder(version: string) {
+  const [major] = version.split('.');
   return async () => {
     glob
       .sync('**/package.json', { ignore: '**/node_modules/**' })
@@ -70,6 +71,11 @@ function createPackageJsonBuilder(version: string) {
           Object.keys(pkg.peerDependencies).forEach((key) => {
             if (key.startsWith('@ngrx')) {
               pkg.peerDependencies[key] = version;
+              saveFile = true;
+            } else if (key.startsWith('@angular')) {
+              // because the NgRx version is in sync with the Angular version
+              // we can also update the Angular dependencies
+              pkg.peerDependencies[key] = `^${major}.0.0`;
               saveFile = true;
             }
           });
