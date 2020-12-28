@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "^10.0.0",
-    "@angular/core": "^10.0.0",
+    "@angular/common": "^11.0.0",
+    "@angular/core": "^11.0.0",
     "@ngrx/store": "11.0.0-beta.0",
     "@ngrx/effects": "11.0.0-beta.0",
     "@ngrx/entity": "11.0.0-beta.0",
