@@ -41,21 +41,6 @@ export function getSelectors<V>(
   );
   const selectRouteParam = (param: string) =>
     createSelector(selectRouteParams, (params) => params && params[param]);
-  const selectParamFromRouterState = (param: string) =>
-    createSelector(selectRouterState, (routerState) => {
-      let paramValue: string | undefined;
-      let route = routerState?.root;
-
-      while (route?.firstChild) {
-        route = route.firstChild;
-        if (route?.params?.[param]) {
-          paramValue = route.params[param];
-          break;
-        }
-      }
-
-      return paramValue;
-    });
   const selectRouteData = createSelector(
     selectCurrentRoute,
     (route) => route && route.data
@@ -72,7 +57,6 @@ export function getSelectors<V>(
     selectQueryParam,
     selectRouteParams,
     selectRouteParam,
-    selectParamFromRouterState,
     selectRouteData,
     selectUrl,
   };
