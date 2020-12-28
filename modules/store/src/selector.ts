@@ -552,6 +552,84 @@ export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<T, V>
 ): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
+/**
+ *
+ * @param memoize The function used to memoize selectors
+ * @param options Config Object that may include a `stateFn` function defining how to return the selector's value, given the entire `Store`'s state, parent `Selector`s, `Props`, and a `MemoizedProjection`
+ *
+ * @usageNotes
+ *
+ * **Creating a Selector Factory Where Array Order Does Not Matter**
+ *
+ * ```ts
+ * function removeMatch(arr: string[], target: string): string[] {
+ *   const matchIndex = arr.indexOf(target);
+ *   return [...arr.slice(0, matchIndex), ...arr.slice(matchIndex + 1)];
+ * }
+ *
+ * function orderDoesNotMatterComparer(a: any, b: any): boolean {
+ *   if (!Array.isArray(a) || !Array.isArray(b)) {
+ *     return a === b;
+ *   }
+ *   if (a.length !== b.length) {
+ *     return false;
+ *   }
+ *   let tempB = [...b];
+ *   function reduceToDetermineIfArraysContainSameContents(
+ *     previousCallResult: boolean,
+ *     arrayMember: any
+ *   ): boolean {
+ *     if (previousCallResult === false) {
+ *       return false;
+ *     }
+ *     if (tempB.includes(arrayMember)) {
+ *       tempB = removeMatch(tempB, arrayMember);
+ *       return true;
+ *     }
+ *     return false;
+ *   }
+ *   return a.reduce(reduceToDetermineIfArraysContainSameContents, true);
+ * }
+ *
+ * export const creactOrderDoesNotMatterSelector = createSelectorFactory(
+ *   (projectionFun) => defaultMemoize(
+ *     projectionFun,
+ *     orderDoesNotMatterComparer,
+ *     orderDoesNotMatterComparer
+ *   )
+ * );
+ * ```
+ *
+ * **Creating an Alternative Memoization Strategy**
+ *
+ * ```ts
+ * function serialize(x: any): string {
+ *   return JSON.stringify(x);
+ * }
+ *
+ * export const createFullHistorySelector = createSelectorFactory(
+ *  (projectionFunction) => {
+ *    const cache = {};
+ *
+ *    function memoized() {
+ *      const serializedArguments = serialize(...arguments);
+ *       if (cache[serializedArguments] != null) {
+ *         cache[serializedArguments] = projectionFunction.apply(null, arguments);
+ *       }
+ *       return cache[serializedArguments];
+ *     }
+ *     return {
+ *       memoized,
+ *       reset: () => {},
+ *       setResult: () => {},
+ *       clearResult: () => {},
+ *     };
+ *   }
+ * );
+ * ```
+ *
+ *
+ */
 export function createSelectorFactory(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<any, any> = {
