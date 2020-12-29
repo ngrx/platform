@@ -171,7 +171,7 @@ const userReducer = createReducer(
     return adapter.updateMany(updates, state);
   }),
   on(UserActions.mapUser, (state, { entityMap }) => {
-    return adapter.map(entityMap, state);
+    return adapter.mapOne(entityMap, state);
   }),
   on(UserActions.mapUsers, (state, { entityMap }) => {
     return adapter.map(entityMap, state);
