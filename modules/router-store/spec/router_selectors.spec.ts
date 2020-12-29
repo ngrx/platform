@@ -18,13 +18,9 @@ const mockData = {
       },
       fragment: null,
       firstChild: {
-        params: {
-          p: 'first-occurrence',
-        },
+        params: {},
         paramMap: {
-          params: {
-            p: 'first-occurrence',
-          },
+          params: {},
         },
         data: {},
         url: [
@@ -46,12 +42,10 @@ const mockData = {
         firstChild: {
           params: {
             id: 'etyDDwAAQBAJ',
-            p: 'second-occurrence',
           },
           paramMap: {
             params: {
               id: 'etyDDwAAQBAJ',
-              p: 'second-occurrence',
             },
           },
           data: {
@@ -185,15 +179,6 @@ describe('Router State Selectors', () => {
 
       expect(result).toEqual(
         state.router.state.root.firstChild.firstChild.params.id
-      );
-    });
-
-    it('should create a selector for selecting the first occurrence of a specific route param', () => {
-      const result = selectors.selectParamFromRouterState('p')(state);
-
-      expect(result).toEqual(state.router.state.root.firstChild.params.p);
-      expect(result).not.toEqual(
-        state.router.state.root.firstChild.firstChild.params.p
       );
     });
 
