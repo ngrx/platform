@@ -36,15 +36,15 @@ export const INITIAL_STATE_TOKEN = new InjectionToken(
   '@ngrx/component-store Initial State'
 );
 
-export type SelectorResults<Selectors> = {
+export type SelectorResults<Selectors extends Observable<unknown>[]> = {
   [Key in keyof Selectors]: Selectors[Key] extends Observable<infer U>
     ? U
-    : Selectors;
+    : never;
 };
-export type SelectorProjector<
-  Selectors extends Observable<unknown>[],
-  Result
-> = (...args: SelectorResults<Selectors>) => Result;
+
+export type Projector<Selectors extends Observable<unknown>[], Result> = (
+  ...args: SelectorResults<Selectors>
+) => Result;
 
 @Injectable()
 export class ComponentStore<T extends object> implements OnDestroy {
@@ -217,15 +217,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
     config?: SelectConfig
   ): Observable<Result>;
   select<Selectors extends Observable<unknown>[], Result>(
-    ...args: [
-      ...selectors: Selectors,
-      projector: SelectorProjector<Selectors, Result>
-    ]
+    ...args: [...selectors: Selectors, projector: Projector<Selectors, Result>]
   ): Observable<Result>;
   select<Selectors extends Observable<unknown>[], Result>(
     ...args: [
       ...selectors: Selectors,
-      projector: SelectorProjector<Selectors, Result>,
+      projector: Projector<Selectors, Result>,
       config: SelectConfig
     ]
   ): Observable<Result>;
@@ -234,9 +231,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
     Result,
     ProjectorFn = (...a: unknown[]) => Result
   >(...args: Selectors): Observable<Result> {
-    const { observables, projector, config } = processSelectorArgs(args);
+    const { observables, projector, config } = processSelectorArgs<
+      Selectors,
+      Result
+    >(args);
 
-    let observable$: Observable<unknown>;
+    let observable$: Observable<Result>;
     // If there are no Observables to combine, then we'll just map the value.
     if (observables.length === 0) {
       observable$ = this.stateSubject$.pipe(
@@ -251,7 +251,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
         map((projectorArgs) => projector(...projectorArgs))
       );
     }
-    return (observable$ as Observable<Result>).pipe(
+
+    return observable$.pipe(
       distinctUntilChanged(),
       shareReplay({
         refCount: true,
@@ -307,11 +308,11 @@ export class ComponentStore<T extends object> implements OnDestroy {
 }
 
 function processSelectorArgs<
-  O extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
-  R,
-  ProjectorFn = (...a: unknown[]) => R
+  Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+  Result,
+  ProjectorFn = (...a: unknown[]) => Result
 >(
-  args: O
+  args: Selectors
 ): {
   observables: Observable<unknown>[];
   projector: ProjectorFn;
