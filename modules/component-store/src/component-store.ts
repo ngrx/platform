@@ -36,6 +36,16 @@ export const INITIAL_STATE_TOKEN = new InjectionToken(
   '@ngrx/component-store Initial State'
 );
 
+export type SelectorResults<Selectors extends Observable<unknown>[]> = {
+  [Key in keyof Selectors]: Selectors[Key] extends Observable<infer U>
+    ? U
+    : never;
+};
+
+export type Projector<Selectors extends Observable<unknown>[], Result> = (
+  ...args: SelectorResults<Selectors>
+) => Result;
+
 @Injectable()
 export class ComponentStore<T extends object> implements OnDestroy {
   // Should be used only in ngOnDestroy.
@@ -196,49 +206,37 @@ export class ComponentStore<T extends object> implements OnDestroy {
   /**
    * Creates a selector.
    *
-   * This supports combining up to 4 selectors. More could be added as needed.
-   *
    * @param projector A pure projection function that takes the current state and
    *   returns some new slice/projection of that state.
    * @param config SelectConfig that changes the behavior of selector, including
    *   the debouncing of the values until the state is settled.
    * @return An observable of the projector results.
    */
-  select<R>(projector: (s: T) => R, config?: SelectConfig): Observable<R>;
-  select<R, S1>(
-    s1: Observable<S1>,
-    projector: (s1: S1) => R,
+  select<Result>(
+    projector: (s: T) => Result,
     config?: SelectConfig
-  ): Observable<R>;
-  select<R, S1, S2>(
-    s1: Observable<S1>,
-    s2: Observable<S2>,
-    projector: (s1: S1, s2: S2) => R,
-    config?: SelectConfig
-  ): Observable<R>;
-  select<R, S1, S2, S3>(
-    s1: Observable<S1>,
-    s2: Observable<S2>,
-    s3: Observable<S3>,
-    projector: (s1: S1, s2: S2, s3: S3) => R,
-    config?: SelectConfig
-  ): Observable<R>;
-  select<R, S1, S2, S3, S4>(
-    s1: Observable<S1>,
-    s2: Observable<S2>,
-    s3: Observable<S3>,
-    s4: Observable<S4>,
-    projector: (s1: S1, s2: S2, s3: S3, s4: S4) => R,
-    config?: SelectConfig
-  ): Observable<R>;
+  ): Observable<Result>;
+  select<Selectors extends Observable<unknown>[], Result>(
+    ...args: [...selectors: Selectors, projector: Projector<Selectors, Result>]
+  ): Observable<Result>;
+  select<Selectors extends Observable<unknown>[], Result>(
+    ...args: [
+      ...selectors: Selectors,
+      projector: Projector<Selectors, Result>,
+      config: SelectConfig
+    ]
+  ): Observable<Result>;
   select<
-    O extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
-    R,
-    ProjectorFn = (...a: unknown[]) => R
-  >(...args: O): Observable<R> {
-    const { observables, projector, config } = processSelectorArgs(args);
+    Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+    Result,
+    ProjectorFn = (...a: unknown[]) => Result
+  >(...args: Selectors): Observable<Result> {
+    const { observables, projector, config } = processSelectorArgs<
+      Selectors,
+      Result
+    >(args);
 
-    let observable$: Observable<unknown>;
+    let observable$: Observable<Result>;
     // If there are no Observables to combine, then we'll just map the value.
     if (observables.length === 0) {
       observable$ = this.stateSubject$.pipe(
@@ -253,7 +251,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
         map((projectorArgs) => projector(...projectorArgs))
       );
     }
-    return (observable$ as Observable<R>).pipe(
+
+    return observable$.pipe(
       distinctUntilChanged(),
       shareReplay({
         refCount: true,
@@ -276,9 +275,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
     // This type quickly became part of effect 'API'
     ProvidedType = void,
     // The actual origin$ type, which could be unknown, when not specified
-    OriginType extends Observable<ProvidedType> | unknown = Observable<
-      ProvidedType
-    >,
+    OriginType extends
+      | Observable<ProvidedType>
+      | unknown = Observable<ProvidedType>,
     // Unwrapped actual type of the origin$ Observable, after default was applied
     ObservableType = OriginType extends Observable<infer A> ? A : never,
     // Return either an empty callback or a function requiring specific types as inputs
@@ -309,11 +308,11 @@ export class ComponentStore<T extends object> implements OnDestroy {
 }
 
 function processSelectorArgs<
-  O extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
-  R,
-  ProjectorFn = (...a: unknown[]) => R
+  Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+  Result,
+  ProjectorFn = (...a: unknown[]) => Result
 >(
-  args: O
+  args: Selectors
 ): {
   observables: Observable<unknown>[];
   projector: ProjectorFn;
