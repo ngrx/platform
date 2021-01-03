@@ -415,7 +415,6 @@ export function liftReducerWith(
           currentStateIndex,
           computedStates,
           isLocked,
-          // prettier-ignore
           isPaused,
         } = liftedAction.nextLiftedState);
         break;
