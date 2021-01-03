@@ -72,7 +72,7 @@ function computeNextEntry(
     nextState = reducer(state, action);
   } catch (err) {
     nextError = err.toString();
-    errorHandler.handleError(err.stack || err);
+    errorHandler.handleError(err);
   }
 
   return {
@@ -416,7 +416,7 @@ export function liftReducerWith(
           computedStates,
           isLocked,
           // prettier-ignore
-          isPaused
+          isPaused,
         } = liftedAction.nextLiftedState);
         break;
       }
