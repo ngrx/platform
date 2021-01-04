@@ -4,33 +4,31 @@ import { RouterReducerState } from './reducer';
 
 export function getSelectors<V>(
   selectState: (state: V) => RouterReducerState<any>
-): RouterStateSelectors<V>;
-export function getSelectors<V>(
-  selectState: (state: V) => RouterReducerState<any>
 ): RouterStateSelectors<V> {
   const selectRouterState = createSelector(
     selectState,
     (router) => router && router.state
   );
-  const selectCurrentRoute = createSelector(
+  const selectRootRoute = createSelector(
     selectRouterState,
-    (routerState) => {
-      if (!routerState) {
-        return undefined;
-      }
-      let route = routerState.root;
-      while (route.firstChild) {
-        route = route.firstChild;
-      }
-      return route;
-    }
+    (routerState) => routerState && routerState.root
   );
+  const selectCurrentRoute = createSelector(selectRootRoute, (rootRoute) => {
+    if (!rootRoute) {
+      return undefined;
+    }
+    let route = rootRoute;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return route;
+  });
   const selectFragment = createSelector(
-    selectCurrentRoute,
+    selectRootRoute,
     (route) => route && route.fragment
   );
   const selectQueryParams = createSelector(
-    selectCurrentRoute,
+    selectRootRoute,
     (route) => route && route.queryParams
   );
   const selectQueryParam = (param: string) =>

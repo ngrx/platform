@@ -12,11 +12,15 @@ const mockData = {
       url: [],
       outlet: 'primary',
       routeConfig: null,
-      queryParams: {},
-      queryParamMap: {
-        params: {},
+      queryParams: {
+        ref: 'ngrx.io',
       },
-      fragment: null,
+      queryParamMap: {
+        params: {
+          ref: 'ngrx.io',
+        },
+      },
+      fragment: 'test-fragment',
       firstChild: {
         params: {},
         paramMap: {
@@ -34,10 +38,12 @@ const mockData = {
           path: 'login',
         },
         queryParams: {
-          id: 3,
+          ref: 'ngrx.io',
         },
         queryParamMap: {
-          params: {},
+          params: {
+            ref: 'ngrx.io',
+          },
         },
         firstChild: {
           params: {
@@ -72,7 +78,7 @@ const mockData = {
           fragment: 'test-fragment',
           children: [],
         },
-        fragment: null,
+        fragment: 'test-fragment',
         children: [],
       },
       children: [
@@ -92,10 +98,15 @@ const mockData = {
           routeConfig: {
             path: 'login',
           },
-          queryParams: {},
-          queryParamMap: {
-            params: {},
+          queryParams: {
+            ref: 'ngrx.io',
           },
+          queryParamMap: {
+            params: {
+              ref: 'ngrx.io',
+            },
+          },
+          fragment: 'test-fragment',
           children: [],
         },
       ],
@@ -104,6 +115,7 @@ const mockData = {
   },
   navigationId: 1,
 };
+
 describe('Router State Selectors', () => {
   describe('Composed Selectors', () => {
     interface State {
@@ -145,25 +157,19 @@ describe('Router State Selectors', () => {
     it('should create a selector for selecting the fragment', () => {
       const result = selectors.selectFragment(state);
 
-      expect(result).toEqual(
-        state.router.state.root.firstChild.firstChild.fragment
-      );
+      expect(result).toEqual(state.router.state.root.fragment);
     });
 
     it('should create a selector for selecting the query params', () => {
       const result = selectors.selectQueryParams(state);
 
-      expect(result).toEqual(
-        state.router.state.root.firstChild.firstChild.queryParams
-      );
+      expect(result).toEqual(state.router.state.root.queryParams);
     });
 
     it('should create a selector for selecting a specific query param', () => {
       const result = selectors.selectQueryParam('ref')(state);
 
-      expect(result).toEqual(
-        state.router.state.root.firstChild.firstChild.queryParams.ref
-      );
+      expect(result).toEqual(state.router.state.root.queryParams.ref);
     });
 
     it('should create a selector for selecting the route params', () => {
