@@ -1,3 +1,103 @@
+<a name="11.0.0-beta.0"></a>
+
+# [11.0.0-beta.0](https://github.com/ngrx/platform/compare/10.0.1...11.0.0-beta.0) (2021-01-05)
+
+### Bug Fixes
+
+- update Angular peer dependencies to version 11 ([#2843](https://github.com/ngrx/platform/issues/2843)) ([f63d281](https://github.com/ngrx/platform/commit/f63d281)), closes [#2842](https://github.com/ngrx/platform/issues/2842)
+- **component:** add schematic assets to ng-package.json ([9598527](https://github.com/ngrx/platform/commit/9598527)), closes [#2819](https://github.com/ngrx/platform/issues/2819)
+- **component-store:** add schematic assets to ng-package.json ([0e3b52d](https://github.com/ngrx/platform/commit/0e3b52d)), closes [#2819](https://github.com/ngrx/platform/issues/2819)
+- **component-store:** adjust updater to accept partials ([#2765](https://github.com/ngrx/platform/issues/2765)) ([b54b9b6](https://github.com/ngrx/platform/commit/b54b9b6)), closes [#2754](https://github.com/ngrx/platform/issues/2754)
+- **router-store:** ingore slash when comparing routes ([#2834](https://github.com/ngrx/platform/issues/2834)) ([cad3f60](https://github.com/ngrx/platform/commit/cad3f60)), closes [#2829](https://github.com/ngrx/platform/issues/2829) [#1781](https://github.com/ngrx/platform/issues/1781)
+- **schematics:** add schematics to devDependencies ([#2784](https://github.com/ngrx/platform/issues/2784)) ([daf1889](https://github.com/ngrx/platform/commit/daf1889))
+- **store:** add noop for all methods in MockReducerManager ([#2777](https://github.com/ngrx/platform/issues/2777)) ([a489b48](https://github.com/ngrx/platform/commit/a489b48)), closes [#2776](https://github.com/ngrx/platform/issues/2776)
+- **store:** correct types for SelectorFactoryConfig ([#2752](https://github.com/ngrx/platform/issues/2752)) ([aa9bf1a](https://github.com/ngrx/platform/commit/aa9bf1a))
+
+### Code Refactoring
+
+- use consistent naming of injection tokens across packages ([#2737](https://github.com/ngrx/platform/issues/2737)) ([e02d0d4](https://github.com/ngrx/platform/commit/e02d0d4))
+
+### Features
+
+- **component-store:** add patchState method ([#2788](https://github.com/ngrx/platform/issues/2788)) ([ecedadb](https://github.com/ngrx/platform/commit/ecedadb))
+- **component-store:** add tapResponse operator ([#2763](https://github.com/ngrx/platform/issues/2763)) ([d1873c9](https://github.com/ngrx/platform/commit/d1873c9))
+- **component-store:** allow more than 4 selects ([#2841](https://github.com/ngrx/platform/issues/2841)) ([7c29320](https://github.com/ngrx/platform/commit/7c29320))
+- **effects:** add support for provideMockActions outside of the TestBed ([#2762](https://github.com/ngrx/platform/issues/2762)) ([c47114c](https://github.com/ngrx/platform/commit/c47114c))
+- **effects:** allow usage of empty forRoot array multiple times ([#2774](https://github.com/ngrx/platform/issues/2774)) ([5219ff5](https://github.com/ngrx/platform/commit/5219ff5))
+- **entity:** remove addAll ([#2783](https://github.com/ngrx/platform/issues/2783)) ([93a4754](https://github.com/ngrx/platform/commit/93a4754))
+- **router-store:** add selectParamFromRouterState selector ([#2771](https://github.com/ngrx/platform/issues/2771)) ([3a1f359](https://github.com/ngrx/platform/commit/3a1f359)), closes [#2758](https://github.com/ngrx/platform/issues/2758)
+- **router-store:** Add urlAfterRedirects ([#2775](https://github.com/ngrx/platform/issues/2775)) ([14553f6](https://github.com/ngrx/platform/commit/14553f6))
+- **store:** add object-style StoreModule.forFeature overload ([#2821](https://github.com/ngrx/platform/issues/2821)) ([17571e5](https://github.com/ngrx/platform/commit/17571e5)), closes [#2809](https://github.com/ngrx/platform/issues/2809)
+- **store:** add support for provideMockStore outside of the TestBed ([#2759](https://github.com/ngrx/platform/issues/2759)) ([1650582](https://github.com/ngrx/platform/commit/1650582)), closes [#2745](https://github.com/ngrx/platform/issues/2745)
+
+### Performance Improvements
+
+- **router-store:** optimize selectQueryParams, selectQueryParam and selectFragment selectors ([#2764](https://github.com/ngrx/platform/issues/2764)) ([918f184](https://github.com/ngrx/platform/commit/918f184))
+
+### BREAKING CHANGES
+
+- **router-store:** Router-store selectors for query params and fragment select from the root router state node. This could potentially break unit tests, but is functionally equivalent to the current behavior at runtime.
+
+BEFORE:
+
+selectQueryParams - returns query params from the last router state node
+selectQueryParam - returns a query param from the last router state node
+selectFragment - returns the fragment from the last router state node
+
+AFTER:
+
+selectQueryParams - returns query params from routerState.root
+selectQueryParam - returns a query param from routerState.root
+selectFragment - returns the fragment from routerState.root
+
+- Angular peer dependency versions are bumped to latest major (11)
+
+BEFORE:
+
+Minimum Angular peer dependency version is ^10.0.0
+
+AFTER:
+
+Minimum Angular peer dependency version is ^11.0.0
+
+- **entity:** To overwrite the entities, we previously used the `addAll` method but the method name was confusing.
+
+BEFORE:
+
+```ts
+adapter.addAll(action.entities, state);
+```
+
+AFTER:
+
+The new method name `setAll` describes the intention better.
+
+```ts
+adapter.setAll(action.entities, state);
+```
+
+- refactor(data): use the setAll adapter method
+- The initial state Injection Token for `@ngrx/component-store` has been renamed
+
+BEFORE:
+
+Injection Token is `initialStateToken`
+
+AFTER:
+
+Injection Token is `INITIAL_STATE_TOKEN`
+
+<a name="10.0.1"></a>
+
+## [10.0.1](https://github.com/ngrx/platform/compare/10.0.0...10.0.1) (2020-10-07)
+
+### Bug Fixes
+
+- **component:** add entry point for schematic ([#2688](https://github.com/ngrx/platform/issues/2688)) ([d937275](https://github.com/ngrx/platform/commit/d937275)), closes [#2683](https://github.com/ngrx/platform/issues/2683)
+- **component-store:** add entry point for schematic ([#2687](https://github.com/ngrx/platform/issues/2687)) ([f8928e3](https://github.com/ngrx/platform/commit/f8928e3)), closes [#2682](https://github.com/ngrx/platform/issues/2682)
+- **schematics:** prevent ng-add from rewriting other workspace cli options ([#2731](https://github.com/ngrx/platform/issues/2731)) ([37354aa](https://github.com/ngrx/platform/commit/37354aa))
+- **store:** prevent unexpected behavior of {} as a props type ([#2728](https://github.com/ngrx/platform/issues/2728)) ([63510a8](https://github.com/ngrx/platform/commit/63510a8))
+
 <a name="10.0.0"></a>
 
 # [10.0.0](https://github.com/ngrx/platform/compare/10.0.0-rc.0...10.0.0) (2020-08-10)
@@ -226,7 +326,7 @@ Angular v10 are minimum dependencies
 
 ### Bug Fixes
 
-- **data:** allow additional selectors in entitySelectors\$ ([#2332](https://github.com/ngrx/platform/issues/2332)) ([900bf75](https://github.com/ngrx/platform/commit/900bf75))
+- **data:** allow additional selectors in entitySelectors$ ([#2332](https://github.com/ngrx/platform/issues/2332)) ([900bf75](https://github.com/ngrx/platform/commit/900bf75))
 - **effects:** dispatch init action once ([#2164](https://github.com/ngrx/platform/issues/2164)) ([a528320](https://github.com/ngrx/platform/commit/a528320)), closes [#2106](https://github.com/ngrx/platform/issues/2106)
 - **effects:** fix specs for ng-add tests ([#2314](https://github.com/ngrx/platform/issues/2314)) ([98d6606](https://github.com/ngrx/platform/commit/98d6606))
 - **schematics:** migrate spec to skipTest to be in line with Angular CLI ([#2253](https://github.com/ngrx/platform/issues/2253)) ([714ae5f](https://github.com/ngrx/platform/commit/714ae5f)), closes [#2242](https://github.com/ngrx/platform/issues/2242)
@@ -420,7 +520,7 @@ AFTER:
 The create functions are the default to create actions (createAction, reducers (createReducer) and effects (createEffect)
 To fallback to the previous generators, use
 
-`sh ng generate reducer ReducerName --creators=false`
+`sh ng generate reducer ReducerName --creators=false `
 
 - Libraries will depend on Angular version 9
 
