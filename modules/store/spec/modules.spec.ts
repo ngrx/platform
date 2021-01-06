@@ -216,34 +216,4 @@ describe(`Store Modules`, () => {
       });
     });
   });
-
-  describe(`: With slice object`, () => {
-    @NgModule({
-      imports: [
-        StoreModule.forFeature({ name: 'a', reducer: featureAReducer }),
-      ],
-    })
-    class FeatureAModule {}
-
-    @NgModule({
-      imports: [StoreModule.forRoot({}), FeatureAModule],
-    })
-    class RootModule {}
-
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [RootModule],
-      });
-
-      store = TestBed.inject(Store);
-    });
-
-    it('should set up a feature state', () => {
-      store.pipe(take(1)).subscribe((state: State) => {
-        expect(state).toEqual({
-          a: 5,
-        } as State);
-      });
-    });
-  });
 });
