@@ -159,6 +159,12 @@
             "desc": "Lightweight & configurable solution for implementing undo-redo based on NgRx and immer",
             "url": "https://github.com/nilsmehlhorn/ngrx-wieder",
             "rev": true
+          },
+          "ngrx-entity-relationship": {
+            "title": "ngrx-entity-relationship",
+            "desc": "A simple ORM library for selecting entities with their relationships which supports @ngrx/store, @ngrx/entity and @ngrx/data",
+            "url": "https://github.com/satanTime/ngrx-entity-relationship",
+            "rev": true
           }
         }
       }
