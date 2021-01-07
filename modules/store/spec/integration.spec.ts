@@ -9,7 +9,7 @@ import {
   createSelector,
 } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { first, toArray, take } from 'rxjs/operators';
+import { first, toArray, take, map } from 'rxjs/operators';
 
 import { INITIAL_STATE, ReducerManager, State } from '../src/private_export';
 import {
@@ -145,13 +145,11 @@ describe('ngRx Integration spec', () => {
 
         let currentlyVisibleTodos: Todo[] = [];
 
-        combineLatest(
-          store.select('visibilityFilter'),
-          store.select('todos'),
-          filterVisibleTodos
-        ).subscribe((visibleTodos) => {
-          currentlyVisibleTodos = visibleTodos;
-        });
+        combineLatest([store.select('visibilityFilter'), store.select('todos')])
+          .pipe(map(filterVisibleTodos))
+          .subscribe((visibleTodos) => {
+            currentlyVisibleTodos = visibleTodos;
+          });
 
         expect(currentlyVisibleTodos.length).toBe(2);
 
@@ -272,13 +270,14 @@ describe('ngRx Integration spec', () => {
 
         let currentlyVisibleTodos: Todo[] = [];
 
-        combineLatest(
+        combineLatest([
           store.pipe(select('visibilityFilter')),
           store.pipe(select('todos')),
-          filterVisibleTodos
-        ).subscribe((visibleTodos) => {
-          currentlyVisibleTodos = visibleTodos;
-        });
+        ])
+          .pipe(map(filterVisibleTodos))
+          .subscribe((visibleTodos) => {
+            currentlyVisibleTodos = visibleTodos;
+          });
 
         expect(currentlyVisibleTodos.length).toBe(2);
 

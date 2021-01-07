@@ -110,18 +110,19 @@ export class NavigationService {
   private getCurrentNodes(
     navigationViews: Observable<NavigationViews>
   ): Observable<CurrentNodes> {
-    const currentNodes = combineLatest(
+    const currentNodes = combineLatest([
       navigationViews.pipe(map(views => this.computeUrlToNavNodesMap(views))),
-      this.location.currentPath,
-
-      (navMap, url) => {
+      this.location.currentPath
+    ]).pipe(
+      map(([navMap, url]) => {
         const matchSpecialUrls = /^api/.exec(url);
         if (matchSpecialUrls) {
           url = matchSpecialUrls[0];
         }
         return navMap.get(url) || { '': { view: '', url: url, nodes: [] } };
-      }
-    ).pipe(publishReplay(1));
+      }),
+      publishReplay(1)
+    );
     (currentNodes as ConnectableObservable<CurrentNodes>).connect();
     return currentNodes;
   }
