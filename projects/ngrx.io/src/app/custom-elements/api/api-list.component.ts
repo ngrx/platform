@@ -9,6 +9,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { combineLatest, Observable, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { LocationService } from 'app/shared/location.service';
 import { ApiSection, ApiService } from './api.service';
@@ -67,15 +68,16 @@ export class ApiListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.filteredSections = combineLatest(
+    this.filteredSections = combineLatest([
       this.apiService.sections,
-      this.criteriaSubject,
-      (sections, criteria) => {
+      this.criteriaSubject
+    ]).pipe(
+      map(([sections, criteria]) => {
         return sections.map(section => ({
           ...section,
           items: this.filterSection(section, criteria),
         }));
-      }
+      })
     );
 
     this.initializeSearchCriteria();

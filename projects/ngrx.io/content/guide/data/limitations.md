@@ -77,10 +77,10 @@ How should these be implemented?
 One approach is to combine _Observable selector_ properties like this
 
 ```typescript
-orders$ = combineLatest(
+orders$ = combineLatest([
   currentCustomerId$,
   orders$
-).pipe(
+]).pipe(
   map(([customerId, orders]) => orders.filter(o => o.customerId === customerId))
 )
 ```
