@@ -17,7 +17,8 @@ import { EntityServicesElements } from './entity-services-elements';
  * Base/default class of a central registry of EntityCollectionServices for all entity types.
  * Create your own subclass to add app-specific members for an improved developer experience.
  *
- * @example
+ * @usageNotes
+ * ```ts
  * export class EntityServices extends EntityServicesBase {
  *   constructor(entityServicesElements: EntityServicesElements) {
  *     super(entityServicesElements);
@@ -32,6 +33,7 @@ import { EntityServicesElements } from './entity-services-elements';
  *     this.dispatch(new ClearCompanyAction(companyId));
  *   }
  * }
+ * ```
  */
 @Injectable()
 export class EntityServicesBase implements EntityServices {
