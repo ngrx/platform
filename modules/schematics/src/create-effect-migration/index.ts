@@ -6,25 +6,12 @@ import {
   RemoveChange,
   replaceImport,
   commitChanges,
+  visitTSSourceFiles,
 } from '@ngrx/schematics/schematics-core';
 
 export function migrateToCreators(): Rule {
-  return (host: Tree) =>
-    host.visit((path) => {
-      if (!path.endsWith('.ts')) {
-        return;
-      }
-
-      const sourceFile = ts.createSourceFile(
-        path,
-        host.read(path)!.toString(),
-        ts.ScriptTarget.Latest
-      );
-
-      if (sourceFile.isDeclarationFile) {
-        return;
-      }
-
+  return (tree: Tree) => {
+    visitTSSourceFiles(tree, (sourceFile) => {
       const effectsPerClass = sourceFile.statements
         .filter(ts.isClassDeclaration)
         .map((clas) =>
@@ -42,37 +29,50 @@ export function migrateToCreators(): Rule {
         []
       );
 
-      const createEffectsChanges = replaceEffectDecorators(host, path, effects);
+      const createEffectsChanges = replaceEffectDecorators(
+        tree,
+        sourceFile,
+        effects
+      );
       const importChanges = replaceImport(
         sourceFile,
-        path,
+        sourceFile.fileName as Path,
         '@ngrx/effects',
         'Effect',
         'createEffect'
       );
 
-      return commitChanges(host, sourceFile.fileName, [
+      commitChanges(tree, sourceFile.fileName, [
         ...importChanges,
         ...createEffectsChanges,
       ]);
     });
+  };
 }
 
 function replaceEffectDecorators(
   host: Tree,
-  path: Path,
+  sourceFile: ts.SourceFile,
   effects: ts.PropertyDeclaration[]
 ) {
   const inserts = effects
     .filter((effect) => !!effect.initializer)
     .map((effect) => {
       const decorator = (effect.decorators || []).find(isEffectDecorator)!;
-      const effectArguments = getDispatchProperties(host, path, decorator);
+      const effectArguments = getDispatchProperties(
+        host,
+        sourceFile.text,
+        decorator
+      );
       const end = effectArguments ? `, ${effectArguments})` : ')';
 
       return [
-        new InsertChange(path, effect.initializer!.pos, ' createEffect(() =>'),
-        new InsertChange(path, effect.initializer!.end, end),
+        new InsertChange(
+          sourceFile.fileName,
+          effect.initializer!.pos,
+          ' createEffect(() =>'
+        ),
+        new InsertChange(sourceFile.fileName, effect.initializer!.end, end),
       ];
     })
     .reduce((acc, inserts) => acc.concat(inserts), []);
@@ -84,7 +84,7 @@ function replaceEffectDecorators(
       const effectDecorators = decorators!.filter(isEffectDecorator);
       return effectDecorators.map((decorator) => {
         return new RemoveChange(
-          path,
+          sourceFile.fileName,
           decorator.expression.pos - 1, // also get the @ sign
           decorator.expression.end
         );
@@ -105,7 +105,7 @@ function isEffectDecorator(decorator: ts.Decorator) {
 
 function getDispatchProperties(
   host: Tree,
-  path: Path,
+  fileContent: string,
   decorator: ts.Decorator
 ) {
   if (!decorator.expression || !ts.isCallExpression(decorator.expression)) {
@@ -113,8 +113,7 @@ function getDispatchProperties(
   }
 
   // just copy the effect properties
-  const content = host.read(path)!.toString('utf8');
-  const args = content
+  const args = fileContent
     .substring(
       decorator.expression.arguments.pos,
       decorator.expression.arguments.end

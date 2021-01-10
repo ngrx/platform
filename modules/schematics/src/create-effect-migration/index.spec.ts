@@ -35,7 +35,7 @@ describe('Creator migration', () => {
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
-      **
+
         foo$ = createEffect(() => this.actions$.pipe(
           ofType<LoginAction>(AuthActions.login),
           tap(action => console.log(action))
@@ -63,7 +63,7 @@ describe('Creator migration', () => {
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
-      **
+
         bar$ = createEffect(() => this.actions$.pipe(
           ofType(AuthActions.login, AuthActions.logout),
           tap(action => console.log(action))
@@ -91,7 +91,7 @@ describe('Creator migration', () => {
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
-      **
+
         baz$ = createEffect(() => ({ debounce = 300, scheduler = asyncScheduler } = {}) => this.actions$.pipe(
           ofType(login),
           tap(action => console.log(action))
@@ -126,14 +126,14 @@ describe('Creator migration', () => {
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
-      **
+
         @Log()
         login$ = createEffect(() => this.actions$.pipe(
           ofType('LOGIN'),
           map(() => ({ type: 'LOGGED_IN' }))
         ));
+
         @Log()
-      **
         logout$ = createEffect(() => this.actions$.pipe(
           ofType('LOGOUT'),
           map(() => ({ type: 'LOGGED_OUT' }))
@@ -182,7 +182,7 @@ describe('Creator migration', () => {
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
-      **
+
         logout$ = createEffect(() => this.actions$.pipe(
           ofType('LOGOUT'),
           map(() => ({ type: 'LOGGED_OUT' }))
@@ -221,7 +221,9 @@ describe('Creator migration', () => {
 
     const actual = tree.readContent(effectPath);
 
-    // ** for indentation because empty lines are formatted on auto-save
-    expect(actual).toBe(expected.replace(/\*\*/g, '  '));
+    const removeEmptyLines = (value: string) =>
+      value.replace(/^\s*$(?:\r\n?|\n)/gm, '');
+
+    expect(removeEmptyLines(actual)).toBe(removeEmptyLines(expected));
   }
 });
