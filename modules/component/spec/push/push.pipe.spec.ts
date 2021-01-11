@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { EMPTY, NEVER, Observable, of } from 'rxjs';
+import { EMPTY, NEVER, Observable, ObservableInput, of } from 'rxjs';
 
 import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
@@ -20,7 +20,7 @@ class PushPipeTestComponent {
 
 let fixturePushPipeTestComponent: any;
 let pushPipeTestComponent: {
-  value$: Observable<any> | undefined | null;
+  value$: ObservableInput<any> | undefined | null;
 };
 let componentNativeElement: any;
 
@@ -69,6 +69,10 @@ describe('PushPipe', () => {
 
       it('should return emitted value from passed observable without changing it', () => {
         expect(pushPipe.transform(of(42))).toBe(42);
+      });
+
+      it('should return emitted value from passed promise without changing it', () => {
+        expect(pushPipe.transform(Promise.resolve(42))).toBe(42);
       });
 
       it('should return undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
@@ -144,6 +148,12 @@ describe('PushPipe', () => {
 
       it('should emitted value from passed observable without changing it', () => {
         pushPipeTestComponent.value$ = of(42);
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
+      });
+
+      it('should emitted value from passed promise without changing it', () => {
+        pushPipeTestComponent.value$ = Promise.resolve(42);
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
       });
