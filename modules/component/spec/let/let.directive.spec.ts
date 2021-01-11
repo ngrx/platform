@@ -5,7 +5,15 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { EMPTY, interval, NEVER, Observable, of, throwError } from 'rxjs';
+import {
+  EMPTY,
+  interval,
+  NEVER,
+  Observable,
+  ObservableInput,
+  of,
+  throwError,
+} from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { LetDirective } from '../../src/let/let.directive';
@@ -65,7 +73,7 @@ class LetDirectiveTestCompleteComponent {
 
 let fixtureLetDirectiveTestComponent: any;
 let letDirectiveTestComponent: {
-  value$: Observable<any> | undefined | null;
+  value$: ObservableInput<any> | undefined | null;
 };
 let componentNativeElement: any;
 
@@ -184,6 +192,12 @@ describe('LetDirective', () => {
 
     it('should render_creator emitted value from passed observable without changing it', () => {
       letDirectiveTestComponent.value$ = of(42);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('42');
+    });
+
+    it('should render_creator emitted value from passed promise without changing it', () => {
+      letDirectiveTestComponent.value$ = Promise.resolve(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
     });
