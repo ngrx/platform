@@ -131,7 +131,10 @@ describe('ngRx Integration spec', () => {
           payload: { id: state.value.todos[0].id },
         });
 
-        const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
+        const filterVisibleTodos = (
+          visibilityFilter: string,
+          todos: Todo[]
+        ) => {
           let predicate;
           if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
             predicate = () => true;
@@ -146,7 +149,7 @@ describe('ngRx Integration spec', () => {
         let currentlyVisibleTodos: Todo[] = [];
 
         combineLatest([store.select('visibilityFilter'), store.select('todos')])
-          .pipe(map(filterVisibleTodos))
+          .pipe(map(([filter, todos]) => filterVisibleTodos(filter, todos)))
           .subscribe((visibleTodos) => {
             currentlyVisibleTodos = visibleTodos;
           });
@@ -256,7 +259,10 @@ describe('ngRx Integration spec', () => {
           payload: { id: state.value.todos[0].id },
         });
 
-        const filterVisibleTodos = (visibilityFilter: any, todos: any) => {
+        const filterVisibleTodos = (
+          visibilityFilter: string,
+          todos: Todo[]
+        ) => {
           let predicate;
           if (visibilityFilter === VisibilityFilters.SHOW_ALL) {
             predicate = () => true;
@@ -274,7 +280,7 @@ describe('ngRx Integration spec', () => {
           store.pipe(select('visibilityFilter')),
           store.pipe(select('todos')),
         ])
-          .pipe(map(filterVisibleTodos))
+          .pipe(map(([filter, todos]) => filterVisibleTodos(filter, todos)))
           .subscribe((visibleTodos) => {
             currentlyVisibleTodos = visibleTodos;
           });
