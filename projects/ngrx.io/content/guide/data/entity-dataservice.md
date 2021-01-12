@@ -12,12 +12,12 @@ Each that return `Observables`:
 
 | Method                                                   | Meaning                               | HTTP Method with endpoint        |
 | -------------------------------------------------------- | ------------------------------------- | -------------------------------- |
-| `add(entity: T)`                                         | Add a new entity                      | `POST` /api/hero/                |
-| `delete(id: any)`                                        | Delete an entity by primary key value | `DELETE` /api/hero/5             |
-| `getAll()`                                               | Get all instances of this entity type | `GET` /api/heroes/               |
-| `getById(id: any)`                                       | Get an entity by its primary key      | `GET` /api/hero/5                |
-| `getWithQuery(queryParams: QueryParams` &#x7c; `string)` | Get entities that satisfy the query   | `GET` /api/heroes/?name=bombasto |
-| `update(update: Update<T>)`                              | Update an existing entity             | `PUT` /api/hero/5                |
+| `add(entity: T): Observable<T>`                          | Add a new entity                      | `POST` /api/hero/                |
+| `delete(id: number` &#x7c; `string): Observable<number` &#x7c; `string>` | Delete an entity by primary key value | `DELETE` /api/hero/5             |
+| `getAll(): Observable<T[]>`                              | Get all instances of this entity type | `GET` /api/heroes/               |
+| `getById(id: number` &#x7c; `string): Observable<T>`     | Get an entity by its primary key      | `GET` /api/hero/5                |
+| `getWithQuery(queryParams: QueryParams` &#x7c; `string): Observable<T[]>` | Get entities that satisfy the query   | `GET` /api/heroes/?name=bombasto |
+| `update(update: Update<T>): Observable<T>`               | Update an existing entity             | `PUT` /api/hero/5                |
 
 <div class="alert is-helpful">
 
@@ -33,6 +33,10 @@ unmentioned properties should retain their current values.
 </div>
 
 The default data service methods return the `Observables` returned by the corresponding Angular `HttpClient` methods.
+
+Your API should return an object in the shape of the return type for each data service method. For example: when calling `.add(entity)` your API
+should create the entity and then return the full entity matching `T` as that is the value that will be set as the record in the store for that entities primary
+key. The one method that differs from the others is `delete`. `delete` requires a response type of the entities primary key, `string | number`, instead of the full object, `T`, that was deleted.
 
 <div class="alert is-helpful">
 
