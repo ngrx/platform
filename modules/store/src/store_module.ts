@@ -215,34 +215,22 @@ export class StoreModule {
       | InjectionToken<StoreConfig<any, any>>,
     config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
   ): ModuleWithProviders<StoreFeatureModule> {
-    let featureName: string;
-    let reducers:
-      | ActionReducerMap<any, any>
-      | InjectionToken<ActionReducerMap<any, any>>
-      | ActionReducer<any, any>
-      | InjectionToken<ActionReducer<any, any>>;
-    if (typeof featureNameOrSlice === 'string') {
-      featureName = featureNameOrSlice;
-      reducers = reducersOrConfig as any;
-    } else {
-      featureName = featureNameOrSlice.name;
-      reducers = featureNameOrSlice.reducer;
-      config = (reducersOrConfig as any) ?? {};
-    }
-
     return {
       ngModule: StoreFeatureModule,
       providers: [
         {
           provide: _FEATURE_CONFIGS,
           multi: true,
-          useValue: config,
+          useValue: typeof featureNameOrSlice === 'string' ? config : {},
         },
         {
           provide: STORE_FEATURES,
           multi: true,
           useValue: {
-            key: featureName,
+            key:
+              typeof featureNameOrSlice === 'string'
+                ? featureNameOrSlice
+                : featureNameOrSlice.name,
             reducerFactory:
               !(config instanceof InjectionToken) && config.reducerFactory
                 ? config.reducerFactory
@@ -262,12 +250,21 @@ export class StoreModule {
           deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
           useFactory: _createFeatureStore,
         },
-        { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
+        {
+          provide: _FEATURE_REDUCERS,
+          multi: true,
+          useValue:
+            typeof featureNameOrSlice === 'string'
+              ? reducersOrConfig
+              : featureNameOrSlice.reducer,
+        },
         {
           provide: _FEATURE_REDUCERS_TOKEN,
           multi: true,
           useExisting:
-            reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
+            reducersOrConfig instanceof InjectionToken
+              ? reducersOrConfig
+              : _FEATURE_REDUCERS,
         },
         {
           provide: FEATURE_REDUCERS,
