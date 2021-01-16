@@ -15,13 +15,13 @@ import { createRender } from '../core/cd-aware/creator_render';
 
 export interface LetViewContext<T> {
   // to enable `let` syntax we have to use $implicit (var; let v = var)
-  $implicit?: T;
+  $implicit: T;
   // to enable `as` syntax we have to assign the directives selector (var as v)
-  ngrxLet?: T;
+  ngrxLet: T;
   // set context var complete to true (var$; let e = $error)
-  $error?: boolean;
+  $error: boolean;
   // set context var complete to true (var$; let c = $complete)
-  $complete?: boolean;
+  $complete: boolean;
 }
 
 /**
