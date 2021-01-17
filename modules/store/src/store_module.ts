@@ -114,6 +114,14 @@ export interface RootStoreConfig<T, V extends Action = Action>
   runtimeChecks?: Partial<RuntimeChecks>;
 }
 
+/**
+ * An object with the name and the reducer for the feature.
+ */
+export interface FeatureSlice<T, V extends Action = Action> {
+  name: string;
+  reducer: ActionReducer<T, V>;
+}
+
 @NgModule({})
 export class StoreModule {
   static forRoot<T, V extends Action = Action>(
@@ -192,13 +200,19 @@ export class StoreModule {
     reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
     config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
   ): ModuleWithProviders<StoreFeatureModule>;
+  static forFeature<T, V extends Action = Action>(
+    slice: FeatureSlice<T, V>,
+    config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
+  ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature(
-    featureName: string,
-    reducers:
+    featureNameOrSlice: string | FeatureSlice<any, any>,
+    reducersOrConfig?:
       | ActionReducerMap<any, any>
       | InjectionToken<ActionReducerMap<any, any>>
       | ActionReducer<any, any>
-      | InjectionToken<ActionReducer<any, any>>,
+      | InjectionToken<ActionReducer<any, any>>
+      | StoreConfig<any, any>
+      | InjectionToken<StoreConfig<any, any>>,
     config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
   ): ModuleWithProviders<StoreFeatureModule> {
     return {
@@ -207,13 +221,16 @@ export class StoreModule {
         {
           provide: _FEATURE_CONFIGS,
           multi: true,
-          useValue: config,
+          useValue: typeof featureNameOrSlice === 'string' ? config : {},
         },
         {
           provide: STORE_FEATURES,
           multi: true,
           useValue: {
-            key: featureName,
+            key:
+              typeof featureNameOrSlice === 'string'
+                ? featureNameOrSlice
+                : featureNameOrSlice.name,
             reducerFactory:
               !(config instanceof InjectionToken) && config.reducerFactory
                 ? config.reducerFactory
@@ -233,12 +250,21 @@ export class StoreModule {
           deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
           useFactory: _createFeatureStore,
         },
-        { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
+        {
+          provide: _FEATURE_REDUCERS,
+          multi: true,
+          useValue:
+            typeof featureNameOrSlice === 'string'
+              ? reducersOrConfig
+              : featureNameOrSlice.reducer,
+        },
         {
           provide: _FEATURE_REDUCERS_TOKEN,
           multi: true,
           useExisting:
-            reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
+            reducersOrConfig instanceof InjectionToken
+              ? reducersOrConfig
+              : _FEATURE_REDUCERS,
         },
         {
           provide: FEATURE_REDUCERS,

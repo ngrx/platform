@@ -26,7 +26,10 @@ export const COMPONENTS = [
     ReactiveFormsModule,
     MaterialModule,
     AuthRoutingModule,
-    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
+    StoreModule.forFeature({
+      name: fromAuth.authFeatureKey,
+      reducer: fromAuth.reducers,
+    }),
     EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: COMPONENTS,
