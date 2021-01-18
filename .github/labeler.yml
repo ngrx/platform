@@ -1,0 +1,59 @@
+# Add 'Project: ngrx.io' label to any ngrx.io file changes
+'Project: ngrx.io':
+  - projects/ngrx.io/*
+  - projects/ngrx.io/**/*
+
+# Add 'Project: Example App' label to any example-app file changes
+'Project: Example App':
+  - projects/example-app/*
+  - projects/example-app/**/*
+
+# Add 'Project: Component' label to any change within the 'component' package
+'Project: Component':
+  - modules/component/*
+  - modules/component/**/*
+
+# Add 'Project: Component Store' label to any change within the 'component-store' package
+'Project: Component Store':
+  - modules/component-store/*
+  - modules/component-store/**/*
+
+# Add 'Project: Data' label to any change within the 'data' package
+'Project: Data':
+  - modules/data/*
+  - modules/data/**/*
+
+# Add 'Project: Effects' label to any change within the 'effects' package
+'Project: Effects':
+  - modules/effects/*
+  - modules/effects/**/*
+
+# Add 'Project: Entity' label to any change within the 'entity' package
+'Project: Entity':
+  - modules/entity/*
+  - modules/entity/**/*
+
+# Add 'Project: Router Store' label to any change within the 'router-store' package
+'Project: Router Store':
+  - modules/router-store/*
+  - modules/router-store/**/*
+
+# Add 'Project: Schematics' label to any change within the 'schematics' package
+'Project: Schematics':
+  - modules/schematics/*
+  - modules/schematics/**/*
+
+# Add 'Project: Store' label to any change within the 'store' package
+'Project: Store':
+  - modules/store/*
+  - modules/store/**/*
+
+# Add 'Project: Store Devtools' label to any change within the 'store-devtools' package
+'Project: Store Devtools':
+  - modules/store-devtools/*
+  - modules/store-devtools/**/*
+
+# Add 'dependencies' label to any change to npm or yarn related stuff
+dependencies:
+  - package.json
+  - yarn.lock
