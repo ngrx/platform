@@ -16,22 +16,20 @@ export type RouterReducerState<
 };
 
 export function routerReducer<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
->(
-  state: RouterReducerState<T> | undefined,
-  action: Action
-): RouterReducerState<T> {
+  RouterState extends BaseRouterStoreState = SerializedRouterStateSnapshot,
+  Result = RouterReducerState<RouterState>
+>(state: Result | undefined, action: Action): Result {
   // Allow compilation with strictFunctionTypes - ref: #1344
-  const routerAction = action as RouterAction<any, T>;
+  const routerAction = action as RouterAction<any, RouterState>;
   switch (routerAction.type) {
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:
     case ROUTER_CANCEL:
-      return {
+      return ({
         state: routerAction.payload.routerState,
         navigationId: routerAction.payload.event.id,
-      };
+      } as unknown) as Result;
     default:
-      return state as RouterReducerState<T>;
+      return state as Result;
   }
 }
