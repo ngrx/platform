@@ -39,7 +39,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{ type: number }>());
       `).toFail(
-        / Type 'Props<\{ type: number; \}>' is not assignable to type '"type property is not allowed in action creators"'/
+        / Type 'ActionCreatorProps<\{ type: number; \}>' is not assignable to type '"type property is not allowed in action creators"'/
       );
     });
 
@@ -47,7 +47,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<[]>());
       `).toFail(
-        /Type 'Props<\[\]>' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type 'ActionCreatorProps<\[\]>' is not assignable to type '"arrays are not allowed in action creators"'/
       );
     });
 
@@ -55,7 +55,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{}>());
       `).toFail(
-        /Type 'Props<\{\}>' is not assignable to type '"empty objects are not allowed in action creators"'/
+        /Type 'ActionCreatorProps<\{\}>' is not assignable to type '"empty objects are not allowed in action creators"'/
       );
     });
   });
