@@ -1,7 +1,10 @@
 import { ActionCreator, ActionReducer, ActionType, Action } from './models';
 
-// Return type of the `on` fn.
-export interface On<S> {
+/**
+ * Return type of the `on` fn.
+ * Contains the action reducer coupled to one or more action types.
+ */
+export interface ReducerTypes<S> {
   reducer: ActionReducer<S>;
   types: string[];
 }
@@ -29,7 +32,7 @@ export function on<
   Creators extends ActionCreator[],
   State,
   Reducer extends OnReducer<State, Creators>
->(...args: [...creators: Creators, reducer: Reducer]): On<State> {
+>(...args: [...creators: Creators, reducer: Reducer]): ReducerTypes<State> {
   const reducer = (args.pop() as Function) as ActionReducer<State>;
   const types = args.reduce(
     (result, creator) => [...result, (creator as ActionCreator).type],
@@ -88,7 +91,7 @@ export function on<
  */
 export function createReducer<S, A extends Action = Action>(
   initialState: S,
-  ...ons: On<S>[]
+  ...ons: ReducerTypes<S>[]
 ): ActionReducer<S, A> {
   const map = new Map<string, ActionReducer<S, A>>();
   for (let on of ons) {
