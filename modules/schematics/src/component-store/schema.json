@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgRxComponentStore",
+  "title": "NgRx Component Store Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the component store.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What should be the name of the component store?"
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the component store.",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "aliases": ["p"]
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Flag to indicate if a dir is created."
+    },
+    "skipTests": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, does not create test files."
+    },
+    "component": {
+      "type": "string",
+      "default": "",
+      "description": "Allows specification of the declaring component.",
+      "alias": "m",
+      "subtype": "filepath",
+      "x-prompt": "To which component (path) should the component store be provided in?"
+    },
+    "module": {
+      "type": "string",
+      "default": "",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "subtype": "filepath",
+      "x-prompt": "To which module (path) should the component store be provided in?"
+    }
+  },
+  "required": []
+}
