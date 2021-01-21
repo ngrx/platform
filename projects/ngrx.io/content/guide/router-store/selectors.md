@@ -9,44 +9,106 @@ The example below shows how to provide a selector for the top level `router` key
 
 Usage:
 
-`reducers/index.ts`
+## Creating a Selector for A Single Entity With Id As Route Param
+
+[Full App Used In This Example](https://stackblitz.com/edit/ngrx-router-store-selectors?file=src/app/car.state.ts)
+
+`router.selectors.ts`
 
 ```ts
-import * as fromRouter from '@ngrx/router-store';
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { getSelectors, RouterReducerState } from '@ngrx/router-store';
+import { createFeatureSelector } from '@ngrx/store';
 
-export interface State {
-  router: fromRouter.RouterReducerState<any>;
-}
-
-export const selectRouter = createFeatureSelector<
-  State,
-  fromRouter.RouterReducerState<any>
->('router');
+export const selectRouter = createFeatureSelector<RouterReducerState>('router');
 
 export const {
-  selectCurrentRoute,   // select the current route
-  selectFragment,       // select the current route fragment
-  selectQueryParams,    // select the current route query params
-  selectQueryParam,     // factory function to select a query param
-  selectRouteParams,    // select the current route params
-  selectRouteParam,     // factory function to select a route param
-  selectRouteData,      // select the current route data
-  selectUrl,            // select the current url
-} = fromRouter.getSelectors(selectRouter);
+  selectCurrentRoute, // select the current route
+  selectFragment, // select the current route fragment
+  selectQueryParams, // select the current route query params
+  selectQueryParam, // factory function to select a query param
+  selectRouteParams, // select the current route params
+  selectRouteParam, // factory function to select a route param
+  selectRouteData, // select the current route data
+  selectUrl, // select the current url
+} = getSelectors(selectRouter);
+```
 
-export const selectSelectedCarId = selectQueryParam('carId');
+`car.reducer.ts`
+
+```ts
+import { createReducer, on } from '@ngrx/store';
+import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { appInit } from './car.actions';
+
+export interface Car {
+  id: string;
+  year: string;
+  make: string;
+  model: string;
+}
+
+export type CarState = EntityState<Car>;
+
+export const carAdapter = createEntityAdapter<Car>({
+  selectId: car => car.id,
+});
+
+const initialState = carAdapter.getInitialState();
+
+export const reducer = createReducer<CarState>(
+  initialState,
+  on(appInit, (state, { cars }) => carAdapter.addMany(cars, state))
+);
+```
+
+`car.selectors.ts`
+
+```ts
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { selectRouteParams } from '../router.selectors';
+import { carAdapter, CarState } from './car.reducer';
+
+export const carsFeatureSelector = createFeatureSelector<CarState>('cars');
+
+const { selectEntities, selectAll } = carAdapter.getSelectors();
+
+export const selectCarEntities = createSelector(
+  carsFeatureSelector,
+  selectEntities
+);
+
+export const selectCars = createSelector(
+  carsFeatureSelector,
+  selectAll
+);
+
+// you can combine the `selectRouteParams` with `selectCarEntities`
+// to get a selector for the active car for this component based
+// on the route
 export const selectCar = createSelector(
-   selectCarEntities,
-   selectSelectedCarId,
-   (cars, carId) => cars[carId]
+  selectCarEntities,
+  selectRouteParams,
+  (cars, { carId }) => cars[carId]
 );
+```
 
-export const selectCarsByColor = createSelector(
-   selectCarEntities,
-   selectQueryParams,
-   (cars, params) => cars.filter(c => c.color === params['color'])
-);
+`car.component.ts`
+
+```ts
+import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { selectCar } from './car.selectors';
+
+@Component({
+  selector: 'app-car',
+  templateUrl: './car.component.html',
+  styleUrls: ['./car.component.css'],
+})
+export class CarComponent {
+  car$ = this.store.pipe(select(selectCar));
+
+  constructor(private store: Store) {}
+}
 ```
 
 ## Extracting all params in the current route
