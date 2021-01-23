@@ -1,11 +1,10 @@
 import {
-  asapScheduler,
   EMPTY,
+  from,
   isObservable,
   NextObserver,
   Observable,
   ObservableInput,
-  scheduled,
   Subject,
   Subscribable,
   Subscription,
@@ -61,7 +60,7 @@ export function createCdAware<U>(cfg: {
 
       const ob$: Observable<U> = isObservable(observable$)
         ? (observable$ as Observable<U>)
-        : scheduled<U>(observable$, asapScheduler);
+        : from(observable$);
 
       // If a new Observable arrives, reset the value to render_creator
       // We do this because we don't know when the next value arrives and want to get rid of the old value

@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flushMicrotasks,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { EMPTY, NEVER, Observable, ObservableInput, of } from 'rxjs';
 
 import { PushPipe } from '../../src/push/push.pipe';
@@ -18,7 +24,7 @@ class PushPipeTestComponent {
   value$: Observable<number> = of(42);
 }
 
-let fixturePushPipeTestComponent: any;
+let fixturePushPipeTestComponent: ComponentFixture<PushPipeTestComponent>;
 let pushPipeTestComponent: {
   value$: ObservableInput<any> | undefined | null;
 };
@@ -71,8 +77,13 @@ describe('PushPipe', () => {
         expect(pushPipe.transform(of(42))).toBe(42);
       });
 
-      it('should return emitted value from passed promise without changing it', () => {
-        expect(pushPipe.transform(Promise.resolve(42))).toBe(42);
+      it('should return emitted value from passed promise without changing it', (done: any) => {
+        let promise = Promise.resolve(42);
+        pushPipe.transform(promise);
+        setTimeout(() => {
+          expect(pushPipe.transform(promise)).toBe(42);
+          done();
+        });
       });
 
       it('should return undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
@@ -152,11 +163,13 @@ describe('PushPipe', () => {
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
       });
 
-      it('should emitted value from passed promise without changing it', () => {
+      it('should emitted value from passed promise without changing it', fakeAsync(() => {
         pushPipeTestComponent.value$ = Promise.resolve(42);
         fixturePushPipeTestComponent.detectChanges();
+        flushMicrotasks();
+        fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
-      });
+      }));
 
       it('should return undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
         pushPipeTestComponent.value$ = of(42);

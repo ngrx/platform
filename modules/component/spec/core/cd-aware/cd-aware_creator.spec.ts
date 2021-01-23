@@ -108,11 +108,14 @@ describe('CdAware', () => {
       expect(cdAwareImplementation.renderedValue).toBe(42);
     });
 
-    it('should render_creator emitted value from passed promise without changing it', () => {
+    it('should render_creator emitted value from passed promise without changing it', (done: any) => {
       cdAwareImplementation.cdAware.nextPotentialObservable(
         Promise.resolve(42)
       );
-      expect(cdAwareImplementation.renderedValue).toBe(42);
+      setTimeout(() => {
+        expect(cdAwareImplementation.renderedValue).toBe(42);
+        done();
+      });
     });
 
     it('should render_creator undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
