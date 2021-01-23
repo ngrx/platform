@@ -4,7 +4,14 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flushMicrotasks,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import {
   EMPTY,
   interval,
@@ -30,25 +37,7 @@ import { MockChangeDetectorRef } from '../fixtures/fixtures';
   `,
 })
 class LetDirectiveTestComponent {
-  value$: Observable<number> = of(42);
-}
-
-@Component({
-  template: `
-    <ng-container
-      *ngrxLet="value$ as value; $error as error; $complete as complete"
-      >{{ (value | json) || 'undefined' }}</ng-container
-    >
-  `,
-})
-class LetDirectiveTestComponentStrategy {
-  numRenders = 0;
-
-  renders() {
-    return ++this.numRenders;
-  }
-
-  value$: Observable<number> = of(42);
+  value$!: Observable<number>;
 }
 
 @Component({
@@ -71,7 +60,7 @@ class LetDirectiveTestCompleteComponent {
   value$: Observable<number> = of(42);
 }
 
-let fixtureLetDirectiveTestComponent: any;
+let fixtureLetDirectiveTestComponent: ComponentFixture<LetDirectiveTestComponent>;
 let letDirectiveTestComponent: {
   value$: ObservableInput<any> | undefined | null;
 };
@@ -88,22 +77,6 @@ const setupLetDirectiveTestComponent = (): void => {
   });
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
     LetDirectiveTestComponent
-  );
-  letDirectiveTestComponent =
-    fixtureLetDirectiveTestComponent.componentInstance;
-  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
-};
-const setupLetDirectiveTestComponentStrategy = (): void => {
-  TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestComponentStrategy, LetDirective],
-    providers: [
-      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
-    ],
-  });
-  fixtureLetDirectiveTestComponent = TestBed.createComponent(
-    LetDirectiveTestComponentStrategy
   );
   letDirectiveTestComponent =
     fixtureLetDirectiveTestComponent.componentInstance;
@@ -196,11 +169,13 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('42');
     });
 
-    it('should render_creator emitted value from passed promise without changing it', () => {
+    it('should render_creator emitted value from passed promise without changing it', fakeAsync(() => {
       letDirectiveTestComponent.value$ = Promise.resolve(42);
       fixtureLetDirectiveTestComponent.detectChanges();
+      flushMicrotasks();
+      fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
-    });
+    }));
 
     it('should render_creator undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
       letDirectiveTestComponent.value$ = of(42);
