@@ -4,7 +4,7 @@ import {
   TypedAction,
   FunctionWithParametersType,
   NotAllowedCheck,
-  Props,
+  ActionCreatorProps,
 } from './models';
 import { REGISTERED_ACTION_TYPES } from './globals';
 
@@ -16,7 +16,7 @@ export function createAction<T extends string>(
 ): ActionCreator<T, () => TypedAction<T>>;
 export function createAction<T extends string, P extends object>(
   type: T,
-  config: Props<P> & NotAllowedCheck<P>
+  config: ActionCreatorProps<P> & NotAllowedCheck<P>
 ): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;
 export function createAction<
   T extends string,
@@ -124,7 +124,7 @@ export function createAction<T extends string, C extends Creator>(
   }
 }
 
-export function props<P extends object>(): Props<P> {
+export function props<P extends object>(): ActionCreatorProps<P> {
   return { _as: 'props', _p: undefined! };
 }
 

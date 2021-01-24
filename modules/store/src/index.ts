@@ -8,7 +8,7 @@ export {
   Creator,
   MetaReducer,
   NotAllowedCheck,
-  Props,
+  ActionCreatorProps,
   Selector,
   SelectorWithProps,
   RuntimeChecks,
@@ -57,4 +57,4 @@ export {
   StoreConfig,
   FeatureSlice,
 } from './store_module';
-export { On, on, createReducer } from './reducer_creator';
+export { ReducerTypes, on, createReducer } from './reducer_creator';

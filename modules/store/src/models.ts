@@ -93,7 +93,7 @@ export type ActionCreator<
   C extends Creator = Creator
 > = C & TypedAction<T>;
 
-export interface Props<T> {
+export interface ActionCreatorProps<T> {
   _as: 'props';
   _p: T;
 }
