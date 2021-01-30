@@ -1,6 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Action, UPDATE } from '@ngrx/store';
-import { empty, Observable, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -39,9 +39,9 @@ export const ExtensionActionTypes = {
   ACTION: 'ACTION',
 };
 
-export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<
-  ReduxDevtoolsExtension
->('@ngrx/store-devtools Redux Devtools Extension');
+export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<ReduxDevtoolsExtension>(
+  '@ngrx/store-devtools Redux Devtools Extension'
+);
 
 export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;
@@ -160,7 +160,7 @@ export class DevtoolsExtension {
 
   private createChangesObservable(): Observable<any> {
     if (!this.devtoolsExtension) {
-      return empty();
+      return EMPTY;
     }
 
     return new Observable((subscriber) => {
