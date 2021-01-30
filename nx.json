@@ -84,10 +84,6 @@
     },
     "data-example-app": {
       "tags": []
-    },
-    "data-example-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["data-example-app"]
     }
   },
   "affected": {
