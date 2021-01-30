@@ -90,7 +90,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
           this.movieService.loadMovies(moviesPerPage, currentPageIndex),
         ).pipe(tap(results => this.updateMovieResults(results))),
       );
-    })(fetchMoviesData$); // 👈 effect is triggered whenever debounced data is changed
+    })(this.fetchMoviesData$); // 👈 effect is triggered whenever debounced data is changed
   }
 
   // Updates how many movies per page should be displayed
