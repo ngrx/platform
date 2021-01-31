@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StoryDataService } from '../state/story-data.service';
 import { DeleteStoryDto, Stories, Story, UpdateStoryDto } from '../state/story';
@@ -8,10 +8,12 @@ import { DeleteStoryDto, Stories, Story, UpdateStoryDto } from '../state/story';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent {
+export class BoardComponent implements OnInit {
   stories$: Observable<Stories[]> = this.storyDataService.groupedStories$;
 
-  constructor(private storyDataService: StoryDataService) {
+  constructor(private storyDataService: StoryDataService) {}
+
+  ngOnInit(): void {
     this.storyDataService.getAll();
   }
 

@@ -8,7 +8,7 @@ import {
 } from '../../state/story';
 
 @Component({
-  selector: 'ngrx-data-nestjs-minimal-boilerplate-kanban-board-ui',
+  selector: 'board-ui',
   templateUrl: './board-ui.component.html',
   styleUrls: ['./board-ui.component.scss'],
 })
