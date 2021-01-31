@@ -17,7 +17,7 @@ export class BoardComponent implements OnInit {
     this.storyDataService.getAll();
   }
 
-  add(story: Story): void {
+  add(story: Partial<Story>): void {
     this.storyDataService.add(story, { isOptimistic: false });
   }
 
