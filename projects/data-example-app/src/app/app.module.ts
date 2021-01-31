@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { EntityDataModule } from '@ngrx/data';
-import { storyEntityMetadata } from '../state/shared-state-story';
+import { storyEntityMetadata } from '../state/story.metadata';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
   HTTP_INTERCEPTORS,
