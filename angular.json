@@ -796,13 +796,6 @@
     },
     "@schematics/angular:directive": {
       "prefix": "bc"
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
     }
   },
   "cli": {
