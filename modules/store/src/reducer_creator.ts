@@ -1,17 +1,28 @@
 import { ActionCreator, ActionReducer, ActionType, Action } from './models';
 
+// Goes over the array of ActionCreators, pulls the action type out of each one
+// and returns the array of these action types.
+type ExtractActionTypes<Creators extends readonly ActionCreator[]> = {
+  [Key in keyof Creators]: Creators[Key] extends ActionCreator<infer T>
+    ? T
+    : never;
+};
+
 /**
  * Return type of the `on` fn.
  * Contains the action reducer coupled to one or more action types.
  */
-export interface ReducerTypes<S> {
-  reducer: ActionReducer<S>;
-  types: string[];
+export interface ReducerTypes<
+  State,
+  Creators extends readonly ActionCreator[]
+> {
+  reducer: OnReducer<State, Creators>;
+  types: ExtractActionTypes<Creators>;
 }
 
 // Specialized Reducer that is aware of the Action type it needs to handle
-export interface OnReducer<S, C extends ActionCreator[]> {
-  (state: S, action: ActionType<C[number]>): S;
+export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
+  (state: State, action: ActionType<Creators[number]>): { [P in keyof State]: State[P] };
 }
 
 /**
@@ -28,16 +39,15 @@ export interface OnReducer<S, C extends ActionCreator[]> {
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
  */
-export function on<
-  Creators extends ActionCreator[],
-  State,
-  Reducer extends OnReducer<State, Creators>
->(...args: [...creators: Creators, reducer: Reducer]): ReducerTypes<State> {
-  const reducer = (args.pop() as Function) as ActionReducer<State>;
-  const types = args.reduce(
-    (result, creator) => [...result, (creator as ActionCreator).type],
-    [] as string[]
-  );
+export function on<State, Creators extends readonly ActionCreator[]>(
+  ...args: [...creators: Creators, reducer: OnReducer<State, Creators>]
+): ReducerTypes<State, Creators> {
+  // This could be refactored when TS releases the version with this fix:
+  // https://github.com/microsoft/TypeScript/pull/41544
+  const reducer = args.pop() as OnReducer<State, Creators>;
+  const types = (((args as unknown) as Creators).map(
+    (creator) => creator.type
+  ) as unknown) as ExtractActionTypes<Creators>;
   return { reducer, types };
 }
 
@@ -91,14 +101,14 @@ export function on<
  */
 export function createReducer<S, A extends Action = Action>(
   initialState: S,
-  ...ons: ReducerTypes<S>[]
+  ...ons: ReducerTypes<S, ActionCreator[]>[]
 ): ActionReducer<S, A> {
-  const map = new Map<string, ActionReducer<S, A>>();
+  const map = new Map<string, OnReducer<S, ActionCreator[]>>();
   for (let on of ons) {
     for (let type of on.types) {
-      if (map.has(type)) {
-        const existingReducer = map.get(type) as ActionReducer<S, A>;
-        const newReducer: ActionReducer<S, A> = (state, action) =>
+      const existingReducer = map.get(type);
+      if (existingReducer) {
+        const newReducer: typeof existingReducer = (state, action) =>
           on.reducer(existingReducer(state, action), action);
         map.set(type, newReducer);
       } else {
