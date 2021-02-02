@@ -316,9 +316,7 @@ export class CollectionEffects {
     () =>
       this.actions$.pipe(
         ofType(CollectionApiActions.addBookSuccess),
-        concatMap(action => of(action).pipe(
-          withLatestFrom(this.store.select(fromBooks.getCollectionBookIds))
-        )),
+        concatLatestFrom(action => this.store.select(fromBooks.getCollectionBookIds)),
         tap(([action, bookCollection]) => {
           if (bookCollection.length === 1) {
             window.alert('Congrats on adding your first book!');
@@ -339,7 +337,7 @@ export class CollectionEffects {
 
 <div class="alert is-important">
 
-**Note:** For performance reasons, use a flattening operator in combination with `withLatestFrom` to prevent the selector from firing until the correct action is dispatched.
+**Note:** For performance reasons, use a flattening operator like `concatLatestFrom` to prevent the selector from firing until the correct action is dispatched.
 
 </div>
 
