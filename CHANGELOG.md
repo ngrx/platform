@@ -1,3 +1,37 @@
+<a name="11.0.0-beta.2"></a>
+
+# [11.0.0-beta.2](https://github.com/ngrx/platform/compare/11.0.0-beta.0...11.0.0-beta.2) (2021-02-02)
+
+### Bug Fixes
+
+- **component:** remove ? from LetViewContext props to prevent 'possibly undefined' error in strict mode ([#2876](https://github.com/ngrx/platform/issues/2876)) ([c3ac252](https://github.com/ngrx/platform/commit/c3ac252))
+- **component:** transform to Observable if Input is Promise ([b611367](https://github.com/ngrx/platform/commit/b611367))
+- **data:** make entity param partial when is not optimistic ([#2899](https://github.com/ngrx/platform/issues/2899)) ([bb70e6c](https://github.com/ngrx/platform/commit/bb70e6c)), closes [#2870](https://github.com/ngrx/platform/issues/2870)
+- **data:** type overloaded add for is optimistic true | undefined ([#2906](https://github.com/ngrx/platform/issues/2906)) ([6d46ac4](https://github.com/ngrx/platform/commit/6d46ac4))
+- **push:** fix return typing for observables to include undefined ([#2907](https://github.com/ngrx/platform/issues/2907)) ([abcc599](https://github.com/ngrx/platform/commit/abcc599)), closes [#2888](https://github.com/ngrx/platform/issues/2888)
+- **router-store:** cast return type as RouterReducerState ([#2887](https://github.com/ngrx/platform/issues/2887)) ([d489484](https://github.com/ngrx/platform/commit/d489484))
+
+### Features
+
+- **effects:** concatLatestFrom operator ([#2760](https://github.com/ngrx/platform/issues/2760)) ([55f0f7a](https://github.com/ngrx/platform/commit/55f0f7a))
+- **effects:** deprecate @Effect decorator ([#2855](https://github.com/ngrx/platform/issues/2855)) ([dbd1ecf](https://github.com/ngrx/platform/commit/dbd1ecf))
+- **store:** add object-style StoreModule.forFeature overload w/fixes ([#2885](https://github.com/ngrx/platform/issues/2885)) ([a9468e1](https://github.com/ngrx/platform/commit/a9468e1)), closes [#2821](https://github.com/ngrx/platform/issues/2821) [#2809](https://github.com/ngrx/platform/issues/2809)
+- **store-devtools:** pass entire error object to the error handler ([#2853](https://github.com/ngrx/platform/issues/2853)) ([ce28b44](https://github.com/ngrx/platform/commit/ce28b44)), closes [#2824](https://github.com/ngrx/platform/issues/2824)
+
+### Performance Improvements
+
+- **schematics:** speed up create effect migration ([#2873](https://github.com/ngrx/platform/issues/2873)) ([2f5dcb4](https://github.com/ngrx/platform/commit/2f5dcb4))
+
+### BREAKING CHANGES
+
+- **push:** BEFORE:
+
+ngrxPush typing doesn't consider `undefined` when the input type is an observable
+
+AFTER:
+
+ngrxPush typing considers `undefined` when the input type is an observable
+
 <a name="11.0.0-beta.0"></a>
 
 # [11.0.0-beta.0](https://github.com/ngrx/platform/compare/10.0.1...11.0.0-beta.0) (2021-01-05)
