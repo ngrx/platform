@@ -79,7 +79,7 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
 
   transform<T>(potentialObservable: null): null;
   transform<T>(potentialObservable: undefined): undefined;
-  transform<T>(potentialObservable: ObservableInput<T>): T;
+  transform<T>(potentialObservable: ObservableInput<T>): T | undefined;
   transform<T>(
     potentialObservable: ObservableInput<T> | null | undefined
   ): T | null | undefined {
