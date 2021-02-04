@@ -1,6 +1,10 @@
+<a name="11.0.0-rc.0"></a>
+
+# [11.0.0-rc.0](https://github.com/ngrx/platform/compare/11.0.0-beta.2...11.0.0-rc.0) (2021-02-04)
+
 <a name="11.0.0-beta.2"></a>
 
-# [11.0.0-beta.2](https://github.com/ngrx/platform/compare/11.0.0-beta.0...11.0.0-beta.2) (2021-02-02)
+# [11.0.0-beta.2](https://github.com/ngrx/platform/compare/11.0.0-beta.1...11.0.0-beta.2) (2021-02-02)
 
 ### Bug Fixes
 
@@ -14,9 +18,7 @@
 ### Features
 
 - **effects:** concatLatestFrom operator ([#2760](https://github.com/ngrx/platform/issues/2760)) ([55f0f7a](https://github.com/ngrx/platform/commit/55f0f7a))
-- **effects:** deprecate @Effect decorator ([#2855](https://github.com/ngrx/platform/issues/2855)) ([dbd1ecf](https://github.com/ngrx/platform/commit/dbd1ecf))
 - **store:** add object-style StoreModule.forFeature overload w/fixes ([#2885](https://github.com/ngrx/platform/issues/2885)) ([a9468e1](https://github.com/ngrx/platform/commit/a9468e1)), closes [#2821](https://github.com/ngrx/platform/issues/2821) [#2809](https://github.com/ngrx/platform/issues/2809)
-- **store-devtools:** pass entire error object to the error handler ([#2853](https://github.com/ngrx/platform/issues/2853)) ([ce28b44](https://github.com/ngrx/platform/commit/ce28b44)), closes [#2824](https://github.com/ngrx/platform/issues/2824)
 
 ### Performance Improvements
 
@@ -31,6 +33,15 @@ ngrxPush typing doesn't consider `undefined` when the input type is an observabl
 AFTER:
 
 ngrxPush typing considers `undefined` when the input type is an observable
+
+<a name="11.0.0-beta.1"></a>
+
+# [11.0.0-beta.1](https://github.com/ngrx/platform/compare/11.0.0-beta.0...11.0.0-beta.1) (2021-01-12)
+
+### Features
+
+- **effects:** deprecate @Effect decorator ([#2855](https://github.com/ngrx/platform/issues/2855)) ([dbd1ecf](https://github.com/ngrx/platform/commit/dbd1ecf))
+- **store-devtools:** pass entire error object to the error handler ([#2853](https://github.com/ngrx/platform/issues/2853)) ([ce28b44](https://github.com/ngrx/platform/commit/ce28b44)), closes [#2824](https://github.com/ngrx/platform/issues/2824)
 
 <a name="11.0.0-beta.0"></a>
 
