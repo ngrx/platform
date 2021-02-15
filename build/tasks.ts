@@ -70,8 +70,8 @@ export async function publishDocsPreview() {
   const REPO_URL = 'git@github.com:ngrx/ngrx-io-previews.git';
   const REPO_DIR = `./tmp/docs-preview`;
   const PR_NUMBER = util.getPrNumber(
-    process.env.CIRCLE_PR_NUMBER,
-    process.env.CIRCLE_PULL_REQUEST_NUMBER
+    (process.env as any).CIRCLE_PR_NUMBER,
+    (process.env as any).CIRCLE_PULL_REQUEST_NUMBER
   );
   const SHORT_SHA = process.env.SHORT_GIT_HASH;
   const owner = process.env.CIRCLE_PROJECT_USERNAME;
@@ -129,8 +129,8 @@ export async function prepareAndPublish(
 
 export async function postGithubComment() {
   const PR_NUMBER = util.getPrNumber(
-    process.env.CIRCLE_PR_NUMBER,
-    process.env.CIRCLE_PULL_REQUEST_NUMBER
+    (process.env as any).CIRCLE_PR_NUMBER,
+    (process.env as any).CIRCLE_PULL_REQUEST_NUMBER
   );
   const owner = process.env.CIRCLE_PROJECT_USERNAME;
 

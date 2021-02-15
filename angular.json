@@ -49,7 +49,8 @@
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -83,7 +84,8 @@
           "options": {
             "jestConfig": "projects/example-app/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/projects/example-app"]
         }
       }
     },
@@ -163,7 +165,8 @@
           "options": {
             "jestConfig": "modules/store/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/store"]
         }
       },
       "schematics": {}
@@ -217,7 +220,8 @@
           "options": {
             "jestConfig": "modules/effects/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/effects"]
         }
       },
       "schematics": {}
@@ -265,7 +269,8 @@
           "options": {
             "jestConfig": "modules/data/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/data"]
         }
       },
       "schematics": {}
@@ -319,7 +324,8 @@
           "options": {
             "jestConfig": "modules/entity/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/entity"]
         }
       },
       "schematics": {}
@@ -367,7 +373,8 @@
           "options": {
             "jestConfig": "modules/store-devtools/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/store-devtools"]
         }
       },
       "schematics": {}
@@ -415,7 +422,8 @@
           "options": {
             "jestConfig": "modules/router-store/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/router-store"]
         }
       },
       "schematics": {}
@@ -441,7 +449,8 @@
           "options": {
             "jestConfig": "modules/schematics/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/schematics"]
         },
         "build-package": {
           "builder": "@nrwl/node:package",
@@ -463,8 +472,10 @@
                 "glob": "collection.json",
                 "output": "."
               }
-            ]
-          }
+            ],
+            "srcRootForCompilationRoot": "modules/schematics"
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "build": {
           "builder": "@nrwl/workspace:run-commands",
@@ -547,7 +558,8 @@
           "options": {
             "jestConfig": "modules/component/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/component"]
         }
       },
       "schematics": {}
@@ -595,7 +607,8 @@
           "options": {
             "jestConfig": "modules/component-store/jest.config.js",
             "runInBand": true
-          }
+          },
+          "outputs": ["coverage/modules/component-store"]
         }
       },
       "schematics": {}
@@ -670,7 +683,8 @@
           "options": {
             "jestConfig": "modules/schematics-core/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/modules/schematics-core"]
         }
       },
       "schematics": {}

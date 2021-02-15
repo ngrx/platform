@@ -1,0 +1,249 @@
+{
+  "migrations": [
+    {
+      "version": "10.1.0-beta.0",
+      "description": "Migrate .eslintrc files to use tsconfig with a wildcard",
+      "factory": "./src/migrations/update-10-1-0/migrate-eslintrc-tsconfig-wildcard",
+      "package": "@nrwl/workspace",
+      "name": "migrate-eslintrc-tsconfig-wildcard"
+    },
+    {
+      "version": "10.3.0-beta.0",
+      "description": "Add @nrwl/cli as dependency",
+      "factory": "./src/migrations/update-10-3-0/add-cli-dependency",
+      "package": "@nrwl/workspace",
+      "name": "add-cli-dependency"
+    },
+    {
+      "version": "10.3.0-beta.0",
+      "description": "Update typescript to v4",
+      "factory": "./src/migrations/update-10-3-0/update-typescript",
+      "package": "@nrwl/workspace",
+      "name": "update-10-3-0"
+    },
+    {
+      "version": "10.3.0-beta.1",
+      "description": "Adds .vscode/extensions.json to a workspace",
+      "factory": "./src/migrations/update-10-3-0/add-vscode-extensions",
+      "package": "@nrwl/workspace",
+      "name": "add-vscode-extensions"
+    },
+    {
+      "version": "10.3.0-beta.0",
+      "description": "Adds `buildableProjectDepsInPackageJsonType` for web and angular package builders",
+      "factory": "./src/migrations/update-10-3-0/add-buildable-project-deps-in-package-json-type",
+      "package": "@nrwl/workspace",
+      "name": "add-buildable-project-deps-in-package-json-type"
+    },
+    {
+      "version": "10.4.0-beta.5",
+      "description": "Add an explicit dependency on @nrwl/tao",
+      "factory": "./src/migrations/update-10-4-0/add-explicit-dep-on-tao",
+      "package": "@nrwl/workspace",
+      "name": "add-explicit-dep-on-tao"
+    },
+    {
+      "version": "10.4.5",
+      "description": "Update the 'update' npm script to invoke nx migrate",
+      "factory": "./src/migrations/update-10-4-0/update-script-to-invoke-nx-migrate",
+      "package": "@nrwl/workspace",
+      "name": "update-script-to-invoke-nx-migrate"
+    },
+    {
+      "version": "11.0.0-beta.3",
+      "description": "Update the decoration script when using Angular CLI",
+      "factory": "./src/migrations/update-11-0-0/update-decorate-angular-cli",
+      "package": "@nrwl/workspace",
+      "name": "update-decorate-angular-cli"
+    },
+    {
+      "version": "11.0.0-beta.3",
+      "description": "Update the @types/node package",
+      "factory": "./src/migrations/update-11-0-0/update-node-types",
+      "package": "@nrwl/workspace",
+      "name": "update-node-types"
+    },
+    {
+      "version": "11.0.0-beta.3",
+      "description": "Rename tools/schematics into tools/generators",
+      "factory": "./src/migrations/update-11-0-0/rename-workspace-schematics",
+      "package": "@nrwl/workspace",
+      "name": "rename-workspace-schematics"
+    },
+    {
+      "version": "11.0.0-beta.15",
+      "description": "Adds `outputs` based on builders",
+      "factory": "./src/migrations/update-11-0-0/add-outputs-in-workspace",
+      "package": "@nrwl/workspace",
+      "name": "add-outputs-in-workspace"
+    },
+    {
+      "version": "11.0.0",
+      "description": "Check that the right update command is used",
+      "factory": "./src/migrations/update-11-0-0/update-command-check",
+      "package": "@nrwl/workspace",
+      "name": "update-command-check"
+    },
+    {
+      "version": "11.0.2",
+      "description": "Rename the workspace-schematic script into workspace-generator script",
+      "factory": "./src/migrations/update-11-0-0/rename-workspace-schematic-script",
+      "package": "@nrwl/workspace",
+      "name": "rename-workspace-schematic-script"
+    },
+    {
+      "version": "10.2.0-beta.1",
+      "description": "Upgrade NgRx libraries to version 10.0.0",
+      "factory": "./src/migrations/update-10-2-0/update-10-2-0",
+      "package": "@nrwl/angular",
+      "name": "update-10-2-0"
+    },
+    {
+      "version": "10.3.0-beta.1",
+      "description": "Add tsconfig.editor.json to angular apps and update jest-angular-preset",
+      "factory": "./src/migrations/update-10-3-0/update-10-3-0",
+      "package": "@nrwl/angular",
+      "name": "update-10-3-0"
+    },
+    {
+      "version": "10.4.0-beta.3",
+      "description": "Adjust karma and protractor setup",
+      "factory": "./src/migrations/update-10-4-0/update-10-4-0",
+      "package": "@nrwl/angular",
+      "name": "update-10-4-0"
+    },
+    {
+      "version": "10.5.0-beta.0",
+      "description": "Update eslint config and builder to extend from new Nx Angular presets and lint templates",
+      "factory": "./src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint",
+      "package": "@nrwl/angular",
+      "name": "add-template-support-and-presets-to-eslint"
+    },
+    {
+      "version": "11.0.0-beta.13",
+      "description": "Update builder configurations and dependencies",
+      "factory": "./src/migrations/update-11-0-0/update-builders-config",
+      "package": "@nrwl/angular",
+      "name": "update-11-0-0"
+    },
+    {
+      "version": "11.1.0-beta",
+      "description": "Removes `canActivate` from a `Route` config when `redirectTo` is also present",
+      "factory": "./migrations/can-activate-with-redirect-to/index",
+      "package": "@angular/core",
+      "name": "migration-v11.1-can-activate-with-redirect-to"
+    },
+    {
+      "version": "10.1.0-beta.4",
+      "description": "Update jest to v26",
+      "factory": "./src/migrations/update-10-1-0/update-10-1-0",
+      "package": "@nrwl/jest",
+      "name": "update-10.1.0"
+    },
+    {
+      "version": "10.2.0",
+      "description": "Remove deprecated jest builder options",
+      "factory": "./src/migrations/update-10-2-0/update-10-2-0",
+      "package": "@nrwl/jest",
+      "name": "update-10.2.0"
+    },
+    {
+      "version": "10.3.0-beta.1",
+      "description": "Adds all jest projects into the root jest config",
+      "factory": "./src/migrations/update-10-3-0/update-projects-property",
+      "package": "@nrwl/jest",
+      "name": "update-projects-property"
+    },
+    {
+      "version": "10.3.1-beta.1",
+      "description": "Fix ts-jest migration",
+      "factory": "./src/migrations/update-10-3-0/update-ts-jest",
+      "package": "@nrwl/jest",
+      "name": "update-ts-jest"
+    },
+    {
+      "version": "10.3.0-beta.1",
+      "description": "Adds a jest extension to the recommended extensions for vscode",
+      "factory": "./src/migrations/update-10-3-0/add-jest-extension",
+      "package": "@nrwl/jest",
+      "name": "add-jest-extension"
+    },
+    {
+      "version": "10.3.0-beta.1",
+      "description": "Update @typescript-eslint to v4.3",
+      "factory": "./src/migrations/update-10-3-0/update-10-3-0",
+      "package": "@nrwl/linter",
+      "name": "update-10.3.0"
+    },
+    {
+      "version": "10.3.0-beta.0",
+      "description": "Migrate to the new ESLint builder and ESLint config style",
+      "factory": "./src/migrations/update-10-3-0/update-eslint-builder-and-config",
+      "package": "@nrwl/linter",
+      "name": "update-eslint-builder-and-config"
+    },
+    {
+      "version": "10.3.0-beta.2",
+      "description": "Add explicit .json file extension to .eslintrc files, not using an extension is deprecated",
+      "factory": "./src/migrations/update-10-3-0/add-json-ext-to-eslintrc",
+      "package": "@nrwl/linter",
+      "name": "add-json-ext-to-eslintrc"
+    },
+    {
+      "version": "10.3.0-beta.3",
+      "description": "Update implicitDependencies within nx.json to include root .eslintrc.json",
+      "factory": "./src/migrations/update-10-3-0/add-root-eslintrc-json-to-workspace-implicit-deps",
+      "package": "@nrwl/linter",
+      "name": "add-root-eslintrc-json-to-workspace-implicit-deps"
+    },
+    {
+      "version": "10.3.1-beta.1",
+      "description": "Revert any node_modules lintFilesPatterns that were accidentally included by update-eslint-builder-and-config",
+      "factory": "./src/migrations/update-10-3-1/revert-node-modules-files-in-eslint-builder-options",
+      "package": "@nrwl/linter",
+      "name": "revert-node-modules-files-in-eslint-builder-options"
+    },
+    {
+      "version": "10.4.0-beta.0",
+      "description": "Update ESLint config files to use preset configs which eslint-plugin-nx exports",
+      "factory": "./src/migrations/update-10-4-0/update-eslint-configs-to-use-nx-presets",
+      "package": "@nrwl/linter",
+      "name": "update-eslint-configs-to-use-nx-presets"
+    },
+    {
+      "version": "10.4.0-beta.1",
+      "description": "Update root ESLint config to use overrides",
+      "factory": "./src/migrations/update-10-4-0/update-root-eslint-config-to-use-overrides",
+      "package": "@nrwl/linter",
+      "name": "update-root-eslint-config-to-use-overrides"
+    },
+    {
+      "version": "10.1.0-beta.1",
+      "description": "Removes rootDir from node libs' tsconfig",
+      "factory": "./src/migrations/update-10-1-0/remove-root-dir",
+      "package": "@nrwl/node",
+      "name": "remove-root-dir"
+    },
+    {
+      "version": "10.2.0",
+      "description": "Remove deprecated jest builder options",
+      "factory": "./src/migrations/update-10-2-0/update-10-2-0",
+      "package": "@nrwl/nx-plugin",
+      "name": "update-10.2.0"
+    },
+    {
+      "version": "11.0.0-beta.4",
+      "description": "Rename ng-update into nx-migrate",
+      "factory": "./src/migrations/update-11-0-0/rename-ng-update-into-nx-migrate",
+      "package": "@nrwl/nx-plugin",
+      "name": "rename-ng-update-into-nx-migrate"
+    },
+    {
+      "version": "11.0.17",
+      "description": "Update schema versions for executors and generators",
+      "factory": "./src/migrations/update-11-0-0/update-schema-version-for-executors-and-generators",
+      "package": "@nrwl/nx-plugin",
+      "name": "update-schema-version-for-executors-and-generators"
+    }
+  ]
+}
