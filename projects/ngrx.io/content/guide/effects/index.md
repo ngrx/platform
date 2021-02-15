@@ -304,7 +304,7 @@ The example below shows the `addBookToCollectionSuccess$` effect displaying a di
 <code-example header="collection.effects.ts">
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { Actions, ofType, createEffect, concatLatestFrom } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { tap, concatMap, withLatestFrom } from 'rxjs/operators';
 import { CollectionApiActions } from '../actions';
