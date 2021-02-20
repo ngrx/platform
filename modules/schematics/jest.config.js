@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'schematics',
+  displayName: 'Schematics',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/schematics',
   snapshotSerializers: [
