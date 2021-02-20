@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'data',
   displayName: 'Data',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/data',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',

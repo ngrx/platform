@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'entity',
   displayName: 'Entity',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/entity',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',

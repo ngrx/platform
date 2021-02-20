@@ -13,9 +13,11 @@ export function getProject(
   const workspace = getWorkspace(host);
 
   if (!options.project) {
+    const defaultProject = (workspace as { defaultProject?: string })
+      .defaultProject;
     options.project =
-      workspace.defaultProject !== undefined
-        ? workspace.defaultProject
+      defaultProject !== undefined
+        ? defaultProject
         : Object.keys(workspace.projects)[0];
   }
 

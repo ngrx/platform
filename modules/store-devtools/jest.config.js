@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'store-devtools',
-  displayName: 'Store DevTools',
-  preset: '../../jest.config.js',
+  displayName: 'Store Devtools',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/store-devtools',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',

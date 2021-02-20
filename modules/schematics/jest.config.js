@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'schematics',
   displayName: 'Schematics',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/schematics',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',

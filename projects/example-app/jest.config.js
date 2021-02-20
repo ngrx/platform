@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'example-app',
   displayName: 'Example App',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/apps/example-app',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
