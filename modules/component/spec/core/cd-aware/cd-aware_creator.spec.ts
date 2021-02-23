@@ -143,10 +143,13 @@ describe('CdAware', () => {
       expect(cdAwareImplementation.completed).toBe(true);
     });
 
-    it('error handling', () => {
+    it('error handling', (done) => {
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
       cdAwareImplementation.cdAware.subscribe({
-        error: (e: Error) => expect(e).toBeDefined(),
+        error: (e: Error) => {
+          expect(e).toBeDefined();
+          done();
+        },
       });
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
       // @TODO use this line

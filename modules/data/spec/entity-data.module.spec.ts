@@ -184,7 +184,7 @@ describe('EntityDataModule', () => {
       expect(metaReducerLog.join('|')).toContain(EntityOp.SET_LOADING);
     });
 
-    it('should respond to action handled by custom EntityCacheMetaReducer', () => {
+    it('should respond to action handled by custom EntityCacheMetaReducer', (done) => {
       const data = {
         Hero: [
           { id: 2, name: 'B', power: 'Fast' },
@@ -202,6 +202,7 @@ describe('EntityDataModule', () => {
           expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
           expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
           expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
+          done();
         } catch (error) {
           fail(error);
         }

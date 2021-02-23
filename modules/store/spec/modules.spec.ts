@@ -104,7 +104,7 @@ describe(`Store Modules`, () => {
       });
     });
 
-    it(`should should use config.reducerFactory`, () => {
+    it(`should should use config.reducerFactory`, (done) => {
       store.dispatch({ type: 'fruit', payload: 'banana' });
       store.dispatch({ type: 'a', payload: 42 });
 
@@ -113,6 +113,7 @@ describe(`Store Modules`, () => {
           fruit: 'banana',
           a: 4,
         });
+        done();
       });
     });
   });
@@ -135,9 +136,10 @@ describe(`Store Modules`, () => {
         store = TestBed.inject(Store);
       });
 
-      it('should have initial state', () => {
+      it('should have initial state', (done) => {
         store.pipe(take(1)).subscribe((s: any) => {
           expect(s).toEqual(initialState);
+          done();
         });
       });
     };
@@ -199,7 +201,7 @@ describe(`Store Modules`, () => {
       store = TestBed.inject(Store);
     });
 
-    it('should nest the child module in the root store object', () => {
+    it('should nest the child module in the root store object', (done) => {
       store.pipe(take(1)).subscribe((state: State) => {
         expect(state).toEqual({
           fruit: 'apple',
@@ -213,6 +215,7 @@ describe(`Store Modules`, () => {
             index: 2,
           },
         } as State);
+        done();
       });
     });
   });

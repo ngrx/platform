@@ -326,7 +326,7 @@ describe('ngRx Store', () => {
       expect(removeReducerSpy).toHaveBeenCalledWith(key);
     });
 
-    it(`should work with added / removed reducers`, () => {
+    it(`should work with added / removed reducers`, (done) => {
       store.addReducer(key, counterReducer);
       store.pipe(take(1)).subscribe((val) => {
         expect(val.counter4).toBe(0);
@@ -336,6 +336,7 @@ describe('ngRx Store', () => {
       store.dispatch({ type: INCREMENT });
       store.pipe(take(1)).subscribe((val) => {
         expect(val.counter4).toBeUndefined();
+        done();
       });
     });
 
