@@ -31,6 +31,11 @@
       "type": "number",
       "default": 25,
       "description": "number (>1) | 0 - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Default is 25 for performance reasons."
+    },
+    "autoPause": {
+      "type": "boolean",
+      "default": false,
+      "description": "boolean - pauses recording actions and state changes when the extension window is not open."
     }
   },
   "required": []

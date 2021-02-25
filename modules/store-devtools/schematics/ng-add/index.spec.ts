@@ -62,7 +62,7 @@ describe('Store-Devtools ng-add Schematic', () => {
       /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
     );
     expect(content).toMatch(
-      /StoreDevtoolsModule.instrument\({ maxAge: 25, logOnly: environment.production }\)/
+      /StoreDevtoolsModule.instrument\({ maxAge: 25, autoPause: false, logOnly: environment.production }\)/
     );
   });
 

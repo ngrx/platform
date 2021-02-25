@@ -54,6 +54,7 @@ export interface ReduxDevtoolsExtensionConfig {
   features?: object | boolean;
   name: string | undefined;
   maxAge?: number;
+  autoPause?: boolean;
   serialize?: boolean | SerializationOptions;
 }
 
@@ -241,6 +242,7 @@ export class DevtoolsExtension {
       name: config.name,
       features: config.features,
       serialize: config.serialize,
+      autoPause: config.autoPause ?? false,
       // The action/state sanitizers are not added to the config
       // because sanitation is done in this class already.
       // It is done before sending it to the devtools extension for consistency:
