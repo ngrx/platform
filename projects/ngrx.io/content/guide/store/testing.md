@@ -110,7 +110,7 @@ The following example tests the `booksReducer` from the [walkthrough](guide/stor
 
 The `provideMockStore()` function can be also used with `Injector.create`:
 
-<code-example header="books.component.ts">
+<code-example header="books.component.spec.ts">
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Injector } from '@angular/core';
 
@@ -132,7 +132,7 @@ describe('Books Component', () => {
 
 Another option to create the `MockStore` without `TestBed` is by calling the `getMockStore()` function:
 
-<code-example header="books.component.ts">
+<code-example header="books.component.spec.ts">
 import { MockStore, getMockStore } from '@ngrx/store/testing';
 
 describe('Books Component', () => {
