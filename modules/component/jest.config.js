@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'component',
   displayName: 'Component',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/component',
   globals: {
     'ts-jest': {

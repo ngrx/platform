@@ -221,16 +221,16 @@ export class StoreModule {
         {
           provide: _FEATURE_CONFIGS,
           multi: true,
-          useValue: typeof featureNameOrSlice === 'string' ? config : {},
+          useValue: featureNameOrSlice instanceof Object ? {} : config,
         },
         {
           provide: STORE_FEATURES,
           multi: true,
           useValue: {
             key:
-              typeof featureNameOrSlice === 'string'
-                ? featureNameOrSlice
-                : featureNameOrSlice.name,
+              featureNameOrSlice instanceof Object
+                ? featureNameOrSlice.name
+                : featureNameOrSlice,
             reducerFactory:
               !(config instanceof InjectionToken) && config.reducerFactory
                 ? config.reducerFactory
@@ -254,9 +254,9 @@ export class StoreModule {
           provide: _FEATURE_REDUCERS,
           multi: true,
           useValue:
-            typeof featureNameOrSlice === 'string'
-              ? reducersOrConfig
-              : featureNameOrSlice.reducer,
+            featureNameOrSlice instanceof Object
+              ? featureNameOrSlice.reducer
+              : reducersOrConfig,
         },
         {
           provide: _FEATURE_REDUCERS_TOKEN,

@@ -1,3 +1,12 @@
+<a name="11.0.1"></a>
+
+## [11.0.1](https://github.com/ngrx/platform/compare/11.0.0...11.0.1) (2021-02-15)
+
+### Bug Fixes
+
+- **schematics:** add index file ([#2923](https://github.com/ngrx/platform/issues/2923)) ([775c794](https://github.com/ngrx/platform/commit/775c794)), closes [#2917](https://github.com/ngrx/platform/issues/2917)
+- **store:** forFeature using instanceof instead of typeof ([#2922](https://github.com/ngrx/platform/issues/2922)) ([2bea205](https://github.com/ngrx/platform/commit/2bea205)), closes [#2919](https://github.com/ngrx/platform/issues/2919)
+
 <a name="11.0.0"></a>
 
 # [11.0.0](https://github.com/ngrx/platform/compare/11.0.0-rc.0...11.0.0) (2021-02-09)

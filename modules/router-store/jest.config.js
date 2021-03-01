@@ -1,7 +1,6 @@
 module.exports = {
-  name: 'router-store',
   displayName: 'Router Store',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/router-store',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',

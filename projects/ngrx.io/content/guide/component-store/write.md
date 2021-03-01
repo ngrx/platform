@@ -47,7 +47,7 @@ export class MoviesPageComponent {
   constructor(private readonly moviesStore: MoviesStore) {}
 
   add(movie: string) {
-    this.moviesStore.addMovie(movie);
+    this.moviesStore.addMovie({ name: movie, id: generateId() });
   }
 }
 </code-example>
