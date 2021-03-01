@@ -46,13 +46,13 @@ Only provide minimal setup for the root state management. Only registers `StoreM
 
 Provide the folder where the state files will be created.
 
-- `--statePath`
+- `--state-path`
   - Type: `string`
   - Default: `reducers`
 
 Provide the name of the interface exported for your state. When defining with the `--root` option, the name of the store will be used to define the interface name.
 
-- `--stateInterface`
+- `--state-interface`
   - Type: `string`
   - Default: `State`
 
@@ -74,5 +74,5 @@ ng generate store admin/Admin -m admin.module.ts
 Generate the initial state management files within a `store` folder and register it within the `app.module.ts`.
 
 ```sh
-ng generate store State --root --statePath store --module app.module.ts
+ng generate store State --root --state-path store --module app.module.ts
 ```

@@ -67,7 +67,7 @@ Specifies if api success and failure `actions`, `reducer`, and `effects` should 
 
 Generate spec files associated with the feature files.
 
-- `--skipTests`
+- `--skip-tests`
   - Type: `boolean`
   - Default: `false`
 
