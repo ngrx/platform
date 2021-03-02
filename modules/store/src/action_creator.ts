@@ -24,7 +24,7 @@ export function createAction<
   R extends object
 >(
   type: T,
-  creator: Creator<P, R> & NotAllowedCheck<R>
+  creator: Creator<P, R & NotAllowedCheck<R>>
 ): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
 /**
  * @description
