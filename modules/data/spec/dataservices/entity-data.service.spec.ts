@@ -1,4 +1,4 @@
-import { NgModule, Optional } from '@angular/core';
+import { Injectable, NgModule, Optional } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 
@@ -31,6 +31,7 @@ export class Bazinga {
   wow!: string;
 }
 
+@Injectable()
 export class BazingaDataService
   implements EntityCollectionDataService<Bazinga> {
   name: string;
