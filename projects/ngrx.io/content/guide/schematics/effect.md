@@ -73,7 +73,7 @@ Specifies if effect has api success and failure actions wired up.
 
 Generate a spec file alongside the effect file.
 
-- `--skipTests`
+- `--skip-tests`
   - Type: `boolean`
   - Default: `false`
 
