@@ -1,6 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
+  CreateStoryDto,
   DeleteStoryDto,
   Stories,
   Story,
@@ -15,20 +16,19 @@ import {
 export class BoardUiComponent {
   @Input() stories: Stories[] = [];
 
-  @Output() add = new EventEmitter<Story>();
+  @Output() add = new EventEmitter<CreateStoryDto>();
 
   @Output() delete = new EventEmitter<DeleteStoryDto>();
 
   @Output() update = new EventEmitter<UpdateStoryDto>();
 
   addNew(column: number, stories: Stories): void {
-    // `as any` because of: https://github.com/ngrx/platform/pull/2899
     this.add.emit({
       order: stories.length,
       column,
       title: `Order ${stories.length} Column ${column}`,
       description: '',
-    } as any);
+    });
   }
 
   dropStory(event: CdkDragDrop<Stories, Story>, column: number): void {

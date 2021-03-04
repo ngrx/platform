@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StoryDataService } from '../state/story-data.service';
-import { DeleteStoryDto, Stories, Story, UpdateStoryDto } from '../state/story';
+import {
+  CreateStoryDto,
+  DeleteStoryDto,
+  Stories,
+  UpdateStoryDto,
+} from '../state/story';
 
 @Component({
   selector: 'board-component',
@@ -17,7 +22,7 @@ export class BoardComponent implements OnInit {
     this.storyDataService.getAll();
   }
 
-  add(story: Partial<Story>): void {
+  add(story: CreateStoryDto): void {
     this.storyDataService.add(story, { isOptimistic: false });
   }
 

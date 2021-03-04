@@ -10,7 +10,7 @@ export interface Story {
 
 export type Stories = Story[];
 
-export type CreateStoryDto = Partial<Omit<Story, 'storyId'>>;
+export type CreateStoryDto = Partial<Story>;
 
 export type UpdateStoryDto = Required<Pick<Story, 'storyId'>> &
   Partial<Omit<Story, 'storyId'>>;
