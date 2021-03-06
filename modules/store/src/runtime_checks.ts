@@ -7,7 +7,7 @@ import {
 import { RuntimeChecks, MetaReducer, Action } from './models';
 import {
   _USER_RUNTIME_CHECKS,
-  _ACTIVE_RUNTIME_CHECKS,
+  ACTIVE_RUNTIME_CHECKS,
   META_REDUCERS,
   USER_RUNTIME_CHECKS,
   _ACTION_TYPE_UNIQUENESS_CHECK,
@@ -98,26 +98,26 @@ export function provideRuntimeChecks(
       deps: [_USER_RUNTIME_CHECKS],
     },
     {
-      provide: _ACTIVE_RUNTIME_CHECKS,
+      provide: ACTIVE_RUNTIME_CHECKS,
       deps: [USER_RUNTIME_CHECKS],
       useFactory: createActiveRuntimeChecks,
     },
     {
       provide: META_REDUCERS,
       multi: true,
-      deps: [_ACTIVE_RUNTIME_CHECKS],
+      deps: [ACTIVE_RUNTIME_CHECKS],
       useFactory: createImmutabilityCheckMetaReducer,
     },
     {
       provide: META_REDUCERS,
       multi: true,
-      deps: [_ACTIVE_RUNTIME_CHECKS],
+      deps: [ACTIVE_RUNTIME_CHECKS],
       useFactory: createSerializationCheckMetaReducer,
     },
     {
       provide: META_REDUCERS,
       multi: true,
-      deps: [_ACTIVE_RUNTIME_CHECKS],
+      deps: [ACTIVE_RUNTIME_CHECKS],
       useFactory: createInNgZoneCheckMetaReducer,
     },
   ];
@@ -128,7 +128,7 @@ export function checkForActionTypeUniqueness(): Provider[] {
     {
       provide: _ACTION_TYPE_UNIQUENESS_CHECK,
       multi: true,
-      deps: [_ACTIVE_RUNTIME_CHECKS],
+      deps: [ACTIVE_RUNTIME_CHECKS],
       useFactory: _actionTypeUniquenessCheck,
     },
   ];

@@ -48,6 +48,7 @@ export {
   FEATURE_REDUCERS,
   USER_PROVIDED_META_REDUCERS,
   USER_RUNTIME_CHECKS,
+  ACTIVE_RUNTIME_CHECKS,
 } from './tokens';
 export {
   StoreModule,

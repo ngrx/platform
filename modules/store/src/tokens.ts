@@ -83,7 +83,7 @@ export const _USER_RUNTIME_CHECKS = new InjectionToken<RuntimeChecks>(
 /**
  * Runtime checks currently in use
  */
-export const _ACTIVE_RUNTIME_CHECKS = new InjectionToken<RuntimeChecks>(
+export const ACTIVE_RUNTIME_CHECKS = new InjectionToken<RuntimeChecks>(
   '@ngrx/store Internal Runtime Checks'
 );
 
