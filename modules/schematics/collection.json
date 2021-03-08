@@ -82,6 +82,12 @@
       "factory": "./src/ng-add",
       "schema": "./src/ng-add/schema.json",
       "description": "Installs the NgRx schematics package"
+    },
+    "component-store": {
+      "aliases": ["cs"],
+      "factory": "./src/component-store",
+      "schema": "./src/component-store/schema.json",
+      "description": "Add component store."
     }
   }
 }

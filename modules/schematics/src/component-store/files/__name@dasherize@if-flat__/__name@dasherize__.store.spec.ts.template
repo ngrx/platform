@@ -1,0 +1,9 @@
+import { <%= classify(name) %>Store } from './<%= dasherize(name) %>.store';
+
+describe('<%= classify(name) %>Store', () => {
+  const componentStore = new <%= classify(name) %>Store();
+
+  it('should be created', () => {
+    expect(componentStore).toBeTruthy();
+  });
+});

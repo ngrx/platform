@@ -23,6 +23,7 @@ export {
   addDeclarationToModule,
   addExportToModule,
   addImportToModule,
+  addProviderToComponent,
   addProviderToModule,
   replaceImport,
   containsProperty,
@@ -41,6 +42,8 @@ export {
 } from './utility/change';
 
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
+
+export { findComponentFromOptions } from './utility/find-component';
 
 export {
   findModule,
