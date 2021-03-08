@@ -70,7 +70,7 @@ describe('ngRx Integration spec', () => {
       expect(store).toBeDefined();
     });
 
-    it('should combine reducers automatically if a key/value map is provided', () => {
+    it('should combine reducers automatically if a key/value map is provided', (done) => {
       const action = { type: 'Test Action' };
       const reducer$ = TestBed.inject(ReducerManager);
 
@@ -81,6 +81,7 @@ describe('ngRx Integration spec', () => {
         reducer({ todos: [] }, action);
 
         expect(reducers.todos).toHaveBeenCalledWith([], action);
+        done();
       });
     });
 
