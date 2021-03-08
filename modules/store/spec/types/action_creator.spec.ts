@@ -88,15 +88,21 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', (type: string) => ({type}));
       `).toFail(
-        /Type '\(type: string\) => \{ type: string; \}' is not assignable to type '"type property is not allowed in action creators"'/
+        /Type '\{ type: string; \}' is not assignable to type '"type property is not allowed in action creators"'/
       );
+    });
+
+    it('should allow foempt', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', (bar = 3) => ({bar}));
+      `).toSucceed();
     });
 
     it('should not allow arrays', () => {
       expectSnippet(`
         const foo = createAction('FOO', () => [ ]);
       `).toFail(
-        /Type '\(\) => any\[\]' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type 'any\[\]' is not assignable to type '"arrays are not allowed in action creators"'/
       );
     });
   });
