@@ -6,6 +6,7 @@ import {
   NextObserver,
   Observer,
   of,
+  throwError,
   Unsubscribable,
 } from 'rxjs';
 
@@ -143,17 +144,12 @@ describe('CdAware', () => {
       expect(cdAwareImplementation.completed).toBe(true);
     });
 
-    it('error handling', (done) => {
+    it('error handling', () => {
+      cdAwareImplementation.cdAware.nextPotentialObservable(
+        throwError('Error!')
+      );
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
-      cdAwareImplementation.cdAware.subscribe({
-        error: (e: Error) => {
-          expect(e).toBeDefined();
-          done();
-        },
-      });
-      expect(cdAwareImplementation.renderedValue).toBe(undefined);
-      // @TODO use this line
-      // expect(cdAwareImplementation.error).toBe(ArgumentNotObservableError);
+      expect(cdAwareImplementation.error).toBe('Error!');
       expect(cdAwareImplementation.completed).toBe(false);
     });
 

@@ -215,7 +215,7 @@ describe('DefaultDataService', () => {
       service.getById(undefined as any).subscribe(
         () => fail('getById succeeded when expected it to fail'),
         (err) => {
-          expect(err.error).toMatch(/No "Hero" key/);
+          expect(err.message).toMatch(/No "Hero" key/);
           done();
         }
       );
@@ -324,7 +324,7 @@ describe('DefaultDataService', () => {
       service.add(undefined as any).subscribe(
         () => fail('add succeeded when expected it to fail'),
         (err) => {
-          expect(err.error).toMatch(/No "Hero" entity/);
+          expect(err.message).toMatch(/No "Hero" entity/);
           done();
         }
       );
