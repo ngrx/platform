@@ -1,6 +1,6 @@
 export const compilerOptions = () => ({
   moduleResolution: 'node',
-  target: 'es2017',
+  target: 'es5',
   baseUrl: '.',
   experimentalDecorators: true,
   paths: {
