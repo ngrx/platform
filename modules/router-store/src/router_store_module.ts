@@ -22,6 +22,7 @@ import {
   select,
   Selector,
   Store,
+  ACTIVE_RUNTIME_CHECKS,
 } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
 
@@ -42,7 +43,6 @@ import {
   SerializedRouterStateSnapshot,
 } from './serializers/default_serializer';
 import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
-import { ACTIVE_RUNTIME_CHECKS } from '@ngrx/store';
 
 export type StateKeyOrSelector<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
