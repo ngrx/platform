@@ -47,6 +47,27 @@ describe('classes/reducer', function (): void {
         expect(state).toEqual({ foo: 42, bar: 54 });
       });
 
+      it('should create a primitive reducer', () => {
+        const initialState: number = 0;
+        const setState = createAction('setState', props<{ value: number }>());
+        const resetState = createAction('resetState');
+
+        const primitiveReducer = createReducer(
+          initialState,
+          on(setState, (_state, { value }) => value),
+          on(resetState, () => initialState)
+        );
+
+        let state = primitiveReducer(undefined, { type: 'UNKNOWN' });
+        expect(state).toEqual(0);
+
+        state = primitiveReducer(state, setState({ value: 7 }));
+        expect(state).toEqual(7);
+
+        state = primitiveReducer(state, resetState);
+        expect(state).toEqual(initialState);
+      });
+
       it('should support reducers with multiple actions', () => {
         type State = string[];
 
