@@ -81,6 +81,9 @@
     },
     "schematics-core": {
       "tags": []
+    },
+    "data-example-app": {
+      "tags": []
     }
   },
   "affected": {
