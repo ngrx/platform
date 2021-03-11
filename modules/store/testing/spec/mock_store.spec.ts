@@ -23,8 +23,9 @@ import {
 } from '@ngrx/store';
 import { INCREMENT } from '../../spec/fixtures/counter';
 import { Component, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { cold } from 'jasmine-marbles';
 
 interface TestAppSchema {
   counter1: number;
@@ -207,6 +208,58 @@ describe('Mock Store with TestBed', () => {
       .subscribe((result) => expect(result).toBe(mockValue));
   });
 
+  it('should allow mocking of store.select by observable with string selector using overrideSelect', () => {
+    const mockValue = 5;
+
+    mockStore.overrideSelect('counter1', of(mockValue));
+
+    expect(mockStore.select('counter1')).toBeObservable(
+      cold('(a|)', { a: mockValue })
+    );
+  });
+
+  it('should allow mocking of store.select by observable with a memoized selector using overrideSelect', () => {
+    const mockValue = 5;
+    const selector = createSelector(
+      () => initialState,
+      (state) => state.counter1
+    );
+
+    mockStore.overrideSelect(selector, of(mockValue));
+
+    expect(mockStore.select(selector)).toBeObservable(
+      cold('(a|)', { a: mockValue })
+    );
+  });
+
+  it('should allow mocking of store.select by observable with a memoized selector with Prop using overrideSelect', () => {
+    const mockValue = 100;
+
+    mockStore.overrideSelect(selectorWithProp, (props) =>
+      of(mockValue + props)
+    );
+
+    expect(mockStore.select(selectorWithProp, 200)).toBeObservable(
+      cold('(a|)', { a: 300 })
+    );
+  });
+
+  it('should use mocked select over mocked selector when both overrideSelect and overrideSelector are used', () => {
+    const mockSelectValue = 5;
+    const mockSelectorValue = 6;
+    const selector = createSelector(
+      () => initialState,
+      (state) => state.counter1
+    );
+
+    mockStore.overrideSelector(selector, mockSelectorValue);
+    mockStore.overrideSelect(selector, of(mockSelectValue));
+
+    expect(mockStore.select(selector)).toBeObservable(
+      cold('(a|)', { a: mockSelectValue })
+    );
+  });
+
   it('should pass through unmocked selectors with Props using store.pipe(select())', () => {
     const selectorWithProp = createSelector(
       () => initialState,
@@ -289,6 +342,29 @@ describe('Mock Store with TestBed', () => {
     mockStore
       .pipe(select(selector3))
       .subscribe((result) => expect(result).toBe(1));
+  });
+
+  it('should allow you reset mocked selects', () => {
+    const mockValue = 5;
+    const selector = createSelector(
+      () => initialState,
+      (state) => state.counter1
+    );
+    const selector2 = createSelector(
+      () => initialState,
+      (state) => state.counter2
+    );
+
+    expect(mockStore.select(selector)).toBeObservable(cold('a', { a: 1 }));
+
+    mockStore.overrideSelect(selector, of(mockValue));
+    mockStore.overrideSelect(selector2, of(mockValue));
+
+    expect(mockStore.select(selector3)).toBeObservable(cold('(a|)', { a: 10 }));
+
+    mockStore.resetSelect();
+
+    expect(mockStore.select(selector3)).toBeObservable(cold('a', { a: 1 }));
   });
 });
 

@@ -39,6 +39,10 @@ type Memoized<Result> =
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
   private readonly selectors = new Map<Memoized<any> | string, any>();
+  private readonly selects$ = new Map<
+    Memoized<any> | string,
+    ((props: any) => Observable<any>) | Observable<any>
+  >();
 
   readonly scannedActions$: Observable<Action>;
   private lastState?: T;
@@ -91,6 +95,26 @@ export class MockStore<T = object> extends Store<T> {
     return resultSelector as OnlyMemoized<typeof selector, Result>;
   }
 
+  overrideSelect<
+    Selector extends Memoized<Result>,
+    Value extends Result,
+    Props extends any[],
+    Result = Selector extends MemoizedSelector<any, infer T>
+      ? T
+      : Selector extends MemoizedSelectorWithProps<any, any, infer U>
+      ? U
+      : Value
+  >(
+    selector: Selector | string,
+    values$: Observable<Value> | ((props: any) => Observable<Value>)
+  ) {
+    this.selects$.set(selector, values$);
+  }
+
+  resetSelect() {
+    this.selects$.clear();
+  }
+
   resetSelectors() {
     for (const selector of this.selectors.keys()) {
       if (typeof selector !== 'string') {
@@ -103,13 +127,23 @@ export class MockStore<T = object> extends Store<T> {
   }
 
   select(selector: any, prop?: any) {
-    if (typeof selector === 'string' && this.selectors.has(selector)) {
-      return new BehaviorSubject<any>(
+    let select$: Observable<any>;
+    if (this.selects$.has(selector)) {
+      const selectOverride = this.selects$.get(selector);
+      if (typeof selectOverride === 'function') {
+        select$ = selectOverride(prop);
+      } else {
+        select$ = this.selects$.get(selector) as Observable<any>;
+      }
+    } else if (typeof selector === 'string' && this.selectors.has(selector)) {
+      select$ = new BehaviorSubject<any>(
         this.selectors.get(selector)
       ).asObservable();
+    } else {
+      select$ = super.select(selector, prop);
     }
 
-    return super.select(selector, prop);
+    return select$;
   }
 
   addReducer() {
