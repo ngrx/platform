@@ -7,6 +7,7 @@ import {
   interval,
   timer,
   Observable,
+  from,
 } from 'rxjs';
 import {
   delayWhen,
@@ -15,6 +16,8 @@ import {
   map,
   tap,
   finalize,
+  delay,
+  concatMap,
 } from 'rxjs/operators';
 
 describe('Component Store', () => {
@@ -88,6 +91,19 @@ describe('Component Store', () => {
 
       expect(() => {
         componentStore.patchState({ foo: 'bar' });
+      }).toThrow(
+        new Error(
+          'ComponentStore has not been initialized yet. ' +
+            'Please make sure it is initialized before updating/getting.'
+        )
+      );
+    });
+
+    it('throws an Error when patchState with Observable is called before initialization', () => {
+      const componentStore = new ComponentStore();
+
+      expect(() => {
+        componentStore.patchState(of({ foo: 'bar' }));
       }).toThrow(
         new Error(
           'ComponentStore has not been initialized yet. ' +
@@ -561,6 +577,28 @@ describe('Component Store', () => {
         m.expect(componentStore.state$).toBeObservable(
           m.hot('s', {
             s: { ...INIT_STATE, value1: 'val1' },
+          })
+        );
+      })
+    );
+
+    it(
+      'with the values from Observable',
+      marbles((m) => {
+        componentStore.patchState(
+          from([
+            { value1: 'foo' },
+            { value2: { foo: 'foo2' } },
+            { value1: 'baz' },
+          ]).pipe(concatMap((partialState) => of(partialState).pipe(delay(3))))
+        );
+
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('a--b--c--d', {
+            a: INIT_STATE,
+            b: { ...INIT_STATE, value1: 'foo' },
+            c: { value1: 'foo', value2: { foo: 'foo2' } },
+            d: { value1: 'baz', value2: { foo: 'foo2' } },
           })
         );
       })
