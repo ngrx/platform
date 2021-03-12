@@ -92,7 +92,7 @@ describe('createAction()', () => {
       );
     });
 
-    it('should allow foempt', () => {
+    it('should allow default parameters', () => {
       expectSnippet(`
         const foo = createAction('FOO', (bar = 3) => ({bar}));
       `).toSucceed();

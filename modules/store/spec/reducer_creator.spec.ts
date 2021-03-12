@@ -11,6 +11,13 @@ describe('classes/reducer', function (): void {
   describe('base', () => {
     const bar = createAction('[foobar] BAR', props<{ bar: number }>());
     const foo = createAction('[foobar] FOO', props<{ foo: number }>());
+    const withDefaultParameter = createAction(
+      '[foobar] withDefaultParameter',
+      (foo: number = 4, bar: number = 7) => ({
+        foo,
+        bar,
+      })
+    );
 
     describe('on', () => {
       it('should support reducers with multiple actions', () => {
@@ -32,7 +39,11 @@ describe('classes/reducer', function (): void {
         const fooBarReducer = createReducer(
           {} as State,
           on(foo, (state, { foo }) => ({ ...state, foo })),
-          on(bar, (state, { bar }) => ({ ...state, bar }))
+          on(bar, (state, { bar }) => ({ ...state, bar })),
+          on(withDefaultParameter, (_state, { type: _, foo, bar }) => ({
+            foo,
+            bar,
+          }))
         );
 
         expect(typeof fooBarReducer).toEqual('function');
@@ -45,6 +56,30 @@ describe('classes/reducer', function (): void {
 
         state = fooBarReducer(state, bar({ bar: 54 }));
         expect(state).toEqual({ foo: 42, bar: 54 });
+
+        state = fooBarReducer(state, withDefaultParameter());
+        expect(state).toEqual({ foo: 4, bar: 7 });
+      });
+
+      it('should create a primitive reducer', () => {
+        const initialState: number = 0;
+        const setState = createAction('setState', props<{ value: number }>());
+        const resetState = createAction('resetState');
+
+        const primitiveReducer = createReducer(
+          initialState,
+          on(setState, (_state, { value }) => value),
+          on(resetState, () => initialState)
+        );
+
+        let state = primitiveReducer(undefined, { type: 'UNKNOWN' });
+        expect(state).toEqual(0);
+
+        state = primitiveReducer(state, setState({ value: 7 }));
+        expect(state).toEqual(7);
+
+        state = primitiveReducer(state, resetState);
+        expect(state).toEqual(initialState);
       });
 
       it('should support reducers with multiple actions', () => {

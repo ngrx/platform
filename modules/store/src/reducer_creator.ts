@@ -22,7 +22,9 @@ export interface ReducerTypes<
 
 // Specialized Reducer that is aware of the Action type it needs to handle
 export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
-  (state: State, action: ActionType<Creators[number]>): { [P in keyof State]: State[P] };
+  (state: State, action: ActionType<Creators[number]>): State extends object
+    ? { [P in keyof State]: State[P] }
+    : State;
 }
 
 /**
