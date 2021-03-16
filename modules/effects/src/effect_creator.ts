@@ -77,11 +77,16 @@ export function getCreateEffectMetadata<
   const propertyNames = Object.getOwnPropertyNames(instance) as Array<keyof T>;
 
   const metadata: EffectMetadata<T>[] = propertyNames
-    .filter(
-      (propertyName) =>
+    .filter((propertyName) => {
+      if (
         instance[propertyName] &&
         instance[propertyName].hasOwnProperty(CREATE_EFFECT_METADATA_KEY)
-    )
+      ) {
+        const property = instance[propertyName] as any;
+        return property[CREATE_EFFECT_METADATA_KEY].hasOwnProperty('dispatch');
+      }
+      return false;
+    })
     .map((propertyName) => {
       const metaData = (instance[propertyName] as any)[
         CREATE_EFFECT_METADATA_KEY
