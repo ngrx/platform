@@ -141,6 +141,12 @@
       "Libraries": {
         "order": 5,
         "resources": {
+          "ngrx-child-selectors": {
+            "title": "ngrx-child-selectors",
+            "desc": "A plugin for easy creation of child selectors",
+            "url": "https://github.com/markostanimirovic/ngrx-child-selectors",
+            "rev": true
+          },
           "ngrx-enums": {
             "title": "ngrx-enums",
             "desc":
