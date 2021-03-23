@@ -85,6 +85,14 @@ describe('createEffect()', () => {
       const fakeCreateEffect: any = () => {};
       class Fixture {
         a = fakeCreateEffect(() => of({ type: 'A' }));
+        b = new Proxy(
+          {},
+          {
+            get(_, prop) {
+              return () => Promise.resolve('bob');
+            },
+          }
+        );
       }
 
       const mock = new Fixture();
