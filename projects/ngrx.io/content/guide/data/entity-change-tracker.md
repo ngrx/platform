@@ -52,7 +52,7 @@ There is no issue if the operation was _pessimistic_.
 The collection had not been updated so there is no obvious inconsistency between the state
 of the entity in the collection and on the server.
 
-It the operation was _optimistic_, the entity in the cached collection has been added, removed, or updated.
+If the operation was _optimistic_, the entity in the cached collection has been added, removed, or updated.
 The entity and the collection are no longer consistent with the state on the server.
 
 That may be a problem for your application.
