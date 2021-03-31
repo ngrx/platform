@@ -148,7 +148,7 @@ function createMigrationDocs(version: string) {
     const navigationContent = readFileSync(CONFIG.navigationFile, 'utf-8');
     const navigation = JSON.parse(navigationContent);
     const migrationsNav = navigation['SideNav'].find(
-      (nav) => nav.title === 'Migrations'
+      (nav: any) => nav.title === 'Migrations'
     );
     if (migrationsNav) {
       migrationsNav.children = [

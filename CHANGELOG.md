@@ -1,3 +1,18 @@
+<a name="11.1.0"></a>
+
+# [11.1.0](https://github.com/ngrx/platform/compare/11.0.1...11.1.0) (2021-03-31)
+
+### Bug Fixes
+
+- **effects:** add support for Proxy objects in Effects ([#2976](https://github.com/ngrx/platform/issues/2976)) ([5f5b679](https://github.com/ngrx/platform/commit/5f5b679)), closes [#2975](https://github.com/ngrx/platform/issues/2975)
+- **store:** allow default parameters in function action ([#2954](https://github.com/ngrx/platform/issues/2954)) ([9b23403](https://github.com/ngrx/platform/commit/9b23403)), closes [#2948](https://github.com/ngrx/platform/issues/2948)
+- **store:** allow primitive types ([#2967](https://github.com/ngrx/platform/issues/2967)) ([eecc8ce](https://github.com/ngrx/platform/commit/eecc8ce)), closes [#2966](https://github.com/ngrx/platform/issues/2966)
+
+### Features
+
+- **component-store:** add ability for patchState to accept Observable ([#2937](https://github.com/ngrx/platform/issues/2937)) ([8930e22](https://github.com/ngrx/platform/commit/8930e22)), closes [#2852](https://github.com/ngrx/platform/issues/2852)
+- **schematics:** add component store schematics ([#2886](https://github.com/ngrx/platform/issues/2886)) ([f086f80](https://github.com/ngrx/platform/commit/f086f80)), closes [#2570](https://github.com/ngrx/platform/issues/2570)
+
 <a name="11.0.1"></a>
 
 ## [11.0.1](https://github.com/ngrx/platform/compare/11.0.0...11.0.1) (2021-02-15)
@@ -17,7 +32,7 @@
 
 <a name="11.0.0-beta.2"></a>
 
-# [11.0.0-beta.2](https://github.com/ngrx/platform/compare/11.0.0-beta.1...11.0.0-beta.2) (2021-02-02)
+# [11.0.0-beta.2](https://github.com/ngrx/platform/compare/11.0.0-beta.0...11.0.0-beta.2) (2021-02-02)
 
 ### Bug Fixes
 
@@ -31,7 +46,9 @@
 ### Features
 
 - **effects:** concatLatestFrom operator ([#2760](https://github.com/ngrx/platform/issues/2760)) ([55f0f7a](https://github.com/ngrx/platform/commit/55f0f7a))
+- **effects:** deprecate @Effect decorator ([#2855](https://github.com/ngrx/platform/issues/2855)) ([dbd1ecf](https://github.com/ngrx/platform/commit/dbd1ecf))
 - **store:** add object-style StoreModule.forFeature overload w/fixes ([#2885](https://github.com/ngrx/platform/issues/2885)) ([a9468e1](https://github.com/ngrx/platform/commit/a9468e1)), closes [#2821](https://github.com/ngrx/platform/issues/2821) [#2809](https://github.com/ngrx/platform/issues/2809)
+- **store-devtools:** pass entire error object to the error handler ([#2853](https://github.com/ngrx/platform/issues/2853)) ([ce28b44](https://github.com/ngrx/platform/commit/ce28b44)), closes [#2824](https://github.com/ngrx/platform/issues/2824)
 
 ### Performance Improvements
 
@@ -46,15 +63,6 @@ ngrxPush typing doesn't consider `undefined` when the input type is an observabl
 AFTER:
 
 ngrxPush typing considers `undefined` when the input type is an observable
-
-<a name="11.0.0-beta.1"></a>
-
-# [11.0.0-beta.1](https://github.com/ngrx/platform/compare/11.0.0-beta.0...11.0.0-beta.1) (2021-01-12)
-
-### Features
-
-- **effects:** deprecate @Effect decorator ([#2855](https://github.com/ngrx/platform/issues/2855)) ([dbd1ecf](https://github.com/ngrx/platform/commit/dbd1ecf))
-- **store-devtools:** pass entire error object to the error handler ([#2853](https://github.com/ngrx/platform/issues/2853)) ([ce28b44](https://github.com/ngrx/platform/commit/ce28b44)), closes [#2824](https://github.com/ngrx/platform/issues/2824)
 
 <a name="11.0.0-beta.0"></a>
 
