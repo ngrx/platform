@@ -4,6 +4,7 @@ import {
   ModuleWithProviders,
   NgModule,
   ErrorHandler,
+  isDevMode,
 } from '@angular/core';
 import {
   NavigationCancel,
@@ -15,7 +16,14 @@ import {
   Event,
   RouterEvent,
 } from '@angular/router';
-import { select, Selector, Store } from '@ngrx/store';
+import {
+  isNgrxMockEnvironment,
+  RuntimeChecks,
+  select,
+  Selector,
+  Store,
+  ACTIVE_RUNTIME_CHECKS,
+} from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
 
 import {
@@ -188,9 +196,27 @@ export class StoreRouterConnectingModule {
     private router: Router,
     private serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
     private errorHandler: ErrorHandler,
-    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig
+    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig,
+    @Inject(ACTIVE_RUNTIME_CHECKS) private activeRuntimeChecks: RuntimeChecks
   ) {
     this.stateKey = this.config.stateKey as StateKeyOrSelector;
+
+    if (
+      !isNgrxMockEnvironment() &&
+      isDevMode() &&
+      (activeRuntimeChecks?.strictActionSerializability ||
+        activeRuntimeChecks?.strictStateSerializability) &&
+      this.serializer instanceof DefaultRouterStateSerializer
+    ) {
+      console.warn(
+        '@ngrx/router-store: The serializability runtime checks cannot be enabled ' +
+          'with the DefaultRouterStateSerializer. The default serializer ' +
+          'has an unserializable router state and actions that are not serializable. ' +
+          'To use the serializability runtime checks either use ' +
+          'the MinimalRouterStateSerializer or implement a custom router state serializer. ' +
+          'This also applies to Ivy with immutability runtime checks.'
+      );
+    }
 
     this.setUpStoreStateListener();
     this.setUpRouterEventsListener();
