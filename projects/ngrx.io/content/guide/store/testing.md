@@ -75,7 +75,7 @@ In this example based on the [walkthrough](guide/store/walkthrough), we mock the
 
 <div class="alert is-helpful">
 
-**Note:** `MockStore` will reset all of the mocked selectors after each test (in the `afterEach()` hook) by calling the `MockStore.resetSelectors()` method.
+**Note:** The mocked selectors will only be reset after each test if you call the `MockStore.resetSelectors()` method in the `afterEach()` hook.
 
 </div>
 
