@@ -93,7 +93,7 @@ export class MoviesPageComponent implements OnInit {
 
 ## `patchState` method
 
-The `patchState` method can be called by providing a partial state object or a partial updater callback.
+The `patchState` method can be called by providing a partial state Observable<object>, object, or a partial updater callback.
 
 When the partial state is provided it patches the state with the provided value.
 
