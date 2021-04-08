@@ -10,6 +10,7 @@
   "angularCompilerOptions": {
     // Work around for issue: https://github.com/angular/angular/issues/22210
     "strictMetadataEmit": false,
+    "skipTemplateCodegen": true,
     "enableIvy": false
   }
 }
