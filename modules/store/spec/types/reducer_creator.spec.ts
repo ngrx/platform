@@ -4,7 +4,7 @@ import { compilerOptions } from './utils';
 describe('createReducer()', () => {
   const expectSnippet = expecter(
     (code) => `
-      import {createAction, createReducer, on, props} from '@ngrx/store';
+      import {createAction, createReducer, on, props, ActionCreator, ActionReducer} from '@ngrx/store';
 
       ${code}
     `,
@@ -56,6 +56,23 @@ describe('createReducer()', () => {
           on(resetAction, () => initialState),
         );
       `).toInfer('reducer', 'ActionReducer<number, Action>');
+    });
+
+    it('should support a generic reducer factory', () => {
+      expectSnippet(`
+        const creator = null as unknown as ActionCreator;
+
+        export function createGenericReducer<TState extends object>(initialState: TState): ActionReducer<TState> {
+          const reducer = createReducer(
+            initialState,
+            on(creator, (state, action) => {
+              return state ;
+            })
+          );
+
+          return reducer;
+        }
+      `).toSucceed();
     });
   });
 
