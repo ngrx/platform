@@ -48,6 +48,9 @@ export interface StoreFeature<T, V extends Action = Action> {
 
 export type Selector<T, V> = (state: T) => V;
 
+/**
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ */
 export type SelectorWithProps<State, Props, Result> = (
   state: State,
   props: Props
