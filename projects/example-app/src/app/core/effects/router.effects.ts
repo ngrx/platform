@@ -26,7 +26,7 @@ export class RouterEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromRoot.State>,
+    private store: Store,
     private titleService: Title
   ) {}
 }

@@ -51,7 +51,7 @@ export function reducers(state: BooksState | undefined, action: Action) {
  * The createFeatureSelector function selects a piece of state from the root of the state object.
  * This is used for selecting feature states that are loaded eagerly or lazily.
  */
-export const selectBooksState = createFeatureSelector<State, BooksState>(
+export const selectBooksState = createFeatureSelector<BooksState>(
   booksFeatureKey
 );
 

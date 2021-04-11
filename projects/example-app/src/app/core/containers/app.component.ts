@@ -38,9 +38,7 @@ import { LayoutActions } from '@example-app/core/actions';
           Sign Out
         </bc-nav-item>
       </bc-sidenav>
-      <bc-toolbar (openMenu)="openSidenav()">
-        Book Collection
-      </bc-toolbar>
+      <bc-toolbar (openMenu)="openSidenav()"> Book Collection </bc-toolbar>
 
       <router-outlet></router-outlet>
     </bc-layout>
@@ -50,7 +48,7 @@ export class AppComponent {
   showSidenav$: Observable<boolean>;
   loggedIn$: Observable<boolean>;
 
-  constructor(private store: Store<fromRoot.State & fromAuth.State>) {
+  constructor(private store: Store) {
     /**
      * Selectors can be applied with the `select` operator which passes the state
      * tree to the provided selector

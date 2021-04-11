@@ -18,7 +18,7 @@ import * as fromBooks from '@example-app/books/reducers';
 })
 export class BookExistsGuard implements CanActivate {
   constructor(
-    private store: Store<fromBooks.State>,
+    private store: Store,
     private googleBooks: GoogleBooksService,
     private router: Router
   ) {}

@@ -28,7 +28,7 @@ export class FindBookPageComponent {
   loading$: Observable<boolean>;
   error$: Observable<string>;
 
-  constructor(private store: Store<fromBooks.State>) {
+  constructor(private store: Store) {
     this.searchQuery$ = store.select(fromBooks.selectSearchQuery).pipe(take(1));
     this.books$ = store.select(fromBooks.selectSearchResults);
     this.loading$ = store.select(fromBooks.selectSearchLoading);
