@@ -4,7 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "ngrx.io-example": {
-      "root": "",
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -40,7 +39,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
