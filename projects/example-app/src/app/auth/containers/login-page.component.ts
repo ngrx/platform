@@ -20,7 +20,7 @@ export class LoginPageComponent implements OnInit {
   pending$ = this.store.select(fromAuth.selectLoginPagePending);
   error$ = this.store.select(fromAuth.selectLoginPageError);
 
-  constructor(private store: Store<fromAuth.State>) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {}
 

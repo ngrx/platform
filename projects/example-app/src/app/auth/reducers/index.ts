@@ -26,9 +26,7 @@ export function reducers(state: AuthState | undefined, action: Action) {
   })(state, action);
 }
 
-export const selectAuthState = createFeatureSelector<State, AuthState>(
-  authFeatureKey
-);
+export const selectAuthState = createFeatureSelector<AuthState>(authFeatureKey);
 
 export const selectAuthStatusState = createSelector(
   selectAuthState,

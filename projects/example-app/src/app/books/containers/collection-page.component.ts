@@ -35,7 +35,7 @@ import * as fromBooks from '@example-app/books/reducers';
 export class CollectionPageComponent implements OnInit {
   books$: Observable<Book[]>;
 
-  constructor(private store: Store<fromBooks.State>) {
+  constructor(private store: Store) {
     this.books$ = store.select(fromBooks.selectBookCollection);
   }
 

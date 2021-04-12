@@ -10,7 +10,7 @@ import * as fromAuth from '@example-app/auth/reducers';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private store: Store<fromAuth.State>) {}
+  constructor(private store: Store) {}
 
   canActivate(): Observable<boolean> {
     return this.store.select(fromAuth.selectLoggedIn).pipe(
