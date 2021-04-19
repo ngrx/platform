@@ -266,7 +266,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   /**
    * Creates an effect.
    *
-   * This effect is subscribed to for the life of the @Component.
+   * This effect is subscribed to throughout the lifecycle of the ComponentStore.
    * @param generator A function that takes an origin Observable input and
    *     returns an Observable. The Observable that is returned will be
    *     subscribed to for the life of the component.
