@@ -1,3 +1,15 @@
+<a name="11.1.1"></a>
+
+## [11.1.1](https://github.com/ngrx/platform/compare/11.1.0...11.1.1) (2021-04-20)
+
+### Bug Fixes
+
+- **store:** adjust types to allow a generic reducer ([#2996](https://github.com/ngrx/platform/issues/2996)) ([7da57bc](https://github.com/ngrx/platform/commit/7da57bc)), closes [#2982](https://github.com/ngrx/platform/issues/2982)
+
+### Features
+
+- **store:** add FunctionWithParametersType to public API ([#2988](https://github.com/ngrx/platform/issues/2988)) ([fe7d058](https://github.com/ngrx/platform/commit/fe7d058)), closes [#2983](https://github.com/ngrx/platform/issues/2983)
+
 <a name="11.1.0"></a>
 
 # [11.1.0](https://github.com/ngrx/platform/compare/11.0.1...11.1.0) (2021-03-31)
