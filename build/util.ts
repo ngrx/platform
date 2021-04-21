@@ -28,7 +28,7 @@ export function remove(target: string): Promise<void> {
   });
 }
 
-export function writeFile(target: string, contents: string) {
+export function writeFile(target: string, contents: string): Promise<void> {
   return new Promise((resolve, reject) => {
     fs.writeFile(target, contents, (err) => {
       if (err) return reject(err);
@@ -54,7 +54,7 @@ export function getListOfFiles(
   });
 }
 
-export function removeRecursively(glob: string) {
+export function removeRecursively(glob: string): Promise<void> {
   return new Promise((resolve, reject) => {
     rimraf(glob, (err) => {
       if (err) {
