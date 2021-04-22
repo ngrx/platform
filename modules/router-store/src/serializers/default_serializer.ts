@@ -36,7 +36,7 @@ export class DefaultRouterStateSerializer
         : null,
       queryParams: route.queryParams,
       queryParamMap: route.queryParamMap,
-      fragment: route.fragment,
+      fragment: route.fragment!,
       component: (route.routeConfig
         ? route.routeConfig.component
         : undefined) as any,

@@ -33,7 +33,7 @@
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
-import 'zone.js/dist/zone'; // Included with Angular CLI.
+import 'zone.js'; // Included with Angular CLI.
 import '@webcomponents/custom-elements'; //  Custom Elements Polyfill
 import '@webcomponents/custom-elements/src/native-shim';
 

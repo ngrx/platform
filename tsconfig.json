@@ -4,7 +4,6 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,
     "noStrictGenericChecks": true,

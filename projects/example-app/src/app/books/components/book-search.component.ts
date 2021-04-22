@@ -41,7 +41,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 
       .mat-form-field {
         min-width: 300px;
-        margin-right: 10px; // Make room for the spinner
+        margin-right: 10px;
       }
 
       .mat-spinner {

@@ -48,7 +48,7 @@ export default function (): Rule {
 function findMetaReducersImportStatements(
   sourceFile: ts.SourceFile,
   createChange: (node: ts.Node) => ReplaceChange,
-  logger: logging.LoggerApi
+  logger: any
 ) {
   let canRunSchematics = false;
 
