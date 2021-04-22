@@ -2,6 +2,7 @@
 
 exports[`Collection Page should compile 1`] = `
 <bc-collection-page
+  __ngContext__={[Function LRootView]}
   books$={[Function Store]}
   store={[Function MockStore]}
 >

@@ -2,6 +2,7 @@
 
 exports[`Find Book Page should compile 1`] = `
 <bc-find-book-page
+  __ngContext__={[Function LRootView]}
   books$={[Function Store]}
   error$={[Function Store]}
   loading$={[Function Store]}
@@ -44,23 +45,22 @@ exports[`Find Book Page should compile 1`] = `
                 <span
                   class="mat-form-field-label-wrapper"
                 >
-                  
                   <label
                     class="mat-form-field-label mat-empty mat-form-field-empty"
                   >
-                    
-                    
                     <span>
                       Search for a book
                     </span>
                     
                     
+                    
+                    
                   </label>
+                  
                 </span>
               </div>
               
             </div>
-            
             <div
               class="mat-form-field-underline"
             >
@@ -68,10 +68,10 @@ exports[`Find Book Page should compile 1`] = `
                 class="mat-form-field-ripple"
               />
             </div>
+            
             <div
               class="mat-form-field-subscript-wrapper"
             >
-              
               
               <div
                 class="mat-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
@@ -82,6 +82,7 @@ exports[`Find Book Page should compile 1`] = `
                   class="mat-form-field-hint-spacer"
                 />
               </div>
+              
             </div>
           </div>
         </mat-form-field>
@@ -97,13 +98,13 @@ exports[`Find Book Page should compile 1`] = `
             style="width: 30px; height: 30px;"
             viewBox="0 0 23 23"
           >
-            
             <circle
               cx="50%"
               cy="50%"
               r="10"
               style="animation-name: mat-progress-spinner-stroke-rotate-30; stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
             />
+            
             
           </svg>
         </mat-spinner>

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Logout Confirmation Dialog should compile 1`] = `
-<ng-component>
+<ng-component
+  __ngContext__={[Function LRootView]}
+>
   <h2
     class="mat-dialog-title"
     mat-dialog-title=""
@@ -25,7 +27,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
         Cancel
       </span>
       <span
-        class="mat-button-ripple mat-ripple"
+        class="mat-ripple mat-button-ripple"
         matripple=""
       />
       <span
@@ -43,7 +45,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
         OK
       </span>
       <span
-        class="mat-button-ripple mat-ripple"
+        class="mat-ripple mat-button-ripple"
         matripple=""
       />
       <span

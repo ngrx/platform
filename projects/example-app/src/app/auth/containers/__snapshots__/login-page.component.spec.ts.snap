@@ -2,6 +2,7 @@
 
 exports[`Login Page should compile 1`] = `
 <bc-login-page
+  __ngContext__={[Function LRootView]}
   error$={[Function Store]}
   pending$={[Function Store]}
   store={[Function MockStore]}
@@ -49,23 +50,22 @@ exports[`Login Page should compile 1`] = `
                     <span
                       class="mat-form-field-label-wrapper"
                     >
-                      
                       <label
                         class="mat-form-field-label"
                       >
-                        
-                        
                         <span>
                           Username
                         </span>
                         
                         
+                        
+                        
                       </label>
+                      
                     </span>
                   </div>
                   
                 </div>
-                
                 <div
                   class="mat-form-field-underline"
                 >
@@ -73,10 +73,10 @@ exports[`Login Page should compile 1`] = `
                     class="mat-form-field-ripple"
                   />
                 </div>
+                
                 <div
                   class="mat-form-field-subscript-wrapper"
                 >
-                  
                   
                   <div
                     class="mat-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
@@ -87,6 +87,7 @@ exports[`Login Page should compile 1`] = `
                       class="mat-form-field-hint-spacer"
                     />
                   </div>
+                  
                 </div>
               </div>
             </mat-form-field>
@@ -118,23 +119,22 @@ exports[`Login Page should compile 1`] = `
                     <span
                       class="mat-form-field-label-wrapper"
                     >
-                      
                       <label
                         class="mat-form-field-label mat-empty mat-form-field-empty"
                       >
-                        
-                        
                         <span>
                           Password
                         </span>
                         
                         
+                        
+                        
                       </label>
+                      
                     </span>
                   </div>
                   
                 </div>
-                
                 <div
                   class="mat-form-field-underline"
                 >
@@ -142,10 +142,10 @@ exports[`Login Page should compile 1`] = `
                     class="mat-form-field-ripple"
                   />
                 </div>
+                
                 <div
                   class="mat-form-field-subscript-wrapper"
                 >
-                  
                   
                   <div
                     class="mat-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
@@ -156,6 +156,7 @@ exports[`Login Page should compile 1`] = `
                       class="mat-form-field-hint-spacer"
                     />
                   </div>
+                  
                 </div>
               </div>
             </mat-form-field>
@@ -175,7 +176,7 @@ exports[`Login Page should compile 1`] = `
                 Login
               </span>
               <span
-                class="mat-button-ripple mat-ripple"
+                class="mat-ripple mat-button-ripple"
                 matripple=""
               />
               <span

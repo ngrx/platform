@@ -2,6 +2,7 @@
 
 exports[`Login Page should compile 1`] = `
 <bc-login-form
+  __ngContext__={[Function LRootView]}
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
@@ -55,6 +56,7 @@ exports[`Login Page should compile 1`] = `
 
 exports[`Login Page should disable the form if pending 1`] = `
 <bc-login-form
+  __ngContext__={[Function LRootView]}
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
@@ -110,6 +112,7 @@ exports[`Login Page should disable the form if pending 1`] = `
 
 exports[`Login Page should display an error message if provided 1`] = `
 <bc-login-form
+  __ngContext__={[Function LRootView]}
   errorMessage={[Function String]}
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
@@ -145,12 +148,12 @@ exports[`Login Page should display an error message if provided 1`] = `
             />
           </mat-form-field>
         </p>
-        
         <p
           class="loginError"
         >
            Invalid credentials 
         </p>
+        
         <p
           class="loginButtons"
         >
