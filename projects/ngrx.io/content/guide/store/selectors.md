@@ -82,6 +82,12 @@ export const selectVisibleBooks = createSelector(
 
 ### Using selectors with props
 
+<div class="alert is-critical">
+
+Selectors with props are [deprecated](https://github.com/ngrx/platform/issues/2980).
+
+</div>
+
 To select a piece of state based on data that isn't available in the store you can pass `props` to the selector function. These `props` gets passed through every selector and the projector function.
 To do so we must specify these `props` when we use the selector inside our component.
 
