@@ -65,12 +65,12 @@ export function getGuidComb(seed?: number) {
 
 // Sort comparison value that's good enough
 export function guidComparer(l: string, r: string) {
-  const l_low = l.slice(-12);
-  const r_low = r.slice(-12);
-  return l_low !== r_low
-    ? l_low < r_low
+  const lLow = l.slice(-12);
+  const rLow = r.slice(-12);
+  return lLow !== rLow
+    ? lLow < rLow
       ? -1
-      : +(l_low !== r_low)
+      : +(lLow !== rLow)
     : l < r
     ? -1
     : +(l !== r);

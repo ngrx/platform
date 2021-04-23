@@ -37,7 +37,8 @@
           "error",
           {
             "selector": "default",
-            "format": ["camelCase"]
+            "format": ["camelCase"],
+            "leadingUnderscore": "allow"
           },
           {
             "selector": "enum",
@@ -45,7 +46,7 @@
           },
           {
             "selector": "enumMember",
-            "format": ["PascalCase"]
+            "format": ["PascalCase", "UPPER_CASE"]
           },
           {
             "selector": "typeParameter",
@@ -58,6 +59,11 @@
           {
             "selector": "interface",
             "format": ["PascalCase"]
+          },
+          {
+            "selector": "classProperty",
+            "format": ["camelCase", "PascalCase"],
+            "leadingUnderscore": "allow"
           },
           {
             "selector": "class",
@@ -74,7 +80,7 @@
           },
           {
             "selector": "function",
-            "format": ["camelCase"],
+            "format": ["camelCase", "PascalCase"],
             "leadingUnderscore": "allow"
           }
         ],

@@ -12,6 +12,7 @@
         "project": ["modules/data/tsconfig.*?.json"]
       },
       "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -27,7 +28,8 @@
             "prefix": "ngrx",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "no-case-declarations": "off"
       },
       "plugins": ["@typescript-eslint"]
     },

@@ -32,6 +32,7 @@ export class EntityCollectionReducerRegistry {
     @Inject(ENTITY_COLLECTION_META_REDUCERS)
     entityCollectionMetaReducers?: MetaReducer<EntityCollection, EntityAction>[]
   ) {
+    // eslint-disable-next-line prefer-spread
     this.entityCollectionMetaReducer = compose.apply(
       null,
       entityCollectionMetaReducers || []
