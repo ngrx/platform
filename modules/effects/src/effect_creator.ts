@@ -71,6 +71,7 @@ export function createEffect<
   return effect as typeof effect & CreateEffectMetadata;
 }
 
+/* eslint-disable no-prototype-builtins */
 export function getCreateEffectMetadata<
   T extends { [props in keyof T]: Object }
 >(instance: T): EffectMetadata<T>[] {
