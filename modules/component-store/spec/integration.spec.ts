@@ -118,6 +118,8 @@ describe('ComponentStore integration', () => {
       state.parent.isChildVisible = false;
       state.fixture.detectChanges();
 
+      state.destroy();
+
       expect(state.componentStoreDestroySpy).toHaveBeenCalled();
     });
   }

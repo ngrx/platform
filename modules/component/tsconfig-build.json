@@ -3,7 +3,6 @@
     "baseUrl": ".",
     "declaration": true,
     "stripInternal": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "module": "es2015",

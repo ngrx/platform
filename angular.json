@@ -643,7 +643,8 @@
               }
             ],
             "outputPath": ["projects/ngrx.io/dist/ngrx.io"]
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "test": {
           "builder": "@nrwl/workspace:run-commands",
@@ -744,7 +745,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

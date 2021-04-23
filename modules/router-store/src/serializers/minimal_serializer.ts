@@ -45,7 +45,7 @@ export class MinimalRouterStateSerializer
           }
         : null,
       queryParams: route.queryParams,
-      fragment: route.fragment,
+      fragment: route.fragment!,
       firstChild: children[0],
       children,
     };
