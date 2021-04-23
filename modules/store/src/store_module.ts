@@ -86,7 +86,8 @@ export class StoreFeatureModule implements OnDestroy {
   ) {
     const feats = features.map((feature, index) => {
       const featureReducerCollection = featureReducers.shift();
-      const reducers = featureReducerCollection /*TODO(#823)*/![index];
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const reducers = featureReducerCollection! /*TODO(#823)*/[index];
 
       return {
         ...feature,
@@ -98,6 +99,7 @@ export class StoreFeatureModule implements OnDestroy {
     reducerManager.addFeatures(feats);
   }
 
+  // eslint-disable-next-line @angular-eslint/contextual-lifecycle
   ngOnDestroy() {
     this.reducerManager.removeFeatures(this.features);
   }

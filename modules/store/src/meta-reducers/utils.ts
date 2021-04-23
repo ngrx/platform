@@ -42,11 +42,12 @@ export function isPlainObject(target: any): target is object {
   return targetPrototype === Object.prototype || targetPrototype === null;
 }
 
-export function isFunction(target: any): target is Function {
+export function isFunction(target: any): target is () => void {
   return typeof target === 'function';
 }
 
 export function isComponent(target: any) {
+  // eslint-disable-next-line no-prototype-builtins
   return isFunction(target) && target.hasOwnProperty('ɵcmp');
 }
 

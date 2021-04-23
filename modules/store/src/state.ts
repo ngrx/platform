@@ -17,6 +17,7 @@ export abstract class StateObservable extends Observable<any> {}
 
 @Injectable()
 export class State<T> extends BehaviorSubject<any> implements OnDestroy {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   static readonly INIT = INIT;
 
   private stateSubscription: Subscription;
@@ -32,10 +33,9 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
     const actionsOnQueue$: Observable<Action> = actions$.pipe(
       observeOn(queueScheduler)
     );
-    const withLatestReducer$: Observable<[
-      Action,
-      ActionReducer<any, Action>
-    ]> = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+    const withLatestReducer$: Observable<
+      [Action, ActionReducer<any, Action>]
+    > = actionsOnQueue$.pipe(withLatestFrom(reducer$));
 
     const seed: StateActionPair<T> = { state: initialState };
     const stateAndAction$: Observable<{
@@ -50,7 +50,7 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
 
     this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
       this.next(state);
-      scannedActions.next(action!);
+      scannedActions.next(action);
     });
   }
 
