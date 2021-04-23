@@ -6,6 +6,6 @@ exports_files([
     "LICENSE",
     # used by ts_jest_test
     "jest.config.js",
-    "setup-jest.ts",
+    "test-setup.ts",
     "tsconfig.json",
 ])
