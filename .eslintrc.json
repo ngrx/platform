@@ -33,7 +33,37 @@
     {
       "files": ["*.ts"],
       "rules": {
-        "@typescript-eslint/naming-convention": "error",
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": ["camelCase"]
+          },
+          {
+            "selector": "enum",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "enumMember",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "typeParameter",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "typeAlias",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "interface",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "class",
+            "format": ["PascalCase"]
+          }
+        ],
         "@typescript-eslint/prefer-namespace-keyword": "error",
         // because we're using object
         "@typescript-eslint/ban-types": "warn",
