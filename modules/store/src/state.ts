@@ -17,7 +17,6 @@ export abstract class StateObservable extends Observable<any> {}
 
 @Injectable()
 export class State<T> extends BehaviorSubject<any> implements OnDestroy {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   static readonly INIT = INIT;
 
   private stateSubscription: Subscription;

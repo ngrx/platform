@@ -27,7 +27,8 @@
             "prefix": "ngrx",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "no-case-declarations": "off"
       },
       "plugins": ["@angular-eslint/eslint-plugin", "@typescript-eslint"]
     },

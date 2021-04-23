@@ -14,7 +14,6 @@ const METADATA_KEY = '__@ngrx/effects__';
  * @deprecated The Effect decorator (`@Effect`) is deprecated in favor for the `createEffect` method.
  * See the docs for more info {@link https://ngrx.io/guide/migration/v11#the-effect-decorator}
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function Effect(config: EffectConfig = {}) {
   return function <T extends Object, K extends EffectPropertyKey<T>>(
     target: T,

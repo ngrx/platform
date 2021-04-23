@@ -9,7 +9,7 @@ import {
 } from '../../state/story';
 
 @Component({
-  selector: 'board-ui',
+  selector: 'ngrx-board-ui',
   templateUrl: './board-ui.component.html',
   styleUrls: ['./board-ui.component.scss'],
 })
