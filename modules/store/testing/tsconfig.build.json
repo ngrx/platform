@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig-build",
+  "extends": "../tsconfig.build",
   "compilerOptions": {
     "paths": {
       "@ngrx/store": ["../../dist/packages/store"]

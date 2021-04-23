@@ -138,7 +138,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/store/tsconfig-build.json",
+            "tsConfig": "modules/store/tsconfig.build.json",
             "project": "modules/store/ng-package.json"
           }
         },
@@ -192,7 +192,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/effects/tsconfig-build.json",
+            "tsConfig": "modules/effects/tsconfig.build.json",
             "project": "modules/effects/ng-package.json"
           }
         },
@@ -246,7 +246,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/data/tsconfig-build.json",
+            "tsConfig": "modules/data/tsconfig.build.json",
             "project": "modules/data/ng-package.json"
           }
         },
@@ -294,7 +294,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/entity/tsconfig-build.json",
+            "tsConfig": "modules/entity/tsconfig.build.json",
             "project": "modules/entity/ng-package.json"
           }
         },
@@ -348,7 +348,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/store-devtools/tsconfig-build.json",
+            "tsConfig": "modules/store-devtools/tsconfig.build.json",
             "project": "modules/store-devtools/ng-package.json"
           }
         },
@@ -396,7 +396,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/router-store/tsconfig-build.json",
+            "tsConfig": "modules/router-store/tsconfig.build.json",
             "project": "modules/router-store/ng-package.json"
           }
         },
@@ -462,7 +462,7 @@
           "builder": "@nrwl/node:package",
           "options": {
             "outputPath": "dist/modules/schematics",
-            "tsConfig": "modules/schematics/tsconfig-build.json",
+            "tsConfig": "modules/schematics/tsconfig.build.json",
             "packageJson": "modules/schematics/package.json",
             "main": "modules/schematics/src/index.ts",
             "sourceMap": false,
@@ -530,7 +530,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/component/tsconfig-build.json",
+            "tsConfig": "modules/component/tsconfig.build.json",
             "project": "modules/component/ng-package.json"
           }
         },
@@ -578,7 +578,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/component-store/tsconfig-build.json",
+            "tsConfig": "modules/component-store/tsconfig.build.json",
             "project": "modules/component-store/ng-package.json"
           }
         },

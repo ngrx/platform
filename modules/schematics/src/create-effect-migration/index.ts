@@ -58,7 +58,13 @@ function replaceEffectDecorators(
   const inserts = effects
     .filter((effect) => !!effect.initializer)
     .map((effect) => {
-      const decorator = (effect.decorators || []).find(isEffectDecorator)!;
+      if (!effect.initializer) {
+        return [];
+      }
+      const decorator = (effect.decorators || []).find(isEffectDecorator);
+      if (!decorator) {
+        return [];
+      }
       const effectArguments = getDispatchProperties(
         host,
         sourceFile.text,
@@ -69,19 +75,21 @@ function replaceEffectDecorators(
       return [
         new InsertChange(
           sourceFile.fileName,
-          effect.initializer!.pos,
+          effect.initializer.pos,
           ' createEffect(() =>'
         ),
-        new InsertChange(sourceFile.fileName, effect.initializer!.end, end),
+        new InsertChange(sourceFile.fileName, effect.initializer.end, end),
       ];
     })
     .reduce((acc, inserts) => acc.concat(inserts), []);
 
   const removes = effects
     .map((effect) => effect.decorators)
-    .filter((decorators) => decorators)
     .map((decorators) => {
-      const effectDecorators = decorators!.filter(isEffectDecorator);
+      if (!decorators) {
+        return [];
+      }
+      const effectDecorators = decorators.filter(isEffectDecorator);
       return effectDecorators.map((decorator) => {
         return new RemoveChange(
           sourceFile.fileName,
