@@ -107,8 +107,8 @@ export function createReducer<S, A extends Action = Action>(
   ...ons: ReducerTypes<S, ActionCreator[]>[]
 ): ActionReducer<S, A> {
   const map = new Map<string, OnReducer<S, ActionCreator[]>>();
-  for (let on of ons) {
-    for (let type of on.types) {
+  for (const on of ons) {
+    for (const type of on.types) {
       const existingReducer = map.get(type);
       if (existingReducer) {
         const newReducer: typeof existingReducer = (state, action) =>

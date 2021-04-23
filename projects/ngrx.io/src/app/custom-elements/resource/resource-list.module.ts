@@ -5,11 +5,11 @@ import { ResourceService } from './resource.service';
 import { WithCustomElementComponent } from '../element-registry';
 
 @NgModule({
-  imports: [ CommonModule ],
-  declarations: [ ResourceListComponent ],
-  entryComponents: [ ResourceListComponent ],
-  providers: [ ResourceService ]
+    imports: [ CommonModule ],
+    declarations: [ ResourceListComponent ],
+    entryComponents: [ ResourceListComponent ],
+    providers: [ ResourceService ]
 })
 export class ResourceListModule implements WithCustomElementComponent {
-  customElementComponent: Type<any> = ResourceListComponent;
+    customElementComponent: Type<any> = ResourceListComponent;
 }

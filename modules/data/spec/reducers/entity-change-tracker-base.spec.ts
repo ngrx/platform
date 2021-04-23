@@ -56,7 +56,7 @@ describe('EntityChangeTrackerBase', () => {
 
   describe('#commitOne', () => {
     it('should clear current tracking of the given entity', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         deletedEntity,
@@ -72,7 +72,7 @@ describe('EntityChangeTrackerBase', () => {
 
   describe('#commitMany', () => {
     it('should clear current tracking of the given entities', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         deletedEntity,
@@ -820,7 +820,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should restore the collection to the pre-change state', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         addedEntity,
@@ -856,7 +856,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should restore the collection to the pre-change state for the given entity', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         addedEntity,
@@ -873,7 +873,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should do nothing when the given entity is null', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         addedEntity,
@@ -891,7 +891,7 @@ describe('EntityChangeTrackerBase', () => {
 
   describe('#undoMany', () => {
     it('should clear many tracked changes', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         addedEntity,
@@ -911,7 +911,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should restore the collection to the pre-change state for the given entities', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         addedEntity,
@@ -931,7 +931,7 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should do nothing when there are no entities to undo', () => {
-      // tslint:disable-next-line:prefer-const
+      // eslint-disable-next-line prefer-const
       let {
         collection,
         addedEntity,

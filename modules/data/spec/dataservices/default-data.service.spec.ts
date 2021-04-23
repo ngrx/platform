@@ -71,7 +71,7 @@ describe('DefaultDataService', () => {
       };
     }
 
-    // tslint:disable-next-line:no-shadowed-variable
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     let service: TestService<Hero>;
 
     beforeEach(() => {

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ngrx-mff',
-  template: `
+    selector: 'ngrx-mff',
+    template: `
     <p>
-      In memory of George Floyd, the NgRx Team asks our community to 
+      In memory of George Floyd, the NgRx Team asks our community to
       donate to the Minnesota Freedom Fund
     </p>
 
@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
       Donate Now
     </a>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: flex;
       flex-direction: column;

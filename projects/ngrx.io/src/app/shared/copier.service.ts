@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 /**
  * This class is based on the code in the following projects:
  *
@@ -10,59 +10,59 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class CopierService {
-  private fakeElem: HTMLTextAreaElement | null;
+    private fakeElem: HTMLTextAreaElement | null;
 
-  /**
+    /**
    * Creates a fake textarea element, sets its value from `text` property,
    * and makes a selection on it.
    */
-  createFake(text: string) {
-    const docElem = document.documentElement!;
-    const isRTL = docElem.getAttribute('dir') === 'rtl';
+    createFake(text: string) {
+        const docElem = document.documentElement!;
+        const isRTL = docElem.getAttribute('dir') === 'rtl';
 
-    // Create a fake element to hold the contents to copy
-    this.fakeElem = document.createElement('textarea');
+        // Create a fake element to hold the contents to copy
+        this.fakeElem = document.createElement('textarea');
 
-    // Prevent zooming on iOS
-    this.fakeElem.style.fontSize = '12pt';
+        // Prevent zooming on iOS
+        this.fakeElem.style.fontSize = '12pt';
 
-    // Reset box model
-    this.fakeElem.style.border = '0';
-    this.fakeElem.style.padding = '0';
-    this.fakeElem.style.margin = '0';
+        // Reset box model
+        this.fakeElem.style.border = '0';
+        this.fakeElem.style.padding = '0';
+        this.fakeElem.style.margin = '0';
 
-    // Move element out of screen horizontally
-    this.fakeElem.style.position = 'absolute';
-    this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
+        // Move element out of screen horizontally
+        this.fakeElem.style.position = 'absolute';
+        this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
 
-    // Move element to the same position vertically
-    const yPosition = window.pageYOffset || docElem.scrollTop;
-    this.fakeElem.style.top = yPosition + 'px';
+        // Move element to the same position vertically
+        const yPosition = window.pageYOffset || docElem.scrollTop;
+        this.fakeElem.style.top = yPosition + 'px';
 
-    this.fakeElem.setAttribute('readonly', '');
-    this.fakeElem.value = text;
+        this.fakeElem.setAttribute('readonly', '');
+        this.fakeElem.value = text;
 
-    document.body.appendChild(this.fakeElem);
+        document.body.appendChild(this.fakeElem);
 
-    this.fakeElem.select();
-    this.fakeElem.setSelectionRange(0, this.fakeElem.value.length);
-  }
-
-  removeFake() {
-    if (this.fakeElem) {
-      document.body.removeChild(this.fakeElem);
-      this.fakeElem = null;
+        this.fakeElem.select();
+        this.fakeElem.setSelectionRange(0, this.fakeElem.value.length);
     }
-  }
 
-  copyText(text: string) {
-    try {
-      this.createFake(text);
-      return document.execCommand('copy');
-    } catch (err) {
-      return false;
-    } finally {
-      this.removeFake();
+    removeFake() {
+        if (this.fakeElem) {
+            document.body.removeChild(this.fakeElem);
+            this.fakeElem = null;
+        }
     }
-  }
+
+    copyText(text: string) {
+        try {
+            this.createFake(text);
+            return document.execCommand('copy');
+        } catch (err) {
+            return false;
+        } finally {
+            this.removeFake();
+        }
+    }
 }

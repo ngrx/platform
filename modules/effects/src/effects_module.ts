@@ -100,11 +100,11 @@ export function createEffects(
 ): any[] {
   const mergedEffects: Type<any>[] = [];
 
-  for (let effectGroup of effectGroups) {
+  for (const effectGroup of effectGroups) {
     mergedEffects.push(...effectGroup);
   }
 
-  for (let userProvidedEffectGroup of userProvidedEffectGroups) {
+  for (const userProvidedEffectGroup of userProvidedEffectGroups) {
     mergedEffects.push(...userProvidedEffectGroup);
   }
 

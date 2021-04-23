@@ -4,11 +4,11 @@ import { WithCustomElementComponent } from '../element-registry';
 import { CirclesComponent } from './circles.component';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [CirclesComponent],
-  exports: [CirclesComponent],
-  entryComponents: [CirclesComponent],
+    imports: [CommonModule],
+    declarations: [CirclesComponent],
+    exports: [CirclesComponent],
+    entryComponents: [CirclesComponent],
 })
 export class CirclesModule implements WithCustomElementComponent {
-  customElementComponent: Type<any> = CirclesComponent;
+    customElementComponent: Type<any> = CirclesComponent;
 }

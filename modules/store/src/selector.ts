@@ -73,7 +73,7 @@ export function defaultMemoize(
   isResultEqual = isEqualCheck
 ): MemoizedProjection {
   let lastArguments: null | IArguments = null;
-  // tslint:disable-next-line:no-any anything could be the result.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, , , , ,
   let lastResult: any = null;
   let overrideResult: any;
 
@@ -90,7 +90,7 @@ export function defaultMemoize(
     overrideResult = undefined;
   }
 
-  // tslint:disable-next-line:no-any anything could be the result.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function memoized(): any {
     if (overrideResult !== undefined) {
       return overrideResult.result;

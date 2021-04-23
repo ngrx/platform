@@ -3,10 +3,11 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Action } from './models';
 
-export const INIT = '@ngrx/store/init' as '@ngrx/store/init';
+export const INIT = '@ngrx/store/init' as const;
 
 @Injectable()
-export class ActionsSubject extends BehaviorSubject<Action>
+export class ActionsSubject
+  extends BehaviorSubject<Action>
   implements OnDestroy {
   constructor() {
     super({ type: INIT });

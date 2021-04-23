@@ -4,8 +4,8 @@ import { EventService } from './event.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: `aio-event-list`,
-  template: `
+    selector: 'aio-event-list',
+    template: `
     <p>Upcoming Events presenting about NgRx:</p>
     <table class="is-full-width">
       <thead>
@@ -43,8 +43,8 @@ import { Observable } from 'rxjs';
 `
 })
 export class EventListComponent {
-  upcomingEvents$: Observable<Event[]> = this.eventService.upcomingEvents$;
-  pastEvents$: Observable<Event[]> = this.eventService.pastEvents$;
+    upcomingEvents$: Observable<Event[]> = this.eventService.upcomingEvents$;
+    pastEvents$: Observable<Event[]> = this.eventService.pastEvents$;
 
-  constructor(private eventService: EventService) { }
+    constructor(private eventService: EventService) { }
 }

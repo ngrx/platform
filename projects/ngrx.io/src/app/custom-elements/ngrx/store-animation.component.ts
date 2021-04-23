@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ngrx-store-animation',
-  template: `
+    selector: 'ngrx-store-animation',
+    template: `
     <div class="services">
       <div class="store"></div>
       <div class="dispatcher"></div>
     </div>
-    
+
     <div class="state-changes-wrapper">
       <ngrx-circles class="state-changes" color="primary"></ngrx-circles>
     </div>
@@ -15,8 +15,8 @@ import { Component } from '@angular/core';
       <ngrx-circles class="actions" color="accent"></ngrx-circles>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       @keyframes spin {
         from {
           transform: rotate(0deg);
@@ -96,6 +96,6 @@ import { Component } from '@angular/core';
         left: 86px;
       }
     `,
-  ],
+    ],
 })
 export class StoreAnimationComponent {}

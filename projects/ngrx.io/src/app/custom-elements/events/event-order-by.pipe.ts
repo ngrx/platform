@@ -9,17 +9,17 @@ type EventOrderBy = 'ascending' | 'descending';
  */
 @Pipe({name: 'eventOrderBy'})
 export class EventOrderByPipe implements PipeTransform {
-  transform(events: Event[] | null, orderBy: EventOrderBy): Event[] {
-    if (events === null) {
-      return [];
+    transform(events: Event[] | null, orderBy: EventOrderBy): Event[] {
+        if (events === null) {
+            return [];
+        }
+        switch (orderBy) {
+            case 'ascending': {
+                return events.sort((eventOne, eventTwo) => +(eventOne.startDate || eventOne.endDate) - +(eventTwo.startDate || eventTwo.endDate));
+            }
+            case 'descending': {
+                return events.sort((eventOne, eventTwo) => +(eventTwo.startDate || eventTwo.endDate) - +(eventOne.startDate || eventOne.endDate));
+            }
+        }
     }
-    switch (orderBy) {
-      case 'ascending': {
-        return events.sort((eventOne, eventTwo) => +(eventOne.startDate || eventOne.endDate) - +(eventTwo.startDate || eventTwo.endDate));
-      }
-      case 'descending': {
-        return events.sort((eventOne, eventTwo) => +(eventTwo.startDate || eventTwo.endDate) - +(eventOne.startDate || eventOne.endDate));
-      }
-    }
-  }
 }

@@ -3,17 +3,17 @@
 // Then re-export them from `navigation.service.ts`
 
 export interface NavigationNode {
-  url?: string;
-  title?: string;
-  tooltip?: string;
-  hidden?: boolean;
-  children?: NavigationNode[];
+    url?: string;
+    title?: string;
+    tooltip?: string;
+    hidden?: boolean;
+    children?: NavigationNode[];
 }
 
 export type NavigationResponse = {__versionInfo: VersionInfo } & { [name: string]: NavigationNode[]|VersionInfo };
 
 export interface NavigationViews {
-  [name: string]: NavigationNode[];
+    [name: string]: NavigationNode[];
 }
 
 /**
@@ -23,9 +23,9 @@ export interface NavigationViews {
  *  nodes: the current node and its ancestor nodes within that view
  */
 export interface CurrentNode {
-  url: string;
-  view: string;
-  nodes: NavigationNode[];
+    url: string;
+    view: string;
+    nodes: NavigationNode[];
 }
 
 /**
@@ -34,20 +34,20 @@ export interface CurrentNode {
  * If a view does not contain a node that matches the current url then the value will be undefined.
  */
 export interface CurrentNodes {
-  [view: string]: CurrentNode;
+    [view: string]: CurrentNode;
 }
 
 export interface VersionInfo {
-  raw: string;
-  major: number;
-  minor: number;
-  patch: number;
-  prerelease: string[];
-  build: string;
-  version: string;
-  codeName: string;
-  isSnapshot: boolean;
-  full: string;
-  branch: string;
-  commitSHA: string;
+    raw: string;
+    major: number;
+    minor: number;
+    patch: number;
+    prerelease: string[];
+    build: string;
+    version: string;
+    codeName: string;
+    isSnapshot: boolean;
+    full: string;
+    branch: string;
+    commitSHA: string;
 }

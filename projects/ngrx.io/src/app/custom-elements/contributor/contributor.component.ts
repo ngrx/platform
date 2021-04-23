@@ -4,8 +4,8 @@ import { Contributor } from './contributors.model';
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 
 @Component({
-  selector: 'aio-contributor',
-  template: `
+    selector: 'aio-contributor',
+    template: `
     <div [ngClass]="{ 'flipped': person.isFlipped }" class="contributor-card">
 
         <div class="card-front" (click)="flipCard(person)">
@@ -36,11 +36,11 @@ import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
   `
 })
 export class ContributorComponent {
-  @Input() person: Contributor;
-  noPicture = '_no-one.png';
-  pictureBase = CONTENT_URL_PREFIX + 'images/bios/';
+    @Input() person: Contributor;
+    noPicture = '_no-one.png';
+    pictureBase = CONTENT_URL_PREFIX + 'images/bios/';
 
-  flipCard(person: Contributor) {
-    person.isFlipped = !person.isFlipped;
-  }
+    flipCard(person: Contributor) {
+        person.isFlipped = !person.isFlipped;
+    }
 }

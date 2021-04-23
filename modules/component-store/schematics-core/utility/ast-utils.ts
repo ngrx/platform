@@ -266,7 +266,7 @@ function _addSymbolToNgModuleMetadata(
   importPath: string
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
-  let node: any = nodes[0]; // tslint:disable-line:no-any
+  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // Find the decorator declaration.
   if (!node) {
@@ -461,7 +461,7 @@ function _addSymbolToComponentMetadata(
   importPath: string
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
-  let node: any = nodes[0]; // tslint:disable-line:no-any
+  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // Find the decorator declaration.
   if (!node) {

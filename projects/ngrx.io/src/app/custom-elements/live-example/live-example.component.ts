@@ -1,9 +1,20 @@
-/* tslint:disable component-selector */
-import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+/* eslint-disable  @angular-eslint/component-selector */
+import {
+    AfterContentInit,
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    ViewChild,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
-import { AttrMap, boolFromValue, getAttrs, getAttrValue } from 'app/shared/attribute-utils';
-
+import {
+    AttrMap,
+    boolFromValue,
+    getAttrs,
+    getAttrValue,
+} from 'app/shared/attribute-utils';
 
 const LIVE_EXAMPLE_BASE = CONTENT_URL_PREFIX + 'live-examples/';
 const ZIP_BASE = CONTENT_URL_PREFIX + 'zips/';
@@ -51,107 +62,120 @@ const ZIP_BASE = CONTENT_URL_PREFIX + 'zips/';
  *   // ~/resources/live-examples/toh-pt1/minimal.stackblitz.json
  */
 @Component({
-  selector: 'live-example',
-  templateUrl: 'live-example.component.html'
+    selector: 'live-example',
+    templateUrl: 'live-example.component.html',
 })
 export class LiveExampleComponent implements AfterContentInit {
+    readonly mode: 'default' | 'embedded' | 'downloadOnly';
+    readonly enableDownload: boolean;
+    readonly stackblitz: string;
+    readonly zip: string;
+    title: string;
 
-  readonly mode: 'default' | 'embedded' | 'downloadOnly';
-  readonly enableDownload: boolean;
-  readonly stackblitz: string;
-  readonly zip: string;
-  title: string;
+    @ViewChild('content', { static: true })
+    private content: ElementRef;
 
-  @ViewChild('content', { static: true })
-  private content: ElementRef;
+    constructor(elementRef: ElementRef, location: Location) {
+        const attrs = getAttrs(elementRef);
+        const exampleDir = this.getExampleDir(attrs, location.path(false));
+        const stackblitzName = this.getStackblitzName(attrs);
 
-  constructor(elementRef: ElementRef, location: Location) {
-    const attrs = getAttrs(elementRef);
-    const exampleDir = this.getExampleDir(attrs, location.path(false));
-    const stackblitzName = this.getStackblitzName(attrs);
+        this.mode = this.getMode(attrs);
+        this.enableDownload = this.getEnableDownload(attrs);
+        this.stackblitz = this.getStackblitz(
+            exampleDir,
+            stackblitzName,
+            this.mode === 'embedded'
+        );
+        this.zip = this.getZip(exampleDir, stackblitzName);
+        this.title = this.getTitle(attrs);
+    }
 
-    this.mode = this.getMode(attrs);
-    this.enableDownload = this.getEnableDownload(attrs);
-    this.stackblitz = this.getStackblitz(exampleDir, stackblitzName, this.mode === 'embedded');
-    this.zip = this.getZip(exampleDir, stackblitzName);
-    this.title = this.getTitle(attrs);
-  }
-
-  ngAfterContentInit() {
+    ngAfterContentInit() {
     // Angular will sanitize this title when displayed, so it should be plain text.
-    const textContent = this.content.nativeElement.textContent.trim();
-    if (textContent) {
-      this.title = textContent;
+        const textContent = this.content.nativeElement.textContent.trim();
+        if (textContent) {
+            this.title = textContent;
+        }
     }
-  }
 
-  private getEnableDownload(attrs: AttrMap) {
-    const downloadDisabled = boolFromValue(getAttrValue(attrs, 'noDownload'));
-    return !downloadDisabled;
-  }
-
-  private getExampleDir(attrs: AttrMap, path: string) {
-    let exampleDir = getAttrValue(attrs, 'name');
-    if (!exampleDir) {
-      // Take the last path segment, excluding query params and hash fragment.
-      const match = path.match(/[^/?#]+(?=\/?(?:\?|#|$))/);
-      exampleDir = match ? match[0] : 'index';
+    private getEnableDownload(attrs: AttrMap) {
+        const downloadDisabled = boolFromValue(getAttrValue(attrs, 'noDownload'));
+        return !downloadDisabled;
     }
-    return exampleDir.trim();
-  }
 
-  private getMode(this: LiveExampleComponent, attrs: AttrMap): typeof this.mode {
-    const downloadOnly = boolFromValue(getAttrValue(attrs, 'downloadOnly'));
-    const isEmbedded = boolFromValue(getAttrValue(attrs, 'embedded'));
+    private getExampleDir(attrs: AttrMap, path: string) {
+        let exampleDir = getAttrValue(attrs, 'name');
+        if (!exampleDir) {
+            // Take the last path segment, excluding query params and hash fragment.
+            const match = path.match(/[^/?#]+(?=\/?(?:\?|#|$))/);
+            exampleDir = match ? match[0] : 'index';
+        }
+        return exampleDir.trim();
+    }
 
-    return downloadOnly ? 'downloadOnly'
-           : isEmbedded ? 'embedded' :
-                          'default';
-  }
+    private getMode(
+        this: LiveExampleComponent,
+        attrs: AttrMap
+    ): typeof this.mode {
+        const downloadOnly = boolFromValue(getAttrValue(attrs, 'downloadOnly'));
+        const isEmbedded = boolFromValue(getAttrValue(attrs, 'embedded'));
 
-  private getStackblitz(exampleDir: string, stackblitzName: string, isEmbedded: boolean) {
-    const urlQuery = isEmbedded ? '?ctl=1' : '';
-    return `${LIVE_EXAMPLE_BASE}${exampleDir}/${stackblitzName}stackblitz.html${urlQuery}`;
-  }
+        return downloadOnly ? 'downloadOnly' : isEmbedded ? 'embedded' : 'default';
+    }
 
-  private getStackblitzName(attrs: AttrMap) {
-    const attrValue = (getAttrValue(attrs, 'stackblitz') || '').trim();
-    return attrValue && `${attrValue}.`;
-  }
+    private getStackblitz(
+        exampleDir: string,
+        stackblitzName: string,
+        isEmbedded: boolean
+    ) {
+        const urlQuery = isEmbedded ? '?ctl=1' : '';
+        return `${LIVE_EXAMPLE_BASE}${exampleDir}/${stackblitzName}stackblitz.html${urlQuery}`;
+    }
 
-  private getTitle(attrs: AttrMap) {
-    return (getAttrValue(attrs, 'title') || 'live example').trim();
-  }
+    private getStackblitzName(attrs: AttrMap) {
+        const attrValue = (getAttrValue(attrs, 'stackblitz') || '').trim();
+        return attrValue && `${attrValue}.`;
+    }
 
-  private getZip(exampleDir: string, stackblitzName: string) {
-    const zipName = exampleDir.split('/')[0];
-    return `${ZIP_BASE}${exampleDir}/${stackblitzName}${zipName}.zip`;
-  }
+    private getTitle(attrs: AttrMap) {
+        return (getAttrValue(attrs, 'title') || 'live example').trim();
+    }
+
+    private getZip(exampleDir: string, stackblitzName: string) {
+        const zipName = exampleDir.split('/')[0];
+        return `${ZIP_BASE}${exampleDir}/${stackblitzName}${zipName}.zip`;
+    }
 }
 
-///// EmbeddedStackblitzComponent ///
+/// // EmbeddedStackblitzComponent ///
 /**
  * Hides the <iframe> so we can test LiveExampleComponent without actually triggering
  * a call to stackblitz to load the iframe
  */
 @Component({
-  selector: 'aio-embedded-stackblitz',
-  template: `<iframe #iframe frameborder="0" width="100%" height="100%"></iframe>`,
-  styles: [ 'iframe { min-height: 400px; }' ]
+    selector: 'aio-embedded-stackblitz',
+    template: `<iframe
+    #iframe
+    frameborder="0"
+    width="100%"
+    height="100%"
+  ></iframe>`,
+    styles: ['iframe { min-height: 400px; }'],
 })
 export class EmbeddedStackblitzComponent implements AfterViewInit {
-  @Input() src: string;
+    @Input() src: string;
 
-  @ViewChild('iframe', { static: true }) iframe: ElementRef;
+    @ViewChild('iframe', { static: true }) iframe: ElementRef;
 
-  ngAfterViewInit() {
+    ngAfterViewInit() {
     // DEVELOPMENT TESTING ONLY
     // this.src = 'https://angular.io/resources/live-examples/quickstart/ts/stackblitz.json';
 
-    if (this.iframe) {
-      // security: the `src` is always authored by the documentation team
-      // and is considered to be safe
-      this.iframe.nativeElement.src = this.src;
+        if (this.iframe) {
+            // security: the `src` is always authored by the documentation team
+            // and is considered to be safe
+            this.iframe.nativeElement.src = this.src;
+        }
     }
-  }
 }

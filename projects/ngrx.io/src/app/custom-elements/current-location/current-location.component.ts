@@ -1,12 +1,12 @@
-/* tslint:disable component-selector */
+/* eslint-disable  @angular-eslint/component-selector */
 import { Component } from '@angular/core';
 import { LocationService } from 'app/shared/location.service';
 
 /** Renders the current location path. */
 @Component({
-  selector: 'current-location',
-  template: '{{ location.currentPath | async }}'
+    selector: 'current-location',
+    template: '{{ location.currentPath | async }}',
 })
 export class CurrentLocationComponent {
-  constructor(public location: LocationService) { }
+    constructor(public location: LocationService) {}
 }

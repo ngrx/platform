@@ -3,25 +3,25 @@ import { Logger } from 'app/shared/logger.service';
 import { ElementsLoader } from './elements-loader';
 
 @Component({
-  selector: 'aio-lazy-ce',
-  template: '',
+    selector: 'aio-lazy-ce',
+    template: '',
 })
 export class LazyCustomElementComponent implements OnInit {
-  @Input() selector = '';
+    @Input() selector = '';
 
-  constructor(
-    private elementRef: ElementRef,
-    private elementsLoader: ElementsLoader,
-    private logger: Logger,
-  ) {}
+    constructor(
+        private elementRef: ElementRef,
+        private elementsLoader: ElementsLoader,
+        private logger: Logger,
+    ) {}
 
-  ngOnInit() {
-    if (!this.selector || /[^\w-]/.test(this.selector)) {
-      this.logger.error(new Error(`Invalid selector for 'aio-lazy-ce': ${this.selector}`));
-      return;
+    ngOnInit() {
+        if (!this.selector || /[^\w-]/.test(this.selector)) {
+            this.logger.error(new Error(`Invalid selector for 'aio-lazy-ce': ${this.selector}`));
+            return;
+        }
+
+        this.elementRef.nativeElement.innerHTML = `<${this.selector}></${this.selector}>`;
+        this.elementsLoader.loadCustomElement(this.selector);
     }
-
-    this.elementRef.nativeElement.innerHTML = `<${this.selector}></${this.selector}>`;
-    this.elementsLoader.loadCustomElement(this.selector);
-  }
 }

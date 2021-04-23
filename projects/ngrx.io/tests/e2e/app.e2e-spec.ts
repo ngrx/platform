@@ -1,7 +1,7 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { SitePage } from './app.po';
 
-describe('site App', function() {
+describe('site App', function () {
   let page: SitePage;
 
   beforeEach(() => {
@@ -36,7 +36,7 @@ describe('site App', function() {
 
     // Test all headings (and sub-headings).
     expect(navItemHeadings.count()).toBeGreaterThan(0);
-    navItemHeadings.each(heading => testNavItemHeading(heading!, 1));
+    navItemHeadings.each((heading) => testNavItemHeading(heading!, 1));
 
     // Helpers
     function expectToBeCollapsed(elementFinder: ElementFinder) {
@@ -63,7 +63,7 @@ describe('site App', function() {
       // Recursively test child-headings (while this heading is expanded).
       const nextLevel = level + 1;
       const childNavItemHeadings = page.getNavItemHeadings(children, nextLevel);
-      childNavItemHeadings.each(childHeading =>
+      childNavItemHeadings.each((childHeading) =>
         testNavItemHeading(childHeading!, nextLevel)
       );
 
@@ -132,14 +132,14 @@ describe('site App', function() {
   });
 
   describe('google analytics', () => {
-    it('should call ga with initial URL', done => {
+    it('should call ga with initial URL', (done) => {
       let path: string;
       page.navigateTo('api');
       page
         .locationPath()
-        .then(p => (path = p))
+        .then((p) => (path = p))
         .then(() => page.ga())
-        .then(calls => {
+        .then((calls) => {
           // The last call (length-1) will be the `send` command
           // The second to last call (length-2) will be the command to `set` the page url
           expect(calls[calls.length - 2]).toEqual(['set', 'page', path]);
@@ -147,15 +147,15 @@ describe('site App', function() {
         });
     });
 
-    it('should call ga with new URL on navigation', done => {
+    it('should call ga with new URL on navigation', (done) => {
       let path: string;
       page.navigateTo('');
       page.click(page.getTopMenuLink('features'));
       page
         .locationPath()
-        .then(p => (path = p))
+        .then((p) => (path = p))
         .then(() => page.ga())
-        .then(calls => {
+        .then((calls) => {
           // The last call (length-1) will be the `send` command
           // The second to last call (length-2) will be the command to `set` the page url
           expect(calls[calls.length - 2]).toEqual(['set', 'page', path]);
@@ -191,14 +191,14 @@ describe('site App', function() {
     it('should be present on all docs pages', () => {
       page.navigateTo('tutorial/toh-pt1');
       expect(page.ghLinks.count()).toEqual(1);
-      /* tslint:disable:max-line-length */
+      /* eslint-disable max-len */
       expect(page.ghLinks.get(0).getAttribute('href')).toMatch(
         /https:\/\/github\.com\/angular\/angular\/edit\/master\/aio\/content\/tutorial\/toh-pt1\.md\?message=docs%3A%20describe%20your%20change\.\.\./
       );
 
       page.navigateTo('guide/http');
       expect(page.ghLinks.count()).toEqual(1);
-      /* tslint:disable:max-line-length */
+      /* eslint-disable max-len */
       expect(page.ghLinks.get(0).getAttribute('href')).toMatch(
         /https:\/\/github\.com\/angular\/angular\/edit\/master\/aio\/content\/guide\/http\.md\?message=docs%3A%20describe%20your%20change\.\.\./
       );

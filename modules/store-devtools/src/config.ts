@@ -82,7 +82,7 @@ export function createConfig(
     },
   };
 
-  let options = typeof _options === 'function' ? _options() : _options;
+  const options = typeof _options === 'function' ? _options() : _options;
   const logOnly = options.logOnly
     ? { pause: true, export: true, test: true }
     : false;

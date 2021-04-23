@@ -6,11 +6,11 @@ import { StoreAnimationComponent } from './store-animation.component';
 import { CirclesModule } from './circles.module';
 
 @NgModule({
-  imports: [CommonModule, CirclesModule],
-  declarations: [StoreAnimationComponent],
-  exports: [StoreAnimationComponent],
-  entryComponents: [StoreAnimationComponent],
+    imports: [CommonModule, CirclesModule],
+    declarations: [StoreAnimationComponent],
+    exports: [StoreAnimationComponent],
+    entryComponents: [StoreAnimationComponent],
 })
 export class StoreAnimationModule implements WithCustomElementComponent {
-  customElementComponent: Type<any> = StoreAnimationComponent;
+    customElementComponent: Type<any> = StoreAnimationComponent;
 }

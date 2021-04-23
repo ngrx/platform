@@ -17,7 +17,7 @@ import { EntitySelectors } from '../selectors/entity-selectors';
 import { EntitySelectors$ } from '../selectors/entity-selectors$';
 import { QueryParams } from '../dataservices/interfaces';
 
-// tslint:disable:member-ordering
+/* eslint-disable @typescript-eslint/member-ordering */
 
 /**
  * Base class for a concrete EntityCollectionService<T>.

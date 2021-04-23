@@ -234,7 +234,7 @@ describe('EntityCollectionService', () => {
   xdescribe('saves (optimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        /* tslint:disable-next-line:no-use-before-declare */
+        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         providers: [
           {
             provide: EntityDispatcherDefaultOptions,
@@ -250,7 +250,7 @@ describe('EntityCollectionService', () => {
   xdescribe('saves (pessimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        /* tslint:disable-next-line:no-use-before-declare */
+        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         providers: [
           {
             provide: EntityDispatcherDefaultOptions,
@@ -468,7 +468,7 @@ function entityServicesSetup() {
     ],
     providers: [
       { provide: EntityCacheEffects, useValue: {} },
-      /* tslint:disable-next-line:no-use-before-declare */
+      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
       { provide: EntityDataService, useClass: TestDataService },
       { provide: Logger, useValue: logger },
     ],

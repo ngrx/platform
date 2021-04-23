@@ -1,23 +1,23 @@
-/* tslint:disable component-selector */
+/* eslint-disable  @angular-eslint/component-selector */
 import {
-  Component,
-  AfterViewInit,
-  ViewChild,
-  Input,
-  ViewChildren,
-  QueryList,
-  OnInit,
+    Component,
+    AfterViewInit,
+    ViewChild,
+    Input,
+    ViewChildren,
+    QueryList,
+    OnInit,
 } from '@angular/core';
 import { CodeComponent } from './code.component';
 
 export interface TabInfo {
-  class: string | null;
-  code: string;
-  language: string | null;
-  linenums: any;
-  path: string;
-  region: string;
-  header: string | null;
+    class: string | null;
+    code: string;
+    language: string | null;
+    linenums: any;
+    path: string;
+    region: string;
+    header: string | null;
 }
 
 /**
@@ -28,8 +28,8 @@ export interface TabInfo {
  * The optional `linenums` attribute is the default `linenums` for each code pane.
  */
 @Component({
-  selector: 'code-tabs',
-  template: `
+    selector: 'code-tabs',
+    template: `
     <!-- Use content projection so that the provided HTML's code-panes can be split into tabs -->
     <div #content style="display: none"><ng-content></ng-content></div>
 
@@ -39,12 +39,14 @@ export interface TabInfo {
           <ng-template mat-tab-label>
             <span class="{{ tab.class }}">{{ tab.header }}</span>
           </ng-template>
-          <aio-code class="{{ tab.class }}"
-                    [language]="tab.language"
-                    [linenums]="tab.linenums"
-                    [path]="tab.path"
-                    [region]="tab.region"
-                    [header]="tab.header">
+          <aio-code
+            class="{{ tab.class }}"
+            [language]="tab.language"
+            [linenums]="tab.linenums"
+            [path]="tab.path"
+            [region]="tab.region"
+            [header]="tab.header"
+          >
           </aio-code>
         </mat-tab>
       </mat-tab-group>
@@ -52,42 +54,42 @@ export interface TabInfo {
   `,
 })
 export class CodeTabsComponent implements OnInit, AfterViewInit {
-  tabs: TabInfo[];
+    tabs: TabInfo[];
 
-  @Input('linenums') linenums: string;
+    @Input('linenums') linenums: string;
 
-  @ViewChild('content', { static: true }) content;
+    @ViewChild('content', { static: true }) content;
 
-  @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
+    @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
-  ngOnInit() {
-    this.tabs = [];
-    const codeExamples = this.content.nativeElement.querySelectorAll(
-      'code-pane'
-    );
+    ngOnInit() {
+        this.tabs = [];
+        const codeExamples = this.content.nativeElement.querySelectorAll(
+            'code-pane'
+        );
 
-    for (let i = 0; i < codeExamples.length; i++) {
-      const tabContent = codeExamples[i];
-      this.tabs.push(this.getTabInfo(tabContent));
+        for (let i = 0; i < codeExamples.length; i++) {
+            const tabContent = codeExamples[i];
+            this.tabs.push(this.getTabInfo(tabContent));
+        }
     }
-  }
 
-  ngAfterViewInit() {
-    this.codeComponents.toArray().forEach((codeComponent, i) => {
-      codeComponent.code = this.tabs[i].code;
-    });
-  }
+    ngAfterViewInit() {
+        this.codeComponents.toArray().forEach((codeComponent, i) => {
+            codeComponent.code = this.tabs[i].code;
+        });
+    }
 
-  /** Gets the extracted TabInfo data from the provided code-pane element. */
-  private getTabInfo(tabContent: HTMLElement): TabInfo {
-    return {
-      class: tabContent.getAttribute('class'),
-      code: tabContent.innerHTML,
-      language: tabContent.getAttribute('language'),
-      linenums: tabContent.getAttribute('linenums') || this.linenums,
-      path: tabContent.getAttribute('path') || '',
-      region: tabContent.getAttribute('region') || '',
-      header: tabContent.getAttribute('header'),
-    };
-  }
+    /** Gets the extracted TabInfo data from the provided code-pane element. */
+    private getTabInfo(tabContent: HTMLElement): TabInfo {
+        return {
+            class: tabContent.getAttribute('class'),
+            code: tabContent.innerHTML,
+            language: tabContent.getAttribute('language'),
+            linenums: tabContent.getAttribute('linenums') || this.linenums,
+            path: tabContent.getAttribute('path') || '',
+            region: tabContent.getAttribute('region') || '',
+            header: tabContent.getAttribute('header'),
+        };
+    }
 }
