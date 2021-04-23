@@ -481,12 +481,7 @@ describe('ngRx Integration spec', () => {
       ) as SpyNgModuleFactoryLoader;
 
       loader.stubbedModules = { feature: FeatureModule };
-      router.resetConfig([
-        {
-          path: 'feature-path',
-          loadChildren: () => import('feature').then((m) => m.default),
-        },
-      ]);
+      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
 
       router.navigateByUrl('/feature-path').catch((err: TypeError) => {
         expect(err.message).toBe(

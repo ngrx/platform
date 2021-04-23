@@ -116,7 +116,7 @@ describe('Store Schematic', () => {
 
     const specifiedProjectPath = getTestProjectPath(defaultWorkspaceOptions, {
       ...defaultAppOptions,
-      name: defaultWorkspaceOptions.defaultProject,
+      name: 'bar',
     });
 
     const tree = await schematicRunner

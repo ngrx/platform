@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
     "noStrictGenericChecks": true,
     "lib": ["es2016", "dom"],
     "outDir": "../out-tsc/app",

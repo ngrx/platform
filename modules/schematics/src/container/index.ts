@@ -126,7 +126,7 @@ export default function (options: ContainerOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
-    const opts = ['state', 'stateInterface'].reduce(
+    const opts = ['state', 'stateInterface', 'testDepth'].reduce(
       (current: Partial<ContainerOptions>, key) => {
         return omit(current, key as any);
       },

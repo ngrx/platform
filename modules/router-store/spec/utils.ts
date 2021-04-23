@@ -39,7 +39,7 @@ export function createTestModule(
         },
         {
           path: 'load',
-          loadChildren: () => import('test').then((m) => m.default),
+          loadChildren: 'test',
           canLoad: ['CanLoadNext'],
         },
         {
