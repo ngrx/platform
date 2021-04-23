@@ -35,7 +35,7 @@ export function migrateToNgrxPush(): Rule {
           new ReplaceChange(
             template.fileName,
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            template.start + match!.index,
+            template.start + match.index!,
             m,
             m.replace('async', 'ngrxPush')
           )
