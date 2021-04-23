@@ -686,8 +686,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/schematics-core/src/**/*.ts",
-              "modules/schematics-core/src/**/*.html"
+              "modules/schematics-core/**/*.ts",
+              "modules/schematics-core/**/*.html"
             ]
           }
         },
