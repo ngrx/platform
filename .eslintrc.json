@@ -62,6 +62,16 @@
           {
             "selector": "class",
             "format": ["PascalCase"]
+          },
+          {
+            "selector": "variable",
+            "format": ["camelCase", "PascalCase", "UPPER_CASE"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "function",
+            "format": ["camelCase"],
+            "leadingUnderscore": "allow"
           }
         ],
         "@typescript-eslint/prefer-namespace-keyword": "error",
