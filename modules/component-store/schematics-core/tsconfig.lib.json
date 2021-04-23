@@ -1,18 +1,22 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "target": "es2015",
-    "declaration": true,
+    "baseUrl": ".",
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "outDir": "../../dist/modules/schematics-score",
+    "sourceMap": true,
     "inlineSources": true,
-    "types": [],
-    "lib": ["dom", "es2018"]
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true,
+    "strict": true
   },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts", "test-setup.ts"],
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
-  },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts"],
-  "include": ["**/*.ts"]
+    "skipMetadataEmit": true,
+    "enableSummariesForJit": false,
+    "enableIvy": false
+  }
 }

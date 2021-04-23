@@ -846,9 +846,12 @@ export function replaceImport(
   };
 
   const changes = imports.map((p) => {
-    const importSpecifiers = (p.importClause!.namedBindings! as ts.NamedImports)
-      .elements;
+    const namedImports = p?.importClause?.namedBindings as ts.NamedImports;
+    if (!namedImports) {
+      return [];
+    }
 
+    const importSpecifiers = namedImports.elements;
     const isAlreadyImported = importSpecifiers
       .map(importText)
       .includes(importToBe);
@@ -865,7 +868,7 @@ export function replaceImport(
       if (!isAlreadyImported) {
         return createReplaceChange(
           sourceFile,
-          specifier!,
+          specifier,
           importAsIs,
           importToBe
         );
