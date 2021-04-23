@@ -69,6 +69,10 @@
             "leadingUnderscore": "allow"
           },
           {
+            "selector": "objectLiteralProperty",
+            "format": ["camelCase", "UPPER_CASE"]
+          },
+          {
             "selector": "function",
             "format": ["camelCase"],
             "leadingUnderscore": "allow"
