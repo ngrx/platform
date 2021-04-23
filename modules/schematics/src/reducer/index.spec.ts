@@ -259,7 +259,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/\[fromFoo.fooFeatureKey\]\: fromFoo.State/);
+    expect(reducers).toMatch(/\[fromFoo.fooFeatureKey\]: fromFoo.State/);
   });
 
   it('should add the reducer function to the ActionReducerMap', async () => {
@@ -272,7 +272,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/\[fromFoo.fooFeatureKey\]\: fromFoo.reducer/);
+    expect(reducers).toMatch(/\[fromFoo.fooFeatureKey\]: fromFoo.reducer/);
   });
 
   it('should group within a "reducers" folder if group is set', async () => {

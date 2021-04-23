@@ -91,7 +91,7 @@ describe('Container Schematic', () => {
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
-    expect(content).toMatch(/import\ {\ Store\ }\ from\ '@ngrx\/store';/);
+    expect(content).toMatch(/import { Store } from '@ngrx\/store';/);
   });
 
   it('should update the component constructor if the state path if provided', async () => {
@@ -104,7 +104,7 @@ describe('Container Schematic', () => {
       `${projectPath}/src/app/foo/foo.component.ts`
     );
 
-    expect(content).toMatch(/constructor\(private store\: Store\) { }\n\n/);
+    expect(content).toMatch(/constructor\(private store: Store\) { }\n\n/);
   });
 
   it('should update the component spec', async () => {

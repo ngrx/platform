@@ -171,15 +171,15 @@ describe('Selector Schematic', () => {
 
       const selectorContent = tree.readContent(selectorPath);
       expect(selectorContent).toMatch(
-        /import\ \* as fromFoo from\ \'\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
+        /import \* as fromFoo from '\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
       );
 
       const specContent = tree.readContent(specPath);
       expect(specContent).toMatch(
-        /import\ \* as fromFoo from\ \'\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
+        /import \* as fromFoo from '\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
       );
       expect(specContent).toMatch(
-        /import\ \{ selectFooState \} from\ \'\.\/foo\.selectors';/
+        /import \{ selectFooState \} from '\.\/foo\.selectors';/
       );
     });
   });
