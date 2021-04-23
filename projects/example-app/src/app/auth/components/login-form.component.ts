@@ -76,7 +76,7 @@ import { Credentials } from '@example-app/auth/models';
     `,
   ],
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
   @Input()
   set pending(isPending: boolean) {
     if (isPending) {
@@ -94,10 +94,6 @@ export class LoginFormComponent implements OnInit {
     username: new FormControl('ngrx'),
     password: new FormControl(''),
   });
-
-  constructor() {}
-
-  ngOnInit() {}
 
   submit() {
     if (this.form.valid) {

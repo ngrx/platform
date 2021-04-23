@@ -16,13 +16,11 @@ import { LoginPageActions } from '@example-app/auth/actions';
   `,
   styles: [],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
   pending$ = this.store.select(fromAuth.selectLoginPagePending);
   error$ = this.store.select(fromAuth.selectLoginPageError);
 
   constructor(private store: Store) {}
-
-  ngOnInit() {}
 
   onSubmit(credentials: Credentials) {
     this.store.dispatch(LoginPageActions.login({ credentials }));
