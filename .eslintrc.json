@@ -41,6 +41,10 @@
             "leadingUnderscore": "allow"
           },
           {
+            "selector": "property",
+            "format": ["camelCase", "UPPER_CASE"]
+          },
+          {
             "selector": "enum",
             "format": ["PascalCase"]
           },
@@ -107,7 +111,8 @@
         "no-eval": "off",
         "no-redeclare": "off",
         "no-underscore-dangle": "off",
-        "no-var": "error"
+        "no-var": "error",
+        "no-prototype-builtins": "off"
       },
       "plugins": ["eslint-plugin-import", "@typescript-eslint"]
     },

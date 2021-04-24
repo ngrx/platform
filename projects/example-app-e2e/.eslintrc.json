@@ -1,6 +1,6 @@
 {
   "extends": ["plugin:cypress/recommended", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "schematics-core"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],

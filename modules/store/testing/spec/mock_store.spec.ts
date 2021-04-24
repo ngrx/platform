@@ -450,7 +450,7 @@ describe('Refreshing state', () => {
   let fixture: ComponentFixture<TodosComponent>;
 
   @Component({
-    selector: 'app-todos',
+    selector: 'ngrx-app-todos',
     template: `
       <ul>
         <li *ngFor="let todo of todos | async">

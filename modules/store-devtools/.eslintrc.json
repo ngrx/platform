@@ -1,6 +1,6 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "schematics-core"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -12,22 +12,8 @@
         "project": ["modules/store-devtools/tsconfig.*?.json"]
       },
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "ngrx",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "ngrx",
-            "style": "kebab-case"
-          }
-        ]
+        "@angular-eslint/directive-selector": "off",
+        "@angular-eslint/component-selector": "off"
       },
       "plugins": ["@typescript-eslint"]
     },

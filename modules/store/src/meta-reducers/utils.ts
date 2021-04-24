@@ -47,7 +47,6 @@ export function isFunction(target: any): target is () => void {
 }
 
 export function isComponent(target: any) {
-  // eslint-disable-next-line no-prototype-builtins
   return isFunction(target) && target.hasOwnProperty('ɵcmp');
 }
 

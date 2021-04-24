@@ -29,7 +29,7 @@ describe('NgRx Effects Integration spec', () => {
       ],
     });
 
-    let router: Router = TestBed.inject(Router);
+    const router: Router = TestBed.inject(Router);
     const loader: SpyNgModuleFactoryLoader = TestBed.inject(
       NgModuleFactoryLoader
     ) as SpyNgModuleFactoryLoader;
@@ -54,7 +54,7 @@ describe('NgRx Effects Integration spec', () => {
       ],
     });
 
-    let router: Router = TestBed.inject(Router);
+    const router: Router = TestBed.inject(Router);
     const loader: SpyNgModuleFactoryLoader = TestBed.inject(
       NgModuleFactoryLoader
     ) as SpyNgModuleFactoryLoader;
@@ -80,7 +80,7 @@ describe('NgRx Effects Integration spec', () => {
 
     describe('init actions', () => {
       it('should dispatch and react to init effect', () => {
-        let dispatchedActionsLog: string[] = [];
+        const dispatchedActionsLog: string[] = [];
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot({
@@ -102,7 +102,7 @@ describe('NgRx Effects Integration spec', () => {
       });
 
       it('should dispatch once for an instance', () => {
-        let dispatchedActionsLog: string[] = [];
+        const dispatchedActionsLog: string[] = [];
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot({
@@ -132,7 +132,7 @@ describe('NgRx Effects Integration spec', () => {
       });
 
       it('should dispatch once per instance key', () => {
-        let dispatchedActionsLog: string[] = [];
+        const dispatchedActionsLog: string[] = [];
         TestBed.configureTestingModule({
           imports: [
             StoreModule.forRoot({
@@ -169,7 +169,7 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     it('should dispatch actions in the correct order', async () => {
-      let dispatchedActionsLog: string[] = [];
+      const dispatchedActionsLog: string[] = [];
       TestBed.configureTestingModule({
         imports: [
           StoreModule.forRoot({
@@ -200,7 +200,7 @@ describe('NgRx Effects Integration spec', () => {
         new FeatEffectWithIdentifierAndInitAction('one')
       );
 
-      let router: Router = TestBed.inject(Router);
+      const router: Router = TestBed.inject(Router);
       const loader: SpyNgModuleFactoryLoader = TestBed.inject(
         NgModuleFactoryLoader
       ) as SpyNgModuleFactoryLoader;
@@ -242,7 +242,7 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     it('should dispatch user provided effects actions in order', async () => {
-      let dispatchedActionsLog: string[] = [];
+      const dispatchedActionsLog: string[] = [];
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
         imports: [
@@ -314,10 +314,6 @@ describe('NgRx Effects Integration spec', () => {
 
   @Injectable()
   class EffectWithOnInitAndResponse implements OnInitEffects {
-    ngrxOnInitEffects(): Action {
-      return { type: '[EffectWithOnInitAndResponse]: INIT' };
-    }
-
     response = createEffect(() => {
       return this.actions$.pipe(
         ofType('[EffectWithOnInitAndResponse]: INIT'),
@@ -333,6 +329,10 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     constructor(private actions$: Actions) {}
+
+    ngrxOnInitEffects(): Action {
+      return { type: '[EffectWithOnInitAndResponse]: INIT' };
+    }
   }
 
   class RootEffectWithInitAction implements OnInitEffects {

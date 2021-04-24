@@ -12,7 +12,7 @@ describe('EntityActionGuard', () => {
   let action: EntityAction<any>;
 
   beforeEach(() => {
-    let selectId = (hero: Hero) => hero.id;
+    const selectId = (hero: Hero) => hero.id;
     guard = new EntityActionGuard('Hero', selectId);
 
     createAction = (data?: any) =>

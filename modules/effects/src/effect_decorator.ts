@@ -50,7 +50,6 @@ function hasMetadataEntries<T extends Object>(
     [METADATA_KEY]: EffectMetadata<T>[];
   };
 } {
-  // eslint-disable-next-line no-prototype-builtins
   return sourceProto.constructor.hasOwnProperty(METADATA_KEY);
 }
 

@@ -7,9 +7,7 @@ import {
   createAction,
 } from '@ngrx/store';
 import { Actions, ofType } from '../';
-import { map, toArray, switchMap } from 'rxjs/operators';
-import { hot, cold } from 'jasmine-marbles';
-import { of } from 'rxjs';
+import { map, toArray } from 'rxjs/operators';
 
 describe('Actions', function () {
   let actions$: Actions<AddAction | SubtractAction>;
@@ -56,12 +54,12 @@ describe('Actions', function () {
       { type: SUBTRACT },
     ];
 
-    let iterations = [...actions];
+    const iterations = [...actions];
 
     actions$.subscribe({
       next(value) {
-        let change = iterations.shift();
-        expect(value.type).toEqual(change!.type);
+        const change = iterations.shift();
+        expect(value.type).toEqual(change?.type);
         done();
       },
     });

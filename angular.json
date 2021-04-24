@@ -88,8 +88,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/example-app/src/**/*.ts",
-              "projects/example-app/src/**/*.html"
+              "projects/example-app/**/*.ts",
+              "projects/example-app/**/*.html"
             ]
           }
         },
@@ -167,8 +167,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/store/src/**/*.ts",
-              "modules/store/src/**/*.html"
+              "modules/store/**/*.ts",
+              "modules/store/**/*.html"
             ]
           }
         },
@@ -221,8 +221,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/effects/src/**/*.ts",
-              "modules/effects/src/**/*.html"
+              "modules/effects/**/*.ts",
+              "modules/effects/**/*.html"
             ]
           }
         },
@@ -269,8 +269,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/data/src/**/*.ts",
-              "modules/data/src/**/*.html"
+              "modules/data/**/*.ts",
+              "modules/data/**/*.html"
             ]
           }
         },
@@ -323,8 +323,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/entity/src/**/*.ts",
-              "modules/entity/src/**/*.html"
+              "modules/entity/**/*.ts",
+              "modules/entity/**/*.html"
             ]
           }
         },
@@ -371,8 +371,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/store-devtools/src/**/*.ts",
-              "modules/store-devtools/src/**/*.html"
+              "modules/store-devtools/**/*.ts",
+              "modules/store-devtools/**/*.html"
             ]
           }
         },
@@ -419,8 +419,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/router-store/src/**/*.ts",
-              "modules/router-store/src/**/*.html"
+              "modules/router-store/**/*.ts",
+              "modules/router-store/**/*.html"
             ]
           }
         },
@@ -445,8 +445,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/schematics/src/**/*.ts",
-              "modules/schematics/src/**/*.html"
+              "modules/schematics/**/*.ts",
+              "modules/schematics/**/*.html"
             ]
           }
         },
@@ -553,8 +553,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/component/src/**/*.ts",
-              "modules/component/src/**/*.html"
+              "modules/component/**/*.ts",
+              "modules/component/**/*.html"
             ]
           }
         },
@@ -669,8 +669,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/ngrx.io/src/**/*.ts",
-              "projects/ngrx.io/src/**/*.html"
+              "projects/ngrx.io/**/*.ts",
+              "projects/ngrx.io/**/*.html"
             ]
           }
         }
@@ -781,8 +781,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/data-example-app/src/**/*.ts",
-              "projects/data-example-app/src/**/*.html"
+              "projects/data-example-app/**/*.ts",
+              "projects/data-example-app/**/*.html"
             ]
           }
         },
