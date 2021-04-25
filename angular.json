@@ -88,8 +88,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/example-app/**/*.ts",
-              "projects/example-app/**/*.html"
+              "projects/example-app/*/**/*.ts",
+              "projects/example-app/*/**/*.html"
             ]
           }
         },
@@ -167,8 +167,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/store/**/*.ts",
-              "modules/store/**/*.html"
+              "modules/store/*/**/*.ts",
+              "modules/store/*/**/*.html"
             ]
           }
         },
@@ -221,8 +221,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/effects/**/*.ts",
-              "modules/effects/**/*.html"
+              "modules/effects/*/**/*.ts",
+              "modules/effects/*/**/*.html"
             ]
           }
         },
@@ -269,8 +269,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/data/**/*.ts",
-              "modules/data/**/*.html"
+              "modules/data/*/**/*.ts",
+              "modules/data/*/**/*.html"
             ]
           }
         },
@@ -323,8 +323,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/entity/**/*.ts",
-              "modules/entity/**/*.html"
+              "modules/entity/*/**/*.ts",
+              "modules/entity/*/**/*.html"
             ]
           }
         },
@@ -371,8 +371,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/store-devtools/**/*.ts",
-              "modules/store-devtools/**/*.html"
+              "modules/store-devtools/*/**/*.ts",
+              "modules/store-devtools/*/**/*.html"
             ]
           }
         },
@@ -419,8 +419,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/router-store/**/*.ts",
-              "modules/router-store/**/*.html"
+              "modules/router-store/*/**/*.ts",
+              "modules/router-store/*/**/*.html"
             ]
           }
         },
@@ -445,8 +445,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/schematics/**/*.ts",
-              "modules/schematics/**/*.html"
+              "modules/schematics/*/**/*.ts",
+              "modules/schematics/*/**/*.html"
             ]
           }
         },
@@ -553,8 +553,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/component/**/*.ts",
-              "modules/component/**/*.html"
+              "modules/component/*/**/*.ts",
+              "modules/component/*/**/*.html"
             ]
           }
         },
@@ -601,8 +601,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/component-store/src/**/*.ts",
-              "modules/component-store/src/**/*.html"
+              "modules/component-store/*/**/*.ts",
+              "modules/component-store/*/**/*.html"
             ]
           }
         },
@@ -669,8 +669,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/ngrx.io/**/*.ts",
-              "projects/ngrx.io/**/*.html"
+              "projects/ngrx.io/src/*/**/*.ts",
+              "projects/ngrx.io/src/*/**/*.html"
             ]
           }
         }
@@ -686,8 +686,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "modules/schematics-core/**/*.ts",
-              "modules/schematics-core/**/*.html"
+              "modules/schematics-core/*/**/*.ts",
+              "modules/schematics-core/*/**/*.html"
             ]
           }
         },
@@ -781,8 +781,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/data-example-app/**/*.ts",
-              "projects/data-example-app/**/*.html"
+              "projects/data-example-app/*/**/*.ts",
+              "projects/data-example-app/*/**/*.html"
             ]
           }
         },

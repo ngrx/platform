@@ -42,7 +42,8 @@
           },
           {
             "selector": "property",
-            "format": ["camelCase", "UPPER_CASE"]
+            "format": ["camelCase", "UPPER_CASE"],
+            "leadingUnderscore": "allow"
           },
           {
             "selector": "enum",
