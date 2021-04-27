@@ -1,3 +1,51 @@
+<a name="12.0.0-beta.0"></a>
+
+# [12.0.0-beta.0](https://github.com/ngrx/platform/compare/11.1.1...12.0.0-beta.0) (2021-04-26)
+
+### Bug Fixes
+
+- **component:** include files in ng-add schematics ([ad13c9c](https://github.com/ngrx/platform/commit/ad13c9c))
+- **component-store:** include files in ng-add schematics ([bfef622](https://github.com/ngrx/platform/commit/bfef622))
+- **data:** include files in ng-add schematics ([526edd9](https://github.com/ngrx/platform/commit/526edd9))
+- **effects:** ng-add schematics will generate effects files properly ([4389307](https://github.com/ngrx/platform/commit/4389307))
+- **entity:** include files in ng-add schematics ([4d9f647](https://github.com/ngrx/platform/commit/4d9f647))
+- **router-store:** include files in ng-add schematics ([eb71d5c](https://github.com/ngrx/platform/commit/eb71d5c))
+- **store:** ng-add schematics will generate router files if minimal set to false ([74a2671](https://github.com/ngrx/platform/commit/74a2671))
+- **store-devtools:** include files in ng-add schematics ([ac706de](https://github.com/ngrx/platform/commit/ac706de))
+
+### build
+
+- update to Angular libraries to version 12 RC.0 ([#3000](https://github.com/ngrx/platform/issues/3000)) ([4fb030e](https://github.com/ngrx/platform/commit/4fb030e))
+- update to Nx version 12.0.x and TypeScript 4.1.x ([#2999](https://github.com/ngrx/platform/issues/2999)) ([cb258cb](https://github.com/ngrx/platform/commit/cb258cb))
+
+### Features
+
+- **store:** deprecate selectors with props ([#2993](https://github.com/ngrx/platform/issues/2993)) ([7c6d4e4](https://github.com/ngrx/platform/commit/7c6d4e4))
+
+### BREAKING CHANGES
+
+- Minimum versions of Angular and TypeScript have been updated
+
+BEFORE:
+
+Minimum of Angular version 11.x
+Minimum of TypeScript 4.1.x
+
+AFTER:
+
+Minimum of Angular version 12.x
+Minimum of TypeScript 4.2.x
+
+- The minimum TypeScript version has been updated to 4.1.x
+
+BEFORE:
+
+The minimum TypeScript version is 4.0.x
+
+AFTER:
+
+The minimum TypeScript version is 4.1.x
+
 <a name="11.1.1"></a>
 
 ## [11.1.1](https://github.com/ngrx/platform/compare/11.1.0...11.1.1) (2021-04-20)
