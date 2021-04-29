@@ -229,7 +229,9 @@ describe('Feature Schematic', () => {
     expect(fileContent).toMatch(
       /import { catchError, map, concatMap } from 'rxjs\/operators';/
     );
-    expect(fileContent).toMatch(/import { EMPTY, of } from 'rxjs';/);
+    expect(fileContent).toMatch(
+      /import { Observable, EMPTY, of } from 'rxjs';/
+    );
     expect(fileContent).toMatch(
       /import \* as FooActions from '.\/foo.actions';/
     );
