@@ -1,6 +1,14 @@
+<a name="12.0.0-beta.1"></a>
+
+# [12.0.0-beta.1](https://github.com/ngrx/platform/compare/12.0.0-beta.0...12.0.0-beta.1) (2021-04-29)
+
+### Bug Fixes
+
+- **schematics:** assert empty as action observable ([#3005](https://github.com/ngrx/platform/issues/3005)) ([61b1ac7](https://github.com/ngrx/platform/commit/61b1ac7)), closes [#2931](https://github.com/ngrx/platform/issues/2931)
+
 <a name="12.0.0-beta.0"></a>
 
-# [12.0.0-beta.0](https://github.com/ngrx/platform/compare/11.1.1...12.0.0-beta.0) (2021-04-26)
+# [12.0.0-beta.0](https://github.com/ngrx/platform/compare/11.1.1...12.0.0-beta.0) (2021-04-27)
 
 ### Bug Fixes
 
