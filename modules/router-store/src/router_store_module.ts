@@ -158,6 +158,12 @@ enum RouterTrigger {
  */
 @NgModule({})
 export class StoreRouterConnectingModule {
+  private lastEvent: Event | null = null;
+  private routerState: SerializedRouterStateSnapshot | null = null;
+  private storeState: any;
+  private trigger = RouterTrigger.NONE;
+  private stateKey: StateKeyOrSelector;
+
   static forRoot<
     T extends BaseRouterStoreState = SerializedRouterStateSnapshot
   >(
@@ -183,13 +189,6 @@ export class StoreRouterConnectingModule {
       ],
     };
   }
-
-  private lastEvent: Event | null = null;
-  private routerState: SerializedRouterStateSnapshot | null = null;
-  private storeState: any;
-  private trigger = RouterTrigger.NONE;
-
-  private stateKey: StateKeyOrSelector;
 
   constructor(
     private store: Store<any>,

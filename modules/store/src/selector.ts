@@ -73,7 +73,7 @@ export function defaultMemoize(
   isResultEqual = isEqualCheck
 ): MemoizedProjection {
   let lastArguments: null | IArguments = null;
-  // tslint:disable-next-line:no-any anything could be the result.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, , , , ,
   let lastResult: any = null;
   let overrideResult: any;
 
@@ -90,7 +90,8 @@ export function defaultMemoize(
     overrideResult = undefined;
   }
 
-  // tslint:disable-next-line:no-any anything could be the result.
+  /* eslint-disable prefer-rest-params, prefer-spread */
+  // disabled because of the use of `arguments`
   function memoized(): any {
     if (overrideResult !== undefined) {
       return overrideResult.result;
@@ -752,7 +753,7 @@ export function createFeatureSelector(
       const featureState = state[featureName];
       if (!isNgrxMockEnvironment() && isDevMode() && !(featureName in state)) {
         console.warn(
-          `@ngrx/store: The feature name \"${featureName}\" does ` +
+          `@ngrx/store: The feature name "${featureName}" does ` +
             'not exist in the state, therefore createFeatureSelector ' +
             'cannot access it.  Be sure it is imported in a loaded module ' +
             `using StoreModule.forRoot('${featureName}', ...) or ` +

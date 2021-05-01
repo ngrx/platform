@@ -103,6 +103,7 @@ export function act<
     typeof configOrProject === 'function'
       ? {
           project: configOrProject,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           error: errorFn!,
           operator: concatMap,
           complete: undefined,

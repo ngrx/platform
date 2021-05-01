@@ -1,8 +1,23 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
-  "newProjectRoot": "",
+  "cli": {
+    "analytics": false,
+    "defaultCollection": "@nrwl/angular"
+  },
   "defaultProject": "example-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "flat": true,
+      "skipTests": true,
+      "prefix": "bc",
+      "style": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "bc"
+    }
+  },
   "projects": {
     "example-app": {
       "root": "projects/example-app",
@@ -70,13 +85,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "projects/example-app/tsconfig.app.json",
-              "projects/example-app/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
+            "lintFilePatterns": [
+              "projects/example-app/*/**/*.ts",
+              "projects/example-app/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -108,10 +122,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": ["projects/example-app-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!projects/example-app-e2e/**"]
+            "lintFilePatterns": ["projects/example-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -125,7 +138,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/store/tsconfig-build.json",
+            "tsConfig": "modules/store/tsconfig.build.json",
             "project": "modules/store/ng-package.json"
           }
         },
@@ -151,13 +164,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/store/tsconfig-build.json",
-              "modules/store/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/store/**"]
+            "lintFilePatterns": [
+              "modules/store/*/**/*.ts",
+              "modules/store/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -180,7 +192,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/effects/tsconfig-build.json",
+            "tsConfig": "modules/effects/tsconfig.build.json",
             "project": "modules/effects/ng-package.json"
           }
         },
@@ -206,13 +218,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/effects/tsconfig-build.json",
-              "modules/effects/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/effects/**"]
+            "lintFilePatterns": [
+              "modules/effects/*/**/*.ts",
+              "modules/effects/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -235,7 +246,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/data/tsconfig-build.json",
+            "tsConfig": "modules/data/tsconfig.build.json",
             "project": "modules/data/ng-package.json"
           }
         },
@@ -255,13 +266,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/data/tsconfig-build.json",
-              "modules/data/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/data/**"]
+            "lintFilePatterns": [
+              "modules/data/*/**/*.ts",
+              "modules/data/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -284,7 +294,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/entity/tsconfig-build.json",
+            "tsConfig": "modules/entity/tsconfig.build.json",
             "project": "modules/entity/ng-package.json"
           }
         },
@@ -310,13 +320,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/entity/tsconfig-build.json",
-              "modules/entity/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/entity/**"]
+            "lintFilePatterns": [
+              "modules/entity/*/**/*.ts",
+              "modules/entity/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -339,7 +348,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/store-devtools/tsconfig-build.json",
+            "tsConfig": "modules/store-devtools/tsconfig.build.json",
             "project": "modules/store-devtools/ng-package.json"
           }
         },
@@ -359,13 +368,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/store-devtools/tsconfig-build.json",
-              "modules/store-devtools/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/store-devtools/**"]
+            "lintFilePatterns": [
+              "modules/store-devtools/*/**/*.ts",
+              "modules/store-devtools/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -388,7 +396,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/router-store/tsconfig-build.json",
+            "tsConfig": "modules/router-store/tsconfig.build.json",
             "project": "modules/router-store/ng-package.json"
           }
         },
@@ -408,13 +416,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/router-store/tsconfig-build.json",
-              "modules/router-store/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/router-store/**"]
+            "lintFilePatterns": [
+              "modules/router-store/*/**/*.ts",
+              "modules/router-store/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -435,13 +442,12 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/schematics/tsconfig-build.json",
-              "modules/schematics/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/schematics/**"]
+            "lintFilePatterns": [
+              "modules/schematics/*/**/*.ts",
+              "modules/schematics/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -456,7 +462,7 @@
           "builder": "@nrwl/node:package",
           "options": {
             "outputPath": "dist/modules/schematics",
-            "tsConfig": "modules/schematics/tsconfig-build.json",
+            "tsConfig": "modules/schematics/tsconfig.build.json",
             "packageJson": "modules/schematics/package.json",
             "main": "modules/schematics/src/index.ts",
             "sourceMap": false,
@@ -524,7 +530,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/component/tsconfig-build.json",
+            "tsConfig": "modules/component/tsconfig.build.json",
             "project": "modules/component/ng-package.json"
           }
         },
@@ -544,13 +550,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/component/tsconfig-build.json",
-              "modules/component/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/component/**"]
+            "lintFilePatterns": [
+              "modules/component/*/**/*.ts",
+              "modules/component/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -573,7 +578,7 @@
         "build-package": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "modules/component-store/tsconfig-build.json",
+            "tsConfig": "modules/component-store/tsconfig.build.json",
             "project": "modules/component-store/ng-package.json"
           }
         },
@@ -593,13 +598,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/component-store/tsconfig-build.json",
-              "modules/component-store/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/component-store/**"]
+            "lintFilePatterns": [
+              "modules/component-store/*/**/*.ts",
+              "modules/component-store/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -660,6 +664,15 @@
               }
             ]
           }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngrx.io/src/*/**/*.ts",
+              "projects/ngrx.io/src/*/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -670,13 +683,12 @@
       "prefix": "ngrx",
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "modules/schematics-core/tsconfig.lib.json",
-              "modules/schematics-core/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!modules/schematics-core/**/*"]
+            "lintFilePatterns": [
+              "modules/schematics-core/*/**/*.ts",
+              "modules/schematics-core/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -766,13 +778,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "projects/data-example-app/tsconfig.app.json",
-              "projects/data-example-app/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!projects/data-example-app/**/*"]
+            "lintFilePatterns": [
+              "projects/data-example-app/*/**/*.ts",
+              "projects/data-example-app/*/**/*.html"
+            ]
           }
         },
         "test": {
@@ -786,22 +797,5 @@
         }
       }
     }
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "inlineStyle": true,
-      "inlineTemplate": true,
-      "flat": true,
-      "skipTests": true,
-      "prefix": "bc",
-      "style": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "bc"
-    }
-  },
-  "cli": {
-    "analytics": false,
-    "defaultCollection": "@nrwl/angular"
   }
 }

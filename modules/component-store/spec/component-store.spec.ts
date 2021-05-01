@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ComponentStore } from '@ngrx/component-store';
 import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
 import {

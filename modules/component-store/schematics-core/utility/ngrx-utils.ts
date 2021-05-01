@@ -112,8 +112,8 @@ export function addReducerToStateInterface(
     const text = node.getFullText(source);
     const matches = text.match(/^\r?\n+(\s*)/);
 
-    if (matches!.length > 0) {
-      toInsert = `${matches![1]}${keyInsert}\n`;
+    if (matches && matches.length > 0) {
+      toInsert = `${matches[1]}${keyInsert}\n`;
     } else {
       toInsert = `\n${keyInsert}`;
     }
@@ -179,8 +179,8 @@ export function addReducerToActionReducerMap(
     const text = node.getFullText(source);
     const matches = text.match(/^\r?\n+(\s*)/);
 
-    if (matches.length > 0) {
-      toInsert = `\n${matches![1]}${keyInsert}`;
+    if (matches && matches.length > 0) {
+      toInsert = `\n${matches[1]}${keyInsert}`;
     } else {
       toInsert = `\n${keyInsert}`;
     }

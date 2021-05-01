@@ -56,7 +56,7 @@ export function noMonitor(): null {
 export const DEFAULT_NAME = 'NgRx Store DevTools';
 
 export function createConfig(
-  _options: StoreDevtoolsOptions
+  optionsInput: StoreDevtoolsOptions
 ): StoreDevtoolsConfig {
   const DEFAULT_OPTIONS: StoreDevtoolsConfig = {
     maxAge: false,
@@ -82,7 +82,8 @@ export function createConfig(
     },
   };
 
-  let options = typeof _options === 'function' ? _options() : _options;
+  const options =
+    typeof optionsInput === 'function' ? optionsInput() : optionsInput;
   const logOnly = options.logOnly
     ? { pause: true, export: true, test: true }
     : false;

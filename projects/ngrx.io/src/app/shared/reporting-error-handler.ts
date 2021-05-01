@@ -8,34 +8,34 @@ import { WindowToken } from './window';
  */
 @Injectable()
 export class ReportingErrorHandler extends ErrorHandler {
-  constructor(@Inject(WindowToken) private window: Window) {
-    super();
-  }
+    constructor(@Inject(WindowToken) private window: Window) {
+        super();
+    }
 
-  /**
+    /**
    * Send error info to Google Analytics, in addition to the default handling.
    * @param error Information about the error.
    */
-  handleError(error: string | Error) {
-    try {
-      super.handleError(error);
-    } catch (e) {
-      this.reportError(e);
+    handleError(error: string | Error) {
+        try {
+            super.handleError(error);
+        } catch (e) {
+            this.reportError(e);
+        }
+        this.reportError(error);
     }
-    this.reportError(error);
-  }
 
-  private reportError(error: string | Error) {
-    if (typeof error === 'string') {
-      (this.window as any).onerror(error);
-    } else {
-      (this.window as any).onerror(
-        error.message,
-        undefined,
-        undefined,
-        undefined,
-        error
-      );
+    private reportError(error: string | Error) {
+        if (typeof error === 'string') {
+            (this.window as any).onerror(error);
+        } else {
+            (this.window as any).onerror(
+                error.message,
+                undefined,
+                undefined,
+                undefined,
+                error
+            );
+        }
     }
-  }
 }

@@ -11,7 +11,7 @@ import {
 describe('BookStorageService', () => {
   let fixture: any;
 
-  let localStorageFake: Storage & any = {
+  const localStorageFake: Storage & any = {
     removeItem: jest.fn(),
     setItem: jest.fn(),
     getItem: jest.fn((_) => JSON.stringify(persistedCollection)),

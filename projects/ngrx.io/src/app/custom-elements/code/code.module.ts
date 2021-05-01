@@ -6,10 +6,10 @@ import { PrettyPrinter } from './pretty-printer.service';
 import { CopierService } from 'app/shared/copier.service';
 
 @NgModule({
-  imports: [ CommonModule, MatSnackBarModule ],
-  declarations: [ CodeComponent ],
-  entryComponents: [ CodeComponent ],
-  exports: [ CodeComponent ],
-  providers: [ PrettyPrinter, CopierService ]
+    imports: [ CommonModule, MatSnackBarModule ],
+    declarations: [ CodeComponent ],
+    entryComponents: [ CodeComponent ],
+    exports: [ CodeComponent ],
+    providers: [ PrettyPrinter, CopierService ]
 })
 export class CodeModule { }

@@ -3,12 +3,7 @@ import { select, Store, StoreModule } from '@ngrx/store';
 
 import { todoCount, todos } from './fixtures/edge_todos';
 
-interface TestAppSchema {
-  counter1: number;
-  counter2: number;
-  counter3: number;
-}
-
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Todo {}
 
 interface TodoAppSchema {

@@ -4,8 +4,4 @@ export default {
   format: 'umd',
   exports: 'named',
   moduleName: 'ngrx.component',
-  globals: {
-    // TODO: @ngrx/component - add ngrx deps, also add it to tsconfig-build.json as path
-    // '@ngrx/store': 'ngrx.store',
-  },
 };

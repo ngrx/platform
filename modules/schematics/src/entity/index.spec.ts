@@ -199,8 +199,8 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/user.reducer.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
-    expect(content).toMatch(/\[fromUser.usersFeatureKey\]\: fromUser.State/);
-    expect(content).toMatch(/\[fromUser.usersFeatureKey\]\: fromUser.reducer/);
+    expect(content).toMatch(/\[fromUser.usersFeatureKey\]: fromUser.State/);
+    expect(content).toMatch(/\[fromUser.usersFeatureKey\]: fromUser.reducer/);
   });
 
   it('should create a plural featureKey', async () => {
@@ -225,8 +225,8 @@ describe('Entity Schematic', () => {
         `${projectPath}/src/app/foo.actions.ts`
       );
       expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-      expect(fileContent).toMatch(/\[Foo\/API\] Load Foos\'/);
-      expect(fileContent).toMatch(/props\<\{ foos\: Foo\[\] }>\(\)/);
+      expect(fileContent).toMatch(/\[Foo\/API\] Load Foos'/);
+      expect(fileContent).toMatch(/props<\{ foos: Foo\[\] }>\(\)/);
     });
 
     it('should use action creator types in the reducer', async () => {
@@ -237,7 +237,7 @@ describe('Entity Schematic', () => {
         `${projectPath}/src/app/foo.reducer.ts`
       );
       expect(fileContent).toMatch(
-        /import \* as FooActions from \'\.\/foo.actions\';/
+        /import \* as FooActions from '\.\/foo.actions';/
       );
       expect(fileContent).toMatch(/on\(FooActions.addFoo,/);
       expect(fileContent).toMatch(

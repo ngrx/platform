@@ -1,13 +1,13 @@
 import { CirclesModule } from './circles.module';
 
 describe('CirclesModule', () => {
-  let circlesModule: CirclesModule;
+    let circlesModule: CirclesModule;
 
-  beforeEach(() => {
-    circlesModule = new CirclesModule();
-  });
+    beforeEach(() => {
+        circlesModule = new CirclesModule();
+    });
 
-  it('should create an instance', () => {
-    expect(circlesModule).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(circlesModule).toBeTruthy();
+    });
 });

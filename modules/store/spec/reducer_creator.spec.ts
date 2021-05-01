@@ -62,7 +62,7 @@ describe('classes/reducer', function (): void {
       });
 
       it('should create a primitive reducer', () => {
-        const initialState: number = 0;
+        const initialState = 0;
         const setState = createAction('setState', props<{ value: number }>());
         const resetState = createAction('resetState');
 

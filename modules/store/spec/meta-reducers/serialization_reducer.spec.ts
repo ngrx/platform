@@ -6,15 +6,15 @@ describe('serializationCheckMetaReducer:', () => {
   Object.defineProperty(AComponent, 'ɵcmp', {});
 
   const serializables: Record<string, any> = {
-    number: { value: 4 },
-    boolean: { value: true },
-    string: { value: 'foobar' },
-    array: { value: [1, 2, 3] },
-    object: { value: {} },
-    nested: { value: { number: 7, array: ['n', 'g', 'r', 'x'] } },
-    null: { value: null },
-    undefined: { value: undefined },
-    component: AComponent, // components should not throw (because these are ignored)
+    aNumber: { value: 4 },
+    aBoolean: { value: true },
+    aString: { value: 'foobar' },
+    anArray: { value: [1, 2, 3] },
+    anObject: { value: {} },
+    aNested: { value: { aNumber: 7, anArray: ['n', 'g', 'r', 'x'] } },
+    aNull: { value: null },
+    anUndefined: { value: undefined },
+    aComponent: AComponent, // components should not throw (because these are ignored)
   };
 
   const unSerializables: Record<string, any> = {

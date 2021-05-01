@@ -126,7 +126,7 @@ export class EntityCacheReducerFactory {
     entityCache: EntityCache,
     action: ClearCollections
   ) {
-    // tslint:disable-next-line:prefer-const
+    // eslint-disable-next-line prefer-const
     let { collections, tag } = action.payload;
     const entityOp = EntityOp.REMOVE_ALL;
 
@@ -184,7 +184,7 @@ export class EntityCacheReducerFactory {
     entityCache: EntityCache,
     action: MergeQuerySet
   ) {
-    // tslint:disable-next-line:prefer-const
+    // eslint-disable-next-line prefer-const
     let { mergeStrategy, querySet, tag } = action.payload;
     mergeStrategy =
       mergeStrategy === null ? MergeStrategy.PreserveChanges : mergeStrategy;

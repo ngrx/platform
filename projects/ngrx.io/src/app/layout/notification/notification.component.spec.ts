@@ -7,118 +7,118 @@ import { NotificationComponent } from './notification.component';
 import { WindowToken } from 'app/shared/window';
 
 describe('NotificationComponent', () => {
-  let component: NotificationComponent;
-  let fixture: ComponentFixture<TestComponent>;
+    let component: NotificationComponent;
+    let fixture: ComponentFixture<TestComponent>;
 
-  function configTestingModule(now = new Date('2018-01-20')) {
-    TestBed.configureTestingModule({
-      declarations: [TestComponent, NotificationComponent],
-      providers: [
-        { provide: WindowToken, useClass: MockWindow },
-        { provide: CurrentDateToken, useValue: now },
-      ],
-      imports: [NoopAnimationsModule],
-      schemas: [NO_ERRORS_SCHEMA]
+    function configTestingModule(now = new Date('2018-01-20')) {
+        TestBed.configureTestingModule({
+            declarations: [TestComponent, NotificationComponent],
+            providers: [
+                { provide: WindowToken, useClass: MockWindow },
+                { provide: CurrentDateToken, useValue: now },
+            ],
+            imports: [NoopAnimationsModule],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
+    }
+
+    function createComponent() {
+        fixture = TestBed.createComponent(TestComponent);
+        const debugElement = fixture.debugElement.query(By.directive(NotificationComponent));
+        component = debugElement.componentInstance;
+        component.ngOnInit();
+        fixture.detectChanges();
+    }
+
+    describe('content projection', () => {
+        it('should display the message text', () => {
+            configTestingModule();
+            createComponent();
+            expect(fixture.nativeElement.innerHTML).toContain('Version 6 of Angular Now Available!');
+        });
+
+        it('should render HTML elements', () => {
+            configTestingModule();
+            createComponent();
+            const button = fixture.debugElement.query(By.css('.action-button'));
+            expect(button.nativeElement.textContent).toEqual('Learn More');
+        });
+
+        it('should process Angular directives', () => {
+            configTestingModule();
+            createComponent();
+            const badSpans = fixture.debugElement.queryAll(By.css('.bad'));
+            expect(badSpans.length).toEqual(0);
+        });
     });
-  }
 
-  function createComponent() {
-    fixture = TestBed.createComponent(TestComponent);
-    const debugElement = fixture.debugElement.query(By.directive(NotificationComponent));
-    component = debugElement.componentInstance;
-    component.ngOnInit();
-    fixture.detectChanges();
-  }
-
-  describe('content projection', () => {
-    it('should display the message text', () => {
-      configTestingModule();
-      createComponent();
-      expect(fixture.nativeElement.innerHTML).toContain('Version 6 of Angular Now Available!');
+    it('should call dismiss() when the message link is clicked, if dismissOnContentClick is true', () => {
+        configTestingModule();
+        createComponent();
+        spyOn(component, 'dismiss');
+        component.dismissOnContentClick = true;
+        const message: HTMLSpanElement = fixture.debugElement.query(By.css('.messageholder')).nativeElement;
+        message.click();
+        expect(component.dismiss).toHaveBeenCalled();
     });
 
-    it('should render HTML elements', () => {
-      configTestingModule();
-      createComponent();
-      const button = fixture.debugElement.query(By.css('.action-button'));
-      expect(button.nativeElement.textContent).toEqual('Learn More');
+    it('should not call dismiss() when the message link is clicked, if dismissOnContentClick is false', () => {
+        configTestingModule();
+        createComponent();
+        spyOn(component, 'dismiss');
+        component.dismissOnContentClick = false;
+        const message: HTMLSpanElement = fixture.debugElement.query(By.css('.messageholder')).nativeElement;
+        message.click();
+        expect(component.dismiss).not.toHaveBeenCalled();
     });
 
-    it('should process Angular directives', () => {
-      configTestingModule();
-      createComponent();
-      const badSpans = fixture.debugElement.queryAll(By.css('.bad'));
-      expect(badSpans.length).toEqual(0);
+    it('should call dismiss() when the close button is clicked', () => {
+        configTestingModule();
+        createComponent();
+        spyOn(component, 'dismiss');
+        fixture.debugElement.query(By.css('button')).triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(component.dismiss).toHaveBeenCalled();
     });
-  });
 
-  it('should call dismiss() when the message link is clicked, if dismissOnContentClick is true', () => {
-    configTestingModule();
-    createComponent();
-    spyOn(component, 'dismiss');
-    component.dismissOnContentClick = true;
-    const message: HTMLSpanElement = fixture.debugElement.query(By.css('.messageholder')).nativeElement;
-    message.click();
-    expect(component.dismiss).toHaveBeenCalled();
-  });
+    it('should hide the notification when dismiss is called', () => {
+        configTestingModule();
+        createComponent();
+        expect(component.showNotification).toBe('show');
+        component.dismiss();
+        expect(component.showNotification).toBe('hide');
+    });
 
-  it('should not call dismiss() when the message link is clicked, if dismissOnContentClick is false', () => {
-    configTestingModule();
-    createComponent();
-    spyOn(component, 'dismiss');
-    component.dismissOnContentClick = false;
-    const message: HTMLSpanElement = fixture.debugElement.query(By.css('.messageholder')).nativeElement;
-    message.click();
-    expect(component.dismiss).not.toHaveBeenCalled();
-  });
+    it('should update localStorage key when dismiss is called', () => {
+        configTestingModule();
+        createComponent();
+        const setItemSpy: jasmine.Spy = TestBed.inject<Window>(
+            WindowToken
+        ).localStorage.setItem as jasmine.Spy;
+        component.dismiss();
+        expect(setItemSpy).toHaveBeenCalledWith('aio-notification/survey-january-2018', 'hide');
+    });
 
-  it('should call dismiss() when the close button is clicked', () => {
-    configTestingModule();
-    createComponent();
-    spyOn(component, 'dismiss');
-    fixture.debugElement.query(By.css('button')).triggerEventHandler('click', null);
-    fixture.detectChanges();
-    expect(component.dismiss).toHaveBeenCalled();
-  });
+    it('should not show the notification if the date is after the expiry date', () => {
+        configTestingModule(new Date('2018-01-23'));
+        createComponent();
+        expect(component.showNotification).toBe('hide');
+    });
 
-  it('should hide the notification when dismiss is called', () => {
-    configTestingModule();
-    createComponent();
-    expect(component.showNotification).toBe('show');
-    component.dismiss();
-    expect(component.showNotification).toBe('hide');
-  });
-
-  it('should update localStorage key when dismiss is called', () => {
-    configTestingModule();
-    createComponent();
-    const setItemSpy: jasmine.Spy = TestBed.inject<Window>(
-      WindowToken
-    ).localStorage.setItem as jasmine.Spy;
-    component.dismiss();
-    expect(setItemSpy).toHaveBeenCalledWith('aio-notification/survey-january-2018', 'hide');
-  });
-
-  it('should not show the notification if the date is after the expiry date', () => {
-    configTestingModule(new Date('2018-01-23'));
-    createComponent();
-    expect(component.showNotification).toBe('hide');
-  });
-
-  it('should not show the notification if the there is a "hide" flag in localStorage', () => {
-    configTestingModule();
-    const getItemSpy: jasmine.Spy = TestBed.inject<MockWindow>(
-      WindowToken
-    ).localStorage.getItem;
-    getItemSpy.and.returnValue('hide');
-    createComponent();
-    expect(getItemSpy).toHaveBeenCalledWith('aio-notification/survey-january-2018');
-    expect(component.showNotification).toBe('hide');
-  });
+    it('should not show the notification if the there is a "hide" flag in localStorage', () => {
+        configTestingModule();
+        const getItemSpy: jasmine.Spy = TestBed.inject<MockWindow>(
+            WindowToken
+        ).localStorage.getItem;
+        getItemSpy.and.returnValue('hide');
+        createComponent();
+        expect(getItemSpy).toHaveBeenCalledWith('aio-notification/survey-january-2018');
+        expect(component.showNotification).toBe('hide');
+    });
 });
 
 @Component({
-  template: `
+    template: `
   <aio-notification
     notificationId="survey-january-2018"
     expirationDate="2018-01-22">
@@ -135,5 +135,5 @@ class TestComponent {
 }
 
 class MockWindow {
-  localStorage = jasmine.createSpyObj('localStorage', ['getItem', 'setItem']);
+    localStorage = jasmine.createSpyObj('localStorage', ['getItem', 'setItem']);
 }

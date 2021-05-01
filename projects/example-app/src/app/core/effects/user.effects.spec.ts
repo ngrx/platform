@@ -35,7 +35,7 @@ describe('UserEffects', () => {
 
       tick(3 * 60 * 1000);
       expect(action).toBeDefined();
-      expect(action!.type).toBe(UserActions.idleTimeout.type);
+      expect(action?.type).toBe(UserActions.idleTimeout.type);
     }));
 
     it('should reset timeout on user activity', fakeAsync(() => {
@@ -53,7 +53,7 @@ describe('UserEffects', () => {
 
       tick(1 * 60 * 1000);
       expect(action).toBeDefined();
-      expect(action!.type).toBe(UserActions.idleTimeout.type);
+      expect(action?.type).toBe(UserActions.idleTimeout.type);
     }));
   });
 });

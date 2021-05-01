@@ -1,6 +1,6 @@
 import { ApiPage } from './api.po';
 
-describe('Api pages', function() {
+describe('Api pages', function () {
   it('should show direct subclasses of a class', () => {
     const page = new ApiPage('api/forms/AbstractControlDirective');
     expect(page.getDescendants('class', true)).toEqual([
@@ -76,13 +76,13 @@ describe('Api pages', function() {
 
   it('should show links to github', () => {
     const page = new ApiPage('api/core/EventEmitter');
-    /* tslint:disable:max-line-length */
+    /* eslint-disable max-len */
     expect(page.ghLinks.get(0).getAttribute('href')).toMatch(
       /https:\/\/github\.com\/angular\/angular\/edit\/master\/packages\/core\/src\/event_emitter\.ts\?message=docs\(core\)%3A%20describe%20your%20change\.\.\.#L\d+-L\d+/
     );
     expect(page.ghLinks.get(1).getAttribute('href')).toMatch(
       /https:\/\/github\.com\/angular\/angular\/tree\/[^/]+\/packages\/core\/src\/event_emitter\.ts#L\d+-L\d+/
     );
-    /* tslint:enable:max-line-length */
+    /* eslint-enable max-len */
   });
 });

@@ -320,7 +320,7 @@ describe('EntityCollectionReducerRegistry', () => {
 
   function createInitialCache(entityMap: { [entityName: string]: any[] }) {
     const cache: EntityCache = {};
-    // tslint:disable-next-line:forin
+    // eslint-disable-next-line guard-for-in
     for (const entityName in entityMap) {
       const selectId =
         metadata[entityName].selectId || ((entity: any) => entity.id);

@@ -1,9 +1,9 @@
 import {
-  Component,
-  Input,
-  AfterContentInit,
-  ViewChild,
-  ElementRef,
+    Component,
+    Input,
+    AfterContentInit,
+    ViewChild,
+    ElementRef,
 } from '@angular/core';
 import { PrettyPrinter } from '../code/pretty-printer.service';
 
@@ -24,28 +24,28 @@ $ ng g store State --root --module app.module.ts
 `;
 
 @Component({
-  selector: 'ngrx-code-block',
-  template: `
+    selector: 'ngrx-code-block',
+    template: `
     <div class="prettyprint-scroller">
       <pre class="prettyprint" #codeContainer></pre>
     </div>
   `,
 })
 export class CodeBlockComponent implements AfterContentInit {
-  @Input() code = '';
+    @Input() code = '';
 
-  @ViewChild('codeContainer', { read: ElementRef, static: true })
-  codeContainer;
+    @ViewChild('codeContainer', { read: ElementRef, static: true })
+    codeContainer;
 
-  formattedCode = '';
+    formattedCode = '';
 
-  constructor(private pretty: PrettyPrinter) {}
+    constructor(private pretty: PrettyPrinter) {}
 
-  ngAfterContentInit() {
-    let code = this.code === 'effects' ? EFFECTS_EXAMPLE : SCHEMATICS_EXAMPLE;
+    ngAfterContentInit() {
+        const code = this.code === 'effects' ? EFFECTS_EXAMPLE : SCHEMATICS_EXAMPLE;
 
-    this.pretty.formatCode(code).subscribe(formattedCode => {
-      this.codeContainer.nativeElement.innerHTML = formattedCode;
-    });
-  }
+        this.pretty.formatCode(code).subscribe(formattedCode => {
+            this.codeContainer.nativeElement.innerHTML = formattedCode;
+        });
+    }
 }

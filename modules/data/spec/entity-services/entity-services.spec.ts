@@ -96,12 +96,12 @@ describe('EntityServices', () => {
       const villain = { key: 'DE', name: 'Dr. Evil' } as Villain;
 
       const { entityServices } = entityServicesSetup();
-      const heroCollectionService = entityServices.getEntityCollectionService<
-        Hero
-      >('Hero');
-      const villainCollectionService = entityServices.getEntityCollectionService<
-        Villain
-      >('Villain');
+      const heroCollectionService = entityServices.getEntityCollectionService<Hero>(
+        'Hero'
+      );
+      const villainCollectionService = entityServices.getEntityCollectionService<Villain>(
+        'Villain'
+      );
 
       const entityCacheValues: any = [];
       entityServices.entityCache$.subscribe((cache) => {
@@ -184,7 +184,7 @@ function entityServicesSetup() {
         entityMetadata: entityMetadata,
       }),
     ],
-    /* tslint:disable-next-line:no-use-before-declare */
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     providers: [
       { provide: EntityCacheEffects, useValue: {} },
       { provide: EntityDataService, useValue: null },

@@ -266,7 +266,7 @@ function _addSymbolToNgModuleMetadata(
   importPath: string
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
-  let node: any = nodes[0]; // tslint:disable-line:no-any
+  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // Find the decorator declaration.
   if (!node) {
@@ -461,7 +461,7 @@ function _addSymbolToComponentMetadata(
   importPath: string
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
-  let node: any = nodes[0]; // tslint:disable-line:no-any
+  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // Find the decorator declaration.
   if (!node) {
@@ -846,9 +846,12 @@ export function replaceImport(
   };
 
   const changes = imports.map((p) => {
-    const importSpecifiers = (p.importClause!.namedBindings! as ts.NamedImports)
-      .elements;
+    const namedImports = p?.importClause?.namedBindings as ts.NamedImports;
+    if (!namedImports) {
+      return [];
+    }
 
+    const importSpecifiers = namedImports.elements;
     const isAlreadyImported = importSpecifiers
       .map(importText)
       .includes(importToBe);
@@ -865,7 +868,7 @@ export function replaceImport(
       if (!isAlreadyImported) {
         return createReplaceChange(
           sourceFile,
-          specifier!,
+          specifier,
           importAsIs,
           importToBe
         );

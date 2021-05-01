@@ -6,11 +6,11 @@ import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 const announcementsPath = CONTENT_URL_PREFIX + 'announcements.json';
 
 export interface Announcement {
-  imageUrl: string;
-  message: string;
-  linkUrl: string;
-  startDate: string;
-  endDate: string;
+    imageUrl: string;
+    message: string;
+    linkUrl: string;
+    startDate: string;
+    endDate: string;
 }
 
 /**
@@ -42,8 +42,8 @@ export interface Announcement {
  * verified members of the Angular team.
  */
 @Component({
-  selector: 'aio-announcement-bar',
-  template: `
+    selector: 'aio-announcement-bar',
+    template: `
   <div class="homepage-container" *ngIf="announcement">
     <div class="announcement-bar">
       <img [src]="announcement.imageUrl">
@@ -53,33 +53,33 @@ export interface Announcement {
   </div>`
 })
 export class AnnouncementBarComponent implements OnInit {
-  announcement: Announcement;
+    announcement: Announcement;
 
-  constructor(private http: HttpClient, private logger: Logger) {}
+    constructor(private http: HttpClient, private logger: Logger) {}
 
-  ngOnInit() {
-    this.http.get<Announcement[]>(announcementsPath)
-      .pipe(
-        catchError(error => {
-          this.logger.error(new Error(`${announcementsPath} request failed: ${error.message}`));
-          return [];
-        }),
-        map(announcements => this.findCurrentAnnouncement(announcements)),
-        catchError(error => {
-          this.logger.error(new Error(`${announcementsPath} contains invalid data: ${error.message}`));
-          return [];
-        }),
-      )
-      .subscribe(announcement => this.announcement = announcement);
-  }
+    ngOnInit() {
+        this.http.get<Announcement[]>(announcementsPath)
+            .pipe(
+                catchError(error => {
+                    this.logger.error(new Error(`${announcementsPath} request failed: ${error.message}`));
+                    return [];
+                }),
+                map(announcements => this.findCurrentAnnouncement(announcements)),
+                catchError(error => {
+                    this.logger.error(new Error(`${announcementsPath} contains invalid data: ${error.message}`));
+                    return [];
+                }),
+            )
+            .subscribe(announcement => this.announcement = announcement);
+    }
 
-  /**
+    /**
    * Get the first date in the list that is "live" now
    */
-  private findCurrentAnnouncement(announcements: Announcement[]) {
-    return announcements
-      .filter(announcement => new Date(announcement.startDate).valueOf() < Date.now())
-      .filter(announcement => new Date(announcement.endDate).valueOf() > Date.now())
-      [0];
-  }
+    private findCurrentAnnouncement(announcements: Announcement[]) {
+        return announcements
+            .filter(announcement => new Date(announcement.startDate).valueOf() < Date.now())
+            .filter(announcement => new Date(announcement.endDate).valueOf() > Date.now())
+            [0];
+    }
 }

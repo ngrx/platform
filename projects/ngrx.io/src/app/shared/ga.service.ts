@@ -10,34 +10,34 @@ import { WindowToken } from 'app/shared/window';
  * Associates data with a GA "property" from the environment (`gaId`).
  */
 export class GaService {
-  private previousUrl: string;
+    private previousUrl: string;
 
-  constructor(@Inject(WindowToken) private window: Window) {
-    this.ga('create', environment['gaId'], 'auto');
-  }
+    constructor(@Inject(WindowToken) private window: Window) {
+        this.ga('create', environment['gaId'], 'auto');
+    }
 
-  locationChanged(url: string) {
-    this.sendPage(url);
-  }
+    locationChanged(url: string) {
+        this.sendPage(url);
+    }
 
-  sendPage(url: string) {
+    sendPage(url: string) {
     // Won't re-send if the url hasn't changed.
-    if (url === this.previousUrl) {
-      return;
+        if (url === this.previousUrl) {
+            return;
+        }
+        this.previousUrl = url;
+        this.ga('set', 'page', '/' + url);
+        this.ga('send', 'pageview');
     }
-    this.previousUrl = url;
-    this.ga('set', 'page', '/' + url);
-    this.ga('send', 'pageview');
-  }
 
-  sendEvent(source: string, action: string, label?: string, value?: number) {
-    this.ga('send', 'event', source, action, label, value);
-  }
-
-  ga(...args: any[]) {
-    const gaFn = (this.window as any)['ga'];
-    if (gaFn) {
-      gaFn(...args);
+    sendEvent(source: string, action: string, label?: string, value?: number) {
+        this.ga('send', 'event', source, action, label, value);
     }
-  }
+
+    ga(...args: any[]) {
+        const gaFn = (this.window as any)['ga'];
+        if (gaFn) {
+            gaFn(...args);
+        }
+    }
 }

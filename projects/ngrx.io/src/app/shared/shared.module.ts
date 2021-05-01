@@ -4,8 +4,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SelectComponent } from './select/select.component';
 
 @NgModule({
-  imports: [CommonModule],
-  exports: [SearchResultsComponent, SelectComponent],
-  declarations: [SearchResultsComponent, SelectComponent],
+    imports: [CommonModule],
+    exports: [SearchResultsComponent, SelectComponent],
+    declarations: [SearchResultsComponent, SelectComponent],
 })
 export class SharedModule {}

@@ -19,7 +19,7 @@ export type Actions = DevtoolsActions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
-export const RECOMPUTE = '@ngrx/store-devtools/recompute' as '@ngrx/store-devtools/recompute';
+export const RECOMPUTE = '@ngrx/store-devtools/recompute' as const;
 export const RECOMPUTE_ACTION = { type: RECOMPUTE };
 
 export interface ComputedState {

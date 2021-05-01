@@ -25,7 +25,7 @@ import '@testing-library/cypress/add-commands';
 // TODO: uncomment once Applitools work properly
 // import '@applitools/eyes-cypress/commands';
 
-let LOCAL_STORAGE_MEMORY: any = {};
+const LOCAL_STORAGE_MEMORY: any = {};
 
 Cypress.Commands.add('saveLocalStorage', () => {
   Object.keys(localStorage).forEach((key) => {

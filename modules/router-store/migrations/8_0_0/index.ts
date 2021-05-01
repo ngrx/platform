@@ -10,7 +10,7 @@ import {
 function updateRouterStoreImport(): Rule {
   return (tree: Tree) => {
     visitTSSourceFiles(tree, (sourceFile) => {
-      let changes: ReplaceChange[] = [];
+      const changes: ReplaceChange[] = [];
       ts.forEachChild(sourceFile, function findDecorator(node) {
         if (!ts.isDecorator(node)) {
           ts.forEachChild(node, findDecorator);

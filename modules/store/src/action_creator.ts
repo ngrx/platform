@@ -125,12 +125,14 @@ export function createAction<T extends string, C extends Creator>(
 }
 
 export function props<P extends object>(): ActionCreatorProps<P> {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/naming-convention
   return { _as: 'props', _p: undefined! };
 }
 
 export function union<
   C extends { [key: string]: ActionCreator<string, Creator> }
 >(creators: C): ReturnType<C[keyof C]> {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return undefined!;
 }
 

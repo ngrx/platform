@@ -78,7 +78,7 @@ describe('PushPipe', () => {
       });
 
       it('should return emitted value from passed promise without changing it', (done: any) => {
-        let promise = Promise.resolve(42);
+        const promise = Promise.resolve(42);
         pushPipe.transform(promise);
         setTimeout(() => {
           expect(pushPipe.transform(promise)).toBe(42);

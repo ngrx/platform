@@ -140,7 +140,7 @@ describe('minimal serializer', () => {
   });
 
   function createExpectedSnapshot(prefix = 'root') {
-    let snapshot = {
+    const snapshot = {
       ...createRouteSnapshot(prefix),
       routeConfig: {
         // config doesn't have a component because it isn't serializable

@@ -10,11 +10,6 @@ import {
   ofEntityOp,
 } from '../../';
 
-class Hero {
-  id!: number;
-  name!: string;
-}
-
 // Todo: consider marble testing
 describe('EntityAction Operators', () => {
   // factory never changes in these tests
@@ -24,18 +19,18 @@ describe('EntityAction Operators', () => {
   let actions: Subject<EntityAction>;
 
   const testActions = {
-    foo: <Action>{ type: 'Foo' },
-    hero_query_all: entityActionFactory.create('Hero', EntityOp.QUERY_ALL),
-    villain_query_many: entityActionFactory.create(
+    FOO: <Action>{ type: 'Foo' },
+    HERO_QUERY_ALL: entityActionFactory.create('Hero', EntityOp.QUERY_ALL),
+    VILLAIN_QUERY_MANY: entityActionFactory.create(
       'Villain',
       EntityOp.QUERY_MANY
     ),
-    hero_delete: entityActionFactory.create(
+    HERO_DELETE: entityActionFactory.create(
       'Hero',
       EntityOp.SAVE_DELETE_ONE,
       42
     ),
-    bar: <Action>(<any>{ type: 'Bar', payload: 'bar' }),
+    BAR: <Action>(<any>{ type: 'Bar', payload: 'bar' }),
   };
 
   function dispatchTestActions() {
@@ -56,9 +51,9 @@ describe('EntityAction Operators', () => {
     actions.pipe(ofEntityType()).subscribe((ea) => results.push(ea));
 
     const expectedActions = [
-      testActions.hero_query_all,
-      testActions.villain_query_many,
-      testActions.hero_delete,
+      testActions.HERO_QUERY_ALL,
+      testActions.VILLAIN_QUERY_MANY,
+      testActions.HERO_DELETE,
     ];
     dispatchTestActions();
     expect(results).toEqual(expectedActions);
@@ -69,8 +64,8 @@ describe('EntityAction Operators', () => {
     actions.pipe(ofEntityType('Hero')).subscribe((ea) => results.push(ea));
 
     const expectedActions = [
-      testActions.hero_query_all,
-      testActions.hero_delete,
+      testActions.HERO_QUERY_ALL,
+      testActions.HERO_DELETE,
     ];
     dispatchTestActions();
     expect(results).toEqual(expectedActions);
@@ -101,9 +96,9 @@ describe('EntityAction Operators', () => {
 
   function ofEntityTypeTest() {
     const expectedActions = [
-      testActions.hero_query_all,
-      testActions.villain_query_many,
-      testActions.hero_delete,
+      testActions.HERO_QUERY_ALL,
+      testActions.VILLAIN_QUERY_MANY,
+      testActions.HERO_DELETE,
       // testActions.bar, // 'Bar' is not an EntityType
     ];
     dispatchTestActions();
@@ -147,9 +142,9 @@ describe('EntityAction Operators', () => {
     actions.pipe(ofEntityOp()).subscribe((ea) => results.push(ea));
 
     const expectedActions = [
-      testActions.hero_query_all,
-      testActions.villain_query_many,
-      testActions.hero_delete,
+      testActions.HERO_QUERY_ALL,
+      testActions.VILLAIN_QUERY_MANY,
+      testActions.HERO_DELETE,
     ];
     dispatchTestActions();
     expect(results).toEqual(expectedActions);
@@ -157,8 +152,8 @@ describe('EntityAction Operators', () => {
 
   function ofEntityOpTest() {
     const expectedActions = [
-      testActions.hero_query_all,
-      testActions.villain_query_many,
+      testActions.HERO_QUERY_ALL,
+      testActions.VILLAIN_QUERY_MANY,
     ];
     dispatchTestActions();
     expect(results).toEqual(expectedActions);

@@ -1,0 +1,125 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": ["camelCase"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "property",
+            "format": ["camelCase", "UPPER_CASE"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "enum",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "enumMember",
+            "format": ["PascalCase", "UPPER_CASE"]
+          },
+          {
+            "selector": "typeParameter",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "typeAlias",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "interface",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "classProperty",
+            "format": ["camelCase", "PascalCase", "UPPER_CASE"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "class",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "variable",
+            "format": ["camelCase", "PascalCase", "UPPER_CASE"],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "objectLiteralProperty",
+            "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+          },
+          {
+            "selector": "function",
+            "format": ["camelCase", "PascalCase"],
+            "leadingUnderscore": "allow"
+          }
+        ],
+        "@typescript-eslint/prefer-namespace-keyword": "error",
+        // because we're using object
+        "@typescript-eslint/ban-types": "warn",
+        // because we have empty constructors for DI
+        "@typescript-eslint/no-empty-function": "warn",
+        "eqeqeq": ["off", "smart"],
+        "id-blacklist": [
+          "error",
+          "any",
+          "Number",
+          "number",
+          "String",
+          "string",
+          "Boolean",
+          "boolean",
+          "Undefined",
+          "undefined"
+        ],
+        "id-match": "error",
+        "import/no-deprecated": "warn",
+        "no-eval": "off",
+        "no-redeclare": "off",
+        "no-underscore-dangle": "off",
+        "no-var": "error",
+        "no-prototype-builtins": "off"
+      },
+      "plugins": ["eslint-plugin-import", "@typescript-eslint"]
+    },
+    {
+      "files": ["*.html"],
+      "rules": {}
+    }
+  ]
+}

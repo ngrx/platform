@@ -166,6 +166,7 @@ export class EntityDataModuleWithoutEffects implements OnDestroy {
     reducerManager.addFeature(this.entityCacheFeature);
   }
 
+  // eslint-disable-next-line @angular-eslint/contextual-lifecycle
   ngOnDestroy() {
     this.reducerManager.removeFeature(this.entityCacheFeature);
   }

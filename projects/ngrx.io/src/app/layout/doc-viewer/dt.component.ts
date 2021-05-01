@@ -2,8 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { DocumentContents } from 'app/documents/document.service';
 
 @Component({
-  selector: 'aio-dt',
-  template: `
+    selector: 'aio-dt',
+    template: `
   <div *ngIf="on">
     <hr>
     <textarea #dt [value]="text" rows="10" cols="80"></textarea>
@@ -14,17 +14,19 @@ import { DocumentContents } from 'app/documents/document.service';
 })
 export class DtComponent {
 
-  @Input() on = false;
-  @Input('doc') doc: DocumentContents;
-  @Output() docChange = new EventEmitter<DocumentContents>();
+    @Input() on = false;
+    @Input('doc') doc: DocumentContents;
+    @Output() docChange = new EventEmitter<DocumentContents>();
 
-  @ViewChild('dt', { read: ElementRef, static: true })
-  dt: ElementRef;
+    @ViewChild('dt', { read: ElementRef, static: true })
+    dt: ElementRef;
 
-  get text() { return this.doc && this.doc.contents; }
+    get text() {
+        return this.doc && this.doc.contents;
+    }
 
-  dtextSet() {
-    this.doc.contents = this.dt.nativeElement.value;
-    this.docChange.emit({ ...this.doc });
-  }
+    dtextSet() {
+        this.doc.contents = this.dt.nativeElement.value;
+        this.docChange.emit({ ...this.doc });
+    }
 }

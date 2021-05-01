@@ -23,7 +23,7 @@ import {
 class CdAwareImplementation<U> implements OnDestroy {
   public renderedValue: any = undefined;
   public error: any = undefined;
-  public completed: boolean = false;
+  public completed = false;
   private readonly subscription: Unsubscribable;
   public cdAware: CdAware<U | undefined | null>;
   resetContextObserver: NextObserver<any> = {

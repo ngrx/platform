@@ -201,7 +201,7 @@ function findNgrxDataImportDeclarations(
 
 function findNgrxDataReplacements(sourceFile: ts.SourceFile) {
   const renameKeys = Object.keys(renames);
-  let changes: ReplaceChange[] = [];
+  const changes: ReplaceChange[] = [];
   ts.forEachChild(sourceFile, (node) => find(node, changes));
   return changes;
 

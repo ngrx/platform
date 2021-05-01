@@ -27,13 +27,14 @@ export function migrateToNgrxPush(): Rule {
   return (host: Tree) =>
     visitTemplates(host, (template) => {
       let match: RegExpMatchArray | null;
-      let changes: Change[] = [];
+      const changes: Change[] = [];
       while ((match = ASYNC_REGEXP.exec(template.content)) !== null) {
         const m = match.toString();
 
         changes.push(
           new ReplaceChange(
             template.fileName,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             template.start + match.index!,
             m,
             m.replace('async', 'ngrxPush')

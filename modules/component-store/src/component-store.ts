@@ -126,6 +126,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
         )
         .subscribe({
           next: ([value, currentState]) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.stateSubject$.next(updaterFn(currentState, value!));
           },
           error: (error: Error) => {
@@ -201,6 +202,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     this.stateSubject$.pipe(take(1)).subscribe((state) => {
       value = projector ? projector(state) : state;
     });
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return value!;
   }
 

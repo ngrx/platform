@@ -31,7 +31,10 @@ import { LayoutActions } from '@example-app/core/actions';
         >
           Browse Books
         </bc-nav-item>
-        <bc-nav-item (navigate)="closeSidenav()" *ngIf="!(loggedIn$ | async)">
+        <bc-nav-item
+          (navigate)="closeSidenav()"
+          *ngIf="(loggedIn$ | async) === false"
+        >
           Sign In
         </bc-nav-item>
         <bc-nav-item (navigate)="logout()" *ngIf="loggedIn$ | async">

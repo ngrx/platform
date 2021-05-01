@@ -5,7 +5,7 @@ import { EntityOp } from '../actions/entity-op';
 import { EntitySelectors$ } from '../selectors/entity-selectors$';
 import { EntitySelectors } from '../selectors/entity-selectors';
 
-// tslint:disable:member-ordering
+/* eslint-disable @typescript-eslint/member-ordering */
 
 /**
  * A facade for managing

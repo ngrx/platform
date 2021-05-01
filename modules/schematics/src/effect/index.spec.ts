@@ -304,7 +304,7 @@ describe('Effect Schematic', () => {
     );
 
     expect(content).toMatch(
-      /import \{ FooActionTypes, FooActions } from \'\.\.\/\.\.\/actions\/foo\/foo\.actions';/
+      /import \{ FooActionTypes, FooActions } from '\.\.\/\.\.\/actions\/foo\/foo\.actions';/
     );
   });
 

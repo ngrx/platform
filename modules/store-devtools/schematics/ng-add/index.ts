@@ -112,7 +112,7 @@ export default function (options: StoreDevtoolsOptions): Rule {
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
 
-    if (options.maxAge! < 0 || options.maxAge === 1) {
+    if (options.maxAge && (options.maxAge < 0 || options.maxAge === 1)) {
       throw new SchematicsException(
         `maxAge should be an integer greater than 1.`
       );

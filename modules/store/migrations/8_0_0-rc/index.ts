@@ -103,7 +103,7 @@ function findStoreFreezeImportsToRemove(sourceFile: ts.SourceFile) {
 }
 
 function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile) {
-  let changes: (RemoveChange | InsertChange)[] = [];
+  const changes: (RemoveChange | InsertChange)[] = [];
   ts.forEachChild(sourceFile, crawl);
   return changes;
 
@@ -137,7 +137,7 @@ function findStoreFreezeUsagesToRemove(sourceFile: ts.SourceFile) {
 }
 
 function findRuntimeCHecksToInsert(sourceFile: ts.SourceFile) {
-  let changes: InsertChange[] = [];
+  const changes: InsertChange[] = [];
   ts.forEachChild(sourceFile, crawl);
   return changes;
 

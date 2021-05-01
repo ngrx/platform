@@ -7,11 +7,11 @@ import { EventDateRangePipe } from './event-date-range.pipe';
 import { EventOrderByPipe } from './event-order-by.pipe';
 
 @NgModule({
-  imports: [ CommonModule ],
-  declarations: [ EventListComponent, EventDateRangePipe, EventOrderByPipe ],
-  entryComponents: [ EventListComponent ],
-  providers: [ EventService ]
+    imports: [ CommonModule ],
+    declarations: [ EventListComponent, EventDateRangePipe, EventOrderByPipe ],
+    entryComponents: [ EventListComponent ],
+    providers: [ EventService ]
 })
 export class EventListModule implements WithCustomElementComponent {
-  customElementComponent: Type<any> = EventListComponent;
+    customElementComponent: Type<any> = EventListComponent;
 }

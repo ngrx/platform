@@ -1,9 +1,9 @@
 import { browser } from 'protractor';
 import { SitePage } from './app.po';
 
-/* tslint:disable:max-line-length */
+/* eslint-disable max-len */
 
-describe('onerror handler', function() {
+describe('onerror handler', function () {
   let page: SitePage;
 
   beforeAll(() => {
@@ -245,7 +245,7 @@ createViewNodes@???`);
 
   async function callOnError(message, url, line, column, error) {
     await browser.executeScript(
-      function() {
+      function () {
         // reset the ga queue
         (window as any).ga.q.length = 0;
         // post the error to the handler
@@ -265,7 +265,7 @@ createViewNodes@???`);
     );
     const gaCalls = await page.ga();
     const exceptionCall = gaCalls.find(
-      call => call[0] === 'send' && call[1] === 'exception'
+      (call) => call[0] === 'send' && call[1] === 'exception'
     );
     if (exceptionCall) {
       const payload = exceptionCall[2];

@@ -86,7 +86,7 @@ describe('EffectSources', () => {
       const i = { type: 'From Source Identifier' };
       const i2 = { type: 'From Source Identifier 2' };
 
-      let circularRef = {} as any;
+      const circularRef = {} as any;
       circularRef.circularRef = circularRef;
       const g = { circularRef };
 
@@ -332,7 +332,7 @@ describe('EffectSources', () => {
       const i2 = { type: 'From Source Identifier 2' };
       const initAction = { type: '[SourceWithInitAction] Init' };
 
-      let circularRef = {} as any;
+      const circularRef = {} as any;
       circularRef.circularRef = circularRef;
       const g = { circularRef };
 
@@ -420,14 +420,6 @@ describe('EffectSources', () => {
       class SourceWithInitAction implements OnInitEffects, OnIdentifyEffects {
         effectIdentifier: string;
 
-        ngrxOnInitEffects() {
-          return initAction;
-        }
-
-        ngrxOnIdentifyEffects() {
-          return this.effectIdentifier;
-        }
-
         effectOne = createEffect(() => {
           return this.actions$.pipe(
             ofType('Action 1'),
@@ -441,6 +433,14 @@ describe('EffectSources', () => {
             mapTo({ type: 'Action 2 Response' })
           );
         });
+
+        ngrxOnInitEffects() {
+          return initAction;
+        }
+
+        ngrxOnIdentifyEffects() {
+          return this.effectIdentifier;
+        }
 
         constructor(private actions$: Actions, identifier: string = '') {
           this.effectIdentifier = identifier;

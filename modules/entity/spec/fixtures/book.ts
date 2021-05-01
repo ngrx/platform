@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const deepFreeze = require('deep-freeze');
 
 export interface BookModel {

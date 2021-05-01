@@ -143,8 +143,7 @@ describe('Router State Selectors', () => {
       interface State {
         router: any;
       }
-      let state: State;
-      state = {
+      const state: State = {
         router: undefined,
       };
       selectors = getSelectors((state: State) => state.router);

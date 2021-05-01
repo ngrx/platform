@@ -462,7 +462,7 @@ describe('Selectors', () => {
   });
 
   describe('createFeatureSelector', () => {
-    let featureName = 'featureA';
+    const featureName = 'featureA';
     let featureSelector: (state: any) => number;
     let warnSpy: jasmine.Spy;
 

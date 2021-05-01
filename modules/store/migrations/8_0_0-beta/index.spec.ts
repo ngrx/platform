@@ -135,7 +135,7 @@ describe('Store Migration 8_0_0 beta', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    let logs: string[] = [];
+    const logs: string[] = [];
     runner.logger.subscribe((log) => logs.push(log.message));
 
     const newTree = await runner
