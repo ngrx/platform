@@ -65,7 +65,7 @@ jobs:
       # Test
       - run:
           name: Run All Lint Checks
-          command: yarn nx run-many --target=lint --all --parallel
+          command: yarn nx run-many --target=lint --all
 
   lint-affected:
     <<: *run_in_node
@@ -80,7 +80,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Lint Checks
-          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel
+          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   # Enforce some static analysis invariants.
   # Note that generally, these should be checked only on the delta in each change,
@@ -252,7 +252,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout:
           path: ~/docs
       - restore_cache:
@@ -297,7 +297,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout
       - restore_cache:
           keys:
@@ -345,7 +345,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec"
+            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
       - checkout
       - restore_cache:
           keys:
