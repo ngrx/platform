@@ -297,7 +297,7 @@ export class AuthEffects {
 
 The `login` action has additional `credentials` metadata which is passed to a service to log the specific user into the application.
 
-However, there may be cases when the required metadata is only accessible from state.  When state is needed, the RxJS `withLatestFrom` operator can be used to provide it.
+However, there may be cases when the required metadata is only accessible from state.  When state is needed, the RxJS `withLatestFrom` or the @ngrx/effects `concatLatestFrom` operators can be used to provide it.
 
 The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
 
@@ -305,8 +305,7 @@ The example below shows the `addBookToCollectionSuccess$` effect displaying a di
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, ofType, createEffect, concatLatestFrom } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { tap, concatMap, withLatestFrom } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { CollectionApiActions } from '../actions';
 import * as fromBooks from '../reducers';
 
