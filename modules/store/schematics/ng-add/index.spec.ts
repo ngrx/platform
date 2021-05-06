@@ -16,6 +16,7 @@ describe('Store ng-add Schematic', () => {
   );
   const defaultOptions: RootStoreOptions = {
     skipPackageJson: false,
+    skipESLintPlugin: false,
     project: 'bar',
     module: 'app',
     minimal: false,
@@ -145,5 +146,46 @@ describe('Store ng-add Schematic', () => {
     );
 
     expect(content).toMatch(/export interface AppState {/);
+  });
+
+  it('should register the NgRx ESLint Plugin', async () => {
+    const options = { ...defaultOptions };
+
+    const initialConfig = {};
+    appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
+
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', options, appTree)
+      .toPromise();
+
+    const packageContent = tree.readContent('package.json');
+    const packageJson = JSON.parse(packageContent);
+    expect(packageJson.devDependencies['eslint-plugin-ngrx']).toBeDefined();
+
+    const eslintContent = tree.readContent(`.eslintrc.json`);
+    const eslintJson = JSON.parse(eslintContent);
+    expect(eslintJson).toEqual({
+      extends: ['plugin:ngrx/recommended'],
+      plugins: ['ngrx'],
+    });
+  });
+
+  it('should not register the NgRx ESLint Plugin when skipped', async () => {
+    const options = { ...defaultOptions, skipESLintPlugin: true };
+
+    const initialConfig = {};
+    appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
+
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', options, appTree)
+      .toPromise();
+
+    const packageContent = tree.readContent('package.json');
+    const packageJson = JSON.parse(packageContent);
+    expect(packageJson.devDependencies['eslint-plugin-ngrx']).not.toBeDefined();
+
+    const eslintContent = tree.readContent(`.eslintrc.json`);
+    const eslintJson = JSON.parse(eslintContent);
+    expect(eslintJson).toEqual(initialConfig);
   });
 });
