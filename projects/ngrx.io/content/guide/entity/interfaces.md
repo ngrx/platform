@@ -26,7 +26,7 @@ export interface User {
 
 export interface State extends EntityState&lt;User&gt; {
   // additional entity state properties
-  selectedUserId: number | null;
+  selectedUserId: string | null;
 }
 </code-example>
 
