@@ -41,6 +41,11 @@
       "type": "boolean",
       "default": true,
       "description": "Setup state management without registering initial reducers."
+    },
+    "skipESLintPlugin": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not register the NgRx ESLint Plugin."
     }
   },
   "required": []

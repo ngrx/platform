@@ -9,4 +9,5 @@ export interface Schema {
    * Setup state management without registering initial reducers.
    */
   minimal?: boolean;
+  skipESLintPlugin?: boolean;
 }

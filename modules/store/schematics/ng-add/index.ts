@@ -115,6 +115,53 @@ function addNgRxStoreToPackageJson() {
   };
 }
 
+function addNgRxESLintPlugin() {
+  return (host: Tree, context: SchematicContext) => {
+    const eslintConfigPath = '.eslintrc.json';
+    const docs =
+      'https://github.com/timdeschryver/eslint-plugin-ngrx/#eslint-plugin-ngrx';
+
+    const eslint = host.read(eslintConfigPath)?.toString('utf-8');
+    if (!eslint) {
+      return host;
+    }
+
+    addPackageToPackageJson(
+      host,
+      'devDependencies',
+      'eslint-plugin-ngrx',
+      '^1.0.0'
+    );
+    context.addTask(new NodePackageInstallTask());
+
+    try {
+      const json = JSON.parse(eslint);
+      json.plugins = [...(json.plugins || []), 'ngrx'];
+      json.extends = [...(json.extends || []), 'plugin:ngrx/recommended'];
+      host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
+
+      context.logger.info(`
+The NgRx ESLint Plugin is installed and configured with the recommended config.
+
+If you want to change the configuration, please see ${docs}.
+`);
+      return host;
+    } catch (err) {
+      context.logger.warn(`
+Something went wrong while adding the NgRx ESLint Plugin.
+The NgRx ESLint Plugin is installed but not configured.
+
+Please see ${docs} to configure the NgRx ESLint Plugin.
+
+Details:
+${err.message}
+`);
+    }
+
+    return host;
+  };
+}
+
 export default function (options: RootStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
@@ -156,6 +203,7 @@ export default function (options: RootStoreOptions): Rule {
         chain([addImportToNgModule(options), mergeWith(templateSource)])
       ),
       options && options.skipPackageJson ? noop() : addNgRxStoreToPackageJson(),
+      options && options.skipESLintPlugin ? noop() : addNgRxESLintPlugin(),
     ])(host, context);
   };
 }
