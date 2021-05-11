@@ -21,7 +21,7 @@ export interface User {
 
 export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
-  selectedUserId: number;
+  selectedUserId: string | null;
 }
 
 export function selectUserId(a: User): string {
@@ -62,7 +62,7 @@ export interface User {
 
 export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
-  selectedUserId: number | null;
+  selectedUserId: string | null;
 }
 
 export const initialState: State = adapter.getInitialState({
@@ -137,7 +137,7 @@ import * as UserActions from '../actions/user.actions';
 
 export interface State extends EntityState&lt;User&gt; {
   // additional entities state properties
-  selectedUserId: number | null;
+  selectedUserId: string | null;
 }
 
 export const adapter: EntityAdapter&lt;User&gt; = createEntityAdapter&lt;User&gt;();
