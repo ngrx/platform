@@ -1,3 +1,11 @@
+<a name="12.0.0"></a>
+
+# [12.0.0](https://github.com/ngrx/platform/compare/12.0.0-rc.0...12.0.0) (2021-05-12)
+
+### Features
+
+- **store:** register eslint-plugin-ngrx with ng add ([#3014](https://github.com/ngrx/platform/issues/3014)) ([5259890](https://github.com/ngrx/platform/commit/5259890))
+
 <a name="12.0.0-rc.0"></a>
 
 # [12.0.0-rc.0](https://github.com/ngrx/platform/compare/12.0.0-beta.1...12.0.0-rc.0) (2021-05-05)
