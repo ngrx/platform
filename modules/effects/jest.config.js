@@ -2,7 +2,6 @@ module.exports = {
   displayName: 'Effects',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/effects',
-
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {

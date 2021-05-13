@@ -2,7 +2,6 @@ module.exports = {
   displayName: 'Data Example App',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/apps/data-example-app',
-
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {

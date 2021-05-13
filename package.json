@@ -110,7 +110,7 @@
     "@nrwl/angular": "12.9.0",
     "core-js": "^2.5.4",
     "opencollective": "^1.0.3",
-    "rxjs": "~6.5.5",
+    "rxjs": "~7.4.0",
     "tslib": "^2.2.0",
     "zone.js": "0.11.4"
   },
@@ -173,7 +173,7 @@
     "husky": "^1.2.0",
     "jasmine": "^3.4.0",
     "jasmine-core": "3.6.0",
-    "jasmine-marbles": "0.8.3",
+    "jasmine-marbles": "0.9.1",
     "jasmine-spec-reporter": "5.0.2",
     "jest": "27.0.3",
     "jest-preset-angular": "9.0.7",
@@ -200,7 +200,7 @@
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rxjs-marbles": "^6.0.0",
+    "rxjs-marbles": "^7.0.1",
     "shelljs": "^0.8.3",
     "sorcery": "^0.10.0",
     "ts-jest": "27.0.3",
@@ -219,6 +219,7 @@
     "logo": "https://opencollective.com/opencollective/logo.txt"
   },
   "resolutions": {
+    "jasmine-marbles": "0.9.1",
     "listr": "^0.14.2",
     "listr-update-renderer": "^0.5.0",
     "listr-verbose-renderer": "^0.5.0",

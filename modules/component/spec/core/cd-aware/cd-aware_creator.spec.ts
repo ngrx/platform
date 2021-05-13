@@ -44,7 +44,7 @@ class CdAwareImplementation<U> implements OnDestroy {
       resetContextObserver: this.resetContextObserver,
       errorHandler,
     });
-    this.subscription = this.cdAware.subscribe();
+    this.subscription = this.cdAware.subscribe({});
   }
 
   ngOnDestroy(): void {

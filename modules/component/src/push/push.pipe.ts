@@ -79,7 +79,7 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
       resetContextObserver: this.resetContextObserver,
       errorHandler,
     });
-    this.subscription = this.cdAware.subscribe();
+    this.subscription = this.cdAware.subscribe({});
   }
 
   transform<T>(potentialObservable: null): null;

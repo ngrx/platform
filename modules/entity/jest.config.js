@@ -2,7 +2,6 @@ module.exports = {
   displayName: 'Entity',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/entity',
-
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {

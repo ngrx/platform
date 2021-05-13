@@ -22,7 +22,7 @@
   "peerDependencies": {
     "@angular/common": "^12.0.0",
     "@angular/core": "^12.0.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3 || ^7.0.0"
   },
   "schematics": "./schematics/collection.json",
   "sideEffects": false,
