@@ -51,9 +51,7 @@ function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
     const [instrumentNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `StoreDevtoolsModule.instrument({ maxAge: ${options.maxAge}, autoPause: ${
-        options.autoPause ?? false
-      }, logOnly: environment.production })`,
+      `StoreDevtoolsModule.instrument({ maxAge: ${options.maxAge}, logOnly: environment.production })`,
       modulePath
     );
 
