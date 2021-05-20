@@ -137,3 +137,11 @@ export interface RuntimeChecks {
    */
   strictActionTypeUniqueness?: boolean;
 }
+
+export type Primitive = string | number | bigint | boolean | null | undefined;
+
+export type RequiredKeys<T> = {
+  [K in keyof T]: {} extends { [P in K]: T[K] } ? never : K;
+}[keyof T];
+
+export type NonOptional<T> = Pick<T, RequiredKeys<T>>;
