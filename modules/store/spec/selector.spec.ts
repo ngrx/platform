@@ -128,7 +128,7 @@ describe('Selectors', () => {
       const selectorFn = jasmine
         .createSpy(
           'selectorFn',
-          createSelector((state: unknown) => state, projectorFn)
+          createSelector((state: any) => state, projectorFn)
         )
         .and.callThrough();
 
