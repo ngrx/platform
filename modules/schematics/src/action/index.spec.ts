@@ -10,6 +10,7 @@ import {
   defaultWorkspaceOptions,
   defaultAppOptions,
 } from '@ngrx/schematics-core/testing';
+import { capitalize } from '../../schematics-core/utility/strings';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
@@ -18,6 +19,7 @@ describe('Action Schematic', () => {
   );
   const defaultOptions: ActionOptions = {
     name: 'foo',
+    prefix: 'load',
     project: 'bar',
     group: false,
     flat: true,
@@ -173,6 +175,28 @@ describe('Action Schematic', () => {
       expect(fileContent).toMatch(/\[Foo\] Load Foos Failure/);
       expect(fileContent).toMatch(/props<{ error: any }>\(\)/);
     });
+
+    it.each(['load', 'delete', 'update'])(
+      'should create a action with prefix',
+      async (prefix) => {
+        const tree = await schematicRunner
+          .runSchematicAsync(
+            'action',
+            { ...creatorDefaultOptions, prefix: prefix },
+            appTree
+          )
+          .toPromise();
+        const fileContent = tree.readContent(
+          `${projectPath}/src/app/foo.actions.ts`
+        );
+        expect(fileContent).toMatch(
+          new RegExp(`export const ${prefix}Foos = createAction`)
+        );
+        expect(fileContent).toMatch(
+          new RegExp(`'\\[Foo] ${capitalize(prefix)} Foos'`)
+        );
+      }
+    );
   });
 
   describe('api', () => {

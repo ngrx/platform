@@ -60,6 +60,12 @@ Generate a spec file alongside the action file.
   - Type: `boolean`
   - Default: `false`
 
+Specify the prefix for the actions.
+
+- `--prefix`
+  - Type: `string`
+  - Default: `load`
+
 ## Examples
 
 Generate a `User` actions file with an associated spec file.

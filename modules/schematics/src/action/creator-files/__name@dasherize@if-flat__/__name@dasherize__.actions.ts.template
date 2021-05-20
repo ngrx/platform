@@ -1,15 +1,15 @@
 import { createAction, props } from '@ngrx/store';
 
-export const load<%= classify(name) %>s = createAction(
-  '[<%= classify(name) %>] Load <%= classify(name) %>s'
+export const <%= prefix %><%= classify(name) %>s = createAction(
+  '[<%= classify(name) %>] <%= classify(prefix) %> <%= classify(name) %>s'
 );
 
-<% if (api) { %>export const load<%= classify(name) %>sSuccess = createAction(
-  '[<%= classify(name) %>] Load <%= classify(name) %>s Success',
+<% if (api) { %>export const <%= prefix %><%= classify(name) %>sSuccess = createAction(
+  '[<%= classify(name) %>] <%= classify(prefix) %> <%= classify(name) %>s Success',
   props<{ data: any }>()
 );<% } %>
 
-<% if (api) { %>export const load<%= classify(name) %>sFailure = createAction(
-  '[<%= classify(name) %>] Load <%= classify(name) %>s Failure',
+<% if (api) { %>export const <%= prefix %><%= classify(name) %>sFailure = createAction(
+  '[<%= classify(name) %>] <%= classify(prefix) %> <%= classify(name) %>s Failure',
   props<{ error: any }>()
 );<% } %>
