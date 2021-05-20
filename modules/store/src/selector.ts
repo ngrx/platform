@@ -123,7 +123,8 @@ export function defaultMemoize(
 }
 
 export function createSelector<State, S extends unknown[], Result>(
-  ...args: [...{ [i in keyof S]: Selector<State, S[i]> }, (...s: S) => Result]
+  ...args: [...Selector<State, unknown>[], unknown] &
+    [...{ [i in keyof S]: Selector<State, S[i]> }, (...s: S) => Result]
 ): MemoizedSelector<State, Result>;
 
 /**
@@ -269,7 +270,8 @@ export function createSelector<
 ): MemoizedSelectorWithProps<State, Props, Result>;
 
 export function createSelector<State, S extends unknown[], Result>(
-  selectors: [...{ [i in keyof S]: Selector<State, S[i]> }],
+  selectors: [...Selector<State, unknown>[], unknown] &
+    [...{ [i in keyof S]: Selector<State, S[i]> }],
   projector: (...s: S) => Result
 ): MemoizedSelector<State, Result>;
 
