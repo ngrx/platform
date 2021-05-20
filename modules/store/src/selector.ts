@@ -270,7 +270,7 @@ export function createSelector<
 ): MemoizedSelectorWithProps<State, Props, Result>;
 
 export function createSelector<State, S extends unknown[], Result>(
-  selectors: [...Selector<State, unknown>[], unknown] &
+  selectors: Selector<State, unknown>[] &
     [...{ [i in keyof S]: Selector<State, S[i]> }],
   projector: (...s: S) => Result
 ): MemoizedSelector<State, Result>;
