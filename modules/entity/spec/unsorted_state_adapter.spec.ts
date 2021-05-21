@@ -68,6 +68,27 @@ describe('Unsorted State Adapter', () => {
     });
   });
 
+  it('should let you set many entities in the state', () => {
+    const firstChange = { title: 'First Change' };
+    const withMany = adapter.setAll([TheGreatGatsby], state);
+
+    const withUpserts = adapter.setMany(
+      [{ ...TheGreatGatsby, ...firstChange }, AClockworkOrange],
+      withMany
+    );
+
+    expect(withUpserts).toEqual({
+      ids: [TheGreatGatsby.id, AClockworkOrange.id],
+      entities: {
+        [TheGreatGatsby.id]: {
+          ...TheGreatGatsby,
+          ...firstChange,
+        },
+        [AClockworkOrange.id]: AClockworkOrange,
+      },
+    });
+  });
+
   it('should remove existing and add new ones on setAll', () => {
     const withOneEntity = adapter.addOne(TheGreatGatsby, state);
 

@@ -87,6 +87,7 @@ state if no changes were made.
 - `addMany`: Add multiple entities to the collection.
 - `setAll`: Replace current collection with provided collection.
 - `setOne`: Add or Replace one entity in the collection.
+- `setMany`: Add or Replace multiple entities in the collection.
 - `removeOne`: Remove one entity from the collection.
 - `removeMany`: Remove multiple entities from the collection, by id or by predicate.
 - `removeAll`: Clear entity collection.
@@ -188,6 +189,9 @@ const userReducer = createReducer(
   on(UserActions.loadUsers, (state, { users }) => {
     return adapter.setAll(users, state);
   }),
+  on(UserActions.setUsers, (state, { users }) => {
+    return adapter.setMany(users, state);
+  }),
   on(UserActions.clearUsers, state => {
     return adapter.removeAll({ ...state, selectedUserId: null });
   })
@@ -242,7 +246,7 @@ type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
 Secondly, `upsertOne` and `upsertMany` will perform an insert or update. If a partial entity is provided this will perform an update.
 
-To prevent partial updates either explicitly set all the fields, setting non-used fields with value `undefined`, or use the `setOne` or `setAll` adapter methods. 
+To prevent partial updates either explicitly set all the fields, setting non-used fields with value `undefined`, or use the `setOne`, `setAll` or `setMany` adapter methods. 
 
 ### Entity Selectors
 
