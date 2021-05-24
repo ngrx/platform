@@ -136,8 +136,16 @@ function addNgRxESLintPlugin() {
 
     try {
       const json = JSON.parse(eslint);
-      json.plugins = [...(json.plugins || []), 'ngrx'];
-      json.extends = [...(json.extends || []), 'plugin:ngrx/recommended'];
+      if (json.overrides) {
+        json.overrides
+          .filter((override: { files?: string[] }) =>
+            override.files?.some((file: string) => file.endsWith('*.ts'))
+          )
+          .forEach(configureESLintPlugin);
+      } else {
+        configureESLintPlugin(json);
+      }
+
       host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
 
       context.logger.info(`
@@ -160,6 +168,11 @@ ${err.message}
 
     return host;
   };
+}
+
+function configureESLintPlugin(json: any): void {
+  json.plugins = [...(json.plugins || []), 'ngrx'];
+  json.extends = [...(json.extends || []), 'plugin:ngrx/recommended'];
 }
 
 export default function (options: RootStoreOptions): Rule {
@@ -189,7 +202,7 @@ export default function (options: RootStoreOptions): Rule {
     }
 
     const templateSource = apply(url('./files'), [
-      filter((_) => (options.minimal ? false : true)),
+      filter(() => (options.minimal ? false : true)),
       applyTemplates({
         ...stringUtils,
         ...options,

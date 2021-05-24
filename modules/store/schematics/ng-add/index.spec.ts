@@ -170,6 +170,80 @@ describe('Store ng-add Schematic', () => {
     });
   });
 
+  it('should register the NgRx ESLint Plugin in overrides when it supports TS', async () => {
+    const options = { ...defaultOptions };
+
+    // this is a trimmed down version of the default angular-eslint schematic
+    const initialConfig = {
+      overrides: [
+        {
+          files: ['*.ts'],
+          parserOptions: {
+            project: ['tsconfig.eslint.json'],
+            createDefaultProgram: true,
+          },
+          extends: [
+            'plugin:@angular-eslint/recommended',
+            'eslint:recommended',
+            'plugin:@typescript-eslint/recommended',
+            'plugin:@typescript-eslint/recommended-requiring-type-checking',
+            'plugin:@angular-eslint/template/process-inline-templates',
+            'plugin:prettier/recommended',
+          ],
+        },
+        {
+          files: ['*.html'],
+          extends: [
+            'plugin:@angular-eslint/template/recommended',
+            'plugin:prettier/recommended',
+          ],
+          rules: {},
+        },
+      ],
+    };
+    appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
+
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', options, appTree)
+      .toPromise();
+
+    const packageContent = tree.readContent('package.json');
+    const packageJson = JSON.parse(packageContent);
+    expect(packageJson.devDependencies['eslint-plugin-ngrx']).toBeDefined();
+
+    const eslintContent = tree.readContent(`.eslintrc.json`);
+    const eslintJson = JSON.parse(eslintContent);
+    expect(eslintJson).toEqual({
+      overrides: [
+        {
+          files: ['*.ts'],
+          parserOptions: {
+            project: ['tsconfig.eslint.json'],
+            createDefaultProgram: true,
+          },
+          plugins: ['ngrx'],
+          extends: [
+            'plugin:@angular-eslint/recommended',
+            'eslint:recommended',
+            'plugin:@typescript-eslint/recommended',
+            'plugin:@typescript-eslint/recommended-requiring-type-checking',
+            'plugin:@angular-eslint/template/process-inline-templates',
+            'plugin:prettier/recommended',
+            'plugin:ngrx/recommended',
+          ],
+        },
+        {
+          files: ['*.html'],
+          extends: [
+            'plugin:@angular-eslint/template/recommended',
+            'plugin:prettier/recommended',
+          ],
+          rules: {},
+        },
+      ],
+    });
+  });
+
   it('should not register the NgRx ESLint Plugin when skipped', async () => {
     const options = { ...defaultOptions, skipESLintPlugin: true };
 
