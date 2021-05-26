@@ -5,6 +5,11 @@ export interface Schema {
   name: string;
 
   /**
+   * The prefix for the actions.
+   */
+  prefix: string;
+
+  /**
    * The path to create the component.
    */
   path?: string;

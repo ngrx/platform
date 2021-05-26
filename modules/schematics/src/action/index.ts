@@ -1,6 +1,5 @@
 import {
   Rule,
-  SchematicsException,
   apply,
   applyTemplates,
   branchAndMerge,
@@ -9,21 +8,21 @@ import {
   mergeWith,
   move,
   noop,
-  template,
   url,
   Tree,
   SchematicContext,
 } from '@angular-devkit/schematics';
 import { Schema as ActionOptions } from './schema';
-import {
-  getProjectPath,
-  stringUtils,
-  parseName,
-} from '@ngrx/schematics/schematics-core';
+import { getProjectPath, stringUtils, parseName } from '../../schematics-core';
+import { capitalize, camelize } from '../../schematics-core/utility/strings';
 
 export default function (options: ActionOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
+
+    options.prefix = options.creators
+      ? camelize(options.prefix || 'load')
+      : capitalize(options.prefix || 'load');
 
     const parsedPath = parseName(options.path, options.name);
     options.name = parsedPath.name;
