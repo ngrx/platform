@@ -67,6 +67,24 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     return DidMutate.Both;
   }
 
+  function setManyMutably(entities: T[], state: R): DidMutate;
+  function setManyMutably(entities: any[], state: any): DidMutate {
+    const didMutateSetOne = entities.map((entity) =>
+      setOneMutably(entity, state)
+    );
+
+    switch (true) {
+      case didMutateSetOne.some((didMutate) => didMutate === DidMutate.Both):
+        return DidMutate.Both;
+      case didMutateSetOne.some(
+        (didMutate) => didMutate === DidMutate.EntitiesOnly
+      ):
+        return DidMutate.EntitiesOnly;
+      default:
+        return DidMutate.None;
+    }
+  }
+
   function removeOneMutably(key: T, state: R): DidMutate;
   function removeOneMutably(key: any, state: any): DidMutate {
     return removeManyMutably([key], state);
@@ -232,6 +250,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     addMany: createStateOperator(addManyMutably),
     setAll: createStateOperator(setAllMutably),
     setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
     updateOne: createStateOperator(updateOneMutably),
     updateMany: createStateOperator(updateManyMutably),
     upsertOne: createStateOperator(upsertOneMutably),
