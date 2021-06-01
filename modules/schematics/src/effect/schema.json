@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxEffect",
+  "$id": "SchematicsNgRxEffect",
   "title": "NgRx Effect Options Schema",
   "type": "object",
   "properties": {

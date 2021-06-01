@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxRootState",
+  "$id": "SchematicsNgRxRootState",
   "title": "NgRx Root State Management Options Schema",
   "type": "object",
   "properties": {

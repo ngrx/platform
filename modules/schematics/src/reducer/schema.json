@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxReducer",
+  "$id": "SchematicsNgRxReducer",
   "title": "NgRx Reducer Options Schema",
   "type": "object",
   "properties": {

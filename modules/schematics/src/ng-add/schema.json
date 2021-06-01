@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxSchematics",
+  "$id": "SchematicsNgRxSchematics",
   "title": "Scaffolding library for Angular applications using NgRx libraries",
   "type": "object",
   "properties": {

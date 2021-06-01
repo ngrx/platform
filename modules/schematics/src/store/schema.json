@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxState",
+  "$id": "SchematicsNgRxState",
   "title": "NgRx State Management Options Schema",
   "type": "object",
   "properties": {

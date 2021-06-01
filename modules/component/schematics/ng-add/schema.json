@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxComponent",
+  "$id": "SchematicsNgRxComponent",
   "title": "NgRx Component Schema",
   "type": "object",
   "properties": {

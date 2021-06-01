@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxAction",
+  "$id": "SchematicsNgRxAction",
   "title": "NgRx Action Options Schema",
   "type": "object",
   "properties": {
