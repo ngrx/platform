@@ -9,7 +9,6 @@ describe('createFeature()', () => {
         createAction,
         createFeature,
         createReducer,
-        Feature,
         on,
         props,
         Store,
@@ -125,6 +124,22 @@ describe('createFeature()', () => {
       `);
 
       snippet.toInfer('counterState$', 'Observable<number>');
+    });
+
+    it('should fail when feature state contains optional properties', () => {
+      expectSnippet(`
+        interface State {
+          movies: string[];
+          activeProductId?: number;
+        }
+
+        const initialState: State = { movies: [], activeProductId: undefined };
+
+        const counterFeature = createFeature({
+          name: 'movies',
+          reducer: createReducer(initialState),
+        });
+      `).toFail(/optional properties are not allowed in the feature state/);
     });
   });
 
@@ -257,65 +272,26 @@ describe('createFeature()', () => {
 
       snippet.toInfer('counterState$', 'Observable<number>');
     });
+
+    it('should fail when feature state contains optional properties', () => {
+      expectSnippet(`
+        interface CounterState {
+          count?: number;
+        }
+
+        interface AppState {
+          counter: CounterState;
+        }
+
+        const counterFeature = createFeature<AppState>({
+          name: 'counter',
+          reducer: createReducer({} as CounterState),
+        });
+      `).toFail(/optional properties are not allowed in the feature state/);
+    });
   });
 
   describe('nested selectors', () => {
-    it('should not create from optional feature state properties', () => {
-      const snippet = expectSnippet(`
-        interface FeatureState {
-          prop1: null;
-          prop2: { foo: string } | null;
-          prop3?: { bar: number };
-          prop4: { baz: boolean } | undefined;
-          prop5?: number;
-          prop6: undefined;
-        }
-
-        const initialState: FeatureState = {
-          prop1: null,
-          prop2: null,
-          prop3: { bar: 1 },
-          prop4: undefined,
-          prop6: undefined,
-        };
-
-        const feature = createFeature({
-          name: 'optional',
-          reducer: createReducer(initialState),
-        });
-
-        const {
-          selectProp1,
-          selectProp2,
-          selectProp4,
-          selectProp6
-        } = feature;
-
-        let featureKeys: keyof typeof feature;
-      `);
-
-      snippet.toInfer(
-        'selectProp1',
-        'MemoizedSelector<Record<string, any>, null, DefaultProjectorFn<null>>'
-      );
-      snippet.toInfer(
-        'selectProp2',
-        'MemoizedSelector<Record<string, any>, { foo: string; } | null, DefaultProjectorFn<{ foo: string; } | null>>'
-      );
-      snippet.toInfer(
-        'selectProp4',
-        'MemoizedSelector<Record<string, any>, { baz: boolean; } | undefined, DefaultProjectorFn<{ baz: boolean; } | undefined>>'
-      );
-      snippet.toInfer(
-        'selectProp6',
-        'MemoizedSelector<Record<string, any>, undefined, DefaultProjectorFn<undefined>>'
-      );
-      snippet.toInfer(
-        'featureKeys',
-        '"selectOptionalState" | "selectProp1" | "selectProp2" | "selectProp4" | "selectProp6" | keyof FeatureConfig<"optional", FeatureState>'
-      );
-    });
-
     it('should not create with feature state as a primitive value', () => {
       expectSnippet(`
         const feature = createFeature({
