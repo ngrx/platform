@@ -17,7 +17,7 @@ export function createSelectorsFactory<T>() {
       (ids, entities): any => ids.map((id: any) => (entities as any)[id])
     );
 
-    const selectTotal = createSelector(selectIds, (ids: any) => ids.length);
+    const selectTotal = createSelector(selectIds, (ids) => ids.length);
 
     if (!selectState) {
       return {
