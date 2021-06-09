@@ -1,3 +1,19 @@
+<a name="12.1.0"></a>
+
+# [12.1.0](https://github.com/ngrx/platform/compare/12.0.0...12.1.0) (2021-06-09)
+
+### Bug Fixes
+
+- **data:** remove strict typing for optimistic false ([#3020](https://github.com/ngrx/platform/issues/3020)) ([3b565b4](https://github.com/ngrx/platform/commit/3b565b4)), closes [#2928](https://github.com/ngrx/platform/issues/2928)
+- **store:** add ESLint plugin to TS overrides when possible ([#3032](https://github.com/ngrx/platform/issues/3032)) ([5102a34](https://github.com/ngrx/platform/commit/5102a34)), closes [#3031](https://github.com/ngrx/platform/issues/3031)
+
+### Features
+
+- **entity:** new `setMany` adapter ([#3026](https://github.com/ngrx/platform/issues/3026)) ([#3029](https://github.com/ngrx/platform/issues/3029)) ([a02ea9f](https://github.com/ngrx/platform/commit/a02ea9f))
+- **schematics:** add the ability to create actions with the prefix ([#3025](https://github.com/ngrx/platform/issues/3025)) ([15bc0df](https://github.com/ngrx/platform/commit/15bc0df))
+- **store:** add createFeature ([#3033](https://github.com/ngrx/platform/issues/3033)) ([5fd1c7b](https://github.com/ngrx/platform/commit/5fd1c7b)), closes [#2974](https://github.com/ngrx/platform/issues/2974)
+- **store-devtools:** add autoPause option ([#2941](https://github.com/ngrx/platform/issues/2941)) ([698bd29](https://github.com/ngrx/platform/commit/698bd29)), closes [#2722](https://github.com/ngrx/platform/issues/2722)
+
 <a name="12.0.0"></a>
 
 # [12.0.0](https://github.com/ngrx/platform/compare/12.0.0-rc.0...12.0.0) (2021-05-12)
