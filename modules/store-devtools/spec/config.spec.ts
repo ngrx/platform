@@ -26,6 +26,7 @@ describe('StoreDevtoolsOptions', () => {
       name: DEFAULT_NAME,
       serialize: false,
       logOnly: false,
+      autoPause: false,
       features: defaultFeatures,
     });
   });
@@ -43,6 +44,7 @@ describe('StoreDevtoolsOptions', () => {
       stateSanitizer,
       name: 'ABC',
       serialize: true,
+      autoPause: true,
       features: {
         test: true,
       },
@@ -55,6 +57,7 @@ describe('StoreDevtoolsOptions', () => {
       name: 'ABC',
       serialize: true,
       logOnly: false,
+      autoPause: true,
       features: {
         test: true,
       },
@@ -71,6 +74,7 @@ describe('StoreDevtoolsOptions', () => {
       name: DEFAULT_NAME,
       serialize: false,
       logOnly: false,
+      autoPause: false,
       features: defaultFeatures,
     });
   });
@@ -87,6 +91,7 @@ describe('StoreDevtoolsOptions', () => {
       name: DEFAULT_NAME,
       serialize: false,
       logOnly: true,
+      autoPause: false,
       features: {
         pause: true,
         export: true,

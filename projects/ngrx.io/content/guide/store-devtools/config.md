@@ -12,6 +12,10 @@ number (>1) | `false` - maximum allowed actions to be stored in the history tree
 
 boolean - connect to the Devtools Extension in log-only mode. Default is `false` which enables all extension [features](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#features).
 
+### `autoPause`
+
+boolean - Pauses recording actions and state changes when the extension window is not open. Default is `false`.
+
 ### `name`
 
 string - the instance name to show on the monitor page. Default value is NgRx Store DevTools.
@@ -75,6 +79,7 @@ features: {
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
+      autoPause: true,
       features: {
         pause: false,
         lock: true,

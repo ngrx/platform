@@ -25,12 +25,14 @@ function createOptions(
     test: true,
   },
   serialize: boolean | undefined = false,
-  maxAge: false | number = false
+  maxAge: false | number = false,
+  autoPause: boolean = false
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
     name,
     features,
     serialize,
+    autoPause,
   };
   if (maxAge !== false /* support === 0 */) {
     options.maxAge = maxAge;
@@ -115,6 +117,7 @@ describe('DevtoolsExtension', () => {
         name: 'ngrx-store-devtool-todolist',
         maxAge: 10,
         serialize: true,
+        autoPause: true,
         // these two should not be added
         actionSanitizer: myActionSanitizer,
         stateSanitizer: myStateSanitizer,
@@ -127,7 +130,8 @@ describe('DevtoolsExtension', () => {
       'ngrx-store-devtool-todolist',
       undefined,
       true,
-      10
+      10,
+      true
     );
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
   });

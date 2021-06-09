@@ -36,6 +36,7 @@ export class StoreDevtoolsConfig {
   actionsBlocklist?: string[];
   actionsSafelist?: string[];
   predicate?: Predicate;
+  autoPause?: boolean;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
@@ -66,6 +67,7 @@ export function createConfig(
     name: DEFAULT_NAME,
     serialize: false,
     logOnly: false,
+    autoPause: false,
     // Add all features explicitly. This prevent buggy behavior for
     // options like "lock" which might otherwise not show up.
     features: {
