@@ -138,15 +138,6 @@ describe('Runtime checks:', () => {
         flush();
       }).not.toThrow();
     }));
-
-    it('should not throw for NgRx actions', fakeAsync(() => {
-      const store = setupStore({ strictStateSerializability: true });
-
-      expect(() => {
-        store.dispatch(makeNgrxAction(invalidAction()));
-        flush();
-      }).not.toThrow();
-    }));
   });
 
   describe('Action Serialization:', () => {
@@ -169,6 +160,15 @@ describe('Runtime checks:', () => {
 
       expect(() => {
         store.dispatch(invalidAction());
+        flush();
+      }).not.toThrow();
+    }));
+
+    it('should not throw for NgRx actions', fakeAsync(() => {
+      const store = setupStore({ strictActionSerializability: true });
+
+      expect(() => {
+        store.dispatch(makeNgrxAction(invalidAction()));
         flush();
       }).not.toThrow();
     }));
@@ -338,14 +338,26 @@ function reducerWithBugs(state: any = {}, action: any) {
         invalidSerializationState: true,
         invalid: new Date(),
       };
-
+      
     case ErrorTypes.UnserializableAction: {
+      return {
+        invalidSerializationAction: true,
+      };
+    }
+    
+    case '@ngrx ' + ErrorTypes.UnserializableAction: {
       return {
         invalidSerializationAction: true,
       };
     }
 
     case ErrorTypes.MutateAction: {
+      action.foo = 'foo';
+      return {
+        invalidMutationAction: true,
+      };
+    }
+    case '@ngrx ' + ErrorTypes.MutateAction: {
       action.foo = 'foo';
       return {
         invalidMutationAction: true,
