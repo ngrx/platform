@@ -70,7 +70,7 @@
     "prettier": "prettier --write \"content/examples/**/*.ts\""
   },
   "engines": {
-    "node": ">=10.9.0 <=13.0.0",
+    "node": "^12.20.0 || >=14.0.0",
     "npm": ">=5.3.0",
     "yarn": ">=1.9.2 <2.0.0"
   },
