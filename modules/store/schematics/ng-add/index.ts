@@ -1,3 +1,5 @@
+import * as ts from 'typescript';
+import { Path, dirname } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -25,9 +27,7 @@ import {
   addPackageToPackageJson,
   platformVersion,
   parseName,
-} from '@ngrx/store/schematics-core';
-import { Path, dirname } from '@angular-devkit/core';
-import * as ts from 'typescript';
+} from '../../schematics-core';
 import { Schema as RootStoreOptions } from './schema';
 
 function addImportToNgModule(options: RootStoreOptions): Rule {

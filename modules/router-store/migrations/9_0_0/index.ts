@@ -13,7 +13,7 @@ import {
   insertImport,
   Change,
   containsProperty,
-} from '@ngrx/router-store/schematics-core';
+} from '../../schematics-core';
 
 function addDefaultSerializer(): Rule {
   const SERIALIZER_PROPERTY = 'serializer: DefaultRouterStateSerializer';

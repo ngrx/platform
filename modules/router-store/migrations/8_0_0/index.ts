@@ -5,7 +5,7 @@ import {
   createReplaceChange,
   visitTSSourceFiles,
   commitChanges,
-} from '@ngrx/router-store/schematics-core';
+} from '../../schematics-core';
 
 function updateRouterStoreImport(): Rule {
   return (tree: Tree) => {

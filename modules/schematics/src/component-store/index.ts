@@ -26,7 +26,7 @@ import {
   parseName,
   stringUtils,
   insertImport,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 
 interface AddProviderContext {
   componentStoreRelativePath: string;

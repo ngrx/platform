@@ -9,7 +9,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   addPackageToPackageJson,
   platformVersion,
-} from '@ngrx/component/schematics-core';
+} from '../../schematics-core';
 import { Schema as SchemaOptions } from './schema';
 
 function addModuleToPackageJson() {

@@ -19,15 +19,10 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "aot": true,
-            "optimization": true,
-            "buildOptimizer": true,
             "outputHashing": "all",
             "sourceMap": true,
             "statsJson": true,
-            "extractLicenses": true,
             "namedChunks": true,
-            "vendorChunk": false,
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
@@ -82,7 +77,8 @@
               ],
               "serviceWorker": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

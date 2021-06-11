@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action } from '../..';
 
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';

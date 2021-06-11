@@ -12,11 +12,7 @@ import {
   noop,
   url,
 } from '@angular-devkit/schematics';
-import {
-  getProjectPath,
-  parseName,
-  stringUtils,
-} from '@ngrx/schematics/schematics-core';
+import { getProjectPath, parseName, stringUtils } from '../../schematics-core';
 import { Schema as SelectorOptions } from './schema';
 
 export default function (options: SelectorOptions): Rule {

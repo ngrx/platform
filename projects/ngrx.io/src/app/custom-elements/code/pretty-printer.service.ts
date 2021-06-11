@@ -27,7 +27,7 @@ export class PrettyPrinter {
         const ppo = (window as any)['prettyPrintOne'];
         return ppo ? Promise.resolve(ppo) :
         // prettify.js is not in window global; load it with webpack loader
-            System.import('assets/js/prettify.js')
+            import('assets/js/prettify.js')
                 .then(
                     () => (window as any)['prettyPrintOne'],
                     err => {
