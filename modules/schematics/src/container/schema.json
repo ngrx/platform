@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgRxContainer",
+  "$id": "SchematicsNgRxContainer",
   "title": "NgRx Container Options Schema",
   "type": "object",
   "properties": {
