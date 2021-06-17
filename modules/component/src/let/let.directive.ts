@@ -176,6 +176,5 @@ export class LetDirective<U> implements OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.viewContainerRef.clear();
   }
 }
