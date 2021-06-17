@@ -1,4 +1,4 @@
-import { Action } from '../..';
+import { Action } from '../../src/models';
 
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
