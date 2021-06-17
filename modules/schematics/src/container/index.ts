@@ -26,7 +26,7 @@ import {
   getProjectPath,
   omit,
   parseName,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 import { Schema as ContainerOptions } from './schema';
 
 function addStateToComponent(options: Partial<ContainerOptions>) {

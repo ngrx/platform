@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import { Path } from '@angular-devkit/core';
 import {
   apply,
@@ -26,8 +27,7 @@ import {
   ReplaceChange,
   stringUtils,
   visitTSSourceFiles,
-} from '@ngrx/data/schematics-core';
-import * as ts from 'typescript';
+} from '../../schematics-core';
 import { Schema as EntityDataOptions } from './schema';
 
 function addNgRxDataToPackageJson() {

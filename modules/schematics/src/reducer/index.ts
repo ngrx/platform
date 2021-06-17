@@ -14,7 +14,6 @@ import {
   template,
   url,
 } from '@angular-devkit/schematics';
-import * as ts from 'typescript';
 import {
   getProjectPath,
   findModuleFromOptions,
@@ -24,7 +23,7 @@ import {
   parseName,
   isIvyEnabled,
   getProject,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 import { Schema as ReducerOptions } from './schema';
 
 export default function (options: ReducerOptions): Rule {

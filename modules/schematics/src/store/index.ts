@@ -28,7 +28,7 @@ import {
   addImportToModule,
   parseName,
   visitNgModuleImports,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 import { Schema as StoreOptions } from './schema';
 
 function addImportToNgModule(options: StoreOptions): Rule {

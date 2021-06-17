@@ -10,7 +10,7 @@ import {
   visitNgModuleExports,
   addImportToModule,
   addExportToModule,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 
 const ASYNC_REGEXP = /\| {0,}async/g;
 const REACTIVE_MODULE = 'ReactiveComponentModule';

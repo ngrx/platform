@@ -10,7 +10,7 @@ import {
   InsertChange,
   visitTSSourceFiles,
   commitChanges,
-} from '@ngrx/store/schematics-core';
+} from '../../schematics-core';
 
 function replaceWithRuntimeChecks(): Rule {
   return (tree: Tree) => {

@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import {
   chain,
   Rule,
@@ -7,12 +8,9 @@ import {
 import {
   commitChanges,
   visitTSSourceFiles,
-} from '@ngrx/effects/schematics-core';
-import {
   createReplaceChange,
   ReplaceChange,
-} from '@ngrx/effects/schematics-core';
-import * as ts from 'typescript';
+} from '../../schematics-core';
 
 function renameErrorHandlerConfig(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {

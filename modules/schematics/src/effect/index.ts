@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import {
   Rule,
   SchematicContext,
@@ -22,8 +23,7 @@ import {
   insertImport,
   parseName,
   stringUtils,
-} from '@ngrx/schematics/schematics-core';
-import * as ts from 'typescript';
+} from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 
 function addImportToNgModule(options: EffectOptions): Rule {

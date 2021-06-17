@@ -7,7 +7,7 @@ import {
   replaceImport,
   commitChanges,
   visitTSSourceFiles,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 
 export function migrateToCreators(): Rule {
   return (tree: Tree) => {

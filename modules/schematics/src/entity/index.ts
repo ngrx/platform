@@ -23,7 +23,7 @@ import {
   parseName,
   isIvyEnabled,
   getProject,
-} from '@ngrx/schematics/schematics-core';
+} from '../../schematics-core';
 import { Schema as EntityOptions } from './schema';
 
 export default function (options: EntityOptions): Rule {

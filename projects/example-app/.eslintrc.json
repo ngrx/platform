@@ -29,6 +29,7 @@
           }
         ],
         "@typescript-eslint/prefer-namespace-keyword": "error",
+        "@nrwl/nx/enforce-module-boundaries": "off",
         "eqeqeq": ["off", "smart"],
         "id-blacklist": [
           "error",

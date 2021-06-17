@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import {
   Rule,
   SchematicContext,
@@ -24,8 +25,7 @@ import {
   stringUtils,
   addPackageToPackageJson,
   platformVersion,
-} from '@ngrx/effects/schematics-core';
-import * as ts from 'typescript';
+} from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 

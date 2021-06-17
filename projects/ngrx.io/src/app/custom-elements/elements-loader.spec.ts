@@ -12,7 +12,7 @@ import { ELEMENT_MODULE_PATHS_TOKEN, WithCustomElementComponent } from './elemen
 
 
 interface Deferred {
-    resolve(): void;
+    resolve(value?: unknown): void
     reject(err: any): void;
 }
 

@@ -9,7 +9,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   addPackageToPackageJson,
   platformVersion,
-} from '@ngrx/entity/schematics-core';
+} from '../../schematics-core';
 import { Schema as EntityOptions } from './schema';
 
 function addNgRxEntityToPackageJson() {

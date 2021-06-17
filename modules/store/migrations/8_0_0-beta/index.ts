@@ -11,7 +11,7 @@ import {
   createReplaceChange,
   visitTSSourceFiles,
   commitChanges,
-} from '@ngrx/store/schematics-core';
+} from '../../schematics-core';
 
 const META_REDUCERS = 'META_REDUCERS';
 
