@@ -307,12 +307,16 @@ it('should get customers', () => {
 })
 </code-example>
 
-For an Effect with store interaction, it's possible to create an Observable `Store`.
+For an Effect with store interaction, use `getMockStore` to create a new instance of `MockStore`.
 
 <code-example header="my.effects.spec.ts">
 it('should get customers', () => {
-  // create the store, this can be just an Observable
-  const store = of({}) as Store&lt;Action&gt;;
+  // create the store, and provide selectors.
+  const store = getMockStore({
+      selectors: [
+        { selector: selectCustomers, value: { Bob: { name: 'Bob' } } }
+      ]
+  });
 
   // instead of using `provideMockActions`,
   // define the actions stream by creating a new `Actions` instance
@@ -322,13 +326,8 @@ it('should get customers', () => {
     })
   );
 
-  // mock the selector
-  selectCustomers.setResult({
-    Bob: { name: 'Bob' },
-  });
-
   // create the effect
-  const effects = new CustomersEffects(store, actions, customersServiceSpy);
+  const effects = new CustomersEffects(store as Store, actions, customersServiceSpy);
 
   // there is no output, because Bob is already in the Store state
   const expected = hot('----');
