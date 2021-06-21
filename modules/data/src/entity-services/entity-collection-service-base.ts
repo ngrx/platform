@@ -143,7 +143,7 @@ export class EntityCollectionServiceBase<
    */
   add(
     entity: Partial<T>,
-    options?: EntityActionOptions & { isOptimistic: false }
+    options: EntityActionOptions & { isOptimistic: false }
   ): Observable<T>;
   add(entity: T, options?: EntityActionOptions): Observable<T> {
     return this.dispatcher.add(entity, options);
