@@ -52,6 +52,68 @@ type NotAllowedFeatureStateCheck<
   ? unknown
   : 'optional properties are not allowed in the feature state';
 
+/**
+ * @description
+ * A function that accepts a feature name and a feature reducer, and creates
+ * a feature selector and a selector for each feature state property.
+ *
+ * @param featureConfig An object that contains a feature name and a feature reducer.
+ * @returns An object that contains a feature name, a feature reducer,
+ * a feature selector, a the selector for each feature state property.
+ *
+ * @usageNotes
+ *
+ * **With Application State**
+ *
+ * ```ts
+ * interface AppState {
+ *   products: ProductsState;
+ * }
+ *
+ * interface ProductsState {
+ *   products: Product[];
+ *   selectedId: string | null;
+ * }
+ *
+ * const initialState: ProductsState = {
+ *   products: [],
+ *   selectedId: null,
+ * };
+ *
+ * // AppState is passed as a generic argument
+ * const productsFeature = createFeature<AppState>({
+ *   name: 'products',
+ *   reducer: createReducer(
+ *     initialState,
+ *     on(ProductsApiActions.loadSuccess(state, { products }) => ({
+ *       ...state,
+ *       products,
+ *     }),
+ *   ),
+ * });
+ *
+ * const {
+ *   selectProductsState, // type: MemoizedSelector<AppState, ProductsState>
+ *   selectProducts, // type: MemoizedSelector<AppState, Product[]>
+ *   selectSelectedId, // type: MemoizedSelector<AppState, string | null>
+ * } = productsFeature;
+ * ```
+ *
+ * **Without Application State**
+ *
+ * ```ts
+ * const productsFeature = createFeature({
+ *   name: 'products',
+ *   reducer: createReducer(initialState),
+ * });
+ *
+ * const {
+ *   selectProductsState, // type: MemoizedSelector<Record<string, any>, ProductsState>
+ *   selectProducts, // type: MemoizedSelector<Record<string, any>, Product[]>
+ *   selectSelectedId, // type: MemoizedSelector<Record<string, any, string | null>
+ * } = productsFeature;
+ * ```
+ */
 export function createFeature<
   AppState extends Record<string, any>,
   FeatureName extends keyof AppState & string = keyof AppState & string,
