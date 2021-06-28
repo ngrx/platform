@@ -6,6 +6,7 @@ import {
   createSelector,
   MemoizedSelector,
 } from './selector';
+import { FeatureSelector, NestedSelectors } from './feature_creator_models';
 
 export type Feature<
   AppState extends Record<string, any>,
@@ -19,32 +20,6 @@ export interface FeatureConfig<FeatureName extends string, FeatureState> {
   name: FeatureName;
   reducer: ActionReducer<FeatureState>;
 }
-
-type FeatureSelector<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string,
-  FeatureState extends AppState[FeatureName]
-> = {
-  [K in FeatureName as `select${Capitalize<K>}State`]: MemoizedSelector<
-    AppState,
-    FeatureState
-  >;
-};
-
-type Primitive = string | number | bigint | boolean | null | undefined;
-
-type NestedSelectors<
-  AppState extends Record<string, any>,
-  FeatureState
-> = FeatureState extends Primitive | unknown[] | Date
-  ? {}
-  : {
-      [K in keyof FeatureState &
-        string as `select${Capitalize<K>}`]: MemoizedSelector<
-        AppState,
-        FeatureState[K]
-      >;
-    };
 
 type NotAllowedFeatureStateCheck<
   FeatureState
@@ -118,15 +93,11 @@ export function createFeature<
   AppState extends Record<string, any>,
   FeatureName extends keyof AppState & string = keyof AppState & string,
   FeatureState extends AppState[FeatureName] = AppState[FeatureName]
->({
-  name,
-  reducer,
-}: FeatureConfig<FeatureName, FeatureState> &
-  NotAllowedFeatureStateCheck<FeatureState>): Feature<
-  AppState,
-  FeatureName,
-  FeatureState
-> {
+>(
+  featureConfig: FeatureConfig<FeatureName, FeatureState> &
+    NotAllowedFeatureStateCheck<FeatureState>
+): Feature<AppState, FeatureName, FeatureState> {
+  const { name, reducer } = featureConfig;
   const featureSelector = createFeatureSelector<AppState, FeatureState>(name);
   const nestedSelectors = createNestedSelectors(featureSelector, reducer);
 
