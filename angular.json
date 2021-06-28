@@ -154,6 +154,9 @@
                 "command": "yarn tsc -p modules/store/tsconfig.schematics.json"
               },
               {
+                "command": "yarn rimraf node_modules/@ngrx/store"
+              },
+              {
                 "command": "yarn mkdirp node_modules/@ngrx/store"
               },
               {
@@ -206,6 +209,9 @@
               },
               {
                 "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
+              },
+              {
+                "command": "yarn rimraf node_modules/@ngrx/effects"
               },
               {
                 "command": "yarn mkdirp node_modules/@ngrx/effects"
@@ -308,6 +314,9 @@
               },
               {
                 "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
+              },
+              {
+                "command": "yarn rimraf node_modules/@ngrx/entity"
               },
               {
                 "command": "yarn mkdirp node_modules/@ngrx/entity"
