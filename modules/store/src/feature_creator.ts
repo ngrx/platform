@@ -6,6 +6,7 @@ import {
   createSelector,
   MemoizedSelector,
 } from './selector';
+import { FeatureSelector, NestedSelectors } from './feature_creator_models';
 
 export type Feature<
   AppState extends Record<string, any>,
@@ -20,51 +21,83 @@ export interface FeatureConfig<FeatureName extends string, FeatureState> {
   reducer: ActionReducer<FeatureState>;
 }
 
-type FeatureSelector<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string,
-  FeatureState extends AppState[FeatureName]
-> = {
-  [K in FeatureName as `select${Capitalize<K>}State`]: MemoizedSelector<
-    AppState,
-    FeatureState
-  >;
-};
-
-type Primitive = string | number | bigint | boolean | null | undefined;
-
-type NestedSelectors<
-  AppState extends Record<string, any>,
-  FeatureState
-> = FeatureState extends Primitive | unknown[] | Date
-  ? {}
-  : {
-      [K in keyof FeatureState &
-        string as `select${Capitalize<K>}`]: MemoizedSelector<
-        AppState,
-        FeatureState[K]
-      >;
-    };
-
 type NotAllowedFeatureStateCheck<
   FeatureState
 > = FeatureState extends Required<FeatureState>
   ? unknown
   : 'optional properties are not allowed in the feature state';
 
+/**
+ * @description
+ * A function that accepts a feature name and a feature reducer, and creates
+ * a feature selector and a selector for each feature state property.
+ *
+ * @param featureConfig An object that contains a feature name and a feature reducer.
+ * @returns An object that contains a feature name, a feature reducer,
+ * a feature selector, a the selector for each feature state property.
+ *
+ * @usageNotes
+ *
+ * **With Application State**
+ *
+ * ```ts
+ * interface AppState {
+ *   products: ProductsState;
+ * }
+ *
+ * interface ProductsState {
+ *   products: Product[];
+ *   selectedId: string | null;
+ * }
+ *
+ * const initialState: ProductsState = {
+ *   products: [],
+ *   selectedId: null,
+ * };
+ *
+ * // AppState is passed as a generic argument
+ * const productsFeature = createFeature<AppState>({
+ *   name: 'products',
+ *   reducer: createReducer(
+ *     initialState,
+ *     on(ProductsApiActions.loadSuccess(state, { products }) => ({
+ *       ...state,
+ *       products,
+ *     }),
+ *   ),
+ * });
+ *
+ * const {
+ *   selectProductsState, // type: MemoizedSelector<AppState, ProductsState>
+ *   selectProducts, // type: MemoizedSelector<AppState, Product[]>
+ *   selectSelectedId, // type: MemoizedSelector<AppState, string | null>
+ * } = productsFeature;
+ * ```
+ *
+ * **Without Application State**
+ *
+ * ```ts
+ * const productsFeature = createFeature({
+ *   name: 'products',
+ *   reducer: createReducer(initialState),
+ * });
+ *
+ * const {
+ *   selectProductsState, // type: MemoizedSelector<Record<string, any>, ProductsState>
+ *   selectProducts, // type: MemoizedSelector<Record<string, any>, Product[]>
+ *   selectSelectedId, // type: MemoizedSelector<Record<string, any, string | null>
+ * } = productsFeature;
+ * ```
+ */
 export function createFeature<
   AppState extends Record<string, any>,
   FeatureName extends keyof AppState & string = keyof AppState & string,
   FeatureState extends AppState[FeatureName] = AppState[FeatureName]
->({
-  name,
-  reducer,
-}: FeatureConfig<FeatureName, FeatureState> &
-  NotAllowedFeatureStateCheck<FeatureState>): Feature<
-  AppState,
-  FeatureName,
-  FeatureState
-> {
+>(
+  featureConfig: FeatureConfig<FeatureName, FeatureState> &
+    NotAllowedFeatureStateCheck<FeatureState>
+): Feature<AppState, FeatureName, FeatureState> {
+  const { name, reducer } = featureConfig;
   const featureSelector = createFeatureSelector<AppState, FeatureState>(name);
   const nestedSelectors = createNestedSelectors(featureSelector, reducer);
 
