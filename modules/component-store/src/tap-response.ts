@@ -17,14 +17,14 @@ import { catchError, tap } from 'rxjs/operators';
  *          (alert) => this.alertsService.dismissAlert(alert).pipe(
  *              tapResponse(
  *                 (dismissedAlert) => this.alertDismissed(dismissedAlert),
- *                 (error) => this.logError(error),
+ *                 (error: { message: string }) => this.logError(error.message),
  *              ))));
  *   });
  * ```
  */
 export function tapResponse<T>(
   nextFn: (next: T) => void,
-  errorFn: (error: unknown) => void,
+  errorFn: <E = unknown>(error: E) => void,
   completeFn?: () => void
 ): (source: Observable<T>) => Observable<T> {
   return (source) =>

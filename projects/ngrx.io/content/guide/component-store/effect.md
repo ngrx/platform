@@ -85,7 +85,7 @@ An easy way to handle the response in ComponentStore effects in a safe way, with
         //👇 Act on the result within inner pipe.
         tapResponse(
           (movie) => this.addMovie(movie),
-          (error) => this.logError(e),
+          (error: HttpErrorResponse) => this.logError(error),
         ),
       )),
     );
