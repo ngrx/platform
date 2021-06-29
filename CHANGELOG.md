@@ -1,3 +1,16 @@
+<a name="12.2.0"></a>
+
+# [12.2.0](https://github.com/ngrx/platform/compare/12.1.0...12.2.0) (2021-06-29)
+
+### Bug Fixes
+
+- **component:** avoid early destruction of view in ngrxLet which interfered with animations ([#2890](https://github.com/ngrx/platform/issues/2890)) ([#3045](https://github.com/ngrx/platform/issues/3045)) ([7515e36](https://github.com/ngrx/platform/commit/7515e36))
+- **data:** make options optional on add with partial ([#3043](https://github.com/ngrx/platform/issues/3043)) ([1620df9](https://github.com/ngrx/platform/commit/1620df9))
+
+### Features
+
+- **component-store:** accept error type in `tapResponse` ([#3056](https://github.com/ngrx/platform/issues/3056)) ([61e1963](https://github.com/ngrx/platform/commit/61e1963))
+
 <a name="12.1.0"></a>
 
 # [12.1.0](https://github.com/ngrx/platform/compare/12.0.0...12.1.0) (2021-06-09)
