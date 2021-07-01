@@ -58,6 +58,54 @@ describe('createAction()', () => {
         /Type 'ActionCreatorProps<\{\}>' is not assignable to type '"action creator props cannot be an empty object"'/
       );
     });
+
+    it('should not allow strings', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<string>());
+      `).toFail(
+        /Type 'string' is not assignable to type '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow numbers', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<number>());
+      `).toFail(
+        /Type 'number' is not assignable to type '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow bigints', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<bigint>());
+      `).toFail(
+        /Type 'bigint' is not assignable to type '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow booleans', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<boolean>());
+      `).toFail(
+        /Type 'boolean' is not assignable to type '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow null', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<null>());
+      `).toFail(
+        /Type 'null' is not assignable to type '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow undefined', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<undefined>());
+      `).toFail(
+        /Type 'undefined' is not assignable to type '"action creator props cannot be a primitive value"'/
+      );
+    });
   });
 
   describe('with function', () => {
@@ -103,6 +151,54 @@ describe('createAction()', () => {
         const foo = createAction('FOO', () => [ ]);
       `).toFail(
         /Type 'any\[\]' is not assignable to type '"action creator props cannot be an array"'/
+      );
+    });
+
+    it('should not allow strings', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', () => '');
+      `).toFail(
+        /Type 'string' is not assignable to type '"action creator cannot return a primitive value"'/
+      );
+    });
+
+    it('should not allow numbers', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', () => 0);
+      `).toFail(
+        /Type 'number' is not assignable to type '"action creator cannot return a primitive value"'/
+      );
+    });
+
+    it('should not allow bigints', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', () => 0n);
+      `).toFail(
+        /Type 'bigint' is not assignable to type '"action creator cannot return a primitive value"'/
+      );
+    });
+
+    it('should not allow booleans', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', () => false);
+      `).toFail(
+        /Type 'boolean' is not assignable to type '"action creator cannot return a primitive value"'/
+      );
+    });
+
+    it('should not allow null', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', () => null);
+      `).toFail(
+        /Type 'null' is not assignable to type '"action creator cannot return a primitive value"'/
+      );
+    });
+
+    it('should not allow undefined', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', () => undefined);
+      `).toFail(
+        /Type 'undefined' is not assignable to type '"action creator cannot return a primitive value"'/
       );
     });
   });

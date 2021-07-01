@@ -56,16 +56,36 @@ export type SelectorWithProps<State, Props, Result> = (
   props: Props
 ) => Result;
 
-export const arraysAreNotAllowedMsg = 'action creator props cannot be an array';
+export const arraysAreNotAllowedMsg = 'action creator cannot return an array';
 type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
 
 export const typePropertyIsNotAllowedMsg =
-  'action creator props cannot have a property named `type`';
+  'action creator cannot return an object with a property named `type`';
 type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 
 export const emptyObjectsAreNotAllowedMsg =
-  'action creator props cannot be an empty object';
+  'action creator cannot return an empty object';
 type EmptyObjectsAreNotAllowed = typeof emptyObjectsAreNotAllowedMsg;
+
+export const primitivesAreNotAllowedMsg =
+  'action creator cannot return a primitive value';
+type PrimitivesAreNotAllowed = typeof primitivesAreNotAllowedMsg;
+
+export const arraysAreNotAllowedInProps =
+  'action creator props cannot be an array';
+type ArraysAreNotAllowedInProps = typeof arraysAreNotAllowedInProps;
+
+export const typePropertyIsNotAllowedInProps =
+  'action creator props cannot have a property named `type`';
+type TypePropertyIsNotAllowedInProps = typeof typePropertyIsNotAllowedInProps;
+
+export const emptyObjectsAreNotAllowedInProps =
+  'action creator props cannot be an empty object';
+type EmptyObjectsAreNotAllowedInProps = typeof emptyObjectsAreNotAllowedInProps;
+
+export const primitivesAreNotAllowedInProps =
+  'action creator props cannot be a primitive value';
+type PrimitivesAreNotAllowedInProps = typeof primitivesAreNotAllowedInProps;
 
 export type FunctionIsNotAllowed<
   T,
@@ -79,13 +99,31 @@ export type Creator<
   R extends object = object
 > = FunctionWithParametersType<P, R>;
 
-export type NotAllowedCheck<T extends object> = T extends any[]
-  ? ArraysAreNotAllowed
-  : T extends { type: any }
-  ? TypePropertyIsNotAllowed
-  : keyof T extends never
-  ? EmptyObjectsAreNotAllowed
-  : unknown;
+type Primitive = string | number | bigint | boolean | null | undefined;
+
+export type NotAllowedCheck<T> = T extends object
+  ? T extends any[]
+    ? ArraysAreNotAllowed
+    : T extends { type: any }
+    ? TypePropertyIsNotAllowed
+    : keyof T extends never
+    ? EmptyObjectsAreNotAllowed
+    : unknown
+  : T extends Primitive
+  ? PrimitivesAreNotAllowed
+  : never;
+
+export type NotAllowedInPropsCheck<T> = T extends object
+  ? T extends any[]
+    ? ArraysAreNotAllowedInProps
+    : T extends { type: any }
+    ? TypePropertyIsNotAllowedInProps
+    : keyof T extends never
+    ? EmptyObjectsAreNotAllowedInProps
+    : unknown
+  : T extends Primitive
+  ? PrimitivesAreNotAllowedInProps
+  : never;
 
 /**
  * See `Creator`.
