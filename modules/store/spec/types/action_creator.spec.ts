@@ -39,7 +39,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{ type: number }>());
       `).toFail(
-        / Type 'ActionCreatorProps<\{ type: number; \}>' is not assignable to type '"type property is not allowed in action creators"'/
+        / Type 'ActionCreatorProps<\{ type: number; \}>' is not assignable to type '"action creator props cannot have a property named `type`"'/
       );
     });
 
@@ -47,7 +47,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<[]>());
       `).toFail(
-        /Type 'ActionCreatorProps<\[\]>' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type 'ActionCreatorProps<\[\]>' is not assignable to type '"action creator props cannot be an array"'/
       );
     });
 
@@ -55,7 +55,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{}>());
       `).toFail(
-        /Type 'ActionCreatorProps<\{\}>' is not assignable to type '"empty objects are not allowed in action creators"'/
+        /Type 'ActionCreatorProps<\{\}>' is not assignable to type '"action creator props cannot be an empty object"'/
       );
     });
   });
@@ -88,7 +88,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', (type: string) => ({type}));
       `).toFail(
-        /Type '\{ type: string; \}' is not assignable to type '"type property is not allowed in action creators"'/
+        /Type '\{ type: string; \}' is not assignable to type '"action creator props cannot have a property named `type`"'/
       );
     });
 
@@ -102,7 +102,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', () => [ ]);
       `).toFail(
-        /Type 'any\[\]' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type 'any\[\]' is not assignable to type '"action creator props cannot be an array"'/
       );
     });
   });

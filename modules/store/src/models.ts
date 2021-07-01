@@ -56,16 +56,15 @@ export type SelectorWithProps<State, Props, Result> = (
   props: Props
 ) => Result;
 
-export const arraysAreNotAllowedMsg =
-  'arrays are not allowed in action creators';
+export const arraysAreNotAllowedMsg = 'action creator props cannot be an array';
 type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
 
 export const typePropertyIsNotAllowedMsg =
-  'type property is not allowed in action creators';
+  'action creator props cannot have a property named `type`';
 type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 
 export const emptyObjectsAreNotAllowedMsg =
-  'empty objects are not allowed in action creators';
+  'action creator props cannot be an empty object';
 type EmptyObjectsAreNotAllowed = typeof emptyObjectsAreNotAllowedMsg;
 
 export type FunctionIsNotAllowed<
