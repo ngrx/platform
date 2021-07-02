@@ -178,9 +178,9 @@ describe('createFeature()', () => {
           reducer: createReducer(
             initialState,
             on(enter, (state) => ({ ...state, loadState: 'loading' })),
-            on(loadBooksSuccess, (state, { books }) => ({
+            on(loadBooksSuccess, (state, { entities }) => ({
               ...state,
-              books,
+              entities,
               loadState: 'loaded',
             }))
           ),

@@ -4,7 +4,7 @@ import { compilerOptions } from './utils';
 describe('select()', () => {
   const expectSnippet = expecter(
     (code) => `
-      import { Store, select, createSelector, createFeatureSelector } '@ngrx/store';
+      import { Store, select, createSelector, createFeatureSelector } from '@ngrx/store';
 
       interface State { foo: { bar: { baz: [] } } };
       const store = {} as Store<State>;
