@@ -99,19 +99,15 @@ export type Creator<
   R extends object = object
 > = FunctionWithParametersType<P, R>;
 
-type Primitive = string | number | bigint | boolean | null | undefined;
+type Primitive = string | number | bigint | boolean | symbol | null | undefined;
 
-export type NotAllowedCheck<T> = T extends object
-  ? T extends any[]
-    ? ArraysAreNotAllowed
-    : T extends { type: any }
-    ? TypePropertyIsNotAllowed
-    : keyof T extends never
-    ? EmptyObjectsAreNotAllowed
-    : unknown
-  : T extends Primitive
-  ? PrimitivesAreNotAllowed
-  : never;
+export type NotAllowedCheck<T extends object> = T extends any[]
+  ? ArraysAreNotAllowed
+  : T extends { type: any }
+  ? TypePropertyIsNotAllowed
+  : keyof T extends never
+  ? EmptyObjectsAreNotAllowed
+  : unknown;
 
 export type NotAllowedInPropsCheck<T> = T extends object
   ? T extends any[]
