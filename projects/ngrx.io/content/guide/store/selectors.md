@@ -266,6 +266,27 @@ export class AppComponent {
 }
 </code-example>
 
+When omitting a generic for the Store, only selectors which operate on `object`s are allowed.
+
+For instance, when using `createFeatureSelector`, the `AppState` argument should be omitted:
+
+<code-example header="index.ts">
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+
+export const featureKey = 'feature';
+
+export interface FeatureState {
+  counter: number;
+}
+
+export const selectFeature = createFeatureSelector<FeatureState>(featureKey);
+
+export const selectFeatureCount = createSelector(
+  selectFeature,
+  (state: FeatureState) => state.counter
+);
+</code-example>
+
 ## Advanced Usage
 
 Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
