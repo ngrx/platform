@@ -67,10 +67,6 @@ export const emptyObjectsAreNotAllowedMsg =
   'action creator cannot return an empty object';
 type EmptyObjectsAreNotAllowed = typeof emptyObjectsAreNotAllowedMsg;
 
-export const primitivesAreNotAllowedMsg =
-  'action creator cannot return a primitive value';
-type PrimitivesAreNotAllowed = typeof primitivesAreNotAllowedMsg;
-
 export const arraysAreNotAllowedInProps =
   'action creator props cannot be an array';
 type ArraysAreNotAllowedInProps = typeof arraysAreNotAllowedInProps;
