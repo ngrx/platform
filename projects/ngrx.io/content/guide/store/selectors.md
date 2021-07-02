@@ -266,7 +266,7 @@ export class AppComponent {
 }
 </code-example>
 
-When omitting a generic for the Store, only selectors which operate on `object`s are allowed.
+When omitting a generic for the Store, only selectors which operate on `object`s are allowed in `store.select`.
 
 For instance, when using `createFeatureSelector`, the `AppState` argument should be omitted:
 
