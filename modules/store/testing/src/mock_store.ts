@@ -8,7 +8,6 @@ import {
   ReducerManager,
   Store,
   createSelector,
-  MemoizedSelectorWithProps,
   MemoizedSelector,
 } from '@ngrx/store';
 import { MockState } from './mock_state';
@@ -29,13 +28,9 @@ if (typeof afterEach === 'function') {
 
 type OnlyMemoized<T, Result> = T extends string | MemoizedSelector<any, any>
   ? MemoizedSelector<any, Result>
-  : T extends MemoizedSelectorWithProps<any, any, any>
-  ? MemoizedSelectorWithProps<any, any, Result>
   : never;
 
-type Memoized<Result> =
-  | MemoizedSelector<any, Result>
-  | MemoizedSelectorWithProps<any, any, Result>;
+type Memoized<Result> = MemoizedSelector<any, Result>;
 
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
@@ -68,11 +63,7 @@ export class MockStore<T = object> extends Store<T> {
   overrideSelector<
     Selector extends Memoized<Result>,
     Value extends Result,
-    Result = Selector extends MemoizedSelector<any, infer T>
-      ? T
-      : Selector extends MemoizedSelectorWithProps<any, any, infer U>
-      ? U
-      : Value
+    Result = Selector extends MemoizedSelector<any, infer T> ? T : Value
   >(
     selector: Selector | string,
     value: Value
@@ -83,7 +74,7 @@ export class MockStore<T = object> extends Store<T> {
       typeof selector === 'string'
         ? createSelector(
             () => {},
-            (): Result => value
+            (v): Result => value
           )
         : selector;
 
