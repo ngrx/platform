@@ -580,6 +580,22 @@ describe('EntityChangeTrackerBase', () => {
       const collection = tracker.trackDeleteMany(['1234', 456], origCollection);
       expect(collection).toBe(origCollection);
     });
+
+    it('should not mutate changeState when called on a tracked "updated" entity', () => {
+      const existingEntity = getFirstExistingEntity();
+      const updatedEntity = toUpdate({
+        ...existingEntity,
+        name: 'test update',
+      });
+      const collection = tracker.trackUpdateOne(updatedEntity, origCollection);
+      const change = collection.changeState[existingEntity!.id];
+      expect(change).toBeDefined();
+      expectChangeType(change, ChangeType.Updated);
+      Object.freeze(change);
+      expect(() => {
+        tracker.trackDeleteMany([existingEntity!.id], collection);
+      }).not.toThrowError();
+    });
   });
 
   describe('#trackUpdateOne', () => {
