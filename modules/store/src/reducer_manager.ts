@@ -1,6 +1,5 @@
 import { Inject, Injectable, OnDestroy, Provider } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-
 import { ActionsSubject } from './actions_subject';
 import {
   Action,
@@ -26,6 +25,10 @@ export const UPDATE = '@ngrx/store/update-reducers' as const;
 export class ReducerManager
   extends BehaviorSubject<ActionReducer<any, any>>
   implements OnDestroy {
+  get currentReducers(): ActionReducerMap<any, any> {
+    return this.reducers;
+  }
+
   constructor(
     private dispatcher: ReducerManagerDispatcher,
     @Inject(INITIAL_STATE) private initialState: any,
