@@ -149,7 +149,7 @@ describe('createFeature()', () => {
         const enter = createAction('[Books Page] Enter');
         const loadBooksSuccess = createAction(
           '[Books API] Load Books Success',
-          props<{ entities: Book[] }>()
+          props<{ books: Book[] }>()
         );
 
         interface Book {

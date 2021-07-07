@@ -24,7 +24,7 @@ describe('ofType()', () => {
 
     it('should infer correctly with props', () => {
       expectSnippet(`
-        const actionA = createAction('Action A', props<{ foo: string }>()});
+        const actionA = createAction('Action A', props<{ foo: string }>());
         const effect = actions$.pipe(ofType(actionA))
       `).toInfer(
         'effect',
