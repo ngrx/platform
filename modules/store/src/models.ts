@@ -126,10 +126,6 @@ export type NotAllowedInPropsCheck<T> = T extends object
   ? PrimitivesAreNotAllowedInProps
   : never;
 
-type Huh = NotAllowedInPropsCheck<unknown>;
-
-props<unknown>();
-
 /**
  * See `Creator`.
  */
