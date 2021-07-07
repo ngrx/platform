@@ -1,5 +1,3 @@
-import { props } from './action_creator';
-
 export interface Action {
   type: string;
 }
