@@ -1,3 +1,5 @@
+import { props } from './action_creator';
+
 export interface Action {
   type: string;
 }
@@ -95,6 +97,15 @@ export type Creator<
   R extends object = object
 > = FunctionWithParametersType<P, R>;
 
+export type Primitive =
+  | string
+  | number
+  | bigint
+  | boolean
+  | symbol
+  | null
+  | undefined;
+
 export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
   : T extends { type: any }
@@ -111,7 +122,13 @@ export type NotAllowedInPropsCheck<T> = T extends object
     : keyof T extends never
     ? EmptyObjectsAreNotAllowedInProps
     : unknown
-  : PrimitivesAreNotAllowedInProps;
+  : T extends Primitive
+  ? PrimitivesAreNotAllowedInProps
+  : never;
+
+type Huh = NotAllowedInPropsCheck<unknown>;
+
+props<unknown>();
 
 /**
  * See `Creator`.
