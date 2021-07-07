@@ -248,15 +248,15 @@ selectTotal.release();
 
 ## Using Store Without Type Generic
 
-When injecting `Store` into components and other injectables, it is possible to omit the generic type. If injected without the generic, the default generic is applied as follows `Store<T = object>`.
+The most common way to select information from the store is to use a selector function defined with `createSelector`. TypeScript is able to automatically infer types from `createSelector`, which reduces the need to provide the shape of the state to `Store` via a generic argument.
 
-The most common way to select information from the store is to use a selector function defined with `createSelector`. When doing so, TypeScript is able to automatically infer types from the selector function, therefore reducing the need to define the type in the store generic.
+So, when injecting `Store` into components and other injectables, the generic type can be omitted. If injected without the generic, the default generic applied is `Store<T = object>`. 
 
 <div class="alert is-important">
 It is important to continue to provide a Store type generic if you are using the string version of selectors as types cannot be inferred automatically in those instances.
 </div>
 
-The follow example demonstrates the use of Store without providing a generic:
+The follow example demonstrates the use of `Store` without providing a generic:
 
 <code-example header="app.component.ts">
 export class AppComponent {
@@ -264,6 +264,29 @@ export class AppComponent {
 
   constructor(private readonly store: Store) {}
 }
+</code-example>
+
+When using strict mode, the `select` method will expect to be passed a selector whose base selects from an `object`.
+
+This is the default behavior of `createFeatureSelector` when providing only one generic argument:
+
+<code-example header="index.ts">
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+
+export const featureKey = 'feature';
+
+export interface FeatureState {
+  counter: number;
+}
+
+// selectFeature will have the type MemoizedSelector&lt;object, FeatureState&gt;
+export const selectFeature = createFeatureSelector&lt;FeatureState&gt;(featureKey);
+
+// selectFeatureCount will have the type MemoizedSelector&lt;object, number&gt;
+export const selectFeatureCount = createSelector(
+  selectFeature,
+  state => state.counter
+);
 </code-example>
 
 ## Advanced Usage
