@@ -149,7 +149,7 @@ describe('createFeature()', () => {
         const enter = createAction('[Books Page] Enter');
         const loadBooksSuccess = createAction(
           '[Books API] Load Books Success',
-          props<{ entities: Book[] }>()
+          props<{ books: Book[] }>()
         );
 
         interface Book {
@@ -178,9 +178,9 @@ describe('createFeature()', () => {
           reducer: createReducer(
             initialState,
             on(enter, (state) => ({ ...state, loadState: 'loading' })),
-            on(loadBooksSuccess, (state, { entities }) => ({
+            on(loadBooksSuccess, (state, { books }) => ({
               ...state,
-              entities,
+              books,
               loadState: 'loaded',
             }))
           ),
