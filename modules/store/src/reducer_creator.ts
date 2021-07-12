@@ -104,7 +104,7 @@ export function on<State, Creators extends readonly ActionCreator[]>(
  */
 export function createReducer<S, A extends Action = Action>(
   initialState: S,
-  ...ons: ReducerTypes<S, ActionCreator[]>[]
+  ...ons: ReducerTypes<S, readonly ActionCreator[]>[]
 ): ActionReducer<S, A> {
   const map = new Map<string, OnReducer<S, ActionCreator[]>>();
   for (const on of ons) {
