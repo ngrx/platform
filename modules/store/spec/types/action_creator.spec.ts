@@ -39,7 +39,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{ type: number }>());
       `).toFail(
-        / Type 'ActionCreatorProps<\{ type: number; \}>' is not assignable to type '"type property is not allowed in action creators"'/
+        /Type '{ type: number; }' does not satisfy the constraint '"action creator props cannot have a property named `type`"'/
       );
     });
 
@@ -47,7 +47,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<[]>());
       `).toFail(
-        /Type 'ActionCreatorProps<\[\]>' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type '\[]' does not satisfy the constraint '"action creator props cannot be an array"'/
       );
     });
 
@@ -55,7 +55,63 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<{}>());
       `).toFail(
-        /Type 'ActionCreatorProps<\{\}>' is not assignable to type '"empty objects are not allowed in action creators"'/
+        /Type '{}' does not satisfy the constraint '"action creator props cannot be an empty object"'/
+      );
+    });
+
+    it('should not allow strings', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<string>());
+      `).toFail(
+        /Type 'string' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow numbers', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<number>());
+      `).toFail(
+        /Type 'number' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow bigints', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<bigint>());
+      `).toFail(
+        /Type 'bigint' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow booleans', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<boolean>());
+      `).toFail(
+        /Type 'boolean' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow symbols', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<symbol>());
+      `).toFail(
+        /Type 'symbol' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
+      );
+    });
+
+    it('should not allow null', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<null>());
+      `).toFail(
+        /Type 'ActionCreatorProps<null>' is not assignable to type '"action creator cannot return an array"'/
+      );
+    });
+
+    it('should not allow undefined', () => {
+      expectSnippet(`
+        const foo = createAction('FOO', props<undefined>());
+      `).toFail(
+        /Type 'ActionCreatorProps<undefined>' is not assignable to type '"action creator cannot return an array"'/
       );
     });
   });
@@ -88,7 +144,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', (type: string) => ({type}));
       `).toFail(
-        /Type '\{ type: string; \}' is not assignable to type '"type property is not allowed in action creators"'/
+        /Type '\{ type: string; \}' is not assignable to type '"action creator cannot return an object with a property named `type`"'/
       );
     });
 
@@ -102,7 +158,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', () => [ ]);
       `).toFail(
-        /Type 'any\[\]' is not assignable to type '"arrays are not allowed in action creators"'/
+        /Type 'any\[\]' is not assignable to type '"action creator cannot return an array"'/
       );
     });
   });

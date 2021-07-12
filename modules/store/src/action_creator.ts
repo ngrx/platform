@@ -5,6 +5,7 @@ import {
   FunctionWithParametersType,
   NotAllowedCheck,
   ActionCreatorProps,
+  NotAllowedInPropsCheck,
 } from './models';
 import { REGISTERED_ACTION_TYPES } from './globals';
 
@@ -124,7 +125,10 @@ export function createAction<T extends string, C extends Creator>(
   }
 }
 
-export function props<P extends object>(): ActionCreatorProps<P> {
+export function props<
+  P extends SafeProps,
+  SafeProps = NotAllowedInPropsCheck<P>
+>(): ActionCreatorProps<P> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/naming-convention
   return { _as: 'props', _p: undefined! };
 }
