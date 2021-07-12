@@ -14,8 +14,7 @@ export function createSelectorsFactory<T>() {
     const selectAll = createSelector(
       selectIds,
       selectEntities,
-      (ids: T[], entities: Dictionary<T>): any =>
-        ids.map((id: any) => (entities as any)[id])
+      (ids, entities): any => ids.map((id: any) => (entities as any)[id])
     );
 
     const selectTotal = createSelector(selectIds, (ids) => ids.length);
