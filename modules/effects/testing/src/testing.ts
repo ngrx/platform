@@ -2,18 +2,15 @@ import { FactoryProvider } from '@angular/core';
 import { Actions } from '@ngrx/effects';
 import { defer, Observable } from 'rxjs';
 
-/**
- * @description
- * Creates mock actions provider.
- *
- * @param source Actions' source
- */
 export function provideMockActions(source: Observable<any>): FactoryProvider;
+export function provideMockActions(
+  factory: () => Observable<any>
+): FactoryProvider;
 /**
  * @description
  * Creates mock actions provider.
  *
- * @param factory Actions' source creation function
+ * @param factoryOrSource Actions' source or source creation function
  *
  * @usageNotes
  *
@@ -60,9 +57,6 @@ export function provideMockActions(source: Observable<any>): FactoryProvider;
  * });
  * ```
  */
-export function provideMockActions(
-  factory: () => Observable<any>
-): FactoryProvider;
 export function provideMockActions(
   factoryOrSource: (() => Observable<any>) | Observable<any>
 ): FactoryProvider {
