@@ -9,7 +9,7 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
   observableFactory: (value: V) => T
 ): OperatorFunction<V, [V, ObservedValueOf<T>]>;
 /**
- * 'concatLatestFrom' combines the source value
+ * `concatLatestFrom` combines the source value
  * and the last available value from a lazily evaluated Observable
  * in a new array
  */

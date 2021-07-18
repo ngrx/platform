@@ -32,28 +32,7 @@ type ActionExtractor<
   AC extends ActionCreator<string, Creator>,
   E
 > = T extends string ? E : ReturnType<Extract<T, AC>>;
-/**
- * 'ofType' filters an Observable of Actions into an observable of the actions
- * whose type strings are passed to it.
- *
- * For example, if `actions` has type `Actions<AdditionAction|SubstractionAction>`, and
- * the type of the `Addition` action is `add`, then
- * `actions.pipe(ofType('add'))` returns an `Observable<AdditionAction>`.
- *
- * Properly typing this function is hard and requires some advanced TS tricks
- * below.
- *
- * Type narrowing automatically works, as long as your `actions` object
- * starts with a `Actions<SomeUnionOfActions>` instead of generic `Actions`.
- *
- * For backwards compatibility, when one passes a single type argument
- * `ofType<T>('something')` the result is an `Observable<T>`. Note, that `T`
- * completely overrides any possible inference from 'something'.
- *
- * Unfortunately, for unknown 'actions: Actions' these types will produce
- * 'Observable<never>'. In such cases one has to manually set the generic type
- * like `actions.ofType<AdditionAction>('add')`.
- */
+
 export function ofType<
   AC extends ActionCreator<string, Creator>[],
   U extends Action = Action,
@@ -116,6 +95,28 @@ export function ofType<
 export function ofType<V extends Action>(
   ...allowedTypes: Array<string | ActionCreator<string, Creator>>
 ): OperatorFunction<Action, V>;
+/**
+ * `ofType` filters an Observable of `Actions` into an Observable of the actions
+ * whose type strings are passed to it.
+ *
+ * For example, if `actions` has type `Actions<AdditionAction|SubstractionAction>`, and
+ * the type of the `Addition` action is `add`, then
+ * `actions.pipe(ofType('add'))` returns an `Observable<AdditionAction>`.
+ *
+ * Properly typing this function is hard and requires some advanced TS tricks
+ * below.
+ *
+ * Type narrowing automatically works, as long as your `actions` object
+ * starts with a `Actions<SomeUnionOfActions>` instead of generic `Actions`.
+ *
+ * For backwards compatibility, when one passes a single type argument
+ * `ofType<T>('something')` the result is an `Observable<T>`. Note, that `T`
+ * completely overrides any possible inference from 'something'.
+ *
+ * Unfortunately, for unknown 'actions: Actions' these types will produce
+ * 'Observable<never>'. In such cases one has to manually set the generic type
+ * like `actions.ofType<AdditionAction>('add')`.
+ */
 export function ofType(
   ...allowedTypes: Array<string | ActionCreator<string, Creator>>
 ): OperatorFunction<Action, Action> {
