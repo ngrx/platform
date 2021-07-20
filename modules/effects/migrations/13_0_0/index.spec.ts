@@ -6,20 +6,22 @@ import {
 import * as path from 'path';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 
-describe('Creator migration', () => {
-  const schematicRunner = new SchematicTestRunner(
-    '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
-  );
+describe('Effects Migration 13_0_0', () => {
+  describe('@Effect to createEffect', () => {
+    const collectionPath = path.join(__dirname, '../migration.json');
+    const schematicRunner = new SchematicTestRunner(
+      'schematics',
+      collectionPath
+    );
 
-  let appTree: UnitTestTree;
+    let appTree: UnitTestTree;
 
-  beforeEach(async () => {
-    appTree = await createWorkspace(schematicRunner, appTree);
-  });
+    beforeEach(async () => {
+      appTree = await createWorkspace(schematicRunner, appTree);
+    });
 
-  it('should use createEffect for non-dispatching effects', async () => {
-    const input = tags.stripIndent`
+    it('migrates to createEffect for dispatching effects', async () => {
+      const input = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -31,7 +33,7 @@ describe('Creator migration', () => {
       }
     `;
 
-    const output = tags.stripIndent`
+      const output = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -43,11 +45,11 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, output);
-  });
+      await runTest(input, output);
+    });
 
-  it('should use createEffect for non-dispatching effects', async () => {
-    const input = tags.stripIndent`
+    it('migrates to createEffect for non-dispatching effects', async () => {
+      const input = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -59,7 +61,7 @@ describe('Creator migration', () => {
       }
     `;
 
-    const output = tags.stripIndent`
+      const output = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -71,11 +73,11 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, output);
-  });
+      await runTest(input, output);
+    });
 
-  it('should use createEffect for effects as functions', async () => {
-    const input = tags.stripIndent`
+    it('migrates to createEffect for effects as functions', async () => {
+      const input = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -87,7 +89,7 @@ describe('Creator migration', () => {
       }
     `;
 
-    const output = tags.stripIndent`
+      const output = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -99,11 +101,11 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, output);
-  });
+      await runTest(input, output);
+    });
 
-  it('should stay off of other decorators', async () => {
-    const input = tags.stripIndent`
+    it('keeps other decorators', async () => {
+      const input = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -122,7 +124,7 @@ describe('Creator migration', () => {
       }
     `;
 
-    const output = tags.stripIndent`
+      const output = tags.stripIndent`
       @Injectable()
       export class SomeEffectsClass {
         constructor(private actions$: Actions) {}
@@ -141,11 +143,11 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, output);
-  });
+      await runTest(input, output);
+    });
 
-  it('should import createEffect', async () => {
-    const input = tags.stripIndent`
+    it('imports createEffect from effects', async () => {
+      const input = tags.stripIndent`
       import { Actions, ofType, Effect } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
@@ -153,7 +155,7 @@ describe('Creator migration', () => {
       }
     `;
 
-    const output = tags.stripIndent`
+      const output = tags.stripIndent`
       import { Actions, ofType, createEffect } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
@@ -161,11 +163,11 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, output);
-  });
+      await runTest(input, output);
+    });
 
-  it('should not import createEffect if already imported', async () => {
-    const input = tags.stripIndent`
+    it('does not import createEffect if already imported', async () => {
+      const input = tags.stripIndent`
       import { Actions, Effect, createEffect, ofType } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
@@ -178,7 +180,7 @@ describe('Creator migration', () => {
       }
     `;
 
-    const output = tags.stripIndent`
+      const output = tags.stripIndent`
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
@@ -191,11 +193,11 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, output);
-  });
+      await runTest(input, output);
+    });
 
-  it('should not run the schematic if the createEffect syntax is already used', async () => {
-    const input = tags.stripIndent`
+    it('does not migrate if the createEffect syntax is already used', async () => {
+      const input = tags.stripIndent`
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
@@ -207,23 +209,50 @@ describe('Creator migration', () => {
       }
     `;
 
-    await runTest(input, input);
+      await runTest(input, input);
+    });
+
+    it('removes the @Effect decorator', async () => {
+      const input = tags.stripIndent`
+        import { Actions, createEffect, ofType } from '@ngrx/effects';
+        @Injectable()
+        export class SomeEffectsClass {
+          @Effect()
+          logout$ = createEffect(() => this.actions$.pipe(
+            ofType('LOGOUT'),
+            map(() => ({ type: 'LOGGED_OUT' }))
+          ));
+          constructor(private actions$: Actions) {}
+        }
+      `;
+      const output = tags.stripIndent`
+        import { Actions, createEffect, ofType } from '@ngrx/effects';
+        @Injectable()
+        export class SomeEffectsClass {
+          logout$ = createEffect(() => this.actions$.pipe(
+            ofType('LOGOUT'),
+            map(() => ({ type: 'LOGGED_OUT' }))
+          ));
+          constructor(private actions$: Actions) {}
+        }
+      `;
+      await runTest(input, output);
+    });
+
+    async function runTest(input: string, expected: string) {
+      const effectPath = '/some.effects.ts';
+      appTree.create(effectPath, input);
+
+      const tree = await schematicRunner
+        .runSchematicAsync(`ngrx-effects-migration-03`, {}, appTree)
+        .toPromise();
+
+      const actual = tree.readContent(effectPath);
+
+      const removeEmptyLines = (value: string) =>
+        value.replace(/^\s*$(?:\r\n?|\n)/gm, '');
+
+      expect(removeEmptyLines(actual)).toBe(removeEmptyLines(expected));
+    }
   });
-
-  async function runTest(input: string, expected: string) {
-    const options = {};
-    const effectPath = '/some.effects.ts';
-    appTree.create(effectPath, input);
-
-    const tree = await schematicRunner
-      .runSchematicAsync('create-effect-migration', options, appTree)
-      .toPromise();
-
-    const actual = tree.readContent(effectPath);
-
-    const removeEmptyLines = (value: string) =>
-      value.replace(/^\s*$(?:\r\n?|\n)/gm, '');
-
-    expect(removeEmptyLines(actual)).toBe(removeEmptyLines(expected));
-  }
 });
