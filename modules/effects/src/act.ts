@@ -44,11 +44,6 @@ export interface ActConfig<
   unsubscribe?: (count: number, input: Input) => UnsubscribeAction;
 }
 
-/**
- * Wraps project fn with error handling making it safe to use in Effects.
- * Takes either config with named properties that represent different possible
- * callbacks or project/error callbacks that are required.
- */
 export function act<
   Input,
   OutputAction extends Action,
@@ -76,6 +71,11 @@ export function act<
 ) => Observable<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 >;
+/**
+ * Wraps project fn with error handling making it safe to use in Effects.
+ * Takes either a config with named properties that represent different possible
+ * callbacks or project/error callbacks that are required.
+ */
 export function act<
   Input,
   OutputAction extends Action,
