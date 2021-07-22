@@ -1,3 +1,18 @@
+<a name="12.3.0"></a>
+
+# [12.3.0](https://github.com/ngrx/platform/compare/12.2.0...12.3.0) (2021-07-22)
+
+### Bug Fixes
+
+- **component-store:** accept error type in tapResponse with strict generic checks ([#3068](https://github.com/ngrx/platform/issues/3068)) ([3e02e37](https://github.com/ngrx/platform/commit/3e02e37)), closes [#3056](https://github.com/ngrx/platform/issues/3056)
+- **data:** immutably delete an entity ([#3040](https://github.com/ngrx/platform/issues/3040)) ([a6c199f](https://github.com/ngrx/platform/commit/a6c199f)), closes [#2553](https://github.com/ngrx/platform/issues/2553)
+- **data:** SAVE_ENTITIES_CANCELED type in SaveEntitiesCanceled ([#3079](https://github.com/ngrx/platform/issues/3079)) ([b24c1e0](https://github.com/ngrx/platform/commit/b24c1e0)), closes [#3065](https://github.com/ngrx/platform/issues/3065)
+- **store:** make readonly usage consistent ([#3050](https://github.com/ngrx/platform/issues/3050)) ([#3069](https://github.com/ngrx/platform/issues/3069)) ([a39b278](https://github.com/ngrx/platform/commit/a39b278))
+
+### Features
+
+- **store:** make reducers accessible from ReducerManager ([#3064](https://github.com/ngrx/platform/issues/3064)) ([bf2bd1a](https://github.com/ngrx/platform/commit/bf2bd1a))
+
 <a name="12.2.0"></a>
 
 # [12.2.0](https://github.com/ngrx/platform/compare/12.1.0...12.2.0) (2021-06-29)
