@@ -1,4 +1,4 @@
-import { OnDestroy } from '@angular/core';
+import { ErrorHandler, OnDestroy } from '@angular/core';
 import {
   concat,
   EMPTY,
@@ -9,7 +9,6 @@ import {
   throwError,
   Unsubscribable,
 } from 'rxjs';
-
 import {
   CdAware,
   createCdAware,
@@ -35,7 +34,7 @@ class CdAwareImplementation<U> implements OnDestroy {
     complete: () => (this.completed = true),
   };
 
-  constructor() {
+  constructor(errorHandler: ErrorHandler) {
     this.cdAware = createCdAware<U>({
       render: createRender({
         ngZone: manualInstanceNgZone,
@@ -43,6 +42,7 @@ class CdAwareImplementation<U> implements OnDestroy {
       }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
+      errorHandler,
     });
     this.subscription = this.cdAware.subscribe();
   }
@@ -53,16 +53,19 @@ class CdAwareImplementation<U> implements OnDestroy {
 }
 
 let cdAwareImplementation: CdAwareImplementation<any>;
-const setupCdAwareImplementation = () => {
-  cdAwareImplementation = new CdAwareImplementation();
+const setupCdAwareImplementation = (errorHandler: ErrorHandler) => {
+  cdAwareImplementation = new CdAwareImplementation(errorHandler);
   cdAwareImplementation.renderedValue = undefined;
   cdAwareImplementation.error = undefined;
   cdAwareImplementation.completed = false;
 };
 
 describe('CdAware', () => {
+  let errorHandlerCb: jest.Mock;
+
   beforeEach(() => {
-    setupCdAwareImplementation();
+    errorHandlerCb = jest.fn();
+    setupCdAwareImplementation({ handleError: errorHandlerCb });
   });
 
   it('should be implementable', () => {
@@ -145,12 +148,12 @@ describe('CdAware', () => {
     });
 
     it('error handling', () => {
-      cdAwareImplementation.cdAware.nextPotentialObservable(
-        throwError('Error!')
-      );
+      const error = 'Error!';
+      cdAwareImplementation.cdAware.nextPotentialObservable(throwError(error));
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
-      expect(cdAwareImplementation.error).toBe('Error!');
+      expect(cdAwareImplementation.error).toBe(error);
       expect(cdAwareImplementation.completed).toBe(false);
+      expect(errorHandlerCb).toHaveBeenCalledWith(error);
     });
 
     it('completion handling', () => {
