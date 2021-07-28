@@ -1,3 +1,4 @@
+import { ErrorHandler } from '@angular/core';
 import {
   EMPTY,
   from,
@@ -35,6 +36,7 @@ export function createCdAware<U>(cfg: {
   render: () => void;
   resetContextObserver: NextObserver<void>;
   updateViewContextObserver: NextObserver<U | undefined | null>;
+  errorHandler: ErrorHandler;
 }): CdAware<U | undefined | null> {
   const potentialObservablesSubject: Subject<
     ObservableInput<U> | undefined | null
@@ -72,6 +74,7 @@ export function createCdAware<U>(cfg: {
         tap(cfg.updateViewContextObserver),
         tap(() => cfg.render()),
         catchError((e) => {
+          cfg.errorHandler.handleError(e);
           return EMPTY;
         })
       );

@@ -1,15 +1,14 @@
 import {
   ChangeDetectorRef,
   Directive,
+  ErrorHandler,
   Input,
   NgZone,
   OnDestroy,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-
 import { NextObserver, ObservableInput, Observer, Unsubscribable } from 'rxjs';
-
 import { CdAware, createCdAware } from '../core/cd-aware/cd-aware_creator';
 import { createRender } from '../core/cd-aware/creator_render';
 
@@ -157,12 +156,14 @@ export class LetDirective<U> implements OnDestroy {
     cdRef: ChangeDetectorRef,
     ngZone: NgZone,
     private readonly templateRef: TemplateRef<LetViewContext<U>>,
-    private readonly viewContainerRef: ViewContainerRef
+    private readonly viewContainerRef: ViewContainerRef,
+    errorHandler: ErrorHandler
   ) {
     this.cdAware = createCdAware<U>({
       render: createRender({ cdRef, ngZone }),
       resetContextObserver: this.resetContextObserver,
       updateViewContextObserver: this.updateViewContextObserver,
+      errorHandler,
     });
     this.subscription = this.cdAware.subscribe();
   }

@@ -3,6 +3,7 @@ logs
 *.log
 .nyc
 .nyc_output
+.history
 
 # Runtime data
 pids

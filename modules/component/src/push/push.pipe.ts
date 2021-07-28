@@ -1,12 +1,12 @@
 import {
   ChangeDetectorRef,
+  ErrorHandler,
   NgZone,
   OnDestroy,
   Pipe,
   PipeTransform,
 } from '@angular/core';
 import { NextObserver, ObservableInput, Unsubscribable } from 'rxjs';
-
 import { CdAware, createCdAware } from '../core/cd-aware/cd-aware_creator';
 import { createRender } from '../core/cd-aware/creator_render';
 
@@ -68,11 +68,16 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     next: (value: S | null | undefined) => (this.renderedValue = value),
   };
 
-  constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
+  constructor(
+    cdRef: ChangeDetectorRef,
+    ngZone: NgZone,
+    errorHandler: ErrorHandler
+  ) {
     this.cdAware = createCdAware<S>({
       render: createRender({ cdRef, ngZone }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
+      errorHandler,
     });
     this.subscription = this.cdAware.subscribe();
   }
