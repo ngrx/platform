@@ -1,4 +1,9 @@
-import { getSelectors, RouterReducerState } from '@ngrx/router-store';
+import {
+  getSelectors,
+  RouterReducerState,
+  DEFAULT_ROUTER_FEATURENAME,
+  createRouterSelector,
+} from '@ngrx/router-store';
 import { RouterStateSelectors } from '../src/models';
 
 const mockData = {
@@ -150,6 +155,19 @@ describe('Router State Selectors', () => {
       const result = selectorOverwrite.selectCurrentRoute(stateOverwrite);
       expect(result).toEqual(
         stateOverwrite.anotherRouterKey.state.root.firstChild.firstChild
+      );
+    });
+
+    it('should be able to use DEFAULT_ROUTER_FEATURENAME and createRouterSelector to select router feature state', () => {
+      const stateOverwrite = {
+        [DEFAULT_ROUTER_FEATURENAME]: mockData,
+      };
+      const selectorOverwrite = getSelectors(createRouterSelector());
+
+      const result = selectorOverwrite.selectCurrentRoute(stateOverwrite);
+      expect(result).toEqual(
+        stateOverwrite[DEFAULT_ROUTER_FEATURENAME].state.root.firstChild
+          .firstChild
       );
     });
 
