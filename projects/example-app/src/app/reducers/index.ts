@@ -80,8 +80,4 @@ export const selectShowSidenav = createSelector(
 /**
  * Router Selectors
  */
-export const selectRouter = createFeatureSelector<fromRouter.RouterReducerState>(
-  'router'
-);
-
-export const { selectRouteData } = fromRouter.getSelectors(selectRouter);
+export const { selectRouteData } = fromRouter.getSelectors();

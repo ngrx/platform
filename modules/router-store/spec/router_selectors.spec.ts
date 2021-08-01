@@ -1,4 +1,4 @@
-import { RouterReducerState, getSelectors } from '@ngrx/router-store';
+import { getSelectors, RouterReducerState } from '@ngrx/router-store';
 import { RouterStateSelectors } from '../src/models';
 
 const mockData = {
@@ -130,13 +130,27 @@ describe('Router State Selectors', () => {
         router: mockData,
       };
 
-      selectors = getSelectors((state: State) => state.router);
+      selectors = getSelectors();
     });
 
     it('should create selectCurrentRoute selector for selecting the current route', () => {
       const result = selectors.selectCurrentRoute(state);
 
       expect(result).toEqual(state.router.state.root.firstChild.firstChild);
+    });
+
+    it('should be able to overwrite default router feature state name', () => {
+      const stateOverwrite = {
+        anotherRouterKey: mockData,
+      };
+      const selectorOverwrite = getSelectors(
+        (state: typeof stateOverwrite) => state.anotherRouterKey
+      );
+
+      const result = selectorOverwrite.selectCurrentRoute(stateOverwrite);
+      expect(result).toEqual(
+        stateOverwrite.anotherRouterKey.state.root.firstChild.firstChild
+      );
     });
 
     it('should return undefined from selectCurrentRoute if routerState does not exist', () => {
