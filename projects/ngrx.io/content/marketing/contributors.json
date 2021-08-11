@@ -84,5 +84,14 @@
     "website": "https://github.com/alex-okrushko",
     "bio": "Alex is a software engineer at Google, and writer for Angular in Depth.",
     "group": "Core"
+  },
+
+  "marko": {
+    "name": "Marko Stanimirović",
+    "picture": "markos.jpg",
+    "twitter": "markostdev",
+    "website": "https://github.com/markostanimirovic",
+    "bio": "Dev @jobcloud · Organizer @angularbelgrade · Hobby Musician guitar · MSc in Software Engineering.",
+    "group": "Contributor"
   }
 }
