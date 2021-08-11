@@ -1,3 +1,15 @@
+<a name="12.4.0"></a>
+
+# [12.4.0](https://github.com/ngrx/platform/compare/12.3.0...12.4.0) (2021-08-11)
+
+### Bug Fixes
+
+- **component:** capture errors from observable when using `ngrxPush` pipe and `ngrxLet` directive ([23c846b](https://github.com/ngrx/platform/commit/23c846b)), closes [#3100](https://github.com/ngrx/platform/issues/3100)
+
+### Features
+
+- **router-store:** add createRouterSelector to select router data for default config ([#3103](https://github.com/ngrx/platform/issues/3103)) ([507f58e](https://github.com/ngrx/platform/commit/507f58e))
+
 <a name="12.3.0"></a>
 
 # [12.3.0](https://github.com/ngrx/platform/compare/12.2.0...12.3.0) (2021-07-22)
