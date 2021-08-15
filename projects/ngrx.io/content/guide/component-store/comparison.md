@@ -88,7 +88,7 @@ ComponentStores, but each one should store its own distinct state.
 
 ## File structure
 
-ComponentStore is focused on a smaller part the state, and thus should contain not only the state
+ComponentStore is focused on a smaller part of the state, and thus should contain not only the state
 itself, but also every "prescription" of how it could be changed. All "`updater`s" and "`effect`s"
 should be part of the ComponentStore, responsible for the specific state.
 
