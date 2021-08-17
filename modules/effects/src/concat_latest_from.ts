@@ -12,6 +12,18 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
  * `concatLatestFrom` combines the source value
  * and the last available value from a lazily evaluated Observable
  * in a new array
+ *
+ * ## Example
+ * Select the active customer from the NgRx Store
+ *
+ * ```ts
+ * import { concatLatestFrom } from '@ngrx/effects';
+ * import * fromCustomers from '../customers';
+ *
+ * this.actions$.pipe(
+ *  concatLatestFrom(() => this.store.select(fromCustomers.selectActiveCustomer))
+ * )
+ * ```
  */
 export function concatLatestFrom<
   T extends Observable<unknown>[] | Observable<unknown>,
