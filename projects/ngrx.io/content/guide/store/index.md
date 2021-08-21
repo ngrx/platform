@@ -25,6 +25,12 @@ The following diagram represents the overall general flow of application state i
   <img src="generated/images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle Diagram" width="100%" height="100%" />
 </figure>
 
+<div class="alert is-important">
+
+**Note:** All `Actions` that are dispatched within an application state are always first processed by the `Reducers` before being handled by the `Effects` of the application state.
+
+</div>
+
 ## Tutorial
 
 The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload></live-example>.
