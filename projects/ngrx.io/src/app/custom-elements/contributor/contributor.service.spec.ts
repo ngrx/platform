@@ -25,9 +25,14 @@ describe('ContributorService', () => {
 
     afterEach(() => httpMock.verify());
 
-    it('should make a single connection to the server', () => {
-        const req = httpMock.expectOne({});
-        expect(req.request.url).toBe('generated/contributors.json');
+    it('should make two requests for contributor data', () => {
+        contribService.contributors.subscribe();
+
+        const req1 = httpMock.match('generated/contributors.json');
+        expect(req1[0].request.url).toBe('generated/contributors.json');
+
+        const req2 = httpMock.match('https://api.github.com/repos/ngrx/platform/contributors?per_page=100&page=1');
+        expect(req2[0].request.url).toBe('https://api.github.com/repos/ngrx/platform/contributors?per_page=100&page=1');
     });
 
     describe('#contributors', () => {
@@ -36,18 +41,9 @@ describe('ContributorService', () => {
 
         beforeEach(() => {
             testData = getTestContribs();
-            httpMock.expectOne({}).flush(testData);
             contribService.contributors.subscribe(results => (contribs = results));
-        });
-
-        it('contributors observable should complete', () => {
-            let completed = false;
-            contribService.contributors.subscribe(
-                undefined,
-                undefined,
-                () => (completed = true)
-            );
-            expect(completed).toBe(true, 'observable completed');
+            httpMock.expectOne('generated/contributors.json').flush(testData);
+            httpMock.expectOne('https://api.github.com/repos/ngrx/platform/contributors?per_page=100&page=1').flush([]);
         });
 
         it('should reshape the contributor json to expected result', () => {
