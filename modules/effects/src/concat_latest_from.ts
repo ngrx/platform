@@ -13,7 +13,8 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
  * and the last available value from a lazily evaluated Observable
  * in a new array
  *
- * ## Example
+ * @usageNotes
+ *
  * Select the active customer from the NgRx Store
  *
  * ```ts

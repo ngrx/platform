@@ -117,7 +117,8 @@ export function ofType<V extends Action>(
  * 'Observable<never>'. In such cases one has to manually set the generic type
  * like `actions.ofType<AdditionAction>('add')`.
  *
- * ## Example
+ * @usageNotes
+ *
  * Filter the Actions stream on the "customers page loaded" action
  *
  * ```ts
