@@ -83,14 +83,9 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   
   constructor() {
     super({movies: Movie[], moviesPerPage: 10, currentPageIndex: 0});
-
-    this.effect((moviePageData$: Observable<{moviesPerPage: number, currentPageIndex: number}>) => {
-      return moviePageData$.pipe(
-        concatMap(({moviesPerPage, currentPageIndex}) =>
-          this.movieService.loadMovies(moviesPerPage, currentPageIndex),
-        ).pipe(tap(results => this.updateMovieResults(results))),
-      );
-    })(this.fetchMoviesData$); // 👈 effect is triggered whenever debounced data is changed
+ 
+    // 👇 effect is triggered whenever debounced data is changed
+    this.fetchMovies(this.fetchMoviesData$);
   }
 
   // Updates how many movies per page should be displayed
@@ -115,6 +110,14 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
     (moviesPerPage, currentPageIndex) => ({moviesPerPage, currentPageIndex}),
     {debounce: true}, // 👈 setting this selector to debounce
   );
+  
+  private readonly fetchMovies = this.effect((moviePageData$: Observable<{moviesPerPage: number, currentPageIndex: number}>) => {
+    return moviePageData$.pipe(
+      concatMap(({moviesPerPage, currentPageIndex}) =>
+        this.movieService.loadMovies(moviesPerPage, currentPageIndex),
+      ).pipe(tap(results => this.updateMovieResults(results))),
+    );
+  });
 }
 </code-example>
 
