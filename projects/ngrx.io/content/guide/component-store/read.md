@@ -111,14 +111,17 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
     {debounce: true}, // 👈 setting this selector to debounce
   );
   
-  private readonly fetchMovies = this.effect((moviePageData$: Observable<{moviesPerPage: number, currentPageIndex: number}>) => {
-    return moviePageData$.pipe(
-      concatMap(({moviesPerPage, currentPageIndex}) =>
-        this.movieService.loadMovies(moviesPerPage, currentPageIndex),
-      ).pipe(tap(results => this.updateMovieResults(results))),
-    );
-  });
-}
+  private readonly fetchMovies = this.effect(
+    (moviePageData$: Observable<{ moviesPerPage: number; currentPageIndex: number }>) => {
+      return moviePageData$.pipe(
+        concatMap(({ moviesPerPage, currentPageIndex }) => {
+          return this.movieService
+            .loadMovies(moviesPerPage, currentPageIndex)
+            .pipe(tap((results) => this.updateMovieResults(results)));
+        }),
+      );
+    },
+  );
 </code-example>
 
 
