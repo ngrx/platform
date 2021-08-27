@@ -82,7 +82,7 @@ Adding the debounce to a selector is done by passing `{debounce: true}` as the l
 export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   
   constructor() {
-    super({movies: Movie[], moviesPerPage: 10, currentPageIndex: 0});
+    super({movies: [], moviesPerPage: 10, currentPageIndex: 0});
  
     // 👇 effect is triggered whenever debounced data is changed
     this.fetchMovies(this.fetchMoviesData$);
@@ -122,6 +122,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
       );
     },
   );
+};
 </code-example>
 
 
