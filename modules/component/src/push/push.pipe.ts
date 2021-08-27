@@ -54,18 +54,16 @@ import { createRender } from '../core/cd-aware/creator_render';
  * @publicApi
  */
 @Pipe({ name: 'ngrxPush', pure: false })
-export class PushPipe<S> implements PipeTransform, OnDestroy {
-  private renderedValue: S | null | undefined;
+export class PushPipe implements PipeTransform, OnDestroy {
+  private renderedValue: unknown;
 
   private readonly subscription: Unsubscribable;
-  private readonly cdAware: CdAware<S | null | undefined>;
+  private readonly cdAware: CdAware<unknown>;
   private readonly resetContextObserver: NextObserver<void> = {
     next: () => (this.renderedValue = undefined),
   };
-  private readonly updateViewContextObserver: NextObserver<
-    S | null | undefined
-  > = {
-    next: (value: S | null | undefined) => (this.renderedValue = value),
+  private readonly updateViewContextObserver: NextObserver<unknown> = {
+    next: (value) => (this.renderedValue = value),
   };
 
   constructor(
@@ -73,7 +71,7 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     ngZone: NgZone,
     errorHandler: ErrorHandler
   ) {
-    this.cdAware = createCdAware<S>({
+    this.cdAware = createCdAware({
       render: createRender({ cdRef, ngZone }),
       updateViewContextObserver: this.updateViewContextObserver,
       resetContextObserver: this.resetContextObserver,
@@ -89,7 +87,7 @@ export class PushPipe<S> implements PipeTransform, OnDestroy {
     potentialObservable: ObservableInput<T> | null | undefined
   ): T | null | undefined {
     this.cdAware.nextPotentialObservable(potentialObservable);
-    return this.renderedValue as any;
+    return this.renderedValue as T | null | undefined;
   }
 
   ngOnDestroy(): void {
