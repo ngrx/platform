@@ -112,9 +112,9 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   );
   
   private readonly fetchMovies = this.effect(
-    (moviePageData$: Observable<{ moviesPerPage: number; currentPageIndex: number }>) => {
+    (moviePageData$: Observable<{moviesPerPage: number; currentPageIndex: number}>) => {
       return moviePageData$.pipe(
-        concatMap(({ moviesPerPage, currentPageIndex }) => {
+        concatMap(({moviesPerPage, currentPageIndex}) => {
           return this.movieService
             .loadMovies(moviesPerPage, currentPageIndex)
             .pipe(tap((results) => this.updateMovieResults(results)));
@@ -122,7 +122,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
       );
     },
   );
-};
+}
 </code-example>
 
 
