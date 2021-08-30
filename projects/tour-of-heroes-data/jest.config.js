@@ -1,6 +1,12 @@
 module.exports = {
   displayName: 'tour-of-heroes-data',
   preset: '../../jest.preset.js',
+  coverageDirectory: '../../coverage/apps/tour-of-heroes-data',
+  snapshotSerializers: [
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
+    'jest-preset-angular/build/AngularSnapshotSerializer.js',
+    'jest-preset-angular/build/HTMLCommentSerializer.js',
+  ],
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -14,10 +20,4 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../coverage/projects/tour-of-heroes-data',
-  snapshotSerializers: [
-    'jest-preset-angular/build/serializers/no-ng-attributes',
-    'jest-preset-angular/build/serializers/ng-snapshot',
-    'jest-preset-angular/build/serializers/html-comment',
-  ],
 };
