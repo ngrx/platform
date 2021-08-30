@@ -1,0 +1,52 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="getVillains()"
+      matTooltip="Refresh the villains"
+    >
+      Refresh
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="enableAddMode()"
+      *ngIf="!selected"
+      matTooltip="Add a new villain"
+    >
+      Add
+    </button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="villains">
+      <mat-spinner
+        *ngIf="loading; else villainList"
+        mode="indeterminate"
+        color="accent"
+      ></mat-spinner>
+      <ng-template #villainList>
+        <ngrx-villain-list
+          [villains]="villains"
+          [selectedVillain]="selected"
+          (deleted)="delete($event)"
+          (selected)="select($event)"
+        ></ngrx-villain-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <ngrx-villain-detail
+      *ngIf="selected"
+      [villain]="selected"
+      (unselect)="close()"
+      (add)="add($event)"
+      (update)="update($event)"
+    >
+    </ngrx-villain-detail>
+  </div>
+</div>

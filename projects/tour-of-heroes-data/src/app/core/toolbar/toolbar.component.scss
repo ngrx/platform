@@ -1,0 +1,97 @@
+@import 'mixin';
+
+.pull-right {
+  position: fixed !important;
+  right: 8px;
+}
+
+.ng-title-icon > i {
+  background-image: url('../../../assets/ng.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 1.2em;
+}
+
+.title {
+  margin-right: 1em;
+}
+
+.item {
+  margin-left: 16px;
+}
+
+.item,
+a {
+  vertical-align: middle;
+}
+
+.router-link-active {
+  @include primary-background-contrast-color;
+}
+
+.footer-container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  > * {
+    // padding: 10px;
+    // flex: 1 100%;
+    display: flex;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .footer-container {
+    > * {
+      font-size: 12px;
+    }
+  }
+}
+
+.commands {
+  flex: 18 0px;
+  order: 1;
+  align-self: center;
+  padding-left: 8px;
+}
+
+.avatar {
+  flex: 1 auto;
+}
+
+.spacer {
+  order: 0;
+  flex: 18 0px;
+}
+
+.avatar-1 {
+  order: 1;
+}
+
+.avatar-2 {
+  order: 2;
+}
+
+.avatar-1 > i,
+.avatar-2 > i {
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 16px;
+
+  border: 0;
+  border-radius: 50%;
+  opacity: 1;
+}
+.avatar-1 > i {
+  background-image: url('../../../assets/wb.jpg');
+}
+.avatar-2 > i {
+  background-image: url('../../../assets/jp.jpg');
+}
+
+.row-commands {
+  height: 40px;
+  border-top: 1px solid white;
+  // @include primary-background-contrast-color; // end
+  @include accent-background-color; // begin
+}

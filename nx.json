@@ -8,7 +8,9 @@
     ".circleci/config.yml": "*",
     ".eslintrc.json": "*"
   },
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "npmScope": "ngrx",
   "tasksRunnerOptions": {
     "default": {
@@ -27,19 +29,45 @@
       }
     }
   },
-  "workspaceLayout": { "appsDir": "projects", "libsDir": "modules" },
+  "workspaceLayout": {
+    "appsDir": "projects",
+    "libsDir": "modules"
+  },
   "projects": {
-    "example-app": { "tags": [] },
-    "store": { "tags": [] },
-    "effects": { "tags": [] },
-    "data": { "tags": [] },
-    "entity": { "tags": [] },
-    "store-devtools": { "tags": [] },
-    "router-store": { "tags": [] },
-    "schematics": { "tags": [] },
-    "component": { "tags": [] },
-    "component-store": { "tags": [] },
-    "example-app-e2e": { "tags": [], "implicitDependencies": ["example-app"] },
+    "example-app": {
+      "tags": []
+    },
+    "store": {
+      "tags": []
+    },
+    "effects": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "entity": {
+      "tags": []
+    },
+    "store-devtools": {
+      "tags": []
+    },
+    "router-store": {
+      "tags": []
+    },
+    "schematics": {
+      "tags": []
+    },
+    "component": {
+      "tags": []
+    },
+    "component-store": {
+      "tags": []
+    },
+    "example-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["example-app"]
+    },
     "docs-app": {
       "tags": [],
       "implicitDependencies": [
@@ -54,7 +82,11 @@
         "component-store"
       ]
     },
-    "schematics-core": { "tags": [] },
-    "data-example-app": { "tags": [] }
+    "schematics-core": {
+      "tags": []
+    },
+    "tour-of-heroes-data": {
+      "tags": []
+    }
   }
 }

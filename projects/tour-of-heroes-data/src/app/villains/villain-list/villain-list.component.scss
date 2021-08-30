@@ -1,0 +1,9 @@
+@import '../../../assets/styles/mixin';
+
+.villains {
+  @include item-list;
+}
+
+.mat-card {
+  @include mat-card-layout;
+}

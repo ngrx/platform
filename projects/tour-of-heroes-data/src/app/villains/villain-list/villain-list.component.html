@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Villains</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="villains">
+      <li
+        *ngFor="let villain of villains; trackBy: byId"
+        class="item-container"
+      >
+        <button
+          mat-button
+          matSuffix
+          mat-icon-button
+          color="accent"
+          class="delete-button"
+          aria-label="Delete"
+          (click)="deleteVillain(villain)"
+          matTooltip="Delete the villain"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div
+          class="selectable-item"
+          [class.selected]="villain === selectedVillain"
+          (click)="select(villain)"
+        >
+          <div class="badge">{{ villain.id }}</div>
+          <div class="item-text">
+            <div class="name">{{ villain.name }}</div>
+            <div class="saying">{{ villain.saying }}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

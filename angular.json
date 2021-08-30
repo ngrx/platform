@@ -16,6 +16,20 @@
     },
     "@schematics/angular:directive": {
       "prefix": "bc"
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
     }
   },
   "projects": {
@@ -711,97 +725,93 @@
       },
       "schematics": {}
     },
-    "data-example-app": {
+    "tour-of-heroes-data": {
       "projectType": "application",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "projects/data-example-app",
-      "sourceRoot": "projects/data-example-app/src",
+      "root": "projects/tour-of-heroes-data",
+      "sourceRoot": "projects/tour-of-heroes-data/src",
       "prefix": "ngrx",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/projects/data-example-app",
-            "index": "projects/data-example-app/src/index.html",
-            "main": "projects/data-example-app/src/main.ts",
-            "polyfills": "projects/data-example-app/src/polyfills.ts",
-            "tsConfig": "projects/data-example-app/tsconfig.app.json",
-            "aot": true,
+            "outputPath": "dist/projects/tour-of-heroes-data",
+            "index": "projects/tour-of-heroes-data/src/index.html",
+            "main": "projects/tour-of-heroes-data/src/main.ts",
+            "polyfills": "projects/tour-of-heroes-data/src/polyfills.ts",
+            "tsConfig": "projects/tour-of-heroes-data/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/data-example-app/src/favicon.ico",
-              "projects/data-example-app/src/assets"
+              "projects/tour-of-heroes-data/src/favicon.ico",
+              "projects/tour-of-heroes-data/src/assets"
             ],
-            "styles": ["projects/data-example-app/src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/tour-of-heroes-data/src/styles.scss",
+              "projects/tour-of-heroes-data/src/assets/styles/mixin.scss",
+              "projects/tour-of-heroes-data/src/assets/styles/theme.scss",
+              "projects/tour-of-heroes-data/src/assets/styles/styles.scss"
+            ],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/tour-of-heroes-data/src/assets/styles"]
+            }
           },
           "configurations": {
             "production": {
+              "budgets": [],
               "fileReplacements": [
                 {
-                  "replace": "projects/data-example-app/src/environments/environment.ts",
-                  "with": "projects/data-example-app/src/environments/environment.prod.ts"
+                  "replace": "projects/tour-of-heroes-data/src/environments/environment.ts",
+                  "with": "projects/tour-of-heroes-data/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "data-example-app:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "data-example-app:build:production"
+              "browserTarget": "tour-of-heroes-data:build:production"
+            },
+            "development": {
+              "browserTarget": "tour-of-heroes-data:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "data-example-app:build"
+            "browserTarget": "tour-of-heroes-data:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "projects/data-example-app/*/**/*.ts",
-              "projects/data-example-app/*/**/*.html"
+              "projects/tour-of-heroes-data/src/**/*.ts",
+              "projects/tour-of-heroes-data/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/projects/tour-of-heroes-data"],
           "options": {
-            "jestConfig": "projects/data-example-app/jest.config.js",
-            "tsConfig": "projects/data-example-app/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "projects/data-example-app/src/test-setup.ts"
+            "jestConfig": "projects/tour-of-heroes-data/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

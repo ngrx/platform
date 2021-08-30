@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div>
+      <a class="ng-title-icon" href="http://angular.io" target="_blank">
+        <i></i>
+      </a>
+      <span class="title">{{ labTitle }}</span>
+      <span></span>
+      <a
+        mat-button
+        [routerLink]="['/heroes']"
+        routerLinkActive="router-link-active"
+      >
+        <span>Heroes</span>
+      </a>
+      <a
+        mat-button
+        [routerLink]="['/villains']"
+        routerLinkActive="router-link-active"
+      >
+        <span>Villains</span>
+      </a>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="row-commands">
+    <div class="footer-container">
+      <span class="spacer">{{ labState }}</span>
+      <a
+        href="http://twitter.com/wardbell"
+        target="_blank"
+        class="avatar avatar-1"
+        title="Ward Bell"
+      >
+        <i></i>
+      </a>
+      <a
+        href="http://twitter.com/john_papa"
+        target="_blank"
+        class="avatar avatar-2"
+        title="John Papa"
+      >
+        <i></i>
+      </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

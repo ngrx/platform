@@ -11,5 +11,6 @@ module.exports = {
     '<rootDir>/modules/component',
     '<rootDir>/modules/component-store',
     '<rootDir>/modules/schematics-core',
+    '<rootDir>/projects/tour-of-heroes-data',
   ],
 };

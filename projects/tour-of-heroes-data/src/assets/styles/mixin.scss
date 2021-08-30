@@ -1,0 +1,177 @@
+@import 'theme';
+
+@mixin primary-color {
+  $primary-color: map-get($primary, 800);
+  color: $primary-color;
+}
+@mixin primary-background-contrast-color {
+  $primary-color: map-get($primary, 400);
+  $font-color: map-get(map-get($primary, contrast), 400);
+  background-color: $primary-color;
+  color: $font-color !important;
+}
+@mixin accent-color {
+  $accent-font-color: map-get($accent, 800);
+  color: $accent-font-color;
+}
+@mixin accent-background-color {
+  $accent-color: map-get($accent, 700);
+  $accent-font-color: map-get(map-get($accent, contrast), 700);
+  background-color: $accent-color;
+  color: $accent-font-color !important;
+}
+@mixin selected-style {
+  $background-color: map-get($accent, 800);
+  $font-color: map-get(map-get($accent, contrast), 800);
+  background: $background-color !important;
+  color: $font-color !important;
+}
+@mixin hover-style {
+  $background-color: map-get($accent, 400);
+  $font-color: map-get(map-get($accent, contrast), 900);
+  background: $background-color !important;
+  color: $font-color !important;
+}
+@mixin selected-hover-style {
+  $background-color: map-get($accent, 600);
+  $font-color: map-get(map-get($accent, contrast), 600);
+  background: $background-color !important;
+  color: $font-color !important;
+}
+
+@mixin item-list {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 25em;
+  .selected,
+  .selected > .item-text * {
+    background-color: rgb(0, 120, 215) !important;
+    color: white;
+  }
+  li {
+    cursor: pointer;
+    position: relative;
+    margin: 0.5em;
+    height: 4em;
+  }
+  .saying {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 15em;
+    white-space: nowrap;
+    margin: 5px 0px;
+  }
+  .name {
+    @include primary-color;
+  }
+  .item-container {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  > * {
+    flex: 1 100%;
+  }
+  .selectable-item {
+    display: flex;
+    flex-flow: row wrap;
+    flex: 18 auto;
+    order: 0;
+    padding: 0;
+    margin: 0;
+    &:hover {
+      color: #607d8b;
+      color: rgb(0, 120, 215);
+      background-color: #ddd;
+      left: 1px;
+    }
+    &.selected:hover {
+      color: white;
+    }
+  }
+  .item-text {
+    flex: 1 auto;
+    order: 2;
+    padding: 10px;
+  }
+  .badge {
+    flex: 1 auto;
+    order: 1;
+    font-size: small;
+    color: #ffffff;
+    padding: 1.5em 1em 0em 1em;
+    background-color: rgb(134, 183, 221);
+    margin: 0em 0em 0em 0em;
+    max-width: 1.5em;
+    text-align: center;
+  }
+  button.delete-button {
+    margin-right: 12px;
+    margin-top: 6px;
+    order: 1;
+  }
+}
+
+@mixin mat-card-layout {
+  width: 366px;
+  margin: 1em;
+  padding: 0px;
+  .mat-card-header {
+    background-color: #85b7de;
+    padding: 18px 12px 6px 24px;
+    color: #ffffff;
+  }
+  .mat-card-content {
+    padding: 24px;
+  }
+}
+
+@mixin editarea-margins {
+  button {
+    margin: 0.5em 1em;
+  }
+  .editfields {
+    margin: 1em;
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+}
+
+@mixin control-panel-layout {
+  margin: 8px;
+  margin-left: 1em;
+  display: flex;
+  flex-flow: column wrap;
+  > * {
+    flex: 1 100%;
+  }
+  .button-panel {
+    flex: 1 auto;
+    margin: 8px 0px;
+    order: 1;
+  }
+  .filter-panel {
+    flex: 1 auto;
+    margin: 8px 0px;
+    order: 2;
+  }
+}
+
+@mixin content-container-layout {
+  display: flex;
+  flex-flow: row wrap;
+  > * {
+    flex: 1 100%;
+  }
+  .list-container {
+    flex: 1 auto;
+    order: 1;
+    max-width: 30em;
+  }
+  .detail-container {
+    flex: 1 auto;
+    order: 2;
+    max-width: 22em;
+  }
+}
