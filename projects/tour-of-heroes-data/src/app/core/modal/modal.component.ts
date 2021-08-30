@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'ngrx-modal',
   templateUrl: './modal.component.html',
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
   message: string;
   title: string;
 
@@ -16,7 +16,6 @@ export class ModalComponent implements OnInit {
     this.title = data.title;
     this.message = data.message;
   }
-  ngOnInit() {}
 
   ok() {
     this.dialogRef.close(true);
