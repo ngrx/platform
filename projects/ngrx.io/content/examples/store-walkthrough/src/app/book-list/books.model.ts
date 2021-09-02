@@ -4,4 +4,4 @@ export interface Book {
       title: string;
       authors: Array<string>;
     };
-  }
+}
