@@ -8,7 +8,7 @@ export const addBook = createAction(
 
 export const removeBook = createAction(
   '[Book Collection] Remove Book',
-  props<{ bookId: number }>()
+  props<{ bookId: string }>()
 );
 
 export const retrievedBookList = createAction(
