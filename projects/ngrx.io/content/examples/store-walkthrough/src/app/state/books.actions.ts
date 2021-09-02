@@ -3,7 +3,7 @@ import { Book } from '../book-list/books.model';
 
 export const addBook = createAction(
   '[Book List] Add Book',
-  props<{ bookId: number }>()
+  props<{ bookId: string }>()
 );
 
 export const removeBook = createAction(
