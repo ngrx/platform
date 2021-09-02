@@ -9,6 +9,7 @@ import {
   HttpClientInMemoryWebApiModule,
   InMemoryDbService,
 } from 'angular-in-memory-web-api';
+import { AppStoreModule } from './store/app-store.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'heroes' },
@@ -36,6 +37,7 @@ const routes: Routes = [
       delay: 300,
       passThruUnknownUrl: true,
     }),
+    AppStoreModule,
   ],
   providers: [{ provide: InMemoryDataService, useExisting: InMemoryDbService }],
   declarations: [AppComponent],

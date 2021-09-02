@@ -1,8 +1,9 @@
-@import '../../../assets/styles/mixin';
+@import 'mixin';
 
 .control-panel {
   @include control-panel-layout;
 }
+
 .content-container {
   @include content-container-layout;
 }

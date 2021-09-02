@@ -6,21 +6,21 @@
     <ul class="heroes">
       <li *ngFor="let hero of heroes; trackBy: byId" class="item-container">
         <button
-          mat-button
-          matSuffix
-          mat-icon-button
-          color="accent"
-          class="delete-button"
-          aria-label="Delete"
           (click)="deleteHero(hero)"
+          aria-label="Delete"
+          class="delete-button"
+          color="accent"
+          mat-button
+          mat-icon-button
+          mat-suffix
           matTooltip="Delete the hero"
         >
           <mat-icon>delete</mat-icon>
         </button>
         <div
-          class="selectable-item"
-          [class.selected]="hero === selectedHero"
           (click)="select(hero)"
+          [class.selected]="hero === selectedHero"
+          class="selectable-item"
         >
           <div class="badge">{{ hero.id }}</div>
           <div class="item-text">

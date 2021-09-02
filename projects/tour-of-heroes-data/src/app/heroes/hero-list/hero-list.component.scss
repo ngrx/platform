@@ -1,4 +1,4 @@
-@import '../../../assets/styles/mixin';
+@import 'mixin';
 
 .heroes {
   @include item-list;

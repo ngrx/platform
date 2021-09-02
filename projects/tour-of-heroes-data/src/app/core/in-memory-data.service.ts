@@ -4,9 +4,9 @@
 import { Injectable } from '@angular/core';
 
 import {
+  ParsedRequestUrl,
   RequestInfo,
   RequestInfoUtilities,
-  ParsedRequestUrl,
 } from 'angular-in-memory-web-api';
 
 import { Hero, Villain } from './model';

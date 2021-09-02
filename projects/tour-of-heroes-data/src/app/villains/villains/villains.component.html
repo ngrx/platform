@@ -1,21 +1,21 @@
 <div class="control-panel">
   <div class="button-panel">
     <button
-      mat-raised-button
-      color="primary"
-      type="button"
       (click)="getVillains()"
+      color="primary"
+      mat-raised-button
       matTooltip="Refresh the villains"
+      type="button"
     >
       Refresh
     </button>
     <button
-      mat-raised-button
-      color="primary"
-      type="button"
       (click)="enableAddMode()"
       *ngIf="!selected"
+      color="primary"
+      mat-raised-button
       matTooltip="Add a new villain"
+      type="button"
     >
       Add
     </button>
@@ -23,29 +23,29 @@
 </div>
 <div class="content-container">
   <div class="list-container">
-    <div *ngIf="villains">
+    <div *ngIf="villains$ | async as villains">
       <mat-spinner
-        *ngIf="loading; else villainList"
-        mode="indeterminate"
+        *ngIf="loading$ | async; else villainList"
         color="accent"
+        mode="indeterminate"
       ></mat-spinner>
       <ng-template #villainList>
         <ngrx-villain-list
-          [villains]="villains"
-          [selectedVillain]="selected"
           (deleted)="delete($event)"
           (selected)="select($event)"
+          [selectedVillain]="selected"
+          [villains]="villains"
         ></ngrx-villain-list>
       </ng-template>
     </div>
   </div>
   <div class="detail-container">
     <ngrx-villain-detail
+      (add)="add($event)"
+      (unselect)="close()"
+      (update)="update($event)"
       *ngIf="selected"
       [villain]="selected"
-      (unselect)="close()"
-      (add)="add($event)"
-      (update)="update($event)"
     >
     </ngrx-villain-detail>
   </div>

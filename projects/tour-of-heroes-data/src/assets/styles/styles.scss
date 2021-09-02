@@ -10,6 +10,7 @@ body {
 .router-link-active {
   @include primary-background-contrast-color;
 }
+
 .page-content {
   margin: 1em;
 }

@@ -1,21 +1,21 @@
 <div class="control-panel">
   <div class="button-panel">
     <button
-      mat-raised-button
-      color="primary"
-      type="button"
       (click)="getHeroes()"
+      color="primary"
+      mat-raised-button
       matTooltip="Refresh the heroes"
+      type="button"
     >
       Refresh
     </button>
     <button
-      mat-raised-button
-      color="primary"
-      type="button"
       (click)="enableAddMode()"
       *ngIf="!selected"
+      color="primary"
+      mat-raised-button
       matTooltip="Add a new hero"
+      type="button"
     >
       Add
     </button>
@@ -23,29 +23,29 @@
 </div>
 <div class="content-container">
   <div class="list-container">
-    <div *ngIf="heroes">
+    <div *ngIf="heroes$ | async as heroes">
       <mat-spinner
-        *ngIf="loading; else heroList"
-        mode="indeterminate"
+        *ngIf="loading$ | async; else heroList"
         color="accent"
+        mode="indeterminate"
       ></mat-spinner>
       <ng-template #heroList>
         <ngrx-hero-list
-          [heroes]="heroes"
-          [selectedHero]="selected"
           (deleted)="delete($event)"
           (selected)="select($event)"
+          [heroes]="heroes"
+          [selectedHero]="selected"
         ></ngrx-hero-list>
       </ng-template>
     </div>
   </div>
   <div class="detail-container">
     <ngrx-hero-detail
+      (add)="add($event)"
+      (unselect)="close()"
+      (update)="update($event)"
       *ngIf="selected"
       [hero]="selected"
-      (unselect)="close()"
-      (add)="add($event)"
-      (update)="update($event)"
     >
     </ngrx-hero-detail>
   </div>

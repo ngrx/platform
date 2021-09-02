@@ -33,6 +33,7 @@ a {
   display: flex;
   flex-flow: row wrap;
   width: 100%;
+
   > * {
     // padding: 10px;
     // flex: 1 100%;
@@ -82,9 +83,11 @@ a {
   border-radius: 50%;
   opacity: 1;
 }
+
 .avatar-1 > i {
   background-image: url('../../../assets/wb.jpg');
 }
+
 .avatar-2 > i {
   background-image: url('../../../assets/jp.jpg');
 }

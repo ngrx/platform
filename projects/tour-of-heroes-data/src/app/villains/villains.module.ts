@@ -5,7 +5,6 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { VillainDetailComponent } from './villain-detail/villain-detail.component';
 import { VillainListComponent } from './villain-list/villain-list.component';
-import { VillainService } from './villain.service';
 import { VillainsComponent } from './villains/villains.component';
 
 const routes: Routes = [
@@ -25,6 +24,5 @@ const routes: Routes = [
     VillainDetailComponent,
     VillainListComponent,
   ],
-  providers: [VillainService],
 })
 export class VillainsModule {}

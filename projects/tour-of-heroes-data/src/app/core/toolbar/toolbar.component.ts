@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
-  labTitle = 'ngrx-data-lab';
-  labState = 'traditional angular app';
+  labTitle = 'ngrx/data-lab';
+  labState = 'now using ngrx/data';
 }

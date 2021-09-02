@@ -9,21 +9,21 @@
         class="item-container"
       >
         <button
-          mat-button
-          matSuffix
-          mat-icon-button
-          color="accent"
-          class="delete-button"
-          aria-label="Delete"
           (click)="deleteVillain(villain)"
+          aria-label="Delete"
+          class="delete-button"
+          color="accent"
+          mat-button
+          mat-icon-button
+          mat-suffix
           matTooltip="Delete the villain"
         >
           <mat-icon>delete</mat-icon>
         </button>
         <div
-          class="selectable-item"
-          [class.selected]="villain === selectedVillain"
           (click)="select(villain)"
+          [class.selected]="villain === selectedVillain"
+          class="selectable-item"
         >
           <div class="badge">{{ villain.id }}</div>
           <div class="item-text">

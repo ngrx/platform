@@ -3,59 +3,59 @@
     <mat-card-title>Hero Details</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="saveHero(form)">
+    <form (ngSubmit)="saveHero(form)" [formGroup]="form">
       <div class="editfields">
         <div [hidden]="addMode">
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <input
-              matInput
-              formControlName="id"
-              placeholder="id"
               #id
+              formControlName="id"
+              matInput
+              placeholder="id"
               readonly
             />
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <input
-              matInput
-              formControlName="name"
-              placeholder="name"
               #name
-              (keyup.esc)="close()"
               (keyup.enter)="saveHero(form)"
+              (keyup.esc)="close()"
+              formControlName="name"
+              matInput
+              placeholder="name"
             />
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <textarea
-              matInput
-              formControlName="saying"
-              placeholder="saying"
               #saying
-              (keyup.esc)="close()"
               (keyup.enter)="saveHero(form)"
+              (keyup.esc)="close()"
+              formControlName="saying"
+              matInput
+              placeholder="saying"
             ></textarea>
           </mat-form-field>
         </div>
       </div>
       <button
-        mat-raised-button
-        color="accent"
-        type="button"
         (click)="close()"
+        color="accent"
+        mat-raised-button
         matTooltip="Cancel all changes"
+        type="button"
       >
         Cancel
       </button>
       <button
-        mat-raised-button
-        color="primary"
-        type="submit"
         [disabled]="form.pristine || form.invalid"
+        color="primary"
+        mat-raised-button
         matTooltip="Save all changes"
+        type="submit"
       >
         Save
       </button>
