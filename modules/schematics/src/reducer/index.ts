@@ -23,6 +23,7 @@ import {
   parseName,
   isIvyEnabled,
   getProject,
+  getPrefix,
 } from '../../schematics-core';
 import { Schema as ReducerOptions } from './schema';
 
@@ -30,6 +31,8 @@ export default function (options: ReducerOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     const projectConfig = getProject(host, options);
     options.path = getProjectPath(host, options);
+
+    options.prefix = getPrefix(options);
 
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
