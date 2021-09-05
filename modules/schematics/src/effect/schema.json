@@ -76,6 +76,12 @@
       "type": "boolean",
       "default": false,
       "description": "Setup root effects module without registering initial effects."
+    },
+    "prefix": {
+      "description": "The prefix of the effect.",
+      "type": "string",
+      "default": "load",
+      "x-prompt": "What should be the prefix of the effect?"
     }
   },
   "required": []

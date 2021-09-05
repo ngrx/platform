@@ -27,6 +27,7 @@ describe('Effect Schematic', () => {
     root: false,
     group: false,
     creators: false,
+    prefix: 'load',
   };
 
   const projectPath = getTestProjectPath();
@@ -462,5 +463,36 @@ describe('Effect Schematic', () => {
     );
 
     expect(content).toMatch(/effects = TestBed\.inject\(FooEffects\);/);
+  });
+
+  it('should add prefix to the effect', async () => {
+    const options = {
+      ...defaultOptions,
+      prefix: 'custom',
+      feature: true,
+      api: true,
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('effect', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+
+    expect(content).toMatch(
+      /import { CustomFoosFailure, CustomFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
+    );
+
+    expect(content).toMatch(/customFoos\$ = this\.actions\$.pipe\(/);
+    expect(content).toMatch(/ofType\(FooActionTypes\.CustomFoos\),/);
+
+    expect(content).toMatch(
+      /map\(data => new CustomFoosSuccess\({ data }\)\),/
+    );
+
+    expect(content).toMatch(
+      /catchError\(error => of\(new CustomFoosFailure\({ error }\)\)\)\)/
+    );
   });
 });

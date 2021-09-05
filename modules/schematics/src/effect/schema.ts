@@ -59,4 +59,9 @@ export interface Schema {
    * Setup root effects module without registering initial effects.
    */
   minimal?: boolean;
+
+  /**
+   * The prefix for the effects.
+   */
+  prefix?: string;
 }

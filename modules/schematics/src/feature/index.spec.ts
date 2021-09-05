@@ -271,4 +271,68 @@ describe('Feature Schematic', () => {
       /on\(FooActions.loadFoosFailure, \(state, action\) => state\),/
     );
   });
+
+  it('should have all api effect with prefix if api flag enabled', async () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+      prefix: 'custom',
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.effects.ts`
+    );
+
+    expect(fileContent).toMatch(
+      /import { Actions, createEffect, ofType } from '@ngrx\/effects';/
+    );
+    expect(fileContent).toMatch(
+      /import { catchError, map, concatMap } from 'rxjs\/operators';/
+    );
+    expect(fileContent).toMatch(
+      /import { Observable, EMPTY, of } from 'rxjs';/
+    );
+    expect(fileContent).toMatch(
+      /import \* as FooActions from '.\/foo.actions';/
+    );
+
+    expect(fileContent).toMatch(/export class FooEffects/);
+    expect(fileContent).toMatch(/customFoos\$ = createEffect\(\(\) => {/);
+    expect(fileContent).toMatch(/return this.actions\$.pipe\(/);
+    expect(fileContent).toMatch(/ofType\(FooActions.customFoos\),/);
+    expect(fileContent).toMatch(/concatMap\(\(\) =>/);
+    expect(fileContent).toMatch(/EMPTY.pipe\(/);
+    expect(fileContent).toMatch(
+      /map\(data => FooActions.customFoosSuccess\({ data }\)\),/
+    );
+    expect(fileContent).toMatch(
+      /catchError\(error => of\(FooActions.customFoosFailure\({ error }\)\)\)\)/
+    );
+  });
+
+  it('should have all api actions with prefix in reducer if api flag enabled', async () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+      prefix: 'custom',
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/on\(FooActions.customFoos, state => state\),/);
+    expect(fileContent).toMatch(
+      /on\(FooActions.customFoosSuccess, \(state, action\) => state\),/
+    );
+    expect(fileContent).toMatch(
+      /on\(FooActions.customFoosFailure, \(state, action\) => state\),/
+    );
+  });
 });
