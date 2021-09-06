@@ -4,9 +4,12 @@ The following example more extensively utilizes the key concepts of store to man
 
 ## Tutorial
 
-1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example>.
+1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example> and create a folder named `book-list` inside `app` folder. We will be using it soon to hold our book list component. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
 
-2.  Right click on the `app` folder in StackBlitz. Create a state management folder `state`, and within the new folder, name a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
+<code-example header="src/app/book-list/books.model.ts" path="store-walkthrough/src/app/book-list/books.model.ts">
+</code-example>
+
+2.  Right click on the `app` folder, create a state management folder `state`, and within the new folder, name a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
 
 <code-example header="src/app/state/books.actions.ts" path="store-walkthrough/src/app/state/books.actions.ts">
 </code-example>
@@ -41,12 +44,8 @@ The following example more extensively utilizes the key concepts of store to man
 <code-example header="src/app/state/books.selectors.ts" path="store-walkthrough/src/app/state/books.selectors.ts">
 </code-example>
 
-9.  Create a folder named `book-list`, which we will be using soon to hold our book list component. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
 
-<code-example header="src/app/book-list/books.model.ts" path="store-walkthrough/src/app/book-list/books.model.ts">
-</code-example>
-
-10. In the same folder, we will have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
+10. In the `book-list` folder, we will have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
 
 <code-example header="src/app/book-list/books.service.ts" path="store-walkthrough/src/app/book-list/books.service.ts">
 </code-example>
