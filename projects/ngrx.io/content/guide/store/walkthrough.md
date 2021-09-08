@@ -4,12 +4,12 @@ The following example more extensively utilizes the key concepts of store to man
 
 ## Tutorial
 
-1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example> and create a folder named `book-list` inside `app` folder. We will be using it soon to hold our book list component. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
+1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example> and create a folder named `book-list` inside the `app` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
 
 <code-example header="src/app/book-list/books.model.ts" path="store-walkthrough/src/app/book-list/books.model.ts">
 </code-example>
 
-2.  Right click on the `app` folder, create a state management folder `state`, and within the new folder, name a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
+2.  Right click on the `app` folder to create a state management folder `state`. Within the new folder, create a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
 
 <code-example header="src/app/state/books.actions.ts" path="store-walkthrough/src/app/state/books.actions.ts">
 </code-example>
@@ -45,12 +45,12 @@ The following example more extensively utilizes the key concepts of store to man
 </code-example>
 
 
-9. In the `book-list` folder, we will have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
+9. In the `book-list` folder, we want to have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
 
 <code-example header="src/app/book-list/books.service.ts" path="store-walkthrough/src/app/book-list/books.service.ts">
 </code-example>
 
-10. In the `book-list` folder, create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
+10. In the same folder (`book-list`), create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
 
 <code-example header="src/app/book-list/book-list.component.html" path="store-walkthrough/src/app/book-list/book-list.component.html">
 </code-example>
