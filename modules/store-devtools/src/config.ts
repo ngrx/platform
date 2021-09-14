@@ -13,7 +13,10 @@ export type SerializationOptions = {
 export type Predicate = (state: any, action: Action) => boolean;
 
 /**
- * @see http://extension.remotedev.io/docs/API/Arguments.html#features
+ * Chrome extension documentation
+ * @see https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md#features
+ * Firefox extension documentation
+ * @see https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#features
  */
 export interface DevToolsFeatureOptions {
   /**
@@ -59,7 +62,10 @@ export interface DevToolsFeatureOptions {
 }
 
 /**
- * @see http://extension.remotedev.io/docs/API/Arguments.html
+ * Chrome extension documentation
+ * @see https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md
+ * Firefox extension documentation
+ * @see https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md
  */
 export class StoreDevtoolsConfig {
   /**
