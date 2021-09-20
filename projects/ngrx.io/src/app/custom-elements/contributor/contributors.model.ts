@@ -12,4 +12,5 @@ export class Contributor {
     twitter?: string;
     bio?: string;
     isFlipped ? = false;
+    pictureUrl?: string;
 }

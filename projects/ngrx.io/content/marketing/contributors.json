@@ -9,7 +9,7 @@
     "group": "Core"
   },
 
-  "brandon": {
+  "brandonroberts": {
     "name": "Brandon Roberts",
     "picture": "brandonroberts.jpg",
     "twitter": "brandontroberts",
@@ -19,7 +19,7 @@
     "group": "Core"
   },
 
-  "mike": {
+  "MikeRyanDev": {
     "name": "Mike Ryan",
     "picture": "mikeryan.jpg",
     "twitter": "mikeryandev",
@@ -29,7 +29,7 @@
     "group": "Core"
   },
 
-  "victor": {
+  "vsavkin": {
     "name": "Victor Savkin",
     "picture": "victor.png",
     "twitter": "vsavkin",
@@ -59,7 +59,7 @@
     "group": "Core"
   },
 
-  "tim": {
+  "timdeschryver": {
     "name": "Tim Deschryver",
     "picture": "timd.jpg",
     "twitter": "tim_deschryver",
@@ -68,7 +68,7 @@
     "group": "Core"
   },
 
-  "wes": {
+  "wesleygrimes": {
     "name": "Wes Grimes",
     "picture": "wesgrimes.jpg",
     "twitter": "wesgrimes",
@@ -77,7 +77,7 @@
     "group": "Core"
   },
 
-  "alex": {
+  "alex-okrushko": {
     "name": "Alex Okrushko",
     "picture": "alexo.jpg",
     "twitter": "alexokrushko",
@@ -86,7 +86,7 @@
     "group": "Core"
   },
 
-  "marko": {
+  "markostanimirovic": {
     "name": "Marko Stanimirović",
     "picture": "markos.jpg",
     "twitter": "markostdev",
