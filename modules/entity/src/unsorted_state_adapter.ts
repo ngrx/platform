@@ -85,12 +85,12 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
     }
   }
 
-  function removeOneMutably(key: T, state: R): DidMutate;
+  function removeOneMutably(key: string | number, state: R): DidMutate;
   function removeOneMutably(key: any, state: any): DidMutate {
     return removeManyMutably([key], state);
   }
 
-  function removeManyMutably(keys: T[], state: R): DidMutate;
+  function removeManyMutably(keys: string[] | number[], state: R): DidMutate;
   function removeManyMutably(predicate: Predicate<T>, state: R): DidMutate;
   function removeManyMutably(
     keysOrPredicate: any[] | Predicate<T>,
