@@ -15,7 +15,6 @@ exports[`Collection Page should compile 1`] = `
       My Collection
     </mat-card-title>
   </mat-card><bc-book-preview-list>
-    
   </bc-book-preview-list>
 </bc-collection-page>
 `;

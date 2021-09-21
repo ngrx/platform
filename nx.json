@@ -4,11 +4,13 @@
     "package.json": "*",
     "tslint.json": "*",
     "nx.json": "*",
-    "tsconfig.base.json": "*",
+    "tsconfig.json": "*",
     ".circleci/config.yml": "*",
     ".eslintrc.json": "*"
   },
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "npmScope": "ngrx",
   "tasksRunnerOptions": {
     "default": {
@@ -27,19 +29,23 @@
       }
     }
   },
-  "workspaceLayout": { "appsDir": "projects", "libsDir": "modules" },
+  "workspaceLayout": {
+    "appsDir": "projects",
+    "libsDir": "modules"
+  },
   "projects": {
-    "example-app": { "tags": [] },
-    "store": { "tags": [] },
-    "effects": { "tags": [] },
-    "data": { "tags": [] },
-    "entity": { "tags": [] },
-    "store-devtools": { "tags": [] },
-    "router-store": { "tags": [] },
-    "schematics": { "tags": [] },
-    "component": { "tags": [] },
-    "component-store": { "tags": [] },
-    "example-app-e2e": { "tags": [], "implicitDependencies": ["example-app"] },
+    "component": {
+      "tags": []
+    },
+    "component-store": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "data-example-app": {
+      "tags": []
+    },
     "docs-app": {
       "tags": [],
       "implicitDependencies": [
@@ -54,7 +60,41 @@
         "component-store"
       ]
     },
-    "schematics-core": { "tags": [] },
-    "data-example-app": { "tags": [] }
+    "effects": {
+      "tags": []
+    },
+    "entity": {
+      "tags": []
+    },
+    "example-app": {
+      "tags": []
+    },
+    "example-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["example-app"]
+    },
+    "router-store": {
+      "tags": []
+    },
+    "schematics": {
+      "tags": []
+    },
+    "schematics-core": {
+      "tags": []
+    },
+    "store": {
+      "tags": []
+    },
+    "store-devtools": {
+      "tags": []
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }

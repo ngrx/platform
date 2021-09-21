@@ -7,7 +7,6 @@ exports[`View Book Page should compile 1`] = `
 >
   <bc-selected-book-page>
     <bc-book-detail>
-      
     </bc-book-detail>
   </bc-selected-book-page>
 </bc-view-book-page>

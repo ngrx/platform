@@ -10,7 +10,7 @@ import { map, takeUntil } from 'rxjs/operators';
     template: `
   <div class="flex-center group-buttons">
     <a *ngFor="let name of groupNames"
-       [class.selected]="name == selectedGroup.name"
+       [class.selected]="name === selectedGroup.name"
        class="button mat-button filter-button"
        (click)="selectGroup(name)">{{name}}</a>
   </div>
