@@ -8,12 +8,13 @@ export const INIT = '@ngrx/store/init' as const;
 @Injectable()
 export class ActionsSubject
   extends BehaviorSubject<Action>
-  implements OnDestroy {
+  implements OnDestroy
+{
   constructor() {
     super({ type: INIT });
   }
 
-  next(action: Action): void {
+  override next(action: Action): void {
     if (typeof action === 'function') {
       throw new TypeError(`
         Dispatch expected an object, instead it received a function.
@@ -27,7 +28,7 @@ export class ActionsSubject
     super.next(action);
   }
 
-  complete() {
+  override complete() {
     /* noop */
   }
 

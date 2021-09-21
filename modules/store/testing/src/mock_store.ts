@@ -103,7 +103,7 @@ export class MockStore<T = object> extends Store<T> {
     this.selectors.clear();
   }
 
-  select(selector: any, prop?: any) {
+  override select(selector: any, prop?: any) {
     if (typeof selector === 'string' && this.selectors.has(selector)) {
       return new BehaviorSubject<any>(
         this.selectors.get(selector)
@@ -113,11 +113,11 @@ export class MockStore<T = object> extends Store<T> {
     return super.select(selector, prop);
   }
 
-  addReducer() {
+  override addReducer() {
     /* noop */
   }
 
-  removeReducer() {
+  override removeReducer() {
     /* noop */
   }
 
