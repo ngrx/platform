@@ -143,5 +143,5 @@ function defineType<T extends string>(
   return Object.defineProperty(creator, 'type', {
     value: type,
     writable: false,
-  });
+  }) as ActionCreator<T>;
 }

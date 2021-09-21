@@ -16,38 +16,38 @@
     "rootDir": ".",
     "strict": true,
     "paths": {
+      "@example-app/*": ["./projects/example-app/src/app/*"],
       "@ngrx/component": ["./modules/component"],
-      "@ngrx/component/schematics-core": [
-        "./modules/component/schematics-core"
-      ],
       "@ngrx/component-store": ["./modules/component-store"],
       "@ngrx/component-store/schematics-core": [
         "./modules/component-store/schematics-core"
       ],
+      "@ngrx/component/schematics-core": [
+        "./modules/component/schematics-core"
+      ],
       "@ngrx/data": ["./modules/data"],
       "@ngrx/data/schematics-core": ["./modules/data/schematics-core"],
       "@ngrx/effects": ["./modules/effects"],
-      "@ngrx/effects/testing": ["./modules/effects/testing"],
       "@ngrx/effects/schematics-core": ["./modules/effects/schematics-core"],
-      "@ngrx/store": ["./modules/store"],
-      "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
-      "@ngrx/store/testing": ["./modules/store/testing"],
-      "@ngrx/store-devtools": ["./modules/store-devtools"],
-      "@ngrx/store-devtools/schematics-core": [
-        "./modules/store-devtools/schematics-core"
-      ],
+      "@ngrx/effects/testing": ["./modules/effects/testing"],
+      "@ngrx/entity": ["./modules/entity"],
+      "@ngrx/entity/schematics-core": ["./modules/entity/schematics-core"],
       "@ngrx/router-store": ["./modules/router-store"],
       "@ngrx/router-store/schematics-core": [
         "./modules/router-store/schematics-core"
       ],
-      "@ngrx/entity": ["./modules/entity"],
-      "@ngrx/entity/schematics-core": ["./modules/entity/schematics-core"],
       "@ngrx/schematics": ["./modules/schematics"],
+      "@ngrx/schematics-core/*": ["./modules/schematics-core/*"],
       "@ngrx/schematics/schematics-core": [
         "./modules/schematics/schematics-core"
       ],
-      "@ngrx/schematics-core/*": ["./modules/schematics-core/*"],
-      "@example-app/*": ["./projects/example-app/src/app/*"]
+      "@ngrx/store": ["./modules/store"],
+      "@ngrx/store-devtools": ["./modules/store-devtools"],
+      "@ngrx/store-devtools/schematics-core": [
+        "./modules/store-devtools/schematics-core"
+      ],
+      "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
+      "@ngrx/store/testing": ["./modules/store/testing"]
     },
     "typeRoots": ["node_modules/@types"]
   },

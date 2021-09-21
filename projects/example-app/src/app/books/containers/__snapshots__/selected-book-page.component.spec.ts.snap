@@ -8,7 +8,6 @@ exports[`Selected Book Page should compile 1`] = `
   store={[Function MockStore]}
 >
   <bc-book-detail>
-    
   </bc-book-detail>
 </bc-selected-book-page>
 `;

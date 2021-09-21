@@ -1,0 +1,83 @@
+{
+  "migrations": [
+    {
+      "version": "12.5.0-beta.1",
+      "description": "Rename the workspace-schematic script into workspace-generator script",
+      "factory": "./src/migrations/update-12-5-0/add-target-dependencies",
+      "cli": "nx",
+      "package": "@nrwl/workspace",
+      "name": "add-target-dependencies"
+    },
+    {
+      "cli": "nx",
+      "version": "12.9.0",
+      "description": "Fixes invalid importPaths for buildable and publishable libs.",
+      "factory": "./src/migrations/update-12-9-0/update-invalid-import-paths",
+      "package": "@nrwl/angular",
+      "name": "update-invalid-import-paths"
+    },
+    {
+      "version": "12.1.0",
+      "factory": "./update-12/replace-prod-flag",
+      "description": "Replace the deprecated '--prod' in package.json scripts.",
+      "package": "@angular/cli",
+      "name": "replace-deprecated-prod-flag"
+    },
+    {
+      "cli": "nx",
+      "version": "12.8.0-beta.0",
+      "description": "Remove Typescript Preprocessor Plugin",
+      "factory": "./src/migrations/update-12-8-0/remove-typescript-plugin",
+      "package": "@nrwl/cypress",
+      "name": "remove-typescript-plugin"
+    },
+    {
+      "version": "12.4.0-beta.1",
+      "cli": "nx",
+      "description": "Add testEnvironment: 'jsdom' in web apps + libraries",
+      "factory": "./src/migrations/update-12-4-0/add-test-environment-for-node",
+      "package": "@nrwl/jest",
+      "name": "support-jest-27"
+    },
+    {
+      "version": "12.4.0-beta.1",
+      "cli": "nx",
+      "description": "Support for Jest 27 via updating ts-jest + jest-preset-angular",
+      "factory": "./src/migrations/update-12-4-0/update-jest-preset-angular",
+      "package": "@nrwl/jest",
+      "name": "update-ts-jest-and-jest-preset-angular"
+    },
+    {
+      "version": "12.6.0-beta.0",
+      "cli": "nx",
+      "description": "Uses `getJestProjects()` to populate projects array in root level `jest.config.js` file.",
+      "factory": "./src/migrations/update-12-6-0/update-base-jest-config",
+      "package": "@nrwl/jest",
+      "name": "update-jest-config-to-use-util"
+    },
+    {
+      "cli": "nx",
+      "version": "12.4.0-beta.0",
+      "description": "Remove ESLint parserOptions.project config if no rules requiring type-checking are in use",
+      "factory": "./src/migrations/update-12-4-0/remove-eslint-project-config-if-no-type-checking-rules",
+      "package": "@nrwl/linter",
+      "name": "remove-eslint-project-config-if-no-type-checking-rules"
+    },
+    {
+      "cli": "nx",
+      "version": "12.9.0-beta.0",
+      "description": "Add outputs for caching",
+      "factory": "./src/migrations/update-12-9-0/add-outputs",
+      "package": "@nrwl/linter",
+      "name": "add-outputs"
+    },
+    {
+      "cli": "nx",
+      "version": "12.9.0-beta.0",
+      "description": "Remove ESLint parserOptions.project config if no rules requiring type-checking are in use",
+      "factory": "./src/migrations/update-12-4-0/remove-eslint-project-config-if-no-type-checking-rules",
+      "package": "@nrwl/linter",
+      "name": "remove-eslint-project-config-if-no-type-checking-rules-again"
+    }
+  ]
+}
