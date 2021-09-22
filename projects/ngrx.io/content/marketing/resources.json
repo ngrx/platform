@@ -153,6 +153,12 @@
             "url": "https://github.com/rx-mind/ngrx-plugins/tree/master/libs/entity-component-store",
             "rev": true
           },
+          "eslint-plugin-ngrx": {
+            "title": "eslint-plugin-ngrx",
+            "desc": "ESLint plugin for NgRx",
+            "url": "https://github.com/timdeschryver/eslint-plugin-ngrx",
+            "rev": true
+          },
           "ngrx-child-selectors": {
             "title": "ngrx-child-selectors",
             "desc": "A plugin for easy creation of child selectors",
@@ -183,6 +189,12 @@
             "title": "ngrx-handlers",
             "desc": "A plugin for generating actions and reducer based on the handler map",
             "url": "https://github.com/markostanimirovic/ngrx-handlers",
+            "rev": true
+          },
+          "ngrx-immer": {
+            "title": "ngrx-immer",
+            "desc": "Immer wrappers around NgRx methods createReducer, on, and ComponentStore",
+            "url": "https://github.com/timdeschryver/ngrx-immer",
             "rev": true
           },
           "ngrx-slice": {
