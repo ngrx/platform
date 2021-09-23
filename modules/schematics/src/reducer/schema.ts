@@ -55,4 +55,9 @@ export interface Schema {
    * handling actions and reducers.
    */
   creators?: boolean;
+
+  /**
+   * The prefix for the reducers.
+   */
+  prefix?: string;
 }

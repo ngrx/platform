@@ -339,4 +339,25 @@ describe('Reducer Schematic', () => {
     expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
     expect(fileContent).not.toMatch(/import { Action } from '@ngrx\/store'/);
   });
+
+  it('should create a reducer with prefix in an api feature', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync(
+        'reducer',
+        { ...defaultOptions, feature: true, api: true, prefix: 'custom' },
+        appTree
+      )
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/on\(FooActions.customFoos, state => state\)/);
+    expect(fileContent).toMatch(
+      /on\(FooActions.customFoosSuccess, \(state, action\) => state\)/
+    );
+    expect(fileContent).toMatch(
+      /on\(FooActions.customFoosFailure, \(state, action\) => state\)/
+    );
+  });
 });

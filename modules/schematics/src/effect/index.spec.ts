@@ -27,6 +27,7 @@ describe('Effect Schematic', () => {
     root: false,
     group: false,
     creators: false,
+    prefix: 'load',
   };
 
   const projectPath = getTestProjectPath();
@@ -462,5 +463,67 @@ describe('Effect Schematic', () => {
     );
 
     expect(content).toMatch(/effects = TestBed\.inject\(FooEffects\);/);
+  });
+
+  it('should add prefix to the effect', async () => {
+    const options = {
+      ...defaultOptions,
+      prefix: 'custom',
+      feature: true,
+      api: true,
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('effect', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+
+    expect(content).toMatch(
+      /import { CustomFoosFailure, CustomFoosSuccess, FooActionTypes, FooActions } from '\.\/foo.actions';/
+    );
+
+    expect(content).toMatch(/customFoos\$ = this\.actions\$.pipe\(/);
+    expect(content).toMatch(/ofType\(FooActionTypes\.CustomFoos\),/);
+
+    expect(content).toMatch(
+      /map\(data => new CustomFoosSuccess\({ data }\)\),/
+    );
+
+    expect(content).toMatch(
+      /catchError\(error => of\(new CustomFoosFailure\({ error }\)\)\)\)/
+    );
+  });
+
+  it('should add prefix to the effect using creator function', async () => {
+    const options = {
+      ...defaultOptions,
+      creators: true,
+      api: true,
+      feature: true,
+      prefix: 'custom',
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('effect', options, appTree)
+      .toPromise();
+    const content = tree.readContent(
+      `${projectPath}/src/app/foo/foo.effects.ts`
+    );
+
+    expect(content).toMatch(
+      /customFoos\$ = createEffect\(\(\) => {\s* return this.actions\$.pipe\(/
+    );
+
+    expect(content).toMatch(/ofType\(FooActions.customFoos\),/);
+
+    expect(content).toMatch(
+      /map\(data => FooActions.customFoosSuccess\({ data }\)\),/
+    );
+
+    expect(content).toMatch(
+      /catchError\(error => of\(FooActions.customFoosFailure\({ error }\)\)\)\)/
+    );
   });
 });

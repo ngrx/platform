@@ -63,6 +63,12 @@
       "description": "Specifies if the actions, reducers, and effects should be created using creator functions",
       "aliases": ["c"],
       "x-prompt": "Do you want to use the create functions?"
+    },
+    "prefix": {
+      "description": "The prefix of the action, effect and reducer.",
+      "type": "string",
+      "default": "load",
+      "x-prompt": "What should be the prefix of the action, effect and reducer?"
     }
   },
   "required": []

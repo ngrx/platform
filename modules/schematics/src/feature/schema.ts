@@ -49,4 +49,6 @@ export interface Schema {
    * Specifies whether to use creator functions for actions, reducers, and effects.
    */
   creators?: boolean;
+
+  prefix?: string;
 }

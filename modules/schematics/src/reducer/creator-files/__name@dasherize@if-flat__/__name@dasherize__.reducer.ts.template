@@ -15,18 +15,18 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
 <% if(feature) { %>
-  on(<%= classify(name) %>Actions.load<%= classify(name) %>s, state => state),
-<% if(api) { %>  on(<%= classify(name) %>Actions.load<%= classify(name) %>sSuccess, (state, action) => state),
-  on(<%= classify(name) %>Actions.load<%= classify(name) %>sFailure, (state, action) => state),
+  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s, state => state),
+<% if(api) { %>  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sSuccess, (state, action) => state),
+  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure, (state, action) => state),
 <% } %><% } %>
 );
 <% }else { %>
 const <%= camelize(name) %>Reducer = createReducer(
   initialState,
 <% if(feature) { %>
-  on(<%= classify(name) %>Actions.load<%= classify(name) %>s, state => state),
-<% if(api) { %>  on(<%= classify(name) %>Actions.load<%= classify(name) %>sSuccess, (state, action) => state),
-  on(<%= classify(name) %>Actions.load<%= classify(name) %>sFailure, (state, action) => state),
+  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s, state => state),
+<% if(api) { %>  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sSuccess, (state, action) => state),
+  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure, (state, action) => state),
 <% } %><% } %>
 );
 
