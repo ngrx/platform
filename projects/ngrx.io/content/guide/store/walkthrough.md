@@ -66,7 +66,7 @@ The following example more extensively utilizes the key concepts of store to man
 <code-example header="src/app/book-collection/book-collection.component.ts" path="store-walkthrough/src/app/book-collection/book-collection.component.ts">
 </code-example>
 
-12.  Add `BookListComponents` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
+12.  Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
 
 <code-example header="src/app/app.component.html (Components)" path="store-walkthrough/src/app/app.component.html" region="components">
 </code-example>

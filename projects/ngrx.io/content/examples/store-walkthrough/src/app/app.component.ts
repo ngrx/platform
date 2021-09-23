@@ -33,6 +33,6 @@ export class AppComponent {
   ngOnInit() {
     this.booksService
       .getBooks()
-      .subscribe((Book) => this.store.dispatch(retrievedBookList({ Book })));
+      .subscribe((books) => this.store.dispatch(retrievedBookList({ books })));
   }
 }
