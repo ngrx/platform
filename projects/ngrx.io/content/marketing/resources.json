@@ -141,10 +141,34 @@
       "Libraries": {
         "order": 5,
         "resources": {
+          "@rx-mind/data-component-store": {
+            "title": "@rx-mind/data-component-store",
+            "desc": "ComponentStore with entity selectors, updaters, and effects",
+            "url": "https://github.com/rx-mind/ngrx-plugins/tree/master/libs/data-component-store",
+            "rev": true
+          },
+          "@rx-mind/entity-component-store": {
+            "title": "@rx-mind/entity-component-store",
+            "desc": "ComponentStore with entity selectors and updaters",
+            "url": "https://github.com/rx-mind/ngrx-plugins/tree/master/libs/entity-component-store",
+            "rev": true
+          },
+          "eslint-plugin-ngrx": {
+            "title": "eslint-plugin-ngrx",
+            "desc": "ESLint plugin for NgRx",
+            "url": "https://github.com/timdeschryver/eslint-plugin-ngrx",
+            "rev": true
+          },
           "ngrx-child-selectors": {
             "title": "ngrx-child-selectors",
             "desc": "A plugin for easy creation of child selectors",
             "url": "https://github.com/markostanimirovic/ngrx-child-selectors",
+            "rev": true
+          },
+          "ngrx-entity-relationship": {
+            "title": "ngrx-entity-relationship",
+            "desc": "A simple ORM library for selecting entities with their relationships which supports @ngrx/store, @ngrx/entity and @ngrx/data",
+            "url": "https://github.com/satanTime/ngrx-entity-relationship",
             "rev": true
           },
           "ngrx-enums": {
@@ -167,16 +191,22 @@
             "url": "https://github.com/markostanimirovic/ngrx-handlers",
             "rev": true
           },
+          "ngrx-immer": {
+            "title": "ngrx-immer",
+            "desc": "Immer wrappers around NgRx methods createReducer, on, and ComponentStore",
+            "url": "https://github.com/timdeschryver/ngrx-immer",
+            "rev": true
+          },
+          "ngrx-slice": {
+            "title": "ngrx-slice",
+            "desc": "createSlice for NgRx",
+            "url": "https://github.com/nartc/ngrx-slice",
+            "rev": true
+          },
           "ngrx-wieder": {
             "title": "ngrx-wieder",
             "desc": "Lightweight & configurable solution for implementing undo-redo based on NgRx and immer",
             "url": "https://github.com/nilsmehlhorn/ngrx-wieder",
-            "rev": true
-          },
-          "ngrx-entity-relationship": {
-            "title": "ngrx-entity-relationship",
-            "desc": "A simple ORM library for selecting entities with their relationships which supports @ngrx/store, @ngrx/entity and @ngrx/data",
-            "url": "https://github.com/satanTime/ngrx-entity-relationship",
             "rev": true
           }
         }
