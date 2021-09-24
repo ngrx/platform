@@ -12,7 +12,8 @@ import { StateObservable } from './state';
 @Injectable()
 export class Store<T = object>
   extends Observable<T>
-  implements Observer<Action> {
+  implements Observer<Action>
+{
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,
@@ -93,7 +94,7 @@ export class Store<T = object>
     return (select as any).call(null, pathOrMapFn, ...paths)(this);
   }
 
-  lift<R>(operator: Operator<T, R>): Store<R> {
+  override lift<R>(operator: Operator<T, R>): Store<R> {
     const store = new Store<R>(this, this.actionsObserver, this.reducerManager);
     store.operator = operator;
 

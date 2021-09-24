@@ -18,7 +18,7 @@ export class Actions<V = Action> extends Observable<V> {
     }
   }
 
-  lift<R>(operator: Operator<V, R>): Observable<R> {
+  override lift<R>(operator: Operator<V, R>): Observable<R> {
     const observable = new Actions<R>();
     observable.source = this;
     observable.operator = operator;

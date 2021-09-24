@@ -1380,7 +1380,7 @@ describe('Component Store', () => {
     }
 
     class ExposedGetComponentStore extends ComponentStore<State> {
-      get = super.get;
+      override get = super.get;
     }
 
     let componentStore: ExposedGetComponentStore;
