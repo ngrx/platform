@@ -268,9 +268,3 @@ export function omit<T extends { [key: string]: any }>(
     .filter((key) => key !== keyToRemove)
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
 }
-
-export function getPrefix(options: any) {
-  return options.creators
-    ? stringUtils.camelize(options.prefix || 'load')
-    : stringUtils.capitalize(options.prefix || 'load');
-}
