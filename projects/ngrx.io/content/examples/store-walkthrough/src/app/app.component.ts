@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import { selectBookCollection, selectBooks } from './state/books.selectors';
 import {
@@ -14,8 +14,8 @@ import { GoogleBooksService } from './book-list/books.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  books$ = this.store.pipe(select(selectBooks));
-  bookCollection$ = this.store.pipe(select(selectBookCollection));
+  books$ = this.store.select(selectBooks);
+  bookCollection$ = this.store.select(selectBookCollection);
 
   onAdd(bookId) {
     this.store.dispatch(addBook({ bookId }));
