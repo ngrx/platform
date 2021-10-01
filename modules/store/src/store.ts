@@ -10,7 +10,7 @@ import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
 
 @Injectable()
-export class Store<T = object>
+export class Store<T = Record<string, unknown>>
   extends Observable<T>
   implements Observer<Action>
 {
