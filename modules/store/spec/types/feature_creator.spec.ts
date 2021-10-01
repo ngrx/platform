@@ -254,9 +254,7 @@ describe('createFeature()', () => {
         let store!: Store;
         const counterState$ = store.select(selectCounterState);
         const count$ = store.select(selectCount);
-      `).toFail(
-        /Type 'object' is not assignable to type '{ counter: { count: number; }; }'/
-      );
+      `).toFail(/No overload matches this call/);
     });
 
     it('should allow use with typed store.select', () => {
