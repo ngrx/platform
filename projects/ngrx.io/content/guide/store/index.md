@@ -42,7 +42,7 @@ The following tutorial shows you how to manage the state of a counter, and how t
 <code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
 </code-example>
 
-3.  Define a reducer function to handle changes in the counter value based on the provided actions.
+3.  Define a feature with a reducer function to handle changes in the counter value based on the provided actions.
 
 <code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
 </code-example>
@@ -52,7 +52,7 @@ The following tutorial shows you how to manage the state of a counter, and how t
 <code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
 </code-example>
 
-5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
+5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule`. This method registers the global providers needed to access the `Store` throughout your application. Then add `StoreModule.forFeature` in the `imports` array and provide `counterFeature`. This will initialize the updating of the state of the counter.
 
 <code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
 </code-example>
