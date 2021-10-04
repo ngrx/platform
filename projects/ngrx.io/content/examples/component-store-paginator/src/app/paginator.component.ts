@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { filter, tap, withLatestFrom, map, pairwise } from 'rxjs/operators';
+import { filter, tap, withLatestFrom, map, pairwise, skip } from 'rxjs/operators';
 
 export interface PaginatorState {
   /** The current page index. */
@@ -92,7 +92,7 @@ export class PaginatorComponent {
     }),
     // debounce, so that we let the state "settle" before emitting a value
     { debounce: true }
-  );
+  ).pipe(skip(1));
 
   // *********** Updaters *********** //
 
