@@ -244,7 +244,7 @@ describe('createFeature()', () => {
       `).toSucceed();
     });
 
-    it('should allow use with untyped store.select', () => {
+    it('should not allow use with untyped store.select', () => {
       expectSnippet(`
         const { selectCounterState, selectCount } = createFeature<{ counter: { count: number } }>({
           name: 'counter',
@@ -255,7 +255,7 @@ describe('createFeature()', () => {
         const counterState$ = store.select(selectCounterState);
         const count$ = store.select(selectCount);
       `).toFail(
-        /Type 'object' is not assignable to type '{ counter: { count: number; }; }'/
+        /Type 'Record<string, unknown>' is not assignable to type '{ counter: { count: number; }; }/
       );
     });
 
