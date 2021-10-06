@@ -92,7 +92,10 @@ export class PaginatorComponent {
     }),
     // debounce, so that we let the state "settle" before emitting a value
     { debounce: true }
-  ).pipe(skip(1));
+  ).pipe(
+    //Skip the emission of the initial state values
+    skip(1)
+  );
 
   // *********** Updaters *********** //
 

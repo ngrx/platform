@@ -145,7 +145,10 @@ export class PaginatorStore extends ComponentStore<PaginatorState> {
     }),
     // debounce, so that we let the state "settle"
     { debounce: true }
-  ).pipe(skip(1));
+  ).pipe(
+    //Skip the emission of the initial state values
+    skip(1)
+  );
   // #enddocregion selectors
 
   readonly nextPage = this.effect((trigger$) => {
