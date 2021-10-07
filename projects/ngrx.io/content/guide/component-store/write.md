@@ -28,6 +28,7 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   }
 
   readonly addMovie = this.updater((state, movie: Movie) => ({
+    ...state,
     movies: [...state.movies, movie],
   }));
 }
