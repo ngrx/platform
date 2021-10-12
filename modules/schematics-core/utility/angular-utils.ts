@@ -1,10 +1,5 @@
-import {
-  JsonParseMode,
-  dirname,
-  normalize,
-  parseJsonAst,
-  resolve,
-} from '@angular-devkit/core';
+import { dirname, normalize, resolve } from '@angular-devkit/core';
+import { parseJsonAst } from '@angular-devkit/core/src/json/parser';
 import { Tree } from '@angular-devkit/schematics';
 import { findPropertyInAstObject } from './json-utilts';
 
@@ -18,7 +13,7 @@ export function isIvyEnabled(tree: Tree, tsConfigPath: string): boolean {
     return true;
   }
 
-  const tsCfgAst = parseJsonAst(buffer.toString(), JsonParseMode.Loose);
+  const tsCfgAst = parseJsonAst(buffer.toString());
 
   if (tsCfgAst.kind !== 'object') {
     return true;

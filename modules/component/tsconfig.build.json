@@ -27,6 +27,7 @@
     "strictMetadataEmit": false,
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/component",
-    "enableIvy": false
+    "enableIvy": true,
+    "compilationMode": "partial"
   }
 }

@@ -20,6 +20,7 @@
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
     "enableSummariesForJit": false,
-    "enableIvy": false
+    "enableIvy": true,
+    "compilationMode": "partial"
   }
 }

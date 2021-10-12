@@ -27,6 +27,7 @@
     "skipTemplateCodegen": true,
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/store",
-    "enableIvy": false
+    "enableIvy": true,
+    "compilationMode": "partial"
   }
 }
