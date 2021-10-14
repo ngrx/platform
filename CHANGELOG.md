@@ -1,3 +1,17 @@
+<a name="12.5.0"></a>
+
+# [12.5.0](https://github.com/ngrx/platform/compare/12.4.0...12.5.0) (2021-10-14)
+
+### Bug Fixes
+
+- **entity:** set correct input argument types for removeMutably methods ([#3148](https://github.com/ngrx/platform/issues/3148)) ([9611415](https://github.com/ngrx/platform/commit/9611415))
+- **schematics:** add missing method ([#3157](https://github.com/ngrx/platform/issues/3157)) ([2a927a2](https://github.com/ngrx/platform/commit/2a927a2))
+- **schematics:** use prefix option in feature schematic ([#3139](https://github.com/ngrx/platform/issues/3139)) ([5fa8890](https://github.com/ngrx/platform/commit/5fa8890)), closes [#3116](https://github.com/ngrx/platform/issues/3116)
+
+### Features
+
+- update to RxJS 7.4.x ([#3109](https://github.com/ngrx/platform/issues/3109)) ([4a42550](https://github.com/ngrx/platform/commit/4a42550))
+
 <a name="12.4.0"></a>
 
 # [12.4.0](https://github.com/ngrx/platform/compare/12.3.0...12.4.0) (2021-08-11)
