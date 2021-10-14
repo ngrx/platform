@@ -25,7 +25,7 @@
     "@ngrx/store": "12.4.0",
     "@ngrx/effects": "12.4.0",
     "@ngrx/entity": "12.4.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3 || ^7.0.0"
   },
   "schematics": "./schematics/collection.json",
   "ng-update": {

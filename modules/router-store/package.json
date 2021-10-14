@@ -24,7 +24,7 @@
     "@angular/core": "^12.0.0",
     "@angular/router": "^12.0.0",
     "@ngrx/store": "12.4.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3 || ^7.0.0"
   },
   "schematics": "./schematics/collection.json",
   "ng-update": {

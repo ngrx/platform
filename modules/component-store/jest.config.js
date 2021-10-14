@@ -2,7 +2,6 @@ module.exports = {
   displayName: 'Component Store',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/libs/component-store',
-
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {

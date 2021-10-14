@@ -9,6 +9,9 @@ import {
   timer,
   Observable,
   from,
+  scheduled,
+  queueScheduler,
+  asyncScheduler,
 } from 'rxjs';
 import {
   delayWhen,
@@ -754,9 +757,9 @@ describe('Component Store', () => {
           (s1, o) => o + ' ' + s1
         );
 
-        componentStore.updater((state, newValue: string) => ({
-          value: newValue,
-        }))(updater$);
+        scheduled(updater$, asyncScheduler).subscribe((value) => {
+          componentStore.setState({ value });
+        });
 
         m.expect(selector$).toBeObservable(expectedSelector$);
       })
@@ -823,9 +826,9 @@ describe('Component Store', () => {
           (s1, o) => o + ' ' + s1
         );
 
-        componentStore.updater((state, newValue: string) => ({
-          value: newValue,
-        }))(updater$);
+        scheduled(updater$, asyncScheduler).subscribe((value) => {
+          componentStore.setState({ value });
+        });
 
         m.expect(selector$).toBeObservable(expectedSelector$);
       })
@@ -1025,10 +1028,7 @@ describe('Component Store', () => {
         componentStore.setState(() => ({ value: 'new value', updated: true }));
         m.flush();
 
-        expect(selectorResults).toEqual([
-          { result: 'empty' },
-          { result: 'new value' },
-        ]);
+        expect(selectorResults).toEqual([{ result: 'new value' }]);
       })
     );
 
@@ -1059,9 +1059,9 @@ describe('Component Store', () => {
           { debounce: true }
         );
 
-        componentStore.updater((state, newValue: string) => ({
-          value: newValue,
-        }))(updater$);
+        scheduled(updater$, queueScheduler).subscribe((value) => {
+          componentStore.setState({ value });
+        });
 
         m.expect(selector$).toBeObservable(expectedSelector$);
       })
@@ -1125,9 +1125,9 @@ describe('Component Store', () => {
           { debounce: true }
         );
 
-        componentStore.updater((state, newValue: string) => ({
-          value: newValue,
-        }))(updater$);
+        scheduled(updater$, queueScheduler).subscribe((value) => {
+          componentStore.setState({ value });
+        });
 
         m.expect(selector$).toBeObservable(expectedSelector$);
       })
