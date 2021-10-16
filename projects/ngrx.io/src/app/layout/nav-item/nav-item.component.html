@@ -14,7 +14,7 @@
     class="heading-container"
     *ngIf="node.children">
     <a
-        *ngIf="node.url !== null"
+        *ngIf="node.url"
         href="{{node.url}}"
         [ngClass]="classes"
         title="{{node.tooltip}}"
@@ -27,7 +27,7 @@
     </a>
 
     <button
-        *ngIf="node.url === null"
+        *ngIf="!node.url"
         type="button"
         [ngClass]="classes"
         title="{{node.tooltip}}"
