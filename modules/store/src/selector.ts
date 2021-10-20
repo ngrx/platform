@@ -742,6 +742,9 @@ export function createSelectorFactory(
 export function createFeatureSelector<T>(
   featureName: string
 ): MemoizedSelector<object, T>;
+/**
+ * @deprecated  Feature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}
+ */
 export function createFeatureSelector<T, V>(
   featureName: keyof T
 ): MemoizedSelector<T, V>;
