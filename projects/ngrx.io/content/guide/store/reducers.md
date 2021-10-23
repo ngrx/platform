@@ -69,7 +69,7 @@ The initial values for the `home` and `away` properties of the state are 0.
 The reducer function's responsibility is to handle the state transitions in an immutable way. Create a reducer function that handles the actions for managing the state of the scoreboard using the `createReducer` function.
 
 <code-example header="scoreboard.reducer.ts">
-const scoreboardReducer = createReducer(
+export const scoreboardReducer = createReducer(
   initialState,
   on(ScoreboardPageActions.homeScore, state => ({ ...state, home: state.home + 1 })),
   on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
@@ -77,9 +77,6 @@ const scoreboardReducer = createReducer(
   on(ScoreboardPageActions.setScores, (state, { game }) => ({ home: game.home, away: game.away }))
 );
 
-export function reducer(state: State | undefined, action: Action) {
-  return scoreboardReducer(state, action);
-}
 </code-example>
 
 <div class="alert is-important">
