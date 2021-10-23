@@ -98,7 +98,7 @@ export function createFeature<
     NotAllowedFeatureStateCheck<FeatureState>
 ): Feature<AppState, FeatureName, FeatureState> {
   const { name, reducer } = featureConfig;
-  const featureSelector = createFeatureSelector<AppState, FeatureState>(name);
+  const featureSelector = createFeatureSelector<FeatureState>(name);
   const nestedSelectors = createNestedSelectors(featureSelector, reducer);
 
   return ({
