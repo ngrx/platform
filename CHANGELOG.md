@@ -1,3 +1,11 @@
+<a name="12.5.1"></a>
+
+## [12.5.1](https://github.com/ngrx/platform/compare/12.5.0...12.5.1) (2021-10-25)
+
+### Bug Fixes
+
+- **router-store:** google upstream ([#3177](https://github.com/ngrx/platform/issues/3177)) ([20afb21](https://github.com/ngrx/platform/commit/20afb21))
+
 <a name="12.5.0"></a>
 
 # [12.5.0](https://github.com/ngrx/platform/compare/12.4.0...12.5.0) (2021-10-14)
