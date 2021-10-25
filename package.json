@@ -116,9 +116,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.0.0-rc.1",
-    "@angular-eslint/eslint-plugin": "12.3.1",
-    "@angular-eslint/eslint-plugin-template": "12.3.1",
-    "@angular-eslint/template-parser": "12.3.1",
+    "@angular-eslint/eslint-plugin": "12.6.0",
+    "@angular-eslint/eslint-plugin-template": "12.6.0",
+    "@angular-eslint/template-parser": "12.6.0",
     "@angular/bazel": "^13.0.0-rc.1",
     "@angular/cli": "13.0.0-rc.1",
     "@angular/compiler-cli": "13.0.0-rc.1",
