@@ -102,8 +102,8 @@ export class EntityEffects {
 
       // Emit which ever gets there first; the other observable is terminated.
       return race(c, d);
-    } catch (err) {
-      return this.handleError$(action)(err);
+    } catch (err: unknown) {
+      return this.handleError$(action)(err as Error);
     }
   }
 
@@ -170,7 +170,7 @@ export class EntityEffects {
     // ensure observable takes some time,
     // as app likely assumes asynchronous response.
     return (error: Error) =>
-      of(this.resultHandler.handleError(action)(error)).pipe(
+      of(this.resultHandler.handleError(action)(error as Error)).pipe(
         delay(this.responseDelay, this.scheduler || asyncScheduler)
       );
   }

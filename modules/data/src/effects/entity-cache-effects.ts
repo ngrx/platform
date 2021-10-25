@@ -129,7 +129,9 @@ export class EntityCacheEffects {
       // Emit which ever gets there first; the other observable is terminated.
       return race(c, d);
     } catch (err) {
-      return this.handleSaveEntitiesError$(action)(err);
+      return this.handleSaveEntitiesError$(action)(
+        err as DataServiceError | Error
+      );
     }
   }
 
