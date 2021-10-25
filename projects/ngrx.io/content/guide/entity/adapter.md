@@ -70,11 +70,7 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-const userReducer = createReducer(initialState);
-
-export function reducer(state: State | undefined, action: Action) {
-  return userReducer(state, action);
-}
+export const userReducer = createReducer(initialState);
 </code-example>
 
 ## Adapter Collection Methods
@@ -149,7 +145,7 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-const userReducer = createReducer(
+export const userReducer = createReducer(
   initialState,
   on(UserActions.addUser, (state, { user }) => {
     return adapter.addOne(user, state)
@@ -198,9 +194,6 @@ const userReducer = createReducer(
   })
 );
 
-export function reducer(state: State | undefined, action: Action) {
-  return userReducer(state, action);
-}
 
 export const getSelectedUserId = (state: State) => state.selectedUserId;
 
