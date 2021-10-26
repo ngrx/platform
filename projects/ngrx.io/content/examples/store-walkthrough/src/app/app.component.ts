@@ -17,11 +17,11 @@ export class AppComponent {
   books$ = this.store.select(selectBooks);
   bookCollection$ = this.store.select(selectBookCollection);
 
-  onAdd(bookId) {
+  onAdd(bookId: string) {
     this.store.dispatch(addBook({ bookId }));
   }
 
-  onRemove(bookId) {
+  onRemove(bookId: string) {
     this.store.dispatch(removeBook({ bookId }));
   }
 

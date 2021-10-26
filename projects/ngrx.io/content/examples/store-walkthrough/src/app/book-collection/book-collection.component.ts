@@ -8,5 +8,5 @@ import { Book } from '../book-list/books.model';
 })
 export class BookCollectionComponent {
   @Input() books: Array<Book>;
-  @Output() remove = new EventEmitter();
+  @Output() remove = new EventEmitter<string>();
 }
