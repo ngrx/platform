@@ -123,6 +123,10 @@
                 {
                   "title": "Downgrade for AngularJS",
                   "url": "guide/store/recipes/downgrade"
+                },
+                {
+                  "title": "ESLint NgRx Plugin",
+                  "url": "guide/store/recipes/eslint-plugin"
                 }
               ]
             },
