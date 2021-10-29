@@ -14,7 +14,7 @@ You can add the plugin automaticaly with
 ng add eslint-plugin-ngrx
 ```
 
-This will add all the configurations and set them to recommended (most rules will throw errors, some minor ones only warning, the command will also prompt you to choose levels of importance).
+This uses configures and enables the recommended rules.
 
 You can also do a manual installation. If you don't have a TypeScript parser for ESLint, install it with the following command:
 
