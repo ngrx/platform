@@ -18,7 +18,7 @@ If you use `ng add @ngrx/store` to install NgRx itself, and you already use ESLi
 
 ### Installing with `ng add`
 
-If you've already have @ngrx/store installed, you can add the plugin manually with the following command:
+If you already have @ngrx/store installed, you can add the plugin manually with the following command:
 
 ```sh
 ng add eslint-plugin-ngrx
