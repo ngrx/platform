@@ -2,19 +2,31 @@
 
 ## What is it?
 
-Lots of projects in Angular use [ESLint](https://eslint.org/) for linting purposes to maintain code quality and general rules. ESLint allows to install [plugins](https://eslint.org/docs/user-guide/configuring/plugins#plugins) for additional rules for the benefit of the codebase. There are lots of third-party plugins for ESLint, and one also exists for NgRx, which helps maintain most common best practices easily. A plugin called [eslint-plugin-ngrx](https://github.com/timdeschryver/eslint-plugin-ngrx) can be installed, configured and used to help maintain those rules.
+Use [ESLint](https://eslint.org/) to follow the best practices and to avoid common pitfalls in your application.
+
+The [NgRx ESLint Plugin]((https://github.com/timdeschryver/eslint-plugin-ngrx)) is no different and promotes the key concepts to create a maintainable project. It consists of @ngrx/store, @ngrx/effects, and @ngrx/component-store rules and a handful of preconfigured configurations.
+
+For more information, see the [documentation page](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/README.md).
 
 The plugin comes with a number of rules that help address most popular NgRx malpractices. The rules are configurable so that every developer can choose which ones they necessarily want to follow, and which ones should givbe a linting error or warning, and so on. A detailed documentation of all the rules with examples can be found [here](https://github.com/timdeschryver/eslint-plugin-ngrx/tree/main/docs/rules). Some rules also allow automatic fixes with `ng lint --fix`.
 
 ## Installation
 
-You can add the plugin automaticaly with 
+### Adding with NgRx
+
+If you use `ng add @ngrx/store` to install NgRx itself, and you already use ESLint, the schematic will automatically add the plugin.
+
+### Installing with `ng add`
+
+If you've already have @ngrx/store installed, you can add the plugin manually with the following command:
 
 ```sh
 ng add eslint-plugin-ngrx
 ```
 
 This will add all the configurations and set them to recommended (most rules will throw errors, some minor ones only warning, the command will also prompt you to choose levels of importance).
+
+### Installing with `npm`
 
 You can also do a manual installation. If you don't have a TypeScript parser for ESLint, install it with the following command:
 
@@ -63,23 +75,5 @@ And see the problems that the linter will find.
 
 ## Configuration
 
-There are several levels of configuration that can be implemented with this plugin:
-
-| Name        | Description                                                                                                                       |
-|-------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| [recommended](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/src/configs/recommended.ts) | Only most critical rules (no cyclic effects, no effects in providers and no decorators) give errors, everything else gives warnings  |
-| [store](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/src/configs/store.ts)       | Only rules for the Store, no rules for Effects. Only gives warnings, no errors                                                    |
-| [effects](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/src/configs/effects.ts)     | Only rules for Effects, no rules for Store. Critical rules give errors as in the "recommended" setting, others only give errors   |
-| [all](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/src/configs/all.ts)         | All rules are enabled, only critical ones give errors                                                                             |
-| [strict](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/src/configs/strict.ts)      | All rules are enabled and give errors                                                                                              |
-
-
-
-
-
-
-
-
-
-
+There are several levels of configuration that can be implemented with this plugin. You can read more about it in the [plugin documentation page](https://github.com/timdeschryver/eslint-plugin-ngrx#configurations).
 
