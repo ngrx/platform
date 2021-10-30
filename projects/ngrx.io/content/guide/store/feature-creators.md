@@ -1,6 +1,6 @@
 # Feature Creators
 
-## What is NgRx feature?
+## What is an NgRx feature?
 
 There are three main building blocks of global state management with `@ngrx/store`: actions, reducers, and selectors.
 For a particular feature state, we create a reducer for handling state transitions based on the dispatched actions
@@ -47,7 +47,7 @@ export const booksFeature = createFeature({
   ),
 });
 
-const {
+export const {
   name, // feature name
   reducer, // feature reducer
   selectBooksState, // feature selector
