@@ -10,6 +10,11 @@
       "description": "The road to v9",
       "version": "9-beta",
       "factory": "./9_0_0/index"
+    },
+    "ngrx-effects-migration-03": {
+      "description": "The road to v13",
+      "version": "13",
+      "factory": "./13_0_0/index"
     }
   }
 }
