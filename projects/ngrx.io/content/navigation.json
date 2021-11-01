@@ -457,6 +457,10 @@
         {
           "title": "Nightly Builds",
           "url": "guide/nightlies"
+        },
+        {
+          "title": "ESLint NgRx Plugin",
+          "url": "guide/eslint-plugin"
         }
       ]
     },
