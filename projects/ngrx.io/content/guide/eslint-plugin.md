@@ -4,7 +4,7 @@
 
 Use [ESLint](https://eslint.org/) to follow the best practices and to avoid common pitfalls in your application.
 
-The [NgRx ESLint Plugin]((https://github.com/timdeschryver/eslint-plugin-ngrx)) is no different and promotes the key concepts to create a maintainable project. It consists of @ngrx/store, @ngrx/effects, and @ngrx/component-store rules and a handful of preconfigured configurations.
+The [NgRx ESLint Plugin](https://github.com/timdeschryver/eslint-plugin-ngrx) is no different and promotes the key concepts to create a maintainable project. It consists of @ngrx/store, @ngrx/effects, and @ngrx/component-store rules and a handful of preconfigured configurations.
 
 For more information, see the [documentation page](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/README.md).
 
@@ -14,7 +14,7 @@ The plugin comes with a number of rules that help address most popular NgRx malp
 
 ### Adding with NgRx
 
-If you use `ng add @ngrx/store` to install NgRx itself, and you already use ESLint, the schematic will automatically add the plugin.
+If you use `ng add @ngrx/store` to install NgRx itself, and you already use ESLint, the schematic automatically adds the plugin.
 
 ### Installing with `ng add`
 
@@ -71,7 +71,7 @@ Then you can run
 ng lint
 ```
 
-And see the problems that the linter will find.
+And see the problems that the linter found.
 
 ## Configuration
 
