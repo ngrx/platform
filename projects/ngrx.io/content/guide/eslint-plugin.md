@@ -27,7 +27,7 @@ If you already have @ngrx/store installed, you can add the plugin manually with 
 ng add eslint-plugin-ngrx
 ```
 
-This uses configures and enables the recommended rules.
+This installs the package and configures ESLint to enable the recommended rules.
 
 ### Installing with `npm`
 
