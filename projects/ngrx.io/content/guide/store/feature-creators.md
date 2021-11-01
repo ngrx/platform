@@ -4,8 +4,8 @@
 
 There are three main building blocks of global state management with `@ngrx/store`: actions, reducers, and selectors.
 For a particular feature state, we create a reducer for handling state transitions based on the dispatched actions
-and selectors for obtaining slices of the feature state. Also, we need to define a feature name needed to register
-the feature reducer in the NgRx store. Therefore, we can consider the NgRx feature as a group of feature name,
+and selectors to obtain slices of the feature state. Also, we need to define a feature name needed to register
+the feature reducer in the NgRx store. Therefore, we can consider the NgRx feature as a grouping of the feature name,
 feature reducer, and selectors for the particular feature state.
 
 ## Using feature creator
@@ -14,7 +14,6 @@ The `createFeature` function reduces repetitive code in selector files by genera
 for each feature state property. It accepts an object containing a feature name and a feature reducer as the input argument:
 
 <code-example header="books.reducer.ts">
-// `createFeature` is imported from `@ngrx/store` package
 import { createFeature, createReducer } from '@ngrx/store';
 import { Book } from './book.model';
 
@@ -61,7 +60,7 @@ and a selector for each feature state property. All generated selectors have the
 the "State" suffix. In this example, the name of the feature selector is `selectBooksState`, where "books" is the feature name.
 The names of the child selectors are `selectBooks` and `selectLoading`, based on the property names of the books feature state.
 
-Generated selectors can be used independently or to create other selectors:
+The generated selectors can be used independently or to create other selectors:
 
 <code-example header="books.selectors.ts">
 import { createSelector } from '@ngrx/store';
@@ -73,6 +72,8 @@ export const selectBookListPageViewModel = createSelector(
   (books, loading) => ({ books, loading })
 );
 </code-example>
+
+## Feature registration
 
 Registering the feature reducer in the store can be done by passing the entire feature object to the `StoreModule.forFeature` method:
 
