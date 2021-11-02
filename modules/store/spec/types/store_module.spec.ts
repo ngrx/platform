@@ -4,7 +4,7 @@ import { compilerOptions } from './utils';
 describe('StoreModule', () => {
   const expectSnippet = expecter(
     (code) => `
-      import {StoreModule,ActionReducerMap,Action} from '@ngrx/store';
+      import { StoreModule, ActionReducerMap, Action, createReducer } from '@ngrx/store';
 
       interface State {
         featureA: object;
@@ -68,6 +68,15 @@ describe('StoreModule', () => {
       `).toFail(
         /Type '{ notExisting: number; }' is not assignable to type 'InitialState<State>/
       );
+    });
+
+    it('throws when store config is passed along with slice object', () => {
+      expectSnippet(`
+        StoreModule.forFeature(
+          { name: 'feature', reducer: createReducer(0) },
+          { initialState: 100, metaReducers: [metaReducer] }
+        );
+      `).toFail(/No overload matches this call/);
     });
   });
 });
