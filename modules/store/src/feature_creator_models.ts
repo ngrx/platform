@@ -1,4 +1,5 @@
 import { MemoizedSelector } from './selector';
+import { Primitive } from './models';
 
 // Generating documentation for `createFeature` function is solved by moving types that use
 // template literal types (`FeatureSelector` and `NestedSelectors`) from `feature_creator.ts`.
@@ -28,5 +29,3 @@ export type NestedSelectors<
         FeatureState[K]
       >;
     };
-
-type Primitive = string | number | bigint | boolean | null | undefined;
