@@ -13,21 +13,31 @@ describe('Store Migration 13_0_0 beta', () => {
     const contents = `
 import {createFeatureSelector} from '@ngrx/store'
 
+// untouched
 const featureSelector1 = createFeatureSelector('feature1');
 const featureSelector2 = createFeatureSelector<Feature>(feature2);
-const featureSelector3 = createFeatureSelector<State, Feature>('feature3');
-const featureSelector4 = createFeatureSelector<State,Feature>(feature4);
-const featureSelector5 = createFeatureSelector<State,Feature,SomethingElse>(feature5);
+const featureSelector3 = createFeatureSelector<State,Feature,SomethingElse>(feature3);
+const featureSelector4 = createFeatureSelector<fromFeat.State>('feature4');
+
+// modified
+const featureSelector5 = createFeatureSelector<State, Feature>('feature5');
+const featureSelector6 = createFeatureSelector<State,Feature>(feature6);
+const featureSelector7 = createFeatureSelector<fromRoot.State, fromFeat.State>('feature7');
 `;
 
     const expected = `
 import {createFeatureSelector} from '@ngrx/store'
 
+// untouched
 const featureSelector1 = createFeatureSelector('feature1');
 const featureSelector2 = createFeatureSelector<Feature>(feature2);
-const featureSelector3 = createFeatureSelector< Feature>('feature3');
-const featureSelector4 = createFeatureSelector<Feature>(feature4);
-const featureSelector5 = createFeatureSelector<State,Feature,SomethingElse>(feature5);
+const featureSelector3 = createFeatureSelector<State,Feature,SomethingElse>(feature3);
+const featureSelector4 = createFeatureSelector<fromFeat.State>('feature4');
+
+// modified
+const featureSelector5 = createFeatureSelector< Feature>('feature5');
+const featureSelector6 = createFeatureSelector<Feature>(feature6);
+const featureSelector7 = createFeatureSelector< fromFeat.State>('feature7');
 `;
 
     const appTree = new UnitTestTree(Tree.empty());
