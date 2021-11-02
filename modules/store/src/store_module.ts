@@ -37,7 +37,6 @@ import {
   USER_PROVIDED_META_REDUCERS,
   _RESOLVED_META_REDUCERS,
   _ROOT_STORE_GUARD,
-  ACTIVE_RUNTIME_CHECKS,
   _ACTION_TYPE_UNIQUENESS_CHECK,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
@@ -108,7 +107,7 @@ export class StoreFeatureModule implements OnDestroy {
 export interface StoreConfig<T, V extends Action = Action> {
   initialState?: InitialState<T>;
   reducerFactory?: ActionReducerFactory<T, V>;
-  metaReducers?: MetaReducer<T, V>[];
+  metaReducers?: MetaReducer<{ [P in keyof T]: T[P] }, V>[];
 }
 
 export interface RootStoreConfig<T, V extends Action = Action>
