@@ -110,6 +110,10 @@
                 {
                   "title": "Meta-Reducers",
                   "url": "guide/store/metareducers"
+                },
+                {
+                  "title": "Feature Creators",
+                  "url": "guide/store/feature-creators"
                 }
               ]
             },
