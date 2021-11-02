@@ -34,7 +34,7 @@ type NotAllowedFeatureStateCheck<
  *
  * @param featureConfig An object that contains a feature name and a feature reducer.
  * @returns An object that contains a feature name, a feature reducer,
- * a feature selector, a the selector for each feature state property.
+ * a feature selector, and a selector for each feature state property.
  *
  * @usageNotes
  *
