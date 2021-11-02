@@ -23,10 +23,10 @@
   "files": ["public_api.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
+    "compilationMode": "partial",
     // Work around for issue: https://github.com/angular/angular/issues/22210
     "strictMetadataEmit": false,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "@ngrx/component",
-    "enableIvy": false
+    "flatModuleId": "@ngrx/component"
   }
 }
