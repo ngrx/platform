@@ -15,6 +15,11 @@
       "description": "The road to v8 RC",
       "version": "8-rc.1",
       "factory": "./8_0_0-rc/index"
+    },
+    "ngrx-store-migration-13-beta": {
+      "description": "The road to v13 beta",
+      "version": "13-beta",
+      "factory": "./13_0_0-beta/index"
     }
   }
 }
