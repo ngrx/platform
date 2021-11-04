@@ -1,3 +1,101 @@
+<a name="13.0.0-beta.0"></a>
+
+# [13.0.0-beta.0](https://github.com/ngrx/platform/compare/12.5.1...13.0.0-beta.0) (2021-11-04)
+
+### Bug Fixes
+
+- **component:** remove class-level generic from PushPipe ([#3127](https://github.com/ngrx/platform/issues/3127)) ([548c72c](https://github.com/ngrx/platform/commit/548c72c)), closes [#3114](https://github.com/ngrx/platform/issues/3114)
+- **store:** infer initial store state properly with metareducers ([#3102](https://github.com/ngrx/platform/issues/3102)) ([d003b85](https://github.com/ngrx/platform/commit/d003b85)), closes [#3007](https://github.com/ngrx/platform/issues/3007)
+- **store:** remove store config from forFeature signature with slice ([#3218](https://github.com/ngrx/platform/issues/3218)) ([b1a64dd](https://github.com/ngrx/platform/commit/b1a64dd)), closes [#3216](https://github.com/ngrx/platform/issues/3216)
+
+### build
+
+- build packages with Ivy ([#3219](https://github.com/ngrx/platform/issues/3219)) ([9e28050](https://github.com/ngrx/platform/commit/9e28050))
+
+### Features
+
+- **effects:** move createEffect migration to ng-update migration ([#3074](https://github.com/ngrx/platform/issues/3074)) ([5974913](https://github.com/ngrx/platform/commit/5974913))
+- **store:** add createFeatureSelector migration ([#3214](https://github.com/ngrx/platform/issues/3214)) ([62334f9](https://github.com/ngrx/platform/commit/62334f9))
+- **store:** provide better TS errors for action creator props ([#3060](https://github.com/ngrx/platform/issues/3060)) ([5ed3c3d](https://github.com/ngrx/platform/commit/5ed3c3d)), closes [#2892](https://github.com/ngrx/platform/issues/2892)
+
+### BREAKING CHANGES
+
+- The minimum version required for Angular and RxJS has been updated
+
+BEFORE:
+
+Angular 12.x is the minimum version
+RxJS 6.5.x is the minimum required version
+
+AFTER:
+
+Angular 13.0.0-RC.0 is the minimum version
+RxJS 7.4.x is the minimum required version
+
+- **store:** The `StoreConfig` argument is removed from the `StoreModule.forFeature` signature with `FeatureSlice`.
+
+BEFORE:
+
+The `StoreModule.forFeature` signature with `FeatureSlice` has `StoreConfig` as the second input argument, but the configuration isn't registered if passed.
+
+AFTER:
+
+The `StoreModule.forFeature` signature with `FeatureSlice` no longer has `StoreConfig` as the second input argument.
+
+- **store:** `initialState` needs to match the interface of the store/feature.
+
+BEFORE:
+
+Missing properties were valid
+
+```ts
+StoreModule.forRoot(reducers, {
+  initialState: { notExisting: 3 },
+  metaReducers: [metaReducer],
+});
+```
+
+AFTER:
+
+A type error is produced for initialState that does not match the store/feature
+
+```ts
+StoreModule.forRoot(reducers, {
+  initialState: { notExisting: 3 },
+  metaReducers: [metaReducer],
+});
+```
+
+- **component:** PushPipe no longer has a class-level generic type parameter.
+
+BEFORE:
+
+Use of PushPipe outside of component templates required a generic
+
+AFTER:
+
+Use of PushPipe outside of component templates no longer requires a generic
+
+- **store:** Types for props outside an action creator is more strictly checked
+
+BEFORE:
+
+Usage of `props` outside of an action creator with invalid types was allowed
+
+AFTER:
+
+Usage of `props` outside of an action creator now breaks for invalid types
+
+- **effects:** The create-effect-migration migration is removed
+
+BEFORE:
+
+The Effect decorator removal and migration are done manually through schematics.
+
+AFTER:
+
+The Effect decorator removal and migration are performed automatically on upgrade to version 13 of NgRx Effects.
+
 <a name="12.5.1"></a>
 
 ## [12.5.1](https://github.com/ngrx/platform/compare/12.5.0...12.5.1) (2021-10-25)
