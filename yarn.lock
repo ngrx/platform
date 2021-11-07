@@ -142,28 +142,44 @@
     ora "5.4.1"
     rxjs "6.6.7"
 
-"@angular-eslint/eslint-plugin-template@12.3.1":
-  version "12.3.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-12.3.1.tgz#33260cd5356df5db7e27719443eabcf6c214e32e"
-  integrity sha512-pz+nO64ma/9Sp2aeRnQ+Vktt7Fo1Lay/J+CG//3TIc3lYsoCTj4h42P6yCcxxJ9b4N7SUxMAnchA8eE5mJS4Ug==
+"@angular-eslint/bundled-angular-compiler@12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-12.6.0.tgz#cd0a38e96896afd7708d00808e060a26721515e4"
+  integrity sha512-T3gNjwuNX+1ZtdjYujOeFe5MQ+BBMJzWbQWnUDrEyGHIStrZFrUZ41gdCCflXmeo8KCe/iigqKI6P83umnP1EQ==
+
+"@angular-eslint/eslint-plugin-template@12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-12.6.0.tgz#8367fc9d33edb3249b85f501f0c4391b2f15fd9d"
+  integrity sha512-F1FS66NaYddE3bpAiKgQ7W3oAu+WbUaKvb/0WNpkx+208Grq+R2Vl+7EQbDkXzi5KdDqquwbB7DTowrYrcEwaA==
   dependencies:
+    "@angular-eslint/bundled-angular-compiler" "12.6.0"
     "@typescript-eslint/experimental-utils" "4.28.2"
     aria-query "^4.2.2"
     axobject-query "^2.2.0"
 
-"@angular-eslint/eslint-plugin@12.3.1":
-  version "12.3.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-12.3.1.tgz#00ac44d5986d86113d65a5373746e1fc22fd8702"
-  integrity sha512-KBm27onYggRcusA/BxuSkDGpVnIs8yG4ARio8ZAhe0H2XIRJTzJZ7oIBBjugDau03AGX3VMG6wAXailjJvsywg==
+"@angular-eslint/eslint-plugin@12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-12.6.0.tgz#26d1ff63071a71f8c2a8dc0230dc54bc9cd2d110"
+  integrity sha512-I/dpEkH62NL55KLAQX1+GkTVhupDLCa7c6iFrMSrcTxOuLk8721HqcCuOfwoGL1jcn/kuyv0xkcmVkuTPKksOg==
   dependencies:
+    "@angular-eslint/utils" "12.6.0"
     "@typescript-eslint/experimental-utils" "4.28.2"
 
-"@angular-eslint/template-parser@12.3.1":
-  version "12.3.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-12.3.1.tgz#561fe1bd3fb4a4d75cc55366d27818bca22204c9"
-  integrity sha512-6DkXqTaVEHZdcN3isHQ2CDoTsKLuJ5C1SYEOuFzOU1Zp85SvjxO92v6gPkFPKk0iQNVRmQS2XcKef6weehUUGA==
+"@angular-eslint/template-parser@12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-12.6.0.tgz#153fa095aebbfe19113c1e9fb3dabf995e6d2497"
+  integrity sha512-OSOPoCq8wNkpg/oYr+BN1F2KBQQrfwKymUnUfhgli2/EeHCHqhNwcQ0Cj3TVraZUzDT7kcQG7CS3riqHxXUWgQ==
   dependencies:
+    "@angular-eslint/bundled-angular-compiler" "12.6.0"
     eslint-scope "^5.1.0"
+
+"@angular-eslint/utils@12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-12.6.0.tgz#7a32e17b2e38359a1c4df6e3443be6033fdd1060"
+  integrity sha512-YBOWMHXKVnu1U/r3D82Tx56Ee2fT0gQ05vBv3e/YVNiXvPzmdgw8/yb0RHFfNYkXb8Kp1yLNtkkEXSegsA3zKw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "12.6.0"
+    "@typescript-eslint/experimental-utils" "4.28.2"
 
 "@angular/animations@13.0.0":
   version "13.0.0"
