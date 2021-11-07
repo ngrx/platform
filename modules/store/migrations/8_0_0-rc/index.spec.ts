@@ -6,7 +6,7 @@ import {
 } from '@angular-devkit/schematics/testing';
 
 xdescribe('Migration to version 8.0.0 rc', () => {
-  xdescribe('removes the usage of the storeFreeze meta-reducer', () => {
+  describe('removes the usage of the storeFreeze meta-reducer', () => {
     /* eslint-disable */
     const fixtures = [
       {
@@ -68,7 +68,7 @@ xdescribe('Migration to version 8.0.0 rc', () => {
     }
   });
 
-  xdescribe('StoreModule.forRoot()', () => {
+  describe('StoreModule.forRoot()', () => {
     /* eslint-disable */
     const fixtures = [
       {
@@ -216,7 +216,7 @@ xdescribe('Migration to version 8.0.0 rc', () => {
     }
   });
 
-  xdescribe('package.json', () => {
+  describe('package.json', () => {
     /* eslint-disable */
     const fixtures = [
       {

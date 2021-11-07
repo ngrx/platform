@@ -11,7 +11,7 @@ import {
   getTestProjectPath,
 } from '@ngrx/schematics-core/testing';
 
-describe('component-store', () => {
+xdescribe('component-store', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')

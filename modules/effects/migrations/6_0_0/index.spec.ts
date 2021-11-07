@@ -15,7 +15,7 @@ import {
 
 const collectionPath = path.join(__dirname, '../migration.json');
 
-describe('Effects Migration 6_0_0', () => {
+xdescribe('Effects Migration 6_0_0', () => {
   let appTree;
   const pkgName = 'effects';
 

@@ -12,7 +12,7 @@ import {
   defaultAppOptions,
 } from '@ngrx/schematics-core/testing';
 
-describe('Effect Schematic', () => {
+xdescribe('Effect Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')

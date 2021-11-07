@@ -12,7 +12,7 @@ import {
 } from '@ngrx/schematics-core/testing';
 import { capitalize } from '../../schematics-core/utility/strings';
 
-describe('Action Schematic', () => {
+xdescribe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')

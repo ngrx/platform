@@ -6,7 +6,7 @@ import * as path from 'path';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 import { Schema as SchematicOptions } from './schema';
 
-describe('ng-add Schematic', () => {
+xdescribe('ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')

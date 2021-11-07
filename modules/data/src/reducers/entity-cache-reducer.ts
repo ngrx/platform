@@ -213,13 +213,8 @@ export class EntityCacheReducerFactory {
     entityCache: EntityCache,
     action: SaveEntities
   ) {
-    const {
-      changeSet,
-      correlationId,
-      isOptimistic,
-      mergeStrategy,
-      tag,
-    } = action.payload;
+    const { changeSet, correlationId, isOptimistic, mergeStrategy, tag } =
+      action.payload;
 
     try {
       changeSet.changes.forEach((item) => {
@@ -243,7 +238,7 @@ export class EntityCacheReducerFactory {
           throw act.payload.error;
         }
       });
-    } catch (error) {
+    } catch (error: any) {
       action.payload.error = error;
     }
 
@@ -293,13 +288,8 @@ export class EntityCacheReducerFactory {
     entityCache: EntityCache,
     action: SaveEntitiesSuccess
   ) {
-    const {
-      changeSet,
-      correlationId,
-      isOptimistic,
-      mergeStrategy,
-      tag,
-    } = action.payload;
+    const { changeSet, correlationId, isOptimistic, mergeStrategy, tag } =
+      action.payload;
 
     changeSet.changes.forEach((item) => {
       const entityName = item.entityName;
@@ -344,16 +334,15 @@ export class EntityCacheReducerFactory {
   ) {
     const entityName = action.payload.entityName;
     const collection = cache[entityName];
-    const reducer = this.entityCollectionReducerRegistry.getOrCreateReducer(
-      entityName
-    );
+    const reducer =
+      this.entityCollectionReducerRegistry.getOrCreateReducer(entityName);
 
     let newCollection: EntityCollection;
     try {
       newCollection = collection
         ? reducer(collection, action)
         : reducer(this.entityCollectionCreator.create(entityName), action);
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(error);
       action.payload.error = error;
     }

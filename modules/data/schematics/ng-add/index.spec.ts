@@ -9,7 +9,7 @@ import {
   getTestProjectPath,
 } from '@ngrx/schematics-core/testing';
 
-describe('Data ng-add Schematic', () => {
+xdescribe('Data ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/data',
     path.join(__dirname, '../collection.json')
