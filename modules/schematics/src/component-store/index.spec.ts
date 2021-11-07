@@ -102,7 +102,7 @@ describe('component-store', () => {
         options,
         appTree
       );
-    } catch (err) {
+    } catch (err: any) {
       thrownError = err;
     }
     expect(thrownError).toBeDefined();
@@ -157,7 +157,7 @@ describe('component-store', () => {
         options,
         appTree
       );
-    } catch (err) {
+    } catch (err: any) {
       thrownError = err;
     }
     expect(thrownError).toBeDefined();

@@ -5,8 +5,8 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 
-describe('Migration to version 8.0.0 rc', () => {
-  describe('removes the usage of the storeFreeze meta-reducer', () => {
+xdescribe('Migration to version 8.0.0 rc', () => {
+  xdescribe('removes the usage of the storeFreeze meta-reducer', () => {
     /* eslint-disable */
     const fixtures = [
       {
@@ -68,7 +68,7 @@ describe('Migration to version 8.0.0 rc', () => {
     }
   });
 
-  describe('StoreModule.forRoot()', () => {
+  xdescribe('StoreModule.forRoot()', () => {
     /* eslint-disable */
     const fixtures = [
       {
@@ -216,7 +216,7 @@ describe('Migration to version 8.0.0 rc', () => {
     }
   });
 
-  describe('package.json', () => {
+  xdescribe('package.json', () => {
     /* eslint-disable */
     const fixtures = [
       {

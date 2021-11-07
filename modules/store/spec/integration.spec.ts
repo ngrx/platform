@@ -22,11 +22,8 @@ import {
   VisibilityFilters,
   resetId,
 } from './fixtures/todos';
-import {
-  RouterTestingModule,
-  SpyNgModuleFactoryLoader,
-} from '@angular/router/testing';
-import { NgModuleFactoryLoader, NgModule } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 
 interface Todo {
@@ -476,12 +473,13 @@ describe('ngRx Integration spec', () => {
       });
 
       const router = TestBed.inject(Router);
-      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
-        NgModuleFactoryLoader
-      ) as SpyNgModuleFactoryLoader;
 
-      loader.stubbedModules = { feature: FeatureModule };
-      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+      router.resetConfig([
+        {
+          path: 'feature-path',
+          loadChildren: () => Promise.resolve(FeatureModule),
+        },
+      ]);
 
       router.navigateByUrl('/feature-path').catch((err: TypeError) => {
         expect(err.message).toBe(

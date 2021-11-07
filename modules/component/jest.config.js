@@ -9,5 +9,6 @@ module.exports = {
     },
   },
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
-  transform: { '^.+\\.(ts|js|html)$': 'jest-preset-angular' },
+  transform: { '^.+\\.(ts|js|mjs|html)$': 'jest-preset-angular' },
+  transformIgnorePatterns: ['node_modules/(?!@angular)']
 };

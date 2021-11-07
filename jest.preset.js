@@ -5,7 +5,8 @@ module.exports = {
   transform: {
     '^.+\\.(ts|js|html)$': 'ts-jest',
   },
-  resolver: '@nrwl/jest/plugins/resolver',
+  // resolver: '@nrwl/jest/plugins/resolver',
+  resolver: '<rootDir>/../../resolver.js',
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageReporters: ['html'],
   snapshotSerializers: [
@@ -13,5 +14,5 @@ module.exports = {
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
   ],
-  testRunner: 'jest-jasmine2',
+  testRunner: 'jest-jasmine2'
 };

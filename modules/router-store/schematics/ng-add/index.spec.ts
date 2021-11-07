@@ -79,7 +79,7 @@ describe('Router Store ng-add Schematic', () => {
     let thrownError: Error | null = null;
     try {
       await schematicRunner.runSchematicAsync('ng-add', options, appTree);
-    } catch (err) {
+    } catch (err: any) {
       thrownError = err;
     }
     expect(thrownError).toBeDefined();

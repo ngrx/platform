@@ -106,7 +106,7 @@ describe('Effect Schematic', () => {
     let thrownError: Error | null = null;
     try {
       await schematicRunner.runSchematicAsync('effects', options, appTree);
-    } catch (err) {
+    } catch (err: any) {
       thrownError = err;
     }
     expect(thrownError).toBeDefined();

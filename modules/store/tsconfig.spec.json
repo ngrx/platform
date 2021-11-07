@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
+    "module": "es2020",
+    "esModuleInterop": true,
     "types": ["jest", "node"]
   },
   "files": ["test-setup.ts"],

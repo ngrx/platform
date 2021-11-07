@@ -154,7 +154,7 @@ The NgRx ESLint Plugin is installed and configured with the recommended config.
 If you want to change the configuration, please see ${docs}.
 `);
       return host;
-    } catch (err) {
+    } catch (err: any) {
       context.logger.warn(`
 Something went wrong while adding the NgRx ESLint Plugin.
 The NgRx ESLint Plugin is installed but not configured.
