@@ -176,7 +176,7 @@
     "jasmine-marbles": "0.9.1",
     "jasmine-spec-reporter": "5.0.2",
     "jest": "27.0.3",
-    "jest-preset-angular": "11.0.0-rc.1",
+    "jest-preset-angular": "11.0.0-rc.2",
     "jest-zone-patch": "^0.0.10",
     "karma": "6.3.2",
     "karma-chrome-launcher": "3.1.0",
