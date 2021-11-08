@@ -10,8 +10,6 @@ import {
   pluralize,
 } from './utility/strings';
 
-export { isIvyEnabled } from './utility/angular-utils';
-
 export {
   findNodes,
   getSourceNodes,

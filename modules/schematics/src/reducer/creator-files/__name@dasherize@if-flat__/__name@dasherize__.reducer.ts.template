@@ -11,7 +11,6 @@ export const initialState: State = {
 
 };
 
-<% if(isIvyEnabled) { %>
 export const reducer = createReducer(
   initialState,
 <% if(feature) { %>
@@ -20,17 +19,3 @@ export const reducer = createReducer(
   on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure, (state, action) => state),
 <% } %><% } %>
 );
-<% }else { %>
-const <%= camelize(name) %>Reducer = createReducer(
-  initialState,
-<% if(feature) { %>
-  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s, state => state),
-<% if(api) { %>  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sSuccess, (state, action) => state),
-  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure, (state, action) => state),
-<% } %><% } %>
-);
-
-export function reducer(state: State | undefined, action: Action) {
-  return <%= camelize(name) %>Reducer(state, action);
-}
-<% } %>
