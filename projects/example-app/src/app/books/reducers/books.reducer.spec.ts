@@ -8,7 +8,7 @@ import {
 } from '@example-app/books/actions';
 import { Book, generateMockBook } from '@example-app/books/models';
 
-xdescribe('BooksReducer', () => {
+describe('BooksReducer', () => {
   const book1 = generateMockBook();
   const book2 = { ...book1, id: '222' };
   const book3 = { ...book1, id: '333' };
