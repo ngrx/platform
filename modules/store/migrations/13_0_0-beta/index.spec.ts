@@ -5,7 +5,7 @@ import {
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 
-xdescribe('Store Migration 13_0_0 beta', () => {
+describe('Store Migration 13_0_0 beta', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
   const pkgName = 'store';
 

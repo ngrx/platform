@@ -6,7 +6,7 @@ import {
 import * as path from 'path';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 
-xdescribe('Effects Migration 13_0_0', () => {
+describe('Effects Migration 13_0_0', () => {
   describe('@Effect to createEffect', () => {
     const collectionPath = path.join(__dirname, '../migration.json');
     const schematicRunner = new SchematicTestRunner(

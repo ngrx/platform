@@ -5,7 +5,7 @@ import {
 import * as path from 'path';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 
-xdescribe('NgrxPush migration', () => {
+describe('NgrxPush migration', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')

@@ -15,7 +15,7 @@ import {
 
 const collectionPath = path.join(__dirname, '../migration.json');
 
-xdescribe('Router Store Migration 6_0_0', () => {
+describe('Router Store Migration 6_0_0', () => {
   let appTree;
   const pkgName = 'router-store';
 

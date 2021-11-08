@@ -11,7 +11,7 @@ import {
   defaultAppOptions,
 } from '@ngrx/schematics-core/testing';
 
-xdescribe('Data Schematic', () => {
+describe('Data Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
     path.join(__dirname, '../../collection.json')

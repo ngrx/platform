@@ -11,7 +11,7 @@ import {
   createAppModuleWithEffects,
 } from '@ngrx/schematics-core/testing';
 
-xdescribe('Effects ng-add Schematic', () => {
+describe('Effects ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/effects',
     path.join(__dirname, '../collection.json')

@@ -9,7 +9,7 @@ import {
   createWorkspace,
 } from '@ngrx/schematics-core/testing';
 
-xdescribe('Store ng-add Schematic', () => {
+describe('Store ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/store',
     path.join(__dirname, '../collection.json')

@@ -15,7 +15,7 @@ import {
 
 const collectionPath = path.join(__dirname, '../migration.json');
 
-xdescribe('Schematics Migration 6_0_0', () => {
+describe('Schematics Migration 6_0_0', () => {
   let appTree;
   const pkgName = 'schematics';
 

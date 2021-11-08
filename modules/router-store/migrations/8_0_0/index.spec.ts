@@ -6,7 +6,7 @@ import {
 import * as path from 'path';
 import { createPackageJson } from '@ngrx/schematics-core/testing/create-package';
 
-xdescribe('Router Store Migration 8_0_0', () => {
+describe('Router Store Migration 8_0_0', () => {
   let appTree: UnitTestTree;
   const collectionPath = path.join(__dirname, '../migration.json');
   const pkgName = 'router-store';

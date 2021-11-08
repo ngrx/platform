@@ -6,7 +6,7 @@ import {
 import * as path from 'path';
 import { createPackageJson } from '@ngrx/schematics-core/testing/create-package';
 
-xdescribe('Store Migration 8_0_0 beta', () => {
+describe('Store Migration 8_0_0 beta', () => {
   let appTree: UnitTestTree;
   const collectionPath = path.join(__dirname, '../migration.json');
   const pkgName = 'store';

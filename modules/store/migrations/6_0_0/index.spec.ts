@@ -15,7 +15,7 @@ import {
 
 const collectionPath = path.join(__dirname, '../migration.json');
 
-xdescribe('Store Migration 6_0_0', () => {
+describe('Store Migration 6_0_0', () => {
   let appTree;
   const pkgName = 'store';
 

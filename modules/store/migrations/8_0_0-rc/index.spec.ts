@@ -5,7 +5,7 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 
-xdescribe('Migration to version 8.0.0 rc', () => {
+describe('Migration to version 8.0.0 rc', () => {
   describe('removes the usage of the storeFreeze meta-reducer', () => {
     /* eslint-disable */
     const fixtures = [
