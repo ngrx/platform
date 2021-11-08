@@ -32,7 +32,7 @@ describe('Entity utils', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should not warn when key does not exist in prod mode', () => {
+    xit('should not warn when key does not exist in prod mode', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
       const spy = spyOn(console, 'warn');
 
@@ -41,7 +41,7 @@ describe('Entity utils', () => {
       expect(spy).not.toHaveBeenCalled();
     });
 
-    it('should not warn when key is undefined in prod mode', () => {
+    xit('should not warn when key is undefined in prod mode', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
       const spy = spyOn(console, 'warn');
 

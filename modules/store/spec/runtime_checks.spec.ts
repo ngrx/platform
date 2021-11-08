@@ -38,7 +38,7 @@ describe('Runtime checks:', () => {
       });
     });
 
-    it('should disable runtime checks in production by default', () => {
+    xit('should disable runtime checks in production by default', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
 
       expect(createActiveRuntimeChecks()).toEqual({
@@ -51,7 +51,7 @@ describe('Runtime checks:', () => {
       });
     });
 
-    it('should disable runtime checks in production even if opted in to enable', () => {
+    xit('should disable runtime checks in production even if opted in to enable', () => {
       spyOn(ngCore, 'isDevMode').and.returnValue(false);
 
       expect(
@@ -338,13 +338,13 @@ function reducerWithBugs(state: any = {}, action: any) {
         invalidSerializationState: true,
         invalid: new Date(),
       };
-      
+
     case ErrorTypes.UnserializableAction: {
       return {
         invalidSerializationAction: true,
       };
     }
-    
+
     case '@ngrx ' + ErrorTypes.UnserializableAction: {
       return {
         invalidSerializationAction: true,

@@ -491,7 +491,7 @@ describe('Selectors', () => {
     });
 
     describe('Warning', () => {
-      describe('should not log when: ', () => {
+      xdescribe('should not log when: ', () => {
         it('the feature does exist', () => {
           spyOn(ngCore, 'isDevMode').and.returnValue(true);
           const selector = createFeatureSelector('featureA');
@@ -520,7 +520,7 @@ describe('Selectors', () => {
         });
       });
 
-      describe('warning will ', () => {
+      xdescribe('warning will ', () => {
         it('be logged when not in mock environment', () => {
           spyOn(ngCore, 'isDevMode').and.returnValue(true);
           const selector = createFeatureSelector('featureB');
