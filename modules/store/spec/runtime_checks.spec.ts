@@ -38,8 +38,8 @@ describe('Runtime checks:', () => {
       });
     });
 
-    xit('should disable runtime checks in production by default', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+    it('should disable runtime checks in production by default', () => {
+      const spy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
 
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
@@ -49,10 +49,13 @@ describe('Runtime checks:', () => {
         strictActionWithinNgZone: false,
         strictActionTypeUniqueness: false,
       });
+
+      spy.mockReset();
+      spy.mockReturnValue(true);
     });
 
-    xit('should disable runtime checks in production even if opted in to enable', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+    it('should disable runtime checks in production even if opted in to enable', () => {
+      const spy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
 
       expect(
         createActiveRuntimeChecks({
@@ -69,6 +72,9 @@ describe('Runtime checks:', () => {
         strictActionWithinNgZone: false,
         strictActionTypeUniqueness: false,
       });
+
+      spy.mockReset();
+      spy.mockReturnValue(true);
     });
   });
 
