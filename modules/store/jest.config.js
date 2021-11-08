@@ -13,8 +13,5 @@ module.exports = {
   transformIgnorePatterns: ['node_modules/(?!@angular|tslib)'],
   moduleNameMapper: {
     'tslib': '<rootDir>../../node_modules/tslib/tslib.es6.js'
-  },
-  moduleNameMapper: {
-    'tslib': '<rootDir>../../node_modules/tslib/tslib.es6.js'
   }
 };

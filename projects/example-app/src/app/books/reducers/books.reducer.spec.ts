@@ -24,7 +24,7 @@ describe('BooksReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const result = reducer(undefined, {} as any);
-      console.log(result);
+
       expect(result).toMatchSnapshot();
     });
   });
