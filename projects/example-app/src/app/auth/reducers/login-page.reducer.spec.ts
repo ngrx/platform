@@ -5,7 +5,7 @@ import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
 
 import { Credentials, User } from '@example-app/auth/models';
 
-describe('LoginPageReducer', () => {
+xdescribe('LoginPageReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const action = {} as any;

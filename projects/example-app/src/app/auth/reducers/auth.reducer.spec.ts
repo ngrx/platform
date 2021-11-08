@@ -4,7 +4,7 @@ import { AuthApiActions, AuthActions } from '@example-app/auth/actions';
 
 import { User } from '@example-app/auth/models';
 
-describe('AuthReducer', () => {
+xdescribe('AuthReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const action = {} as any;
