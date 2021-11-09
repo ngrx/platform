@@ -6,6 +6,6 @@ module.exports = {
   testEnvironment: 'node',
   transformIgnorePatterns: ['node_modules/(?!@angular|tslib)'],
   moduleNameMapper: {
-    'tslib': '<rootDir>/../../node_modules/tslib/tslib.js'
-  }
+    tslib: '<rootDir>/../../node_modules/tslib/tslib.js',
+  },
 };

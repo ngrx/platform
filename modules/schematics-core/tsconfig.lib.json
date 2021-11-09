@@ -13,7 +13,7 @@
     "strict": true
   },
   "include": ["**/*.ts"],
-  "exclude": ["**/*.spec.ts", "test-setup.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "test-setup.ts"],
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
     "enableSummariesForJit": false,

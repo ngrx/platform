@@ -12,6 +12,6 @@ module.exports = {
   transform: { '^.+\\.(ts|js|mjs|html)$': 'jest-preset-angular' },
   transformIgnorePatterns: ['node_modules/(?!@angular|tslib)'],
   moduleNameMapper: {
-    'tslib': '<rootDir>../../node_modules/tslib/tslib.es6.js'
-  }
+    tslib: '<rootDir>../../node_modules/tslib/tslib.es6.js',
+  },
 };
