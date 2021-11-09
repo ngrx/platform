@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^13.0.0-rc.0",
+    "@angular/core": "^13.0.0",
     "@ngrx/store": "13.0.0-beta.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
