@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "downlevelIteration": true,
-    "outDir": "../../dist/modules/schematics-score",
+    "outDir": "../../dist/modules/schematics-core",
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2018", "dom"],
