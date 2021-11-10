@@ -36,7 +36,6 @@ describe('ServiceWorker navigation URLs', () => {
     expect(
       isNavigationUrl('/generated/images/guide/animations/animation_auto.gif')
     ).toBeFalsy();
-    expect(isNavigationUrl('/generated/ie-polyfills.min.js')).toBeFalsy();
     expect(
       isNavigationUrl('/generated/docs/guide/animations.json')
     ).toBeFalsy();
