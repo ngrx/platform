@@ -40,8 +40,6 @@ Here are the most important tasks you might need to use:
   - `yarn example-e2e --filter=foo` - limit e2e tests to those containing the word "foo"
   - `yarn example-e2e --setup --local` - run e2e tests with the local version of Angular contained in the "dist" folder
 
-- `yarn build-ie-polyfills` - generates a js file of polyfills that can be loaded in Internet Explorer.
-
 ## Developing on Windows
 
 It is necessary to run `yarn setup` and `yarn boilerplate:add` using Administrator rights as Linux-specific symlinks are used.

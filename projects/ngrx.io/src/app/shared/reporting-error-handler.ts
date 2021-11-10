@@ -20,7 +20,7 @@ export class ReportingErrorHandler extends ErrorHandler {
         try {
             super.handleError(error);
         } catch (e) {
-            this.reportError(e);
+            this.reportError(e as Error);
         }
         this.reportError(error);
     }
