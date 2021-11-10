@@ -290,6 +290,7 @@ export class EntityCollectionReducerMethods<T> {
         collection,
         mergeStrategy
       ),
+      loaded: true,
       loading: false,
     };
   }
