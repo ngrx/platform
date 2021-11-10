@@ -21,7 +21,6 @@ import {
   addReducerToState,
   addReducerImportToNgModule,
   parseName,
-  isIvyEnabled,
   getProject,
   getPrefix,
 } from '../../schematics-core';
@@ -49,9 +48,6 @@ export default function (options: ReducerOptions): Rule {
           options.flat ? '' : s,
           options.group ? 'reducers' : ''
         ),
-      isIvyEnabled:
-        isIvyEnabled(host, 'tsconfig.json') &&
-        isIvyEnabled(host, `${projectConfig.root}/tsconfig.app.json`),
       ...(options as object),
     };
 

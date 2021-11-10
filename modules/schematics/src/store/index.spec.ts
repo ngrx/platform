@@ -199,7 +199,7 @@ describe('Store Schematic', () => {
     let thrownError: Error | null = null;
     try {
       await schematicRunner.runSchematicAsync('store', options, appTree);
-    } catch (err) {
+    } catch (err: any) {
       thrownError = err;
     }
     expect(thrownError).toBeDefined();

@@ -128,7 +128,7 @@ export class EntityCacheEffects {
 
       // Emit which ever gets there first; the other observable is terminated.
       return race(c, d);
-    } catch (err) {
+    } catch (err: any) {
       return this.handleSaveEntitiesError$(action)(err);
     }
   }

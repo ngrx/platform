@@ -39,9 +39,10 @@ export const ExtensionActionTypes = {
   ACTION: 'ACTION',
 };
 
-export const REDUX_DEVTOOLS_EXTENSION = new InjectionToken<ReduxDevtoolsExtension>(
-  '@ngrx/store-devtools Redux Devtools Extension'
-);
+export const REDUX_DEVTOOLS_EXTENSION =
+  new InjectionToken<ReduxDevtoolsExtension>(
+    '@ngrx/store-devtools Redux Devtools Extension'
+  );
 
 export interface ReduxDevtoolsExtensionConnection {
   subscribe(listener: (change: any) => void): void;
@@ -260,7 +261,7 @@ export class DevtoolsExtension {
   private sendToReduxDevtools(send: Function) {
     try {
       send();
-    } catch (err) {
+    } catch (err: any) {
       console.warn(
         '@ngrx/store-devtools: something went wrong inside the redux devtools',
         err

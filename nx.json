@@ -33,62 +33,6 @@
     "appsDir": "projects",
     "libsDir": "modules"
   },
-  "projects": {
-    "component": {
-      "tags": []
-    },
-    "component-store": {
-      "tags": []
-    },
-    "data": {
-      "tags": []
-    },
-    "data-example-app": {
-      "tags": []
-    },
-    "docs-app": {
-      "tags": [],
-      "implicitDependencies": [
-        "store",
-        "effects",
-        "router-store",
-        "store-devtools",
-        "entity",
-        "data",
-        "schematics",
-        "component",
-        "component-store"
-      ]
-    },
-    "effects": {
-      "tags": []
-    },
-    "entity": {
-      "tags": []
-    },
-    "example-app": {
-      "tags": []
-    },
-    "example-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["example-app"]
-    },
-    "router-store": {
-      "tags": []
-    },
-    "schematics": {
-      "tags": []
-    },
-    "schematics-core": {
-      "tags": []
-    },
-    "store": {
-      "tags": []
-    },
-    "store-devtools": {
-      "tags": []
-    }
-  },
   "targetDependencies": {
     "build": [
       {
@@ -96,5 +40,23 @@
         "projects": "dependencies"
       }
     ]
-  }
+  },
+  "cli": {
+    "analytics": false,
+    "defaultCollection": "@nrwl/angular"
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "flat": true,
+      "skipTests": true,
+      "prefix": "bc",
+      "style": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "bc"
+    }
+  },
+  "defaultProject": "example-app"
 }

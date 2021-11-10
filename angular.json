@@ -1,10 +1,5 @@
 {
   "version": 1,
-  "cli": {
-    "analytics": false,
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "example-app",
   "schematics": {
     "@schematics/angular:component": {
       "inlineStyle": true,
@@ -66,7 +61,8 @@
           "outputs": ["coverage/modules/component"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "component-store": {
       "projectType": "library",
@@ -115,7 +111,8 @@
           "outputs": ["coverage/modules/component-store"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "data": {
       "projectType": "library",
@@ -164,7 +161,8 @@
           "outputs": ["coverage/modules/data"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "data-example-app": {
       "projectType": "application",
@@ -260,7 +258,8 @@
             "setupFile": "projects/data-example-app/src/test-setup.ts"
           }
         }
-      }
+      },
+      "tags": []
     },
     "docs-app": {
       "root": "projects/ngrx.io",
@@ -320,7 +319,19 @@
           },
           "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": [
+        "store",
+        "effects",
+        "router-store",
+        "store-devtools",
+        "entity",
+        "data",
+        "schematics",
+        "component",
+        "component-store"
+      ]
     },
     "effects": {
       "projectType": "library",
@@ -378,7 +389,8 @@
           "outputs": ["coverage/modules/effects"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "entity": {
       "projectType": "library",
@@ -436,7 +448,8 @@
           "outputs": ["coverage/modules/entity"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "example-app": {
       "root": "projects/example-app",
@@ -521,7 +534,8 @@
           },
           "outputs": ["coverage/projects/example-app"]
         }
-      }
+      },
+      "tags": []
     },
     "example-app-e2e": {
       "root": "projects/example-app-e2e",
@@ -548,7 +562,9 @@
           },
           "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["example-app"]
     },
     "router-store": {
       "projectType": "library",
@@ -597,7 +613,8 @@
           "outputs": ["coverage/modules/router-store"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "schematics": {
       "root": "modules/schematics",
@@ -684,7 +701,8 @@
             "outputPath": ["dist/modules/schematics"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "schematics-core": {
       "projectType": "library",
@@ -711,7 +729,8 @@
           "outputs": ["coverage/modules/schematics-core"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "store": {
       "projectType": "library",
@@ -769,7 +788,8 @@
           "outputs": ["coverage/modules/store"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     },
     "store-devtools": {
       "projectType": "library",
@@ -818,7 +838,8 @@
           "outputs": ["coverage/modules/store-devtools"]
         }
       },
-      "schematics": {}
+      "schematics": {},
+      "tags": []
     }
   }
 }

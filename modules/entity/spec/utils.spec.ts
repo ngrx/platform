@@ -33,16 +33,18 @@ describe('Entity utils', () => {
     });
 
     it('should not warn when key does not exist in prod mode', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+      const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
       const spy = spyOn(console, 'warn');
 
       const key = selectIdValue(AClockworkOrange, (book: any) => book.foo);
 
       expect(spy).not.toHaveBeenCalled();
+
+      ngSpy.mockReset();
     });
 
     it('should not warn when key is undefined in prod mode', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+      const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
       const spy = spyOn(console, 'warn');
 
       const undefinedAClockworkOrange = { ...AClockworkOrange, id: undefined };
@@ -52,6 +54,8 @@ describe('Entity utils', () => {
       );
 
       expect(spy).not.toHaveBeenCalled();
+
+      ngSpy.mockReset();
     });
   });
 });

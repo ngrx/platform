@@ -155,14 +155,14 @@ describe('Router Store Module', () => {
       a.payload && a.payload.event;
 
     describe('Full', () => {
-      it('should dispatch the full event', async (done: any) => {
+      it('should dispatch the full event', (done: any) => {
         const { actions, router } = setup(RouterState.Full);
         actions.pipe(filter(onlyRouterActions)).subscribe(({ payload }) => {
           expect(payload.event instanceof RouterEvent).toBe(true);
           done();
         });
 
-        await router.navigateByUrl('/');
+        router.navigateByUrl('/');
       });
 
       it('should use the minimal router serializer by default', () => {
@@ -190,7 +190,7 @@ describe('Router Store Module', () => {
     });
 
     describe('Minimal', () => {
-      it('should dispatch the navigation id with url', async (done: any) => {
+      it('should dispatch the navigation id with url', (done: any) => {
         const { actions, router } = setup(RouterState.Minimal);
         actions
           .pipe(filter(onlyRouterActions))
@@ -200,10 +200,10 @@ describe('Router Store Module', () => {
             done();
           });
 
-        await router.navigateByUrl('/');
+        router.navigateByUrl('/');
       });
 
-      it('should dispatch the navigation with urlAfterRedirects', async (done: any) => {
+      it('should dispatch the navigation with urlAfterRedirects', (done: any) => {
         const { actions, router } = setup(RouterState.Minimal);
         actions
           .pipe(
@@ -224,7 +224,7 @@ describe('Router Store Module', () => {
             done();
           });
 
-        await router.navigateByUrl('/redirect');
+        router.navigateByUrl('/redirect');
       });
 
       it('should use the minimal router serializer', () => {

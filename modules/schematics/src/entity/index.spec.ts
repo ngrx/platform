@@ -246,40 +246,6 @@ describe('Entity Schematic', () => {
     });
   });
 
-  describe('View engine', () => {
-    beforeEach(() => {
-      // remove the first line comment from the json file
-      const json = appTree
-        .readContent('./projects/bar/tsconfig.app.json')
-        .split('\n')
-        .slice(1)
-        .join('\n');
-      const tsConfig = JSON.parse(json);
-
-      tsConfig.angularCompilerOptions = tsConfig.angularCompilerOptions || {};
-      tsConfig.angularCompilerOptions.enableIvy = false;
-      appTree.overwrite(
-        './projects/bar/tsconfig.app.json',
-        JSON.stringify(tsConfig)
-      );
-    });
-
-    it('should create and export a reducer as a function', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('reducer', defaultOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.reducer.ts`
-      );
-
-      expect(fileContent).toMatch(
-        /export function reducer\(state: State | undefined, action: Action\) {/
-      );
-      expect(fileContent).toMatch(/const fooReducer = createReducer\(/);
-      expect(fileContent).toMatch(/export function reducer/);
-    });
-  });
-
   describe('Ivy', () => {
     it('should create and export a reducer', async () => {
       const tree = await schematicRunner
