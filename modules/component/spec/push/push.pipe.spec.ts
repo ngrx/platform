@@ -11,7 +11,7 @@ import { EMPTY, NEVER, Observable, ObservableInput, of } from 'rxjs';
 import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
-let pushPipe: PushPipe<unknown>;
+let pushPipe: PushPipe;
 
 function wrapWithSpace(str: string): string {
   return ' ' + str + ' ';

@@ -2,7 +2,8 @@
 
 The `getSelectors` method supplied within `@ngrx/router-store` provides functions for selecting common information from the router state.
 
-The `getSelectors` method takes a selector function as its only argument to select the piece of state where the router state is being stored.
+The default behavior of `getSelectors` selects the router state for the `router` state key.
+If the default router state config is overwritten with a different router state key, the `getSelectors` method takes a selector function to select the piece of state where the router state is being stored.
 The example below shows how to provide a selector for the top level `router` key in your state object.
 
 **Note:** The `getSelectors` method works with the `routerReducer` provided by `@ngrx/router-store`. If you use a [custom serializer](guide/router-store/configuration#custom-router-state-serializer), you'll need to provide your own selectors.
@@ -13,13 +14,8 @@ Usage:
 
 [Full App Used In This Example](https://stackblitz.com/edit/ngrx-router-store-selectors?file=src/app/car.state.ts)
 
-`router.selectors.ts`
-
-```ts
-import { getSelectors, RouterReducerState } from '@ngrx/router-store';
-import { createFeatureSelector } from '@ngrx/store';
-
-export const selectRouter = createFeatureSelector<RouterReducerState>('router');
+<code-example header="router.selectors.ts">
+import { getSelectors } from '@ngrx/router-store';
 
 export const {
   selectCurrentRoute, // select the current route
@@ -30,12 +26,10 @@ export const {
   selectRouteParam, // factory function to select a route param
   selectRouteData, // select the current route data
   selectUrl, // select the current url
-} = getSelectors(selectRouter);
-```
+} = getSelectors();
+</code-example>
 
-`car.reducer.ts`
-
-```ts
+<code-example header="car.reducer.ts" >
 import { createReducer, on } from '@ngrx/store';
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { appInit } from './car.actions';
@@ -47,28 +41,26 @@ export interface Car {
   model: string;
 }
 
-export type CarState = EntityState<Car>;
+export type CarState = EntityState&lt;Car&gt;;
 
-export const carAdapter = createEntityAdapter<Car>({
-  selectId: car => car.id,
+export const carAdapter = createEntityAdapter&lt;Car&gt;({
+  selectId: car =&gt; car.id,
 });
 
 const initialState = carAdapter.getInitialState();
 
-export const reducer = createReducer<CarState>(
+export const reducer = createReducer&lt;CarState&gt;(
   initialState,
-  on(appInit, (state, { cars }) => carAdapter.addMany(cars, state))
+  on(appInit, (state, { cars }) =&gt; carAdapter.addMany(cars, state))
 );
-```
+</code-example>
 
-`car.selectors.ts`
-
-```ts
+<code-example header="car.selectors.ts" >
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { selectRouteParams } from '../router.selectors';
 import { carAdapter, CarState } from './car.reducer';
 
-export const carsFeatureSelector = createFeatureSelector<CarState>('cars');
+export const carsFeatureSelector = createFeatureSelector&lt;CarState&gt;('cars');
 
 const { selectEntities, selectAll } = carAdapter.getSelectors();
 
@@ -88,13 +80,11 @@ export const selectCars = createSelector(
 export const selectCar = createSelector(
   selectCarEntities,
   selectRouteParams,
-  (cars, { carId }) => cars[carId]
+  (cars, { carId }) =&gt; cars[carId]
 );
-```
+</code-example>
 
-`car.component.ts`
-
-```ts
+<code-example header="car.component.ts" >
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { selectCar } from './car.selectors';
@@ -109,7 +99,7 @@ export class CarComponent {
 
   constructor(private store: Store) {}
 }
-```
+</code-example>
 
 ## Extracting all params in the current route
 
@@ -138,11 +128,11 @@ Using `selectRouteParam{s}` will get the `matched` param but not the `urlPath` p
 
 If all params in the URL Tree need to be extracted (both `urlPath` and `matched`), the following custom selector can be used. It accumulates params of all the segments in the matched route:
 
-```typescript
+<code-example>
 import { Params } from '@angular/router';
 import { createSelector } from '@ngrx/store';
 
-export const selectRouteNestedParams = createSelector(selectRouter, (router) => {
+export const selectRouteNestedParams = createSelector(selectRouter, (router) =&gt; {
   let currentRoute = router?.state?.root;
   let params: Params = {};
   while (currentRoute?.firstChild) {
@@ -155,9 +145,9 @@ export const selectRouteNestedParams = createSelector(selectRouter, (router) => 
   return params;
 });
 
-export const selectRouteNestedParam = (param: string) =>
-  createSelector(selectRouteNestedParams, (params) => params && params[param]);
-```
+export const selectRouteNestedParam = (param: string) =&gt;
+  createSelector(selectRouteNestedParams, (params) =&gt; params &amp;&amp; params[param]);
+</code-example>
 
 <div class="alert is-important">
 

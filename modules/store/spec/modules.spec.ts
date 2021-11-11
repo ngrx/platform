@@ -26,10 +26,10 @@ describe(`Store Modules`, () => {
   );
 
   // Trigger here is basically an action type used to trigger state update
-  const createDummyReducer = <T>(def: T, trigger: string): ActionReducer<T> => (
-    s = def,
-    { type, payload }: any
-  ) => (type === trigger ? payload : s);
+  const createDummyReducer =
+    <T>(def: T, trigger: string): ActionReducer<T> =>
+    (s = def, { type, payload }: any) =>
+      type === trigger ? payload : s;
   const rootFruitReducer = createDummyReducer('apple', 'fruit');
   const featureAReducer = createDummyReducer(5, 'a');
   const featureBListReducer = createDummyReducer([1, 2, 3], 'bList');
@@ -104,7 +104,7 @@ describe(`Store Modules`, () => {
       });
     });
 
-    it(`should should use config.reducerFactory`, (done) => {
+    it(`should use config.reducerFactory`, (done) => {
       store.dispatch({ type: 'fruit', payload: 'banana' });
       store.dispatch({ type: 'a', payload: 42 });
 
@@ -241,11 +241,12 @@ describe(`Store Modules`, () => {
       store = TestBed.inject(Store);
     });
 
-    it('should set up a feature state', () => {
+    it('should set up a feature state', (done) => {
       store.pipe(take(1)).subscribe((state: State) => {
         expect(state).toEqual({
           a: 5,
         } as State);
+        done();
       });
     });
   });

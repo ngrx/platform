@@ -39,7 +39,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should disable runtime checks in production by default', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+      const spy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
 
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
@@ -49,10 +49,13 @@ describe('Runtime checks:', () => {
         strictActionWithinNgZone: false,
         strictActionTypeUniqueness: false,
       });
+
+      spy.mockReset();
+      spy.mockReturnValue(true);
     });
 
     it('should disable runtime checks in production even if opted in to enable', () => {
-      spyOn(ngCore, 'isDevMode').and.returnValue(false);
+      const spy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
 
       expect(
         createActiveRuntimeChecks({
@@ -69,6 +72,9 @@ describe('Runtime checks:', () => {
         strictActionWithinNgZone: false,
         strictActionTypeUniqueness: false,
       });
+
+      spy.mockReset();
+      spy.mockReturnValue(true);
     });
   });
 
@@ -338,13 +344,13 @@ function reducerWithBugs(state: any = {}, action: any) {
         invalidSerializationState: true,
         invalid: new Date(),
       };
-      
+
     case ErrorTypes.UnserializableAction: {
       return {
         invalidSerializationAction: true,
       };
     }
-    
+
     case '@ngrx ' + ErrorTypes.UnserializableAction: {
       return {
         invalidSerializationAction: true,

@@ -8,7 +8,6 @@ export const selectBooks = createSelector(
 );
 
 export const selectCollectionState = createFeatureSelector<
-  AppState,
   ReadonlyArray<string>
 >("collection");
 

@@ -162,7 +162,7 @@ export class StoreRouterConnectingModule {
   private routerState: SerializedRouterStateSnapshot | null = null;
   private storeState: any;
   private trigger = RouterTrigger.NONE;
-  private stateKey: StateKeyOrSelector;
+  private readonly stateKey: StateKeyOrSelector;
 
   static forRoot<
     T extends BaseRouterStoreState = SerializedRouterStateSnapshot
@@ -195,8 +195,9 @@ export class StoreRouterConnectingModule {
     private router: Router,
     private serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
     private errorHandler: ErrorHandler,
-    @Inject(ROUTER_CONFIG) private config: StoreRouterConfig,
-    @Inject(ACTIVE_RUNTIME_CHECKS) private activeRuntimeChecks: RuntimeChecks
+    @Inject(ROUTER_CONFIG) private readonly config: StoreRouterConfig,
+    @Inject(ACTIVE_RUNTIME_CHECKS)
+    private readonly activeRuntimeChecks: RuntimeChecks
   ) {
     this.stateKey = this.config.stateKey as StateKeyOrSelector;
 
@@ -381,7 +382,7 @@ function isSameUrl(first: string, second: string): boolean {
 }
 
 function stripTrailingSlash(text: string): string {
-  if (text.length > 0 && text[text.length - 1] === '/') {
+  if (text?.length > 0 && text[text.length - 1] === '/') {
     return text.substring(0, text.length - 1);
   }
   return text;

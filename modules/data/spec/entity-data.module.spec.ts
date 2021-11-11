@@ -203,7 +203,7 @@ describe('EntityDataModule', () => {
           expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
           expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
           done();
-        } catch (error) {
+        } catch (error: any) {
           fail(error);
         }
       }, fail);

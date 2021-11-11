@@ -22,9 +22,9 @@ import { catchError, tap } from 'rxjs/operators';
  *   });
  * ```
  */
-export function tapResponse<T>(
+export function tapResponse<T, E = unknown>(
   nextFn: (next: T) => void,
-  errorFn: <E = unknown>(error: E) => void,
+  errorFn: (error: E) => void,
   completeFn?: () => void
 ): (source: Observable<T>) => Observable<T> {
   return (source) =>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { filter, tap, map, withLatestFrom, pairwise } from 'rxjs/operators';
+import { filter, tap, map, withLatestFrom, pairwise, skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export interface PaginatorState {
@@ -145,6 +145,9 @@ export class PaginatorStore extends ComponentStore<PaginatorState> {
     }),
     // debounce, so that we let the state "settle"
     { debounce: true }
+  ).pipe(
+    // Skip the emission of the initial state values
+    skip(1)
   );
   // #enddocregion selectors
 

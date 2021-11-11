@@ -37,7 +37,6 @@ import {
   USER_PROVIDED_META_REDUCERS,
   _RESOLVED_META_REDUCERS,
   _ROOT_STORE_GUARD,
-  ACTIVE_RUNTIME_CHECKS,
   _ACTION_TYPE_UNIQUENESS_CHECK,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
@@ -108,7 +107,7 @@ export class StoreFeatureModule implements OnDestroy {
 export interface StoreConfig<T, V extends Action = Action> {
   initialState?: InitialState<T>;
   reducerFactory?: ActionReducerFactory<T, V>;
-  metaReducers?: MetaReducer<T, V>[];
+  metaReducers?: MetaReducer<{ [P in keyof T]: T[P] }, V>[];
 }
 
 export interface RootStoreConfig<T, V extends Action = Action>
@@ -203,18 +202,15 @@ export class StoreModule {
     config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
   ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature<T, V extends Action = Action>(
-    slice: FeatureSlice<T, V>,
-    config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
+    slice: FeatureSlice<T, V>
   ): ModuleWithProviders<StoreFeatureModule>;
   static forFeature(
     featureNameOrSlice: string | FeatureSlice<any, any>,
-    reducersOrConfig?:
+    reducers?:
       | ActionReducerMap<any, any>
       | InjectionToken<ActionReducerMap<any, any>>
       | ActionReducer<any, any>
-      | InjectionToken<ActionReducer<any, any>>
-      | StoreConfig<any, any>
-      | InjectionToken<StoreConfig<any, any>>,
+      | InjectionToken<ActionReducer<any, any>>,
     config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
   ): ModuleWithProviders<StoreFeatureModule> {
     return {
@@ -258,15 +254,13 @@ export class StoreModule {
           useValue:
             featureNameOrSlice instanceof Object
               ? featureNameOrSlice.reducer
-              : reducersOrConfig,
+              : reducers,
         },
         {
           provide: _FEATURE_REDUCERS_TOKEN,
           multi: true,
           useExisting:
-            reducersOrConfig instanceof InjectionToken
-              ? reducersOrConfig
-              : _FEATURE_REDUCERS,
+            reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
         },
         {
           provide: FEATURE_REDUCERS,

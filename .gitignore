@@ -1,8 +1,10 @@
+/.angular/cache
 # Logs
 logs
 *.log
 .nyc
 .nyc_output
+.history
 
 # Runtime data
 pids

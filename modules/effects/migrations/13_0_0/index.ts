@@ -56,13 +56,15 @@ function replaceEffectDecorators(
   effects: ts.PropertyDeclaration[]
 ) {
   const inserts = effects
-    .filter((effect) => !!effect.initializer)
     .map((effect) => {
       if (!effect.initializer) {
         return [];
       }
       const decorator = (effect.decorators || []).find(isEffectDecorator);
       if (!decorator) {
+        return [];
+      }
+      if (effect.initializer.getText().includes('createEffect')) {
         return [];
       }
       const effectArguments = getDispatchProperties(

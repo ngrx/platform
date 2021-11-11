@@ -128,7 +128,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel
+          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
@@ -228,7 +228,7 @@ jobs:
       - run: yarn copy:schematics
       - run:
           name: Check schematics-core for consistency
-          command: git diff --name-only --exit-code ./modules
+          command: yarn schematics:check
 
   e2e-affected:
     <<: *run_in_browser

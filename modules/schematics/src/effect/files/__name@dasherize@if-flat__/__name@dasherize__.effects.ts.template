@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, <%= effectMethod %><% if (feature) { %>, ofType<% } %> } from '@ngrx/effects';
 <% if (feature && api) { %>import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
-<% if (!creators) {%>import { Load<%= classify(name) %>sFailure, Load<%= classify(name) %>sSuccess, <%= classify(name) %>ActionTypes, <%= classify(name) %>Actions } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+<% if (!creators) {%>import { <%= prefix %><%= classify(name) %>sFailure, <%= prefix %><%= classify(name) %>sSuccess, <%= classify(name) %>ActionTypes, <%= classify(name) %>Actions } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 <% if (creators) {%>import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 <% } %>
 <% if (feature && !api) { %>import { concatMap } from 'rxjs/operators';
@@ -15,34 +15,34 @@ import { Observable, EMPTY } from 'rxjs';
 export class <%= classify(name) %>Effects {
 <% if (feature && api && !creators) { %>
   <%= effectStart %>
-    ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s),
+    ofType(<%= classify(name) %>ActionTypes.<%= prefix %><%= classify(name) %>s),
     concatMap(() =>
       /** An EMPTY observable only emits completion. Replace with your own observable API request */
       EMPTY.pipe(
-        map(data => new Load<%= classify(name) %>sSuccess({ data })),
-        catchError(error => of(new Load<%= classify(name) %>sFailure({ error }))))
+        map(data => new <%= prefix %><%= classify(name) %>sSuccess({ data })),
+        catchError(error => of(new <%= prefix %><%= classify(name) %>sFailure({ error }))))
     )
   <%= effectEnd %>
 <% } else if (feature && api && creators) { %>
   <%= effectStart %>
-      ofType(<%= classify(name) %>Actions.load<%= classify(name) %>s),
+      ofType(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s),
       concatMap(() =>
         /** An EMPTY observable only emits completion. Replace with your own observable API request */
         EMPTY.pipe(
-          map(data => <%= classify(name) %>Actions.load<%= classify(name) %>sSuccess({ data })),
-          catchError(error => of(<%= classify(name) %>Actions.load<%= classify(name) %>sFailure({ error }))))
+          map(data => <%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sSuccess({ data })),
+          catchError(error => of(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure({ error }))))
       )
   <%= effectEnd %>
 <% } %>
 <% if (feature && !api && !creators) { %>
   <%= effectStart %>
-    ofType(<%= classify(name) %>ActionTypes.Load<%= classify(name) %>s),
+    ofType(<%= classify(name) %>ActionTypes.<%= prefix %><%= classify(name) %>s),
     /** An EMPTY observable only emits completion. Replace with your own observable API request */
     concatMap(() => EMPTY as Observable<{ type: string }>)
   <%= effectEnd %>
 <% } else if (feature && !api && creators) { %>
   <%= effectStart %>
-      ofType(<%= classify(name) %>Actions.load<%= classify(name) %>s),
+      ofType(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s),
       /** An EMPTY observable only emits completion. Replace with your own observable API request */
       concatMap(() => EMPTY as Observable<{ type: string }>)
   <%= effectEnd %>

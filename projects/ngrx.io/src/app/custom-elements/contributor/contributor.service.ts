@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ConnectableObservable, Observable } from 'rxjs';
-import { map, publishLast } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { Contributor, ContributorGroup } from './contributors.model';
 
@@ -10,25 +10,69 @@ import { Contributor, ContributorGroup } from './contributors.model';
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 
 const contributorsPath = CONTENT_URL_PREFIX + 'contributors.json';
-const knownGroups = ['Core', 'Contributor'];
+const knownGroups = ['Core', 'Contributor', 'Community'];
 
 @Injectable()
 export class ContributorService {
     contributors: Observable<ContributorGroup[]>;
+    private _currentContributorsPage$ = new BehaviorSubject(1);
+    currentContributorsPage$ = this._currentContributorsPage$.asObservable();
 
     constructor(private http: HttpClient) {
         this.contributors = this.getContributors();
     }
 
+    updateContributorsCurrentPage(page: number) {
+        this._currentContributorsPage$.next(page);
+    }
+
     private getContributors() {
-        const contributors = this.http
-            .get<{ [key: string]: Contributor }>(contributorsPath)
+        // combine both contributors.json and github api into one list
+        const coreContributors = this.http.get<{ [key: string]: Contributor }>(contributorsPath);
+        const commmunityContributors = this.currentContributorsPage$
+            .pipe(
+                switchMap(currentPage => {
+                    return this.http.get<any[]>(`https://api.github.com/repos/ngrx/platform/contributors?per_page=100&page=${currentPage}`)
+                        .pipe(
+                            map(commContribs => {
+                                const data = commContribs.reduce((prev, current) => {
+                                    return {
+                                        ...prev,
+                                        [current.login]: {
+                                            name: current.login,
+                                            pictureUrl: current.avatar_url,
+                                            group: 'Community'
+                                        }
+                                    };
+                                }, {});
+
+                                return data;
+                            })
+                        );
+                })
+            );
+
+        const contributors = combineLatest([coreContributors, commmunityContributors])
             .pipe(
                 // Create group map
-                map(contribs => {
+                map(([contribs, commContribs]) => {
                     const contribMap: { [name: string]: Contributor[] } = {};
+
+                    // adds core/contributors
                     Object.keys(contribs).forEach(key => {
                         const contributor = contribs[key];
+                        const group = contributor.group;
+                        const contribGroup = contribMap[group];
+                        if (contribGroup) {
+                            contribGroup.push(contributor);
+                        } else {
+                            contribMap[group] = [contributor];
+                        }
+                    });
+
+                    // adds community
+                    Object.keys(commContribs).forEach(key => {
+                        const contributor = commContribs[key];
                         const group = contributor.group;
                         const contribGroup = contribMap[group];
                         if (contribGroup) {
@@ -53,12 +97,9 @@ export class ContributorService {
                             } as ContributorGroup;
                         })
                         .sort(compareGroups);
-                }),
-
-                publishLast()
+                })
             );
 
-        (contributors as ConnectableObservable<ContributorGroup[]>).connect();
         return contributors;
     }
 }

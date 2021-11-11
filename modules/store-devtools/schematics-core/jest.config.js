@@ -15,9 +15,4 @@ module.exports = {
     },
   },
   coverageDirectory: '../../coverage/modules/schematics-core',
-  snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
-  ],
 };

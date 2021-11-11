@@ -493,36 +493,42 @@ describe('Selectors', () => {
     describe('Warning', () => {
       describe('should not log when: ', () => {
         it('the feature does exist', () => {
-          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
           const selector = createFeatureSelector('featureA');
 
           selector({ featureA: {} });
 
           expect(warnSpy).not.toHaveBeenCalled();
+
+          ngSpy.mockReset();
         });
 
         it('the feature key exist but is falsy', () => {
-          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {}, featureB: undefined });
 
           expect(warnSpy).not.toHaveBeenCalled();
+
+          ngSpy.mockReset();
         });
 
         it('not in development mode', () => {
-          spyOn(ngCore, 'isDevMode').and.returnValue(false);
+          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {} });
 
           expect(warnSpy).not.toHaveBeenCalled();
+
+          ngSpy.mockReset();
         });
       });
 
       describe('warning will ', () => {
         it('be logged when not in mock environment', () => {
-          spyOn(ngCore, 'isDevMode').and.returnValue(true);
+          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {} });
@@ -531,6 +537,8 @@ describe('Selectors', () => {
           expect(warnSpy.calls.mostRecent().args[0]).toMatch(
             /The feature name "featureB" does not exist/
           );
+
+          ngSpy.mockReset();
         });
 
         it('not be logged when in mock environment', () => {

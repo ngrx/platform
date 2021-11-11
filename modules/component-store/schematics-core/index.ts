@@ -10,8 +10,6 @@ import {
   pluralize,
 } from './utility/strings';
 
-export { isIvyEnabled } from './utility/angular-utils';
-
 export {
   findNodes,
   getSourceNodes,
@@ -60,6 +58,7 @@ export {
   addReducerImportToNgModule,
   addReducerToActionReducerMap,
   omit,
+  getPrefix,
 } from './utility/ngrx-utils';
 
 export { getProjectPath, getProject, isLib } from './utility/project';

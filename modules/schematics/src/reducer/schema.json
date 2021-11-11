@@ -70,5 +70,11 @@
       "x-prompt": "Do you want to use the create function?"
     }
   },
+  "prefix": {
+    "description": "The prefix of the reducer.",
+    "type": "string",
+    "default": "load",
+    "x-prompt": "What should be the prefix of the reducer?"
+  },
   "required": []
 }

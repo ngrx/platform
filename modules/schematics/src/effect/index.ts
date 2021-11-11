@@ -23,6 +23,7 @@ import {
   insertImport,
   parseName,
   stringUtils,
+  getPrefix,
 } from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 
@@ -105,12 +106,19 @@ function getEffectMethod(creators?: boolean) {
   return creators ? 'createEffect' : 'Effect';
 }
 
-function getEffectStart(name: string, creators?: boolean): string {
+function getEffectStart(
+  name: string,
+  effectPrefix: string,
+  creators?: boolean
+): string {
   const effectName = stringUtils.classify(name);
+  const effectMethodPrefix = stringUtils.camelize(effectPrefix);
+
   return creators
-    ? `load${effectName}s$ = createEffect(() => {` +
+    ? `${effectMethodPrefix}${effectName}s$ = createEffect(() => {` +
         '\n    return this.actions$.pipe( \n'
-    : '@Effect()\n' + `  load${effectName}s$ = this.actions$.pipe(`;
+    : '@Effect()\n' +
+        `  ${effectMethodPrefix}${effectName}s$ = this.actions$.pipe(`;
 }
 
 function getEffectEnd(creators?: boolean) {
@@ -120,6 +128,8 @@ function getEffectEnd(creators?: boolean) {
 export default function (options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
+
+    options.prefix = getPrefix(options);
 
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
@@ -142,7 +152,11 @@ export default function (options: EffectOptions): Rule {
             options.group ? 'effects' : ''
           ),
         effectMethod: getEffectMethod(options.creators),
-        effectStart: getEffectStart(options.name, options.creators),
+        effectStart: getEffectStart(
+          options.name,
+          options.prefix,
+          options.creators
+        ),
         effectEnd: getEffectEnd(options.creators),
         ...(options as object),
       } as any),

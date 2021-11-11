@@ -101,7 +101,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
       ? () => void
       : (observableOrValue: ValueType | Observable<ValueType>) => Subscription
   >(updaterFn: (state: T, value: OriginType) => T): ReturnType {
-    return (((
+    return ((
       observableOrValue?: OriginType | Observable<OriginType>
     ): Subscription => {
       let initializationError: Error | undefined;
@@ -140,7 +140,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
         throw /** @type {!Error} */ (initializationError);
       }
       return subscription;
-    }) as unknown) as ReturnType;
+    }) as unknown as ReturnType;
   }
 
   /**
@@ -296,7 +296,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe();
 
-    return (((
+    return ((
       observableOrValue?: ObservableType | Observable<ObservableType>
     ): Subscription => {
       const observable$ = isObservable(observableOrValue)
@@ -304,9 +304,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
         : of(observableOrValue);
       return observable$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
         // any new 👇 value is pushed into a stream
-        origin$.next(value);
+        origin$.next(value as ObservableType);
       });
-    }) as unknown) as ReturnType;
+    }) as unknown as ReturnType;
   }
 }
 

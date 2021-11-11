@@ -34,7 +34,7 @@ type NotAllowedFeatureStateCheck<
  *
  * @param featureConfig An object that contains a feature name and a feature reducer.
  * @returns An object that contains a feature name, a feature reducer,
- * a feature selector, a the selector for each feature state property.
+ * a feature selector, and a selector for each feature state property.
  *
  * @usageNotes
  *
@@ -98,7 +98,7 @@ export function createFeature<
     NotAllowedFeatureStateCheck<FeatureState>
 ): Feature<AppState, FeatureName, FeatureState> {
   const { name, reducer } = featureConfig;
-  const featureSelector = createFeatureSelector<AppState, FeatureState>(name);
+  const featureSelector = createFeatureSelector<FeatureState>(name);
   const nestedSelectors = createNestedSelectors(featureSelector, reducer);
 
   return ({

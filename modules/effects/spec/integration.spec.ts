@@ -1,9 +1,6 @@
-import { NgModuleFactoryLoader, NgModule, Injectable } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import {
-  RouterTestingModule,
-  SpyNgModuleFactoryLoader,
-} from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { Action, StoreModule, INIT } from '@ngrx/store';
 import {
@@ -18,6 +15,7 @@ import {
 import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
 import { mapTo, exhaustMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { FeatureModule } from 'modules/store/spec/ngc/main';
 
 describe('NgRx Effects Integration spec', () => {
   it('throws if forRoot() with Effects is used more than once', (done: any) => {
@@ -30,12 +28,12 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     const router: Router = TestBed.inject(Router);
-    const loader: SpyNgModuleFactoryLoader = TestBed.inject(
-      NgModuleFactoryLoader
-    ) as SpyNgModuleFactoryLoader;
-
-    loader.stubbedModules = { feature: FeatModuleWithForRoot };
-    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+    router.resetConfig([
+      {
+        path: 'feature-path',
+        loadChildren: () => Promise.resolve(FeatModuleWithForRoot),
+      },
+    ]);
 
     router.navigateByUrl('/feature-path').catch((err: TypeError) => {
       expect(err.message).toBe(
@@ -55,13 +53,13 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     const router: Router = TestBed.inject(Router);
-    const loader: SpyNgModuleFactoryLoader = TestBed.inject(
-      NgModuleFactoryLoader
-    ) as SpyNgModuleFactoryLoader;
-
     //                       empty forRoot([]) 👇
-    loader.stubbedModules = { feature: FeatModuleWithEmptyForRoot };
-    router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+    router.resetConfig([
+      {
+        path: 'feature-path',
+        loadChildren: () => Promise.resolve(FeatModuleWithEmptyForRoot),
+      },
+    ]);
 
     router.navigateByUrl('/feature-path').then(() => {
       // success
@@ -70,13 +68,12 @@ describe('NgRx Effects Integration spec', () => {
   });
 
   describe('actions', () => {
-    const createDispatchedReducer = (dispatchedActions: string[] = []) => (
-      state = {},
-      action: Action
-    ) => {
-      dispatchedActions.push(action.type);
-      return state;
-    };
+    const createDispatchedReducer =
+      (dispatchedActions: string[] = []) =>
+      (state = {}, action: Action) => {
+        dispatchedActions.push(action.type);
+        return state;
+      };
 
     describe('init actions', () => {
       it('should dispatch and react to init effect', () => {
@@ -201,12 +198,13 @@ describe('NgRx Effects Integration spec', () => {
       );
 
       const router: Router = TestBed.inject(Router);
-      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
-        NgModuleFactoryLoader
-      ) as SpyNgModuleFactoryLoader;
 
-      loader.stubbedModules = { feature: FeatModuleWithForFeature };
-      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+      router.resetConfig([
+        {
+          path: 'feature-path',
+          loadChildren: () => Promise.resolve(FeatModuleWithForFeature),
+        },
+      ]);
 
       await router.navigateByUrl('/feature-path');
 
@@ -267,12 +265,13 @@ describe('NgRx Effects Integration spec', () => {
 
       const logger = TestBed.inject(EffectLoggerWithOnRunEffects);
       const router: Router = TestBed.inject(Router);
-      const loader: SpyNgModuleFactoryLoader = TestBed.inject(
-        NgModuleFactoryLoader
-      ) as SpyNgModuleFactoryLoader;
-
-      loader.stubbedModules = { feature: FeatModuleWithUserProvidedEffects };
-      router.resetConfig([{ path: 'feature-path', loadChildren: 'feature' }]);
+      router.resetConfig([
+        {
+          path: 'feature-path',
+          loadChildren: () =>
+            Promise.resolve(FeatModuleWithUserProvidedEffects),
+        },
+      ]);
 
       await router.navigateByUrl('/feature-path');
 
@@ -392,7 +391,8 @@ describe('NgRx Effects Integration spec', () => {
   }
 
   class FeatEffectWithIdentifierAndInitAction
-    implements OnInitEffects, OnIdentifyEffects {
+    implements OnInitEffects, OnIdentifyEffects
+  {
     ngrxOnIdentifyEffects(): string {
       return this.effectIdentifier;
     }

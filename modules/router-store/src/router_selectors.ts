@@ -1,9 +1,21 @@
-import { createSelector } from '@ngrx/store';
+import {
+  createFeatureSelector,
+  createSelector,
+  MemoizedSelector,
+} from '@ngrx/store';
 import { RouterStateSelectors } from './models';
 import { RouterReducerState } from './reducer';
+import { DEFAULT_ROUTER_FEATURENAME } from './router_store_module';
+
+export function createRouterSelector<State extends Record<string, any>>(): MemoizedSelector<
+  State,
+  RouterReducerState
+> {
+  return createFeatureSelector(DEFAULT_ROUTER_FEATURENAME);
+}
 
 export function getSelectors<V>(
-  selectState: (state: V) => RouterReducerState<any>
+  selectState: (state: V) => RouterReducerState<any> = createRouterSelector<V>()
 ): RouterStateSelectors<V> {
   const selectRouterState = createSelector(
     selectState,

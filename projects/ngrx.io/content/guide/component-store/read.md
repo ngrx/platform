@@ -82,15 +82,10 @@ Adding the debounce to a selector is done by passing `{debounce: true}` as the l
 export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   
   constructor() {
-    super({movies: Movie[], moviesPerPage: 10, currentPageIndex: 0});
-
-    this.effect((moviePageData$: Observable<{moviesPerPage: number, currentPageIndex: number}>) => {
-      return moviePageData$.pipe(
-        concatMap(({moviesPerPage, currentPageIndex}) =>
-          this.movieService.loadMovies(moviesPerPage, currentPageIndex),
-        ).pipe(tap(results => this.updateMovieResults(results))),
-      );
-    })(this.fetchMoviesData$); // 👈 effect is triggered whenever debounced data is changed
+    super({movies: [], moviesPerPage: 10, currentPageIndex: 0});
+ 
+    // 👇 effect is triggered whenever debounced data is changed
+    this.fetchMovies(this.fetchMoviesData$);
   }
 
   // Updates how many movies per page should be displayed
@@ -114,6 +109,18 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
     currentPageIndex$,
     (moviesPerPage, currentPageIndex) => ({moviesPerPage, currentPageIndex}),
     {debounce: true}, // 👈 setting this selector to debounce
+  );
+  
+  private readonly fetchMovies = this.effect(
+    (moviePageData$: Observable<{moviesPerPage: number; currentPageIndex: number}>) => {
+      return moviePageData$.pipe(
+        concatMap(({moviesPerPage, currentPageIndex}) => {
+          return this.movieService
+            .loadMovies(moviesPerPage, currentPageIndex)
+            .pipe(tap((results) => this.updateMovieResults(results)));
+        }),
+      );
+    },
   );
 }
 </code-example>

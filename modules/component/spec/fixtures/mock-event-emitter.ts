@@ -1,8 +1,8 @@
 import { EventEmitter } from '@angular/core';
 
 export class MockEventEmitter<T> extends EventEmitter<T> {
-  next(value: any) {}
-  error(error: any) {}
-  complete() {}
-  emit() {}
+  override next(value: any) {}
+  override error(error: any) {}
+  override complete() {}
+  override emit() {}
 }

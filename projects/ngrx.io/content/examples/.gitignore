@@ -89,3 +89,9 @@ upgrade-phonecat-2-hybrid/aot/**/*
 # ngUpgrade testing
 !upgrade-phonecat-*/**/karma.conf.js
 !upgrade-phonecat-*/**/karma-test-shim.js
+
+# OS generated files
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db

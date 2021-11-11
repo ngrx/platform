@@ -39,7 +39,7 @@ export function createTestModule(
         },
         {
           path: 'load',
-          loadChildren: 'test',
+          loadChildren: () => Promise.resolve(null),
           canLoad: ['CanLoadNext'],
         },
         {

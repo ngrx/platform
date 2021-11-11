@@ -13,16 +13,18 @@ import {
   SchematicContext,
 } from '@angular-devkit/schematics';
 import { Schema as ActionOptions } from './schema';
-import { getProjectPath, stringUtils, parseName } from '../../schematics-core';
-import { capitalize, camelize } from '../../schematics-core/utility/strings';
+import {
+  getProjectPath,
+  stringUtils,
+  parseName,
+  getPrefix,
+} from '../../schematics-core';
 
 export default function (options: ActionOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
-    options.prefix = options.creators
-      ? camelize(options.prefix || 'load')
-      : capitalize(options.prefix || 'load');
+    options.prefix = getPrefix(options);
 
     const parsedPath = parseName(options.path, options.name);
     options.name = parsedPath.name;

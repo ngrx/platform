@@ -4,11 +4,13 @@
     "package.json": "*",
     "tslint.json": "*",
     "nx.json": "*",
-    "tsconfig.base.json": "*",
+    "tsconfig.json": "*",
     ".circleci/config.yml": "*",
     ".eslintrc.json": "*"
   },
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "npmScope": "ngrx",
   "tasksRunnerOptions": {
     "default": {
@@ -27,34 +29,34 @@
       }
     }
   },
-  "workspaceLayout": { "appsDir": "projects", "libsDir": "modules" },
-  "projects": {
-    "example-app": { "tags": [] },
-    "store": { "tags": [] },
-    "effects": { "tags": [] },
-    "data": { "tags": [] },
-    "entity": { "tags": [] },
-    "store-devtools": { "tags": [] },
-    "router-store": { "tags": [] },
-    "schematics": { "tags": [] },
-    "component": { "tags": [] },
-    "component-store": { "tags": [] },
-    "example-app-e2e": { "tags": [], "implicitDependencies": ["example-app"] },
-    "docs-app": {
-      "tags": [],
-      "implicitDependencies": [
-        "store",
-        "effects",
-        "router-store",
-        "store-devtools",
-        "entity",
-        "data",
-        "schematics",
-        "component",
-        "component-store"
-      ]
+  "workspaceLayout": {
+    "appsDir": "projects",
+    "libsDir": "modules"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "cli": {
+    "analytics": false,
+    "defaultCollection": "@nrwl/angular"
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "flat": true,
+      "skipTests": true,
+      "prefix": "bc",
+      "style": "css"
     },
-    "schematics-core": { "tags": [] },
-    "data-example-app": { "tags": [] }
-  }
+    "@schematics/angular:directive": {
+      "prefix": "bc"
+    }
+  },
+  "defaultProject": "example-app"
 }

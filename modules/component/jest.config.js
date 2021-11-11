@@ -6,18 +6,12 @@ module.exports = {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
-      astTransformers: {
-        before: [
-          'jest-preset-angular/build/InlineFilesTransformer',
-          'jest-preset-angular/build/StripStylesTransformer',
-        ],
-      },
     },
   },
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
-  snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
-  ],
+  transform: { '^.+\\.(ts|js|mjs|html)$': 'jest-preset-angular' },
+  transformIgnorePatterns: ['node_modules/(?!@angular|tslib)'],
+  moduleNameMapper: {
+    tslib: '<rootDir>../../node_modules/tslib/tslib.es6.js',
+  },
 };

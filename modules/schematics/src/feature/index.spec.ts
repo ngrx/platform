@@ -271,4 +271,52 @@ describe('Feature Schematic', () => {
       /on\(FooActions.loadFoosFailure, \(state, action\) => state\),/
     );
   });
+
+  it('should have all api effect with prefix if api flag enabled', async () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+      prefix: 'custom',
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.effects.ts`
+    );
+
+    expect(fileContent).toMatch(/customFoos\$ = createEffect\(\(\) => {/);
+    expect(fileContent).toMatch(/ofType\(FooActions.customFoos\),/);
+
+    expect(fileContent).toMatch(
+      /map\(data => FooActions.customFoosSuccess\({ data }\)\),/
+    );
+    expect(fileContent).toMatch(
+      /catchError\(error => of\(FooActions.customFoosFailure\({ error }\)\)\)\)/
+    );
+  });
+
+  it('should have all api actions with prefix in reducer if api flag enabled', async () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+      prefix: 'custom',
+    };
+
+    const tree = await schematicRunner
+      .runSchematicAsync('feature', options, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+
+    expect(fileContent).toMatch(/on\(FooActions.customFoos, state => state\),/);
+    expect(fileContent).toMatch(
+      /on\(FooActions.customFoosSuccess, \(state, action\) => state\),/
+    );
+    expect(fileContent).toMatch(
+      /on\(FooActions.customFoosFailure, \(state, action\) => state\),/
+    );
+  });
 });

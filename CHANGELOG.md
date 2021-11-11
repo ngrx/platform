@@ -1,3 +1,150 @@
+<a name="13.0.0-beta.0"></a>
+
+# [13.0.0-beta.0](https://github.com/ngrx/platform/compare/12.5.1...13.0.0-beta.0) (2021-11-04)
+
+### Bug Fixes
+
+- **component:** remove class-level generic from PushPipe ([#3127](https://github.com/ngrx/platform/issues/3127)) ([548c72c](https://github.com/ngrx/platform/commit/548c72c)), closes [#3114](https://github.com/ngrx/platform/issues/3114)
+- **store:** infer initial store state properly with metareducers ([#3102](https://github.com/ngrx/platform/issues/3102)) ([d003b85](https://github.com/ngrx/platform/commit/d003b85)), closes [#3007](https://github.com/ngrx/platform/issues/3007)
+- **store:** remove store config from forFeature signature with slice ([#3218](https://github.com/ngrx/platform/issues/3218)) ([b1a64dd](https://github.com/ngrx/platform/commit/b1a64dd)), closes [#3216](https://github.com/ngrx/platform/issues/3216)
+
+### build
+
+- build packages with Ivy ([#3219](https://github.com/ngrx/platform/issues/3219)) ([9e28050](https://github.com/ngrx/platform/commit/9e28050))
+
+### Features
+
+- **effects:** move createEffect migration to ng-update migration ([#3074](https://github.com/ngrx/platform/issues/3074)) ([5974913](https://github.com/ngrx/platform/commit/5974913))
+- **store:** add createFeatureSelector migration ([#3214](https://github.com/ngrx/platform/issues/3214)) ([62334f9](https://github.com/ngrx/platform/commit/62334f9))
+- **store:** provide better TS errors for action creator props ([#3060](https://github.com/ngrx/platform/issues/3060)) ([5ed3c3d](https://github.com/ngrx/platform/commit/5ed3c3d)), closes [#2892](https://github.com/ngrx/platform/issues/2892)
+
+### BREAKING CHANGES
+
+- The minimum version required for Angular and RxJS has been updated
+
+BEFORE:
+
+Angular 12.x is the minimum version
+RxJS 6.5.x is the minimum required version
+
+AFTER:
+
+Angular 13.0.0-RC.0 is the minimum version
+RxJS 7.4.x is the minimum required version
+
+- **store:** The `StoreConfig` argument is removed from the `StoreModule.forFeature` signature with `FeatureSlice`.
+
+BEFORE:
+
+The `StoreModule.forFeature` signature with `FeatureSlice` has `StoreConfig` as the second input argument, but the configuration isn't registered if passed.
+
+AFTER:
+
+The `StoreModule.forFeature` signature with `FeatureSlice` no longer has `StoreConfig` as the second input argument.
+
+- **store:** `initialState` needs to match the interface of the store/feature.
+
+BEFORE:
+
+Missing properties were valid
+
+```ts
+StoreModule.forRoot(reducers, {
+  initialState: { notExisting: 3 },
+  metaReducers: [metaReducer],
+});
+```
+
+AFTER:
+
+A type error is produced for initialState that does not match the store/feature
+
+```ts
+StoreModule.forRoot(reducers, {
+  initialState: { notExisting: 3 },
+  metaReducers: [metaReducer],
+});
+```
+
+- **component:** PushPipe no longer has a class-level generic type parameter.
+
+BEFORE:
+
+Use of PushPipe outside of component templates required a generic
+
+AFTER:
+
+Use of PushPipe outside of component templates no longer requires a generic
+
+- **store:** Types for props outside an action creator is more strictly checked
+
+BEFORE:
+
+Usage of `props` outside of an action creator with invalid types was allowed
+
+AFTER:
+
+Usage of `props` outside of an action creator now breaks for invalid types
+
+- **effects:** The create-effect-migration migration is removed
+
+BEFORE:
+
+The Effect decorator removal and migration are done manually through schematics.
+
+AFTER:
+
+The Effect decorator removal and migration are performed automatically on upgrade to version 13 of NgRx Effects.
+
+<a name="12.5.1"></a>
+
+## [12.5.1](https://github.com/ngrx/platform/compare/12.5.0...12.5.1) (2021-10-25)
+
+### Bug Fixes
+
+- **router-store:** google upstream ([#3177](https://github.com/ngrx/platform/issues/3177)) ([20afb21](https://github.com/ngrx/platform/commit/20afb21))
+
+<a name="12.5.0"></a>
+
+# [12.5.0](https://github.com/ngrx/platform/compare/12.4.0...12.5.0) (2021-10-14)
+
+### Bug Fixes
+
+- **entity:** set correct input argument types for removeMutably methods ([#3148](https://github.com/ngrx/platform/issues/3148)) ([9611415](https://github.com/ngrx/platform/commit/9611415))
+- **schematics:** add missing method ([#3157](https://github.com/ngrx/platform/issues/3157)) ([2a927a2](https://github.com/ngrx/platform/commit/2a927a2))
+- **schematics:** use prefix option in feature schematic ([#3139](https://github.com/ngrx/platform/issues/3139)) ([5fa8890](https://github.com/ngrx/platform/commit/5fa8890)), closes [#3116](https://github.com/ngrx/platform/issues/3116)
+
+### Features
+
+- update to RxJS 7.4.x ([#3109](https://github.com/ngrx/platform/issues/3109)) ([4a42550](https://github.com/ngrx/platform/commit/4a42550))
+
+<a name="12.4.0"></a>
+
+# [12.4.0](https://github.com/ngrx/platform/compare/12.3.0...12.4.0) (2021-08-11)
+
+### Bug Fixes
+
+- **component:** capture errors from observable when using `ngrxPush` pipe and `ngrxLet` directive ([23c846b](https://github.com/ngrx/platform/commit/23c846b)), closes [#3100](https://github.com/ngrx/platform/issues/3100)
+
+### Features
+
+- **router-store:** add createRouterSelector to select router data for default config ([#3103](https://github.com/ngrx/platform/issues/3103)) ([507f58e](https://github.com/ngrx/platform/commit/507f58e))
+
+<a name="12.3.0"></a>
+
+# [12.3.0](https://github.com/ngrx/platform/compare/12.2.0...12.3.0) (2021-07-22)
+
+### Bug Fixes
+
+- **component-store:** accept error type in tapResponse with strict generic checks ([#3068](https://github.com/ngrx/platform/issues/3068)) ([3e02e37](https://github.com/ngrx/platform/commit/3e02e37)), closes [#3056](https://github.com/ngrx/platform/issues/3056)
+- **data:** immutably delete an entity ([#3040](https://github.com/ngrx/platform/issues/3040)) ([a6c199f](https://github.com/ngrx/platform/commit/a6c199f)), closes [#2553](https://github.com/ngrx/platform/issues/2553)
+- **data:** SAVE_ENTITIES_CANCELED type in SaveEntitiesCanceled ([#3079](https://github.com/ngrx/platform/issues/3079)) ([b24c1e0](https://github.com/ngrx/platform/commit/b24c1e0)), closes [#3065](https://github.com/ngrx/platform/issues/3065)
+- **store:** make readonly usage consistent ([#3050](https://github.com/ngrx/platform/issues/3050)) ([#3069](https://github.com/ngrx/platform/issues/3069)) ([a39b278](https://github.com/ngrx/platform/commit/a39b278))
+
+### Features
+
+- **store:** make reducers accessible from ReducerManager ([#3064](https://github.com/ngrx/platform/issues/3064)) ([bf2bd1a](https://github.com/ngrx/platform/commit/bf2bd1a))
+
 <a name="12.2.0"></a>
 
 # [12.2.0](https://github.com/ngrx/platform/compare/12.1.0...12.2.0) (2021-06-29)
