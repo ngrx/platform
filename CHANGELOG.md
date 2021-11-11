@@ -1,3 +1,43 @@
+<a name="13.0.0-rc.0"></a>
+
+# [13.0.0-rc.0](https://github.com/ngrx/platform/compare/13.0.0-beta.0...13.0.0-rc.0) (2021-11-11)
+
+### Bug Fixes
+
+- **data:** set loaded to true on queryManySuccess ([#3228](https://github.com/ngrx/platform/issues/3228)) ([52b828e](https://github.com/ngrx/platform/commit/52b828e)), closes [#3165](https://github.com/ngrx/platform/issues/3165)
+
+### Features
+
+- **store:** use variadic tuple types for createSelector ([#3023](https://github.com/ngrx/platform/issues/3023)) ([367d9b4](https://github.com/ngrx/platform/commit/367d9b4)), closes [#2715](https://github.com/ngrx/platform/issues/2715)
+- update Angular packages to version 13.0.0 ([#3184](https://github.com/ngrx/platform/issues/3184)) ([996f1e8](https://github.com/ngrx/platform/commit/996f1e8)), closes [#3189](https://github.com/ngrx/platform/issues/3189)
+
+### BREAKING CHANGES
+
+- **store:** When manually specifying the generic arguments, you have to specify the selector's list of selector return values.
+
+BEFORE:
+
+```ts
+createSelector<Story[], Story[], Story[][]>
+```
+
+AFTER:
+
+```ts
+//        needs to be a tuple 👇
+createSelector<Story[], [ Story[] ] , Story[][]>
+```
+
+- **data:** Now both the `getWithQuery` and `getAll` methods are consistent and do set `loaded` property to true on dispatching their success actions respectively.
+
+BEFORE:
+
+The `getWithQuery` method would not set the `loaded` property to true upon success
+
+AFTER:
+
+The `getWithQuery` method sets the `loaded` property to true upon success
+
 <a name="13.0.0-beta.0"></a>
 
 # [13.0.0-beta.0](https://github.com/ngrx/platform/compare/12.5.1...13.0.0-beta.0) (2021-11-04)
