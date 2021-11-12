@@ -140,12 +140,12 @@ export class Store<T = object>
 
 export const STORE_PROVIDERS: Provider[] = [Store];
 
-export function select<T, Results extends unknown[]>(
-  ...mapFns: [...{ [i in keyof Results]: (state: T) => Results[i] }]
-): (source$: Observable<T>) => Observable<Results>;
 export function select<T, K>(
   mapFn: (state: T) => K
 ): (source$: Observable<T>) => Observable<K>;
+export function select<T, Results extends unknown[]>(
+  ...mapFns: [...{ [i in keyof Results]: (state: T) => Results[i] }]
+): (source$: Observable<T>) => Observable<Results>;
 /**
  * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
  */
