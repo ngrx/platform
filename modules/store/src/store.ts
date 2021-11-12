@@ -25,9 +25,9 @@ export class Store<T = object>
   }
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
-  select<Ks extends unknown[]>(
-    ...mapFns: [...{ [i in keyof Ks]: (state: T) => Ks[i] }]
-  ): Observable<Ks>;
+  select<Results extends unknown[]>(
+    ...mapFns: [...{ [i in keyof Results]: (state: T) => Results[i] }]
+  ): Observable<Results>;
   /**
    * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
