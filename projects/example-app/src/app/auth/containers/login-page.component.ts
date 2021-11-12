@@ -9,7 +9,7 @@ import { LoginPageActions } from '@example-app/auth/actions';
   template: `
     <bc-login-form
       (submitted)="onSubmit($event)"
-      [pending]="(pending$ | async)!"
+      [pending]="(pending$ | async) === true"
       [errorMessage]="error$ | async"
     >
     </bc-login-form>
