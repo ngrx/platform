@@ -13,7 +13,7 @@ import * as fromBooks from '@example-app/books/reducers';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <bc-book-search
-      [query]="(searchQuery$ | async)!"
+      [query]="(searchQuery$ | async) ?? ''"
       [searching]="(loading$ | async)!"
       [error]="(error$ | async)!"
       (search)="search($event)"
