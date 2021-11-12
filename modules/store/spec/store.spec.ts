@@ -29,6 +29,7 @@ interface TestAppSchema {
   counter2: number;
   counter3: number;
   counter4?: number;
+  actionCount: number;
 }
 
 describe('ngRx Store', () => {
@@ -36,13 +37,14 @@ describe('ngRx Store', () => {
   let dispatcher: ActionsSubject;
 
   function setup(
-    initialState: any = { counter1: 0, counter2: 1 },
+    initialState: any = { counter1: 0, counter2: 1, actionCount: 0 },
     metaReducers: any = []
   ) {
     const reducers = {
       counter1: counterReducer,
       counter2: counterReducer,
       counter3: counterReducer,
+      actionCount: (state: number | undefined) => (state ?? 0) + 1,
     };
 
     TestBed.configureTestingModule({
@@ -222,7 +224,17 @@ describe('ngRx Store', () => {
       );
     });
 
-    it('should let you select state with multiple selector functions', () => {
+    it('should let you select state with multiple selector functions and only return distinct results', () => {
+      const actionSequence = '--a--b--c--d--e--f';
+      const actionValues = {
+        a: { type: INCREMENT },
+        b: { type: INCREMENT },
+        c: { type: DECREMENT },
+        d: { type: RESET },
+        e: { type: INCREMENT },
+        f: { type: 'OTHER' }, // state will change because actionCount will increment
+      };
+
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe((action) => store.dispatch(action));
@@ -233,7 +245,7 @@ describe('ngRx Store', () => {
         (s) => s.counter3
       );
 
-      const stateSequence = 'i-v--w--x--y--z';
+      const stateSequence = 'i-v--w--x--y--z---';
       const counter1Values = {
         i: [0, 1, 0],
         v: [1, 2, 1],

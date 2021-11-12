@@ -246,13 +246,16 @@ export function select<T, Props, K>(
       mapped$ = source$.pipe(pluck(pathOrMapFn, ...(pathSlices as string[])));
     } else if (typeof propsOrPathOrMapFn === 'function') {
       mapped$ = source$.pipe(
-        map((source: T) => [
-          pathOrMapFn(source),
-          (propsOrPathOrMapFn as (state: T, props?: Props) => any)(source),
-          ...(
-            (pathsOrMapFns ?? []) as ((state: T, props?: Props) => any)[]
-          ).map((fn) => fn(source)),
-        ])
+        map(
+          (source: T) =>
+            new SelectedValues([
+              pathOrMapFn(source),
+              (propsOrPathOrMapFn as (state: T, props?: Props) => any)(source),
+              ...(
+                (pathsOrMapFns ?? []) as ((state: T, props?: Props) => any)[]
+              ).map((fn) => fn(source)),
+            ])
+        )
       );
     } else if (typeof pathOrMapFn === 'function') {
       mapped$ = source$.pipe(
@@ -265,6 +268,27 @@ export function select<T, Props, K>(
       );
     }
 
-    return mapped$.pipe(distinctUntilChanged());
+    return mapped$.pipe(
+      distinctUntilChanged((previous, current) => {
+        if (
+          current instanceof SelectedValues &&
+          previous instanceof SelectedValues
+        ) {
+          return (
+            current.values.length === previous.values.length &&
+            current.values.every(
+              (currentValue: unknown, i: number) =>
+                currentValue === previous.values[i]
+            )
+          );
+        }
+        return previous === current;
+      }),
+      map((v) => (v instanceof SelectedValues ? v.values : v))
+    );
   };
+}
+
+class SelectedValues<T extends unknown[]> {
+  constructor(public readonly values: T) {}
 }
