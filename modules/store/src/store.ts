@@ -25,6 +25,9 @@ export class Store<T = object>
   }
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
+  select<Ks extends unknown[]>(
+    ...mapFns: [...{ [i in keyof Ks]: (state: T) => Ks[i] }]
+  ): Observable<Ks>;
   /**
    * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
@@ -137,6 +140,9 @@ export class Store<T = object>
 
 export const STORE_PROVIDERS: Provider[] = [Store];
 
+export function select<T, Results extends unknown[]>(
+  ...mapFns: [...{ [i in keyof Results]: (state: T) => Results[i] }]
+): (source$: Observable<T>) => Observable<Results>;
 export function select<T, K>(
   mapFn: (state: T) => K
 ): (source$: Observable<T>) => Observable<K>;
@@ -225,19 +231,32 @@ export function select<
   ...paths: string[]
 ): (source$: Observable<T>) => Observable<K>;
 export function select<T, Props, K>(
-  pathOrMapFn: ((state: T, props?: Props) => any) | string,
-  propsOrPath?: Props | string,
-  ...paths: string[]
+  ...[pathOrMapFn, propsOrPathOrMapFn, ...pathsOrMapFns]:
+    | string[]
+    | [(state: T, props?: Props) => any, Props | string, ...string[]]
+    | ((state: T) => any)[]
 ) {
   return function selectOperator(source$: Observable<T>): Observable<K> {
     let mapped$: Observable<any>;
 
     if (typeof pathOrMapFn === 'string') {
-      const pathSlices = [<string>propsOrPath, ...paths].filter(Boolean);
-      mapped$ = source$.pipe(pluck(pathOrMapFn, ...pathSlices));
+      const pathSlices = [<string>propsOrPathOrMapFn, ...pathsOrMapFns].filter(
+        Boolean
+      );
+      mapped$ = source$.pipe(pluck(pathOrMapFn, ...(pathSlices as string[])));
+    } else if (typeof propsOrPathOrMapFn === 'function') {
+      mapped$ = source$.pipe(
+        map((source: T) => [
+          pathOrMapFn(source),
+          (propsOrPathOrMapFn as (state: T, props?: Props) => any)(source),
+          ...(
+            (pathsOrMapFns ?? []) as ((state: T, props?: Props) => any)[]
+          ).map((fn) => fn(source)),
+        ])
+      );
     } else if (typeof pathOrMapFn === 'function') {
       mapped$ = source$.pipe(
-        map((source) => pathOrMapFn(source, <Props>propsOrPath))
+        map((source) => pathOrMapFn(source, <Props>propsOrPathOrMapFn))
       );
     } else {
       throw new TypeError(

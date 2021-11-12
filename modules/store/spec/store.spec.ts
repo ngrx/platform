@@ -222,6 +222,34 @@ describe('ngRx Store', () => {
       );
     });
 
+    it('should let you select state with multiple selector functions', () => {
+      const counterSteps = hot(actionSequence, actionValues);
+
+      counterSteps.subscribe((action) => store.dispatch(action));
+
+      const counterStateWithFunc = store.pipe(
+        select(
+          (s) => s.counter1,
+          (s) => s.counter2,
+          (s) => s.counter3
+        )
+      );
+
+      const stateSequence = 'i-v--w--x--y--z';
+      const counter1Values = {
+        i: [0, 1, 0],
+        v: [1, 2, 1],
+        w: [2, 3, 2],
+        x: [1, 2, 1],
+        y: [0, 0, 0],
+        z: [1, 1, 1],
+      };
+
+      expect(counterStateWithFunc).toBeObservable(
+        hot(stateSequence, counter1Values)
+      );
+    });
+
     it('should correctly lift itself', () => {
       const result = store.pipe(select('counter1'));
 
