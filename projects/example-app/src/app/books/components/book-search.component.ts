@@ -11,7 +11,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
             matInput
             placeholder="Search for a book"
             [value]="query"
-            (keyup)="search.emit($event.target.value)"
+            (keyup)="search.emit($any($event.target).value)"
           />
         </mat-form-field>
         <mat-spinner
