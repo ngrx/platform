@@ -245,7 +245,7 @@ describe('ngRx Store', () => {
         (s) => s.counter3
       );
 
-      const stateSequence = 'i-v--w--x--y--z---';
+      const stateSequence = 'i-v--w--x--y--z---'; // final frame is when actionCount changes
       const counter1Values = {
         i: [0, 1, 0],
         v: [1, 2, 1],
