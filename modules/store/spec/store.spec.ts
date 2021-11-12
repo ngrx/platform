@@ -227,12 +227,10 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe((action) => store.dispatch(action));
 
-      const counterStateWithFunc = store.pipe(
-        select(
-          (s) => s.counter1,
-          (s) => s.counter2,
-          (s) => s.counter3
-        )
+      const counterStateWithFunc = store.select(
+        (s) => s.counter1,
+        (s) => s.counter2,
+        (s) => s.counter3
       );
 
       const stateSequence = 'i-v--w--x--y--z';
