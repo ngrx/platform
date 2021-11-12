@@ -13,7 +13,7 @@ import * as fromBooks from '@example-app/books/reducers';
   template: `
     <bc-book-detail
       [book]="book$ | async"
-      [inCollection]="isSelectedBookInCollection$ | async"
+      [inCollection]="(isSelectedBookInCollection$ | async) === true"
       (add)="addToCollection($event)"
       (remove)="removeFromCollection($event)"
     >
