@@ -14,7 +14,7 @@ import * as fromBooks from '@example-app/books/reducers';
   template: `
     <bc-book-search
       [query]="(searchQuery$ | async) ?? ''"
-      [searching]="(loading$ | async)!"
+      [searching]="(loading$ | async) === true"
       [error]="(error$ | async)!"
       (search)="search($event)"
     >
