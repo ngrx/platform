@@ -6,7 +6,7 @@ A method for returning a generic entity adapter for a single entity state collec
 returned adapter provides many adapter methods for performing operations
 against the collection type. The method takes an object with 2 properties for configuration.
 
-- `selectId`: A `method` for selecting the primary id for the collection. Optional when the entity has a primary key of `id`
+- `selectId`: A method for selecting the primary id for the collection. Optional when the entity has a primary key of `id`
 - `sortComparer`: A compare function used to [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) the collection. The comparer function is only needed if the collection needs to be sorted before being displayed. Set to `false` to leave the collection unsorted, which is more performant during CRUD operations.
 
 Usage:
