@@ -316,7 +316,7 @@ describe('Sorted State Adapter', () => {
     );
 
     expect(withUpdates).toEqual({
-      ids: [AClockworkOrange.id, TheGreatGatsby.id],
+      ids: [TheGreatGatsby.id, AClockworkOrange.id],
       entities: {
         [TheGreatGatsby.id]: {
           ...TheGreatGatsby,
