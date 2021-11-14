@@ -61,6 +61,11 @@ export interface StoreRouterConfig<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > {
   stateKey?: StateKeyOrSelector<T>;
+  /**
+   * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
+   * Set to `Full` to use the `DefaultRouterStateSerializer` and to set the angular router events as payload.
+   * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
+   */
   serializer?: new (...args: any[]) => RouterStateSerializer;
   /**
    * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run.
@@ -70,11 +75,6 @@ export interface StoreRouterConfig<
    * set this property to NavigationActionTiming.PostActivation.
    */
   navigationActionTiming?: NavigationActionTiming;
-  /**
-   * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
-   * Set to `Full` to use the `DefaultRouterStateSerializer` and to set the angular router events as payload.
-   * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
-   */
   routerState?: RouterState;
 }
 
