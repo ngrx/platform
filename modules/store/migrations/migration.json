@@ -21,10 +21,10 @@
       "version": "13-beta",
       "factory": "./13_0_0-beta/index"
     },
-    "ngrx-store-migration-13-0-1": {
-      "description": "The road to v13.0.1",
-      "version": "13.0.1",
-      "factory": "./13_0_1/index"
+    "ngrx-store-migration-13-rc": {
+      "description": "The road to v13 RC",
+      "version": "13-rc.1",
+      "factory": "./13_0_0-rc/index"
     }
   }
 }

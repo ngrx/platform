@@ -43,7 +43,7 @@ const selectorWithTwoSlicesWithGenericArgsWithWhitespace = createSelector<State,
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
     const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-13-0-1`, {}, appTree)
+      .runSchematicAsync(`ngrx-${pkgName}-migration-13-rc`, {}, appTree)
       .toPromise();
     const file = newTree.readContent('fixture.ts');
 

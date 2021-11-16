@@ -39,7 +39,7 @@ function updateCreateSelectorGenerics(): Rule {
         const { typeArguments } = node;
 
         if (!typeArguments?.length) return;
-        const typeArgumentsLength = typeArguments?.length ?? 0;
+        const typeArgumentsLength = typeArguments?.length;
         if (typeArgumentsLength < 3) return;
         if (!ts.isIdentifier(node.expression)) return;
         if (node.expression.text !== 'createSelector') return;
@@ -71,7 +71,7 @@ function updateCreateSelectorGenerics(): Rule {
           new RemoveChange(
             sourceFile.fileName,
             typeArguments.pos,
-            typeArguments?.end ?? 0
+            typeArguments?.end
           ),
           new InsertChange(
             sourceFile.fileName,
