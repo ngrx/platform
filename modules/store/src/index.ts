@@ -13,6 +13,7 @@ export {
   SelectorWithProps,
   RuntimeChecks,
   FunctionWithParametersType,
+  TypedAction
 } from './models';
 export { createAction, props, union } from './action_creator';
 export { Store, select } from './store';
