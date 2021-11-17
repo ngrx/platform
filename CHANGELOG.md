@@ -1,3 +1,11 @@
+<a name="13.0.1"></a>
+
+## [13.0.1](https://github.com/ngrx/platform/compare/13.0.0...13.0.1) (2021-11-17)
+
+### Bug Fixes
+
+- **store:** add migration for create selector generics ([#3237](https://github.com/ngrx/platform/issues/3237)) ([5d97a11](https://github.com/ngrx/platform/commit/5d97a11))
+
 <a name="13.0.0"></a>
 
 # [13.0.0](https://github.com/ngrx/platform/compare/13.0.0-rc.0...13.0.0) (2021-11-16)
