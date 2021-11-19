@@ -18,6 +18,14 @@ import { MOCK_SELECTORS } from './tokens';
 if (typeof afterEach === 'function') {
   afterEach(() => {
     try {
+      /**
+       * Since angular v13, destroyAfterEach part of the teardown option object is enabled by default
+       * which means that at this point TestBed has already been cleaned up.
+       * If destroyAfterEach is enabled, injecting MockStore in TestBed will cause an error when testing with jest
+       *
+       * More info about testing module teardown: https://dev.to/this-is-angular/improving-angular-tests-by-enabling-angular-testing-module-teardown-38kh
+       * Issue related to these changes: https://github.com/ngrx/platform/issues/3243
+       */
       const TestBed = getTestBed() as any;
       const shouldResetSelectors = !TestBed.shouldTearDownTestingModule();
       if (shouldResetSelectors) {
