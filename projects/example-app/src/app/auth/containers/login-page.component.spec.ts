@@ -30,7 +30,7 @@ describe('Login Page', () => {
     instance = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
   });
 
   /**

@@ -35,7 +35,7 @@ describe('Selected Book Page', () => {
     instance = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    spyOn(store, 'dispatch');
+    jest.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {
