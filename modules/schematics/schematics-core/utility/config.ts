@@ -142,6 +142,6 @@ export function getWorkspace(host: Tree) {
     throw new SchematicsException(`Could not find (${path})`);
   }
   const config = configBuffer.toString();
-  console.log(config);
+
   return JSON.parse(config);
 }
