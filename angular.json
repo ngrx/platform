@@ -1,18 +1,5 @@
 {
   "version": 1,
-  "schematics": {
-    "@schematics/angular:component": {
-      "inlineStyle": true,
-      "inlineTemplate": true,
-      "flat": true,
-      "skipTests": true,
-      "prefix": "bc",
-      "style": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "bc"
-    }
-  },
   "projects": {
     "component": {
       "projectType": "library",
