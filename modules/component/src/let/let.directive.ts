@@ -94,7 +94,7 @@ export class LetDirective<U> implements OnDestroy {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   static ngTemplateGuard_ngrxLet: 'binding';
 
-  private embeddedView: any;
+  private embeddedviewCreated = false;
   private readonly viewContext: LetViewContext<U | undefined | null> = {
     $implicit: undefined,
     ngrxLet: undefined,
@@ -107,7 +107,7 @@ export class LetDirective<U> implements OnDestroy {
   private readonly resetContextObserver: NextObserver<void> = {
     next: () => {
       // if not initialized no need to set undefined
-      if (this.embeddedView) {
+      if (this.embeddedviewCreated) {
         this.viewContext.$implicit = undefined;
         this.viewContext.ngrxLet = undefined;
         this.viewContext.$error = false;
@@ -117,26 +117,17 @@ export class LetDirective<U> implements OnDestroy {
   };
   private readonly updateViewContextObserver: Observer<U | null | undefined> = {
     next: (value: U | null | undefined) => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
       this.viewContext.$implicit = value;
       this.viewContext.ngrxLet = value;
+      this.ensureEmbeddedViewCreated();
     },
     error: (error: Error) => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
       this.viewContext.$error = true;
+      this.ensureEmbeddedViewCreated();
     },
     complete: () => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
       this.viewContext.$complete = true;
+      this.ensureEmbeddedViewCreated();
     },
   };
 
@@ -168,11 +159,14 @@ export class LetDirective<U> implements OnDestroy {
     this.subscription = this.cdAware.subscribe({});
   }
 
-  createEmbeddedView() {
-    this.embeddedView = this.viewContainerRef.createEmbeddedView(
-      this.templateRef,
-      this.viewContext
-    );
+  ensureEmbeddedViewCreated() {
+    if (!this.embeddedviewCreated) {
+      this.embeddedviewCreated = true;
+      this.viewContainerRef.createEmbeddedView(
+        this.templateRef,
+        this.viewContext
+      );
+    }
   }
 
   ngOnDestroy() {

@@ -1,6 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
+  Directive,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import {
+  BehaviorSubject,
   EMPTY,
   interval,
   NEVER,
@@ -58,6 +60,29 @@ class LetDirectiveTestErrorComponent {
 })
 class LetDirectiveTestCompleteComponent {
   value$: Observable<number> = of(42);
+}
+
+@Directive({
+  selector: '[recursiveDirective]',
+})
+export class RecursiveDirective {
+  constructor(private subject: BehaviorSubject<number>) {
+    this.subject.next(1);
+  }
+}
+
+@Component({
+  template: `
+    <ng-container recursiveDirective *ngrxLet="subject as value">{{
+      value
+    }}</ng-container>
+  `,
+})
+class LetDirectiveTestRecursionComponent {
+  constructor(public subject: BehaviorSubject<number>) {}
+  get value$() {
+    return this.subject;
+  }
 }
 
 let fixtureLetDirectiveTestComponent: ComponentFixture<LetDirectiveTestComponent>;
@@ -111,6 +136,29 @@ const setupLetDirectiveTestComponentComplete = (): void => {
 
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
     LetDirectiveTestCompleteComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+
+const setupLetDirectiveTestRecursionComponent = (): void => {
+  const subject = new BehaviorSubject(0);
+  TestBed.configureTestingModule({
+    declarations: [
+      LetDirectiveTestRecursionComponent,
+      RecursiveDirective,
+      LetDirective,
+    ],
+    providers: [
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      TemplateRef,
+      ViewContainerRef,
+      { provide: BehaviorSubject, useValue: subject },
+    ],
+  });
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestRecursionComponent
   );
   letDirectiveTestComponent =
     fixtureLetDirectiveTestComponent.componentInstance;
@@ -280,5 +328,15 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
     });
+  });
+
+  describe('when rendering recursively', () => {
+    beforeEach(waitForAsync(setupLetDirectiveTestRecursionComponent));
+
+    it('should render 2nd emitted value if the observable emits while the view is being rendered', fakeAsync(() => {
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(letDirectiveTestComponent).toBeDefined();
+      expect(componentNativeElement.textContent).toBe('1');
+    }));
   });
 });
