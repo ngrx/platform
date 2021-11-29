@@ -94,7 +94,7 @@ export class LetDirective<U> implements OnDestroy {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   static ngTemplateGuard_ngrxLet: 'binding';
 
-  private embeddedviewCreated = false;
+  private embeddedViewCreated = false;
   private readonly viewContext: LetViewContext<U | undefined | null> = {
     $implicit: undefined,
     ngrxLet: undefined,
