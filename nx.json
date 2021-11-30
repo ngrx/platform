@@ -26,7 +26,7 @@
         ],
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "parallel": 0
+        "parallel": 1
       }
     }
   },
