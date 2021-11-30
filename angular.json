@@ -239,10 +239,8 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "projects/data-example-app/jest.config.js",
-            "tsConfig": "projects/data-example-app/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "projects/data-example-app/src/test-setup.ts"
+            "jestConfig": "modules/data-example-app/jest.config.js",
+            "runInBand": true
           }
         }
       },
