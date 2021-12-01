@@ -239,8 +239,9 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/data-example-app/jest.config.js",
-            "runInBand": true
+            "jestConfig": "projects/data-example-app/jest.config.js",
+            "runInBand": true,
+            "passWithNoTests": true
           }
         }
       },
