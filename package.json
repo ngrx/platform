@@ -108,7 +108,7 @@
     "@angular/platform-server": "13.0.0",
     "@angular/router": "13.0.0",
     "@applitools/eyes-cypress": "^3.4.12",
-    "@nrwl/angular": "13.2.0-beta.1",
+    "@nrwl/angular": "13.2.2",
     "core-js": "^2.5.4",
     "opencollective": "^1.0.3",
     "rxjs": "~7.4.0",
@@ -130,15 +130,15 @@
     "@bazel/jasmine": "1.6.0",
     "@bazel/typescript": "1.6.0",
     "@cypress/webpack-preprocessor": "^4.0.3",
-    "@nrwl/cli": "13.2.0-beta.1",
-    "@nrwl/cypress": "13.2.0-beta.1",
-    "@nrwl/eslint-plugin-nx": "13.2.0-beta.1",
-    "@nrwl/jest": "13.2.0-beta.1",
-    "@nrwl/linter": "13.2.0-beta.1",
-    "@nrwl/node": "13.2.0-beta.1",
-    "@nrwl/nx-cloud": "12.5.2",
-    "@nrwl/tao": "13.2.0-beta.1",
-    "@nrwl/workspace": "13.2.0-beta.1",
+    "@nrwl/cli": "13.2.2",
+    "@nrwl/cypress": "13.2.2",
+    "@nrwl/eslint-plugin-nx": "13.2.2",
+    "@nrwl/jest": "13.2.2",
+    "@nrwl/linter": "13.2.2",
+    "@nrwl/node": "13.2.2",
+    "@nrwl/nx-cloud": "12.5.4",
+    "@nrwl/tao": "13.2.2",
+    "@nrwl/workspace": "13.2.2",
     "@octokit/rest": "^15.17.0",
     "@testing-library/cypress": "^7.0.1",
     "@types/fs-extra": "^2.1.0",
@@ -228,3 +228,4 @@
     }
   }
 }
+

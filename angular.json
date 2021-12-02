@@ -1,18 +1,5 @@
 {
   "version": 1,
-  "schematics": {
-    "@schematics/angular:component": {
-      "inlineStyle": true,
-      "inlineTemplate": true,
-      "flat": true,
-      "skipTests": true,
-      "prefix": "bc",
-      "style": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "bc"
-    }
-  },
   "projects": {
     "component": {
       "projectType": "library",
@@ -253,9 +240,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "projects/data-example-app/jest.config.js",
-            "tsConfig": "projects/data-example-app/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "projects/data-example-app/src/test-setup.ts"
+            "runInBand": true,
+            "passWithNoTests": true
           }
         }
       },
