@@ -11,7 +11,6 @@ import {
   Store,
   createSelector,
   select,
-  StoreModule,
   MemoizedSelector,
   createFeatureSelector,
   isNgrxMockEnvironment,
@@ -514,31 +513,5 @@ describe('Refreshing state', () => {
 
     expect(getTodoItems('li').length).toBe(1);
     expect(getTodoItems('li')[0].nativeElement.textContent.trim()).toBe('bbb');
-  });
-});
-
-describe('Cleans up after each test', () => {
-  const selectData = createSelector(
-    (state: any) => state,
-    (state) => state.value
-  );
-
-  it('should return the mocked selectors value', (done: any) => {
-    TestBed.configureTestingModule({
-      providers: [
-        provideMockStore({
-          initialState: {
-            value: 100,
-          },
-          selectors: [{ selector: selectData, value: 200 }],
-        }),
-      ],
-    });
-
-    const store = TestBed.inject(Store);
-    store.pipe(select(selectData)).subscribe((v) => {
-      expect(v).toBe(200);
-      done();
-    });
   });
 });
