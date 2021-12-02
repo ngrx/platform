@@ -11,6 +11,7 @@ import {
   Store,
   createSelector,
   select,
+  StoreModule,
   MemoizedSelector,
   createFeatureSelector,
   isNgrxMockEnvironment,
@@ -513,5 +514,55 @@ describe('Refreshing state', () => {
 
     expect(getTodoItems('li').length).toBe(1);
     expect(getTodoItems('li')[0].nativeElement.textContent.trim()).toBe('bbb');
+  });
+});
+
+describe('Cleanup selectors after each test', () => {
+  let store: MockStore;
+  const selectData = createSelector(
+    (state: any) => state,
+    (state) => state.value
+  );
+
+  // see https://github.com/ngrx/platform/issues/3243
+  afterEach(() => {
+    store.resetSelectors();
+  });
+
+  it('should return the mocked selectors value', (done: any) => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({
+          initialState: {
+            value: 100,
+          },
+          selectors: [{ selector: selectData, value: 200 }],
+        }),
+      ],
+    });
+
+    store = TestBed.inject(MockStore);
+    store.pipe(select(selectData)).subscribe((v) => {
+      expect(v).toBe(200);
+      done();
+    });
+  });
+
+  it('should return the real value', (done: any) => {
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({} as any, {
+          initialState: {
+            value: 300,
+          },
+        }),
+      ],
+    });
+
+    const store = TestBed.inject(Store);
+    store.pipe(select(selectData)).subscribe((v) => {
+      expect(v).toBe(300);
+      done();
+    });
   });
 });
