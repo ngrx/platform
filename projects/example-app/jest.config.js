@@ -14,5 +14,5 @@ module.exports = {
   moduleNameMapper: {
     tslib: '<rootDir>../../node_modules/tslib/tslib.es6.js',
   },
-  testRunner: 'jest-circus',
+  testRunner: 'jest-circus/runner',
 };
