@@ -86,7 +86,8 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
       'router-store/index.ts',
       'data/index.ts',
       'schematics/index.ts',
-      'component-store/index.ts'
+      'component-store/index.ts',
+      'component/index.ts',
     ];
 
     readFilesProcessor.fileReaders.push(packageContentFileReader);
