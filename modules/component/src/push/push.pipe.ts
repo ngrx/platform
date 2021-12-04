@@ -11,7 +11,7 @@ import { CdAware, createCdAware } from '../core/cd-aware/cd-aware_creator';
 import { createRender } from '../core/cd-aware/creator_render';
 
 /**
- * @Pipe PushPipe
+ * @ngModule ReactiveComponentModule
  *
  * @description
  *

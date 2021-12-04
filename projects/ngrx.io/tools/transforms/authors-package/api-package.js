@@ -17,7 +17,8 @@ const packageMap = {
   'router-store': ['router-store/index.ts'],
   data: ['data/index.ts'],
   schematics: ['schematics/index.ts'],
-  'component-store': ['component-store/index.ts']
+  'component-store': ['component-store/index.ts'],
+  component: ['component/index.ts'],
 };
 
 
