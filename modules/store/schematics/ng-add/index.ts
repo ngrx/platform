@@ -130,20 +130,26 @@ function addNgRxESLintPlugin() {
       host,
       'devDependencies',
       'eslint-plugin-ngrx',
-      '^1.0.0'
+      '^2.0.0'
     );
     context.addTask(new NodePackageInstallTask());
 
     try {
       const json = JSON.parse(eslint);
       if (json.overrides) {
-        json.overrides
-          .filter((override: { files?: string[] }) =>
-            override.files?.some((file: string) => file.endsWith('*.ts'))
+        if (
+          !json.overrides.some((override: any) =>
+            override.extends?.some((extend: any) =>
+              extend.startsWith('plugin:ngrx')
+            )
           )
-          .forEach(configureESLintPlugin);
-      } else {
-        configureESLintPlugin(json);
+        ) {
+          json.overrides.push(configureESLintPlugin());
+        }
+      } else if (
+        !json.extends?.some((extend: any) => extend.startsWith('plugin:ngrx'))
+      ) {
+        json.overrides = [configureESLintPlugin()];
       }
 
       host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
@@ -170,9 +176,11 @@ ${err.message}
   };
 }
 
-function configureESLintPlugin(json: any): void {
-  json.plugins = [...(json.plugins || []), 'ngrx'];
-  json.extends = [...(json.extends || []), 'plugin:ngrx/recommended'];
+function configureESLintPlugin(): Record<string, unknown> {
+  return {
+    files: ['*.ts'],
+    extends: [`plugin:ngrx/recommended`],
+  };
 }
 
 export default function (options: RootStoreOptions): Rule {

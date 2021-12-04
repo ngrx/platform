@@ -1,15 +1,12 @@
 # ESLint plugin for NgRx
 
-## What is it?
-
 Use [ESLint](https://eslint.org/) to follow the best practices and to avoid common pitfalls in your application.
 
 The [NgRx ESLint Plugin](https://github.com/timdeschryver/eslint-plugin-ngrx) is no different and promotes the key concepts to create a maintainable project. It consists of @ngrx/store, @ngrx/effects, and @ngrx/component-store rules and a handful of preconfigured configurations.
 
+The plugin comes with a number of rules that help address most popular NgRx malpractices. The rules are configurable so that you can choose the ones you want to follow, and which rules should give a linting error or warning.
 
-The plugin comes with a number of rules that help address most popular NgRx malpractices. The rules are configurable so that you can choose the ones you want to follow, and which rules should give a linting error or warning. 
-
-A detailed documentation of all the rules with examples can be found on the [documentation page](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/README.md#rules). 
+A detailed documentation of all the rules with examples can be found on the [documentation page](https://github.com/timdeschryver/eslint-plugin-ngrx/blob/main/README.md#rules).
 
 Some rules also allow automatic fixes with `ng lint --fix`.
 
@@ -49,7 +46,7 @@ Then, add it to your ESLint configuration file (for example, `.eslintrc.json`):
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2019,
+    "ecmaVersion": 2020,
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
@@ -64,19 +61,27 @@ To enable the recommended configuration, add it to your ESLint configuration fil
 
 ```json
 {
-  "extends": ["plugin:ngrx/recommended"]
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
+  "overrides" [
+    {
+      "files": ["*.ts"],
+      "extends": ["plugin:ngrx/recommended"]
+    }
+  ]
 }
 ```
 
-Then you can run 
+Next, you can run the linter with the following to see the problems are found.
 
 ```sh
 ng lint
 ```
 
-And see the problems that the linter found.
-
 ## Configuration
 
 There are several levels of configuration that can be implemented with this plugin. You can read more about it in the [plugin documentation page](https://github.com/timdeschryver/eslint-plugin-ngrx#configurations).
-

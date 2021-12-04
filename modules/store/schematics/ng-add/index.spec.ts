@@ -165,12 +165,16 @@ describe('Store ng-add Schematic', () => {
     const eslintContent = tree.readContent(`.eslintrc.json`);
     const eslintJson = JSON.parse(eslintContent);
     expect(eslintJson).toEqual({
-      extends: ['plugin:ngrx/recommended'],
-      plugins: ['ngrx'],
+      overrides: [
+        {
+          files: ['*.ts'],
+          extends: ['plugin:ngrx/recommended'],
+        },
+      ],
     });
   });
 
-  it('should register the NgRx ESLint Plugin in overrides when it supports TS', async () => {
+  it('should register the NgRx ESLint Plugin in an existing config', async () => {
     const options = { ...defaultOptions };
 
     // this is a trimmed down version of the default angular-eslint schematic
@@ -221,7 +225,6 @@ describe('Store ng-add Schematic', () => {
             project: ['tsconfig.eslint.json'],
             createDefaultProgram: true,
           },
-          plugins: ['ngrx'],
           extends: [
             'plugin:@angular-eslint/recommended',
             'eslint:recommended',
@@ -229,7 +232,6 @@ describe('Store ng-add Schematic', () => {
             'plugin:@typescript-eslint/recommended-requiring-type-checking',
             'plugin:@angular-eslint/template/process-inline-templates',
             'plugin:prettier/recommended',
-            'plugin:ngrx/recommended',
           ],
         },
         {
@@ -240,8 +242,38 @@ describe('Store ng-add Schematic', () => {
           ],
           rules: {},
         },
+        {
+          files: ['*.ts'],
+          extends: ['plugin:ngrx/recommended'],
+        },
       ],
     });
+  });
+
+  it('should not register the NgRx ESLint Plugin if already added', async () => {
+    const options = { ...defaultOptions, skipESLintPlugin: true };
+
+    const initialConfig = {
+      overrides: [
+        {
+          files: ['*.ts'],
+          extends: ['plugin:ngrx/recommended'],
+        },
+      ],
+    };
+    appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
+
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', options, appTree)
+      .toPromise();
+
+    const packageContent = tree.readContent('package.json');
+    const packageJson = JSON.parse(packageContent);
+    expect(packageJson.devDependencies['eslint-plugin-ngrx']).not.toBeDefined();
+
+    const eslintContent = tree.readContent(`.eslintrc.json`);
+    const eslintJson = JSON.parse(eslintContent);
+    expect(eslintJson).toEqual(initialConfig);
   });
 
   it('should not register the NgRx ESLint Plugin when skipped', async () => {
