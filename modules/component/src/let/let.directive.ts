@@ -94,7 +94,7 @@ export class LetDirective<U> implements OnDestroy {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   static ngTemplateGuard_ngrxLet: 'binding';
 
-  private embeddedView: any;
+  private isEmbeddedViewCreated = false;
   private readonly viewContext: LetViewContext<U | undefined | null> = {
     $implicit: undefined,
     ngrxLet: undefined,
@@ -107,7 +107,7 @@ export class LetDirective<U> implements OnDestroy {
   private readonly resetContextObserver: NextObserver<void> = {
     next: () => {
       // if not initialized no need to set undefined
-      if (this.embeddedView) {
+      if (this.isEmbeddedViewCreated) {
         this.viewContext.$implicit = undefined;
         this.viewContext.ngrxLet = undefined;
         this.viewContext.$error = false;
@@ -117,26 +117,26 @@ export class LetDirective<U> implements OnDestroy {
   };
   private readonly updateViewContextObserver: Observer<U | null | undefined> = {
     next: (value: U | null | undefined) => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
       this.viewContext.$implicit = value;
       this.viewContext.ngrxLet = value;
+      // to have init lazy
+      if (!this.isEmbeddedViewCreated) {
+        this.createEmbeddedView();
+      }
     },
     error: (error: Error) => {
+      this.viewContext.$error = true;
       // to have init lazy
-      if (!this.embeddedView) {
+      if (!this.isEmbeddedViewCreated) {
         this.createEmbeddedView();
       }
-      this.viewContext.$error = true;
     },
     complete: () => {
+      this.viewContext.$complete = true;
       // to have init lazy
-      if (!this.embeddedView) {
+      if (!this.isEmbeddedViewCreated) {
         this.createEmbeddedView();
       }
-      this.viewContext.$complete = true;
     },
   };
 
@@ -169,7 +169,8 @@ export class LetDirective<U> implements OnDestroy {
   }
 
   createEmbeddedView() {
-    this.embeddedView = this.viewContainerRef.createEmbeddedView(
+    this.isEmbeddedViewCreated = true;
+    this.viewContainerRef.createEmbeddedView(
       this.templateRef,
       this.viewContext
     );
