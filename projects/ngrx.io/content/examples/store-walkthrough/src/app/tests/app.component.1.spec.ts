@@ -100,25 +100,16 @@ describe('AppComponent', () => {
 
 //#docregion resetMockSelector
 describe('AppComponent reset selectors', () => {
-  let store: MockStore<AppState>;
+  let store: MockStore;
 
   afterEach(() => {
-    store.resetSelectors();
+    store?.resetSelectors();
   });
 
   it('should return the mocked value', (done: any) => {
     TestBed.configureTestingModule({
       providers: [
         provideMockStore({
-          initialState: [
-            {
-              id: 'firstId',
-              volumeInfo: {
-                title: 'Initial Title',
-                authors: ['Initial Author'],
-              },
-            },
-          ],
           selectors: [
             {
               selector: selectBooks,
@@ -137,6 +128,8 @@ describe('AppComponent reset selectors', () => {
       ],
     });
 
+    store = TestBed.inject(MockStore);
+
     store.select(selectBooks).subscribe((mockBooks) => {
       expect(mockBooks).toEqual([
         {
@@ -144,41 +137,6 @@ describe('AppComponent reset selectors', () => {
           volumeInfo: {
             title: 'Mocked Title',
             authors: ['Mocked Author'],
-          },
-        },
-      ]);
-      done();
-    });
-  });
-
-  it('should return the real value', (done: any) => {
-    TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({} as any, {
-          initialState: {
-            books: [
-              {
-                id: 'realId',
-                volumeInfo: {
-                  title: 'Real Title',
-                  authors: ['Real Author'],
-                },
-              },
-            ],
-          },
-        }),
-      ],
-    });
-
-    const store = TestBed.inject(Store);
-
-    store.select(selectBooks).subscribe((mockBooks) => {
-      expect(mockBooks).toEqual([
-        {
-          id: 'realId',
-          volumeInfo: {
-            title: 'Real Title',
-            authors: ['Real Author'],
           },
         },
       ]);

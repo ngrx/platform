@@ -73,7 +73,7 @@ Usage:
 
 In this example based on the [walkthrough](guide/store/walkthrough), we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with a default mocked return value of an array of books. Similarly, we mock the `selectBookCollection` selector and pass the selector together with another array. In the test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
 
-You can reset selectors by calling the `MockStore.resetSelectors()` method in `afterEach()` hook.
+You can reset selectors by calling the `MockStore.resetSelectors()` method in the `afterEach()` hook.
 
 <code-example header="src/app/app.component.spec.ts (Reset Mock Selector) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="resetMockSelector"></code-example>
 
