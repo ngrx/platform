@@ -1,4 +1,5 @@
 import { MemoizedSelector } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -96,3 +97,93 @@ describe('AppComponent', () => {
     //#enddocregion mockSelector
   });
 });
+
+//#docregion resetMockSelector
+describe('AppComponent reset selectors', () => {
+  let store: MockStore<AppState>;
+
+  afterEach(() => {
+    store.resetSelectors();
+  });
+
+  it('should return the mocked value', (done: any) => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({
+          initialState: [
+            {
+              id: 'firstId',
+              volumeInfo: {
+                title: 'Initial Title',
+                authors: ['Initial Author'],
+              },
+            },
+          ],
+          selectors: [
+            {
+              selector: selectBooks,
+              value: [
+                {
+                  id: 'mockedId',
+                  volumeInfo: {
+                    title: 'Mocked Title',
+                    authors: ['Mocked Author'],
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      ],
+    });
+
+    store.select(selectBooks).subscribe((mockBooks) => {
+      expect(mockBooks).toEqual([
+        {
+          id: 'mockedId',
+          volumeInfo: {
+            title: 'Mocked Title',
+            authors: ['Mocked Author'],
+          },
+        },
+      ]);
+      done();
+    });
+  });
+
+  it('should return the real value', (done: any) => {
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({} as any, {
+          initialState: {
+            books: [
+              {
+                id: 'realId',
+                volumeInfo: {
+                  title: 'Real Title',
+                  authors: ['Real Author'],
+                },
+              },
+            ],
+          },
+        }),
+      ],
+    });
+
+    const store = TestBed.inject(Store);
+
+    store.select(selectBooks).subscribe((mockBooks) => {
+      expect(mockBooks).toEqual([
+        {
+          id: 'realId',
+          volumeInfo: {
+            title: 'Real Title',
+            authors: ['Real Author'],
+          },
+        },
+      ]);
+      done();
+    });
+  });
+});
+//#enddocregion resetMockSelector
