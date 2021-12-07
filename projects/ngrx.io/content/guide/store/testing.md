@@ -73,11 +73,9 @@ Usage:
 
 In this example based on the [walkthrough](guide/store/walkthrough), we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with a default mocked return value of an array of books. Similarly, we mock the `selectBookCollection` selector and pass the selector together with another array. In the test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
 
-<div class="alert is-helpful">
+You can reset selectors by calling the `MockStore.resetSelectors()` method in the `afterEach()` hook.
 
-**Note:** `MockStore` will reset all of the mocked selectors after each test (in the `afterEach()` hook) by calling the `MockStore.resetSelectors()` method.
-
-</div>
+<code-example header="src/app/app.component.spec.ts (Reset Mock Selector) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="resetMockSelector"></code-example>
 
 Try the <live-example name="testing-store"></live-example>.
 

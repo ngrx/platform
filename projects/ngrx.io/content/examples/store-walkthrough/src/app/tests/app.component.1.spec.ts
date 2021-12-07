@@ -1,4 +1,5 @@
 import { MemoizedSelector } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -96,3 +97,51 @@ describe('AppComponent', () => {
     //#enddocregion mockSelector
   });
 });
+
+//#docregion resetMockSelector
+describe('AppComponent reset selectors', () => {
+  let store: MockStore;
+
+  afterEach(() => {
+    store?.resetSelectors();
+  });
+
+  it('should return the mocked value', (done: any) => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({
+          selectors: [
+            {
+              selector: selectBooks,
+              value: [
+                {
+                  id: 'mockedId',
+                  volumeInfo: {
+                    title: 'Mocked Title',
+                    authors: ['Mocked Author'],
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      ],
+    });
+
+    store = TestBed.inject(MockStore);
+
+    store.select(selectBooks).subscribe((mockBooks) => {
+      expect(mockBooks).toEqual([
+        {
+          id: 'mockedId',
+          volumeInfo: {
+            title: 'Mocked Title',
+            authors: ['Mocked Author'],
+          },
+        },
+      ]);
+      done();
+    });
+  });
+});
+//#enddocregion resetMockSelector

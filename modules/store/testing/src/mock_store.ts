@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {
   Action,
@@ -14,18 +13,6 @@ import {
 import { MockState } from './mock_state';
 import { MockSelector } from './mock_selector';
 import { MOCK_SELECTORS } from './tokens';
-
-if (typeof afterEach === 'function') {
-  afterEach(() => {
-    try {
-      const mockStore: MockStore | undefined = TestBed.inject(MockStore);
-      if (mockStore) {
-        mockStore.resetSelectors();
-      }
-      // eslint-disable-next-line no-empty
-    } catch {}
-  });
-}
 
 type OnlyMemoized<T, Result> = T extends string | MemoizedSelector<any, any>
   ? MemoizedSelector<any, Result>

@@ -50,7 +50,7 @@ describe('AuthEffects', () => {
     routerService = TestBed.inject(Router);
     dialog = TestBed.inject(MatDialog);
 
-    spyOn(routerService, 'navigate').and.callThrough();
+    jest.spyOn(routerService, 'navigate');
   });
 
   describe('login$', () => {
