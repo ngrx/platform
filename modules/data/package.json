@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/data",
-  "version": "13.0.1",
+  "version": "13.0.2",
   "description": "API management for NgRx",
   "repository": {
     "type": "git",
@@ -22,9 +22,9 @@
   "peerDependencies": {
     "@angular/common": "^13.0.0",
     "@angular/core": "^13.0.0",
-    "@ngrx/store": "13.0.1",
-    "@ngrx/effects": "13.0.1",
-    "@ngrx/entity": "13.0.1",
+    "@ngrx/store": "13.0.2",
+    "@ngrx/effects": "13.0.2",
+    "@ngrx/entity": "13.0.2",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "schematics": "./schematics/collection.json",
