@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn build --progress false && yarn copy-404-page && cp -rf src/extra-files/stable/. dist/ngrx.io/
+      - run: yarn build-for next --progress false && yarn copy-404-page && cp -rf src/extra-files/next/. dist/ngrx.io/
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
