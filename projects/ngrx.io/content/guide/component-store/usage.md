@@ -250,15 +250,3 @@ The last point can sometimes be refactored into another `updater`. Use your best
 `@Output()`s and derived data are **reacting** to these state changes and are generated using `selector`s.
 
 A *ViewModel* for the component is also composed from `selector`s.
-
-## Use Case 2: Complex Common Component State
-
-The use case is in the process of being added - check back later
-
-## Use Case 3: Complex Independent Component Store
-
-The use case is in the process of being added - check back later
-
-## Use Case 4: Application-wide Singleton Service
-
-The use case is in the process of being added - check back later
