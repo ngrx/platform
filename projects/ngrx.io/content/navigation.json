@@ -571,6 +571,11 @@
       "title": "Community",
       "children": [
         {
+          "url": "https://github.com/ngrx/platform/blob/master/CODE_OF_CONDUCT.md",
+          "title": "Code of Conduct",
+          "tooltip": "Code of Conduct"
+        },
+        {
           "url": "https://twitter.com/ngrx_io",
           "title": "Twitter",
           "tooltip": "Twitter"
