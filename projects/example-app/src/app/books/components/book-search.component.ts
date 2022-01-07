@@ -11,7 +11,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
             matInput
             placeholder="Search for a book"
             [value]="query"
-            (keyup)="search.emit($event.target.value)"
+            (keyup)="onSearch($event)"
           />
         </mat-form-field>
         <mat-spinner
@@ -62,4 +62,8 @@ export class BookSearchComponent {
   @Input() searching = false;
   @Input() error = '';
   @Output() search = new EventEmitter<string>();
+
+  onSearch(event: KeyboardEvent): void {
+    this.search.emit((event.target as HTMLInputElement).value);
+  }
 }
