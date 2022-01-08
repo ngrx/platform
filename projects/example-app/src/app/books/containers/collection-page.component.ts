@@ -15,7 +15,7 @@ import * as fromBooks from '@example-app/books/reducers';
       <mat-card-title>My Collection</mat-card-title>
     </mat-card>
 
-    <bc-book-preview-list [books]="books$ | async"></bc-book-preview-list>
+    <bc-book-preview-list [books]="(books$ | async)!"></bc-book-preview-list>
   `,
   /**
    * Container components are permitted to have just enough styles

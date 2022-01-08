@@ -12,8 +12,8 @@ import * as fromBooks from '@example-app/books/reducers';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <bc-book-detail
-      [book]="book$ | async"
-      [inCollection]="isSelectedBookInCollection$ | async"
+      [book]="(book$ | async)!"
+      [inCollection]="(isSelectedBookInCollection$ | async)!"
       (add)="addToCollection($event)"
       (remove)="removeFromCollection($event)"
     >
