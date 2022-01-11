@@ -1,4 +1,3 @@
-import { createSelector } from '@ngrx/store';
 import {
   EntityDefinition,
   Comparer,
@@ -17,9 +16,8 @@ export function createEntityAdapter<T>(
   } = {}
 ): EntityAdapter<T> {
   const { selectId, sortComparer }: EntityDefinition<T> = {
-    sortComparer: false,
-    selectId: (instance: any) => instance.id,
-    ...options,
+    selectId: options.selectId ?? ((entity: any) => entity.id),
+    sortComparer: options.sortComparer ?? false,
   };
 
   const stateFactory = createInitialStateFactory<T>();
