@@ -7,8 +7,6 @@
     "build": "nx run-many --target=build --all",
     "build:bazel": "bazel build //modules/...",
     "deploy:builds": "ts-node ./build/deploy-build.ts",
-    "deploy:preview": "ts-node ./build/deploy-preview.ts",
-    "cleanup:previews": "ts-node ./build/cleanup-previews.ts",
     "test": "nx affected:test",
     "test:all": "nx run-many --target=test --all",
     "test:bazel": "bazel test //modules/...",

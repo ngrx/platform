@@ -17,13 +17,9 @@ var_2: &run_in_node
 var_3: &set_bazel_options
   run:
     command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
-var_4: &docs_cache_key yarn-docs-cache-{{ checksum "~/docs/projects/ngrx.io/yarn.lock" }}-0.14
 var_5: &run_in_browser
   docker:
     - image: circleci/node:14.17.0-browsers
-var_6: &docs_in_node
-  docker:
-    - image: circleci/node:14.17.0
 var_7: &bazel_cache_key yarn-bazel-cache-{{ checksum "master.txt" }}-0.14.1
 
 commands:
@@ -42,14 +38,12 @@ jobs:
           keys:
             - *cache_key
       - run: yarn --frozen-lockfile --non-interactive
-      - run: yarn --cwd projects/ngrx.io --ignore-engines install
       - save_cache:
           key: *cache_key
           paths:
             - ~/.cache/yarn
             - ~/.cache/Cypress
             - node_modules
-            - projects/ngrx.io/node_modules
 
   lint:
     <<: *run_in_node
@@ -243,52 +237,6 @@ jobs:
           name: Run Affected E2E Tests
           command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless --parallel
 
-  docs-preview:
-    <<: *docs_in_node
-    working_directory: ~/docs/projects/ngrx.io
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
-      - checkout:
-          path: ~/docs
-      - restore_cache:
-          keys:
-            - *docs_cache_key
-      - run:
-          name: Setup Environment Variables
-          command: |
-            echo 'export CI_PREVIEW=true' >> $BASH_ENV
-            echo 'export SHORT_GIT_HASH=$(git rev-parse --short $CIRCLE_SHA1)' >> $BASH_ENV
-            echo 'export CIRCLE_PULL_REQUEST_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | cut -d"/" -f7)' >> $BASH_ENV
-            source $BASH_ENV
-      - run: npm rebuild node-sass
-      - run: yarn build-for next --progress false --base-href /pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ --output-path dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/ && yarn copy-404-page
-      - run: cp -rf src/extra-files/next/. dist/ngrx.io/pr$CIRCLE_PULL_REQUEST_NUMBER-$SHORT_GIT_HASH/
-      - run: yarn --cwd ../../ install --ignore-engines && yarn --cwd ../../ run deploy:preview
-      - save_cache:
-          key: *docs_cache_key
-          paths:
-            - ~/docs/projects/ngrx.io/node_modules
-            - ~/docs/node_modules
-
-  deploy-docs-stable:
-    <<: *docs_in_node
-    working_directory: ~/docs/projects/ngrx.io
-    steps:
-      - checkout:
-          path: ~/docs
-      - restore_cache:
-          keys:
-            - *cache_key
-            - *docs_cache_key
-      - run: npm rebuild node-sass
-      - run: yarn build --progress false --output-path dist/ngrx.io/ && yarn copy-404-page
-      - run: cp -rf src/extra-files/stable/. dist/ngrx.io/
-      - run:
-          name: Deploy Docs to Firebase
-          command: ./node_modules/.bin/firebase deploy --only hosting:stable --token=$FIREBASE_DEPLOY_TOKEN
-
   deploy:
     <<: *run_in_node
     steps:
@@ -336,20 +284,6 @@ jobs:
       - run:
           name: Publish next to npm
           command: ./node_modules/.bin/ts-node ./build/publish-next.ts
-
-  cleanup-previews:
-    <<: *run_in_node
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - 'c9:c2:b4:5e:13:23:b6:6d:d8:29:3e:68:c6:40:9c:ec'
-      - checkout
-      - restore_cache:
-          keys:
-            - *cache_key
-      - run:
-          name: Cleanup old PR previews
-          command: yarn run cleanup:previews
 
 workflows:
   version: 2
@@ -407,12 +341,6 @@ workflows:
           filters:
             branches:
               ignore: master
-      - docs-preview:
-          requires:
-            - install
-          filters:
-            branches:
-              ignore: master
       - schematics-core-check:
           requires:
             - install
@@ -425,12 +353,6 @@ workflows:
           filters:
             branches:
               only: master
-      - cleanup-previews:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
       # - update-master-hash:
       #     requires:
       #       - install
@@ -438,14 +360,6 @@ workflows:
       #       branches:
       #         only: master
       - publish-stable:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /9\.\d+\.\d+(?!-\w+\.\d)/
-            branches:
-              ignore: /.*/
-      - deploy-docs-stable:
           requires:
             - build
           filters:
