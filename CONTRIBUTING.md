@@ -50,6 +50,14 @@ yarn jest <relative path> --watch
 - The feature will be discussed and considered.
 - Once the PR is submitted, it will be reviewed and merged once approved.
 
+## Questions and requests for support
+
+Questions and requests for support should not be opened as issues and should be handled in the following ways:
+
+- Start a new [Q&A Discussion](https://github.com/ngrx/platform/discussions/new?category=q-a) on GitHub.
+- Ask a question on [StackOverflow](https://stackoverflow.com/questions/tagged/ngrx) using the `ngrx` tag.
+- Join our [Discord server](https://discord.com/invite/ngrx).
+
 ## <a name="commit"></a> Commit Message Guidelines
 
 We have very precise rules over how our git commit messages can be formatted. This leads to **more
