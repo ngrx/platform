@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support Request
+    url: https://github.com/ngrx/platform/blob/master/CONTRIBUTING.md#questions-and-requests-for-support
+    about: Questions and requests for support
