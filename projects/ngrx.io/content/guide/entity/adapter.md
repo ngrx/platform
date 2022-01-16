@@ -89,8 +89,8 @@ state if no changes were made.
 - `removeAll`: Clear entity collection.
 - `updateOne`: Update one entity in the collection. Supports partial updates.
 - `updateMany`: Update multiple entities in the collection. Supports partial updates.
-- `upsertOne`: Add or Update one entity in the collection. Supports partial updates.
-- `upsertMany`: Add or Update multiple entities in the collection. Supports partial updates.
+- `upsertOne`: Add or Update one entity in the collection.
+- `upsertMany`: Add or Update multiple entities in the collection.
 - `mapOne`: Update one entity in the collection by defining a map function.
 - `map`: Update multiple entities in the collection by defining a map function, similar to [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
 
@@ -238,9 +238,7 @@ interface UpdateNum<T> {
 type Update<T> = UpdateStr<T> | UpdateNum<T>;
 ```
 
-Secondly, `upsertOne` and `upsertMany` will perform an insert or update. If a partial entity is provided this will perform an update.
-
-To prevent partial updates either explicitly set all the fields, setting non-used fields with value `undefined`, or use the `setOne`, `setAll` or `setMany` adapter methods. 
+Secondly, `upsertOne` and `upsertMany` will perform an insert or update. These methods do not support partial updates.
 
 ### Entity Selectors
 
