@@ -1,3 +1,4 @@
+import { createFeatureSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { <%= classify(name) %> } from '<%= featurePath(group, flat, "models", dasherize(name)) %><%= dasherize(name) %>.model';
 import { <%= classify(name) %>Actions, <%= classify(name) %>ActionTypes } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';
@@ -65,9 +66,11 @@ export function reducer(
   }
 }
 
+export const <%= pluralize(name) %>Feature = createFeatureSelector<State>(<%= pluralize(name) %>FeatureKey);
+
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors();
+} = adapter.getSelectors(<%= pluralize(name) %>Feature);
