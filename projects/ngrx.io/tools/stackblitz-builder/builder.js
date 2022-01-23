@@ -275,7 +275,6 @@ class StackblitzBuilder {
 
     var defaultExcludes = [
       '!**/e2e/**/*.*',
-      '!**/tsconfig.json',
       '!**/package.json',
       '!**/example-config.json',
       '!**/tslint.json',
