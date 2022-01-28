@@ -632,10 +632,10 @@ export function createFeatureSelector(
       const featureState = state[featureName];
       if (!isNgrxMockEnvironment() && isDevMode() && !(featureName in state)) {
         console.warn(
-          `@ngrx/store: The feature name "${featureName}" does ` +
+          `@ngrx/store: The feature named "${featureName}" does ` +
             'not exist in the state, therefore createFeatureSelector ' +
             'cannot access it.  Be sure it is imported in a loaded module ' +
-            `using StoreModule.forRoot('${featureName}', ...) or ` +
+            `using StoreModule.forRoot({ ${featureName}: ${featureName}Reducer, ... }) or ` +
             `StoreModule.forFeature('${featureName}', ...).  If the default ` +
             'state is intended to be undefined, as is the case with router ' +
             'state, this development-only warning message can be ignored.'
