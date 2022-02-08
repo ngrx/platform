@@ -102,27 +102,14 @@ function addImportToNgModule(options: EffectOptions): Rule {
   };
 }
 
-function getEffectMethod(creators?: boolean) {
-  return creators ? 'createEffect' : 'Effect';
-}
-
-function getEffectStart(
-  name: string,
-  effectPrefix: string,
-  creators?: boolean
-): string {
+function getEffectStart(name: string, effectPrefix: string): string {
   const effectName = stringUtils.classify(name);
   const effectMethodPrefix = stringUtils.camelize(effectPrefix);
 
-  return creators
-    ? `${effectMethodPrefix}${effectName}s$ = createEffect(() => {` +
-        '\n    return this.actions$.pipe( \n'
-    : '@Effect()\n' +
-        `  ${effectMethodPrefix}${effectName}s$ = this.actions$.pipe(`;
-}
-
-function getEffectEnd(creators?: boolean) {
-  return creators ? '  );\n' + '  });' : ');';
+  return (
+    `${effectMethodPrefix}${effectName}s$ = createEffect(() => {` +
+    '\n    return this.actions$.pipe( \n'
+  );
 }
 
 export default function (options: EffectOptions): Rule {
@@ -151,13 +138,9 @@ export default function (options: EffectOptions): Rule {
             options.flat ? '' : s,
             options.group ? 'effects' : ''
           ),
-        effectMethod: getEffectMethod(options.creators),
-        effectStart: getEffectStart(
-          options.name,
-          options.prefix,
-          options.creators
-        ),
-        effectEnd: getEffectEnd(options.creators),
+        effectMethod: 'createEffect',
+        effectStart: getEffectStart(options.name, options.prefix),
+        effectEnd: '  );\n' + '  });',
         ...(options as object),
       } as any),
       move(parsedPath.path),

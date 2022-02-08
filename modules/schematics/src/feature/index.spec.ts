@@ -191,25 +191,6 @@ describe('Feature Schematic', () => {
     );
   });
 
-  it('should have all three api actions in actions type union if api flag enabled and creators=false', async () => {
-    const options = {
-      ...defaultOptions,
-      api: true,
-      creators: false,
-    };
-
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
-    );
-  });
-
   it('should have all api effect if api flag enabled', async () => {
     const options = {
       ...defaultOptions,

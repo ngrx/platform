@@ -57,13 +57,6 @@
       "aliases": ["a"],
       "x-prompt": "Should we generate and wire success and failure actions?"
     },
-    "creators": {
-      "type": "boolean",
-      "default": true,
-      "description": "Specifies if the actions, reducers, and effects should be created using creator functions",
-      "aliases": ["c"],
-      "x-prompt": "Do you want to use the create functions?"
-    },
     "prefix": {
       "description": "The prefix of the action, effect and reducer.",
       "type": "string",

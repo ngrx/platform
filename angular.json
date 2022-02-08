@@ -758,12 +758,6 @@
                 "command": "cpy modules/schematics/src/**/files/**/*.* dist/ --parents"
               },
               {
-                "command": "cpy modules/schematics/src/**/creator-files/**/*.* dist/ --parents"
-              },
-              {
-                "command": "cpy modules/schematics/src/**/common-files/**/*.* dist/ --parents"
-              },
-              {
                 "command": "cpy modules/schematics/src/**/integration-files/**/*.* dist/ --parents"
               },
               {

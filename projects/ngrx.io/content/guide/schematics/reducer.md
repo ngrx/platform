@@ -27,13 +27,6 @@ Provide the project name where the reducer files will be created.
   - Alias: `-p`
   - Type: `string`
 
-Use creator functions to generate the actions and reducer.
-
-- `--creators`
-  - Alias: `-c`
-  - Type: `boolean`
-  - Default: `true`
-
 Nest the reducer file within a folder based on the reducer `name`.
 
 - `--flat`

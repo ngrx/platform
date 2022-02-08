@@ -40,10 +40,4 @@ export interface Schema {
    * should be generated.
    */
   api?: boolean;
-
-  /**
-   * Specifies whether to use creator functions for
-   * handling actions and reducers.
-   */
-  creators?: boolean;
 }

@@ -30,24 +30,21 @@ export default function (options: ActionOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
-    const templateSource = apply(
-      url(options.creators ? './creator-files' : './files'),
-      [
-        options.skipTests
-          ? filter((path) => !path.endsWith('.spec.ts.template'))
-          : noop(),
-        applyTemplates({
-          ...stringUtils,
-          'if-flat': (s: string) =>
-            stringUtils.group(
-              options.flat ? '' : s,
-              options.group ? 'actions' : ''
-            ),
-          ...options,
-        }),
-        move(parsedPath.path),
-      ]
-    );
+    const templateSource = apply(url('./files'), [
+      options.skipTests
+        ? filter((path) => !path.endsWith('.spec.ts.template'))
+        : noop(),
+      applyTemplates({
+        ...stringUtils,
+        'if-flat': (s: string) =>
+          stringUtils.group(
+            options.flat ? '' : s,
+            options.group ? 'actions' : ''
+          ),
+        ...options,
+      }),
+      move(parsedPath.path),
+    ]);
 
     return chain([branchAndMerge(chain([mergeWith(templateSource)]))])(
       host,

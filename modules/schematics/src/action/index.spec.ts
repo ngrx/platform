@@ -93,111 +93,64 @@ describe('Action Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  describe('action classes', () => {
-    const actionClassesDefaultOptions = { ...defaultOptions, creators: false };
+  it('should create a const for the action creator', async () => {
+    const options = {
+      ...defaultOptions,
+    };
 
-    it('should create an enum named "Foo"', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('action', actionClassesDefaultOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
+    const tree = await schematicRunner
+      .runSchematicAsync('action', options, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
 
-      expect(fileContent).toMatch(/export enum FooActionTypes/);
-    });
+    expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
+    expect(fileContent).toMatch(/\[Foo\] Load Foos'/);
+  });
 
-    it('should create a class based on the provided name', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('action', actionClassesDefaultOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
+  it('should create success/error actions when the api flag is set', async () => {
+    const options = {
+      ...defaultOptions,
+      api: true,
+    };
 
-      expect(fileContent).toMatch(/export class LoadFoos implements Action/);
-    });
+    const tree = await schematicRunner
+      .runSchematicAsync('action', options, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
 
-    it('should create the union type based on the provided name', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('action', actionClassesDefaultOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
+    expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
+    expect(fileContent).toMatch(/\[Foo\] Load Foos Success/);
+    expect(fileContent).toMatch(/props<{ data: any }>\(\)/);
+    expect(fileContent).toMatch(/\[Foo\] Load Foos Failure/);
+    expect(fileContent).toMatch(/props<{ error: any }>\(\)/);
+  });
 
-      expect(fileContent).toMatch(/export type FooActions = LoadFoos/);
-    });
+  it.each(['load', 'delete', 'update'])(
+    'should create a action with prefix',
+    async (prefix) => {
+      const options = {
+        ...defaultOptions,
+        prefix: prefix,
+      };
 
-    it('should create spec class with right imports', async () => {
-      const options = { ...actionClassesDefaultOptions };
       const tree = await schematicRunner
         .runSchematicAsync('action', options, appTree)
         .toPromise();
       const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.spec.ts`
-      );
-
-      expect(fileContent).toMatch(/expect\(new FooActions.LoadFoos\(\)\)/);
-    });
-  });
-
-  describe('action creators', () => {
-    const creatorDefaultOptions = { ...defaultOptions };
-
-    it('should create a const for the action creator', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('action', creatorDefaultOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.actions.ts`
       );
-
-      expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-      expect(fileContent).toMatch(/\[Foo\] Load Foos'/);
-    });
-
-    it('should create success/error actions when the api flag is set', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync(
-          'action',
-          { ...creatorDefaultOptions, api: true },
-          appTree
-        )
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
+      expect(fileContent).toMatch(
+        new RegExp(`export const ${prefix}Foos = createAction`)
       );
-
-      expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-      expect(fileContent).toMatch(/\[Foo\] Load Foos Success/);
-      expect(fileContent).toMatch(/props<{ data: any }>\(\)/);
-      expect(fileContent).toMatch(/\[Foo\] Load Foos Failure/);
-      expect(fileContent).toMatch(/props<{ error: any }>\(\)/);
-    });
-
-    it.each(['load', 'delete', 'update'])(
-      'should create a action with prefix',
-      async (prefix) => {
-        const tree = await schematicRunner
-          .runSchematicAsync(
-            'action',
-            { ...creatorDefaultOptions, prefix: prefix },
-            appTree
-          )
-          .toPromise();
-        const fileContent = tree.readContent(
-          `${projectPath}/src/app/foo.actions.ts`
-        );
-        expect(fileContent).toMatch(
-          new RegExp(`export const ${prefix}Foos = createAction`)
-        );
-        expect(fileContent).toMatch(
-          new RegExp(`'\\[Foo] ${capitalize(prefix)} Foos'`)
-        );
-      }
-    );
-  });
+      expect(fileContent).toMatch(
+        new RegExp(`'\\[Foo] ${capitalize(prefix)} Foos'`)
+      );
+    }
+  );
 
   describe('api', () => {
     it('should group within an "actions" folder if group is set', async () => {
@@ -253,27 +206,6 @@ describe('Action Schematic', () => {
 
       expect(fileContent).toMatch(
         /export const loadFoosFailure = createAction\(\r?\n?\s*'\[Foo\] Load Foos Failure'\r?\n?\s*,/
-      );
-    });
-
-    it('should create the union type with success and failure based on the provided name, given api and creators false', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync(
-          'action',
-          {
-            ...defaultOptions,
-            api: true,
-            creators: false,
-          },
-          appTree
-        )
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
-
-      expect(fileContent).toMatch(
-        /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
       );
     });
   });
