@@ -33,7 +33,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         storyId = url.split('/').pop();
 
         if (!storyId) {
-          return throwError(new HttpErrorResponse({ status: 400 }));
+          return throwError(() => new HttpErrorResponse({ status: 400 }));
         }
 
         const obj = data[storyId];
@@ -41,7 +41,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return of(new HttpResponse({ status: 200, body: obj }));
         }
 
-        return throwError(new HttpErrorResponse({ status: 404 }));
+        return throwError(() => new HttpErrorResponse({ status: 404 }));
 
       case 'POST':
         storyId = Date.now().toString();
@@ -58,11 +58,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         storyId = url.split('/').pop();
 
         if (!storyId) {
-          return throwError(new HttpErrorResponse({ status: 400 }));
+          return throwError(() => new HttpErrorResponse({ status: 400 }));
         }
 
         if (!data[storyId]) {
-          return throwError(new HttpErrorResponse({ status: 404 }));
+          return throwError(() => new HttpErrorResponse({ status: 404 }));
         }
 
         data[storyId] = {
@@ -77,7 +77,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         storyId = url.split('/').pop();
 
         if (!storyId) {
-          return throwError(new HttpErrorResponse({ status: 400 }));
+          return throwError(() => new HttpErrorResponse({ status: 400 }));
         }
 
         delete data[storyId];
@@ -85,7 +85,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(new HttpResponse({ status: 200, body: storyId }));
 
       default:
-        return throwError(new HttpErrorResponse({ status: 501 }));
+        return throwError(() => new HttpErrorResponse({ status: 501 }));
     }
   }
 }

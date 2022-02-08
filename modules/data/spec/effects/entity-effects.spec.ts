@@ -553,10 +553,10 @@ export class TestDataService {
 
   setErrorResponse(methodName: keyof TestDataServiceMethod, error: any) {
     // Following won't quite work because delay does not appear to delay an error
-    // this[methodName].and.returnValue(throwError(error).pipe(delay(1)));
+    // this[methodName].and.returnValue(throwError(() => error).pipe(delay(1)));
     // Use timer instead
     this[methodName].and.returnValue(
-      timer(1).pipe(mergeMap(() => throwError(error)))
+      timer(1).pipe(mergeMap(() => throwError(() => error)))
     );
   }
 }

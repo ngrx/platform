@@ -50,11 +50,8 @@ describe('EntityCollectionService', () => {
     let reducedActions$Snoop: () => void;
 
     beforeEach(() => {
-      ({
-        heroCollectionService,
-        reducedActions$Snoop,
-        dataService,
-      } = entityServicesSetup());
+      ({ heroCollectionService, reducedActions$Snoop, dataService } =
+        entityServicesSetup());
     });
 
     // Compare to next test which subscribes to getAll() result
@@ -167,11 +164,8 @@ describe('EntityCollectionService', () => {
     let reducedActions$Snoop: () => void;
 
     beforeEach(() => {
-      ({
-        dataService,
-        heroCollectionService,
-        reducedActions$Snoop,
-      } = entityServicesSetup());
+      ({ dataService, heroCollectionService, reducedActions$Snoop } =
+        entityServicesSetup());
     });
 
     it('can cancel a long running query', (done: any) => {
@@ -478,16 +472,14 @@ function entityServicesSetup() {
   const dataService: TestDataService = TestBed.inject<unknown>(
     EntityDataService
   ) as TestDataService;
-  const entityActionFactory: EntityActionFactory = TestBed.inject(
-    EntityActionFactory
-  );
+  const entityActionFactory: EntityActionFactory =
+    TestBed.inject(EntityActionFactory);
   const entityDispatcherFactory: EntityDispatcherFactory = TestBed.inject(
     EntityDispatcherFactory
   );
   const entityServices: EntityServices = TestBed.inject(EntityServices);
-  const heroCollectionService = entityServices.getEntityCollectionService<Hero>(
-    'Hero'
-  );
+  const heroCollectionService =
+    entityServices.getEntityCollectionService<Hero>('Hero');
   const reducedActions$: Observable<Action> =
     entityDispatcherFactory.reducedActions$;
   const store: Store<EntityCache> = TestBed.inject(Store);
@@ -618,10 +610,10 @@ export class TestDataService {
 
   setErrorResponse(methodName: keyof TestDataServiceMethod, error: any) {
     // Following won't quite work because delay does not appear to delay an error
-    // this[methodName].and.returnValue(throwError(error).pipe(delay(1)));
+    // this[methodName].and.returnValue(throwError(() => error).pipe(delay(1)));
     // Use timer instead
     this[methodName].and.returnValue(
-      timer(1).pipe(mergeMap(() => throwError(error)))
+      timer(1).pipe(mergeMap(() => throwError(() => error)))
     );
   }
 }

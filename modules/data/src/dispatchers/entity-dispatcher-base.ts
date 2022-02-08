@@ -590,10 +590,10 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
       mergeMap((act) => {
         const { entityOp } = act.payload;
         return entityOp === EntityOp.CANCEL_PERSIST
-          ? throwError(new PersistanceCanceled(act.payload.data))
+          ? throwError(() => new PersistanceCanceled(act.payload.data))
           : entityOp.endsWith(OP_SUCCESS)
           ? of(act.payload.data as D)
-          : throwError(act.payload.data.error);
+          : throwError(() => act.payload.data.error);
       })
     );
   }

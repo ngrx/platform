@@ -93,7 +93,7 @@ describe('Effects Error Handler', () => {
   }
 
   class AlwaysErrorEffect {
-    effect$ = createEffect(() => throwError('always an error') as any);
+    effect$ = createEffect(() => throwError(() => 'always an error') as any);
   }
 
   /**

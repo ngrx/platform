@@ -122,7 +122,7 @@ export function effectResubscriptionHandler&gt;T extends Action&lt;(
           }
 
           errorHandler.handleError(e);
-          return throwError(e);
+          return throwError(() => e);
         })
       )
     )

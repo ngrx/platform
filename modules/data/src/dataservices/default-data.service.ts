@@ -162,7 +162,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       }
       default: {
         const error = new Error('Unimplemented HTTP method, ' + method);
-        result$ = throwError(error);
+        result$ = throwError(() => error);
       }
     }
     if (this.timeout) {
@@ -178,7 +178,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
         return ok;
       }
       const error = new DataServiceError(err, reqData);
-      return throwError(error);
+      return throwError(() => error);
     };
   }
 

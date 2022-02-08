@@ -15,7 +15,9 @@ describe('tapResponse', () => {
     const errorCallback = jest.fn<void, [{ message: string }]>();
     const error = { message: 'error' };
 
-    throwError(error).pipe(tapResponse(noop, errorCallback)).subscribe();
+    throwError(() => error)
+      .pipe(tapResponse(noop, errorCallback))
+      .subscribe();
 
     expect(errorCallback).toHaveBeenCalledWith(error);
   });
@@ -35,7 +37,7 @@ describe('tapResponse', () => {
     new Observable((subscriber) => subscriber.next(1))
       .pipe(
         concatMap(() =>
-          throwError('error').pipe(
+          throwError(() => 'error').pipe(
             tapResponse(noop, noop),
             finalize(innerCompleteCallback)
           )

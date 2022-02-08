@@ -206,13 +206,14 @@ export class EntityCacheDispatcher {
       mergeMap((act) => {
         return act.type === EntityCacheAction.SAVE_ENTITIES_CANCEL
           ? throwError(
-              new PersistanceCanceled(
-                (act as SaveEntitiesCancel).payload.reason
-              )
+              () =>
+                new PersistanceCanceled(
+                  (act as SaveEntitiesCancel).payload.reason
+                )
             )
           : act.type === EntityCacheAction.SAVE_ENTITIES_SUCCESS
           ? of((act as SaveEntitiesSuccess).payload.changeSet)
-          : throwError((act as SaveEntitiesError).payload);
+          : throwError(() => (act as SaveEntitiesError).payload);
       })
     );
   }
