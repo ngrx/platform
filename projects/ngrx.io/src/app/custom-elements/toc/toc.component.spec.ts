@@ -497,7 +497,7 @@ class TestTocService {
     setActiveIndex(index: number | null) {
         this.activeItemIndex.next(index);
         if (asapScheduler.actions.length > 0) {
-          asapScheduler.flush();
+            asapScheduler.flush();
         }
     }
 }
