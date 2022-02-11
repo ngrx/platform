@@ -35,7 +35,7 @@ export class ContributorListComponent implements OnInit, OnDestroy {
     groupNames: string[];
     selectedGroup: ContributorGroup;
     contributorPage$: Observable<number>;
-    destroy$ = new Subject();
+    destroy$ = new Subject<void>();
 
     constructor(
         private contributorService: ContributorService,
