@@ -71,10 +71,10 @@ describe('EntityCollectionService', () => {
           filter((loading) => !loading),
           withLatestFrom(heroCollectionService.entities$)
         )
-        .subscribe(([loading, data]) => {
+        .subscribe({([loading, data]) => {
           expect(data).toEqual(heroes);
           done();
-        });
+        }});
     });
 
     // Compare to previous test the waits for loading$ flag to flip
@@ -83,7 +83,7 @@ describe('EntityCollectionService', () => {
       const hero2 = { id: 2, name: 'B' } as Hero;
       const heroes = [hero1, hero2];
       dataService.setResponse('getAll', heroes);
-      heroCollectionService.getAll().subscribe(expectDataToBe(heroes, done));
+      heroCollectionService.getAll().subscribe({expectDataToBe(heroes, done)});
 
       // reducedActions$Snoop(); // diagnostic
     });
@@ -92,13 +92,13 @@ describe('EntityCollectionService', () => {
       const httpError = { error: new Error('Test Failure'), status: 501 };
       const error = makeDataServiceError('GET', httpError);
       dataService.setErrorResponse('getAll', error);
-      heroCollectionService.getAll().subscribe(expectErrorToBe(error, done));
+      heroCollectionService.getAll().subscribe({expectErrorToBe(error, done)});
     });
 
     it('getByKey observable should emit a hero on success', (done: any) => {
       const hero = { id: 1, name: 'A' } as Hero;
       dataService.setResponse('getById', hero);
-      heroCollectionService.getByKey(1).subscribe(expectDataToBe(hero, done));
+      heroCollectionService.getByKey(1).subscribe({expectDataToBe(hero, done)});
     });
 
     it('getByKey observable should emit expected error when data service fails', (done: any) => {
@@ -117,7 +117,7 @@ describe('EntityCollectionService', () => {
       dataService.setErrorResponse('getById', error);
       heroCollectionService
         .getByKey(42)
-        .subscribe(expectErrorToBe(error, done));
+        .subscribe({expectErrorToBe(error, done)});
     });
 
     it('getWithQuery observable should emit heroes on success', (done: any) => {
@@ -127,7 +127,7 @@ describe('EntityCollectionService', () => {
       dataService.setResponse('getWithQuery', heroes);
       heroCollectionService
         .getWithQuery({ name: 'foo' })
-        .subscribe(expectDataToBe(heroes, done));
+        .subscribe({expectDataToBe(heroes, done)});
 
       // reducedActions$Snoop(); // diagnostic
     });
@@ -138,7 +138,7 @@ describe('EntityCollectionService', () => {
       dataService.setErrorResponse('getWithQuery', error);
       heroCollectionService
         .getWithQuery({ name: 'foo' })
-        .subscribe(expectErrorToBe(error, done));
+        .subscribe({expectErrorToBe(error, done)});
     });
 
     it('load observable should emit heroes on success', (done: any) => {
@@ -146,14 +146,14 @@ describe('EntityCollectionService', () => {
       const hero2 = { id: 2, name: 'B' } as Hero;
       const heroes = [hero1, hero2];
       dataService.setResponse('getAll', heroes);
-      heroCollectionService.load().subscribe(expectDataToBe(heroes, done));
+      heroCollectionService.load().subscribe({expectDataToBe(heroes, done)});
     });
 
     it('load observable should emit expected error when data service fails', (done: any) => {
       const httpError = { error: new Error('Test Failure'), status: 501 };
       const error = makeDataServiceError('GET', httpError);
       dataService.setErrorResponse('getAll', error);
-      heroCollectionService.load().subscribe(expectErrorToBe(error, done));
+      heroCollectionService.load().subscribe({expectErrorToBe(error, done)});
     });
   });
 
@@ -183,14 +183,14 @@ describe('EntityCollectionService', () => {
       // Create the correlation id yourself to know which action to cancel.
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe(
+      heroCollectionService.getAll(options).subscribe({
         (data) => fail('should not have data but got data'),
         (error) => {
           expect(error instanceof PersistanceCanceled).toBe(true);
           expect(error.message).toBe('Test cancel');
           done();
         }
-      );
+      });
 
       heroCollectionService.cancel(correlationId, 'Test cancel');
     });
@@ -203,10 +203,10 @@ describe('EntityCollectionService', () => {
 
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe((data) => {
+      heroCollectionService.getAll(options).subscribe({(data) => {
         expect(data).toEqual(heroes);
         done();
-      }, fail);
+      }, fail});
 
       heroCollectionService.cancel('not-the-crid');
     });
@@ -221,7 +221,7 @@ describe('EntityCollectionService', () => {
       const options: EntityActionOptions = { correlationId };
       heroCollectionService
         .getAll(options)
-        .subscribe((data) => expect(data).toEqual(heroes), fail);
+        .subscribe({(data) => expect(data).toEqual(heroes), fail});
 
       setTimeout(
         () => heroCollectionService.cancel(correlationId),
@@ -287,7 +287,7 @@ describe('EntityCollectionService', () => {
       dataService.setResponse('add', hero);
       heroCollectionService
         .add(hero)
-        .subscribe(expectDataToBe(hero, done, undefined, extra));
+        .subscribe({expectDataToBe(hero, done, undefined, extra)});
     });
 
     it('add() observable should emit expected error when data service fails', (done: any) => {
@@ -295,7 +295,7 @@ describe('EntityCollectionService', () => {
       const httpError = { error: new Error('Test Failure'), status: 501 };
       const error = makeDataServiceError('PUT', httpError);
       dataService.setErrorResponse('add', error);
-      heroCollectionService.add(hero).subscribe(expectErrorToBe(error, done));
+      heroCollectionService.add(hero).subscribe({expectErrorToBe(error, done)});
     });
 
     it('delete() should send delete for entity not in cache and return its id', (done: any) => {
@@ -303,15 +303,15 @@ describe('EntityCollectionService', () => {
       dataService.setResponse('delete', 42);
       heroCollectionService
         .delete(42)
-        .subscribe(expectDataToBe(42, done, undefined, extra));
+        .subscribe({expectDataToBe(42, done, undefined, extra)});
     });
 
     it('delete() should skip delete for added entity cache', (done: any) => {
       // reducedActions$Snoop();
       let wasSkipped: boolean;
-      successActions$.subscribe(
+      successActions$.subscribe({
         (act: EntityAction) => (wasSkipped = act.payload.skip === true)
-      );
+      });
       const extra = () => expect(wasSkipped).toBe(true);
 
       const hero = { id: 1, name: 'A' } as Hero;
@@ -319,14 +319,14 @@ describe('EntityCollectionService', () => {
       dataService.setResponse('delete', 1);
       heroCollectionService
         .delete(1)
-        .subscribe(expectDataToBe(1, done, undefined, extra));
+        .subscribe({expectDataToBe(1, done, undefined, extra)});
     });
 
     it('delete() observable should emit expected error when data service fails', (done: any) => {
       const httpError = { error: new Error('Test Failure'), status: 501 };
       const error = makeDataServiceError('DELETE', httpError);
       dataService.setErrorResponse('delete', error);
-      heroCollectionService.delete(42).subscribe(expectErrorToBe(error, done));
+      heroCollectionService.delete(42).subscribe({expectErrorToBe(error, done)});
     });
 
     it('update() should save updated entity and return it', (done: any) => {
@@ -337,7 +337,7 @@ describe('EntityCollectionService', () => {
       dataService.setResponse('update', null); // server returns nothing after update
       heroCollectionService
         .update(update)
-        .subscribe(expectDataToBe(update, done, undefined, extra));
+        .subscribe({expectDataToBe(update, done, undefined, extra)});
     });
 
     it('update() should save updated entity and return server-changed version', (done: any) => {
@@ -353,7 +353,7 @@ describe('EntityCollectionService', () => {
       dataService.setResponse('update', postUpdate); // server returns entity with server-side changes
       heroCollectionService
         .update(update)
-        .subscribe(expectDataToBe(postUpdate, done, undefined, extra));
+        .subscribe({expectDataToBe(postUpdate, done, undefined, extra)});
     });
 
     it('update() observable should emit expected error when data service fails', (done: any) => {
@@ -365,7 +365,7 @@ describe('EntityCollectionService', () => {
       dataService.setErrorResponse('update', error);
       heroCollectionService
         .update(update)
-        .subscribe(expectErrorToBe(error, done));
+        .subscribe({expectErrorToBe(error, done)});
     });
 
     it('can handle out-of-order save results', (done: any) => {
@@ -376,7 +376,7 @@ describe('EntityCollectionService', () => {
       let responseDelay = delayMs;
       const savedHeroes: Hero[] = [];
 
-      successActions$.pipe(delay(1)).subscribe((act) => {
+      successActions$.pipe(delay(1)).subscribe({(act) => {
         successActionCount += 1;
         if (successActionCount === 2) {
           // Confirm hero2 actually saved before hero1
@@ -400,11 +400,11 @@ describe('EntityCollectionService', () => {
       // Confirm that each add returns with its own hero
       heroCollectionService
         .add(hero1)
-        .subscribe((data) => expect(data).toEqual(hero1));
+        .subscribe({(data) => expect(data).toEqual(hero1)});
 
       heroCollectionService
         .add(hero2)
-        .subscribe((data) => expect(data).toEqual(hero2));
+        .subscribe({(data) => expect(data).toEqual(hero2)});
     });
   }
 
@@ -428,9 +428,9 @@ describe('EntityCollectionService', () => {
         { id: 1, name: 'A' },
       ]);
       store.dispatch(action);
-      heroCollectionService.collection$.subscribe((collection) => {
+      heroCollectionService.collection$.subscribe({(collection) => {
         expect(collection.ids).toEqual([1]);
-      });
+      }});
     });
   });
 });
@@ -501,17 +501,17 @@ function entityServicesSetup() {
   function expectOptimisticSuccess(expected: boolean) {
     let wasOptimistic: boolean;
     const msg = `${expected ? 'Optimistic' : 'Pessimistic'} save `;
-    successActions$.subscribe(
+    successActions$.subscribe({
       (act: EntityAction) => (wasOptimistic = act.payload.isOptimistic === true)
-    );
+    });
     return () => expect(wasOptimistic).toBe(expected);
   }
 
   /** Snoop on reducedActions$ while debugging a test */
   function reducedActions$Snoop() {
-    reducedActions$.subscribe((act) => {
+    reducedActions$.subscribe({(act) => {
       console.log('scannedActions$', act);
-    });
+    }});
   }
 
   return {
