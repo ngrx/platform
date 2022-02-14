@@ -112,7 +112,7 @@ describe('EntityDataModule', () => {
           // tap(act => console.log('test action', act)),
           skip(1) // Skip QUERY_ALL
         )
-        .subscribe({(act) => actions.push(act)});
+        .subscribe((act) => actions.push(act));
 
       const action = entityActionFactory.create('Hero', EntityOp.QUERY_ALL);
       store.dispatch(action);
@@ -124,7 +124,7 @@ describe('EntityDataModule', () => {
       const actions: Action[] = [];
 
       // listen for actions after the next dispatched action
-      actions$.pipe(skip(1)).subscribe({(act) => actions.push(act)});
+      actions$.pipe(skip(1)).subscribe((act) => actions.push(act));
 
       store.dispatch({ type: 'not-an-entity-action' });
       expect(actions.length).toBe(0);
@@ -197,16 +197,19 @@ describe('EntityDataModule', () => {
         payload: data,
       };
       store.dispatch(action);
-      cacheSelector$.subscribe({(cache) => {
-        try {
-          expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
-          expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
-          expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
-          done();
-        } catch (error: any) {
-          fail(error);
-        }
-      }, fail});
+      cacheSelector$.subscribe({
+        next: (cache) => {
+          try {
+            expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
+            expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
+            expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
+            done();
+          } catch (error: any) {
+            fail(error);
+          }
+        },
+        error: fail,
+      });
     });
   });
 });
