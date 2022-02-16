@@ -124,7 +124,7 @@ export class ScrollSpiedElementGroup {
 @Injectable()
 export class ScrollSpyService {
     private spiedElementGroups: ScrollSpiedElementGroup[] = [];
-    private onStopListening = new Subject();
+    private onStopListening = new Subject<void>();
     private resizeEvents = fromEvent(window, 'resize').pipe(
         auditTime(300),
         takeUntil(this.onStopListening)

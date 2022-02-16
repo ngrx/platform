@@ -27,7 +27,7 @@
     "@ngrx/entity": "^13.0.2",
     "@ngrx/router-store": "^13.0.2",
     "@ngrx/store": "^13.0.2",
-    "rxjs": "~6.6.0",
+    "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
@@ -41,7 +41,7 @@
     "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
-    "jasmine-marbles": "^0.5.0",
+    "jasmine-marbles": "^0.9.1",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.3.2",
     "karma-chrome-launcher": "~3.1.0",
