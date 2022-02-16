@@ -42,7 +42,8 @@ describe('EntityCacheEffects (normal testing)', () => {
         done();
       },
       error: fail,
-  });
+    });
+  }
 
   beforeEach(() => {
     actions$ = new ReplaySubject<Action>(1);
@@ -127,7 +128,6 @@ describe('EntityCacheEffects (normal testing)', () => {
   });
 
   it('should emit SAVE_ENTITIES_SUCCESS immediately if no changes to save', (done: any) => {
-    const action = new SaveEntities({ changes: [] }, 'test/save', options);
     effects.saveEntities$.subscribe({
       next: (result) => {
         expect(result instanceof SaveEntitiesSuccess).toBe(true);
@@ -135,6 +135,7 @@ describe('EntityCacheEffects (normal testing)', () => {
         done();
       },
       error: done.fail,
+    });
   });
 
   xit('should return a SAVE_ENTITIES_ERROR when data service fails', (done: any) => {
