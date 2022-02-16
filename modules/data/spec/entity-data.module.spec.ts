@@ -197,16 +197,19 @@ describe('EntityDataModule', () => {
         payload: data,
       };
       store.dispatch(action);
-      cacheSelector$.subscribe((cache) => {
-        try {
-          expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
-          expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
-          expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
-          done();
-        } catch (error: any) {
-          fail(error);
-        }
-      }, fail);
+      cacheSelector$.subscribe({
+        next: (cache) => {
+          try {
+            expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
+            expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
+            expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
+            done();
+          } catch (error: any) {
+            fail(error);
+          }
+        },
+        error: fail,
+      });
     });
   });
 });

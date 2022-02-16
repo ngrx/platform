@@ -50,11 +50,8 @@ describe('EntityCollectionService', () => {
     let reducedActions$Snoop: () => void;
 
     beforeEach(() => {
-      ({
-        heroCollectionService,
-        reducedActions$Snoop,
-        dataService,
-      } = entityServicesSetup());
+      ({ heroCollectionService, reducedActions$Snoop, dataService } =
+        entityServicesSetup());
     });
 
     // Compare to next test which subscribes to getAll() result
@@ -167,11 +164,8 @@ describe('EntityCollectionService', () => {
     let reducedActions$Snoop: () => void;
 
     beforeEach(() => {
-      ({
-        dataService,
-        heroCollectionService,
-        reducedActions$Snoop,
-      } = entityServicesSetup());
+      ({ dataService, heroCollectionService, reducedActions$Snoop } =
+        entityServicesSetup());
     });
 
     it('can cancel a long running query', (done: any) => {
@@ -183,14 +177,14 @@ describe('EntityCollectionService', () => {
       // Create the correlation id yourself to know which action to cancel.
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe(
-        (data) => fail('should not have data but got data'),
-        (error) => {
+      heroCollectionService.getAll(options).subscribe({
+        next: (data) => fail('should not have data but got data'),
+        error: (error) => {
           expect(error instanceof PersistanceCanceled).toBe(true);
           expect(error.message).toBe('Test cancel');
           done();
-        }
-      );
+        },
+      });
 
       heroCollectionService.cancel(correlationId, 'Test cancel');
     });
@@ -203,10 +197,13 @@ describe('EntityCollectionService', () => {
 
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe((data) => {
-        expect(data).toEqual(heroes);
-        done();
-      }, fail);
+      heroCollectionService.getAll(options).subscribe({
+        next: (data) => {
+          expect(data).toEqual(heroes);
+          done();
+        },
+        error: fail,
+      });
 
       heroCollectionService.cancel('not-the-crid');
     });
@@ -219,9 +216,10 @@ describe('EntityCollectionService', () => {
 
       const correlationId = 'CRID007';
       const options: EntityActionOptions = { correlationId };
-      heroCollectionService
-        .getAll(options)
-        .subscribe((data) => expect(data).toEqual(heroes), fail);
+      heroCollectionService.getAll(options).subscribe({
+        next: (data) => expect(data).toEqual(heroes),
+        error: fail,
+      });
 
       setTimeout(
         () => heroCollectionService.cancel(correlationId),
@@ -478,16 +476,14 @@ function entityServicesSetup() {
   const dataService: TestDataService = TestBed.inject<unknown>(
     EntityDataService
   ) as TestDataService;
-  const entityActionFactory: EntityActionFactory = TestBed.inject(
-    EntityActionFactory
-  );
+  const entityActionFactory: EntityActionFactory =
+    TestBed.inject(EntityActionFactory);
   const entityDispatcherFactory: EntityDispatcherFactory = TestBed.inject(
     EntityDispatcherFactory
   );
   const entityServices: EntityServices = TestBed.inject(EntityServices);
-  const heroCollectionService = entityServices.getEntityCollectionService<Hero>(
-    'Hero'
-  );
+  const heroCollectionService =
+    entityServices.getEntityCollectionService<Hero>('Hero');
   const reducedActions$: Observable<Action> =
     entityDispatcherFactory.reducedActions$;
   const store: Store<EntityCache> = TestBed.inject(Store);
