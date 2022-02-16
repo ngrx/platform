@@ -120,7 +120,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
                   withLatestFrom(this.stateSubject$)
                 )
               : // If state was not initialized, we'll throw an error.
-                throwError(new Error(this.notInitializedErrorMessage))
+                throwError(() => new Error(this.notInitializedErrorMessage))
           ),
           takeUntil(this.destroy$)
         )

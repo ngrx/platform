@@ -149,7 +149,9 @@ describe('CdAware', () => {
 
     it('error handling', () => {
       const error = 'Error!';
-      cdAwareImplementation.cdAware.nextPotentialObservable(throwError(error));
+      cdAwareImplementation.cdAware.nextPotentialObservable(
+        throwError(() => error)
+      );
       expect(cdAwareImplementation.renderedValue).toBe(undefined);
       expect(cdAwareImplementation.error).toBe(error);
       expect(cdAwareImplementation.completed).toBe(false);

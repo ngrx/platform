@@ -314,7 +314,9 @@ describe('LetDirective', () => {
     });
 
     it('should render_creator the error to true if one occurs', () => {
-      letDirectiveTestComponent.value$ = throwError(new Error('error message'));
+      letDirectiveTestComponent.value$ = throwError(
+        () => new Error('error message')
+      );
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
     });

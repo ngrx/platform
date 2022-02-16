@@ -79,7 +79,7 @@ export class EntityCacheDataService {
   protected handleError(reqData: RequestData) {
     return (err: any) => {
       const error = new DataServiceError(err, reqData);
-      return throwError(error);
+      return throwError(() => error);
     };
   }
 
@@ -156,8 +156,8 @@ export class EntityCacheDataService {
   protected getIdSelector(entityName: string) {
     let idSelector = this.idSelectors[entityName];
     if (!idSelector) {
-      idSelector = this.entityDefinitionService.getDefinition(entityName)
-        .selectId;
+      idSelector =
+        this.entityDefinitionService.getDefinition(entityName).selectId;
       this.idSelectors[entityName] = idSelector;
     }
     return idSelector;

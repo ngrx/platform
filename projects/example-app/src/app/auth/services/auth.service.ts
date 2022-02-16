@@ -15,7 +15,7 @@ export class AuthService {
      * message for the login form.
      */
     if (username !== 'test' && username !== 'ngrx') {
-      return throwError('Invalid username or password');
+      return throwError(() => 'Invalid username or password');
     }
 
     return of({ name: 'User' });

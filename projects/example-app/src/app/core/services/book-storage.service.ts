@@ -23,7 +23,7 @@ export class BookStorageService {
   supported(): Observable<boolean> {
     return this.storage !== null
       ? of(true)
-      : throwError('Local Storage Not Supported');
+      : throwError(() => 'Local Storage Not Supported');
   }
 
   getCollection(): Observable<Book[]> {
