@@ -11,7 +11,6 @@ import {
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageActions } from '@example-app/books/actions';
-import * as fromBooks from '@example-app/books/reducers';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { MaterialModule } from '@example-app/material';
 

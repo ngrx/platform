@@ -26,7 +26,7 @@ export const reducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(CollectionApiActions.loadBooksSuccess, (state, { books }) => ({
+  on(CollectionApiActions.loadBooksSuccess, (_state, { books }) => ({
     loaded: true,
     loading: false,
     ids: books.map((book) => book.id),

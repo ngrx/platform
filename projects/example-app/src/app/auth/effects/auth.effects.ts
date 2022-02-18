@@ -42,7 +42,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthApiActions.loginRedirect, AuthActions.logout),
-        tap((authed) => {
+        tap((_authed) => {
           this.router.navigate(['/login']);
         })
       ),
