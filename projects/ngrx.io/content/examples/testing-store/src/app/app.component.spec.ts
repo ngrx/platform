@@ -5,20 +5,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AppState } from './state/app.state';
 import { AppComponent } from './app.component';
-import {
-  addBook,
-  removeBook,
-  retrievedBookList,
-} from './state/books.actions';
+import { addBook, removeBook, retrievedBookList } from './state/books.actions';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import {
-  selectBooks,
-  selectCollectionIds,
-  selectBookCollection,
-} from './state/books.selectors';
+import { selectBooks, selectBookCollection } from './state/books.selectors';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -86,9 +78,7 @@ describe('AppComponent', () => {
 
   it('add method should dispatch add action', () => {
     component.onAdd('firstId');
-    expect(store.dispatch).toHaveBeenCalledWith(
-      addBook({ bookId: 'firstId' })
-    );
+    expect(store.dispatch).toHaveBeenCalledWith(addBook({ bookId: 'firstId' }));
   });
 
   it('remove method should dispatch remove action', () => {
