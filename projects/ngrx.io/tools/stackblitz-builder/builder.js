@@ -319,7 +319,7 @@ class StackblitzBuilder {
     let includeSpec = false;
     const gpaths = config.files.map(function (fileName) {
       fileName = fileName.trim();
-      if (fileName.substr(0, 1) == '!') {
+      if (fileName[0] === '!') {
         return '!' + path.join(config.basePath, fileName.substr(1));
       } else {
         includeSpec = includeSpec || /\.spec\.(ts|js)$/.test(fileName);
