@@ -1,12 +1,5 @@
-import {
-  TestBed,
-  async,
-  ComponentFixture,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import {
   HttpClientTestingModule,
@@ -23,54 +16,58 @@ import { booksReducer } from './state/books.reducer';
 describe('AppComponent Integration Test', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let booksService: GoogleBooksService;
   let httpMock: HttpTestingController;
 
-  beforeEach(async((done: any) => {
-    TestBed.configureTestingModule({
-      declarations: [AppComponent, BookListComponent, BookCollectionComponent],
-      imports: [
-        HttpClientTestingModule,
-        StoreModule.forRoot({
-          books: booksReducer,
-          collection: collectionReducer,
-        }),
-      ],
-      providers: [GoogleBooksService],
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          AppComponent,
+          BookListComponent,
+          BookCollectionComponent,
+        ],
+        imports: [
+          HttpClientTestingModule,
+          StoreModule.forRoot({
+            books: booksReducer,
+            collection: collectionReducer,
+          }),
+        ],
+        providers: [GoogleBooksService],
+      }).compileComponents();
 
-    booksService = TestBed.get(GoogleBooksService);
-    httpMock = TestBed.get(HttpTestingController);
+      httpMock = TestBed.inject(HttpTestingController);
 
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.debugElement.componentInstance;
+      fixture = TestBed.createComponent(AppComponent);
+      component = fixture.debugElement.componentInstance;
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    const req = httpMock.expectOne(
-      'https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=oliver%20sacks'
-    );
-    req.flush({
-      items: [
-        {
-          id: 'firstId',
-          volumeInfo: {
-            title: 'First Title',
-            authors: ['First Author'],
+      const req = httpMock.expectOne(
+        'https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=oliver%20sacks'
+      );
+      req.flush({
+        items: [
+          {
+            id: 'firstId',
+            volumeInfo: {
+              title: 'First Title',
+              authors: ['First Author'],
+            },
           },
-        },
-        {
-          id: 'secondId',
-          volumeInfo: {
-            title: 'Second Title',
-            authors: ['Second Author'],
+          {
+            id: 'secondId',
+            volumeInfo: {
+              title: 'Second Title',
+              authors: ['Second Author'],
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
 
-    fixture.detectChanges();
-  }));
+      fixture.detectChanges();
+    })
+  );
 
   afterEach(() => {
     httpMock.verify();
