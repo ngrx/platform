@@ -28,7 +28,7 @@ class StackblitzBuilder {
     });
     fileNames.forEach((configFileName) => {
       try {
-        console.log('***' + configFileName);
+        // console.log('***' + configFileName);
         this._buildStackblitzFrom(configFileName);
       } catch (e) {
         console.log(e);
