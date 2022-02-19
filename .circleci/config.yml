@@ -311,16 +311,14 @@ workflows:
           requires:
             - install
           filters:
-            branches:
-              only: master
             tags:
               only: /.*/
-      - test-affected:
-          requires:
-            - install
-          filters:
-            branches:
-              ignore: master
+      # - test-affected:
+      #     requires:
+      #       - install
+      #     filters:
+      #       branches:
+      #         ignore: master
       - build:
           requires:
             - install
