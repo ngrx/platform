@@ -4,10 +4,8 @@ import {
   applyTemplates,
   branchAndMerge,
   chain,
-  filter,
   mergeWith,
   move,
-  noop,
   url,
   Tree,
   SchematicContext,
@@ -31,9 +29,6 @@ export default function (options: ActionOptions): Rule {
     options.path = parsedPath.path;
 
     const templateSource = apply(url('./files'), [
-      options.skipTests
-        ? filter((path) => !path.endsWith('.spec.ts.template'))
-        : noop(),
       applyTemplates({
         ...stringUtils,
         'if-flat': (s: string) =>

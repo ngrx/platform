@@ -49,8 +49,8 @@ describe('Action Schematic', () => {
       .toPromise();
     const files = tree.files;
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
+    ).toBeTruthy();
   });
 
   it('should create one file', async () => {
@@ -58,11 +58,11 @@ describe('Action Schematic', () => {
       .runSchematicAsync('action', defaultOptions, appTree)
       .toPromise();
     expect(
-      tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      tree.files.includes(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeTruthy();
   });
 
-  it('should create two files test files by default', async () => {
+  it('should not create test files', async () => {
     const options = {
       ...defaultOptions,
     };
@@ -70,27 +70,8 @@ describe('Action Schematic', () => {
       .runSchematicAsync('action', options, appTree)
       .toPromise();
     expect(
-      tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
-    expect(
-      tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
-  });
-
-  it('should not create test files when skipTests is set to true', async () => {
-    const options = {
-      ...defaultOptions,
-      skipTests: true,
-    };
-    const tree = await schematicRunner
-      .runSchematicAsync('action', options, appTree)
-      .toPromise();
-    expect(
-      tree.files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
-    ).toEqual(-1);
-    expect(
-      tree.files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      tree.files.includes(`${projectPath}/src/app/foo.actions.spec.ts`)
+    ).toBe(false);
   });
 
   it('should create a const for the action creator', async () => {
@@ -165,8 +146,8 @@ describe('Action Schematic', () => {
         )
         .toPromise();
       expect(
-        tree.files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
-      ).toBeGreaterThanOrEqual(0);
+        tree.files.includes(`${projectPath}/src/app/actions/foo.actions.ts`)
+      ).toBeTruthy();
     });
 
     it('should create a success class based on the provided name, given api', async () => {
