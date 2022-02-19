@@ -1,5 +1,5 @@
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AppState } from './state/app.state';
@@ -18,71 +18,66 @@ describe('AppComponent', () => {
   let mockBookCollectionSelector;
   let mockBooksSelector;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        providers: [provideMockStore()],
-        imports: [HttpClientTestingModule],
-        declarations: [
-          BookListComponent,
-          BookCollectionComponent,
-          AppComponent,
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideMockStore()],
+      imports: [HttpClientTestingModule],
+      declarations: [BookListComponent, BookCollectionComponent, AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    });
 
-      store = TestBed.inject(MockStore);
-      fixture = TestBed.createComponent(AppComponent);
-      component = fixture.componentInstance;
+    store = TestBed.inject(MockStore);
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
 
-      mockBooksSelector = store.overrideSelector(selectBooks, [
-        {
-          id: 'firstId',
-          volumeInfo: {
-            title: 'First Title',
-            authors: ['First Author'],
-          },
+    mockBooksSelector = store.overrideSelector(selectBooks, [
+      {
+        id: 'firstId',
+        volumeInfo: {
+          title: 'First Title',
+          authors: ['First Author'],
         },
-        {
-          id: 'secondId',
-          volumeInfo: {
-            title: 'Second Title',
-            authors: ['Second Author'],
-          },
+      },
+      {
+        id: 'secondId',
+        volumeInfo: {
+          title: 'Second Title',
+          authors: ['Second Author'],
         },
-        {
-          id: 'thirdId',
-          volumeInfo: {
-            title: 'Third Title',
-            authors: ['Third Author'],
-          },
+      },
+      {
+        id: 'thirdId',
+        volumeInfo: {
+          title: 'Third Title',
+          authors: ['Third Author'],
         },
-        {
-          id: 'fourthId',
-          volumeInfo: {
-            title: 'Fourth Title',
-            authors: ['Fourth Author'],
-          },
+      },
+      {
+        id: 'fourthId',
+        volumeInfo: {
+          title: 'Fourth Title',
+          authors: ['Fourth Author'],
         },
-      ]);
+      },
+    ]);
 
-      mockBookCollectionSelector = store.overrideSelector(
-        selectBookCollection,
-        [
-          {
-            id: 'thirdId',
-            volumeInfo: {
-              title: 'Third Title',
-              authors: ['Third Author'],
-            },
-          },
-        ]
-      );
+    mockBookCollectionSelector = store.overrideSelector(selectBookCollection, [
+      {
+        id: 'thirdId',
+        volumeInfo: {
+          title: 'Third Title',
+          authors: ['Third Author'],
+        },
+      },
+    ]);
 
-      fixture.detectChanges();
-      spyOn(store, 'dispatch').and.callFake(() => {});
-    })
-  );
+    fixture.detectChanges();
+    spyOn(store, 'dispatch').and.callFake(() => {});
+  });
+
+  afterEach(() => {
+    TestBed.inject(MockStore)?.resetSelectors();
+  });
 
   it('add method should dispatch add action', () => {
     component.onAdd('firstId');
