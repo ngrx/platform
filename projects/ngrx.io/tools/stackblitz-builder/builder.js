@@ -13,13 +13,6 @@ class StackblitzBuilder {
     this.basePath = basePath;
     this.destPath = destPath;
 
-    // Extract npm package dependencies
-    const packageJson = require(path.join(
-      __dirname,
-      '../examples/shared/boilerplate/cli/package.json'
-    ));
-    this.examplePackageDependencies = packageJson.dependencies;
-
     this.copyrights = {};
     this._buildCopyrightStrings();
   }
@@ -35,7 +28,7 @@ class StackblitzBuilder {
     });
     fileNames.forEach((configFileName) => {
       try {
-        // console.log('***'+configFileName)
+        console.log('***' + configFileName);
         this._buildStackblitzFrom(configFileName);
       } catch (e) {
         console.log(e);
@@ -79,7 +72,7 @@ class StackblitzBuilder {
       const config = this._initConfigAndCollectFileNames(configFileName);
       const postData = this._createPostData(config, configFileName);
 
-      this._addStackblitzrc(postData);
+      this._addStackblitzrc(postData, config);
 
       const html = this._createStackblitzHtml(config, postData);
       fs.writeFileSync(outputFileName, html, 'utf-8');
@@ -150,10 +143,10 @@ class StackblitzBuilder {
     }
   }
 
-  _addStackblitzrc(postData) {
+  _addStackblitzrc(postData, config) {
     postData['project[files][.stackblitzrc]'] = JSON.stringify({
       installDependencies: true,
-      startCommand: 'turbo start',
+      startCommand: `turbo ${config?.type === 'testing' ? 'test' : 'start'}`,
       env: {
         ENABLE_CJS_IMPORTS: true,
       },
