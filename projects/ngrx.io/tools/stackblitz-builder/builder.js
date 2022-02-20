@@ -18,17 +18,13 @@ class StackblitzBuilder {
   }
 
   build() {
-    this._checkForOutdatedConfig();
-
     // When testing it sometimes helps to look a just one example directory like so:
-    // const stackblitzPaths = path.join(this.basePath, '**/testing/*stackblitz.json');
     const stackblitzPaths = path.join(this.basePath, '**/*stackblitz.json');
     const fileNames = globby.sync(stackblitzPaths, {
       ignore: ['**/node_modules/**'],
     });
     fileNames.forEach((configFileName) => {
       try {
-        // console.log('***' + configFileName);
         this._buildStackblitzFrom(configFileName);
       } catch (e) {
         console.log(e);
@@ -90,26 +86,6 @@ class StackblitzBuilder {
         fs.unlinkSync(altFileName);
       }
       throw e;
-    }
-  }
-
-  _checkForOutdatedConfig() {
-    // Ensure that nobody is trying to use the old config filenames (i.e. `plnkr.json`).
-    const plunkerPaths = path.join(this.basePath, '**/*plnkr.json');
-    const fileNames = globby.sync(plunkerPaths, {
-      ignore: ['**/node_modules/**'],
-    });
-
-    if (fileNames.length) {
-      const readmePath = path.join(__dirname, 'README.md');
-      const errorMessage =
-        "One or more examples are still trying to use 'plnkr.json' files for configuring " +
-        "live examples. This is not supported any more. 'stackblitz.json' should be used " +
-        'instead.\n' +
-        `(Slight modifications may be required. See '${readmePath}' for more info.\n\n` +
-        fileNames.map((name) => `- ${name}`).join('\n');
-
-      throw Error(errorMessage);
     }
   }
 
@@ -204,7 +180,6 @@ class StackblitzBuilder {
       } else if (extn == '.html') {
         content = content + this.copyrights.html;
       }
-      // const escapedValue = escapeHtml(content);
 
       let relativeFileName = path.relative(config.basePath, fileName);
 
