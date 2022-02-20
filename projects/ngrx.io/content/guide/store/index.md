@@ -57,7 +57,12 @@ The following tutorial shows you how to manage the state of a counter, and how t
 <code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
 </code-example>
 
-6.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state. Also, create the `my-counter.component.html` file within this same folder.
+6. Create a new file named `counter.selector.ts` within the `app` folder to define a selector function to obatain the `count` from the state.
+
+<code-example header="src/app/counter.selector.ts" path="store/src/app/counter.selector.ts">
+</code-example>
+
+7.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state. Also, create the `my-counter.component.html` file within this same folder.
 
 <code-example header="src/app/my-counter/my-counter.component.ts" >
 import { Component } from '@angular/core';
@@ -99,7 +104,7 @@ export class MyCounterComponent {
 </code-example>
 
 
-7.  Add the new component to your AppModule's declarations and declare it in the template:
+8.  Add the new component to your AppModule's declarations and declare it in the template:
 
 <code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
 </code-example>
@@ -107,7 +112,7 @@ export class MyCounterComponent {
 <code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
 </code-example>
 
-8.  Inject the store into `MyCounterComponent` and connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
+9.  Inject the store into `MyCounterComponent` and use the `selectCount` selector to connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
 
 <code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
 </code-example>
@@ -118,6 +123,7 @@ Let's cover what you did:
 
 - Defined actions to express events.
 - Defined a reducer function to manage the state of the counter.
+- Defined a selector function to obtain the state of the counter.
 - Registered the global state container that is available throughout your application.
 - Injected the `Store` service to dispatch actions and select the current state of the counter.
 
