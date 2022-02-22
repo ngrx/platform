@@ -39,7 +39,6 @@
     "@ngrx/schematics": "^13.0.2",
     "@ngrx/store-devtools": "^13.0.2",
     "@types/jasminewd2": "~2.0.3",
-    "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-marbles": "^0.9.1",
     "jasmine-spec-reporter": "~5.0.0",
