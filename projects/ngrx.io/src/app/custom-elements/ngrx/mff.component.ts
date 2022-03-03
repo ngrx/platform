@@ -4,11 +4,11 @@ import { Component } from '@angular/core';
     selector: 'ngrx-mff',
     template: `
     <p>
-      In memory of George Floyd, the NgRx Team asks our community to
-      donate to the Minnesota Freedom Fund
+      The NgRx Team asks our community to support the people of Ukraine
+      who are being invaded by Russia.
     </p>
 
-    <a href="https://www.minnesotafreedomfund.org" target="_blank">
+    <a href="https://supportukrainenow.org/" target="_blank">
       Donate Now
     </a>
   `,
