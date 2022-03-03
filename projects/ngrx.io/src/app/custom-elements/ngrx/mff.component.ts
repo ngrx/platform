@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'ngrx-mff',
     template: `
     <p>
-      The NgRx Team asks our community to support the people of Ukraine 
+      The NgRx Team asks our community to support the people of Ukraine
       who are being invaded by Russia.
     </p>
 
