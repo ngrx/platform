@@ -1,8 +1,9 @@
 // #docregion routerSelectors
 import { getSelectors, RouterReducerState } from '@ngrx/router-store';
-import { createFeatureSelector } from '@ngrx/store';
 
-export const selectRouter = createFeatureSelector<RouterReducerState>('router');
+// `router` is used as default feature name. You can use the feature name
+// of you choice by creating a feature selector and pass it to getSelectors function
+// export const selectRouter = createFeatureSelector<RouterReducerState>('yourFeatureName');
 
 export const {
   selectCurrentRoute, // select the current route
@@ -13,5 +14,5 @@ export const {
   selectRouteParam, // factory function to select a route param
   selectRouteData, // select the current route data
   selectUrl, // select the current url
-} = getSelectors(selectRouter);
+} = getSelectors();
 // #enddocregion routerSelectors
