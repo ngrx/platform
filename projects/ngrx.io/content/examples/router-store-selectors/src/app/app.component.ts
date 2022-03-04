@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { appInit } from './car/car.actions';
 import { selectCars } from './car/car.selectors';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  cars$ = this.store.pipe(select(selectCars));
+  cars$ = this.store.select(selectCars);
 
   constructor(private store: Store) {}
 
