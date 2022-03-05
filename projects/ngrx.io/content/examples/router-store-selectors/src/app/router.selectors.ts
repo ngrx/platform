@@ -1,7 +1,7 @@
 // #docregion routerSelectors
 import { getSelectors, RouterReducerState } from '@ngrx/router-store';
 
-// `router` is used as default the feature name. You can use the feature name
+// `router` is used as the default feature name. You can use the feature name
 // of your choice by creating a feature selector and pass it to the `getSelectors` function
 // export const selectRouter = createFeatureSelector<RouterReducerState>('yourFeatureName');
 
