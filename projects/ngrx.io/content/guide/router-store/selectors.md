@@ -10,95 +10,24 @@ The example below shows how to provide a selector for the top level `router` key
 
 Usage:
 
+<div class="alert is-helpful">
+
+You can see the full example at StackBlitz: <live-example name="router-store-selectors"></live-example>
+
+</div>
+
 ## Creating a Selector for A Single Entity With Id As Route Param
 
-[Full App Used In This Example](https://stackblitz.com/edit/ngrx-router-store-selectors?file=src/app/car.state.ts)
-
-<code-example header="router.selectors.ts">
-import { getSelectors } from '@ngrx/router-store';
-
-export const {
-  selectCurrentRoute, // select the current route
-  selectFragment, // select the current route fragment
-  selectQueryParams, // select the current route query params
-  selectQueryParam, // factory function to select a query param
-  selectRouteParams, // select the current route params
-  selectRouteParam, // factory function to select a route param
-  selectRouteData, // select the current route data
-  selectUrl, // select the current url
-} = getSelectors();
+<code-example header="router.selectors.ts" path="router-store-selectors/src/app/router.selectors.ts" region="routerSelectors">
 </code-example>
 
-<code-example header="car.reducer.ts" >
-import { createReducer, on } from '@ngrx/store';
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
-import { appInit } from './car.actions';
-
-export interface Car {
-  id: string;
-  year: string;
-  make: string;
-  model: string;
-}
-
-export type CarState = EntityState&lt;Car&gt;;
-
-export const carAdapter = createEntityAdapter&lt;Car&gt;({
-  selectId: car =&gt; car.id,
-});
-
-const initialState = carAdapter.getInitialState();
-
-export const reducer = createReducer&lt;CarState&gt;(
-  initialState,
-  on(appInit, (state, { cars }) =&gt; carAdapter.addMany(cars, state))
-);
+<code-example header="car.reducer.ts" path="router-store-selectors/src/app/car/car.reducer.ts" region="carReducer">
 </code-example>
 
-<code-example header="car.selectors.ts" >
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { selectRouteParams } from '../router.selectors';
-import { carAdapter, CarState } from './car.reducer';
-
-export const carsFeatureSelector = createFeatureSelector&lt;CarState&gt;('cars');
-
-const { selectEntities, selectAll } = carAdapter.getSelectors();
-
-export const selectCarEntities = createSelector(
-  carsFeatureSelector,
-  selectEntities
-);
-
-export const selectCars = createSelector(
-  carsFeatureSelector,
-  selectAll
-);
-
-// you can combine the `selectRouteParams` with `selectCarEntities`
-// to get a selector for the active car for this component based
-// on the route
-export const selectCar = createSelector(
-  selectCarEntities,
-  selectRouteParams,
-  (cars, { carId }) =&gt; cars[carId]
-);
+<code-example header="car.selectors.ts" path="router-store-selectors/src/app/car/car.selectors.ts" region="carSelectors">
 </code-example>
 
-<code-example header="car.component.ts" >
-import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { selectCar } from './car.selectors';
-
-@Component({
-  selector: 'app-car',
-  templateUrl: './car.component.html',
-  styleUrls: ['./car.component.css'],
-})
-export class CarComponent {
-  car$ = this.store.pipe(select(selectCar));
-
-  constructor(private store: Store) {}
-}
+<code-example header="car.component.ts" path="router-store-selectors/src/app/car/car.component.ts" region="carComponent">
 </code-example>
 
 ## Extracting all params in the current route
