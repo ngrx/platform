@@ -37,6 +37,7 @@ function updateVersions(version: string) {
     ['Update ng-add schematic', createUpdateAddSchematicBuilder(version)],
     ['Update docs version picker', createArchivePreviousDocsBuilder(version)],
     ['Create migration docs', createMigrationDocs(version)],
+    ['Update GitHub MIGRATION.MD', createMigrationMD(version)],
   ]);
 
   publishNext({
@@ -177,7 +178,7 @@ NgRx supports using the Angular CLI \`ng update\` command to update your depende
 To update your packages to the latest released version, run the command below.
 
 \`\`\`sh
-ng update @ngrx/store
+ng update @ngrx/store@${newMajor}
 \`\`\`
 
 ## Dependencies
@@ -202,4 +203,19 @@ TK
 function writeAsJson(path: string, json: object) {
   const content = JSON.stringify(json, null, 2);
   writeFileSync(path, `${content}${EOL}`);
+}
+
+/**
+ * Update the migration.MD file that is visible in GitHub
+ */
+function createMigrationMD(version: string) {
+  return async () => {
+    const [newMajor] = version.split('.');
+
+    const migrationPlaceholder = `# V${newMajor} Migration guide
+
+This document has been moved to https://ngrx.io/guide/migration/${newMajor}.
+`;
+    writeFileSync('./MIGRATION.md', migrationPlaceholder);
+  };
 }
