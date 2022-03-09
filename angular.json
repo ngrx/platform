@@ -538,14 +538,17 @@
           "builder": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "projects/example-app-e2e/cypress.json",
-            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
-            "devServerTarget": "example-app:serve"
+            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json"
           },
           "configurations": {
             "production": {
               "devServerTarget": "example-app:serve:production"
+            },
+            "development": {
+              "devServerTarget": "example-app:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
