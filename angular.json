@@ -170,7 +170,6 @@
             "main": "projects/data-example-app/src/main.ts",
             "polyfills": "projects/data-example-app/src/polyfills.ts",
             "tsConfig": "projects/data-example-app/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/data-example-app/src/favicon.ico",
               "projects/data-example-app/src/assets"
@@ -186,13 +185,6 @@
                   "with": "projects/data-example-app/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -204,21 +196,32 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
+          "defaultConfiguration": "production",
           "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "data-example-app:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "data-example-app:build:production"
+            },
+            "development": {
+              "browserTarget": "data-example-app:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -447,7 +450,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist/projects/example-app",
             "index": "projects/example-app/src/index.html",
             "main": "projects/example-app/src/main.ts",
@@ -474,27 +476,31 @@
                   "with": "projects/example-app/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
+          "defaultConfiguration": "production",
           "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "example-app:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "example-app:build:production"
+            },
+            "development": {
+              "browserTarget": "example-app:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -532,14 +538,17 @@
           "builder": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "projects/example-app-e2e/cypress.json",
-            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
-            "devServerTarget": "example-app:serve"
+            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json"
           },
           "configurations": {
             "production": {
               "devServerTarget": "example-app:serve:production"
+            },
+            "development": {
+              "devServerTarget": "example-app:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
