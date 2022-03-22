@@ -155,7 +155,7 @@ export const scoreboardFeatureKey = 'game';
 <code-example header="scoreboard.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import * as fromScoreboard from './reducers/scoreboard.reducer';
+import { scoreboardReducer } from './reducers/scoreboard.reducer';
   
 @NgModule({
   imports: [
