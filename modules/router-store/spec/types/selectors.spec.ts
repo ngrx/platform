@@ -105,15 +105,25 @@ describe('router selectors', () => {
     );
   });
 
-  it('selectUrl should return string', () => {
+  it('selectUrl with strict option should return strict selector with [string] slices and string projection', () => {
     expectSnippet(`
       export const selector = createSelector(
         selectUrl,
-        url => url
+        url => url,
+        { strict: true }
       );
     `).toInfer(
       'selector',
-      'MemoizedSelector<State, string, DefaultProjectorFn<string>>'
+      'StrictMemoizedSelector<[url: string], string, State>'
     );
+  });
+
+  it('selectUrl with strict generic params should return strict selector with [string] slices and string projection', () => {
+    expectSnippet(`
+      export const selector = createSelector<[string], string>(
+        selectUrl,
+        url => url
+      );
+    `).toInfer('selector', 'StrictMemoizedSelector<[url: string], string>');
   });
 });

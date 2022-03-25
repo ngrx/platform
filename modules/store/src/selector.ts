@@ -17,13 +17,21 @@ export type ComparatorFn = (a: any, b: any) => boolean;
 
 export type DefaultProjectorFn<T> = (...args: any[]) => T;
 
+export type ProjectorFn<Args extends unknown[], T> = (...args: Args) => T;
+
+export type StrictMemoizedSelector<
+  Slices extends unknown[],
+  Result,
+  State = unknown
+> = MemoizedSelector<State, Result, (...slices: Slices) => Result>;
+
 export interface MemoizedSelector<
   State,
   Result,
-  ProjectorFn = DefaultProjectorFn<Result>
+  Projector = DefaultProjectorFn<Result>
 > extends Selector<State, Result> {
   release(): void;
-  projector: ProjectorFn;
+  projector: Projector;
   setResult: (result?: Result) => void;
   clearResult: () => void;
 }
@@ -121,6 +129,22 @@ export function defaultMemoize(
 
   return { memoized, reset, setResult, clearResult };
 }
+
+export function createSelector<
+  State,
+  Slices extends unknown[],
+  Result,
+  IsStrict extends boolean
+>(
+  ...args: [...Selector<State, unknown>[], unknown, unknown] &
+    [
+      ...{ [i in keyof Slices]: Selector<State, Slices[i]> },
+      (...s: Slices) => Result,
+      { strict: IsStrict }
+    ]
+): IsStrict extends true
+  ? StrictMemoizedSelector<Slices, Result, State>
+  : MemoizedSelector<State, Result>;
 
 export function createSelector<State, Slices extends unknown[], Result>(
   ...args: [...Selector<State, unknown>[], unknown] &
@@ -271,6 +295,20 @@ export function createSelector<
     props: Props
   ) => Result
 ): MemoizedSelectorWithProps<State, Props, Result>;
+
+export function createSelector<
+  State,
+  Slices extends unknown[],
+  Result,
+  IsStrict extends boolean
+>(
+  selectors: Selector<State, unknown>[] &
+    [...{ [i in keyof Slices]: Selector<State, Slices[i]> }],
+  projector: (...s: Slices) => Result,
+  options: { strict: IsStrict }
+): IsStrict extends true
+  ? StrictMemoizedSelector<Slices, Result, State>
+  : MemoizedSelector<State, Result>;
 
 export function createSelector<State, Slices extends unknown[], Result>(
   selectors: Selector<State, unknown>[] &
