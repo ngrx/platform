@@ -23,6 +23,7 @@ import {
   delay,
   concatMap,
 } from 'rxjs/operators';
+import { createSelector } from '@ngrx/store';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -894,6 +895,23 @@ describe('Component Store', () => {
       });
 
       componentStore.ngOnDestroy();
+    });
+
+    it('supports memoization with createSelector', () => {
+      const projectorCallback = jest.fn((str: string) => str);
+      const memoizedSelector = createSelector(
+        (s: State) => s.value,
+        projectorCallback
+      );
+      const selector = componentStore.select(memoizedSelector);
+
+      // first call to memoizedSelector
+      const subscription = selector.subscribe();
+      // second call to memoizedSelector with the same value
+      componentStore.setState(INIT_STATE);
+
+      subscription.unsubscribe();
+      expect(projectorCallback).toHaveBeenCalledTimes(1);
     });
   });
 
