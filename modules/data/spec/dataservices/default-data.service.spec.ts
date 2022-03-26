@@ -543,5 +543,27 @@ describe('DefaultDataServiceFactory', () => {
       heroDS.getAll();
       expect(http.get).toHaveBeenCalledWith(newHeroesUrl, undefined);
     });
+
+    it('should keep trailing slash', () => {
+      const newHeroesUrl = 'some/other/api/heroes/';
+      const config: DefaultDataServiceConfig = {
+        root: '//example.com/api/',
+        entityHttpResourceUrls: {
+          Hero: {
+            entityResourceUrl: '/api/hero/',
+            collectionResourceUrl: newHeroesUrl,
+          },
+        },
+        trailingSlashEndpoints: true,
+      };
+      const factory = new DefaultDataServiceFactory(
+        http,
+        httpUrlGenerator,
+        config
+      );
+      const heroDS = factory.create<Hero>('Hero');
+      heroDS.getAll();
+      expect(http.get).toHaveBeenCalledWith(newHeroesUrl, undefined);
+    });
   });
 });
