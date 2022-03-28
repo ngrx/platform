@@ -244,7 +244,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     if (observables.length === 0) {
       observable$ = this.stateSubject$.pipe(
         config.debounce ? debounceSync() : (source$) => source$,
-        map(projector)
+        map((state) => projector(state))
       );
     } else {
       // If there are multiple arguments, then we're aggregating selectors, so we need
