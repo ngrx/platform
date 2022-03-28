@@ -23,4 +23,6 @@ export abstract class DefaultDataServiceConfig {
   saveDelay?: number;
   /** request timeout in MS (default: 0)*/
   timeout?: number; //
+  /** to keep trailing slashes or not; false by default */
+  trailingSlashEndpoints?: boolean;
 }

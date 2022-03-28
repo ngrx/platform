@@ -34,6 +34,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
   protected getDelay = 0;
   protected saveDelay = 0;
   protected timeout = 0;
+  protected trailingSlashEndpoints = false;
 
   get name() {
     return this._name;
@@ -53,9 +54,11 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       getDelay = 0,
       saveDelay = 0,
       timeout: to = 0,
+      trailingSlashEndpoints = false,
     } = config || {};
     this.delete404OK = delete404OK;
-    this.entityUrl = httpUrlGenerator.entityResource(entityName, root);
+    this.entityUrl = httpUrlGenerator.entityResource(entityName, root,
+      trailingSlashEndpoints);
     this.entitiesUrl = httpUrlGenerator.collectionResource(entityName, root);
     this.getDelay = getDelay;
     this.saveDelay = saveDelay;
