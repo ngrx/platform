@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "13.0.2",
+  "version": "13.1.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "ng": "ng",

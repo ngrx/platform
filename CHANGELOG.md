@@ -1,3 +1,18 @@
+<a name="13.1.0"></a>
+
+# [13.1.0](https://github.com/ngrx/platform/compare/13.0.2...13.1.0) (2022-03-28)
+
+### Bug Fixes
+
+- **component-store:** memoization not working when passing selectors directly to select ([#3356](https://github.com/ngrx/platform/issues/3356)) ([38bce88](https://github.com/ngrx/platform/commit/38bce88))
+- **entity:** add default options to entity adapter when undefined is passed ([#3287](https://github.com/ngrx/platform/issues/3287)) ([17fe494](https://github.com/ngrx/platform/commit/17fe494))
+- **store:** add explicit overloads for createSelector ([#3354](https://github.com/ngrx/platform/issues/3354)) ([2f82101](https://github.com/ngrx/platform/commit/2f82101)), closes [#3268](https://github.com/ngrx/platform/issues/3268)
+
+### Features
+
+- **data:** add ability to configure trailing slashes ([#3357](https://github.com/ngrx/platform/issues/3357)) ([56aedfd](https://github.com/ngrx/platform/commit/56aedfd))
+- **store-devtools:** add REDUX_DEVTOOLS_EXTENSION injection token to public API ([#3338](https://github.com/ngrx/platform/issues/3338)) ([b55b0e4](https://github.com/ngrx/platform/commit/b55b0e4))
+
 <a name="13.0.2"></a>
 
 ## [13.0.2](https://github.com/ngrx/platform/compare/13.0.1...13.0.2) (2021-12-07)

@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component",
-  "version": "13.0.2",
+  "version": "13.1.0",
   "description": "Reactive Extensions for Angular Components",
   "repository": {
     "type": "git",
