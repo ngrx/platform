@@ -1,0 +1,55 @@
+name: Bug Report
+description: Report a bug or regression in functionality
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ❤️ ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate)
+        Please search GitHub for a similar issue or PR before submitting a new issue.
+        If you need real-time help, join us on [Discord](https://discord.com/invite/ngrx).
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction of the bug/regression with instructions
+      description: Use the [NgRx StackBlitz example](https://stackblitz.com/edit/ngrx-seed) to create a reproduction.
+      placeholder: If the bug/regression does not include a reproduction via StackBlitz or GitHub repo, your issue may be closed without resolution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Minimal reproduction of the bug/regression with instructions
+      description: Describe what the expected behavior would be.
+    validations:
+      required: true
+
+  - type: textarea
+    id: version
+    attributes:
+      label: Versions of NgRx, Angular, Node, affected browser(s) and operating system(s)
+      placeholder: |
+        NgRx:
+        Angular:
+        Node:
+        Browser(s):
+        Operating system(s):
+    validations:
+      required: true
+
+  - type: textarea
+    id: other
+    attributes:
+      label: Other information
+
+  - type: checkboxes
+    id: assistance
+    attributes:
+      label: I would be willing to submit a PR to fix this issue
+      description: Assistance is provided if you need help submitting a pull request
+      options:
+        - label: 'Yes'
+        - label: 'No'
