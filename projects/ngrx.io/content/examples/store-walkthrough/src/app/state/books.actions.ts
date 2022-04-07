@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Book } from '../book-list/books.model';
 
 export const addBook = createAction(
-  '[Book List] Add Book',
+  '[Book Collection] Add Book',
   props<{ bookId: string }>()
 );
 
