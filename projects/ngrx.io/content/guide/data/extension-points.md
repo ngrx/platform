@@ -109,19 +109,19 @@ The [_Entity Reducer_ guide](guide/data/entity-reducer#customizing) explains how
 customize entity reducers.
 
 ## Custom _Selectors_
-  
+
 ### Introduction
-  
-`@ngrx/data` has several built-in selectors that are defined in the [EntitySelectors](https://ngrx.io/api/data/EntitySelectors) interface. These can be used outside of a component.  
-  
-Many apps use `@ngrx/data` in conjunction with @ngrx/store including manually written reducers, actions, and so on. `@ngrx/data` selectors can be used to combine @ngrx/data state with the state of the entire application.  
-  
+
+`@ngrx/data` has several built-in selectors that are defined in the [EntitySelectors](https://ngrx.io/api/data/EntitySelectors) interface. These can be used outside of a component.
+
+Many apps use `@ngrx/data` in conjunction with @ngrx/store including manually written reducers, actions, and so on. `@ngrx/data` selectors can be used to combine @ngrx/data state with the state of the entire application.
+
 ### Using EntitySelectorsFactory
-  
-[EntitySelectorsFactory](https://ngrx.io/api/data/EntitySelectorsFactory) exposes a `create` method that can be used to create selectors outside the context of a component, such as in a `reducers/index.ts` file.  
-  
+
+[EntitySelectorsFactory](https://ngrx.io/api/data/EntitySelectorsFactory) exposes a `create` method that can be used to create selectors outside the context of a component, such as in a `reducers/index.ts` file.
+
 #### Example
-  
+
 ```ts
 /* src/app/reducers/index.ts */
 import * as fromCat from './cat.reducer';
@@ -145,10 +145,10 @@ export const {
 
 export const selectedCatsWithOwners = createSelector(
   selectAllCats,
-  ownerSelectors.selectEntities,
-  (cats, ownerEntities) => cats.map(c => ({
+  ownerSelectors.selectEntityMap,
+  (cats, ownerEntityMap) => cats.map(c => ({
     ...c,
-    owner: ownerEntities[c.owner]
+    owner: ownerEntityMap[c.owner]
   }))
 );
 ```
