@@ -19,7 +19,7 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
  *
  * ```ts
  * import { concatLatestFrom } from '@ngrx/effects';
- * import * fromCustomers from '../customers';
+ * import * as fromCustomers from '../customers';
  *
  * this.actions$.pipe(
  *  concatLatestFrom(() => this.store.select(fromCustomers.selectActiveCustomer))
