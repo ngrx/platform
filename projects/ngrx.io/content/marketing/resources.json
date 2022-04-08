@@ -197,6 +197,12 @@
             "url": "https://github.com/timdeschryver/ngrx-immer",
             "rev": true
           },
+          "ngrx-lite": {
+            "title": "ngrx-lite",
+            "desc": "A wrapper around NgRx ComponentStore with some Benefits",
+            "url": "https://github.com/gernsdorfer/ngrx-lite",
+            "rev": true
+          },
           "ngrx-slice": {
             "title": "ngrx-slice",
             "desc": "createSlice for NgRx",
