@@ -100,8 +100,7 @@ export class AppComponent implements OnInit {
     // Search related properties
     showSearchResults = false;
     searchResults: Observable<SearchResults>;
-    @ViewChildren('searchBox, searchResultsView', { read: ElementRef })
-    searchElements: QueryList<ElementRef>;
+    @ViewChildren('searchBox, searchResultsView', { read: ElementRef }) searchElements: QueryList<ElementRef>;
     @ViewChild(SearchBoxComponent, { static: true }) searchBox: SearchBoxComponent;
 
     @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;

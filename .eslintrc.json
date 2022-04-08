@@ -36,10 +36,14 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": [
           "warn",
-          { "argsIgnorePattern": "^_" }
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_"
+          }
         ],
         "@typescript-eslint/naming-convention": [
-          "error",
+          "warn",
           {
             "selector": "default",
             "format": ["camelCase"],
@@ -85,6 +89,10 @@
             "leadingUnderscore": "allow"
           },
           {
+            "selector": "objectLiteralMethod",
+            "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+          },
+          {
             "selector": "objectLiteralProperty",
             "format": ["camelCase", "PascalCase", "UPPER_CASE"]
           },
@@ -113,7 +121,6 @@
           "undefined"
         ],
         "id-match": "error",
-        "import/no-deprecated": "warn",
         "no-eval": "off",
         "no-redeclare": "off",
         "no-underscore-dangle": "off",

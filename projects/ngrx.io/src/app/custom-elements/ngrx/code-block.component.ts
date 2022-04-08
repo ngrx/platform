@@ -34,8 +34,7 @@ $ ng g store State --root --module app.module.ts
 export class CodeBlockComponent implements AfterContentInit {
     @Input() code = '';
 
-    @ViewChild('codeContainer', { read: ElementRef, static: true })
-    codeContainer;
+    @ViewChild('codeContainer', { read: ElementRef, static: true }) codeContainer;
 
     formattedCode = '';
 
