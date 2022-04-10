@@ -235,7 +235,7 @@ jobs:
       - write_master_hash
       - run:
           name: Run Affected E2E Tests
-          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --headless --parallel
+          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel --exclude=docs-app
 
   deploy:
     <<: *run_in_node

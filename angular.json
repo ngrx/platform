@@ -636,7 +636,7 @@
           "outputs": ["coverage/modules/schematics"]
         },
         "build-package": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "options": {
             "outputPath": "dist/modules/schematics",
             "tsConfig": "modules/schematics/tsconfig.build.json",
@@ -702,7 +702,7 @@
     "schematics-core": {
       "projectType": "library",
       "root": "modules/schematics-core",
-      "sourceRoot": "modules/schematics-core/src",
+      "sourceRoot": "modules/schematics-core",
       "prefix": "ngrx",
       "architect": {
         "lint": {

@@ -29,8 +29,7 @@ export class NotificationComponent implements OnInit {
     @Input() expirationDate: string;
     @Output() dismissed = new EventEmitter<void>();
 
-    @HostBinding('@hideAnimation')
-    showNotification: 'show'|'hide';
+    @HostBinding('@hideAnimation') showNotification: 'show'|'hide';
 
     constructor(
         @Inject(WindowToken) private window: Window,

@@ -1,3 +1,5 @@
 *.spec.ts
-**/schematics-core/**
 **/testing/**
+modules/BUILD
+modules/license-banner.txt
+modules/README.md
