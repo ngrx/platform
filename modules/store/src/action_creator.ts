@@ -129,7 +129,7 @@ export function props<
   P extends SafeProps,
   SafeProps = NotAllowedInPropsCheck<P>
 >(): ActionCreatorProps<P> {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/naming-convention
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return { _as: 'props', _p: undefined! };
 }
 

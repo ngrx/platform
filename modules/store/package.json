@@ -35,7 +35,8 @@
       "@ngrx/schematics",
       "@ngrx/store-devtools",
       "@ngrx/component-store",
-      "@ngrx/component"
+      "@ngrx/component",
+      "@ngrx/eslint-plugin"
     ],
     "migrations": "./migrations/migration.json"
   },

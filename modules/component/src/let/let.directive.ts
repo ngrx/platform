@@ -91,7 +91,6 @@ export interface LetViewContext<T> {
  */
 @Directive({ selector: '[ngrxLet]' })
 export class LetDirective<U> implements OnDestroy {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   static ngTemplateGuard_ngrxLet: 'binding';
 
   private isEmbeddedViewCreated = false;

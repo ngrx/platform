@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 // disabled because we have lowercase generics for `select`
 import { Injectable, Provider } from '@angular/core';
 import { Observable, Observer, Operator } from 'rxjs';
