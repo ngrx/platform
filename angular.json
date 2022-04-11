@@ -440,6 +440,83 @@
       "schematics": {},
       "tags": []
     },
+    "eslint-plugin": {
+      "root": "modules/eslint-plugin",
+      "sourceRoot": "modules/eslint-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "modules/eslint-plugin/*/**/*.ts",
+              "modules/eslint-plugin/*/**/*.html"
+            ]
+          },
+          "outputs": ["{options.outputFile}"]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "modules/eslint-plugin/jest.config.js",
+            "runInBand": true
+          },
+          "outputs": ["coverage/modules/eslint-plugin"]
+        },
+        "build-package": {
+          "builder": "@nrwl/js:tsc",
+          "options": {
+            "outputPath": "dist/modules/eslint-plugin",
+            "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
+            "packageJson": "modules/eslint-plugin/package.json",
+            "main": "modules/eslint-plugin/src/index.ts",
+            "sourceMap": false,
+            "assets": [
+              "collection.json",
+              {
+                "input": "./modules/eslint-plugin/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./modules/eslint-plugin",
+                "glob": "collection.json",
+                "output": "."
+              }
+            ],
+            "srcRootForCompilationRoot": "modules/eslint-plugin"
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "nx build-package eslint-plugin"
+              },
+              // uncomment when there are eslint-plugin migrations
+              // {
+              //   "command": "yarn tsc -p modules/eslint-plugin/tsconfig.schematics.json"
+              // },
+              {
+                "command": "cpy modules/eslint-plugin/migrations/migration.json dist/modules/eslint-plugin/migrations"
+              },
+              {
+                "command": "cpy modules/eslint-plugin/schematics/collection.json dist/modules/eslint-plugin/schematics"
+              },
+              {
+                "command": "cpy modules/eslint-plugin/schematics/ng-add/schema.json dist/modules/eslint-plugin/schematics/ng-add"
+              }
+            ],
+            "outputPath": ["dist/modules/eslint-plugin"]
+          }
+        }
+      },
+      "tags": []
+    },
     "example-app": {
       "root": "projects/example-app",
       "sourceRoot": "projects/example-app/src",

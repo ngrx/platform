@@ -168,7 +168,7 @@ describe('Store ng-add Schematic', () => {
       overrides: [
         {
           files: ['*.ts'],
-          extends: ['plugin:ngrx/recommended'],
+          extends: ['plugin:@ngrx/recommended'],
         },
       ],
     });
@@ -244,7 +244,7 @@ describe('Store ng-add Schematic', () => {
         },
         {
           files: ['*.ts'],
-          extends: ['plugin:ngrx/recommended'],
+          extends: ['plugin:@ngrx/recommended'],
         },
       ],
     });
@@ -257,7 +257,7 @@ describe('Store ng-add Schematic', () => {
       overrides: [
         {
           files: ['*.ts'],
-          extends: ['plugin:ngrx/recommended'],
+          extends: ['plugin:@ngrx/recommended'],
         },
       ],
     };

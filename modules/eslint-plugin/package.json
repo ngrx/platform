@@ -1,0 +1,49 @@
+{
+  "name": "@ngrx/eslint-plugin",
+  "version": "13.1.0",
+  "description": "NgRx ESLint Plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "RxJS",
+    "Angular",
+    "Redux",
+    "NgRx"
+  ],
+  "author": "NgRx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "schematics": "./schematics/collection.json",
+  "ng-update": {
+    "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools",
+      "@ngrx/component-store",
+      "@ngrx/component",
+      "@ngrx/eslint-plugin"
+    ],
+    "migrations": "./migrations/migration.json"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@angular-devkit/schematics": "^13.0.3",
+    "@typescript-eslint/experimental-utils": "^5.4.0",
+    "eslint-etc": "^5.1.0",
+    "semver": "^7.3.5",
+    "strip-json-comments": "3.1.1"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.0.0",
+    "typescript": ">=4.4.0"
+  }
+}

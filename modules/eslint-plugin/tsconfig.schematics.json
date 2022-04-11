@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "outDir": "../../dist/modules/eslint-plugin",
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": ["migrations/**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
+}

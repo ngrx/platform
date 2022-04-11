@@ -140,14 +140,14 @@ function addNgRxESLintPlugin() {
         if (
           !json.overrides.some((override: any) =>
             override.extends?.some((extend: any) =>
-              extend.startsWith('plugin:ngrx')
+              extend.startsWith('plugin:@ngrx')
             )
           )
         ) {
           json.overrides.push(configureESLintPlugin());
         }
       } else if (
-        !json.extends?.some((extend: any) => extend.startsWith('plugin:ngrx'))
+        !json.extends?.some((extend: any) => extend.startsWith('plugin:@ngrx'))
       ) {
         json.overrides = [configureESLintPlugin()];
       }
@@ -179,7 +179,7 @@ ${err.message}
 function configureESLintPlugin(): Record<string, unknown> {
   return {
     files: ['*.ts'],
-    extends: [`plugin:ngrx/recommended`],
+    extends: [`plugin:@ngrx/recommended`],
   };
 }
 

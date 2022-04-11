@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "target": "esnext",
+    "paths": {
+      "@ngrx/component-store": ["../../../modules/component-store"],
+      "@ngrx/effects": ["../../../modules/effects"],
+      "@ngrx/store": ["../../../modules/store"]
+    }
+  },
+  "files": ["../../../estree.ts"]
+}
