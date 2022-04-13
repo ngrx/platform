@@ -36,7 +36,7 @@ import { createRender } from '../core/cd-aware/creator_render';
  * `ngrxPush` pipe solves that problem.
  *
  * Included Features:
- *  - Take observables or promises, retrieve their values and render_creator the value to the template
+ *  - Take observables or promises, retrieve their values and render the value to the template
  *  - Handling null and undefined values in a clean unified/structured way
  *  - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
  *  - Distinct same values in a row to increase performance
