@@ -27,7 +27,7 @@ import { createRender } from '../core/cd-aware/creator_render';
  * ```
  *
  * The problem is `async` pipe just marks the component and all its ancestors as dirty.
- * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked
+ * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked
  *     components.
  *
  * Heavy dynamic and interactive UIs suffer from zones change detection a lot and can
