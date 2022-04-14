@@ -27,7 +27,7 @@ import { createRender } from '../core/cd-aware/creator_render';
  * ```
  *
  * The problem is `async` pipe just marks the component and all its ancestors as dirty.
- * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked
+ * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked
  *     components.
  *
  * Heavy dynamic and interactive UIs suffer from zones change detection a lot and can
@@ -36,7 +36,7 @@ import { createRender } from '../core/cd-aware/creator_render';
  * `ngrxPush` pipe solves that problem.
  *
  * Included Features:
- *  - Take observables or promises, retrieve their values and render_creator the value to the template
+ *  - Take observables or promises, retrieve their values and render the value to the template
  *  - Handling null and undefined values in a clean unified/structured way
  *  - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
  *  - Distinct same values in a row to increase performance
