@@ -456,15 +456,20 @@
       ]
     },
     {
+      "title": "ESLint Plugin",
+      "children": [
+        {
+          "title": "Overview",
+          "url": "guide/eslint-plugin/overview"
+        }
+      ]
+    },
+    {
       "title": "Recipes",
       "children": [
         {
           "title": "Nightly Builds",
           "url": "guide/nightlies"
-        },
-        {
-          "title": "ESLint NgRx Plugin",
-          "url": "guide/eslint-plugin"
         }
       ]
     },

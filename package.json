@@ -51,7 +51,8 @@
     "lint": "nx workspace-lint && ng lint",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "workspace-generator": "nx workspace-generator"
+    "workspace-generator": "nx workspace-generator",
+    "eslint-plugin:update": "ts-node ./build/generate-eslint-plugin.ts"
   },
   "engines": {
     "node": "^12.20.0 || >=14.0.0",

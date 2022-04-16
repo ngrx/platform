@@ -1,2 +1,2 @@
 export const docsUrl = (ruleName: string) =>
-  `https://github.com/timdeschryver/eslint-plugin-ngrx/tree/main/docs/rules/${ruleName}.md`;
+  `https://ngrx.io/guide/eslint-plugin/rules/${ruleName}.md`;
