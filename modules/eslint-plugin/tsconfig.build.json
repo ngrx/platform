@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "outDir": "../../dist/modules/eslint-plugin",
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts", "test-setup.ts"]
+}

@@ -70,7 +70,7 @@ To enable the recommended configuration, add it to your ESLint configuration fil
   "overrides" [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:ngrx/recommended"]
+      "extends": ["plugin:@ngrx/recommended"]
     }
   ]
 }

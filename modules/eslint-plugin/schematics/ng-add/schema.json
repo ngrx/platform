@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsEslintPluginNgRx",
+  "title": "eslint-plugin-ngrx schema",
+  "type": "object",
+  "properties": {
+    "config": {
+      "description": "The config to be used.",
+      "type": "string",
+      "default": "recommended",
+      "enum": [
+        "recommended",
+        "strict",
+        "store",
+        "effects",
+        "component-store",
+        "all"
+      ],
+      "x-prompt": {
+        "message": "Which config would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "recommended",
+            "label": "recommended"
+          },
+          {
+            "value": "recommended-requiring-type-checking",
+            "label": "recommended with type checking"
+          },
+          {
+            "value": "strict",
+            "label": "strict"
+          },
+          {
+            "value": "strict-requiring-type-checking",
+            "label": "strict with type checking"
+          },
+          {
+            "value": "store",
+            "label": "store"
+          },
+          {
+            "value": "store-strict",
+            "label": "strict store"
+          },
+          {
+            "value": "effects",
+            "label": "effects"
+          },
+          {
+            "value": "effects-requiring-type-checking",
+            "label": "effects with type checking"
+          },
+          {
+            "value": "effects-strict",
+            "label": "strict effects"
+          },
+          {
+            "value": "component-store",
+            "label": "component-store"
+          },
+          {
+            "value": "component-store-strict",
+            "label": "strict component-store"
+          },
+          {
+            "value": "all",
+            "label": "all"
+          },
+          {
+            "value": "all-requiring-type-checking",
+            "label": "all with type checking"
+          }
+        ]
+      }
+    }
+  },
+  "required": []
+}

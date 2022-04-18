@@ -42,66 +42,7 @@
             "caughtErrorsIgnorePattern": "^_"
           }
         ],
-        "@typescript-eslint/naming-convention": [
-          "warn",
-          {
-            "selector": "default",
-            "format": ["camelCase"],
-            "leadingUnderscore": "allow"
-          },
-          {
-            "selector": "property",
-            "format": ["camelCase", "UPPER_CASE"],
-            "leadingUnderscore": "allow"
-          },
-          {
-            "selector": "enum",
-            "format": ["PascalCase"]
-          },
-          {
-            "selector": "enumMember",
-            "format": ["PascalCase", "UPPER_CASE"]
-          },
-          {
-            "selector": "typeParameter",
-            "format": ["PascalCase"]
-          },
-          {
-            "selector": "typeAlias",
-            "format": ["PascalCase"]
-          },
-          {
-            "selector": "interface",
-            "format": ["PascalCase"]
-          },
-          {
-            "selector": "classProperty",
-            "format": ["camelCase", "PascalCase", "UPPER_CASE"],
-            "leadingUnderscore": "allow"
-          },
-          {
-            "selector": "class",
-            "format": ["PascalCase"]
-          },
-          {
-            "selector": "variable",
-            "format": ["camelCase", "PascalCase", "UPPER_CASE"],
-            "leadingUnderscore": "allow"
-          },
-          {
-            "selector": "objectLiteralMethod",
-            "format": ["camelCase", "PascalCase", "UPPER_CASE"]
-          },
-          {
-            "selector": "objectLiteralProperty",
-            "format": ["camelCase", "PascalCase", "UPPER_CASE"]
-          },
-          {
-            "selector": "function",
-            "format": ["camelCase", "PascalCase"],
-            "leadingUnderscore": "allow"
-          }
-        ],
+        "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/prefer-namespace-keyword": "error",
         // because we're using object
         "@typescript-eslint/ban-types": "warn",
