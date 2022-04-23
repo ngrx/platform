@@ -128,7 +128,7 @@ function addNgRxESLintPlugin() {
     );
 
     const installTaskId = context.addTask(new NodePackageInstallTask());
-    context.addTask(new RunSchematicTask('@ngrx/eslint-plugin', 'ng-add'), [
+    context.addTask(new RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}), [
       installTaskId,
     ]);
 
