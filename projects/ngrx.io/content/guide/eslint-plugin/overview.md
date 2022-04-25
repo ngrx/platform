@@ -1,5 +1,13 @@
 # Overview
 
+Use [ESLint](https://eslint.org/) to follow the best practices and to avoid common pitfalls in your application.
+
+The NgRx ESLint Plugin is no different and promotes the key concepts to create a maintainable project. It consists of @ngrx/store, @ngrx/effects, and @ngrx/component-store rules and a handful of preconfigured configurations.
+
+The plugin comes with a number of rules that help address most popular NgRx malpractices. The rules are configurable so that you can choose the ones you want to follow, and which rules should give a linting error or warning.
+
+Some rules also allow automatic fixes with `ng lint --fix`.
+
 ## Rules
 
 <!-- DO NOT EDIT, this table is automatically generated-->
