@@ -32,6 +32,14 @@ export interface SelectConfig {
   debounce?: boolean;
 }
 
+export interface OnStoreInit {
+  readonly ngrxOnStoreInit: () => void;
+}
+
+export interface OnStateInit {
+  readonly ngrxOnStateInit: () => void;
+}
+
 export const INITIAL_STATE_TOKEN = new InjectionToken(
   '@ngrx/component-store Initial State'
 );
@@ -62,9 +70,21 @@ export class ComponentStore<T extends object> implements OnDestroy {
   readonly state$: Observable<T> = this.select((s) => s);
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
+    // check/call store init hook
+    this.callInitStoreHook();
+
     // State can be initialized either through constructor or setState.
     if (defaultState) {
       this.initState(defaultState);
+    }
+  }
+
+  private callInitStoreHook() {
+    const onStoreInit: Function | undefined = (
+      this as unknown as ComponentStore<T> & OnStoreInit
+    )['ngrxOnStoreInit'];
+    if (typeof onStoreInit === 'function') {
+      onStoreInit.call(this);
     }
   }
 
@@ -149,8 +169,18 @@ export class ComponentStore<T extends object> implements OnDestroy {
    */
   private initState(state: T): void {
     scheduled([state], queueScheduler).subscribe((s) => {
+      const isInitialized = this.isInitialized;
       this.isInitialized = true;
       this.stateSubject$.next(s);
+
+      if (!isInitialized) {
+        const onStateInit: Function | undefined = (
+          this as unknown as ComponentStore<T> & OnStateInit
+        )['ngrxOnStateInit'];
+        if (typeof onStateInit === 'function') {
+          onStateInit.call(this, s);
+        }
+      }
     });
   }
 
