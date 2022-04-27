@@ -145,8 +145,9 @@ type ActionGroup<
  *
  * @param config An object that contains a source and dictionary of events.
  * An event is a key-value pair of an event name and event props.
- * @returns A dictionary of action creators. The type of each action
- * is created using the "[Source] Event Name" pattern.
+ * @returns A dictionary of action creators.
+ * The name of each action creator is created by camel casing the event name.
+ * The type of each action is created using the "[Source] Event Name" pattern.
  *
  * @usageNotes
  *
