@@ -11,10 +11,6 @@ for (const [ruleName, { meta }] of Object.entries(rules)) {
   const docPath = path.join(RULES_PATH, `${ruleName}.md`);
   const doc = readFileSync(docPath, 'utf-8');
   const docContent = doc.substr(doc.indexOf(PLACEHOLDER) + PLACEHOLDER.length);
-  // const frontMatter = [
-  //   `Fixable: ${meta.fixable ? 'yes' : 'no'}`,
-  //   meta.version ? ,
-  // ];
   const newDoc = format(
     `# ${ruleName}
 
