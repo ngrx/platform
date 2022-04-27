@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ComponentStore } from '@ngrx/component-store';
+import {
+  ComponentStore,
+  OnStateInit,
+  OnStoreInit,
+} from '@ngrx/component-store';
 import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
 import {
   of,
@@ -1445,6 +1449,86 @@ describe('Component Store', () => {
       componentStore.updater((state, value: string) => ({ value }))('updated');
 
       expect(componentStore.get()).toEqual({ value: 'updated' });
+    });
+  });
+
+  describe('lifecycle hooks', () => {
+    interface LifeCycle {
+      init: boolean;
+    }
+
+    const onStoreInitMessage = 'on store init called';
+    const onStateInitMessage = 'on state init called';
+    let logs: string[] = [];
+    class LifecycleStore
+      extends ComponentStore<LifeCycle>
+      implements OnStoreInit, OnStateInit
+    {
+      constructor(state?: LifeCycle) {
+        super(state);
+      }
+
+      logEffect = this.effect(
+        tap<void>(() => {
+          logs.push('effect');
+        })
+      );
+
+      ngrxOnStoreInit() {
+        logs.push(onStoreInitMessage);
+      }
+
+      ngrxOnStateInit() {
+        logs.push(onStateInitMessage);
+      }
+    }
+
+    let componentStore: LifecycleStore;
+
+    beforeEach(() => {
+      logs = [];
+    });
+
+    it('should call the OnInitStore lifecycle hook if defined', async () => {
+      componentStore = new LifecycleStore({ init: true });
+
+      expect(logs[0]).toBe(onStoreInitMessage);
+    });
+
+    it('should only call the OnInitStore lifecycle hook once', async () => {
+      componentStore = new LifecycleStore({ init: true });
+      expect(logs[0]).toBe(onStoreInitMessage);
+
+      logs = [];
+      componentStore.setState({ init: false });
+
+      expect(logs.length).toBe(0);
+    });
+
+    it('should call the OnInitState lifecycle hook if defined and state is set eagerly', async () => {
+      componentStore = new LifecycleStore({ init: true });
+
+      expect(logs[1]).toBe(onStateInitMessage);
+    });
+
+    it('should call the OnInitState lifecycle hook if defined and after state is set lazily', async () => {
+      componentStore = new LifecycleStore();
+
+      expect(logs.length).toBe(1);
+
+      componentStore.setState({ init: true });
+
+      expect(logs[1]).toBe(onStateInitMessage);
+    });
+
+    it('should only call the OnInitStore lifecycle hook once', async () => {
+      componentStore = new LifecycleStore({ init: true });
+
+      expect(logs[1]).toBe(onStateInitMessage);
+      logs = [];
+      componentStore.setState({ init: false });
+
+      expect(logs.length).toBe(0);
     });
   });
 });

@@ -71,7 +71,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // check/call store init hook
-    this.callInitStoreHook();
+    this.callInitStoreHook(defaultState);
 
     // State can be initialized either through constructor or setState.
     if (defaultState) {
@@ -79,7 +79,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
   }
 
-  private callInitStoreHook() {
+  private callInitStoreHook(ds?: T) {
     const onStoreInit: Function | undefined = (
       this as unknown as ComponentStore<T> & OnStoreInit
     )['ngrxOnStoreInit'];
