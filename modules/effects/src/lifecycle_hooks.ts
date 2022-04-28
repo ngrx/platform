@@ -88,6 +88,42 @@ export function isOnRunEffects(instance: any): instance is OnRunEffects {
 
 /**
  * @description
+ * Interface to dispatch an action after effect resolved.
+ *
+ * Implement this interface to dispatch a custom action after
+ * the effect has been resolved. You can listen to this action
+ * in the rest of the application to execute something after
+ * the effect is resolved.
+ *
+ * @usageNotes
+ *
+ * ### Set an identifier for an Effects class
+ *
+ * ```ts
+ * class EffectWithInitAction implements OnResolveEffects {
+ *  ngrxOnResolveEffects() {
+ *    return { type: '[EffectWithResolveAction] Resolve' };
+ *  }
+ * ```
+ */
+export declare interface OnResolveEffects {
+  /**
+   * @description
+   * Action to be dispatched after the effect is registered.
+   */
+  ngrxOnResolveEffects(): Action;
+}
+
+export const onResolveEffects: keyof OnResolveEffects = 'ngrxOnResolveEffects';
+
+export function inOnResolveEffects(
+  instance: any
+): instance is OnResolveEffects {
+  return isFunction(instance, onResolveEffects);
+}
+
+/**
+ * @description
  * Interface to dispatch an action after effect registration.
  *
  * Implement this interface to dispatch a custom action after

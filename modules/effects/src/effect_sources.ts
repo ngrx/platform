@@ -22,9 +22,12 @@ import {
   onRunEffectsKey,
   OnRunEffects,
   onInitEffects,
+  OnResolveEffects,
+  onResolveEffects,
   isOnIdentifyEffects,
   isOnRunEffects,
   isOnInitEffects,
+  inOnResolveEffects,
 } from './lifecycle_hooks';
 import { EFFECTS_ERROR_HANDLER } from './tokens';
 import { getSourceForInstance } from './utils';
@@ -83,7 +86,12 @@ export class EffectSources extends Subject<any> {
           map((instance) => instance.ngrxOnInitEffects())
         );
 
-        return merge(effect$, init$);
+        const resolve$ = source$.pipe(
+          filter(inOnResolveEffects),
+          map((instance) => instance.ngrxOnResolveEffects())
+        );
+
+        return merge(effect$, init$, resolve$);
       })
     );
   }
