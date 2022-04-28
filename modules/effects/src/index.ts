@@ -25,6 +25,7 @@ export {
   OnIdentifyEffects,
   OnRunEffects,
   OnInitEffects,
+  OnResolveEffects,
 } from './lifecycle_hooks';
 export { USER_PROVIDED_EFFECTS } from './tokens';
 export { concatLatestFrom } from './concat_latest_from';

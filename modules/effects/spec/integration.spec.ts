@@ -6,6 +6,7 @@ import { Action, StoreModule, INIT } from '@ngrx/store';
 import {
   EffectsModule,
   OnInitEffects,
+  OnResolveEffects,
   ROOT_EFFECTS_INIT,
   OnIdentifyEffects,
   EffectSources,
@@ -95,6 +96,30 @@ describe('NgRx Effects Integration spec', () => {
           '[EffectWithOnInitAndResponse]: INIT Response',
 
           ROOT_EFFECTS_INIT,
+        ]);
+      });
+
+      it('should dispatch and react to resolve effect', () => {
+        const dispatchedActionsLog: string[] = [];
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({
+              dispatched: createDispatchedReducer(dispatchedActionsLog),
+            }),
+            EffectsModule.forRoot([]),
+          ],
+          providers: [EffectWithOnResolveAndResponse],
+        });
+        const effectSources = TestBed.inject(EffectSources);
+        const effects = TestBed.inject(EffectWithOnResolveAndResponse);
+        effectSources.addEffects(effects);
+
+        expect(dispatchedActionsLog).toEqual([
+          INIT,
+          ROOT_EFFECTS_INIT,
+
+          '[EffectWithOnResolveAndResponse]: RESOLVE',
+          '[EffectWithOnResolveAndResponse]: RESOLVE Response',
         ]);
       });
 
@@ -331,6 +356,29 @@ describe('NgRx Effects Integration spec', () => {
 
     ngrxOnInitEffects(): Action {
       return { type: '[EffectWithOnInitAndResponse]: INIT' };
+    }
+  }
+
+  @Injectable()
+  class EffectWithOnResolveAndResponse implements OnResolveEffects {
+    response = createEffect(() => {
+      return this.actions$.pipe(
+        ofType('[EffectWithOnResolveAndResponse]: RESOLVE'),
+        mapTo({ type: '[EffectWithOnResolveAndResponse]: RESOLVE Response' })
+      );
+    });
+
+    noop = createEffect(() => {
+      return this.actions$.pipe(
+        ofType('noop'),
+        mapTo({ type: 'noop response' })
+      );
+    });
+
+    constructor(private actions$: Actions) {}
+
+    ngrxOnResolveEffects(): Action {
+      return { type: '[EffectWithOnResolveAndResponse]: RESOLVE' };
     }
   }
 
