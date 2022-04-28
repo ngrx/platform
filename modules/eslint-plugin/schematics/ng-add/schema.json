@@ -10,11 +10,18 @@
       "default": "recommended",
       "enum": [
         "recommended",
+        "recommended-requiring-type-checking",
         "strict",
+        "strict-requiring-type-checking",
         "store",
+        "store-strict",
         "effects",
+        "effects-requiring-type-checking",
+        "effects-strict",
         "component-store",
-        "all"
+        "component-store-strict",
+        "all",
+        "all-requiring-type-checking"
       ],
       "x-prompt": {
         "message": "Which config would you like to use?",

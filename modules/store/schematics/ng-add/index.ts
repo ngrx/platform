@@ -15,7 +15,10 @@ import {
   move,
   filter,
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import {
+  NodePackageInstallTask,
+  RunSchematicTask,
+} from '@angular-devkit/schematics/tasks';
 import {
   InsertChange,
   addImportToModule,
@@ -117,69 +120,19 @@ function addNgRxStoreToPackageJson() {
 
 function addNgRxESLintPlugin() {
   return (host: Tree, context: SchematicContext) => {
-    const eslintConfigPath = '.eslintrc.json';
-    const docs =
-      'https://github.com/timdeschryver/eslint-plugin-ngrx/#eslint-plugin-ngrx';
-
-    const eslint = host.read(eslintConfigPath)?.toString('utf-8');
-    if (!eslint) {
-      return host;
-    }
-
     addPackageToPackageJson(
       host,
       'devDependencies',
-      'eslint-plugin-ngrx',
-      '^2.0.0'
+      '@ngrx/eslint-plugin',
+      platformVersion
     );
-    context.addTask(new NodePackageInstallTask());
 
-    try {
-      const json = JSON.parse(eslint);
-      if (json.overrides) {
-        if (
-          !json.overrides.some((override: any) =>
-            override.extends?.some((extend: any) =>
-              extend.startsWith('plugin:@ngrx')
-            )
-          )
-        ) {
-          json.overrides.push(configureESLintPlugin());
-        }
-      } else if (
-        !json.extends?.some((extend: any) => extend.startsWith('plugin:@ngrx'))
-      ) {
-        json.overrides = [configureESLintPlugin()];
-      }
-
-      host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
-
-      context.logger.info(`
-The NgRx ESLint Plugin is installed and configured with the recommended config.
-
-If you want to change the configuration, please see ${docs}.
-`);
-      return host;
-    } catch (err: any) {
-      context.logger.warn(`
-Something went wrong while adding the NgRx ESLint Plugin.
-The NgRx ESLint Plugin is installed but not configured.
-
-Please see ${docs} to configure the NgRx ESLint Plugin.
-
-Details:
-${err.message}
-`);
-    }
+    const installTaskId = context.addTask(new NodePackageInstallTask());
+    context.addTask(new RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}), [
+      installTaskId,
+    ]);
 
     return host;
-  };
-}
-
-function configureESLintPlugin(): Record<string, unknown> {
-  return {
-    files: ['*.ts'],
-    extends: [`plugin:@ngrx/recommended`],
   };
 }
 
