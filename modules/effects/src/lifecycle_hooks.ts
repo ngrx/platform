@@ -100,7 +100,7 @@ export function isOnRunEffects(instance: any): instance is OnRunEffects {
  * ### Set an identifier for an Effects class
  *
  * ```ts
- * class EffectWithInitAction implements OnResolveEffects {
+ * class EffectWithResolveAction implements OnResolveEffects {
  *  ngrxOnResolveEffects() {
  *    return { type: '[EffectWithResolveAction] Resolve' };
  *  }
