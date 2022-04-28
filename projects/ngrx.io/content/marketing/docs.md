@@ -21,13 +21,15 @@ NgRx packages are divided into a few main categories
 - [ComponentStore](guide/component-store) - Standalone library for managing local/component state.
 
 ### Data
+
 - [Data](guide/data) - Extension for simplified entity data management.
 
 ### View
 
 - [Component](guide/component) - Extension for fully reactive Angular applications.
 
-### Developer Tooling
+### Developer Tools
 
 - [Store Devtools](guide/store-devtools) - Instrumentation for @ngrx/store that enables visual tracking of state and time-travel debugging.
 - [Schematics](guide/schematics) - Scaffolding library for Angular applications using NgRx libraries.
+- [ESLint Plugin](guide/eslint-plugin) - ESLint rules to warn against bad practices. It also contains a few automatic fixes to enforce a consistent style, and to promote best practice.

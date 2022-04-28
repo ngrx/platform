@@ -146,32 +146,6 @@
           ]
         },
         {
-          "title": "@ngrx/store-devtools",
-          "children": [
-            {
-              "title": "Overview",
-              "url": "guide/store-devtools"
-            },
-            {
-              "title": "Installation",
-              "url": "guide/store-devtools/install"
-            },
-            {
-              "title": "Instrumentation",
-              "url": "guide/store-devtools/config"
-            },
-            {
-              "title": "Recipes",
-              "children": [
-                {
-                  "title": "Exclude from Production",
-                  "url": "guide/store-devtools/recipes/exclude"
-                }
-              ]
-            }
-          ]
-        },
-        {
           "title": "@ngrx/effects",
           "children": [
             {
@@ -246,56 +220,6 @@
                 {
                   "title": "Additional State Properties",
                   "url": "guide/entity/recipes/additional-state-properties"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "title": "@ngrx/schematics",
-          "children": [
-            {
-              "title": "Overview",
-              "url": "guide/schematics"
-            },
-            {
-              "title": "Installation",
-              "url": "guide/schematics/install"
-            },
-            {
-              "title": "Schematics",
-              "children": [
-                {
-                  "title": "Store",
-                  "url": "guide/schematics/store"
-                },
-                {
-                  "title": "Action",
-                  "url": "guide/schematics/action"
-                },
-                {
-                  "title": "Reducer",
-                  "url": "guide/schematics/reducer"
-                },
-                {
-                  "title": "Selector",
-                  "url": "guide/schematics/selector"
-                },
-                {
-                  "title": "Container",
-                  "url": "guide/schematics/container"
-                },
-                {
-                  "title": "Effect",
-                  "url": "guide/schematics/effect"
-                },
-                {
-                  "title": "Entity",
-                  "url": "guide/schematics/entity"
-                },
-                {
-                  "title": "Feature",
-                  "url": "guide/schematics/feature"
                 }
               ]
             }
@@ -456,15 +380,101 @@
       ]
     },
     {
+      "title": "Developer Tools",
+      "children": [
+        {
+          "title": "@ngrx/store-devtools",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/store-devtools"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/store-devtools/install"
+            },
+            {
+              "title": "Instrumentation",
+              "url": "guide/store-devtools/config"
+            },
+            {
+              "title": "Recipes",
+              "children": [
+                {
+                  "title": "Exclude from Production",
+                  "url": "guide/store-devtools/recipes/exclude"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "@ngrx/schematics",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/schematics"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/schematics/install"
+            },
+            {
+              "title": "Schematics",
+              "children": [
+                {
+                  "title": "Store",
+                  "url": "guide/schematics/store"
+                },
+                {
+                  "title": "Action",
+                  "url": "guide/schematics/action"
+                },
+                {
+                  "title": "Reducer",
+                  "url": "guide/schematics/reducer"
+                },
+                {
+                  "title": "Selector",
+                  "url": "guide/schematics/selector"
+                },
+                {
+                  "title": "Container",
+                  "url": "guide/schematics/container"
+                },
+                {
+                  "title": "Effect",
+                  "url": "guide/schematics/effect"
+                },
+                {
+                  "title": "Entity",
+                  "url": "guide/schematics/entity"
+                },
+                {
+                  "title": "Feature",
+                  "url": "guide/schematics/feature"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "@ngrx/eslint-plugin",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/eslint-plugin/overview"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "Recipes",
       "children": [
         {
           "title": "Nightly Builds",
           "url": "guide/nightlies"
-        },
-        {
-          "title": "ESLint NgRx Plugin",
-          "url": "guide/eslint-plugin"
         }
       ]
     },
