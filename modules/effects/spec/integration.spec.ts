@@ -2,7 +2,7 @@ import { NgModule, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { Action, StoreModule, INIT } from '@ngrx/store';
+import { Action, StoreModule, INIT, Store } from '@ngrx/store';
 import {
   EffectsModule,
   OnInitEffects,
@@ -14,7 +14,7 @@ import {
   USER_PROVIDED_EFFECTS,
 } from '..';
 import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
-import { mapTo, exhaustMap, tap } from 'rxjs/operators';
+import { mapTo, exhaustMap, tap, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FeatureModule } from 'modules/store/spec/ngc/main';
 
@@ -112,12 +112,21 @@ describe('NgRx Effects Integration spec', () => {
         });
         const effectSources = TestBed.inject(EffectSources);
         const effects = TestBed.inject(EffectWithOnResolveAndResponse);
+        const store = TestBed.inject(Store);
+
+        effectSources.addEffects(effects);
+        store.dispatch({
+          type: '[EffectWithOnResolveAndResponse]: RESOLVE Destroy',
+        });
         effectSources.addEffects(effects);
 
         expect(dispatchedActionsLog).toEqual([
           INIT,
           ROOT_EFFECTS_INIT,
 
+          '[EffectWithOnResolveAndResponse]: RESOLVE',
+          '[EffectWithOnResolveAndResponse]: RESOLVE Response',
+          '[EffectWithOnResolveAndResponse]: RESOLVE Destroy',
           '[EffectWithOnResolveAndResponse]: RESOLVE',
           '[EffectWithOnResolveAndResponse]: RESOLVE Response',
         ]);
@@ -360,7 +369,9 @@ describe('NgRx Effects Integration spec', () => {
   }
 
   @Injectable()
-  class EffectWithOnResolveAndResponse implements OnResolveEffects {
+  class EffectWithOnResolveAndResponse
+    implements OnResolveEffects, OnRunEffects
+  {
     response = createEffect(() => {
       return this.actions$.pipe(
         ofType('[EffectWithOnResolveAndResponse]: RESOLVE'),
@@ -376,6 +387,18 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     constructor(private actions$: Actions) {}
+
+    ngrxOnRunEffects(
+      resolvedEffects$: Observable<EffectNotification>
+    ): Observable<EffectNotification> {
+      return resolvedEffects$.pipe(
+        takeUntil(
+          this.actions$.pipe(
+            ofType('[EffectWithOnResolveAndResponse]: RESOLVE Destroy')
+          )
+        )
+      );
+    }
 
     ngrxOnResolveEffects(): Action {
       return { type: '[EffectWithOnResolveAndResponse]: RESOLVE' };
