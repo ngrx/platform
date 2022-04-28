@@ -161,6 +161,23 @@ class UserEffects implements OnInitEffects {
 }
 </code-example>
 
+### OnResolveEffects
+
+Implement this interface to dispatch a custom action after the effect has been manuel added through EffectSources method called addEffects().
+You can listen to this action in the rest of the application to execute something after the effect is resolved.
+
+This hook is different from OnInitEffects this is run on every resolving phase. OnInitEffecs run once when the effect instance is initialized. So this is useful if you add effects manually.
+
+Usage:
+
+<code-example header="user.effects.ts">
+class UserEffects implements OnResolveEffects {
+  ngrxOnResolveEffects(): Action {
+    return { type: '[UserEffects]: Resolve' };
+  }
+}
+</code-example>
+
 ### OnRunEffects
 
 By default, effects are merged and subscribed to the store. Implement the `OnRunEffects` interface to control the lifecycle of the resolved effects.
