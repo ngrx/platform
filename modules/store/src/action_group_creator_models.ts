@@ -4,8 +4,8 @@ import {
   Creator,
   FunctionWithParametersType,
   NotAllowedCheck,
-} from '@ngrx/store';
-import { TypedAction } from './models';
+  TypedAction,
+} from './models';
 
 // Generating API docs for the `createActionGroup` function is solved by moving its types
 // to a separate file. These types should be moved to the `action_group_creator.ts` file
