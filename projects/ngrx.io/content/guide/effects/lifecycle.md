@@ -163,7 +163,7 @@ class UserEffects implements OnInitEffects {
 
 ### OnResolveEffects
 
-Implement this interface to dispatch a custom action after the effect has been manuel added through EffectSources method called addEffects().
+Implement this interface to dispatch a custom action after the effect has been manually added through EffectSources method called addEffects().
 You can listen to this action in the rest of the application to execute something after the effect is resolved.
 
 This hook is different from OnInitEffects this is run on every resolving phase. OnInitEffecs run once when the effect instance is initialized. So this is useful if you add effects manually.
