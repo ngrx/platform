@@ -15,6 +15,7 @@ export {
   FunctionWithParametersType,
 } from './models';
 export { createAction, props, union } from './action_creator';
+export { createActionGroup, emptyProps } from './action_group_creator';
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
