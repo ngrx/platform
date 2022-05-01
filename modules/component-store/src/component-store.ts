@@ -71,7 +71,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // check/call store init hook
-    this.callInitStoreHook(defaultState);
+    this.callInitStoreHook();
 
     // State can be initialized either through constructor or setState.
     if (defaultState) {
@@ -79,12 +79,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
   }
 
-  private callInitStoreHook(ds?: T) {
-    const onStoreInit: Function | undefined = (
-      this as unknown as ComponentStore<T> & OnStoreInit
-    )['ngrxOnStoreInit'];
-    if (typeof onStoreInit === 'function') {
-      onStoreInit.call(this);
+  private callInitStoreHook() {
+    if (isOnStoreInitDefined(this)) {
+      this.ngrxOnStoreInit();
     }
   }
 
@@ -173,13 +170,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
       this.isInitialized = true;
       this.stateSubject$.next(s);
 
-      if (!isInitialized) {
-        const onStateInit: Function | undefined = (
-          this as unknown as ComponentStore<T> & OnStateInit
-        )['ngrxOnStateInit'];
-        if (typeof onStateInit === 'function') {
-          onStateInit.call(this, s);
-        }
+      if (!isInitialized && isOnStateInitDefined(this)) {
+        this.ngrxOnStateInit();
       }
     });
   }
@@ -373,4 +365,12 @@ function processSelectorArgs<
     projector,
     config,
   };
+}
+
+function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
+  return typeof (cs as OnStoreInit).ngrxOnStoreInit === 'function';
+}
+
+function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
+  return typeof (cs as OnStateInit).ngrxOnStateInit === 'function';
 }
