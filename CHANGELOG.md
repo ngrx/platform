@@ -1,3 +1,11 @@
+<a name="13.2.0"></a>
+
+# [13.2.0](https://github.com/ngrx/platform/compare/13.1.0...13.2.0) (2022-05-01)
+
+### Features
+
+- **store:** add createActionGroup function ([#3381](https://github.com/ngrx/platform/issues/3381)) ([865ccfc](https://github.com/ngrx/platform/commit/865ccfc)), closes [#3337](https://github.com/ngrx/platform/issues/3337)
+
 <a name="13.1.0"></a>
 
 # [13.1.0](https://github.com/ngrx/platform/compare/13.0.2...13.1.0) (2022-03-28)
