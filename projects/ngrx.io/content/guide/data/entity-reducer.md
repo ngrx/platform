@@ -235,7 +235,7 @@ These _entity collection reducers_ are internal to the _EntityCache Reducer_ tha
 An _entity collection MetaReducer_ is narrowly focused on manipulation of a single, target _entity collection_.
 It wraps _all entity collection reducers_.
 
-Note that it can't can't access other collections,the _entity cache_, or any other state in the store.
+Note that it can't access other collections, the _entity cache_, or any other state in the store.
 If you need a cross-collection _MetaReducer_, try the [EntityCache MetaReducer](#cache-meta-reducers)
 described above.
 
