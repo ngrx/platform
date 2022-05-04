@@ -44,10 +44,12 @@ describe('Pipe: Ellipsis', () => {
   });
 
   it('should return up to 250 characters followed by an ellipsis', () => {
-    expect(pipe.transform(longStr)).toEqual(`${longStr.substr(0, 250)}...`);
+    expect(pipe.transform(longStr)).toEqual(`${longStr.substring(0, 250)}...`);
   });
 
   it('should return only 20 characters followed by an ellipsis', () => {
-    expect(pipe.transform(longStr, 20)).toEqual(`${longStr.substr(0, 20)}...`);
+    expect(pipe.transform(longStr, 20)).toEqual(
+      `${longStr.substring(0, 20)}...`
+    );
   });
 });

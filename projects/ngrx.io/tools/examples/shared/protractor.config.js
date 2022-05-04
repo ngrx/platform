@@ -139,10 +139,10 @@ function Reporter(options) {
           spec.failedExpectations.forEach(function (fe) {
             results.push(pad + 'message: ' + fe.message);
           });
-          pad=pad.substr(2);
+          pad=pad.substring(2);
         }
       });
-      pad = pad.substr(2);
+      pad = pad.substring(2);
       results.push('');
     });
     results.push('');
@@ -154,7 +154,7 @@ function Reporter(options) {
   function log(str, indent) {
     _pad = _pad || '';
     if (indent == -1) {
-      _pad = _pad.substr(2);
+      _pad = _pad.substring(2);
     }
     console.log(_pad + str);
     if (indent == 1) {

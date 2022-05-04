@@ -10,7 +10,9 @@ const RULES_PATH = './projects/ngrx.io/content/guide/eslint-plugin/rules';
 for (const [ruleName, { meta }] of Object.entries(rules)) {
   const docPath = path.join(RULES_PATH, `${ruleName}.md`);
   const doc = readFileSync(docPath, 'utf-8');
-  const docContent = doc.substr(doc.indexOf(PLACEHOLDER) + PLACEHOLDER.length);
+  const docContent = doc.substring(
+    doc.indexOf(PLACEHOLDER) + PLACEHOLDER.length
+  );
   const newDoc = format(
     `# ${ruleName}
 
