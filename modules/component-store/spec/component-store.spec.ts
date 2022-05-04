@@ -1513,7 +1513,6 @@ describe('Component Store', () => {
 
     it('should call the OnInitState lifecycle hook if defined and after state is set lazily', async () => {
       componentStore = new LifecycleStore();
-
       expect(logs.length).toBe(1);
 
       componentStore.setState({ init: true });

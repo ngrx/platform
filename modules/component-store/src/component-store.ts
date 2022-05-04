@@ -9,6 +9,7 @@ import {
   Subject,
   queueScheduler,
   scheduled,
+  EMPTY,
 } from 'rxjs';
 import {
   concatMap,
@@ -18,6 +19,7 @@ import {
   distinctUntilChanged,
   shareReplay,
   take,
+  catchError,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -69,19 +71,23 @@ export class ComponentStore<T extends object> implements OnDestroy {
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
 
-  constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
-    // check/call store init hook
-    this.callInitStoreHook();
+  // check/call store init hook
+  private readonly initStoreHook = this.effect(() =>
+    of(null).pipe(($) => {
+      if (isOnStoreInitDefined(this)) {
+        this.ngrxOnStoreInit();
+      }
+      return $;
+    })
+  )();
 
+  // check/call state init hook on first emission of value
+  private readonly initStateHook = this.callInitStateHook();
+
+  constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
     if (defaultState) {
       this.initState(defaultState);
-    }
-  }
-
-  private callInitStoreHook() {
-    if (isOnStoreInitDefined(this)) {
-      this.ngrxOnStoreInit();
     }
   }
 
@@ -166,13 +172,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
    */
   private initState(state: T): void {
     scheduled([state], queueScheduler).subscribe((s) => {
-      const isInitialized = this.isInitialized;
       this.isInitialized = true;
       this.stateSubject$.next(s);
-
-      if (!isInitialized && isOnStateInitDefined(this)) {
-        this.ngrxOnStateInit();
-      }
     });
   }
 
@@ -329,6 +330,21 @@ export class ComponentStore<T extends object> implements OnDestroy {
         origin$.next(value as ObservableType);
       });
     }) as unknown as ReturnType;
+  }
+
+  callInitStateHook() {
+    this.stateSubject$
+      .pipe(
+        take(1),
+        map((val) => {
+          if (val && isOnStateInitDefined(this)) {
+            this.ngrxOnStateInit();
+          }
+          return val;
+        }),
+        catchError(() => EMPTY)
+      )
+      .subscribe();
   }
 }
 
