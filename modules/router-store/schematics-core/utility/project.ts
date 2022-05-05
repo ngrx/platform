@@ -30,7 +30,7 @@ export function getProjectPath(
 ) {
   const project = getProject(host, options);
 
-  if (project.root.substring(-1) === '/') {
+  if (project.root.slice(-1) === '/') {
     project.root = project.root.substring(0, project.root.length - 1);
   }
 

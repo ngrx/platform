@@ -144,7 +144,7 @@ class ExampleZipper {
 
     let gpaths = json.files.map((fileName) => {
       fileName = fileName.trim();
-      if (fileName.substring(0, 1) === '!') {
+      if (fileName[0] === '!') {
         return '!' + path.join(exampleDirName, fileName.substring(1));
       } else {
         return path.join(exampleDirName, fileName);
