@@ -46,7 +46,7 @@ export class DefaultPluralizer {
       return name + 's';
       // consonant + y
     } else if (name.endsWith('y')) {
-      return name.substr(0, name.length - 1) + 'ies';
+      return name.substring(0, name.length - 1) + 'ies';
       // endings typically pluralized with 'es'
     } else if (/[s|ss|sh|ch|x|z]$/.test(name)) {
       return name + 'es';

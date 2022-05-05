@@ -30,8 +30,8 @@ export function getProjectPath(
 ) {
   const project = getProject(host, options);
 
-  if (project.root.substr(-1) === '/') {
-    project.root = project.root.substr(0, project.root.length - 1);
+  if (project.root.slice(-1) === '/') {
+    project.root = project.root.substring(0, project.root.length - 1);
   }
 
   if (options.path === undefined) {

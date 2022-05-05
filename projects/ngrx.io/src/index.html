@@ -77,7 +77,7 @@
           col = col || '?';
           stack = url + ':' + line + ':' + col;
         }
-        return (msg + '\n' + stack).substr(0, 150);
+        return (msg + '\n' + stack).substring(0, 150);
       }
     };
   </script>

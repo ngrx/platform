@@ -115,7 +115,7 @@ export class EntitySelectors$Factory {
       if (name.startsWith('select')) {
         // strip 'select' prefix from the selector fn name and append `$`
         // Ex: 'selectEntities' => 'entities$'
-        const name$ = name[6].toLowerCase() + name.substr(7) + '$';
+        const name$ = name[6].toLowerCase() + name.substring(7) + '$';
         selectors$[name$] = this.store.select((<any>selectors)[name]);
       }
     });

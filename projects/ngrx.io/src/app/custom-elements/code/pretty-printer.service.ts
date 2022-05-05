@@ -56,7 +56,7 @@ export class PrettyPrinter {
                 try {
                     return ppo(code, language, linenums);
                 } catch (err) {
-                    const msg = `Could not format code that begins '${code.substr(0, 50)}...'.`;
+                    const msg = `Could not format code that begins '${code.substring(0, 50)}...'.`;
                     console.error(msg, err);
                     throw new Error(msg);
                 }

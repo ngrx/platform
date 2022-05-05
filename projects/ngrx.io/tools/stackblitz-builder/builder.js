@@ -170,7 +170,7 @@ class StackblitzBuilder {
       const extn = path.extname(fileName);
       if (extn == '.png') {
         content = this._encodeBase64(fileName);
-        fileName = fileName.substr(0, fileName.length - 4) + '.base64.png';
+        fileName = fileName.substring(0, fileName.length - 4) + '.base64.png';
       } else {
         content = fs.readFileSync(fileName, 'utf-8');
       }
@@ -203,7 +203,7 @@ class StackblitzBuilder {
         }
       }
 
-      content = regionExtractor()(content, extn.substr(1)).contents;
+      content = regionExtractor()(content, extn.substring(1)).contents;
 
       postData[`project[files][${relativeFileName}]`] = content;
     });
@@ -275,7 +275,7 @@ class StackblitzBuilder {
     ];
     if (config.files) {
       if (config.files.length > 0) {
-        if (config.files[0].substr(0, 1) == '!') {
+        if (config.files[0].substring(0, 1) == '!') {
           config.files = defaultIncludes.concat(config.files);
         }
       }
@@ -288,7 +288,7 @@ class StackblitzBuilder {
     const gpaths = config.files.map(function (fileName) {
       fileName = fileName.trim();
       if (fileName[0] === '!') {
-        return '!' + path.join(config.basePath, fileName.substr(1));
+        return '!' + path.join(config.basePath, fileName.substring(1));
       } else {
         includeSpec = includeSpec || /\.spec\.(ts|js)$/.test(fileName);
         return path.join(config.basePath, fileName);

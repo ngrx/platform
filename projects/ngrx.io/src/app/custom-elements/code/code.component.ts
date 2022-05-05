@@ -222,7 +222,7 @@ function leftAlign(text: string): string {
     });
 
     return lines
-        .map(line => line.substr(indent))
+        .map(line => line.substring(indent))
         .join('\n')
         .trim();
 }

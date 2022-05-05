@@ -126,13 +126,13 @@ class ExampleZipper {
               return file;
             }
 
-            return '!' + basePath + file.substr(1);
+            return '!' + basePath + file.substring(1);
           }
 
           return basePath + file;
         });
 
-        if (json.files[0].substr(0, 1) === '!') {
+        if (json.files[0].substring(0, 1) === '!') {
           json.files = defaultIncludes.concat(json.files);
         }
       }
@@ -144,8 +144,8 @@ class ExampleZipper {
 
     let gpaths = json.files.map((fileName) => {
       fileName = fileName.trim();
-      if (fileName.substr(0, 1) === '!') {
-        return '!' + path.join(exampleDirName, fileName.substr(1));
+      if (fileName[0] === '!') {
+        return '!' + path.join(exampleDirName, fileName.substring(1));
       } else {
         return path.join(exampleDirName, fileName);
       }
@@ -160,7 +160,7 @@ class ExampleZipper {
       let relativePath = path.relative(exampleDirName, fileName);
       relativePath = this._renameFile(relativePath, exampleType);
       let content = fs.readFileSync(fileName, 'utf8');
-      let extn = path.extname(fileName).substr(1);
+      let extn = path.extname(fileName).substring(1);
       // if we don't need to clean up the file then we can do the following.
       // zip.append(fs.createReadStream(fileName), { name: relativePath });
       let output = regionExtractor()(content, extn).contents;
