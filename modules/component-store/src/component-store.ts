@@ -20,6 +20,7 @@ import {
   shareReplay,
   take,
   catchError,
+  tap,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -34,10 +35,19 @@ export interface SelectConfig {
   debounce?: boolean;
 }
 
+/**
+ * The interface for the lifecycle hook
+ * called after the ComponentStore is instantiated.
+ */
 export interface OnStoreInit {
   readonly ngrxOnStoreInit: () => void;
 }
 
+/**
+ * The interface for the lifecycle hook
+ * called only once after the ComponentStore
+ * state is first initialized.
+ */
 export interface OnStateInit {
   readonly ngrxOnStateInit: () => void;
 }
@@ -72,14 +82,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   readonly state$: Observable<T> = this.select((s) => s);
 
   // check/call store init hook
-  private readonly initStoreHook = this.effect(() =>
-    of(null).pipe(($) => {
-      if (isOnStoreInitDefined(this)) {
-        this.ngrxOnStoreInit();
-      }
-      return $;
-    })
-  )();
+  private readonly initStoreHook = this.callInitStoreHook();
 
   // check/call state init hook on first emission of value
   private readonly initStateHook = this.callInitStateHook();
@@ -332,15 +335,30 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }) as unknown as ReturnType;
   }
 
-  callInitStateHook() {
+  /**
+   * Checks to see if the OnInitStore
+   * hook is defined. If so, it calls
+   * the method.
+   */
+  private callInitStoreHook() {
+    if (isOnStoreInitDefined(this)) {
+      this.ngrxOnStoreInit();
+    }
+  }
+
+  /**
+   * Checks to see if the OnInitState
+   * hook is defined. If so, it calls
+   * the method once after the state is first set.
+   */
+  private callInitStateHook() {
     this.stateSubject$
       .pipe(
         take(1),
-        map((val) => {
+        tap((val) => {
           if (val && isOnStateInitDefined(this)) {
             this.ngrxOnStateInit();
           }
-          return val;
         }),
         catchError(() => EMPTY)
       )

@@ -1489,13 +1489,13 @@ describe('Component Store', () => {
       logs = [];
     });
 
-    it('should call the OnInitStore lifecycle hook if defined', async () => {
+    it('should call the OnInitStore lifecycle hook if defined', () => {
       componentStore = new LifecycleStore({ init: true });
 
       expect(logs[0]).toBe(onStoreInitMessage);
     });
 
-    it('should only call the OnInitStore lifecycle hook once', async () => {
+    it('should only call the OnInitStore lifecycle hook once', () => {
       componentStore = new LifecycleStore({ init: true });
       expect(logs[0]).toBe(onStoreInitMessage);
 
@@ -1505,13 +1505,13 @@ describe('Component Store', () => {
       expect(logs.length).toBe(0);
     });
 
-    it('should call the OnInitState lifecycle hook if defined and state is set eagerly', async () => {
+    it('should call the OnInitState lifecycle hook if defined and state is set eagerly', () => {
       componentStore = new LifecycleStore({ init: true });
 
       expect(logs[1]).toBe(onStateInitMessage);
     });
 
-    it('should call the OnInitState lifecycle hook if defined and after state is set lazily', async () => {
+    it('should call the OnInitState lifecycle hook if defined and after state is set lazily', () => {
       componentStore = new LifecycleStore();
       expect(logs.length).toBe(1);
 
@@ -1520,7 +1520,7 @@ describe('Component Store', () => {
       expect(logs[1]).toBe(onStateInitMessage);
     });
 
-    it('should only call the OnInitStore lifecycle hook once', async () => {
+    it('should only call the OnInitStore lifecycle hook once', () => {
       componentStore = new LifecycleStore({ init: true });
 
       expect(logs[1]).toBe(onStateInitMessage);
