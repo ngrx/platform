@@ -6,8 +6,15 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { EMPTY, NEVER, Observable, ObservableInput, of } from 'rxjs';
-
+import {
+  BehaviorSubject,
+  EMPTY,
+  NEVER,
+  Observable,
+  ObservableInput,
+  of,
+  throwError,
+} from 'rxjs';
 import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
@@ -73,11 +80,15 @@ describe('PushPipe', () => {
         expect(pushPipe.transform(NEVER)).toBe(undefined);
       });
 
+      it('should return undefined as value when error observable is initially passed', () => {
+        expect(pushPipe.transform(throwError(() => 'ERROR!'))).toBe(undefined);
+      });
+
       it('should return emitted value from passed observable without changing it', () => {
         expect(pushPipe.transform(of(42))).toBe(42);
       });
 
-      it('should return emitted value from passed promise without changing it', (done: any) => {
+      it('should return emitted value from passed promise without changing it', (done) => {
         const promise = Promise.resolve(42);
         pushPipe.transform(promise);
         setTimeout(() => {
@@ -89,6 +100,11 @@ describe('PushPipe', () => {
       it('should return undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
         expect(pushPipe.transform(of(42))).toBe(42);
         expect(pushPipe.transform(NEVER)).toBe(undefined);
+      });
+
+      it('should return undefined as value when new error observable is passed', () => {
+        expect(pushPipe.transform(of(10))).toBe(10);
+        expect(pushPipe.transform(throwError(() => 'ERROR!'))).toBe(undefined);
       });
     });
   });
@@ -157,6 +173,14 @@ describe('PushPipe', () => {
         );
       });
 
+      it('should render undefined when error observable is initially passed', () => {
+        pushPipeTestComponent.value$ = throwError(() => 'ERROR!');
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
+      });
+
       it('should emitted value from passed observable without changing it', () => {
         pushPipeTestComponent.value$ = of(42);
         fixturePushPipeTestComponent.detectChanges();
@@ -176,6 +200,27 @@ describe('PushPipe', () => {
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
         pushPipeTestComponent.value$ = NEVER;
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
+      });
+
+      it('should render emitted value when error event is emitted after next event', () => {
+        const subject = new BehaviorSubject(1000);
+        pushPipeTestComponent.value$ = subject;
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('1000'));
+        subject.error('ERROR!');
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('1000'));
+      });
+
+      it('should render undefined when new error observable is passed', () => {
+        pushPipeTestComponent.value$ = of(10);
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('10'));
+        pushPipeTestComponent.value$ = throwError(() => 'ERROR!');
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(
           wrapWithSpace('undefined')

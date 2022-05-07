@@ -6,9 +6,10 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { NextObserver, ObservableInput, Unsubscribable } from 'rxjs';
-import { CdAware, createCdAware } from '../core/cd-aware/cd-aware_creator';
-import { createRender } from '../core/cd-aware/creator_render';
+import { ObservableInput, Unsubscribable } from 'rxjs';
+import { PotentialObservable } from '../core/potential-observable';
+import { createRenderScheduler } from '../core/render-scheduler';
+import { createRenderEventManager } from '../core/render-event/manager';
 
 /**
  * @ngModule ReactiveComponentModule
@@ -56,41 +57,55 @@ import { createRender } from '../core/cd-aware/creator_render';
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe implements PipeTransform, OnDestroy {
   private renderedValue: unknown;
-
+  private readonly renderScheduler = createRenderScheduler({
+    ngZone: this.ngZone,
+    cdRef: this.cdRef,
+  });
+  private readonly renderEventManager = createRenderEventManager({
+    reset: () => this.setRenderedValue(undefined),
+    next: (event) => this.setRenderedValue(event.value),
+    error: (event) => {
+      if (event.reset) {
+        this.setRenderedValue(undefined);
+      }
+      this.errorHandler.handleError(event.error);
+    },
+    complete: (event) => {
+      if (event.reset) {
+        this.setRenderedValue(undefined);
+      }
+    },
+  });
   private readonly subscription: Unsubscribable;
-  private readonly cdAware: CdAware<unknown>;
-  private readonly resetContextObserver: NextObserver<void> = {
-    next: () => (this.renderedValue = undefined),
-  };
-  private readonly updateViewContextObserver: NextObserver<unknown> = {
-    next: (value) => (this.renderedValue = value),
-  };
 
   constructor(
-    cdRef: ChangeDetectorRef,
-    ngZone: NgZone,
-    errorHandler: ErrorHandler
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly ngZone: NgZone,
+    private readonly errorHandler: ErrorHandler
   ) {
-    this.cdAware = createCdAware({
-      render: createRender({ cdRef, ngZone }),
-      updateViewContextObserver: this.updateViewContextObserver,
-      resetContextObserver: this.resetContextObserver,
-      errorHandler,
-    });
-    this.subscription = this.cdAware.subscribe({});
+    this.subscription = this.renderEventManager
+      .handlePotentialObservableChanges()
+      .subscribe();
   }
 
   transform<T>(potentialObservable: null): null;
   transform<T>(potentialObservable: undefined): undefined;
   transform<T>(potentialObservable: ObservableInput<T>): T | undefined;
   transform<T>(
-    potentialObservable: ObservableInput<T> | null | undefined
+    potentialObservable: PotentialObservable<T>
   ): T | null | undefined {
-    this.cdAware.nextPotentialObservable(potentialObservable);
+    this.renderEventManager.nextPotentialObservable(potentialObservable);
     return this.renderedValue as T | null | undefined;
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private setRenderedValue(value: unknown): void {
+    if (value !== this.renderedValue) {
+      this.renderedValue = value;
+      this.renderScheduler.schedule();
+    }
   }
 }
