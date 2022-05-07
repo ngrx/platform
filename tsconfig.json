@@ -53,7 +53,6 @@
     "typeRoots": ["node_modules/@types"]
   },
   "exclude": [
-    "bazel-out",
     "dist",
     "node_modules",
     "**/*/node_modules",

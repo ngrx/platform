@@ -14,13 +14,9 @@ var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.14.1
 var_2: &run_in_node
   docker:
     - image: circleci/node:14.17.0
-var_3: &set_bazel_options
-  run:
-    command: sudo cp .circleci/bazel.rc /etc/bazel.bazelrc
 var_5: &run_in_browser
   docker:
     - image: circleci/node:14.17.0-browsers
-var_7: &bazel_cache_key yarn-bazel-cache-{{ checksum "master.txt" }}-0.14.1
 
 commands:
   write_master_hash:
@@ -72,29 +68,6 @@ jobs:
       - run:
           name: Run Affected Lint Checks
           command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel=1
-
-  # Enforce some static analysis invariants.
-  # Note that generally, these should be checked only on the delta in each change,
-  # otherwise any change to the static analysis config requires updating all the
-  # code in the repo.
-  # Also analyzing everything makes the lint job slow.
-  lint-bazel:
-    <<: *run_in_node
-    steps:
-      - checkout
-      - *set_bazel_options
-      - restore_cache:
-          keys:
-            - *cache_key
-
-      # Run the Buildifier to check our Bazel rules for format issues.
-      - run: 'yarn bazel:format --mode=check ||
-          (echo "BUILD files not formatted. Please run ''yarn bazel:format --mode=fix''" ; exit 1)'
-
-      # Run the Buildifier to check our Bazel rules for lint issues.
-      # Note: The `--lint=warn` will auto fixe (re-write) the affected files.
-      - run: 'yarn bazel:format --lint=warn ||
-          (echo "BUILD files contain unresolved lint errors. Please fix manually the remaining errors." ; exit 1)'
 
   test:
     <<: *run_in_browser
@@ -167,50 +140,6 @@ jobs:
       - run:
           name: Run Affected Builds
           command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --with-deps
-
-  build-bazel:
-    <<: *run_in_node
-    steps:
-      - checkout
-      - *set_bazel_options
-      - write_master_hash
-      - restore_cache:
-          keys:
-            - *bazel_cache_key
-            - *cache_key
-
-      # Build
-      - run: yarn
-      - run:
-          name: Build All Packages with Bazel
-          command: yarn bazel build //modules/...
-      # Store artifacts from build
-      - persist_to_workspace:
-          root: dist
-          paths:
-            - bin/*
-
-  update-master-hash:
-    <<: *run_in_node
-    steps:
-      - checkout
-      - *set_bazel_options
-      - write_master_hash
-      - restore_cache:
-          keys:
-            - *bazel_cache_key
-
-      # Build
-      - run: yarn
-      - run:
-          name: Build All Packages with Bazel
-          command: yarn bazel build //modules/...
-      - save_cache:
-          key: *bazel_cache_key
-          paths:
-            - ~/.cache/bazel_repository_cache
-            - ~/.cache/bazel_disk_cache
-            - node_modules
 
   schematics-core-check:
     <<: *run_in_browser
@@ -351,12 +280,6 @@ workflows:
           filters:
             branches:
               only: master
-      # - update-master-hash:
-      #     requires:
-      #       - install
-      #     filters:
-      #       branches:
-      #         only: master
       - publish-stable:
           requires:
             - build
