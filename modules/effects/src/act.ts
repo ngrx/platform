@@ -1,12 +1,5 @@
 import { Action } from '@ngrx/store';
-import {
-  defer,
-  merge,
-  Notification,
-  Observable,
-  OperatorFunction,
-  Subject,
-} from 'rxjs';
+import { defer, merge, Observable, OperatorFunction, Subject } from 'rxjs';
 import {
   concatMap,
   dematerialize,
@@ -15,6 +8,7 @@ import {
   map,
   materialize,
 } from 'rxjs/operators';
+import { ObservableNotification } from './utils';
 
 /** Represents config with named parameters for act */
 export interface ActConfig<
@@ -117,68 +111,58 @@ export function act<
     | CompleteAction
     | UnsubscribeAction;
   return (source) =>
-    defer(
-      (): Observable<ResultAction> => {
-        const subject = new Subject<UnsubscribeAction>();
-        return merge(
-          source.pipe(
-            operator((input, index) =>
-              defer(() => {
-                let completed = false;
-                let errored = false;
-                let projectedCount = 0;
-                return project(input, index).pipe(
-                  materialize(),
-                  map((notification):
-                    | (Notification<
+    defer((): Observable<ResultAction> => {
+      const subject = new Subject<UnsubscribeAction>();
+      return merge(
+        source.pipe(
+          operator((input, index) =>
+            defer(() => {
+              let completed = false;
+              let errored = false;
+              let projectedCount = 0;
+              return project(input, index).pipe(
+                materialize(),
+                map(
+                  (
+                    notification
+                  ):
+                    | ObservableNotification<
                         ErrorAction | CompleteAction | OutputAction
-                      > & {
-                        kind: 'N';
-                        value: ErrorAction | CompleteAction | OutputAction;
-                      })
+                      >
                     | undefined => {
                     switch (notification.kind) {
                       case 'E':
                         errored = true;
-                        return new Notification(
-                          'N',
-                          error(notification.error, input)
-                        ) as Notification<ErrorAction> & {
-                          kind: 'N';
-                          value: ErrorAction;
+                        return {
+                          kind: 'N',
+                          value: error(notification.error, input),
                         };
                       case 'C':
                         completed = true;
                         return complete
-                          ? (new Notification(
-                              'N',
-                              complete(projectedCount, input)
-                            ) as Notification<CompleteAction> & {
-                              kind: 'N';
-                              value: CompleteAction;
-                            })
+                          ? {
+                              kind: 'N',
+                              value: complete(projectedCount, input),
+                            }
                           : undefined;
                       default:
                         ++projectedCount;
-                        return notification as Notification<OutputAction> & {
-                          kind: 'N';
-                          value: OutputAction;
-                        };
+                        return notification as ObservableNotification<OutputAction>;
                     }
-                  }),
-                  filter((n): n is NonNullable<typeof n> => n != null),
-                  dematerialize(),
-                  finalize(() => {
-                    if (!completed && !errored && unsubscribe) {
-                      subject.next(unsubscribe(projectedCount, input));
-                    }
-                  })
-                );
-              })
-            )
-          ),
-          subject
-        );
-      }
-    );
+                  }
+                ),
+                filter((n): n is NonNullable<typeof n> => n != null),
+                dematerialize(),
+                finalize(() => {
+                  if (!completed && !errored && unsubscribe) {
+                    subject.next(unsubscribe(projectedCount, input));
+                  }
+                })
+              );
+            })
+          )
+        ),
+        subject
+      );
+    });
 }

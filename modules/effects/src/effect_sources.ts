@@ -1,6 +1,6 @@
 import { ErrorHandler, Inject, Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Notification, Observable, Subject, merge } from 'rxjs';
+import { Observable, Subject, merge } from 'rxjs';
 import {
   dematerialize,
   exhaustMap,
@@ -27,7 +27,7 @@ import {
   isOnInitEffects,
 } from './lifecycle_hooks';
 import { EFFECTS_ERROR_HANDLER } from './tokens';
-import { getSourceForInstance } from './utils';
+import { getSourceForInstance, ObservableNotification } from './utils';
 
 @Injectable()
 export class EffectSources extends Subject<any> {
@@ -65,12 +65,8 @@ export class EffectSources extends Subject<any> {
             return output.notification;
           }),
           filter(
-            (
-              notification
-            ): notification is Notification<Action> & {
-              kind: 'N';
-              value: Action;
-            } => notification.kind === 'N' && notification.value != null
+            (notification): notification is ObservableNotification<Action> =>
+              notification.kind === 'N' && notification.value != null
           ),
           dematerialize()
         );
