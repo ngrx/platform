@@ -37,3 +37,13 @@ export function tapResponse<T, E = unknown>(
       catchError(() => EMPTY)
     );
 }
+
+export function tapResponse<T>(
+  observer: Partial<Observer<T>>
+): (source: Observable<T>) => Observable<T> {
+  return (source) =>
+    source.pipe(
+      tap(observer),
+      catchError(() => EMPTY)
+    );
+}
