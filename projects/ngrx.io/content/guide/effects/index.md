@@ -341,3 +341,31 @@ export class CollectionEffects {
 </div>
 
 To learn about testing effects that incorporate state, see the [Effects that use State](guide/effects/testing#effect-that-uses-state) section in the testing guide.
+
+## Non-Action Effects
+
+Because all effects are basically RxJS `Observable`s, they can be used without actions and the `ofType` operator. This is useful for effects that don't need to listen to some specific actions, but rather to some other `Observable`s from our application. For example. imagine we want to track user activity (clicks anywhere, for example), and send that data to our monitoring server. We can do this by creating a custom effect that listens to the `document` `click` event and emits the event data to our server:
+
+<code-example header="user-activity.effects.ts">  
+import { Injectable } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { UserActivityService } from '../services/user-activity.service';
+
+@Injectable()
+export class UserActivityEffects {
+  trackUserActivity$ = createEffect(() =>
+    fromEvent(document, 'click').pipe(
+      switchMap(event => this.userActivityService.trackUserActivity(event)),
+    ), { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private userActivityService: UserActivityService,
+  ) {}
+}
+</code-example>
+
+Here our stream is created from the `document` `click` event, without any action that need to be dispatched.
