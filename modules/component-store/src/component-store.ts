@@ -20,7 +20,6 @@ import {
   shareReplay,
   take,
   catchError,
-  tap,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -29,25 +28,18 @@ import {
   Optional,
   InjectionToken,
   Inject,
+  Type,
+  inject,
 } from '@angular/core';
 
 export interface SelectConfig {
   debounce?: boolean;
 }
 
-/**
- * The interface for the lifecycle hook
- * called after the ComponentStore is instantiated.
- */
 export interface OnStoreInit {
   readonly ngrxOnStoreInit: () => void;
 }
 
-/**
- * The interface for the lifecycle hook
- * called only once after the ComponentStore
- * state is first initialized.
- */
 export interface OnStateInit {
   readonly ngrxOnStateInit: () => void;
 }
@@ -81,11 +73,18 @@ export class ComponentStore<T extends object> implements OnDestroy {
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
 
-  // check/call store init hook
-  private readonly initStoreHook = this.callInitStoreHook();
+  // // check/call store init hook
+  // private readonly initStoreHook = this.effect(() =>
+  //   of(null).pipe(($) => {
+  //     if (isOnStoreInitDefined(this)) {
+  //       this.ngrxOnStoreInit();
+  //     }
+  //     return $;
+  //   })
+  // )();
 
   // check/call state init hook on first emission of value
-  private readonly initStateHook = this.callInitStateHook();
+  // private readonly initStateHook = this.callInitStateHook();
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
@@ -335,32 +334,20 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }) as unknown as ReturnType;
   }
 
-  /**
-   * Checks to see if the OnInitStore
-   * hook is defined. If so, it calls
-   * the method.
-   */
-  private callInitStoreHook() {
-    if (isOnStoreInitDefined(this)) {
-      this.ngrxOnStoreInit();
-    }
-  }
-
-  /**
-   * Checks to see if the OnInitState
-   * hook is defined. If so, it calls
-   * the method once after the state is first set.
-   */
-  private callInitStateHook() {
+  callInitStateHook() {
     this.stateSubject$
       .pipe(
         take(1),
-        tap((val) => {
+        map((val) => {
           if (val && isOnStateInitDefined(this)) {
             this.ngrxOnStateInit();
           }
+          return val;
         }),
-        catchError(() => EMPTY)
+        catchError((e) => {
+          console.log(e);
+          return EMPTY;
+        })
       )
       .subscribe();
   }
@@ -407,4 +394,34 @@ function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
 
 function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
   return typeof (cs as OnStateInit).ngrxOnStateInit === 'function';
+}
+
+const WITH_HOOKS = new InjectionToken<ComponentStore<any>[]>(
+  '@ngrx/component-store: ComponentStores with Hooks'
+);
+
+export function provideWithHooks(
+  componentStoreClass: Type<ComponentStore<any>>
+) {
+  return [
+    { provide: WITH_HOOKS, multi: true, useClass: componentStoreClass },
+    {
+      provide: componentStoreClass,
+      useFactory: () => {
+        const componentStore = inject(WITH_HOOKS).pop();
+
+        if (isOnStoreInitDefined(componentStore)) {
+          componentStore.ngrxOnStoreInit();
+        }
+
+        if (isOnStateInitDefined(componentStore)) {
+          componentStore.state$
+            .pipe(take(1))
+            .subscribe(() => componentStore.ngrxOnStateInit());
+        }
+
+        return componentStore;
+      },
+    },
+  ];
 }
