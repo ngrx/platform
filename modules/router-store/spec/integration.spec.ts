@@ -9,7 +9,7 @@ import {
   ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Store, ScannedActionsSubject } from '@ngrx/store';
-import { filter, first, mapTo, take } from 'rxjs/operators';
+import { filter, first, map, take } from 'rxjs/operators';
 
 import {
   NavigationActionTiming,
@@ -748,7 +748,10 @@ describe('integration spec', () => {
       reducers: { routerReducer },
       canActivate: () => {
         store.dispatch({ type: 'USER_EVENT' });
-        return store.pipe(take(1), mapTo(true));
+        return store.pipe(
+          take(1),
+          map(() => true)
+        );
       },
     });
 
