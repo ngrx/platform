@@ -1,5 +1,4 @@
-import createSpy = jasmine.createSpy;
-import { ChangeDetectorRef, NgZone } from '@angular/core';
+import { NgZone } from '@angular/core';
 import { MockNoopNgZone } from './mock-noop-ng-zone';
 
 /**
@@ -17,27 +16,13 @@ export const manualInstanceNoopNgZone = new NoopNgZone({
 });
 
 export class MockChangeDetectorRef {
-  markForCheck = createSpy('markForCheck');
-  detectChanges = createSpy('detectChanges');
-  checkNoChanges = createSpy('checkNoChanges');
-  detach = createSpy('detach');
-  reattach = createSpy('reattach');
+  markForCheck = jest.fn();
+  detectChanges = jest.fn();
+  checkNoChanges = jest.fn();
+  detach = jest.fn();
+  reattach = jest.fn();
 }
 
-export const mockPromise = {
-  then: () => {},
-};
-
-export function getMockOptimizedStrategyConfig() {
-  return {
-    component: {},
-    cdRef: (new MockChangeDetectorRef() as any) as ChangeDetectorRef,
-  };
-}
-
-export function getMockNoopStrategyConfig() {
-  return {
-    component: {},
-    cdRef: (new MockChangeDetectorRef() as any) as ChangeDetectorRef,
-  };
+export class MockErrorHandler {
+  handleError = jest.fn();
 }

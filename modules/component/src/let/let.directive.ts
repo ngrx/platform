@@ -15,14 +15,26 @@ import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
 
 export interface LetViewContext<T> {
-  // to enable `let` syntax we have to use $implicit (var; let v = var)
+  /**
+   * using `$implicit` to enable `let` syntax: `*ngrxLet="obs$; let o"`
+   */
   $implicit: T;
-  // to enable `as` syntax we have to assign the directives selector (var as v)
+  /**
+   * using `ngrxLet` to enable `as` syntax: `*ngrxLet="obs$ as o"`
+   */
   ngrxLet: T;
-  // set context var complete to true (var$; let e = $error)
+  /**
+   * `*ngrxLet="obs$; let e = $error"` or `*ngrxLet="obs$; $error as e"`
+   */
   $error: boolean;
-  // set context var complete to true (var$; let c = $complete)
+  /**
+   * `*ngrxLet="obs$; let c = $complete"` or `*ngrxLet="obs$; $complete as c"`
+   */
   $complete: boolean;
+  /**
+   * `*ngrxLet="obs$; let s = $suspense"` or `*ngrxLet="obs$; $suspense as s"`
+   */
+  $suspense: boolean;
 }
 
 /**
@@ -30,63 +42,45 @@ export interface LetViewContext<T> {
  *
  * @description
  *
- * The `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).
- * It also helps with several internal processing under the hood.
- *
- * The current way of binding an observable to the view looks like that:
- * ```html
- * <ng-container *ngIf="observableNumber$ | async as n">
- * <app-number [number]="n">
- * </app-number>
- * <app-number-special [number]="n">
- * </app-number-special>
- * </ng-container>
- *  ```
- *
- *  The problem is `*ngIf` is also interfering with rendering and in case of a `0` the component would be hidden
- *
- * Included Features:
- * - binding is always present. (`*ngIf="truthy$ | async"`)
- * - it takes away the multiple usages of the `async` or `ngrxPush` pipe
- * - a unified/structured way of handling null and undefined
- * - triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)
- * - triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)
- * - distinct same values in a row (distinctUntilChanged operator)
+ * The `*ngrxLet` directive serves a convenient way of binding observables to a view context
+ * (DOM element's scope). It also helps with several internal processing under the hood.
  *
  * @usageNotes
  *
- * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
- * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
+ * ### Displaying Observable Values
  *
  * ```html
- * <ng-container *ngrxLet="observableNumber$ as n">
- * <app-number [number]="n">
- * </app-number>
+ * <ng-container *ngrxLet="number$ as n">
+ *   <app-number [number]="n"></app-number>
  * </ng-container>
  *
- * <ng-container *ngrxLet="observableNumber$; let n">
- * <app-number [number]="n">
- * </app-number>
+ * <ng-container *ngrxLet="number$; let n">
+ *   <app-number [number]="n"></app-number>
  * </ng-container>
  * ```
  *
- * In addition to that it provides us information from the whole observable context.
- * We can track the observables:
- * - next value
- * - error value
- * - complete state
+ * ### Tracking Different Observable Events
  *
  * ```html
- * <ng-container *ngrxLet="observableNumber$; let n; let e = $error, let c = $complete">
- * <app-number [number]="n"  *ngIf="!e && !c">
- * </app-number>
- * <ng-container *ngIf="e">
- * There is an error: {{e}}
+ * <ng-container *ngrxLet="number$ as n; let e = $error; let c = $complete">
+ *   <app-number [number]="n" *ngIf="!e && !c">
+ *   </app-number>
+ *
+ *   <p *ngIf="e">There is an error.</p>
+ *   <p *ngIf="c">Observable is completed.</p>
  * </ng-container>
- * <ng-container *ngIf="c">
- * Observable completed: {{c}}
+ * ```
+ *
+ * ### Using Suspense Template
+ *
+ * ```html
+ * <ng-container *ngrxLet="number$ as n; suspenseTpl: loading">
+ *   <app-number [number]="n"></app-number>
  * </ng-container>
- * </ng-container>
+ *
+ * <ng-template #loading>
+ *   <p>Loading...</p>
+ * </ng-template>
  * ```
  *
  * @publicApi
@@ -95,12 +89,14 @@ export interface LetViewContext<T> {
 export class LetDirective<U> implements OnInit, OnDestroy {
   static ngTemplateGuard_ngrxLet: 'binding';
 
-  private isEmbeddedViewCreated = false;
+  private isMainViewCreated = false;
+  private isSuspenseViewCreated = false;
   private readonly viewContext: LetViewContext<U | null | undefined> = {
     $implicit: undefined,
     ngrxLet: undefined,
     $error: false,
     $complete: false,
+    $suspense: true,
   };
   private readonly renderScheduler = createRenderScheduler({
     ngZone: this.ngZone,
@@ -108,28 +104,29 @@ export class LetDirective<U> implements OnInit, OnDestroy {
   });
   private readonly renderEventManager = createRenderEventManager<U>({
     reset: () => {
-      if (this.isEmbeddedViewCreated) {
-        this.viewContext.$implicit = undefined;
-        this.viewContext.ngrxLet = undefined;
-        this.viewContext.$error = false;
-        this.viewContext.$complete = false;
+      this.viewContext.$implicit = undefined;
+      this.viewContext.ngrxLet = undefined;
+      this.viewContext.$error = false;
+      this.viewContext.$complete = false;
+      this.viewContext.$suspense = true;
 
-        this.renderScheduler.schedule();
-      }
+      this.renderSuspenseView();
     },
     next: (event) => {
       this.viewContext.$implicit = event.value;
       this.viewContext.ngrxLet = event.value;
+      this.viewContext.$suspense = false;
 
       if (event.reset) {
         this.viewContext.$error = false;
         this.viewContext.$complete = false;
       }
 
-      this.renderEmbeddedView();
+      this.renderMainView();
     },
     error: (event) => {
       this.viewContext.$error = true;
+      this.viewContext.$suspense = false;
 
       if (event.reset) {
         this.viewContext.$implicit = undefined;
@@ -137,11 +134,12 @@ export class LetDirective<U> implements OnInit, OnDestroy {
         this.viewContext.$complete = false;
       }
 
-      this.renderEmbeddedView();
+      this.renderMainView();
       this.errorHandler.handleError(event.error);
     },
     complete: (event) => {
       this.viewContext.$complete = true;
+      this.viewContext.$suspense = false;
 
       if (event.reset) {
         this.viewContext.$implicit = undefined;
@@ -149,10 +147,27 @@ export class LetDirective<U> implements OnInit, OnDestroy {
         this.viewContext.$error = false;
       }
 
-      this.renderEmbeddedView();
+      this.renderMainView();
     },
   });
   private readonly subscription = new Subscription();
+
+  @Input()
+  set ngrxLet(potentialObservable: PotentialObservable<U>) {
+    this.renderEventManager.nextPotentialObservable(potentialObservable);
+  }
+
+  @Input('ngrxLetSuspenseTpl') suspenseTemplateRef?: TemplateRef<
+    LetViewContext<U | null | undefined>
+  >;
+
+  constructor(
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly ngZone: NgZone,
+    private readonly mainTemplateRef: TemplateRef<LetViewContext<U>>,
+    private readonly viewContainerRef: ViewContainerRef,
+    private readonly errorHandler: ErrorHandler
+  ) {}
 
   static ngTemplateContextGuard<U>(
     dir: LetDirective<U>,
@@ -160,19 +175,6 @@ export class LetDirective<U> implements OnInit, OnDestroy {
   ): ctx is LetViewContext<U> {
     return true;
   }
-
-  @Input()
-  set ngrxLet(potentialObservable: PotentialObservable<U>) {
-    this.renderEventManager.nextPotentialObservable(potentialObservable);
-  }
-
-  constructor(
-    private readonly cdRef: ChangeDetectorRef,
-    private readonly ngZone: NgZone,
-    private readonly templateRef: TemplateRef<LetViewContext<U>>,
-    private readonly viewContainerRef: ViewContainerRef,
-    private readonly errorHandler: ErrorHandler
-  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -184,15 +186,36 @@ export class LetDirective<U> implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private renderEmbeddedView(): void {
-    if (!this.isEmbeddedViewCreated) {
-      this.isEmbeddedViewCreated = true;
+  private renderMainView(): void {
+    if (this.isSuspenseViewCreated) {
+      this.isSuspenseViewCreated = false;
+      this.viewContainerRef.clear();
+    }
+
+    if (!this.isMainViewCreated) {
+      this.isMainViewCreated = true;
       this.viewContainerRef.createEmbeddedView(
-        this.templateRef,
+        this.mainTemplateRef,
         this.viewContext
       );
     }
 
     this.renderScheduler.schedule();
+  }
+
+  private renderSuspenseView(): void {
+    if (this.suspenseTemplateRef && this.isMainViewCreated) {
+      this.isMainViewCreated = false;
+      this.viewContainerRef.clear();
+    }
+
+    if (this.suspenseTemplateRef && !this.isSuspenseViewCreated) {
+      this.isSuspenseViewCreated = true;
+      this.viewContainerRef.createEmbeddedView(this.suspenseTemplateRef);
+    }
+
+    if (this.isMainViewCreated || this.isSuspenseViewCreated) {
+      this.renderScheduler.schedule();
+    }
   }
 }
