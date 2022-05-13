@@ -24,7 +24,6 @@ import {
   throwError,
 } from 'rxjs';
 import { take } from 'rxjs/operators';
-
 import { LetDirective } from '../../src/let/let.directive';
 import { MockChangeDetectorRef } from '../fixtures/fixtures';
 
@@ -175,49 +174,49 @@ describe('LetDirective', () => {
       expect(componentNativeElement).toBeDefined();
     });
 
-    it('should render_creator undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
+    it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = undefined;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render_creator null as value when initially null was passed (as no value ever was emitted)', () => {
+    it('should render null as value when initially null was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = null;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('null');
     });
 
-    it('should render_creator undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
+    it('should render undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
       letDirectiveTestComponent.value$ = of(undefined);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render_creator null as value when initially of(null) was passed (as null was emitted)', () => {
+    it('should render null as value when initially of(null) was passed (as null was emitted)', () => {
       letDirectiveTestComponent.value$ = of(null);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('null');
     });
 
-    it('should render_creator undefined as value when initially EMPTY was passed (as no value ever was emitted)', () => {
+    it('should render undefined as value when initially EMPTY was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = EMPTY;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render_creator nothing as value when initially NEVER was passed (as no value ever was emitted)', () => {
+    it('should render nothing as value when initially NEVER was passed (as no value ever was emitted)', () => {
       letDirectiveTestComponent.value$ = NEVER;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('');
     });
 
-    it('should render_creator emitted value from passed observable without changing it', () => {
+    it('should render emitted value from passed observable without changing it', () => {
       letDirectiveTestComponent.value$ = of(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
     });
 
-    it('should render_creator emitted value from passed promise without changing it', fakeAsync(() => {
+    it('should render emitted value from passed promise without changing it', fakeAsync(() => {
       letDirectiveTestComponent.value$ = Promise.resolve(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       flushMicrotasks();
@@ -225,7 +224,7 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('42');
     }));
 
-    it('should render_creator undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
+    it('should render undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
       letDirectiveTestComponent.value$ = of(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
@@ -234,7 +233,7 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render_creator new value as value when a new observable was passed', () => {
+    it('should render new value as value when a new observable was passed', () => {
       letDirectiveTestComponent.value$ = of(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
@@ -243,13 +242,13 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('45');
     });
 
-    it('should render_creator the last value when a new observable was passed', () => {
+    it('should render the last value when a new observable was passed', () => {
       letDirectiveTestComponent.value$ = of(42, 45);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('45');
     });
 
-    it('should render_creator values over time when a new observable was passed', fakeAsync(() => {
+    it('should render values over time when a new observable was passed', fakeAsync(() => {
       letDirectiveTestComponent.value$ = interval(1000).pipe(take(3));
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('');
@@ -277,6 +276,7 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('45');
     });
+
     it('should render the last value when a new observable was passed', () => {
       letDirectiveTestComponent.value$ = of(42, 45);
       fixtureLetDirectiveTestComponent.detectChanges();
@@ -307,13 +307,13 @@ describe('LetDirective', () => {
   describe('when error', () => {
     beforeEach(waitForAsync(setupLetDirectiveTestComponentError));
 
-    it('should render_creator the error to false if next or complete', () => {
+    it('should render the error to false if next or complete', () => {
       letDirectiveTestComponent.value$ = of(1);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('false');
     });
 
-    it('should render_creator the error to true if one occurs', () => {
+    it('should render the error to true if one occurs', () => {
       letDirectiveTestComponent.value$ = throwError(
         () => new Error('error message')
       );
@@ -325,7 +325,7 @@ describe('LetDirective', () => {
   describe('when complete', () => {
     beforeEach(waitForAsync(setupLetDirectiveTestComponentComplete));
 
-    it('should render_creator true if completed', () => {
+    it('should render true if completed', () => {
       letDirectiveTestComponent.value$ = EMPTY;
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
