@@ -13,9 +13,8 @@ import {
   USER_PROVIDED_EFFECTS,
 } from '..';
 import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
-import { mapTo, exhaustMap, tap } from 'rxjs/operators';
+import { map, exhaustMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { FeatureModule } from 'modules/store/spec/ngc/main';
 
 describe('NgRx Effects Integration spec', () => {
   it('throws if forRoot() with Effects is used more than once', (done: any) => {
@@ -316,14 +315,14 @@ describe('NgRx Effects Integration spec', () => {
     response = createEffect(() => {
       return this.actions$.pipe(
         ofType('[EffectWithOnInitAndResponse]: INIT'),
-        mapTo({ type: '[EffectWithOnInitAndResponse]: INIT Response' })
+        map(() => ({ type: '[EffectWithOnInitAndResponse]: INIT Response' }))
       );
     });
 
     noop = createEffect(() => {
       return this.actions$.pipe(
         ofType('noop'),
-        mapTo({ type: 'noop response' })
+        map(() => ({ type: 'noop response' }))
       );
     });
 

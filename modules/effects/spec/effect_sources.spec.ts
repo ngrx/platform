@@ -10,7 +10,7 @@ import {
   timer,
   Subject,
 } from 'rxjs';
-import { map, mapTo } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import {
   Effect,
@@ -423,14 +423,14 @@ describe('EffectSources', () => {
         effectOne = createEffect(() => {
           return this.actions$.pipe(
             ofType('Action 1'),
-            mapTo({ type: 'Action 1 Response' })
+            map(() => ({ type: 'Action 1 Response' }))
           );
         });
 
         effectTwo = createEffect(() => {
           return this.actions$.pipe(
             ofType('Action 2'),
-            mapTo({ type: 'Action 2 Response' })
+            map(() => ({ type: 'Action 2 Response' }))
           );
         });
 
