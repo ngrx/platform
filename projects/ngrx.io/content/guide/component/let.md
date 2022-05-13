@@ -79,6 +79,15 @@ when an observable is in a suspense state:
 </ng-template>
 ```
 
+<div class="alert is-helpful">
+
+Observable is in a suspense state until it emits the first event (next, error, or complete).
+
+</div>
+
+In case the new observable is passed to the `*ngrxLet` directive in runtime,
+the suspense template will be displayed again until the new observable emits the first event.
+
 ## Included Features
 
 - Binding is always present.
