@@ -11,7 +11,7 @@
     "noStrictGenericChecks": true,
     "lib": ["es2016", "dom"],
     "outDir": "../out-tsc/app",
-    "target": "es5",
+    "target": "es2020",
     "module": "commonjs",
     "baseUrl": ".",
     "rootDir": ".",
