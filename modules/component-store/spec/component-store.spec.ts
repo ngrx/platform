@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   ComponentStore,
+  INITIAL_STATE_TOKEN,
   OnStateInit,
   OnStoreInit,
+  provideComponentStore,
 } from '@ngrx/component-store';
 import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
 import {
@@ -28,6 +30,7 @@ import {
   concatMap,
 } from 'rxjs/operators';
 import { createSelector } from '@ngrx/store';
+import { Inject, Injectable, InjectionToken, Injector } from '@angular/core';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -1459,75 +1462,86 @@ describe('Component Store', () => {
 
     const onStoreInitMessage = 'on store init called';
     const onStateInitMessage = 'on state init called';
-    let logs: string[] = [];
+
+    const INIT_STATE = new InjectionToken('Init State');
+
+    @Injectable()
     class LifecycleStore
       extends ComponentStore<LifeCycle>
       implements OnStoreInit, OnStateInit
     {
-      constructor(state?: LifeCycle) {
+      logs: string[] = [];
+      constructor(@Inject(INIT_STATE) state?: LifeCycle) {
         super(state);
       }
 
       logEffect = this.effect(
         tap<void>(() => {
-          logs.push('effect');
+          this.logs.push('effect');
         })
       );
 
       ngrxOnStoreInit() {
-        logs.push(onStoreInitMessage);
+        this.logs.push(onStoreInitMessage);
       }
 
       ngrxOnStateInit() {
-        logs.push(onStateInitMessage);
+        this.logs.push(onStateInitMessage);
       }
     }
 
-    let componentStore: LifecycleStore;
+    function setup(initialState?: LifeCycle) {
+      const injector = Injector.create({
+        providers: [
+          { provide: INIT_STATE, useValue: initialState },
+          provideComponentStore(LifecycleStore),
+        ],
+      });
 
-    beforeEach(() => {
-      logs = [];
-    });
+      return {
+        store: injector.get(LifecycleStore),
+      };
+    }
 
     it('should call the OnInitStore lifecycle hook if defined', () => {
-      componentStore = new LifecycleStore({ init: true });
+      const state = setup({ init: true });
 
-      expect(logs[0]).toBe(onStoreInitMessage);
+      expect(state.store.logs[0]).toBe(onStoreInitMessage);
     });
 
     it('should only call the OnInitStore lifecycle hook once', () => {
-      componentStore = new LifecycleStore({ init: true });
-      expect(logs[0]).toBe(onStoreInitMessage);
+      const state = setup({ init: true });
+      expect(state.store.logs[0]).toBe(onStoreInitMessage);
 
-      logs = [];
-      componentStore.setState({ init: false });
+      state.store.logs = [];
+      state.store.setState({ init: false });
 
-      expect(logs.length).toBe(0);
+      expect(state.store.logs.length).toBe(0);
     });
 
     it('should call the OnInitState lifecycle hook if defined and state is set eagerly', () => {
-      componentStore = new LifecycleStore({ init: true });
+      const state = setup({ init: true });
 
-      expect(logs[1]).toBe(onStateInitMessage);
+      expect(state.store.logs[1]).toBe(onStateInitMessage);
     });
 
     it('should call the OnInitState lifecycle hook if defined and after state is set lazily', () => {
-      componentStore = new LifecycleStore();
-      expect(logs.length).toBe(1);
+      const state = setup();
+      expect(state.store.logs.length).toBe(1);
 
-      componentStore.setState({ init: true });
+      state.store.setState({ init: true });
 
-      expect(logs[1]).toBe(onStateInitMessage);
+      expect(state.store.logs[1]).toBe(onStateInitMessage);
     });
 
     it('should only call the OnInitStore lifecycle hook once', () => {
-      componentStore = new LifecycleStore({ init: true });
+      const state = setup({ init: true });
 
-      expect(logs[1]).toBe(onStateInitMessage);
-      logs = [];
-      componentStore.setState({ init: false });
+      expect(state.store.logs[1]).toBe(onStateInitMessage);
+      state.store.logs = [];
+      state.store.setState({ init: false });
 
-      expect(logs.length).toBe(0);
+      expect(state.store.logs.length).toBe(0);
     });
   });
 });

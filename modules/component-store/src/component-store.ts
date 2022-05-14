@@ -9,7 +9,6 @@ import {
   Subject,
   queueScheduler,
   scheduled,
-  EMPTY,
 } from 'rxjs';
 import {
   concatMap,
@@ -19,7 +18,6 @@ import {
   distinctUntilChanged,
   shareReplay,
   take,
-  catchError,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -72,19 +70,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
     `Please make sure it is initialized before updating/getting.`;
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
-
-  // // check/call store init hook
-  // private readonly initStoreHook = this.effect(() =>
-  //   of(null).pipe(($) => {
-  //     if (isOnStoreInitDefined(this)) {
-  //       this.ngrxOnStoreInit();
-  //     }
-  //     return $;
-  //   })
-  // )();
-
-  // check/call state init hook on first emission of value
-  // private readonly initStateHook = this.callInitStateHook();
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
@@ -333,24 +318,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
       });
     }) as unknown as ReturnType;
   }
-
-  callInitStateHook() {
-    this.stateSubject$
-      .pipe(
-        take(1),
-        map((val) => {
-          if (val && isOnStateInitDefined(this)) {
-            this.ngrxOnStateInit();
-          }
-          return val;
-        }),
-        catchError((e) => {
-          console.log(e);
-          return EMPTY;
-        })
-      )
-      .subscribe();
-  }
 }
 
 function processSelectorArgs<
@@ -400,7 +367,7 @@ const WITH_HOOKS = new InjectionToken<ComponentStore<any>[]>(
   '@ngrx/component-store: ComponentStores with Hooks'
 );
 
-export function provideWithHooks(
+export function provideComponentStore(
   componentStoreClass: Type<ComponentStore<any>>
 ) {
   return [
@@ -408,19 +375,25 @@ export function provideWithHooks(
     {
       provide: componentStoreClass,
       useFactory: () => {
-        const componentStore = inject(WITH_HOOKS).pop();
+        const componentStores = inject(WITH_HOOKS);
+        let instance;
+        componentStores.forEach((componentStore) => {
+          if (componentStore instanceof componentStoreClass) {
+            instance = componentStore;
 
-        if (isOnStoreInitDefined(componentStore)) {
-          componentStore.ngrxOnStoreInit();
-        }
+            if (isOnStoreInitDefined(componentStore)) {
+              componentStore.ngrxOnStoreInit();
+            }
 
-        if (isOnStateInitDefined(componentStore)) {
-          componentStore.state$
-            .pipe(take(1))
-            .subscribe(() => componentStore.ngrxOnStateInit());
-        }
+            if (isOnStateInitDefined(componentStore)) {
+              componentStore.state$
+                .pipe(take(1))
+                .subscribe(() => componentStore.ngrxOnStateInit());
+            }
+          }
+        });
 
-        return componentStore;
+        return instance;
       },
     },
   ];
