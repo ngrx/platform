@@ -1,8 +1,9 @@
-module.exports = {
-  displayName: 'Data Example App',
+/* eslint-disable */
+export default {
+  displayName: 'Entity',
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/apps/data-example-app',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  coverageDirectory: '../../coverage/modules/entity',
+  setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

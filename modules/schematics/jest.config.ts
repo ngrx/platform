@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'Schematics',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/schematics',

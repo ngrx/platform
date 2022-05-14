@@ -42,7 +42,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/component/jest.config.js",
+            "jestConfig": "modules/component/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/component"]
@@ -92,7 +92,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/component-store/jest.config.js",
+            "jestConfig": "modules/component-store/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/component-store"]
@@ -142,7 +142,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/data/jest.config.js",
+            "jestConfig": "modules/data/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/data"]
@@ -242,7 +242,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "projects/data-example-app/jest.config.js",
+            "jestConfig": "projects/data-example-app/jest.config.ts",
             "runInBand": true,
             "passWithNoTests": true
           }
@@ -372,7 +372,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/effects/jest.config.js",
+            "jestConfig": "modules/effects/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/effects"]
@@ -431,7 +431,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/entity/jest.config.js",
+            "jestConfig": "modules/entity/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/entity"]
@@ -459,7 +459,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/eslint-plugin/jest.config.js",
+            "jestConfig": "modules/eslint-plugin/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/eslint-plugin"]
@@ -598,7 +598,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "projects/example-app/jest.config.js",
+            "jestConfig": "projects/example-app/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/projects/example-app"]
@@ -679,7 +679,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/router-store/jest.config.js",
+            "jestConfig": "modules/router-store/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/router-store"]
@@ -707,7 +707,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/schematics/jest.config.js",
+            "jestConfig": "modules/schematics/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/schematics"]
@@ -795,7 +795,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/schematics-core/jest.config.js",
+            "jestConfig": "modules/schematics-core/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/modules/schematics-core"]
@@ -854,7 +854,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/store/jest.config.js",
+            "jestConfig": "modules/store/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/store"]
@@ -904,7 +904,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "modules/store-devtools/jest.config.js",
+            "jestConfig": "modules/store-devtools/jest.config.ts",
             "runInBand": true
           },
           "outputs": ["coverage/modules/store-devtools"]

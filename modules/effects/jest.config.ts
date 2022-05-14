@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'Effects',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/effects',

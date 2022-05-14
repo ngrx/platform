@@ -1,14 +1,15 @@
-module.exports = {
-  displayName: 'Data',
+/* eslint-disable */
+export default {
+  displayName: 'Component',
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/modules/data',
-  setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
+  coverageDirectory: '../../coverage/modules/component',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
+  setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   transform: { '^.+\\.(ts|js|mjs|html)$': 'jest-preset-angular' },
   transformIgnorePatterns: ['node_modules/(?!@angular|tslib)'],
   moduleNameMapper: {

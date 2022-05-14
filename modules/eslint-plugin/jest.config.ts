@@ -1,8 +1,10 @@
-module.exports = {
-  displayName: 'Component Store',
+/* eslint-disable */
+export default {
+  displayName: 'eslint-plugin',
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/libs/component-store',
+  coverageDirectory: '../../coverage/modules/esling-plugin',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
+  testEnvironment: 'node',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

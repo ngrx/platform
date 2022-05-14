@@ -1,8 +1,9 @@
-module.exports = {
-  displayName: 'Store',
+/* eslint-disable */
+export default {
+  displayName: 'Example App',
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/modules/store',
-  setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
+  coverageDirectory: '../../coverage/apps/example-app',
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -14,4 +15,5 @@ module.exports = {
   moduleNameMapper: {
     tslib: '<rootDir>../../node_modules/tslib/tslib.es6.js',
   },
+  testRunner: 'jest-circus/runner',
 };
