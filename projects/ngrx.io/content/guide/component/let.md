@@ -49,7 +49,7 @@ and safe to work with streams in the template:
 </ng-container>
 ```
 
-### Tracking Different Observable Events
+## Tracking Different Observable Events
 
 In addition to that it provides us information from the whole observable context.
 We can track next, error, and complete events:
@@ -64,7 +64,7 @@ We can track next, error, and complete events:
 </ng-container>
 ```
 
-### Using Suspense Template
+## Using Suspense Template
 
 There is an option to pass the suspense template that will be displayed
 when an observable is in a suspense state:
@@ -81,18 +81,19 @@ when an observable is in a suspense state:
 
 <div class="alert is-helpful">
 
-Observable is in a suspense state until it emits the first event (next, error, or complete).
+An observable is in a suspense state until it emits the first event (next, error, or complete).
 
 </div>
 
-In case the new observable is passed to the `*ngrxLet` directive in runtime,
+In case a new observable is passed to the `*ngrxLet` directive at runtime,
 the suspense template will be displayed again until the new observable emits the first event.
 
 ## Included Features
 
-- Binding is always present.
-- It takes away the multiple usages of the `async` or `ngrxPush` pipe.
-- Unified/structured way of handling `null` and `undefined`.
+- Binding is present even for falsy values.
+  (See ["Comparison with `*ngIf` and `async`"](#comparison-with-ngif-and-async) section)
+- Takes away the multiple usages of the `async` or `ngrxPush` pipe.
+- Provides a unified/structured way of handling `null` and `undefined`.
 - Triggers the change detection differently if `zone.js` is present or not
   using the `ChangeDetectorRef.markForCheck` or `ChangeDetectorRef.detectChanges`.
 - Distinct the same values in a row using the `distinctUntilChanged` operator.
