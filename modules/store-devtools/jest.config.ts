@@ -1,9 +1,9 @@
-module.exports = {
-  displayName: 'eslint-plugin',
+/* eslint-disable */
+export default {
+  displayName: 'Store Devtools',
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/modules/esling-plugin',
+  coverageDirectory: '../../coverage/modules/store-devtools',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
-  testEnvironment: 'node',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

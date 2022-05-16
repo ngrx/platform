@@ -1,7 +1,8 @@
-module.exports = {
-  displayName: 'Router Store',
+/* eslint-disable */
+export default {
+  displayName: 'Store',
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/modules/router-store',
+  coverageDirectory: '../../coverage/modules/store',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {
