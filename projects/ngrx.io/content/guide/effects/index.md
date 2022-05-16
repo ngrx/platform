@@ -362,7 +362,6 @@ export class UserActivityEffects {
   );
 
   constructor(
-    private actions$: Actions,
     private userActivityService: UserActivityService,
   ) {}
 }
