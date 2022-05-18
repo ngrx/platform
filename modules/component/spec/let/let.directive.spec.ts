@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   Directive,
+  ErrorHandler,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
@@ -15,17 +16,20 @@ import {
 } from '@angular/core/testing';
 import {
   BehaviorSubject,
+  delay,
   EMPTY,
   interval,
   NEVER,
   Observable,
   ObservableInput,
   of,
+  switchMap,
+  take,
   throwError,
+  timer,
 } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { LetDirective } from '../../src/let/let.directive';
-import { MockChangeDetectorRef } from '../fixtures/fixtures';
+import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
 
 @Component({
   template: `
@@ -47,7 +51,7 @@ class LetDirectiveTestComponent {
   `,
 })
 class LetDirectiveTestErrorComponent {
-  value$: Observable<number> = of(42);
+  value$ = of(42);
 }
 
 @Component({
@@ -58,7 +62,30 @@ class LetDirectiveTestErrorComponent {
   `,
 })
 class LetDirectiveTestCompleteComponent {
-  value$: Observable<number> = of(42);
+  value$ = of(42);
+}
+
+@Component({
+  template: `
+    <ng-container *ngrxLet="value$ as value; $suspense as s">{{
+      s ? 'suspense' : value
+    }}</ng-container>
+  `,
+})
+class LetDirectiveTestSuspenseComponent {
+  value$ = of(42);
+}
+
+@Component({
+  template: `
+    <ng-container *ngrxLet="value$ as value; suspenseTpl: loading">{{
+      value === undefined ? 'undefined' : value
+    }}</ng-container>
+    <ng-template #loading>Loading...</ng-template>
+  `,
+})
+class LetDirectiveTestSuspenseTplComponent {
+  value$ = of(42);
 }
 
 @Directive({
@@ -79,6 +106,7 @@ export class RecursiveDirective {
 })
 class LetDirectiveTestRecursionComponent {
   constructor(public subject: BehaviorSubject<number>) {}
+
   get value$() {
     return this.subject;
   }
@@ -106,11 +134,13 @@ const setupLetDirectiveTestComponent = (): void => {
     fixtureLetDirectiveTestComponent.componentInstance;
   componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
 };
+
 const setupLetDirectiveTestComponentError = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestErrorComponent, LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: ErrorHandler, useClass: MockErrorHandler },
       TemplateRef,
       ViewContainerRef,
     ],
@@ -123,6 +153,7 @@ const setupLetDirectiveTestComponentError = (): void => {
     fixtureLetDirectiveTestComponent.componentInstance;
   componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
 };
+
 const setupLetDirectiveTestComponentComplete = (): void => {
   TestBed.configureTestingModule({
     declarations: [LetDirectiveTestCompleteComponent, LetDirective],
@@ -135,6 +166,44 @@ const setupLetDirectiveTestComponentComplete = (): void => {
 
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
     LetDirectiveTestCompleteComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+
+const setupLetDirectiveTestComponentSuspense = (): void => {
+  TestBed.configureTestingModule({
+    declarations: [LetDirectiveTestSuspenseComponent, LetDirective],
+    providers: [
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: ErrorHandler, useClass: MockErrorHandler },
+      TemplateRef,
+      ViewContainerRef,
+    ],
+  });
+
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestSuspenseComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+
+const setupLetDirectiveTestComponentSuspenseTpl = (): void => {
+  TestBed.configureTestingModule({
+    declarations: [LetDirectiveTestSuspenseTplComponent, LetDirective],
+    providers: [
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: ErrorHandler, useClass: MockErrorHandler },
+      TemplateRef,
+      ViewContainerRef,
+    ],
+  });
+
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestSuspenseTplComponent
   );
   letDirectiveTestComponent =
     fixtureLetDirectiveTestComponent.componentInstance;
@@ -320,6 +389,14 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
     });
+
+    it('should call error handler', () => {
+      const errorHandler = TestBed.inject(ErrorHandler);
+      const error = new Error('ERROR');
+      letDirectiveTestComponent.value$ = throwError(() => error);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(errorHandler.handleError).toHaveBeenCalledWith(error);
+    });
   });
 
   describe('when complete', () => {
@@ -330,6 +407,80 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('true');
     });
+  });
+
+  describe('when suspense', () => {
+    beforeEach(waitForAsync(setupLetDirectiveTestComponentSuspense));
+
+    it('should not render when first observable is in suspense state', fakeAsync(() => {
+      letDirectiveTestComponent.value$ = of(true).pipe(delay(1000));
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('true');
+    }));
+
+    it('should render suspense when next observable is in suspense state', fakeAsync(() => {
+      letDirectiveTestComponent.value$ = of(true);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      letDirectiveTestComponent.value$ = of(false).pipe(delay(1000));
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('suspense');
+      tick(1000);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('false');
+    }));
+  });
+
+  describe('when suspense template is passed', () => {
+    beforeEach(waitForAsync(setupLetDirectiveTestComponentSuspenseTpl));
+
+    it('should render main template when observable emits next event', () => {
+      letDirectiveTestComponent.value$ = new BehaviorSubject('ngrx');
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('ngrx');
+    });
+
+    it('should render main template when observable emits error event', () => {
+      letDirectiveTestComponent.value$ = throwError(() => 'ERROR!');
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('undefined');
+    });
+
+    it('should render main template when observable emits complete event', () => {
+      letDirectiveTestComponent.value$ = EMPTY;
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('undefined');
+    });
+
+    it('should render suspense template when observable does not emit', () => {
+      letDirectiveTestComponent.value$ = NEVER;
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('Loading...');
+    });
+
+    it('should render suspense template when initial observable is in suspense state', fakeAsync(() => {
+      letDirectiveTestComponent.value$ = of('component').pipe(delay(100));
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('Loading...');
+      tick(100);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('component');
+    }));
+
+    it('should render suspense template when next observable is in suspense state', fakeAsync(() => {
+      letDirectiveTestComponent.value$ = new BehaviorSubject('ngrx');
+      fixtureLetDirectiveTestComponent.detectChanges();
+      letDirectiveTestComponent.value$ = timer(100).pipe(
+        switchMap(() => throwError(() => 'ERROR!'))
+      );
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('Loading...');
+      tick(100);
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('undefined');
+    }));
   });
 
   describe('when rendering recursively', () => {
