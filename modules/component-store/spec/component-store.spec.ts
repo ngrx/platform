@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   ComponentStore,
-  INITIAL_STATE_TOKEN,
   OnStateInit,
   OnStoreInit,
   provideComponentStore,
@@ -30,7 +29,13 @@ import {
   concatMap,
 } from 'rxjs/operators';
 import { createSelector } from '@ngrx/store';
-import { Inject, Injectable, InjectionToken, Injector } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  InjectionToken,
+  Injector,
+  Provider,
+} from '@angular/core';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -1490,27 +1495,39 @@ describe('Component Store', () => {
       }
     }
 
-    function setup(initialState?: LifeCycle) {
+    @Injectable()
+    class ExtraStore extends LifecycleStore {
+      constructor() {
+        super();
+      }
+    }
+
+    function setup({
+      initialState,
+      providers = [],
+    }: { initialState?: LifeCycle; providers?: Provider[] } = {}) {
       const injector = Injector.create({
         providers: [
           { provide: INIT_STATE, useValue: initialState },
           provideComponentStore(LifecycleStore),
+          providers,
         ],
       });
 
       return {
         store: injector.get(LifecycleStore),
+        injector,
       };
     }
 
     it('should call the OnInitStore lifecycle hook if defined', () => {
-      const state = setup({ init: true });
+      const state = setup({ initialState: { init: true } });
 
       expect(state.store.logs[0]).toBe(onStoreInitMessage);
     });
 
     it('should only call the OnInitStore lifecycle hook once', () => {
-      const state = setup({ init: true });
+      const state = setup({ initialState: { init: true } });
       expect(state.store.logs[0]).toBe(onStoreInitMessage);
 
       state.store.logs = [];
@@ -1520,7 +1537,7 @@ describe('Component Store', () => {
     });
 
     it('should call the OnInitState lifecycle hook if defined and state is set eagerly', () => {
-      const state = setup({ init: true });
+      const state = setup({ initialState: { init: true } });
 
       expect(state.store.logs[1]).toBe(onStateInitMessage);
     });
@@ -1535,13 +1552,25 @@ describe('Component Store', () => {
     });
 
     it('should only call the OnInitStore lifecycle hook once', () => {
-      const state = setup({ init: true });
+      const state = setup({ initialState: { init: true } });
 
       expect(state.store.logs[1]).toBe(onStateInitMessage);
       state.store.logs = [];
       state.store.setState({ init: false });
 
       expect(state.store.logs.length).toBe(0);
+    });
+
+    it('works with multiple stores where one extends the other', () => {
+      const state = setup({
+        providers: [provideComponentStore(ExtraStore)],
+      });
+
+      const lifecycleStore = state.store;
+      const extraStore = state.injector.get(ExtraStore);
+
+      expect(lifecycleStore).toBeDefined();
+      expect(extraStore).toBeDefined();
     });
   });
 });

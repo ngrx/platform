@@ -26,20 +26,10 @@ import {
   Optional,
   InjectionToken,
   Inject,
-  Type,
-  inject,
 } from '@angular/core';
 
 export interface SelectConfig {
   debounce?: boolean;
-}
-
-export interface OnStoreInit {
-  readonly ngrxOnStoreInit: () => void;
-}
-
-export interface OnStateInit {
-  readonly ngrxOnStateInit: () => void;
 }
 
 export const INITIAL_STATE_TOKEN = new InjectionToken(
@@ -353,48 +343,4 @@ function processSelectorArgs<
     projector,
     config,
   };
-}
-
-function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
-  return typeof (cs as OnStoreInit).ngrxOnStoreInit === 'function';
-}
-
-function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
-  return typeof (cs as OnStateInit).ngrxOnStateInit === 'function';
-}
-
-const WITH_HOOKS = new InjectionToken<ComponentStore<any>[]>(
-  '@ngrx/component-store: ComponentStores with Hooks'
-);
-
-export function provideComponentStore(
-  componentStoreClass: Type<ComponentStore<any>>
-) {
-  return [
-    { provide: WITH_HOOKS, multi: true, useClass: componentStoreClass },
-    {
-      provide: componentStoreClass,
-      useFactory: () => {
-        const componentStores = inject(WITH_HOOKS);
-        let instance;
-        componentStores.forEach((componentStore) => {
-          if (componentStore instanceof componentStoreClass) {
-            instance = componentStore;
-
-            if (isOnStoreInitDefined(componentStore)) {
-              componentStore.ngrxOnStoreInit();
-            }
-
-            if (isOnStateInitDefined(componentStore)) {
-              componentStore.state$
-                .pipe(take(1))
-                .subscribe(() => componentStore.ngrxOnStateInit());
-            }
-          }
-        });
-
-        return instance;
-      },
-    },
-  ];
 }
