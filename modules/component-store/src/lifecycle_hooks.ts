@@ -10,11 +10,11 @@ export interface OnStateInit {
   readonly ngrxOnStateInit: () => void;
 }
 
-export function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
+function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
   return typeof (cs as OnStoreInit).ngrxOnStoreInit === 'function';
 }
 
-export function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
+function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
   return typeof (cs as OnStateInit).ngrxOnStateInit === 'function';
 }
 
