@@ -95,5 +95,5 @@ the suspense template will be displayed again until the new observable emits the
 - Takes away the multiple usages of the `async` or `ngrxPush` pipe.
 - Provides a unified/structured way of handling `null` and `undefined`.
 - Triggers the change detection differently if `zone.js` is present or not
-  using the `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.
+  using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.
 - Distinct the same values in a row for better performance.
