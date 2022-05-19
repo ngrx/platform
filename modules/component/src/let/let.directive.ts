@@ -26,7 +26,7 @@ export interface LetViewContext<T> {
   /**
    * `*ngrxLet="obs$; let e = $error"` or `*ngrxLet="obs$; $error as e"`
    */
-  $error: boolean;
+  $error: any;
   /**
    * `*ngrxLet="obs$; let c = $complete"` or `*ngrxLet="obs$; $complete as c"`
    */
@@ -66,7 +66,7 @@ export interface LetViewContext<T> {
  *   <app-number [number]="n" *ngIf="!e && !c">
  *   </app-number>
  *
- *   <p *ngIf="e">There is an error.</p>
+ *   <p *ngIf="e">There is an error: {{ e }}</p>
  *   <p *ngIf="c">Observable is completed.</p>
  * </ng-container>
  * ```
@@ -94,7 +94,7 @@ export class LetDirective<U> implements OnInit, OnDestroy {
   private readonly viewContext: LetViewContext<U | null | undefined> = {
     $implicit: undefined,
     ngrxLet: undefined,
-    $error: false,
+    $error: undefined,
     $complete: false,
     $suspense: true,
   };
@@ -106,7 +106,7 @@ export class LetDirective<U> implements OnInit, OnDestroy {
     reset: () => {
       this.viewContext.$implicit = undefined;
       this.viewContext.ngrxLet = undefined;
-      this.viewContext.$error = false;
+      this.viewContext.$error = undefined;
       this.viewContext.$complete = false;
       this.viewContext.$suspense = true;
 
@@ -118,14 +118,14 @@ export class LetDirective<U> implements OnInit, OnDestroy {
       this.viewContext.$suspense = false;
 
       if (event.reset) {
-        this.viewContext.$error = false;
+        this.viewContext.$error = undefined;
         this.viewContext.$complete = false;
       }
 
       this.renderMainView();
     },
     error: (event) => {
-      this.viewContext.$error = true;
+      this.viewContext.$error = event.error;
       this.viewContext.$suspense = false;
 
       if (event.reset) {
@@ -144,7 +144,7 @@ export class LetDirective<U> implements OnInit, OnDestroy {
       if (event.reset) {
         this.viewContext.$implicit = undefined;
         this.viewContext.ngrxLet = undefined;
-        this.viewContext.$error = false;
+        this.viewContext.$error = undefined;
       }
 
       this.renderMainView();
