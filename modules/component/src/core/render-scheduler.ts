@@ -1,4 +1,8 @@
-import { ChangeDetectorRef, NgZone } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  NgZone,
+  ɵmarkDirty as markDirty,
+} from '@angular/core';
 
 export interface RenderScheduler {
   schedule(): void;
@@ -16,7 +20,8 @@ export function createRenderScheduler(
     if (hasZone(config.ngZone)) {
       config.cdRef.markForCheck();
     } else {
-      config.cdRef.detectChanges();
+      const context = getCdRefContext(config.cdRef);
+      markDirty(context);
     }
   }
 
@@ -29,4 +34,8 @@ export function createRenderScheduler(
  */
 function hasZone(z: NgZone): boolean {
   return z instanceof NgZone;
+}
+
+function getCdRefContext(cdRef: ChangeDetectorRef): object {
+  return (cdRef as unknown as { context: object }).context;
 }

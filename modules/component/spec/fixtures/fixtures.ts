@@ -21,6 +21,7 @@ export class MockChangeDetectorRef {
   checkNoChanges = jest.fn();
   detach = jest.fn();
   reattach = jest.fn();
+  context = { x: 1, y: 2 };
 }
 
 export class MockErrorHandler {
