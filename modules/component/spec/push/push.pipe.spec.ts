@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ErrorHandler } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -16,7 +16,7 @@ import {
   throwError,
 } from 'rxjs';
 import { PushPipe } from '../../src/push/push.pipe';
-import { MockChangeDetectorRef } from '../fixtures/fixtures';
+import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
 
 let pushPipe: PushPipe;
 
@@ -42,6 +42,7 @@ const setupPushPipeComponent = () => {
     providers: [
       PushPipe,
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      { provide: ErrorHandler, useClass: MockErrorHandler },
     ],
   });
   pushPipe = TestBed.inject(PushPipe);
@@ -84,6 +85,12 @@ describe('PushPipe', () => {
         expect(pushPipe.transform(throwError(() => 'ERROR!'))).toBe(undefined);
       });
 
+      it('should call error handler when error observable is passed', () => {
+        const errorHandler = TestBed.inject(ErrorHandler);
+        pushPipe.transform(throwError(() => 'ERROR!'));
+        expect(errorHandler.handleError).toHaveBeenCalledWith('ERROR!');
+      });
+
       it('should return emitted value from passed observable without changing it', () => {
         expect(pushPipe.transform(of(42))).toBe(42);
       });
@@ -113,6 +120,7 @@ describe('PushPipe', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         declarations: [PushPipe, PushPipeTestComponent],
+        providers: [{ provide: ErrorHandler, useClass: MockErrorHandler }],
       });
 
       fixturePushPipeTestComponent = TestBed.createComponent(
@@ -179,6 +187,13 @@ describe('PushPipe', () => {
         expect(componentNativeElement.textContent).toBe(
           wrapWithSpace('undefined')
         );
+      });
+
+      it('should call error handler when error observable is passed', () => {
+        const errorHandler = TestBed.inject(ErrorHandler);
+        pushPipeTestComponent.value$ = throwError(() => 'ERROR!');
+        fixturePushPipeTestComponent.detectChanges();
+        expect(errorHandler.handleError).toHaveBeenCalledWith('ERROR!');
       });
 
       it('should emitted value from passed observable without changing it', () => {
