@@ -464,6 +464,10 @@
             {
               "title": "Overview",
               "url": "guide/eslint-plugin/overview"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/eslint-plugin/install"
             }
           ]
         }
