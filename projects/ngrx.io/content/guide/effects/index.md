@@ -351,7 +351,7 @@ For example, imagine we want to track click events and send that data to our mon
 <code-example header="user-activity.effects.ts">  
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { createEffect } from '@ngrx/effects';
 
 import { UserActivityService } from '../services/user-activity.service';
@@ -360,7 +360,7 @@ import { UserActivityService } from '../services/user-activity.service';
 export class UserActivityEffects {
   trackUserActivity$ = createEffect(() =>
     fromEvent(document, 'click').pipe(
-      switchMap(event => this.userActivityService.trackUserActivity(event)),
+      concatMap(event => this.userActivityService.trackUserActivity(event)),
     ), { dispatch: false }
   );
 
