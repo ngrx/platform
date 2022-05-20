@@ -348,7 +348,7 @@ Because effects are merely consumers of observables, they can be used without ac
 
 <code-example header="user-activity.effects.ts">  
 import { Injectable } from '@angular/core';
-import { Actions, ofType } from '@ngrx/effects';
+import { createEffect } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { UserActivityService } from '../services/user-activity.service';
