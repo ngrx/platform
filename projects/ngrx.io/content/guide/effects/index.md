@@ -344,7 +344,9 @@ To learn about testing effects that incorporate state, see the [Effects that use
 
 ## Using Other Observable Sources for Effects
 
-Because effects are merely consumers of observables, they can be used without actions and the `ofType` operator. This is useful for effects that don't need to listen to some specific actions, but rather to some other observable source. For example, imagine we want to track whenever click events happen and send that data to our monitoring server. This can be done by creating a custom effect that listens to the `document` `click` event and emits the event data to our server:
+Because effects are merely consumers of observables, they can be used without actions and the `ofType` operator. This is useful for effects that don't need to listen to some specific actions, but rather to some other observable source. 
+
+For example, imagine we want to track click events and send that data to our monitoring server. This can be done by creating an effect that listens to the `document` `click` event and emits the event data to our server.
 
 <code-example header="user-activity.effects.ts">  
 import { Injectable } from '@angular/core';
