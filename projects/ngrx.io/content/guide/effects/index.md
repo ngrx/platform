@@ -369,4 +369,3 @@ export class UserActivityEffects {
 }
 </code-example>
 
-Here the stream is created from the `document` `click` event, without any additional action that needs to be dispatched. 
