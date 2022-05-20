@@ -47,7 +47,9 @@ class LetDirectiveTestComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $error as error">{{ error }}</ng-container>
+    <ng-container *ngrxLet="value$; $error as error">{{
+      error === undefined ? 'undefined' : error
+    }}</ng-container>
   `,
 })
 class LetDirectiveTestErrorComponent {
@@ -376,21 +378,25 @@ describe('LetDirective', () => {
   describe('when error', () => {
     beforeEach(waitForAsync(setupLetDirectiveTestComponentError));
 
-    it('should render the error to false if next or complete', () => {
-      letDirectiveTestComponent.value$ = of(1);
+    it('should render undefined when next event is emitted', () => {
+      letDirectiveTestComponent.value$ = new BehaviorSubject(1);
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('false');
+      expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render the error to true if one occurs', () => {
-      letDirectiveTestComponent.value$ = throwError(
-        () => new Error('error message')
-      );
+    it('should render undefined when complete event is emitted', () => {
+      letDirectiveTestComponent.value$ = EMPTY;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('true');
+      expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should call error handler', () => {
+    it('should render error when error event is emitted', () => {
+      letDirectiveTestComponent.value$ = throwError(() => 'error message');
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('error message');
+    });
+
+    it('should call error handler when error event is emitted', () => {
       const errorHandler = TestBed.inject(ErrorHandler);
       const error = new Error('ERROR');
       letDirectiveTestComponent.value$ = throwError(() => error);

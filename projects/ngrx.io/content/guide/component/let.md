@@ -59,7 +59,7 @@ We can track next, error, and complete events:
   <app-number [number]="n" *ngIf="!e && !c">
   </app-number>
 
-  <p *ngIf="e">There is an error.</p>
+  <p *ngIf="e">There is an error: {{ e }}</p>
   <p *ngIf="c">Observable is completed.</p>
 </ng-container>
 ```
