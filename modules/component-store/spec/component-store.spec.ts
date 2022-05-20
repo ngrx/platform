@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ComponentStore } from '@ngrx/component-store';
+import {
+  ComponentStore,
+  OnStateInit,
+  OnStoreInit,
+  provideComponentStore,
+} from '@ngrx/component-store';
 import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
 import {
   of,
@@ -24,6 +29,13 @@ import {
   concatMap,
 } from 'rxjs/operators';
 import { createSelector } from '@ngrx/store';
+import {
+  Inject,
+  Injectable,
+  InjectionToken,
+  Injector,
+  Provider,
+} from '@angular/core';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -1445,6 +1457,120 @@ describe('Component Store', () => {
       componentStore.updater((state, value: string) => ({ value }))('updated');
 
       expect(componentStore.get()).toEqual({ value: 'updated' });
+    });
+  });
+
+  describe('lifecycle hooks', () => {
+    interface LifeCycle {
+      init: boolean;
+    }
+
+    const onStoreInitMessage = 'on store init called';
+    const onStateInitMessage = 'on state init called';
+
+    const INIT_STATE = new InjectionToken('Init State');
+
+    @Injectable()
+    class LifecycleStore
+      extends ComponentStore<LifeCycle>
+      implements OnStoreInit, OnStateInit
+    {
+      logs: string[] = [];
+      constructor(@Inject(INIT_STATE) state?: LifeCycle) {
+        super(state);
+      }
+
+      logEffect = this.effect(
+        tap<void>(() => {
+          this.logs.push('effect');
+        })
+      );
+
+      ngrxOnStoreInit() {
+        this.logs.push(onStoreInitMessage);
+      }
+
+      ngrxOnStateInit() {
+        this.logs.push(onStateInitMessage);
+      }
+    }
+
+    @Injectable()
+    class ExtraStore extends LifecycleStore {
+      constructor() {
+        super();
+      }
+    }
+
+    function setup({
+      initialState,
+      providers = [],
+    }: { initialState?: LifeCycle; providers?: Provider[] } = {}) {
+      const injector = Injector.create({
+        providers: [
+          { provide: INIT_STATE, useValue: initialState },
+          provideComponentStore(LifecycleStore),
+          providers,
+        ],
+      });
+
+      return {
+        store: injector.get(LifecycleStore),
+        injector,
+      };
+    }
+
+    it('should call the OnInitStore lifecycle hook if defined', () => {
+      const state = setup({ initialState: { init: true } });
+
+      expect(state.store.logs[0]).toBe(onStoreInitMessage);
+    });
+
+    it('should only call the OnInitStore lifecycle hook once', () => {
+      const state = setup({ initialState: { init: true } });
+      expect(state.store.logs[0]).toBe(onStoreInitMessage);
+
+      state.store.logs = [];
+      state.store.setState({ init: false });
+
+      expect(state.store.logs.length).toBe(0);
+    });
+
+    it('should call the OnInitState lifecycle hook if defined and state is set eagerly', () => {
+      const state = setup({ initialState: { init: true } });
+
+      expect(state.store.logs[1]).toBe(onStateInitMessage);
+    });
+
+    it('should call the OnInitState lifecycle hook if defined and after state is set lazily', () => {
+      const state = setup();
+      expect(state.store.logs.length).toBe(1);
+
+      state.store.setState({ init: true });
+
+      expect(state.store.logs[1]).toBe(onStateInitMessage);
+    });
+
+    it('should only call the OnInitStore lifecycle hook once', () => {
+      const state = setup({ initialState: { init: true } });
+
+      expect(state.store.logs[1]).toBe(onStateInitMessage);
+      state.store.logs = [];
+      state.store.setState({ init: false });
+
+      expect(state.store.logs.length).toBe(0);
+    });
+
+    it('works with multiple stores where one extends the other', () => {
+      const state = setup({
+        providers: [provideComponentStore(ExtraStore)],
+      });
+
+      const lifecycleStore = state.store;
+      const extraStore = state.injector.get(ExtraStore);
+
+      expect(lifecycleStore).toBeDefined();
+      expect(extraStore).toBeDefined();
     });
   });
 });
