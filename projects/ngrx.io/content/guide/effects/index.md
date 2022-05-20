@@ -350,7 +350,7 @@ For example, imagine we want to track click events and send that data to our mon
 
 <code-example header="user-activity.effects.ts">  
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { createEffect } from '@ngrx/effects';
 
