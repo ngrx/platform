@@ -1,4 +1,4 @@
-import { Component, Provider, ɵConsole as Console } from '@angular/core';
+import { Component, Provider, Type, ɵConsole as Console } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
@@ -39,7 +39,7 @@ export function createTestModule(
         },
         {
           path: 'load',
-          loadChildren: () => Promise.resolve(null),
+          loadChildren: () => Promise.resolve({} as Type<any>),
           canLoad: ['CanLoadNext'],
         },
         {

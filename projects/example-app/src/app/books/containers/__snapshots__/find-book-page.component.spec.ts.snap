@@ -2,7 +2,7 @@
 
 exports[`Find Book Page should compile 1`] = `
 <bc-find-book-page
-  __ngContext__={[Function LRootView]}
+  __ngContext__="0"
   books$={[Function Store]}
   error$={[Function Store]}
   loading$={[Function Store]}
@@ -75,7 +75,7 @@ exports[`Find Book Page should compile 1`] = `
           </div>
         </mat-form-field>
         <mat-spinner
-          class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation _mat-animation-noopable"
+          class="mat-progress-spinner mat-spinner mat-primary mat-progress-spinner-indeterminate-animation _mat-animation-noopable"
           mode="indeterminate"
           role="progressbar"
           style="width: 30px; height: 30px;"
@@ -92,7 +92,7 @@ exports[`Find Book Page should compile 1`] = `
               cx="50%"
               cy="50%"
               r="10"
-              style="animation-name: mat-progress-spinner-stroke-rotate-30; stroke-dasharray: 62.83185307179586px; stroke-width: 10%;"
+              style="animation-name: mat-progress-spinner-stroke-rotate-30; stroke-dasharray: 62.83185307179586px; stroke-width: 10%; transform-origin: 50% 50%;"
             />
           </svg>
         </mat-spinner>

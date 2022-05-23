@@ -2,7 +2,7 @@
 
 exports[`View Book Page should compile 1`] = `
 <bc-view-book-page
-  __ngContext__={[Function LRootView]}
+  __ngContext__="0"
   actionsSubscription={[Function SafeSubscriber]}
 >
   <bc-selected-book-page>

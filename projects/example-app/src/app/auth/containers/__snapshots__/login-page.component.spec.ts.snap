@@ -2,7 +2,7 @@
 
 exports[`Login Page should compile 1`] = `
 <bc-login-page
-  __ngContext__={[Function LRootView]}
+  __ngContext__="0"
   error$={[Function Store]}
   pending$={[Function Store]}
   store={[Function MockStore]}
