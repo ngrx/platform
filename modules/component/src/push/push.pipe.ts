@@ -39,9 +39,9 @@ import { createRenderEventManager } from '../core/render-event/manager';
  * Included Features:
  *  - Take observables or promises, retrieve their values and render the value to the template
  *  - Handling null and undefined values in a clean unified/structured way
- *  - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
- *  - Distinct same values in a row to increase performance
- *  - Coalescing of change detection calls to boost performance
+ *  - Triggers the change detection differently if `zone.js` is present or not
+ *    using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`
+ *  - Distinct the same values in a row for better performance
  *
  * @usageNotes
  *

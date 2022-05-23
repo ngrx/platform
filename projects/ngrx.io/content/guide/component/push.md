@@ -55,6 +55,6 @@ lean to bad performance or even unusable applications, but the `async` pipe does
 
  - Take observables or promises, retrieves their values, and passes the value to the template.
  - Handles `null` and `undefined` values in a clean unified/structured way.
- - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`).
- - Distinct same values in a row to increase performance.
- - Coalescing of change detection calls to boost performance.
+- Triggers the change detection differently if `zone.js` is present or not
+  using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.
+- Distinct the same values in a row for better performance.
