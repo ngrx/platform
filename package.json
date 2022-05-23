@@ -128,6 +128,7 @@
     "@nrwl/tao": "14.1.5",
     "@nrwl/workspace": "14.1.5",
     "@octokit/rest": "^15.17.0",
+    "@schematics/angular": "^14.0.0-rc.1",
     "@testing-library/cypress": "^7.0.1",
     "@types/fs-extra": "^2.1.0",
     "@types/glob": "^5.0.33",
@@ -209,7 +210,8 @@
   },
   "resolutions": {
     "jasmine-marbles": "0.9.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "@schematics/angular": "^14.0.0-rc.1"
   },
   "husky": {
     "hooks": {
