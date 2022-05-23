@@ -482,6 +482,10 @@
       "title": "Migrations",
       "children": [
         {
+          "title": "V14",
+          "url": "guide/migration/v14"
+        },
+        {
           "title": "V13",
           "url": "guide/migration/v13"
         },
