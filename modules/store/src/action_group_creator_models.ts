@@ -70,10 +70,10 @@ type EmptyStringCheck<
   ? `${Name} cannot be an empty string or contain only spaces`
   : unknown;
 
-type TemplateLiteralCheck<
+type StringLiteralCheck<
   Str extends string,
   Name extends string
-> = string extends Str ? `${Name} must be a template literal type` : unknown;
+> = string extends Str ? `${Name} must be a string literal type` : unknown;
 
 type UniqueEventNameCheck<
   EventNames extends string,
@@ -120,11 +120,11 @@ export interface ActionGroupConfig<
   Source extends string,
   Events extends Record<string, ActionCreatorProps<unknown> | Creator>
 > {
-  source: Source & TemplateLiteralCheck<Source, 'source'>;
+  source: Source & StringLiteralCheck<Source, 'source'>;
   events: {
     [EventName in keyof Events]: Events[EventName] &
       EmptyStringCheck<EventName & string, 'event name'> &
-      TemplateLiteralCheck<EventName & string, 'event name'> &
+      StringLiteralCheck<EventName & string, 'event name'> &
       ForbiddenCharactersCheck<EventName & string, 'event name'> &
       UniqueEventNameCheck<keyof Events & string, EventName & string> &
       NotAllowedEventPropsCheck<Events[EventName]>;

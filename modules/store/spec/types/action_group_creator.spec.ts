@@ -60,13 +60,13 @@ describe('createActionGroup', () => {
     });
 
     describe('source', () => {
-      it('should fail when source is not a template literal type', () => {
+      it('should fail when source is not a string literal type', () => {
         expectSnippet(`
           const booksApiActions = createActionGroup({
             source: 'Books API' as string,
             events: {},
           });
-        `).toFail(/source must be a template literal type/);
+        `).toFail(/source must be a string literal type/);
       });
     });
 
@@ -116,7 +116,7 @@ describe('createActionGroup', () => {
         );
       });
 
-      it('should fail when event name is not a template literal type', () => {
+      it('should fail when event name is not a string literal type', () => {
         expectSnippet(`
           const booksApiActions = createActionGroup({
             source: 'Books API',
@@ -124,7 +124,7 @@ describe('createActionGroup', () => {
               ['Load Books Success' as string]: emptyProps()
             },
           });
-        `).toFail(/event name must be a template literal type/);
+        `).toFail(/event name must be a string literal type/);
       });
 
       describe('forbidden characters', () => {
