@@ -2,7 +2,7 @@
 
 exports[`Logout Confirmation Dialog should compile 1`] = `
 <ng-component
-  __ngContext__={[Function LRootView]}
+  __ngContext__="0"
 >
   <h2
     class="mat-dialog-title"

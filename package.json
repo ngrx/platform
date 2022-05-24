@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "13.1.0",
+  "version": "14.0.0-beta.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "ng": "ng",
@@ -86,17 +86,17 @@
     ]
   },
   "dependencies": {
-    "@angular/animations": "13.0.0",
-    "@angular/cdk": "13.0.0",
-    "@angular/common": "13.0.0",
-    "@angular/compiler": "13.0.0",
-    "@angular/core": "13.0.0",
-    "@angular/forms": "13.0.0",
-    "@angular/material": "13.0.0",
-    "@angular/platform-browser": "13.0.0",
-    "@angular/platform-browser-dynamic": "13.0.0",
-    "@angular/platform-server": "13.0.0",
-    "@angular/router": "13.0.0",
+    "@angular/animations": "14.0.0-rc.1",
+    "@angular/cdk": "14.0.0-rc.0",
+    "@angular/common": "14.0.0-rc.1",
+    "@angular/compiler": "14.0.0-rc.1",
+    "@angular/core": "14.0.0-rc.1",
+    "@angular/forms": "14.0.0-rc.1",
+    "@angular/material": "14.0.0-rc.0",
+    "@angular/platform-browser": "14.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "14.0.0-rc.1",
+    "@angular/platform-server": "14.0.0-rc.1",
+    "@angular/router": "14.0.0-rc.1",
     "@nrwl/angular": "14.1.5",
     "@typescript-eslint/experimental-utils": "^5.18.0",
     "core-js": "^2.5.4",
@@ -109,14 +109,14 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "13.0.1",
+    "@angular-devkit/build-angular": "14.0.0-rc.1",
     "@angular-eslint/builder": "13.2.0",
     "@angular-eslint/eslint-plugin": "13.2.0",
     "@angular-eslint/eslint-plugin-template": "13.2.0",
     "@angular-eslint/schematics": "13.2.0",
     "@angular-eslint/template-parser": "13.2.0",
-    "@angular/cli": "13.0.1",
-    "@angular/compiler-cli": "13.0.0",
+    "@angular/cli": "14.0.0-rc.1",
+    "@angular/compiler-cli": "14.0.0-rc.1",
     "@babel/core": "7.9.0",
     "@nrwl/cli": "14.1.5",
     "@nrwl/cypress": "14.1.5",
@@ -128,6 +128,7 @@
     "@nrwl/tao": "14.1.5",
     "@nrwl/workspace": "14.1.5",
     "@octokit/rest": "^15.17.0",
+    "@schematics/angular": "^14.0.0-rc.1",
     "@testing-library/cypress": "^7.0.1",
     "@types/fs-extra": "^2.1.0",
     "@types/glob": "^5.0.33",
@@ -175,7 +176,7 @@
     "karma-jasmine-html-reporter": "1.5.4",
     "lint-staged": "^8.0.0",
     "ncp": "^2.0.0",
-    "ng-packagr": "13.0.3",
+    "ng-packagr": "14.0.0-rc.0",
     "npm-run-all": "^4.1.5",
     "nyc": "^10.1.2",
     "ora": "^1.3.0",
@@ -199,7 +200,7 @@
     "tsconfig-paths": "^3.1.3",
     "tsickle": "^0.37.0",
     "tsutils": "2.27.2",
-    "typescript": "4.4.4",
+    "typescript": "4.6.4",
     "uglify-js": "^3.1.9"
   },
   "collective": {
@@ -209,7 +210,8 @@
   },
   "resolutions": {
     "jasmine-marbles": "0.9.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "@schematics/angular": "^14.0.0-rc.1"
   },
   "husky": {
     "hooks": {
@@ -217,4 +219,3 @@
     }
   }
 }
-

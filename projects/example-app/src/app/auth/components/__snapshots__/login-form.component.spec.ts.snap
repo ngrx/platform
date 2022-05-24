@@ -2,7 +2,7 @@
 
 exports[`Login Page should compile 1`] = `
 <bc-login-form
-  __ngContext__={[Function LRootView]}
+  __ngContext__="0"
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
@@ -55,7 +55,7 @@ exports[`Login Page should compile 1`] = `
 
 exports[`Login Page should disable the form if pending 1`] = `
 <bc-login-form
-  __ngContext__={[Function LRootView]}
+  __ngContext__={[Function Number]}
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
@@ -110,7 +110,7 @@ exports[`Login Page should disable the form if pending 1`] = `
 
 exports[`Login Page should display an error message if provided 1`] = `
 <bc-login-form
-  __ngContext__={[Function LRootView]}
+  __ngContext__={[Function Number]}
   errorMessage={[Function String]}
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}

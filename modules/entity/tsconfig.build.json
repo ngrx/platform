@@ -16,7 +16,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2018", "dom"],
-    "target": "es2015",
+    "target": "es2020",
     "skipLibCheck": true
   },
   "files": ["public_api.ts"],

@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
             import('../board/board.module').then((m) => m.BoardModule),
         },
       ],
-      { initialNavigation: 'enabled' }
+      { initialNavigation: 'enabledBlocking' }
     ),
   ],
   exports: [RouterModule],
