@@ -5,7 +5,7 @@
 For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
 
 ```sh
-npm install @ngrx/eslint-plugin --save
+npm install @ngrx/eslint-plugin --save-dev
 ```
 
 ## Installing with `yarn`
