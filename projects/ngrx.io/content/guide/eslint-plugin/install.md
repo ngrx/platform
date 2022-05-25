@@ -13,7 +13,7 @@ npm install @ngrx/eslint-plugin --save-dev
 For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
 
 ```sh
-yarn add @ngrx/eslin-plugin
+yarn add @ngrx/eslint-plugin -D
 ```
 
 ## Installing with `ng add`
