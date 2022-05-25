@@ -9,6 +9,7 @@ import {
   Subject,
   queueScheduler,
   scheduled,
+  asyncScheduler,
 } from 'rxjs';
 import {
   concatMap,
@@ -18,6 +19,7 @@ import {
   distinctUntilChanged,
   shareReplay,
   take,
+  delay,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -26,7 +28,9 @@ import {
   Optional,
   InjectionToken,
   Inject,
+  isDevMode,
 } from '@angular/core';
+import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 
 export interface SelectConfig {
   debounce?: boolean;
@@ -60,12 +64,15 @@ export class ComponentStore<T extends object> implements OnDestroy {
     `Please make sure it is initialized before updating/getting.`;
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
+  private ɵhasProvider = false;
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
     if (defaultState) {
       this.initState(defaultState);
     }
+
+    this.checkProviderForHooks();
   }
 
   /** Completes all relevant Observable streams. */
@@ -307,6 +314,26 @@ export class ComponentStore<T extends object> implements OnDestroy {
         origin$.next(value as ObservableType);
       });
     }) as unknown as ReturnType;
+  }
+
+  /**
+   * Used to check if lifecycle hooks are defined
+   * but not used with provideComponentStore()
+   */
+  private checkProviderForHooks() {
+    asyncScheduler.schedule(() => {
+      if (
+        isDevMode() &&
+        (isOnStoreInitDefined(this) || isOnStateInitDefined(this)) &&
+        !this.ɵhasProvider
+      ) {
+        console.warn(
+          `@ngrx/component-store: The ${this.constructor.name} has one or more ` +
+            'lifecycle hooks implemented without being provided using the ' +
+            `provideComponentStore(${this.constructor.name}) function. `
+        );
+      }
+    });
   }
 }
 
