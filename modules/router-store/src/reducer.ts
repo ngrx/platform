@@ -6,7 +6,7 @@ import {
   RouterAction,
 } from './actions';
 import { BaseRouterStoreState } from './serializers/base';
-import { SerializedRouterStateSnapshot } from './serializers/default_serializer';
+import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
 
 export type RouterReducerState<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
@@ -25,10 +25,10 @@ export function routerReducer<
     case ROUTER_NAVIGATION:
     case ROUTER_ERROR:
     case ROUTER_CANCEL:
-      return ({
+      return {
         state: routerAction.payload.routerState,
         navigationId: routerAction.payload.event.id,
-      } as unknown) as Result;
+      } as unknown as Result;
     default:
       return state as Result;
   }

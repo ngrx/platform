@@ -1,14 +1,27 @@
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { BaseRouterStoreState, RouterStateSerializer } from './base';
 
-export interface SerializedRouterStateSnapshot extends BaseRouterStoreState {
-  root: ActivatedRouteSnapshot;
+export interface MinimalActivatedRouteSnapshot {
+  routeConfig: ActivatedRouteSnapshot['routeConfig'];
+  url: ActivatedRouteSnapshot['url'];
+  params: ActivatedRouteSnapshot['params'];
+  queryParams: ActivatedRouteSnapshot['queryParams'];
+  fragment: ActivatedRouteSnapshot['fragment'];
+  data: ActivatedRouteSnapshot['data'];
+  outlet: ActivatedRouteSnapshot['outlet'];
+  firstChild?: MinimalActivatedRouteSnapshot;
+  children: MinimalActivatedRouteSnapshot[];
+}
+
+export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {
+  root: MinimalActivatedRouteSnapshot;
   url: string;
 }
 
 export class DefaultRouterStateSerializer
-  implements RouterStateSerializer<SerializedRouterStateSnapshot> {
-  serialize(routerState: RouterStateSnapshot): SerializedRouterStateSnapshot {
+  implements RouterStateSerializer<MinimalRouterStateSnapshot>
+{
+  serialize(routerState: RouterStateSnapshot): MinimalRouterStateSnapshot {
     return {
       root: this.serializeRoute(routerState.root),
       url: routerState.url,
@@ -17,17 +30,15 @@ export class DefaultRouterStateSerializer
 
   private serializeRoute(
     route: ActivatedRouteSnapshot
-  ): ActivatedRouteSnapshot {
+  ): MinimalActivatedRouteSnapshot {
     const children = route.children.map((c) => this.serializeRoute(c));
     return {
       params: route.params,
-      paramMap: route.paramMap,
       data: route.data,
       url: route.url,
       outlet: route.outlet,
       routeConfig: route.routeConfig
         ? {
-            component: route.routeConfig.component,
             path: route.routeConfig.path,
             pathMatch: route.routeConfig.pathMatch,
             redirectTo: route.routeConfig.redirectTo,
@@ -35,15 +46,8 @@ export class DefaultRouterStateSerializer
           }
         : null,
       queryParams: route.queryParams,
-      queryParamMap: route.queryParamMap,
       fragment: route.fragment,
-      component: (route.routeConfig
-        ? route.routeConfig.component
-        : undefined) as any,
-      root: undefined as any,
-      parent: undefined as any,
       firstChild: children[0],
-      pathFromRoot: undefined as any,
       children,
     };
   }

@@ -1,12 +1,12 @@
 import { RouterStateSnapshot } from '@angular/router';
 import {
+  FullRouterStateSerializer,
   DefaultRouterStateSerializer,
-  MinimalRouterStateSerializer,
 } from '../src';
 
-describe('default serializer', () => {
+describe('full serializer', () => {
   it('should serialize all properties', () => {
-    const serializer = new DefaultRouterStateSerializer();
+    const serializer = new FullRouterStateSerializer();
     const snapshot = createRouteSnapshot();
     const routerState = {
       url: 'url',
@@ -22,7 +22,7 @@ describe('default serializer', () => {
   });
 
   it('should serialize with an empty routeConfig', () => {
-    const serializer = new DefaultRouterStateSerializer();
+    const serializer = new FullRouterStateSerializer();
     const snapshot = { ...createRouteSnapshot(), routeConfig: null };
     const routerState = {
       url: 'url',
@@ -42,7 +42,7 @@ describe('default serializer', () => {
   });
 
   it('should serialize children', () => {
-    const serializer = new DefaultRouterStateSerializer();
+    const serializer = new FullRouterStateSerializer();
     const snapshot = {
       ...createRouteSnapshot(),
       children: [createRouteSnapshot('child')],
@@ -80,7 +80,7 @@ describe('default serializer', () => {
 
 describe('minimal serializer', () => {
   it('should serialize only the minimal properties', () => {
-    const serializer = new MinimalRouterStateSerializer();
+    const serializer = new DefaultRouterStateSerializer();
     const snapshot = createRouteSnapshot();
     const routerState = {
       url: 'url',
@@ -96,7 +96,7 @@ describe('minimal serializer', () => {
   });
 
   it('should serialize with an empty routeConfig', () => {
-    const serializer = new MinimalRouterStateSerializer();
+    const serializer = new DefaultRouterStateSerializer();
     const snapshot = { ...createRouteSnapshot(), routeConfig: null };
     const routerState = {
       url: 'url',
@@ -115,7 +115,7 @@ describe('minimal serializer', () => {
   });
 
   it('should serialize children', () => {
-    const serializer = new MinimalRouterStateSerializer();
+    const serializer = new DefaultRouterStateSerializer();
     const snapshot = {
       ...createRouteSnapshot(),
       children: [createRouteSnapshot('child')],
