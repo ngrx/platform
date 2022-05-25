@@ -1,4 +1,4 @@
-# ngrxLet Structural Directive
+# Let Directive
 
 The `*ngrxLet` directive serves a convenient way of binding observables to a view context
 (DOM element's scope). It also helps with several internal processing under the hood.

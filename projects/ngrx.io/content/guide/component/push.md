@@ -1,4 +1,4 @@
-# ngrxPush Pipe
+# Push Pipe
 
 The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
 It contains intelligent handling of change detection to enable us
@@ -34,10 +34,10 @@ The current way of binding an observable to the view looks like this:
 <app-number [number]="number$ | async"></app-number>
 ```
 
-`async` pipe marks the component and all its ancestors as dirty, but does not trigger the change detection mechanism.
-It needs `zone.js` microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked components.
-So, in order to use the `async` pipe in zone-less mode, we would have to manually trigger the change detection each time
-an observable emits a new value.
+The `async` pipe marks the component and all its ancestors as dirty, but does not trigger the change detection mechanism.
+It needs the `zone.js` microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked components.
+To use the `async` pipe in zone-less mode, we have to manually trigger the change detection each time an observable
+emits a new value.
 
 Fortunately, the `ngrxPush` pipe solves this problem by scheduling a new change detection cycle in zone-less mode when
 an observable emits a new value. It can be used as follows:

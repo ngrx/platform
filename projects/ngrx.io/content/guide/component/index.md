@@ -22,5 +22,5 @@ Detailed installation instructions can be found on the [Installation](guide/comp
 
 ## Available Features
 
-Learn more about features provided by the `@ngrx/component` package through the [ngrxLet directive](guide/component/let)
-and [ngrxPush pipe](guide/component/push) docs.
+Learn more about features provided by the `@ngrx/component` package through the [`*ngrxLet` directive](guide/component/let)
+and [`ngrxPush` pipe](guide/component/push) docs.
