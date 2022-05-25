@@ -40,8 +40,11 @@ function findSerializerImportDeclarations(
   imports: ts.ImportDeclaration[]
 ) {
   const changes = imports
-    .map((p) => (p.importClause!.namedBindings! as ts.NamedImports).elements)
-    .reduce((imports, curr) => imports.concat(curr), [] as ts.ImportSpecifier[])
+    .map((p) => (p?.importClause?.namedBindings as ts.NamedImports)?.elements)
+    .reduce(
+      (imports, curr) => imports.concat(curr ?? []),
+      [] as ts.ImportSpecifier[]
+    )
     .map((specifier) => {
       if (!ts.isImportSpecifier(specifier)) {
         return { hit: false };
@@ -64,13 +67,16 @@ function findSerializerImportDeclarations(
     })
     .filter(({ hit }) => hit)
     .map(({ specifier, text }) =>
-      createReplaceChange(
-        sourceFile,
-        specifier!,
-        text!,
-        (renames as any)[text!]
-      )
-    );
+      !!specifier && !!text
+        ? createReplaceChange(
+            sourceFile,
+            specifier,
+            text,
+            (renames as any)[text]
+          )
+        : undefined
+    )
+    .filter((change) => !!change) as Array<ReplaceChange>;
 
   return changes;
 }
