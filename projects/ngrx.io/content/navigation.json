@@ -463,7 +463,7 @@
           "children": [
             {
               "title": "Overview",
-              "url": "guide/eslint-plugin/overview"
+              "url": "guide/eslint-plugin"
             },
             {
               "title": "Installation",

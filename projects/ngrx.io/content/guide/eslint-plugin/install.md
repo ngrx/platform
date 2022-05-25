@@ -24,4 +24,4 @@ If your project is using the Angular CLI 6+ then you can install the plugin to y
 ng add @ngrx/eslint-plugin
 ```
 
-The command will prompt you to select which config you would like to have preconfigured; you can read the detailed list of available configs [here](guide/eslint-plugin/overview#configurations).
+The command will prompt you to select which config you would like to have preconfigured; you can read the detailed list of available configs [here](guide/eslint-plugin/#configurations).
