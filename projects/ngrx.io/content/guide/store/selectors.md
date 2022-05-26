@@ -167,7 +167,7 @@ export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;
 
 <div class="alert is-important">
 
-If you're using a [Feature Creator](guide/store/feature-creators), the top level selector is generated automatically (as well as child selectors for each feature state property), so you don't need to use `createFeatureSelector`.
+Using a [Feature Creator](guide/store/feature-creators) generates the top-level selector and child selectors for each feature state property.
 
 </div>
 
