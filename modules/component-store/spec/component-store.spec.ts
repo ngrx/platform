@@ -1579,11 +1579,21 @@ describe('Component Store', () => {
       expect(extraStore).toBeDefined();
     });
 
+    it('should not log a warning when a ComponentStore with hooks is provided using provideComponentStore()', fakeAsync(() => {
+      jest.spyOn(console, 'warn');
+
+      const state = setup();
+
+      const store = state.injector.get(LifecycleStore);
+
+      tick(0);
+      expect(store.ngrxOnStoreInit).toBeDefined();
+      expect(store['ɵhasProvider']).toBeTruthy();
+      expect(console.warn).not.toHaveBeenCalled();
+    }));
+
     it('should log a warning when a hook is implemented without using provideComponentStore()', fakeAsync(() => {
-      const consoleOrig = console;
-      (global.console as any) = {
-        warn: jest.fn(),
-      };
+      jest.spyOn(console, 'warn');
 
       const state = setup({
         providers: [NonProviderStore],
@@ -1595,8 +1605,6 @@ describe('Component Store', () => {
       expect(store.ngrxOnStoreInit).toBeDefined();
       expect(store['ɵhasProvider']).toBeFalsy();
       expect(console.warn).toHaveBeenCalled();
-
-      console = consoleOrig;
     }));
   });
 });
