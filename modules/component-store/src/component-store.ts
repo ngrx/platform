@@ -19,7 +19,6 @@ import {
   distinctUntilChanged,
   shareReplay,
   take,
-  delay,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
