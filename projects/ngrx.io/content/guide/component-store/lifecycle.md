@@ -1,6 +1,6 @@
 # Lifecycle
 
-NgRx ComponentStore comes with lifecycle hooks for performing tasks after the ComponentStore is initially instantiated, and after the initial state is first set. You can use these lifecycle hooks to set up long-running effects, wire up additional logic, and other tasks outside the constructor of the ComponentStore.
+NgRx ComponentStore comes with lifecycle hooks and observables for performing tasks after the ComponentStore is initially instantiated, after the initial state is first set, and when the ComponentStore is destroyed. You can use these lifecycle hooks to set up long-running effects, wire up additional logic, and other tasks outside the constructor of the ComponentStore.
 
 ## Setup
 
@@ -73,7 +73,7 @@ export class BooksStore extends ComponentStore<BooksState> implements OnStateIni
   }
 
   ngrxOnStateInit() {
-    // called after store has been instantiated
+    // called once after state has been first initialized
   }
 }
 
@@ -98,12 +98,11 @@ export interface BooksState {
 @Injectable()
 export class BooksStore extends ComponentStore<BooksState> implements OnStateInit {
   constructor() {
-    // lazy state initialization
     super();
   }
 
   ngrxOnStateInit() {
-    // called after store state has been initialized
+    // called once after state has been first initialized
   }
 }
 
@@ -121,6 +120,7 @@ export class BooksPageComponent implements OnInit {
   constructor(private booksStore: BooksStore) {}
 
   ngOnInit() {
+    // lazy state initialization
     this.booksStore.setState(initialState);
   }
 }
