@@ -1,4 +1,4 @@
-# ngrxLet Structural Directive
+# Let Directive
 
 The `*ngrxLet` directive serves a convenient way of binding observables to a view context
 (DOM element's scope). It also helps with several internal processing under the hood.
@@ -93,6 +93,7 @@ the suspense template will be displayed again until the new observable emits the
 - Binding is present even for falsy values.
   (See ["Comparison with `*ngIf` and `async`"](#comparison-with-ngif-and-async) section)
 - Takes away the multiple usages of the `async` or `ngrxPush` pipe.
+- Allows displaying different content based on the current state of an observable.
 - Provides a unified/structured way of handling `null` and `undefined`.
 - Triggers the change detection differently if `zone.js` is present or not
   using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.

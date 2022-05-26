@@ -1,6 +1,8 @@
 # @ngrx/component
 
-Component is a set of primitive reactive helpers to enable fully reactive, Zoneless applications. They give more control over rendering, and provide further reactivity for Angular applications.
+Component is a library for building reactive Angular templates.
+It provides a set of declarables that can work with or without `zone.js`.
+They give more control over rendering and provide further reactivity for Angular applications.
 
 <div class="alert is-critical">
 
@@ -10,29 +12,15 @@ This package is still experimental and may change during development.
 
 ## Key Concepts
 
-Rendering happens in the template only:
-  - The [ngrxPush pipe](guide/component/push) provides a drop-in replacement for the `async` pipe.
-  - The [ngrxLet directive](guide/component/let) provides a structural directive with better support for handling observables. 
+- Rendering observable events in a performant way.
+- Displaying different content based on the current state of an observable.
+- Building fully reactive Angular applications regardless of whether `zone.js` is present or not.
 
 ## Installation
 
 Detailed installation instructions can be found on the [Installation](guide/component/install) page.
 
-## Usage
+## Available Features
 
-Both the `*ngrxLet` directive, and `ngrxPush` pipe are provided through the `ReactiveComponentModule`. To use them, add the `ReactiveComponentModule` to the `imports` of your NgModule.
-
-```typescript
-import { NgModule } from '@angular/core';
-import { ReactiveComponentModule } from '@ngrx/component';
-
-@NgModule({
-  imports: [
-    // other imports
-    ReactiveComponentModule
-  ]
-})
-export class MyFeatureModule {}
-```
-
-Read more about the [ngrxLet directive](guide/component/let), and [ngrxPush pipe](guide/component/push).
+Learn more about features provided by the `@ngrx/component` package through the [`*ngrxLet` directive](guide/component/let)
+and [`ngrxPush` pipe](guide/component/push) docs.
