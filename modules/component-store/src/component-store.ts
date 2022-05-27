@@ -326,10 +326,18 @@ export class ComponentStore<T extends object> implements OnDestroy {
         (isOnStoreInitDefined(this) || isOnStateInitDefined(this)) &&
         !this.ɵhasProvider
       ) {
+        const warnings = [
+          isOnStoreInitDefined(this) ? 'OnStoreInit' : '',
+          isOnStateInitDefined(this) ? 'OnStateInit' : '',
+        ].filter((defined) => defined);
+
         console.warn(
-          `@ngrx/component-store: The ${this.constructor.name} has one or more ` +
-            'lifecycle hooks implemented without being provided using the ' +
-            `provideComponentStore(${this.constructor.name}) function. `
+          `@ngrx/component-store: ${
+            this.constructor.name
+          } has the ${warnings.join(' and ')} ` +
+            'lifecycle hook(s) implemented without being provided using the ' +
+            `provideComponentStore(${this.constructor.name}) function. ` +
+            `To resolve this, provide the component store via provideComponentStore(${this.constructor.name})`
         );
       }
     });

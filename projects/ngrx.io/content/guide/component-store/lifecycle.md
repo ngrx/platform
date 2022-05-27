@@ -4,7 +4,7 @@ NgRx ComponentStore comes with lifecycle hooks and observables for performing ta
 
 ## Setup
 
-Both lifecycle hooks are enabled by providing the ComponentStore through the `provideComponentStore()` function. This function registers the ComponentStore as a provider, and sets up a factory provider to instantiate the ComponentStore instance and run the implemented lifecycle hooks.
+Both lifecycle hooks are enabled by providing the ComponentStore through the `provideComponentStore()` function. This function registers the ComponentStore as a provider, sets up a factory provider to instantiate the ComponentStore instance, and calls the implemented lifecycle hooks.
 
 Currently, Angular provides initializer tokens in a few areas. The `APP_INITIALIZER` and `BOOTSTRAP_INITIALIZER` for application/bootstrap init logic, and the `ENVIRONMENT_INITIALIZER` for environment injector init logic. The `provideComponentStore()` mimics this behavior to run the lifecycle hooks. The function is required because there aren't any provided tokens at the component level injector to allow initialization tasks.
 
@@ -18,6 +18,7 @@ Currently, Angular provides initializer tokens in a few areas. The `APP_INITIALI
 
 The `OnStoreInit` interface is used the implement the `ngrxOnStoreInit` method in the ComponentStore class. This lifecycle method is called immediately after the ComponentStore class is instantiated.
 
+<code-example header="books.store.ts">
 ```ts
 export interface BooksState {
   collection: Book[];
@@ -28,7 +29,7 @@ export const initialState: BooksState = {
 };
 
 @Injectable()
-export class BooksStore extends ComponentStore<BooksState> implements OnStoreInit {
+export class BooksStore extends ComponentStore&lt;BooksState&gt; implements OnStoreInit {
 
   constructor() {
     super(initialState);
@@ -38,7 +39,9 @@ export class BooksStore extends ComponentStore<BooksState> implements OnStoreIni
     // called after store has been instantiated
   }
 }
+</code-example>
 
+<code-example header="books-page.component.ts">
 @Component({
   // ... other metadata
   providers: [
@@ -48,7 +51,7 @@ export class BooksStore extends ComponentStore<BooksState> implements OnStoreIni
 export class BooksPageComponent {
   constructor(private booksStore: BooksStore) {}
 }
-```
+</code-example>
 
 ## OnStateInit
 
@@ -56,7 +59,7 @@ The `OnStateInit` interface is used the implement the `ngrxOnStateInit` method i
 
 ### Eager State Init
 
-```ts
+<code-example header="books.store.ts">
 export interface BooksState {
   collection: Book[];
 }
@@ -66,7 +69,7 @@ export const initialState: BooksState = {
 };
 
 @Injectable()
-export class BooksStore extends ComponentStore<BooksState> implements OnStateInit {
+export class BooksStore extends ComponentStore&lt;BooksState&gt; implements OnStateInit {
   constructor() {
     // eager state initialization
     super(initialState);
@@ -76,7 +79,9 @@ export class BooksStore extends ComponentStore<BooksState> implements OnStateIni
     // called once after state has been first initialized
   }
 }
+</code-example>
 
+<code-example header="books-page.component.ts">
 @Component({
   // ... other metadata
   providers: [
@@ -86,17 +91,17 @@ export class BooksStore extends ComponentStore<BooksState> implements OnStateIni
 export class BooksPageComponent {
   constructor(private booksStore: BooksStore) {}
 }
-```
+</code-example>
 
 ### Lazy State Init
 
-```ts
+<code-example header="books.store.ts">
 export interface BooksState {
   collection: Book[];
 }
 
 @Injectable()
-export class BooksStore extends ComponentStore<BooksState> implements OnStateInit {
+export class BooksStore extends ComponentStore&lt;BooksState&gt; implements OnStateInit {
   constructor() {
     super();
   }
@@ -109,7 +114,9 @@ export class BooksStore extends ComponentStore<BooksState> implements OnStateIni
 export const initialState: BooksState = {
   collection: []
 };
+</code-example>
 
+<code-example header="books-page.component.ts">
 @Component({
   // ... other metadata
   providers: [
@@ -124,7 +131,7 @@ export class BooksPageComponent implements OnInit {
     this.booksStore.setState(initialState);
   }
 }
-```
+</code-example>
 
 ## OnDestroy
 
@@ -132,7 +139,7 @@ ComponentStore also implements the `OnDestroy` interface from `@angulare/core` t
 
 It also exposes a `destroy$` property on the ComponentStore class that can be used instead of manually creating a `Subject` to unsubscribe from any observables created in the component.
 
-```ts
+<code-example header="books-page.component.ts">
 @Component({
   // ... other metadata
   providers: [ComponentStore]
@@ -143,11 +150,11 @@ export class BooksPageComponent implements OnInit {
   ngOnInit() {
     const timer = interval(1000)
       .pipe(takeUntil(this.cs.destroy$))
-      .subscribe(() => {
+      .subscribe(() =&gt; {
         // listen until ComponentStore is destroyed
       });
   }
 }
-```
+</code-example>
 
 The `provideComponentStore()` function is not required to listen to the `destroy$` property on the ComoponentStore.
