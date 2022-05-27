@@ -165,6 +165,12 @@ The following selector below would not compile because `fooFeatureKey` (`'foo'`)
 export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;(fooFeatureKey);
 </code-example>
 
+<div class="alert is-important">
+
+Using a [Feature Creator](guide/store/feature-creators) generates the top-level selector and child selectors for each feature state property.
+
+</div>
+
 ## Resetting Memoized Selectors
 
 The selector function returned by calling `createSelector` or `createFeatureSelector` initially has a memoized value of `null`. After a selector is invoked the first time its memoized value is stored in memory. If the selector is subsequently invoked with the same arguments it will return the memoized value. If the selector is then invoked with different arguments it will recompute and update its memoized value. Consider the following:
