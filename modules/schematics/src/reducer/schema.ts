@@ -51,12 +51,6 @@ export interface Schema {
   api?: boolean;
 
   /**
-   * Specifies whether to use creator functions for
-   * handling actions and reducers.
-   */
-  creators?: boolean;
-
-  /**
    * The prefix for the reducers.
    */
   prefix?: string;

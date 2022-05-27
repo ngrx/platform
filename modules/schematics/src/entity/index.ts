@@ -50,7 +50,7 @@ export default function (options: EntityOptions): Rule {
       ...(options as object),
     };
 
-    const commonTemplates = apply(url('./common-files'), [
+    const templateSource = apply(url('./files'), [
       options.skipTests
         ? filter((path) => !path.endsWith('.spec.ts.template'))
         : noop(),
@@ -58,17 +58,10 @@ export default function (options: EntityOptions): Rule {
       move(parsedPath.path),
     ]);
 
-    const templateSource = apply(
-      url(options.creators ? './creator-files' : './files'),
-      [applyTemplates(templateOptions), move(parsedPath.path)]
-    );
-
     return chain([
       addReducerToState({ ...options, plural: true }),
       addReducerImportToNgModule({ ...options, plural: true }),
-      branchAndMerge(
-        chain([mergeWith(commonTemplates), mergeWith(templateSource)])
-      ),
+      branchAndMerge(mergeWith(templateSource)),
     ])(host, context);
   };
 }

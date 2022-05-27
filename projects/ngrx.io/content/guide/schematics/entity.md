@@ -26,13 +26,6 @@ Provide the project name where the entity files will be created.
   - Alias: `-p`
   - Type: `string`
 
-Use creator functions for actions, reducers, and effects.
-
-- `--creators`
-  - Alias: `-c`
-  - Type: `boolean`
-  - Default: `true`
-
 Nest the effects file within a folder based on the entity `name`.
 
 - `--flat`

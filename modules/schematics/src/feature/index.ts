@@ -18,7 +18,6 @@ export default function (options: FeatureOptions): Rule {
         project: options.project,
         skipTests: options.skipTests,
         api: options.api,
-        creators: options.creators,
         prefix: options.prefix,
       }),
       schematic('reducer', {
@@ -32,7 +31,6 @@ export default function (options: FeatureOptions): Rule {
         reducers: options.reducers,
         feature: true,
         api: options.api,
-        creators: options.creators,
         prefix: options.prefix,
       }),
       schematic('effect', {
@@ -45,7 +43,6 @@ export default function (options: FeatureOptions): Rule {
         skipTests: options.skipTests,
         feature: true,
         api: options.api,
-        creators: options.creators,
         prefix: options.prefix,
       }),
       schematic('selector', {

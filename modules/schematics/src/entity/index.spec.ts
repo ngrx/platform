@@ -177,7 +177,7 @@ describe('Entity Schematic', () => {
       reducers: 'reducers/index.ts',
     };
 
-    const reducerTree = await schematicRunner
+    const _reducerTree = await schematicRunner
       .runSchematicAsync('store', options, appTree)
       .toPromise();
     const tree = await schematicRunner
@@ -214,36 +214,32 @@ describe('Entity Schematic', () => {
     expect(fileContent).toMatch(/foosFeatureKey = 'foos'/);
   });
 
-  describe('action creators', () => {
-    const creatorOptions = { ...defaultOptions, creators: true };
+  it('should create a const for the action creator', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', defaultOptions, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+    expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
+    expect(fileContent).toMatch(/\[Foo\/API\] Load Foos'/);
+    expect(fileContent).toMatch(/props<\{ foos: Foo\[\] }>\(\)/);
+  });
 
-    it('should create a const for the action creator', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('entity', creatorOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
-      expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-      expect(fileContent).toMatch(/\[Foo\/API\] Load Foos'/);
-      expect(fileContent).toMatch(/props<\{ foos: Foo\[\] }>\(\)/);
-    });
-
-    it('should use action creator types in the reducer', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('entity', creatorOptions, appTree)
-        .toPromise();
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.reducer.ts`
-      );
-      expect(fileContent).toMatch(
-        /import \* as FooActions from '\.\/foo.actions';/
-      );
-      expect(fileContent).toMatch(/on\(FooActions.addFoo,/);
-      expect(fileContent).toMatch(
-        /\(state, action\) => adapter\.addOne\(action.foo, state\)/
-      );
-    });
+  it('should use action creator types in the reducer', async () => {
+    const tree = await schematicRunner
+      .runSchematicAsync('entity', defaultOptions, appTree)
+      .toPromise();
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+    expect(fileContent).toMatch(
+      /import \* as FooActions from '\.\/foo.actions';/
+    );
+    expect(fileContent).toMatch(/on\(FooActions.addFoo,/);
+    expect(fileContent).toMatch(
+      /\(state, action\) => adapter\.addOne\(action.foo, state\)/
+    );
   });
 
   describe('Ivy', () => {

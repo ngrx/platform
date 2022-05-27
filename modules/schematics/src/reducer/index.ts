@@ -51,7 +51,7 @@ export default function (options: ReducerOptions): Rule {
       ...(options as object),
     };
 
-    const commonTemplate = apply(url('./common-files'), [
+    const templateSource = apply(url('./files'), [
       options.skipTests
         ? filter((path) => !path.endsWith('.spec.ts.template'))
         : noop(),
@@ -59,19 +59,10 @@ export default function (options: ReducerOptions): Rule {
       move(parsedPath.path),
     ]);
 
-    const templateSource = apply(
-      url(options.creators ? './creator-files' : './files'),
-      [applyTemplates(templateOptions), move(parsedPath.path)]
-    );
-
     return chain([
       branchAndMerge(chain([addReducerToState(options)])),
       branchAndMerge(
-        chain([
-          addReducerImportToNgModule(options),
-          mergeWith(commonTemplate),
-          mergeWith(templateSource),
-        ])
+        chain([addReducerImportToNgModule(options), mergeWith(templateSource)])
       ),
     ])(host, context);
   };

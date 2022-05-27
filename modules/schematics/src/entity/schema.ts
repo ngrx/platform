@@ -36,10 +36,4 @@ export interface Schema {
    */
 
   group?: boolean;
-
-  /**
-   * Specifies whether to use creator functions for
-   * handling actions and reducers.
-   */
-  creators?: boolean;
 }

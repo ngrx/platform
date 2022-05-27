@@ -231,28 +231,6 @@ describe('Reducer Schematic', () => {
     );
   });
 
-  it('should create an reducer function with api success and failure, given creators=false, feature and api', async () => {
-    const tree = await schematicRunner
-      .runSchematicAsync(
-        'reducer',
-        {
-          ...defaultOptions,
-          feature: true,
-          api: true,
-          creators: false,
-        },
-        appTree
-      )
-      .toPromise();
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
-
-    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosSuccess/);
-    expect(fileContent).toMatch(/case FooActionTypes\.LoadFoosFailure/);
-    expect(fileContent).not.toMatch(/import { Action } from '@ngrx\/store'/);
-  });
-
   it('should create a reducer with prefix in an api feature', async () => {
     const tree = await schematicRunner
       .runSchematicAsync(
