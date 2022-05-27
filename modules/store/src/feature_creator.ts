@@ -21,11 +21,10 @@ export interface FeatureConfig<FeatureName extends string, FeatureState> {
   reducer: ActionReducer<FeatureState>;
 }
 
-type NotAllowedFeatureStateCheck<
-  FeatureState
-> = FeatureState extends Required<FeatureState>
-  ? unknown
-  : 'optional properties are not allowed in the feature state';
+type NotAllowedFeatureStateCheck<FeatureState> =
+  FeatureState extends Required<FeatureState>
+    ? unknown
+    : 'optional properties are not allowed in the feature state';
 
 /**
  * @description
@@ -101,12 +100,12 @@ export function createFeature<
   const featureSelector = createFeatureSelector<FeatureState>(name);
   const nestedSelectors = createNestedSelectors(featureSelector, reducer);
 
-  return ({
+  return {
     name,
     reducer,
     [`select${capitalize(name)}State`]: featureSelector,
     ...nestedSelectors,
-  } as unknown) as Feature<AppState, FeatureName, FeatureState>;
+  } as unknown as Feature<AppState, FeatureName, FeatureState>;
 }
 
 function createNestedSelectors<
@@ -117,9 +116,9 @@ function createNestedSelectors<
   reducer: ActionReducer<FeatureState>
 ): NestedSelectors<AppState, FeatureState> {
   const initialState = getInitialState(reducer);
-  const nestedKeys = (isPlainObject(initialState)
-    ? Object.keys(initialState)
-    : []) as Array<keyof FeatureState & string>;
+  const nestedKeys = (
+    isPlainObject(initialState) ? Object.keys(initialState) : []
+  ) as Array<keyof FeatureState & string>;
 
   return nestedKeys.reduce(
     (nestedSelectors, nestedKey) => ({

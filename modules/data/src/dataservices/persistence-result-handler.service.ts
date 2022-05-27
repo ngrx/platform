@@ -31,7 +31,8 @@ export abstract class PersistenceResultHandler {
  */
 @Injectable()
 export class DefaultPersistenceResultHandler
-  implements PersistenceResultHandler {
+  implements PersistenceResultHandler
+{
   constructor(
     private logger: Logger,
     private entityActionFactory: EntityActionFactory
@@ -60,12 +61,14 @@ export class DefaultPersistenceResultHandler
         err instanceof DataServiceError ? err : new DataServiceError(err, null);
       const errorData: EntityActionDataServiceError = { error, originalAction };
       this.logger.error(errorData);
-      const action = this.entityActionFactory.createFromAction<
-        EntityActionDataServiceError
-      >(originalAction, {
-        entityOp: errorOp,
-        data: errorData,
-      });
+      const action =
+        this.entityActionFactory.createFromAction<EntityActionDataServiceError>(
+          originalAction,
+          {
+            entityOp: errorOp,
+            data: errorData,
+          }
+        );
       return action;
     };
   }

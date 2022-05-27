@@ -48,9 +48,9 @@ export function on<State, Creators extends readonly ActionCreator[]>(
   // This could be refactored when TS releases the version with this fix:
   // https://github.com/microsoft/TypeScript/pull/41544
   const reducer = args.pop() as OnReducer<any, Creators>;
-  const types = (((args as unknown) as Creators).map(
+  const types = (args as unknown as Creators).map(
     (creator) => creator.type
-  ) as unknown) as ExtractActionTypes<Creators>;
+  ) as unknown as ExtractActionTypes<Creators>;
   return { reducer, types };
 }
 

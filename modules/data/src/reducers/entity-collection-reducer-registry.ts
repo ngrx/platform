@@ -44,9 +44,8 @@ export class EntityCollectionReducerRegistry {
    * @param entityName Name of the entity type for this reducer
    */
   getOrCreateReducer<T>(entityName: string): EntityCollectionReducer<T> {
-    let reducer: EntityCollectionReducer<T> = this.entityCollectionReducers[
-      entityName
-    ];
+    let reducer: EntityCollectionReducer<T> =
+      this.entityCollectionReducers[entityName];
 
     if (!reducer) {
       reducer = this.entityCollectionReducerFactory.create<T>(entityName);

@@ -68,9 +68,8 @@ describe('EntityCollectionReducer', () => {
   beforeEach(() => {
     const eds = new EntityDefinitionService([metadata]);
     collectionCreator = new EntityCollectionCreator(eds);
-    const collectionReducerMethodsFactory = new EntityCollectionReducerMethodsFactory(
-      eds
-    );
+    const collectionReducerMethodsFactory =
+      new EntityCollectionReducerMethodsFactory(eds);
     const collectionReducerFactory = new EntityCollectionReducerFactory(
       collectionReducerMethodsFactory
     );
@@ -215,11 +214,8 @@ describe('EntityCollectionReducer', () => {
     });
 
     it('QUERY_ALL_SUCCESS overwrites changeState.originalValue for updated entity', () => {
-      const {
-        entityCache,
-        preUpdatedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      const { entityCache, preUpdatedEntity, updatedEntity } =
+        createTestTrackedEntities();
       const queriedUpdate = { ...updatedEntity, name: 'Queried update' };
 
       // a new entity and yet another version of the entity that is currently updated but not saved.
@@ -230,8 +226,8 @@ describe('EntityCollectionReducer', () => {
         queryResults
       );
       const collection = entityReducer(entityCache, action)['Hero'];
-      const originalValue = collection.changeState[updatedEntity.id]!
-        .originalValue;
+      const originalValue =
+        collection.changeState[updatedEntity.id]!.originalValue;
 
       expect(collection.entities[updatedEntity.id]).toEqual(updatedEntity);
       expect(originalValue).toBeDefined();
@@ -298,11 +294,8 @@ describe('EntityCollectionReducer', () => {
     });
 
     it('QUERY_BY_KEY_SUCCESS updates the originalValue of a pending update', () => {
-      const {
-        entityCache,
-        preUpdatedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      const { entityCache, preUpdatedEntity, updatedEntity } =
+        createTestTrackedEntities();
       const queriedUpdate = { ...updatedEntity, name: 'Queried update' };
       const action = createAction(
         'Hero',
@@ -310,8 +303,8 @@ describe('EntityCollectionReducer', () => {
         queriedUpdate
       );
       const collection = entityReducer(entityCache, action)['Hero'];
-      const originalValue = collection.changeState[updatedEntity.id]!
-        .originalValue;
+      const originalValue =
+        collection.changeState[updatedEntity.id]!.originalValue;
 
       expect(collection.entities[updatedEntity.id]).toEqual(updatedEntity);
       expect(originalValue).toBeDefined();
@@ -396,11 +389,8 @@ describe('EntityCollectionReducer', () => {
     });
 
     it('QUERY_MANY_SUCCESS overwrites changeState.originalValue for updated entity', () => {
-      const {
-        entityCache,
-        preUpdatedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      const { entityCache, preUpdatedEntity, updatedEntity } =
+        createTestTrackedEntities();
       const queriedUpdate = { ...updatedEntity, name: 'Queried update' };
 
       // a new entity and yet another version of the entity that is currently updated but not saved.
@@ -411,8 +401,8 @@ describe('EntityCollectionReducer', () => {
         queryResults
       );
       const collection = entityReducer(entityCache, action)['Hero'];
-      const originalValue = collection.changeState[updatedEntity.id]!
-        .originalValue;
+      const originalValue =
+        collection.changeState[updatedEntity.id]!.originalValue;
 
       expect(collection.entities[updatedEntity.id]).toEqual(updatedEntity);
       expect(originalValue).toBeDefined();
@@ -481,11 +471,8 @@ describe('EntityCollectionReducer', () => {
     });
 
     it('QUERY_LOAD_SUCCESS clears changeState', () => {
-      const {
-        entityCache,
-        preUpdatedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      const { entityCache, preUpdatedEntity, updatedEntity } =
+        createTestTrackedEntities();
 
       // Completely replaces existing Hero entities
       const heroes: Hero[] = [
@@ -1026,10 +1013,8 @@ describe('EntityCollectionReducer', () => {
         { isOptimistic: true }
       );
 
-      const {
-        entities: initialEntities,
-        changeState: initialChangeState,
-      } = entityCache['Hero'];
+      const { entities: initialEntities, changeState: initialChangeState } =
+        entityCache['Hero'];
       expect(initialChangeState[removedEntity.id]).toBeDefined();
 
       const action = createAction(
@@ -1243,11 +1228,8 @@ describe('EntityCollectionReducer', () => {
 
   describe('SAVE_DELETE_MANY_SUCCESS (Optimistic)', () => {
     it('should turn loading flag off and clear change tracking for existing entities', () => {
-      const {
-        entityCache,
-        removedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      const { entityCache, removedEntity, updatedEntity } =
+        createTestTrackedEntities();
       const ids = [removedEntity.id, updatedEntity.id];
 
       let action = createAction('Hero', EntityOp.SAVE_DELETE_MANY, ids, {
@@ -2122,11 +2104,8 @@ describe('EntityCollectionReducer', () => {
 
   describe('SAVE_UPSERT_MANY_ERROR', () => {
     it('should only clear the loading flag', () => {
-      const {
-        entityCache,
-        addedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      const { entityCache, addedEntity, updatedEntity } =
+        createTestTrackedEntities();
       const originalAction = createAction('Hero', EntityOp.SAVE_UPSERT_MANY, [
         addedEntity,
         updatedEntity,

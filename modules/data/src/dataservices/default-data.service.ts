@@ -57,8 +57,11 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       trailingSlashEndpoints = false,
     } = config || {};
     this.delete404OK = delete404OK;
-    this.entityUrl = httpUrlGenerator.entityResource(entityName, root,
-      trailingSlashEndpoints);
+    this.entityUrl = httpUrlGenerator.entityResource(
+      entityName,
+      root,
+      trailingSlashEndpoints
+    );
     this.entitiesUrl = httpUrlGenerator.collectionResource(entityName, root);
     this.getDelay = getDelay;
     this.saveDelay = saveDelay;

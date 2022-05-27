@@ -33,7 +33,8 @@ export class Bazinga {
 
 @Injectable()
 export class BazingaDataService
-  implements EntityCollectionDataService<Bazinga> {
+  implements EntityCollectionDataService<Bazinga>
+{
   name: string;
 
   // TestBed bug requires `@Optional` even though http is always provided.

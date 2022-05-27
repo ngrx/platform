@@ -61,11 +61,8 @@ describe('EntityServices', () => {
     it('should observe the entire entity cache', () => {
       const entityCacheValues: any = [];
 
-      const {
-        entityActionFactory,
-        entityServices,
-        store,
-      } = entityServicesSetup();
+      const { entityActionFactory, entityServices, store } =
+        entityServicesSetup();
 
       // entityCache$.subscribe() callback invoked immediately. The cache is empty at first.
       entityServices.entityCache$.subscribe((ec) => entityCacheValues.push(ec));
@@ -96,12 +93,10 @@ describe('EntityServices', () => {
       const villain = { key: 'DE', name: 'Dr. Evil' } as Villain;
 
       const { entityServices } = entityServicesSetup();
-      const heroCollectionService = entityServices.getEntityCollectionService<Hero>(
-        'Hero'
-      );
-      const villainCollectionService = entityServices.getEntityCollectionService<Villain>(
-        'Villain'
-      );
+      const heroCollectionService =
+        entityServices.getEntityCollectionService<Hero>('Hero');
+      const villainCollectionService =
+        entityServices.getEntityCollectionService<Villain>('Villain');
 
       const entityCacheValues: any = [];
       entityServices.entityCache$.subscribe((cache) => {
@@ -193,9 +188,8 @@ function entityServicesSetup() {
   });
 
   const actions$: Observable<Action> = TestBed.inject(Actions);
-  const entityActionFactory: EntityActionFactory = TestBed.inject(
-    EntityActionFactory
-  );
+  const entityActionFactory: EntityActionFactory =
+    TestBed.inject(EntityActionFactory);
   const entityDispatcherFactory: EntityDispatcherFactory = TestBed.inject(
     EntityDispatcherFactory
   );

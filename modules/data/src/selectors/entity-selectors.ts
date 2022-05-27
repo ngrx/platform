@@ -175,10 +175,7 @@ export class EntitySelectorsFactory {
     const selectKeys = (c: EntityCollection<T>) => c.ids;
     const selectEntityMap = (c: EntityCollection<T>) => c.entities;
 
-    const selectEntities: Selector<
-      EntityCollection<T>,
-      T[]
-    > = createSelector(
+    const selectEntities: Selector<EntityCollection<T>, T[]> = createSelector(
       selectKeys,
       selectEntityMap,
       (keys: (number | string)[], entities: Dictionary<T>): T[] =>

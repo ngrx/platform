@@ -60,7 +60,7 @@ export abstract class EntityServices {
    * @param entityCollectionServiceMap Map of service-name to entity-collection-service
    */
   abstract registerEntityCollectionServices(
-    // eslint-disable-next-line @typescript-eslint/unified-signatures
+  // eslint-disable-next-line @typescript-eslint/unified-signatures
     entityCollectionServiceMap: EntityCollectionServiceMap
   ): void;
   // #endregion EntityCollectionService creation and registration API

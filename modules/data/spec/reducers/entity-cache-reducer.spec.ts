@@ -316,11 +316,8 @@ describe('EntityCacheReducer', () => {
       });
 
       it('should be able to use ignore changes merge strategy', () => {
-        const {
-          updatedHero,
-          serverUpdatedHero,
-          initialCache,
-        } = createInitialCacheForMerges();
+        const { updatedHero, serverUpdatedHero, initialCache } =
+          createInitialCacheForMerges();
         const querySet: EntityCacheQuerySet = {
           Hero: [serverUpdatedHero],
         };
