@@ -112,9 +112,8 @@ export class StoreDevtools implements Observer<any> {
       this.refresh();
     });
 
-    const liftedState$ = liftedStateSubject.asObservable() as Observable<
-      LiftedState
-    >;
+    const liftedState$ =
+      liftedStateSubject.asObservable() as Observable<LiftedState>;
     const state$ = liftedState$.pipe(map(unliftState));
 
     this.extensionStartSubscription = extensionStartSubscription;

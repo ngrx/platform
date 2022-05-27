@@ -57,12 +57,8 @@ describe('EntityChangeTrackerBase', () => {
 
   describe('#commitOne', () => {
     it('should clear current tracking of the given entity', () => {
-      let {
-        collection,
-        deletedEntity,
-        addedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      let { collection, deletedEntity, addedEntity, updatedEntity } =
+        createTestTrackedEntities();
       collection = tracker.commitMany([updatedEntity], collection);
       expect(collection.changeState[updatedEntity.id]).toBeUndefined();
       expect(collection.changeState[deletedEntity!.id]).toBeDefined();
@@ -72,12 +68,8 @@ describe('EntityChangeTrackerBase', () => {
 
   describe('#commitMany', () => {
     it('should clear current tracking of the given entities', () => {
-      let {
-        collection,
-        deletedEntity,
-        addedEntity,
-        updatedEntity,
-      } = createTestTrackedEntities();
+      let { collection, deletedEntity, addedEntity, updatedEntity } =
+        createTestTrackedEntities();
       collection = tracker.commitMany([addedEntity, updatedEntity], collection);
       expect(collection.changeState[addedEntity.id]).toBeUndefined();
       expect(collection.changeState[updatedEntity.id]).toBeUndefined();
@@ -110,11 +102,8 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should be able to use ignore changes strategy', () => {
-      const {
-        updatedHero,
-        serverUpdatedHero,
-        initialCache,
-      } = createInitialCacheForMerges();
+      const { updatedHero, serverUpdatedHero, initialCache } =
+        createInitialCacheForMerges();
 
       const collection = tracker.mergeQueryResults(
         [serverUpdatedHero],
@@ -200,11 +189,8 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should be able to use ignore changes strategy', () => {
-      const {
-        updatedHero,
-        serverUpdatedHero,
-        initialCache,
-      } = createInitialCacheForMerges();
+      const { updatedHero, serverUpdatedHero, initialCache } =
+        createInitialCacheForMerges();
 
       const collection = tracker.mergeSaveAdds(
         [serverUpdatedHero],
@@ -298,11 +284,8 @@ describe('EntityChangeTrackerBase', () => {
     });
 
     it('should be able to use ignore changes strategy', () => {
-      const {
-        updatedHero,
-        serverUpdatedHero,
-        initialCache,
-      } = createInitialCacheForMerges();
+      const { updatedHero, serverUpdatedHero, initialCache } =
+        createInitialCacheForMerges();
 
       const collection = tracker.mergeSaveUpserts(
         [serverUpdatedHero],
@@ -969,10 +952,9 @@ describe('EntityChangeTrackerBase', () => {
     collection = tracker.trackUpdateOne(toUpdate(updatedEntity), collection);
 
     // Make the collection match these changes
-    collection.ids = (collection.ids.slice(
-      1,
-      collection.ids.length
-    ) as number[]).concat(42);
+    collection.ids = (
+      collection.ids.slice(1, collection.ids.length) as number[]
+    ).concat(42);
     const entities: { [id: number]: Hero } = {
       ...collection.entities,
       42: addedEntity,

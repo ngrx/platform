@@ -19,7 +19,8 @@ export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {
 }
 
 export class MinimalRouterStateSerializer
-  implements RouterStateSerializer<MinimalRouterStateSnapshot> {
+  implements RouterStateSerializer<MinimalRouterStateSnapshot>
+{
   serialize(routerState: RouterStateSnapshot): MinimalRouterStateSnapshot {
     return {
       root: this.serializeRoute(routerState.root),

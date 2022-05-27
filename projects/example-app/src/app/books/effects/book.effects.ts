@@ -32,29 +32,30 @@ import { GoogleBooksService } from '@example-app/core/services';
 @Injectable()
 export class BookEffects {
   search$ = createEffect(
-    () => ({ debounce = 300, scheduler = asyncScheduler } = {}) =>
-      this.actions$.pipe(
-        ofType(FindBookPageActions.searchBooks),
-        debounceTime(debounce, scheduler),
-        switchMap(({ query }) => {
-          if (query === '') {
-            return empty;
-          }
+    () =>
+      ({ debounce = 300, scheduler = asyncScheduler } = {}) =>
+        this.actions$.pipe(
+          ofType(FindBookPageActions.searchBooks),
+          debounceTime(debounce, scheduler),
+          switchMap(({ query }) => {
+            if (query === '') {
+              return empty;
+            }
 
-          const nextSearch$ = this.actions$.pipe(
-            ofType(FindBookPageActions.searchBooks),
-            skip(1)
-          );
+            const nextSearch$ = this.actions$.pipe(
+              ofType(FindBookPageActions.searchBooks),
+              skip(1)
+            );
 
-          return this.googleBooks.searchBooks(query).pipe(
-            takeUntil(nextSearch$),
-            map((books: Book[]) => BooksApiActions.searchSuccess({ books })),
-            catchError((err) =>
-              of(BooksApiActions.searchFailure({ errorMsg: err.message }))
-            )
-          );
-        })
-      )
+            return this.googleBooks.searchBooks(query).pipe(
+              takeUntil(nextSearch$),
+              map((books: Book[]) => BooksApiActions.searchSuccess({ books })),
+              catchError((err) =>
+                of(BooksApiActions.searchFailure({ errorMsg: err.message }))
+              )
+            );
+          })
+        )
   );
 
   constructor(

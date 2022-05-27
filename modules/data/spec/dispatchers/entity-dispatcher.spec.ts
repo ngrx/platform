@@ -181,11 +181,8 @@ export function commandDispatchTest(
     it('#getAll() dispatches QUERY_ALL', () => {
       dispatcher.getAll();
 
-      const {
-        entityOp,
-        entityName,
-        mergeStrategy,
-      } = dispatchedAction().payload;
+      const { entityOp, entityName, mergeStrategy } =
+        dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_ALL);
       expect(entityName).toBe('Hero');
       expect(mergeStrategy).toBeUndefined();
@@ -194,11 +191,8 @@ export function commandDispatchTest(
     it('#getAll({mergeStrategy}) dispatches QUERY_ALL with a MergeStrategy', () => {
       dispatcher.getAll({ mergeStrategy: MergeStrategy.PreserveChanges });
 
-      const {
-        entityOp,
-        entityName,
-        mergeStrategy,
-      } = dispatchedAction().payload;
+      const { entityOp, entityName, mergeStrategy } =
+        dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_ALL);
       expect(entityName).toBe('Hero');
       expect(mergeStrategy).toBe(MergeStrategy.PreserveChanges);
@@ -227,12 +221,8 @@ export function commandDispatchTest(
     it('#getWithQuery(QueryParams) dispatches QUERY_MANY', () => {
       dispatcher.getWithQuery({ name: 'B' });
 
-      const {
-        entityOp,
-        data,
-        entityName,
-        mergeStrategy,
-      } = dispatchedAction().payload;
+      const { entityOp, data, entityName, mergeStrategy } =
+        dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_MANY);
       expect(entityName).toBe('Hero');
       expect(data).toEqual({ name: 'B' });
@@ -242,12 +232,8 @@ export function commandDispatchTest(
     it('#getWithQuery(string) dispatches QUERY_MANY', () => {
       dispatcher.getWithQuery('name=B');
 
-      const {
-        entityOp,
-        data,
-        entityName,
-        mergeStrategy,
-      } = dispatchedAction().payload;
+      const { entityOp, data, entityName, mergeStrategy } =
+        dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_MANY);
       expect(entityName).toBe('Hero');
       expect(data).toEqual('name=B');
@@ -259,12 +245,8 @@ export function commandDispatchTest(
         mergeStrategy: MergeStrategy.PreserveChanges,
       });
 
-      const {
-        entityOp,
-        data,
-        entityName,
-        mergeStrategy,
-      } = dispatchedAction().payload;
+      const { entityOp, data, entityName, mergeStrategy } =
+        dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_MANY);
       expect(entityName).toBe('Hero');
       expect(data).toEqual('name=B');
@@ -274,11 +256,8 @@ export function commandDispatchTest(
     it('#load() dispatches QUERY_LOAD', () => {
       dispatcher.load();
 
-      const {
-        entityOp,
-        entityName,
-        mergeStrategy,
-      } = dispatchedAction().payload;
+      const { entityOp, entityName, mergeStrategy } =
+        dispatchedAction().payload;
       expect(entityOp).toBe(EntityOp.QUERY_LOAD);
       expect(entityName).toBe('Hero');
       expect(mergeStrategy).toBeUndefined();

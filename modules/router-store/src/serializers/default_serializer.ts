@@ -7,7 +7,8 @@ export interface SerializedRouterStateSnapshot extends BaseRouterStoreState {
 }
 
 export class DefaultRouterStateSerializer
-  implements RouterStateSerializer<SerializedRouterStateSnapshot> {
+  implements RouterStateSerializer<SerializedRouterStateSnapshot>
+{
   serialize(routerState: RouterStateSnapshot): SerializedRouterStateSnapshot {
     return {
       root: this.serializeRoute(routerState.root),
