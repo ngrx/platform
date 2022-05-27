@@ -10,10 +10,12 @@ ng add @ngrx/store-devtools@latest
 
 ### Optional `ng add` flags
 
-* path - path to the module that you wish to add the import for the `StoreDevtoolsModule` to.
-* project - name of the project defined in your `angular.json` to help locating the module to add the `StoreDevtoolsModule` to.
-* module - name of file containing the module that you wish to add the import for the `StoreDevtoolsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`;
-* maxAge - number (>1) | 0 - maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Default is 25 for performance reasons.
+| flag | description | value type | default value |
+| --- | --- | --- | ---
+| `--path` | Path to the module that you wish to add the import for the `StoreDevtoolsModule` to. | `string` |
+| `--project` | Name of the project defined in your `angular.json` to help locating the module to add the `StoreDevtoolsModule` to. | `string` | 
+| `--module` | Name of file containing the module that you wish to add the import for the `StoreDevtoolsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`. | `string` | `app`
+| `--maxAge` | Maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Must be greater than 1 or 0. | `number` | `25`
 
 This command will automate the following steps:
 

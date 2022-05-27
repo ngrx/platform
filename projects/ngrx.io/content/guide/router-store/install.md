@@ -10,9 +10,11 @@ ng add @ngrx/router-store@latest
 
 ### Optional `ng add` flags
 
-* path - path to the module that you wish to add the import for the `StoreRouterConnectingModule` to.
-* project - name of the project defined in your `angular.json` to help locating the module to add the `StoreRouterConnectingModule` to.
-* module - name of file containing the module that you wish to add the import for the `StoreRouterConnectingModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`;
+| flag | description | value type | default value |
+| --- | --- | --- | ---
+| `--path` | Path to the module that you wish to add the import for the `StoreRouterConnectingModule` to. | `string` |
+| `--project` | Name of the project defined in your `angular.json` to help locating the module to add the `StoreRouterConnectingModule` to. | `string`
+| `--module` | Name of file containing the module that you wish to add the import for the `StoreRouterConnectingModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`. | `string` | `app`
 
 This command will automate the following steps:
 

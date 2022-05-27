@@ -10,13 +10,15 @@ ng add @ngrx/effects@latest
 
 ### Optional `ng add` flags
 
-* path - path to the module that you wish to add the import for the `EffectsModule` to.
-* flat - Indicate if a directory is to be created to hold your effects file
-* skipTests - When true, does not create test files.
-* project - name of the project defined in your `angular.json` to help locating the module to add the `EffectsModule` to.
-* module - name of file containing the module that you wish to add the import for the `EffectsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`
-* minimal - By default true, only provide minimal setup for the root effects setup. Only registers `EffectsModule.forRoot()` in the provided `module` with an empty array.
-* group - Group effects file within `effects` folder
+| flag | description | value type | default value
+| --- | --- | --- | ---
+| `--path` | Path to the module that you wish to add the import for the `EffectsModule` to. | `string`
+| `--flat` | Indicate if a directory is to be created to hold your effects file. | `boolean` | `true`
+| `--skipTests` | When true, does not create test files. | `boolean` | `false`
+| `--project` | Name of the project defined in your `angular.json` to help locating the module to add the `EffectsModule` to. | `string`
+| `--module` | Name of file containing the module that you wish to add the import for the `EffectsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts` | `string` | `app`
+| `--minimal` | When true, only provide minimal setup for the root effects setup. Only registers `EffectsModule.forRoot()` in the provided `module` with an empty array. | `boolean` | `true`
+| `--group` | Group effects file within `effects` folder. | `boolean` | `false`
 
 This command will automate the following steps:
 

@@ -10,11 +10,13 @@ ng add @ngrx/data@latest
 
 ### Optional `ng add` flags
 
-* project - name of the project defined in your `angular.json` to help locating the module to add the `EntityDataModule` to.
-* module - name of file containing the module that you wish to add the import for the `EntityDataModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`.
-* effects - if `false` it will use the `EntityDataModuleWithoutEffects` module instead of the default `EntityDataModule`.
-* migrateNgRxData - if `true` it will replace the `ngrx-data` module with the `@ngrx/data` module.
-* entityConfig - if `false` it will not create and declare the `entity-metadata` file.
+| flag | description | value type | default value |
+| --- | --- | --- | ---
+| `--project` | Name of the project defined in your `angular.json` to help locating the module to add the `EntityDataModule` to. | `string` |
+| `--module` | Name of file containing the module that you wish to add the import for the `EntityDataModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`. | `string` | `app`
+| `--effects` | If `false` it will use the `EntityDataModuleWithoutEffects` module instead of the default `EntityDataModule`. | `boolean` | `true`
+| `--migrateNgRxData` | If `true` it will replace the `ngrx-data` module with the `@ngrx/data` module. | `boolean` | `false`
+| `--entityConfig` | If `false` it will not create and declare the `entity-metadata` file. | `boolean` | `true`
 
 This command will automate the following steps:
 

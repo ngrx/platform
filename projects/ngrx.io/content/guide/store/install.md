@@ -9,13 +9,14 @@ ng add @ngrx/store@latest
 ```
 
 ### Optional `ng add` flags
-
-* path - path to the module that you wish to add the import for the `StoreModule` to.
-* project - name of the project defined in your `angular.json` to help locating the module to add the `StoreModule` to.
-* module - name of file containing the module that you wish to add the import for the `StoreModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`;
-* minimal - By default true, flag to only provide minimal setup for the root state management. Only registers `StoreModule.forRoot()` in the provided `module` with an empty object, and default runtime checks.
-* statePath - The file path to create the state in. By default, this is `reducers`.
-* stateInterface - The type literal of the defined interface for the state. By default, this is `State`.
+| flag | description | value type | default value |
+| --- | --- | --- | ---
+| `--path` | Path to the module that you wish to add the import for the StoreModule to. | `string` |
+| `--project` | Name of the project defined in your `angular.json` to help locating the module to add the `StoreModule` to. | `string` |
+| `--module` | Name of file containing the module that you wish to add the import for the `StoreModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`. | `string` | `app`
+| `--minimal` | Flag to only provide minimal setup for the root state management. Only registers `StoreModule.forRoot()` in the provided `module` with an empty object, and default runtime checks. | `boolean` |`true`
+| `--statePath` | The file path to create the state in. | `string` | `reducers` |
+| `--stateInterface` | The type literal of the defined interface for the state. | `string` | `State` |
 
 This command will automate the following steps:
 

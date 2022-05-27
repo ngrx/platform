@@ -10,7 +10,9 @@ ng add @ngrx/schematics@latest
 
 ### Optional `ng add` flags
 
-* defaultCollection - Use @ngrx/schematics as the default collection.
+| flag | description | value type | default value |
+| --- | --- | --- | ---
+| `--defaultCollection` | Use @ngrx/schematics as the default collection. | `boolean` | `true`
 
 This command will automate the following steps:
 
