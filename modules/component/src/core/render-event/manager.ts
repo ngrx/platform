@@ -15,7 +15,6 @@ import {
 
 export interface RenderEventManager<T> {
   nextPotentialObservable(potentialObservable: PotentialObservable<T>): void;
-
   handlePotentialObservableChanges(): Observable<RenderEvent<T>>;
 }
 

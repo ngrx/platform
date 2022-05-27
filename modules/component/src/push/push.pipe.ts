@@ -6,10 +6,14 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { ObservableInput, Unsubscribable } from 'rxjs';
-import { PotentialObservable } from '../core/potential-observable';
+import { Unsubscribable } from 'rxjs';
+import { ObservableOrPromise } from '../core/potential-observable';
 import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
+
+type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
+  ? R | undefined
+  : PO;
 
 /**
  * @ngModule ReactiveComponentModule
@@ -66,14 +70,9 @@ export class PushPipe implements PipeTransform, OnDestroy {
       .subscribe();
   }
 
-  transform<T>(potentialObservable: null): null;
-  transform<T>(potentialObservable: undefined): undefined;
-  transform<T>(potentialObservable: ObservableInput<T>): T | undefined;
-  transform<T>(
-    potentialObservable: PotentialObservable<T>
-  ): T | null | undefined {
+  transform<PO>(potentialObservable: PO): PushPipeResult<PO> {
     this.renderEventManager.nextPotentialObservable(potentialObservable);
-    return this.renderedValue as T | null | undefined;
+    return this.renderedValue as PushPipeResult<PO>;
   }
 
   ngOnDestroy(): void {

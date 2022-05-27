@@ -9,7 +9,7 @@ export interface ResetRenderEvent extends BaseRenderEvent {
 
 export interface NextRenderEvent<T> extends BaseRenderEvent {
   type: 'next';
-  value: T | null | undefined;
+  value: T;
 }
 
 export interface ErrorRenderEvent extends BaseRenderEvent {
