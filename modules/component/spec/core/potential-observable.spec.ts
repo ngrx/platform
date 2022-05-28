@@ -11,30 +11,30 @@ describe('fromPotentialObservable', () => {
     };
   }
 
-  function testNullishInput(input: null | undefined): void {
-    it(`should create observable from ${input}`, () => {
+  function testNonObservableInput(input: any, label = input): void {
+    it(`should create observable from ${label}`, () => {
       const { testScheduler } = setup();
 
       testScheduler.run(({ expectObservable }) => {
         const obs$ = fromPotentialObservable(input);
-        expectObservable(obs$).toBe('(x|)', { x: input });
+        expectObservable(obs$).toBe('x', { x: input });
       });
     });
   }
 
-  testNullishInput(null);
+  testNonObservableInput(null);
 
-  testNullishInput(undefined);
+  testNonObservableInput(undefined);
 
-  it('should create observable from array', () => {
-    const { testScheduler } = setup();
-    const array = [1, 2, 3];
+  testNonObservableInput(100, 'number');
 
-    testScheduler.run(({ expectObservable }) => {
-      const obs$ = fromPotentialObservable(array);
-      expectObservable(obs$).toBe('(xyz|)', { x: 1, y: 2, z: 3 });
-    });
-  });
+  testNonObservableInput('ngrx', 'string');
+
+  testNonObservableInput(true, 'boolean');
+
+  testNonObservableInput({ ngrx: 'component' }, 'object');
+
+  testNonObservableInput([1, 2, 3], 'array');
 
   it('should create observable from promise', (done) => {
     const promise = Promise.resolve(100);

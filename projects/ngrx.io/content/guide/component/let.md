@@ -88,6 +88,22 @@ An observable is in a suspense state until it emits the first event (next, error
 In case a new observable is passed to the `*ngrxLet` directive at runtime,
 the suspense template will be displayed again until the new observable emits the first event.
 
+## Using Aliases for Non-Observable Values
+
+The `*ngrxLet` directive can also accept static (non-observable) values as input argument.
+This feature provides the ability to create readable templates by using aliases for deeply nested properties:
+
+```html
+<ng-container *ngrxLet="userForm.controls.email as email">
+  <input type="text" [formControl]="email" />
+
+  <ng-container *ngIf="email.errors && (email.touched || email.dirty)">
+    <p *ngIf="email.errors.required">This field is required.</p>
+    <p *ngIf="email.errors.email">This field must be an email.</p>
+  </ng-container>
+</ng-container>
+```
+
 ## Included Features
 
 - Binding is present even for falsy values.
@@ -95,6 +111,7 @@ the suspense template will be displayed again until the new observable emits the
 - Takes away the multiple usages of the `async` or `ngrxPush` pipe.
 - Allows displaying different content based on the current state of an observable.
 - Provides a unified/structured way of handling `null` and `undefined`.
+- Provides the ability to create readable templates by using aliases for nested properties.
 - Triggers the change detection differently if `zone.js` is present or not
   using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.
 - Distinct the same values in a row for better performance.

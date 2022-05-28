@@ -14,6 +14,7 @@ This package is still experimental and may change during development.
 
 - Rendering observable events in a performant way.
 - Displaying different content based on the current state of an observable.
+- Creating readable templates by using aliases for nested properties.
 - Building fully reactive Angular applications regardless of whether `zone.js` is present or not.
 
 ## Installation

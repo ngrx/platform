@@ -10,19 +10,24 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PotentialObservable } from '../core/potential-observable';
+import {
+  ObservableOrPromise,
+  PotentialObservable,
+} from '../core/potential-observable';
 import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
 
-export interface LetViewContext<T> {
+type LetViewContextValue<PO> = PO extends ObservableOrPromise<infer V> ? V : PO;
+
+export interface LetViewContext<PO> {
   /**
    * using `$implicit` to enable `let` syntax: `*ngrxLet="obs$; let o"`
    */
-  $implicit: T;
+  $implicit: LetViewContextValue<PO>;
   /**
    * using `ngrxLet` to enable `as` syntax: `*ngrxLet="obs$ as o"`
    */
-  ngrxLet: T;
+  ngrxLet: LetViewContextValue<PO>;
   /**
    * `*ngrxLet="obs$; let e = $error"` or `*ngrxLet="obs$; $error as e"`
    */
@@ -83,15 +88,28 @@ export interface LetViewContext<T> {
  * </ng-template>
  * ```
  *
+ * ### Using Aliases for Non-Observable Values
+ *
+ * ```html
+ * <ng-container *ngrxLet="userForm.controls.email as email">
+ *   <input type="text" [formControl]="email" />
+ *
+ *   <ng-container *ngIf="email.errors && (email.touched || email.dirty)">
+ *     <p *ngIf="email.errors.required">This field is required.</p>
+ *     <p *ngIf="email.errors.email">This field must be an email.</p>
+ *   </ng-container>
+ * </ng-container>
+ * ```
+ *
  * @publicApi
  */
 @Directive({ selector: '[ngrxLet]' })
-export class LetDirective<U> implements OnInit, OnDestroy {
+export class LetDirective<PO> implements OnInit, OnDestroy {
   static ngTemplateGuard_ngrxLet: 'binding';
 
   private isMainViewCreated = false;
   private isSuspenseViewCreated = false;
-  private readonly viewContext: LetViewContext<U | null | undefined> = {
+  private readonly viewContext: LetViewContext<PO | undefined> = {
     $implicit: undefined,
     ngrxLet: undefined,
     $error: undefined,
@@ -102,7 +120,9 @@ export class LetDirective<U> implements OnInit, OnDestroy {
     ngZone: this.ngZone,
     cdRef: this.cdRef,
   });
-  private readonly renderEventManager = createRenderEventManager<U>({
+  private readonly renderEventManager = createRenderEventManager<
+    LetViewContextValue<PO>
+  >({
     reset: () => {
       this.viewContext.$implicit = undefined;
       this.viewContext.ngrxLet = undefined;
@@ -153,26 +173,28 @@ export class LetDirective<U> implements OnInit, OnDestroy {
   private readonly subscription = new Subscription();
 
   @Input()
-  set ngrxLet(potentialObservable: PotentialObservable<U>) {
-    this.renderEventManager.nextPotentialObservable(potentialObservable);
+  set ngrxLet(potentialObservable: PO) {
+    this.renderEventManager.nextPotentialObservable(
+      potentialObservable as PotentialObservable<LetViewContextValue<PO>>
+    );
   }
 
   @Input('ngrxLetSuspenseTpl') suspenseTemplateRef?: TemplateRef<
-    LetViewContext<U | null | undefined>
+    LetViewContext<PO>
   >;
 
   constructor(
     private readonly cdRef: ChangeDetectorRef,
     private readonly ngZone: NgZone,
-    private readonly mainTemplateRef: TemplateRef<LetViewContext<U>>,
+    private readonly mainTemplateRef: TemplateRef<LetViewContext<PO>>,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly errorHandler: ErrorHandler
   ) {}
 
-  static ngTemplateContextGuard<U>(
-    dir: LetDirective<U>,
-    ctx: unknown | null | undefined
-  ): ctx is LetViewContext<U> {
+  static ngTemplateContextGuard<PO>(
+    dir: LetDirective<PO>,
+    ctx: unknown
+  ): ctx is LetViewContext<PO> {
     return true;
   }
 
