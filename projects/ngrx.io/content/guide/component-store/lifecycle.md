@@ -19,7 +19,6 @@ Currently, Angular provides initializer tokens in a few areas. The `APP_INITIALI
 The `OnStoreInit` interface is used the implement the `ngrxOnStoreInit` method in the ComponentStore class. This lifecycle method is called immediately after the ComponentStore class is instantiated.
 
 <code-example header="books.store.ts">
-```ts
 export interface BooksState {
   collection: Book[];
 }
