@@ -7,7 +7,7 @@ import {
   RouterAction,
   RouterState,
   RouterStateSerializer,
-  DefaultRouterStateSerializer,
+  MinimalRouterStateSerializer,
   FullRouterStateSerializer,
 } from '@ngrx/router-store';
 import { select, Store, ActionsSubject } from '@ngrx/store';
@@ -167,12 +167,12 @@ describe('Router Store Module', () => {
 
       it('should use the default router serializer by default', () => {
         const { serializer } = setup();
-        expect(serializer).toEqual(new DefaultRouterStateSerializer());
+        expect(serializer).toEqual(new MinimalRouterStateSerializer());
       });
 
       it('should use the default router serializer if minimal state option is passed in', () => {
         const { serializer } = setup(RouterState.Minimal);
-        expect(serializer).toEqual(new DefaultRouterStateSerializer());
+        expect(serializer).toEqual(new MinimalRouterStateSerializer());
       });
 
       it('should use the full router serializer if full state option is passed in', () => {
@@ -235,9 +235,9 @@ describe('Router Store Module', () => {
       it('should use the provided serializer if one is provided', () => {
         const { serializer } = setup(
           RouterState.Minimal,
-          DefaultRouterStateSerializer
+          MinimalRouterStateSerializer
         );
-        expect(serializer).toEqual(new DefaultRouterStateSerializer());
+        expect(serializer).toEqual(new MinimalRouterStateSerializer());
       });
     });
   });

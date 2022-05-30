@@ -1,7 +1,7 @@
 import { RouterStateSnapshot } from '@angular/router';
 import {
   FullRouterStateSerializer,
-  DefaultRouterStateSerializer,
+  MinimalRouterStateSerializer,
 } from '../src';
 
 describe('full serializer', () => {
@@ -80,7 +80,7 @@ describe('full serializer', () => {
 
 describe('minimal serializer', () => {
   it('should serialize only the minimal properties', () => {
-    const serializer = new DefaultRouterStateSerializer();
+    const serializer = new MinimalRouterStateSerializer();
     const snapshot = createRouteSnapshot();
     const routerState = {
       url: 'url',
@@ -96,7 +96,7 @@ describe('minimal serializer', () => {
   });
 
   it('should serialize with an empty routeConfig', () => {
-    const serializer = new DefaultRouterStateSerializer();
+    const serializer = new MinimalRouterStateSerializer();
     const snapshot = { ...createRouteSnapshot(), routeConfig: null };
     const routerState = {
       url: 'url',
@@ -115,7 +115,7 @@ describe('minimal serializer', () => {
   });
 
   it('should serialize children', () => {
-    const serializer = new DefaultRouterStateSerializer();
+    const serializer = new MinimalRouterStateSerializer();
     const snapshot = {
       ...createRouteSnapshot(),
       children: [createRouteSnapshot('child')],

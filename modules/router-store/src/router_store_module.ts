@@ -42,7 +42,7 @@ import {
   FullRouterStateSerializer,
   SerializedRouterStateSnapshot,
 } from './serializers/full_serializer';
-import { DefaultRouterStateSerializer } from './serializers/default_serializer';
+import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
 
 export type StateKeyOrSelector<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
@@ -50,7 +50,7 @@ export type StateKeyOrSelector<
 
 /**
  * Full = Serializes the router event with FullRouterStateSerializer
- * Minimal = Serializes the router event with DefaultRouterStateSerializer
+ * Minimal = Serializes the router event with MinimalRouterStateSerializer
  */
 export const enum RouterState {
   Full,
@@ -73,7 +73,7 @@ export interface StoreRouterConfig<
   /**
    * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
    * Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.
-   * Set to `Minimal` to use the `DefaultRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
+   * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
    */
   routerState?: RouterState;
 }
@@ -102,7 +102,7 @@ export function _createRouterConfig(
 ): StoreRouterConfig {
   return {
     stateKey: DEFAULT_ROUTER_FEATURENAME,
-    serializer: DefaultRouterStateSerializer,
+    serializer: MinimalRouterStateSerializer,
     navigationActionTiming: NavigationActionTiming.PreActivation,
     ...config,
   };
@@ -184,7 +184,7 @@ export class StoreRouterConnectingModule {
             ? config.serializer
             : config.routerState === RouterState.Full
             ? FullRouterStateSerializer
-            : DefaultRouterStateSerializer,
+            : MinimalRouterStateSerializer,
         },
       ],
     };
@@ -213,7 +213,7 @@ export class StoreRouterConnectingModule {
           'with the FullRouterStateSerializer. The FullRouterStateSerializer ' +
           'has an unserializable router state and actions that are not serializable. ' +
           'To use the serializability runtime checks either use ' +
-          'the DefaultRouterStateSerializer or implement a custom router state serializer. ' +
+          'the MinimalRouterStateSerializer or implement a custom router state serializer. ' +
           'This also applies to Ivy with immutability runtime checks.'
       );
     }

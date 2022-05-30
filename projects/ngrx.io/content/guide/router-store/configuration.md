@@ -10,7 +10,7 @@ interface StoreRouterConfig {
 </code-example>
 
 - `stateKey`: The name of reducer key, defaults to `router`. It's also possible to provide a selector function.
-- `serializer`: How a router snapshot is serialized. Defaults to `DefaultRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
+- `serializer`: How a router snapshot is serialized. Defaults to `MinimalRouterStateSerializer`. See [Custom Router State Serializer](#custom-router-state-serializer) for more information.
 - `navigationActionTiming`: When the `ROUTER_NAVIGATION` is dispatched. Defaults to `NavigationActionTiming.PreActivation`. See [Navigation Action Timing](#navigation-action-timing) for more information.
 - `routerState`: Set this property to decide which serializer should be used, if none is provided, and the metadata on the dispatched action.
 
@@ -101,9 +101,9 @@ This property decides which router serializer should be used. If there is a cust
 
 ### RouterState.Minimal
 
-`RouterState.Minimal` will use the `DefaultRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
+`RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
 
-The difference between `FullRouterStateSerializer` and the `DefaultRouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
+The difference between `FullRouterStateSerializer` and the `MinimalRouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
 
 <code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
@@ -126,6 +126,6 @@ StoreRouterConnectingModule.forRoot({
 <div class="alert is-important">
 
 The `FullRouterStateSerializer` cannot be used when [serializability runtime checks](guide/store/configuration/runtime-checks) are enabled.
-With serializability runtime checks enabled, the `DefaultRouterStateSerializer` serializer **must** be used. This also applies to Ivy with immutability runtime checks.
+With serializability runtime checks enabled, the `MinimalRouterStateSerializer` serializer **must** be used. This also applies to Ivy with immutability runtime checks.
 
 </div>

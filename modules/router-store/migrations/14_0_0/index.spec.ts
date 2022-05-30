@@ -27,21 +27,18 @@ describe('Router Store Migration 14_0_0', () => {
 
   describe('Rename serializers', () => {
     it(
-      `should rename the DefaultRouterStateSerializer to FullRouterStateSerializer and the MinimalRouterStateSerializer to DefaultRouterStateSerializer`,
+      `should rename the DefaultRouterStateSerializer to FullRouterStateSerializer`,
       waitForAsync(async () => {
         const input = `
       import { DefaultRouterStateSerializer } from '@ngrx/router-store';
-      import { MinimalRouterStateSerializer } from '@ngrx/router-store';
 
       const fullSerializer: DefaultRouterStateSerializer;
-      const minimalSerializer: MinimalRouterStateSerializer;
 
       @NgModule({
         imports: [
           AuthModule,
           AppRoutingModule,
           StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer, key: 'router' }),
-          StoreRouterConnectingModule.forRoot({ serializer: MinimalRouterStateSerializer, key: 'router' }),
           CoreModule,
         ],
         bootstrap: [AppComponent],
@@ -50,17 +47,14 @@ describe('Router Store Migration 14_0_0', () => {
     `;
         const expected = `
       import { FullRouterStateSerializer } from '@ngrx/router-store';
-      import { DefaultRouterStateSerializer } from '@ngrx/router-store';
 
       const fullSerializer: FullRouterStateSerializer;
-      const minimalSerializer: DefaultRouterStateSerializer;
 
       @NgModule({
         imports: [
           AuthModule,
           AppRoutingModule,
           StoreRouterConnectingModule.forRoot({ serializer: FullRouterStateSerializer, key: 'router' }),
-          StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer, key: 'router' }),
           CoreModule,
         ],
         bootstrap: [AppComponent],

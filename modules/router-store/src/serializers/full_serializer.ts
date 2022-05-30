@@ -7,7 +7,7 @@ export interface SerializedRouterStateSnapshot extends BaseRouterStoreState {
 }
 
 /**
- * @deprecated The FullRouterStateSerializer cannot be used when serializability runtime checks are enabled. Use the {@link DefaultRouterStateSerializer} or a {@link https://ngrx.io/guide/router-store/configuration#custom-router-state-serializer custom serializer} instead.
+ * @deprecated The FullRouterStateSerializer cannot be used when serializability runtime checks are enabled. Use the {@link MinimalRouterStateSerializer} or a {@link https://ngrx.io/guide/router-store/configuration#custom-router-state-serializer custom serializer} instead.
  */
 export class FullRouterStateSerializer
   implements RouterStateSerializer<SerializedRouterStateSnapshot>

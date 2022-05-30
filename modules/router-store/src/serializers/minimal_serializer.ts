@@ -18,7 +18,7 @@ export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {
   url: string;
 }
 
-export class DefaultRouterStateSerializer
+export class MinimalRouterStateSerializer
   implements RouterStateSerializer<MinimalRouterStateSnapshot>
 {
   serialize(routerState: RouterStateSnapshot): MinimalRouterStateSnapshot {

@@ -9,7 +9,6 @@ import {
 
 const renames = {
   DefaultRouterStateSerializer: 'FullRouterStateSerializer',
-  MinimalRouterStateSerializer: 'DefaultRouterStateSerializer',
 };
 
 function renameSerializers() {
