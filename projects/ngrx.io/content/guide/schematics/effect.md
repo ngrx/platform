@@ -26,13 +26,6 @@ Provide the project name where the effect files will be created.
   - Alias: `-p`
   - Type: `string`
 
-Use creator functions for actions and effects.
-
-- `--creators`
-  - Alias: `-c`
-  - Type: `boolean`
-  - Default: `true`
-
 Nest the effects file within a folder based by the effect `name`.
 
 - `--flat`

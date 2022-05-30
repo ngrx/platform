@@ -20,8 +20,6 @@ import {
   EMPTY,
   interval,
   NEVER,
-  Observable,
-  ObservableInput,
   of,
   switchMap,
   take,
@@ -30,6 +28,7 @@ import {
 } from 'rxjs';
 import { LetDirective } from '../../src/let/let.directive';
 import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
+import { stripSpaces } from '../helpers';
 
 @Component({
   template: `
@@ -42,7 +41,7 @@ import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
   `,
 })
 class LetDirectiveTestComponent {
-  value$!: Observable<number>;
+  value$: unknown;
 }
 
 @Component({
@@ -116,7 +115,7 @@ class LetDirectiveTestRecursionComponent {
 
 let fixtureLetDirectiveTestComponent: ComponentFixture<LetDirectiveTestComponent>;
 let letDirectiveTestComponent: {
-  value$: ObservableInput<any> | undefined | null;
+  value$: unknown;
 };
 let componentNativeElement: any;
 
@@ -257,6 +256,38 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('null');
     });
 
+    it('should render initially passed number', () => {
+      letDirectiveTestComponent.value$ = 10;
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('10');
+    });
+
+    it('should render initially passed string', () => {
+      letDirectiveTestComponent.value$ = 'ngrx';
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('"ngrx"');
+    });
+
+    it('should render initially passed boolean', () => {
+      letDirectiveTestComponent.value$ = true;
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('true');
+    });
+
+    it('should render initially passed object', () => {
+      letDirectiveTestComponent.value$ = { ngrx: 'component' };
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(stripSpaces(componentNativeElement.textContent)).toBe(
+        '{"ngrx":"component"}'
+      );
+    });
+
+    it('should render initially passed array', () => {
+      letDirectiveTestComponent.value$ = [1, 2, 3];
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(stripSpaces(componentNativeElement.textContent)).toBe('[1,2,3]');
+    });
+
     it('should render undefined as value when initially of(undefined) was passed (as undefined was emitted)', () => {
       letDirectiveTestComponent.value$ = of(undefined);
       fixtureLetDirectiveTestComponent.detectChanges();
@@ -304,7 +335,7 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('undefined');
     });
 
-    it('should render new value as value when a new observable was passed', () => {
+    it('should render new value when a new observable was passed', () => {
       letDirectiveTestComponent.value$ = of(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
@@ -339,40 +370,23 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('2');
     }));
 
-    it('should render new value as value when a new observable was passed', () => {
-      letDirectiveTestComponent.value$ = of(42);
+    it('should render non-observable value when it was passed after observable', () => {
+      letDirectiveTestComponent.value$ = of(100);
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('42');
-      letDirectiveTestComponent.value$ = of(45);
+      expect(componentNativeElement.textContent).toBe('100');
+      letDirectiveTestComponent.value$ = 200;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('45');
+      expect(componentNativeElement.textContent).toBe('200');
     });
 
-    it('should render the last value when a new observable was passed', () => {
-      letDirectiveTestComponent.value$ = of(42, 45);
+    it('should render non-observable value when it was passed after another non-observable', () => {
+      letDirectiveTestComponent.value$ = 'ngrx';
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('45');
+      expect(componentNativeElement.textContent).toBe('"ngrx"');
+      letDirectiveTestComponent.value$ = 'component';
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('"component"');
     });
-
-    it('should render values over time when a new observable was passed', fakeAsync(() => {
-      letDirectiveTestComponent.value$ = interval(1000).pipe(take(3));
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('');
-      tick(1000);
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('0');
-      tick(1000);
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('1');
-      tick(1000);
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('2');
-
-      tick(1000);
-      fixtureLetDirectiveTestComponent.detectChanges();
-      // Remains at 2, since that was the last value.
-      expect(componentNativeElement.textContent).toBe('2');
-    }));
   });
 
   describe('when error', () => {

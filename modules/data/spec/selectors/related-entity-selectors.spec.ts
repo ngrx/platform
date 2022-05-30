@@ -60,9 +60,8 @@ describe('Related-entity Selectors', () => {
       const heroSelectors = entitySelectorsFactory.create<Hero>('Hero');
       const selectHeroMap = heroSelectors.selectEntityMap;
 
-      const sidekickSelectors = entitySelectorsFactory.create<Sidekick>(
-        'Sidekick'
-      );
+      const sidekickSelectors =
+        entitySelectorsFactory.create<Sidekick>('Sidekick');
       const selectSidekickMap = sidekickSelectors.selectEntityMap;
 
       return {
@@ -296,9 +295,8 @@ describe('Related-entity Selectors', () => {
       const powerSelectors = entitySelectorsFactory.create<Power>('Power');
       const selectPowerMap = powerSelectors.selectEntityMap;
 
-      const heroPowerMapSelectors = entitySelectorsFactory.create<HeroPowerMap>(
-        'HeroPowerMap'
-      );
+      const heroPowerMapSelectors =
+        entitySelectorsFactory.create<HeroPowerMap>('HeroPowerMap');
       const selectHeroPowerMapEntities = heroPowerMapSelectors.selectEntities;
 
       const selectHeroPowerIds = createSelector(
@@ -326,11 +324,8 @@ describe('Related-entity Selectors', () => {
     }
 
     function createHeroPowersSelector$(heroId: number): Observable<Power[]> {
-      const {
-        selectHeroMap,
-        selectHeroPowerIds,
-        selectPowerMap,
-      } = setCollectionSelectors();
+      const { selectHeroMap, selectHeroPowerIds, selectPowerMap } =
+        setCollectionSelectors();
 
       const selectHero = createSelector(
         selectHeroMap,

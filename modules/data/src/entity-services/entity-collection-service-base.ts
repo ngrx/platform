@@ -28,7 +28,8 @@ import { QueryParams } from '../dataservices/interfaces';
 export class EntityCollectionServiceBase<
   T,
   S$ extends EntitySelectors$<T> = EntitySelectors$<T>
-> implements EntityCollectionService<T> {
+> implements EntityCollectionService<T>
+{
   /** Dispatcher of EntityCommands (EntityActions) */
   readonly dispatcher: EntityDispatcher<T>;
 

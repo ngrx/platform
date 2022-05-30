@@ -1230,9 +1230,8 @@ export class EntityCollectionReducerMethodsFactory {
 
   /** Create the  {EntityCollectionReducerMethods} for the named entity type */
   create<T>(entityName: string): EntityCollectionReducerMethodMap<T> {
-    const definition = this.entityDefinitionService.getDefinition<T>(
-      entityName
-    );
+    const definition =
+      this.entityDefinitionService.getDefinition<T>(entityName);
     const methodsClass = new EntityCollectionReducerMethods(
       entityName,
       definition

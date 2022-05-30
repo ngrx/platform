@@ -26,7 +26,7 @@ NgRx packages are divided into a few main categories
 
 ### View
 
-- [Component](guide/component) - Extension for fully reactive Angular applications.
+- [Component](guide/component) - Extension for building reactive Angular templates.
 
 ### Developer Tools
 

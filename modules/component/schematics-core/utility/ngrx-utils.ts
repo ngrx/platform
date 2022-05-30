@@ -269,8 +269,6 @@ export function omit<T extends { [key: string]: any }>(
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
 }
 
-export function getPrefix(options: { prefix?: string; creators?: boolean }) {
-  return options.creators
-    ? stringUtils.camelize(options.prefix || 'load')
-    : stringUtils.capitalize(options.prefix || 'load');
+export function getPrefix(options: { prefix?: string }) {
+  return stringUtils.camelize(options.prefix || 'load');
 }

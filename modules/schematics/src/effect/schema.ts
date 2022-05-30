@@ -50,12 +50,6 @@ export interface Schema {
   api?: boolean;
 
   /**
-   * Specifies whether to use creator functions for
-   * handling actions, reducers, and effects.
-   */
-  creators?: boolean;
-
-  /**
    * Setup root effects module without registering initial effects.
    */
   minimal?: boolean;

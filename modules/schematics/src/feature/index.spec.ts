@@ -39,29 +39,29 @@ describe('Feature Schematic', () => {
       .toPromise();
     const files = tree.files;
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.actions.spec.ts`)
+    ).toBeFalsy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.reducer.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.reducer.spec.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.effects.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.effects.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.effects.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.effects.spec.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.selectors.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.selectors.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.selectors.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
+    ).toBeTruthy();
   });
 
   it('should not create test files', async () => {
@@ -72,29 +72,29 @@ describe('Feature Schematic', () => {
       .toPromise();
     const files = tree.files;
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
-    expect(files.indexOf(`${projectPath}/src/app/foo.actions.spec.ts`)).toEqual(
-      -1
-    );
+      files.includes(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
-    ).toBeGreaterThanOrEqual(0);
-    expect(files.indexOf(`${projectPath}/src/app/foo.reducer.spec.ts`)).toEqual(
-      -1
-    );
+      files.includes(`${projectPath}/src/app/foo.actions.spec.ts`)
+    ).toBeFalsy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.effects.ts`)
-    ).toBeGreaterThanOrEqual(0);
-    expect(files.indexOf(`${projectPath}/src/app/foo.effects.spec.ts`)).toEqual(
-      -1
-    );
+      files.includes(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.selectors.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/foo.reducer.spec.ts`)
+    ).toBeFalsy();
     expect(
-      files.indexOf(`${projectPath}/src/app/foo.selectors.spec.ts`)
-    ).toEqual(-1);
+      files.includes(`${projectPath}/src/app/foo.effects.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.effects.spec.ts`)
+    ).toBeFalsy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.selectors.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
+    ).toBeFalsy();
   });
 
   it('should create all files of a feature to specified project if provided', async () => {
@@ -113,29 +113,29 @@ describe('Feature Schematic', () => {
       .toPromise();
     const files = tree.files;
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.actions.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.actions.spec.ts`)
+    ).toBeFalsy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.reducer.spec.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.effects.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.effects.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.effects.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.effects.spec.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.selectors.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.selectors.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${specifiedProjectPath}/src/lib/foo.selectors.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${specifiedProjectPath}/src/lib/foo.selectors.spec.ts`)
+    ).toBeTruthy();
   });
 
   it('should create all files of a feature within grouped folders if group is set', async () => {
@@ -146,26 +146,26 @@ describe('Feature Schematic', () => {
       .toPromise();
     const files = tree.files;
     expect(
-      files.indexOf(`${projectPath}/src/app/actions/foo.actions.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/actions/foo.actions.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/reducers/foo.reducer.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/reducers/foo.reducer.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/reducers/foo.reducer.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/reducers/foo.reducer.spec.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/effects/foo.effects.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/effects/foo.effects.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/effects/foo.effects.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/effects/foo.effects.spec.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/selectors/foo.selectors.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/selectors/foo.selectors.ts`)
+    ).toBeTruthy();
     expect(
-      files.indexOf(`${projectPath}/src/app/selectors/foo.selectors.spec.ts`)
-    ).toBeGreaterThanOrEqual(0);
+      files.includes(`${projectPath}/src/app/selectors/foo.selectors.spec.ts`)
+    ).toBeTruthy();
   });
 
   it('should respect the path provided for the feature name', async () => {
@@ -188,25 +188,6 @@ describe('Feature Schematic', () => {
     );
     expect(moduleFileContent).toMatch(
       /import \* as fromFoo from '.\/foo\/reducers\/foo.reducer';/
-    );
-  });
-
-  it('should have all three api actions in actions type union if api flag enabled and creators=false', async () => {
-    const options = {
-      ...defaultOptions,
-      api: true,
-      creators: false,
-    };
-
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
-
-    expect(fileContent).toMatch(
-      /export type FooActions = LoadFoos \| LoadFoosSuccess \| LoadFoosFailure/
     );
   });
 

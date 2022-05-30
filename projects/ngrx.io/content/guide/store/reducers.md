@@ -167,7 +167,7 @@ export class ScoreboardModule {}
 
 <div class="alert is-important">
 
-**Note:** It is recommended to abstract a feature key string to prevent hardcoding strings when registering feature state and calling `createFeatureSelector`.
+**Note:** It is recommended to abstract a feature key string to prevent hardcoding strings when registering feature state and calling `createFeatureSelector`. Alternatively, you can use a [Feature Creator](guide/store/feature-creators) which automatically generates selectors for your feature state.
 
 </div>
 

@@ -20,11 +20,6 @@ export interface Schema {
   project?: string;
 
   /**
-   * When true, does not create test files.
-   */
-  skipTests?: boolean;
-
-  /**
    * Flag to indicate if a dir is created.
    */
 
@@ -40,10 +35,4 @@ export interface Schema {
    * should be generated.
    */
   api?: boolean;
-
-  /**
-   * Specifies whether to use creator functions for
-   * handling actions and reducers.
-   */
-  creators?: boolean;
 }

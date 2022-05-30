@@ -41,8 +41,11 @@ export abstract class HttpUrlGenerator {
    * Return the base URL for a single entity resource,
    * e.g., the base URL to get a single hero by its id
    */
-  abstract entityResource(entityName: string, root: string,
-    trailingSlashEndpoints: boolean): string;
+  abstract entityResource(
+    entityName: string,
+    root: string,
+    trailingSlashEndpoints: boolean
+  ): string;
 
   /**
    * Return the base URL for a collection resource,
@@ -83,7 +86,7 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
   ): HttpResourceUrls {
     let resourceUrls = this.knownHttpResourceUrls[entityName];
     if (!resourceUrls) {
-      const nRoot =  trailingSlashEndpoints ? root:  normalizeRoot(root);
+      const nRoot = trailingSlashEndpoints ? root : normalizeRoot(root);
       resourceUrls = {
         entityResourceUrl: `${nRoot}/${entityName}/`.toLowerCase(),
         collectionResourceUrl: `${nRoot}/${this.pluralizer.pluralize(
@@ -101,9 +104,13 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
    * @param root {string} Root path to the resource, e.g., 'some-api`
    * @returns complete path to resource, e.g, 'some-api/hero'
    */
-  entityResource(entityName: string, root: string,
-    trailingSlashEndpoints: boolean): string {
-    return this.getResourceUrls(entityName, root, trailingSlashEndpoints).entityResourceUrl;
+  entityResource(
+    entityName: string,
+    root: string,
+    trailingSlashEndpoints: boolean
+  ): string {
+    return this.getResourceUrls(entityName, root, trailingSlashEndpoints)
+      .entityResourceUrl;
   }
 
   /**

@@ -1,13 +1,25 @@
-import { from, Observable, ObservableInput, of } from 'rxjs';
+import { from, isObservable, Observable } from 'rxjs';
 
-export type PotentialObservable<T> = ObservableInput<T> | null | undefined;
+export type ObservableOrPromise<T> = Observable<T> | PromiseLike<T>;
+
+export type PotentialObservable<T> = T | ObservableOrPromise<T>;
 
 export function fromPotentialObservable<T>(
   potentialObservable: PotentialObservable<T>
-): Observable<T | null | undefined> {
-  if (!potentialObservable) {
-    return of(potentialObservable as null | undefined);
+): Observable<T> {
+  if (isObservable(potentialObservable)) {
+    return potentialObservable;
   }
 
-  return from(potentialObservable);
+  if (isPromiseLike(potentialObservable)) {
+    return from(potentialObservable);
+  }
+
+  return new Observable((subscriber) => {
+    subscriber.next(potentialObservable);
+  });
+}
+
+function isPromiseLike(value: unknown): value is PromiseLike<unknown> {
+  return typeof (value as PromiseLike<unknown>)?.then === 'function';
 }

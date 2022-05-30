@@ -24,7 +24,8 @@ export const UPDATE = '@ngrx/store/update-reducers' as const;
 @Injectable()
 export class ReducerManager
   extends BehaviorSubject<ActionReducer<any, any>>
-  implements OnDestroy {
+  implements OnDestroy
+{
   get currentReducers(): ActionReducerMap<any, any> {
     return this.reducers;
   }

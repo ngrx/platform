@@ -40,9 +40,8 @@ export class EntityCollectionServiceElementsFactory {
     entityName: string
   ): EntityCollectionServiceElements<T, S$> {
     entityName = entityName.trim();
-    const definition = this.entityDefinitionService.getDefinition<T>(
-      entityName
-    );
+    const definition =
+      this.entityDefinitionService.getDefinition<T>(entityName);
     const dispatcher = this.entityDispatcherFactory.create<T>(
       entityName,
       definition.selectId,

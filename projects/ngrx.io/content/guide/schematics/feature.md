@@ -26,13 +26,6 @@ Provide the project name where the feature files will be created.
   - Alias: `-p`
   - Type: `string`
 
-Use creator functions for actions, reducers, and effects.
-
-- `--creators`
-  - Alias: `-c`
-  - Type: `boolean`
-  - Default: `true`
-
 Nest the feature files within a folder based on the feature `name`.
 
 - `--flat`
