@@ -1,6 +1,6 @@
 # Installation
 
-## Installing with `ng add` (recommended)
+## Installing with `ng add`
 
 You can install the ComponentStore to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
