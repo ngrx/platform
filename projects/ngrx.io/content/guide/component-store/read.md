@@ -81,7 +81,7 @@ Adding the debounce to a selector is done by passing `{debounce: true}` as the l
 @Injectable()
 export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
   
-  constructor() {
+  constructor(private movieService: MovieService) {
     super({movies: [], moviesPerPage: 10, currentPageIndex: 0});
  
     // 👇 effect is triggered whenever debounced data is changed
