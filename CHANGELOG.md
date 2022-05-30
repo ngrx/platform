@@ -1,3 +1,107 @@
+<a name="14.0.0-beta.0"></a>
+
+# [14.0.0-beta.0](https://github.com/ngrx/platform/compare/13.1.0...14.0.0-beta.0) (2022-05-30)
+
+- Closes #3344, #3345 ([70056a8](https://github.com/ngrx/platform/commit/70056a8)), closes [#3344](https://github.com/ngrx/platform/issues/3344) [#3345](https://github.com/ngrx/platform/issues/3345)
+
+### Bug Fixes
+
+- **store:** rename template literal to string literal for createActionGroup ([#3426](https://github.com/ngrx/platform/issues/3426)) ([7d08db1](https://github.com/ngrx/platform/commit/7d08db1))
+
+### Features
+
+- **schematics:** remove creators option ([#3311](https://github.com/ngrx/platform/issues/3311)) ([e86278a](https://github.com/ngrx/platform/commit/e86278a))
+- update Angular packages to latest v14 RC ([#3425](https://github.com/ngrx/platform/issues/3425)) ([f15dd1e](https://github.com/ngrx/platform/commit/f15dd1e)), closes [#3417](https://github.com/ngrx/platform/issues/3417)
+- **component:** add error as value to LetDirective's context ([#3380](https://github.com/ngrx/platform/issues/3380)) ([6452e24](https://github.com/ngrx/platform/commit/6452e24)), closes [#3343](https://github.com/ngrx/platform/issues/3343)
+- **component:** add suspense template input to LetDirective ([#3377](https://github.com/ngrx/platform/issues/3377)) ([345ee53](https://github.com/ngrx/platform/commit/345ee53)), closes [#3340](https://github.com/ngrx/platform/issues/3340)
+- **component:** use global render strategy in zone-less mode ([#3379](https://github.com/ngrx/platform/issues/3379)) ([f233dae](https://github.com/ngrx/platform/commit/f233dae)), closes [#3342](https://github.com/ngrx/platform/issues/3342)
+- **component-store:** add OnStoreInit and OnStateInit lifecycle hooks ([#3368](https://github.com/ngrx/platform/issues/3368)) ([0ffed02](https://github.com/ngrx/platform/commit/0ffed02)), closes [#3335](https://github.com/ngrx/platform/issues/3335)
+- **eslint-plugin:** add NgRx ESLint Plugin ([#3373](https://github.com/ngrx/platform/issues/3373)) ([ae0041b](https://github.com/ngrx/platform/commit/ae0041b))
+- **store:** add createActionGroup function ([#3381](https://github.com/ngrx/platform/issues/3381)) ([2cdecb3](https://github.com/ngrx/platform/commit/2cdecb3)), closes [#3337](https://github.com/ngrx/platform/issues/3337)
+- **store:** install and configure the [@ngrx](https://github.com/ngrx)/eslint-plugin on ng-add ([#3386](https://github.com/ngrx/platform/issues/3386)) ([bf2672e](https://github.com/ngrx/platform/commit/bf2672e))
+
+### Performance Improvements
+
+- **component:** reset state / trigger CD only if necessary ([#3328](https://github.com/ngrx/platform/issues/3328)) ([f5b055b](https://github.com/ngrx/platform/commit/f5b055b))
+
+### BREAKING CHANGES
+
+- 1. The context of `LetDirective` is strongly typed when `null` or
+     `undefined` is passed as input.
+
+BEFORE:
+
+```html
+<p *ngrxLet="null as n">{{ n }}</p>
+<p *ngrxLet="undefined as u">{{ u }}</p>
+```
+
+- The type of `n` is `any`.
+- The type of `u` is `any`.
+
+AFTER:
+
+```html
+<p *ngrxLet="null as n">{{ n }}</p>
+<p *ngrxLet="undefined as u">{{ u }}</p>
+```
+
+- The type of `n` is `null`.
+- The type of `u` is `undefined`.
+
+* **schematics:** BEFORE:
+
+Creating actions, reducers, and effects is possible without using the creator syntax is possible.
+
+AFTER:
+
+- All schematics use the non-creator syntax to scaffold the code.
+- The option `--creators` (and `-c`) is removed from the schematic options.
+- The `skipTests` option is removed while generating actions.
+
+* Minimum version of Angular has been updated
+
+BEFORE:
+
+Minimum version of Angular was 13.x
+
+AFTER:
+
+Minimum version of Angular is 14.x
+
+- **component:** The native local rendering strategy is replaced by global
+  in zone-less mode for better performance.
+
+BEFORE:
+
+The change detection is triggered via `changeDetectorRef.detectChanges`
+in zone-less mode.
+
+AFTER:
+
+The change detection is triggered via `ɵmarkDirty` in zone-less mode.
+
+- **component:** The `$error` property from `LetDirective`'s view context is
+  a thrown error or `undefined` instead of `true`/`false`.
+
+BEFORE:
+
+```ts
+<p *ngrxLet="obs$; $error as e">{{ e }}</p>
+```
+
+- `e` will be `true` when `obs$` emits error event.
+- `e` will be `false` when `obs$` emits next/complete event.
+
+AFTER:
+
+```ts
+<p *ngrxLet="obs$; $error as e">{{ e }}</p>
+```
+
+- `e` will be thrown error when `obs$` emits error event.
+- `e` will be `undefined` when `obs$` emits next/complete event.
+
 <a name="13.1.0"></a>
 
 # [13.1.0](https://github.com/ngrx/platform/compare/13.0.2...13.1.0) (2022-03-28)
