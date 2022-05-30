@@ -2,7 +2,7 @@
 
 ## Installing with `ng add`
 
-You can install the plugin to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+You can install the ESLint plugin to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/eslint-plugin
