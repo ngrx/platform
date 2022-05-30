@@ -26,7 +26,7 @@ export interface OnStateInit {
  * @param cs ComponentStore type
  * @returns boolean
  */
-function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
+export function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
   return typeof (cs as OnStoreInit).ngrxOnStoreInit === 'function';
 }
 
@@ -37,7 +37,7 @@ function isOnStoreInitDefined(cs: unknown): cs is OnStoreInit {
  * @param cs ComponentStore type
  * @returns boolean
  */
-function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
+export function isOnStateInitDefined(cs: unknown): cs is OnStateInit {
   return typeof (cs as OnStateInit).ngrxOnStateInit === 'function';
 }
 
@@ -98,6 +98,9 @@ export function provideComponentStore<T extends object>(
       provide: componentStoreClass,
       useFactory: () => {
         const componentStore = inject(CS_WITH_HOOKS);
+
+        // Set private property that CS has been provided with lifecycle hooks
+        componentStore['ɵhasProvider'] = true;
 
         if (isOnStoreInitDefined(componentStore)) {
           componentStore.ngrxOnStoreInit();

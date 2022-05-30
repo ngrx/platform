@@ -1,3 +1,7 @@
 export * from './component-store';
 export * from './tap-response';
-export * from './lifecycle_hooks';
+export {
+  provideComponentStore,
+  OnStateInit,
+  OnStoreInit,
+} from './lifecycle_hooks';
