@@ -36,6 +36,7 @@ import {
   Injector,
   Provider,
 } from '@angular/core';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -1502,6 +1503,11 @@ describe('Component Store', () => {
       }
     }
 
+    @Injectable()
+    class NonProviderStore extends ComponentStore<{}> implements OnStoreInit {
+      ngrxOnStoreInit() {}
+    }
+
     function setup({
       initialState,
       providers = [],
@@ -1572,5 +1578,33 @@ describe('Component Store', () => {
       expect(lifecycleStore).toBeDefined();
       expect(extraStore).toBeDefined();
     });
+
+    it('should not log a warning when a ComponentStore with hooks is provided using provideComponentStore()', fakeAsync(() => {
+      jest.spyOn(console, 'warn');
+
+      const state = setup();
+
+      const store = state.injector.get(LifecycleStore);
+
+      tick(0);
+      expect(store.ngrxOnStoreInit).toBeDefined();
+      expect(store['ɵhasProvider']).toBeTruthy();
+      expect(console.warn).not.toHaveBeenCalled();
+    }));
+
+    it('should log a warning when a hook is implemented without using provideComponentStore()', fakeAsync(() => {
+      jest.spyOn(console, 'warn');
+
+      const state = setup({
+        providers: [NonProviderStore],
+      });
+
+      const store = state.injector.get(NonProviderStore);
+
+      tick(0);
+      expect(store.ngrxOnStoreInit).toBeDefined();
+      expect(store['ɵhasProvider']).toBeFalsy();
+      expect(console.warn).toHaveBeenCalled();
+    }));
   });
 });

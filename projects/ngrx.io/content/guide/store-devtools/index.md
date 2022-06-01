@@ -10,7 +10,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 
 Instrumentation with the Chrome / Firefox Extension
 
-1.  Download the [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension/)
+1.  Download the [Redux Devtools Extension](https://github.com/reduxjs/redux-devtools/)
 
 2.  In your `AppModule` add instrumentation to the module imports using `StoreDevtoolsModule.instrument`:
 

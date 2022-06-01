@@ -36,7 +36,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@angular-devkit/schematics": "^13.0.3",
+    "@angular-devkit/schematics": "^14.0.0-rc.0",
     "@typescript-eslint/experimental-utils": "^5.4.0",
     "eslint-etc": "^5.1.0",
     "semver": "^7.3.5",
