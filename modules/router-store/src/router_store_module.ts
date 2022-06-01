@@ -49,8 +49,8 @@ export type StateKeyOrSelector<
 > = string | Selector<any, RouterReducerState<T>>;
 
 /**
- * Full = Serializes the router event with FullRouterStateSerializer
  * Minimal = Serializes the router event with MinimalRouterStateSerializer
+ * Full = Serializes the router event with FullRouterStateSerializer
  */
 export const enum RouterState {
   Full,
@@ -72,8 +72,8 @@ export interface StoreRouterConfig<
   navigationActionTiming?: NavigationActionTiming;
   /**
    * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
-   * Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.
    * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
+   * Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.
    */
   routerState?: RouterState;
 }
@@ -213,8 +213,7 @@ export class StoreRouterConnectingModule {
           'with the FullRouterStateSerializer. The FullRouterStateSerializer ' +
           'has an unserializable router state and actions that are not serializable. ' +
           'To use the serializability runtime checks either use ' +
-          'the MinimalRouterStateSerializer or implement a custom router state serializer. ' +
-          'This also applies to Ivy with immutability runtime checks.'
+          'the MinimalRouterStateSerializer or implement a custom router state serializer.'
       );
     }
 

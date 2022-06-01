@@ -101,7 +101,7 @@ This property decides which router serializer should be used. If there is a cust
 
 ### RouterState.Minimal
 
-`RouterState.Minimal` will use the `MinimalRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
+`RouterState.Minimal` uses the `MinimalRouterStateSerializer` serializer to serialize the Angular Router's `RouterState` and `RouterEvent`.
 
 The difference between `FullRouterStateSerializer` and the `MinimalRouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
 
@@ -113,9 +113,9 @@ StoreRouterConnectingModule.forRoot({
 
 ### RouterState.Full
 
-When this property is set to `RouterState.Full`, `@ngrx/router-store` will use the `FullRouterStateSerializer` serializer to serialize the Angular router event.
+When this property is set to `RouterState.Full`, `@ngrx/router-store` uses the `FullRouterStateSerializer` serializer to serialize the Angular router event.
 
-The metadata on the action will contain the Angular router event, e.g. `NavigationStart` and `RoutesRecognized`.
+The metadata on the action contains the Angular router event, e.g. `NavigationStart` and `RoutesRecognized`.
 
 <code-example header="app.module.ts">
 StoreRouterConnectingModule.forRoot({
@@ -126,6 +126,6 @@ StoreRouterConnectingModule.forRoot({
 <div class="alert is-important">
 
 The `FullRouterStateSerializer` cannot be used when [serializability runtime checks](guide/store/configuration/runtime-checks) are enabled.
-With serializability runtime checks enabled, the `MinimalRouterStateSerializer` serializer **must** be used. This also applies to Ivy with immutability runtime checks.
+With serializability runtime checks enabled, the `MinimalRouterStateSerializer` serializer **must** be used.
 
 </div>
