@@ -120,18 +120,21 @@ function addNgRxStoreToPackageJson() {
 
 function addNgRxESLintPlugin() {
   return (host: Tree, context: SchematicContext) => {
-    addPackageToPackageJson(
-      host,
-      'devDependencies',
-      '@ngrx/eslint-plugin',
-      platformVersion
-    );
+    const eslint = host.read('.eslintrc.json')?.toString('utf-8');
+    if (eslint) {
+      addPackageToPackageJson(
+        host,
+        'devDependencies',
+        '@ngrx/eslint-plugin',
+        platformVersion
+      );
 
-    const installTaskId = context.addTask(new NodePackageInstallTask());
-    context.addTask(new RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}), [
-      installTaskId,
-    ]);
-
+      const installTaskId = context.addTask(new NodePackageInstallTask());
+      context.addTask(
+        new RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}),
+        [installTaskId]
+      );
+    }
     return host;
   };
 }
