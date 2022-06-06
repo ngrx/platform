@@ -24,7 +24,7 @@
         "all-requiring-type-checking"
       ],
       "x-prompt": {
-        "message": "Which config would you like to use?",
+        "message": "Which ESLint configuration would you like to use?",
         "type": "list",
         "items": [
           {

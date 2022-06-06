@@ -151,6 +151,8 @@ describe('Store ng-add Schematic', () => {
   it('adds the @ngrx/eslint-plugin schematic', async () => {
     const options = { ...defaultOptions, skipESLintPlugin: false };
 
+    appTree.create('.eslintrc.json', '{}');
+
     await schematicRunner
       .runSchematicAsync('ng-add', options, appTree)
       .toPromise();
