@@ -36,9 +36,9 @@ export {
   BaseRouterStoreState,
 } from './serializers/base';
 export {
-  DefaultRouterStateSerializer,
+  FullRouterStateSerializer,
   SerializedRouterStateSnapshot,
-} from './serializers/default_serializer';
+} from './serializers/full_serializer';
 export {
   MinimalActivatedRouteSnapshot,
   MinimalRouterStateSnapshot,

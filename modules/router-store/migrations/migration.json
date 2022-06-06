@@ -15,6 +15,11 @@
       "description": "The road to v9",
       "version": "9-beta",
       "factory": "./9_0_0/index"
+    },
+    "ngrx-router-store-migration-04": {
+      "description": "The road to v14",
+      "version": "14-beta",
+      "factory": "./14_0_0/index"
     }
   }
 }

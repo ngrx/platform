@@ -8,7 +8,7 @@ import {
   RouterState,
   RouterStateSerializer,
   MinimalRouterStateSerializer,
-  DefaultRouterStateSerializer,
+  FullRouterStateSerializer,
 } from '@ngrx/router-store';
 import { select, Store, ActionsSubject } from '@ngrx/store';
 import { withLatestFrom, filter, skip } from 'rxjs/operators';
@@ -165,27 +165,27 @@ describe('Router Store Module', () => {
         router.navigateByUrl('/');
       });
 
-      it('should use the minimal router serializer by default', () => {
+      it('should use the default router serializer by default', () => {
         const { serializer } = setup();
         expect(serializer).toEqual(new MinimalRouterStateSerializer());
       });
 
-      it('should use the minimal router serializer if minimal state option is passed in', () => {
+      it('should use the default router serializer if minimal state option is passed in', () => {
         const { serializer } = setup(RouterState.Minimal);
         expect(serializer).toEqual(new MinimalRouterStateSerializer());
       });
 
-      it('should use the default router serializer if full state option is passed in', () => {
+      it('should use the full router serializer if full state option is passed in', () => {
         const { serializer } = setup(RouterState.Full);
-        expect(serializer).toEqual(new DefaultRouterStateSerializer());
+        expect(serializer).toEqual(new FullRouterStateSerializer());
       });
 
       it('should use the provided serializer if one is provided', () => {
         const { serializer } = setup(
           RouterState.Full,
-          MinimalRouterStateSerializer
+          FullRouterStateSerializer
         );
-        expect(serializer).toEqual(new MinimalRouterStateSerializer());
+        expect(serializer).toEqual(new FullRouterStateSerializer());
       });
     });
 
@@ -229,15 +229,15 @@ describe('Router Store Module', () => {
 
       it('should use the minimal router serializer', () => {
         const { serializer } = setup(RouterState.Minimal);
-        expect(serializer).toEqual(new MinimalRouterStateSerializer());
+        expect(serializer).toEqual(new FullRouterStateSerializer());
       });
 
       it('should use the provided serializer if one is provided', () => {
         const { serializer } = setup(
           RouterState.Minimal,
-          DefaultRouterStateSerializer
+          MinimalRouterStateSerializer
         );
-        expect(serializer).toEqual(new DefaultRouterStateSerializer());
+        expect(serializer).toEqual(new MinimalRouterStateSerializer());
       });
     });
   });

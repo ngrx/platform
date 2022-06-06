@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 
 import { BaseRouterStoreState } from './serializers/base';
-import { SerializedRouterStateSnapshot } from './serializers/default_serializer';
+import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
 import { createAction, props } from '@ngrx/store';
 
 /**
