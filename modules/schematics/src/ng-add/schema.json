@@ -3,14 +3,6 @@
   "$id": "SchematicsNgRxSchematics",
   "title": "Scaffolding library for Angular applications using NgRx libraries",
   "type": "object",
-  "properties": {
-    "defaultCollection": {
-      "type": "boolean",
-      "default": true,
-      "description": "Use @ngrx/schematics as the default collection",
-      "x-prompt": "Do you want to use @ngrx/schematics as the default collection?",
-      "alias": "d"
-    }
-  },
+  "properties": {},
   "required": []
 }
