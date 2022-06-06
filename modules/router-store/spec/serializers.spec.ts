@@ -148,6 +148,7 @@ describe('minimal serializer', () => {
         pathMatch: `${prefix}-route.routeConfig.pathMatch`,
         redirectTo: `${prefix}-route.routeConfig.redirectTo`,
         outlet: `${prefix}-route.routeConfig.outlet`,
+        title: `${prefix}-route.routeConfig.title`,
       },
       firstChild: undefined,
     };
@@ -179,6 +180,7 @@ function createRouteSnapshot(prefix = 'root'): any {
       pathMatch: `${prefix}-route.routeConfig.pathMatch`,
       redirectTo: `${prefix}-route.routeConfig.redirectTo`,
       outlet: `${prefix}-route.routeConfig.outlet`,
+      title: `${prefix}-route.routeConfig.title`,
     },
     queryParams: `${prefix}-route.queryParams`,
     queryParamMap: `${prefix}-route.queryParamMap`,

@@ -41,6 +41,7 @@ const mockData = {
         outlet: 'primary',
         routeConfig: {
           path: 'login',
+          title: 'Login',
         },
         queryParams: {
           ref: 'ngrx.io',
@@ -231,6 +232,12 @@ describe('Router State Selectors', () => {
       const result = selectors.selectUrl(state);
 
       expect(result).toEqual(state.router.state.url);
+    });
+
+    it('should create a selector for getting the title', () => {
+      const result = selectors.selectTitle(state);
+
+      expect(result).toEqual(state.router.state.routeConfig?.title);
     });
   });
 });

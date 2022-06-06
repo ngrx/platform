@@ -58,6 +58,10 @@ export function getSelectors<V>(
     selectRouterState,
     (routerState) => routerState && routerState.url
   );
+  const selectTitle = createSelector(
+    selectCurrentRoute,
+    (route) => route && route.routeConfig?.title
+  );
 
   return {
     selectCurrentRoute,
@@ -68,5 +72,6 @@ export function getSelectors<V>(
     selectRouteParam,
     selectRouteData,
     selectUrl,
+    selectTitle,
   };
 }

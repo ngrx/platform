@@ -14,5 +14,6 @@ export const {
   selectRouteParam, // factory function to select a route param
   selectRouteData, // select the current route data
   selectUrl, // select the current url
+  selectTitle, // Select the title if available
 } = getSelectors();
 // #enddocregion routerSelectors
