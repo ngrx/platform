@@ -6,18 +6,35 @@ running in zone-full as well as zone-less mode without any changes to the code.
 
 ## Usage
 
-The `ngrxPush` pipe is provided through the `ReactiveComponentModule`.
-To use it, add the `ReactiveComponentModule` to the `imports` of your NgModule:
+The `ngrxPush` pipe is provided through the `PushModule`.
+To use it, add the `PushModule` to the `imports` of your standalone component or NgModule:
 
-```typescript
+```ts
+import { Component } from '@angular/core';
+import { PushModule } from '@ngrx/component';
+
+@Component({
+  // ... other metadata
+  standalone: true,
+  imports: [
+    // ... other imports
+    PushModule,
+  ],
+})
+export class MyStandaloneComponent {}
+```
+
+The `ngrxPush` pipe can be also used by importing the `ReactiveComponentModule`:
+
+```ts
 import { NgModule } from '@angular/core';
 import { ReactiveComponentModule } from '@ngrx/component';
 
 @NgModule({
   imports: [
-    // other imports
-    ReactiveComponentModule
-  ]
+    // ... other imports
+    ReactiveComponentModule,
+  ],
 })
 export class MyFeatureModule {}
 ```

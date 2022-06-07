@@ -5,8 +5,25 @@ The `*ngrxLet` directive serves a convenient way of binding observables to a vie
 
 ## Usage
 
-The `*ngrxLet` directive is provided through the `ReactiveComponentModule`.
-To use it, add the `ReactiveComponentModule` to the `imports` of your NgModule:
+The `*ngrxLet` directive is provided through the `LetModule`.
+To use it, add the `LetModule` to the `imports` of your standalone component or NgModule:
+
+```ts
+import { Component } from '@angular/core';
+import { LetModule } from '@ngrx/component';
+
+@Component({
+  // ... other metadata
+  standalone: true,
+  imports: [
+    // ... other imports
+    LetModule,
+  ],
+})
+export class MyStandaloneComponent {}
+```
+
+The `*ngrxLet` directive can be also used by importing the `ReactiveComponentModule`:
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -14,7 +31,7 @@ import { ReactiveComponentModule } from '@ngrx/component';
 
 @NgModule({
   imports: [
-    // other imports
+    // ... other imports
     ReactiveComponentModule,
   ],
 })

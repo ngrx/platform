@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
-
-import { LetDirective } from './let/let.directive';
-import { PushPipe } from './push/push.pipe';
-
-const DECLARATIONS = [LetDirective, PushPipe];
-const EXPORTS = [DECLARATIONS];
+import { LetModule } from './let/let.module';
+import { PushModule } from './push/push.module';
 
 @NgModule({
-  declarations: [DECLARATIONS],
-  exports: [EXPORTS],
+  exports: [LetModule, PushModule],
 })
 export class ReactiveComponentModule {}
