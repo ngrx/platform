@@ -33,6 +33,7 @@ export class FullRouterStateSerializer
             pathMatch: route.routeConfig.pathMatch,
             redirectTo: route.routeConfig.redirectTo,
             outlet: route.routeConfig.outlet,
+            title: route.routeConfig.title,
           }
         : null,
       queryParams: route.queryParams,
