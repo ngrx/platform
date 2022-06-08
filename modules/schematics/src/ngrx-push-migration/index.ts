@@ -13,11 +13,11 @@ import {
 } from '../../schematics-core';
 
 const ASYNC_REGEXP = /\| {0,}async/g;
-const REACTIVE_MODULE = 'ReactiveComponentModule';
+const PUSH_MODULE = 'PushModule';
 const COMPONENT_MODULE = '@ngrx/component';
 
-const reactiveModuleToFind = (node: ts.Node) =>
-  ts.isIdentifier(node) && node.text === REACTIVE_MODULE;
+const pushModuleToFind = (node: ts.Node) =>
+  ts.isIdentifier(node) && node.text === PUSH_MODULE;
 
 const ngModulesToFind = (node: ts.Node) =>
   ts.isIdentifier(node) &&
@@ -46,22 +46,22 @@ export function migrateToNgrxPush(): Rule {
     });
 }
 
-export function importReactiveComponentModule(): Rule {
+export function importPushModule(): Rule {
   return (host: Tree) => {
     visitTSSourceFiles(host, (sourceFile) => {
       let hasCommonModuleOrBrowserModule = false;
-      let hasReactiveComponentModule = false;
+      let hasPushModule = false;
 
       visitNgModuleImports(sourceFile, (_, importNodes) => {
         hasCommonModuleOrBrowserModule = importNodes.some(ngModulesToFind);
-        hasReactiveComponentModule = importNodes.some(reactiveModuleToFind);
+        hasPushModule = importNodes.some(pushModuleToFind);
       });
 
-      if (hasCommonModuleOrBrowserModule && !hasReactiveComponentModule) {
+      if (hasCommonModuleOrBrowserModule && !hasPushModule) {
         const changes: Change[] = addImportToModule(
           sourceFile,
           sourceFile.fileName,
-          REACTIVE_MODULE,
+          PUSH_MODULE,
           COMPONENT_MODULE
         );
         commitChanges(host, sourceFile.fileName, changes);
@@ -70,22 +70,22 @@ export function importReactiveComponentModule(): Rule {
   };
 }
 
-export function exportReactiveComponentModule(): Rule {
+export function exportPushModule(): Rule {
   return (host: Tree) => {
     visitTSSourceFiles(host, (sourceFile) => {
       let hasCommonModuleOrBrowserModule = false;
-      let hasReactiveComponentModule = false;
+      let hasPushModule = false;
 
       visitNgModuleExports(sourceFile, (_, exportNodes) => {
         hasCommonModuleOrBrowserModule = exportNodes.some(ngModulesToFind);
-        hasReactiveComponentModule = exportNodes.some(reactiveModuleToFind);
+        hasPushModule = exportNodes.some(pushModuleToFind);
       });
 
-      if (hasCommonModuleOrBrowserModule && !hasReactiveComponentModule) {
+      if (hasCommonModuleOrBrowserModule && !hasPushModule) {
         const changes: Change[] = addExportToModule(
           sourceFile,
           sourceFile.fileName,
-          REACTIVE_MODULE,
+          PUSH_MODULE,
           COMPONENT_MODULE
         );
         commitChanges(host, sourceFile.fileName, changes);
@@ -95,9 +95,5 @@ export function exportReactiveComponentModule(): Rule {
 }
 
 export default function (): Rule {
-  return chain([
-    migrateToNgrxPush(),
-    importReactiveComponentModule(),
-    exportReactiveComponentModule(),
-  ]);
+  return chain([migrateToNgrxPush(), importPushModule(), exportPushModule()]);
 }

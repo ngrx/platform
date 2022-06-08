@@ -76,8 +76,8 @@ describe('NgrxPush migration', () => {
     });
   });
 
-  describe('importReactiveComponentModule', () => {
-    it('should import ReactiveComponentModule when BrowserModule is imported', async () => {
+  describe('importPushModule', () => {
+    it('should import PushModule when BrowserModule is imported', async () => {
       appTree.create(
         './sut.module.ts',
         `
@@ -100,15 +100,11 @@ describe('NgrxPush migration', () => {
         .toPromise();
 
       const actual = tree.readContent('./sut.module.ts');
-      expect(actual).toMatch(
-        /imports: \[ BrowserModule, ReactiveComponentModule \],/
-      );
-      expect(actual).toMatch(
-        /import { ReactiveComponentModule } from '@ngrx\/component'/
-      );
+      expect(actual).toMatch(/imports: \[ BrowserModule, PushModule \],/);
+      expect(actual).toMatch(/import { PushModule } from '@ngrx\/component'/);
     });
 
-    it('should import ReactiveComponentModule when CommonModule is imported', async () => {
+    it('should import PushModule when CommonModule is imported', async () => {
       appTree.create(
         './sut.module.ts',
         `
@@ -131,15 +127,11 @@ describe('NgrxPush migration', () => {
         .toPromise();
 
       const actual = tree.readContent('./sut.module.ts');
-      expect(actual).toMatch(
-        /imports: \[ CommonModule, ReactiveComponentModule \],/
-      );
-      expect(actual).toMatch(
-        /import { ReactiveComponentModule } from '@ngrx\/component'/
-      );
+      expect(actual).toMatch(/imports: \[ CommonModule, PushModule \],/);
+      expect(actual).toMatch(/import { PushModule } from '@ngrx\/component'/);
     });
 
-    it("should not import ReactiveComponentModule when it doesn't need to", async () => {
+    it("should not import PushModule when it doesn't need to", async () => {
       appTree.create(
         './sut.module.ts',
         `
@@ -158,17 +150,15 @@ describe('NgrxPush migration', () => {
         .toPromise();
 
       const actual = tree.readContent('./sut.module.ts');
+      expect(actual).not.toMatch(/imports: \[ CommonModule, PushModule \],/);
       expect(actual).not.toMatch(
-        /imports: \[ CommonModule, ReactiveComponentModule \],/
-      );
-      expect(actual).not.toMatch(
-        /import { ReactiveComponentModule } from '@ngrx\/component'/
+        /import { PushModule } from '@ngrx\/component'/
       );
     });
   });
 
-  describe('exportReactiveComponentModule', () => {
-    it('should export ReactiveComponentModule when BrowserModule is exported', async () => {
+  describe('exportPushModule', () => {
+    it('should export PushModule when BrowserModule is exported', async () => {
       appTree.create(
         './sut.module.ts',
         `
@@ -191,15 +181,11 @@ describe('NgrxPush migration', () => {
         .toPromise();
 
       const actual = tree.readContent('./sut.module.ts');
-      expect(actual).toMatch(
-        /exports: \[ BrowserModule, ReactiveComponentModule \],/
-      );
-      expect(actual).toMatch(
-        /import { ReactiveComponentModule } from '@ngrx\/component'/
-      );
+      expect(actual).toMatch(/exports: \[ BrowserModule, PushModule \],/);
+      expect(actual).toMatch(/import { PushModule } from '@ngrx\/component'/);
     });
 
-    it('should export ReactiveComponentModule when CommonModule is exported', async () => {
+    it('should export PushModule when CommonModule is exported', async () => {
       appTree.create(
         './sut.module.ts',
         `
@@ -222,15 +208,11 @@ describe('NgrxPush migration', () => {
         .toPromise();
 
       const actual = tree.readContent('./sut.module.ts');
-      expect(actual).toMatch(
-        /exports: \[ CommonModule, ReactiveComponentModule \],/
-      );
-      expect(actual).toMatch(
-        /import { ReactiveComponentModule } from '@ngrx\/component'/
-      );
+      expect(actual).toMatch(/exports: \[ CommonModule, PushModule \],/);
+      expect(actual).toMatch(/import { PushModule } from '@ngrx\/component'/);
     });
 
-    it("should not export ReactiveComponentModule when it doesn't need to", async () => {
+    it("should not export PushModule when it doesn't need to", async () => {
       appTree.create(
         './sut.module.ts',
         `
@@ -249,11 +231,9 @@ describe('NgrxPush migration', () => {
         .toPromise();
 
       const actual = tree.readContent('./sut.module.ts');
+      expect(actual).not.toMatch(/exports: \[ CommonModule, PushModule \],/);
       expect(actual).not.toMatch(
-        /exports: \[ CommonModule, ReactiveComponentModule \],/
-      );
-      expect(actual).not.toMatch(
-        /import { ReactiveComponentModule } from '@ngrx\/component'/
+        /import { PushModule } from '@ngrx\/component'/
       );
     });
   });
