@@ -42,7 +42,7 @@ export class MyFeatureModule {}
 <div class="alert is-critical">
 
 `ReactiveComponentModule` is deprecated in favor of `PushModule`.
-See the [migration guide](https://ngrx.io/guide/migration/v14#reactivecomponentmodule) for more information.
+See the [migration guide](guide/migration/v14#reactivecomponentmodule) for more information.
 
 </div>
 
