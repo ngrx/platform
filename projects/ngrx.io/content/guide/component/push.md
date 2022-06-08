@@ -39,6 +39,13 @@ import { ReactiveComponentModule } from '@ngrx/component';
 export class MyFeatureModule {}
 ```
 
+<div class="alert is-critical">
+
+`ReactiveComponentModule` is deprecated in favor of `PushModule`.
+See the [migration guide](guide/migration/v14#reactivecomponentmodule) for more information.
+
+</div>
+
 ## Comparison with `async` Pipe
 
 The current way of binding an observable to the view looks like this:
