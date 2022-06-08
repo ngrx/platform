@@ -8,7 +8,6 @@ import { PrettyPrinter } from '../code/pretty-printer.service';
     imports: [CommonModule],
     declarations: [CodeBlockComponent],
     exports: [CodeBlockComponent],
-    entryComponents: [CodeBlockComponent],
     providers: [PrettyPrinter],
 })
 export class CodeBlockModule implements WithCustomElementComponent {

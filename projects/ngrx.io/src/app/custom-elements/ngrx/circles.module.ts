@@ -7,7 +7,6 @@ import { CirclesComponent } from './circles.component';
     imports: [CommonModule],
     declarations: [CirclesComponent],
     exports: [CirclesComponent],
-    entryComponents: [CirclesComponent],
 })
 export class CirclesModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = CirclesComponent;
