@@ -6,9 +6,8 @@ import { AnnouncementBarComponent } from './announcement-bar.component';
 import { WithCustomElementComponent } from '../element-registry';
 
 @NgModule({
-    imports: [ CommonModule, SharedModule, HttpClientModule ],
-    declarations: [ AnnouncementBarComponent ],
-    entryComponents: [ AnnouncementBarComponent ],
+    imports: [CommonModule, SharedModule, HttpClientModule],
+    declarations: [AnnouncementBarComponent],
 })
 export class AnnouncementBarModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = AnnouncementBarComponent;

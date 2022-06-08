@@ -9,7 +9,6 @@ import { CirclesModule } from './circles.module';
     imports: [CommonModule, CirclesModule],
     declarations: [StoreAnimationComponent],
     exports: [StoreAnimationComponent],
-    entryComponents: [StoreAnimationComponent],
 })
 export class StoreAnimationModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = StoreAnimationComponent;

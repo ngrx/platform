@@ -4,9 +4,8 @@ import { WithCustomElementComponent } from '../element-registry';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-    imports: [ MatExpansionModule ],
-    declarations: [ ExpandableSectionComponent, ],
-    entryComponents: [ ExpandableSectionComponent ]
+    imports: [MatExpansionModule],
+    declarations: [ExpandableSectionComponent],
 })
 export class ExpandableSectionModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = ExpandableSectionComponent;

@@ -7,10 +7,9 @@ import { ContributorComponent } from './contributor.component';
 import { WithCustomElementComponent } from '../element-registry';
 
 @NgModule({
-    imports: [ CommonModule, MatPaginatorModule ],
-    declarations: [ ContributorListComponent, ContributorComponent ],
-    entryComponents: [ ContributorListComponent ],
-    providers: [ ContributorService ]
+    imports: [CommonModule, MatPaginatorModule],
+    declarations: [ContributorListComponent, ContributorComponent],
+    providers: [ContributorService],
 })
 export class ContributorListModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = ContributorListComponent;

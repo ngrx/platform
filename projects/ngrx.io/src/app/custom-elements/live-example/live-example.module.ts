@@ -4,9 +4,8 @@ import { EmbeddedStackblitzComponent, LiveExampleComponent } from './live-exampl
 import { WithCustomElementComponent } from '../element-registry';
 
 @NgModule({
-    imports: [ CommonModule ],
-    declarations: [ LiveExampleComponent, EmbeddedStackblitzComponent ],
-    entryComponents: [ LiveExampleComponent ]
+    imports: [CommonModule],
+    declarations: [LiveExampleComponent, EmbeddedStackblitzComponent],
 })
 export class LiveExampleModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = LiveExampleComponent;
