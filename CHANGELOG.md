@@ -1,3 +1,30 @@
+<a name="14.0.0-rc.0"></a>
+
+# [14.0.0-rc.0](https://github.com/ngrx/platform/compare/14.0.0-beta.0...14.0.0-rc.0) (2022-06-08)
+
+### Code Refactoring
+
+- **router-store:** change name for full router state serializer ([#3430](https://github.com/ngrx/platform/issues/3430)) ([d443f50](https://github.com/ngrx/platform/commit/d443f50)), closes [#3416](https://github.com/ngrx/platform/issues/3416)
+
+### Features
+
+- **component:** add separate modules for PushPipe and LetDirective ([#3449](https://github.com/ngrx/platform/issues/3449)) ([eacc4b4](https://github.com/ngrx/platform/commit/eacc4b4)), closes [#3341](https://github.com/ngrx/platform/issues/3341)
+- **component:** deprecate ReactiveComponentModule ([#3451](https://github.com/ngrx/platform/issues/3451)) ([b4dd2c8](https://github.com/ngrx/platform/commit/b4dd2c8))
+- **eslint-plugin:** improve install flow ([#3447](https://github.com/ngrx/platform/issues/3447)) ([8ddaf60](https://github.com/ngrx/platform/commit/8ddaf60))
+- **schematics:** use schematicCollections instead of defaultCollection ([#3441](https://github.com/ngrx/platform/issues/3441)) ([5abf828](https://github.com/ngrx/platform/commit/5abf828)), closes [#3383](https://github.com/ngrx/platform/issues/3383)
+
+### BREAKING CHANGES
+
+- **router-store:** The full router state serializer has been renamed.
+
+BEFORE:
+
+The full router state serializer is named `DefaultRouterStateSerializer`
+
+AFTER:
+
+The full router state serializer is named `FullRouterStateSerializer`. A migration is provided to rename the export in affected projects.
+
 <a name="14.0.0-beta.0"></a>
 
 # [14.0.0-beta.0](https://github.com/ngrx/platform/compare/13.1.0...14.0.0-beta.0) (2022-05-30)
