@@ -16,7 +16,7 @@ type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
   : PO;
 
 /**
- * @ngModule ReactiveComponentModule
+ * @ngModule PushModule
  *
  * @description
  *

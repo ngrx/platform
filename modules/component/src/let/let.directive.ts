@@ -43,7 +43,7 @@ export interface LetViewContext<PO> {
 }
 
 /**
- * @ngModule ReactiveComponentModule
+ * @ngModule LetModule
  *
  * @description
  *
