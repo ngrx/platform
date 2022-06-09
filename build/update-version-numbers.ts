@@ -214,7 +214,7 @@ function createMigrationMD(version: string) {
 
     const migrationPlaceholder = `# V${newMajor} Migration guide
 
-This document has been moved to https://ngrx.io/guide/migration/${newMajor}.
+This document has been moved to https://ngrx.io/guide/migration/v${newMajor}.
 `;
     writeFileSync('./MIGRATION.md', migrationPlaceholder);
   };
