@@ -60,4 +60,4 @@ export class CustomersModule {}
 
 ## Further reading
 
-- [EffectsModule API](https://ngrx.io/api/effects/EffectsModule)
+- [EffectsModule API](api/effects/EffectsModule)
