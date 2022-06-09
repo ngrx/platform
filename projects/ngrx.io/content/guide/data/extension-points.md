@@ -112,13 +112,13 @@ customize entity reducers.
 
 ### Introduction
 
-`@ngrx/data` has several built-in selectors that are defined in the [EntitySelectors](https://ngrx.io/api/data/EntitySelectors) interface. These can be used outside of a component.
+`@ngrx/data` has several built-in selectors that are defined in the [EntitySelectors](api/data/EntitySelectors) interface. These can be used outside of a component.
 
 Many apps use `@ngrx/data` in conjunction with @ngrx/store including manually written reducers, actions, and so on. `@ngrx/data` selectors can be used to combine @ngrx/data state with the state of the entire application.
 
 ### Using EntitySelectorsFactory
 
-[EntitySelectorsFactory](https://ngrx.io/api/data/EntitySelectorsFactory) exposes a `create` method that can be used to create selectors outside the context of a component, such as in a `reducers/index.ts` file.
+[EntitySelectorsFactory](api/data/EntitySelectorsFactory) exposes a `create` method that can be used to create selectors outside the context of a component, such as in a `reducers/index.ts` file.
 
 #### Example
 

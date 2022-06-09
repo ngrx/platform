@@ -42,5 +42,5 @@ this.store.pipe(select(fromCustomers.selectAllCustomers));
 
 ## Further reading
 
-- [Selector docs](https://ngrx.io/guide/store/selectors)
-- [Testing selectors docs](https://ngrx.io/guide/store/testing#testing-selectors)
+- [Selector docs](guide/store/selectors)
+- [Testing selectors docs](guide/store/testing#testing-selectors)

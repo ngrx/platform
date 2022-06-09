@@ -75,5 +75,5 @@ To report only needed uses of `withLatestFrom` use:
 
 ## Further reading
 
-- [`concatLatestFrom` API](https://ngrx.io/api/effects/concatLatestFrom)
-- [Incorporating State](https://ngrx.io/guide/effects#incorporating-state)
+- [`concatLatestFrom` API](api/effects/concatLatestFrom)
+- [Incorporating State](guide/effects#incorporating-state)

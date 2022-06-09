@@ -76,4 +76,4 @@ class Effect implements OnRunEffects {
 
 ## Further reading
 
-- [Effect lifecycle docs](https://ngrx.io/guide/effects/lifecycle#controlling-effects)
+- [Effect lifecycle docs](guide/effects/lifecycle#controlling-effects)

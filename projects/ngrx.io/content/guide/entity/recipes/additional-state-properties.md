@@ -2,7 +2,7 @@
 
 It's possible to add extra properties to a `State` extending from `EntityState`. These properties must be updated manually. Just like in a non-entity state, we can update the added properties in the reducer. This can be done with or without using the `@ngrx/entity` helper functions.
 
-The steps below show you how to extend the [Entity Adapter](https://ngrx.io/guide/entity/adapter) example.
+The steps below show you how to extend the [Entity Adapter](guide/entity/adapter) example.
 
 Usage:
 
