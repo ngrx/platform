@@ -14,7 +14,7 @@ import {
   styleUrls: ['./board-ui.component.scss'],
 })
 export class BoardUiComponent {
-  @Input() stories: Stories[] = [];
+  @Input() stories: Stories[] | null = [];
 
   @Output() add = new EventEmitter<CreateStoryDto>();
 
