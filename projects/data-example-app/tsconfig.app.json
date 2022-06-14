@@ -5,6 +5,11 @@
     "module": "commonjs",
     "types": ["jest", "node"]
   },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"]
