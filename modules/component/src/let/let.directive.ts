@@ -105,8 +105,6 @@ export interface LetViewContext<PO> {
  */
 @Directive({ selector: '[ngrxLet]' })
 export class LetDirective<PO> implements OnInit, OnDestroy {
-  static ngTemplateGuard_ngrxLet: 'binding';
-
   private isMainViewCreated = false;
   private isSuspenseViewCreated = false;
   private readonly viewContext: LetViewContext<PO | undefined> = {
