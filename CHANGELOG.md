@@ -1,3 +1,11 @@
+<a name="14.0.0"></a>
+
+# [14.0.0](https://github.com/ngrx/platform/compare/14.0.0-rc.0...14.0.0) (2022-06-20)
+
+### Bug Fixes
+
+- **component:** do not exclude falsy types from LetDirective's input type ([#3460](https://github.com/ngrx/platform/issues/3460)) ([7028adb](https://github.com/ngrx/platform/commit/7028adb))
+
 <a name="14.0.0-rc.0"></a>
 
 # [14.0.0-rc.0](https://github.com/ngrx/platform/compare/14.0.0-beta.0...14.0.0-rc.0) (2022-06-08)
