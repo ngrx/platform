@@ -88,24 +88,41 @@ describe('ComponentStore types', () => {
       });
     });
 
-    describe('infers void', () => {
-      it('when argument type is specified as Observable<void> and nothing is passed', () => {
-        const effectTest = `const v = componentStore.effect((e: Observable<void>) => string$)();`;
+    describe('for void types', () => {
+      it('when generic type is specified as void the argument is optional', () => {
+        const effectTest = `const sub = componentStore.effect<void>((e) => EMPTY)();`;
         expectSnippet(effectTest).toSucceed();
-        expectSnippet(effectTest).toInfer('v', 'void');
+        expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
-      it('when type is not specified and origin can still be piped', () => {
-        //                      treated as Observable<void> 👇
-        const effectTest = `const v = componentStore.effect((e) => e.pipe(concatMap(() => of())))();`;
+      it('when argument type is specified as Observable<void> the argument is optional', () => {
+        const effectTest = `const sub = componentStore.effect((e: Observable<void>) => EMPTY)();`;
         expectSnippet(effectTest).toSucceed();
-        expectSnippet(effectTest).toInfer('v', 'void');
+        expectSnippet(effectTest).toInfer('sub', 'Subscription');
+      });
+
+      it('when type is not specified the argument is optional', () => {
+        const effectTest = `const sub = componentStore.effect((e) => EMPTY)();`;
+        expectSnippet(effectTest).toSucceed();
+        expectSnippet(effectTest).toInfer('sub', 'Subscription');
+      });
+
+      it('when type is specified as void the argument can be a void$', () => {
+        const effectTest = `const sub = componentStore.effect((e: Observable<void>) => EMPTY)(of<void>());`;
+        expectSnippet(effectTest).toSucceed();
+        expectSnippet(effectTest).toInfer('sub', 'Subscription');
+      });
+
+      it('when type is specified as void the argument can be a void', () => {
+        const effectTest = `const sub = componentStore.effect((e) => EMPTY)({} as unknown as void);`;
+        expectSnippet(effectTest).toSucceed();
+        expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when generic type is specified as void and origin can still be piped', () => {
-        const effectTest = `const v = componentStore.effect<void>((e) => e.pipe(concatMap(() => number$)))();`;
+        const effectTest = `const sub = componentStore.effect<void>((e) => e.pipe(concatMap(() => number$)))();`;
         expectSnippet(effectTest).toSucceed();
-        expectSnippet(effectTest).toInfer('v', 'void');
+        expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
     });
 
@@ -146,28 +163,16 @@ describe('ComponentStore types', () => {
         );
       });
 
+      it('when generic type is specified as void and a variable with incorrect type is passed', () => {
+        expectSnippet(`componentStore.effect<void>((e) => number$)(5);`).toFail(
+          /Argument of type 'number' is not assignable to parameter of type 'void \| Observable<void>'/
+        );
+      });
+
       it('when generic type is specified as unknown and a variable is not passed', () => {
         expectSnippet(
           `componentStore.effect<unknown>((e) => number$)();`
         ).toFail(/Expected 1 arguments, but got 0/);
-      });
-
-      it('when argument type is specified as Observable<void> and anything is passed', () => {
-        expectSnippet(
-          `componentStore.effect((e: Observable<void>) => string$)(5);`
-        ).toFail(/Expected 0 arguments, but got 1/);
-      });
-
-      it('when type is not specified and anything is passed', () => {
-        expectSnippet(
-          `const sub = componentStore.effect((e) => EMPTY)('string');`
-        ).toFail(/Expected 0 arguments, but got 1/);
-      });
-
-      it('when generic type is specified and anything is passed', () => {
-        expectSnippet(
-          `componentStore.effect<void>((e) => EMPTY)(undefined);`
-        ).toFail(/Expected 0 arguments, but got 1/);
       });
     });
   });
