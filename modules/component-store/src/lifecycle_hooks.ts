@@ -1,5 +1,5 @@
 import { Provider, InjectionToken, Type, inject } from '@angular/core';
-import { take } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { ComponentStore } from './component-store';
 
 /**
