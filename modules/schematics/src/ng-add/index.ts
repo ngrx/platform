@@ -10,16 +10,14 @@ function updateSchematicCollections(host: Tree) {
   const workspace = getWorkspace(host);
   const path = getWorkspacePath(host);
 
-  if (!(workspace['cli'] && workspace['cli']['schematicCollections'])) {
-    throw new Error(
-      'schematicCollections is not defined in the global cli options'
-    );
+  workspace.cli = workspace.cli || {};
+  workspace.cli.schematicCollections = workspace.cli.schematicCollections || [];
+  if (workspace.cli.defaultCollection) {
+    workspace.cli.schematicCollections.push(workspace.cli.defaultCollection);
+    delete workspace.cli.defaultCollection;
   }
+  workspace.cli.schematicCollections.push('@ngrx/schematics');
 
-  workspace['cli']['schematicCollections'] = [
-    ...workspace['cli']['schematicCollections'],
-    '@ngrx/schematics',
-  ];
   host.overwrite(path, JSON.stringify(workspace, null, 2));
 }
 
