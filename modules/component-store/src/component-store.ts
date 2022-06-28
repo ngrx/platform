@@ -289,9 +289,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
       | unknown = Observable<ProvidedType>,
     // Unwrapped actual type of the origin$ Observable, after default was applied
     ObservableType = OriginType extends Observable<infer A> ? A : never,
-    // Return either an empty callback or a function requiring specific types as inputs
+    // Return either an optional callback or a function requiring specific types as inputs
     ReturnType = ProvidedType | ObservableType extends void
-      ? () => void
+      ? (observableOrValue?: void | Observable<void>) => Subscription
       : (
           observableOrValue: ObservableType | Observable<ObservableType>
         ) => Subscription
