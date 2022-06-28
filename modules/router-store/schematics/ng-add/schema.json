@@ -13,7 +13,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to create the router store.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "project": {
       "type": "string",
