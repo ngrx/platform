@@ -22,29 +22,14 @@ describe('ng-add Schematic', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
-  it('should fail if schematicCollections is not defined', async () => {
-    appTree.overwrite(
-      '/angular.json',
-      JSON.stringify(defaultWorkspace, undefined, 2)
-    );
-
-    let thrownError: Error | null = null;
-    try {
-      await schematicRunner
-        .runSchematicAsync('ng-add', {}, appTree)
-        .toPromise();
-    } catch (err: any) {
-      thrownError = err;
-    }
-
-    expect(thrownError).toBeDefined();
-  });
-
   it('should add @ngrx/schematics into schematicCollections ', async () => {
     appTree.overwrite(
       '/angular.json',
       JSON.stringify(
-        { ...defaultWorkspace, cli: { schematicCollections: ['foo'] } },
+        {
+          ...defaultWorkspace,
+          cli: { schematicCollections: ['existingCollection'] },
+        },
         undefined,
         2
       )
@@ -55,7 +40,43 @@ describe('ng-add Schematic', () => {
       .toPromise();
     const workspace = JSON.parse(tree.readContent('/angular.json'));
     expect(workspace.cli.schematicCollections).toEqual([
-      'foo',
+      'existingCollection',
+      '@ngrx/schematics',
+    ]);
+  });
+
+  it('should create schematicCollections is not defined', async () => {
+    appTree.overwrite(
+      '/angular.json',
+      JSON.stringify(defaultWorkspace, undefined, 2)
+    );
+
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', {}, appTree)
+      .toPromise();
+    const workspace = JSON.parse(tree.readContent('/angular.json'));
+    expect(workspace.cli.schematicCollections).toEqual(['@ngrx/schematics']);
+  });
+
+  it('should create schematicCollections is not defined using the original defaultCollection ', async () => {
+    appTree.overwrite(
+      '/angular.json',
+      JSON.stringify(
+        {
+          ...defaultWorkspace,
+          cli: { defaultCollection: 'existingCollection' },
+        },
+        undefined,
+        2
+      )
+    );
+
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', {}, appTree)
+      .toPromise();
+    const workspace = JSON.parse(tree.readContent('/angular.json'));
+    expect(workspace.cli.schematicCollections).toEqual([
+      'existingCollection',
       '@ngrx/schematics',
     ]);
   });
