@@ -18,7 +18,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to create the effect.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "flat": {
       "type": "boolean",

@@ -18,7 +18,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to the module.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "project": {
       "type": "string",
