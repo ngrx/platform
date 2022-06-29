@@ -1,3 +1,14 @@
+<a name="14.0.1"></a>
+
+## [14.0.1](https://github.com/ngrx/platform/compare/14.0.0...14.0.1) (2022-06-29)
+
+### Bug Fixes
+
+- **component-store:** allow void callbacks in effect ([#3466](https://github.com/ngrx/platform/issues/3466)) ([e6dedd6](https://github.com/ngrx/platform/commit/e6dedd6)), closes [#3462](https://github.com/ngrx/platform/issues/3462)
+- **component-store:** import operators from rxjs/operators ([#3465](https://github.com/ngrx/platform/issues/3465)) ([f9ba513](https://github.com/ngrx/platform/commit/f9ba513))
+- **schematics:** add workingDirectory to schemas ([#3473](https://github.com/ngrx/platform/issues/3473)) ([50ea6b3](https://github.com/ngrx/platform/commit/50ea6b3)), closes [#3469](https://github.com/ngrx/platform/issues/3469)
+- **schematics:** create schematicCollections if not exists ([#3470](https://github.com/ngrx/platform/issues/3470)) ([011cbcc](https://github.com/ngrx/platform/commit/011cbcc))
+
 <a name="14.0.0"></a>
 
 # [14.0.0](https://github.com/ngrx/platform/compare/14.0.0-rc.0...14.0.0) (2022-06-20)
