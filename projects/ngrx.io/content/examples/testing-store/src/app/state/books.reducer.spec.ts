@@ -31,7 +31,7 @@ describe('BooksReducer', () => {
       const state = fromReducer.booksReducer(initialState, action);
 
       expect(state).toEqual(newState);
-      expect(state).not.toBe(newState);
+      expect(state).not.toBe(initialState);
     });
   });
 });
