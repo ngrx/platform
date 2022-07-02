@@ -4,7 +4,7 @@ import {
   ErrorRenderEvent,
   NextRenderEvent,
   RenderEvent,
-  ResetRenderEvent,
+  SuspenseRenderEvent,
 } from '../../../src/core/render-event/models';
 
 describe('combineRenderEventHandlers', () => {
@@ -27,11 +27,11 @@ describe('combineRenderEventHandlers', () => {
     });
   }
 
-  const resetEvent: ResetRenderEvent = {
-    type: 'reset',
+  const suspenseEvent: SuspenseRenderEvent = {
+    type: 'suspense',
     reset: true,
   };
-  testRenderEvent(resetEvent);
+  testRenderEvent(suspenseEvent);
 
   const nextEvent: NextRenderEvent<number> = {
     type: 'next',

@@ -64,7 +64,7 @@ function switchMapToRenderEvent<T>(): (
         });
 
         if (reset) {
-          subscriber.next({ type: 'reset', reset });
+          subscriber.next({ type: 'suspense', reset });
           reset = false;
         }
 

@@ -44,7 +44,7 @@ export class PushPipe implements PipeTransform, OnDestroy {
     cdRef: this.cdRef,
   });
   private readonly renderEventManager = createRenderEventManager({
-    reset: () => this.setRenderedValue(undefined),
+    suspense: () => this.setRenderedValue(undefined),
     next: (event) => this.setRenderedValue(event.value),
     error: (event) => {
       if (event.reset) {

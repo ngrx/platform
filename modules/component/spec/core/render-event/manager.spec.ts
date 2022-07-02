@@ -14,12 +14,12 @@ import { createRenderEventManager } from '../../../src/core/render-event/manager
 
 describe('createRenderEventManager', () => {
   function setup<T>() {
-    const resetHandler = jest.fn();
+    const suspenseHandler = jest.fn();
     const nextHandler = jest.fn();
     const errorHandler = jest.fn();
     const completeHandler = jest.fn();
     const renderEventManager = createRenderEventManager<T>({
-      reset: resetHandler,
+      suspense: suspenseHandler,
       next: nextHandler,
       error: errorHandler,
       complete: completeHandler,
@@ -28,7 +28,7 @@ describe('createRenderEventManager', () => {
 
     return {
       renderEventManager,
-      resetHandler,
+      suspenseHandler,
       nextHandler,
       errorHandler,
       completeHandler,
@@ -159,14 +159,14 @@ describe('createRenderEventManager', () => {
     });
 
     describe('that emits first event asynchronously', () => {
-      it('should call reset handler immediately and next handler when value is emitted', fakeAsync(() => {
-        const { renderEventManager, resetHandler, nextHandler } =
+      it('should call suspense handler immediately and next handler when value is emitted', fakeAsync(() => {
+        const { renderEventManager, suspenseHandler, nextHandler } =
           setup<string>();
 
         renderEventManager.nextPotentialObservable(of('ngrx').pipe(delay(100)));
 
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
         expect(nextHandler).not.toHaveBeenCalled();
@@ -180,16 +180,16 @@ describe('createRenderEventManager', () => {
         });
       }));
 
-      it('should call reset handler immediately and error handler when error is emitted', fakeAsync(() => {
-        const { renderEventManager, resetHandler, errorHandler } =
+      it('should call suspense handler immediately and error handler when error is emitted', fakeAsync(() => {
+        const { renderEventManager, suspenseHandler, errorHandler } =
           setup<number>();
 
         renderEventManager.nextPotentialObservable(
           timer(100).pipe(switchMap(() => throwError(() => 'ERROR!')))
         );
 
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
         expect(errorHandler).not.toHaveBeenCalled();
@@ -204,15 +204,15 @@ describe('createRenderEventManager', () => {
       }));
 
       it('should call complete handler immediately and error handler when error is emitted', fakeAsync(() => {
-        const { renderEventManager, resetHandler, completeHandler } =
+        const { renderEventManager, suspenseHandler, completeHandler } =
           setup<boolean>();
 
         renderEventManager.nextPotentialObservable(
           timer(100).pipe(switchMap(() => EMPTY))
         );
 
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
         expect(completeHandler).not.toHaveBeenCalled();
@@ -227,12 +227,12 @@ describe('createRenderEventManager', () => {
     });
 
     describe('that never emits event', () => {
-      it('should call reset handler', () => {
-        const { renderEventManager, resetHandler } = setup();
+      it('should call suspense handler', () => {
+        const { renderEventManager, suspenseHandler } = setup();
 
         renderEventManager.nextPotentialObservable(NEVER);
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
       });
@@ -417,8 +417,8 @@ describe('createRenderEventManager', () => {
     });
 
     describe('that emits first event asynchronously', () => {
-      it('should call reset handler immediately and next handler when value is emitted', fakeAsync(() => {
-        const { renderEventManager, resetHandler, nextHandler } =
+      it('should call suspense handler immediately and next handler when value is emitted', fakeAsync(() => {
+        const { renderEventManager, suspenseHandler, nextHandler } =
           withNextObservableSetup(of('ngrx'));
 
         renderEventManager.nextPotentialObservable(
@@ -433,8 +433,8 @@ describe('createRenderEventManager', () => {
         });
 
         // next observable
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
         expect(nextHandler.mock.calls[1]).not.toBeDefined();
@@ -447,13 +447,17 @@ describe('createRenderEventManager', () => {
           reset: false,
         });
 
-        expect(resetHandler).toHaveBeenCalledTimes(1);
+        expect(suspenseHandler).toHaveBeenCalledTimes(1);
         expect(nextHandler).toHaveBeenCalledTimes(2);
       }));
 
-      it('should call reset handler immediately and error handler when error is emitted', fakeAsync(() => {
-        const { renderEventManager, resetHandler, nextHandler, errorHandler } =
-          withNextObservableSetup(new BehaviorSubject('ngrx/component'));
+      it('should call suspense handler immediately and error handler when error is emitted', fakeAsync(() => {
+        const {
+          renderEventManager,
+          suspenseHandler,
+          nextHandler,
+          errorHandler,
+        } = withNextObservableSetup(new BehaviorSubject('ngrx/component'));
 
         renderEventManager.nextPotentialObservable(
           timer(100).pipe(switchMap(() => throwError(() => 'ERROR!')))
@@ -467,8 +471,8 @@ describe('createRenderEventManager', () => {
         });
 
         // next observable
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
         expect(errorHandler).not.toHaveBeenCalled();
@@ -481,7 +485,7 @@ describe('createRenderEventManager', () => {
           reset: false,
         });
 
-        expect(resetHandler).toHaveBeenCalledTimes(1);
+        expect(suspenseHandler).toHaveBeenCalledTimes(1);
         expect(nextHandler).toHaveBeenCalledTimes(1);
         expect(errorHandler).toHaveBeenCalledTimes(1);
       }));
@@ -489,7 +493,7 @@ describe('createRenderEventManager', () => {
       it('should call complete handler immediately and error handler when error is emitted', fakeAsync(() => {
         const {
           renderEventManager,
-          resetHandler,
+          suspenseHandler,
           nextHandler,
           completeHandler,
         } = withNextObservableSetup(new BehaviorSubject(false));
@@ -506,8 +510,8 @@ describe('createRenderEventManager', () => {
         });
 
         // next observable
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
         expect(completeHandler).not.toHaveBeenCalled();
@@ -519,15 +523,15 @@ describe('createRenderEventManager', () => {
           reset: false,
         });
 
-        expect(resetHandler).toHaveBeenCalledTimes(1);
+        expect(suspenseHandler).toHaveBeenCalledTimes(1);
         expect(nextHandler).toHaveBeenCalledTimes(1);
         expect(completeHandler).toHaveBeenCalledTimes(1);
       }));
     });
 
     describe('that never emits event', () => {
-      it('should call reset handler', () => {
-        const { renderEventManager, resetHandler, nextHandler } =
+      it('should call suspense handler', () => {
+        const { renderEventManager, suspenseHandler, nextHandler } =
           withNextObservableSetup(new BehaviorSubject(10));
 
         renderEventManager.nextPotentialObservable(NEVER);
@@ -536,23 +540,23 @@ describe('createRenderEventManager', () => {
           value: 10,
           reset: true,
         });
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
       });
 
-      it('should not call reset handler second time when first observable never emits', () => {
-        const { renderEventManager, resetHandler } = withNextObservableSetup(
+      it('should not call suspense handler second time when first observable never emits', () => {
+        const { renderEventManager, suspenseHandler } = withNextObservableSetup(
           new Observable()
         );
 
         renderEventManager.nextPotentialObservable(new Observable());
-        expect(resetHandler).toHaveBeenCalledWith({
-          type: 'reset',
+        expect(suspenseHandler).toHaveBeenCalledWith({
+          type: 'suspense',
           reset: true,
         });
-        expect(resetHandler).toHaveBeenCalledTimes(1);
+        expect(suspenseHandler).toHaveBeenCalledTimes(1);
       });
     });
   });

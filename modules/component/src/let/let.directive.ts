@@ -121,7 +121,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
   private readonly renderEventManager = createRenderEventManager<
     LetViewContextValue<PO>
   >({
-    reset: () => {
+    suspense: () => {
       this.viewContext.$implicit = undefined;
       this.viewContext.ngrxLet = undefined;
       this.viewContext.$error = undefined;
