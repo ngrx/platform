@@ -1,11 +1,5 @@
-import {
-  distinctUntilChanged,
-  Observable,
-  pipe,
-  ReplaySubject,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { Observable, pipe, ReplaySubject } from 'rxjs';
+import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { ErrorRenderEvent, NextRenderEvent, RenderEvent } from './models';
 import { combineRenderEventHandlers, RenderEventHandlers } from './handlers';
 import {
