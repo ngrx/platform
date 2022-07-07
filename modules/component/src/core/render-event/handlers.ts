@@ -3,11 +3,11 @@ import {
   ErrorRenderEvent,
   NextRenderEvent,
   RenderEvent,
-  ResetRenderEvent,
+  SuspenseRenderEvent,
 } from './models';
 
 export interface RenderEventHandlers<T> {
-  reset?(event: ResetRenderEvent): void;
+  suspense?(event: SuspenseRenderEvent): void;
   next?(event: NextRenderEvent<T>): void;
   error?(event: ErrorRenderEvent): void;
   complete?(event: CompleteRenderEvent): void;

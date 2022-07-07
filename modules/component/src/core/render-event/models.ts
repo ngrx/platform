@@ -2,8 +2,8 @@ interface BaseRenderEvent {
   reset: boolean;
 }
 
-export interface ResetRenderEvent extends BaseRenderEvent {
-  type: 'reset';
+export interface SuspenseRenderEvent extends BaseRenderEvent {
+  type: 'suspense';
   reset: true;
 }
 
@@ -22,7 +22,7 @@ export interface CompleteRenderEvent extends BaseRenderEvent {
 }
 
 export type RenderEvent<T> =
-  | ResetRenderEvent
+  | SuspenseRenderEvent
   | NextRenderEvent<T>
   | ErrorRenderEvent
   | CompleteRenderEvent;
