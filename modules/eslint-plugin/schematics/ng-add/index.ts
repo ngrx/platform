@@ -41,7 +41,7 @@ Please see ${docs} to configure the NgRx ESLint Plugin.
       context.logger.info(`
   The NgRx ESLint Plugin is installed and configured with the '${schema.config}' config.
 
-  If you want to change the configuration, please see ${docs}.
+  Take a look at the docs at ${docs} if you want to change the default configuration.
   `);
       return host;
     } catch (err) {
