@@ -1,3 +1,14 @@
+<a name="14.0.2"></a>
+
+## [14.0.2](https://github.com/ngrx/platform/compare/14.0.1...14.0.2) (2022-07-12)
+
+### Bug Fixes
+
+- **component:** import operators from rxjs/operators ([#3479](https://github.com/ngrx/platform/issues/3479)) ([20ef7a4](https://github.com/ngrx/platform/commit/20ef7a4))
+- **component-store:** effect handles generics that extend upon a type ([#3485](https://github.com/ngrx/platform/issues/3485)) ([9d2bda7](https://github.com/ngrx/platform/commit/9d2bda7)), closes [#3482](https://github.com/ngrx/platform/issues/3482)
+- **data:** add TSDoc annotations ([#3483](https://github.com/ngrx/platform/issues/3483)) ([cbbc49f](https://github.com/ngrx/platform/commit/cbbc49f))
+- **eslint-plugin:** fix configuration guide link ([#3480](https://github.com/ngrx/platform/issues/3480)) ([8219b1d](https://github.com/ngrx/platform/commit/8219b1d))
+
 <a name="14.0.1"></a>
 
 ## [14.0.1](https://github.com/ngrx/platform/compare/14.0.0...14.0.1) (2022-06-29)

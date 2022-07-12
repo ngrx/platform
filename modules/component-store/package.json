@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component-store",
-  "version": "14.0.1",
+  "version": "14.0.2",
   "description": "Reactive store for component state",
   "repository": {
     "type": "git",
