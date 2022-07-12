@@ -119,8 +119,8 @@ export class EntitySelectors$Factory {
         selectors$[name$] = this.store.select((<any>selectors)[name]);
       }
     });
-    selectors$.entityActions$ = this.actions.pipe(ofEntityType(entityName));
-    selectors$.errors$ = this.entityActionErrors$.pipe(
+    selectors$['entityActions$'] = this.actions.pipe(ofEntityType(entityName));
+    selectors$['errors$'] = this.entityActionErrors$.pipe(
       ofEntityType(entityName)
     );
     return selectors$ as S$;

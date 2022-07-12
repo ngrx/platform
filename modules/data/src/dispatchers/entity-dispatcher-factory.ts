@@ -52,10 +52,12 @@ export class EntityDispatcherFactory implements OnDestroy {
     /**
      * Function that returns the primary key for an entity `T`.
      * Usually acquired from `EntityDefinition` metadata.
+     * @param {IdSelector<T>} selectId
      */
     selectId: IdSelector<T> = defaultSelectId,
     /** Defaults for options that influence dispatcher behavior such as whether
      * `add()` is optimistic or pessimistic;
+     * @param {Partial<EntityDispatcherDefaultOptions>} defaultOptions
      */
     defaultOptions: Partial<EntityDispatcherDefaultOptions> = {}
   ): EntityDispatcher<T> {
