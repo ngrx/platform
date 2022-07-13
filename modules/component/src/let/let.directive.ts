@@ -3,7 +3,6 @@ import {
   Directive,
   ErrorHandler,
   Input,
-  NgZone,
   OnDestroy,
   OnInit,
   TemplateRef,
@@ -16,6 +15,7 @@ import {
 } from '../core/potential-observable';
 import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
+import { TickScheduler } from '../core/tick-scheduler';
 
 type LetViewContextValue<PO> = PO extends ObservableOrPromise<infer V> ? V : PO;
 
@@ -115,8 +115,8 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     $suspense: true,
   };
   private readonly renderScheduler = createRenderScheduler({
-    ngZone: this.ngZone,
     cdRef: this.cdRef,
+    tickScheduler: this.tickScheduler,
   });
   private readonly renderEventManager = createRenderEventManager<
     LetViewContextValue<PO>
@@ -183,7 +183,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
 
   constructor(
     private readonly cdRef: ChangeDetectorRef,
-    private readonly ngZone: NgZone,
+    private readonly tickScheduler: TickScheduler,
     private readonly mainTemplateRef: TemplateRef<LetViewContext<PO>>,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly errorHandler: ErrorHandler
