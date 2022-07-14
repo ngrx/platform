@@ -209,6 +209,12 @@
             "url": "https://github.com/nartc/ngrx-slice",
             "rev": true
           },
+          "ngrx-traits": {
+            "title": "ngrx-traits",
+            "desc": "A library to help you reuse and compose a set of NGRX actions, selectors, reducers, and effects across your app",
+            "url": "https://github.com/gabrielguerrero/ngrx-traits",
+            "rev": true
+          },
           "ngrx-wieder": {
             "title": "ngrx-wieder",
             "desc": "Lightweight & configurable solution for implementing undo-redo based on NgRx and immer",
