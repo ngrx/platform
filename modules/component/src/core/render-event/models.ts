@@ -6,13 +6,13 @@ interface BaseRenderEvent {
   /**
    * true if the synchronous event is emitted
    */
-  sync: boolean;
+  synchronous: boolean;
 }
 
 export interface SuspenseRenderEvent extends BaseRenderEvent {
   type: 'suspense';
   reset: true;
-  sync: true;
+  synchronous: true;
 }
 
 export interface NextRenderEvent<T> extends BaseRenderEvent {

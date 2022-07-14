@@ -140,7 +140,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
         this.viewContext.$complete = false;
       }
 
-      this.renderMainView(event.sync);
+      this.renderMainView(event.synchronous);
     },
     error: (event) => {
       this.viewContext.$error = event.error;
@@ -152,7 +152,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
         this.viewContext.$complete = false;
       }
 
-      this.renderMainView(event.sync);
+      this.renderMainView(event.synchronous);
       this.errorHandler.handleError(event.error);
     },
     complete: (event) => {
@@ -165,7 +165,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
         this.viewContext.$error = undefined;
       }
 
-      this.renderMainView(event.sync);
+      this.renderMainView(event.synchronous);
     },
   });
   private readonly subscription = new Subscription();

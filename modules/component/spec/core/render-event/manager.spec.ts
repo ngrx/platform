@@ -46,11 +46,11 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
       });
 
-      it('should call next handler with sync and without reset flag when another value is emitted synchronously', () => {
+      it('should call next handler with synchronous and without reset flag when another value is emitted synchronously', () => {
         const { renderEventManager, nextHandler } = setup<string>();
 
         renderEventManager.nextPotentialObservable(of('angular', 'ngrx'));
@@ -58,18 +58,18 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'angular',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[1][0]).toEqual({
           type: 'next',
           value: 'ngrx',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler).toHaveBeenCalledTimes(2);
       });
 
-      it('should call next handler without reset and sync flags when another value is emitted asynchronously', () => {
+      it('should call next handler without reset and synchronous flags when another value is emitted asynchronously', () => {
         const { renderEventManager, nextHandler } = setup<string>();
         const subject = new BehaviorSubject('ngrx');
 
@@ -80,13 +80,13 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[1][0]).toEqual({
           type: 'next',
           value: 'angular',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
         expect(nextHandler).toHaveBeenCalledTimes(2);
       });
@@ -101,13 +101,13 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[1][0]).toEqual({
           type: 'next',
           value: 'component',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler).toHaveBeenCalledTimes(2);
       });
@@ -126,13 +126,13 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'angular',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[1][0]).toEqual({
           type: 'next',
           value: 'ngrx/component',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
         expect(nextHandler).toHaveBeenCalledTimes(2);
       }));
@@ -152,18 +152,18 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[1][0]).toEqual({
           type: 'next',
           value: 'component',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler).toHaveBeenCalledTimes(2);
       }));
 
-      it('should call error handler with reset and sync flags when error is emitted', () => {
+      it('should call error handler with reset and synchronous flags when error is emitted', () => {
         const { renderEventManager, errorHandler } = setup<number>();
 
         renderEventManager.nextPotentialObservable(throwError(() => 'ERROR!'));
@@ -171,11 +171,11 @@ describe('createRenderEventManager', () => {
           type: 'error',
           error: 'ERROR!',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
       });
 
-      it('should call error handler with sync and without reset flag when error is emitted synchronously as second event', () => {
+      it('should call error handler with synchronous and without reset flag when error is emitted synchronously as second event', () => {
         const { renderEventManager, errorHandler, nextHandler } =
           setup<number>();
 
@@ -190,20 +190,20 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 1,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(errorHandler).toHaveBeenCalledWith({
           type: 'error',
           error: 'ERROR!!!',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(1);
         expect(errorHandler).toHaveBeenCalledTimes(1);
       });
 
-      it('should call error handler without reset and sync flags when error is emitted asynchronously as second event', () => {
+      it('should call error handler without reset and synchronous flags when error is emitted asynchronously as second event', () => {
         const { renderEventManager, errorHandler, nextHandler } =
           setup<number>();
         const subject = new BehaviorSubject(100);
@@ -215,31 +215,31 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 100,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(errorHandler).toHaveBeenCalledWith({
           type: 'error',
           error: 'ERROR!',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(1);
         expect(errorHandler).toHaveBeenCalledTimes(1);
       });
 
-      it('should call complete handler with reset and sync flags when complete is emitted', () => {
+      it('should call complete handler with reset and synchronous flags when complete is emitted', () => {
         const { renderEventManager, completeHandler } = setup<boolean>();
 
         renderEventManager.nextPotentialObservable(EMPTY);
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
       });
 
-      it('should call complete handler with sync and without reset flag when complete is emitted synchronously as second event', () => {
+      it('should call complete handler with synchronous and without reset flag when complete is emitted synchronously as second event', () => {
         const { renderEventManager, nextHandler, completeHandler } =
           setup<number>();
 
@@ -249,19 +249,19 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 100,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(1);
         expect(completeHandler).toHaveBeenCalledTimes(1);
       });
 
-      it('should call complete handler without reset and sync flags when complete is emitted asynchronously as second event', () => {
+      it('should call complete handler without reset and synchronous flags when complete is emitted asynchronously as second event', () => {
         const { renderEventManager, nextHandler, completeHandler } =
           setup<boolean>();
         const subject = new BehaviorSubject(true);
@@ -273,12 +273,12 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: true,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(1);
@@ -296,7 +296,7 @@ describe('createRenderEventManager', () => {
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler).not.toHaveBeenCalled();
 
@@ -306,7 +306,7 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
       }));
 
@@ -321,7 +321,7 @@ describe('createRenderEventManager', () => {
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(errorHandler).not.toHaveBeenCalled();
 
@@ -331,7 +331,7 @@ describe('createRenderEventManager', () => {
           type: 'error',
           error: 'ERROR!',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
       }));
 
@@ -346,7 +346,7 @@ describe('createRenderEventManager', () => {
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).not.toHaveBeenCalled();
 
@@ -355,7 +355,7 @@ describe('createRenderEventManager', () => {
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
       }));
     });
@@ -368,7 +368,7 @@ describe('createRenderEventManager', () => {
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
       });
     });
@@ -383,7 +383,7 @@ describe('createRenderEventManager', () => {
     }
 
     describe('that emits first event synchronously', () => {
-      it('should call next handler with reset and sync flags when first value is emitted', () => {
+      it('should call next handler with reset and synchronous flags when first value is emitted', () => {
         const {
           renderEventManager,
           nextHandler,
@@ -398,7 +398,7 @@ describe('createRenderEventManager', () => {
           type: 'error',
           error: 'ERROR!',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
@@ -406,12 +406,12 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 100,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(1);
@@ -419,7 +419,7 @@ describe('createRenderEventManager', () => {
         expect(completeHandler).toHaveBeenCalledTimes(1);
       });
 
-      it('should call next handler with sync and without reset flag when another value is emitted synchronously', () => {
+      it('should call next handler with synchronous and without reset flag when another value is emitted synchronously', () => {
         const { renderEventManager, nextHandler } = withNextObservableSetup(
           new BehaviorSubject(1)
         );
@@ -436,7 +436,7 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 1,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
@@ -444,19 +444,19 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 10,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[2][0]).toEqual({
           type: 'next',
           value: 100,
           reset: false,
-          sync: true,
+          synchronous: true,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(3);
       });
 
-      it('should call next handler without reset and sync flags when another value is emitted asynchronously', () => {
+      it('should call next handler without reset and synchronous flags when another value is emitted asynchronously', () => {
         const { renderEventManager, nextHandler } = withNextObservableSetup(
           new BehaviorSubject(1)
         );
@@ -470,7 +470,7 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 1,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
@@ -478,13 +478,13 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 10,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[2][0]).toEqual({
           type: 'next',
           value: 100,
           reset: false,
-          sync: false,
+          synchronous: false,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(3);
@@ -501,12 +501,12 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 100,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler).toHaveBeenCalledTimes(1);
       });
 
-      it('should call error handler with reset and sync flags when error is emitted', () => {
+      it('should call error handler with reset and synchronous flags when error is emitted', () => {
         const {
           renderEventManager,
           nextHandler,
@@ -521,12 +521,12 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 200,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
@@ -534,7 +534,7 @@ describe('createRenderEventManager', () => {
           type: 'error',
           error: 'ERROR!',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         expect(nextHandler).toHaveBeenCalledTimes(1);
@@ -554,7 +554,7 @@ describe('createRenderEventManager', () => {
           type: 'error',
           error: 'SAME_ERROR!',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(errorHandler).toHaveBeenCalledTimes(1);
       });
@@ -570,19 +570,19 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 1,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler.mock.calls[0][0]).toEqual({
           type: 'complete',
           reset: false,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
         expect(completeHandler.mock.calls[1][0]).toEqual({
           type: 'complete',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         expect(completeHandler).toHaveBeenCalledTimes(2);
@@ -597,7 +597,7 @@ describe('createRenderEventManager', () => {
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).toHaveBeenCalledTimes(1);
       });
@@ -617,14 +617,14 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(nextHandler.mock.calls[1]).not.toBeDefined();
 
@@ -634,7 +634,7 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'component',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
 
         expect(suspenseHandler).toHaveBeenCalledTimes(1);
@@ -658,14 +658,14 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 'ngrx/component',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(errorHandler).not.toHaveBeenCalled();
 
@@ -675,7 +675,7 @@ describe('createRenderEventManager', () => {
           type: 'error',
           error: 'ERROR!',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
 
         expect(suspenseHandler).toHaveBeenCalledTimes(1);
@@ -700,14 +700,14 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: false,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
 
         // next observable
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(completeHandler).not.toHaveBeenCalled();
 
@@ -716,7 +716,7 @@ describe('createRenderEventManager', () => {
         expect(completeHandler).toHaveBeenCalledWith({
           type: 'complete',
           reset: false,
-          sync: false,
+          synchronous: false,
         });
 
         expect(suspenseHandler).toHaveBeenCalledTimes(1);
@@ -735,12 +735,12 @@ describe('createRenderEventManager', () => {
           type: 'next',
           value: 10,
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
       });
 
@@ -753,7 +753,7 @@ describe('createRenderEventManager', () => {
         expect(suspenseHandler).toHaveBeenCalledWith({
           type: 'suspense',
           reset: true,
-          sync: true,
+          synchronous: true,
         });
         expect(suspenseHandler).toHaveBeenCalledTimes(1);
       });
