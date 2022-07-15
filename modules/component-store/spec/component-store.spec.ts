@@ -79,19 +79,8 @@ describe('Component Store', () => {
     it(
       'throws an Error when setState with a function/callback is called' +
         ' before initialization',
-      marbles((m) => {
+      () => {
         const componentStore = new ComponentStore();
-
-        m.expect(componentStore.state$).toBeObservable(
-          m.hot(
-            '#',
-            {},
-            new Error(
-              'ComponentStore has not been initialized yet. ' +
-                'Please make sure it is initialized before updating/getting.'
-            )
-          )
-        );
 
         expect(() => {
           componentStore.setState(() => ({ setState: 'new state' }));
@@ -101,7 +90,7 @@ describe('Component Store', () => {
               'Please make sure it is initialized before updating/getting.'
           )
         );
-      })
+      }
     );
 
     it('throws an Error when patchState with an object is called before initialization', () => {
@@ -147,54 +136,29 @@ describe('Component Store', () => {
       }
     );
 
-    it(
-      'throws an Error when updater is called before initialization',
-      marbles((m) => {
-        const componentStore = new ComponentStore();
+    it('throws an Error when updater is called before initialization', () => {
+      const componentStore = new ComponentStore();
 
-        m.expect(componentStore.state$).toBeObservable(
-          m.hot(
-            '#',
-            {},
-            new Error(
-              'ComponentStore has not been initialized yet. ' +
-                'Please make sure it is initialized before updating/getting.'
-            )
-          )
-        );
-
-        expect(() => {
-          componentStore.updater((state, value: object) => value)({
-            updater: 'new state',
-          });
-        }).toThrow(
-          new Error(
-            'ComponentStore has not been initialized yet. ' +
-              'Please make sure it is initialized before updating/getting.'
-          )
-        );
-      })
-    );
+      expect(() => {
+        componentStore.updater((state, value: object) => value)({
+          updater: 'new state',
+        });
+      }).toThrow(
+        new Error(
+          'ComponentStore has not been initialized yet. ' +
+            'Please make sure it is initialized before updating/getting.'
+        )
+      );
+    });
 
     it(
       'throws an Error when updater is called with sync Observable' +
         ' before initialization',
-      marbles((m) => {
+      () => {
         const componentStore = new ComponentStore();
         const syncronousObservable$ = of({
           updater: 'new state',
         });
-
-        m.expect(componentStore.state$).toBeObservable(
-          m.hot(
-            '#',
-            {},
-            new Error(
-              'ComponentStore has not been initialized yet. ' +
-                'Please make sure it is initialized before updating/getting.'
-            )
-          )
-        );
 
         expect(() => {
           componentStore.updater<object>((state, value) => value)(
@@ -206,39 +170,32 @@ describe('Component Store', () => {
               'Please make sure it is initialized before updating/getting.'
           )
         );
-      })
+      }
     );
 
     it(
-      'does not throw an Error when updater is called with async Observable' +
-        ' before initialization, however closes the subscription and does not' +
-        ' update the state and sends error in state$',
+      'throws an Error asynchronously when updater is called with async' +
+        ' Observable before initialization, however closes the subscription' +
+        ' and does not update the state',
       marbles((m) => {
         const componentStore = new ComponentStore();
-        const asyncronousObservable$ = m.cold('-u', {
+        const asynchronousObservable$ = m.cold('-u', {
           u: { updater: 'new state' },
         });
 
         let subscription: Subscription | undefined;
 
-        m.expect(componentStore.state$).toBeObservable(
-          m.hot(
-            '-#',
-            {},
-            new Error(
-              'ComponentStore has not been initialized yet. ' +
-                'Please make sure it is initialized before updating/getting.'
-            )
-          )
-        );
-
         expect(() => {
           subscription = componentStore.updater(
             (state, value: object) => value
-          )(asyncronousObservable$);
-        }).not.toThrow();
-
-        m.flush();
+          )(asynchronousObservable$);
+          m.flush();
+        }).toThrow(
+          new Error(
+            'ComponentStore has not been initialized yet. ' +
+              'Please make sure it is initialized before updating/getting.'
+          )
+        );
 
         expect(subscription!.closed).toBe(true);
       })
@@ -634,6 +591,69 @@ describe('Component Store', () => {
             s: { ...INIT_STATE, value2: { foo: 'bar2' } },
           })
         );
+      })
+    );
+  });
+
+  describe('throws an error', () => {
+    it('when synchronous error is thrown within updater', () => {
+      const componentStore = new ComponentStore({});
+      const error = new Error('ERROR!');
+      const updater = componentStore.updater(() => {
+        throw error;
+      });
+
+      expect(() => updater()).toThrow(error);
+    });
+
+    it('when synchronous error is thrown within setState callback', () => {
+      const componentStore = new ComponentStore({});
+      const error = new Error('ERROR!');
+
+      expect(() => {
+        componentStore.setState(() => {
+          throw error;
+        });
+      }).toThrow(error);
+    });
+
+    it('when synchronous error is thrown within patchState callback', () => {
+      const componentStore = new ComponentStore({});
+      const error = new Error('ERROR!');
+
+      expect(() => {
+        componentStore.patchState(() => {
+          throw error;
+        });
+      }).toThrow(error);
+    });
+
+    it(
+      'when asynchronous observable throws an error with updater',
+      marbles((m) => {
+        const componentStore = new ComponentStore({});
+        const error = new Error('ERROR!');
+        const updater = componentStore.updater<unknown>(() => ({}));
+        const asyncObs$ = m.cold('-#', {}, error);
+
+        expect(() => {
+          updater(asyncObs$);
+          m.flush();
+        }).toThrow(error);
+      })
+    );
+
+    it(
+      'when asynchronous observable throws an error with patchState',
+      marbles((m) => {
+        const componentStore = new ComponentStore({});
+        const error = new Error('ERROR!');
+        const asyncObs$ = m.cold('-#', {}, error);
+
+        expect(() => {
+          componentStore.patchState(asyncObs$);
+          m.flush();
+        }).toThrow(error);
       })
     );
   });
