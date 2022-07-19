@@ -164,7 +164,7 @@ describe('createActionGroup', () => {
                   '${char}Load Books Success': emptyProps(),
                 },
               });
-          `).toFail(/event name cannot contain/);
+          `).toFail(/event name cannot contain the following characters:/);
           });
 
           it(`should fail when event name contains ${char} in the middle`, () => {
@@ -175,7 +175,7 @@ describe('createActionGroup', () => {
                   'Load Books ${char} Success': emptyProps(),
                 },
               });
-          `).toFail(/event name cannot contain/);
+          `).toFail(/event name cannot contain the following characters:/);
           });
 
           it(`should fail when event name contains ${char} in the end`, () => {
@@ -186,7 +186,7 @@ describe('createActionGroup', () => {
                   'Load Books Success${char}': emptyProps(),
                 },
               });
-          `).toFail(/event name cannot contain/);
+          `).toFail(/event name cannot contain the following characters:/);
           });
         });
       });
