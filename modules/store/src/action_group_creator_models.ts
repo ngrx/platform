@@ -28,39 +28,21 @@ type TitleCase<Str extends string> = Str extends `${infer First} ${infer Rest}`
   ? `${Capitalize<First>} ${TitleCase<Rest>}`
   : Capitalize<Str>;
 
-type ForbiddenCharacters =
-  | '/'
-  | '\\'
-  | '|'
-  | '<'
-  | '>'
-  | '['
-  | ']'
-  | '{'
-  | '}'
-  | '('
-  | ')'
-  | '.'
-  | ','
-  | '!'
-  | '?'
-  | '#'
-  | '%'
-  | '^'
-  | '&'
-  | '*'
-  | '+'
-  | '-'
-  | '~'
-  | "'"
-  | '"'
-  | '`';
+type ForbiddenCharactersStr =
+  '/ \\ | < > [ ] { } ( ) . , ! ? # % ^ & * + - ~ \' " `';
+
+type ForbiddenCharacters<Str extends string = ForbiddenCharactersStr> =
+  Str extends `${infer First} ${infer Rest}`
+    ? First | ForbiddenCharacters<Rest>
+    : Str extends ''
+    ? never
+    : Str;
 
 type ForbiddenCharactersCheck<
   Str extends string,
   Name extends string
 > = Str extends `${infer _}${ForbiddenCharacters}${infer _}`
-  ? `${Name} cannot contain ${ForbiddenCharacters}`
+  ? `${Name} cannot contain the following characters: ${ForbiddenCharactersStr}`
   : unknown;
 
 type EmptyStringCheck<
