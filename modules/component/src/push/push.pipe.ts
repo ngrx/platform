@@ -44,17 +44,17 @@ export class PushPipe implements PipeTransform, OnDestroy {
     cdRef: this.cdRef,
   });
   private readonly renderEventManager = createRenderEventManager({
-    suspense: () => this.setRenderedValue(undefined),
-    next: (event) => this.setRenderedValue(event.value),
+    suspense: (event) => this.setRenderedValue(undefined, event.synchronous),
+    next: (event) => this.setRenderedValue(event.value, event.synchronous),
     error: (event) => {
       if (event.reset) {
-        this.setRenderedValue(undefined);
+        this.setRenderedValue(undefined, event.synchronous);
       }
       this.errorHandler.handleError(event.error);
     },
     complete: (event) => {
       if (event.reset) {
-        this.setRenderedValue(undefined);
+        this.setRenderedValue(undefined, event.synchronous);
       }
     },
   });
@@ -79,10 +79,13 @@ export class PushPipe implements PipeTransform, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private setRenderedValue(value: unknown): void {
+  private setRenderedValue(value: unknown, isSyncEvent: boolean): void {
     if (value !== this.renderedValue) {
       this.renderedValue = value;
-      this.renderScheduler.schedule();
+
+      if (!isSyncEvent) {
+        this.renderScheduler.schedule();
+      }
     }
   }
 }

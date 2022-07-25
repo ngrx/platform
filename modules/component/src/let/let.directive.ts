@@ -140,7 +140,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
         this.viewContext.$complete = false;
       }
 
-      this.renderMainView();
+      this.renderMainView(event.synchronous);
     },
     error: (event) => {
       this.viewContext.$error = event.error;
@@ -152,7 +152,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
         this.viewContext.$complete = false;
       }
 
-      this.renderMainView();
+      this.renderMainView(event.synchronous);
       this.errorHandler.handleError(event.error);
     },
     complete: (event) => {
@@ -165,7 +165,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
         this.viewContext.$error = undefined;
       }
 
-      this.renderMainView();
+      this.renderMainView(event.synchronous);
     },
   });
   private readonly subscription = new Subscription();
@@ -206,7 +206,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private renderMainView(): void {
+  private renderMainView(isSyncEvent: boolean): void {
     if (this.isSuspenseViewCreated) {
       this.isSuspenseViewCreated = false;
       this.viewContainerRef.clear();
@@ -220,7 +220,9 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
       );
     }
 
-    this.renderScheduler.schedule();
+    if (!isSyncEvent) {
+      this.renderScheduler.schedule();
+    }
   }
 
   private renderSuspenseView(): void {
@@ -232,10 +234,6 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     if (this.suspenseTemplateRef && !this.isSuspenseViewCreated) {
       this.isSuspenseViewCreated = true;
       this.viewContainerRef.createEmbeddedView(this.suspenseTemplateRef);
-    }
-
-    if (this.isMainViewCreated || this.isSuspenseViewCreated) {
-      this.renderScheduler.schedule();
     }
   }
 }

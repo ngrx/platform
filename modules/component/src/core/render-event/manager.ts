@@ -40,27 +40,29 @@ function switchMapToRenderEvent<T>(): (
     switchMap((potentialObservable) => {
       const observable$ = fromPotentialObservable(potentialObservable);
       let reset = true;
+      let synchronous = true;
 
       return new Observable<RenderEvent<T>>((subscriber) => {
         const subscription = observable$.subscribe({
           next(value) {
-            subscriber.next({ type: 'next', value, reset });
+            subscriber.next({ type: 'next', value, reset, synchronous });
             reset = false;
           },
           error(error) {
-            subscriber.next({ type: 'error', error, reset });
+            subscriber.next({ type: 'error', error, reset, synchronous });
             reset = false;
           },
           complete() {
-            subscriber.next({ type: 'complete', reset });
+            subscriber.next({ type: 'complete', reset, synchronous });
             reset = false;
           },
         });
 
         if (reset) {
-          subscriber.next({ type: 'suspense', reset });
+          subscriber.next({ type: 'suspense', reset, synchronous: true });
           reset = false;
         }
+        synchronous = false;
 
         return subscription;
       });

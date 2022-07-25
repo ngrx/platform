@@ -30,6 +30,7 @@ describe('combineRenderEventHandlers', () => {
   const suspenseEvent: SuspenseRenderEvent = {
     type: 'suspense',
     reset: true,
+    synchronous: true,
   };
   testRenderEvent(suspenseEvent);
 
@@ -37,6 +38,7 @@ describe('combineRenderEventHandlers', () => {
     type: 'next',
     value: 1,
     reset: true,
+    synchronous: false,
   };
   testRenderEvent(nextEvent);
 
@@ -44,12 +46,14 @@ describe('combineRenderEventHandlers', () => {
     type: 'error',
     error: 'ERROR!',
     reset: false,
+    synchronous: true,
   };
   testRenderEvent(errorEvent);
 
   const completeEvent: CompleteRenderEvent = {
     type: 'complete',
     reset: false,
+    synchronous: false,
   };
   testRenderEvent(completeEvent);
 });
