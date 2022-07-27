@@ -113,6 +113,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
     return ((
       observableOrValue?: OriginType | Observable<OriginType>
     ): Subscription => {
+      // We need to explicitly throw an error if a synchronous error occurs.
+      // This is necessary to make synchronous errors catchable.
       let isSyncUpdate = true;
       let syncError: unknown;
       // We can receive either the value or an observable. In case it's a

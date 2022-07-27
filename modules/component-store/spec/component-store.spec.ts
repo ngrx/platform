@@ -17,6 +17,7 @@ import {
   scheduled,
   queueScheduler,
   asyncScheduler,
+  throwError,
 } from 'rxjs';
 import {
   delayWhen,
@@ -136,7 +137,7 @@ describe('Component Store', () => {
       }
     );
 
-    it('throws an Error when updater is called before initialization', () => {
+    it('throws an Error synchronously when updater is called before initialization', () => {
       const componentStore = new ComponentStore();
 
       expect(() => {
@@ -596,7 +597,7 @@ describe('Component Store', () => {
   });
 
   describe('throws an error', () => {
-    it('when synchronous error is thrown within updater', () => {
+    it('synchronously when synchronous error is thrown within updater', () => {
       const componentStore = new ComponentStore({});
       const error = new Error('ERROR!');
       const updater = componentStore.updater(() => {
@@ -606,7 +607,7 @@ describe('Component Store', () => {
       expect(() => updater()).toThrow(error);
     });
 
-    it('when synchronous error is thrown within setState callback', () => {
+    it('synchronously when synchronous error is thrown within setState callback', () => {
       const componentStore = new ComponentStore({});
       const error = new Error('ERROR!');
 
@@ -617,7 +618,7 @@ describe('Component Store', () => {
       }).toThrow(error);
     });
 
-    it('when synchronous error is thrown within patchState callback', () => {
+    it('synchronously when synchronous error is thrown within patchState callback', () => {
       const componentStore = new ComponentStore({});
       const error = new Error('ERROR!');
 
@@ -628,8 +629,27 @@ describe('Component Store', () => {
       }).toThrow(error);
     });
 
+    it('synchronously when synchronous observable throws an error with updater', () => {
+      const componentStore = new ComponentStore({});
+      const error = new Error('ERROR!');
+      const updater = componentStore.updater<unknown>(() => ({}));
+
+      expect(() => {
+        updater(throwError(() => error));
+      }).toThrow(error);
+    });
+
+    it('synchronously when synchronous observable throws an error with patchState', () => {
+      const componentStore = new ComponentStore({});
+      const error = new Error('ERROR!');
+
+      expect(() => {
+        componentStore.patchState(throwError(() => error));
+      }).toThrow(error);
+    });
+
     it(
-      'when asynchronous observable throws an error with updater',
+      'asynchronously when asynchronous observable throws an error with updater',
       marbles((m) => {
         const componentStore = new ComponentStore({});
         const error = new Error('ERROR!');
@@ -637,21 +657,33 @@ describe('Component Store', () => {
         const asyncObs$ = m.cold('-#', {}, error);
 
         expect(() => {
-          updater(asyncObs$);
+          try {
+            updater(asyncObs$);
+          } catch {
+            throw new Error('updater should not throw an error synchronously');
+          }
+
           m.flush();
         }).toThrow(error);
       })
     );
 
     it(
-      'when asynchronous observable throws an error with patchState',
+      'asynchronously when asynchronous observable throws an error with patchState',
       marbles((m) => {
         const componentStore = new ComponentStore({});
         const error = new Error('ERROR!');
         const asyncObs$ = m.cold('-#', {}, error);
 
         expect(() => {
-          componentStore.patchState(asyncObs$);
+          try {
+            componentStore.patchState(asyncObs$);
+          } catch {
+            throw new Error(
+              'patchState should not throw an error synchronously'
+            );
+          }
+
           m.flush();
         }).toThrow(error);
       })
