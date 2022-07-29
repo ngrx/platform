@@ -1,4 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {}
+  "schematics": {
+    "ngrx-component-migration-14-1": {
+      "description": "Version 14.1",
+      "version": "14.1",
+      "factory": "./14_1_0/index"
+    }
+  }
 }
