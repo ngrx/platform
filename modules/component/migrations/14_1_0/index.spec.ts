@@ -41,9 +41,18 @@ describe('Component Store Migration 14_1_0', () => {
           ReactiveComponentModule,
           CoreModule,
         ],
+        exports: [ReactiveComponentModule]
         bootstrap: [AppComponent],
       })
       export class AppModule {}
+
+      @Component({
+        imports: [
+          AuthModule,
+          ReactiveComponentModule
+        ]
+      })
+      export class SomeStandaloneComponent {}
     `;
         const expected = `
       import { LetModule, PushModule } from '@ngrx/component';
@@ -57,9 +66,18 @@ describe('Component Store Migration 14_1_0', () => {
           LetModule, PushModule,
           CoreModule,
         ],
+        exports: [LetModule, PushModule]
         bootstrap: [AppComponent],
       })
       export class AppModule {}
+
+      @Component({
+        imports: [
+          AuthModule,
+          LetModule, PushModule
+        ]
+      })
+      export class SomeStandaloneComponent {}
     `;
 
         appTree.create('./app.module.ts', input);

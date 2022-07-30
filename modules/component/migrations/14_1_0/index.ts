@@ -9,24 +9,28 @@ import {
 
 const reactiveComponentModuleText = 'ReactiveComponentModule';
 const reactiveComponentModuleReplacement = 'LetModule, PushModule';
+const moduleLocations = {
+  imports: ['NgModule', 'Component'],
+  exports: ['NgModule'],
+};
 
 function migrateReactiveComponentModule() {
   return (tree: Tree) => {
     visitTSSourceFiles(tree, (sourceFile) => {
-      const componentStoreImports = sourceFile.statements
+      const componentImports = sourceFile.statements
         .filter(ts.isImportDeclaration)
         .filter(({ moduleSpecifier }) =>
           moduleSpecifier.getText(sourceFile).includes('@ngrx/component')
         );
 
-      if (componentStoreImports.length === 0) {
+      if (componentImports.length === 0) {
         return;
       }
 
       const changes = [
         ...findReactiveComponentModuleImportDeclarations(
           sourceFile,
-          componentStoreImports
+          componentImports
         ),
         ...findReactiveComponentModuleImportReplacements(sourceFile),
       ];
@@ -91,18 +95,32 @@ function findReactiveComponentModuleImportReplacements(
   function find(node: ts.Node, changes: ReplaceChange[]) {
     let change = undefined;
 
-    // ReactiveComponentModule in NgModule `imports` array
     if (
       ts.isIdentifier(node) &&
       node.text === reactiveComponentModuleText &&
       ts.isArrayLiteralExpression(node.parent) &&
-      ts.isPropertyAssignment(node.parent.parent) &&
-      node.parent.parent.getText().startsWith('imports:')
+      ts.isPropertyAssignment(node.parent.parent)
     ) {
-      change = {
-        node: node,
-        text: node.text,
-      };
+      const property = node.parent.parent;
+      if (ts.isIdentifier(property.name)) {
+        const propertyName = String(property.name.escapedText);
+        if (Object.keys(moduleLocations).includes(propertyName)) {
+          const decorator = property.parent.parent.parent;
+          if (
+            ts.isDecorator(decorator) &&
+            ts.isCallExpression(decorator.expression) &&
+            ts.isIdentifier(decorator.expression.expression) &&
+            moduleLocations[propertyName as 'imports' | 'exports'].includes(
+              String(decorator.expression.expression.escapedText)
+            )
+          ) {
+            change = {
+              node: node,
+              text: node.text,
+            };
+          }
+        }
+      }
     }
 
     if (change) {
