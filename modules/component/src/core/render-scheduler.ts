@@ -1,41 +1,22 @@
-import {
-  ChangeDetectorRef,
-  NgZone,
-  ɵmarkDirty as markDirty,
-} from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+import { TickScheduler } from './tick-scheduler';
 
 export interface RenderScheduler {
   schedule(): void;
 }
 
 export interface RenderSchedulerConfig {
-  ngZone: NgZone;
   cdRef: ChangeDetectorRef;
+  tickScheduler: TickScheduler;
 }
 
 export function createRenderScheduler(
   config: RenderSchedulerConfig
 ): RenderScheduler {
   function schedule(): void {
-    if (hasZone(config.ngZone)) {
-      config.cdRef.markForCheck();
-    } else {
-      const context = getCdRefContext(config.cdRef);
-      markDirty(context);
-    }
+    config.cdRef.markForCheck();
+    config.tickScheduler.schedule();
   }
 
   return { schedule };
-}
-
-/**
- * @description
- * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
- */
-function hasZone(z: NgZone): boolean {
-  return z instanceof NgZone;
-}
-
-function getCdRefContext(cdRef: ChangeDetectorRef): object {
-  return (cdRef as unknown as { context: object }).context;
 }

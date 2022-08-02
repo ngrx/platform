@@ -1,16 +1,11 @@
 import { NgZone } from '@angular/core';
 import { MockNoopNgZone } from './mock-noop-ng-zone';
 
-/**
- * this is not exposed as NgZone should never be exposed to get miss matched with the real one
- */
-class NoopNgZone extends MockNoopNgZone {}
-
-export const manualInstanceNgZone = new NgZone({
+export const ngZoneMock = new NgZone({
   enableLongStackTrace: false,
   shouldCoalesceEventChangeDetection: false,
 });
-export const manualInstanceNoopNgZone = new NoopNgZone({
+export const noopNgZoneMock = new MockNoopNgZone({
   enableLongStackTrace: false,
   shouldCoalesceEventChangeDetection: false,
 });

@@ -1,7 +1,6 @@
 import {
   ChangeDetectorRef,
   ErrorHandler,
-  NgZone,
   OnDestroy,
   Pipe,
   PipeTransform,
@@ -10,6 +9,7 @@ import { Unsubscribable } from 'rxjs';
 import { ObservableOrPromise } from '../core/potential-observable';
 import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
+import { TickScheduler } from '../core/tick-scheduler';
 
 type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
   ? R | undefined
@@ -40,8 +40,8 @@ type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
 export class PushPipe implements PipeTransform, OnDestroy {
   private renderedValue: unknown;
   private readonly renderScheduler = createRenderScheduler({
-    ngZone: this.ngZone,
     cdRef: this.cdRef,
+    tickScheduler: this.tickScheduler,
   });
   private readonly renderEventManager = createRenderEventManager({
     suspense: (event) => this.setRenderedValue(undefined, event.synchronous),
@@ -62,7 +62,7 @@ export class PushPipe implements PipeTransform, OnDestroy {
 
   constructor(
     private readonly cdRef: ChangeDetectorRef,
-    private readonly ngZone: NgZone,
+    private readonly tickScheduler: TickScheduler,
     private readonly errorHandler: ErrorHandler
   ) {
     this.subscription = this.renderEventManager
