@@ -21,11 +21,11 @@ describe('createRenderScheduler', () => {
     });
 
     const renderScheduler = TestBed.inject(Service).renderScheduler;
-    expect(renderScheduler).toBeDefined();
+    expect(renderScheduler instanceof RenderScheduler).toBe(true);
   });
 
   it('should throw an error out of injection context', () => {
-    expect(() => createRenderScheduler()).toThrow();
+    expect(() => createRenderScheduler()).toThrowError();
   });
 });
 

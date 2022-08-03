@@ -4,8 +4,8 @@ import { TickScheduler } from './tick-scheduler';
 @Injectable()
 export class RenderScheduler {
   constructor(
-    private cdRef: ChangeDetectorRef,
-    private tickScheduler: TickScheduler
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly tickScheduler: TickScheduler
   ) {}
 
   schedule(): void {
