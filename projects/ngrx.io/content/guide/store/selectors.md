@@ -3,7 +3,7 @@
 Selectors are pure functions used for obtaining slices of store state. @ngrx/store provides a few helper functions for optimizing this selection. Selectors provide many features when selecting slices of state:
 
 - Portability
-- Memoization
+- Memorization
 - Composition
 - Testability
 - Type Safety
