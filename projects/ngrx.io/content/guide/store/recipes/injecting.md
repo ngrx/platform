@@ -5,7 +5,7 @@
 To inject the root reducers into your application, use an `InjectionToken` and a `Provider` to register the reducers through dependency injection.
 
 <code-example header="app.module.ts">
-import { NgModule, InjectionToken } from '@angular/core';
+import { NgModule, inject, InjectionToken } from '@angular/core';
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 
 import { SomeService } from './some.service';
@@ -61,7 +61,7 @@ the Store API and a `Provider` to register the meta reducers through dependency
 injection.
 
 <code-example header="app.module.ts">
-import { MetaReducer, META_REDUCERS } from '@ngrx/store';
+import { ActionReducer, MetaReducer, META_REDUCERS } from '@ngrx/store';
 import { SomeService } from './some.service';
 import * as fromRoot from './reducers';
 
