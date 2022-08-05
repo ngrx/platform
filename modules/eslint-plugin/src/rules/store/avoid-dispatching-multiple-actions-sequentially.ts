@@ -32,17 +32,22 @@ export default createRule<Options, MessageIds>({
       return {};
     }
 
-    const collectedDispatches = new Set<TSESTree.CallExpression>();
+    const collectedDispatches: TSESTree.CallExpression[] = [];
 
     return {
       [`BlockStatement > ExpressionStatement > ${dispatchExpression(
         storeNames
       )}`](node: TSESTree.CallExpression) {
-        collectedDispatches.add(node);
+        collectedDispatches.push(node);
       },
       'BlockStatement:exit'() {
-        if (collectedDispatches.size > 1) {
-          for (const node of collectedDispatches) {
+        const withSameParent = collectedDispatches.filter((d1) =>
+          collectedDispatches.some(
+            (d2) => d2 !== d1 && d2.parent?.parent === d1.parent?.parent
+          )
+        );
+        if (withSameParent.length > 1) {
+          for (const node of withSameParent) {
             context.report({
               node,
               messageId,
@@ -50,7 +55,7 @@ export default createRule<Options, MessageIds>({
           }
         }
 
-        collectedDispatches.clear();
+        collectedDispatches.length = 0;
       },
     };
   },
