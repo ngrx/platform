@@ -1,22 +1,19 @@
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, inject, Injectable } from '@angular/core';
 import { TickScheduler } from './tick-scheduler';
 
-export interface RenderScheduler {
-  schedule(): void;
-}
+@Injectable()
+export class RenderScheduler {
+  constructor(
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly tickScheduler: TickScheduler
+  ) {}
 
-export interface RenderSchedulerConfig {
-  cdRef: ChangeDetectorRef;
-  tickScheduler: TickScheduler;
-}
-
-export function createRenderScheduler(
-  config: RenderSchedulerConfig
-): RenderScheduler {
-  function schedule(): void {
-    config.cdRef.markForCheck();
-    config.tickScheduler.schedule();
+  schedule(): void {
+    this.cdRef.markForCheck();
+    this.tickScheduler.schedule();
   }
+}
 
-  return { schedule };
+export function createRenderScheduler(): RenderScheduler {
+  return new RenderScheduler(inject(ChangeDetectorRef), inject(TickScheduler));
 }

@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Directive,
   ErrorHandler,
   Input,
@@ -13,9 +12,8 @@ import {
   ObservableOrPromise,
   PotentialObservable,
 } from '../core/potential-observable';
-import { createRenderScheduler } from '../core/render-scheduler';
+import { RenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
-import { TickScheduler } from '../core/tick-scheduler';
 
 type LetViewContextValue<PO> = PO extends ObservableOrPromise<infer V> ? V : PO;
 
@@ -103,7 +101,10 @@ export interface LetViewContext<PO> {
  *
  * @publicApi
  */
-@Directive({ selector: '[ngrxLet]' })
+@Directive({
+  selector: '[ngrxLet]',
+  providers: [RenderScheduler],
+})
 export class LetDirective<PO> implements OnInit, OnDestroy {
   private isMainViewCreated = false;
   private isSuspenseViewCreated = false;
@@ -114,10 +115,6 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     $complete: false,
     $suspense: true,
   };
-  private readonly renderScheduler = createRenderScheduler({
-    cdRef: this.cdRef,
-    tickScheduler: this.tickScheduler,
-  });
   private readonly renderEventManager = createRenderEventManager<
     LetViewContextValue<PO>
   >({
@@ -182,11 +179,10 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
   >;
 
   constructor(
-    private readonly cdRef: ChangeDetectorRef,
-    private readonly tickScheduler: TickScheduler,
     private readonly mainTemplateRef: TemplateRef<LetViewContext<PO>>,
     private readonly viewContainerRef: ViewContainerRef,
-    private readonly errorHandler: ErrorHandler
+    private readonly errorHandler: ErrorHandler,
+    private readonly renderScheduler: RenderScheduler
   ) {}
 
   static ngTemplateContextGuard<PO>(

@@ -1,15 +1,8 @@
-import {
-  ChangeDetectorRef,
-  ErrorHandler,
-  OnDestroy,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+import { ErrorHandler, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { Unsubscribable } from 'rxjs';
 import { ObservableOrPromise } from '../core/potential-observable';
 import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
-import { TickScheduler } from '../core/tick-scheduler';
 
 type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
   ? R | undefined
@@ -39,10 +32,7 @@ type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe implements PipeTransform, OnDestroy {
   private renderedValue: unknown;
-  private readonly renderScheduler = createRenderScheduler({
-    cdRef: this.cdRef,
-    tickScheduler: this.tickScheduler,
-  });
+  private readonly renderScheduler = createRenderScheduler();
   private readonly renderEventManager = createRenderEventManager({
     suspense: (event) => this.setRenderedValue(undefined, event.synchronous),
     next: (event) => this.setRenderedValue(event.value, event.synchronous),
@@ -60,11 +50,7 @@ export class PushPipe implements PipeTransform, OnDestroy {
   });
   private readonly subscription: Unsubscribable;
 
-  constructor(
-    private readonly cdRef: ChangeDetectorRef,
-    private readonly tickScheduler: TickScheduler,
-    private readonly errorHandler: ErrorHandler
-  ) {
+  constructor(private readonly errorHandler: ErrorHandler) {
     this.subscription = this.renderEventManager
       .handlePotentialObservableChanges()
       .subscribe();
