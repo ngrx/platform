@@ -21,7 +21,7 @@ describe('createRenderScheduler', () => {
     });
 
     const renderScheduler = TestBed.inject(Service).renderScheduler;
-    expect(renderScheduler instanceof RenderScheduler).toBe(true);
+    expect(renderScheduler).toBeInstanceOf(RenderScheduler);
   });
 
   it('should throw an error out of injection context', () => {
