@@ -63,6 +63,36 @@ ngOnInit() {
   });
 }
 }`,
+  // https://github.com/ngrx/platform/issues/3513
+  `
+import { Store } from '@ngrx/store'
+
+class Ok {
+constructor(private store: Store) {}
+
+ngOnInit() {
+  this.store.dispatch(one());
+
+  this.store.subscribe(() => {
+    this.store.dispatch(anotherOne());
+  });
+}
+}`,
+  // https://github.com/ngrx/platform/issues/3513
+  `
+import { Store } from '@ngrx/store'
+
+class Ok {
+constructor(private store: Store) {}
+
+ngOnInit() {
+  this.store.dispatch(anotherOne());
+
+  this.store.subscribe(() => {
+    this.store.dispatch(one());
+  });
+}
+}`,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [
