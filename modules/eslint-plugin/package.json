@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/eslint-plugin",
-  "version": "14.0.2",
+  "version": "14.1.0",
   "description": "NgRx ESLint Plugin",
   "repository": {
     "type": "git",

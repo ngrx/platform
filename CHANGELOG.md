@@ -1,3 +1,22 @@
+<a name="14.1.0"></a>
+
+# [14.1.0](https://github.com/ngrx/platform/compare/14.0.2...14.1.0) (2022-08-09)
+
+### Bug Fixes
+
+- **eslint-plugin:** allow sequential dispatches in a different block context ([#3515](https://github.com/ngrx/platform/issues/3515)) ([faf446f](https://github.com/ngrx/platform/commit/faf446f)), closes [#3513](https://github.com/ngrx/platform/issues/3513)
+- **eslint-plugin:** Remove the md suffix from the docsUrl path ([#3518](https://github.com/ngrx/platform/issues/3518)) ([71d4d4b](https://github.com/ngrx/platform/commit/71d4d4b))
+- **store:** improve error for forbidden characters in createActionGroup ([#3496](https://github.com/ngrx/platform/issues/3496)) ([398fbed](https://github.com/ngrx/platform/commit/398fbed))
+
+### Features
+
+- **component:** add RenderScheduler to the public API ([#3516](https://github.com/ngrx/platform/issues/3516)) ([4642919](https://github.com/ngrx/platform/commit/4642919))
+- **component:** replace markDirty with custom TickScheduler ([#3488](https://github.com/ngrx/platform/issues/3488)) ([3fcd8af](https://github.com/ngrx/platform/commit/3fcd8af))
+
+### Performance Improvements
+
+- **component:** do not schedule render for synchronous events ([#3487](https://github.com/ngrx/platform/issues/3487)) ([bb9071c](https://github.com/ngrx/platform/commit/bb9071c))
+
 <a name="14.0.2"></a>
 
 ## [14.0.2](https://github.com/ngrx/platform/compare/14.0.1...14.0.2) (2022-07-12)
