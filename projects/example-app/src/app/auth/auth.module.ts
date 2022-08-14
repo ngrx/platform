@@ -33,6 +33,5 @@ export const COMPONENTS = [
     EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: COMPONENTS,
-  entryComponents: [LogoutConfirmationDialogComponent],
 })
 export class AuthModule {}
