@@ -10,6 +10,7 @@ import {
   queueScheduler,
   scheduled,
   asyncScheduler,
+  EMPTY,
 } from 'rxjs';
 import {
   concatMap,
@@ -19,6 +20,8 @@ import {
   distinctUntilChanged,
   shareReplay,
   take,
+  tap,
+  catchError,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -110,7 +113,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
     return ((
       observableOrValue?: OriginType | Observable<OriginType>
     ): Subscription => {
-      let initializationError: Error | undefined;
+      // We need to explicitly throw an error if a synchronous error occurs.
+      // This is necessary to make synchronous errors catchable.
+      let isSyncUpdate = true;
+      let syncError: unknown;
       // We can receive either the value or an observable. In case it's a
       // simple value, we'll wrap it with `of` operator to turn it into
       // Observable.
@@ -128,23 +134,26 @@ export class ComponentStore<T extends object> implements OnDestroy {
               : // If state was not initialized, we'll throw an error.
                 throwError(() => new Error(this.notInitializedErrorMessage))
           ),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          map(([value, currentState]) => updaterFn(currentState, value!)),
+          tap((newState) => this.stateSubject$.next(newState)),
+          catchError((error: unknown) => {
+            if (isSyncUpdate) {
+              syncError = error;
+              return EMPTY;
+            }
+
+            return throwError(() => error);
+          }),
           takeUntil(this.destroy$)
         )
-        .subscribe({
-          next: ([value, currentState]) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            this.stateSubject$.next(updaterFn(currentState, value!));
-          },
-          error: (error: Error) => {
-            initializationError = error;
-            this.stateSubject$.error(error);
-          },
-        });
+        .subscribe();
 
-      if (initializationError) {
-        // prettier-ignore
-        throw /** @type {!Error} */ (initializationError);
+      if (syncError) {
+        throw syncError;
       }
+      isSyncUpdate = false;
+
       return subscription;
     }) as unknown as ReturnType;
   }
