@@ -1,37 +1,26 @@
-import { ENVIRONMENT_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
+import {
+  ENVIRONMENT_INITIALIZER,
+  ErrorHandler,
+  inject,
+  Provider,
+} from '@angular/core';
 import { StoreRouterConnectingService } from './store_router_connecting.service';
-import { ACTIVE_RUNTIME_CHECKS, RuntimeChecks, Store } from '@ngrx/store';
+import { ACTIVE_RUNTIME_CHECKS, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { ROUTER_CONFIG, StoreRouterConfig } from './router_store_config';
 import { RouterStateSerializer } from './serializers/base';
-import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
 
 export const _initRouterStore: Provider = {
   provide: ENVIRONMENT_INITIALIZER,
   multi: true,
-  deps: [
-    Store,
-    Router,
-    RouterStateSerializer,
-    ErrorHandler,
-    ROUTER_CONFIG,
-    ACTIVE_RUNTIME_CHECKS,
-  ],
-  useValue(
-    store: Store,
-    router: Router,
-    serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
-    errorHandler: ErrorHandler,
-    config: StoreRouterConfig,
-    activeRuntimeChecks: RuntimeChecks
-  ) {
-    return new StoreRouterConnectingService(
-      store,
-      router,
-      serializer,
-      errorHandler,
-      config,
-      activeRuntimeChecks
+  useValue() {
+    new StoreRouterConnectingService(
+      inject(Store),
+      inject(Router),
+      inject(RouterStateSerializer),
+      inject(ErrorHandler),
+      inject<StoreRouterConfig>(ROUTER_CONFIG),
+      inject(ACTIVE_RUNTIME_CHECKS)
     );
   },
 };
