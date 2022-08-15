@@ -1,4 +1,4 @@
-import { ENVIRONMENT_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
+import { Provider } from '@angular/core';
 import {
   _createRouterConfig,
   _ROUTER_CONFIG,

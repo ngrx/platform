@@ -1,16 +1,13 @@
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
-import { Selector } from '@ngrx/store';
-import { RouterReducerState } from './reducer';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
-  RouterStateSerializer,
   BaseRouterStoreState,
+  RouterStateSerializer,
 } from './serializers/base';
 import {
   FullRouterStateSerializer,
   SerializedRouterStateSnapshot,
 } from './serializers/full_serializer';
 import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
-import { StoreRouterConnectingService } from './store_router_connecting.service';
 import {
   _createRouterConfig,
   _ROUTER_CONFIG,

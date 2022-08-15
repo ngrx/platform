@@ -1,4 +1,4 @@
-import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BaseRouterStoreState, RouterStateSerializer } from './base';
 
 export interface MinimalActivatedRouteSnapshot {
