@@ -31,9 +31,11 @@ export function tapResponse<T, E = unknown>(
     source.pipe(
       tap({
         next: nextFn,
-        error: errorFn,
         complete: completeFn,
       }),
-      catchError(() => EMPTY)
+      catchError((e) => {
+        errorFn(e);
+        return EMPTY;
+      })
     );
 }
