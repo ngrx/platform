@@ -10,22 +10,6 @@ import {
   RoutesRecognized,
 } from '@angular/router';
 import {
-  FullRouterStateSerializer,
-  NavigationActionTiming,
-  ROUTER_CANCEL,
-  ROUTER_CONFIG,
-  ROUTER_ERROR,
-  ROUTER_NAVIGATED,
-  ROUTER_NAVIGATION,
-  ROUTER_REQUEST,
-  RouterReducerState,
-  RouterState,
-  RouterStateSerializer,
-  SerializedRouterStateSnapshot,
-  StateKeyOrSelector,
-  StoreRouterConfig,
-} from '@ngrx/router-store';
-import {
   ACTIVE_RUNTIME_CHECKS,
   isNgrxMockEnvironment,
   RuntimeChecks,
@@ -33,6 +17,26 @@ import {
   Store,
 } from '@ngrx/store';
 import { withLatestFrom } from 'rxjs/operators';
+import {
+  ROUTER_CANCEL,
+  ROUTER_ERROR,
+  ROUTER_NAVIGATED,
+  ROUTER_NAVIGATION,
+  ROUTER_REQUEST,
+} from './actions';
+import {
+  NavigationActionTiming,
+  ROUTER_CONFIG,
+  RouterState,
+  StateKeyOrSelector,
+  StoreRouterConfig,
+} from './router_store_config';
+import {
+  FullRouterStateSerializer,
+  SerializedRouterStateSnapshot,
+} from './serializers/full_serializer';
+import { RouterReducerState } from './reducer';
+import { RouterStateSerializer } from './serializers/base';
 
 enum RouterTrigger {
   NONE = 1,

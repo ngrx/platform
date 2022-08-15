@@ -1,18 +1,21 @@
+import { ENVIRONMENT_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
 import {
-  BaseRouterStoreState,
-  FullRouterStateSerializer,
-  MinimalRouterStateSerializer,
+  _createRouterConfig,
+  _ROUTER_CONFIG,
   ROUTER_CONFIG,
   RouterState,
-  RouterStateSerializer,
-  SerializedRouterStateSnapshot,
   StoreRouterConfig,
-} from '@ngrx/router-store';
-import { ENVIRONMENT_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
-import { _createRouterConfig, _ROUTER_CONFIG } from './router_store_module';
-import { StoreRouterConnectingService } from './store_router_connecting.service';
-import { ACTIVE_RUNTIME_CHECKS, RuntimeChecks, Store } from '@ngrx/store';
-import { Router } from '@angular/router';
+} from './router_store_config';
+import {
+  FullRouterStateSerializer,
+  SerializedRouterStateSnapshot,
+} from './serializers/full_serializer';
+import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
+import {
+  BaseRouterStoreState,
+  RouterStateSerializer,
+} from './serializers/base';
+import { _initRouterStore } from './init_router_store';
 
 export function provideRouterStore<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
@@ -32,34 +35,6 @@ export function provideRouterStore<
         ? FullRouterStateSerializer
         : MinimalRouterStateSerializer,
     },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      deps: [
-        Store,
-        Router,
-        RouterStateSerializer,
-        ErrorHandler,
-        ROUTER_CONFIG,
-        ACTIVE_RUNTIME_CHECKS,
-      ],
-      useValue(
-        store: Store,
-        router: Router,
-        serializer: RouterStateSerializer<SerializedRouterStateSnapshot>,
-        errorHandler: ErrorHandler,
-        config: StoreRouterConfig,
-        activeRuntimeChecks: RuntimeChecks
-      ) {
-        return new StoreRouterConnectingService(
-          store,
-          router,
-          serializer,
-          errorHandler,
-          config,
-          activeRuntimeChecks
-        );
-      },
-    },
+    _initRouterStore,
   ];
 }
