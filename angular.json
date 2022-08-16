@@ -497,6 +497,10 @@
               {
                 "command": "nx build-package eslint-plugin"
               },
+              // uncomment when there are eslint-plugin migrations
+              // {
+              //   "command": "yarn tsc -p modules/eslint-plugin/tsconfig.schematics.json"
+              // },
               {
                 "command": "cpy modules/eslint-plugin/migrations/migration.json dist/modules/eslint-plugin/migrations"
               },
