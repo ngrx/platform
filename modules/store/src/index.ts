@@ -57,8 +57,7 @@ export {
   StoreModule,
   StoreRootModule,
   StoreFeatureModule,
-  RootStoreConfig,
-  StoreConfig,
-  FeatureSlice,
 } from './store_module';
+export { RootStoreConfig, StoreConfig, FeatureSlice } from './store_config';
+export { provideStore, provideState } from './provide_store';
 export { ReducerTypes, on, createReducer } from './reducer_creator';
