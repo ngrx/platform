@@ -17,6 +17,29 @@ import {
 } from './serializers/base';
 import { _initRouterStore } from './init_router_store';
 
+/**
+ * Provider function to connect the RouterModule to the StoreModule
+ *
+ * Usage:
+ *
+ * ```typescript
+ * @NgModule({
+ *   declarations: [AppCmp, SimpleCmp],
+ *   imports: [
+ *     BrowserModule,
+ *     StoreModule.forRoot(mapOfReducers),
+ *     RouterModule.forRoot([
+ *       { path: '', component: SimpleCmp },
+ *       { path: 'next', component: SimpleCmp }
+ *     ]),
+ *   ],
+ *   bootstrap: [AppCmp],
+ *   providers: [provideRouterStore()]
+ * })
+ * export class AppModule {
+ * }
+ * ```
+ */
 export function provideRouterStore<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 >(config: StoreRouterConfig<T> = {}): Provider[] {

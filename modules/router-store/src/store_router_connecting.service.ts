@@ -50,6 +50,10 @@ interface StoreRouterActionPayload {
   storeState?: any;
 }
 
+/**
+ * Shared router initialization logic used alongside both the StoreRouterConnectingModule and the provideRouterStore
+ * function
+ */
 @Injectable()
 export class StoreRouterConnectingService {
   private lastEvent: Event | null = null;
