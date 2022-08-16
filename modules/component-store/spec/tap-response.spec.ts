@@ -22,6 +22,19 @@ describe('tapResponse', () => {
     expect(errorCallback).toHaveBeenCalledWith(error);
   });
 
+  it('should invoke error callback on the exception thrown in next', () => {
+    const errorCallback = jest.fn<void, [{ message: string }]>();
+    const error = { message: 'error' };
+
+    function producesError() {
+      throw error;
+    }
+
+    of(1).pipe(tapResponse(producesError, errorCallback)).subscribe();
+
+    expect(errorCallback).toHaveBeenCalledWith(error);
+  });
+
   it('should invoke complete callback on complete', () => {
     const completeCallback = jest.fn<void, []>();
 
