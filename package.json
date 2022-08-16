@@ -117,6 +117,7 @@
     "@angular-eslint/template-parser": "13.2.0",
     "@angular/cli": "14.0.0-rc.1",
     "@angular/compiler-cli": "14.0.0-rc.1",
+    "@angular/language-service": "~13.3.0",
     "@babel/core": "7.9.0",
     "@nrwl/cli": "14.1.5",
     "@nrwl/cypress": "14.1.5",

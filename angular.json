@@ -798,6 +798,127 @@
       "schematics": {},
       "tags": []
     },
+    "standalone-app": {
+      "projectType": "application",
+      "root": "projects/standalone-app",
+      "sourceRoot": "projects/standalone-app/src",
+      "prefix": "ngrx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/projects/standalone-app",
+            "index": "projects/standalone-app/src/index.html",
+            "main": "projects/standalone-app/src/main.ts",
+            "polyfills": "projects/standalone-app/src/polyfills.ts",
+            "tsConfig": "projects/standalone-app/tsconfig.app.json",
+            "assets": [
+              "projects/standalone-app/src/favicon.ico",
+              "projects/standalone-app/src/assets"
+            ],
+            "styles": ["projects/standalone-app/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/standalone-app/src/environments/environment.ts",
+                  "with": "projects/standalone-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "standalone-app:build:production"
+            },
+            "development": {
+              "browserTarget": "standalone-app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "standalone-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/standalone-app/**/*.ts",
+              "projects/standalone-app/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/projects/standalone-app"],
+          "options": {
+            "jestConfig": "projects/standalone-app/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "standalone-app-e2e": {
+      "root": "projects/standalone-app-e2e",
+      "sourceRoot": "projects/standalone-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "projects/standalone-app-e2e/cypress.json",
+            "devServerTarget": "standalone-app:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "standalone-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["projects/standalone-app-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["standalone-app"]
+    },
     "store": {
       "projectType": "library",
       "root": "modules/store",
