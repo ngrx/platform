@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   template: `
-    Welcome {{ title }}
+    <h1>Welcome {{ title }}</h1>
 
     <a routerLink="/feature">Load Feature</a>
 

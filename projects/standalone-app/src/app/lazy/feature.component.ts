@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FeatureActions, feature } from './feature.state';
 
 @Component({
-  selector: 'app-feature',
+  selector: 'ngrx-feature',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -13,7 +13,7 @@ import { FeatureActions, feature } from './feature.state';
     Feature State: {{ feature$ | async | json }}
   `,
 })
-export class FeatureComponent {
+export class FeatureComponent implements OnInit {
   feature$ = this.store.select(feature.selectFeatureState);
 
   constructor(private store: Store) {}

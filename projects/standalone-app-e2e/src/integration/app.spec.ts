@@ -8,6 +8,6 @@ describe('standalone-app', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome standalone-app');
+    getGreeting().contains('Welcome ngrx-standalone-app');
   });
 });
