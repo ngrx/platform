@@ -9,8 +9,10 @@ export const _initRouterStore: Provider[] = [
   {
     provide: ENVIRONMENT_INITIALIZER,
     multi: true,
-    useValue() {
-      inject(StoreRouterConnectingService);
+    useFactory() {
+      return () => {
+        inject(StoreRouterConnectingService);
+      };
     },
   },
   StoreRouterConnectingService,
