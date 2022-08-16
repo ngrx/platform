@@ -23,21 +23,11 @@ import { _initRouterStore } from './init_router_store';
  * Usage:
  *
  * ```typescript
- * @NgModule({
- *   declarations: [AppCmp, SimpleCmp],
- *   imports: [
- *     BrowserModule,
- *     StoreModule.forRoot(mapOfReducers),
- *     RouterModule.forRoot([
- *       { path: '', component: SimpleCmp },
- *       { path: 'next', component: SimpleCmp }
- *     ]),
- *   ],
- *   bootstrap: [AppCmp],
- *   providers: [provideRouterStore()]
+ * bootstrapApplication(AppComponent, {
+ *  providers: [
+ *    provideRouterStore()
+ *  ]
  * })
- * export class AppModule {
- * }
  * ```
  */
 export function provideRouterStore<
