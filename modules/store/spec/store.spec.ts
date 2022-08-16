@@ -12,7 +12,7 @@ import {
   ActionReducer,
   Action,
 } from '../';
-import { StoreConfig } from '../src/store_module';
+import { StoreConfig } from '../src/store_config';
 import { combineReducers } from '../src/utils';
 import {
   counterReducer,
