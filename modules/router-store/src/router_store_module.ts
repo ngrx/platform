@@ -1,21 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import {
-  BaseRouterStoreState,
-  RouterStateSerializer,
-} from './serializers/base';
-import {
-  FullRouterStateSerializer,
-  SerializedRouterStateSnapshot,
-} from './serializers/full_serializer';
-import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
-import {
-  _createRouterConfig,
-  _ROUTER_CONFIG,
-  ROUTER_CONFIG,
-  RouterState,
-  StoreRouterConfig,
-} from './router_store_config';
-import { _initRouterStore } from './init_router_store';
+import { BaseRouterStoreState } from './serializers/base';
+import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
+import { StoreRouterConfig } from './router_store_config';
+import { provideRouterStore } from './provide_router_store';
 
 /**
  * Connects RouterModule with StoreModule.
@@ -68,23 +55,7 @@ export class StoreRouterConnectingModule {
   ): ModuleWithProviders<StoreRouterConnectingModule> {
     return {
       ngModule: StoreRouterConnectingModule,
-      providers: [
-        { provide: _ROUTER_CONFIG, useValue: config },
-        {
-          provide: ROUTER_CONFIG,
-          useFactory: _createRouterConfig,
-          deps: [_ROUTER_CONFIG],
-        },
-        {
-          provide: RouterStateSerializer,
-          useClass: config.serializer
-            ? config.serializer
-            : config.routerState === RouterState.Full
-            ? FullRouterStateSerializer
-            : MinimalRouterStateSerializer,
-        },
-        _initRouterStore,
-      ],
+      providers: provideRouterStore(config),
     };
   }
 }
