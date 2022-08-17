@@ -13,7 +13,6 @@ import {
   EMPTY,
 } from 'rxjs';
 import {
-  concatMap,
   takeUntil,
   withLatestFrom,
   map,
@@ -22,6 +21,7 @@ import {
   take,
   tap,
   catchError,
+  observeOn,
 } from 'rxjs/operators';
 import { debounceSync } from './debounce-sync';
 import {
@@ -61,9 +61,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
 
   private readonly stateSubject$ = new ReplaySubject<T>(1);
   private isInitialized = false;
-  private notInitializedErrorMessage =
-    `${this.constructor.name} has not been initialized yet. ` +
-    `Please make sure it is initialized before updating/getting.`;
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
   private ɵhasProvider = false;
@@ -125,15 +122,11 @@ export class ComponentStore<T extends object> implements OnDestroy {
         : of(observableOrValue);
       const subscription = observable$
         .pipe(
-          concatMap((value) =>
-            this.isInitialized
-              ? // Push the value into queueScheduler
-                scheduled([value], queueScheduler).pipe(
-                  withLatestFrom(this.stateSubject$)
-                )
-              : // If state was not initialized, we'll throw an error.
-                throwError(() => new Error(this.notInitializedErrorMessage))
-          ),
+          // Push the value into queueScheduler
+          observeOn(queueScheduler),
+          // If the state is not initialized yet, we'll throw an error.
+          tap(() => this.assertStateIsInitialized()),
+          withLatestFrom(this.stateSubject$),
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           map(([value, currentState]) => updaterFn(currentState, value!)),
           tap((newState) => this.stateSubject$.next(newState)),
@@ -209,9 +202,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   protected get(): T;
   protected get<R>(projector: (s: T) => R): R;
   protected get<R>(projector?: (s: T) => R): R | T {
-    if (!this.isInitialized) {
-      throw new Error(this.notInitializedErrorMessage);
-    }
+    this.assertStateIsInitialized();
     let value: R | T;
 
     this.stateSubject$.pipe(take(1)).subscribe((state) => {
@@ -352,6 +343,15 @@ export class ComponentStore<T extends object> implements OnDestroy {
         );
       }
     });
+  }
+
+  private assertStateIsInitialized(): void {
+    if (!this.isInitialized) {
+      throw new Error(
+        `${this.constructor.name} has not been initialized yet. ` +
+          `Please make sure it is initialized before updating/getting.`
+      );
+    }
   }
 }
 

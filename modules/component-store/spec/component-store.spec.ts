@@ -203,7 +203,7 @@ describe('Component Store', () => {
     );
 
     it(
-      'does not throws an Error when updater is called with async Observable' +
+      'does not throw an Error when updater is called with async Observable' +
         ' before initialization, that emits the value after initialization',
       marbles((m) => {
         const componentStore = new ComponentStore();
@@ -235,6 +235,19 @@ describe('Component Store', () => {
           m.hot('(iu)', { i: INIT_STATE, u: UPDATED_STATE })
         );
       })
+    );
+
+    it(
+      'does not throw an Error when ComponentStore initialization and' +
+        ' state update are scheduled via queueScheduler',
+      () => {
+        expect(() => {
+          queueScheduler.schedule(() => {
+            const componentStore = new ComponentStore({ foo: false });
+            componentStore.patchState({ foo: true });
+          });
+        }).not.toThrow();
+      }
     );
   });
 
