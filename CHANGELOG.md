@@ -1,3 +1,16 @@
+<a name="14.2.0"></a>
+
+# [14.2.0](https://github.com/ngrx/platform/compare/14.1.0...14.2.0) (2022-08-18)
+
+### Bug Fixes
+
+- **component-store:** make synchronous updater errors catchable ([#3490](https://github.com/ngrx/platform/issues/3490)) ([1a906fd](https://github.com/ngrx/platform/commit/1a906fd))
+- **component-store:** move isInitialized check to queueScheduler context on state update ([#3492](https://github.com/ngrx/platform/issues/3492)) ([53636e4](https://github.com/ngrx/platform/commit/53636e4)), closes [#2991](https://github.com/ngrx/platform/issues/2991)
+
+### Features
+
+- **component-store:** handle errors in next callback ([#3533](https://github.com/ngrx/platform/issues/3533)) ([551c8eb](https://github.com/ngrx/platform/commit/551c8eb))
+
 <a name="14.1.0"></a>
 
 # [14.1.0](https://github.com/ngrx/platform/compare/14.0.2...14.1.0) (2022-08-09)
