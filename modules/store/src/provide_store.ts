@@ -66,36 +66,46 @@ import {
 } from './store_config';
 
 /**
+ * InjectionToken that registers feature states.
+ * Mainly used to provide a hook that can be injected
+ * to ensure feature state is loaded before something
+ * that depends on it.
+ */
+export const FEATURE_STATE_PROVIDER = new InjectionToken('NgRx Feature State', {
+  factory() {
+    const features = inject<StoreFeature<any, any>[]>(_STORE_FEATURES);
+    const featureReducers = inject<ActionReducerMap<any>[]>(FEATURE_REDUCERS);
+    const reducerManager = inject(ReducerManager);
+    inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
+
+    const feats = features.map((feature, index) => {
+      const featureReducerCollection = featureReducers.shift();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const reducers = featureReducerCollection! /*TODO(#823)*/[index];
+
+      return {
+        ...feature,
+        reducers,
+        initialState: _initialStateFactory(feature.initialState),
+      };
+    });
+
+    reducerManager.addFeatures(feats);
+  },
+});
+
+/**
  * Environment Initializer used in the feature
  * providers to register state features
  */
 const ENVIRONMENT_STATE_PROVIDER: Provider[] = [
+  { provide: FEATURE_STATE_PROVIDER, deps: [], useValue: true },
   {
     provide: ENVIRONMENT_INITIALIZER,
     multi: true,
     deps: [],
     useFactory() {
-      return () => {
-        const features = inject<StoreFeature<any, any>[]>(_STORE_FEATURES);
-        const featureReducers =
-          inject<ActionReducerMap<any>[]>(FEATURE_REDUCERS);
-        const reducerManager = inject(ReducerManager);
-        inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
-
-        const feats = features.map((feature, index) => {
-          const featureReducerCollection = featureReducers.shift();
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const reducers = featureReducerCollection! /*TODO(#823)*/[index];
-
-          return {
-            ...feature,
-            reducers,
-            initialState: _initialStateFactory(feature.initialState),
-          };
-        });
-
-        reducerManager.addFeatures(feats);
-      };
+      return () => inject(FEATURE_STATE_PROVIDER);
     },
   },
 ];
@@ -310,18 +320,18 @@ const ENVIRONMENT_STORE_PROVIDER = [
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
- *   providers: [provideStore({})],
+ *   providers: [provideStore()],
  * });
  * ```
  */
 export function provideStore<T, V extends Action = Action>(
-  reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
+  reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
   config?: RootStoreConfig<T, V>
 ): ImportedNgModuleProviders;
 export function provideStore(
   reducers:
     | ActionReducerMap<any, any>
-    | InjectionToken<ActionReducerMap<any, any>>,
+    | InjectionToken<ActionReducerMap<any, any>> = {},
   config: RootStoreConfig<any, any> = {}
 ): ImportedNgModuleProviders {
   return {

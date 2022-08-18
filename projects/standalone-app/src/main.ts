@@ -14,7 +14,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideStore({}),
+    provideStore(),
     importProvidersFrom(
       RouterModule.forRoot(
         [

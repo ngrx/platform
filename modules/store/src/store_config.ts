@@ -101,7 +101,7 @@ export function _concatMetaReducers(
 export function _provideForRootGuard(store: Store<any>): any {
   if (store) {
     throw new TypeError(
-      `StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.`
+      `The root Store has been provided more than once. Feature modules should provide feature states instead.`
     );
   }
   return 'guarded';
