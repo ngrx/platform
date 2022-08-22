@@ -4,7 +4,6 @@ import {
   Injector,
   Optional,
   SkipSelf,
-  ImportedNgModuleProviders,
   ENVIRONMENT_INITIALIZER,
   inject,
   InjectFlags,
@@ -15,6 +14,7 @@ import {
   ActionReducer,
   ActionReducerMap,
   StoreFeature,
+  EnvironmentProviders,
 } from './models';
 import { combineReducers, createReducerFactory } from './utils';
 import {
@@ -92,15 +92,15 @@ export function provideState<T, V extends Action = Action>(
   featureName: string,
   reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
   config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
-): ImportedNgModuleProviders;
+): EnvironmentProviders;
 export function provideState<T, V extends Action = Action>(
   featureName: string,
   reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
   config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
-): ImportedNgModuleProviders;
+): EnvironmentProviders;
 export function provideState<T, V extends Action = Action>(
   slice: FeatureSlice<T, V>
-): ImportedNgModuleProviders;
+): EnvironmentProviders;
 export function provideState(
   featureNameOrSlice: string | FeatureSlice<any, any>,
   reducers?:
@@ -109,7 +109,7 @@ export function provideState(
     | ActionReducer<any, any>
     | InjectionToken<ActionReducer<any, any>>,
   config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
-): ImportedNgModuleProviders {
+): EnvironmentProviders {
   return {
     ɵproviders: [
       ..._provideState(featureNameOrSlice, reducers, config),
@@ -217,13 +217,13 @@ const ENVIRONMENT_STORE_PROVIDER: Provider[] = [
 export function provideStore<T, V extends Action = Action>(
   reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
   config?: RootStoreConfig<T, V>
-): ImportedNgModuleProviders;
+): EnvironmentProviders;
 export function provideStore(
   reducers:
     | ActionReducerMap<any, any>
     | InjectionToken<ActionReducerMap<any, any>> = {},
   config: RootStoreConfig<any, any> = {}
-): ImportedNgModuleProviders {
+): EnvironmentProviders {
   return {
     ɵproviders: [
       ..._provideStore(reducers, config),
