@@ -90,3 +90,23 @@ export const ACTIVE_RUNTIME_CHECKS = new InjectionToken<RuntimeChecks>(
 export const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken<void>(
   '@ngrx/store Check if Action types are unique'
 );
+
+/**
+ * InjectionToken that registers the global Store.
+ * Mainly used to provide a hook that can be injected
+ * to ensure the root state is loaded before something
+ * that depends on it.
+ */
+export const ROOT_STORE_PROVIDER = new InjectionToken<void>(
+  '@ngrx/store Root Store Provider'
+);
+
+/**
+ * InjectionToken that registers feature states.
+ * Mainly used to provide a hook that can be injected
+ * to ensure feature state is loaded before something
+ * that depends on it.
+ */
+export const FEATURE_STATE_PROVIDER = new InjectionToken<void>(
+  '@ngrx/store Feature State Provider'
+);

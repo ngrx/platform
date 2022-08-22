@@ -52,6 +52,8 @@ export {
   USER_PROVIDED_META_REDUCERS,
   USER_RUNTIME_CHECKS,
   ACTIVE_RUNTIME_CHECKS,
+  FEATURE_STATE_PROVIDER,
+  ROOT_STORE_PROVIDER,
 } from './tokens';
 export {
   StoreModule,
@@ -59,9 +61,5 @@ export {
   StoreFeatureModule,
 } from './store_module';
 export { RootStoreConfig, StoreConfig, FeatureSlice } from './store_config';
-export {
-  provideStore,
-  provideState,
-  FEATURE_STATE_PROVIDER,
-} from './provide_store';
+export { provideStore, provideState } from './provide_store';
 export { ReducerTypes, on, createReducer } from './reducer_creator';

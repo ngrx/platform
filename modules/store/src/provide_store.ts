@@ -36,6 +36,8 @@ import {
   _RESOLVED_META_REDUCERS,
   _ROOT_STORE_GUARD,
   _ACTION_TYPE_UNIQUENESS_CHECK,
+  ROOT_STORE_PROVIDER,
+  FEATURE_STATE_PROVIDER,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -64,121 +66,6 @@ import {
   _initialStateFactory,
   _provideForRootGuard,
 } from './store_config';
-
-/**
- * InjectionToken that registers feature states.
- * Mainly used to provide a hook that can be injected
- * to ensure feature state is loaded before something
- * that depends on it.
- */
-export const FEATURE_STATE_PROVIDER = new InjectionToken('NgRx Feature State', {
-  factory() {
-    const features = inject<StoreFeature<any, any>[]>(_STORE_FEATURES);
-    const featureReducers = inject<ActionReducerMap<any>[]>(FEATURE_REDUCERS);
-    const reducerManager = inject(ReducerManager);
-    inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
-
-    const feats = features.map((feature, index) => {
-      const featureReducerCollection = featureReducers.shift();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const reducers = featureReducerCollection! /*TODO(#823)*/[index];
-
-      return {
-        ...feature,
-        reducers,
-        initialState: _initialStateFactory(feature.initialState),
-      };
-    });
-
-    reducerManager.addFeatures(feats);
-  },
-});
-
-/**
- * Environment Initializer used in the feature
- * providers to register state features
- */
-const ENVIRONMENT_STATE_PROVIDER: Provider[] = [
-  { provide: FEATURE_STATE_PROVIDER, deps: [], useValue: true },
-  {
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    deps: [],
-    useFactory() {
-      return () => inject(FEATURE_STATE_PROVIDER);
-    },
-  },
-];
-
-export function _provideState(
-  featureNameOrSlice: string | FeatureSlice<any, any>,
-  reducers?:
-    | ActionReducerMap<any, any>
-    | InjectionToken<ActionReducerMap<any, any>>
-    | ActionReducer<any, any>
-    | InjectionToken<ActionReducer<any, any>>,
-  config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
-) {
-  return [
-    {
-      provide: _FEATURE_CONFIGS,
-      multi: true,
-      useValue: featureNameOrSlice instanceof Object ? {} : config,
-    },
-    {
-      provide: STORE_FEATURES,
-      multi: true,
-      useValue: {
-        key:
-          featureNameOrSlice instanceof Object
-            ? featureNameOrSlice.name
-            : featureNameOrSlice,
-        reducerFactory:
-          !(config instanceof InjectionToken) && config.reducerFactory
-            ? config.reducerFactory
-            : combineReducers,
-        metaReducers:
-          !(config instanceof InjectionToken) && config.metaReducers
-            ? config.metaReducers
-            : [],
-        initialState:
-          !(config instanceof InjectionToken) && config.initialState
-            ? config.initialState
-            : undefined,
-      },
-    },
-    {
-      provide: _STORE_FEATURES,
-      deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
-      useFactory: _createFeatureStore,
-    },
-    {
-      provide: _FEATURE_REDUCERS,
-      multi: true,
-      useValue:
-        featureNameOrSlice instanceof Object
-          ? featureNameOrSlice.reducer
-          : reducers,
-    },
-    {
-      provide: _FEATURE_REDUCERS_TOKEN,
-      multi: true,
-      useExisting:
-        reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
-    },
-    {
-      provide: FEATURE_REDUCERS,
-      multi: true,
-      deps: [
-        Injector,
-        _FEATURE_REDUCERS,
-        [new Inject(_FEATURE_REDUCERS_TOKEN)],
-      ],
-      useFactory: _createFeatureReducers,
-    },
-    checkForActionTypeUniqueness(),
-  ];
-}
 
 /**
  * Provides additional slices of state in the Store.
@@ -288,23 +175,26 @@ export function _provideStore(
   ];
 }
 
+function rootStoreProviderFactory(): void {
+  inject(ActionsSubject);
+  inject(ReducerObservable);
+  inject(ScannedActionsSubject);
+  inject(Store);
+  inject(_ROOT_STORE_GUARD, InjectFlags.Optional);
+  inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
+}
+
 /**
  * Environment Initializer used in the root
  * providers to initialize the Store
  */
-const ENVIRONMENT_STORE_PROVIDER = [
+const ENVIRONMENT_STORE_PROVIDER: Provider[] = [
+  { provide: ROOT_STORE_PROVIDER, useFactory: rootStoreProviderFactory },
   {
     provide: ENVIRONMENT_INITIALIZER,
     multi: true,
     useFactory() {
-      return () => {
-        inject(ActionsSubject);
-        inject(ReducerObservable);
-        inject(ScannedActionsSubject);
-        inject(Store);
-        inject(_ROOT_STORE_GUARD, InjectFlags.Optional);
-        inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
-      };
+      return () => inject(ROOT_STORE_PROVIDER);
     },
   },
 ];
@@ -340,4 +230,115 @@ export function provideStore(
       ENVIRONMENT_STORE_PROVIDER,
     ],
   };
+}
+
+function featureStateProviderFactory() {
+  inject(ROOT_STORE_PROVIDER);
+  const features = inject<StoreFeature<any, any>[]>(_STORE_FEATURES);
+  const featureReducers = inject<ActionReducerMap<any>[]>(FEATURE_REDUCERS);
+  const reducerManager = inject(ReducerManager);
+  inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
+
+  const feats = features.map((feature, index) => {
+    const featureReducerCollection = featureReducers.shift();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const reducers = featureReducerCollection! /*TODO(#823)*/[index];
+
+    return {
+      ...feature,
+      reducers,
+      initialState: _initialStateFactory(feature.initialState),
+    };
+  });
+
+  reducerManager.addFeatures(feats);
+}
+
+/**
+ * Environment Initializer used in the feature
+ * providers to register state features
+ */
+const ENVIRONMENT_STATE_PROVIDER: Provider[] = [
+  {
+    provide: FEATURE_STATE_PROVIDER,
+    useFactory: featureStateProviderFactory,
+  },
+  {
+    provide: ENVIRONMENT_INITIALIZER,
+    multi: true,
+    deps: [],
+    useFactory() {
+      return () => inject(FEATURE_STATE_PROVIDER);
+    },
+  },
+];
+
+export function _provideState(
+  featureNameOrSlice: string | FeatureSlice<any, any>,
+  reducers?:
+    | ActionReducerMap<any, any>
+    | InjectionToken<ActionReducerMap<any, any>>
+    | ActionReducer<any, any>
+    | InjectionToken<ActionReducer<any, any>>,
+  config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
+) {
+  return [
+    {
+      provide: _FEATURE_CONFIGS,
+      multi: true,
+      useValue: featureNameOrSlice instanceof Object ? {} : config,
+    },
+    {
+      provide: STORE_FEATURES,
+      multi: true,
+      useValue: {
+        key:
+          featureNameOrSlice instanceof Object
+            ? featureNameOrSlice.name
+            : featureNameOrSlice,
+        reducerFactory:
+          !(config instanceof InjectionToken) && config.reducerFactory
+            ? config.reducerFactory
+            : combineReducers,
+        metaReducers:
+          !(config instanceof InjectionToken) && config.metaReducers
+            ? config.metaReducers
+            : [],
+        initialState:
+          !(config instanceof InjectionToken) && config.initialState
+            ? config.initialState
+            : undefined,
+      },
+    },
+    {
+      provide: _STORE_FEATURES,
+      deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+      useFactory: _createFeatureStore,
+    },
+    {
+      provide: _FEATURE_REDUCERS,
+      multi: true,
+      useValue:
+        featureNameOrSlice instanceof Object
+          ? featureNameOrSlice.reducer
+          : reducers,
+    },
+    {
+      provide: _FEATURE_REDUCERS_TOKEN,
+      multi: true,
+      useExisting:
+        reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
+    },
+    {
+      provide: FEATURE_REDUCERS,
+      multi: true,
+      deps: [
+        Injector,
+        _FEATURE_REDUCERS,
+        [new Inject(_FEATURE_REDUCERS_TOKEN)],
+      ],
+      useFactory: _createFeatureReducers,
+    },
+    checkForActionTypeUniqueness(),
+  ];
 }
