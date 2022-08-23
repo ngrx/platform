@@ -17,7 +17,7 @@ export class StoreDevtoolsModule {
   ): ModuleWithProviders<StoreDevtoolsModule> {
     return {
       ngModule: StoreDevtoolsModule,
-      providers: provideStoreDevtools(options),
+      providers: [...provideStoreDevtools(options).ɵproviders],
     };
   }
 }
