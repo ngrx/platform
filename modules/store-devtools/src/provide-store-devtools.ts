@@ -1,4 +1,4 @@
-import { InjectionToken, Provider } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import {
   DevtoolsExtension,
   REDUX_DEVTOOLS_EXTENSION,
