@@ -13,7 +13,11 @@ import {
   StoreDevtoolsConfig,
   StoreDevtoolsOptions,
 } from './config';
-import { ReducerManagerDispatcher, StateObservable } from '@ngrx/store';
+import {
+  EnvironmentProviders,
+  ReducerManagerDispatcher,
+  StateObservable,
+} from '@ngrx/store';
 import { createStateObservable } from './instrument';
 import { StoreDevtools } from './devtools';
 
@@ -43,37 +47,39 @@ export function createReduxDevtoolsExtension() {
 
 export function provideStoreDevtools(
   options: StoreDevtoolsOptions = {}
-): Provider[] {
-  return [
-    DevtoolsExtension,
-    DevtoolsDispatcher,
-    StoreDevtools,
-    {
-      provide: INITIAL_OPTIONS,
-      useValue: options,
-    },
-    {
-      provide: IS_EXTENSION_OR_MONITOR_PRESENT,
-      deps: [REDUX_DEVTOOLS_EXTENSION, STORE_DEVTOOLS_CONFIG],
-      useFactory: createIsExtensionOrMonitorPresent,
-    },
-    {
-      provide: REDUX_DEVTOOLS_EXTENSION,
-      useFactory: createReduxDevtoolsExtension,
-    },
-    {
-      provide: STORE_DEVTOOLS_CONFIG,
-      deps: [INITIAL_OPTIONS],
-      useFactory: createConfig,
-    },
-    {
-      provide: StateObservable,
-      deps: [StoreDevtools],
-      useFactory: createStateObservable,
-    },
-    {
-      provide: ReducerManagerDispatcher,
-      useExisting: DevtoolsDispatcher,
-    },
-  ];
+): EnvironmentProviders {
+  return {
+    ɵproviders: [
+      DevtoolsExtension,
+      DevtoolsDispatcher,
+      StoreDevtools,
+      {
+        provide: INITIAL_OPTIONS,
+        useValue: options,
+      },
+      {
+        provide: IS_EXTENSION_OR_MONITOR_PRESENT,
+        deps: [REDUX_DEVTOOLS_EXTENSION, STORE_DEVTOOLS_CONFIG],
+        useFactory: createIsExtensionOrMonitorPresent,
+      },
+      {
+        provide: REDUX_DEVTOOLS_EXTENSION,
+        useFactory: createReduxDevtoolsExtension,
+      },
+      {
+        provide: STORE_DEVTOOLS_CONFIG,
+        deps: [INITIAL_OPTIONS],
+        useFactory: createConfig,
+      },
+      {
+        provide: StateObservable,
+        deps: [StoreDevtools],
+        useFactory: createStateObservable,
+      },
+      {
+        provide: ReducerManagerDispatcher,
+        useExisting: DevtoolsDispatcher,
+      },
+    ],
+  };
 }
