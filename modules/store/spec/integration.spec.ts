@@ -483,7 +483,7 @@ describe('ngRx Integration spec', () => {
 
       router.navigateByUrl('/feature-path').catch((err: TypeError) => {
         expect(err.message).toBe(
-          'StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.'
+          'The root Store has been provided more than once. Feature modules should provide feature states instead.'
         );
         done();
       });
