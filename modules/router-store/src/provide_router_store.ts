@@ -57,15 +57,6 @@ export function provideRouterStore<
           return () => inject(StoreRouterConnectingService);
         },
       },
-      {
-        provide: ENVIRONMENT_INITIALIZER,
-        multi: true,
-        useFactory() {
-          return () => {
-            inject(StoreRouterConnectingService);
-          };
-        },
-      },
       StoreRouterConnectingService,
     ],
   };
