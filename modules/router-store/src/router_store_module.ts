@@ -55,7 +55,7 @@ export class StoreRouterConnectingModule {
   ): ModuleWithProviders<StoreRouterConnectingModule> {
     return {
       ngModule: StoreRouterConnectingModule,
-      providers: provideRouterStore(config),
+      providers: [...provideRouterStore(config).ɵproviders],
     };
   }
 }
