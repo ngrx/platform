@@ -8,3 +8,4 @@ export {
   DevToolsFeatureOptions,
   INITIAL_OPTIONS,
 } from './config';
+export { provideStoreDevtools } from './provide-store-devtools';

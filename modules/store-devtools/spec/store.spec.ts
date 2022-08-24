@@ -15,8 +15,8 @@ import {
   StoreDevtoolsModule,
   StoreDevtoolsOptions,
 } from '../';
-import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/instrument';
 import { RECOMPUTE } from '../src/reducer';
+import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/provide-store-devtools';
 
 const counter = jasmine
   .createSpy('counter')
