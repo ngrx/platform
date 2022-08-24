@@ -7,17 +7,13 @@ import {
   SkipSelf,
   Type,
 } from '@angular/core';
-import { Actions } from './actions';
-import { EffectSources } from './effect_sources';
 import { EffectsFeatureModule } from './effects_feature_module';
-import { defaultEffectsErrorHandler } from './effects_error_handler';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
 import {
   _FEATURE_EFFECTS,
   _ROOT_EFFECTS,
   _ROOT_EFFECTS_GUARD,
-  EFFECTS_ERROR_HANDLER,
   FEATURE_EFFECTS,
   ROOT_EFFECTS,
   USER_PROVIDED_EFFECTS,
@@ -58,13 +54,6 @@ export class EffectsModule {
     return {
       ngModule: EffectsRootModule,
       providers: [
-        {
-          provide: EFFECTS_ERROR_HANDLER,
-          useValue: defaultEffectsErrorHandler,
-        },
-        EffectsRunner,
-        EffectSources,
-        Actions,
         rootEffects,
         {
           provide: _ROOT_EFFECTS,
