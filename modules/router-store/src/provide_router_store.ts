@@ -19,9 +19,9 @@ import { StoreRouterConnectingService } from './store_router_connecting.service'
 import { EnvironmentProviders } from '@ngrx/store';
 
 /**
- * Provider function to connect the RouterModule to the StoreModule
+ * Connects the Angular Router to the Store.
  *
- * Usage:
+ * @usageNotes
  *
  * ```typescript
  * bootstrapApplication(AppComponent, {
