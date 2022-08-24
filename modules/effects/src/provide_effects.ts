@@ -15,13 +15,12 @@ import { EffectSources } from './effect_sources';
 import { rootEffectsInit as effectsInit } from './effects_actions';
 
 /**
- * Runs provided effects. Can be called at the root or feature level.
- * Unlike the `EffectsModule.forRoot` method, this function does not
- * need to be called at the root level if there are no root effects.
+ * Runs the provided effects.
+ * Can be called at the root and feature levels.
  *
  * @usageNotes
  *
- * ### Providing root effects
+ * ### Providing effects at the root level
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
@@ -29,7 +28,7 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
  * });
  * ```
  *
- * ### Providing feature effects
+ * ### Providing effects at the feature level
  *
  * ```ts
  * const booksRoutes: Route[] = [
