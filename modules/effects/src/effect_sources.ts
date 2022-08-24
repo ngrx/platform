@@ -29,7 +29,7 @@ import {
 import { EFFECTS_ERROR_HANDLER } from './tokens';
 import { getSourceForInstance, ObservableNotification } from './utils';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EffectSources extends Subject<any> {
   constructor(
     private errorHandler: ErrorHandler,
