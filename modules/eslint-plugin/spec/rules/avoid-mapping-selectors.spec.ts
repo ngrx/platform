@@ -154,6 +154,36 @@ class OkBecauseOfEffect {
 
   constructor(private store: Store) {}
 }`,
+  // https://github.com/ngrx/platform/issues/3511
+  `
+import { Store } from '@ngrx/store'
+
+class OkBecauseOfEffect {
+  storeSelect$ = createEffect(() => {
+    return this.store.select(selectObj).pipe(
+      switchMap(() => this.service.something()),
+      map((obj) => obj.prop),
+    )
+  })
+
+  pipeSelect$ = createEffect(() => {
+    return this.store.pipe(
+      select(selectObj),
+      exhaustMap(() => this.service.something()),
+      map((obj) => obj.prop),
+    )
+  })
+
+  somethingElse$ = createEffect(() => {
+    return this.store.pipe(
+      select(selectObj),
+      customOperator(() => this.prop),
+      map((obj) => obj.prop),
+    )
+  })
+
+  constructor(private store: Store, private service: Service) {}
+}`,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [
