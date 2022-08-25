@@ -1,3 +1,14 @@
+<a name="14.3.0"></a>
+
+# [14.3.0](https://github.com/ngrx/platform/compare/14.2.0...14.3.0) (2022-08-25)
+
+### Features
+
+- **effects:** add provideEffects function ([#3524](https://github.com/ngrx/platform/issues/3524)) ([db35bfe](https://github.com/ngrx/platform/commit/db35bfe)), closes [#3522](https://github.com/ngrx/platform/issues/3522)
+- **router-store:** add provideRouterStore function ([#3532](https://github.com/ngrx/platform/issues/3532)) ([511b7cf](https://github.com/ngrx/platform/commit/511b7cf)), closes [#3528](https://github.com/ngrx/platform/issues/3528)
+- **store:** add provideStore and provideState functions for standalone APIs ([#3539](https://github.com/ngrx/platform/issues/3539)) ([5639c1e](https://github.com/ngrx/platform/commit/5639c1e)), closes [#3526](https://github.com/ngrx/platform/issues/3526)
+- **store-devtools:** add provideStoreDevtools function ([#3537](https://github.com/ngrx/platform/issues/3537)) ([6b0db4e](https://github.com/ngrx/platform/commit/6b0db4e)), closes [#3527](https://github.com/ngrx/platform/issues/3527)
+
 <a name="14.2.0"></a>
 
 # [14.2.0](https://github.com/ngrx/platform/compare/14.1.0...14.2.0) (2022-08-18)
