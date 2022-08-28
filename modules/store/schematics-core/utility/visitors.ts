@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import { normalize, resolve } from '@angular-devkit/core';
 import { Tree, DirEntry } from '@angular-devkit/schematics';
+import { getNodeDecorators } from './decorators';
 
 export function visitTSSourceFiles<Result = void>(
   tree: Tree,
@@ -166,15 +167,13 @@ export function visitDecorator(
     }
 
     const classDeclarationNode = node as ts.ClassDeclaration;
+    const decorators = getNodeDecorators(classDeclarationNode);
 
-    if (
-      !classDeclarationNode.decorators ||
-      !classDeclarationNode.decorators.length
-    ) {
+    if (!decorators || !decorators.length) {
       return;
     }
 
-    const componentDecorator = classDeclarationNode.decorators.find((d) => {
+    const componentDecorator = decorators.find((d) => {
       return (
         ts.isCallExpression(d.expression) &&
         ts.isIdentifier(d.expression.expression) &&
