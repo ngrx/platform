@@ -45,6 +45,22 @@ export function createReduxDevtoolsExtension() {
   }
 }
 
+/**
+ * Provides developer tools and instrumentation for `Store`.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * bootstrapApplication(AppComponent, {
+ *   providers: [
+ *     provideStoreDevtools({
+ *       maxAge: 25,
+ *       logOnly: environment.production,
+ *     }),
+ *   ],
+ * });
+ * ```
+ */
 export function provideStoreDevtools(
   options: StoreDevtoolsOptions = {}
 ): EnvironmentProviders {

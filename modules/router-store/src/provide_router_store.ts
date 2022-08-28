@@ -23,12 +23,10 @@ import { EnvironmentProviders } from '@ngrx/store';
  *
  * @usageNotes
  *
- * ```typescript
+ * ```ts
  * bootstrapApplication(AppComponent, {
- *  providers: [
- *    provideRouterStore()
- *  ]
- * })
+ *   providers: [provideRouterStore()],
+ * });
  * ```
  */
 export function provideRouterStore<
