@@ -5,6 +5,7 @@ import { createRule } from '../../rule-creator';
 import {
   asPattern,
   getNgRxStores,
+  isMemberExpression,
   namedCallableExpression,
   pipeExpression,
 } from '../../utils';
@@ -59,17 +60,40 @@ export default createRule<Options, MessageIds>({
       return false;
     }
 
+    let pipeHasThisExpression = false;
+
+    const selectorQuery = `:matches(${selectSelector}, ${pipeWithSelectAndMapSelector})`;
     return {
-      [`:matches(${selectSelector}, ${pipeWithSelectAndMapSelector}) > CallExpression[callee.name='map']:not(:has(ThisExpression))`](
+      [`${selectorQuery} > CallExpression:has(ThisExpression)`](
         node: TSESTree.CallExpression
       ) {
+        pipeHasThisExpression = true;
+      },
+      [`${selectorQuery}[callee.property.name=pipe]:exit`](
+        node: TSESTree.CallExpression
+      ) {
+        if (pipeHasThisExpression) {
+          pipeHasThisExpression = false;
+          return;
+        }
+
         if (isInCreateEffect(node)) {
           return;
         }
-        context.report({
-          node,
-          messageId,
-        });
+
+        const operators = node.arguments;
+        const mapOperator = operators.find(
+          (operator) =>
+            isCallExpression(operator) &&
+            isIdentifier(operator.callee) &&
+            operator.callee.name === 'map'
+        );
+        if (mapOperator) {
+          context.report({
+            node: mapOperator,
+            messageId,
+          });
+        }
       },
     };
   },
