@@ -67,6 +67,19 @@ import {
   _provideForRootGuard,
 } from './store_config';
 
+export function provideState<T, V extends Action = Action>(
+  featureName: string,
+  reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
+  config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
+): EnvironmentProviders;
+export function provideState<T, V extends Action = Action>(
+  featureName: string,
+  reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
+  config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
+): EnvironmentProviders;
+export function provideState<T, V extends Action = Action>(
+  slice: FeatureSlice<T, V>
+): EnvironmentProviders;
 /**
  * Provides additional slices of state in the Store.
  * These providers cannot be used at the component level.
@@ -88,19 +101,6 @@ import {
  * ];
  * ```
  */
-export function provideState<T, V extends Action = Action>(
-  featureName: string,
-  reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-  config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
-): EnvironmentProviders;
-export function provideState<T, V extends Action = Action>(
-  featureName: string,
-  reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
-  config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
-): EnvironmentProviders;
-export function provideState<T, V extends Action = Action>(
-  slice: FeatureSlice<T, V>
-): EnvironmentProviders;
 export function provideState(
   featureNameOrSlice: string | FeatureSlice<any, any>,
   reducers?:
@@ -199,6 +199,10 @@ const ENVIRONMENT_STORE_PROVIDER: Provider[] = [
   },
 ];
 
+export function provideStore<T, V extends Action = Action>(
+  reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
+  config?: RootStoreConfig<T, V>
+): EnvironmentProviders;
 /**
  * Provides the global Store providers and initializes
  * the Store.
@@ -214,10 +218,6 @@ const ENVIRONMENT_STORE_PROVIDER: Provider[] = [
  * });
  * ```
  */
-export function provideStore<T, V extends Action = Action>(
-  reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-  config?: RootStoreConfig<T, V>
-): EnvironmentProviders;
 export function provideStore(
   reducers:
     | ActionReducerMap<any, any>
