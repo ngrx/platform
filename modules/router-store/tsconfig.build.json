@@ -23,8 +23,6 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "compilationMode": "partial",
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": true,
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/router-store"
   }

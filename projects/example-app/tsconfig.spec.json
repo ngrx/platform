@@ -4,8 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
     "types": ["jest", "node"],
-    "strict": false,
-    "target": "es2020"
+    "strict": false
   },
   "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]

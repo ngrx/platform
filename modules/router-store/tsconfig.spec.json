@@ -3,8 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["jest", "node"],
-    "target": "es2020"
+    "types": ["jest", "node"]
   },
   "files": ["test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
