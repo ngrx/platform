@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es2020",
     "types": ["jest", "node"]
   },
   "files": ["test-setup.ts"],

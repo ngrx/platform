@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "component": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/component",
       "sourceRoot": "modules/component/src",
@@ -52,6 +53,7 @@
       "tags": []
     },
     "component-store": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/component-store",
       "sourceRoot": "modules/component-store/src",
@@ -102,6 +104,7 @@
       "tags": []
     },
     "data": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/data",
       "sourceRoot": "modules/data/src",
@@ -152,6 +155,7 @@
       "tags": []
     },
     "data-example-app": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "schematics": {
         "@nrwl/angular:component": {
@@ -251,6 +255,7 @@
       "tags": []
     },
     "docs-app": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "projects/ngrx.io",
       "sourceRoot": "projects/ngrx.io/src",
       "projectType": "application",
@@ -323,6 +328,7 @@
       ]
     },
     "effects": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/effects",
       "sourceRoot": "modules/effects/src",
@@ -382,6 +388,7 @@
       "tags": []
     },
     "entity": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/entity",
       "sourceRoot": "modules/entity/src",
@@ -441,6 +448,7 @@
       "tags": []
     },
     "eslint-plugin": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "modules/eslint-plugin",
       "sourceRoot": "modules/eslint-plugin/src",
       "projectType": "library",
@@ -497,10 +505,6 @@
               {
                 "command": "nx build-package eslint-plugin"
               },
-              // uncomment when there are eslint-plugin migrations
-              // {
-              //   "command": "yarn tsc -p modules/eslint-plugin/tsconfig.schematics.json"
-              // },
               {
                 "command": "cpy modules/eslint-plugin/migrations/migration.json dist/modules/eslint-plugin/migrations"
               },
@@ -518,6 +522,7 @@
       "tags": []
     },
     "example-app": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "projects/example-app",
       "sourceRoot": "projects/example-app/src",
       "projectType": "application",
@@ -607,6 +612,7 @@
       "tags": []
     },
     "example-app-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "projects/example-app-e2e",
       "sourceRoot": "projects/example-app-e2e/src",
       "projectType": "application",
@@ -639,6 +645,7 @@
       "implicitDependencies": ["example-app"]
     },
     "router-store": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/router-store",
       "sourceRoot": "modules/router-store/src",
@@ -689,6 +696,7 @@
       "tags": []
     },
     "schematics": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "modules/schematics",
       "sourceRoot": "modules/schematics/src",
       "projectType": "library",
@@ -771,6 +779,7 @@
       "tags": []
     },
     "schematics-core": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/schematics-core",
       "sourceRoot": "modules/schematics-core",
@@ -799,6 +808,7 @@
       "tags": []
     },
     "standalone-app": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "projects/standalone-app",
       "sourceRoot": "projects/standalone-app/src",
@@ -892,6 +902,7 @@
       "tags": []
     },
     "standalone-app-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "projects/standalone-app-e2e",
       "sourceRoot": "projects/standalone-app-e2e/src",
       "projectType": "application",
@@ -920,6 +931,7 @@
       "implicitDependencies": ["standalone-app"]
     },
     "store": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/store",
       "sourceRoot": "modules/store/src",
@@ -979,6 +991,7 @@
       "tags": []
     },
     "store-devtools": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "modules/store-devtools",
       "sourceRoot": "modules/store-devtools/src",

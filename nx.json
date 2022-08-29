@@ -34,17 +34,8 @@
     "appsDir": "projects",
     "libsDir": "modules"
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
-  },
   "cli": {
-    "analytics": false,
-    "defaultCollection": "@nrwl/angular"
+    "analytics": false
   },
   "generators": {
     "@schematics/angular:component": {
@@ -72,5 +63,11 @@
       "style": "css"
     }
   },
-  "defaultProject": "example-app"
+  "defaultProject": "example-app",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
+  }
 }
