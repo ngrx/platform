@@ -13,7 +13,7 @@ export function createRouterSelector<
   return createFeatureSelector(DEFAULT_ROUTER_FEATURENAME);
 }
 
-export function getSelectors<V>(
+export function getSelectors<V extends Record<string, any>>(
   selectState: (state: V) => RouterReducerState<any> = createRouterSelector<V>()
 ): RouterStateSelectors<V> {
   const selectRouterState = createSelector(

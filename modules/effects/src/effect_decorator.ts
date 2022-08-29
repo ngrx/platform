@@ -28,7 +28,7 @@ export function Effect(config: EffectConfig = {}) {
   };
 }
 
-export function getEffectDecoratorMetadata<T>(
+export function getEffectDecoratorMetadata<T extends Object>(
   instance: T
 ): EffectMetadata<T>[] {
   const effectsDecorators: EffectMetadata<T>[] = compose(
