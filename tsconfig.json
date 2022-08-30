@@ -8,7 +8,6 @@
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "noImplicitOverride": true,
-    "noStrictGenericChecks": true,
     "lib": ["es2016", "dom"],
     "outDir": "../out-tsc/app",
     "target": "es2020",
