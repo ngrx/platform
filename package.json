@@ -146,7 +146,7 @@
     "@types/shelljs": "^0.8.5",
     "@typescript-eslint/eslint-plugin": "5.35.1",
     "@typescript-eslint/parser": "5.35.1",
-    "@typescript-eslint/utils": "^5.29.0",
+    "@typescript-eslint/utils": "5.35.1",
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
     "conventional-changelog": "^1.1.4",
