@@ -32,7 +32,7 @@
   "vsavkin": {
     "name": "Victor Savkin",
     "picture": "victor.png",
-    "twitter": "vsavkin",
+    "twitter": "victorsavkin",
     "website": "http://blog.nrwl.io",
     "bio":
       "Victor is co-founder of Nrwl. Victor developed Angular dependency injection, change detection, forms, and the router.",
@@ -53,7 +53,7 @@
     "name": "John Papa",
     "picture": "john-papa.jpg",
     "website": "https://github.com/johnpapa",
-    "twitter": "johnpapa",
+    "twitter": "john_papa",
     "bio":
       "John Papa is a dedicated father and husband, a Principal Developer Advocate with Microsoft, and an alumnus of the Google Developer Expert, Microsoft RD, and MVP programs.",
     "group": "Core"
@@ -71,7 +71,6 @@
   "wesleygrimes": {
     "name": "Wes Grimes",
     "picture": "wesgrimes.jpg",
-    "twitter": "wesgrimes",
     "website": "https://github.com/wesleygrimes",
     "bio": "Wes is a software engineer in the insurance industry, and writer for Angular in Depth and Ultimate Courses.",
     "group": "Core"
@@ -92,6 +91,6 @@
     "twitter": "markostdev",
     "website": "https://github.com/markostanimirovic",
     "bio": "Dev @jobcloud · Organizer @angularbelgrade · Hobby Musician guitar · MSc in Software Engineering.",
-    "group": "Contributor"
+    "group": "Core"
   }
 }
