@@ -42,14 +42,21 @@ export default createRule<Options, MessageIds>({
       storeNames
     )})` as const;
 
+    const selectsInArray: TSESTree.CallExpression[] = [];
     return {
-      [`CallExpression[callee.name='combineLatest'][arguments.length>1] ${pipeableOrStoreSelect} ~ ${pipeableOrStoreSelect}`](
+      [`CallExpression[callee.name='combineLatest'] ${pipeableOrStoreSelect} ~ ${pipeableOrStoreSelect}`](
         node: TSESTree.CallExpression
       ) {
-        context.report({
-          node,
-          messageId,
-        });
+        selectsInArray.push(node);
+      },
+      [`CallExpression[callee.name='combineLatest']:exit`]() {
+        for (const node of selectsInArray) {
+          context.report({
+            node,
+            messageId,
+          });
+        }
+        selectsInArray.length = 0;
       },
     };
   },
