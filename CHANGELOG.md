@@ -1,3 +1,12 @@
+<a name="14.3.1"></a>
+
+## [14.3.1](https://github.com/ngrx/platform/compare/14.3.0...14.3.1) (2022-09-08)
+
+### Bug Fixes
+
+- add support for TypeScript 4.8 ([#3548](https://github.com/ngrx/platform/issues/3548)) ([d558ce1](https://github.com/ngrx/platform/commit/d558ce1)), closes [#3547](https://github.com/ngrx/platform/issues/3547)
+- **eslint-plugin:** avoid-mapping-selectors don't report on ThisExpression ([#3546](https://github.com/ngrx/platform/issues/3546)) ([a28175c](https://github.com/ngrx/platform/commit/a28175c)), closes [#3511](https://github.com/ngrx/platform/issues/3511)
+
 <a name="14.3.0"></a>
 
 # [14.3.0](https://github.com/ngrx/platform/compare/14.2.0...14.3.0) (2022-08-25)
