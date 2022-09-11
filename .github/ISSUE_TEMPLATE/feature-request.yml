@@ -9,6 +9,25 @@ body:
         Please search GitHub for a similar issue or PR before submitting a new issue.
         If you need real-time help, join us on [Discord](https://discord.com/invite/ngrx).
 
+  - type: dropdown
+    id: affected-packages
+    attributes:
+      label: Which @ngrx/* package(s) are relevant/related to the feature request?
+      options:
+        - component-store
+        - component
+        - data
+        - effects
+        - entity
+        - eslint-plugin
+        - router-store
+        - schematics
+        - store-devtools
+        - store
+      multiple: true
+    validations:
+      required: true
+
   - type: textarea
     id: information
     attributes:

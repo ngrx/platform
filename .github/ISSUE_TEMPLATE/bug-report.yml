@@ -1,6 +1,5 @@
 name: Bug Report
 description: Report a bug or regression in functionality
-labels: [bug]
 
 body:
   - type: markdown
@@ -9,6 +8,25 @@ body:
         ❤️ ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate)
         Please search GitHub for a similar issue or PR before submitting a new issue.
         If you need real-time help, join us on [Discord](https://discord.com/invite/ngrx).
+
+  - type: dropdown
+    id: affected-packages
+    attributes:
+      label: Which @ngrx/* package(s) are the source of the bug?
+      options:
+        - component-store
+        - component
+        - data
+        - effects
+        - entity
+        - eslint-plugin
+        - router-store
+        - schematics
+        - store-devtools
+        - store
+      multiple: true
+    validations:
+      required: true
 
   - type: textarea
     id: reproduction
