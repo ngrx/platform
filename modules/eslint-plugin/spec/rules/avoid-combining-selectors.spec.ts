@@ -80,12 +80,44 @@ class NotOk {
     `
 import { Store } from '@ngrx/store'
 
+class NotOkWithArrays {
+  readonly vm$: Observable<unknown>
+
+  constructor(store: Store, private store2: Store) {
+    this.vm$ = combineLatest([
+      store.select(selectItems),
+      store.select(selectOtherItems),
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+      this.store2.select(selectOtherItems),
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    ])
+  }
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+
 class NotOk1 {
   vm$ = combineLatest(
     this.store.pipe(select(selectItems)),
     this.store.pipe(select(selectOtherItems)),
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
   )
+
+  constructor(private store: Store) {}
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+
+class NotOkWithArray {
+  vm$ = combineLatest([
+    this.store.pipe(select(selectItems)),
+    this.store.pipe(select(selectOtherItems)),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  ])
 
   constructor(private store: Store) {}
 }`
