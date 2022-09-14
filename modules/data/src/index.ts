@@ -191,8 +191,10 @@ export {
 } from './utils/utilities';
 
 // // EntityDataModule
-export {
-  EntityDataModuleConfig,
-  EntityDataModuleWithoutEffects,
-} from './entity-data-without-effects.module';
+export { EntityDataModuleWithoutEffects } from './entity-data-without-effects.module';
 export { EntityDataModule } from './entity-data.module';
+export {
+  provideEntityData,
+  provideEntityDataWithoutEffects,
+  EntityDataModuleConfig,
+} from './provide_entity_data';

@@ -2,36 +2,14 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { EffectsModule, EffectSources } from '@ngrx/effects';
 
-import { DefaultDataServiceFactory } from './dataservices/default-data.service';
-
-import {
-  DefaultPersistenceResultHandler,
-  PersistenceResultHandler,
-} from './dataservices/persistence-result-handler.service';
-
-import {
-  DefaultHttpUrlGenerator,
-  HttpUrlGenerator,
-} from './dataservices/http-url-generator';
-
-import { EntityCacheDataService } from './dataservices/entity-cache-data.service';
 import { EntityCacheEffects } from './effects/entity-cache-effects';
-import { EntityDataService } from './dataservices/entity-data.service';
 import { EntityEffects } from './effects/entity-effects';
 
-import { ENTITY_METADATA_TOKEN } from './entity-metadata/entity-metadata';
-
-import {
-  ENTITY_CACHE_META_REDUCERS,
-  ENTITY_COLLECTION_META_REDUCERS,
-} from './reducers/constants';
-import { Pluralizer, PLURAL_NAMES_TOKEN } from './utils/interfaces';
-import { DefaultPluralizer } from './utils/default-pluralizer';
-
+import { EntityDataModuleWithoutEffects } from './entity-data-without-effects.module';
 import {
   EntityDataModuleConfig,
-  EntityDataModuleWithoutEffects,
-} from './entity-data-without-effects.module';
+  _provideEntityData,
+} from './provide_entity_data';
 
 /**
  * entity-data main module includes effects and HTTP data services
@@ -43,19 +21,6 @@ import {
     EntityDataModuleWithoutEffects,
     EffectsModule, // do not supply effects because can't replace later
   ],
-  providers: [
-    DefaultDataServiceFactory,
-    EntityCacheDataService,
-    EntityDataService,
-    EntityCacheEffects,
-    EntityEffects,
-    { provide: HttpUrlGenerator, useClass: DefaultHttpUrlGenerator },
-    {
-      provide: PersistenceResultHandler,
-      useClass: DefaultPersistenceResultHandler,
-    },
-    { provide: Pluralizer, useClass: DefaultPluralizer },
-  ],
 })
 export class EntityDataModule {
   static forRoot(
@@ -63,34 +28,7 @@ export class EntityDataModule {
   ): ModuleWithProviders<EntityDataModule> {
     return {
       ngModule: EntityDataModule,
-      providers: [
-        // TODO: Moved these effects classes up to EntityDataModule itself
-        // Remove this comment if that was a mistake.
-        // EntityCacheEffects,
-        // EntityEffects,
-        {
-          provide: ENTITY_METADATA_TOKEN,
-          multi: true,
-          useValue: config.entityMetadata ? config.entityMetadata : [],
-        },
-        {
-          provide: ENTITY_CACHE_META_REDUCERS,
-          useValue: config.entityCacheMetaReducers
-            ? config.entityCacheMetaReducers
-            : [],
-        },
-        {
-          provide: ENTITY_COLLECTION_META_REDUCERS,
-          useValue: config.entityCollectionMetaReducers
-            ? config.entityCollectionMetaReducers
-            : [],
-        },
-        {
-          provide: PLURAL_NAMES_TOKEN,
-          multi: true,
-          useValue: config.pluralNames ? config.pluralNames : {},
-        },
-      ],
+      providers: [..._provideEntityData(config)],
     };
   }
 

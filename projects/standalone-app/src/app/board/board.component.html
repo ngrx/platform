@@ -1,0 +1,7 @@
+<ngrx-board-ui
+  (add)="add($event)"
+  (delete)="delete($event)"
+  (update)="update($event)"
+  [stories]="(stories$ | async)!"
+>
+</ngrx-board-ui>

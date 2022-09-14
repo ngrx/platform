@@ -1,0 +1,33 @@
+<div cdkDropListGroup>
+  <div
+    *ngFor="let storyColumn of stories; let i = index"
+    class="list-container"
+  >
+    <h2>Column {{ i }}</h2>
+
+    <button (click)="addNew(i, storyColumn)">Add New</button>
+
+    <div
+      (cdkDropListDropped)="dropStory($event, i)"
+      [cdkDropListData]="storyColumn"
+      cdkDropList
+      class="drag-list"
+      id="{{ i }}"
+    >
+      <div
+        *ngFor="let story of storyColumn"
+        [cdkDragData]="story"
+        cdkDrag
+        class="drag-box"
+      >
+        <input
+          #storyTitle
+          (blur)="updateStory(story, storyTitle.value)"
+          [ngModel]="story.title"
+        />
+        -
+        <button (click)="delete.emit(story.storyId)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

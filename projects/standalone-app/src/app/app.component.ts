@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router';
     <h1>Welcome {{ title }}</h1>
 
     <a routerLink="/feature">Load Feature</a>
+    <br />
+    <a routerLink="/board">Boards</a>
 
     <router-outlet></router-outlet>
   `,
