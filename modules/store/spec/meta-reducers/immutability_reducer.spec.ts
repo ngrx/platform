@@ -1,4 +1,4 @@
-import { immutabilityCheckMetaReducer } from '../../src/meta-reducers';
+import { immutabilityCheckMetaReducer, freeze } from '../../src/meta-reducers';
 
 describe('immutabilityCheckMetaReducer:', () => {
   describe('actions:', () => {
@@ -126,5 +126,19 @@ describe('immutabilityCheckMetaReducer:', () => {
       const state = reducer({ numbers: [1, 2, 3] }, { type: 'init' });
       return reducer(state, { type: 'invoke' });
     }
+  });
+});
+
+describe('freeze', () => {
+  it('should not freeze the same object twice', () => {
+    const childObj = { bar: 'baz' };
+    const parentObj = { foo: childObj };
+    const spy = spyOn(Object, 'freeze').and.callThrough();
+    freeze(parentObj);
+    expect(spy).toHaveBeenCalledWith(parentObj);
+    expect(spy).toHaveBeenCalledWith(childObj);
+    spy.calls.reset();
+    freeze(parentObj);
+    expect(spy).not.toHaveBeenCalled();
   });
 });

@@ -14,7 +14,11 @@ export function immutabilityCheckMetaReducer(
   };
 }
 
-function freeze(target: any) {
+export function freeze(target: any) {
+  if (Object.isFrozen(target)) {
+    return target;
+  }
+
   Object.freeze(target);
 
   const targetIsFunction = isFunction(target);
