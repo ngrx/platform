@@ -31,6 +31,7 @@ commands:
 jobs:
   install:
     <<: *run_in_node
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
