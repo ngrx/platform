@@ -90,5 +90,39 @@ describe('createReducer()', () => {
         on(foo, (state, action) => { const bar: string = action.bar; return state; });
       `).toFail(/'bar' does not exist on type/);
     });
+
+    it('should infer the typed based on state and actions type with action used in on function', () => {
+      expectSnippet(`
+        interface State { name: string };
+        const foo = createAction('FOO', props<{ foo: string }>());
+        const onFn = on(foo, (state: State, action) => ({  name: action.foo }));
+      `).toInfer(
+        'onFn',
+        `
+      ReducerTypes<{
+        name: string;
+    }, [ActionCreator<"FOO", (props: {
+        foo: string;
+    }) => {
+        foo: string;
+    } & TypedAction<"FOO">>]>
+    `
+      );
+    });
+
+    it('should infer the typed based on state and actions type without action', () => {
+      expectSnippet(`
+        interface State { name: string };
+        const foo = createAction('FOO');
+        const onFn = on(foo, (state: State) => ({ name: 'some value' }));
+      `).toInfer(
+        'onFn',
+        `
+      ReducerTypes<{
+        name: string;
+    }, [ActionCreator<"FOO", () => TypedAction<"FOO">>]>
+    `
+      );
+    });
   });
 });
