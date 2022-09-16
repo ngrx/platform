@@ -1,4 +1,4 @@
-import { ENVIRONMENT_INITIALIZER, inject, Provider } from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
 import {
   _createRouterConfig,
   _ROUTER_CONFIG,
@@ -25,7 +25,10 @@ import { EnvironmentProviders } from '@ngrx/store';
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
- *   providers: [provideRouterStore()],
+ *   providers: [
+ *     provideStore({ router: routerReducer }),
+ *     provideRouterStore(),
+ *   ],
  * });
  * ```
  */
