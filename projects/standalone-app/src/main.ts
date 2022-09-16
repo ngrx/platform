@@ -1,6 +1,9 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import {
+  provideRouter,
+  withEnabledBlockingInitialNavigation,
+} from '@angular/router';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
@@ -18,17 +21,15 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideStore({ router: routerReducer }),
-    importProvidersFrom(
-      RouterModule.forRoot(
-        [
-          {
-            path: 'feature',
-            loadChildren: () =>
-              import('./app/lazy/feature.routes').then((m) => m.routes),
-          },
-        ],
-        { initialNavigation: 'enabledBlocking' }
-      )
+    provideRouter(
+      [
+        {
+          path: 'feature',
+          loadChildren: () =>
+            import('./app/lazy/feature.routes').then((m) => m.routes),
+        },
+      ],
+      withEnabledBlockingInitialNavigation()
     ),
     provideStoreDevtools({
       maxAge: 25,
