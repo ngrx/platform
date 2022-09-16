@@ -37,7 +37,7 @@ import {
   Injector,
   Provider,
 } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, flushMicrotasks } from '@angular/core/testing';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -1651,7 +1651,7 @@ describe('Component Store', () => {
 
       const store = state.injector.get(LifecycleStore);
 
-      tick(0);
+      flushMicrotasks();
       expect(store.ngrxOnStoreInit).toBeDefined();
       expect(store['ɵhasProvider']).toBeTruthy();
       expect(console.warn).not.toHaveBeenCalled();
@@ -1666,7 +1666,7 @@ describe('Component Store', () => {
 
       const store = state.injector.get(NonProviderStore);
 
-      tick(0);
+      flushMicrotasks();
       expect(store.ngrxOnStoreInit).toBeDefined();
       expect(store['ɵhasProvider']).toBeFalsy();
       expect(console.warn).toHaveBeenCalled();

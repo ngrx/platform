@@ -9,7 +9,7 @@ import {
   Subject,
   queueScheduler,
   scheduled,
-  asyncScheduler,
+  asapScheduler,
   EMPTY,
 } from 'rxjs';
 import {
@@ -322,7 +322,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
    * but not used with provideComponentStore()
    */
   private checkProviderForHooks() {
-    asyncScheduler.schedule(() => {
+    asapScheduler.schedule(() => {
       if (
         isDevMode() &&
         (isOnStoreInitDefined(this) || isOnStateInitDefined(this)) &&
