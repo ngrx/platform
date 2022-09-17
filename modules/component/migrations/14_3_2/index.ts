@@ -27,12 +27,32 @@ function migrateReactiveComponentModule() {
         return;
       }
 
-      const changes = [
-        ...findReactiveComponentModuleImportDeclarations(
+      const ngModuleReplacements =
+        findReactiveComponentModuleNgModuleReplacements(sourceFile);
+
+      const possibleUsagesOfReactiveComponentModuleCount =
+        findPossibleReactiveComponentModuleUsageCount(sourceFile);
+
+      const importAdditionReplacements =
+        findReactiveComponentModuleImportDeclarationAdditions(
           sourceFile,
           componentImports
-        ),
-        ...findReactiveComponentModuleImportReplacements(sourceFile),
+        );
+
+      const importUsagesCount = importAdditionReplacements.length;
+
+      const jsImportDeclarationReplacements =
+        possibleUsagesOfReactiveComponentModuleCount >
+        ngModuleReplacements.length + importUsagesCount
+          ? importAdditionReplacements
+          : findReactiveComponentModuleImportDeclarationReplacements(
+              sourceFile,
+              componentImports
+            );
+
+      const changes = [
+        ...jsImportDeclarationReplacements,
+        ...ngModuleReplacements,
       ];
 
       commitChanges(tree, sourceFile.fileName, changes);
@@ -40,7 +60,7 @@ function migrateReactiveComponentModule() {
   };
 }
 
-function findReactiveComponentModuleImportDeclarations(
+function findReactiveComponentModuleImportDeclarationReplacements(
   sourceFile: ts.SourceFile,
   imports: ts.ImportDeclaration[]
 ) {
@@ -85,7 +105,68 @@ function findReactiveComponentModuleImportDeclarations(
   return changes;
 }
 
-function findReactiveComponentModuleImportReplacements(
+function findReactiveComponentModuleImportDeclarationAdditions(
+  sourceFile: ts.SourceFile,
+  imports: ts.ImportDeclaration[]
+) {
+  const changes = imports
+    .map((p) => (p?.importClause?.namedBindings as ts.NamedImports)?.elements)
+    .reduce(
+      (imports, curr) => imports.concat(curr ?? []),
+      [] as ts.ImportSpecifier[]
+    )
+    .map((specifier) => {
+      if (!ts.isImportSpecifier(specifier)) {
+        return { hit: false };
+      }
+
+      if (specifier.name.text === reactiveComponentModuleText) {
+        return { hit: true, specifier, text: specifier.name.text };
+      }
+
+      // if import is renamed
+      if (
+        specifier.propertyName &&
+        specifier.propertyName.text === reactiveComponentModuleText
+      ) {
+        return { hit: true, specifier, text: specifier.propertyName.text };
+      }
+
+      return { hit: false };
+    })
+    .filter(({ hit }) => hit)
+    .map(({ specifier, text }) =>
+      !!specifier && !!text
+        ? createReplaceChange(
+            sourceFile,
+            specifier,
+            text,
+            `${text}, ${reactiveComponentModuleReplacement}`
+          )
+        : undefined
+    )
+    .filter((change) => !!change) as Array<ReplaceChange>;
+
+  return changes;
+}
+
+function findPossibleReactiveComponentModuleUsageCount(
+  sourceFile: ts.SourceFile
+): number {
+  let count = 0;
+  ts.forEachChild(sourceFile, (node) => countUsages(node));
+  return count;
+
+  function countUsages(node: ts.Node) {
+    if (ts.isIdentifier(node) && node.text === reactiveComponentModuleText) {
+      count = count + 1;
+    }
+
+    ts.forEachChild(node, (childNode) => countUsages(childNode));
+  }
+}
+
+function findReactiveComponentModuleNgModuleReplacements(
   sourceFile: ts.SourceFile
 ) {
   const changes: ReplaceChange[] = [];
