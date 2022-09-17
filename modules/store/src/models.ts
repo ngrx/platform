@@ -1,3 +1,5 @@
+import { ImportedNgModuleProviders } from '@angular/core';
+
 export interface Action {
   type: string;
 }
@@ -173,3 +175,9 @@ export interface RuntimeChecks {
    */
   strictActionTypeUniqueness?: boolean;
 }
+
+/** An alias type of ImportedNgModuleProviders
+ * that better describes where the providers
+ * are allowed to be registered.
+ */
+export type EnvironmentProviders = ImportedNgModuleProviders;

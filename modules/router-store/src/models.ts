@@ -1,4 +1,4 @@
-import { Params, Data } from '@angular/router';
+import { Data, Params } from '@angular/router';
 import { MemoizedSelector } from '@ngrx/store';
 
 export interface RouterStateSelectors<V> {

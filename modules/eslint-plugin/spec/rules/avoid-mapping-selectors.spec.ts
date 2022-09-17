@@ -118,11 +118,16 @@ export class CollectionService {
 import { Store } from '@ngrx/store'
 
 class OkBecauseOfThis {
-  foo$ = this.store.select(selectIsAuthenticated).pipe(
+  storeSelect$ = this.store.select(selectIsAuthenticated).pipe(
       take(1),
       map((isAuthenticated: boolean) => (isAuthenticated ? true : this.router.parseUrl('/login'))),
   )
 
+  pipeSelect$ = this.store.pipe(
+      select(selectIsAuthenticated),
+      take(1),
+      map((isAuthenticated: boolean) => (isAuthenticated ? true : this.router.parseUrl('/login'))),
+  )
 
   constructor(private store: Store) {}
 }`,
@@ -130,15 +135,54 @@ class OkBecauseOfThis {
 import { Store } from '@ngrx/store'
 
 class OkBecauseOfEffect {
-foo$ = createEffect(() => {
-  return this.store.select(selectObj).pipe(
-    map((obj) => obj.prop),
-    distinctUntilChanged(),
-    map(() => anAction())
-  )
-})
-  
-constructor(private store: Store) {}
+  storeSelect$ = createEffect(() => {
+    return this.store.select(selectObj).pipe(
+      map((obj) => obj.prop),
+      distinctUntilChanged(),
+      map(() => anAction())
+    )
+  })
+
+  pipeSelect$ = createEffect(() => {
+    return this.store.pipe(
+      select(selectObj),
+      map((obj) => obj.prop),
+      distinctUntilChanged(),
+      map(() => anAction())
+    )
+  })
+
+  constructor(private store: Store) {}
+}`,
+  // https://github.com/ngrx/platform/issues/3511
+  `
+import { Store } from '@ngrx/store'
+
+class OkBecauseOfEffect {
+  storeSelect$ = createEffect(() => {
+    return this.store.select(selectObj).pipe(
+      switchMap(() => this.service.something()),
+      map((obj) => obj.prop),
+    )
+  })
+
+  pipeSelect$ = createEffect(() => {
+    return this.store.pipe(
+      select(selectObj),
+      exhaustMap(() => this.service.something()),
+      map((obj) => obj.prop),
+    )
+  })
+
+  somethingElse$ = createEffect(() => {
+    return this.store.pipe(
+      select(selectObj),
+      customOperator(() => this.prop),
+      map((obj) => obj.prop),
+    )
+  })
+
+  constructor(private store: Store, private service: Service) {}
 }`,
 ];
 

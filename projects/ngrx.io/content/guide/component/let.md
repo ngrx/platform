@@ -136,6 +136,6 @@ This feature provides the ability to create readable templates by using aliases 
 - Allows displaying different content based on the current state of an observable.
 - Provides a unified/structured way of handling `null` and `undefined`.
 - Provides the ability to create readable templates by using aliases for nested properties.
-- Triggers the change detection differently if `zone.js` is present or not
-  using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.
+- Triggers change detection using the `RenderScheduler` that behaves differently in
+  zone-full and zone-less mode.
 - Distinct the same values in a row for better performance.

@@ -1,40 +1,51 @@
-import * as angular from '@angular/core';
-import { noop } from 'rxjs';
-import { createRenderScheduler } from '../../src/core/render-scheduler';
 import {
-  manualInstanceNgZone,
-  manualInstanceNoopNgZone,
-  MockChangeDetectorRef,
-} from '../fixtures/fixtures';
+  createRenderScheduler,
+  RenderScheduler,
+} from '../../src/core/render-scheduler';
+import { NoopTickScheduler } from '../../src/core/tick-scheduler';
+import { MockChangeDetectorRef } from '../fixtures/fixtures';
+import { TestBed } from '@angular/core/testing';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 
 describe('createRenderScheduler', () => {
-  function setup(ngZone: angular.NgZone) {
-    const cdRef = new MockChangeDetectorRef();
-    const renderScheduler = createRenderScheduler({ ngZone, cdRef });
-    jest.spyOn(angular, 'ɵmarkDirty').mockImplementation(noop);
+  it('should initialize within injection context', () => {
+    @Injectable({ providedIn: 'root' })
+    class Service {
+      readonly renderScheduler = createRenderScheduler();
+    }
 
-    return { cdRef, renderScheduler, markDirty: angular.ɵmarkDirty };
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      ],
+    });
+
+    const renderScheduler = TestBed.inject(Service).renderScheduler;
+    expect(renderScheduler).toBeInstanceOf(RenderScheduler);
+  });
+
+  it('should throw an error out of injection context', () => {
+    expect(() => createRenderScheduler()).toThrowError();
+  });
+});
+
+describe('RenderScheduler', () => {
+  function setup() {
+    const cdRef = new MockChangeDetectorRef();
+    const tickScheduler = new NoopTickScheduler();
+    jest.spyOn(tickScheduler, 'schedule');
+    const renderScheduler = new RenderScheduler(cdRef, tickScheduler);
+
+    return { cdRef, renderScheduler, tickScheduler };
   }
 
   describe('schedule', () => {
-    it('should call markForCheck in zone-full mode', () => {
-      const { cdRef, renderScheduler, markDirty } = setup(manualInstanceNgZone);
+    it('should call cdRef.markForCheck and tickScheduler.schedule', () => {
+      const { cdRef, renderScheduler, tickScheduler } = setup();
       renderScheduler.schedule();
 
-      expect(markDirty).toHaveBeenCalledTimes(0);
       expect(cdRef.markForCheck).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call markDirty in zone-less mode', () => {
-      const { cdRef, renderScheduler, markDirty } = setup(
-        manualInstanceNoopNgZone
-      );
-      renderScheduler.schedule();
-
-      expect(markDirty).toHaveBeenCalledWith(
-        (cdRef as unknown as { context: object }).context
-      );
-      expect(cdRef.markForCheck).toHaveBeenCalledTimes(0);
+      expect(tickScheduler.schedule).toHaveBeenCalledTimes(1);
     });
   });
 });

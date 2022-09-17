@@ -5,7 +5,7 @@ import {
 } from '@ngrx/store';
 import { RouterStateSelectors } from './models';
 import { RouterReducerState } from './reducer';
-import { DEFAULT_ROUTER_FEATURENAME } from './router_store_module';
+import { DEFAULT_ROUTER_FEATURENAME } from './router_store_config';
 
 export function createRouterSelector<
   State extends Record<string, any>
@@ -13,7 +13,7 @@ export function createRouterSelector<
   return createFeatureSelector(DEFAULT_ROUTER_FEATURENAME);
 }
 
-export function getSelectors<V>(
+export function getSelectors<V extends Record<string, any>>(
   selectState: (state: V) => RouterReducerState<any> = createRouterSelector<V>()
 ): RouterStateSelectors<V> {
   const selectRouterState = createSelector(

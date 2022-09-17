@@ -4,9 +4,13 @@ import { Subscription } from 'rxjs';
 
 import { EffectSources } from './effect_sources';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EffectsRunner implements OnDestroy {
   private effectsSubscription: Subscription | null = null;
+
+  get isStarted(): boolean {
+    return !!this.effectsSubscription;
+  }
 
   constructor(
     private effectSources: EffectSources,

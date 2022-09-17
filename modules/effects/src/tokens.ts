@@ -1,5 +1,8 @@
 import { InjectionToken, Type } from '@angular/core';
-import { EffectsErrorHandler } from './effects_error_handler';
+import {
+  defaultEffectsErrorHandler,
+  EffectsErrorHandler,
+} from './effects_error_handler';
 
 export const _ROOT_EFFECTS_GUARD = new InjectionToken<void>(
   '@ngrx/effects Internal Root Guard'
@@ -20,5 +23,6 @@ export const FEATURE_EFFECTS = new InjectionToken<any[][]>(
   '@ngrx/effects Feature Effects'
 );
 export const EFFECTS_ERROR_HANDLER = new InjectionToken<EffectsErrorHandler>(
-  '@ngrx/effects Effects Error Handler'
+  '@ngrx/effects Effects Error Handler',
+  { providedIn: 'root', factory: () => defaultEffectsErrorHandler }
 );

@@ -8,7 +8,7 @@ import {
 import { Observable, OperatorFunction, Operator } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Actions<V = Action> extends Observable<V> {
   constructor(@Inject(ScannedActionsSubject) source?: Observable<V>) {
     super();

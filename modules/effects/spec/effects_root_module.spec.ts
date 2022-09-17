@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { INIT, Store, StoreModule } from '@ngrx/store';
 
 import { EffectsModule } from '../src/effects_module';
-import { ROOT_EFFECTS_INIT } from '../src/effects_root_module';
+import { ROOT_EFFECTS_INIT } from '../src/effects_actions';
 
 describe('Effects Root Module', () => {
   const foo = 'foo';

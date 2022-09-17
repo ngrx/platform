@@ -78,6 +78,6 @@ an observable emits a new value. It can be used as follows:
 
 - Takes observables or promises, retrieves their values, and passes the value to the template.
 - Handles `null` and `undefined` values in a clean unified/structured way.
-- Triggers the change detection differently if `zone.js` is present or not
-  using `ChangeDetectorRef.markForCheck` or `ɵmarkDirty`.
+- Triggers change detection using the `RenderScheduler` that behaves differently in
+  zone-full and zone-less mode.
 - Distinct the same values in a row for better performance.

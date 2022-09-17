@@ -4,7 +4,8 @@
     "declaration": true,
     "stripInternal": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
     "module": "es2015",
     "moduleResolution": "node",
     "noEmitOnError": false,
@@ -24,8 +25,7 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "compilationMode": "partial",
-    // Work around for issue: https://github.com/angular/angular/issues/22210
-    "strictMetadataEmit": false,
+    "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/component"
   }

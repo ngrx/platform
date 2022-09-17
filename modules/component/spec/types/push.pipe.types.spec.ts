@@ -6,9 +6,9 @@ describe('PushPipe', () => {
       import { Observable } from 'rxjs';
       import { PushPipe } from '@ngrx/component';
 
-      const anyVal = {} as any;
-      const pushPipe = new PushPipe(anyVal, anyVal, anyVal);
-      const value = pushPipe.transform(anyVal as ${potentialObservableType});
+      const unknownVal: unknown = {};
+      const pushPipe = unknownVal as PushPipe;
+      const value = pushPipe.transform(unknownVal as ${potentialObservableType});
     `
   );
 

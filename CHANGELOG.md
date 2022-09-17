@@ -1,3 +1,55 @@
+<a name="14.3.1"></a>
+
+## [14.3.1](https://github.com/ngrx/platform/compare/14.3.0...14.3.1) (2022-09-08)
+
+### Bug Fixes
+
+- add support for TypeScript 4.8 ([#3548](https://github.com/ngrx/platform/issues/3548)) ([d558ce1](https://github.com/ngrx/platform/commit/d558ce1)), closes [#3547](https://github.com/ngrx/platform/issues/3547)
+- **eslint-plugin:** avoid-mapping-selectors don't report on ThisExpression ([#3546](https://github.com/ngrx/platform/issues/3546)) ([a28175c](https://github.com/ngrx/platform/commit/a28175c)), closes [#3511](https://github.com/ngrx/platform/issues/3511)
+
+<a name="14.3.0"></a>
+
+# [14.3.0](https://github.com/ngrx/platform/compare/14.2.0...14.3.0) (2022-08-25)
+
+### Features
+
+- **effects:** add provideEffects function ([#3524](https://github.com/ngrx/platform/issues/3524)) ([db35bfe](https://github.com/ngrx/platform/commit/db35bfe)), closes [#3522](https://github.com/ngrx/platform/issues/3522)
+- **router-store:** add provideRouterStore function ([#3532](https://github.com/ngrx/platform/issues/3532)) ([511b7cf](https://github.com/ngrx/platform/commit/511b7cf)), closes [#3528](https://github.com/ngrx/platform/issues/3528)
+- **store:** add provideStore and provideState functions for standalone APIs ([#3539](https://github.com/ngrx/platform/issues/3539)) ([5639c1e](https://github.com/ngrx/platform/commit/5639c1e)), closes [#3526](https://github.com/ngrx/platform/issues/3526)
+- **store-devtools:** add provideStoreDevtools function ([#3537](https://github.com/ngrx/platform/issues/3537)) ([6b0db4e](https://github.com/ngrx/platform/commit/6b0db4e)), closes [#3527](https://github.com/ngrx/platform/issues/3527)
+
+<a name="14.2.0"></a>
+
+# [14.2.0](https://github.com/ngrx/platform/compare/14.1.0...14.2.0) (2022-08-18)
+
+### Bug Fixes
+
+- **component-store:** make synchronous updater errors catchable ([#3490](https://github.com/ngrx/platform/issues/3490)) ([1a906fd](https://github.com/ngrx/platform/commit/1a906fd))
+- **component-store:** move isInitialized check to queueScheduler context on state update ([#3492](https://github.com/ngrx/platform/issues/3492)) ([53636e4](https://github.com/ngrx/platform/commit/53636e4)), closes [#2991](https://github.com/ngrx/platform/issues/2991)
+
+### Features
+
+- **component-store:** handle errors in next callback ([#3533](https://github.com/ngrx/platform/issues/3533)) ([551c8eb](https://github.com/ngrx/platform/commit/551c8eb))
+
+<a name="14.1.0"></a>
+
+# [14.1.0](https://github.com/ngrx/platform/compare/14.0.2...14.1.0) (2022-08-09)
+
+### Bug Fixes
+
+- **eslint-plugin:** allow sequential dispatches in a different block context ([#3515](https://github.com/ngrx/platform/issues/3515)) ([faf446f](https://github.com/ngrx/platform/commit/faf446f)), closes [#3513](https://github.com/ngrx/platform/issues/3513)
+- **eslint-plugin:** Remove the md suffix from the docsUrl path ([#3518](https://github.com/ngrx/platform/issues/3518)) ([71d4d4b](https://github.com/ngrx/platform/commit/71d4d4b))
+- **store:** improve error for forbidden characters in createActionGroup ([#3496](https://github.com/ngrx/platform/issues/3496)) ([398fbed](https://github.com/ngrx/platform/commit/398fbed))
+
+### Features
+
+- **component:** add RenderScheduler to the public API ([#3516](https://github.com/ngrx/platform/issues/3516)) ([4642919](https://github.com/ngrx/platform/commit/4642919))
+- **component:** replace markDirty with custom TickScheduler ([#3488](https://github.com/ngrx/platform/issues/3488)) ([3fcd8af](https://github.com/ngrx/platform/commit/3fcd8af))
+
+### Performance Improvements
+
+- **component:** do not schedule render for synchronous events ([#3487](https://github.com/ngrx/platform/issues/3487)) ([bb9071c](https://github.com/ngrx/platform/commit/bb9071c))
+
 <a name="14.0.2"></a>
 
 ## [14.0.2](https://github.com/ngrx/platform/compare/14.0.1...14.0.2) (2022-07-12)

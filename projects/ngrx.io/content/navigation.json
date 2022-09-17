@@ -114,6 +114,10 @@
                 {
                   "title": "Feature Creators",
                   "url": "guide/store/feature-creators"
+                },
+                {
+                  "title": "Action Groups",
+                  "url": "guide/store/action-groups"
                 }
               ]
             },

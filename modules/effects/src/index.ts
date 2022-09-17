@@ -11,14 +11,11 @@ export { EffectsMetadata, CreateEffectMetadata } from './models';
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';
+export { ROOT_EFFECTS_INIT, rootEffectsInit } from './effects_actions';
 export { EffectsRunner } from './effects_runner';
 export { EffectNotification } from './effect_notification';
 export { EffectsFeatureModule } from './effects_feature_module';
-export {
-  ROOT_EFFECTS_INIT,
-  rootEffectsInit,
-  EffectsRootModule,
-} from './effects_root_module';
+export { EffectsRootModule } from './effects_root_module';
 export { EFFECTS_ERROR_HANDLER } from './tokens';
 export { act } from './act';
 export {
@@ -28,3 +25,4 @@ export {
 } from './lifecycle_hooks';
 export { USER_PROVIDED_EFFECTS } from './tokens';
 export { concatLatestFrom } from './concat_latest_from';
+export { provideEffects } from './provide_effects';

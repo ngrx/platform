@@ -25,7 +25,7 @@ This command will automate the following steps:
 3. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot({})`.
 
 ```sh
-ng add @ngrx/store@latest --minimal false
+ng add @ngrx/store@latest --no-minimal
 ```
 
 This command will automate the following steps:
