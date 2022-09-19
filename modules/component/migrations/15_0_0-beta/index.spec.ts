@@ -64,7 +64,7 @@ describe('Component Migration 15_0_0-beta', () => {
         const runner = new SchematicTestRunner('schematics', collectionPath);
 
         const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-14-3-2`, {}, appTree)
+          .runSchematicAsync(`ngrx-${pkgName}-migration-15-beta`, {}, appTree)
           .toPromise();
         const file = newTree.readContent('app.module.ts');
 
@@ -101,7 +101,7 @@ describe('Component Migration 15_0_0-beta', () => {
         const runner = new SchematicTestRunner('schematics', collectionPath);
 
         const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-14-3-2`, {}, appTree)
+          .runSchematicAsync(`ngrx-${pkgName}-migration-15-beta`, {}, appTree)
           .toPromise();
         const file = newTree.readContent('app.module.ts');
 
@@ -148,7 +148,7 @@ describe('Component Migration 15_0_0-beta', () => {
         const runner = new SchematicTestRunner('schematics', collectionPath);
 
         const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-14-3-2`, {}, appTree)
+          .runSchematicAsync(`ngrx-${pkgName}-migration-15-beta`, {}, appTree)
           .toPromise();
         const file = newTree.readContent('app.module.ts');
 
