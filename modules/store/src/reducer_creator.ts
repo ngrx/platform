@@ -20,9 +20,23 @@ export interface ReducerTypes<
   types: ExtractActionTypes<Creators>;
 }
 
-// Specialized Reducer that is aware of the Action type it needs to handle
-export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
-  (state: State, action: ActionType<Creators[number]>): State;
+/**
+ *  Specialized Reducer that is aware of the Action type it needs to handle
+ */
+export interface OnReducer<
+  // State type that is being passed from consumer of `on` fn, e.g. from `createReducer` factory
+  State,
+  Creators extends readonly ActionCreator[],
+  // Inferred type from within OnReducer function if `State` is unknown
+  InferredState = State,
+  // Resulting state would be either a State or if State is unknown then the inferred state from the function itself
+  ResultState = unknown extends State ? InferredState : State
+> {
+  (
+    // if State is unknown then set the InferredState type
+    state: unknown extends State ? InferredState : State,
+    action: ActionType<Creators[number]>
+  ): ResultState;
 }
 
 /**
@@ -39,15 +53,29 @@ export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
  */
-export function on<State, Creators extends readonly ActionCreator[]>(
+export function on<
+  // State type that is being passed from `createReducer` when created within that factory function
+  State,
+  // Action creators
+  Creators extends readonly ActionCreator[],
+  // Inferred type from within OnReducer function if `State` is unknown. This is typically the case when `on` function
+  // is created outside of `createReducer` and state type is either explicitly set OR inferred by return type.
+  // For example: `const onFn = on(action, (state: State, {prop}) => ({ ...state, name: prop }));`
+  InferredState = State
+>(
   ...args: [
     ...creators: Creators,
-    reducer: OnReducer<State extends infer S ? S : never, Creators>
+    reducer: OnReducer<
+      State extends infer S ? S : never,
+      Creators,
+      InferredState
+    >
   ]
-): ReducerTypes<State, Creators> {
-  // This could be refactored when TS releases the version with this fix:
-  // https://github.com/microsoft/TypeScript/pull/41544
-  const reducer = args.pop() as OnReducer<any, Creators>;
+): ReducerTypes<unknown extends State ? InferredState : State, Creators> {
+  const reducer = args.pop() as unknown as OnReducer<
+    unknown extends State ? InferredState : State,
+    Creators
+  >;
   const types = (args as unknown as Creators).map(
     (creator) => creator.type
   ) as unknown as ExtractActionTypes<Creators>;
