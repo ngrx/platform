@@ -7,7 +7,7 @@ import * as path from 'path';
 import { createPackageJson } from '@ngrx/schematics-core/testing/create-package';
 import { waitForAsync } from '@angular/core/testing';
 
-describe('Component Store Migration 14_3_2', () => {
+describe('Component Migration 15_0_0-beta', () => {
   let appTree: UnitTestTree;
   const collectionPath = path.join(__dirname, '../migration.json');
   const pkgName = 'component';
