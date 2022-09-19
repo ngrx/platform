@@ -238,11 +238,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
   select<
     Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
     Result,
-    ProjectorFn = (...a: unknown[]) => Result
+    ProjectorFn extends (...a: unknown[]) => Result
   >(...args: Selectors): Observable<Result> {
     const { observables, projector, config } = processSelectorArgs<
       Selectors,
-      Result
+      Result,
+      ProjectorFn
     >(args);
 
     let observable$: Observable<Result>;
@@ -358,7 +359,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
 function processSelectorArgs<
   Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
   Result,
-  ProjectorFn = (...a: unknown[]) => Result
+  ProjectorFn extends (...a: unknown[]) => Result
 >(
   args: Selectors
 ): {

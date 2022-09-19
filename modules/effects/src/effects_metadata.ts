@@ -20,7 +20,7 @@ export function getEffectsMetadata<T extends Object>(
 export function getSourceMetadata<T extends Object>(
   instance: T
 ): EffectMetadata<T>[] {
-  const effects: Array<(instance: T) => EffectMetadata<T>[]> = [
+  const effects: Array<(instance: Object) => EffectMetadata<T>[]> = [
     getEffectDecoratorMetadata,
     getCreateEffectMetadata,
   ];
