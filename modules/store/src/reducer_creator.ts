@@ -60,7 +60,7 @@ export function on<
   Creators extends readonly ActionCreator[],
   // Inferred type from within OnReducer function if `State` is unknown. This is typically the case when `on` function
   // is created outside of `createReducer` and state type is either explicitly set OR inferred by return type.
-  // e.g. `const onFn = on(action, (state: State, {prop}) => ({ ...state, name: prop }));`
+  // For example: `const onFn = on(action, (state: State, {prop}) => ({ ...state, name: prop }));`
   InferredState = State
 >(
   ...args: [
