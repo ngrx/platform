@@ -620,8 +620,9 @@
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "projects/example-app-e2e/cypress.json",
-            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json"
+            "cypressConfig": "projects/example-app-e2e/cypress.config.ts",
+            "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
+            "testingType": "e2e"
           },
           "configurations": {
             "production": {
@@ -910,8 +911,9 @@
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "projects/standalone-app-e2e/cypress.json",
-            "devServerTarget": "standalone-app:serve:development"
+            "cypressConfig": "projects/standalone-app-e2e/cypress.config.ts",
+            "devServerTarget": "standalone-app:serve:development",
+            "testingType": "e2e"
           },
           "configurations": {
             "production": {
