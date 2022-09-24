@@ -24,7 +24,7 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
- *   providers: [provideEffects([RouterEffects])],
+ *   providers: [provideEffects(RouterEffects]],
  * });
  * ```
  *
@@ -34,7 +34,7 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
  * const booksRoutes: Route[] = [
  *   {
  *     path: '',
- *     providers: [provideEffects([BooksApiEffects])],
+ *     providers: [provideEffects(BooksApiEffects)],
  *     children: [
  *       { path: '', component: BookListComponent },
  *       { path: ':id', component: BookDetailsComponent },
@@ -43,7 +43,9 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
  * ];
  * ```
  */
-export function provideEffects(effects: Type<unknown>[]): EnvironmentProviders {
+export function provideEffects(
+  ...effects: Type<unknown>[]
+): EnvironmentProviders {
   return {
     ɵproviders: [
       effects,

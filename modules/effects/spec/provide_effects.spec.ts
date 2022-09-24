@@ -31,8 +31,8 @@ describe('provideEffects', () => {
         },
         provideStore({}).ɵproviders,
         // provide effects twice
-        provideEffects([]).ɵproviders,
-        provideEffects([]).ɵproviders,
+        provideEffects().ɵproviders,
+        provideEffects().ɵproviders,
       ],
     });
 
@@ -50,8 +50,8 @@ describe('provideEffects', () => {
         },
         provideStore().ɵproviders,
         // provide effects twice
-        provideEffects([]).ɵproviders,
-        provideEffects([]).ɵproviders,
+        provideEffects().ɵproviders,
+        provideEffects().ɵproviders,
       ],
     });
 
@@ -63,7 +63,7 @@ describe('provideEffects', () => {
   it('throws an error when store is not provided', () => {
     TestBed.configureTestingModule({
       // provide only effects
-      providers: [provideEffects([TestEffects]).ɵproviders],
+      providers: [provideEffects(TestEffects).ɵproviders],
     });
 
     expect(() => TestBed.inject(TestEffects)).toThrowError();
@@ -73,7 +73,7 @@ describe('provideEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         provideStore().ɵproviders,
-        provideEffects([TestEffects]).ɵproviders,
+        provideEffects(TestEffects).ɵproviders,
       ],
     });
 
@@ -91,7 +91,7 @@ describe('provideEffects', () => {
   it('runs provided effects after root state registration', (done) => {
     TestBed.configureTestingModule({
       providers: [
-        provideEffects([TestEffects]).ɵproviders,
+        provideEffects(TestEffects).ɵproviders,
         // provide store after effects
         provideStore({ [rootSliceKey]: createReducer('ngrx') }).ɵproviders,
       ],
@@ -114,7 +114,7 @@ describe('provideEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         provideStore().ɵproviders,
-        provideEffects([TestEffects]).ɵproviders,
+        provideEffects(TestEffects).ɵproviders,
         // provide feature state after effects
         provideState(featureSliceKey, createReducer('effects')).ɵproviders,
       ],
