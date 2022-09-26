@@ -113,6 +113,23 @@ aio-shell.folder-tutorial mat-toolbar.mat-toolbar {
     }
   }
 }
+.nav-link[href=enterprise-support] {
+  background: #8000802e;
+  border-radius: 10px;
+  position: relative;
+  padding: 16px;
+  &:focus {
+    padding: 16px;
+  }
+  &:after {
+    content: 'New';
+    position: absolute;
+    font-size: 12px;
+    line-height: 14px;
+    top: 4px;
+    right: 10px;
+  }
+}
 
 // TOP MENU
 aio-top-menu {
