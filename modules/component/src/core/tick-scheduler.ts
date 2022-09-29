@@ -1,5 +1,4 @@
 import { ApplicationRef, inject, Injectable, NgZone } from '@angular/core';
-import { animationFrameScheduler } from 'rxjs';
 import { isNgZone } from './zone-helpers';
 
 @Injectable({
@@ -28,7 +27,7 @@ export class AnimationFrameTickScheduler extends TickScheduler {
   schedule(): void {
     if (!this.isScheduled) {
       this.isScheduled = true;
-      animationFrameScheduler.schedule(() => {
+      requestAnimationFrame(() => {
         this.appRef.tick();
         this.isScheduled = false;
       });
