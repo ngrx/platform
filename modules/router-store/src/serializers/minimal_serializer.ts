@@ -43,7 +43,10 @@ export class MinimalRouterStateSerializer
             pathMatch: route.routeConfig.pathMatch,
             redirectTo: route.routeConfig.redirectTo,
             outlet: route.routeConfig.outlet,
-            title: route.routeConfig.title,
+            title:
+              typeof route.routeConfig.title === 'string'
+                ? route.routeConfig.title
+                : undefined,
           }
         : null,
       queryParams: route.queryParams,
