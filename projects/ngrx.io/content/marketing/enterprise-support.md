@@ -56,11 +56,11 @@ Additionally, the following topics can be covered for your teams:
         <p>In his free time, he loves to learn & share the knowledge, provides NgRx workshops and helps with <a
                 href="https://ts.dev/style">ts.dev/style</a> - the popular TypeScript style guide.</p>
     </div>
-    <ngrxio-contributor json='{"name": "Marko Stanimirović", "picture":"markos.jpg"}'></ngrxio-contributor>
+    <ngrxio-contributor json='{"name": "Marko Stanimirović", "picture":"marko.jpg"}'></ngrxio-contributor>
     <div class="member-description">Marko Stanimirović is a core member of the NgRx team (contributing since 2020),
-        Google Developer Expert in Angular, and organizer of the Angular Belgrade group.
-        <p>Marko's contributions include <code>featureCreator</code>, overhaul of the <code>@ngrx/template</code>
-            library and continuous maintenance of NgRx libraries.</p>
+        a Google Developer Expert in Angular, and an organizer of the Angular Belgrade group.
+        <p>Marko's contributions include <code>createFeature()</code>, overhaul of the <code>@ngrx/component</code>
+            library, and continuous maintenance of NgRx libraries.</p>
         <p>He enjoys contributing to open source software, sharing knowledge through technical articles and talks, and
             playing guitar.</p>
         <p>Marko is also a Master of Science in Software Engineering from the University of Belgrade.</p>

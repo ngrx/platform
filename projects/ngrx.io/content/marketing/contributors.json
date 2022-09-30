@@ -87,10 +87,10 @@
 
   "markostanimirovic": {
     "name": "Marko Stanimirović",
-    "picture": "markos.jpg",
+    "picture": "marko.jpg",
     "twitter": "markostdev",
     "website": "https://github.com/markostanimirovic",
-    "bio": "Dev @jobcloud · Organizer @angularbelgrade · Hobby Musician guitar · MSc in Software Engineering.",
+    "bio": "Marko is a core member of the NgRx team, a Google Developer Expert in Angular, and an organizer of the Angular Belgrade group. He enjoys contributing to open source software, sharing knowledge through technical articles and talks, and playing guitar. He is also a Master of Science in Software Engineering from the University of Belgrade.",
     "group": "Core"
   }
 }
