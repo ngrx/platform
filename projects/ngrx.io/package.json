@@ -80,6 +80,7 @@
     "@angular/common": "14.0.0",
     "@angular/core": "14.0.0",
     "@angular/elements": "14.0.0",
+    "@angular/fire": "^7.4.1",
     "@angular/forms": "14.0.0",
     "@angular/material": "14.0.1",
     "@angular/platform-browser": "14.0.0",
