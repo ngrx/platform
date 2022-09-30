@@ -79,7 +79,6 @@ export class AnnouncementBarComponent implements OnInit {
     private findCurrentAnnouncement(announcements: Announcement[]) {
         return announcements
             .filter(announcement => new Date(announcement.startDate).valueOf() < Date.now())
-            .filter(announcement => new Date(announcement.endDate).valueOf() > Date.now())
-            [0];
+            .filter(announcement => new Date(announcement.endDate).valueOf() > Date.now())[0];
     }
 }

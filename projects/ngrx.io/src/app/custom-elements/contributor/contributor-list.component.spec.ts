@@ -81,7 +81,7 @@ describe('ContributorListComponent', () => {
         return comp;
     }
 
-    interface SearchResult { [index: string]: string; };
+    interface SearchResult { [index: string]: string; }
 
     class TestLocationService {
         searchResult: SearchResult = {};

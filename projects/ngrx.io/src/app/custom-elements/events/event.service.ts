@@ -51,5 +51,5 @@ export class EventService {
 
         (events as ConnectableObservable<Event[]>).connect();
         return events;
-    };
+    }
 }

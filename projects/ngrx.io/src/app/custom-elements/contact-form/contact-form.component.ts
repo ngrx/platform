@@ -37,7 +37,7 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
             <mat-label>Message</mat-label>
             <textarea type="text" matInput ngModel name="body" required placeholder="Type your message"></textarea>
          </mat-form-field>
-         
+
         <button
             mat-raised-button
             color="primary"
@@ -45,13 +45,13 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
             [disabled]="!contactForm.valid"
             >Send</button>
         <div *ngIf="error" class="alert is-critical">
-            <p>Error sending email</p> 
+            <p>Error sending email</p>
             <p>{{error}}</p>
         </div>
       </form>
       <ng-template #thankYou>
         <div class="alert is-helpful">
-            <p>Thank you for reaching out.</p> 
+            <p>Thank you for reaching out.</p>
             <p>Our team would respond promptly.</p>
         </div>
       </ng-template>
@@ -61,7 +61,7 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
 export class ContactFormComponent {
     protected emailSent = false;
     protected error: unknown;
-    
+
     constructor(private readonly firestore: Firestore ) { }
 
     submit(contact: {
@@ -73,13 +73,13 @@ export class ContactFormComponent {
             to: 'info@ts.dev',
             from: contact.email,
             message: {
-               subject: 'NgRx Enterprise Support inquiry',
-               text: `${contact.body}\n${contact.fromName}`
+                subject: 'NgRx Enterprise Support inquiry',
+                text: `${contact.body}\n${contact.fromName}`
             }
-          }).then(
+        }).then(
             () => this.emailSent = true,
             (e) => this.error = e,
-          )
+        )
     }
 
 }

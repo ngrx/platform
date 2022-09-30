@@ -37,10 +37,10 @@ import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
 })
 export class ContributorComponent {
     @HostBinding('class.clickable')
-    clickable = true;
+        clickable = true;
 
     @Input()
-    person: Contributor;
+        person: Contributor;
 
     // Allows to pass contributor data as a json string.
     //  Useful for web element version of this component.
@@ -62,7 +62,9 @@ export class ContributorComponent {
     }
 
     flipCard(person: Contributor) {
-        if (!this.clickable) return;
+        if (!this.clickable) {
+            return;
+        }
         person.isFlipped = !person.isFlipped;
     }
 }

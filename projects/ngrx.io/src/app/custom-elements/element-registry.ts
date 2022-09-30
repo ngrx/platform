@@ -16,7 +16,7 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
     },
     {
         // register custom element under a different selector to avoid conflict with the Angular component.
-        selector: 'ngrxio-contributor', 
+        selector: 'ngrxio-contributor',
         loadChildren: () => import('./contributor/contributor-list.module').then(m => m.ContributorModule),
     },
     {
