@@ -61,7 +61,7 @@ The following example more extensively utilizes the key concepts of store to man
 <code-example header="src/app/book-collection/book-collection.component.ts" path="store-walkthrough/src/app/book-collection/book-collection.component.ts">
 </code-example>
 
-11.  Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
+11.  Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations (along with their top level import statements) in `app.module.ts` as well.  Also, be sure to import the `CommonModule` from `@angular/common` as it is need for async pipe and NgFor directive usage in the component templates.
 
 <code-example header="src/app/app.component.html (Components)" path="store-walkthrough/src/app/app.component.html" region="components">
 </code-example>
