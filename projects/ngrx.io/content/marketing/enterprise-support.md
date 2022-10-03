@@ -1,7 +1,7 @@
 
 <h1 class="banner-headline">Enterprise-level Support from NgRx team members</h1>
 
-NgRx collection of libraries continues to stay open-sourced MIT-licensed and free to use. At the same time, we hear from companies that designing high quality architecture could be challenging and additional help and guidance is needed.
+NgRx collection of libraries continues to stay open-sourced MIT-licensed and free to use. At the same time, we hear from companies that designing high-quality architecture could be challenging and additional help and guidance are needed.
 
 Take your Angular app to a new level with **premium services** from [participating NgRx team members](#participating-ngrx-team-members).
 
@@ -13,19 +13,19 @@ Take your Angular app to a new level with **premium services** from [participati
 - [**Trainings**](#trainings)
 
 ### NgRx Support
-Does your team need period help with general questions related to NgRx, Angular and RxJS in a timely manner?
+Does your team need period help with general questions related to NgRx, Angular, and RxJS in a timely manner?
 
 Is there a particular NgRx feature or a bug that your team would like to get prioritized?
 
-With **NgRx support**, our team will be able to assist either through email or Video Call in a reasonable time frame with issues that you might have.
+Have you encountered an issue? With **NgRx support**, our team can assist either through email or Video Call in a reasonable time frame.
 
 ### Angular/NgRx consulting
 When your teams need a more hands-on approach with the architecture and implementation of your Angular/NgRx app that follows best practices from a team of experts, then this is the right choice for your company.
 
-Whether your team is starting with a green field project, introduces state management into the app or has been using NgRx for a while, we can help ensure that the architecture is set up for scalability and performance while the app's quality is improved.
+Whether your team is starting with a green field project, is introducing state management into the app, or has been using NgRx for a while, we can help to ensure that the architecture is set up for scalability and performance while improving the app's quality.
 
 ### Trainings
-Two or Three full days of **NgRx workshop** that covers from the basics of NgRx to the most advanced topics. Whether your teams are just starting with NgRx or have been using it for a while - they are guaranteed to learn new concepts during this training.
+Two or three full days of **NgRx workshop** that covers from the basics of NgRx to the most advanced topics. Whether your teams are just starting with NgRx or have been using it for a while - they are guaranteed to learn new concepts during this training.
 
 The workshop covers both NgRx global `store` and `ComponentStore`.
 
