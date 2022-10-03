@@ -10,29 +10,29 @@ Take your Angular app to a new level with **premium services** from [participati
 ## Provided services
 - [**NgRx support**](#ngrx-support)
 - [**Angular/NgRx consulting**](#angularngrx-consulting)
-- [**Trainings**](#trainings)
+- [**Training and Workshops**](#training)
 
 ### NgRx Support
-Does your team need period help with general questions related to NgRx, Angular, and RxJS in a timely manner?
+Does your team need periodic help with general questions related to NgRx, Angular, and RxJS in a timely manner?
 
 Is there a particular NgRx feature or a bug that your team would like to get prioritized?
 
-Have you encountered an issue? With **NgRx support**, our team can assist either through email or Video Call in a reasonable time frame.
+Have you encountered an issue? With **NgRx support**, our team can assist either through email or video call in a reasonable time frame.
 
 ### Angular/NgRx consulting
 When your teams need a more hands-on approach with the architecture and implementation of your Angular/NgRx app that follows best practices from a team of experts, then this is the right choice for your company.
 
-Whether your team is starting with a green field project, is introducing state management into the app, or has been using NgRx for a while, we can help to ensure that the architecture is set up for scalability and performance while improving the app's quality.
+Whether your team is starting with a greenfield project, is introducing state management into the app, or has been using NgRx for a while, we can help to ensure that the architecture is set up for scalability and performance while improving the app's code quality.
 
-### Trainings
-Two or three full days of **NgRx workshop** that covers from the basics of NgRx to the most advanced topics. Whether your teams are just starting with NgRx or have been using it for a while - they are guaranteed to learn new concepts during this training.
+### Training
+We also offer two or three full days of **NgRx workshop** that covers the basics of NgRx to the most advanced topics. Whether your teams are just starting with NgRx or have been using it for a while - they are guaranteed to learn new concepts during this workshop.
 
-The workshop covers both NgRx global `store` and `ComponentStore`.
+The workshop covers both NgRx global `Store` and `ComponentStore`.
 
 Additionally, the following topics can be covered for your teams:
 
 - How to set up Frontend teams for success with proper development processes.
-- Testing Angular applications. Unit and end-to-end tests.
+- Testing Angular applications using unit and end-to-end tests.
 
 ## Participating NgRx team members
 
@@ -69,6 +69,6 @@ Additionally, the following topics can be covered for your teams:
 
 ## Contact
 
-Get in touch with the team to see how we can make you and your project successful. Let us know which services you are interested in.
+Get in touch with the team to see how we can make you and your project more successful. Let us know which services you are interested in.
 
 <ngrx-contact-form></ngrx-contact-form>
