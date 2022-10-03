@@ -15,8 +15,8 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
         loadChildren: () => import('./api/api-list.module').then(m => m.ApiListModule),
     },
     {
-        // register custom element under a different selector to avoid conflict with the Angular component.
-        selector: 'ngrxio-contributor',
+        // Register custom element under a different selector to avoid conflict with the Angular component.
+        selector: 'ngrx-contributor',
         loadChildren: () => import('./contributor/contributor-list.module').then(m => m.ContributorModule),
     },
     {

@@ -37,7 +37,7 @@ Additionally, the following topics can be covered for your teams:
 ## Participating NgRx team members
 
 <div class="team-grid">
-    <ngrxio-contributor json='{"name": "Mike Ryan", "picture": "mike-ryan.jpg"}'></ngrxio-contributor>
+    <ngrx-contributor json='{"name": "Mike Ryan", "picture": "mike-ryan.jpg"}'></ngrx-contributor>
     <div class="member-description">Mike Ryan is a Principal Architect at LiveLoveApp and one of the original
         co-creators of NgRx and a Google Developer Expert in Angular.
         <p>He wrote the initial implementations for <code>@ngrx/effects</code>, <code>@ngrx/store-devtools</code>, and
@@ -45,7 +45,7 @@ Additionally, the following topics can be covered for your teams:
         <p>Since creating NgRx, Mike has helped small startups and large enterprises (including Google!) successfully
             implement reactive Angular applications using NgRx.</p>
     </div>
-    <ngrxio-contributor json='{"name": "Alex Okrushko", "picture": "alex-okrushko.jpg"}'></ngrxio-contributor>
+    <ngrx-contributor json='{"name": "Alex Okrushko", "picture": "alex-okrushko.jpg"}'></ngrx-contributor>
     <div class="member-description">Alex Okrushko is a Principal Architect at Cisco CX - Customer Experience. He is part
         of the NgRx team, Google Developer Expert in Angular, @AngularToronto organizer and co-organizer of the official
         Angular Discord.
@@ -56,7 +56,7 @@ Additionally, the following topics can be covered for your teams:
         <p>In his free time, he loves to learn & share the knowledge, provides NgRx workshops and helps with <a
                 href="https://ts.dev/style">ts.dev/style</a> - the popular TypeScript style guide.</p>
     </div>
-    <ngrxio-contributor json='{"name": "Marko Stanimirović", "picture":"marko.jpg"}'></ngrxio-contributor>
+    <ngrx-contributor json='{"name": "Marko Stanimirović", "picture":"marko.jpg"}'></ngrx-contributor>
     <div class="member-description">Marko Stanimirović is a core member of the NgRx team (contributing since 2020),
         a Google Developer Expert in Angular, and an organizer of the Angular Belgrade group.
         <p>Marko's contributions include <code>createFeature()</code>, overhaul of the <code>@ngrx/component</code>

@@ -43,9 +43,8 @@ export class ContributorComponent {
         person: Contributor;
 
     // Allows to pass contributor data as a json string.
-    //  Useful for web element version of this component.
+    // Useful for web element version of this component.
     @Input() set json(contributorInfo: string) {
-        // console.log(contributorInfo);
         this.clickable = false;
         this.person = JSON.parse(contributorInfo);
     }

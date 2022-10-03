@@ -18,41 +18,35 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
                 align-self: end;
             }
         textarea {
-            height: 200px
+            height: 200px;
         }
         `
     ],
     template: `
-      <form *ngIf="!emailSent else thankYou"
-      #contactForm="ngForm" (ngSubmit)="submit(contactForm.value)">
+      <form *ngIf="!emailSent else thankYou" #contactForm="ngForm" (ngSubmit)="submit(contactForm.value)">
         <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput required ngModel name="fromName" placeholder="Enter your name">
-         </mat-form-field>
-         <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input type="email" matInput ngModel email name="email" required placeholder="Enter your email">
-         </mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput required ngModel name="fromName" placeholder="Enter your name">
+        </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Message</mat-label>
-            <textarea type="text" matInput ngModel name="body" required placeholder="Type your message"></textarea>
-         </mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" matInput ngModel email name="email" required placeholder="Enter your email">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Message</mat-label>
+          <textarea type="text" matInput ngModel name="body" required placeholder="Type your message"></textarea>
+        </mat-form-field>
 
-        <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!contactForm.valid"
-            >Send</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!contactForm.valid">Send</button>
         <div *ngIf="error" class="alert is-critical">
-            <p>Error sending email</p>
-            <p>{{error}}</p>
+          <p>Error sending email</p>
+          <p>{{error}}</p>
         </div>
       </form>
       <ng-template #thankYou>
         <div class="alert is-helpful">
-            <p>Thank you for reaching out.</p>
-            <p>Our team would respond promptly.</p>
+          <p>Thank you for reaching out.</p>
+          <p>Our team would respond promptly.</p>
         </div>
       </ng-template>
     `
