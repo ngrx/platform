@@ -1,7 +1,7 @@
 
 <h1 class="banner-headline">Enterprise-level Support from NgRx team members</h1>
 
-NgRx collection of libraries continues to stay open-sourced MIT-licensed and free to use. At the same time, we hear from companies that designing high-quality architecture could be challenging and additional help and guidance are needed.
+The NgRx collection of libraries will always remain open-source, MIT-licensed, and free to use. At the same time, we hear from companies that designing high-quality architecture could be challenging and additional help and guidance are needed.
 
 Take your Angular app to a new level with **premium services** from [participating NgRx team members](#participating-ngrx-team-members).
 
