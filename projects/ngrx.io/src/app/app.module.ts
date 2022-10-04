@@ -44,6 +44,8 @@ import { WindowToken, windowProvider } from 'app/shared/window';
 import { CustomElementsModule } from 'app/custom-elements/custom-elements.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { SwUpdatesModule } from 'app/sw-updates/sw-updates.module';
+import {provideFirebaseApp, initializeApp} from '@angular/fire/app';
+import {getFirestore, provideFirestore} from '@angular/fire/firestore/lite';
 
 import { environment } from '../environments/environment';
 
@@ -127,6 +129,16 @@ export const svgIconProviders = [
         ServiceWorkerModule.register('/ngsw-worker.js', {
             enabled: environment.production,
         }),
+        provideFirebaseApp(() => initializeApp({
+            apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
+            authDomain: 'ngrx-io-dev.firebaseapp.com',
+            databaseURL: 'https://ngrx-io-dev.firebaseio.com',
+            projectId: 'ngrx-io-dev',
+            storageBucket: 'ngrx-io-dev.appspot.com',
+            messagingSenderId: '670550641358',
+            appId: '1:670550641358:web:cd7543509875b279a71e9f'
+        })),
+        provideFirestore(() => getFirestore()),
     ],
     declarations: [
         AppComponent,

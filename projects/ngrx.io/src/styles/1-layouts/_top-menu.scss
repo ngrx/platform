@@ -50,7 +50,7 @@ aio-shell.folder-api mat-toolbar.mat-toolbar,
 aio-shell.folder-docs mat-toolbar.mat-toolbar,
 aio-shell.folder-guide mat-toolbar.mat-toolbar,
 aio-shell.folder-tutorial mat-toolbar.mat-toolbar {
-  @media (min-width: 992px) {
+  @media (min-width: 1366px) {
     .hamburger.mat-button {
       // Hamburger shown on non-marketing pages on large screens.
       margin: $hamburgerShownMargin;
@@ -64,7 +64,7 @@ aio-shell.folder-tutorial mat-toolbar.mat-toolbar {
   margin: $hamburgerShownMargin;
   padding: 0;
 
-  @media (min-width: 992px) {
+  @media (min-width: 1366px) {
     // Hamburger hidden by default on large screens.
     // (Will be shown per doc.)
     margin: $hamburgerHiddenMargin;
@@ -106,11 +106,29 @@ aio-shell.folder-tutorial mat-toolbar.mat-toolbar {
     top: 12px;
     height: 40px;
 
-    @media (max-width: 992px) {
+    @media (max-width: 1366px) {
       &:hover {
         transform: scale(1.1);
       }
     }
+  }
+}
+
+.nav-link[href=enterprise-support] {
+  background: #8000802e;
+  border-radius: 10px;
+  position: relative;
+  padding: 16px;
+  &:focus {
+    padding: 16px;
+  }
+  &:after {
+    content: 'New';
+    position: absolute;
+    font-size: 12px;
+    line-height: 14px;
+    top: 4px;
+    right: 10px;
   }
 }
 

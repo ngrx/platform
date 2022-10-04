@@ -1,0 +1,17 @@
+@import '../mixins';
+
+.team-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    column-gap: 10px;
+    row-gap: 20px;
+
+    ngrx-contributor {
+        justify-self: center;
+        align-self: start;
+    }
+
+    @media only screen and (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}

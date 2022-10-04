@@ -312,15 +312,15 @@ describe('AppComponent', () => {
     });
 
     describe('onResize', () => {
-        it('should set isSideBySide to true if the window width is greater than 992 pixels', () => {
+        it('should set isSideBySide to true if the window width is greater than 1366 pixels', () => {
             component.isSideBySide = false;
-            component.onResize(993);
+            component.onResize(1367);
             expect(component.isSideBySide).toBeTruthy();
         });
 
-        it('should set isSideBySide to false if the window width is less than or equal to 992 pixels', () => {
+        it('should set isSideBySide to false if the window width is less than or equal to 1366 pixels', () => {
             component.isSideBySide = true;
-            component.onResize(992);
+            component.onResize(1366);
             expect(component.isSideBySide).toBeFalsy();
         });
 
@@ -343,7 +343,7 @@ describe('AppComponent', () => {
                 const sideNavToggleSpy = spyOn(component.sidenav, 'toggle');
                 sideNavToggleSpy.calls.reset();
                 component.updateSideNav();
-                component.onResize(993);
+                component.onResize(1367);
                 expect(component.sidenav.toggle).toHaveBeenCalledWith(false);
             }
         );

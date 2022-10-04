@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 import { Contributor } from './contributors.model';
 import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
@@ -36,7 +36,19 @@ import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
   `
 })
 export class ContributorComponent {
-    @Input() person: Contributor;
+    @HostBinding('class.clickable')
+        clickable = true;
+
+    @Input()
+        person: Contributor;
+
+    // Allows to pass contributor data as a json string.
+    // Useful for web element version of this component.
+    @Input() set json(contributorInfo: string) {
+        this.clickable = false;
+        this.person = JSON.parse(contributorInfo);
+    }
+
     noPicture = '_no-one.jpg';
     pictureBase = CONTENT_URL_PREFIX + 'images/bios/';
 
@@ -49,6 +61,9 @@ export class ContributorComponent {
     }
 
     flipCard(person: Contributor) {
+        if (!this.clickable) {
+            return;
+        }
         person.isFlipped = !person.isFlipped;
     }
 }

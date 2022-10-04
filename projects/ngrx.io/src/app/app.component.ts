@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
     private isFetchingTimeout: any;
     private isSideNavDoc = false;
 
-    private sideBySideWidth = 992;
+    private sideBySideWidth = 1366;
     sideNavNodes: NavigationNode[];
     topMenuNodes: NavigationNode[];
     topMenuNarrowNodes: NavigationNode[];

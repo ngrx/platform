@@ -15,6 +15,11 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
         loadChildren: () => import('./api/api-list.module').then(m => m.ApiListModule),
     },
     {
+        // Register custom element under a different selector to avoid conflict with the Angular component.
+        selector: 'ngrx-contributor',
+        loadChildren: () => import('./contributor/contributor-list.module').then(m => m.ContributorModule),
+    },
+    {
         selector: 'aio-contributor-list',
         loadChildren: () => import('./contributor/contributor-list.module').then(m => m.ContributorListModule),
     },
@@ -72,6 +77,10 @@ export const ELEMENT_MODULE_PATHS_AS_ROUTES = [
     {
         selector: 'ngrx-mff',
         loadChildren: () => import('./ngrx/mff.module').then(m => m.MffModule),
+    },
+    {
+        selector: 'ngrx-contact-form',
+        loadChildren: () => import('./contact-form/contact-form.module').then(m => m.ContactFormModule),
     }
 ];
 

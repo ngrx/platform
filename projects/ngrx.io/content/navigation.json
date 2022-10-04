@@ -9,6 +9,10 @@
       "title": "Docs"
     },
     {
+      "url": "enterprise-support",
+      "title": "Enterprise Support"
+    },
+    {
       "url": "https://blog.ngrx.io",
       "title": "Blog"
     },
@@ -36,6 +40,10 @@
         {
           "url": "docs",
           "title": "Docs"
+        },
+        {
+          "url": "enterprise-support",
+          "title": "Enterprise Support"
         },
         {
           "url": "https://blog.ngrx.io",
@@ -540,6 +548,11 @@
       "url": "contributing",
       "title": "Contributing",
       "tooltip": "Contributing"
+    },
+    {
+      "url": "enterprise-support",
+      "title": "Enterprise Support",
+      "tooltip": "Enterprise Support"
     }
   ],
   "Footer": [
