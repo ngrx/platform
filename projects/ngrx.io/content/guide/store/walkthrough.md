@@ -26,12 +26,12 @@ The following example more extensively utilizes the key concepts of store to man
 
 5.  Import the `StoreModule` from `@ngrx/store` and the `books.reducer` and `collection.reducer` file.
 
-<code-example header="src/app/app.module.ts (imports)" path="store-walkthrough/src/app/app.module.ts" region="imports">
+<code-example header="src/app/app.module.ts (imports)" path="store-walkthrough/src/app/app.module.1.ts" region="partialTopLevelImports">
 </code-example>
 
 6.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `books` and `booksReducer`, as well as the `collection` and `collectionReducer` that manage the state of the book list and the collection. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<code-example header="src/app/app.module.ts (StoreModule)" path="store-walkthrough/src/app/app.module.1.ts">
+<code-example header="src/app/app.module.ts (StoreModule)" path="store-walkthrough/src/app/app.module.1.ts" region="storeModuleAddToImports">
 </code-example>
 
 7. Create the book list and collection selectors to ensure we get the correct information from the store. As you can see, the `selectBookCollection`  selector combines two other selectors in order to build its return value.
@@ -61,12 +61,12 @@ The following example more extensively utilizes the key concepts of store to man
 <code-example header="src/app/book-collection/book-collection.component.ts" path="store-walkthrough/src/app/book-collection/book-collection.component.ts">
 </code-example>
 
-11.  Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations in `app.module.ts` as well. 
+11.  Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations (along with their top level import statements) in `app.module.ts` as well.
 
 <code-example header="src/app/app.component.html (Components)" path="store-walkthrough/src/app/app.component.html" region="components">
 </code-example>
 
-<code-example header="src/app/app.module.ts" path="store-walkthrough/src/app/app.module.ts" region="declareComponents">
+<code-example header="src/app/app.module.ts (Final)" path="store-walkthrough/src/app/app.module.ts">
 </code-example>
 
 12. In the `AppComponent` class, add the selectors and corresponding actions to dispatch on `add` or `remove` method calls. Then subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included).
