@@ -22,6 +22,7 @@
       "@ngrx/component-store/schematics-core": [
         "./modules/component-store/schematics-core"
       ],
+      "@ngrx/component-store/testing": ["./modules/component-store/testing"],
       "@ngrx/component/schematics-core": [
         "./modules/component/schematics-core"
       ],

@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.build",
+  "compilerOptions": {
+    "paths": {
+      "@ngrx/component-store": ["../../dist/packages/component-store"]
+    }
+  },
+  "files": ["index.ts"],
+  "angularCompilerOptions": {}
+}
