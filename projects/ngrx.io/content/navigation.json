@@ -133,6 +133,10 @@
               "title": "Recipes",
               "children": [
                 {
+                  "title": "Common patterns",
+                  "url": "guide/store/recipes/common-patterns"
+                },
+                {
                   "title": "Injecting Reducers",
                   "url": "guide/store/recipes/injecting"
                 },
