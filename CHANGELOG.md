@@ -1,3 +1,15 @@
+<a name="14.3.2"></a>
+
+## [14.3.2](https://github.com/ngrx/platform/compare/14.3.1...14.3.2) (2022-10-04)
+
+### Bug Fixes
+
+- **component:** replace animationFrameScheduler with requestAnimationFrame ([#3592](https://github.com/ngrx/platform/issues/3592)) ([0a4d2dd](https://github.com/ngrx/platform/commit/0a4d2dd)), closes [#3591](https://github.com/ngrx/platform/issues/3591)
+- **component-store:** use asapScheduler to schedule lifecycle hooks check ([#3580](https://github.com/ngrx/platform/issues/3580)) ([02431b4](https://github.com/ngrx/platform/commit/02431b4)), closes [#3573](https://github.com/ngrx/platform/issues/3573)
+- **eslint-plugin:** avoid-combining-selectors with arrays should warn ([#3566](https://github.com/ngrx/platform/issues/3566)) ([4b0c6de](https://github.com/ngrx/platform/commit/4b0c6de))
+- **router-store:** set undefined for unserializable route title ([#3593](https://github.com/ngrx/platform/issues/3593)) ([8eb4001](https://github.com/ngrx/platform/commit/8eb4001)), closes [#3495](https://github.com/ngrx/platform/issues/3495)
+- **store:** fix typing of on fn ([#3577](https://github.com/ngrx/platform/issues/3577)) ([d054aa9](https://github.com/ngrx/platform/commit/d054aa9)), closes [#3576](https://github.com/ngrx/platform/issues/3576)
+
 <a name="14.3.1"></a>
 
 ## [14.3.1](https://github.com/ngrx/platform/compare/14.3.0...14.3.1) (2022-09-08)
