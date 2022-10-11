@@ -88,6 +88,18 @@ We can track next, error, and complete events:
 </ng-container>
 ```
 
+## Combining Multiple Observables
+
+The `*ngrxLet` directive can be also used with a dictionary of observables.
+This feature provides the ability to create a view model object in the template:
+
+```html
+<ng-container *ngrxLet="{ users: users$, query: query$ } as vm">
+  <app-search-bar [query]="vm.query"></app-search-bar>
+  <app-user-list [users]="vm.users"></app-user-list>
+</ng-container>
+```
+
 ## Using Suspense Template
 
 There is an option to pass the suspense template that will be displayed
@@ -134,6 +146,7 @@ This feature provides the ability to create readable templates by using aliases 
   (See ["Comparison with `*ngIf` and `async`"](#comparison-with-ngif-and-async) section)
 - Takes away the multiple usages of the `async` or `ngrxPush` pipe.
 - Allows displaying different content based on the current state of an observable.
+- Allows combining multiple observables in the template.
 - Provides a unified/structured way of handling `null` and `undefined`.
 - Provides the ability to create readable templates by using aliases for nested properties.
 - Triggers change detection using the `RenderScheduler` that behaves differently in

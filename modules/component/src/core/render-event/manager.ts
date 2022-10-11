@@ -4,19 +4,21 @@ import { ErrorRenderEvent, NextRenderEvent, RenderEvent } from './models';
 import { combineRenderEventHandlers, RenderEventHandlers } from './handlers';
 import {
   fromPotentialObservable,
-  PotentialObservable,
+  PotentialObservableResult,
 } from '../potential-observable';
 
-export interface RenderEventManager<T> {
-  nextPotentialObservable(potentialObservable: PotentialObservable<T>): void;
-  handlePotentialObservableChanges(): Observable<RenderEvent<T>>;
+export interface RenderEventManager<PO> {
+  nextPotentialObservable(potentialObservable: PO): void;
+  handlePotentialObservableChanges(): Observable<
+    RenderEvent<PotentialObservableResult<PO>>
+  >;
 }
 
-export function createRenderEventManager<T>(
-  handlers: RenderEventHandlers<T>
-): RenderEventManager<T> {
+export function createRenderEventManager<PO>(
+  handlers: RenderEventHandlers<PotentialObservableResult<PO>>
+): RenderEventManager<PO> {
   const handleRenderEvent = combineRenderEventHandlers(handlers);
-  const potentialObservable$ = new ReplaySubject<PotentialObservable<T>>(1);
+  const potentialObservable$ = new ReplaySubject<PO>(1);
 
   return {
     nextPotentialObservable(potentialObservable) {
@@ -33,39 +35,41 @@ export function createRenderEventManager<T>(
   };
 }
 
-function switchMapToRenderEvent<T>(): (
-  source: Observable<PotentialObservable<T>>
-) => Observable<RenderEvent<T>> {
+function switchMapToRenderEvent<PO>(): (
+  source: Observable<PO>
+) => Observable<RenderEvent<PotentialObservableResult<PO>>> {
   return pipe(
     switchMap((potentialObservable) => {
       const observable$ = fromPotentialObservable(potentialObservable);
       let reset = true;
       let synchronous = true;
 
-      return new Observable<RenderEvent<T>>((subscriber) => {
-        const subscription = observable$.subscribe({
-          next(value) {
-            subscriber.next({ type: 'next', value, reset, synchronous });
-            reset = false;
-          },
-          error(error) {
-            subscriber.next({ type: 'error', error, reset, synchronous });
-            reset = false;
-          },
-          complete() {
-            subscriber.next({ type: 'complete', reset, synchronous });
-            reset = false;
-          },
-        });
+      return new Observable<RenderEvent<PotentialObservableResult<PO>>>(
+        (subscriber) => {
+          const subscription = observable$.subscribe({
+            next(value) {
+              subscriber.next({ type: 'next', value, reset, synchronous });
+              reset = false;
+            },
+            error(error) {
+              subscriber.next({ type: 'error', error, reset, synchronous });
+              reset = false;
+            },
+            complete() {
+              subscriber.next({ type: 'complete', reset, synchronous });
+              reset = false;
+            },
+          });
 
-        if (reset) {
-          subscriber.next({ type: 'suspense', reset, synchronous: true });
-          reset = false;
+          if (reset) {
+            subscriber.next({ type: 'suspense', reset, synchronous: true });
+            reset = false;
+          }
+          synchronous = false;
+
+          return subscription;
         }
-        synchronous = false;
-
-        return subscription;
-      });
+      );
     })
   );
 }

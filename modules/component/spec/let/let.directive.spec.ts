@@ -20,6 +20,7 @@ import {
   EMPTY,
   interval,
   NEVER,
+  Observable,
   of,
   switchMap,
   take,
@@ -274,11 +275,25 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('true');
     });
 
-    it('should render initially passed object', () => {
+    it('should render initially passed empty object', () => {
+      letDirectiveTestComponent.value$ = {};
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(stripSpaces(componentNativeElement.textContent)).toBe('{}');
+    });
+
+    it('should render initially passed object with non-observable values', () => {
       letDirectiveTestComponent.value$ = { ngrx: 'component' };
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(stripSpaces(componentNativeElement.textContent)).toBe(
         '{"ngrx":"component"}'
+      );
+    });
+
+    it('should render initially passed object with at least one non-observable value', () => {
+      letDirectiveTestComponent.value$ = { ngrx: 'component', o$: of(1) };
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(stripSpaces(componentNativeElement.textContent)).toBe(
+        '{"ngrx":"component","o$":{}}'
       );
     });
 
@@ -511,5 +526,84 @@ describe('LetDirective', () => {
       expect(letDirectiveTestComponent).toBeDefined();
       expect(componentNativeElement.textContent).toBe('1');
     }));
+  });
+
+  describe('with observable dictionary', () => {
+    function withObservableDictionarySetup<
+      O1 extends Observable<unknown>,
+      O2 extends Observable<unknown>
+    >(config: { o1$: O1; o2$: O2 }) {
+      @Component({
+        template: `
+          <ng-container *ngrxLet="{ o1: o1$, o2: o2$ } as vm">{{
+            vm.o1 + '-' + vm.o2
+          }}</ng-container>
+        `,
+      })
+      class LetDirectiveTestComponent {
+        o1$ = config.o1$;
+        o2$ = config.o2$;
+      }
+
+      TestBed.configureTestingModule({
+        declarations: [LetDirectiveTestComponent, LetDirective],
+        providers: [
+          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+          { provide: ErrorHandler, useClass: MockErrorHandler },
+          TemplateRef,
+          ViewContainerRef,
+        ],
+      });
+
+      const fixture = TestBed.createComponent(LetDirectiveTestComponent);
+
+      return {
+        fixture,
+        nativeElement: fixture.nativeElement,
+      };
+    }
+
+    it('should not create embedded view until all observables from dictionary emit first value', fakeAsync(() => {
+      const { fixture, nativeElement } = withObservableDictionarySetup({
+        o1$: of(1).pipe(delay(10)),
+        o2$: of(2).pipe(delay(20)),
+      });
+
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('');
+
+      tick(10);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('');
+
+      tick(20);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('1-2');
+    }));
+
+    it('should update embedded view when any observable from dictionary emits value', () => {
+      const o1$ = new BehaviorSubject(1);
+      const o2$ = new BehaviorSubject(2);
+      const { fixture, nativeElement } = withObservableDictionarySetup({
+        o1$,
+        o2$,
+      });
+
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('1-2');
+
+      o1$.next(10);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('10-2');
+
+      o2$.next(20);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('10-20');
+
+      o1$.next(100);
+      o2$.next(200);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('100-200');
+    });
   });
 });
