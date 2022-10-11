@@ -15,6 +15,11 @@
       "description": "The road to v13",
       "version": "13",
       "factory": "./13_0_0/index"
+    },
+    "ngrx-effects-migration-15-beta": {
+      "description": "The road to v15 beta",
+      "version": "15-beta",
+      "factory": "./15_0_0-beta/index"
     }
   }
 }
