@@ -1,9 +1,4 @@
-import {
-  ENVIRONMENT_INITIALIZER,
-  inject,
-  InjectFlags,
-  Type,
-} from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, inject, Type } from '@angular/core';
 import {
   EnvironmentProviders,
   FEATURE_STATE_PROVIDER,
@@ -52,7 +47,7 @@ export function provideEffects(effects: Type<unknown>[]): EnvironmentProviders {
         multi: true,
         useValue: () => {
           inject(ROOT_STORE_PROVIDER);
-          inject(FEATURE_STATE_PROVIDER, InjectFlags.Optional);
+          inject(FEATURE_STATE_PROVIDER, { optional: true });
 
           const effectsRunner = inject(EffectsRunner);
           const effectSources = inject(EffectSources);
