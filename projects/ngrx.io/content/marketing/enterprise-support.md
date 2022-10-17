@@ -8,9 +8,15 @@ Take your Angular app to a new level with **premium services** from [participati
 [Send us a message.](#contact)
 
 ## Provided services
+- [**Architecture and code review**](#architecture-and-code-review)
 - [**NgRx support**](#ngrx-support)
 - [**Angular/NgRx consulting**](#angularngrx-consulting)
 - [**Training and Workshops**](#training)
+
+### Architecture and code review
+Let us go over the code and analyze the architecture of your web applications, and create a report with our recommendations. This can be done for the Angular applications that are already using NgRx or are interested to hear about how NgRx can help.
+
+The in-depth report includes code quality assessment, runtime performance evaluation and test strategies evaluation.
 
 ### NgRx Support
 Does your team need periodic help with general questions related to NgRx, Angular, and RxJS in a timely manner?
