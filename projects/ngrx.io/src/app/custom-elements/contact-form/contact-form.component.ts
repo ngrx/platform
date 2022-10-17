@@ -66,7 +66,7 @@ export class ContactFormComponent {
         addDoc(collection(this.firestore, 'mail'), {
             to: ['info@ts.dev', 'hello+ngrx@liveloveapp.com'],
             from: contact.email,
-            replyTo: contact.email,
+            replyTo: [contact.email, 'info@ts.dev', 'hello+ngrx@liveloveapp.com'],
             message: {
                 subject: 'NgRx Enterprise Support inquiry',
                 text: `${contact.body}\n${contact.fromName}`
