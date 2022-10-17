@@ -18,7 +18,7 @@ export function provideMockActions(
  *
  * ```ts
  * describe('Books Effects', () => {
- *   let actions$: Observable<any>;
+ *   let actions$ = new Observable<Action>();
  *   let effects: BooksEffects;
  *
  *   beforeEach(() => {
@@ -40,7 +40,7 @@ export function provideMockActions(
  * ```ts
  * describe('Counter Effects', () => {
  *   let injector: Injector;
- *   let actions$: Observable<any>;
+ *   let actions$ = new Observable<Action>();
  *   let effects: CounterEffects;
  *
  *   beforeEach(() => {
