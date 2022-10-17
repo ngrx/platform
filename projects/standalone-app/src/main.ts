@@ -37,6 +37,6 @@ bootstrapApplication(AppComponent, {
       name: 'NgRx Standalone App',
     }),
     provideRouterStore(),
-    provideEffects([AppEffects]),
+    provideEffects(AppEffects),
   ],
 });
