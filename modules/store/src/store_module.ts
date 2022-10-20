@@ -1,9 +1,9 @@
 import {
-  NgModule,
   Inject,
-  ModuleWithProviders,
-  OnDestroy,
   InjectionToken,
+  ModuleWithProviders,
+  NgModule,
+  OnDestroy,
   Optional,
 } from '@angular/core';
 import {
@@ -13,28 +13,20 @@ import {
   StoreFeature,
 } from './models';
 import {
-  _INITIAL_REDUCERS,
-  _REDUCER_FACTORY,
-  _INITIAL_STATE,
-  _STORE_REDUCERS,
-  FEATURE_REDUCERS,
-  _FEATURE_REDUCERS,
-  _FEATURE_REDUCERS_TOKEN,
-  _STORE_FEATURES,
-  _FEATURE_CONFIGS,
-  _RESOLVED_META_REDUCERS,
-  _ROOT_STORE_GUARD,
   _ACTION_TYPE_UNIQUENESS_CHECK,
+  _ROOT_STORE_GUARD,
+  _STORE_FEATURES,
+  FEATURE_REDUCERS,
 } from './tokens';
 import { ActionsSubject } from './actions_subject';
 import { ReducerManager, ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
 import { Store } from './store';
 import {
+  _initialStateFactory,
   FeatureSlice,
   RootStoreConfig,
   StoreConfig,
-  _initialStateFactory,
 } from './store_config';
 import { _provideState, _provideStore } from './provide_store';
 
@@ -91,16 +83,10 @@ export class StoreModule {
   static forRoot<T, V extends Action = Action>(
     reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
     config?: RootStoreConfig<T, V>
-  ): ModuleWithProviders<StoreRootModule>;
-  static forRoot(
-    reducers:
-      | ActionReducerMap<any, any>
-      | InjectionToken<ActionReducerMap<any, any>>,
-    config: RootStoreConfig<any, any> = {}
   ): ModuleWithProviders<StoreRootModule> {
     return {
       ngModule: StoreRootModule,
-      providers: [..._provideStore(reducers, config)],
+      providers: [..._provideStore(reducers, config ?? {})],
     };
   }
 
@@ -117,14 +103,14 @@ export class StoreModule {
   static forFeature<T, V extends Action = Action>(
     slice: FeatureSlice<T, V>
   ): ModuleWithProviders<StoreFeatureModule>;
-  static forFeature(
-    featureNameOrSlice: string | FeatureSlice<any, any>,
+  static forFeature<T, V extends Action = Action>(
+    featureNameOrSlice: string | FeatureSlice<T, V>,
     reducers?:
-      | ActionReducerMap<any, any>
-      | InjectionToken<ActionReducerMap<any, any>>
-      | ActionReducer<any, any>
-      | InjectionToken<ActionReducer<any, any>>,
-    config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
+      | ActionReducerMap<T, V>
+      | InjectionToken<ActionReducerMap<T, V>>
+      | ActionReducer<T, V>
+      | InjectionToken<ActionReducer<T, V>>,
+    config: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>> = {}
   ): ModuleWithProviders<StoreFeatureModule> {
     return {
       ngModule: StoreFeatureModule,

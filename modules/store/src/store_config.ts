@@ -1,4 +1,4 @@
-import { InjectionToken, Injector } from '@angular/core';
+import { inject, InjectionToken } from '@angular/core';
 import {
   Action,
   ActionReducer,
@@ -10,19 +10,6 @@ import {
   RuntimeChecks,
 } from './models';
 import { combineReducers } from './utils';
-import {
-  _INITIAL_REDUCERS,
-  _REDUCER_FACTORY,
-  _INITIAL_STATE,
-  _STORE_REDUCERS,
-  _FEATURE_REDUCERS,
-  _FEATURE_REDUCERS_TOKEN,
-  _STORE_FEATURES,
-  _FEATURE_CONFIGS,
-  _RESOLVED_META_REDUCERS,
-  _ROOT_STORE_GUARD,
-  _ACTION_TYPE_UNIQUENESS_CHECK,
-} from './tokens';
 import { Store } from './store';
 
 export interface StoreConfig<T, V extends Action = Action> {
@@ -44,21 +31,19 @@ export interface FeatureSlice<T, V extends Action = Action> {
   reducer: ActionReducer<T, V>;
 }
 
-export function _createStoreReducers(
-  injector: Injector,
-  reducers: ActionReducerMap<any, any>
-) {
-  return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
+export function _createStoreReducers<T, V extends Action = Action>(
+  reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>
+): ActionReducerMap<T, V> {
+  return reducers instanceof InjectionToken ? inject(reducers) : reducers;
 }
 
-export function _createFeatureStore(
-  injector: Injector,
-  configs: StoreConfig<any, any>[] | InjectionToken<StoreConfig<any, any>>[],
-  featureStores: StoreFeature<any, any>[]
+export function _createFeatureStore<T, V extends Action = Action>(
+  configs: StoreConfig<T, V>[] | InjectionToken<StoreConfig<T, V>>[],
+  featureStores: StoreFeature<T, V>[]
 ) {
   return featureStores.map((feat, index) => {
     if (configs[index] instanceof InjectionToken) {
-      const conf = injector.get(configs[index]);
+      const conf = inject(configs[index] as InjectionToken<StoreConfig<T, V>>);
       return {
         key: feat.key,
         reducerFactory: conf.reducerFactory
@@ -72,15 +57,14 @@ export function _createFeatureStore(
   });
 }
 
-export function _createFeatureReducers(
-  injector: Injector,
-  reducerCollection: ActionReducerMap<any, any>[]
-) {
-  const reducers = reducerCollection.map((reducer) => {
-    return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
+export function _createFeatureReducers<T, V extends Action = Action>(
+  reducerCollection: Array<
+    ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>
+  >
+): ActionReducerMap<T, V>[] {
+  return reducerCollection.map((reducer) => {
+    return reducer instanceof InjectionToken ? inject(reducer) : reducer;
   });
-
-  return reducers;
 }
 
 export function _initialStateFactory(initialState: any): any {
@@ -98,7 +82,8 @@ export function _concatMetaReducers(
   return metaReducers.concat(userProvidedMetaReducers);
 }
 
-export function _provideForRootGuard(store: Store<any>): any {
+export function _provideForRootGuard(): unknown {
+  const store = inject(Store, { optional: true, skipSelf: true });
   if (store) {
     throw new TypeError(
       `The root Store has been provided more than once. Feature modules should provide feature states instead.`

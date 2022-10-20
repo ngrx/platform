@@ -1,12 +1,4 @@
-import {
-  Injector,
-  ModuleWithProviders,
-  NgModule,
-  Optional,
-  Self,
-  SkipSelf,
-  Type,
-} from '@angular/core';
+import { inject, ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { EffectsFeatureModule } from './effects_feature_module';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
@@ -22,7 +14,7 @@ import {
 @NgModule({})
 export class EffectsModule {
   static forFeature(
-    featureEffects: Type<any>[] = []
+    featureEffects: Type<unknown>[] = []
   ): ModuleWithProviders<EffectsFeatureModule> {
     return {
       ngModule: EffectsFeatureModule,
@@ -42,14 +34,14 @@ export class EffectsModule {
           provide: FEATURE_EFFECTS,
           multi: true,
           useFactory: createEffects,
-          deps: [Injector, _FEATURE_EFFECTS, USER_PROVIDED_EFFECTS],
+          deps: [_FEATURE_EFFECTS, USER_PROVIDED_EFFECTS],
         },
       ],
     };
   }
 
   static forRoot(
-    rootEffects: Type<any>[] = []
+    rootEffects: Type<unknown>[] = []
   ): ModuleWithProviders<EffectsRootModule> {
     return {
       ngModule: EffectsRootModule,
@@ -62,10 +54,6 @@ export class EffectsModule {
         {
           provide: _ROOT_EFFECTS_GUARD,
           useFactory: _provideForRootGuard,
-          deps: [
-            [EffectsRunner, new Optional(), new SkipSelf()],
-            [_ROOT_EFFECTS, new Self()],
-          ],
         },
         {
           provide: USER_PROVIDED_EFFECTS,
@@ -75,19 +63,18 @@ export class EffectsModule {
         {
           provide: ROOT_EFFECTS,
           useFactory: createEffects,
-          deps: [Injector, _ROOT_EFFECTS, USER_PROVIDED_EFFECTS],
+          deps: [_ROOT_EFFECTS, USER_PROVIDED_EFFECTS],
         },
       ],
     };
   }
 }
 
-export function createEffects(
-  injector: Injector,
-  effectGroups: Type<any>[][],
-  userProvidedEffectGroups: Type<any>[][]
-): any[] {
-  const mergedEffects: Type<any>[] = [];
+function createEffects(
+  effectGroups: Type<unknown>[][],
+  userProvidedEffectGroups: Type<unknown>[][]
+): unknown[] {
+  const mergedEffects: Type<unknown>[] = [];
 
   for (const effectGroup of effectGroups) {
     mergedEffects.push(...effectGroup);
@@ -97,20 +84,17 @@ export function createEffects(
     mergedEffects.push(...userProvidedEffectGroup);
   }
 
-  return createEffectInstances(injector, mergedEffects);
+  return createEffectInstances(mergedEffects);
 }
 
-export function createEffectInstances(
-  injector: Injector,
-  effects: Type<any>[]
-): any[] {
-  return effects.map((effect) => injector.get(effect));
+function createEffectInstances(effects: Type<unknown>[]): unknown[] {
+  return effects.map((effect) => inject(effect));
 }
 
-export function _provideForRootGuard(
-  runner: EffectsRunner,
-  rootEffects: any[][]
-): any {
+function _provideForRootGuard(): unknown {
+  const runner = inject(EffectsRunner, { optional: true, skipSelf: true });
+  const rootEffects = inject(_ROOT_EFFECTS, { self: true });
+
   // check whether any effects are actually passed
   const hasEffects = !(rootEffects.length === 1 && rootEffects[0].length === 0);
   if (hasEffects && runner) {
