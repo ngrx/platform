@@ -47,6 +47,11 @@ describe('Effects Migration 15_0_0', () => {
                   path: 'feature',
                   loadChildren: () =>
                     import('./app/lazy/feature.routes').then((m) => m.routes),
+                  providers: [
+                    provideEffects([]),
+                    provideEffects([AppEffects]),
+                    provideEffects([AppEffects1, AppEffect2]),        
+                  ]
                 },
               ],
               withEnabledBlockingInitialNavigation()
@@ -94,6 +99,11 @@ describe('Effects Migration 15_0_0', () => {
                   path: 'feature',
                   loadChildren: () =>
                     import('./app/lazy/feature.routes').then((m) => m.routes),
+                  providers: [
+                    provideEffects(),
+                    provideEffects(AppEffects),
+                    provideEffects(AppEffects1, AppEffect2),        
+                  ]
                 },
               ],
               withEnabledBlockingInitialNavigation()
