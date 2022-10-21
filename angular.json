@@ -16,7 +16,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -46,7 +46,7 @@
             "jestConfig": "modules/component/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/component"]
+          "outputs": ["{workspaceRoot}/coverage/modules/component"]
         }
       },
       "schematics": {},
@@ -67,7 +67,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -97,7 +97,7 @@
             "jestConfig": "modules/component-store/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/component-store"]
+          "outputs": ["{workspaceRoot}/coverage/modules/component-store"]
         }
       },
       "schematics": {},
@@ -118,7 +118,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -148,7 +148,7 @@
             "jestConfig": "modules/data/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/data"]
+          "outputs": ["{workspaceRoot}/coverage/modules/data"]
         }
       },
       "schematics": {},
@@ -263,7 +263,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "cwd": "projects/ngrx.io",
             "parallel": false,
@@ -289,7 +289,7 @@
           "outputs": ["{options.outputPath}"]
         },
         "test": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "cwd": "projects/ngrx.io",
             "parallel": false,
@@ -342,7 +342,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -381,7 +381,7 @@
             "jestConfig": "modules/effects/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/effects"]
+          "outputs": ["{workspaceRoot}/coverage/modules/effects"]
         }
       },
       "schematics": {},
@@ -402,7 +402,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -441,7 +441,7 @@
             "jestConfig": "modules/entity/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/entity"]
+          "outputs": ["{workspaceRoot}/coverage/modules/entity"]
         }
       },
       "schematics": {},
@@ -470,7 +470,7 @@
             "jestConfig": "modules/eslint-plugin/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/eslint-plugin"]
+          "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
         },
         "build-package": {
           "builder": "@nrwl/js:tsc",
@@ -498,7 +498,7 @@
           "outputs": ["{options.outputPath}"]
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -606,7 +606,7 @@
             "jestConfig": "projects/example-app/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/projects/example-app"]
+          "outputs": ["{workspaceRoot}/coverage/projects/example-app"]
         }
       },
       "tags": []
@@ -660,7 +660,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -690,7 +690,7 @@
             "jestConfig": "modules/router-store/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/router-store"]
+          "outputs": ["{workspaceRoot}/coverage/modules/router-store"]
         }
       },
       "schematics": {},
@@ -719,7 +719,7 @@
             "jestConfig": "modules/schematics/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/schematics"]
+          "outputs": ["{workspaceRoot}/coverage/modules/schematics"]
         },
         "build-package": {
           "builder": "@nrwl/js:tsc",
@@ -747,7 +747,7 @@
           "outputs": ["{options.outputPath}"]
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -802,7 +802,7 @@
             "jestConfig": "modules/schematics-core/jest.config.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/modules/schematics-core"]
+          "outputs": ["{workspaceRoot}/coverage/modules/schematics-core"]
         }
       },
       "schematics": {},
@@ -893,7 +893,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/projects/standalone-app"],
+          "outputs": ["{workspaceRoot}/coverage/projects/standalone-app"],
           "options": {
             "jestConfig": "projects/standalone-app/jest.config.ts",
             "passWithNoTests": true
@@ -947,7 +947,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -986,7 +986,7 @@
             "jestConfig": "modules/store/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/store"]
+          "outputs": ["{workspaceRoot}/coverage/modules/store"]
         }
       },
       "schematics": {},
@@ -1007,7 +1007,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "parallel": false,
             "commands": [
@@ -1037,7 +1037,7 @@
             "jestConfig": "modules/store-devtools/jest.config.ts",
             "runInBand": true
           },
-          "outputs": ["coverage/modules/store-devtools"]
+          "outputs": ["{workspaceRoot}/coverage/modules/store-devtools"]
         }
       },
       "schematics": {},
