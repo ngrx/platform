@@ -29,10 +29,10 @@ describe('provideEffects', () => {
           multi: true,
           useValue: () => jest.spyOn(inject(EffectsRunner), 'start'),
         },
-        provideStore({}).ɵproviders,
+        provideStore(),
         // provide effects twice
-        provideEffects().ɵproviders,
-        provideEffects().ɵproviders,
+        provideEffects(),
+        provideEffects(),
       ],
     });
 
@@ -48,10 +48,10 @@ describe('provideEffects', () => {
           multi: true,
           useValue: () => jest.spyOn(inject(Store), 'dispatch'),
         },
-        provideStore().ɵproviders,
+        provideStore(),
         // provide effects twice
-        provideEffects().ɵproviders,
-        provideEffects().ɵproviders,
+        provideEffects(),
+        provideEffects(),
       ],
     });
 
@@ -63,7 +63,7 @@ describe('provideEffects', () => {
   it('throws an error when store is not provided', () => {
     TestBed.configureTestingModule({
       // provide only effects
-      providers: [provideEffects(TestEffects).ɵproviders],
+      providers: [provideEffects(TestEffects)],
     });
 
     expect(() => TestBed.inject(TestEffects)).toThrowError();
@@ -71,10 +71,7 @@ describe('provideEffects', () => {
 
   it('runs provided effects', (done) => {
     TestBed.configureTestingModule({
-      providers: [
-        provideStore().ɵproviders,
-        provideEffects(TestEffects).ɵproviders,
-      ],
+      providers: [provideStore(), provideEffects(TestEffects)],
     });
 
     const store = TestBed.inject(Store);
@@ -91,9 +88,9 @@ describe('provideEffects', () => {
   it('runs provided effects after root state registration', (done) => {
     TestBed.configureTestingModule({
       providers: [
-        provideEffects(TestEffects).ɵproviders,
+        provideEffects(TestEffects),
         // provide store after effects
-        provideStore({ [rootSliceKey]: createReducer('ngrx') }).ɵproviders,
+        provideStore({ [rootSliceKey]: createReducer('ngrx') }),
       ],
     });
 
@@ -113,10 +110,10 @@ describe('provideEffects', () => {
   it('runs provided effects after feature state registration', (done) => {
     TestBed.configureTestingModule({
       providers: [
-        provideStore().ɵproviders,
-        provideEffects(TestEffects).ɵproviders,
+        provideStore(),
+        provideEffects(TestEffects),
         // provide feature state after effects
-        provideState(featureSliceKey, createReducer('effects')).ɵproviders,
+        provideState(featureSliceKey, createReducer('effects')),
       ],
     });
 

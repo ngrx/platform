@@ -13,10 +13,10 @@ version: 2.1
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.14.1
 var_2: &run_in_node
   docker:
-    - image: cimg/node:14.17.0
+    - image: cimg/node:14.20.0
 var_5: &run_in_browser
   docker:
-    - image: cimg/node:14.17.0-browsers
+    - image: cimg/node:14.20.0-browsers
 
 orbs:
   browser-tools: circleci/browser-tools@1.3.0

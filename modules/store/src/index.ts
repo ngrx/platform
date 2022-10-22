@@ -13,7 +13,6 @@ export {
   SelectorWithProps,
   RuntimeChecks,
   FunctionWithParametersType,
-  EnvironmentProviders,
 } from './models';
 export { createAction, props, union } from './action_creator';
 export { createActionGroup, emptyProps } from './action_group_creator';
