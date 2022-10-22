@@ -1,36 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
-  ComponentStore,
-  OnStateInit,
-  OnStoreInit,
-  provideComponentStore,
-} from '@ngrx/component-store';
-import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
-import {
-  of,
-  Subscription,
-  ConnectableObservable,
-  interval,
-  timer,
-  Observable,
-  from,
-  scheduled,
-  queueScheduler,
-  asyncScheduler,
-  throwError,
-} from 'rxjs';
-import {
-  delayWhen,
-  publishReplay,
-  take,
-  map,
-  tap,
-  finalize,
-  delay,
-  concatMap,
-} from 'rxjs/operators';
-import { createSelector } from '@ngrx/store';
-import {
   Inject,
   Injectable,
   InjectionToken,
@@ -38,6 +7,37 @@ import {
   Provider,
 } from '@angular/core';
 import { fakeAsync, flushMicrotasks } from '@angular/core/testing';
+import {
+  ComponentStore,
+  OnStateInit,
+  OnStoreInit,
+  provideComponentStore,
+} from '@ngrx/component-store';
+import { createSelector } from '@ngrx/store';
+import {
+  asyncScheduler,
+  ConnectableObservable,
+  from,
+  interval,
+  Observable,
+  of,
+  queueScheduler,
+  scheduled,
+  Subscription,
+  throwError,
+  timer,
+} from 'rxjs';
+import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
+import {
+  concatMap,
+  delay,
+  delayWhen,
+  finalize,
+  map,
+  publishReplay,
+  take,
+  tap,
+} from 'rxjs/operators';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -432,7 +432,7 @@ describe('Component Store', () => {
   });
 
   describe('cancels updater Observable', () => {
-    beforeEach(() => jest.useFakeTimers());
+    beforeEach(() => jest.useFakeTimers({ legacyFakeTimers: true }));
 
     interface State {
       value: string;
