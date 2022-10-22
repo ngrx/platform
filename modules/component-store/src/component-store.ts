@@ -11,6 +11,9 @@ import {
   scheduled,
   asapScheduler,
   EMPTY,
+  ObservableInput,
+  ObservedValueOf,
+  OperatorFunction,
 } from 'rxjs';
 import {
   takeUntil,
@@ -225,40 +228,71 @@ export class ComponentStore<T extends object> implements OnDestroy {
     projector: (s: T) => Result,
     config?: SelectConfig
   ): Observable<Result>;
+  select<SelectorsObject extends Record<string, ObservableInput<unknown>>>(
+    selectorsObject: SelectorsObject,
+    config?: SelectConfig
+  ): Observable<{
+    [K in keyof SelectorsObject]: ObservedValueOf<SelectorsObject[K]>;
+  }>;
   select<Selectors extends Observable<unknown>[], Result>(
-    ...args: [...selectors: Selectors, projector: Projector<Selectors, Result>]
+    ...selectorsWithProjector: [
+      ...selectors: Selectors,
+      projector: Projector<Selectors, Result>
+    ]
   ): Observable<Result>;
   select<Selectors extends Observable<unknown>[], Result>(
-    ...args: [
+    ...selectorsWithProjectorAndConfig: [
       ...selectors: Selectors,
       projector: Projector<Selectors, Result>,
       config: SelectConfig
     ]
   ): Observable<Result>;
   select<
-    Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+    Selectors extends Array<
+      Observable<unknown> | SelectConfig | ProjectorFn | SelectorsObject
+    >,
     Result,
-    ProjectorFn extends (...a: unknown[]) => Result
+    ProjectorFn extends (...a: unknown[]) => Result,
+    SelectorsObject extends Record<string, ObservableInput<unknown>>
   >(...args: Selectors): Observable<Result> {
-    const { observables, projector, config } = processSelectorArgs<
-      Selectors,
-      Result,
-      ProjectorFn
-    >(args);
+    const { observablesOrSelectorsObject, projector, config } =
+      processSelectorArgs<Selectors, Result, ProjectorFn, SelectorsObject>(
+        args
+      );
 
     let observable$: Observable<Result>;
-    // If there are no Observables to combine, then we'll just map the value.
-    if (observables.length === 0) {
-      observable$ = this.stateSubject$.pipe(
-        config.debounce ? debounceSync() : (source$) => source$,
-        map((state) => projector(state))
+
+    // Operators to apply to the pipe.
+    // Many 'any's because we are pushing operators manually into an array
+    // before passing them into a pipe.
+    const operators: OperatorFunction<any, unknown>[] = [];
+
+    if (config.debounce) {
+      operators.push(debounceSync());
+    }
+
+    if (projector) {
+      // where projector is provided.
+      operators.push(
+        map((projectorArgs: unknown[] | object): Result => {
+          if (Array.isArray(projectorArgs)) {
+            return projector(...projectorArgs);
+          }
+          return projector(projectorArgs);
+        })
       );
+    }
+
+    if (
+      Array.isArray(observablesOrSelectorsObject) &&
+      observablesOrSelectorsObject.length === 0
+    ) {
+      // Just a projector that could have debounced.
+      observable$ = this.stateSubject$.pipe(...(operators as [any]));
     } else {
-      // If there are multiple arguments, then we're aggregating selectors, so we need
-      // to take the combineLatest of them before calling the map function.
-      observable$ = combineLatest(observables).pipe(
-        config.debounce ? debounceSync() : (source$) => source$,
-        map((projectorArgs) => projector(...projectorArgs))
+      // array of selectors or selectorsObject
+      observable$ = combineLatest(observablesOrSelectorsObject as any).pipe(
+        ...(operators as [any])
       );
     }
 
@@ -357,36 +391,55 @@ export class ComponentStore<T extends object> implements OnDestroy {
 }
 
 function processSelectorArgs<
-  Selectors extends Array<Observable<unknown> | SelectConfig | ProjectorFn>,
+  Selectors extends Array<
+    Observable<unknown> | SelectConfig | ProjectorFn | SelectorsObject
+  >,
   Result,
-  ProjectorFn extends (...a: unknown[]) => Result
+  ProjectorFn extends (...a: unknown[]) => Result,
+  SelectorsObject extends Record<string, ObservableInput<unknown>>
 >(
   args: Selectors
-): {
-  observables: Observable<unknown>[];
-  projector: ProjectorFn;
-  config: Required<SelectConfig>;
-} {
+):
+  | {
+      observablesOrSelectorsObject: Observable<unknown>[];
+      projector: ProjectorFn;
+      config: Required<SelectConfig>;
+    }
+  | {
+      observablesOrSelectorsObject: SelectorsObject;
+      projector: undefined;
+      config: Required<SelectConfig>;
+    } {
   const selectorArgs = Array.from(args);
   // Assign default values.
   let config: Required<SelectConfig> = { debounce: false };
-  let projector: ProjectorFn;
-  // Last argument is either projector or config
-  const projectorOrConfig = selectorArgs.pop() as ProjectorFn | SelectConfig;
 
-  if (typeof projectorOrConfig !== 'function') {
-    // We got the config as the last argument, replace any default values with it.
-    config = { ...config, ...projectorOrConfig };
-    // Pop the next args, which would be the projector fn.
-    projector = selectorArgs.pop() as ProjectorFn;
-  } else {
-    projector = projectorOrConfig;
+  // Last argument is either config or projector or selectorsObject
+  if (isSelectConfig(selectorArgs[selectorArgs.length - 1])) {
+    config = { ...config, ...selectorArgs.pop() };
   }
-  // The Observables to combine, if there are any.
+
+  // At this point selectorArgs is either projector, selectors with projector or selectorsObject
+  if (selectorArgs.length === 1 && typeof selectorArgs[0] !== 'function') {
+    // this is a selectorsObject
+    return {
+      observablesOrSelectorsObject: selectorArgs[0] as SelectorsObject,
+      projector: undefined,
+      config,
+    };
+  }
+
+  const projector = selectorArgs.pop() as ProjectorFn;
+
+  // The Observables to combine, if there are any left.
   const observables = selectorArgs as Observable<unknown>[];
   return {
-    observables,
+    observablesOrSelectorsObject: observables,
     projector,
     config,
   };
+}
+
+function isSelectConfig(arg: SelectConfig | unknown): arg is SelectConfig {
+  return typeof (arg as SelectConfig).debounce !== 'undefined';
 }

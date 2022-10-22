@@ -809,6 +809,80 @@ describe('Component Store', () => {
       ]);
     });
 
+    it('can combine into an object through selectorObject', () => {
+      const selector1 = componentStore.select((s) => s.value);
+      const selector2 = componentStore.select((s) => s.updated);
+      const selector3 = componentStore.select({
+        s1: selector1,
+        s2: selector2,
+      });
+
+      const selectorResults: Array<{
+        s1: string;
+        s2: boolean | undefined;
+      }> = [];
+      selector3.subscribe((s3) => {
+        selectorResults.push(s3);
+      });
+
+      componentStore.setState(() => ({ value: 'new value', updated: true }));
+
+      expect(selectorResults).toEqual([
+        { s1: 'init', s2: undefined },
+        { s1: 'new value', s2: undefined }, // not debounced
+        { s1: 'new value', s2: true },
+      ]);
+    });
+
+    it('can combine into an object through a single selectorObject', () => {
+      const selector1 = componentStore.select((s) => s.value);
+
+      const selector2 = componentStore.select({
+        s1: selector1,
+      });
+
+      const selectorResults: Array<{
+        s1: string;
+      }> = [];
+      selector2.subscribe((s2) => {
+        selectorResults.push(s2);
+      });
+
+      componentStore.setState(() => ({ value: 'new value', updated: true }));
+
+      expect(selectorResults).toEqual([{ s1: 'init' }, { s1: 'new value' }]);
+    });
+
+    it('can combine into an object through selectorObject with debounce', fakeAsync(() => {
+      const selector1 = componentStore.select((s) => s.value);
+      const selector2 = componentStore.select((s) => s.updated);
+      const selector3 = componentStore.select(
+        {
+          s1: selector1,
+          s2: selector2,
+        },
+        { debounce: true }
+      );
+
+      const selectorResults: Array<{
+        s1: string;
+        s2: boolean | undefined;
+      }> = [];
+      selector3.subscribe((s3) => {
+        selectorResults.push(s3);
+      });
+      flushMicrotasks();
+
+      componentStore.setState(() => ({ value: 'new value', updated: true }));
+      flushMicrotasks();
+
+      expect(selectorResults).toEqual([
+        { s1: 'init', s2: undefined },
+        // debounced, so new value for both
+        { s1: 'new value', s2: true },
+      ]);
+    }));
+
     it(
       'can combine with other Observables',
       marbles((m) => {
