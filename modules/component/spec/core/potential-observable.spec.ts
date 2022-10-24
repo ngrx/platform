@@ -32,7 +32,17 @@ describe('fromPotentialObservable', () => {
 
   testNonObservableInput(true, 'boolean');
 
-  testNonObservableInput({ ngrx: 'component' }, 'object');
+  testNonObservableInput({}, 'empty object');
+
+  testNonObservableInput(
+    { ngrx: 'component' },
+    'object with non-observable values'
+  );
+
+  testNonObservableInput(
+    { x: of(1), y: 2 },
+    'object with at least one non-observable value'
+  );
 
   testNonObservableInput([1, 2, 3], 'array');
 
@@ -51,5 +61,21 @@ describe('fromPotentialObservable', () => {
     const obs1$ = of('ngrx');
     const obs2$ = fromPotentialObservable(obs1$);
     expect(obs1$).toBe(obs2$);
+  });
+
+  it('should combine observables and distinct same values from observable dictionary', () => {
+    const { testScheduler } = setup();
+
+    testScheduler.run(({ cold, expectObservable }) => {
+      const o1$ = cold('o--p-q', { o: 1, p: 2, q: 2 });
+      const o2$ = cold('-xy-z-', { x: 3, y: 3, z: 4 });
+
+      const result$ = fromPotentialObservable({ o1: o1$, o2: o2$ });
+      expectObservable(result$).toBe('-k-lm-', {
+        k: { o1: 1, o2: 3 },
+        l: { o1: 2, o2: 3 },
+        m: { o1: 2, o2: 4 },
+      });
+    });
   });
 });

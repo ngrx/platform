@@ -6,7 +6,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { BehaviorSubject, EMPTY, NEVER, of, throwError } from 'rxjs';
+import { BehaviorSubject, delay, EMPTY, NEVER, of, throwError } from 'rxjs';
 import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
 import { stripSpaces, wrapWithSpace } from '../helpers';
@@ -66,8 +66,18 @@ describe('PushPipe', () => {
         expect(pushPipe.transform(true)).toBe(true);
       });
 
-      it('should return initially passed object', () => {
+      it('should return initially passed empty object', () => {
+        const obj = {};
+        expect(pushPipe.transform(obj)).toBe(obj);
+      });
+
+      it('should return initially passed object with non-observable values', () => {
         const obj = { ngrx: 'component' };
+        expect(pushPipe.transform(obj)).toBe(obj);
+      });
+
+      it('should return initially passed object with at least one non-observable value', () => {
+        const obj = { ngrx: 'component', obs$: of(10) };
         expect(pushPipe.transform(obj)).toBe(obj);
       });
 
@@ -113,6 +123,19 @@ describe('PushPipe', () => {
           expect(pushPipe.transform(promise)).toBe(42);
           done();
         });
+      });
+
+      it('should return undefined when any observable from dictionary emits first value asynchronously', () => {
+        const result = pushPipe.transform({
+          o1$: of(1).pipe(delay(1)),
+          o2$: of(2),
+        });
+        expect(result).toBe(undefined);
+      });
+
+      it('should return emitted values from observables that are passed as dictionary and emit first values synchronously', () => {
+        const result = pushPipe.transform({ o1: of(10), o2: of(20) });
+        expect(result).toEqual({ o1: 10, o2: 20 });
       });
 
       it('should return undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
@@ -192,11 +215,25 @@ describe('PushPipe', () => {
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('true'));
       });
 
-      it('should render initially passed object', () => {
+      it('should render initially passed empty object', () => {
+        pushPipeTestComponent.value$ = {};
+        fixturePushPipeTestComponent.detectChanges();
+        expect(stripSpaces(componentNativeElement.textContent)).toBe('{}');
+      });
+
+      it('should render initially passed object with non-observable values', () => {
         pushPipeTestComponent.value$ = { ngrx: 'component' };
         fixturePushPipeTestComponent.detectChanges();
         expect(stripSpaces(componentNativeElement.textContent)).toBe(
           '{"ngrx":"component"}'
+        );
+      });
+
+      it('should render initially passed object with at least one non-observable value', () => {
+        pushPipeTestComponent.value$ = { ngrx: 'component', o: of('ngrx') };
+        fixturePushPipeTestComponent.detectChanges();
+        expect(stripSpaces(componentNativeElement.textContent)).toBe(
+          '{"ngrx":"component","o":{}}'
         );
       });
 
@@ -265,6 +302,39 @@ describe('PushPipe', () => {
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
       }));
 
+      it('should render undefined initially when any observable from dictionary emits first value asynchronously', () => {
+        pushPipeTestComponent.value$ = {
+          o1: of(100),
+          o2: of(200).pipe(delay(1)),
+        };
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
+      });
+
+      it('should render emitted values from observables that are passed as dictionary', () => {
+        const o1 = new BehaviorSubject('ng');
+        const o2 = new BehaviorSubject('rx');
+        pushPipeTestComponent.value$ = { o1, o2 };
+        fixturePushPipeTestComponent.detectChanges();
+        expect(stripSpaces(componentNativeElement.textContent)).toBe(
+          '{"o1":"ng","o2":"rx"}'
+        );
+
+        o1.next('ngrx');
+        fixturePushPipeTestComponent.detectChanges();
+        expect(stripSpaces(componentNativeElement.textContent)).toBe(
+          '{"o1":"ngrx","o2":"rx"}'
+        );
+
+        o2.next('component');
+        fixturePushPipeTestComponent.detectChanges();
+        expect(stripSpaces(componentNativeElement.textContent)).toBe(
+          '{"o1":"ngrx","o2":"component"}'
+        );
+      });
+
       it('should render undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
         pushPipeTestComponent.value$ = of(42);
         fixturePushPipeTestComponent.detectChanges();
@@ -310,7 +380,7 @@ describe('PushPipe', () => {
         );
       });
 
-      it('should return non-observable value when it was passed after another non-observable', () => {
+      it('should render non-observable value when it was passed after another non-observable', () => {
         pushPipeTestComponent.value$ = 10;
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('10'));

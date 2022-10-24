@@ -74,9 +74,21 @@ an observable emits a new value. It can be used as follows:
 <app-number [number]="number$ | ngrxPush"></app-number>
 ```
 
+## Combining Multiple Observables
+
+The `ngrxPush` pipe can be also used with a dictionary of observables in the
+following way:
+
+```html
+<code>
+  {{ { users: users$, query: query$ } | ngrxPush | json }}
+</code>
+```
+
 ## Included Features
 
 - Takes observables or promises, retrieves their values, and passes the value to the template.
+- Allows combining multiple observables in the template.
 - Handles `null` and `undefined` values in a clean unified/structured way.
 - Triggers change detection using the `RenderScheduler` that behaves differently in
   zone-full and zone-less mode.
