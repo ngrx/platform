@@ -92,5 +92,3 @@ export {
   visitNgModules,
   visitTemplates,
 } from './utility/visitors';
-
-export { getNodeDecorators } from './utility/decorators';
