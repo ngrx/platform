@@ -175,9 +175,3 @@ export interface RuntimeChecks {
    */
   strictActionTypeUniqueness?: boolean;
 }
-
-/** An alias type of ImportedNgModuleProviders
- * that better describes where the providers
- * are allowed to be registered.
- */
-export type EnvironmentProviders = ImportedNgModuleProviders;

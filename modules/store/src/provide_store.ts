@@ -1,15 +1,16 @@
 import {
   ENVIRONMENT_INITIALIZER,
+  EnvironmentProviders,
   Inject,
   inject,
   InjectionToken,
+  makeEnvironmentProviders,
   Provider,
 } from '@angular/core';
 import {
   Action,
   ActionReducer,
   ActionReducerMap,
-  EnvironmentProviders,
   StoreFeature,
 } from './models';
 import { combineReducers, createReducerFactory } from './utils';
@@ -106,12 +107,10 @@ export function provideState<T, V extends Action = Action>(
     | InjectionToken<ActionReducer<T, V>>,
   config: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>> = {}
 ): EnvironmentProviders {
-  return {
-    ɵproviders: [
-      ..._provideState(featureNameOrSlice, reducers, config),
-      ENVIRONMENT_STATE_PROVIDER,
-    ],
-  };
+  return makeEnvironmentProviders([
+    ..._provideState(featureNameOrSlice, reducers, config),
+    ENVIRONMENT_STATE_PROVIDER,
+  ]);
 }
 
 export function _provideStore<T, V extends Action = Action>(
@@ -211,15 +210,10 @@ export function provideStore<T, V extends Action = Action>(
   reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
   config?: RootStoreConfig<T, V>
 ): EnvironmentProviders {
-  return {
-    ɵproviders: [
-      ..._provideStore(
-        reducers ?? ({} as ActionReducerMap<T, V>),
-        config ?? {}
-      ),
-      ENVIRONMENT_STORE_PROVIDER,
-    ],
-  };
+  return makeEnvironmentProviders([
+    ..._provideStore(reducers ?? ({} as ActionReducerMap<T, V>), config ?? {}),
+    ENVIRONMENT_STORE_PROVIDER,
+  ]);
 }
 
 function featureStateProviderFactory(): void {

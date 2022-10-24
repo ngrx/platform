@@ -10,10 +10,8 @@ import {
   url,
   noop,
   filter,
-  template,
   move,
   mergeWith,
-  MergeStrategy,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import {
@@ -83,21 +81,12 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
 
     const componentClass = source.statements.find(
       (stm) => stm.kind === ts.SyntaxKind.ClassDeclaration
-    );
-    const component = componentClass as ts.ClassDeclaration;
-    const componentConstructor = component.members.find(
-      (member) => member.kind === ts.SyntaxKind.Constructor
-    );
-    const cmpCtr = componentConstructor as ts.ConstructorDeclaration;
-    const { pos } = cmpCtr;
-    const constructorText = cmpCtr.getText();
-    const [start, end] = constructorText.split('()');
-    const storeConstructor = [start, `(private store: Store)`, end].join('');
+    ) as ts.ClassDeclaration;
     const constructorUpdate = new ReplaceChange(
       componentPath,
-      pos,
-      `  ${constructorText}\n\n`,
-      `\n\n  ${storeConstructor}`
+      componentClass.members.pos,
+      '\n',
+      `\n  constructor(private store: Store) {}`
     );
 
     const changes = [storeImport, stateImport, constructorUpdate];
@@ -107,7 +96,7 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
       if (change instanceof InsertChange) {
         recorder.insertLeft(change.pos, change.toAdd);
       } else if (change instanceof ReplaceChange) {
-        recorder.remove(pos, change.oldText.length);
+        recorder.remove(change.pos, change.oldText.length);
         recorder.insertLeft(change.order, change.newText);
       }
     }
