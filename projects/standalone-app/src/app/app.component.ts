@@ -12,7 +12,6 @@ import { RouterModule } from '@angular/router';
 
     <router-outlet></router-outlet>
   `,
-  styles: [],
 })
 export class AppComponent {
   title = 'ngrx-standalone-app';
