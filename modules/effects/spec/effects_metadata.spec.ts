@@ -1,19 +1,14 @@
 import { getEffectsMetadata, getSourceMetadata } from '../src/effects_metadata';
 import { of } from 'rxjs';
-import { Effect, createEffect } from '..';
+import { createEffect } from '..';
 import { EffectMetadata } from '../src/models';
 
 describe('Effects metadata', () => {
   describe('getSourceMetadata', () => {
     it('should combine effects created by the effect decorator and by createEffect', () => {
       class Fixture {
-        @Effect() a: any;
         b = createEffect(() => of({ type: 'a' }));
-        @Effect({ dispatch: false })
-        c: any;
         d = createEffect(() => of({ type: 'a' }), { dispatch: false });
-        @Effect({ dispatch: false, useEffectsErrorHandler: false })
-        e: any;
         z: any;
         f = createEffect(() => () => of({ type: 'a' }));
         g = createEffect(() => () => of({ type: 'a' }), { dispatch: false });
@@ -25,11 +20,8 @@ describe('Effects metadata', () => {
 
       const mock = new Fixture();
       const expected: EffectMetadata<Fixture>[] = [
-        { propertyName: 'a', dispatch: true, useEffectsErrorHandler: true },
-        { propertyName: 'c', dispatch: false, useEffectsErrorHandler: true },
         { propertyName: 'b', dispatch: true, useEffectsErrorHandler: true },
         { propertyName: 'd', dispatch: false, useEffectsErrorHandler: true },
-        { propertyName: 'e', dispatch: false, useEffectsErrorHandler: false },
         { propertyName: 'f', dispatch: true, useEffectsErrorHandler: true },
         { propertyName: 'g', dispatch: false, useEffectsErrorHandler: true },
         { propertyName: 'h', dispatch: true, useEffectsErrorHandler: false },
@@ -45,13 +37,8 @@ describe('Effects metadata', () => {
   describe('getEffectsMetadata', () => {
     it('should get map of metadata for all effects created', () => {
       class Fixture {
-        @Effect() a: any;
         b = createEffect(() => of({ type: 'd' }));
-        @Effect({ dispatch: true })
-        c: any;
         d = createEffect(() => of({ type: 'e' }), { dispatch: true });
-        @Effect({ dispatch: false })
-        e: any;
         f = createEffect(() => of({ type: 'f' }), { dispatch: false });
         g = createEffect(() => of({ type: 'g' }), {
           useEffectsErrorHandler: false,
@@ -67,9 +54,6 @@ describe('Effects metadata', () => {
       const mock = new Fixture();
 
       expect(getEffectsMetadata(mock)).toEqual({
-        a: { dispatch: true, useEffectsErrorHandler: true },
-        c: { dispatch: true, useEffectsErrorHandler: true },
-        e: { dispatch: false, useEffectsErrorHandler: true },
         b: { dispatch: true, useEffectsErrorHandler: true },
         d: { dispatch: true, useEffectsErrorHandler: true },
         f: { dispatch: false, useEffectsErrorHandler: true },

@@ -1,6 +1,5 @@
 export { createEffect } from './effect_creator';
 export { EffectConfig } from './models';
-export { Effect } from './effect_decorator';
 export { getEffectsMetadata } from './effects_metadata';
 export { mergeEffects } from './effects_resolver';
 export {

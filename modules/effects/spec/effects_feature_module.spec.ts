@@ -9,7 +9,7 @@ import {
   StoreModule,
 } from '@ngrx/store';
 import { map, withLatestFrom } from 'rxjs/operators';
-import { Actions, Effect, EffectsModule, ofType, createEffect } from '../';
+import { Actions, EffectsModule, ofType, createEffect } from '../';
 import { EffectsFeatureModule } from '../src/effects_feature_module';
 import { EffectsRootModule } from '../src/effects_root_module';
 import { FEATURE_EFFECTS } from '../src/tokens';
@@ -65,22 +65,6 @@ describe('Effects Feature Module', () => {
 
       effects = TestBed.inject(FeatureEffects);
       store = TestBed.inject(Store);
-    });
-
-    it('should have the feature state defined to select from the effect', (done: any) => {
-      const action = { type: 'INCREMENT' };
-      const result = { type: 'INCREASE' };
-
-      effects.effectWithStore.subscribe((res) => {
-        expect(res).toEqual(result);
-      });
-
-      store.dispatch(action);
-
-      store.pipe(select(getDataState)).subscribe((data) => {
-        expect(data).toBe(110);
-        done();
-      });
     });
 
     it('should have the feature state defined to select from the createEffect', (done: any) => {
@@ -144,13 +128,6 @@ const getCreateDataState = createSelector(
 @Injectable()
 class FeatureEffects {
   constructor(private actions: Actions, private store: Store<State>) {}
-
-  @Effect()
-  effectWithStore = this.actions.pipe(
-    ofType('INCREMENT'),
-    withLatestFrom(this.store.select(getDataState)),
-    map(([action, state]) => ({ type: 'INCREASE' }))
-  );
 
   createEffectWithStore = createEffect(() =>
     this.actions.pipe(
