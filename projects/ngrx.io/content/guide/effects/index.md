@@ -137,13 +137,6 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 
 </div>
 
-<div class="alert is-important">
-
-**Note:** You can also write effects using the `@Effect()` decorator, which was the previously defined way before effects creators were introduced in NgRx. If
-you are looking for examples of effect decorators, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/effects#writing-effects).
-
-</div>
-
 ## Handling Errors
 
 Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
