@@ -24,16 +24,16 @@ export interface CreateEffectMetadata {
   [CREATE_EFFECT_METADATA_KEY]: EffectConfig;
 }
 
-export type EffectPropertyKey<T extends Object> = Exclude<
+export type EffectPropertyKey<T extends Record<keyof T, Object>> = Exclude<
   keyof T,
   keyof Object
 >;
 
-export interface EffectMetadata<T extends Object>
+export interface EffectMetadata<T extends Record<keyof T, Object>>
   extends Required<EffectConfig> {
   propertyName: EffectPropertyKey<T>;
 }
 
-export type EffectsMetadata<T extends Object> = {
+export type EffectsMetadata<T extends Record<keyof T, Object>> = {
   [Key in EffectPropertyKey<T>]?: EffectConfig;
 };
