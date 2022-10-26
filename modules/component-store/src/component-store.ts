@@ -11,9 +11,7 @@ import {
   scheduled,
   asapScheduler,
   EMPTY,
-  ObservableInput,
   ObservedValueOf,
-  OperatorFunction,
 } from 'rxjs';
 import {
   takeUntil,
@@ -228,7 +226,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     projector: (s: T) => Result,
     config?: SelectConfig
   ): Observable<Result>;
-  select<SelectorsObject extends Record<string, ObservableInput<unknown>>>(
+  select<SelectorsObject extends Record<string, Observable<unknown>>>(
     selectorsObject: SelectorsObject,
     config?: SelectConfig
   ): Observable<{
@@ -253,7 +251,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     >,
     Result,
     ProjectorFn extends (...a: unknown[]) => Result,
-    SelectorsObject extends Record<string, ObservableInput<unknown>>
+    SelectorsObject extends Record<string, Observable<unknown>>
   >(...args: Selectors): Observable<Result> {
     const { observablesOrSelectorsObject, projector, config } =
       processSelectorArgs<Selectors, Result, ProjectorFn, SelectorsObject>(
@@ -372,7 +370,7 @@ function processSelectorArgs<
   >,
   Result,
   ProjectorFn extends (...a: unknown[]) => Result,
-  SelectorsObject extends Record<string, ObservableInput<unknown>>
+  SelectorsObject extends Record<string, Observable<unknown>>
 >(
   args: Selectors
 ):
