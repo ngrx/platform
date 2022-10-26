@@ -260,45 +260,21 @@ export class ComponentStore<T extends object> implements OnDestroy {
         args
       );
 
-    let observable$: Observable<Result>;
+    const source$ = hasProjectFnOnly(observablesOrSelectorsObject, projector)
+      ? this.stateSubject$
+      : combineLatest(observablesOrSelectorsObject as any);
 
-    // Operators to apply to the pipe.
-    // Many 'any's because we are pushing operators manually into an array
-    // before passing them into a pipe.
-    const operators: OperatorFunction<any, unknown>[] = [];
-
-    if (config.debounce) {
-      operators.push(debounceSync());
-    }
-
-    if (projector) {
-      // where projector is provided.
-      operators.push(
-        map((projectorArgs: unknown[] | object): Result => {
-          if (Array.isArray(projectorArgs)) {
-            return projector(...projectorArgs);
-          }
-          return projector(projectorArgs);
-        })
-      );
-    }
-
-    if (
-      Array.isArray(observablesOrSelectorsObject) &&
-      observablesOrSelectorsObject.length === 0
-    ) {
-      // Just a projector that could have debounced.
-      observable$ = this.stateSubject$.pipe(...(operators as [any]));
-    } else {
-      // array of selectors or selectorsObject
-      observable$ = combineLatest(observablesOrSelectorsObject as any).pipe(
-        ...(operators as [any])
-      );
-    }
-
-    return observable$.pipe(
+    return source$.pipe(
+      config.debounce ? debounceSync() : noopOperator(),
+      (projector
+        ? map((projectorArgs) =>
+            Array.isArray(projectorArgs)
+              ? projector(...projectorArgs)
+              : projector(projectorArgs)
+          )
+        : noopOperator()) as () => Observable<Result>,
       distinctUntilChanged(),
-      shareReplay({
+      shareReplay<Result>({
         refCount: true,
         bufferSize: 1,
       }),
@@ -442,4 +418,19 @@ function processSelectorArgs<
 
 function isSelectConfig(arg: SelectConfig | unknown): arg is SelectConfig {
   return typeof (arg as SelectConfig).debounce !== 'undefined';
+}
+
+function hasProjectFnOnly(
+  observablesOrSelectorsObject: unknown[] | Record<string, unknown>,
+  projector: unknown
+) {
+  return (
+    Array.isArray(observablesOrSelectorsObject) &&
+    observablesOrSelectorsObject.length === 0 &&
+    projector
+  );
+}
+
+function noopOperator(): <T>(source$: Observable<T>) => typeof source$ {
+  return (source$) => source$;
 }
