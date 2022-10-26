@@ -14,7 +14,7 @@ The `createFeature` function reduces repetitive code in selector files by genera
 for each feature state property. It accepts an object containing a feature name and a feature reducer as the input argument:
 
 <code-example header="books.reducer.ts">
-import { createFeature, createReducer } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { Book } from './book.model';
 
 import * as BookListPageActions from './book-list-page.actions';

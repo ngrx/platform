@@ -8,14 +8,11 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  ObservableOrPromise,
-  PotentialObservable,
-} from '../core/potential-observable';
+import { PotentialObservableResult } from '../core/potential-observable';
 import { RenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
 
-type LetViewContextValue<PO> = PO extends ObservableOrPromise<infer V> ? V : PO;
+type LetViewContextValue<PO> = PotentialObservableResult<PO>;
 
 export interface LetViewContext<PO> {
   /**
@@ -74,6 +71,15 @@ export interface LetViewContext<PO> {
  * </ng-container>
  * ```
  *
+ * ### Combining Multiple Observables
+ *
+ * ```html
+ * <ng-container *ngrxLet="{ users: users$, query: query$ } as vm">
+ *   <app-search-bar [query]="vm.query"></app-search-bar>
+ *   <app-user-list [users]="vm.users"></app-user-list>
+ * </ng-container>
+ * ```
+ *
  * ### Using Suspense Template
  *
  * ```html
@@ -115,9 +121,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     $complete: false,
     $suspense: true,
   };
-  private readonly renderEventManager = createRenderEventManager<
-    LetViewContextValue<PO>
-  >({
+  private readonly renderEventManager = createRenderEventManager<PO>({
     suspense: () => {
       this.viewContext.$implicit = undefined;
       this.viewContext.ngrxLet = undefined;
@@ -169,17 +173,15 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
 
   @Input()
   set ngrxLet(potentialObservable: PO) {
-    this.renderEventManager.nextPotentialObservable(
-      potentialObservable as PotentialObservable<LetViewContextValue<PO>>
-    );
+    this.renderEventManager.nextPotentialObservable(potentialObservable);
   }
 
-  @Input('ngrxLetSuspenseTpl') suspenseTemplateRef?: TemplateRef<
-    LetViewContext<PO>
-  >;
+  @Input('ngrxLetSuspenseTpl') suspenseTemplateRef?: TemplateRef<unknown>;
 
   constructor(
-    private readonly mainTemplateRef: TemplateRef<LetViewContext<PO>>,
+    private readonly mainTemplateRef: TemplateRef<
+      LetViewContext<PO | undefined>
+    >,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly errorHandler: ErrorHandler,
     private readonly renderScheduler: RenderScheduler

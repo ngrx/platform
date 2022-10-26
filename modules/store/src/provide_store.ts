@@ -1,12 +1,10 @@
 import {
-  Inject,
-  InjectionToken,
-  Injector,
-  Optional,
-  SkipSelf,
   ENVIRONMENT_INITIALIZER,
+  EnvironmentProviders,
+  Inject,
   inject,
-  InjectFlags,
+  InjectionToken,
+  makeEnvironmentProviders,
   Provider,
 } from '@angular/core';
 import {
@@ -14,30 +12,29 @@ import {
   ActionReducer,
   ActionReducerMap,
   StoreFeature,
-  EnvironmentProviders,
 } from './models';
 import { combineReducers, createReducerFactory } from './utils';
 import {
-  INITIAL_STATE,
-  INITIAL_REDUCERS,
-  _INITIAL_REDUCERS,
-  REDUCER_FACTORY,
-  _REDUCER_FACTORY,
-  STORE_FEATURES,
-  _INITIAL_STATE,
-  META_REDUCERS,
-  _STORE_REDUCERS,
-  FEATURE_REDUCERS,
+  _ACTION_TYPE_UNIQUENESS_CHECK,
+  _FEATURE_CONFIGS,
   _FEATURE_REDUCERS,
   _FEATURE_REDUCERS_TOKEN,
-  _STORE_FEATURES,
-  _FEATURE_CONFIGS,
-  USER_PROVIDED_META_REDUCERS,
+  _INITIAL_REDUCERS,
+  _INITIAL_STATE,
+  _REDUCER_FACTORY,
   _RESOLVED_META_REDUCERS,
   _ROOT_STORE_GUARD,
-  _ACTION_TYPE_UNIQUENESS_CHECK,
-  ROOT_STORE_PROVIDER,
+  _STORE_FEATURES,
+  _STORE_REDUCERS,
+  FEATURE_REDUCERS,
   FEATURE_STATE_PROVIDER,
+  INITIAL_REDUCERS,
+  INITIAL_STATE,
+  META_REDUCERS,
+  REDUCER_FACTORY,
+  ROOT_STORE_PROVIDER,
+  STORE_FEATURES,
+  USER_PROVIDED_META_REDUCERS,
 } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import {
@@ -50,21 +47,21 @@ import {
   ScannedActionsSubject,
 } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
-import { STORE_PROVIDERS, Store } from './store';
+import { Store, STORE_PROVIDERS } from './store';
 import {
-  provideRuntimeChecks,
   checkForActionTypeUniqueness,
+  provideRuntimeChecks,
 } from './runtime_checks';
 import {
-  FeatureSlice,
-  RootStoreConfig,
-  StoreConfig,
   _concatMetaReducers,
   _createFeatureReducers,
   _createFeatureStore,
   _createStoreReducers,
   _initialStateFactory,
   _provideForRootGuard,
+  FeatureSlice,
+  RootStoreConfig,
+  StoreConfig,
 } from './store_config';
 
 export function provideState<T, V extends Action = Action>(
@@ -101,34 +98,29 @@ export function provideState<T, V extends Action = Action>(
  * ];
  * ```
  */
-export function provideState(
-  featureNameOrSlice: string | FeatureSlice<any, any>,
+export function provideState<T, V extends Action = Action>(
+  featureNameOrSlice: string | FeatureSlice<T, V>,
   reducers?:
-    | ActionReducerMap<any, any>
-    | InjectionToken<ActionReducerMap<any, any>>
-    | ActionReducer<any, any>
-    | InjectionToken<ActionReducer<any, any>>,
-  config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
+    | ActionReducerMap<T, V>
+    | InjectionToken<ActionReducerMap<T, V>>
+    | ActionReducer<T, V>
+    | InjectionToken<ActionReducer<T, V>>,
+  config: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>> = {}
 ): EnvironmentProviders {
-  return {
-    ɵproviders: [
-      ..._provideState(featureNameOrSlice, reducers, config),
-      ENVIRONMENT_STATE_PROVIDER,
-    ],
-  };
+  return makeEnvironmentProviders([
+    ..._provideState(featureNameOrSlice, reducers, config),
+    ENVIRONMENT_STATE_PROVIDER,
+  ]);
 }
 
-export function _provideStore(
-  reducers:
-    | ActionReducerMap<any, any>
-    | InjectionToken<ActionReducerMap<any, any>>,
-  config: RootStoreConfig<any, any>
-) {
+export function _provideStore<T, V extends Action = Action>(
+  reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
+  config: RootStoreConfig<T, V>
+): Provider[] {
   return [
     {
       provide: _ROOT_STORE_GUARD,
       useFactory: _provideForRootGuard,
-      deps: [[Store, new Optional(), new SkipSelf()]],
     },
     { provide: _INITIAL_STATE, useValue: config.initialState },
     {
@@ -144,7 +136,7 @@ export function _provideStore(
     },
     {
       provide: INITIAL_REDUCERS,
-      deps: [Injector, _INITIAL_REDUCERS, [new Inject(_STORE_REDUCERS)]],
+      deps: [_INITIAL_REDUCERS, [new Inject(_STORE_REDUCERS)]],
       useFactory: _createStoreReducers,
     },
     {
@@ -180,8 +172,8 @@ function rootStoreProviderFactory(): void {
   inject(ReducerObservable);
   inject(ScannedActionsSubject);
   inject(Store);
-  inject(_ROOT_STORE_GUARD, InjectFlags.Optional);
-  inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
+  inject(_ROOT_STORE_GUARD, { optional: true });
+  inject(_ACTION_TYPE_UNIQUENESS_CHECK, { optional: true });
 }
 
 /**
@@ -199,10 +191,6 @@ const ENVIRONMENT_STORE_PROVIDER: Provider[] = [
   },
 ];
 
-export function provideStore<T, V extends Action = Action>(
-  reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-  config?: RootStoreConfig<T, V>
-): EnvironmentProviders;
 /**
  * Provides the global Store providers and initializes
  * the Store.
@@ -218,26 +206,22 @@ export function provideStore<T, V extends Action = Action>(
  * });
  * ```
  */
-export function provideStore(
-  reducers:
-    | ActionReducerMap<any, any>
-    | InjectionToken<ActionReducerMap<any, any>> = {},
-  config: RootStoreConfig<any, any> = {}
+export function provideStore<T, V extends Action = Action>(
+  reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
+  config?: RootStoreConfig<T, V>
 ): EnvironmentProviders {
-  return {
-    ɵproviders: [
-      ..._provideStore(reducers, config),
-      ENVIRONMENT_STORE_PROVIDER,
-    ],
-  };
+  return makeEnvironmentProviders([
+    ..._provideStore(reducers ?? ({} as ActionReducerMap<T, V>), config ?? {}),
+    ENVIRONMENT_STORE_PROVIDER,
+  ]);
 }
 
-function featureStateProviderFactory() {
+function featureStateProviderFactory(): void {
   inject(ROOT_STORE_PROVIDER);
   const features = inject<StoreFeature<any, any>[]>(_STORE_FEATURES);
   const featureReducers = inject<ActionReducerMap<any>[]>(FEATURE_REDUCERS);
   const reducerManager = inject(ReducerManager);
-  inject(_ACTION_TYPE_UNIQUENESS_CHECK, InjectFlags.Optional);
+  inject(_ACTION_TYPE_UNIQUENESS_CHECK, { optional: true });
 
   const feats = features.map((feature, index) => {
     const featureReducerCollection = featureReducers.shift();
@@ -266,22 +250,21 @@ const ENVIRONMENT_STATE_PROVIDER: Provider[] = [
   {
     provide: ENVIRONMENT_INITIALIZER,
     multi: true,
-    deps: [],
     useFactory() {
       return () => inject(FEATURE_STATE_PROVIDER);
     },
   },
 ];
 
-export function _provideState(
-  featureNameOrSlice: string | FeatureSlice<any, any>,
+export function _provideState<T, V extends Action = Action>(
+  featureNameOrSlice: string | FeatureSlice<T, V>,
   reducers?:
-    | ActionReducerMap<any, any>
-    | InjectionToken<ActionReducerMap<any, any>>
-    | ActionReducer<any, any>
-    | InjectionToken<ActionReducer<any, any>>,
-  config: StoreConfig<any, any> | InjectionToken<StoreConfig<any, any>> = {}
-) {
+    | ActionReducerMap<T, V>
+    | InjectionToken<ActionReducerMap<T, V>>
+    | ActionReducer<T, V>
+    | InjectionToken<ActionReducer<T, V>>,
+  config: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>> = {}
+): Provider[] {
   return [
     {
       provide: _FEATURE_CONFIGS,
@@ -312,7 +295,7 @@ export function _provideState(
     },
     {
       provide: _STORE_FEATURES,
-      deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+      deps: [_FEATURE_CONFIGS, STORE_FEATURES],
       useFactory: _createFeatureStore,
     },
     {
@@ -332,11 +315,7 @@ export function _provideState(
     {
       provide: FEATURE_REDUCERS,
       multi: true,
-      deps: [
-        Injector,
-        _FEATURE_REDUCERS,
-        [new Inject(_FEATURE_REDUCERS_TOKEN)],
-      ],
+      deps: [_FEATURE_REDUCERS, [new Inject(_FEATURE_REDUCERS_TOKEN)]],
       useFactory: _createFeatureReducers,
     },
     checkForActionTypeUniqueness(),

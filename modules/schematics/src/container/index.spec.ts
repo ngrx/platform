@@ -104,7 +104,7 @@ describe('Container Schematic', () => {
       `${projectPath}/src/app/foo/foo.component.ts`
     );
 
-    expect(content).toMatch(/constructor\(private store: Store\) { }\n\n/);
+    expect(content).toMatch(/constructor\(private store: Store\) {}\n/);
   });
 
   it('should update the component spec', async () => {
