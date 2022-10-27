@@ -15,8 +15,6 @@ export = {
     '@ngrx/updater-explicit-return-type': 'error',
     '@ngrx/avoid-cyclic-effects': 'error',
     '@ngrx/no-dispatch-in-effects': 'error',
-    '@ngrx/no-effect-decorator-and-creator': 'error',
-    '@ngrx/no-effect-decorator': 'error',
     '@ngrx/no-effects-in-providers': 'error',
     '@ngrx/no-multiple-actions-in-effects': 'error',
     '@ngrx/prefer-action-creator-in-of-type': 'error',
