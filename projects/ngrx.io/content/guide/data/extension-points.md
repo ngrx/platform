@@ -77,7 +77,7 @@ and re-setting `defaultDispatcherOptions` _before_ creating dispatchers
 
 ## Custom _effects_
 
-The NgRx Data library has one NgRx `@Effect`, the `EntityEffects` class.
+The NgRx Data library has one NgRx `Effect`, the `EntityEffects` class.
 
 This class detects entity persistence actions, performs the persistence operation with a
 call to an `EntityDataService` and channels the HTTP response through a

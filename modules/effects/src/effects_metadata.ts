@@ -1,8 +1,7 @@
 import { EffectMetadata, EffectsMetadata } from './models';
 import { getCreateEffectMetadata } from './effect_creator';
-import { getEffectDecoratorMetadata } from './effect_decorator';
 
-export function getEffectsMetadata<T extends Object>(
+export function getEffectsMetadata<T extends Record<keyof T, Object>>(
   instance: T
 ): EffectsMetadata<T> {
   return getSourceMetadata(instance).reduce(
@@ -17,16 +16,8 @@ export function getEffectsMetadata<T extends Object>(
   );
 }
 
-export function getSourceMetadata<T extends Object>(
+export function getSourceMetadata<T extends { [props in keyof T]: object }>(
   instance: T
 ): EffectMetadata<T>[] {
-  const effects: Array<(instance: Object) => EffectMetadata<T>[]> = [
-    getEffectDecoratorMetadata,
-    getCreateEffectMetadata,
-  ];
-
-  return effects.reduce<EffectMetadata<T>[]>(
-    (sources, source) => sources.concat(source(instance)),
-    []
-  );
+  return getCreateEffectMetadata(instance);
 }
