@@ -114,8 +114,11 @@ export function provideState<T, V extends Action = Action>(
 }
 
 export function _provideStore<T, V extends Action = Action>(
-  reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
-  config: RootStoreConfig<T, V>
+  reducers:
+    | ActionReducerMap<T, V>
+    | InjectionToken<ActionReducerMap<T, V>>
+    | Record<string, never> = {},
+  config: RootStoreConfig<T, V> = {}
 ): Provider[] {
   return [
     {
@@ -211,7 +214,7 @@ export function provideStore<T, V extends Action = Action>(
   config?: RootStoreConfig<T, V>
 ): EnvironmentProviders {
   return makeEnvironmentProviders([
-    ..._provideStore(reducers ?? ({} as ActionReducerMap<T, V>), config ?? {}),
+    ..._provideStore(reducers, config),
     ENVIRONMENT_STORE_PROVIDER,
   ]);
 }

@@ -81,12 +81,12 @@ export class StoreFeatureModule implements OnDestroy {
 @NgModule({})
 export class StoreModule {
   static forRoot<T, V extends Action = Action>(
-    reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
+    reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
     config?: RootStoreConfig<T, V>
   ): ModuleWithProviders<StoreRootModule> {
     return {
       ngModule: StoreRootModule,
-      providers: [..._provideStore(reducers, config ?? {})],
+      providers: [..._provideStore(reducers, config)],
     };
   }
 
