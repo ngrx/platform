@@ -54,6 +54,18 @@ describe('Component Store', () => {
     );
 
     it(
+      'supports an array state',
+      marbles((m) => {
+        const INIT_STATE = [1, 2, 3];
+        const componentStore = new ComponentStore(INIT_STATE);
+
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('i', { i: INIT_STATE })
+        );
+      })
+    );
+
+    it(
       'stays uninitialized if initial state is not provided',
       marbles((m) => {
         const componentStore = new ComponentStore();
@@ -372,7 +384,7 @@ describe('Component Store', () => {
           },
         ]);
 
-        // New subsriber gets the latest value only.
+        // New subscriber gets the latest value only.
         m.expect(componentStore.state$).toBeObservable(
           m.hot('s', {
             s: {

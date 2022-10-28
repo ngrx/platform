@@ -266,13 +266,15 @@ export class ComponentStore<T extends object> implements OnDestroy {
       config.debounce ? debounceSync() : noopOperator(),
       (projector
         ? map((projectorArgs) =>
+            // projectorArgs could be an Array in case where the entire state is an Array, so adding this check
+            observablesOrSelectorsObject.length > 0 &&
             Array.isArray(projectorArgs)
               ? projector(...projectorArgs)
               : projector(projectorArgs)
           )
         : noopOperator()) as () => Observable<Result>,
       distinctUntilChanged(),
-      shareReplay<Result>({
+      shareReplay({
         refCount: true,
         bufferSize: 1,
       }),
