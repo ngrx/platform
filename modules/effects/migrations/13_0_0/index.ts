@@ -7,7 +7,6 @@ import {
   replaceImport,
   commitChanges,
   visitTSSourceFiles,
-  getNodeDecorators,
 } from '../../schematics-core';
 
 export function migrateToCreators(): Rule {
@@ -17,7 +16,7 @@ export function migrateToCreators(): Rule {
         .filter(ts.isClassDeclaration)
         .map((clas) =>
           clas.members.filter(ts.isPropertyDeclaration).filter((property) => {
-            const decorators = getNodeDecorators(property);
+            const decorators = ts.getDecorators(property);
             return decorators && decorators.some(isEffectDecorator);
           })
         );
@@ -58,7 +57,7 @@ function replaceEffectDecorators(
       if (!effect.initializer) {
         return [];
       }
-      const decorator = (getNodeDecorators(effect) || []).find(
+      const decorator = (ts.getDecorators(effect) || []).find(
         isEffectDecorator
       );
       if (!decorator) {
@@ -86,7 +85,7 @@ function replaceEffectDecorators(
     .reduce((acc, inserts) => acc.concat(inserts), []);
 
   const removes = effects
-    .map((effect) => getNodeDecorators(effect))
+    .map((effect) => ts.getDecorators(effect))
     .map((decorators) => {
       if (!decorators) {
         return [];
