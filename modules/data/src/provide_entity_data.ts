@@ -39,11 +39,6 @@ import { EntityCollectionReducerRegistry } from './reducers/entity-collection-re
 import { EntityDispatcherFactory } from './dispatchers/entity-dispatcher-factory';
 import { EntityDefinitionService } from './entity-metadata/entity-definition.service';
 import { EntityCacheDispatcher } from './dispatchers/entity-cache-dispatcher';
-import {
-  createEntityCacheSelector,
-  entityCacheSelectorProvider,
-  ENTITY_CACHE_SELECTOR_TOKEN,
-} from './selectors/entity-cache-selector';
 import { EntityCollectionServiceElementsFactory } from './entity-services/entity-collection-service-elements-factory';
 import { EntityCollectionServiceFactory } from './entity-services/entity-collection-service-factory';
 import { EntityServices } from './entity-services/entity-services';
@@ -59,6 +54,10 @@ import { EntityCacheReducerFactory } from './reducers/entity-cache-reducer';
 import { EntityCache } from './reducers/entity-cache';
 import { EntityCollection } from './reducers/entity-collection';
 import { EntityAction } from './actions/entity-action';
+import {
+  createEntityCacheSelector,
+  ENTITY_CACHE_SELECTOR_TOKEN,
+} from './selectors/entity-cache-selector';
 
 export interface EntityDataModuleConfig {
   entityMetadata?: EntityMetadataMap;
@@ -133,7 +132,6 @@ export function _provideEntityDataWithoutEffects(
     EntityActionFactory,
     EntityCacheDispatcher,
     EntityCacheReducerFactory,
-    entityCacheSelectorProvider,
     EntityCollectionCreator,
     EntityCollectionReducerFactory,
     EntityCollectionReducerMethodsFactory,
