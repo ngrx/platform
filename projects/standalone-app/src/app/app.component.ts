@@ -12,8 +12,6 @@ import { RouterModule } from '@angular/router';
     <br />
     <a routerLink="/board">Boards</a>
 
-    <a routerLink="/board">Boards</a>
-
     <router-outlet></router-outlet>
   `,
 })

@@ -35,7 +35,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         if (!storyId) {
           return throwError(() => new HttpErrorResponse({ status: 400 }));
         }
-
+        // eslint-disable-next-line no-case-declarations
         const obj = data[storyId];
         if (obj) {
           return of(new HttpResponse({ status: 200, body: obj }));
