@@ -1,5 +1,6 @@
 import { ComponentStore } from '@ngrx/component-store';
 import { isObservable, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { Constructor } from './constructor';
 import { callWithRecursiveProxies, getProxyArgsForFunction } from './proxies';
 
 const MOCK_STORE_VALUE = Symbol('MOCK_STORE_VALUE');
@@ -14,19 +15,33 @@ interface MockedStoreValue {
   [MOCK_STORE_VALUE]: ProxyComponentStoreValue;
 }
 
-interface Constructor<ClassType> {
-  new (...args: never[]): ClassType;
-}
-
-type SelectorKeys<T> = {
+/**
+ * Given a type T, determines the possible keys that could be a selector.
+ *
+ * This may include false positives since general Observable properties will
+ * be interpreted as selectors in this context.
+ */
+export type SelectorKeys<T> = {
   // We don't care about the actual type of Observable, we just need the key
   [K in keyof T]-?: T[K] extends Observable<unknown> ? K : never;
 }[keyof T];
 
+/**
+ * Given a type T, determines the possible keys that could be an effect
+ *
+ * This may include false positives since any function will be interpreted as
+ * a possible effect in this context.
+ */
 type EffectKeys<T> = {
   [K in keyof T]-?: T[K] extends () => unknown ? K : never;
 }[keyof T];
 
+/**
+ * Given a type T, determines the possible keys that could be a updater.
+ *
+ * This may include false positives since any function will be interpreted as
+ * a possible updater in this context.
+ */
 type UpdaterKeys<T> = {
   [K in keyof T]-?: T[K] extends () => unknown ? K : never;
 }[keyof T];
@@ -41,7 +56,7 @@ export interface MockStoreHints<ClassType> {
   updaters?: Array<UpdaterKeys<ClassType>>;
 }
 
-class MockObservable<T> extends Observable<T> {
+class MockObservable<T> extends Observable<T> implements MockedStoreValue {
   readonly [MOCK_STORE_VALUE] = ProxyComponentStoreValue.SELECT;
 
   override lift<R>(): Observable<R> {
@@ -124,9 +139,15 @@ export class ProxyComponentStore<ClassType> {
           hints?.selectors?.includes(prop as SelectorKeys<ClassType>)
         ) {
           proxyInstance[prop] = new ReplaySubject<unknown>(1);
-        } else if (mockStoreValue === ProxyComponentStoreValue.UPDATER || hints?.updaters?.includes(prop as UpdaterKeys<ClassType>)) {
+        } else if (
+          mockStoreValue === ProxyComponentStoreValue.UPDATER ||
+          hints?.updaters?.includes(prop as UpdaterKeys<ClassType>)
+        ) {
           proxyInstance[prop] = jasmine.createSpy(`updater[${String(prop)}]`);
-        } else if (mockStoreValue === ProxyComponentStoreValue.EFFECT || hints?.effects?.includes(prop as EffectKeys<ClassType>)) {
+        } else if (
+          mockStoreValue === ProxyComponentStoreValue.EFFECT ||
+          hints?.effects?.includes(prop as EffectKeys<ClassType>)
+        ) {
           proxyInstance[prop] = jasmine.createSpy(`effect[${String(prop)}]`);
         } else if (prop === 'destroy$') {
           // Special case for always mocking the `destroy$` Observable.
@@ -187,19 +208,28 @@ function isMockedStoreValue(val: unknown): val is MockedStoreValue {
  * Given a class, property name, and the mock store object, runs the
  * specified function on the class prototype to determine a good default
  * value to return.
+ *
+ * This may be a ReplaySubject, for Observables or selectors, or a simple spy
+ * for other functions.
  */
 function getAppropriateMockForFunction(
   classConstructor: Constructor<unknown>,
   prop: string | symbol | number,
   self: unknown
 ) {
-  const value = callWithRecursiveProxies(classConstructor.prototype[prop], self);
+  const value = callWithRecursiveProxies(
+    classConstructor.prototype[prop],
+    self
+  );
 
   let mockValue = value;
   // Depending on what we get back from the function, provide a default
   // value for the mock. In particular, we care about selectors and
   // Observables.
-  if (isMockedStoreValue(value) && value[MOCK_STORE_VALUE] === ProxyComponentStoreValue.SELECT) {
+  if (
+    isMockedStoreValue(value) &&
+    value[MOCK_STORE_VALUE] === ProxyComponentStoreValue.SELECT
+  ) {
     mockValue = new ReplaySubject<unknown>(1);
   } else if (isObservable(mockValue)) {
     mockValue = new ReplaySubject<unknown>(1);

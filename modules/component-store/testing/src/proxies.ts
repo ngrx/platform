@@ -1,6 +1,4 @@
-interface Constructor<ClassType> {
-  new (...args: never[]): ClassType;
-}
+import { Constructor } from './constructor';
 
 /**
  * A proxy that will have all function calls return another such proxy
@@ -40,7 +38,9 @@ export function constructRecursiveProxy(name: string) {
  * This allows us to avoid calling actual function implementations in order to
  * avoid executing their side effects.
  */
-export function getProxyArgsForFunction(fn: Constructor<unknown> | ((...args: unknown[]) => unknown)) {
+export function getProxyArgsForFunction(
+  fn: Constructor<unknown> | ((...args: unknown[]) => unknown)
+) {
   // The function that we want to call can take any arbitrary number of
   // arguments.  We need to provide objects that can 'get' any property and
   // also have any methods called on them.
