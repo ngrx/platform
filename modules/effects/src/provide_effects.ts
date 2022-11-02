@@ -3,6 +3,7 @@ import {
   EnvironmentProviders,
   inject,
   makeEnvironmentProviders,
+  ModuleWithProviders,
   Type,
 } from '@angular/core';
 import {
@@ -13,6 +14,7 @@ import {
 import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
 import { rootEffectsInit as effectsInit } from './effects_actions';
+import { EffectsFeatureModule } from './effects_feature_module';
 
 /**
  * Runs the provided effects.
@@ -44,10 +46,11 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
  * ```
  */
 export function provideEffects(
-  ...effects: Type<unknown>[]
+  ...effects: Type<unknown>[] | Type<unknown>[][]
 ): EnvironmentProviders {
+  const effectsFlattened = effects.flat();
   return makeEnvironmentProviders([
-    effects,
+    effectsFlattened,
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
@@ -63,7 +66,7 @@ export function provideEffects(
           effectsRunner.start();
         }
 
-        for (const effectsClass of effects) {
+        for (const effectsClass of effectsFlattened) {
           const effectsInstance = inject(effectsClass);
           effectSources.addEffects(effectsInstance);
         }
