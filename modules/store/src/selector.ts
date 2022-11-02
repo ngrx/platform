@@ -23,7 +23,7 @@ export interface MemoizedSelector<
   ProjectorFn = DefaultProjectorFn<Result>
 > extends Selector<State, Result> {
   release(): void;
-  projector: SelectorProjectorFn<ProjectorFn>;
+  projector: ProjectorFn;
   setResult: (result?: Result) => void;
   clearResult: () => void;
 }
