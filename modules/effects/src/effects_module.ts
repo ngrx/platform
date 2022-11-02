@@ -14,16 +14,23 @@ import {
 @NgModule({})
 export class EffectsModule {
   static forFeature(
-    featureEffects: Type<unknown>[] = []
+    featureEffects: Type<unknown>[]
+  ): ModuleWithProviders<EffectsFeatureModule>;
+  static forFeature(
+    ...featureEffects: Type<unknown>[]
+  ): ModuleWithProviders<EffectsFeatureModule>;
+  static forFeature(
+    ...featureEffects: Type<unknown>[] | Type<unknown>[][]
   ): ModuleWithProviders<EffectsFeatureModule> {
+    const effects = featureEffects.flat();
     return {
       ngModule: EffectsFeatureModule,
       providers: [
-        featureEffects,
+        effects,
         {
           provide: _FEATURE_EFFECTS,
           multi: true,
-          useValue: featureEffects,
+          useValue: effects,
         },
         {
           provide: USER_PROVIDED_EFFECTS,
@@ -41,15 +48,22 @@ export class EffectsModule {
   }
 
   static forRoot(
-    rootEffects: Type<unknown>[] = []
+    rootEffects: Type<unknown>[]
+  ): ModuleWithProviders<EffectsRootModule>;
+  static forRoot(
+    ...rootEffects: Type<unknown>[]
+  ): ModuleWithProviders<EffectsRootModule>;
+  static forRoot(
+    ...rootEffects: Type<unknown>[] | Type<unknown>[][]
   ): ModuleWithProviders<EffectsRootModule> {
+    const effects = rootEffects.flat();
     return {
       ngModule: EffectsRootModule,
       providers: [
-        rootEffects,
+        effects,
         {
           provide: _ROOT_EFFECTS,
-          useValue: [rootEffects],
+          useValue: [effects],
         },
         {
           provide: _ROOT_EFFECTS_GUARD,
