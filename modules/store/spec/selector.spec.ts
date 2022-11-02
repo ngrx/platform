@@ -56,7 +56,7 @@ describe('Selectors', () => {
 
       const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
-      expect(selector.projector()).toBe(2);
+      expect((selector.projector as any)()).toBe(2);
 
       selector.setResult(5);
 
