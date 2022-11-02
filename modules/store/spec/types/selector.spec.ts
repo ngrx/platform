@@ -39,3 +39,43 @@ describe('createSelector()', () => {
     });
   });
 });
+
+describe('createSelector() with props', () => {
+  const expectSnippet = expecter(
+    (code) => `
+      import {createSelector} from '@ngrx/store';
+      import { MemoizedSelectorWithProps, DefaultProjectorFn } from '@ngrx/store';
+
+      ${code}
+    `,
+    compilerOptions()
+  );
+
+  describe('projector', () => {
+    it('should require correct arguments by default', () => {
+      expectSnippet(`
+        const selectTest = createSelector(
+            () => 'one',
+            () => 2,
+            (one, two, props) => 3
+        );
+        selectTest.projector();
+      `).toFail(/Expected 3 arguments, but got 0./);
+    });
+    it('should not require parameters for existing explicitly loosely typed selectors', () => {
+      expectSnippet(`
+        const selectTest: MemoizedSelectorWithProps<
+          unknown,
+          number,
+          any,
+          DefaultProjectorFn<number>
+        > = createSelector(
+          () => 'one',
+          () => 2,
+          (one, two, props) => 3
+        );
+        selectTest.projector();
+      `).toSucceed();
+    });
+  });
+});
