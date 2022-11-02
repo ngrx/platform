@@ -17,12 +17,6 @@ export type ComparatorFn = (a: any, b: any) => boolean;
 
 export type DefaultProjectorFn<T> = (...args: any[]) => T;
 
-type SelectorProjectorFn<ProjectorFn> = ProjectorFn extends (
-  ...args: infer ProjectorArgs
-) => infer ProjectorResult
-  ? (...args: ProjectorArgs) => ProjectorResult
-  : ProjectorFn;
-
 export interface MemoizedSelector<
   State,
   Result,
