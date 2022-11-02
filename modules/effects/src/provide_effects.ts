@@ -3,7 +3,6 @@ import {
   EnvironmentProviders,
   inject,
   makeEnvironmentProviders,
-  ModuleWithProviders,
   Type,
 } from '@angular/core';
 import {
@@ -14,7 +13,6 @@ import {
 import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
 import { rootEffectsInit as effectsInit } from './effects_actions';
-import { EffectsFeatureModule } from './effects_feature_module';
 
 /**
  * Runs the provided effects.
