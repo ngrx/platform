@@ -198,11 +198,11 @@ describe('Selectors', () => {
         },
         projectFn
       );
-      selector.projector('', '', 47);
+      selector.projector('', '', 47, 'prop');
 
       expect(incrementOne).not.toHaveBeenCalled();
       expect(incrementTwo).not.toHaveBeenCalled();
-      expect(projectFn).toHaveBeenCalledWith('', '', 47);
+      expect(projectFn).toHaveBeenCalledWith('', '', 47, 'prop');
     });
 
     it('should call the projector function when the state changes', () => {
@@ -387,11 +387,11 @@ describe('Selectors', () => {
         projectFn
       );
 
-      selector.projector('', '', 47);
+      selector.projector('', '', 47, 'prop');
 
       expect(incrementOne).not.toHaveBeenCalled();
       expect(incrementTwo).not.toHaveBeenCalled();
-      expect(projectFn).toHaveBeenCalledWith('', '', 47);
+      expect(projectFn).toHaveBeenCalledWith('', '', 47, 'prop');
     });
 
     it('should call the projector function when the state changes', () => {
