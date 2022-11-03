@@ -1,16 +1,15 @@
 import 'jasmine';
 
 import { inject, Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { ComponentStore } from '@ngrx/component-store';
-import { EMPTY, Observable, of, ReplaySubject } from 'rxjs';
-import { concatMap, tap } from 'rxjs/operators';
-import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
 import {
   getMockComponentStore,
-  MockComponentStore,
   provideMockComponentStores,
 } from '@ngrx/component-store/testing';
-import { TestBed } from '@angular/core/testing';
+import { EMPTY, Observable, of, ReplaySubject } from 'rxjs';
+import { marbles } from 'rxjs-marbles/jest';
+import { concatMap, tap } from 'rxjs/operators';
 
 interface ParentState {
   parentValue: string;
@@ -22,7 +21,7 @@ interface SampleState {
 
 @Injectable({ providedIn: 'root' })
 class SampleService {
-  getValues(id: string): Observable<string[]> {
+  getValues(_id: string): Observable<string[]> {
     return of([]);
   }
 }
@@ -219,7 +218,7 @@ describe('provideMockComponentStores', () => {
   describe('updaters', () => {
     it(
       'is a spy',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [provideMockComponentStores([SampleComponentStore])],
         });
@@ -232,7 +231,7 @@ describe('provideMockComponentStores', () => {
 
     it(
       'is initially not called',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [provideMockComponentStores([SampleComponentStore])],
         });
@@ -244,7 +243,7 @@ describe('provideMockComponentStores', () => {
 
     it(
       'can be provided through hints',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [
             provideMockComponentStores([
@@ -263,7 +262,7 @@ describe('provideMockComponentStores', () => {
   describe('effects', () => {
     it(
       'is a spy',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [provideMockComponentStores([SampleComponentStore])],
         });
@@ -276,7 +275,7 @@ describe('provideMockComponentStores', () => {
 
     it(
       'is initially not called',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [provideMockComponentStores([SampleComponentStore])],
         });
@@ -288,7 +287,7 @@ describe('provideMockComponentStores', () => {
 
     it(
       'can be provided through hints',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [
             provideMockComponentStores([
@@ -307,7 +306,7 @@ describe('provideMockComponentStores', () => {
   describe('prototype methods', () => {
     it(
       'is a spy',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [provideMockComponentStores([SampleComponentStore])],
         });
@@ -320,7 +319,7 @@ describe('provideMockComponentStores', () => {
 
     it(
       'returns the same spy if accessed multiple times',
-      marbles((m) => {
+      marbles(() => {
         TestBed.configureTestingModule({
           providers: [provideMockComponentStores([SampleComponentStore])],
         });
@@ -335,7 +334,7 @@ describe('provideMockComponentStores', () => {
     describe('provides an appropriate default return value', () => {
       it(
         'for functions returning strings',
-        marbles((m) => {
+        marbles(() => {
           TestBed.configureTestingModule({
             providers: [provideMockComponentStores([SampleComponentStore])],
           });
@@ -365,7 +364,7 @@ describe('provideMockComponentStores', () => {
 
         it(
           'returns the same subject if called multiple times',
-          marbles((m) => {
+          marbles(() => {
             TestBed.configureTestingModule({
               providers: [provideMockComponentStores([SampleComponentStore])],
             });
@@ -400,7 +399,7 @@ describe('provideMockComponentStores', () => {
 
         it(
           'returns the same subject if called multiple times',
-          marbles((m) => {
+          marbles(() => {
             TestBed.configureTestingModule({
               providers: [provideMockComponentStores([SampleComponentStore])],
             });

@@ -1,4 +1,4 @@
-import { ErrorHandler, Provider, Type } from '@angular/core';
+import { Provider, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import 'jasmine';
 import { Observable, ReplaySubject } from 'rxjs';
