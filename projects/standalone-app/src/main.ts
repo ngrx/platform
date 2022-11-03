@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   provideRouter,
@@ -16,6 +16,8 @@ import { AppComponent } from './app/app.component';
 
 import { environment } from './environments/environment';
 import { AppEffects } from './app/app.effects';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { fakeBackendInterceptorFn } from './app/board/fake-backend-interceptor.service';
 
 if (environment.production) {
   enableProdMode();
@@ -34,6 +36,7 @@ export const storyEntityMetadata: EntityMetadata<Story> = {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideHttpClient(withInterceptors([fakeBackendInterceptorFn()])),
     provideStore({ router: routerReducer }),
     provideRouter(
       [
@@ -42,11 +45,11 @@ bootstrapApplication(AppComponent, {
           loadChildren: () =>
             import('./app/lazy/feature.routes').then((m) => m.routes),
         },
-         {
-            path: 'board',
-            loadChildren: () =>
-              import('./app/board/board.routes').then((m) => m.routes),
-          },
+        {
+          path: 'board',
+          loadChildren: () =>
+            import('./app/board/board.routes').then((m) => m.routes),
+        },
       ],
       withEnabledBlockingInitialNavigation()
     ),
@@ -65,5 +68,5 @@ bootstrapApplication(AppComponent, {
         Story: 'stories',
       },
     }),
-  ]
+  ],
 });
