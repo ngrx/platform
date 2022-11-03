@@ -1,3 +1,4 @@
+import { ErrorHandler } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { isObservable, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { Constructor } from './constructor';
@@ -33,7 +34,7 @@ export type SelectorKeys<T> = {
  * a possible effect in this context.
  */
 type EffectKeys<T> = {
-  [K in keyof T]-?: T[K] extends () => unknown ? K : never;
+  [K in keyof T]-?: T[K] extends (...args: never[]) => unknown ? K : never;
 }[keyof T];
 
 /**
@@ -43,7 +44,7 @@ type EffectKeys<T> = {
  * a possible updater in this context.
  */
 type UpdaterKeys<T> = {
-  [K in keyof T]-?: T[K] extends () => unknown ? K : never;
+  [K in keyof T]-?: T[K] extends (...args: never[]) => unknown ? K : never;
 }[keyof T];
 
 /**
@@ -175,7 +176,9 @@ export class ProxyComponentStore<ClassType> {
           return spy;
         }
 
-        return (ComponentStore.prototype as any)[prop];
+        return ComponentStore.prototype[
+          prop as keyof ComponentStore<Record<string, unknown>>
+        ];
       },
     });
 

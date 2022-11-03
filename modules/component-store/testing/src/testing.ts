@@ -1,4 +1,4 @@
-import { Provider, Type } from '@angular/core';
+import { ErrorHandler, Provider, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import 'jasmine';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -40,7 +40,11 @@ export type MockComponentStore<T> = {
 
 type FunctionReturningObservable<T> = (...args: never[]) => Observable<T>;
 
-type SpyReturningReplaySubject<T> = jasmine.Spy & (() => ReplaySubject<T>);
+// There appears to be an issue with Jest types; it always overrides the
+// return type to be `any`.
+type SpyReturningReplaySubject<T> = jasmine.Spy<
+  (...args: any[]) => ReplaySubject<T>
+>;
 
 type UnwrapObservable<T> = T extends Observable<infer U> ? U : never;
 
@@ -69,20 +73,10 @@ function createMockComponentStoreInternal<ClassType>(
   hints?: MockStoreHints<ClassType>
 ): MockComponentStore<ClassType> {
   // Type hackery
-  try {
-    return new ProxyComponentStore(
-      classConstructor,
-      hints
-    ) as unknown as MockComponentStore<ClassType>;
-  } catch (e: unknown) {
-    if (e instanceof Error && e.message.includes('inject()')) {
-      throw new Error(
-        'ComponentStores using `inject()` must be mocked with ' +
-          '`provideMockComponentStores` and `getMockComponentStore`'
-      );
-    }
-    throw e;
-  }
+  return new ProxyComponentStore(
+    classConstructor,
+    hints
+  ) as unknown as MockComponentStore<ClassType>;
 }
 
 /**
