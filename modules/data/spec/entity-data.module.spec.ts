@@ -72,7 +72,7 @@ const entityMetadata = {
 
 //////// Tests begin ////////
 
-xdescribe('EntityDataModule', () => {
+describe('EntityDataModule', () => {
   describe('with replaced EntityEffects', () => {
     // factory never changes in these tests
     const entityActionFactory = new EntityActionFactory();

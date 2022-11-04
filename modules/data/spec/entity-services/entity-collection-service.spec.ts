@@ -30,7 +30,7 @@ import {
 } from '../..';
 
 // TODO fix these tests
-xdescribe('EntityCollectionService', () => {
+describe('EntityCollectionService', () => {
   describe('Command dispatching', () => {
     // Borrowing the dispatcher tests from entity-dispatcher.spec.
     // The critical difference: those test didn't invoke the reducers; they do when run here.
