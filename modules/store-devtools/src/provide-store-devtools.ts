@@ -56,7 +56,7 @@ export function createReduxDevtoolsExtension() {
  *   providers: [
  *     provideStoreDevtools({
  *       maxAge: 25,
- *       logOnly: environment.production,
+ *       logOnly: !isDevMode(),
  *     }),
  *   ],
  * });

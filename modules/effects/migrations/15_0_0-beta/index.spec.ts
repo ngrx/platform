@@ -18,7 +18,7 @@ describe('Effects Migration 15_0_0-beta', () => {
 
   it('replace array in provideEffects', async () => {
     const input = tags.stripIndent`
-        import { enableProdMode } from '@angular/core';
+        import { enableProdMode, isDevMode } from '@angular/core';
         import { bootstrapApplication } from '@angular/platform-browser';
         import {
           provideRouter,
@@ -50,7 +50,7 @@ describe('Effects Migration 15_0_0-beta', () => {
                   providers: [
                     provideEffects([]),
                     provideEffects([AppEffects]),
-                    provideEffects([AppEffects1, AppEffect2]),        
+                    provideEffects([AppEffects1, AppEffect2]),
                   ]
                 },
               ],
@@ -58,7 +58,7 @@ describe('Effects Migration 15_0_0-beta', () => {
             ),
             provideStoreDevtools({
               maxAge: 25,
-              logOnly: environment.production,
+              logOnly: !isDevMode(),
               name: 'NgRx Standalone App',
             }),
             provideRouterStore(),
@@ -70,7 +70,7 @@ describe('Effects Migration 15_0_0-beta', () => {
       `;
 
     const expected = tags.stripIndent`
-        import { enableProdMode } from '@angular/core';
+        import { enableProdMode, isDevMode } from '@angular/core';
         import { bootstrapApplication } from '@angular/platform-browser';
         import {
           provideRouter,
@@ -102,7 +102,7 @@ describe('Effects Migration 15_0_0-beta', () => {
                   providers: [
                     provideEffects(),
                     provideEffects(AppEffects),
-                    provideEffects(AppEffects1, AppEffect2),        
+                    provideEffects(AppEffects1, AppEffect2),
                   ]
                 },
               ],
@@ -110,7 +110,7 @@ describe('Effects Migration 15_0_0-beta', () => {
             ),
             provideStoreDevtools({
               maxAge: 25,
-              logOnly: environment.production,
+              logOnly: !isDevMode(),
               name: 'NgRx Standalone App',
             }),
             provideRouterStore(),

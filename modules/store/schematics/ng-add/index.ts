@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import { Path, dirname } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -146,13 +145,6 @@ export default function (options: RootStoreOptions): Rule {
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
 
-    const statePath = `/${options.path}/${options.statePath}/index.ts`;
-    const srcPath = dirname(options.path as Path);
-    const environmentsPath = buildRelativePath(
-      statePath,
-      `/${srcPath}/environments/environment`
-    );
-
     if (options.module) {
       options.module = findModuleFromOptions(host, {
         name: '',
@@ -170,7 +162,6 @@ export default function (options: RootStoreOptions): Rule {
       applyTemplates({
         ...stringUtils,
         ...options,
-        environmentsPath,
       }),
       move(parsedPath.path),
     ]);
