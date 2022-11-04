@@ -1,3 +1,3 @@
-# V14 Migration guide
+# V15 Migration guide
 
-This document has been moved to https://ngrx.io/guide/migration/v14.
+This document has been moved to https://ngrx.io/guide/migration/v15.

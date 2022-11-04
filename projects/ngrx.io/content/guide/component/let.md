@@ -23,28 +23,6 @@ import { LetModule } from '@ngrx/component';
 export class MyStandaloneComponent {}
 ```
 
-The `*ngrxLet` directive can be also used by importing the `ReactiveComponentModule`:
-
-```ts
-import { NgModule } from '@angular/core';
-import { ReactiveComponentModule } from '@ngrx/component';
-
-@NgModule({
-  imports: [
-    // ... other imports
-    ReactiveComponentModule,
-  ],
-})
-export class MyFeatureModule {}
-```
-
-<div class="alert is-critical">
-
-`ReactiveComponentModule` is deprecated in favor of `LetModule`.
-See the [migration guide](guide/migration/v14#reactivecomponentmodule) for more information.
-
-</div>
-
 ## Comparison with `*ngIf` and `async`
 
 The current way of binding an observable to the view looks like this:
