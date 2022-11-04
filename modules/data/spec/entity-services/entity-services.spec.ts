@@ -22,7 +22,7 @@ import {
   Logger,
 } from '../..';
 
-describe('EntityServices', () => {
+xdescribe('EntityServices', () => {
   describe('entityActionErrors$', () => {
     it('should emit EntityAction errors for multiple entity types', () => {
       const errors: EntityAction[] = [];
