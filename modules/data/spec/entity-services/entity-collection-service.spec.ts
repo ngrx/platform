@@ -29,7 +29,6 @@ import {
   Logger,
 } from '../..';
 
-// TODO fix these tests
 describe('EntityCollectionService', () => {
   describe('Command dispatching', () => {
     // Borrowing the dispatcher tests from entity-dispatcher.spec.
@@ -134,16 +133,9 @@ describe('EntityCollectionService', () => {
       const httpError = { error: new Error('Test Failure'), status: 501 };
       const error = makeDataServiceError('GET', httpError);
       dataService.setErrorResponse('getWithQuery', error);
-      heroCollectionService.getWithQuery({ name: 'foo' }).subscribe(
-        () => {
-          console.log('expected error', error);
-          expectErrorToBe(error, done);
-        },
-        (err) => {
-          console.log('actual error', err);
-          expectErrorToBe(error, done);
-        }
-      );
+      heroCollectionService
+        .getWithQuery({ name: 'foo' })
+        .subscribe(expectErrorToBe(error, done));
     });
 
     it('load observable should emit heroes on success', (done: any) => {
