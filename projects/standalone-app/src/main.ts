@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   provideRouter,
@@ -8,7 +8,6 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { provideEntityData } from '@ngrx/data';
 import { EntityMetadata } from '@ngrx/data';
 import { Story } from './app/story';
 
@@ -52,13 +51,5 @@ bootstrapApplication(AppComponent, {
     }),
     provideRouterStore(),
     provideEffects(AppEffects),
-    provideEntityData({
-      entityMetadata: {
-        Story: storyEntityMetadata,
-      },
-      pluralNames: {
-        Story: 'stories',
-      },
-    }),
   ],
 });
