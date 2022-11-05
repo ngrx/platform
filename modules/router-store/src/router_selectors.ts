@@ -58,10 +58,14 @@ export function getSelectors<V extends Record<string, any>>(
     selectRouterState,
     (routerState) => routerState && routerState.url
   );
-  const selectTitle = createSelector(
-    selectCurrentRoute,
-    (route) => route && route.routeConfig?.title
-  );
+  const selectTitle = createSelector(selectCurrentRoute, (route) => {
+    if (!route?.routeConfig) {
+      return undefined;
+    }
+    return typeof route.routeConfig.title === 'string'
+      ? route.routeConfig.title // static title
+      : route.title; // resolved title
+  });
 
   return {
     selectCurrentRoute,
