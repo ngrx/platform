@@ -2,7 +2,6 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
-import { getFileContent } from '@schematics/angular/utility/test';
 import * as path from 'path';
 import { Schema as StoreDevtoolsOptions } from './schema';
 import {
@@ -62,7 +61,7 @@ describe('Store-Devtools ng-add Schematic', () => {
       /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
     );
     expect(content).toMatch(
-      /StoreDevtoolsModule.instrument\({ maxAge: 25, logOnly: environment.production }\)/
+      /StoreDevtoolsModule.instrument\({ maxAge: 25, logOnly: !isDevMode\(\) }\)/
     );
   });
 
@@ -78,7 +77,7 @@ describe('Store-Devtools ng-add Schematic', () => {
     );
   });
 
-  it('should import the environments correctly', async () => {
+  it('should import isDevMode correctly', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = await schematicRunner
@@ -86,7 +85,7 @@ describe('Store-Devtools ng-add Schematic', () => {
       .toPromise();
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
-      /import { environment } from '..\/environments\/environment';/
+      /import { NgModule, isDevMode } from '@angular\/core';/
     );
   });
 

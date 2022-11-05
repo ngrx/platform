@@ -12,7 +12,6 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   InsertChange,
   addImportToModule,
-  buildRelativePath,
   findModuleFromOptions,
   getProjectPath,
   insertImport,
@@ -20,7 +19,6 @@ import {
   platformVersion,
   parseName,
 } from '../../schematics-core';
-import { Path, dirname } from '@angular-devkit/core';
 import { Schema as StoreDevtoolsOptions } from './schema';
 
 function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
@@ -51,14 +49,8 @@ function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
     const [instrumentNgModuleImport] = addImportToModule(
       source,
       modulePath,
-      `StoreDevtoolsModule.instrument({ maxAge: ${options.maxAge}, logOnly: environment.production })`,
+      `StoreDevtoolsModule.instrument({ maxAge: ${options.maxAge}, logOnly: !isDevMode() })`,
       modulePath
-    );
-
-    const srcPath = dirname(options.path as Path);
-    const environmentsPath = buildRelativePath(
-      modulePath,
-      `/${srcPath}/environments/environment`
     );
 
     const changes = [
@@ -68,7 +60,7 @@ function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
         'StoreDevtoolsModule',
         '@ngrx/store-devtools'
       ),
-      insertImport(source, modulePath, 'environment', environmentsPath),
+      insertImport(source, modulePath, 'isDevMode', '@angular/core'),
       instrumentNgModuleImport,
     ];
     const recorder = host.beginUpdate(modulePath);

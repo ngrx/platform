@@ -93,7 +93,7 @@ describe('Store ng-add Schematic', () => {
     );
   });
 
-  it('should import the environments correctly', async () => {
+  it('should import isDevMode correctly', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = await schematicRunner
@@ -102,9 +102,7 @@ describe('Store ng-add Schematic', () => {
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
-    expect(content).toMatch(
-      /import { environment } from '..\/..\/environments\/environment';/
-    );
+    expect(content).toMatch(/import { isDevMode } from '@angular\/core';/);
   });
 
   it('should fail if specified module does not exist', async () => {

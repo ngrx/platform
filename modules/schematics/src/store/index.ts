@@ -8,13 +8,11 @@ import {
   branchAndMerge,
   chain,
   mergeWith,
-  template,
   url,
   move,
   filter,
   noop,
 } from '@angular-devkit/schematics';
-import { Path, dirname } from '@angular-devkit/core';
 import * as ts from 'typescript';
 import {
   stringUtils,
@@ -58,11 +56,6 @@ function addImportToNgModule(options: StoreOptions): Rule {
 
     const statePath = `${options.path}/${options.statePath}`;
     const relativePath = buildRelativePath(modulePath, statePath);
-
-    const environmentsPath = buildRelativePath(
-      statePath,
-      `${options.path}/environments/environment`
-    );
 
     const rootStoreReducers = options.minimal ? `{}` : `reducers`;
     const rootStoreConfig = options.minimal ? `` : `, { metaReducers }`;
@@ -126,7 +119,7 @@ function addImportToNgModule(options: StoreOptions): Rule {
       const storeDevtoolsNgModuleImport = addImportToModule(
         source,
         modulePath,
-        `${adjectiveComma}!environment.production ? StoreDevtoolsModule.instrument() : []`,
+        `${adjectiveComma}isDevMode() ? StoreDevtoolsModule.instrument() : []`,
         relativePath
       ).shift();
 
@@ -137,7 +130,7 @@ function addImportToNgModule(options: StoreOptions): Rule {
           'StoreDevtoolsModule',
           '@ngrx/store-devtools'
         ),
-        insertImport(source, modulePath, 'environment', environmentsPath),
+        insertImport(source, modulePath, 'isDevMode', '@angular/core'),
         storeDevtoolsNgModuleImport,
       ]);
     }
@@ -167,13 +160,6 @@ export default function (options: StoreOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
-    const statePath = `/${options.path}/${options.statePath}/index.ts`;
-    const srcPath = dirname(options.path as Path);
-    const environmentsPath = buildRelativePath(
-      statePath,
-      `${srcPath}/environments/environment`
-    );
-
     if (options.module) {
       options.module = findModuleFromOptions(host, options);
     }
@@ -192,7 +178,6 @@ export default function (options: StoreOptions): Rule {
         ...stringUtils,
         ...(options as object),
         isLib: isLib(host, options),
-        environmentsPath,
       }),
       move(parsedPath.path),
     ]);

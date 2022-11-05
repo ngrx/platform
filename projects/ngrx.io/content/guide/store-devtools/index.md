@@ -15,6 +15,7 @@ Instrumentation with the Chrome / Firefox Extension
 2.  In your `AppModule` add instrumentation to the module imports using `StoreDevtoolsModule.instrument`:
 
 <code-example header="app.module.ts">
+import { NgModule, isDevMode } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'; // Angular CLI environment
 
@@ -24,7 +25,7 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     // Instrumentation must be imported after importing StoreModule (config is optional)
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
+      logOnly: !isDevMode(), // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
   ],
