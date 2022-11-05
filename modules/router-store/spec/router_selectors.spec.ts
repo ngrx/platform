@@ -41,7 +41,6 @@ const mockData = {
         outlet: 'primary',
         routeConfig: {
           path: 'login',
-          title: 'Login',
         },
         queryParams: {
           ref: 'ngrx.io',
@@ -234,10 +233,65 @@ describe('Router State Selectors', () => {
       expect(result).toEqual(state.router.state.url);
     });
 
-    it('should create a selector for getting the title', () => {
-      const result = selectors.selectTitle(state);
+    describe('selectTitle', () => {
+      it('should return undefined when route is not defined', () => {
+        const title = selectors.selectTitle({
+          router: { state: { root: null }, navigationId: 1 },
+        });
 
-      expect(result).toEqual(state.router.state.routeConfig?.title);
+        expect(title).toBe(undefined);
+      });
+
+      it('should return undefined when route config is not defined', () => {
+        const title = selectors.selectTitle({
+          router: {
+            state: { root: { routeConfig: null } },
+            navigationId: 1,
+          },
+        });
+
+        expect(title).toBe(undefined);
+      });
+
+      it('should return undefined when title is not defined', () => {
+        const title = selectors.selectTitle({
+          router: {
+            state: { root: { routeConfig: {} } },
+            navigationId: 1,
+          },
+        });
+
+        expect(title).toBe(undefined);
+      });
+
+      it('should return static title', () => {
+        const staticTitle = 'Static Title';
+        const title = selectors.selectTitle({
+          router: {
+            state: { root: { routeConfig: { title: staticTitle } } },
+            navigationId: 1,
+          },
+        });
+
+        expect(title).toBe(staticTitle);
+      });
+
+      it('should return resolved title', () => {
+        const resolvedTitle = 'Resolved Title';
+        const title = selectors.selectTitle({
+          router: {
+            state: {
+              root: {
+                routeConfig: { title: class TitleResolver {} },
+                title: resolvedTitle,
+              },
+            },
+            navigationId: 1,
+          },
+        });
+
+        expect(title).toBe(resolvedTitle);
+      });
     });
   });
 });
