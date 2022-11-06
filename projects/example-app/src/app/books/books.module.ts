@@ -61,7 +61,7 @@ export const CONTAINERS = [
      * All Effects will only be instantiated once regardless of
      * whether they are registered once or multiple times.
      */
-    EffectsModule.forFeature([BookEffects, CollectionEffects]),
+    EffectsModule.forFeature(BookEffects, CollectionEffects),
     PipesModule,
   ],
   declarations: [COMPONENTS, CONTAINERS],

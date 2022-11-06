@@ -17,7 +17,16 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
 /**
  * Runs the provided effects.
  * Can be called at the root and feature levels.
- *
+ */
+export function provideEffects(effects: Type<unknown>[]): EnvironmentProviders;
+/**
+ * Runs the provided effects.
+ * Can be called at the root and feature levels.
+ */
+export function provideEffects(
+  ...effects: Type<unknown>[]
+): EnvironmentProviders;
+/**
  * @usageNotes
  *
  * ### Providing effects at the root level
@@ -44,10 +53,11 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
  * ```
  */
 export function provideEffects(
-  ...effects: Type<unknown>[]
+  ...effects: Type<unknown>[] | Type<unknown>[][]
 ): EnvironmentProviders {
+  const effectsFlattened = effects.flat();
   return makeEnvironmentProviders([
-    effects,
+    effectsFlattened,
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
@@ -63,7 +73,7 @@ export function provideEffects(
           effectsRunner.start();
         }
 
-        for (const effectsClass of effects) {
+        for (const effectsClass of effectsFlattened) {
           const effectsInstance = inject(effectsClass);
           effectSources.addEffects(effectsInstance);
         }
