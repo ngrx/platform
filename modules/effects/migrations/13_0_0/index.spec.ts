@@ -48,6 +48,107 @@ describe('Effects Migration 13_0_0', () => {
       await runTest(input, output);
     });
 
+    it('migrates to createEffect for dispatching effects (constructor)', async () => {
+      const input = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        @Effect()
+        foo$;
+        constructor(private actions$: Actions) {
+          foo$ = this.actions$.pipe(
+            ofType<LoginAction>(AuthActions.login),
+            tap(action => console.log(action))
+          );
+        }
+      }
+    `;
+
+      const output = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        foo$;
+        constructor(private actions$: Actions) {
+          foo$ = createEffect(() => this.actions$.pipe(
+            ofType<LoginAction>(AuthActions.login),
+            tap(action => console.log(action))
+          ));
+        }
+      }
+    `;
+
+      await runTest(input, output);
+    });
+
+    it('migrates to createEffect for dispatching effects (constructor-nested)', async () => {
+      const input = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        @Effect()
+        foo$;
+        constructor(private actions$: Actions) {
+          if (!environment.prod) {
+            foo$ = this.actions$.pipe(
+              ofType<LoginAction>(AuthActions.login),
+              tap(action => console.log(action))
+            );
+          } else {
+            foo$ = observableNever();
+          }
+        }
+      }
+    `;
+
+      const output = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        foo$;
+        constructor(private actions$: Actions) {
+          if (!environment.prod) {
+            foo$ = createEffect(() => this.actions$.pipe(
+              ofType<LoginAction>(AuthActions.login),
+              tap(action => console.log(action))
+            ));
+          } else {
+            foo$ = createEffect(() => observableNever());
+          }
+        }
+      }
+    `;
+
+      await runTest(input, output);
+    });
+
+    it('migrates to createEffect for non-dispatching effects (constructor)', async () => {
+      const input = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        @Effect({ dispatch: false })
+        bar$
+        constructor(private actions$: Actions) {
+          bar$ = this.actions$.pipe(
+            ofType(AuthActions.login, AuthActions.logout),
+            tap(action => console.log(action))
+          );
+        }
+      }
+    `;
+
+      const output = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        bar$
+        constructor(private actions$: Actions) {
+          bar$ = createEffect(() => this.actions$.pipe(
+            ofType(AuthActions.login, AuthActions.logout),
+            tap(action => console.log(action))
+          ), { dispatch: false });
+        }
+      }
+    `;
+
+      await runTest(input, output);
+    });
+
     it('migrates to createEffect for non-dispatching effects', async () => {
       const input = tags.stripIndent`
       @Injectable()
@@ -201,6 +302,7 @@ describe('Effects Migration 13_0_0', () => {
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       @Injectable()
       export class SomeEffectsClass {
+        @Effect()
         logout$ = createEffect(() => this.actions$.pipe(
           ofType('LOGOUT'),
           map(() => ({ type: 'LOGGED_OUT' }))
@@ -209,7 +311,54 @@ describe('Effects Migration 13_0_0', () => {
       }
     `;
 
-      await runTest(input, input);
+      const output = tags.stripIndent`
+      import { Actions, createEffect, ofType } from '@ngrx/effects';
+      @Injectable()
+      export class SomeEffectsClass {
+        logout$ = createEffect(() => this.actions$.pipe(
+          ofType('LOGOUT'),
+          map(() => ({ type: 'LOGGED_OUT' }))
+        ));
+        constructor(private actions$: Actions) {}
+      }
+    `;
+
+      await runTest(input, output);
+    });
+
+    it('does not migrate if the createEffect syntax is already used (constructor)', async () => {
+      const input = tags.stripIndent`
+      import { Actions, createEffect, ofType } from '@ngrx/effects';
+      @Injectable()
+      export class SomeEffectsClass {
+        @Effect()
+        logout$;
+
+        constructor(private actions$: Actions) {
+          logout$ = createEffect(() => this.actions$.pipe(
+            ofType('LOGOUT'),
+            map(() => ({ type: 'LOGGED_OUT' }))
+          ));
+        }
+      }
+    `;
+
+      const output = tags.stripIndent`
+      import { Actions, createEffect, ofType } from '@ngrx/effects';
+      @Injectable()
+      export class SomeEffectsClass {
+        logout$;
+
+        constructor(private actions$: Actions) {
+          logout$ = createEffect(() => this.actions$.pipe(
+            ofType('LOGOUT'),
+            map(() => ({ type: 'LOGGED_OUT' }))
+          ));
+        }
+      }
+    `;
+
+      await runTest(input, output);
     });
 
     it('removes the @Effect decorator', async () => {
@@ -236,6 +385,36 @@ describe('Effects Migration 13_0_0', () => {
           constructor(private actions$: Actions) {}
         }
       `;
+      await runTest(input, output);
+    });
+
+    it('removes the inline @Effect decorator', async () => {
+      const input = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        @Effect() foo$;
+        constructor(private actions$: Actions) {
+          foo$ = createEffect(() => this.actions$.pipe(
+            ofType<LoginAction>(AuthActions.login),
+            tap(action => console.log(action))
+          ));
+        }
+      }
+    `;
+
+      const output = tags.stripIndent`
+      @Injectable()
+      export class SomeEffectsClass {
+        foo$;
+        constructor(private actions$: Actions) {
+          foo$ = createEffect(() => this.actions$.pipe(
+            ofType<LoginAction>(AuthActions.login),
+            tap(action => console.log(action))
+          ));
+        }
+      }
+    `;
+
       await runTest(input, output);
     });
 

@@ -1,36 +1,180 @@
 import * as ts from 'typescript';
+import { BinaryExpression } from 'typescript';
 import { Path } from '@angular-devkit/core';
-import { Tree, Rule, chain } from '@angular-devkit/schematics';
+import { chain, Rule, Tree } from '@angular-devkit/schematics';
 import {
-  InsertChange,
-  RemoveChange,
-  replaceImport,
+  Change,
   commitChanges,
+  createReplaceChange,
+  replaceImport,
   visitTSSourceFiles,
 } from '../../schematics-core';
+import { createRemoveChange } from '../../schematics-core/utility/change';
 
 export function migrateToCreators(): Rule {
+  interface EffectDeclaration {
+    name: string;
+    propertyDeclaration: ts.PropertyDeclaration;
+    decoratorNode: ts.Decorator;
+    decoratorConfig?: string;
+    handled: boolean;
+  }
+
   return (tree: Tree) => {
     visitTSSourceFiles(tree, (sourceFile) => {
-      const effectsPerClass = sourceFile.statements
+      const classChanges: Change[] = sourceFile.statements
         .filter(ts.isClassDeclaration)
-        .map((clas) =>
-          clas.members.filter(ts.isPropertyDeclaration).filter((property) => {
-            const decorators = ts.getDecorators(property);
-            return decorators && decorators.some(isEffectDecorator);
-          })
-        );
+        .reduce<Change[]>((accChanges, clas) => {
+          // find effect declarations
+          const effectDeclarations: EffectDeclaration[] = clas.members
+            .filter(ts.isPropertyDeclaration)
+            .filter(
+              (property) =>
+                ts.isIdentifier(property.name) &&
+                // && (property.decorators || []).some(isEffectDecorator) // deprecated
+                (ts.getDecorators(property) || []).some(isEffectDecorator)
+            )
+            .map((property) => {
+              // const decorator = (property.decorators || []).find(isEffectDecorator) as ts.Decorator;
+              const decorator = (ts.getDecorators(property) || []).find(
+                isEffectDecorator
+              ) as ts.Decorator;
 
-      const effects = effectsPerClass.reduce(
-        (acc, effects) => acc.concat(effects),
-        []
-      );
+              // gather all relevant info
+              return <EffectDeclaration>{
+                name: (property.name as ts.Identifier).text,
+                propertyDeclaration: property,
+                decoratorNode: decorator,
+                decoratorConfig: getDispatchProperties(decorator),
+                handled: false,
+              };
+            });
 
-      const createEffectsChanges = replaceEffectDecorators(
-        tree,
-        sourceFile,
-        effects
-      );
+          // find and handle declaration assignments
+          effectDeclarations.forEach((effectDeclaration: EffectDeclaration) => {
+            const initializer =
+              effectDeclaration.propertyDeclaration.initializer;
+
+            if (initializer) {
+              const assignmentText = initializer?.getText();
+
+              if (!assignmentText.includes('createEffect')) {
+                const effectConfig: string = effectDeclaration.decoratorConfig
+                  ? `, ${effectDeclaration.decoratorConfig}`
+                  : '';
+                accChanges.push(
+                  createReplaceChange(
+                    sourceFile,
+                    initializer,
+                    assignmentText,
+                    `createEffect(() => ${assignmentText}${effectConfig})`
+                  )
+                );
+              }
+
+              effectDeclaration.handled = true;
+            }
+          });
+
+          // find and handle constructor assignments
+          const isDeclaredEffectIdentifier = (
+            identifier: ts.Identifier
+          ): EffectDeclaration | undefined => {
+            return effectDeclarations.find(
+              (propertyDeclaration: EffectDeclaration) => {
+                return propertyDeclaration.name == identifier.text;
+              }
+            );
+          };
+
+          const isEffectAssignmentNode = (
+            node: ts.Node
+          ): EffectDeclaration | undefined => {
+            if (!ts.isBinaryExpression(node)) {
+              return void 0;
+            }
+
+            const binaryExpression: BinaryExpression = node as BinaryExpression;
+
+            // operatorToken must be 'assignment' (equals-token)
+            if (
+              binaryExpression.operatorToken.kind !== ts.SyntaxKind.EqualsToken
+            ) {
+              return void 0;
+            }
+
+            if (ts.isIdentifier(binaryExpression.left)) {
+              // identify simple assignment: foo$ = ...
+              return isDeclaredEffectIdentifier(
+                binaryExpression.left as ts.Identifier
+              );
+            } else if (ts.isPropertyAccessExpression(binaryExpression.left)) {
+              // identify 'this' assignment: this.foo$ = ...
+              return isDeclaredEffectIdentifier(
+                (binaryExpression.left as ts.PropertyAccessExpression)
+                  .name as ts.Identifier
+              );
+            }
+
+            return void 0;
+          };
+
+          const checkEffectAssignmentNode = (node: ts.Node) => {
+            const effectDeclaration = isEffectAssignmentNode(node);
+
+            if (!effectDeclaration) {
+              ts.forEachChild(node, checkEffectAssignmentNode);
+            } else {
+              const binaryExpression = node as BinaryExpression;
+
+              const assignmentText = binaryExpression.right.getText();
+
+              if (!assignmentText.includes('createEffect')) {
+                const effectConfig: string = effectDeclaration.decoratorConfig
+                  ? `, ${effectDeclaration.decoratorConfig}`
+                  : '';
+                accChanges.push(
+                  createReplaceChange(
+                    sourceFile,
+                    binaryExpression.right,
+                    assignmentText,
+                    `createEffect(() => ${assignmentText}${effectConfig})`
+                  )
+                );
+              }
+
+              // mark effectDeclaration as handled
+              effectDeclaration.handled = true;
+            }
+          };
+
+          // find constructor & (deep) handle child nodes
+          clas.members
+            .filter(ts.isConstructorDeclaration)
+            .forEach((constructorNode) => {
+              ts.forEachChild(constructorNode, checkEffectAssignmentNode);
+            });
+
+          // remove @Effect from effectDeclarations (only if effectDeclaration.handled)
+          effectDeclarations
+            .filter((effectDeclaration) => effectDeclaration.handled)
+            .forEach((effectDeclaration) => {
+              const decoratorNode = effectDeclaration.decoratorNode;
+              const trailingWhiteSpaces = getTrailingWhitespaces(decoratorNode);
+
+              accChanges.push(
+                createRemoveChange(
+                  sourceFile,
+                  decoratorNode,
+                  decoratorNode.getStart(),
+                  decoratorNode.getEnd() + trailingWhiteSpaces.length
+                )
+              );
+            });
+
+          return accChanges;
+        }, []);
+
       const importChanges = replaceImport(
         sourceFile,
         sourceFile.fileName as Path,
@@ -41,94 +185,46 @@ export function migrateToCreators(): Rule {
 
       commitChanges(tree, sourceFile.fileName, [
         ...importChanges,
-        ...createEffectsChanges,
+        ...classChanges,
       ]);
     });
   };
 }
 
-function replaceEffectDecorators(
-  host: Tree,
-  sourceFile: ts.SourceFile,
-  effects: ts.PropertyDeclaration[]
-) {
-  const inserts = effects
-    .map((effect) => {
-      if (!effect.initializer) {
-        return [];
-      }
-      const decorator = (ts.getDecorators(effect) || []).find(
-        isEffectDecorator
-      );
-      if (!decorator) {
-        return [];
-      }
-      if (effect.initializer.getText().includes('createEffect')) {
-        return [];
-      }
-      const effectArguments = getDispatchProperties(
-        host,
-        sourceFile.text,
-        decorator
-      );
-      const end = effectArguments ? `, ${effectArguments})` : ')';
-
-      return [
-        new InsertChange(
-          sourceFile.fileName,
-          effect.initializer.pos,
-          ' createEffect(() =>'
-        ),
-        new InsertChange(sourceFile.fileName, effect.initializer.end, end),
-      ];
-    })
-    .reduce((acc, inserts) => acc.concat(inserts), []);
-
-  const removes = effects
-    .map((effect) => ts.getDecorators(effect))
-    .map((decorators) => {
-      if (!decorators) {
-        return [];
-      }
-      const effectDecorators = decorators.filter(isEffectDecorator);
-      return effectDecorators.map((decorator) => {
-        return new RemoveChange(
-          sourceFile.fileName,
-          decorator.expression.pos - 1, // also get the @ sign
-          decorator.expression.end
-        );
-      });
-    })
-    .reduce((acc, removes) => acc.concat(removes), []);
-
-  return [...inserts, ...removes];
-}
-
-function isEffectDecorator(decorator: ts.Decorator) {
+function isEffectDecorator({ expression }: ts.Decorator): boolean {
   return (
-    ts.isCallExpression(decorator.expression) &&
-    ts.isIdentifier(decorator.expression.expression) &&
-    decorator.expression.expression.text === 'Effect'
+    ts.isCallExpression(expression) &&
+    ts.isIdentifier(expression.expression) &&
+    expression.expression.text === 'Effect'
   );
 }
 
-function getDispatchProperties(
-  host: Tree,
-  fileContent: string,
-  decorator: ts.Decorator
-) {
+function getTrailingWhitespaces(node: ts.Node) {
+  const regExpMatchArray = node
+    .getSourceFile()
+    .getFullText()
+    .substring(node.getEnd())
+    .match(/(\s*)/);
+  if (!!regExpMatchArray && regExpMatchArray.index === 0) {
+    return regExpMatchArray[1];
+  }
+  return '';
+}
+
+function getDispatchProperties(decorator: ts.Decorator) {
   if (!decorator.expression || !ts.isCallExpression(decorator.expression)) {
-    return '';
+    return void 0;
   }
 
   // just copy the effect properties
-  const args = fileContent
+  return decorator
+    .getSourceFile()
+    .getFullText()
     .substring(
       decorator.expression.arguments.pos,
       decorator.expression.arguments.end
     )
     .trim();
-  return args;
 }
 
 export default function (): Rule {
