@@ -17,7 +17,16 @@ import { rootEffectsInit as effectsInit } from './effects_actions';
 /**
  * Runs the provided effects.
  * Can be called at the root and feature levels.
- *
+ */
+export function provideEffects(effects: Type<unknown>[]): EnvironmentProviders;
+/**
+ * Runs the provided effects.
+ * Can be called at the root and feature levels.
+ */
+export function provideEffects(
+  ...effects: Type<unknown>[]
+): EnvironmentProviders;
+/**
  * @usageNotes
  *
  * ### Providing effects at the root level
