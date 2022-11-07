@@ -190,9 +190,15 @@ export {
   toUpdateFactory,
 } from './utils/utilities';
 
+// // EntityDataConfig
+export { EntityDataModuleConfig } from './entity-data-config';
+
 // // EntityDataModule
-export {
-  EntityDataModuleConfig,
-  EntityDataModuleWithoutEffects,
-} from './entity-data-without-effects.module';
+export { EntityDataModuleWithoutEffects } from './entity-data-without-effects.module';
 export { EntityDataModule } from './entity-data.module';
+
+// // Standalone APIs
+export {
+  provideEntityData,
+  provideEntityDataWithoutEffects,
+} from './provide-entity-data';
