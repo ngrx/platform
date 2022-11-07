@@ -54,62 +54,30 @@ export class MyFeatureModule {}
 
 BEFORE:
 
-You could pass any arguments to the projector method
-
-const selector = createSelector(
-selectString, // returning a string
-selectNumber, // returning a number
-(s, n, prefix: string) => {
-return prefix + s.repeat(n);
-}
-)
-
-// you could pass any argument
-selector.projector(1, 'a', true);
-
-AFTER:
-
-const selector = createSelector(
-selectString, // returning a string
-selectNumber, // returning a number
-(s, n, prefix: string) => {
-return prefix + s.repeat(n);
-}
-)
-
-// this throws
-selector.projector(1, 'a', true);
-// this does not throw because the arguments have the correct type
-selector.projector(1, 'a', 'prefix');
-
-- **store:** The projector function on the selector is type-safe by default.
-
-BEFORE:
-
-The projector is not type-safe by default, allowing for potential mismatch types in the projector function.
+The projector is not type-safe, allowing for potential mismatch types in the projector function.
 
 ```ts
 const mySelector = createSelector(
   () => 'one',
   () => 2,
   (one, two) => 3
-);
+)
 
-mySelector.projector(); // <- type is projector(...args: any[]): number
+mySelector.projector() // <- type is projector(...args: any[]): number
 ```
 
 AFTER:
 
-The projector is strict by default, but can be bypassed with an `any` generic parameter.
+The projector is strict by default, but can be bypassed with an `any` type assertion to specify a less specific type.
 
 ```ts
 const mySelector = createSelector(
   () => 'one',
   () => 2,
   (one, two) => 3
-);
+)
 
-mySelector.projector(); // <- Results in type error. Type is projector(s1: string, s2: number): number
+mySelector.projector() // <- Results in type error. Type is projector(s1: string, s2: number): number
 ```
 
 To retain previous behavior
@@ -119,38 +87,42 @@ const mySelector = createSelector(
   () => 'one',
   () => 2,
   (one, two) => 3
-)(mySelector.projector as any)();
+)
+
+(mySelector.projector as any)()
 ```
 
 - **effects:** The @Effect decorator is removed
 
 BEFORE:
 
-Defining an effect is done with @Effect
+An effect is defined with the `@Effect` decorator.
 
+```ts
 @Effect()
 data$ = this.actions$.pipe();
+```
 
 AFTER:
 
-Defining an effect is done with createEffect
+You need to define an effect with `createEffect`.
 
+```ts
 data$ = createEffect(() => this.actions$.pipe());
+```
 
-- **effects:** The signature of `provideEffects` is changed to expect a
-  spreaded array of effects.
 
 BEFORE:
 
 `provideEffects` expecteded the effects to be passed as an array.
 
-````ts
+```ts
 // single effect
 provideEffects([MyEffect])
 
 // multiple effects
 provideEffects([MyEffect, MySecondEffect])
-```ts
+```
 
 AFTER:
 
@@ -162,7 +134,7 @@ provideEffects(MyEffect)
 
 // multiple effects
 provideEffects(MyEffect, MySecondEffect)
-```ts
+```
 
 
 
