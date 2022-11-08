@@ -59,7 +59,7 @@ import { EntityEffects } from './effects/entity-effects';
 import { DefaultPluralizer } from './utils/default-pluralizer';
 import { EntityDataModuleConfig } from './entity-data-config';
 
-export const ENTITY_DATA_WITHOUT_EFFECTS_PROVIDERS: Provider[] = [
+export const BASE_ENTITY_DATA_PROVIDERS: Provider[] = [
   CorrelationIdGenerator,
   EntityDispatcherDefaultOptions,
   EntityActionFactory,
@@ -80,15 +80,14 @@ export const ENTITY_DATA_WITHOUT_EFFECTS_PROVIDERS: Provider[] = [
   { provide: ENTITY_CACHE_NAME_TOKEN, useValue: ENTITY_CACHE_NAME },
   { provide: EntityServices, useClass: EntityServicesBase },
   { provide: Logger, useClass: DefaultLogger },
+  {
+    provide: ENVIRONMENT_INITIALIZER,
+    multi: true,
+    useValue: () => initializeBaseEntityData(),
+  },
 ];
 
-const ENTITY_DATA_WITHOUT_EFFECTS_ENV_PROVIDER: Provider = {
-  provide: ENVIRONMENT_INITIALIZER,
-  multi: true,
-  useValue: () => initializeEntityDataWithoutEffects(),
-};
-
-export function initializeEntityDataWithoutEffects(): void {
+function initializeBaseEntityData(): void {
   const reducerManager = inject(ReducerManager);
   const entityCacheReducerFactory = inject(EntityCacheReducerFactory);
   const entityCacheName = inject(ENTITY_CACHE_NAME_TOKEN, {
@@ -116,14 +115,42 @@ export function initializeEntityDataWithoutEffects(): void {
   const entityCacheFeature = {
     key,
     reducers: entityCacheReducerFactory.create(),
-    reducerFactory: combineReducers as ActionReducerFactory<unknown>,
+    reducerFactory: combineReducers as ActionReducerFactory<EntityCache>,
     initialState: initialState || {},
     metaReducers: metaReducers,
   };
   reducerManager.addFeature(entityCacheFeature);
 }
 
-export function provideRootEntityDataWithoutEffects(
+export const ENTITY_DATA_EFFECTS_PROVIDERS: Provider[] = [
+  DefaultDataServiceFactory,
+  EntityCacheDataService,
+  EntityDataService,
+  EntityCacheEffects,
+  EntityEffects,
+  { provide: HttpUrlGenerator, useClass: DefaultHttpUrlGenerator },
+  {
+    provide: PersistenceResultHandler,
+    useClass: DefaultPersistenceResultHandler,
+  },
+  { provide: Pluralizer, useClass: DefaultPluralizer },
+  {
+    provide: ENVIRONMENT_INITIALIZER,
+    multi: true,
+    useValue: () => initializeEntityDataEffects(),
+  },
+];
+
+function initializeEntityDataEffects(): void {
+  const effectsSources = inject(EffectSources);
+  const entityCacheEffects = inject(EntityCacheEffects);
+  const entityEffects = inject(EntityEffects);
+
+  effectsSources.addEffects(entityCacheEffects);
+  effectsSources.addEffects(entityEffects);
+}
+
+export function provideEntityDataConfig(
   config: EntityDataModuleConfig
 ): Provider[] {
   return [
@@ -144,52 +171,6 @@ export function provideRootEntityDataWithoutEffects(
       multi: true,
       useValue: config.pluralNames ? config.pluralNames : {},
     },
-  ];
-}
-
-export function provideEntityDataWithoutEffects(
-  config: EntityDataModuleConfig
-): EnvironmentProviders {
-  return makeEnvironmentProviders([
-    ENTITY_DATA_WITHOUT_EFFECTS_PROVIDERS,
-    provideRootEntityDataWithoutEffects(config),
-    ENTITY_DATA_WITHOUT_EFFECTS_ENV_PROVIDER,
-  ]);
-}
-
-export const ENTITY_DATA_PROVIDERS: Provider[] = [
-  DefaultDataServiceFactory,
-  EntityCacheDataService,
-  EntityDataService,
-  EntityCacheEffects,
-  EntityEffects,
-  { provide: HttpUrlGenerator, useClass: DefaultHttpUrlGenerator },
-  {
-    provide: PersistenceResultHandler,
-    useClass: DefaultPersistenceResultHandler,
-  },
-  { provide: Pluralizer, useClass: DefaultPluralizer },
-];
-
-const ENTITY_DATA_ENV_PROVIDER: Provider = {
-  provide: ENVIRONMENT_INITIALIZER,
-  multi: true,
-  useValue: () => initializeEntityData(),
-};
-
-export function initializeEntityData(): void {
-  const effectsSources = inject(EffectSources);
-  const entityCacheEffects = inject(EntityCacheEffects);
-  const entityEffects = inject(EntityEffects);
-
-  effectsSources.addEffects(entityCacheEffects);
-  effectsSources.addEffects(entityEffects);
-}
-
-export function provideRootEntityData(
-  config: EntityDataModuleConfig
-): Provider[] {
-  return [
     {
       provide: ENTITY_METADATA_TOKEN,
       multi: true,
@@ -198,17 +179,92 @@ export function provideRootEntityData(
   ];
 }
 
+/**
+ * Sets up base entity data providers with entity config.
+ * This function should to be used at the root level.
+ *
+ * @usageNotes
+ *
+ * ### Providing entity data with effects
+ *
+ * When used with `withEffects` feature, the `provideEntityData` function is
+ * an alternative to `EntityDataModule.forRoot`
+ *
+ * ```ts
+ * import { provideStore } from '@ngrx/store';
+ * import { provideEffects } from '@ngrx/effects';
+ * import {
+ *   EntityMetadataMap,
+ *   provideEntityData,
+ *   withEffects,
+ * } from '@ngrx/data';
+ *
+ * const entityMetadata: EntityMetadataMap = {
+ *   Hero: {},
+ *   Villain: {},
+ * };
+ * const pluralNames = { Hero: 'Heroes' };
+ *
+ * bootstrapApplication(AppComponent, {
+ *   providers: [
+ *     provideStore(),
+ *     provideEffects(),
+ *     provideEntityData({ entityMetadata, pluralNames }, withEffects()),
+ *   ],
+ * });
+ * ```
+ *
+ * ### Providing entity data without effects
+ *
+ * When used without `withEffects` feature, the `provideEntityData` function is
+ * an alternative to `EntityDataModuleWithoutEffects.forRoot`.
+ *
+ * ```ts
+ * import { provideStore } from '@ngrx/store';
+ * import { EntityMetadataMap, provideEntityData } from '@ngrx/data';
+ *
+ * const entityMetadata: EntityMetadataMap = {
+ *   Musician: {},
+ *   Song: {},
+ * };
+ *
+ * bootstrapApplication(AppComponent, {
+ *   providers: [
+ *     provideStore(),
+ *     provideEntityData({ entityMetadata }),
+ *   ],
+ * });
+ * ```
+ *
+ */
 export function provideEntityData(
-  config: EntityDataModuleConfig
+  config: EntityDataModuleConfig,
+  ...features: EntityDataFeature[]
 ): EnvironmentProviders {
   return makeEnvironmentProviders([
-    // add EntityDataWithoutEffects providers
-    ENTITY_DATA_WITHOUT_EFFECTS_PROVIDERS,
-    provideRootEntityDataWithoutEffects(config),
-    ENTITY_DATA_WITHOUT_EFFECTS_ENV_PROVIDER,
-    // add EntityData providers
-    ENTITY_DATA_PROVIDERS,
-    provideRootEntityData(config),
-    ENTITY_DATA_ENV_PROVIDER,
+    BASE_ENTITY_DATA_PROVIDERS,
+    provideEntityDataConfig(config),
+    ...features.map((feature) => feature.ɵproviders),
   ]);
+}
+
+enum EntityDataFeatureKind {
+  WithEffects,
+}
+
+interface EntityDataFeature {
+  ɵkind: EntityDataFeatureKind;
+  ɵproviders: Provider[];
+}
+
+/**
+ * Registers entity data effects and provides HTTP data services.
+ *
+ * @see `provideEntityData`
+ */
+export function withEffects(): EntityDataFeature {
+  return {
+    ɵkind: EntityDataFeatureKind.WithEffects,
+    ɵproviders: [ENTITY_DATA_EFFECTS_PROVIDERS],
+  };
 }

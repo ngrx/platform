@@ -1,12 +1,9 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-
 import { EntityDataModuleConfig } from './entity-data-config';
 import { EntityDataModuleWithoutEffects } from './entity-data-without-effects.module';
 import {
-  ENTITY_DATA_PROVIDERS,
-  initializeEntityData,
-  provideRootEntityData,
-  provideRootEntityDataWithoutEffects,
+  ENTITY_DATA_EFFECTS_PROVIDERS,
+  provideEntityDataConfig,
 } from './provide-entity-data';
 
 /**
@@ -16,7 +13,7 @@ import {
  */
 @NgModule({
   imports: [EntityDataModuleWithoutEffects],
-  providers: [ENTITY_DATA_PROVIDERS],
+  providers: [ENTITY_DATA_EFFECTS_PROVIDERS],
 })
 export class EntityDataModule {
   static forRoot(
@@ -24,14 +21,7 @@ export class EntityDataModule {
   ): ModuleWithProviders<EntityDataModule> {
     return {
       ngModule: EntityDataModule,
-      providers: [
-        provideRootEntityDataWithoutEffects(config),
-        provideRootEntityData(config),
-      ],
+      providers: [provideEntityDataConfig(config)],
     };
-  }
-
-  constructor() {
-    initializeEntityData();
   }
 }

@@ -198,7 +198,4 @@ export { EntityDataModuleWithoutEffects } from './entity-data-without-effects.mo
 export { EntityDataModule } from './entity-data.module';
 
 // // Standalone APIs
-export {
-  provideEntityData,
-  provideEntityDataWithoutEffects,
-} from './provide-entity-data';
+export { provideEntityData, withEffects } from './provide-entity-data';

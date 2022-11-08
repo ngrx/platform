@@ -1,9 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { EntityDataModuleConfig } from './entity-data-config';
 import {
-  provideRootEntityDataWithoutEffects,
-  ENTITY_DATA_WITHOUT_EFFECTS_PROVIDERS,
-  initializeEntityDataWithoutEffects,
+  BASE_ENTITY_DATA_PROVIDERS,
+  provideEntityDataConfig,
 } from './provide-entity-data';
 
 /**
@@ -13,7 +12,7 @@ import {
  * therefore opt-out of @ngrx/effects for entities
  */
 @NgModule({
-  providers: [ENTITY_DATA_WITHOUT_EFFECTS_PROVIDERS],
+  providers: [BASE_ENTITY_DATA_PROVIDERS],
 })
 export class EntityDataModuleWithoutEffects {
   static forRoot(
@@ -21,11 +20,7 @@ export class EntityDataModuleWithoutEffects {
   ): ModuleWithProviders<EntityDataModuleWithoutEffects> {
     return {
       ngModule: EntityDataModuleWithoutEffects,
-      providers: [provideRootEntityDataWithoutEffects(config)],
+      providers: [provideEntityDataConfig(config)],
     };
-  }
-
-  constructor() {
-    initializeEntityDataWithoutEffects();
   }
 }
