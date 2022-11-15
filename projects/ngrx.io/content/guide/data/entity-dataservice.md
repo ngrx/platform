@@ -10,14 +10,15 @@ A data service is an instance of a class that implements the `EntityCollectionDa
 This interface supports a basic set of CRUD operations for an entity.
 Each that return `Observables`:
 
-| Method                                                   | Meaning                               | HTTP Method with endpoint        |
-| -------------------------------------------------------- | ------------------------------------- | -------------------------------- |
-| `add(entity: T): Observable<T>`                          | Add a new entity                      | `POST` /api/hero/                |
-| `delete(id: number` &#x7c; `string): Observable<number` &#x7c; `string>` | Delete an entity by primary key value | `DELETE` /api/hero/5             |
-| `getAll(): Observable<T[]>`                              | Get all instances of this entity type | `GET` /api/heroes/               |
-| `getById(id: number` &#x7c; `string): Observable<T>`     | Get an entity by its primary key      | `GET` /api/hero/5                |
-| `getWithQuery(queryParams: QueryParams` &#x7c; `string): Observable<T[]>` | Get entities that satisfy the query   | `GET` /api/heroes/?name=bombasto |
-| `update(update: Update<T>): Observable<T>`               | Update an existing entity             | `PUT` /api/hero/5                |
+| Method                                                                                               | Meaning                                    | HTTP Method with endpoint        |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------|----------------------------------|
+| `add(entity: T): Observable<T>, httpOptions?: HttpOptions`                                           | Add a new entity                           | `POST` /api/hero/                |
+| `delete(id: number` &#x7c; `string, httpOptions?: HttpOptions): Observable<number` &#x7c; `string>`  | Delete an entity by primary key value      | `DELETE` /api/hero/5             |
+| `getAll(httpOptions?: HttpOptions): Observable<T[]>`                                                 | Get all instances of this entity type      | `GET` /api/heroes/               |
+| `getById(id: number` &#x7c; `string, httpOptions?: HttpOptions): Observable<T>`                      | Get an entity by its primary key           | `GET` /api/hero/5                |
+| `getWithQuery(queryParams: QueryParams` &#x7c; `string, httpOptions?: HttpOptions): Observable<T[]>` | Get entities that satisfy the query        | `GET` /api/heroes/?name=bombasto |
+| `update(update: Update<T>, httpOptions?: HttpOptions): Observable<T>`                                | Update an existing entity                  | `PUT` /api/hero/5                |
+| `upsert(entity: T, httpOptions?: HttpOptions): Observable<T>`                                        | Upsert an entity (if api supports upsert)  | `POST` /api/hero/5               |
 
 <div class="alert is-helpful">
 

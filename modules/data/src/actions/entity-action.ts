@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 import { EntityOp } from './entity-op';
 import { MergeStrategy } from './merge-strategy';
+import { HttpOptions } from '../dataservices/interfaces';
 
 /** Action concerning an entity collection. */
 export interface EntityAction<P = any> extends Action {
@@ -18,6 +19,8 @@ export interface EntityActionOptions {
   readonly mergeStrategy?: MergeStrategy;
   /** The tag to use in the action's type. The entityName if no tag specified. */
   readonly tag?: string;
+  /** Options that will be passed to the dataService http request. Allows setting of Query Parameters and Headers */
+  readonly httpOptions?: HttpOptions;
 
   // Mutable actions are BAD.
   // Unfortunately, these mutations are the only way to stop @ngrx/effects

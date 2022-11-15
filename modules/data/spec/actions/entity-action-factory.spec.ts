@@ -78,6 +78,11 @@ describe('EntityActionFactory', () => {
       isOptimistic: true,
       mergeStrategy: MergeStrategy.OverwriteChanges,
       tag: 'Foo',
+      httpOptions: {
+        httpParams: {
+          fromString: 'extraQueryParam=CreateHeroLink',
+        },
+      },
     };
     const action = factory.create(payload);
 
@@ -89,6 +94,7 @@ describe('EntityActionFactory', () => {
       isOptimistic,
       mergeStrategy,
       tag,
+      httpOptions,
     } = action.payload;
     expect(entityName).toBe(payload.entityName);
     expect(entityOp).toBe(payload.entityOp);
@@ -97,6 +103,9 @@ describe('EntityActionFactory', () => {
     expect(isOptimistic).toBe(payload.isOptimistic);
     expect(mergeStrategy).toBe(payload.mergeStrategy);
     expect(tag).toBe(payload.tag);
+    expect(httpOptions?.httpParams?.fromString).toBe(
+      payload.httpOptions?.httpParams?.fromString
+    );
   });
 
   it('#createFromAction should create EntityAction from another EntityAction', () => {

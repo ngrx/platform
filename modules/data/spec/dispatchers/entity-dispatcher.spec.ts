@@ -113,6 +113,18 @@ export function commandDispatchTest(
         expect(data).toBe(42);
       });
 
+      it('#delete(42) with a query param dispatches SAVE_DELETE_ONE optimistically for the id:42', () => {
+        dispatcher.delete(42, {
+          httpOptions: { httpParams: { fromObject: { queryParam1: 1 } } },
+        }); // optimistic by default
+        const { entityOp, isOptimistic, data, httpOptions } =
+          dispatchedAction().payload;
+        expect(entityOp).toBe(EntityOp.SAVE_DELETE_ONE);
+        expect(isOptimistic).toBe(true);
+        expect(data).toBe(42);
+        expect(httpOptions?.httpParams?.fromObject?.queryParam1).toBe(1);
+      });
+
       it('#delete(hero) dispatches SAVE_DELETE_ONE optimistically for the hero.id', () => {
         const id = 42;
         const hero: Hero = { id, name: 'test' };
