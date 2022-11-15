@@ -31,6 +31,11 @@ It _must_ include the properties that participate in the primary key (e.g., `id`
 The update property values are the _properties-to-update_;
 unmentioned properties should retain their current values.
 
+`HttpOptions` is an object containing properties that will be forwarded on
+to the Data Service's http requests. The `DefaultDataService` uses this data to create `HttpHeaders` and `HttpParams`
+ to pass to `HttpClient` requests. This allows the configuration of Http Query Parameters and/or
+Http Headers from the `EntityCollectionDataService` api.  
+
 </div>
 
 The default data service methods return the `Observables` returned by the corresponding Angular `HttpClient` methods.
