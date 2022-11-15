@@ -26,13 +26,17 @@ function createOptions(
   },
   serialize: boolean | undefined = false,
   maxAge: false | number = false,
-  autoPause: boolean = false
+  autoPause: boolean = false,
+  trace: boolean = false,
+  traceLimit: number = 10
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
     name,
     features,
     serialize,
     autoPause,
+    trace,
+    traceLimit,
   };
   if (maxAge !== false /* support === 0 */) {
     options.maxAge = maxAge;
@@ -121,6 +125,8 @@ describe('DevtoolsExtension', () => {
         // these two should not be added
         actionSanitizer: myActionSanitizer,
         stateSanitizer: myStateSanitizer,
+        trace: true,
+        traceLimit: 20,
       }),
       <any>null
     );
