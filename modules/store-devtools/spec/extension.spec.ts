@@ -137,7 +137,9 @@ describe('DevtoolsExtension', () => {
       undefined,
       true,
       10,
-      true
+      true,
+      true,
+      20
     );
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
   });
