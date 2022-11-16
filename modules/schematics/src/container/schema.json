@@ -99,6 +99,10 @@
       "enum": ["unit", "integration"],
       "type": "string",
       "default": "integration"
+    },
+    "standalone": {
+      "description": "Whether the generated component is standalone.",
+      "type": "boolean"
     }
   },
   "required": []
