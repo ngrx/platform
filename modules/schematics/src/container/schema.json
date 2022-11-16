@@ -103,6 +103,11 @@
     "standalone": {
       "description": "Whether the generated component is standalone.",
       "type": "boolean"
+    },
+    "displayBlock": {
+      "description": "Specifies if the style will contain :host { display: block; }.",
+      "type": "boolean",
+      "alias": "b"
     }
   },
   "required": []

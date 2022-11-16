@@ -178,4 +178,28 @@ describe('Container Schematic', () => {
       expect(content).toMatch(/standalone: true/);
     });
   });
+
+  describe('display-block', () => {
+    it('should be disabled by default', async () => {
+      const options = { ...defaultOptions, displayBlock: false };
+      const tree = await schematicRunner
+        .runSchematicAsync('container', options, appTree)
+        .toPromise();
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.css`
+      );
+      expect(content).not.toMatch(/display: block/);
+    });
+
+    it('should create add style if true', async () => {
+      const options = { ...defaultOptions, displayBlock: true };
+      const tree = await schematicRunner
+        .runSchematicAsync('container', options, appTree)
+        .toPromise();
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.css`
+      );
+      expect(content).toMatch(/display: block/);
+    });
+  });
 });
