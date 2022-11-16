@@ -78,4 +78,9 @@ export interface Schema {
    * Whether the generated component is standalone
    */
   standalone?: boolean;
+
+  /**
+   * Specifies if the style will contain :host { display: block; }.
+   */
+  displayBlock?: boolean;
 }
