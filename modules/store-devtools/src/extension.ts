@@ -57,7 +57,7 @@ export interface ReduxDevtoolsExtensionConfig {
   maxAge?: number;
   autoPause?: boolean;
   serialize?: boolean | SerializationOptions;
-  trace?: boolean | ((action: any) => string);
+  trace?: boolean | (() => string);
   traceLimit?: number;
 }
 
