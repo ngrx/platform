@@ -247,7 +247,7 @@ export class DevtoolsExtension {
       serialize: config.serialize,
       autoPause: config.autoPause ?? false,
       trace: config.trace ?? false,
-      traceLimit: config.traceLimit ?? 10,
+      traceLimit: config.traceLimit ?? 75,
       // The action/state sanitizers are not added to the config
       // because sanitation is done in this class already.
       // It is done before sending it to the devtools extension for consistency:
