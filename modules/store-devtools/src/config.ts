@@ -108,7 +108,7 @@ export class StoreDevtoolsConfig {
   /**
    * If set to true, will include stack trace for every dispatched action
    */
-  trace?: boolean | ((action: Action) => string);
+  trace?: boolean | (() => string);
 
   /**
    * Maximum stack trace frames to be stored (in case trace option was provided as true).
