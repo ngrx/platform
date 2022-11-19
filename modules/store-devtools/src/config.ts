@@ -150,7 +150,7 @@ export function createConfig(
     logOnly: false,
     autoPause: false,
     trace: false,
-    traceLimit: 10,
+    traceLimit: 75,
     // Add all features explicitly. This prevent buggy behavior for
     // options like "lock" which might otherwise not show up.
     features: {
