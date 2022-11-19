@@ -28,7 +28,7 @@ function createOptions(
   maxAge: false | number = false,
   autoPause: boolean = false,
   trace: boolean = false,
-  traceLimit: number = 10
+  traceLimit: number = 75
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
     name,

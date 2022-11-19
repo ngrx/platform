@@ -29,7 +29,7 @@ describe('StoreDevtoolsOptions', () => {
       autoPause: false,
       features: defaultFeatures,
       trace: false,
-      traceLimit: 10,
+      traceLimit: 75,
     });
   });
 
@@ -82,7 +82,7 @@ describe('StoreDevtoolsOptions', () => {
       logOnly: false,
       autoPause: false,
       trace: false,
-      traceLimit: 10,
+      traceLimit: 75,
       features: defaultFeatures,
     });
   });
@@ -101,7 +101,7 @@ describe('StoreDevtoolsOptions', () => {
       logOnly: true,
       autoPause: false,
       trace: false,
-      traceLimit: 10,
+      traceLimit: 75,
       features: {
         pause: true,
         export: true,
