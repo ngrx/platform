@@ -1,6 +1,6 @@
 import { ENVIRONMENT_INITIALIZER, inject, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { map } from 'rxjs';
+import { filter, forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
 import {
   createAction,
   createFeatureSelector,
@@ -69,7 +69,7 @@ describe('provideEffects', () => {
     expect(() => TestBed.inject(TestEffects)).toThrowError();
   });
 
-  it('runs provided effects', (done) => {
+  it('runs provided class effects', (done) => {
     TestBed.configureTestingModule({
       providers: [provideStore(), provideEffects(TestEffects)],
     });
@@ -83,6 +83,47 @@ describe('provideEffects', () => {
     });
 
     store.dispatch(simpleEffectTest());
+  });
+
+  it('runs provided functional effects', (done) => {
+    TestBed.configureTestingModule({
+      providers: [TestService, provideStore(), provideEffects(testEffects)],
+    });
+
+    const store = TestBed.inject(Store);
+    const actions$ = TestBed.inject(Actions);
+
+    forkJoin([
+      actions$.pipe(ofType(simpleFnEffectDone), take(1)),
+      actions$.pipe(ofType(fnEffectWithServiceDone), take(1)),
+    ]).subscribe(([, { numbers }]) => {
+      expect(numbers).toEqual([1, 2, 3]);
+      done();
+    });
+
+    store.dispatch(simpleFnEffectTest());
+    store.dispatch(fnEffectWithServiceTest());
+  });
+
+  it('runs provided class and functional effects', (done) => {
+    TestBed.configureTestingModule({
+      providers: [
+        TestService,
+        provideStore(),
+        provideEffects(TestEffects, testEffects),
+      ],
+    });
+
+    const store = TestBed.inject(Store);
+    const actions$ = TestBed.inject(Actions);
+
+    forkJoin([
+      actions$.pipe(ofType(simpleEffectDone), take(1)),
+      actions$.pipe(ofType(simpleFnEffectDone), take(1)),
+    ]).subscribe(() => done());
+
+    store.dispatch(simpleEffectTest());
+    store.dispatch(simpleFnEffectTest());
   });
 
   it('runs provided effects after root state registration', (done) => {
@@ -138,6 +179,13 @@ const selectFeatureSlice = createFeatureSelector<string>(featureSliceKey);
 
 const simpleEffectTest = createAction('simpleEffectTest');
 const simpleEffectDone = createAction('simpleEffectDone');
+const simpleFnEffectTest = createAction('simpleFnEffectTest');
+const simpleFnEffectDone = createAction('simpleFnEffectDone');
+const fnEffectWithServiceTest = createAction('fnEffectWithServiceTest');
+const fnEffectWithServiceDone = createAction(
+  'fnEffectWithServiceDone',
+  props<{ numbers: number[] }>()
+);
 const effectWithRootStateTest = createAction('effectWithRootStateTest');
 const effectWithRootStateDone = createAction(
   'effectWithRootStateDone',
@@ -179,3 +227,32 @@ class TestEffects {
     );
   });
 }
+
+@Injectable()
+class TestService {
+  getNumbers(): Observable<number[]> {
+    return of([1, 2, 3]);
+  }
+}
+
+const testEffects = {
+  simpleFnEffect: createEffect(
+    () => {
+      return inject(Actions).pipe(
+        ofType(simpleFnEffectTest),
+        map(() => simpleFnEffectDone())
+      );
+    },
+    { functional: true }
+  ),
+  fnEffectWithService: createEffect(
+    (actions$ = inject(Actions), service = inject(TestService)) => {
+      return actions$.pipe(
+        ofType(fnEffectWithServiceTest),
+        switchMap(() => service.getNumbers()),
+        map((numbers) => fnEffectWithServiceDone({ numbers }))
+      );
+    },
+    { functional: true }
+  ),
+};

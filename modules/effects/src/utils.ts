@@ -1,5 +1,25 @@
+import { Type } from '@angular/core';
+
 export function getSourceForInstance<T>(instance: T): T {
   return Object.getPrototypeOf(instance);
+}
+
+export function isClassInstance(obj: object): boolean {
+  return (
+    obj.constructor.name !== 'Object' && obj.constructor.name !== 'Function'
+  );
+}
+
+export function isClass(
+  classOrRecord: Type<unknown> | Record<string, unknown>
+): classOrRecord is Type<unknown> {
+  return typeof classOrRecord === 'function';
+}
+
+export function getClasses(
+  classesAndRecords: Array<Type<unknown> | Record<string, unknown>>
+): Type<unknown>[] {
+  return classesAndRecords.filter(isClass);
 }
 
 // TODO: replace with RxJS interfaces when possible

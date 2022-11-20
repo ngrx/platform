@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { createEffect, getCreateEffectMetadata } from '../src/effect_creator';
 
 describe('createEffect()', () => {
@@ -46,6 +46,77 @@ describe('createEffect()', () => {
     );
   });
 
+  it('should create a non-functional effect by default', () => {
+    const obs$ = of({ type: 'a' });
+    const effect = createEffect(() => obs$);
+
+    expect(effect).toBe(obs$);
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ functional: false })
+    );
+  });
+
+  it('should be possible to explicitly create a non-functional effect', () => {
+    const obs$ = of({ type: 'a' });
+    const effect = createEffect(() => obs$, { functional: false });
+
+    expect(effect).toBe(obs$);
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ functional: false })
+    );
+  });
+
+  it('should be possible to create a functional effect', () => {
+    const source = () => of({ type: 'a' });
+    const effect = createEffect(source, { functional: true });
+
+    expect(effect).toBe(source);
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ functional: true })
+    );
+  });
+
+  it('should be possible to invoke functional effect as function', (done) => {
+    const sum = createEffect((x = 10, y = 20) => of(x + y), {
+      functional: true,
+      dispatch: false,
+    });
+
+    forkJoin([sum(), sum(100, 200)]).subscribe(([defaultResult, result]) => {
+      expect(defaultResult).toBe(30);
+      expect(result).toBe(300);
+      done();
+    });
+  });
+
+  it('should use effects error handler by default', () => {
+    const effect = createEffect(() => of({ type: 'a' }));
+
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ useEffectsErrorHandler: true })
+    );
+  });
+
+  it('should be possible to explicitly create an effect with error handler', () => {
+    const effect = createEffect(() => of({ type: 'a' }), {
+      useEffectsErrorHandler: true,
+    });
+
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ useEffectsErrorHandler: true })
+    );
+  });
+
+  it('should be possible to create an effect without error handler', () => {
+    const effect = createEffect(() => of({ type: 'a' }), {
+      useEffectsErrorHandler: false,
+    });
+
+    expect(effect['__@ngrx/effects_create__']).toEqual(
+      jasmine.objectContaining({ useEffectsErrorHandler: false })
+    );
+  });
+
   describe('getCreateEffectMetadata', () => {
     it('should get the effects metadata for a class instance', () => {
       class Fixture {
@@ -54,12 +125,15 @@ describe('createEffect()', () => {
         c = createEffect(() => of({ type: 'c' }), { dispatch: false });
         d = createEffect(() => of({ type: 'd' }), {
           useEffectsErrorHandler: true,
+          functional: false,
         });
         e = createEffect(() => of({ type: 'd' }), {
           useEffectsErrorHandler: false,
+          functional: true,
         });
         f = createEffect(() => of({ type: 'e' }), {
           dispatch: false,
+          functional: true,
           useEffectsErrorHandler: false,
         });
         g = createEffect(() => of({ type: 'e' }), {
@@ -71,18 +145,54 @@ describe('createEffect()', () => {
       const mock = new Fixture();
 
       expect(getCreateEffectMetadata(mock)).toEqual([
-        { propertyName: 'a', dispatch: true, useEffectsErrorHandler: true },
-        { propertyName: 'b', dispatch: true, useEffectsErrorHandler: true },
-        { propertyName: 'c', dispatch: false, useEffectsErrorHandler: true },
-        { propertyName: 'd', dispatch: true, useEffectsErrorHandler: true },
-        { propertyName: 'e', dispatch: true, useEffectsErrorHandler: false },
-        { propertyName: 'f', dispatch: false, useEffectsErrorHandler: false },
-        { propertyName: 'g', dispatch: true, useEffectsErrorHandler: false },
+        {
+          propertyName: 'a',
+          dispatch: true,
+          functional: false,
+          useEffectsErrorHandler: true,
+        },
+        {
+          propertyName: 'b',
+          dispatch: true,
+          functional: false,
+          useEffectsErrorHandler: true,
+        },
+        {
+          propertyName: 'c',
+          dispatch: false,
+          functional: false,
+          useEffectsErrorHandler: true,
+        },
+        {
+          propertyName: 'd',
+          dispatch: true,
+          functional: false,
+          useEffectsErrorHandler: true,
+        },
+        {
+          propertyName: 'e',
+          dispatch: true,
+          functional: true,
+          useEffectsErrorHandler: false,
+        },
+        {
+          propertyName: 'f',
+          dispatch: false,
+          functional: true,
+          useEffectsErrorHandler: false,
+        },
+        {
+          propertyName: 'g',
+          dispatch: true,
+          functional: false,
+          useEffectsErrorHandler: false,
+        },
       ]);
     });
 
     it('should return an empty array if the effect has not been created with createEffect()', () => {
       const fakeCreateEffect: any = () => {};
+
       class Fixture {
         a = fakeCreateEffect(() => of({ type: 'A' }));
         b = new Proxy(

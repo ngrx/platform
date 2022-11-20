@@ -3,24 +3,25 @@ import {
   defaultEffectsErrorHandler,
   EffectsErrorHandler,
 } from './effects_error_handler';
+import { FunctionalEffect } from './models';
 
 export const _ROOT_EFFECTS_GUARD = new InjectionToken<void>(
   '@ngrx/effects Internal Root Guard'
 );
-export const USER_PROVIDED_EFFECTS = new InjectionToken<Type<any>[][]>(
+export const USER_PROVIDED_EFFECTS = new InjectionToken<Type<unknown>[][]>(
   '@ngrx/effects User Provided Effects'
 );
-export const _ROOT_EFFECTS = new InjectionToken<Type<any>[]>(
-  '@ngrx/effects Internal Root Effects'
+export const _ROOT_EFFECTS = new InjectionToken<
+  [Array<Type<unknown> | Record<string, FunctionalEffect>>]
+>('@ngrx/effects Internal Root Effects');
+export const ROOT_EFFECTS_INSTANCES = new InjectionToken<unknown[]>(
+  '@ngrx/effects Root Effects Instances'
 );
-export const ROOT_EFFECTS = new InjectionToken<Type<any>[]>(
-  '@ngrx/effects Root Effects'
-);
-export const _FEATURE_EFFECTS = new InjectionToken<Type<any>[]>(
-  '@ngrx/effects Internal Feature Effects'
-);
-export const FEATURE_EFFECTS = new InjectionToken<any[][]>(
-  '@ngrx/effects Feature Effects'
+export const _FEATURE_EFFECTS = new InjectionToken<
+  Array<Type<unknown> | Record<string, FunctionalEffect>>[]
+>('@ngrx/effects Internal Feature Effects');
+export const FEATURE_EFFECTS_INSTANCE_GROUPS = new InjectionToken<unknown[][]>(
+  '@ngrx/effects Feature Effects Instance Groups'
 );
 export const EFFECTS_ERROR_HANDLER = new InjectionToken<EffectsErrorHandler>(
   '@ngrx/effects Effects Error Handler',
