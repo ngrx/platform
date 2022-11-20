@@ -33,12 +33,9 @@ import { stripSpaces } from '../helpers';
 
 @Component({
   template: `
-    <ng-container
-      *ngrxLet="value$ as value; $error as error; $complete as complete"
-      >{{
-        value === null ? 'null' : (value | json) || 'undefined'
-      }}</ng-container
-    >
+    <ng-container *ngrxLet="value$ as value">{{
+      value === null ? 'null' : (value | json) || 'undefined'
+    }}</ng-container>
   `,
 })
 class LetDirectiveTestComponent {
@@ -47,7 +44,7 @@ class LetDirectiveTestComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $error as error">{{
+    <ng-container *ngrxLet="value$; error as error">{{
       error === undefined ? 'undefined' : error
     }}</ng-container>
   `,
@@ -58,7 +55,7 @@ class LetDirectiveTestErrorComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $complete as complete">{{
+    <ng-container *ngrxLet="value$; complete as complete">{{
       complete
     }}</ng-container>
   `,
@@ -69,7 +66,7 @@ class LetDirectiveTestCompleteComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$ as value; $suspense as s">{{
+    <ng-container *ngrxLet="value$ as value; suspense as s">{{
       s ? 'suspense' : value
     }}</ng-container>
   `,
