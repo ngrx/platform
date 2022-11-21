@@ -33,10 +33,7 @@ export function createEffect<Source extends () => Observable<unknown>>(
   source: Source,
   config: EffectConfig & { functional: true; dispatch: false }
 ): FunctionalEffect<Source>;
-export function createEffect<
-  Result extends Observable<Action>,
-  Source extends () => Result
->(
+export function createEffect<Source extends () => Observable<Action>>(
   source: Source & ConditionallyDisallowActionCreator<true, ReturnType<Source>>,
   config: EffectConfig & { functional: true; dispatch?: true }
 ): FunctionalEffect<Source>;
@@ -110,12 +107,12 @@ export function createEffect<
  * ```
  */
 export function createEffect<
-  C extends EffectConfig,
-  DT extends DispatchType<C>,
-  OT extends ObservableType<DT, OT>,
-  R extends EffectResult<OT>,
-  S extends () => R
->(source: S, config = {} as C): (S | R) & CreateEffectMetadata {
+  Result extends EffectResult<unknown>,
+  Source extends () => Result
+>(
+  source: Source,
+  config: EffectConfig = {}
+): (Source | Result) & CreateEffectMetadata {
   const effect = config.functional ? source : source();
   const value: EffectConfig = {
     ...DEFAULT_EFFECT_CONFIG,
