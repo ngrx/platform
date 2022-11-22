@@ -24,17 +24,17 @@ export interface LetViewContext<PO> {
    */
   ngrxLet: LetViewContextValue<PO>;
   /**
-   * `*ngrxLet="obs$; let e = $error"` or `*ngrxLet="obs$; $error as e"`
+   * `*ngrxLet="obs$; let e = error"` or `*ngrxLet="obs$; error as e"`
    */
-  $error: any;
+  error: any;
   /**
-   * `*ngrxLet="obs$; let c = $complete"` or `*ngrxLet="obs$; $complete as c"`
+   * `*ngrxLet="obs$; let c = complete"` or `*ngrxLet="obs$; complete as c"`
    */
-  $complete: boolean;
+  complete: boolean;
   /**
-   * `*ngrxLet="obs$; let s = $suspense"` or `*ngrxLet="obs$; $suspense as s"`
+   * `*ngrxLet="obs$; let s = suspense"` or `*ngrxLet="obs$; suspense as s"`
    */
-  $suspense: boolean;
+  suspense: boolean;
 }
 
 /**
@@ -62,7 +62,7 @@ export interface LetViewContext<PO> {
  * ### Tracking Different Observable Events
  *
  * ```html
- * <ng-container *ngrxLet="number$ as n; let e = $error; let c = $complete">
+ * <ng-container *ngrxLet="number$ as n; error as e; complete as c">
  *   <app-number [number]="n" *ngIf="!e && !c">
  *   </app-number>
  *
@@ -117,53 +117,53 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
   private readonly viewContext: LetViewContext<PO | undefined> = {
     $implicit: undefined,
     ngrxLet: undefined,
-    $error: undefined,
-    $complete: false,
-    $suspense: true,
+    error: undefined,
+    complete: false,
+    suspense: true,
   };
   private readonly renderEventManager = createRenderEventManager<PO>({
     suspense: () => {
       this.viewContext.$implicit = undefined;
       this.viewContext.ngrxLet = undefined;
-      this.viewContext.$error = undefined;
-      this.viewContext.$complete = false;
-      this.viewContext.$suspense = true;
+      this.viewContext.error = undefined;
+      this.viewContext.complete = false;
+      this.viewContext.suspense = true;
 
       this.renderSuspenseView();
     },
     next: (event) => {
       this.viewContext.$implicit = event.value;
       this.viewContext.ngrxLet = event.value;
-      this.viewContext.$suspense = false;
+      this.viewContext.suspense = false;
 
       if (event.reset) {
-        this.viewContext.$error = undefined;
-        this.viewContext.$complete = false;
+        this.viewContext.error = undefined;
+        this.viewContext.complete = false;
       }
 
       this.renderMainView(event.synchronous);
     },
     error: (event) => {
-      this.viewContext.$error = event.error;
-      this.viewContext.$suspense = false;
+      this.viewContext.error = event.error;
+      this.viewContext.suspense = false;
 
       if (event.reset) {
         this.viewContext.$implicit = undefined;
         this.viewContext.ngrxLet = undefined;
-        this.viewContext.$complete = false;
+        this.viewContext.complete = false;
       }
 
       this.renderMainView(event.synchronous);
       this.errorHandler.handleError(event.error);
     },
     complete: (event) => {
-      this.viewContext.$complete = true;
-      this.viewContext.$suspense = false;
+      this.viewContext.complete = true;
+      this.viewContext.suspense = false;
 
       if (event.reset) {
         this.viewContext.$implicit = undefined;
         this.viewContext.ngrxLet = undefined;
-        this.viewContext.$error = undefined;
+        this.viewContext.error = undefined;
       }
 
       this.renderMainView(event.synchronous);

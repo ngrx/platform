@@ -57,7 +57,7 @@ In addition to that it provides us information from the whole observable context
 We can track next, error, and complete events:
 
 ```html
-<ng-container *ngrxLet="number$ as n; let e = $error; let c = $complete">
+<ng-container *ngrxLet="number$ as n; error as e; complete as c">
   <app-number [number]="n" *ngIf="!e && !c">
   </app-number>
 
