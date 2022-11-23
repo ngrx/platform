@@ -31,10 +31,6 @@ export interface LetViewContext<PO> {
    * `*ngrxLet="obs$; let c = complete"` or `*ngrxLet="obs$; complete as c"`
    */
   complete: boolean;
-  /**
-   * `*ngrxLet="obs$; let s = suspense"` or `*ngrxLet="obs$; suspense as s"`
-   */
-  suspense: boolean;
 }
 
 /**
@@ -119,7 +115,6 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     ngrxLet: undefined,
     error: undefined,
     complete: false,
-    suspense: true,
   };
   private readonly renderEventManager = createRenderEventManager<PO>({
     suspense: () => {
@@ -127,14 +122,12 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
       this.viewContext.ngrxLet = undefined;
       this.viewContext.error = undefined;
       this.viewContext.complete = false;
-      this.viewContext.suspense = true;
 
       this.renderSuspenseView();
     },
     next: (event) => {
       this.viewContext.$implicit = event.value;
       this.viewContext.ngrxLet = event.value;
-      this.viewContext.suspense = false;
 
       if (event.reset) {
         this.viewContext.error = undefined;
@@ -145,7 +138,6 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     },
     error: (event) => {
       this.viewContext.error = event.error;
-      this.viewContext.suspense = false;
 
       if (event.reset) {
         this.viewContext.$implicit = undefined;
@@ -158,7 +150,6 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
     },
     complete: (event) => {
       this.viewContext.complete = true;
-      this.viewContext.suspense = false;
 
       if (event.reset) {
         this.viewContext.$implicit = undefined;
@@ -224,7 +215,7 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
   }
 
   private renderSuspenseView(): void {
-    if (this.suspenseTemplateRef && this.isMainViewCreated) {
+    if (this.isMainViewCreated) {
       this.isMainViewCreated = false;
       this.viewContainerRef.clear();
     }
