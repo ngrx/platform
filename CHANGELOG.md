@@ -1,3 +1,76 @@
+<a name="15.0.0-rc.0"></a>
+
+# [15.0.0-rc.0](https://github.com/ngrx/platform/compare/15.0.0-beta.1...15.0.0-rc.0) (2022-11-23)
+
+### Features
+
+- **component:** clear `LetDirective` view when replaced observable is in suspense state ([#3671](https://github.com/ngrx/platform/issues/3671)) ([ec59c4b](https://github.com/ngrx/platform/commit/ec59c4b))
+- **component:** remove $ prefix from LetViewContext property names ([#3670](https://github.com/ngrx/platform/issues/3670)) ([b3b21e6](https://github.com/ngrx/platform/commit/b3b21e6))
+
+### BREAKING CHANGES
+
+- **component:** The `LetDirective` view will be cleared when the replaced observable is in a suspense state. Also, the `suspense` property is removed from the `LetViewContext` because it would always be `false` when the `LetDirective` view is rendered. Instead of `suspense` property, use the suspense template to handle the suspense state.
+
+BEFORE:
+
+The `LetDirective` view will not be cleared when the replaced observable is in a suspense state and the suspense template is not passed:
+
+```ts
+@Component({
+  template: `
+    <!-- When button is clicked, the 'LetDirective' view won't be cleared. -->
+    <!-- Instead, the value of 'o' will be 'undefined' until the replaced -->
+    <!-- observable emits the first value (after 1 second). -->
+    <p *ngrxLet="obs$ as o">{{ o }}</p>
+    <button (click)="replaceObs()">Replace Observable</button>
+  `,
+})
+export class TestComponent {
+  obs$ = of(1);
+
+  replaceObs(): void {
+    this.obs$ = of(2).pipe(delay(1000));
+  }
+}
+```
+
+AFTER:
+
+The `LetDirective` view will be cleared when the replaced observable is in a suspense state and the suspense template is not passed:
+
+```ts
+@Component({
+  template: `
+    <!-- When button is clicked, the 'LetDirective' view will be cleared. -->
+    <!-- The view will be created again when the replaced observable -->
+    <!-- emits the first value (after 1 second). -->
+    <p *ngrxLet="obs$ as o">{{ o }}</p>
+    <button (click)="replaceObs()">Replace Observable</button>
+  `,
+})
+export class TestComponent {
+  obs$ = of(1);
+
+  replaceObs(): void {
+    this.obs$ = of(2).pipe(delay(1000));
+  }
+}
+```
+
+- **component:** The `$` prefix is removed from `LetViewContext` property names.
+
+BEFORE:
+
+```html
+<ng-container *ngrxLet="obs$; $error as e; $complete as c"> ... </ng-container>
+```
+
+AFTER:
+
+```html
+<ng-container *ngrxLet="obs$; error as e; complete as c"> ... </ng-container>
+```
+
 <a name="15.0.0-beta.1"></a>
 
 # [15.0.0-beta.1](https://github.com/ngrx/platform/compare/15.0.0-beta.0...15.0.0-beta.1) (2022-11-18)
