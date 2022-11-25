@@ -104,6 +104,16 @@ export class StoreDevtoolsConfig {
    * Auto pauses when the extension’s window is not opened, and so has zero impact on your app when not in use.
    */
   autoPause?: boolean;
+
+  /**
+   * If set to true, will include stack trace for every dispatched action
+   */
+  trace?: boolean | (() => string);
+
+  /**
+   * Maximum stack trace frames to be stored (in case trace option was provided as true).
+   */
+  traceLimit?: number;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
@@ -139,6 +149,8 @@ export function createConfig(
     serialize: false,
     logOnly: false,
     autoPause: false,
+    trace: false,
+    traceLimit: 75,
     // Add all features explicitly. This prevent buggy behavior for
     // options like "lock" which might otherwise not show up.
     features: {

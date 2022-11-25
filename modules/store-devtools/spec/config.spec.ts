@@ -28,6 +28,8 @@ describe('StoreDevtoolsOptions', () => {
       logOnly: false,
       autoPause: false,
       features: defaultFeatures,
+      trace: false,
+      traceLimit: 75,
     });
   });
 
@@ -45,6 +47,8 @@ describe('StoreDevtoolsOptions', () => {
       name: 'ABC',
       serialize: true,
       autoPause: true,
+      trace: true,
+      traceLimit: 20,
       features: {
         test: true,
       },
@@ -58,6 +62,8 @@ describe('StoreDevtoolsOptions', () => {
       serialize: true,
       logOnly: false,
       autoPause: true,
+      trace: true,
+      traceLimit: 20,
       features: {
         test: true,
       },
@@ -75,6 +81,8 @@ describe('StoreDevtoolsOptions', () => {
       serialize: false,
       logOnly: false,
       autoPause: false,
+      trace: false,
+      traceLimit: 75,
       features: defaultFeatures,
     });
   });
@@ -92,6 +100,8 @@ describe('StoreDevtoolsOptions', () => {
       serialize: false,
       logOnly: true,
       autoPause: false,
+      trace: false,
+      traceLimit: 75,
       features: {
         pause: true,
         export: true,
