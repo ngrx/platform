@@ -96,8 +96,8 @@ For example if we have a counter and we want to multiply its value, we can add t
 The last argument of a selector or a projector is the `props` argument, for our example it looks as follows:
 
 <code-example header="index.ts">
-export const getCount = createSelector(
-  getCounterValue,
+export const selectCount = createSelector(
+  selectCounterValue,
   (counter, props) => counter * props.multiply
 );
 </code-example>
@@ -106,7 +106,7 @@ Inside the component we can define the `props`:
 
 <code-example header="app.component.ts">
 ngOnInit() {
-  this.counter = this.store.select(fromRoot.getCount, { multiply: 2 })
+  this.counter = this.store.select(fromRoot.selectCount, { multiply: 2 })
 }
 </code-example>
 
@@ -115,7 +115,7 @@ Keep in mind that a selector only keeps the previous input arguments in its cach
 The following is an example of using multiple counters differentiated by `id`.
 
 <code-example header="index.ts">
-export const getCount = () =>
+export const selectCount = () =>
   createSelector(
     (state, props) => state.counter[props.id],
     (counter, props) => counter * props.multiply
@@ -126,9 +126,9 @@ The component's selectors are now calling the factory function to create differe
 
 <code-example header="app.component.ts">
 ngOnInit() {
-  this.counter2 = this.store.select(fromRoot.getCount(), { id: 'counter2', multiply: 2 });
-  this.counter4 = this.store.select(fromRoot.getCount(), { id: 'counter4', multiply: 4 });
-  this.counter6 = this.store.select(fromRoot.getCount(), { id: 'counter6', multiply: 6 });
+  this.counter2 = this.store.select(fromRoot.selectCount(), { id: 'counter2', multiply: 2 });
+  this.counter4 = this.store.select(fromRoot.selectCount(), { id: 'counter4', multiply: 4 });
+  this.counter6 = this.store.select(fromRoot.selectCount(), { id: 'counter6', multiply: 6 });
 }
 </code-example>
 
