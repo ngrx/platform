@@ -154,4 +154,52 @@ describe('Container Schematic', () => {
       /import { Store, StoreModule } from '@ngrx\/store';/
     );
   });
+
+  describe('standalone', () => {
+    it('should be disabled by default', async () => {
+      const options = { ...defaultOptions, standalone: false };
+      const tree = await schematicRunner
+        .runSchematicAsync('container', options, appTree)
+        .toPromise();
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.ts`
+      );
+      expect(content).not.toMatch(/standalone: true/);
+    });
+
+    it('should create a standalone component if true', async () => {
+      const options = { ...defaultOptions, standalone: true };
+      const tree = await schematicRunner
+        .runSchematicAsync('container', options, appTree)
+        .toPromise();
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.ts`
+      );
+      expect(content).toMatch(/standalone: true/);
+    });
+  });
+
+  describe('display-block', () => {
+    it('should be disabled by default', async () => {
+      const options = { ...defaultOptions, displayBlock: false };
+      const tree = await schematicRunner
+        .runSchematicAsync('container', options, appTree)
+        .toPromise();
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.css`
+      );
+      expect(content).not.toMatch(/display: block/);
+    });
+
+    it('should create add style if true', async () => {
+      const options = { ...defaultOptions, displayBlock: true };
+      const tree = await schematicRunner
+        .runSchematicAsync('container', options, appTree)
+        .toPromise();
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.css`
+      );
+      expect(content).toMatch(/display: block/);
+    });
+  });
 });

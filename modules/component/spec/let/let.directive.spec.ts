@@ -33,12 +33,9 @@ import { stripSpaces } from '../helpers';
 
 @Component({
   template: `
-    <ng-container
-      *ngrxLet="value$ as value; $error as error; $complete as complete"
-      >{{
-        value === null ? 'null' : (value | json) || 'undefined'
-      }}</ng-container
-    >
+    <ng-container *ngrxLet="value$ as value">{{
+      value === null ? 'null' : (value | json) || 'undefined'
+    }}</ng-container>
   `,
 })
 class LetDirectiveTestComponent {
@@ -47,7 +44,7 @@ class LetDirectiveTestComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $error as error">{{
+    <ng-container *ngrxLet="value$; error as error">{{
       error === undefined ? 'undefined' : error
     }}</ng-container>
   `,
@@ -58,7 +55,7 @@ class LetDirectiveTestErrorComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $complete as complete">{{
+    <ng-container *ngrxLet="value$; complete as complete">{{
       complete
     }}</ng-container>
   `,
@@ -69,9 +66,7 @@ class LetDirectiveTestCompleteComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$ as value; $suspense as s">{{
-      s ? 'suspense' : value
-    }}</ng-container>
+    <ng-container *ngrxLet="value$ as value">{{ value }}</ng-container>
   `,
 })
 class LetDirectiveTestSuspenseComponent {
@@ -341,13 +336,13 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('42');
     }));
 
-    it('should render undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
+    it('should clear the view when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
       letDirectiveTestComponent.value$ = of(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
       letDirectiveTestComponent.value$ = NEVER;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
+      expect(componentNativeElement.textContent).toBe('');
     });
 
     it('should render new value when a new observable was passed', () => {
@@ -456,12 +451,12 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('true');
     }));
 
-    it('should render suspense when next observable is in suspense state', fakeAsync(() => {
+    it('should clear the view when next observable is in suspense state', fakeAsync(() => {
       letDirectiveTestComponent.value$ = of(true);
       fixtureLetDirectiveTestComponent.detectChanges();
       letDirectiveTestComponent.value$ = of(false).pipe(delay(1000));
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('suspense');
+      expect(componentNativeElement.textContent).toBe('');
       tick(1000);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('false');

@@ -73,4 +73,14 @@ export interface Schema {
    * Specifies whether to create a unit test or an integration test.
    */
   testDepth?: string;
+
+  /**
+   * Whether the generated component is standalone
+   */
+  standalone?: boolean;
+
+  /**
+   * Specifies if the style will contain :host { display: block; }.
+   */
+  displayBlock?: boolean;
 }
