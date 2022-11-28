@@ -33,7 +33,7 @@ export function provideEffects(
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
- *   providers: [provideEffects(RouterEffects]],
+ *   providers: [provideEffects(RouterEffects)],
  * });
  * ```
  *
