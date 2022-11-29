@@ -8,7 +8,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { tap } from 'rxjs/operators';
 
 // #docregion state
 export interface SlideToggleState {
@@ -50,8 +49,6 @@ export class SlideToggleComponent {
   }));
   // #enddocregion selector
 
-  @ViewChild('input') inputElement: ElementRef<HTMLInputElement>;
-
   // #docregion updater
   readonly setChecked = this.componentStore.updater(
     (state, value: boolean) => ({ ...state, checked: value })
@@ -78,14 +75,9 @@ export class SlideToggleComponent {
   // #enddocregion init
 
   // #docregion updater
-  onChangeEvent = this.componentStore.effect<Event>((event$) => {
-    return event$.pipe(
-      tap<Event>((event) => {
-        event.stopPropagation();
-        this.setChecked(this.inputElement.nativeElement.checked);
-      })
-    );
-  });
+  onClick(checked: boolean): void {
+    this.setChecked(!checked);
+  }
   // #enddocregion updater
   // #docregion providers
 }
