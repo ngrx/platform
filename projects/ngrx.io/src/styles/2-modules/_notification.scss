@@ -58,7 +58,7 @@ aio-notification {
     }
 
     .action-button {
-      background: mat.get-contrast-color-from-palette($dull-magenta, 700);
+      background: mat.get-color-from-palette($dull-magenta, 700);
       color: $offwhite;
       border-radius: 15px;
       text-transform: uppercase;

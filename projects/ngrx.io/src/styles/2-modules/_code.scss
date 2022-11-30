@@ -174,7 +174,7 @@ ol.linenums {
     color: #800;
   } /* string content */
   .kwd {
-    color: mat.get-contrast-color-from-palette($gold, 900);
+    color: mat.get-color-from-palette($gold, 900);
   } /* a keyword */
   .com {
     color: #060;
@@ -183,7 +183,7 @@ ol.linenums {
     color: purple;
   } /* a type name */
   .lit {
-    color: mat.get-contrast-color-from-palette($gold, 900);
+    color: mat.get-color-from-palette($gold, 900);
   } /* a literal value */
   /* punctuation, lisp open bracket, lisp close bracket */
   .pun,
