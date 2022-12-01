@@ -54,6 +54,8 @@ export function getSelectors<V extends Record<string, any>>(
     selectCurrentRoute,
     (route) => route && route.data
   );
+  const selectRouteDataParam = (param: string) =>
+    createSelector(selectRouteData, (data) => data && data[param]);
   const selectUrl = createSelector(
     selectRouterState,
     (routerState) => routerState && routerState.url
@@ -75,6 +77,7 @@ export function getSelectors<V extends Record<string, any>>(
     selectRouteParams,
     selectRouteParam,
     selectRouteData,
+    selectRouteDataParam,
     selectUrl,
     selectTitle,
   };
