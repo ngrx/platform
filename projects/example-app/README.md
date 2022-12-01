@@ -17,8 +17,8 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
 - [@ngrx/entity](https://ngrx.io/guide/entity) - Entity State adapter for managing record collections.
 - [@ngrx/store-devtools](https://ngrx.io/guide/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
 - [@angular/router](https://angular.io/guide/router) - Angular Router
-- [@angular/material](https://github.com/angular/material2) - Angular Material
-- [jest](https://facebook.github.io/jest/) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
+- [@angular/material](https://material.angular.io) - Angular Material
+- [jest](https://jestjs.io) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
 
 ### Quick start
 
@@ -33,10 +33,7 @@ cd platform
 yarn
 
 # Start the server
-yarn run build && yarn run cli serve
-
-# Or try
-yarn run example:start
+yarn nx serve example-app
 ```
 
 Navigate to [http://localhost:4200/](http://localhost:4200/) in your browser. To log in, the username and password is `test`.
