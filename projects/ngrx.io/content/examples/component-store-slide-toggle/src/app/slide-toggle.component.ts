@@ -2,12 +2,11 @@ import {
   Component,
   Input,
   ChangeDetectionStrategy,
-  ElementRef,
   Output,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
+import { tap } from 'rxjs/operators';
 
 // #docregion state
 export interface SlideToggleState {
@@ -75,9 +74,17 @@ export class SlideToggleComponent {
   // #enddocregion init
 
   // #docregion updater
-  onClick(checked: boolean): void {
-    this.setChecked(!checked);
-  }
+  onChangeEvent = this.componentStore.effect<{
+    source: Event;
+    checked: boolean;
+  }>((event$) => {
+    return event$.pipe(
+      tap<{ source: Event; checked: boolean }>((event) => {
+        event.source.stopPropagation();
+        this.setChecked(!event.checked);
+      })
+    );
+  });
   // #enddocregion updater
   // #docregion providers
 }

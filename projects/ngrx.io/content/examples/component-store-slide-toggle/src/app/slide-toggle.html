@@ -7,7 +7,7 @@
       [class.mdc-switch--selected]="vm.checked"
       [class.mdc-switch--unselected]="!vm.checked"
       [class.mdc-switch--checked]="vm.checked"
-      (click)="onClick(vm.checked)"
+      (click)="onChangeEvent({ source: $event, checked: vm.checked })"
       #switch
     >
       <div class="mdc-switch__track"></div>
