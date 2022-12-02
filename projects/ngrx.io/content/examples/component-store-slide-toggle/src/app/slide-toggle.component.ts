@@ -2,9 +2,7 @@ import {
   Component,
   Input,
   ChangeDetectionStrategy,
-  ElementRef,
   Output,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
@@ -50,8 +48,6 @@ export class SlideToggleComponent {
   }));
   // #enddocregion selector
 
-  @ViewChild('input') inputElement: ElementRef<HTMLInputElement>;
-
   // #docregion updater
   readonly setChecked = this.componentStore.updater(
     (state, value: boolean) => ({ ...state, checked: value })
@@ -78,11 +74,14 @@ export class SlideToggleComponent {
   // #enddocregion init
 
   // #docregion updater
-  onChangeEvent = this.componentStore.effect<Event>((event$) => {
+  onChangeEvent = this.componentStore.effect<{
+    source: Event;
+    checked: boolean;
+  }>((event$) => {
     return event$.pipe(
-      tap<Event>((event) => {
-        event.stopPropagation();
-        this.setChecked(this.inputElement.nativeElement.checked);
+      tap<{ source: Event; checked: boolean }>((event) => {
+        event.source.stopPropagation();
+        this.setChecked(!event.checked);
       })
     );
   });
