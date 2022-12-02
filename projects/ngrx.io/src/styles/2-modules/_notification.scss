@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 @import '../mixins';
 
 $notificationHeight: 56px;
@@ -56,7 +58,7 @@ aio-notification {
     }
 
     .action-button {
-      background: mat-color($dull-magenta, 700);
+      background: mat.get-color-from-palette($dull-magenta, 700);
       color: $offwhite;
       border-radius: 15px;
       text-transform: uppercase;

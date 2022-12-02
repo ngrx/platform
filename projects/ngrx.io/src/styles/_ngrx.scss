@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 @import './mixins';
 
 $dull-magenta: (
@@ -86,7 +88,7 @@ aio-shell.page-home {
     }
   }
 
-   // just for safari on ios
+  // just for safari on ios
   @media not all and (min-resolution: 0.001dpcm) {
     @supports (-webkit-appearance: none) {
       pre.prettyprint {
@@ -102,7 +104,7 @@ aio-shell.page-home {
     color: #000;
   }
   pre .str {
-    color: mat-color($dull-magenta, 100);
+    color: mat.get-color-from-palette($dull-magenta, 100);
   }
   /* string  - pink */
   pre .kwd {
@@ -114,11 +116,11 @@ aio-shell.page-home {
   }
   /* comment - skyblue */
   pre .typ {
-    color: mat-color($gold, 300);
+    color: mat.get-color-from-palette($gold, 300);
   }
   /* type    - lightgreen */
   pre .lit {
-    color: mat-color($dull-magenta, 300);
+    color: mat.get-color-from-palette($dull-magenta, 300);
   }
   /* literal - darkred */
   pre .pun {
@@ -140,11 +142,11 @@ aio-shell.page-home {
   }
   /* attribute name  - khaki */
   pre .atv {
-    color: mat-color($dull-magenta, 100);
+    color: mat.get-color-from-palette($dull-magenta, 100);
   }
   /* attribute value - pink */
   pre .dec {
-    color: mat-color($gold, 300);
+    color: mat.get-color-from-palette($gold, 300);
   }
   /* decimal         - lightgreen */
   /* Specify class=linenums on a pre to get line numbering */
@@ -176,10 +178,10 @@ ngrx-circles circle {
   fill: white;
 }
 ngrx-circles[color='primary'] circle {
-  fill: mat-color($dull-magenta, 500);
+  fill: mat.get-color-from-palette($dull-magenta, 500);
 }
 ngrx-circles[color='accent'] circle {
-  fill: mat-color($gold, 500);
+  fill: mat.get-color-from-palette($gold, 500);
 }
 ngrx-circles {
   @for $i from 1 to 10 {

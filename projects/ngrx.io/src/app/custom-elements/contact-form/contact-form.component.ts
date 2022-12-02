@@ -17,9 +17,6 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
         button {
                 align-self: end;
             }
-        textarea {
-            height: 200px;
-        }
         `
     ],
     template: `
@@ -34,7 +31,7 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Message</mat-label>
-          <textarea type="text" matInput ngModel name="body" required placeholder="Type your message"></textarea>
+          <textarea type="text" matInput ngModel name="body" required placeholder="Type your message" rows="10"></textarea>
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!contactForm.valid">Send</button>
