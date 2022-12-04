@@ -18,11 +18,11 @@ describe('createActionGroup', () => {
   });
 
   it('should create action name by camel casing the event name', () => {
-    expect(booksApiActions.loadBooksSuccess).toBeDefined();
+    expect(booksApiActions.loadBOOKSSuCCess).toBeDefined();
   });
 
   it('should create action type using the "[Source] Event" pattern', () => {
-    expect(booksApiActions.loadBooksSuccess().type).toBe(
+    expect(booksApiActions.loadBOOKSSuCCess().type).toBe(
       '[Books API]  Load BOOKS  suCCess  '
     );
   });

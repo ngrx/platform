@@ -73,12 +73,14 @@ export function emptyProps(): ActionCreatorProps<void> {
 function toActionName<EventName extends string>(
   eventName: EventName
 ): ActionName<EventName> {
-  return eventName
+  const classCased = eventName
     .trim()
-    .toLowerCase()
     .split(' ')
-    .map((word, i) => (i === 0 ? word : capitalize(word)))
-    .join('') as ActionName<EventName>;
+    .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
+    .join('');
+  const camelCased =
+    classCased.charAt(0).toLowerCase() + classCased.substring(1);
+  return camelCased as ActionName<EventName>;
 }
 
 function toActionType<Source extends string, EventName extends string>(

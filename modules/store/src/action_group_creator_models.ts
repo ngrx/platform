@@ -95,7 +95,7 @@ type EventCreator<
   : never;
 
 export type ActionName<EventName extends string> = Uncapitalize<
-  Join<TitleCase<Lowercase<Trim<EventName>>>>
+  Join<TitleCase<Trim<EventName>>>
 >;
 
 export interface ActionGroupConfig<

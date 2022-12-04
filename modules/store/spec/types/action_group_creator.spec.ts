@@ -80,9 +80,9 @@ describe('createActionGroup', () => {
             },
           });
 
-          let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
+          let loadBOOKSSuCCess: typeof booksApiActions.loadBOOKSSuCCess;
         `).toInfer(
-          'loadBooksSuccess',
+          'loadBOOKSSuCCess',
           `ActionCreator<
             "[Books API]  Load BOOKS  suCCess  ",
             () => TypedAction<"[Books API]  Load BOOKS  suCCess  ">
@@ -196,11 +196,11 @@ describe('createActionGroup', () => {
           const booksApiActions = createActionGroup({
             source: 'Books API',
             events: {
-              '  Load BOOks  success ': emptyProps(),
-              'load Books Success': props<{ books: string[] }>(),
+              '  Load BOOks  Success ': emptyProps(),
+              'load BOOks Success': props<{ books: string[] }>(),
             }
           });
-        `).toFail(/loadBooksSuccess action is already defined/);
+        `).toFail(/loadBOOksSuccess action is already defined/);
       });
     });
 
