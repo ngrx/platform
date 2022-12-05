@@ -1,3 +1,11 @@
+<a name="15.0.0"></a>
+
+# [15.0.0](https://github.com/ngrx/platform/compare/15.0.0-rc.0...15.0.0) (2022-11-29)
+
+### Features
+
+- **store-devtools:** add redux dev tool trace support ([#3517](https://github.com/ngrx/platform/issues/3517)) ([#3665](https://github.com/ngrx/platform/issues/3665)) ([187802a](https://github.com/ngrx/platform/commit/187802a)), closes [#1868](https://github.com/ngrx/platform/issues/1868)
+
 <a name="15.0.0-rc.0"></a>
 
 # [15.0.0-rc.0](https://github.com/ngrx/platform/compare/15.0.0-beta.1...15.0.0-rc.0) (2022-11-23)

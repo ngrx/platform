@@ -728,6 +728,7 @@
             "tsConfig": "modules/schematics/tsconfig.build.json",
             "packageJson": "modules/schematics/package.json",
             "main": "modules/schematics/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": false,
             "sourceMap": false,
             "assets": [
               "collection.json",

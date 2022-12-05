@@ -9,6 +9,9 @@ export interface RouterStateSelectors<V> {
   selectRouteParams: MemoizedSelector<V, Params>;
   selectRouteParam: (param: string) => MemoizedSelector<V, string | undefined>;
   selectRouteData: MemoizedSelector<V, Data>;
+  selectRouteDataParam: (
+    param: string
+  ) => MemoizedSelector<V, string | undefined>;
   selectUrl: MemoizedSelector<V, string>;
   selectTitle: MemoizedSelector<V, string | undefined>;
 }

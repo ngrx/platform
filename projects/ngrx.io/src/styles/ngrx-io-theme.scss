@@ -1,25 +1,28 @@
-@import '@angular/material/theming';
+@use '@angular/material' as mat;
+
 // Plus imports for other components in your app.
 @import './ngrx';
-
-// Include the base styles for Angular Material core. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-@include mat-core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$ngrx-io-primary: mat-palette($dull-magenta, 700, 600, 800);
-$ngrx-io-accent:  mat-palette($gold, 700, 600, 800);
+$ngrx-io-primary: mat.define-palette($dull-magenta, 700, 600, 800);
+$ngrx-io-accent: mat.define-palette($gold, 700, 600, 800);
 
 // The warn palette is optional (defaults to red).
-$ngrx-io-warn:    mat-palette($mat-red);
+$ngrx-io-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$ngrx-io-theme: mat-light-theme($ngrx-io-primary, $ngrx-io-accent, $ngrx-io-warn);
+$ngrx-io-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $ngrx-io-primary,
+      accent: $ngrx-io-accent,
+      warn: $ngrx-io-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($ngrx-io-theme);
-
+@include mat.all-component-themes($ngrx-io-theme);

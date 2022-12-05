@@ -227,6 +227,14 @@ describe('Router State Selectors', () => {
       );
     });
 
+    it('should create a selector for selecting a specific route data param', () => {
+      const result = selectors.selectRouteDataParam('testData')(state);
+
+      expect(result).toEqual(
+        state.router.state.root.firstChild.firstChild.data.testData
+      );
+    });
+
     it('should create a selector for selecting the url', () => {
       const result = selectors.selectUrl(state);
 

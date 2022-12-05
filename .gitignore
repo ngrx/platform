@@ -57,6 +57,7 @@ __build__/**
 *.swp
 !/typings/custom.d.ts
 .vscode/
+.vim/
 
 # Build Artifacts #
 release
