@@ -102,6 +102,30 @@ import { entityConfig } from './entity-metadata';
 export class AppModule {}
 </code-example>
 
+### Using the Standalone API
+
+Registering the root entity data can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { provideEntityData, withEffects } from '@ngrx/data';
+
+import { AppComponent } from './app.component';
+import { entityConfig } from './entity-metadata';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    provideStore(),
+    provideEffects(),
+    provideEntityData(entityConfig, withEffects())
+  ],
+});
+</code-example>
+
 ## Creating entity data services
 
 NgRx Data handles creating, retrieving, updating, and deleting data on your server by extending `EntityCollectionServiceBase` in your service class.

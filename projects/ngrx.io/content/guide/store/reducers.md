@@ -121,7 +121,32 @@ export class AppModule {}
 
 Registering states with `StoreModule.forRoot()` ensures that the states are defined upon application startup. In general, you register root states that always need to be available to all areas of your application immediately.
 
-## Register feature state
+### Using the Standalone API
+
+Registering the root store and state can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideStore, provideState } from '@ngrx/store';
+
+import { AppComponent } from './app.component';
+import { scoreboardReducer } from './reducers/scoreboard.reducer';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideStore(),
+    provideState({ game: scoreboardReducer })
+  ],
+});
+</code-example>
+
+<div class="alert is-important">
+
+**Note:** Although you can register reducers in the `provideStore()` function, we recommened keeping `provideStore()` empty and using the `provideState()` function to register feature states in the root `providers` array.
+
+</div>
+
+## Registering feature state
 
 Feature states behave in the same way root states do, but allow you to define them with specific feature areas in your application. Your state is one large object, and feature states register additional keys and values in that object.
 
@@ -137,6 +162,21 @@ import { StoreModule } from '@ngrx/store';
   ],
 })
 export class AppModule {}
+</code-example>
+
+Using the Standalone API:
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideStore } from '@ngrx/store';
+
+import { AppComponent } from './app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideStore()
+  ],
+});
 </code-example>
 
 This registers your application with an empty object for the root state.
@@ -165,6 +205,26 @@ import { scoreboardFeatureKey, scoreboardReducer } from './reducers/scoreboard.r
 export class ScoreboardModule {}
 </code-example>
 
+### Using the Standalone API
+
+Feature states are registered in the `providers` array of the route config.
+
+<code-example header="game-routes.ts">
+import { Route } from '@angular/router';
+import { provideState } from '@ngrx/store';
+
+import { scoreboardFeatureKey, scoreboardReducer } from './reducers/scoreboard.reducer';
+
+export const routes: Route[] = [
+  {
+    path: 'scoreboard',
+    providers: [
+      provideState({ [scoreboardFeatureKey]: scoreboardReducer })
+    ]
+  }
+];
+</code-example>
+
 <div class="alert is-important">
 
 **Note:** It is recommended to abstract a feature key string to prevent hardcoding strings when registering feature state and calling `createFeatureSelector`. Alternatively, you can use a [Feature Creator](guide/store/feature-creators) which automatically generates selectors for your feature state.
@@ -187,7 +247,23 @@ import { ScoreboardModule } from './scoreboard/scoreboard.module';
 export class AppModule {}
 </code-example>
 
-Once the `ScoreboardModule` is loaded, the `game` key becomes a property in the object and is now managed in the state.
+Using the Standalone API, register the feature state on application bootstrap:
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideStore } from '@ngrx/store';
+
+import { AppComponent } from './app.component';
+import { scoreboardFeatureKey, scoreboardReducer } from './reducers/scoreboard.reducer';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideStore({ [scoreboardFeatureKey]: scoreboardReducer }),
+  ]
+});
+</code-example>
+
+After the feature is loaded, the `game` key becomes a property in the object and is now managed in the state.
 
 ```json
 {
@@ -201,4 +277,4 @@ Whether your feature states are loaded eagerly or lazily depends on the needs of
 
 Reducers are only responsible for deciding which state transitions need to occur for a given action.
 
-In an application there is also a need to handle impure actions, e.g. AJAX requests, in NgRx we call them [Effects](guide/effects).
+In an application there is also a need to handle impure actions, such as AJAX requests, in NgRx we call them [Effects](guide/effects).
