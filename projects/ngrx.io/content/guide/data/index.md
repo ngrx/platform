@@ -110,6 +110,7 @@ Registering the root entity data can also be done using the standalone APIs if y
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { provideEntityData, withEffects } from '@ngrx/data';
 
 import { AppComponent } from './app.component';

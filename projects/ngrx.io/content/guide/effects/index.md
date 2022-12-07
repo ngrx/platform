@@ -200,9 +200,11 @@ Registering effects can also be done using the standalone APIs if you are bootst
 
 <code-example header="main.ts">
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideStore, provideState } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
+import { MovieEffects } from './effects/movie.effects';
 
 bootstrapApplication(AppComponent, {
   providers: [

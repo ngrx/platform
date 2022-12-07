@@ -39,6 +39,7 @@ export class AppModule {}
 Registering the instrumentation can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
 
 <code-example header="main.ts">
+import { isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
