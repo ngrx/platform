@@ -168,6 +168,37 @@ describe('Selectors', () => {
       expect(grandparent.release).toHaveBeenCalled();
       expect(parent.release).toHaveBeenCalled();
     });
+
+    it('should create a selector from selectors dictionary', () => {
+      interface State {
+        x: number;
+        y: string;
+      }
+
+      const selectX = (state: State) => state.x + 1;
+      const selectY = (state: State) => state.y;
+
+      const selectDictionary = createSelector({
+        s: selectX,
+        m: selectY,
+      });
+
+      expect(selectDictionary({ x: 1, y: 'ngrx' })).toEqual({
+        s: 2,
+        m: 'ngrx',
+      });
+      expect(selectDictionary({ x: 2, y: 'ngrx' })).toEqual({
+        s: 3,
+        m: 'ngrx',
+      });
+    });
+
+    it('should create a selector from empty dictionary', () => {
+      const selectDictionary = createSelector({});
+
+      expect(selectDictionary({ x: 1, y: 'ngrx' })).toEqual({});
+      expect(selectDictionary({ x: 2, y: 'store' })).toEqual({});
+    });
   });
 
   describe('createSelector with props', () => {
