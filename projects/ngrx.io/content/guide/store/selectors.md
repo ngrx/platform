@@ -80,6 +80,17 @@ export const selectVisibleBooks = createSelector(
 );
 </code-example>
 
+The `createSelector` function also provides the ability to pass a dictionary of selectors without a projector.
+In this case, `createSelector` will generate a projector function that maps the results of the input selectors to a dictionary.
+
+```ts
+// result type - { books: Book[]; query: string }
+const selectBooksPageViewModel = createSelector({
+  books: selectBooks, // result type - Book[]
+  query: selectQuery, // result type - string
+});
+```
+
 ### Using selectors with props
 
 <div class="alert is-critical">
@@ -135,8 +146,6 @@ ngOnInit() {
 ## Selecting Feature States
 
 The `createFeatureSelector` is a convenience method for returning a top level feature state. It returns a typed selector function for a feature slice of state.
-
-### Example
 
 <code-example header="index.ts">
 import { createSelector, createFeatureSelector } from '@ngrx/store';

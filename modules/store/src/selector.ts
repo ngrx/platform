@@ -193,6 +193,18 @@ export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(
   ) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
 
+export function createSelector<
+  Selectors extends Record<string, Selector<State, unknown>>,
+  State = Selectors extends Record<string, Selector<infer S, unknown>>
+    ? S
+    : never,
+  Result extends Record<string, unknown> = {
+    [Key in keyof Selectors]: Selectors[Key] extends Selector<State, infer R>
+      ? R
+      : never;
+  }
+>(selectors: Selectors): MemoizedSelector<State, Result, never>;
+
 export function createSelector<State, Slices extends unknown[], Result>(
   ...args: [...slices: Selector<State, unknown>[], projector: unknown] &
     [
@@ -632,8 +644,6 @@ export function createSelectorFactory<T = any, Props = any, V = any>(
  *   }
  * );
  * ```
- *
- *
  */
 export function createSelectorFactory(
   memoize: MemoizeFn,
@@ -648,6 +658,8 @@ export function createSelectorFactory(
     if (Array.isArray(args[0])) {
       const [head, ...tail] = args;
       args = [...head, ...tail];
+    } else if (args.length === 1 && isSelectorsDictionary(args[0])) {
+      args = extractArgsFromSelectorsDictionary(args[0]);
     }
 
     const selectors = args.slice(0, args.length - 1);
@@ -716,4 +728,34 @@ export function createFeatureSelector(
     },
     (featureState: any) => featureState
   );
+}
+
+function isSelectorsDictionary(
+  selectors: unknown
+): selectors is Record<string, Selector<unknown, unknown>> {
+  return (
+    !!selectors &&
+    typeof selectors === 'object' &&
+    Object.values(selectors).every((selector) => typeof selector === 'function')
+  );
+}
+
+function extractArgsFromSelectorsDictionary(
+  selectorsDictionary: Record<string, Selector<unknown, unknown>>
+): [
+  ...selectors: Selector<unknown, unknown>[],
+  projector: (...selectorResults: unknown[]) => unknown
+] {
+  const selectors = Object.values(selectorsDictionary);
+  const resultKeys = Object.keys(selectorsDictionary);
+  const projector = (...selectorResults: unknown[]) =>
+    resultKeys.reduce(
+      (result, key, index) => ({
+        ...result,
+        [key]: selectorResults[index],
+      }),
+      {}
+    );
+
+  return [...selectors, projector];
 }
