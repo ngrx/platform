@@ -4,7 +4,7 @@ import { compilerOptions } from './utils';
 describe('createSelector()', () => {
   const expectSnippet = expecter(
     (code) => `
-      import {createSelector} from '@ngrx/store';
+      import { createSelector } from '@ngrx/store';
       import { MemoizedSelector, DefaultProjectorFn } from '@ngrx/store';
 
       ${code}
@@ -38,12 +38,30 @@ describe('createSelector()', () => {
       `).toSucceed();
     });
   });
+
+  it('should create a selector from selectors dictionary', () => {
+    expectSnippet(`
+      const selectDictionary = createSelector({
+        s: (state: { x: string }) => state.x,
+        m: (state: { y: number }) => state.y,
+      });
+    `).toInfer(
+      'selectDictionary',
+      'MemoizedSelector<{ x: string; } & { y: number; }, { s: string; m: number; }, never>'
+    );
+  });
+
+  it('should create a selector from empty dictionary', () => {
+    expectSnippet(`
+      const selectDictionary = createSelector({});
+    `).toInfer('selectDictionary', 'MemoizedSelector<unknown, {}, never>');
+  });
 });
 
 describe('createSelector() with props', () => {
   const expectSnippet = expecter(
     (code) => `
-      import {createSelector} from '@ngrx/store';
+      import { createSelector } from '@ngrx/store';
       import { MemoizedSelectorWithProps, DefaultProjectorFn } from '@ngrx/store';
 
       ${code}

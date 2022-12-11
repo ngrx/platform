@@ -94,7 +94,7 @@ To isolate side-effects from your component, you must create an `Effects` class 
 
 Effects are injectable service classes with distinct parts:
 
-- An injectable `Actions` service that provides an observable stream of _all_ actions dispatched _after_ the latest state has been reduced.
+- An injectable `Actions` service that provides an observable stream of _each_ action dispatched _after_ the latest state has been reduced.
 - Metadata is attached to the observable streams using the `createEffect` function. The metadata is used to register the streams that are subscribed to the store. Any action returned from the effect stream is then dispatched back to the `Store`.
 - Actions are filtered using a pipeable [`ofType` operator](guide/effects/operators#oftype). The `ofType` operator takes one or more action types as arguments to filter on which actions to act upon.
 - Effects are subscribed to the `Store` observable.
@@ -194,7 +194,31 @@ The `EffectsModule.forRoot()` method must be added to your `AppModule` imports e
 
 </div>
 
-Effects start running immediately after the AppModule is loaded to ensure they are listening for all relevant actions as soon as possible.
+### Using the Standalone API
+
+Registering effects can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+
+import { AppComponent } from './app.component';
+import { MovieEffects } from './effects/movie.effects';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideStore(),
+    provideEffects(MovieEffects)
+  ],
+});
+</code-example>
+
+<div class="alert is-important">
+
+Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible. Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
+
+</div>
 
 ## Registering feature effects
 
@@ -212,9 +236,29 @@ import { MovieEffects } from './effects/movie.effects';
 export class MovieModule {}
 </code-example>
 
+### Using the Standalone API
+
+Feature-level effects are registered in the `providers` array of the route config. The same `provideEffects()` function is used in root-level and feature-level effects.
+
+<code-example header="movie-routes.ts">
+import { Route } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
+
+import { MovieEffects } from './effects/movie.effects';
+
+export const routes: Route[] = [
+  {
+    path: 'movies',
+    providers: [
+      provideEffects(MovieEffects)
+    ]
+  }
+];
+</code-example>
+
 <div class="alert is-important">
 
-**Note:** Running an effects class multiple times, either by `forRoot()` or `forFeature()`, (for example via different lazy loaded modules) will not cause Effects to run multiple times. There is no functional difference between effects loaded by `forRoot()` and `forFeature()`; the important difference between the functions is that `forRoot()` sets up the providers required for effects.
+**Note:** Registering an effects class multiple times, either by `forRoot()`, `forFeature()`, or `provideEffects()`, (for example in different lazy loaded features) will not cause the effects to run multiple times. There is no functional difference between effects loaded by `root` and `feature`; the important difference between the functions is that `root` providers sets up the providers required for effects.
 
 </div>
 
@@ -235,7 +279,7 @@ providers: [
 
 <div class="alert is-critical">
 
-The `EffectsModule.forFeature()` method must be added to the module imports even if you only provide effects over token, and don't pass them via parameters. (Same goes for `EffectsModule.forRoot()`)
+The `EffectsModule.forFeature()` method or `provideEffects()` function must be added to the module imports/route config even if you only provide effects over token, and don't pass them through parameters. (Same goes for `EffectsModule.forRoot()`)
 
 </div>
 

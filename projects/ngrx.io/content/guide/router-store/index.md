@@ -28,3 +28,29 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}
 </code-example>
+
+### Using the Standalone API
+
+Registering the router bindings can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { provideStore, provideState } from '@ngrx/store';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+
+import { AppComponent } from './app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter([
+      // routes
+    ]),
+    provideStore(),
+    provideState({
+      router: routerReducer,
+    }),
+    provideRouterStore()
+  ],
+});
+</code-example>
