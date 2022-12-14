@@ -123,64 +123,64 @@ export function defaultMemoize(
   return { memoized, reset, setResult, clearResult };
 }
 
-export function createSelector<State, S1, Result>(
-  s1: Selector<State, S1>,
+export function createSelector<State1, S1, Result>(
+  s1: Selector<State1, S1>,
   projector: (s1: S1) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
+): MemoizedSelector<State1, Result, typeof projector>;
+export function createSelector<State1, State2, S1, S2, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
   projector: (s1: S1, s2: S2) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, S3, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
-  s3: Selector<State, S3>,
+): MemoizedSelector<State1 & State2, Result, typeof projector>;
+export function createSelector<State1, State2, State3, S1, S2, S3, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
+  s3: Selector<State3, S3>,
   projector: (s1: S1, s2: S2, s3: S3) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, S3, S4, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
-  s3: Selector<State, S3>,
-  s4: Selector<State, S4>,
+): MemoizedSelector<State1 & State2 & State3, Result, typeof projector>;
+export function createSelector<State1, State2, State3, State4, S1, S2, S3, S4, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
+  s3: Selector<State3, S3>,
+  s4: Selector<State4, S4>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, S3, S4, S5, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
-  s3: Selector<State, S3>,
-  s4: Selector<State, S4>,
-  s5: Selector<State, S5>,
+): MemoizedSelector<State1 & State2 & State3 & State4, Result,typeof projector>;
+export function createSelector<State1, State2, State3, State4, State5, S1, S2, S3, S4, S5, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
+  s3: Selector<State3, S3>,
+  s4: Selector<State4, S4>,
+  s5: Selector<State5, S5>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
-  s3: Selector<State, S3>,
-  s4: Selector<State, S4>,
-  s5: Selector<State, S5>,
-  s6: Selector<State, S6>,
+): MemoizedSelector<State1 & State2 & State3 & State4 & State5, Result, typeof projector>;
+export function createSelector<State1, State2, State3, State4, State5, State6, S1, S2, S3, S4, S5, S6, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
+  s3: Selector<State3, S3>,
+  s4: Selector<State4, S4>,
+  s5: Selector<State5, S5>,
+  s6: Selector<State6, S6>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
-  s3: Selector<State, S3>,
-  s4: Selector<State, S4>,
-  s5: Selector<State, S5>,
-  s6: Selector<State, S6>,
-  s7: Selector<State, S7>,
+): MemoizedSelector<State1 & State2 & State3 & State4 & State5 & State6, Result, typeof projector>;
+export function createSelector<State1, State2, State3, State4, State5, State6, State7, S1, S2, S3, S4, S5, S6, S7, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
+  s3: Selector<State3, S3>,
+  s4: Selector<State4, S4>,
+  s5: Selector<State5, S5>,
+  s6: Selector<State6, S6>,
+  s7: Selector<State7, S7>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result
-): MemoizedSelector<State, Result, typeof projector>;
-export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(
-  s1: Selector<State, S1>,
-  s2: Selector<State, S2>,
-  s3: Selector<State, S3>,
-  s4: Selector<State, S4>,
-  s5: Selector<State, S5>,
-  s6: Selector<State, S6>,
-  s7: Selector<State, S7>,
-  s8: Selector<State, S8>,
+): MemoizedSelector<State1 & State2 & State3 & State4 & State5 & State6 & State7, Result, typeof projector>;
+export function createSelector<State1, State2, State3, State4, State5, State6, State7, State8, S1, S2, S3, S4, S5, S6, S7, S8, Result>(
+  s1: Selector<State1, S1>,
+  s2: Selector<State2, S2>,
+  s3: Selector<State3, S3>,
+  s4: Selector<State4, S4>,
+  s5: Selector<State5, S5>,
+  s6: Selector<State6, S6>,
+  s7: Selector<State7, S7>,
+  s8: Selector<State8, S8>,
   projector: (
     s1: S1,
     s2: S2,
@@ -191,7 +191,7 @@ export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(
     s7: S7,
     s8: S8
   ) => Result
-): MemoizedSelector<State, Result, typeof projector>;
+): MemoizedSelector<State1 & State2 & State3 & State4 & State5 & State6 & State7 & State8, Result, typeof projector>;
 
 export function createSelector<
   Selectors extends Record<string, Selector<State, unknown>>,
