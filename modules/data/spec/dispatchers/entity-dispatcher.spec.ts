@@ -262,6 +262,17 @@ export function commandDispatchTest(
       expect(entityName).toBe('Hero');
       expect(mergeStrategy).toBeUndefined();
     });
+
+    it('#loadWithQuery() dispatches QUERY_MANY', () => {
+      dispatcher.loadWithQuery('name=B');
+
+      const { entityOp, data, entityName, mergeStrategy } =
+        dispatchedAction().payload;
+      expect(entityOp).toBe(EntityOp.QUERY_MANY);
+      expect(entityName).toBe('Hero');
+      expect(data).toEqual('name=B');
+      expect(mergeStrategy).toBeUndefined(); //?
+    });
   });
 
   /*** Cache-only operations ***/

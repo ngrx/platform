@@ -316,6 +316,17 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
     );
   }
 
+  loadWithQuery(queryParams: QueryParams | string,
+                options?: EntityActionOptions
+  ): Observable<T[]> {
+    options = this.setQueryEntityActionOptions(options);
+    const action = this.createEntityAction(EntityOp.QUERY_MANY, queryParams, options);
+    this.dispatch(action);
+    return this.getResponseData$<T[]>(options.correlationId).pipe(
+      shareReplay(1)
+    );
+  }
+
   /**
    * Dispatch action to save the updated entity (or partial entity) in remote storage.
    * The update entity may be partial (but must have its key)

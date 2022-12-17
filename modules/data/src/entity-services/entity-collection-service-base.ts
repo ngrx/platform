@@ -245,6 +245,12 @@ export class EntityCollectionServiceBase<
     return this.dispatcher.load(options);
   }
 
+  loadWithQuery(queryParams: QueryParams | string,
+       options?: EntityActionOptions
+  ): Observable<T[]> {
+    return this.dispatcher.loadWithQuery(queryParams, options);
+  }
+
   /**
    * Dispatch action to save the updated entity (or partial entity) in remote storage.
    * The update entity may be partial (but must have its key)
