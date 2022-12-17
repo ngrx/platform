@@ -205,6 +205,38 @@ describe('createActionGroup', () => {
     });
 
     describe('props', () => {
+      it('should infer when props are typed as union', () => {
+        expectSnippet(`
+          const booksApiActions = createActionGroup({
+            source: 'Books API',
+            events: {
+              'Load Books Success': props<{ books: string[]; total: number } | { books: symbol[] }>(),
+            },
+          });
+
+          let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
+        `).toInfer(
+          'loadBooksSuccess',
+          'ActionCreator<"[Books API] Load Books Success", (props: { books: string[]; total: number; } | { books: symbol[]; }) => ({ books: string[]; total: number; } | { books: symbol[]; }) & TypedAction<"[Books API] Load Books Success">>'
+        );
+      });
+
+      it('should infer when props are typed as intersection', () => {
+        expectSnippet(`
+          const booksApiActions = createActionGroup({
+            source: 'Books API',
+            events: {
+              'Load Books Success': props<{ books: string[] } & { total: number }>(),
+            },
+          });
+
+          let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
+        `).toInfer(
+          'loadBooksSuccess',
+          'ActionCreator<"[Books API] Load Books Success", (props: { books: string[]; } & { total: number; }) => { books: string[]; } & { total: number; } & TypedAction<"[Books API] Load Books Success">>'
+        );
+      });
+
       it('should fail when props contain a type property', () => {
         expectSnippet(`
           const booksApiActions = createActionGroup({
