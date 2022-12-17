@@ -92,6 +92,21 @@ export interface EntityServerCommands<T> {
   load(options?: EntityActionOptions): Observable<T[]>;
 
   /**
+   * Dispatch action to query remote storage for the entities that satisfy a query expressed
+   * with either a query parameter map or an HTTP URL query string, and
+   * completely replace the cached collection with the queried entities.
+   * @param queryParams the query in a form understood by the server
+   * @param [options] options that influence load behavior
+   * @returns A terminating Observable of the entities in the collection
+   * after server reports successful query or the query error.
+   * @see getWithQuery
+   */
+  loadWithQuery(queryParams: QueryParams | string,
+                options?: EntityActionOptions
+  ): Observable<T[]>;
+
+
+  /**
    * Dispatch action to save the updated entity (or partial entity) in remote storage.
    * The update entity may be partial (but must have its key)
    * in which case it patches the existing entity.
