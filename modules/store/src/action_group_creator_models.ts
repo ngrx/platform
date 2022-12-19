@@ -78,7 +78,7 @@ type EventCreator<
   PropsCreator extends ActionCreatorProps<unknown> | Creator,
   Type extends string
 > = PropsCreator extends ActionCreatorProps<infer Props>
-  ? Props extends void
+  ? void extends Props
     ? ActionCreator<Type, () => TypedAction<Type>>
     : ActionCreator<
         Type,
