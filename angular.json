@@ -479,6 +479,7 @@
             "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
             "packageJson": "modules/eslint-plugin/package.json",
             "main": "modules/eslint-plugin/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": false,
             "sourceMap": false,
             "assets": [
               "collection.json",
