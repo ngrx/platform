@@ -608,7 +608,7 @@ export function createSelectorFactory<T = any, Props = any, V = any>(
  *   return a.reduce(reduceToDetermineIfArraysContainSameContents, true);
  * }
  *
- * export const creactOrderDoesNotMatterSelector = createSelectorFactory(
+ * export const createOrderDoesNotMatterSelector = createSelectorFactory(
  *   (projectionFun) => defaultMemoize(
  *     projectionFun,
  *     orderDoesNotMatterComparer,
