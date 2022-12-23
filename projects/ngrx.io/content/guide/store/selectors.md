@@ -156,22 +156,12 @@ export interface FeatureState {
   counter: number;
 }
 
-export interface AppState {
-  feature: FeatureState;
-}
-
-export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;(featureKey);
+export const selectFeature = createFeatureSelector&lt;FeatureState&gt;(featureKey);
 
 export const selectFeatureCount = createSelector(
   selectFeature,
   (state: FeatureState) => state.counter
 );
-</code-example>
-
-The following selector below would not compile because `fooFeatureKey` (`'foo'`) is not a feature slice of `AppState`.
-
-<code-example header="index.ts">
-export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;(fooFeatureKey);
 </code-example>
 
 <div class="alert is-important">
