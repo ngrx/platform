@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/eslint-plugin",
-  "version": "15.0.0",
+  "version": "15.1.0",
   "description": "NgRx ESLint Plugin",
   "repository": {
     "type": "git",
@@ -36,7 +36,6 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@angular-devkit/schematics": "^14.0.0-rc.0",
     "@typescript-eslint/experimental-utils": "^5.4.0",
     "eslint-etc": "^5.1.0",
     "semver": "^7.3.5",

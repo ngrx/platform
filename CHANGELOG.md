@@ -1,3 +1,20 @@
+<a name="15.1.0"></a>
+
+# [15.1.0](https://github.com/ngrx/platform/compare/15.0.0...15.1.0) (2022-12-21)
+
+### Bug Fixes
+
+- **component-store:** revert throwError usages with factory for RxJS 6 compatibility ([726dfb7](https://github.com/ngrx/platform/commit/726dfb7))
+- **data:** revert throwError usages with factory for RxJS 6 compatibility ([a137b59](https://github.com/ngrx/platform/commit/a137b59)), closes [#3702](https://github.com/ngrx/platform/issues/3702)
+- **eslint-plugin:** remove [@angular-devkit](https://github.com/angular-devkit)/schematics dependency ([#3710](https://github.com/ngrx/platform/issues/3710)) ([f0ae915](https://github.com/ngrx/platform/commit/f0ae915)), closes [#3709](https://github.com/ngrx/platform/issues/3709)
+- **schematics:** disable package json peer dep updates during build ([#3692](https://github.com/ngrx/platform/issues/3692)) ([9cfc103](https://github.com/ngrx/platform/commit/9cfc103)), closes [#3691](https://github.com/ngrx/platform/issues/3691)
+- **store:** support using `createActionGroup` with props typed as unions ([#3713](https://github.com/ngrx/platform/issues/3713)) ([e75fa1a](https://github.com/ngrx/platform/commit/e75fa1a)), closes [#3712](https://github.com/ngrx/platform/issues/3712)
+
+### Features
+
+- **router-store:** add new selectRouteDataParam selector ([#3673](https://github.com/ngrx/platform/issues/3673)) ([#3686](https://github.com/ngrx/platform/issues/3686)) ([81bc0d9](https://github.com/ngrx/platform/commit/81bc0d9))
+- **store:** support using`createSelector` with selectors dictionary ([#3703](https://github.com/ngrx/platform/issues/3703)) ([5c87dda](https://github.com/ngrx/platform/commit/5c87dda)), closes [#3677](https://github.com/ngrx/platform/issues/3677)
+
 <a name="15.0.0"></a>
 
 # [15.0.0](https://github.com/ngrx/platform/compare/15.0.0-rc.0...15.0.0) (2022-11-29)
