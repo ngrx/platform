@@ -14,7 +14,7 @@ The `createFeature` function reduces repetitive code in selector files by genera
 for each feature state property. It accepts an object containing a feature name and a feature reducer as the input argument:
 
 <code-example header="books.reducer.ts">
-import { createFeature, createReducer } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { Book } from './book.model';
 
 import * as BookListPageActions from './book-list-page.actions';
@@ -80,12 +80,50 @@ Registering the feature reducer in the store can be done by passing the entire f
 <code-example header="books.module.ts">
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+
 import { booksFeature } from './books.reducer';
 
 @NgModule({
   imports: [StoreModule.forFeature(booksFeature)],
 })
 export class BooksModule {}
+</code-example>
+
+### Using the Standalone API
+
+Registering the feature can be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideStore, provideState } from '@ngrx/store';
+
+import { AppComponent } from './app.component';
+import { booksFeature } from './books.reducer';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideStore(),
+    provideState(booksFeature)
+  ],
+});
+</code-example>
+
+Feature states can also be registered in the `providers` array of the route config.
+
+<code-example header="books-routes.ts">
+import { Route } from '@angular/router';
+import { provideState } from '@ngrx/store';
+
+import { booksFeature } from './books.reducer';
+
+export const routes: Route[] = [
+  {
+    path: 'books',
+    providers: [
+      provideState(booksFeature)
+    ]
+  }
+];
 </code-example>
 
 ## Restrictions

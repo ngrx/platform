@@ -79,7 +79,7 @@ export class EntityCacheDataService {
   protected handleError(reqData: RequestData) {
     return (err: any) => {
       const error = new DataServiceError(err, reqData);
-      return throwError(() => error);
+      return throwError(error);
     };
   }
 

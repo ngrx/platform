@@ -1,4 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {}
+  "schematics": {
+    "ngrx-component-migration-15-beta": {
+      "description": "As of NgRx v14, `ReactiveComponentModule` is deprecated. It is replaced by `LetModule` and `PushModule`.",
+      "version": "15.0.0-beta",
+      "factory": "./15_0_0-beta/index"
+    }
+  }
 }

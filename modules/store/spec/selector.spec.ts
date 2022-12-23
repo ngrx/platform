@@ -56,7 +56,7 @@ describe('Selectors', () => {
 
       const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
-      expect(selector.projector()).toBe(2);
+      expect((selector.projector as any)()).toBe(2);
 
       selector.setResult(5);
 
@@ -168,6 +168,37 @@ describe('Selectors', () => {
       expect(grandparent.release).toHaveBeenCalled();
       expect(parent.release).toHaveBeenCalled();
     });
+
+    it('should create a selector from selectors dictionary', () => {
+      interface State {
+        x: number;
+        y: string;
+      }
+
+      const selectX = (state: State) => state.x + 1;
+      const selectY = (state: State) => state.y;
+
+      const selectDictionary = createSelector({
+        s: selectX,
+        m: selectY,
+      });
+
+      expect(selectDictionary({ x: 1, y: 'ngrx' })).toEqual({
+        s: 2,
+        m: 'ngrx',
+      });
+      expect(selectDictionary({ x: 2, y: 'ngrx' })).toEqual({
+        s: 3,
+        m: 'ngrx',
+      });
+    });
+
+    it('should create a selector from empty dictionary', () => {
+      const selectDictionary = createSelector({});
+
+      expect(selectDictionary({ x: 1, y: 'ngrx' })).toEqual({});
+      expect(selectDictionary({ x: 2, y: 'store' })).toEqual({});
+    });
   });
 
   describe('createSelector with props', () => {
@@ -198,11 +229,11 @@ describe('Selectors', () => {
         },
         projectFn
       );
-      selector.projector('', '', 47);
+      selector.projector('', '', 47, 'prop');
 
       expect(incrementOne).not.toHaveBeenCalled();
       expect(incrementTwo).not.toHaveBeenCalled();
-      expect(projectFn).toHaveBeenCalledWith('', '', 47);
+      expect(projectFn).toHaveBeenCalledWith('', '', 47, 'prop');
     });
 
     it('should call the projector function when the state changes', () => {
@@ -387,11 +418,11 @@ describe('Selectors', () => {
         projectFn
       );
 
-      selector.projector('', '', 47);
+      selector.projector('', '', 47, 'prop');
 
       expect(incrementOne).not.toHaveBeenCalled();
       expect(incrementTwo).not.toHaveBeenCalled();
-      expect(projectFn).toHaveBeenCalledWith('', '', 47);
+      expect(projectFn).toHaveBeenCalledWith('', '', 47, 'prop');
     });
 
     it('should call the projector function when the state changes', () => {

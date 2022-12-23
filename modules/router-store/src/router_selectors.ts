@@ -54,14 +54,20 @@ export function getSelectors<V extends Record<string, any>>(
     selectCurrentRoute,
     (route) => route && route.data
   );
+  const selectRouteDataParam = (param: string) =>
+    createSelector(selectRouteData, (data) => data && data[param]);
   const selectUrl = createSelector(
     selectRouterState,
     (routerState) => routerState && routerState.url
   );
-  const selectTitle = createSelector(
-    selectCurrentRoute,
-    (route) => route && route.routeConfig?.title
-  );
+  const selectTitle = createSelector(selectCurrentRoute, (route) => {
+    if (!route?.routeConfig) {
+      return undefined;
+    }
+    return typeof route.routeConfig.title === 'string'
+      ? route.routeConfig.title // static title
+      : route.title; // resolved title
+  });
 
   return {
     selectCurrentRoute,
@@ -71,6 +77,7 @@ export function getSelectors<V extends Record<string, any>>(
     selectRouteParams,
     selectRouteParam,
     selectRouteData,
+    selectRouteDataParam,
     selectUrl,
     selectTitle,
   };

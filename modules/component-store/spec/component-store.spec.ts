@@ -1,36 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
-  ComponentStore,
-  OnStateInit,
-  OnStoreInit,
-  provideComponentStore,
-} from '@ngrx/component-store';
-import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
-import {
-  of,
-  Subscription,
-  ConnectableObservable,
-  interval,
-  timer,
-  Observable,
-  from,
-  scheduled,
-  queueScheduler,
-  asyncScheduler,
-  throwError,
-} from 'rxjs';
-import {
-  delayWhen,
-  publishReplay,
-  take,
-  map,
-  tap,
-  finalize,
-  delay,
-  concatMap,
-} from 'rxjs/operators';
-import { createSelector } from '@ngrx/store';
-import {
   Inject,
   Injectable,
   InjectionToken,
@@ -38,6 +7,37 @@ import {
   Provider,
 } from '@angular/core';
 import { fakeAsync, flushMicrotasks } from '@angular/core/testing';
+import {
+  ComponentStore,
+  OnStateInit,
+  OnStoreInit,
+  provideComponentStore,
+} from '@ngrx/component-store';
+import { createSelector } from '@ngrx/store';
+import {
+  asyncScheduler,
+  ConnectableObservable,
+  from,
+  interval,
+  Observable,
+  of,
+  queueScheduler,
+  scheduled,
+  Subscription,
+  throwError,
+  timer,
+} from 'rxjs';
+import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
+import {
+  concatMap,
+  delay,
+  delayWhen,
+  finalize,
+  map,
+  publishReplay,
+  take,
+  tap,
+} from 'rxjs/operators';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -45,6 +45,18 @@ describe('Component Store', () => {
       'through constructor',
       marbles((m) => {
         const INIT_STATE = { init: 'state' };
+        const componentStore = new ComponentStore(INIT_STATE);
+
+        m.expect(componentStore.state$).toBeObservable(
+          m.hot('i', { i: INIT_STATE })
+        );
+      })
+    );
+
+    it(
+      'supports an array state',
+      marbles((m) => {
+        const INIT_STATE = [1, 2, 3];
         const componentStore = new ComponentStore(INIT_STATE);
 
         m.expect(componentStore.state$).toBeObservable(
@@ -372,7 +384,7 @@ describe('Component Store', () => {
           },
         ]);
 
-        // New subsriber gets the latest value only.
+        // New subscriber gets the latest value only.
         m.expect(componentStore.state$).toBeObservable(
           m.hot('s', {
             s: {
@@ -432,7 +444,7 @@ describe('Component Store', () => {
   });
 
   describe('cancels updater Observable', () => {
-    beforeEach(() => jest.useFakeTimers());
+    beforeEach(() => jest.useFakeTimers({ legacyFakeTimers: true }));
 
     interface State {
       value: string;
@@ -808,6 +820,80 @@ describe('Component Store', () => {
         { result: 'new value' },
       ]);
     });
+
+    it('can combine into an object through selectorObject', () => {
+      const selector1 = componentStore.select((s) => s.value);
+      const selector2 = componentStore.select((s) => s.updated);
+      const selector3 = componentStore.select({
+        s1: selector1,
+        s2: selector2,
+      });
+
+      const selectorResults: Array<{
+        s1: string;
+        s2: boolean | undefined;
+      }> = [];
+      selector3.subscribe((s3) => {
+        selectorResults.push(s3);
+      });
+
+      componentStore.setState(() => ({ value: 'new value', updated: true }));
+
+      expect(selectorResults).toEqual([
+        { s1: 'init', s2: undefined },
+        { s1: 'new value', s2: undefined }, // not debounced
+        { s1: 'new value', s2: true },
+      ]);
+    });
+
+    it('can combine into an object through a single selectorObject', () => {
+      const selector1 = componentStore.select((s) => s.value);
+
+      const selector2 = componentStore.select({
+        s1: selector1,
+      });
+
+      const selectorResults: Array<{
+        s1: string;
+      }> = [];
+      selector2.subscribe((s2) => {
+        selectorResults.push(s2);
+      });
+
+      componentStore.setState(() => ({ value: 'new value', updated: true }));
+
+      expect(selectorResults).toEqual([{ s1: 'init' }, { s1: 'new value' }]);
+    });
+
+    it('can combine into an object through selectorObject with debounce', fakeAsync(() => {
+      const selector1 = componentStore.select((s) => s.value);
+      const selector2 = componentStore.select((s) => s.updated);
+      const selector3 = componentStore.select(
+        {
+          s1: selector1,
+          s2: selector2,
+        },
+        { debounce: true }
+      );
+
+      const selectorResults: Array<{
+        s1: string;
+        s2: boolean | undefined;
+      }> = [];
+      selector3.subscribe((s3) => {
+        selectorResults.push(s3);
+      });
+      flushMicrotasks();
+
+      componentStore.setState(() => ({ value: 'new value', updated: true }));
+      flushMicrotasks();
+
+      expect(selectorResults).toEqual([
+        { s1: 'init', s2: undefined },
+        // debounced, so new value for both
+        { s1: 'new value', s2: true },
+      ]);
+    }));
 
     it(
       'can combine with other Observables',

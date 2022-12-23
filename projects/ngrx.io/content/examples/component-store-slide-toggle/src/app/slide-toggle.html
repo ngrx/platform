@@ -1,35 +1,51 @@
-<div class="mat-slide-toggle mat-slide-toggle-label-before" 
-     *ngIf="vm$ | async as vm"
-     [class.mat-checked]="vm.checked">
-  <label class="mat-slide-toggle-label" #label>
-    <div #toggleBar class="mat-slide-toggle-bar"
-        [class.mat-slide-toggle-bar-no-side-margin]="!labelContent.textContent || !labelContent.textContent.trim()">
-
-      <input #input class="mat-slide-toggle-input cdk-visually-hidden" type="checkbox"
-            role="switch"
-            [checked]="vm.checked"
-            [attr.aria-checked]="vm.checked.toString()"
-            (change)="onChangeEvent($event)"
+<div *ngIf="vm$ | async as vm" class="mat-mdc-slide-toggle mat-accent">
+  <div class="mdc-form-field mdc-form-field--align-end">
+    <button
+      class="mdc-switch"
+      role="switch"
+      type="button"
+      [class.mdc-switch--selected]="vm.checked"
+      [class.mdc-switch--unselected]="!vm.checked"
+      [class.mdc-switch--checked]="vm.checked"
+      (click)="onChangeEvent({ source: $event, checked: vm.checked })"
+      #switch
+    >
+      <div class="mdc-switch__track"></div>
+      <div class="mdc-switch__handle-track">
+        <div class="mdc-switch__handle">
+          <div class="mdc-switch__shadow">
+            <div class="mdc-elevation-overlay"></div>
+          </div>
+          <div class="mdc-switch__ripple">
+            <div
+              class="mat-mdc-slide-toggle-ripple mat-mdc-focus-indicator"
+              mat-ripple
+              [matRippleTrigger]="switch"
+              [matRippleCentered]="true"
+            ></div>
+          </div>
+          <div class="mdc-switch__icons">
+            <svg
+              class="mdc-switch__icon mdc-switch__icon--on"
+              viewBox="0 0 24 24"
             >
-
-      <div class="mat-slide-toggle-thumb-container" #thumbContainer>
-        <div class="mat-slide-toggle-thumb"></div>
-        <div class="mat-slide-toggle-ripple mat-focus-indicator" mat-ripple
-            [matRippleTrigger]="label"
-            [matRippleCentered]="true"
-            [matRippleRadius]="20"
-            [matRippleAnimation]="{enterDuration: 150}">
-
-          <div class="mat-ripple-element mat-slide-toggle-persistent-ripple"></div>
+              <path
+                d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"
+              />
+            </svg>
+            <svg
+              class="mdc-switch__icon mdc-switch__icon--off"
+              viewBox="0 0 24 24"
+            >
+              <path d="M20 13H4v-2h16v2z" />
+            </svg>
+          </div>
         </div>
       </div>
+    </button>
 
-    </div>
-
-    <span class="mat-slide-toggle-content" #labelContent>
-      <!-- Add an invisible span so JAWS can read the label -->
-      <span style="display:none">&nbsp;</span>
+    <label>
       <ng-content></ng-content>
-    </span>
-  </label>
+    </label>
+  </div>
 </div>

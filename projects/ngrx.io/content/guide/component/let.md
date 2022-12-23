@@ -23,28 +23,6 @@ import { LetModule } from '@ngrx/component';
 export class MyStandaloneComponent {}
 ```
 
-The `*ngrxLet` directive can be also used by importing the `ReactiveComponentModule`:
-
-```ts
-import { NgModule } from '@angular/core';
-import { ReactiveComponentModule } from '@ngrx/component';
-
-@NgModule({
-  imports: [
-    // ... other imports
-    ReactiveComponentModule,
-  ],
-})
-export class MyFeatureModule {}
-```
-
-<div class="alert is-critical">
-
-`ReactiveComponentModule` is deprecated in favor of `LetModule`.
-See the [migration guide](guide/migration/v14#reactivecomponentmodule) for more information.
-
-</div>
-
 ## Comparison with `*ngIf` and `async`
 
 The current way of binding an observable to the view looks like this:
@@ -79,12 +57,24 @@ In addition to that it provides us information from the whole observable context
 We can track next, error, and complete events:
 
 ```html
-<ng-container *ngrxLet="number$ as n; let e = $error; let c = $complete">
+<ng-container *ngrxLet="number$ as n; error as e; complete as c">
   <app-number [number]="n" *ngIf="!e && !c">
   </app-number>
 
   <p *ngIf="e">There is an error: {{ e }}</p>
   <p *ngIf="c">Observable is completed.</p>
+</ng-container>
+```
+
+## Combining Multiple Observables
+
+The `*ngrxLet` directive can be also used with a dictionary of observables.
+This feature provides the ability to create a view model object in the template:
+
+```html
+<ng-container *ngrxLet="{ users: users$, query: query$ } as vm">
+  <app-search-bar [query]="vm.query"></app-search-bar>
+  <app-user-list [users]="vm.users"></app-user-list>
 </ng-container>
 ```
 
@@ -134,6 +124,7 @@ This feature provides the ability to create readable templates by using aliases 
   (See ["Comparison with `*ngIf` and `async`"](#comparison-with-ngif-and-async) section)
 - Takes away the multiple usages of the `async` or `ngrxPush` pipe.
 - Allows displaying different content based on the current state of an observable.
+- Allows combining multiple observables in the template.
 - Provides a unified/structured way of handling `null` and `undefined`.
 - Provides the ability to create readable templates by using aliases for nested properties.
 - Triggers change detection using the `RenderScheduler` that behaves differently in

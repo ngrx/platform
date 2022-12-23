@@ -1,13 +1,11 @@
-import { getGreeting } from '../support/app.po';
+import { getGreeting, loadFeature } from '../support/app.po';
 
 describe('standalone-app', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
-
-    // Function helper example, see `../support/app.po.ts` file
     getGreeting().contains('Welcome ngrx-standalone-app');
+    loadFeature();
+    cy.contains('Feature State: { "loaded": true }');
   });
 });

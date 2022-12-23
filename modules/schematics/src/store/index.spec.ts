@@ -154,7 +154,7 @@ describe('Store Schematic', () => {
     );
   });
 
-  it('should import the environments correctly in the app module', async () => {
+  it('should import isDevMode correctly in the app module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = await schematicRunner
@@ -162,7 +162,7 @@ describe('Store Schematic', () => {
       .toPromise();
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
-      /import { environment } from '..\/environments\/environment';/
+      /import { NgModule, isDevMode } from '@angular\/core';/
     );
   });
 
@@ -175,23 +175,7 @@ describe('Store Schematic', () => {
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
-    expect(content).toMatch(
-      /import { environment } from '..\/..\/environments\/environment';/
-    );
-  });
-
-  it('should not import the environments in the reducers for a library', async () => {
-    const options = {
-      ...defaultOptions,
-      project: 'baz',
-      module: 'baz.module.ts',
-    };
-
-    const tree = await schematicRunner
-      .runSchematicAsync('store', options, appTree)
-      .toPromise();
-    const content = tree.readContent(`/projects/baz/src/lib/reducers/index.ts`);
-    expect(content).not.toMatch(/import { environment }/);
+    expect(content).toMatch(/import { isDevMode } from '@angular\/core';/);
   });
 
   it('should fail if specified module does not exist', async () => {
@@ -367,7 +351,7 @@ describe('Store Schematic', () => {
     const content = tree.readContent(`${projectPath}/src/app/empty.module.ts`);
 
     expect(content).toMatch(
-      /imports: \[StoreModule.forRoot\(reducers, { metaReducers }\), !environment.production \? StoreDevtoolsModule.instrument\(\) : \[\]\]/
+      /imports: \[StoreModule.forRoot\(reducers, { metaReducers }\), isDevMode\(\) \? StoreDevtoolsModule.instrument\(\) : \[\]\]/
     );
   });
 });

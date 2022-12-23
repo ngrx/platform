@@ -20,6 +20,7 @@ import {
   EMPTY,
   interval,
   NEVER,
+  Observable,
   of,
   switchMap,
   take,
@@ -32,12 +33,9 @@ import { stripSpaces } from '../helpers';
 
 @Component({
   template: `
-    <ng-container
-      *ngrxLet="value$ as value; $error as error; $complete as complete"
-      >{{
-        value === null ? 'null' : (value | json) || 'undefined'
-      }}</ng-container
-    >
+    <ng-container *ngrxLet="value$ as value">{{
+      value === null ? 'null' : (value | json) || 'undefined'
+    }}</ng-container>
   `,
 })
 class LetDirectiveTestComponent {
@@ -46,7 +44,7 @@ class LetDirectiveTestComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $error as error">{{
+    <ng-container *ngrxLet="value$; error as error">{{
       error === undefined ? 'undefined' : error
     }}</ng-container>
   `,
@@ -57,7 +55,7 @@ class LetDirectiveTestErrorComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$; $complete as complete">{{
+    <ng-container *ngrxLet="value$; complete as complete">{{
       complete
     }}</ng-container>
   `,
@@ -68,9 +66,7 @@ class LetDirectiveTestCompleteComponent {
 
 @Component({
   template: `
-    <ng-container *ngrxLet="value$ as value; $suspense as s">{{
-      s ? 'suspense' : value
-    }}</ng-container>
+    <ng-container *ngrxLet="value$ as value">{{ value }}</ng-container>
   `,
 })
 class LetDirectiveTestSuspenseComponent {
@@ -274,11 +270,25 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('true');
     });
 
-    it('should render initially passed object', () => {
+    it('should render initially passed empty object', () => {
+      letDirectiveTestComponent.value$ = {};
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(stripSpaces(componentNativeElement.textContent)).toBe('{}');
+    });
+
+    it('should render initially passed object with non-observable values', () => {
       letDirectiveTestComponent.value$ = { ngrx: 'component' };
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(stripSpaces(componentNativeElement.textContent)).toBe(
         '{"ngrx":"component"}'
+      );
+    });
+
+    it('should render initially passed object with at least one non-observable value', () => {
+      letDirectiveTestComponent.value$ = { ngrx: 'component', o$: of(1) };
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(stripSpaces(componentNativeElement.textContent)).toBe(
+        '{"ngrx":"component","o$":{}}'
       );
     });
 
@@ -326,13 +336,13 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('42');
     }));
 
-    it('should render undefined as value when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
+    it('should clear the view when a new observable NEVER was passed (as no value ever was emitted from new observable)', () => {
       letDirectiveTestComponent.value$ = of(42);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
       letDirectiveTestComponent.value$ = NEVER;
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
+      expect(componentNativeElement.textContent).toBe('');
     });
 
     it('should render new value when a new observable was passed', () => {
@@ -441,12 +451,12 @@ describe('LetDirective', () => {
       expect(componentNativeElement.textContent).toBe('true');
     }));
 
-    it('should render suspense when next observable is in suspense state', fakeAsync(() => {
+    it('should clear the view when next observable is in suspense state', fakeAsync(() => {
       letDirectiveTestComponent.value$ = of(true);
       fixtureLetDirectiveTestComponent.detectChanges();
       letDirectiveTestComponent.value$ = of(false).pipe(delay(1000));
       fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('suspense');
+      expect(componentNativeElement.textContent).toBe('');
       tick(1000);
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('false');
@@ -511,5 +521,84 @@ describe('LetDirective', () => {
       expect(letDirectiveTestComponent).toBeDefined();
       expect(componentNativeElement.textContent).toBe('1');
     }));
+  });
+
+  describe('with observable dictionary', () => {
+    function withObservableDictionarySetup<
+      O1 extends Observable<unknown>,
+      O2 extends Observable<unknown>
+    >(config: { o1$: O1; o2$: O2 }) {
+      @Component({
+        template: `
+          <ng-container *ngrxLet="{ o1: o1$, o2: o2$ } as vm">{{
+            vm.o1 + '-' + vm.o2
+          }}</ng-container>
+        `,
+      })
+      class LetDirectiveTestComponent {
+        o1$ = config.o1$;
+        o2$ = config.o2$;
+      }
+
+      TestBed.configureTestingModule({
+        declarations: [LetDirectiveTestComponent, LetDirective],
+        providers: [
+          { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+          { provide: ErrorHandler, useClass: MockErrorHandler },
+          TemplateRef,
+          ViewContainerRef,
+        ],
+      });
+
+      const fixture = TestBed.createComponent(LetDirectiveTestComponent);
+
+      return {
+        fixture,
+        nativeElement: fixture.nativeElement,
+      };
+    }
+
+    it('should not create embedded view until all observables from dictionary emit first value', fakeAsync(() => {
+      const { fixture, nativeElement } = withObservableDictionarySetup({
+        o1$: of(1).pipe(delay(10)),
+        o2$: of(2).pipe(delay(20)),
+      });
+
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('');
+
+      tick(10);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('');
+
+      tick(20);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('1-2');
+    }));
+
+    it('should update embedded view when any observable from dictionary emits value', () => {
+      const o1$ = new BehaviorSubject(1);
+      const o2$ = new BehaviorSubject(2);
+      const { fixture, nativeElement } = withObservableDictionarySetup({
+        o1$,
+        o2$,
+      });
+
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('1-2');
+
+      o1$.next(10);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('10-2');
+
+      o2$.next(20);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('10-20');
+
+      o1$.next(100);
+      o2$.next(200);
+      fixture.detectChanges();
+      expect(nativeElement.textContent).toBe('100-200');
+    });
   });
 });

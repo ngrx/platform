@@ -1,11 +1,11 @@
-import {
+<% if (!isLib) { %>import { isDevMode } from '@angular/core';
+<% } %>import {
   ActionReducer,
   ActionReducerMap,
   createFeatureSelector,
   createSelector,
   MetaReducer
 } from '@ngrx/store';
-<% if (!isLib) { %>import { environment } from '<%= environmentsPath %>';<% } %>
 <% if (!root) { %>
 export const <%= camelize(name) %>FeatureKey = '<%= camelize(name) %>';<% } %>
 
@@ -18,4 +18,4 @@ export const reducers: ActionReducerMap<<%= classify(stateInterface) %>> = {
 };
 
 
-export const metaReducers: MetaReducer<<%= classify(stateInterface) %>>[] = <% if (!isLib) { %>!environment.production ? [] : <% } %>[];
+export const metaReducers: MetaReducer<<%= classify(stateInterface) %>>[] = <% if (!isLib) { %>isDevMode() ? [] : <% } %>[];

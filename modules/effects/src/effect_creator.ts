@@ -71,9 +71,9 @@ export function createEffect<
   return effect as typeof effect & CreateEffectMetadata;
 }
 
-export function getCreateEffectMetadata<
-  T extends { [props in keyof T]: Object }
->(instance: T): EffectMetadata<T>[] {
+export function getCreateEffectMetadata<T extends Record<keyof T, Object>>(
+  instance: T
+): EffectMetadata<T>[] {
   const propertyNames = Object.getOwnPropertyNames(instance) as Array<keyof T>;
 
   const metadata: EffectMetadata<T>[] = propertyNames

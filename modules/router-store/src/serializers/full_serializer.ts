@@ -26,6 +26,7 @@ export class FullRouterStateSerializer
       data: route.data,
       url: route.url,
       outlet: route.outlet,
+      title: route.title,
       routeConfig: route.routeConfig
         ? {
             component: route.routeConfig.component,

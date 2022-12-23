@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   provideRouter,
@@ -33,10 +33,10 @@ bootstrapApplication(AppComponent, {
     ),
     provideStoreDevtools({
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: !isDevMode(),
       name: 'NgRx Standalone App',
     }),
     provideRouterStore(),
-    provideEffects([AppEffects]),
+    provideEffects(AppEffects),
   ],
 });

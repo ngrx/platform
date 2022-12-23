@@ -85,6 +85,33 @@ export const reducers: ActionReducerMap&lt;State&gt; = {
 export class AppModule {}
 </code-example>
 
+### Using the Standalone API
+
+<code-example header="main.ts">
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { provideStore, provideState } from '@ngrx/store';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+
+import { AppComponent } from './app.component';
+import { CustomSerializer } from './custom-serializer';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter([
+      // routes
+    ]),
+    provideStore(),
+    provideState({
+      router: routerReducer,
+    }),
+    provideRouterStore({
+      serializer: CustomSerializer
+    })
+  ],
+});
+</code-example>
+
 ## Navigation action timing
 
 `ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:

@@ -4,16 +4,11 @@ Component is a library for building reactive Angular templates.
 It provides a set of declarables that can work with or without `zone.js`.
 They give more control over rendering and provide further reactivity for Angular applications.
 
-<div class="alert is-critical">
-
-This package is still experimental and may change during development.
-
-</div>
-
 ## Key Concepts
 
 - Rendering observable events in a performant way.
 - Displaying different content based on the current state of an observable.
+- Combining multiple observables in the template.
 - Creating readable templates by using aliases for nested properties.
 - Building fully reactive Angular applications regardless of whether `zone.js` is present or not.
 

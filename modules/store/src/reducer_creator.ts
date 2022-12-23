@@ -95,8 +95,7 @@ export function on<
  * @usageNotes
  *
  * - Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.
- * - The returned `ActionReducer` should additionally be wrapped with another function, if you are using View Engine AOT.
- * In case you are using Ivy (or only JIT View Engine) the extra wrapper function is not required.
+ * - The returned `ActionReducer` does not require being wrapped with another function.
  *
  * **Declaring a reducer creator**
  *
@@ -110,24 +109,6 @@ export function on<
  *   ),
  *   on(featureActions.actionThree, () => initialState);
  * );
- * ```
- *
- * **Declaring a reducer creator using a wrapper function (Only needed if using View Engine AOT)**
- *
- * ```ts
- * const featureReducer = createReducer(
- *   initialState,
- *   on(
- *     featureActions.actionOne,
- *     featureActions.actionTwo,
- *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
- *   ),
- *   on(featureActions.actionThree, () => initialState);
- * );
- *
- * export function reducer(state: State | undefined, action: Action) {
- *   return featureReducer(state, action);
- * }
  * ```
  */
 export function createReducer<S, A extends Action = Action>(

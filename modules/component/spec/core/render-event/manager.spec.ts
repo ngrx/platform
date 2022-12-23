@@ -19,7 +19,7 @@ describe('createRenderEventManager', () => {
     const nextHandler = jest.fn();
     const errorHandler = jest.fn();
     const completeHandler = jest.fn();
-    const renderEventManager = createRenderEventManager<T>({
+    const renderEventManager = createRenderEventManager<Observable<T>>({
       suspense: suspenseHandler,
       next: nextHandler,
       error: errorHandler,

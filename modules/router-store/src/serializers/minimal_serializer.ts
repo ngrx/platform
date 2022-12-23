@@ -9,6 +9,7 @@ export interface MinimalActivatedRouteSnapshot {
   fragment: ActivatedRouteSnapshot['fragment'];
   data: ActivatedRouteSnapshot['data'];
   outlet: ActivatedRouteSnapshot['outlet'];
+  title: ActivatedRouteSnapshot['title'];
   firstChild?: MinimalActivatedRouteSnapshot;
   children: MinimalActivatedRouteSnapshot[];
 }
@@ -37,6 +38,7 @@ export class MinimalRouterStateSerializer
       data: route.data,
       url: route.url,
       outlet: route.outlet,
+      title: route.title,
       routeConfig: route.routeConfig
         ? {
             path: route.routeConfig.path,

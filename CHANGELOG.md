@@ -1,3 +1,274 @@
+<a name="15.1.0"></a>
+
+# [15.1.0](https://github.com/ngrx/platform/compare/15.0.0...15.1.0) (2022-12-21)
+
+### Bug Fixes
+
+- **component-store:** revert throwError usages with factory for RxJS 6 compatibility ([726dfb7](https://github.com/ngrx/platform/commit/726dfb7))
+- **data:** revert throwError usages with factory for RxJS 6 compatibility ([a137b59](https://github.com/ngrx/platform/commit/a137b59)), closes [#3702](https://github.com/ngrx/platform/issues/3702)
+- **eslint-plugin:** remove [@angular-devkit](https://github.com/angular-devkit)/schematics dependency ([#3710](https://github.com/ngrx/platform/issues/3710)) ([f0ae915](https://github.com/ngrx/platform/commit/f0ae915)), closes [#3709](https://github.com/ngrx/platform/issues/3709)
+- **schematics:** disable package json peer dep updates during build ([#3692](https://github.com/ngrx/platform/issues/3692)) ([9cfc103](https://github.com/ngrx/platform/commit/9cfc103)), closes [#3691](https://github.com/ngrx/platform/issues/3691)
+- **store:** support using `createActionGroup` with props typed as unions ([#3713](https://github.com/ngrx/platform/issues/3713)) ([e75fa1a](https://github.com/ngrx/platform/commit/e75fa1a)), closes [#3712](https://github.com/ngrx/platform/issues/3712)
+
+### Features
+
+- **router-store:** add new selectRouteDataParam selector ([#3673](https://github.com/ngrx/platform/issues/3673)) ([#3686](https://github.com/ngrx/platform/issues/3686)) ([81bc0d9](https://github.com/ngrx/platform/commit/81bc0d9))
+- **store:** support using`createSelector` with selectors dictionary ([#3703](https://github.com/ngrx/platform/issues/3703)) ([5c87dda](https://github.com/ngrx/platform/commit/5c87dda)), closes [#3677](https://github.com/ngrx/platform/issues/3677)
+
+<a name="15.0.0"></a>
+
+# [15.0.0](https://github.com/ngrx/platform/compare/15.0.0-rc.0...15.0.0) (2022-11-29)
+
+### Features
+
+- **store-devtools:** add redux dev tool trace support ([#3517](https://github.com/ngrx/platform/issues/3517)) ([#3665](https://github.com/ngrx/platform/issues/3665)) ([187802a](https://github.com/ngrx/platform/commit/187802a)), closes [#1868](https://github.com/ngrx/platform/issues/1868)
+
+<a name="15.0.0-rc.0"></a>
+
+# [15.0.0-rc.0](https://github.com/ngrx/platform/compare/15.0.0-beta.1...15.0.0-rc.0) (2022-11-23)
+
+### Features
+
+- **component:** clear `LetDirective` view when replaced observable is in suspense state ([#3671](https://github.com/ngrx/platform/issues/3671)) ([ec59c4b](https://github.com/ngrx/platform/commit/ec59c4b))
+- **component:** remove $ prefix from LetViewContext property names ([#3670](https://github.com/ngrx/platform/issues/3670)) ([b3b21e6](https://github.com/ngrx/platform/commit/b3b21e6))
+
+### BREAKING CHANGES
+
+- **component:** The `LetDirective` view will be cleared when the replaced observable is in a suspense state. Also, the `suspense` property is removed from the `LetViewContext` because it would always be `false` when the `LetDirective` view is rendered. Instead of `suspense` property, use the suspense template to handle the suspense state.
+
+BEFORE:
+
+The `LetDirective` view will not be cleared when the replaced observable is in a suspense state and the suspense template is not passed:
+
+```ts
+@Component({
+  template: `
+    <!-- When button is clicked, the 'LetDirective' view won't be cleared. -->
+    <!-- Instead, the value of 'o' will be 'undefined' until the replaced -->
+    <!-- observable emits the first value (after 1 second). -->
+    <p *ngrxLet="obs$ as o">{{ o }}</p>
+    <button (click)="replaceObs()">Replace Observable</button>
+  `,
+})
+export class TestComponent {
+  obs$ = of(1);
+
+  replaceObs(): void {
+    this.obs$ = of(2).pipe(delay(1000));
+  }
+}
+```
+
+AFTER:
+
+The `LetDirective` view will be cleared when the replaced observable is in a suspense state and the suspense template is not passed:
+
+```ts
+@Component({
+  template: `
+    <!-- When button is clicked, the 'LetDirective' view will be cleared. -->
+    <!-- The view will be created again when the replaced observable -->
+    <!-- emits the first value (after 1 second). -->
+    <p *ngrxLet="obs$ as o">{{ o }}</p>
+    <button (click)="replaceObs()">Replace Observable</button>
+  `,
+})
+export class TestComponent {
+  obs$ = of(1);
+
+  replaceObs(): void {
+    this.obs$ = of(2).pipe(delay(1000));
+  }
+}
+```
+
+- **component:** The `$` prefix is removed from `LetViewContext` property names.
+
+BEFORE:
+
+```html
+<ng-container *ngrxLet="obs$; $error as e; $complete as c"> ... </ng-container>
+```
+
+AFTER:
+
+```html
+<ng-container *ngrxLet="obs$; error as e; complete as c"> ... </ng-container>
+```
+
+<a name="15.0.0-beta.1"></a>
+
+# [15.0.0-beta.1](https://github.com/ngrx/platform/compare/15.0.0-beta.0...15.0.0-beta.1) (2022-11-18)
+
+### Features
+
+- **data:** add initial standalone APIs ([#3647](https://github.com/ngrx/platform/issues/3647)) ([aa7ed66](https://github.com/ngrx/platform/commit/aa7ed66)), closes [#3553](https://github.com/ngrx/platform/issues/3553)
+- **data:** add withEffects feature for provideEntityData ([#3656](https://github.com/ngrx/platform/issues/3656)) ([a6959e8](https://github.com/ngrx/platform/commit/a6959e8))
+- **effects:** forRoot and forFeature accept spreaded array ([#3638](https://github.com/ngrx/platform/issues/3638)) ([0eaa536](https://github.com/ngrx/platform/commit/0eaa536))
+- **router-store:** return resolved title via selectTitle ([#3648](https://github.com/ngrx/platform/issues/3648)) ([cc04e2f](https://github.com/ngrx/platform/commit/cc04e2f)), closes [#3622](https://github.com/ngrx/platform/issues/3622)
+- **schematics:** add display block flag ([e0d368d](https://github.com/ngrx/platform/commit/e0d368d))
+- **schematics:** add standalone flag ([b0bd2ff](https://github.com/ngrx/platform/commit/b0bd2ff))
+- **schematics:** replace environments usage with isDevMode ([#3645](https://github.com/ngrx/platform/issues/3645)) ([4f61b63](https://github.com/ngrx/platform/commit/4f61b63)), closes [#3618](https://github.com/ngrx/platform/issues/3618)
+
+### BREAKING CHANGES
+
+- **router-store:** Property `title: string | undefined` is added to the `MinimalActivatedRouteSnapshot` interface.
+
+BEFORE:
+
+The `MinimalActivatedRouteSnapshot` interface doesn't contain the `title` property.
+
+AFTER:
+
+The `MinimalActivatedRouteSnapshot` interface contains the required `title` property.
+
+<a name="15.0.0-beta.0"></a>
+
+# [15.0.0-beta.0](https://github.com/ngrx/platform/compare/14.3.2...15.0.0-beta.0) (2022-11-03)
+
+### Features
+
+- **component:** add migration for replacing ReactiveComponentModule ([#3506](https://github.com/ngrx/platform/issues/3506)) ([49c6cf3](https://github.com/ngrx/platform/commit/49c6cf3)), closes [#3491](https://github.com/ngrx/platform/issues/3491)
+- **component:** handle observable dictionaries ([#3602](https://github.com/ngrx/platform/issues/3602)) ([42efccb](https://github.com/ngrx/platform/commit/42efccb)), closes [#3545](https://github.com/ngrx/platform/issues/3545)
+- **component:** remove ReactiveComponentModule ([#3643](https://github.com/ngrx/platform/issues/3643)) ([4bdf345](https://github.com/ngrx/platform/commit/4bdf345)), closes [#3623](https://github.com/ngrx/platform/issues/3623)
+- **component-store:** Add SelectorObject to `select` ([#3629](https://github.com/ngrx/platform/issues/3629)) ([f8d0241](https://github.com/ngrx/platform/commit/f8d0241)), closes [#3632](https://github.com/ngrx/platform/issues/3632) [#3631](https://github.com/ngrx/platform/issues/3631)
+- **effects:** change the signature of provideEffect ([#3587](https://github.com/ngrx/platform/issues/3587)) ([899afe7](https://github.com/ngrx/platform/commit/899afe7))
+- **effects:** migration for provideEffects argument ([#3601](https://github.com/ngrx/platform/issues/3601)) ([f7dfeab](https://github.com/ngrx/platform/commit/f7dfeab))
+- **effects:** remove @Effect decorator ([#3634](https://github.com/ngrx/platform/issues/3634)) ([96c5bdd](https://github.com/ngrx/platform/commit/96c5bdd)), closes [#3617](https://github.com/ngrx/platform/issues/3617)
+- **eslint-plugin:** remove rules using @Effect ([#3635](https://github.com/ngrx/platform/issues/3635)) ([5f74e61](https://github.com/ngrx/platform/commit/5f74e61))
+- **schematics:** drop support for TypeScript <4.8 ([#3631](https://github.com/ngrx/platform/issues/3631)) ([b9c1ab6](https://github.com/ngrx/platform/commit/b9c1ab6))
+- **store:** make reducers arg of StoreModule.forRoot optional ([#3632](https://github.com/ngrx/platform/issues/3632)) ([e5177aa](https://github.com/ngrx/platform/commit/e5177aa))
+- **store:** strict projector for selectors with props ([#3640](https://github.com/ngrx/platform/issues/3640)) ([351459f](https://github.com/ngrx/platform/commit/351459f)), closes [#3571](https://github.com/ngrx/platform/issues/3571)
+- **store:** strict projectors ([#3581](https://github.com/ngrx/platform/issues/3581)) ([43198a2](https://github.com/ngrx/platform/commit/43198a2)), closes [#3571](https://github.com/ngrx/platform/issues/3571)
+
+### BREAKING CHANGES
+
+- **component:** `ReactiveComponentModule` is removed in favor of `LetModule` and `PushModule`.
+
+BEFORE:
+
+```ts
+import { ReactiveComponentModule } from '@ngrx/component';
+
+@NgModule({
+  imports: [
+    // ... other imports
+    ReactiveComponentModule,
+  ],
+})
+export class MyFeatureModule {}
+```
+
+AFTER:
+
+```ts
+import { LetModule, PushModule } from '@ngrx/component';
+
+@NgModule({
+  imports: [
+    // ... other imports
+    LetModule,
+    PushModule,
+  ],
+})
+export class MyFeatureModule {}
+```
+
+- **store:** The projector method has become strict
+
+BEFORE:
+
+The projector is not type-safe, allowing for potential mismatch types in the projector function.
+
+```ts
+const mySelector = createSelector(
+  () => 'one',
+  () => 2,
+  (one, two) => 3
+);
+
+mySelector.projector(); // <- type is projector(...args: any[]): number
+```
+
+AFTER:
+
+The projector is strict by default, but can be bypassed with an `any` type assertion to specify a less specific type.
+
+```ts
+const mySelector = createSelector(
+  () => 'one',
+  () => 2,
+  (one, two) => 3
+);
+
+mySelector.projector(); // <- Results in type error. Type is projector(s1: string, s2: number): number
+```
+
+To retain previous behavior
+
+```ts
+const mySelector = createSelector(
+  () => 'one',
+  () => 2,
+  (one, two) => 3
+)(mySelector.projector as any)();
+```
+
+- **effects:** The @Effect decorator is removed
+
+BEFORE:
+
+An effect is defined with the `@Effect` decorator.
+
+```ts
+@Effect()
+data$ = this.actions$.pipe();
+```
+
+AFTER:
+
+You need to define an effect with `createEffect`.
+
+```ts
+data$ = createEffect(() => this.actions$.pipe());
+```
+
+BEFORE:
+
+`provideEffects` expecteded the effects to be passed as an array.
+
+```ts
+// single effect
+provideEffects([MyEffect]);
+
+// multiple effects
+provideEffects([MyEffect, MySecondEffect]);
+```
+
+AFTER:
+
+`provideEffects` expects the effects as a spreaded array as argument.
+
+```ts
+// single effect
+provideEffects(MyEffect);
+
+// multiple effects
+provideEffects(MyEffect, MySecondEffect);
+```
+
+<a name="14.3.2"></a>
+
+## [14.3.2](https://github.com/ngrx/platform/compare/14.3.1...14.3.2) (2022-10-04)
+
+### Bug Fixes
+
+- **component:** replace animationFrameScheduler with requestAnimationFrame ([#3592](https://github.com/ngrx/platform/issues/3592)) ([0a4d2dd](https://github.com/ngrx/platform/commit/0a4d2dd)), closes [#3591](https://github.com/ngrx/platform/issues/3591)
+- **component-store:** use asapScheduler to schedule lifecycle hooks check ([#3580](https://github.com/ngrx/platform/issues/3580)) ([02431b4](https://github.com/ngrx/platform/commit/02431b4)), closes [#3573](https://github.com/ngrx/platform/issues/3573)
+- **eslint-plugin:** avoid-combining-selectors with arrays should warn ([#3566](https://github.com/ngrx/platform/issues/3566)) ([4b0c6de](https://github.com/ngrx/platform/commit/4b0c6de))
+- **router-store:** set undefined for unserializable route title ([#3593](https://github.com/ngrx/platform/issues/3593)) ([8eb4001](https://github.com/ngrx/platform/commit/8eb4001)), closes [#3495](https://github.com/ngrx/platform/issues/3495)
+- **store:** fix typing of on fn ([#3577](https://github.com/ngrx/platform/issues/3577)) ([d054aa9](https://github.com/ngrx/platform/commit/d054aa9)), closes [#3576](https://github.com/ngrx/platform/issues/3576)
+
 <a name="14.3.1"></a>
 
 ## [14.3.1](https://github.com/ngrx/platform/compare/14.3.0...14.3.1) (2022-09-08)
@@ -269,14 +540,14 @@ AFTER:
 BEFORE:
 
 ```ts
-createSelector<Story[], Story[], Story[][]>
+createSelector<Story[], Story[], Story[][]>;
 ```
 
 AFTER:
 
 ```ts
 //        needs to be a tuple 👇
-createSelector<Story[], [ Story[] ] , Story[][]>
+createSelector<Story[], [Story[]], Story[][]>;
 ```
 
 - **data:** Now both the `getWithQuery` and `getAll` methods are consistent and do set `loaded` property to true on dispatching their success actions respectively.

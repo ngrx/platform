@@ -80,6 +80,17 @@ export const selectVisibleBooks = createSelector(
 );
 </code-example>
 
+The `createSelector` function also provides the ability to pass a dictionary of selectors without a projector.
+In this case, `createSelector` will generate a projector function that maps the results of the input selectors to a dictionary.
+
+```ts
+// result type - { books: Book[]; query: string }
+const selectBooksPageViewModel = createSelector({
+  books: selectBooks, // result type - Book[]
+  query: selectQuery, // result type - string
+});
+```
+
 ### Using selectors with props
 
 <div class="alert is-critical">
@@ -96,8 +107,8 @@ For example if we have a counter and we want to multiply its value, we can add t
 The last argument of a selector or a projector is the `props` argument, for our example it looks as follows:
 
 <code-example header="index.ts">
-export const getCount = createSelector(
-  getCounterValue,
+export const selectCount = createSelector(
+  selectCounterValue,
   (counter, props) => counter * props.multiply
 );
 </code-example>
@@ -106,7 +117,7 @@ Inside the component we can define the `props`:
 
 <code-example header="app.component.ts">
 ngOnInit() {
-  this.counter = this.store.select(fromRoot.getCount, { multiply: 2 })
+  this.counter = this.store.select(fromRoot.selectCount, { multiply: 2 })
 }
 </code-example>
 
@@ -115,7 +126,7 @@ Keep in mind that a selector only keeps the previous input arguments in its cach
 The following is an example of using multiple counters differentiated by `id`.
 
 <code-example header="index.ts">
-export const getCount = () =>
+export const selectCount = () =>
   createSelector(
     (state, props) => state.counter[props.id],
     (counter, props) => counter * props.multiply
@@ -126,17 +137,15 @@ The component's selectors are now calling the factory function to create differe
 
 <code-example header="app.component.ts">
 ngOnInit() {
-  this.counter2 = this.store.select(fromRoot.getCount(), { id: 'counter2', multiply: 2 });
-  this.counter4 = this.store.select(fromRoot.getCount(), { id: 'counter4', multiply: 4 });
-  this.counter6 = this.store.select(fromRoot.getCount(), { id: 'counter6', multiply: 6 });
+  this.counter2 = this.store.select(fromRoot.selectCount(), { id: 'counter2', multiply: 2 });
+  this.counter4 = this.store.select(fromRoot.selectCount(), { id: 'counter4', multiply: 4 });
+  this.counter6 = this.store.select(fromRoot.selectCount(), { id: 'counter6', multiply: 6 });
 }
 </code-example>
 
 ## Selecting Feature States
 
 The `createFeatureSelector` is a convenience method for returning a top level feature state. It returns a typed selector function for a feature slice of state.
-
-### Example
 
 <code-example header="index.ts">
 import { createSelector, createFeatureSelector } from '@ngrx/store';
@@ -147,22 +156,12 @@ export interface FeatureState {
   counter: number;
 }
 
-export interface AppState {
-  feature: FeatureState;
-}
-
-export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;(featureKey);
+export const selectFeature = createFeatureSelector&lt;FeatureState&gt;(featureKey);
 
 export const selectFeatureCount = createSelector(
   selectFeature,
   (state: FeatureState) => state.counter
 );
-</code-example>
-
-The following selector below would not compile because `fooFeatureKey` (`'foo'`) is not a feature slice of `AppState`.
-
-<code-example header="index.ts">
-export const selectFeature = createFeatureSelector&lt;AppState, FeatureState&gt;(fooFeatureKey);
 </code-example>
 
 <div class="alert is-important">

@@ -17,9 +17,6 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
         button {
                 align-self: end;
             }
-        textarea {
-            height: 200px;
-        }
         `
     ],
     template: `
@@ -34,7 +31,7 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Message</mat-label>
-          <textarea type="text" matInput ngModel name="body" required placeholder="Type your message"></textarea>
+          <textarea type="text" matInput ngModel name="body" required placeholder="Type your message" rows="10"></textarea>
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!contactForm.valid">Send</button>
@@ -64,8 +61,9 @@ export class ContactFormComponent {
         body: string;
     }) {
         addDoc(collection(this.firestore, 'mail'), {
-            to: 'info@ts.dev',
+            to: ['info@ts.dev', 'hello+ngrx@liveloveapp.com'],
             from: contact.email,
+            replyTo: [contact.email, 'info@ts.dev', 'hello+ngrx@liveloveapp.com'],
             message: {
                 subject: 'NgRx Enterprise Support inquiry',
                 text: `${contact.body}\n${contact.fromName}`

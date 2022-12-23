@@ -131,7 +131,7 @@ In the slide-toggle example, the state is updated either through `@Input` or by 
 
 `@Input` here is a setter function that passes the value to the `setChecked` updater.
 
-When a user clicks the toggle (triggering a 'change' event), instead of calling the same updater directly, the `onChangeEvent` effect is called. This is done because we also need to have the side-effect of `event.stopPropagation()` to prevent this event from bubbling up (slide-toggle output event in named 'change' as well) and only after that the `setChecked` updater is called with the value of the input element.
+When a user clicks the toggle (triggering a 'change' event), instead of calling the same updater directly, the `onChangeEvent` effect is called. This is done because we also need to have the side-effect of `event.source.stopPropagation` to prevent this event from bubbling up (slide-toggle output event in named 'change' as well) and only after that the `setChecked` updater is called with the value of the input element.
 
 <code-example linenums="false"
   header="src/app/slide-toggle.component.ts"

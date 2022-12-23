@@ -1,12 +1,10 @@
 import { ErrorHandler, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { Unsubscribable } from 'rxjs';
-import { ObservableOrPromise } from '../core/potential-observable';
+import { PotentialObservableResult } from '../core/potential-observable';
 import { createRenderScheduler } from '../core/render-scheduler';
 import { createRenderEventManager } from '../core/render-event/manager';
 
-type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
-  ? R | undefined
-  : PO;
+type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
 
 /**
  * @ngModule PushModule
@@ -19,12 +17,22 @@ type PushPipeResult<PO> = PO extends ObservableOrPromise<infer R>
  *
  * @usageNotes
  *
+ * ### Displaying Observable Values
+ *
  * ```html
  * <p>{{ number$ | ngrxPush }}</p>
  *
  * <ng-container *ngIf="number$ | ngrxPush as n">{{ n }}</ng-container>
  *
  * <app-number [number]="number$ | ngrxPush"></app-number>
+ * ```
+ *
+ * ### Combining Multiple Observables
+ *
+ * ```html
+ * <code>
+ *   {{ { users: users$, query: query$ } | ngrxPush | json }}
+ * </code>
  * ```
  *
  * @publicApi
