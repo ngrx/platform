@@ -479,6 +479,7 @@
             "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
             "packageJson": "modules/eslint-plugin/package.json",
             "main": "modules/eslint-plugin/src/index.ts",
+            "updateBuildableProjectDepsInPackageJson": false,
             "sourceMap": false,
             "assets": [
               "collection.json",
@@ -1041,7 +1042,14 @@
           "outputs": ["{workspaceRoot}/coverage/modules/store-devtools"]
         }
       },
-      "schematics": {},
+      "schematics": {
+        "@angular-eslint/schematics:application": {
+          "setParserOptionsProject": true
+        },
+        "@angular-eslint/schematics:library": {
+          "setParserOptionsProject": true
+        }
+      },
       "tags": []
     }
   }
