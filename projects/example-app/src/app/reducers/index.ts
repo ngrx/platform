@@ -2,11 +2,9 @@ import {
   createSelector,
   createFeatureSelector,
   ActionReducer,
-  MetaReducer,
   Action,
   ActionReducerMap,
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
 import * as fromRouter from '@ngrx/router-store';
 
 /**
@@ -60,10 +58,15 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * By default, @ngrx/store uses combineReducers with the reducer map to compose
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
+ *
+ * export const metaReducers: MetaReducer<State>[] = !environment.production
+ *  ? [logger]
+ *  : [];
+ *
+ * Since V15.1 Angular doesn't include environment files by default.
+ * If you want to use meta-reducers please add it manually using
+ * `ng g environments` command.
  */
-export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger]
-  : [];
 
 /**
  * Layout Selectors
