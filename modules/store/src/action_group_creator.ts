@@ -1,11 +1,13 @@
 import { createAction, props } from './action_creator';
-import { ActionCreatorProps, Creator } from './models';
-import { capitalize } from './helpers';
 import {
   ActionGroup,
   ActionGroupConfig,
+  ActionGroupKeepCasing,
   ActionName,
+  ActionNameKeepCasing,
 } from './action_group_creator_models';
+import { capitalize } from './helpers';
+import { ActionCreatorProps, Creator } from './models';
 
 /**
  * @description
@@ -57,7 +59,7 @@ export function createActionGroup<
   return Object.keys(events).reduce(
     (actionGroup, eventName) => ({
       ...actionGroup,
-      [toActionName(eventName)]: createAction(
+      [toActionName(eventName, false)]: createAction(
         toActionType(source, eventName),
         events[eventName]
       ),
@@ -66,19 +68,44 @@ export function createActionGroup<
   );
 }
 
+export function createActionGroupKeepCasing<
+  Source extends string,
+  Events extends Record<string, ActionCreatorProps<unknown> | Creator>
+>(
+  config: ActionGroupConfig<Source, Events>
+): ActionGroupKeepCasing<Source, Events> {
+  const { source, events } = config;
+
+  return Object.keys(events).reduce(
+    (actionGroup, eventName) => ({
+      ...actionGroup,
+      [toActionName(eventName, true)]: createAction(
+        toActionType(source, eventName),
+        events[eventName]
+      ),
+    }),
+    {} as ActionGroupKeepCasing<Source, Events>
+  );
+}
+
 export function emptyProps(): ActionCreatorProps<void> {
   return props();
 }
 
 function toActionName<EventName extends string>(
-  eventName: EventName
-): ActionName<EventName> {
-  return eventName
-    .trim()
-    .toLowerCase()
-    .split(' ')
-    .map((word, i) => (i === 0 ? word : capitalize(word)))
-    .join('') as ActionName<EventName>;
+  eventName: EventName,
+  keepCasing: boolean
+): ActionName<EventName> | ActionNameKeepCasing<EventName> {
+  let splitName = eventName.trim().split(' ');
+
+  if (!keepCasing) {
+    splitName = splitName
+      .map((word) => word.toLowerCase())
+      .map((word, i) => (i === 0 ? word : capitalize(word)));
+    return splitName.join('') as ActionName<EventName>;
+  }
+
+  return splitName.join('') as ActionNameKeepCasing<EventName>;
 }
 
 function toActionType<Source extends string, EventName extends string>(

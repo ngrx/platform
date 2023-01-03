@@ -98,6 +98,10 @@ export type ActionName<EventName extends string> = Uncapitalize<
   Join<TitleCase<Lowercase<Trim<EventName>>>>
 >;
 
+export type ActionNameKeepCasing<EventName extends string> = Uncapitalize<
+  Join<Trim<EventName>>
+>;
+
 export interface ActionGroupConfig<
   Source extends string,
   Events extends Record<string, ActionCreatorProps<unknown> | Creator>
@@ -121,4 +125,13 @@ export type ActionGroup<
     Events[EventName],
     `[${Source}] ${EventName & string}`
   >;
+};
+
+export type ActionGroupKeepCasing<
+  Source extends string,
+  Events extends Record<string, ActionCreatorProps<unknown> | Creator>
+> = {
+  [EventName in keyof Events as ActionNameKeepCasing<
+    EventName & string
+  >]: EventCreator<Events[EventName], `[${Source}] ${EventName & string}`>;
 };

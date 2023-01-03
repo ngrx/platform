@@ -1,4 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createActionGroupKeepCasing } from '../src/action_group_creator';
 
 describe('createActionGroup', () => {
   const authApiActions = createActionGroup({
@@ -17,6 +18,16 @@ describe('createActionGroup', () => {
     },
   });
 
+  const authorApiActions = createActionGroupKeepCasing({
+    source: 'Author API keep casing',
+    events: {
+      loadAuthors: emptyProps(),
+      loadAuthorsSUCceS: emptyProps(),
+      loadAuthorsFailed: emptyProps(),
+      'reload authors': emptyProps(),
+    },
+  });
+
   it('should create action name by camel casing the event name', () => {
     expect(booksApiActions.loadBooksSuccess).toBeDefined();
   });
@@ -24,6 +35,19 @@ describe('createActionGroup', () => {
   it('should create action type using the "[Source] Event" pattern', () => {
     expect(booksApiActions.loadBooksSuccess().type).toBe(
       '[Books API]  Load BOOKS  suCCess  '
+    );
+  });
+
+  it('should create action name by camel casing the event name', () => {
+    expect(authorApiActions.loadAuthors).toBeDefined();
+    expect(authorApiActions.loadAuthorsSUCceS).toBeDefined();
+    expect(authorApiActions.loadAuthorsFailed).toBeDefined();
+    expect(authorApiActions.reloadauthors).toBeDefined();
+  });
+
+  it('should create action type using the "[Source] Event" pattern', () => {
+    expect(authorApiActions.loadAuthors().type).toBe(
+      '[Author API keep casing] loadAuthors'
     );
   });
 
