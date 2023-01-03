@@ -4,6 +4,7 @@ import {
   ActionReducer,
   Action,
   ActionReducerMap,
+  MetaReducer,
 } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 
@@ -15,7 +16,7 @@ import * as fromRouter from '@ngrx/router-store';
  */
 
 import * as fromLayout from '@example-app/core/reducers/layout.reducer';
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, isDevMode } from '@angular/core';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -58,15 +59,9 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * By default, @ngrx/store uses combineReducers with the reducer map to compose
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
- *
- * export const metaReducers: MetaReducer<State>[] = !environment.production
- *  ? [logger]
- *  : [];
- *
- * Since V15.1 Angular doesn't include environment files by default.
- * If you want to use meta-reducers please add it manually using
- * `ng g environments` command.
  */
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [logger] : [];
 
 /**
  * Layout Selectors
