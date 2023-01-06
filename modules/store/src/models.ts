@@ -1,5 +1,3 @@
-import { ImportedNgModuleProviders } from '@angular/core';
-
 export interface Action {
   type: string;
 }
@@ -142,10 +140,6 @@ export interface ActionCreatorProps<T> {
 export type FunctionWithParametersType<P extends unknown[], R = void> = (
   ...args: P
 ) => R;
-
-export type ParametersType<T> = T extends (...args: infer U) => unknown
-  ? U
-  : never;
 
 export interface RuntimeChecks {
   /**
