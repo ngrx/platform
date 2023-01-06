@@ -6,7 +6,11 @@ import {
   ActionReducerMap,
   MetaReducer,
 } from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
+import {
+  getRouterSelectors,
+  routerReducer,
+  RouterReducerState,
+} from '@ngrx/router-store';
 
 /**
  * Every reducer module's default export is the reducer function itself. In
@@ -24,7 +28,7 @@ import { InjectionToken, isDevMode } from '@angular/core';
  */
 export interface State {
   [fromLayout.layoutFeatureKey]: fromLayout.State;
-  router: fromRouter.RouterReducerState<any>;
+  router: RouterReducerState<any>;
 }
 
 /**
@@ -37,7 +41,7 @@ export const ROOT_REDUCERS = new InjectionToken<
 >('Root reducers token', {
   factory: () => ({
     [fromLayout.layoutFeatureKey]: fromLayout.reducer,
-    router: fromRouter.routerReducer,
+    router: routerReducer,
   }),
 });
 
@@ -60,7 +64,6 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
  */
-
 export const metaReducers: MetaReducer<State>[] = isDevMode() ? [logger] : [];
 
 /**
@@ -78,4 +81,4 @@ export const selectShowSidenav = createSelector(
 /**
  * Router Selectors
  */
-export const { selectRouteData } = fromRouter.getSelectors();
+export const { selectRouteData } = getRouterSelectors();
