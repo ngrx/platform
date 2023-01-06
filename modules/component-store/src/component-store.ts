@@ -137,7 +137,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
               return EMPTY;
             }
 
-            return throwError(() => error);
+            return throwError(error);
           }),
           takeUntil(this.destroy$)
         )
