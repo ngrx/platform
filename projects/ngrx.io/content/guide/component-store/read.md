@@ -67,6 +67,19 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 }
 </code-example>
 
+## Creating a View Model
+
+Creating view models is a recommended way to consolidate multiple streams in a clean API to provide to your component template.
+The `select` method accepts a dictionary of observables as input and returns an observable of the dictionary of values as output. View models can be written in the following way: 
+
+<code-example header="movies.store.ts">
+  private readonly vm$ = this.select({
+    movies: this.movies$,
+    userPreferredMovieIds: this.userPreferredMovieIds$,
+    userPreferredMovies: this.userPreferredMovies$
+  });
+</code-example>
+
 ## Debounce selectors
 
 Selectors are synchronous by default, meaning that they emit the value immediately when subscribed to, and on every state change.
@@ -104,11 +117,10 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 
   readonly currentPageIndex$ = this.select(state => state.currentPageIndex);
 
-  private readonly fetchMoviesData$ = this.select(
-    moviesPerPage$,
-    currentPageIndex$,
-    (moviesPerPage, currentPageIndex) => ({moviesPerPage, currentPageIndex}),
-    {debounce: true}, // 👈 setting this selector to debounce
+  private readonly fetchMoviesData$ = this.select({
+    moviesPerPage: this.moviesPerPage$,
+    currentPageIndex: this.currentPageIndex$
+  },{debounce: true}, // 👈 setting this selector to debounce
   );
   
   private readonly fetchMovies = this.effect(
