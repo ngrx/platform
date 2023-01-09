@@ -104,13 +104,13 @@ describe('createFeature()', () => {
     });
   });
 
-  describe('derived selectors', () => {
+  describe('extra selectors', () => {
     it('should create a feature', () => {
       const initialState = { count1: 9, count2: 10 };
       const counterFeature = createFeature({
         name: 'counter',
         reducer: createReducer(initialState),
-        derivedSelectors: ({
+        extraSelectors: ({
           selectCounterState,
           selectCount1,
           selectCount2,
@@ -153,12 +153,12 @@ describe('createFeature()', () => {
       ]);
     });
 
-    it('should override base selectors if derived selectors have the same names', () => {
+    it('should override base selectors if extra selectors have the same names', () => {
       const initialState = { count1: 10, count2: 100 };
       const counterFeature = createFeature({
         name: 'counter',
         reducer: createReducer(initialState),
-        derivedSelectors: ({
+        extraSelectors: ({
           selectCounterState,
           selectCount1,
           selectCount2,

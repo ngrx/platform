@@ -20,17 +20,17 @@ type Feature<
 > = FeatureConfig<FeatureName, FeatureState> &
   BaseSelectors<AppState, FeatureName, FeatureState>;
 
-type FeatureWithDerivedSelectors<
+type FeatureWithExtraSelectors<
   FeatureName extends string,
   FeatureState,
-  DerivedSelectors extends DerivedSelectorsDictionary
-> = string extends keyof DerivedSelectors
+  ExtraSelectors extends SelectorsDictionary
+> = string extends keyof ExtraSelectors
   ? Feature<Record<string, any>, FeatureName, FeatureState>
   : Omit<
       Feature<Record<string, any>, FeatureName, FeatureState>,
-      keyof DerivedSelectors
+      keyof ExtraSelectors
     > &
-      DerivedSelectors;
+      ExtraSelectors;
 
 type BaseSelectors<
   AppState extends Record<string, any>,
@@ -39,18 +39,18 @@ type BaseSelectors<
 > = FeatureSelector<AppState, FeatureName, FeatureState> &
   NestedSelectors<AppState, FeatureState>;
 
-type DerivedSelectorsDictionary = Record<
+type SelectorsDictionary = Record<
   string,
   Selector<Record<string, any>, unknown>
 >;
 
-type DerivedSelectorsFactory<
+type ExtraSelectorsFactory<
   FeatureName extends string,
   FeatureState,
-  DerivedSelectors extends DerivedSelectorsDictionary
+  ExtraSelectors extends SelectorsDictionary
 > = (
   baseSelectors: BaseSelectors<Record<string, any>, FeatureName, FeatureState>
-) => DerivedSelectors;
+) => ExtraSelectors;
 
 type NotAllowedFeatureStateCheck<FeatureState> =
   FeatureState extends Required<FeatureState>
@@ -58,27 +58,27 @@ type NotAllowedFeatureStateCheck<FeatureState> =
     : 'optional properties are not allowed in the feature state';
 
 /**
- * Creates a feature object with derived selectors.
+ * Creates a feature object with extra selectors.
  *
  * @param featureConfig An object that contains a feature name, a feature
- * reducer, and derived selectors factory.
+ * reducer, and extra selectors factory.
  * @returns An object that contains a feature name, a feature reducer,
  * a feature selector, a selector for each feature state property, and
- * derived selectors.
+ * extra selectors.
  */
 export function createFeature<
   FeatureName extends string,
   FeatureState,
-  DerivedSelectors extends DerivedSelectorsDictionary
+  ExtraSelectors extends SelectorsDictionary
 >(
   featureConfig: FeatureConfig<FeatureName, FeatureState> & {
-    derivedSelectors: DerivedSelectorsFactory<
+    extraSelectors: ExtraSelectorsFactory<
       FeatureName,
       FeatureState,
-      DerivedSelectors
+      ExtraSelectors
     >;
   } & NotAllowedFeatureStateCheck<FeatureState>
-): FeatureWithDerivedSelectors<FeatureName, FeatureState, DerivedSelectors>;
+): FeatureWithExtraSelectors<FeatureName, FeatureState, ExtraSelectors>;
 /**
  * Creates a feature object.
  *
@@ -99,13 +99,13 @@ export function createFeature<
  * @description
  * A function that accepts a feature name and a feature reducer, and creates
  * a feature selector and a selector for each feature state property.
- * This function also provides the ability to add derived selectors to
+ * This function also provides the ability to add extra selectors to
  * the feature object.
  *
  * @param featureConfig An object that contains a feature name and a feature
- * reducer as required, and derived selectors factory as an optional argument.
+ * reducer as required, and extra selectors factory as an optional argument.
  * @returns An object that contains a feature name, a feature reducer,
- * a feature selector, a selector for each feature state property, and derived
+ * a feature selector, a selector for each feature state property, and extra
  * selectors.
  *
  * @usageNotes
@@ -161,7 +161,7 @@ export function createFeature<
  * } = productsFeature;
  * ```
  *
- * **Creating Feature with Derived Selectors**
+ * **Creating Feature with Extra Selectors**
  *
  * ```ts
  * type CallState = 'init' | 'loading' | 'loaded' | { error: string };
@@ -178,7 +178,7 @@ export function createFeature<
  * export const productsFeature = createFeature({
  *   name: 'products',
  *   reducer: createReducer(initialState),
- *   derivedSelectors: ({ selectProductsState, selectCallState }) => ({
+ *   extraSelectors: ({ selectProductsState, selectCallState }) => ({
  *     ...adapter.getSelectors(selectBooksState),
  *     ...getCallStateSelectors(selectCallState)
  *   }),
@@ -193,10 +193,10 @@ export function createFeature<
  *   selectIds,
  *   selectEntities,
  *   selectCallState,
- *   // derived selectors returned by `adapter.getSelectors`
+ *   // selectors returned by `adapter.getSelectors`
  *   selectAll,
  *   selectTotal,
- *   // derived selectors returned by `getCallStateSelectors`
+ *   // selectors returned by `getCallStateSelectors`
  *   selectIsLoading,
  *   selectIsLoaded,
  *   selectError,
@@ -207,23 +207,20 @@ export function createFeature<
   AppState extends Record<string, any>,
   FeatureName extends keyof AppState & string,
   FeatureState extends AppState[FeatureName],
-  DerivedSelectors extends Record<
-    string,
-    Selector<Record<string, any>, unknown>
-  >
+  ExtraSelectors extends SelectorsDictionary
 >(
   featureConfig: FeatureConfig<FeatureName, FeatureState> & {
-    derivedSelectors?: DerivedSelectorsFactory<
+    extraSelectors?: ExtraSelectorsFactory<
       FeatureName,
       FeatureState,
-      DerivedSelectors
+      ExtraSelectors
     >;
   }
-): Feature<AppState, FeatureName, FeatureState> & DerivedSelectors {
+): Feature<AppState, FeatureName, FeatureState> & ExtraSelectors {
   const {
     name,
     reducer,
-    derivedSelectors: derivedSelectorsFactory,
+    extraSelectors: extraSelectorsFactory,
   } = featureConfig;
 
   const featureSelector = createFeatureSelector<FeatureState>(name);
@@ -232,16 +229,16 @@ export function createFeature<
     [`select${capitalize(name)}State`]: featureSelector,
     ...nestedSelectors,
   } as BaseSelectors<Record<string, any>, FeatureName, FeatureState>;
-  const derivedSelectors = derivedSelectorsFactory
-    ? derivedSelectorsFactory(baseSelectors)
+  const extraSelectors = extraSelectorsFactory
+    ? extraSelectorsFactory(baseSelectors)
     : {};
 
   return {
     name,
     reducer,
     ...baseSelectors,
-    ...derivedSelectors,
-  } as Feature<AppState, FeatureName, FeatureState> & DerivedSelectors;
+    ...extraSelectors,
+  } as Feature<AppState, FeatureName, FeatureState> & ExtraSelectors;
 }
 
 function createNestedSelectors<

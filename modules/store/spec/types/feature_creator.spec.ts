@@ -398,7 +398,7 @@ describe('createFeature()', () => {
     });
   });
 
-  describe('derived selectors', () => {
+  describe('extra selectors', () => {
     it('should create a feature', () => {
       const snippet = expectSnippet(`
         const increment = createAction('increment');
@@ -416,7 +416,7 @@ describe('createFeature()', () => {
             initialState,
             on(increment, (state) => ({ count: state.count + 1 }))
           ),
-          derivedSelectors: ({ selectCounterState, selectCount }) => ({
+          extraSelectors: ({ selectCounterState, selectCount }) => ({
             selectCounterState2: createSelector(
               selectCounterState,
               (state) => state
@@ -470,7 +470,7 @@ describe('createFeature()', () => {
         const counterFeature = createFeature({
           name: 'counter',
           reducer: counterReducer,
-          derivedSelectors: ({ selectCounterState, selectCount }) => ({
+          extraSelectors: ({ selectCounterState, selectCount }) => ({
             selectSquaredCount: createSelector(
               selectCounterState,
               selectCount,
@@ -509,12 +509,12 @@ describe('createFeature()', () => {
       );
     });
 
-    it('should override base selectors if derived selectors have the same names', () => {
+    it('should override base selectors if extra selectors have the same names', () => {
       const snippet = expectSnippet(`
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer({ count1: 0, count2: 0 }),
-          derivedSelectors: ({ selectCounterState, selectCount1, selectCount2 }) => ({
+          extraSelectors: ({ selectCounterState, selectCount1, selectCount2 }) => ({
             selectCounterState: createSelector(
               selectCount1,
               selectCount2,
@@ -556,14 +556,14 @@ describe('createFeature()', () => {
       );
     });
 
-    it('should not break the feature object when derived selector names are not string literals', () => {
+    it('should not break the feature object when extra selector names are not string literals', () => {
       const snippet = expectSnippet(`
         const untypedSelectors: Record<string, Selector<Record<string, any>, unknown>> = {};
 
         const counterFeature1 = createFeature({
           name: 'counter1',
           reducer: createReducer(0),
-          derivedSelectors: ({ selectCounter1State }) => ({
+          extraSelectors: ({ selectCounter1State }) => ({
             ['selectInvalid' as string]: createSelector(
               selectCounter1State,
               (count) => count
@@ -579,7 +579,7 @@ describe('createFeature()', () => {
         const counterFeature2 = createFeature({
           name: 'counter2',
           reducer: createReducer(0),
-          derivedSelectors: () => untypedSelectors,
+          extraSelectors: () => untypedSelectors,
         });
 
         const { selectCounter1State } = counterFeature1;
@@ -607,12 +607,12 @@ describe('createFeature()', () => {
       );
     });
 
-    it('should not break the feature object when derived selectors are an empty object', () => {
+    it('should not break the feature object when extra selectors are an empty object', () => {
       const snippet = expectSnippet(`
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer(0),
-          derivedSelectors: () => ({}),
+          extraSelectors: () => ({}),
         });
 
         const { selectCounterState } = counterFeature;
@@ -629,15 +629,15 @@ describe('createFeature()', () => {
       );
     });
 
-    it('should create a feature when derived selectors dictionary is typed as a type', () => {
+    it('should create a feature when extra selectors dictionary is typed as a type', () => {
       const snippet = expectSnippet(`
-        type DerivedSelectors = {
+        type ExtraSelectors = {
           selectCountStr: Selector<Record<string, any>, string>;
         }
 
-        function getDerivedSelectors(
+        function getExtraSelectors(
           selectCount: Selector<Record<string, any>, number>
-        ): DerivedSelectors {
+        ): ExtraSelectors {
           return {
             selectCountStr: createSelector(
               selectCount,
@@ -649,8 +649,8 @@ describe('createFeature()', () => {
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer(0),
-          derivedSelectors: ({ selectCounterState }) =>
-            getDerivedSelectors(selectCounterState),
+          extraSelectors: ({ selectCounterState }) =>
+            getExtraSelectors(selectCounterState),
         });
 
         const { selectCountStr } = counterFeature;
@@ -669,15 +669,15 @@ describe('createFeature()', () => {
 
     // This is known behavior.
     // Record<string, Selector> is not compatible with interface of selectors.
-    it('should fail when derived selectors dictionary is typed as an interface', () => {
+    it('should fail when extra selectors dictionary is typed as an interface', () => {
       expectSnippet(`
-        interface DerivedSelectors {
+        interface ExtraSelectors {
           selectSquaredCount: Selector<Record<string, any>, number>;
         }
 
-        function getDerivedSelectors(
+        function getExtraSelectors(
           selectCount: Selector<Record<string, any>, number>
-        ): DerivedSelectors {
+        ): ExtraSelectors {
           return {
             selectSquaredCount: createSelector(
               selectCount,
@@ -689,20 +689,20 @@ describe('createFeature()', () => {
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer(0),
-          derivedSelectors: ({ selectCounterState }) =>
-            getDerivedSelectors(selectCounterState),
+          extraSelectors: ({ selectCounterState }) =>
+            getExtraSelectors(selectCounterState),
         });
       `).toFail(
-        /Index signature for type 'string' is missing in type 'DerivedSelectors'./
+        /Index signature for type 'string' is missing in type 'ExtraSelectors'./
       );
     });
 
-    it('should fail when derived selectors result is not a dictionary of selectors', () => {
+    it('should fail when extra selectors result is not a dictionary of selectors', () => {
       expectSnippet(`
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer(0),
-          derivedSelectors: ({ selectCounterState }) => ({
+          extraSelectors: ({ selectCounterState }) => ({
             selectSquaredCount: createSelector(
               selectCounterState,
               (count) => count * count
@@ -716,7 +716,7 @@ describe('createFeature()', () => {
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer(0),
-          derivedSelectors: () => 'ngrx',
+          extraSelectors: () => 'ngrx',
         });
       `).toFail();
     });
@@ -726,7 +726,7 @@ describe('createFeature()', () => {
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer({} as { count?: number; }),
-          derivedSelectors: () => ({}),
+          extraSelectors: () => ({}),
         });
       `).toFail();
 
@@ -739,7 +739,7 @@ describe('createFeature()', () => {
         const counterFeature = createFeature({
           name: 'counter',
           reducer: createReducer(initialState),
-          derivedSelectors: () => ({}),
+          extraSelectors: () => ({}),
         });
       `).toFail();
     });
