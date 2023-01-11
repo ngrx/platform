@@ -74,12 +74,6 @@ The following example more extensively utilizes the key concepts of store to man
 <code-example header="src/app/app.component.ts" path="store-walkthrough/src/app/app.component.ts">
 </code-example>
 
-13. Update tsconfig.json and remove (to fix Type 'null' is not assignable to type):
-
-```
-"strictTemplates": true
-```
-
 And that's it! Click the add and remove buttons to change the state.
 
 Let's cover what you did:
