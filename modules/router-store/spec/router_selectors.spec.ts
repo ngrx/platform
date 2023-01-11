@@ -1,5 +1,5 @@
 import {
-  getSelectors,
+  getRouterSelectors,
   RouterReducerState,
   DEFAULT_ROUTER_FEATURENAME,
   createRouterSelector,
@@ -135,7 +135,7 @@ describe('Router State Selectors', () => {
         router: mockData,
       };
 
-      selectors = getSelectors();
+      selectors = getRouterSelectors();
     });
 
     it('should create selectCurrentRoute selector for selecting the current route', () => {
@@ -148,7 +148,7 @@ describe('Router State Selectors', () => {
       const stateOverwrite = {
         anotherRouterKey: mockData,
       };
-      const selectorOverwrite = getSelectors(
+      const selectorOverwrite = getRouterSelectors(
         (state: typeof stateOverwrite) => state.anotherRouterKey
       );
 
@@ -162,7 +162,7 @@ describe('Router State Selectors', () => {
       const stateOverwrite = {
         [DEFAULT_ROUTER_FEATURENAME]: mockData,
       };
-      const selectorOverwrite = getSelectors(createRouterSelector());
+      const selectorOverwrite = getRouterSelectors(createRouterSelector());
 
       const result = selectorOverwrite.selectCurrentRoute(stateOverwrite);
       expect(result).toEqual(
@@ -178,7 +178,7 @@ describe('Router State Selectors', () => {
       const state: State = {
         router: undefined,
       };
-      selectors = getSelectors((state: State) => state.router);
+      selectors = getRouterSelectors((state: State) => state.router);
 
       const result = selectors.selectCurrentRoute(state);
 
