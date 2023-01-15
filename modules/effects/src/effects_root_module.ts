@@ -2,7 +2,7 @@ import { NgModule, Inject, Optional } from '@angular/core';
 import { Store, StoreRootModule, StoreFeatureModule } from '@ngrx/store';
 import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
-import { _ROOT_EFFECTS_GUARD, ROOT_EFFECTS_INSTANCES } from './tokens';
+import { _ROOT_EFFECTS_GUARD, _ROOT_EFFECTS_INSTANCES } from './tokens';
 import { ROOT_EFFECTS_INIT } from './effects_actions';
 
 @NgModule({})
@@ -11,7 +11,7 @@ export class EffectsRootModule {
     private sources: EffectSources,
     runner: EffectsRunner,
     store: Store,
-    @Inject(ROOT_EFFECTS_INSTANCES) rootEffectsInstances: unknown[],
+    @Inject(_ROOT_EFFECTS_INSTANCES) rootEffectsInstances: unknown[],
     @Optional() storeRootModule: StoreRootModule,
     @Optional() storeFeatureModule: StoreFeatureModule,
     @Optional()

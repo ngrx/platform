@@ -14,14 +14,14 @@ export const USER_PROVIDED_EFFECTS = new InjectionToken<Type<unknown>[][]>(
 export const _ROOT_EFFECTS = new InjectionToken<
   [Array<Type<unknown> | Record<string, FunctionalEffect>>]
 >('@ngrx/effects Internal Root Effects');
-export const ROOT_EFFECTS_INSTANCES = new InjectionToken<unknown[]>(
-  '@ngrx/effects Root Effects Instances'
+export const _ROOT_EFFECTS_INSTANCES = new InjectionToken<unknown[]>(
+  '@ngrx/effects Internal Root Effects Instances'
 );
 export const _FEATURE_EFFECTS = new InjectionToken<
   Array<Type<unknown> | Record<string, FunctionalEffect>>[]
 >('@ngrx/effects Internal Feature Effects');
-export const FEATURE_EFFECTS_INSTANCE_GROUPS = new InjectionToken<unknown[][]>(
-  '@ngrx/effects Feature Effects Instance Groups'
+export const _FEATURE_EFFECTS_INSTANCE_GROUPS = new InjectionToken<unknown[][]>(
+  '@ngrx/effects Internal Feature Effects Instance Groups'
 );
 export const EFFECTS_ERROR_HANDLER = new InjectionToken<EffectsErrorHandler>(
   '@ngrx/effects Effects Error Handler',

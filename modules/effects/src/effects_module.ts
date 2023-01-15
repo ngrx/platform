@@ -6,8 +6,8 @@ import {
   _FEATURE_EFFECTS,
   _ROOT_EFFECTS,
   _ROOT_EFFECTS_GUARD,
-  FEATURE_EFFECTS_INSTANCE_GROUPS,
-  ROOT_EFFECTS_INSTANCES,
+  _FEATURE_EFFECTS_INSTANCE_GROUPS,
+  _ROOT_EFFECTS_INSTANCES,
   USER_PROVIDED_EFFECTS,
 } from './tokens';
 import { FunctionalEffect } from './models';
@@ -43,7 +43,7 @@ export class EffectsModule {
           useValue: [],
         },
         {
-          provide: FEATURE_EFFECTS_INSTANCE_GROUPS,
+          provide: _FEATURE_EFFECTS_INSTANCE_GROUPS,
           multi: true,
           useFactory: createEffectsInstances,
           deps: [_FEATURE_EFFECTS, USER_PROVIDED_EFFECTS],
@@ -83,7 +83,7 @@ export class EffectsModule {
           useValue: [],
         },
         {
-          provide: ROOT_EFFECTS_INSTANCES,
+          provide: _ROOT_EFFECTS_INSTANCES,
           useFactory: createEffectsInstances,
           deps: [_ROOT_EFFECTS, USER_PROVIDED_EFFECTS],
         },

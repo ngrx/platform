@@ -12,7 +12,7 @@ import { map, withLatestFrom } from 'rxjs/operators';
 import { Actions, EffectsModule, ofType, createEffect } from '../';
 import { EffectsFeatureModule } from '../src/effects_feature_module';
 import { EffectsRootModule } from '../src/effects_root_module';
-import { FEATURE_EFFECTS_INSTANCE_GROUPS } from '../src/tokens';
+import { _FEATURE_EFFECTS_INSTANCE_GROUPS } from '../src/tokens';
 
 describe('Effects Feature Module', () => {
   describe('when registered', () => {
@@ -33,7 +33,7 @@ describe('Effects Feature Module', () => {
             },
           },
           {
-            provide: FEATURE_EFFECTS_INSTANCE_GROUPS,
+            provide: _FEATURE_EFFECTS_INSTANCE_GROUPS,
             useValue: effectSourceGroups,
           },
           EffectsFeatureModule,
