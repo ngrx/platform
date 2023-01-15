@@ -105,7 +105,7 @@ describe('createFeature()', () => {
   });
 
   describe('extra selectors', () => {
-    it('should create a feature', () => {
+    it('should create extra selectors', () => {
       const initialState = { count1: 9, count2: 10 };
       const counterFeature = createFeature({
         name: 'counter',

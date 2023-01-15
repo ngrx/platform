@@ -399,7 +399,7 @@ describe('createFeature()', () => {
   });
 
   describe('extra selectors', () => {
-    it('should create a feature', () => {
+    it('should create extra selectors', () => {
       const snippet = expectSnippet(`
         const increment = createAction('increment');
 
@@ -463,7 +463,7 @@ describe('createFeature()', () => {
       );
     });
 
-    it('should create a feature when reducer is created outside', () => {
+    it('should create extra selectors when reducer is created outside', () => {
       const snippet = expectSnippet(`
         const counterReducer = createReducer({ count: 0 });
 
