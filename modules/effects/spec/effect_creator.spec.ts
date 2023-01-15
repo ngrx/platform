@@ -12,7 +12,7 @@ describe('createEffect()', () => {
     const effect = createEffect(() => of({ type: 'a' }));
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ dispatch: true })
+      expect.objectContaining({ dispatch: true })
     );
   });
 
@@ -22,7 +22,7 @@ describe('createEffect()', () => {
     });
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ dispatch: true })
+      expect.objectContaining({ dispatch: true })
     );
   });
 
@@ -32,7 +32,7 @@ describe('createEffect()', () => {
     });
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ dispatch: false })
+      expect.objectContaining({ dispatch: false })
     );
   });
 
@@ -42,7 +42,7 @@ describe('createEffect()', () => {
     });
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ dispatch: false })
+      expect.objectContaining({ dispatch: false })
     );
   });
 
@@ -52,7 +52,7 @@ describe('createEffect()', () => {
 
     expect(effect).toBe(obs$);
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ functional: false })
+      expect.objectContaining({ functional: false })
     );
   });
 
@@ -62,7 +62,7 @@ describe('createEffect()', () => {
 
     expect(effect).toBe(obs$);
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ functional: false })
+      expect.objectContaining({ functional: false })
     );
   });
 
@@ -72,7 +72,7 @@ describe('createEffect()', () => {
 
     expect(effect).toBe(source);
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ functional: true })
+      expect.objectContaining({ functional: true })
     );
   });
 
@@ -93,7 +93,7 @@ describe('createEffect()', () => {
     const effect = createEffect(() => of({ type: 'a' }));
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ useEffectsErrorHandler: true })
+      expect.objectContaining({ useEffectsErrorHandler: true })
     );
   });
 
@@ -103,7 +103,7 @@ describe('createEffect()', () => {
     });
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ useEffectsErrorHandler: true })
+      expect.objectContaining({ useEffectsErrorHandler: true })
     );
   });
 
@@ -113,7 +113,7 @@ describe('createEffect()', () => {
     });
 
     expect(effect['__@ngrx/effects_create__']).toEqual(
-      jasmine.objectContaining({ useEffectsErrorHandler: false })
+      expect.objectContaining({ useEffectsErrorHandler: false })
     );
   });
 
