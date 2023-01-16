@@ -54,4 +54,5 @@ export interface QueryParams {
 export interface HttpOptions {
   httpParams?: HttpParamsOptions;
   httpHeaders?: string | { [p: string]: string | string[] };
+  [key: string]: any;
 }

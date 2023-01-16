@@ -106,19 +106,19 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
     queryParams: QueryParams | string | undefined,
     options?: HttpOptions
   ): Observable<T[]> {
-    let fromQueryParams;
-    if (queryParams) {
-      fromQueryParams =
-        typeof queryParams === 'string'
-          ? { fromString: queryParams }
-          : { fromObject: queryParams };
-    }
-    const mergedOptions: HttpOptions = {
-      httpHeaders: options?.httpHeaders,
-      httpParams: options?.httpParams ? options.httpParams : fromQueryParams,
-    };
+    const qParams =
+      typeof queryParams === 'string'
+        ? { fromString: queryParams }
+        : { fromObject: queryParams };
+    const params = new HttpParams(qParams);
 
-    return this.execute('GET', this.entitiesUrl, undefined, mergedOptions);
+    return this.execute(
+      'GET',
+      this.entitiesUrl,
+      undefined,
+      { params },
+      options
+    );
   }
 
   update(update: Update<T>, options?: HttpOptions): Observable<T> {
@@ -141,13 +141,40 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
     method: HttpMethods,
     url: string,
     data?: any, // data, error, or undefined/null
-    httpOptions?: HttpOptions
+    options?: any, // options or undefined/null
+    httpOptions?: HttpOptions // these override any options passed via options
   ): Observable<any> {
+    let ngHttpClientOptions: any = undefined;
+    if (httpOptions) {
+      ngHttpClientOptions = {
+        headers: httpOptions?.httpHeaders
+          ? new HttpHeaders(httpOptions?.httpHeaders)
+          : undefined,
+        params: httpOptions?.httpParams
+          ? new HttpParams(httpOptions?.httpParams)
+          : undefined,
+      };
+    }
+
+    // If any options have been specified, pass them to http client. Note
+    // the new http options, if specified, will override any options passed
+    // from the deprecated options parameter
+    let mergedOptions: any = undefined;
+    if (options || ngHttpClientOptions) {
+      mergedOptions = {};
+      if (ngHttpClientOptions?.headers) {
+        mergedOptions.headers = ngHttpClientOptions?.headers;
+      }
+      if (ngHttpClientOptions?.params || options?.params) {
+        mergedOptions.params = ngHttpClientOptions?.params ?? options?.params;
+      }
+    }
+
     const req: RequestData = {
       method,
       url,
       data,
-      options: httpOptions?.httpParams,
+      options: mergedOptions,
     };
 
     if (data instanceof Error) {
@@ -156,36 +183,23 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
 
     let result$: Observable<ArrayBuffer>;
 
-    let options: any = {
-      headers: httpOptions?.httpHeaders
-        ? new HttpHeaders(httpOptions?.httpHeaders)
-        : undefined,
-      params: httpOptions?.httpParams
-        ? new HttpParams(httpOptions?.httpParams)
-        : undefined,
-    };
-
-    if (options?.headers === undefined && options?.params === undefined) {
-      options = undefined;
-    }
-
     switch (method) {
       case 'DELETE': {
-        result$ = this.http.delete(url, options);
+        result$ = this.http.delete(url, ngHttpClientOptions);
         if (this.saveDelay) {
           result$ = result$.pipe(delay(this.saveDelay));
         }
         break;
       }
       case 'GET': {
-        result$ = this.http.get(url, options);
+        result$ = this.http.get(url, mergedOptions);
         if (this.getDelay) {
           result$ = result$.pipe(delay(this.getDelay));
         }
         break;
       }
       case 'POST': {
-        result$ = this.http.post(url, data, options);
+        result$ = this.http.post(url, data, ngHttpClientOptions);
         if (this.saveDelay) {
           result$ = result$.pipe(delay(this.saveDelay));
         }
@@ -193,7 +207,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       }
       // N.B.: It must return an Update<T>
       case 'PUT': {
-        result$ = this.http.put(url, data, options);
+        result$ = this.http.put(url, data, ngHttpClientOptions);
         if (this.saveDelay) {
           result$ = result$.pipe(delay(this.saveDelay));
         }
