@@ -1,3 +1,12 @@
+<a name="14.3.3"></a>
+
+## [14.3.3](https://github.com/ngrx/platform/compare/14.3.2...14.3.3) (2023-01-16)
+
+### Bug Fixes
+
+- **component-store:** revert throwError usages with factory for RxJs 6 compatibility ([3d31996](https://github.com/ngrx/platform/commit/3d31996))
+- **data:** revert throwError usages with factory for RxJs 6 compatibility ([a987c61](https://github.com/ngrx/platform/commit/a987c61))
+
 <a name="14.3.2"></a>
 
 ## [14.3.2](https://github.com/ngrx/platform/compare/14.3.1...14.3.2) (2022-10-04)
@@ -281,14 +290,14 @@ AFTER:
 BEFORE:
 
 ```ts
-createSelector<Story[], Story[], Story[][]>
+createSelector<Story[], Story[], Story[][]>;
 ```
 
 AFTER:
 
 ```ts
 //        needs to be a tuple 👇
-createSelector<Story[], [ Story[] ] , Story[][]>
+createSelector<Story[], [Story[]], Story[][]>;
 ```
 
 - **data:** Now both the `getWithQuery` and `getAll` methods are consistent and do set `loaded` property to true on dispatching their success actions respectively.
