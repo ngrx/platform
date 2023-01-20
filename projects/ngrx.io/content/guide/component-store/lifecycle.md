@@ -16,7 +16,7 @@ Currently, Angular provides initializer tokens in a few areas. The `APP_INITIALI
 
 ## OnStoreInit
 
-The `OnStoreInit` interface is used the implement the `ngrxOnStoreInit` method in the ComponentStore class. This lifecycle method is called immediately after the ComponentStore class is instantiated.
+The `OnStoreInit` interface is used to implement the `ngrxOnStoreInit` method in the ComponentStore class. This lifecycle method is called immediately after the ComponentStore class is instantiated.
 
 <code-example header="books.store.ts">
 export interface BooksState {
@@ -54,7 +54,7 @@ export class BooksPageComponent {
 
 ## OnStateInit
 
-The `OnStateInit` interface is used the implement the `ngrxOnStateInit` method in the ComponentStore class. This lifecycle method is called **only once** after the ComponentStore state is initially set. ComponentStore supports eager and lazy initialization of state, and the lifecycle hook is called appropriately in either scenario.
+The `OnStateInit` interface is used to implement the `ngrxOnStateInit` method in the ComponentStore class. This lifecycle method is called **only once** after the ComponentStore state is initially set. ComponentStore supports eager and lazy initialization of state, and the lifecycle hook is called appropriately in either scenario.
 
 ### Eager State Init
 

@@ -13,7 +13,13 @@ export function createRouterSelector<
   return createFeatureSelector(DEFAULT_ROUTER_FEATURENAME);
 }
 
-export function getSelectors<V extends Record<string, any>>(
+/**
+ * @deprecated This function is deprecated in favor of `getRouterSelectors`.
+ * For more info see: https://github.com/ngrx/platform/issues/3738
+ */
+export const getSelectors = getRouterSelectors;
+
+export function getRouterSelectors<V extends Record<string, any>>(
   selectState: (state: V) => RouterReducerState<any> = createRouterSelector<V>()
 ): RouterStateSelectors<V> {
   const selectRouterState = createSelector(

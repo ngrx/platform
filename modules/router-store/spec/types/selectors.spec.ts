@@ -4,16 +4,16 @@ import { compilerOptions } from './utils';
 describe('router selectors', () => {
   const expectSnippet = expecter(
     (code) => `
-      import * as fromRouter from '@ngrx/router-store';
+      import { getRouterSelectors, RouterReducerState } from '@ngrx/router-store';
       import { createSelector, createFeatureSelector } from '@ngrx/store';
 
       export interface State {
-        router: fromRouter.RouterReducerState<any>;
+        router: RouterReducerState<any>;
       }
 
       export const selectRouter = createFeatureSelector<
         State,
-        fromRouter.RouterReducerState<any>
+        RouterReducerState<any>
       >('router');
 
       export const {
@@ -25,7 +25,7 @@ describe('router selectors', () => {
         selectRouteData,
         selectUrl,
         selectTitle,
-      } = fromRouter.getSelectors(selectRouter);
+      } = getRouterSelectors(selectRouter);
 
       ${code}
     `,
