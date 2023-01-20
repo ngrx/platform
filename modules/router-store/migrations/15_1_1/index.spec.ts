@@ -128,16 +128,23 @@ describe('Router Store Migration 15_1_1', () => {
     it(`does not rename getSelectors if not imported from router-store`, waitForAsync(async () => {
       const input = `
         import { getSelectors } from '@ngrx/something';
-        export const {
-          selectCurrentRoute,
-          selectQueryParams,
-          selectQueryParam,
-          selectRouteParams,
-          selectRouteParam,
-          selectRouteData,
-          selectUrl,
-          selectTitle,
-        } = getSelectors(selectRouter);
+        export const { selectCurrentRoute } = getSelectors(selectRouter);
+      `;
+
+      appTree.create('./selector.ts', input);
+      const runner = new SchematicTestRunner('schematics', collectionPath);
+
+      const newTree = await runner
+        .runSchematicAsync(`ngrx-${pkgName}-migration-05`, {}, appTree)
+        .toPromise();
+      const file = newTree.readContent('selector.ts');
+
+      expect(file).toBe(input);
+    }));
+    it(`does not rename other methods on namespace import`, waitForAsync(async () => {
+      const input = `
+        import * as routerStore from '@ngrx/router-store';
+        const root = routerStore.forRoot();
       `;
 
       appTree.create('./selector.ts', input);
