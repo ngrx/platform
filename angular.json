@@ -183,12 +183,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/data-example-app/src/environments/environment.ts",
-                  "with": "projects/data-example-app/src/environments/environment.prod.ts"
-                }
-              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -553,12 +547,6 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "fileReplacements": [
-                {
-                  "replace": "projects/example-app/src/environments/environment.ts",
-                  "with": "projects/example-app/src/environments/environment.prod.ts"
-                }
-              ],
               "outputHashing": "all"
             },
             "development": {
@@ -845,12 +833,6 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "projects/standalone-app/src/environments/environment.ts",
-                  "with": "projects/standalone-app/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"

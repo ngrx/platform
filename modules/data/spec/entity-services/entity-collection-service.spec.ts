@@ -152,6 +152,23 @@ describe('EntityCollectionService', () => {
       dataService.setErrorResponse('getAll', error);
       heroCollectionService.load().subscribe(expectErrorToBe(error, done));
     });
+
+    it('loadWithQuery observable should emit heroes on success', (done: any) => {
+      const hero1 = { id: 1, name: 'A' } as Hero;
+      const hero2 = { id: 2, name: 'B' } as Hero;
+      const heroes = [hero1, hero2];
+      dataService.setResponse('getWithQuery', heroes);
+      heroCollectionService.loadWithQuery({name: 'foo'}).subscribe(expectDataToBe(heroes, done));
+    });
+
+    it('loadWithQuery observable should emit expected error when data service fails', (done: any) => {
+      const httpError = { error: new Error('Test Failure'), status: 501 };
+      const error = makeDataServiceError('GET', httpError);
+      dataService.setErrorResponse('getWithQuery', error);
+      heroCollectionService
+        .loadWithQuery({name: 'foo'})
+        .subscribe(expectErrorToBe(error, done));
+    });
   });
 
   describe('cancel', () => {

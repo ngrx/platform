@@ -91,3 +91,23 @@ An easy way to handle the response in ComponentStore effects in a safe way, with
     );
   });
 </code-example>
+
+## Calling an `effect` without parameters
+
+A common use case is to call the `effect` method without any parameters. 
+To make this possible set the generic type of the `effect` method to `void`.
+
+<code-example header="movies.store.ts">
+  readonly getAllMovies = this.effect&lt;void&gt;(
+    // The name of the source stream doesn't matter: `trigger$`, `source$` or `$` are good 
+    // names. We encourage to choose one of these and them consistently in your codebase.
+    trigger$ => trigger$.pipe(
+      exhaustMap(() => this.moviesService.fetchAllMovies().pipe(
+        tapResponse(
+          movies => this.addAllMovies(movies),
+          (error) => this.logError(error),
+        )
+      )
+    )
+  ));
+</code-example>
