@@ -76,8 +76,8 @@ jobs:
   test:
     <<: *run_in_browser
     steps:
-      - browser-tools/install-browser-tools
       - checkout
+      - browser-tools/install-browser-tools
       - run: |
           node --version
           google-chrome --version
