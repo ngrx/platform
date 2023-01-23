@@ -87,6 +87,14 @@ export function createFeature<
  * @returns An object that contains a feature name, a feature reducer,
  * a feature selector, and a selector for each feature state property.
  */
+export function createFeature<FeatureName extends string, FeatureState>(
+  featureConfig: FeatureConfig<FeatureName, FeatureState> &
+    NotAllowedFeatureStateCheck<FeatureState>
+): Feature<Record<string, any>, FeatureName, FeatureState>;
+/**
+ * @deprecated Use the `createFeature` signature without root state instead.
+ * For more info see: https://github.com/ngrx/platform/issues/3737
+ */
 export function createFeature<
   AppState extends Record<string, any>,
   FeatureName extends keyof AppState & string = keyof AppState & string,
@@ -110,13 +118,7 @@ export function createFeature<
  *
  * @usageNotes
  *
- * **With Application State**
- *
  * ```ts
- * interface AppState {
- *   products: ProductsState;
- * }
- *
  * interface ProductsState {
  *   products: Product[];
  *   selectedId: string | null;
@@ -127,8 +129,7 @@ export function createFeature<
  *   selectedId: null,
  * };
  *
- * // AppState is passed as a generic argument
- * const productsFeature = createFeature<AppState>({
+ * const productsFeature = createFeature({
  *   name: 'products',
  *   reducer: createReducer(
  *     initialState,
@@ -140,24 +141,13 @@ export function createFeature<
  * });
  *
  * const {
- *   selectProductsState, // type: MemoizedSelector<AppState, ProductsState>
- *   selectProducts, // type: MemoizedSelector<AppState, Product[]>
- *   selectSelectedId, // type: MemoizedSelector<AppState, string | null>
- * } = productsFeature;
- * ```
- *
- * **Without Application State**
- *
- * ```ts
- * const productsFeature = createFeature({
- *   name: 'products',
- *   reducer: createReducer(initialState),
- * });
- *
- * const {
+ *   name,
+ *   reducer,
+ *   // feature selector
  *   selectProductsState, // type: MemoizedSelector<Record<string, any>, ProductsState>
+ *   // feature state properties selectors
  *   selectProducts, // type: MemoizedSelector<Record<string, any>, Product[]>
- *   selectSelectedId, // type: MemoizedSelector<Record<string, any, string | null>
+ *   selectSelectedId, // type: MemoizedSelector<Record<string, any>, string | null>
  * } = productsFeature;
  * ```
  *
