@@ -6,27 +6,32 @@ import {
   _FEATURE_EFFECTS,
   _ROOT_EFFECTS,
   _ROOT_EFFECTS_GUARD,
-  FEATURE_EFFECTS,
-  ROOT_EFFECTS,
+  _FEATURE_EFFECTS_INSTANCE_GROUPS,
+  _ROOT_EFFECTS_INSTANCES,
   USER_PROVIDED_EFFECTS,
 } from './tokens';
+import { FunctionalEffect } from './models';
+import { getClasses, isClass } from './utils';
 
 @NgModule({})
 export class EffectsModule {
   static forFeature(
-    featureEffects: Type<unknown>[]
+    featureEffects: Array<Type<unknown> | Record<string, FunctionalEffect>>
   ): ModuleWithProviders<EffectsFeatureModule>;
   static forFeature(
-    ...featureEffects: Type<unknown>[]
+    ...featureEffects: Array<Type<unknown> | Record<string, FunctionalEffect>>
   ): ModuleWithProviders<EffectsFeatureModule>;
   static forFeature(
-    ...featureEffects: Type<unknown>[] | Type<unknown>[][]
+    ...featureEffects:
+      | Array<Type<unknown> | Record<string, FunctionalEffect>>
+      | [Array<Type<unknown> | Record<string, FunctionalEffect>>]
   ): ModuleWithProviders<EffectsFeatureModule> {
     const effects = featureEffects.flat();
+    const effectsClasses = getClasses(effects);
     return {
       ngModule: EffectsFeatureModule,
       providers: [
-        effects,
+        effectsClasses,
         {
           provide: _FEATURE_EFFECTS,
           multi: true,
@@ -38,9 +43,9 @@ export class EffectsModule {
           useValue: [],
         },
         {
-          provide: FEATURE_EFFECTS,
+          provide: _FEATURE_EFFECTS_INSTANCE_GROUPS,
           multi: true,
-          useFactory: createEffects,
+          useFactory: createEffectsInstances,
           deps: [_FEATURE_EFFECTS, USER_PROVIDED_EFFECTS],
         },
       ],
@@ -48,19 +53,22 @@ export class EffectsModule {
   }
 
   static forRoot(
-    rootEffects: Type<unknown>[]
+    rootEffects: Array<Type<unknown> | Record<string, FunctionalEffect>>
   ): ModuleWithProviders<EffectsRootModule>;
   static forRoot(
-    ...rootEffects: Type<unknown>[]
+    ...rootEffects: Array<Type<unknown> | Record<string, FunctionalEffect>>
   ): ModuleWithProviders<EffectsRootModule>;
   static forRoot(
-    ...rootEffects: Type<unknown>[] | Type<unknown>[][]
+    ...rootEffects:
+      | Array<Type<unknown> | Record<string, FunctionalEffect>>
+      | [Array<Type<unknown> | Record<string, FunctionalEffect>>]
   ): ModuleWithProviders<EffectsRootModule> {
     const effects = rootEffects.flat();
+    const effectsClasses = getClasses(effects);
     return {
       ngModule: EffectsRootModule,
       providers: [
-        effects,
+        effectsClasses,
         {
           provide: _ROOT_EFFECTS,
           useValue: [effects],
@@ -75,8 +83,8 @@ export class EffectsModule {
           useValue: [],
         },
         {
-          provide: ROOT_EFFECTS,
-          useFactory: createEffects,
+          provide: _ROOT_EFFECTS_INSTANCES,
+          useFactory: createEffectsInstances,
           deps: [_ROOT_EFFECTS, USER_PROVIDED_EFFECTS],
         },
       ],
@@ -84,25 +92,25 @@ export class EffectsModule {
   }
 }
 
-function createEffects(
-  effectGroups: Type<unknown>[][],
-  userProvidedEffectGroups: Type<unknown>[][]
+function createEffectsInstances(
+  effectsGroups: Array<Type<unknown> | Record<string, FunctionalEffect>>[],
+  userProvidedEffectsGroups: Type<unknown>[][]
 ): unknown[] {
-  const mergedEffects: Type<unknown>[] = [];
+  const effects: Array<Type<unknown> | Record<string, FunctionalEffect>> = [];
 
-  for (const effectGroup of effectGroups) {
-    mergedEffects.push(...effectGroup);
+  for (const effectsGroup of effectsGroups) {
+    effects.push(...effectsGroup);
   }
 
-  for (const userProvidedEffectGroup of userProvidedEffectGroups) {
-    mergedEffects.push(...userProvidedEffectGroup);
+  for (const userProvidedEffectsGroup of userProvidedEffectsGroups) {
+    effects.push(...userProvidedEffectsGroup);
   }
 
-  return createEffectInstances(mergedEffects);
-}
-
-function createEffectInstances(effects: Type<unknown>[]): unknown[] {
-  return effects.map((effect) => inject(effect));
+  return effects.map((effectsClassOrRecord) =>
+    isClass(effectsClassOrRecord)
+      ? inject(effectsClassOrRecord)
+      : effectsClassOrRecord
+  );
 }
 
 function _provideForRootGuard(): unknown {

@@ -18,16 +18,16 @@ import {
 import { EffectsErrorHandler } from './effects_error_handler';
 import { mergeEffects } from './effects_resolver';
 import {
-  onIdentifyEffectsKey,
-  onRunEffectsKey,
-  OnRunEffects,
-  onInitEffects,
   isOnIdentifyEffects,
   isOnRunEffects,
   isOnInitEffects,
 } from './lifecycle_hooks';
 import { EFFECTS_ERROR_HANDLER } from './tokens';
-import { getSourceForInstance, ObservableNotification } from './utils';
+import {
+  getSourceForInstance,
+  isClassInstance,
+  ObservableNotification,
+} from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class EffectSources extends Subject<any> {
@@ -48,7 +48,11 @@ export class EffectSources extends Subject<any> {
    */
   toActions(): Observable<Action> {
     return this.pipe(
-      groupBy(getSourceForInstance),
+      groupBy((effectsInstance) =>
+        isClassInstance(effectsInstance)
+          ? getSourceForInstance(effectsInstance)
+          : effectsInstance
+      ),
       mergeMap((source$) => {
         return source$.pipe(groupBy(effectsInstance));
       }),

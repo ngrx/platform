@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { Action, StoreModule, INIT } from '@ngrx/store';
+import { concat, exhaustMap, map, NEVER, Observable, of, tap } from 'rxjs';
 import {
   EffectsModule,
   OnInitEffects,
@@ -13,8 +14,6 @@ import {
   USER_PROVIDED_EFFECTS,
 } from '..';
 import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
-import { map, exhaustMap, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 describe('NgRx Effects Integration spec', () => {
   it('throws if forRoot() with Effects is used more than once', (done: any) => {
@@ -64,6 +63,54 @@ describe('NgRx Effects Integration spec', () => {
       // success
       done();
     });
+  });
+
+  it('runs provided class and functional effects', () => {
+    const obs$ = concat(of('ngrx'), NEVER);
+    const classEffectRun = jest.fn<void, []>();
+    const functionalEffectRun = jest.fn<void, []>();
+    const classEffect$ = createEffect(() => obs$.pipe(tap(classEffectRun)), {
+      dispatch: false,
+    });
+    const functionalEffect = createEffect(
+      () => obs$.pipe(tap(functionalEffectRun)),
+      {
+        functional: true,
+        dispatch: false,
+      }
+    );
+
+    class ClassEffects1 {
+      classEffect$ = classEffect$;
+    }
+
+    class ClassEffects2 {
+      classEffect$ = classEffect$;
+    }
+
+    const functionalEffects1 = { functionalEffect };
+    const functionalEffects2 = { functionalEffect };
+
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot(),
+        EffectsModule.forRoot(ClassEffects1, functionalEffects1),
+        EffectsModule.forFeature(
+          ClassEffects1,
+          functionalEffects2,
+          ClassEffects2
+        ),
+        EffectsModule.forFeature(
+          functionalEffects1,
+          functionalEffects2,
+          ClassEffects2
+        ),
+      ],
+    });
+    TestBed.inject(EffectSources);
+
+    expect(classEffectRun).toHaveBeenCalledTimes(2);
+    expect(functionalEffectRun).toHaveBeenCalledTimes(2);
   });
 
   describe('actions', () => {
