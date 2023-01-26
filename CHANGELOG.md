@@ -1,3 +1,16 @@
+<a name="15.2.0"></a>
+
+# [15.2.0](https://github.com/ngrx/platform/compare/15.1.0...15.2.0) (2023-01-26)
+
+### Features
+
+- **data:** add loadWithQuery method ([#3717](https://github.com/ngrx/platform/issues/3717)) ([06b97bf](https://github.com/ngrx/platform/commit/06b97bf)), closes [#3088](https://github.com/ngrx/platform/issues/3088)
+- **effects:** add ability to create functional effects ([#3669](https://github.com/ngrx/platform/issues/3669)) ([dd76c63](https://github.com/ngrx/platform/commit/dd76c63)), closes [#3668](https://github.com/ngrx/platform/issues/3668)
+- **router-store:** add migration for getRouterSelectors ([#3753](https://github.com/ngrx/platform/issues/3753)) ([a785331](https://github.com/ngrx/platform/commit/a785331))
+- **router-store:** rename getSelectors to getRouterSelectors ([#3745](https://github.com/ngrx/platform/issues/3745)) ([7ad76b8](https://github.com/ngrx/platform/commit/7ad76b8)), closes [#3738](https://github.com/ngrx/platform/issues/3738)
+- **store:** add ability to create extra selectors with createFeature ([#3744](https://github.com/ngrx/platform/issues/3744)) ([e4f873b](https://github.com/ngrx/platform/commit/e4f873b)), closes [#3719](https://github.com/ngrx/platform/issues/3719)
+- **store:** deprecate createFeature signature with root state ([#3756](https://github.com/ngrx/platform/issues/3756)) ([ccb3b93](https://github.com/ngrx/platform/commit/ccb3b93)), closes [#3737](https://github.com/ngrx/platform/issues/3737)
+
 <a name="15.1.0"></a>
 
 # [15.1.0](https://github.com/ngrx/platform/compare/15.0.0...15.1.0) (2022-12-21)
