@@ -40,13 +40,22 @@ Generate the root effects and register it within the `app.module.ts`
 ng generate @ngrx/schematics:effect App --root --module app.module.ts
 ```
 
-## Default Schematics Collection
+## Adding NgRx schematics to schematicCollections
 
-To use `@ngrx/schematics` as the default collection in your Angular CLI project,
-add it to your `angular.json`:
+To use `@ngrx/schematics` in your Angular CLI project, add it manually to your `angular.json` or with the following command:
 
 ```sh
-ng config cli.defaultCollection @ngrx/schematics
+ng config cli.schematicCollections "[\"@ngrx/schematics\"]"
+```
+
+You should end up with the following result in your `angular.json`:
+
+```json
+{
+  "cli": {
+     "schematicCollections": ["@ngrx/schematics"]
+  }
+}
 ```
 
 The [collection schema](https://github.com/ngrx/platform/tree/master/modules/schematics/collection.json) also has aliases to the most common schematics used to generate files.
