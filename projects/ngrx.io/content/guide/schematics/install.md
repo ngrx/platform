@@ -8,15 +8,9 @@ You can make `@ngrx/schematics` the default collection for your application with
 ng add @ngrx/schematics@latest
 ```
 
-### Optional `ng add` flags
-
-| flag | description | value type | default value |
-| --- | --- | --- | ---
-| `--defaultCollection` | Use @ngrx/schematics as the default collection. | `boolean` | `true`
-
 This command will automate the following steps:
 
-1. Update `angular.json` > `cli > defaultCollection` with `@ngrx/schematics`.
+1. Add `@ngrx/schematics` to `angular.json` > `cli > schematicCollections`. If `schematicCollections` does not exist, it will be created.
 
 ## Installing with `npm`
 
