@@ -1,4 +1,10 @@
-import { createFeature, createReducer, Store, StoreModule } from '@ngrx/store';
+import {
+  createFeature,
+  createReducer,
+  createSelector,
+  Store,
+  StoreModule,
+} from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs/operators';
 
@@ -94,6 +100,104 @@ describe('createFeature()', () => {
         'name',
         'reducer',
         'selectFooState',
+      ]);
+    });
+  });
+
+  describe('extra selectors', () => {
+    it('should create extra selectors', () => {
+      const initialState = { count1: 9, count2: 10 };
+      const counterFeature = createFeature({
+        name: 'counter',
+        reducer: createReducer(initialState),
+        extraSelectors: ({
+          selectCounterState,
+          selectCount1,
+          selectCount2,
+        }) => ({
+          selectSquaredCount2: createSelector(
+            selectCounterState,
+            ({ count2 }) => count2 * count2
+          ),
+          selectTotalCount: createSelector(
+            selectCount1,
+            selectCount2,
+            (count1, count2) => count1 + count2
+          ),
+        }),
+      });
+
+      expect(counterFeature.selectCounterState({ counter: initialState })).toBe(
+        initialState
+      );
+      expect(counterFeature.selectCount1({ counter: initialState })).toBe(
+        initialState.count1
+      );
+      expect(counterFeature.selectCount2({ counter: initialState })).toBe(
+        initialState.count2
+      );
+      expect(
+        counterFeature.selectSquaredCount2({ counter: initialState })
+      ).toBe(initialState.count2 * initialState.count2);
+      expect(counterFeature.selectTotalCount({ counter: initialState })).toBe(
+        initialState.count1 + initialState.count2
+      );
+      expect(Object.keys(counterFeature)).toEqual([
+        'name',
+        'reducer',
+        'selectCounterState',
+        'selectCount1',
+        'selectCount2',
+        'selectSquaredCount2',
+        'selectTotalCount',
+      ]);
+    });
+
+    it('should override base selectors if extra selectors have the same names', () => {
+      const initialState = { count1: 10, count2: 100 };
+      const counterFeature = createFeature({
+        name: 'counter',
+        reducer: createReducer(initialState),
+        extraSelectors: ({
+          selectCounterState,
+          selectCount1,
+          selectCount2,
+        }) => ({
+          selectCounterState: createSelector(
+            selectCounterState,
+            ({ count1, count2 }) => `ngrx-${count1}-${count2}`
+          ),
+          selectCount2: createSelector(
+            selectCount2,
+            (count2) => `ngrx-${count2}`
+          ),
+          selectTotalCount: createSelector(
+            selectCount1,
+            selectCount2,
+            (count1, count2) => count1 + count2
+          ),
+        }),
+      });
+
+      expect(counterFeature.selectCounterState({ counter: initialState })).toBe(
+        `ngrx-${initialState.count1}-${initialState.count2}`
+      );
+      expect(counterFeature.selectCount1({ counter: initialState })).toBe(
+        initialState.count1
+      );
+      expect(counterFeature.selectCount2({ counter: initialState })).toBe(
+        `ngrx-${initialState.count2}`
+      );
+      expect(counterFeature.selectTotalCount({ counter: initialState })).toBe(
+        initialState.count1 + initialState.count2
+      );
+      expect(Object.keys(counterFeature)).toEqual([
+        'name',
+        'reducer',
+        'selectCounterState',
+        'selectCount1',
+        'selectCount2',
+        'selectTotalCount',
       ]);
     });
   });

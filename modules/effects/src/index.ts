@@ -6,7 +6,11 @@ export {
   EffectsErrorHandler,
   defaultEffectsErrorHandler,
 } from './effects_error_handler';
-export { EffectsMetadata, CreateEffectMetadata } from './models';
+export {
+  EffectsMetadata,
+  CreateEffectMetadata,
+  FunctionalEffect,
+} from './models';
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';

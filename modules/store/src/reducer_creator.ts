@@ -111,10 +111,14 @@ export function on<
  * );
  * ```
  */
-export function createReducer<S, A extends Action = Action>(
-  initialState: S,
-  ...ons: ReducerTypes<S, readonly ActionCreator[]>[]
-): ActionReducer<S, A> {
+export function createReducer<
+  S,
+  A extends Action = Action,
+  // Additional generic for the return type is introduced to enable correct
+  // type inference when `createReducer` is used within `createFeature`.
+  // For more info see: https://github.com/microsoft/TypeScript/issues/52114
+  R extends ActionReducer<S, A> = ActionReducer<S, A>
+>(initialState: S, ...ons: ReducerTypes<S, readonly ActionCreator[]>[]): R {
   const map = new Map<string, OnReducer<S, ActionCreator[]>>();
   for (const on of ons) {
     for (const type of on.types) {
@@ -132,5 +136,5 @@ export function createReducer<S, A extends Action = Action>(
   return function (state: S = initialState, action: A): S {
     const reducer = map.get(action.type);
     return reducer ? reducer(state, action) : state;
-  };
+  } as R;
 }

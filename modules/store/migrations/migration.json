@@ -25,6 +25,11 @@
       "description": "The road to v13 RC",
       "version": "13-rc.1",
       "factory": "./13_0_0-rc/index"
+    },
+    "ngrx-store-migration-15-2-0": {
+      "description": "The road to v15.2",
+      "version": "15.2.0",
+      "factory": "./15_2_0/index"
     }
   }
 }

@@ -201,20 +201,60 @@ describe('EffectSources', () => {
         }
       }
 
-      it('should resolve effects from instances', () => {
-        const sources$ = cold('--a--', { a: new SourceA() });
-        const expected = cold('--a--', { a });
+      const recordA = {
+        a: createEffect(() => alwaysOf(a), { functional: true }),
+      };
+      const recordB = {
+        b: createEffect(() => alwaysOf(b), { functional: true }),
+      };
+
+      it('should resolve effects from class instances', () => {
+        const sources$ = cold('--a--b--', {
+          a: new SourceA(),
+          b: new SourceB(),
+        });
+        const expected = cold('--a--b--', { a, b });
 
         const output = toActions(sources$);
 
         expect(output).toBeObservable(expected);
       });
 
-      it('should ignore duplicate sources', () => {
+      it('should resolve effects from records', () => {
+        const sources$ = cold('--a--b--', { a: recordA, b: recordB });
+        const expected = cold('--a--b--', { a, b });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should ignore duplicate class instances', () => {
         const sources$ = cold('--a--a--a--', {
           a: new SourceA(),
         });
         const expected = cold('--a--------', { a });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should ignore different instances of the same class', () => {
+        const sources$ = cold('--a--b--', {
+          a: new SourceA(),
+          b: new SourceA(),
+        });
+        const expected = cold('--a-----', { a });
+
+        const output = toActions(sources$);
+
+        expect(output).toBeObservable(expected);
+      });
+
+      it('should ignore duplicate records', () => {
+        const sources$ = cold('--a--b--', { a: recordA, b: recordA });
+        const expected = cold('--a-----', { a });
 
         const output = toActions(sources$);
 
@@ -264,7 +304,7 @@ describe('EffectSources', () => {
         expect(output).toBeObservable(expected);
       });
 
-      it('should start with an  action after being registered with OnInitEffects', () => {
+      it('should start with an action after being registered with OnInitEffects', () => {
         const sources$ = cold('--a--', {
           a: new SourceWithInitAction(new Subject()),
         });

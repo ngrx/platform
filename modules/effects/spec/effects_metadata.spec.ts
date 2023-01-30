@@ -9,6 +9,7 @@ describe('Effects metadata', () => {
       class Fixture {
         effectSimple = createEffect(() => of({ type: 'a' }));
         effectNoDispatch = createEffect(() => of({ type: 'a' }), {
+          functional: true,
           dispatch: false,
         });
         noEffect: any;
@@ -27,21 +28,25 @@ describe('Effects metadata', () => {
         {
           propertyName: 'effectSimple',
           dispatch: true,
+          functional: false,
           useEffectsErrorHandler: true,
         },
         {
           propertyName: 'effectNoDispatch',
           dispatch: false,
+          functional: true,
           useEffectsErrorHandler: true,
         },
         {
           propertyName: 'effectWithMethod',
           dispatch: true,
+          functional: false,
           useEffectsErrorHandler: true,
         },
         {
           propertyName: 'effectWithUseEffectsErrorHandler',
           dispatch: true,
+          functional: false,
           useEffectsErrorHandler: false,
         },
       ];

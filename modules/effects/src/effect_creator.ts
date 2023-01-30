@@ -1,11 +1,12 @@
 import { Observable } from 'rxjs';
 import { Action, ActionCreator } from '@ngrx/store';
 import {
-  EffectMetadata,
-  EffectConfig,
-  DEFAULT_EFFECT_CONFIG,
-  CreateEffectMetadata,
   CREATE_EFFECT_METADATA_KEY,
+  CreateEffectMetadata,
+  DEFAULT_EFFECT_CONFIG,
+  EffectConfig,
+  EffectMetadata,
+  FunctionalEffect,
 } from './models';
 
 type DispatchType<T> = T extends { dispatch: infer U } ? U : true;
@@ -19,48 +20,100 @@ type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
     : unknown
   : unknown;
 
-/**
- * @description
- * Creates an effect from an `Observable` and an `EffectConfig`.
- *
- * @param source A function which returns an `Observable`.
- * @param config A `Partial<EffectConfig>` to configure the effect.  By default, `dispatch` is true and `useEffectsErrorHandler` is true.
- * @returns If `EffectConfig`#`dispatch` is true, returns `Observable<Action>`.  Else, returns `Observable<unknown>`.
- *
- * @usageNotes
- *
- * ** Mapping to a different action **
- * ```ts
- * effectName$ = createEffect(
- *   () => this.actions$.pipe(
- *     ofType(FeatureActions.actionOne),
- *     map(() => FeatureActions.actionTwo())
- *   )
- * );
- * ```
- *
- *  ** Non-dispatching effects **
- * ```ts
- * effectName$ = createEffect(
- *   () => this.actions$.pipe(
- *     ofType(FeatureActions.actionOne),
- *     tap(() => console.log('Action One Dispatched'))
- *   ),
- *   { dispatch: false }
- *   // FeatureActions.actionOne is not dispatched
- * );
- * ```
- */
 export function createEffect<
-  C extends EffectConfig,
+  C extends EffectConfig & { functional?: false },
   DT extends DispatchType<C>,
   OT extends ObservableType<DT, OT>,
   R extends EffectResult<OT>
 >(
   source: () => R & ConditionallyDisallowActionCreator<DT, R>,
-  config?: Partial<C>
-): R & CreateEffectMetadata {
-  const effect = source();
+  config?: C
+): R & CreateEffectMetadata;
+export function createEffect<Source extends () => Observable<unknown>>(
+  source: Source,
+  config: EffectConfig & { functional: true; dispatch: false }
+): FunctionalEffect<Source>;
+export function createEffect<Source extends () => Observable<Action>>(
+  source: Source & ConditionallyDisallowActionCreator<true, ReturnType<Source>>,
+  config: EffectConfig & { functional: true; dispatch?: true }
+): FunctionalEffect<Source>;
+/**
+ * @description
+ *
+ * Creates an effect from a source and an `EffectConfig`.
+ *
+ * @param source A function which returns an observable or observable factory.
+ * @param config A `EffectConfig` to configure the effect. By default,
+ * `dispatch` is true, `functional` is false, and `useEffectsErrorHandler` is
+ * true.
+ * @returns If `EffectConfig`#`functional` is true, returns the source function.
+ * Else, returns the source function result. When `EffectConfig`#`dispatch` is
+ * true, the source function result needs to be `Observable<Action>`.
+ *
+ * @usageNotes
+ *
+ * ### Class Effects
+ *
+ * ```ts
+ * @Injectable()
+ * export class FeatureEffects {
+ *   // mapping to a different action
+ *   readonly effect1$ = createEffect(
+ *     () => this.actions$.pipe(
+ *       ofType(FeatureActions.actionOne),
+ *       map(() => FeatureActions.actionTwo())
+ *     )
+ *   );
+ *
+ *   // non-dispatching effect
+ *   readonly effect2$ = createEffect(
+ *     () => this.actions$.pipe(
+ *       ofType(FeatureActions.actionTwo),
+ *       tap(() => console.log('Action Two Dispatched'))
+ *     ),
+ *     { dispatch: false } // FeatureActions.actionTwo is not dispatched
+ *   );
+ *
+ *   constructor(private readonly actions$: Actions) {}
+ * }
+ * ```
+ *
+ * ### Functional Effects
+ *
+ * ```ts
+ * // mapping to a different action
+ * export const loadUsers = createEffect(
+ *   (actions$ = inject(Actions), usersService = inject(UsersService)) => {
+ *     return actions$.pipe(
+ *       ofType(UsersPageActions.opened),
+ *       exhaustMap(() => {
+ *         return usersService.getAll().pipe(
+ *           map((users) => UsersApiActions.usersLoadedSuccess({ users })),
+ *           catchError((error) =>
+ *             of(UsersApiActions.usersLoadedFailure({ error }))
+ *           )
+ *         );
+ *       })
+ *     );
+ *   },
+ *   { functional: true }
+ * );
+ *
+ * // non-dispatching functional effect
+ * export const logDispatchedActions = createEffect(
+ *   () => inject(Actions).pipe(tap(console.log)),
+ *   { functional: true, dispatch: false }
+ * );
+ * ```
+ */
+export function createEffect<
+  Result extends EffectResult<unknown>,
+  Source extends () => Result
+>(
+  source: Source,
+  config: EffectConfig = {}
+): (Source | Result) & CreateEffectMetadata {
+  const effect = config.functional ? source : source();
   const value: EffectConfig = {
     ...DEFAULT_EFFECT_CONFIG,
     ...config, // Overrides any defaults if values are provided
