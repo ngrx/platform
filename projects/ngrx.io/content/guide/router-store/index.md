@@ -46,8 +46,7 @@ bootstrapApplication(AppComponent, {
     provideRouter([
       // routes
     ]),
-    provideStore(),
-    provideState({
+    provideStore({
       router: routerReducer,
     }),
     provideRouterStore()
