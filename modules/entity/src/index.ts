@@ -1,12 +1,13 @@
 export { createEntityAdapter } from './create_adapter';
 export {
+  Comparer,
   Dictionary,
-  EntityState,
+  DictionaryNum,
   EntityAdapter,
-  Update,
   EntityMap,
   EntityMapOne,
-  Predicate,
+  EntityState,
   IdSelector,
-  Comparer,
+  Predicate,
+  Update,
 } from './models';

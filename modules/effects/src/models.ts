@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 /**
  * Configures an effect created by `createEffect`.
  */
@@ -8,6 +10,11 @@ export interface EffectConfig {
    */
   dispatch?: boolean;
   /**
+   * Determines whether the functional effect will be created.
+   * If true, the effect can be created outside the effects class.
+   */
+  functional?: boolean;
+  /**
    * Determines if the effect will be resubscribed to if an error occurs in the main actions stream.
    */
   useEffectsErrorHandler?: boolean;
@@ -15,6 +22,7 @@ export interface EffectConfig {
 
 export const DEFAULT_EFFECT_CONFIG: Readonly<Required<EffectConfig>> = {
   dispatch: true,
+  functional: false,
   useEffectsErrorHandler: true,
 };
 
@@ -23,6 +31,14 @@ export const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
 export interface CreateEffectMetadata {
   [CREATE_EFFECT_METADATA_KEY]: EffectConfig;
 }
+
+export interface FunctionalCreateEffectMetadata extends CreateEffectMetadata {
+  [CREATE_EFFECT_METADATA_KEY]: EffectConfig & { functional: true };
+}
+
+export type FunctionalEffect<
+  Source extends () => Observable<unknown> = () => Observable<unknown>
+> = Source & FunctionalCreateEffectMetadata;
 
 export type EffectPropertyKey<T extends Record<keyof T, Object>> = Exclude<
   keyof T,
