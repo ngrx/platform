@@ -36,7 +36,7 @@ Registering the router bindings can also be done using the standalone APIs if yo
 <code-example header="main.ts">
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { provideStore, provideState } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 
 import { AppComponent } from './app.component';
@@ -46,8 +46,7 @@ bootstrapApplication(AppComponent, {
     provideRouter([
       // routes
     ]),
-    provideStore(),
-    provideState({
+    provideStore({
       router: routerReducer,
     }),
     provideRouterStore()
