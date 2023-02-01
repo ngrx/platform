@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Update } from '@ngrx/entity';
-import { HttpParamsOptions } from '@angular/common/http';
 
 /** A service that performs REST-like HTTP data operations for an entity collection */
 export interface EntityCollectionDataService<T> {
@@ -52,7 +51,30 @@ export interface QueryParams {
  * HttpHeaders.
  */
 export interface HttpOptions {
-  httpParams?: HttpParamsOptions;
-  httpHeaders?: string | { [p: string]: string | string[] };
-  [key: string]: any;
+  httpParams?: HttpParams;
+  httpHeaders?: HttpHeaders;
+}
+
+/**
+ * Type that adheres to angular's Http Headers
+ */
+export type HttpHeaders = string | { [p: string]: string | string[] };
+
+/**
+ * Options that partially adheres to angular's HttpParamsOptions. The non-serializable encoder property is omitted.
+ */
+export declare interface HttpParams {
+  /**
+   * String representation of the HTTP parameters in URL-query-string format.
+   * Mutually exclusive with `fromObject`.
+   */
+  fromString?: string;
+  /** Object map of the HTTP parameters. Mutually exclusive with `fromString`. */
+  fromObject?: {
+    [param: string]:
+      | string
+      | number
+      | boolean
+      | ReadonlyArray<string | number | boolean>;
+  };
 }

@@ -111,7 +111,9 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
         ? { fromString: queryParams }
         : { fromObject: queryParams };
     const params = new HttpParams(qParams);
-
+    console.warn(
+      'Warning: options.httpParams will be merged with queryParams when both are are provided to getWithQuery(). In the event of a conflict HttpOptions.httpParams will override queryParams`. The queryParams parameter of getWithQuery() will be removed in next major release.'
+    );
     return this.execute(
       'GET',
       this.entitiesUrl,
