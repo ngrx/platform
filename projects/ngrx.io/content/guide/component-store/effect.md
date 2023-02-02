@@ -100,7 +100,7 @@ To make this possible set the generic type of the `effect` method to `void`.
 <code-example header="movies.store.ts">
   readonly getAllMovies = this.effect&lt;void&gt;(
     // The name of the source stream doesn't matter: `trigger$`, `source$` or `$` are good 
-    // names. We encourage to choose one of these and them consistently in your codebase.
+    // names. We encourage to choose one of these and use them consistently in your codebase.
     trigger$ => trigger$.pipe(
       exhaustMap(() => this.moviesService.fetchAllMovies().pipe(
         tapResponse(
