@@ -124,6 +124,12 @@ describe('createFeature()', () => {
             selectCount2,
             (count1, count2) => count1 + count2
           ),
+          selectCount3: (count: number) =>
+            createSelector(
+              selectCount1,
+              selectCount2,
+              (count1, count2) => count1 + count2 + count
+            ),
         }),
       });
 
@@ -142,6 +148,9 @@ describe('createFeature()', () => {
       expect(counterFeature.selectTotalCount({ counter: initialState })).toBe(
         initialState.count1 + initialState.count2
       );
+      expect(counterFeature.selectCount3(1)({ counter: initialState })).toBe(
+        initialState.count1 + initialState.count2 + 1
+      );
       expect(Object.keys(counterFeature)).toEqual([
         'name',
         'reducer',
@@ -150,6 +159,7 @@ describe('createFeature()', () => {
         'selectCount2',
         'selectSquaredCount2',
         'selectTotalCount',
+        'selectCount3',
       ]);
     });
 

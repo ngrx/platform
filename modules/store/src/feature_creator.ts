@@ -41,7 +41,8 @@ type BaseSelectors<
 
 type SelectorsDictionary = Record<
   string,
-  Selector<Record<string, any>, unknown>
+  | Selector<Record<string, any>, unknown>
+  | ((...args: any[]) => Selector<Record<string, any>, unknown>)
 >;
 
 type ExtraSelectorsFactory<

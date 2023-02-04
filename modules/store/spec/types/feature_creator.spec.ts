@@ -425,6 +425,8 @@ describe('createFeature()', () => {
               selectCount,
               (count) => count + 1
             ),
+            selectCountPlusNum: (num: number) =>
+              createSelector(selectCount, (count) => count + num),
           }),
         });
 
@@ -435,6 +437,7 @@ describe('createFeature()', () => {
           selectCount,
           selectCounterState2,
           selectCountPlus1,
+          selectCountPlusNum,
         } = counterFeature;
         let counterFeatureKeys: keyof typeof counterFeature;
       `);
@@ -458,8 +461,12 @@ describe('createFeature()', () => {
         'MemoizedSelector<Record<string, any>, number, (s1: number) => number>'
       );
       snippet.toInfer(
+        'selectCountPlusNum',
+        '(num: number) => MemoizedSelector<Record<string, any>, number, (s1: number) => number>'
+      );
+      snippet.toInfer(
         'counterFeatureKeys',
-        '"name" | "reducer" | "selectCounterState" | "selectCount" | "selectCounterState2" | "selectCountPlus1"'
+        '"name" | "reducer" | "selectCounterState" | "selectCount" | "selectCounterState2" | "selectCountPlus1" | "selectCountPlusNum"'
       );
     });
 
@@ -633,6 +640,7 @@ describe('createFeature()', () => {
       const snippet = expectSnippet(`
         type ExtraSelectors = {
           selectCountStr: Selector<Record<string, any>, string>;
+          selectCountPlusNum: (num: number) => Selector<Record<string, any>, number>;
         }
 
         function getExtraSelectors(
@@ -643,6 +651,8 @@ describe('createFeature()', () => {
               selectCount,
               (count) => count + ''
             ),
+            selectCountPlusNum: (num: number) =>
+              createSelector(selectCount, (count) => count + num)
           };
         }
 
@@ -653,7 +663,7 @@ describe('createFeature()', () => {
             getExtraSelectors(selectCounterState),
         });
 
-        const { selectCountStr } = counterFeature;
+        const { selectCountStr, selectCountPlusNum } = counterFeature;
         let counterFeatureKeys: keyof typeof counterFeature;
       `);
 
@@ -662,8 +672,12 @@ describe('createFeature()', () => {
         'Selector<Record<string, any>, string>'
       );
       snippet.toInfer(
+        'selectCountPlusNum',
+        '(num: number) => Selector<Record<string, any>, number>'
+      );
+      snippet.toInfer(
         'counterFeatureKeys',
-        '"name" | "reducer" | "selectCounterState" | "selectCountStr"'
+        '"name" | "reducer" | "selectCounterState" | keyof ExtraSelectors'
       );
     });
 
