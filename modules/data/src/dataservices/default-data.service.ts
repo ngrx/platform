@@ -1,7 +1,8 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, isDevMode, Optional } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
 
@@ -15,6 +16,7 @@ import { DefaultDataServiceConfig } from './default-data-service-config';
 import {
   EntityCollectionDataService,
   HttpMethods,
+  HttpOptions,
   QueryParams,
   RequestData,
 } from './interfaces';
@@ -68,67 +70,118 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
     this.timeout = to;
   }
 
-  add(entity: T): Observable<T> {
+  add(entity: T, options?: HttpOptions): Observable<T> {
     const entityOrError =
       entity || new Error(`No "${this.entityName}" entity to add`);
-    return this.execute('POST', this.entityUrl, entityOrError);
+    return this.execute('POST', this.entityUrl, entityOrError, options);
   }
 
-  delete(key: number | string): Observable<number | string> {
+  delete(
+    key: number | string,
+    options?: HttpOptions
+  ): Observable<number | string> {
     let err: Error | undefined;
     if (key == null) {
       err = new Error(`No "${this.entityName}" key to delete`);
     }
-    return this.execute('DELETE', this.entityUrl + key, err).pipe(
+    return this.execute('DELETE', this.entityUrl + key, err, options).pipe(
       // forward the id of deleted entity as the result of the HTTP DELETE
       map((result) => key as number | string)
     );
   }
 
-  getAll(): Observable<T[]> {
-    return this.execute('GET', this.entitiesUrl);
+  getAll(options?: HttpOptions): Observable<T[]> {
+    return this.execute('GET', this.entitiesUrl, options);
   }
 
-  getById(key: number | string): Observable<T> {
+  getById(key: number | string, options?: HttpOptions): Observable<T> {
     let err: Error | undefined;
     if (key == null) {
       err = new Error(`No "${this.entityName}" key to get`);
     }
-    return this.execute('GET', this.entityUrl + key, err);
+    return this.execute('GET', this.entityUrl + key, err, options);
   }
 
-  getWithQuery(queryParams: QueryParams | string): Observable<T[]> {
+  getWithQuery(
+    queryParams: QueryParams | string | undefined,
+    options?: HttpOptions
+  ): Observable<T[]> {
     const qParams =
       typeof queryParams === 'string'
         ? { fromString: queryParams }
         : { fromObject: queryParams };
     const params = new HttpParams(qParams);
-    return this.execute('GET', this.entitiesUrl, undefined, { params });
+
+    return this.execute(
+      'GET',
+      this.entitiesUrl,
+      undefined,
+      { params },
+      options
+    );
   }
 
-  update(update: Update<T>): Observable<T> {
+  update(update: Update<T>, options?: HttpOptions): Observable<T> {
     const id = update && update.id;
     const updateOrError =
       id == null
         ? new Error(`No "${this.entityName}" update data or id`)
         : update.changes;
-    return this.execute('PUT', this.entityUrl + id, updateOrError);
+    return this.execute('PUT', this.entityUrl + id, updateOrError, options);
   }
 
   // Important! Only call if the backend service supports upserts as a POST to the target URL
-  upsert(entity: T): Observable<T> {
+  upsert(entity: T, options?: HttpOptions): Observable<T> {
     const entityOrError =
       entity || new Error(`No "${this.entityName}" entity to upsert`);
-    return this.execute('POST', this.entityUrl, entityOrError);
+    return this.execute('POST', this.entityUrl, entityOrError, options);
   }
 
   protected execute(
     method: HttpMethods,
     url: string,
     data?: any, // data, error, or undefined/null
-    options?: any
+    options?: any, // options or undefined/null
+    httpOptions?: HttpOptions // these override any options passed via options
   ): Observable<any> {
-    const req: RequestData = { method, url, data, options };
+    let ngHttpClientOptions: any = undefined;
+    if (httpOptions) {
+      ngHttpClientOptions = {
+        headers: httpOptions?.httpHeaders
+          ? new HttpHeaders(httpOptions?.httpHeaders)
+          : undefined,
+        params: httpOptions?.httpParams
+          ? new HttpParams(httpOptions?.httpParams)
+          : undefined,
+      };
+    }
+
+    // If any options have been specified, pass them to http client. Note
+    // the new http options, if specified, will override any options passed
+    // from the deprecated options parameter
+    let mergedOptions: any = undefined;
+    if (options || ngHttpClientOptions) {
+      if (isDevMode() && options && ngHttpClientOptions) {
+        console.warn(
+          '@ngrx/data: options.httpParams will be merged with queryParams when both are are provided to getWithQuery(). In the event of a conflict HttpOptions.httpParams will override queryParams`. The queryParams parameter of getWithQuery() will be removed in next major release.'
+        );
+      }
+
+      mergedOptions = {};
+      if (ngHttpClientOptions?.headers) {
+        mergedOptions.headers = ngHttpClientOptions?.headers;
+      }
+      if (ngHttpClientOptions?.params || options?.params) {
+        mergedOptions.params = ngHttpClientOptions?.params ?? options?.params;
+      }
+    }
+
+    const req: RequestData = {
+      method,
+      url,
+      data,
+      options: mergedOptions,
+    };
 
     if (data instanceof Error) {
       return this.handleError(req)(data);
@@ -138,21 +191,21 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
 
     switch (method) {
       case 'DELETE': {
-        result$ = this.http.delete(url, options);
+        result$ = this.http.delete(url, ngHttpClientOptions);
         if (this.saveDelay) {
           result$ = result$.pipe(delay(this.saveDelay));
         }
         break;
       }
       case 'GET': {
-        result$ = this.http.get(url, options);
+        result$ = this.http.get(url, mergedOptions);
         if (this.getDelay) {
           result$ = result$.pipe(delay(this.getDelay));
         }
         break;
       }
       case 'POST': {
-        result$ = this.http.post(url, data, options);
+        result$ = this.http.post(url, data, ngHttpClientOptions);
         if (this.saveDelay) {
           result$ = result$.pipe(delay(this.saveDelay));
         }
@@ -160,7 +213,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
       }
       // N.B.: It must return an Update<T>
       case 'PUT': {
-        result$ = this.http.put(url, data, options);
+        result$ = this.http.put(url, data, ngHttpClientOptions);
         if (this.saveDelay) {
           result$ = result$.pipe(delay(this.saveDelay));
         }

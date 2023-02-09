@@ -18,6 +18,7 @@ import {
   DefaultDataServiceConfig,
   DataServiceError,
 } from '../../';
+import { HttpOptions } from '../../src/dataservices/interfaces';
 
 class Hero {
   id!: number;
@@ -251,6 +252,68 @@ describe('DefaultDataService', () => {
 
     it('should return expected selected heroes w/ string params', (done) => {
       service.getWithQuery('name=B').subscribe((heroes) => {
+        expect(heroes).toEqual(expectedHeroes);
+        done();
+      }, fail);
+
+      // HeroService should have made one request to GET heroes
+      // from expected URL with query params
+      const req = httpTestingController.expectOne(heroesUrl + '?name=B');
+      expect(req.request.method).toEqual('GET');
+
+      // Respond with the mock heroes
+      req.flush(expectedHeroes);
+    });
+
+    it('should return expected selected heroes w/ string params and a custom header', (done) => {
+      const httpOptions: HttpOptions = {
+        httpHeaders: { MyHeader: 'MyHeaderValue' },
+      } as HttpOptions;
+      service.getWithQuery('name=B', httpOptions).subscribe((heroes) => {
+        expect(heroes).toEqual(expectedHeroes);
+        done();
+      }, fail);
+
+      // HeroService should have made one request to GET heroes
+      // from expected URL with query params
+      const req = httpTestingController.expectOne(heroesUrl + '?name=B');
+      expect(req.request.method).toEqual('GET');
+      expect(req.request.headers.has('MyHeader')).toEqual(true);
+      expect(req.request.headers.get('MyHeader')).toEqual('MyHeaderValue');
+
+      // Respond with the mock heroes
+      req.flush(expectedHeroes);
+    });
+
+    it('should return expected selected heroes w/ httpOption string params', (done) => {
+      const httpOptions: HttpOptions = {
+        httpParams: { fromString: 'name=B' },
+      } as HttpOptions;
+
+      service.getWithQuery(undefined, httpOptions).subscribe((heroes) => {
+        expect(heroes).toEqual(expectedHeroes);
+        done();
+      }, fail);
+
+      // HeroService should have made one request to GET heroes
+      // from expected URL with query params
+      const req = httpTestingController.expectOne(heroesUrl + '?name=B');
+      expect(req.request.method).toEqual('GET');
+
+      // Respond with the mock heroes
+      req.flush(expectedHeroes);
+    });
+
+    it('should return expected selected heroes w/ httpOption option params', (done) => {
+      const httpOptions: HttpOptions = {
+        httpParams: {
+          fromObject: {
+            name: 'B',
+          },
+        },
+      } as HttpOptions;
+
+      service.getWithQuery(undefined, httpOptions).subscribe((heroes) => {
         expect(heroes).toEqual(expectedHeroes);
         done();
       }, fail);
