@@ -1,3 +1,15 @@
+<a name="15.3.0"></a>
+
+# [15.3.0](https://github.com/ngrx/platform/compare/15.2.1...15.3.0) (2023-02-13)
+
+### Bug Fixes
+
+- **store:** support using factory selectors as extra selectors ([#3767](https://github.com/ngrx/platform/issues/3767)) ([f4714c3](https://github.com/ngrx/platform/commit/f4714c3))
+
+### Features
+
+- **data:** Add HttpOptions to EntityActionOptions ([#3663](https://github.com/ngrx/platform/issues/3663)) ([#3664](https://github.com/ngrx/platform/issues/3664)) ([dd745c0](https://github.com/ngrx/platform/commit/dd745c0))
+
 <a name="15.2.1"></a>
 
 ## [15.2.1](https://github.com/ngrx/platform/compare/15.1.0...15.2.1) (2023-01-26)
