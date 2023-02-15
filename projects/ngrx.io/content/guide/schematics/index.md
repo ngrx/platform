@@ -58,4 +58,15 @@ You should end up with the following result in your `angular.json`:
 }
 ```
 
+Or, when the Angular schematic is also registered you should end up with following result:
+
+
+```json
+{
+  "cli": {
+     "schematicCollections": ["@schematics/angular", "@ngrx/schematics"],
+  }
+}
+```
+
 The [collection schema](https://github.com/ngrx/platform/tree/master/modules/schematics/collection.json) also has aliases to the most common schematics used to generate files.
