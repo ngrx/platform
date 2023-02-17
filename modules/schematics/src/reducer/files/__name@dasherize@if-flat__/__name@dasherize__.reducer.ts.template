@@ -1,5 +1,6 @@
-import { Action, createReducer, on } from '@ngrx/store';
-<% if(feature) { %>import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+import { Action,<% if(feature) { %> createFeature,<% } %> createReducer, on } from '@ngrx/store';
+import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';
+
 
 export const <%= camelize(name) %>FeatureKey = '<%= camelize(name) %>';
 
@@ -11,11 +12,21 @@ export const initialState: State = {
 
 };
 
-export const reducer = createReducer(
-  initialState,
 <% if(feature) { %>
-  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s, state => state),
-<% if(api) { %>  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sSuccess, (state, action) => state),
-  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure, (state, action) => state),
-<% } %><% } %>
-);
+export const <%= camelize(name) %>Feature = createFeature({
+  name: <%= camelize(name) %>FeatureKey,
+  reducer: <% } else {%>export const reducer = <% } %>createReducer(
+    initialState,
+    on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s, state => state),
+  <% if(api) { %>  on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sSuccess, (state, action) => state),
+    on(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>sFailure, (state, action) => state),
+  <% } %>
+  )<% if(feature) { %>,
+});<% } else {%>;<% } %>
+
+<% if(feature) { %>
+  export const {
+    name,
+    reducer,
+  } = feature;
+<% } %>

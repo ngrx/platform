@@ -111,7 +111,9 @@ describe('Reducer Schematic', () => {
         `${projectPath}/src/app/foo.reducer.ts`
       );
 
-      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
+      expect(fileContent).toMatch(/export const fooFeature = createFeature\(/);
+      expect(fileContent).toMatch(/name: fooFeatureKey,/);
+      expect(fileContent).toMatch(/reducer: createReducer\(/);
       expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
     });
 
@@ -127,7 +129,9 @@ describe('Reducer Schematic', () => {
         `${projectPath}/src/app/foo.reducer.ts`
       );
 
-      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
+      expect(fileContent).toMatch(/export const fooFeature = createFeature\(/);
+      expect(fileContent).toMatch(/name: fooFeatureKey,/);
+      expect(fileContent).toMatch(/reducer: createReducer\(/);
       expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
       expect(fileContent).toMatch(
         /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
