@@ -106,7 +106,7 @@ To show how you handle loading movies from the example above, let's look at `Mov
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, exhaustMap, catchError } from 'rxjs/operators';
 import { MoviesService } from './movies.service';
 
 @Injectable()
@@ -114,7 +114,7 @@ export class MovieEffects {
 
   loadMovies$ = createEffect(() => this.actions$.pipe(
     ofType('[Movies Page] Load Movies'),
-    mergeMap(() => this.moviesService.getAll()
+    exhaustMap(() => this.moviesService.getAll()
       .pipe(
         map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
         catchError(() => EMPTY)
@@ -129,7 +129,7 @@ export class MovieEffects {
 }
 </code-example>
 
-The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `mergeMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. It's also important to [handle errors](#handling-errors) when dealing with observable streams so that the effects continue running.
+The `loadMovies$` effect is listening for all dispatched actions through the `Actions` stream, but is only interested in the `[Movies Page] Load Movies` event using the `ofType` operator. The stream of actions is then flattened and mapped into a new observable using the `exhaustMap` operator. The `MoviesService#getAll()` method returns an observable that maps the movies to a new action on success, and currently returns an empty observable if an error occurs. The action is dispatched to the `Store` where it can be handled by reducers when a state change is needed. It's also important to [handle errors](#handling-errors) when dealing with observable streams so that the effects continue running.
 
 <div class="alert is-important">
 
@@ -139,13 +139,13 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 
 ## Handling Errors
 
-Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
+Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `exhaustMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, exhaustMap, catchError } from 'rxjs/operators';
 import { MoviesService } from './movies.service';
 
 @Injectable()
@@ -154,7 +154,7 @@ export class MovieEffects {
   loadMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
-      mergeMap(() => this.moviesService.getAll()
+      exhaustMap(() => this.moviesService.getAll()
         .pipe(
           map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
           catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
