@@ -139,7 +139,7 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 
 ## Handling Errors
 
-Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `exhaustMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
+Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
 
 <code-example header="movie.effects.ts">
 import { Injectable } from '@angular/core';
