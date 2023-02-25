@@ -25,6 +25,15 @@ const valid: () => RunTests['valid'] = () => [
   `export const select_feature = createSelectorFactory(factoryFn)`,
   `export const select$feature = createSelectorFactory(factoryFn)`,
   `export const selectF01 = createSelector(factoryFn)`,
+  `
+    export const authFeature = createFeature({
+      name: 'auth',
+      reducer: authReducer,
+      extraSelectors: ({selectToken}) => ({
+        selectIsAuthorized: createSelector(selectToken, token => !!token)
+      }),
+    })
+  `,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [

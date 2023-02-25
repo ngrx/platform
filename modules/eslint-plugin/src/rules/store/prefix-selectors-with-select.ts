@@ -34,7 +34,7 @@ export default createRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     return {
-      'VariableDeclarator[id.name!=/^select[^a-z].+$/]:matches([id.typeAnnotation.typeAnnotation.typeName.name=/^MemoizedSelector(WithProps)?$/], :has(CallExpression[callee.name=/^(create(Feature)?Selector|createSelectorFactory)$/]))'({
+      'VariableDeclarator[id.name!=/^select[^a-z].+$/]:not(:has(Identifier[name="createFeature"])):matches([id.typeAnnotation.typeAnnotation.typeName.name=/^MemoizedSelector(WithProps)?$/], :has(CallExpression[callee.name=/^(create(Feature)?Selector|createSelectorFactory)$/]))'({
         id,
       }: TSESTree.VariableDeclarator & { id: TSESTree.Identifier }) {
         const suggestedName = getSuggestedName(id.name);
