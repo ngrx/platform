@@ -128,17 +128,17 @@ describe('Books Component', () => {
 });
 </code-example>
 
-Another option to create the `MockStore` without `TestBed` is by calling the `getMockStore()` function:
+Another option to create the `MockStore` without `TestBed` is by calling the `createMockStore()` function:
 
 <code-example header="books.component.spec.ts">
-import { MockStore, getMockStore } from '@ngrx/store/testing';
+import { MockStore, createMockStore } from '@ngrx/store/testing';
 
 describe('Books Component', () => {
   let store: MockStore;
   const initialState = { books: ['Book 1', 'Book 2', 'Book 3'] };
 
   beforeEach(() => {    
-    store = getMockStore({ initialState });
+    store = createMockStore({ initialState });
   });
 });
 </code-example>

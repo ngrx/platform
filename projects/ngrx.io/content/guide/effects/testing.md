@@ -307,12 +307,12 @@ it('should get customers', () => {
 })
 </code-example>
 
-For an Effect with store interaction, use `getMockStore` to create a new instance of `MockStore`.
+For an Effect with store interaction, use `createMockStore` to create a new instance of `MockStore`.
 
 <code-example header="my.effects.spec.ts">
 it('should get customers', () => {
   // create the store, and provide selectors.
-  const store = getMockStore({
+  const store = createMockStore({
       selectors: [
         { selector: selectCustomers, value: { Bob: { name: 'Bob' } } }
       ]

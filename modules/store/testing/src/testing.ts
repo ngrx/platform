@@ -127,6 +127,14 @@ function mockStoreFactory<T>(
 }
 
 /**
+ * @deprecated This function is deprecated in favor of `createMockStore`.
+ * If you are looking to get an existing mock store, you probably want to use `TestBed.inject(MockStore)` instead.
+ *
+ * For more info see: https://github.com/ngrx/platform/issues/3781
+ */
+export const getMockStore = createMockStore;
+
+/**
  * @description
  * Creates mock store with all necessary dependencies outside of the `TestBed`.
  *
@@ -141,7 +149,7 @@ function mockStoreFactory<T>(
  *   let store: MockStore;
  *
  *   beforeEach(() => {
- *     store = getMockStore({
+ *     store = createMockStore({
  *       initialState: { books: { entities: ['Book 1', 'Book 2', 'Book 3'] } },
  *       selectors: [
  *         { selector: selectAllBooks, value: ['Book 1', 'Book 2'] },
@@ -152,7 +160,7 @@ function mockStoreFactory<T>(
  * });
  * ```
  */
-export function getMockStore<T>(config: MockStoreConfig<T> = {}): MockStore<T> {
+export function createMockStore<T>(config: MockStoreConfig<T> = {}): MockStore<T> {
   const injector = Injector.create({ providers: provideMockStore(config) });
   return injector.get(MockStore);
 }

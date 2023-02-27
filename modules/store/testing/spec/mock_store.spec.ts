@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { skip, take } from 'rxjs/operators';
 import {
-  getMockStore,
+  createMockStore,
   MockReducerManager,
   MockState,
   MockStore,
@@ -410,11 +410,11 @@ describe('Mock Store with Injector', () => {
     });
   });
 
-  describe('getMockStore', () => {
+  describe('createMockStore', () => {
     let mockStore: MockStore<typeof initialState>;
 
     beforeEach(() => {
-      mockStore = getMockStore({ initialState, selectors: [mockSelector] });
+      mockStore = createMockStore({ initialState, selectors: [mockSelector] });
     });
 
     it('should create MockStore', (done: any) => {
