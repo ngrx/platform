@@ -80,7 +80,6 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { Book } from './book.model';
 
 import * as BookListPageActions from './book-list-page.actions';
-import * as BooksApiActions from './books-api.actions';
 
 interface State {
   books: Book[];
