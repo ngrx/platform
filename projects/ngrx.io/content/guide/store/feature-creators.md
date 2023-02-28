@@ -73,6 +73,8 @@ export const selectBookListPageViewModel = createSelector(
 );
 </code-example>
 
+## Providing Extra Selectors
+
 `createFeature` also can be used to provide extra selectors for the feature state with the `extraSelectors` option:
 
 <code-example header="books.feature.ts">
