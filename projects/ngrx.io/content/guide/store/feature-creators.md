@@ -102,7 +102,7 @@ export const booksFeature = createFeature({
       query: action.query,
     })),
   ),
-  extraSelectors: ({selectQuery, selectBooks}) => ({
+  extraSelectors: ({ selectQuery, selectBooks }) => ({
     selectFilteredBooks: createSelector(
       selectQuery,
       selectBooks,
