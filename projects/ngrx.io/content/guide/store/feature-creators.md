@@ -73,6 +73,47 @@ export const selectBookListPageViewModel = createSelector(
 );
 </code-example>
 
+## Providing Extra Selectors
+
+`createFeature` also can be used to provide extra selectors for the feature state with the `extraSelectors` option:
+
+<code-example header="books.feature.ts">
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { Book } from './book.model';
+
+import * as BookListPageActions from './book-list-page.actions';
+
+interface State {
+  books: Book[];
+  query: string;
+}
+
+const initialState: State = {
+  books: [],
+  query: '',
+};
+
+export const booksFeature = createFeature({
+  name: 'books',
+  reducer: createReducer(
+    initialState,
+    on(BookListPageActions.search, (state, action) => ({
+      ...state,
+      query: action.query,
+    })),
+  ),
+  extraSelectors: ({ selectQuery, selectBooks }) => ({
+    selectFilteredBooks: createSelector(
+      selectQuery,
+      selectBooks,
+      (query, books) => books.filter(book => book.title.includes(query)),
+    ),
+  }),
+});
+</code-example>
+
+The `extraSelectors` option accepts a function that takes the generated selectors as input arguments and returns an object of all the extra selectors. We can use it to define as many extra selectors as we need.
+
 ## Feature registration
 
 Registering the feature reducer in the store can be done by passing the entire feature object to the `StoreModule.forFeature` method:
