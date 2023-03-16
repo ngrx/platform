@@ -1,3 +1,17 @@
+<a name="15.4.0"></a>
+
+# [15.4.0](https://github.com/ngrx/platform/compare/15.3.0...15.4.0) (2023-03-16)
+
+### Bug Fixes
+
+- **data:** correctly handle HttpOptions when provided ([#3795](https://github.com/ngrx/platform/issues/3795)) ([cbdf524](https://github.com/ngrx/platform/commit/cbdf524)), closes [#3794](https://github.com/ngrx/platform/issues/3794)
+- **eslint-plugin:** ignore select name within createFeature ([#3788](https://github.com/ngrx/platform/issues/3788)) ([b58f9a3](https://github.com/ngrx/platform/commit/b58f9a3)), closes [#3786](https://github.com/ngrx/platform/issues/3786)
+
+### Features
+
+- **store:** rename getMockStore to createMockStore ([#3789](https://github.com/ngrx/platform/issues/3789)) ([6d615b3](https://github.com/ngrx/platform/commit/6d615b3)), closes [#3781](https://github.com/ngrx/platform/issues/3781)
+- **store:** use createFeature in feature schematics ([#3776](https://github.com/ngrx/platform/issues/3776)) ([9b3647f](https://github.com/ngrx/platform/commit/9b3647f)), closes [#3741](https://github.com/ngrx/platform/issues/3741)
+
 <a name="15.3.0"></a>
 
 # [15.3.0](https://github.com/ngrx/platform/compare/15.2.1...15.3.0) (2023-02-13)
