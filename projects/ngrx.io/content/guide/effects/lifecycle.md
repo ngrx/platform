@@ -106,7 +106,7 @@ import { Observable, throwError } from 'rxjs';
 import { retryWhen, mergeMap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
-import { MovieEffects } from './effects/movie.effects';
+import { MoviesEffects } from './effects/movies.effects';
 import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
 
 export function effectResubscriptionHandler&gt;T extends Action&lt;(
@@ -130,7 +130,7 @@ export function effectResubscriptionHandler&gt;T extends Action&lt;(
 }
 
 @NgModule({
-  imports: [EffectsModule.forRoot([MovieEffects])],
+  imports: [EffectsModule.forRoot([MoviesEffects])],
   providers: [
     {
       provide: EFFECTS_ERROR_HANDLER,
