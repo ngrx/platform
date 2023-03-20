@@ -335,3 +335,37 @@ it('should get customers', () => {
   expect(effects.getByName$).toBeObservable(expected);
 });
 </code-example>
+
+### Functional Effects
+
+Functional effects can be tested like any other function. If we inject all dependencies as effect function arguments, `TestBed` is not required to mock dependencies. Instead, we can pass fake instances as input arguments to the functional effect.
+
+<code-example header="actors.effects.spec.ts">
+import { of } from 'rxjs';
+
+import { loadActors } from './actors.effects';
+import { ActorsService } from './actors.service';
+import { actorsMock } from './actors.mock';
+import { ActorsPageActions } from './actors-page.actions';
+import { ActorsApiActions } from './actors-api.actions';
+
+it('loads actors successfully', (done) => {
+  const actorsServiceMock = {
+    getAll: () => of(actorsMock),
+  } as ActorsService;
+  const actionsMock$ = of(ActorsPageActions.opened());
+
+  loadActors(actionsMock$, actorsServiceMock).subscribe((action) => {
+    expect(action).toEqual(
+      ActorsApiActions.actorsLoadedSuccess({ actors: actorsMock })
+    );
+    done();
+  });
+});
+</code-example>
+
+<div class="alert is-helpful">
+
+You can check the `loadActors` effect implementation [here](guide/effects#functional-effects).
+
+</div>
