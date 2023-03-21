@@ -31,11 +31,11 @@ describe('Effects Migration 9_0_0', () => {
   import { Injectable } from '@angular/core';
   import { Actions, ofType, createEffect } from '@ngrx/effects';
   import { tap } from 'rxjs/operators';
-   
+
   @Injectable()
   export class LogEffects {
     constructor(private actions$: Actions) {}
-    
+
     logActions$ = createEffect(() =>
       this.actions$.pipe(
         tap(action => console.log(action))
@@ -47,11 +47,11 @@ describe('Effects Migration 9_0_0', () => {
   import { Injectable } from '@angular/core';
   import { Actions, ofType, createEffect } from '@ngrx/effects';
   import { tap } from 'rxjs/operators';
-   
+
   @Injectable()
   export class LogEffects {
     constructor(private actions$: Actions) {}
-    
+
     logActions$ = createEffect(() =>
       this.actions$.pipe(
         tap(action => console.log(action))
@@ -67,11 +67,11 @@ describe('Effects Migration 9_0_0', () => {
   import { Injectable } from '@angular/core';
   import { Actions, Effect, ofType } from '@ngrx/effects';
   import { tap } from 'rxjs/operators';
-   
+
   @Injectable()
   export class LogEffects {
     constructor(private actions$: Actions) {}
-    
+
     @Effect({ resubscribeOnError: false })
     logActions$ = this.actions$.pipe(
       tap(action => console.log(action))
@@ -83,11 +83,11 @@ describe('Effects Migration 9_0_0', () => {
   import { Injectable } from '@angular/core';
   import { Actions, Effect, ofType } from '@ngrx/effects';
   import { tap } from 'rxjs/operators';
-   
+
   @Injectable()
   export class LogEffects {
     constructor(private actions$: Actions) {}
-    
+
     @Effect({ useEffectsErrorHandler: false })
     logActions$ = this.actions$.pipe(
       tap(action => console.log(action))
@@ -113,11 +113,11 @@ export const resubscribeOnError = null;
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
- 
+
 @Injectable()
 export class LogEffects {
   constructor(private actions$: Actions) {}
-  
+
   logActions$ = createEffect(() =>
     this.actions$.pipe(
       tap(resubscribeOnError => console.log(resubscribeOnError))
@@ -133,9 +133,11 @@ export class LogEffects {
       appTree.create('./app.module.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-02`,
+        {},
+        appTree
+      );
       const file = newTree.readContent('app.module.ts');
 
       expect(file).toBe(expected);

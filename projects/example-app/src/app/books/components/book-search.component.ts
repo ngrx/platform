@@ -20,9 +20,9 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
           [strokeWidth]="3"
         ></mat-spinner>
       </mat-card-content>
-      <mat-card-footer
-        ><span *ngIf="error">{{ error }}</span></mat-card-footer
-      >
+      <mat-card-footer>
+        <span *ngIf="error">{{ error }}</span>
+      </mat-card-footer>
     </mat-card>
   `,
   styles: [
@@ -34,24 +34,28 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
         justify-content: center;
       }
 
+      mat-card-title {
+        padding: 1rem;
+      }
+
       mat-card-footer {
         color: #ff0000;
         padding: 5px 0;
       }
 
-      .mat-form-field {
+      .mat-mdc-form-field {
         min-width: 300px;
         margin-right: 10px;
       }
 
-      .mat-spinner {
+      .mat-mdc-progress-spinner {
         position: relative;
         top: 10px;
         left: 10px;
         visibility: hidden;
       }
 
-      .mat-spinner.show {
+      .mat-mdc-progress-spinner.show {
         visibility: visible;
       }
     `,

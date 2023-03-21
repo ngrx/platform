@@ -123,9 +123,11 @@ describe('Effects Migration 15_0_0-beta', () => {
 
     appTree.create('main.ts', input);
 
-    const tree = await schematicRunner
-      .runSchematicAsync(`ngrx-effects-migration-15-beta`, {}, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      `ngrx-effects-migration-15-beta`,
+      {},
+      appTree
+    );
 
     const actual = tree.readContent('main.ts');
 

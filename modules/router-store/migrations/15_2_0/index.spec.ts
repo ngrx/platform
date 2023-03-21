@@ -57,9 +57,11 @@ describe('Router Store Migration 15_2_0', () => {
       appTree.create('./selector.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-05`, {}, appTree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-05`,
+        {},
+        appTree
+      );
       const file = newTree.readContent('selector.ts');
 
       expect(file).toBe(expected);
@@ -78,9 +80,11 @@ describe('Router Store Migration 15_2_0', () => {
       appTree.create('./selector.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-05`, {}, appTree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-05`,
+        {},
+        appTree
+      );
       const file = newTree.readContent('selector.ts');
 
       expect(file).toBe(expected);
@@ -117,9 +121,11 @@ describe('Router Store Migration 15_2_0', () => {
       appTree.create('./selector.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-05`, {}, appTree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-05`,
+        {},
+        appTree
+      );
       const file = newTree.readContent('selector.ts');
 
       expect(file).toBe(expected);
@@ -134,9 +140,11 @@ describe('Router Store Migration 15_2_0', () => {
       appTree.create('./selector.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-05`, {}, appTree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-05`,
+        {},
+        appTree
+      );
       const file = newTree.readContent('selector.ts');
 
       expect(file).toBe(input);
@@ -150,9 +158,11 @@ describe('Router Store Migration 15_2_0', () => {
       appTree.create('./selector.ts', input);
       const runner = new SchematicTestRunner('schematics', collectionPath);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-05`, {}, appTree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-05`,
+        {},
+        appTree
+      );
       const file = newTree.readContent('selector.ts');
 
       expect(file).toBe(input);

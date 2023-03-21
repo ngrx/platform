@@ -31,9 +31,11 @@ describe('Reducer Schematic', () => {
   });
 
   it('should create one file', async () => {
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', defaultOptions, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      defaultOptions,
+      appTree
+    );
 
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
@@ -51,9 +53,11 @@ describe('Reducer Schematic', () => {
       name: 'baz',
     });
 
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
@@ -64,9 +68,11 @@ describe('Reducer Schematic', () => {
     const options = {
       ...defaultOptions,
     };
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
 
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.reducer.spec.ts`)
@@ -77,9 +83,11 @@ describe('Reducer Schematic', () => {
   });
 
   it('should create a featureKey', async () => {
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', defaultOptions, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      defaultOptions,
+      appTree
+    );
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.reducer.ts`
     );
@@ -89,9 +97,11 @@ describe('Reducer Schematic', () => {
 
   describe('Ivy', () => {
     it('should create and export a reducer', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync('reducer', defaultOptions, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'reducer',
+        defaultOptions,
+        appTree
+      );
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.reducer.ts`
       );
@@ -100,13 +110,11 @@ describe('Reducer Schematic', () => {
     });
 
     it('should create and export a reducer in a feature', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync(
-          'reducer',
-          { ...defaultOptions, feature: true },
-          appTree
-        )
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'reducer',
+        { ...defaultOptions, feature: true },
+        appTree
+      );
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.reducer.ts`
       );
@@ -118,13 +126,11 @@ describe('Reducer Schematic', () => {
     });
 
     it('should create and export a reducer in an api feature', async () => {
-      const tree = await schematicRunner
-        .runSchematicAsync(
-          'reducer',
-          { ...defaultOptions, feature: true, api: true },
-          appTree
-        )
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'reducer',
+        { ...defaultOptions, feature: true, api: true },
+        appTree
+      );
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.reducer.ts`
       );
@@ -145,9 +151,11 @@ describe('Reducer Schematic', () => {
   it('should import into a specified module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
     const appModule = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
     expect(appModule).toMatch(/import \* as fromFoo from '.\/foo.reducer'/);
@@ -156,9 +164,11 @@ describe('Reducer Schematic', () => {
   it('should import into a specified reducers file', async () => {
     const options = { ...defaultOptions, reducers: `reducers/index.ts` };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
     const reducers = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
@@ -169,9 +179,11 @@ describe('Reducer Schematic', () => {
   it('should add the reducer State to the State interface', async () => {
     const options = { ...defaultOptions, reducers: 'reducers/index.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
     const reducers = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
@@ -182,9 +194,11 @@ describe('Reducer Schematic', () => {
   it('should add the reducer function to the ActionReducerMap', async () => {
     const options = { ...defaultOptions, reducers: 'reducers/index.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
     const reducers = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
@@ -193,16 +207,14 @@ describe('Reducer Schematic', () => {
   });
 
   it('should group within a "reducers" folder if group is set', async () => {
-    const tree = await schematicRunner
-      .runSchematicAsync(
-        'reducer',
-        {
-          ...defaultOptions,
-          group: true,
-        },
-        appTree
-      )
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      {
+        ...defaultOptions,
+        group: true,
+      },
+      appTree
+    );
 
     expect(
       tree.files.indexOf(`${projectPath}/src/app/reducers/foo.reducer.ts`)
@@ -218,9 +230,11 @@ describe('Reducer Schematic', () => {
       feature: true,
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('reducer', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/foo/foo.reducer.ts`)
@@ -236,13 +250,11 @@ describe('Reducer Schematic', () => {
   });
 
   it('should create a reducer with prefix in an api feature', async () => {
-    const tree = await schematicRunner
-      .runSchematicAsync(
-        'reducer',
-        { ...defaultOptions, feature: true, api: true, prefix: 'custom' },
-        appTree
-      )
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      { ...defaultOptions, feature: true, api: true, prefix: 'custom' },
+      appTree
+    );
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.reducer.ts`
     );

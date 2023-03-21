@@ -31,9 +31,7 @@ describe('Store-Devtools ng-add Schematic', () => {
   it('should update package.json', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/store-devtools']).toBeDefined();
@@ -42,9 +40,7 @@ describe('Store-Devtools ng-add Schematic', () => {
   it('should skip package.json update', async () => {
     const options = { ...defaultOptions, skipPackageJson: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/store-devtools']).toBeUndefined();
@@ -53,9 +49,7 @@ describe('Store-Devtools ng-add Schematic', () => {
   it('should be provided by default', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
       /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
@@ -68,9 +62,7 @@ describe('Store-Devtools ng-add Schematic', () => {
   it('should import into a specified module', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
       /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
@@ -80,9 +72,7 @@ describe('Store-Devtools ng-add Schematic', () => {
   it('should import isDevMode correctly', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
       /import { NgModule, isDevMode } from '@angular\/core';/
@@ -93,7 +83,7 @@ describe('Store-Devtools ng-add Schematic', () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync('ng-add', options, appTree);
+      await schematicRunner.runSchematic('ng-add', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -105,7 +95,7 @@ describe('Store-Devtools ng-add Schematic', () => {
 
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync('ng-add', options, appTree);
+      await schematicRunner.runSchematic('ng-add', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -117,7 +107,7 @@ describe('Store-Devtools ng-add Schematic', () => {
 
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync('ng-add', options, appTree);
+      await schematicRunner.runSchematic('ng-add', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -131,9 +121,7 @@ describe('Store-Devtools ng-add Schematic', () => {
       maxAge: 5,
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/maxAge: 5/);
   });

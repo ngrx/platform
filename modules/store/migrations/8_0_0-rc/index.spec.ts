@@ -57,9 +57,7 @@ describe('Migration to version 8.0.0 rc', () => {
         tree.create(reducerPath, input);
 
         const schematicRunner = createSchematicsRunner();
-        await schematicRunner
-          .runSchematicAsync('ngrx-store-migration-03', {}, tree)
-          .toPromise();
+        await schematicRunner.runSchematic('ngrx-store-migration-03', {}, tree);
         await schematicRunner.engine.executePostTasks().toPromise();
 
         const actual = tree.readContent(reducerPath);
@@ -205,9 +203,7 @@ describe('Migration to version 8.0.0 rc', () => {
         tree.create(appModulePath, input);
 
         const schematicRunner = createSchematicsRunner();
-        await schematicRunner
-          .runSchematicAsync('ngrx-store-migration-03', {}, tree)
-          .toPromise();
+        await schematicRunner.runSchematic('ngrx-store-migration-03', {}, tree);
         await schematicRunner.engine.executePostTasks().toPromise();
 
         const actual = tree.readContent(appModulePath);
@@ -253,9 +249,7 @@ describe('Migration to version 8.0.0 rc', () => {
         tree.create(packageJsonPath, input);
 
         const schematicRunner = createSchematicsRunner();
-        await schematicRunner
-          .runSchematicAsync('ngrx-store-migration-03', {}, tree)
-          .toPromise();
+        await schematicRunner.runSchematic('ngrx-store-migration-03', {}, tree);
         await schematicRunner.engine.executePostTasks().toPromise();
 
         const actual = tree.readContent(packageJsonPath);

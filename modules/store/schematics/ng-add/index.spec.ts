@@ -32,9 +32,7 @@ describe('Store ng-add Schematic', () => {
   it('should update package.json', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
 
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
@@ -44,9 +42,7 @@ describe('Store ng-add Schematic', () => {
   it('should skip package.json update', async () => {
     const options = { ...defaultOptions, skipPackageJson: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/store']).toBeUndefined();
@@ -55,9 +51,7 @@ describe('Store ng-add Schematic', () => {
   it('should create the initial store setup', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
@@ -67,9 +61,7 @@ describe('Store ng-add Schematic', () => {
   it('should skip the initial store setup files if the minimal flag is provided', async () => {
     const options = { ...defaultOptions, minimal: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     const files = tree.files;
 
@@ -84,9 +76,7 @@ describe('Store ng-add Schematic', () => {
   it('should import into a specified module', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
@@ -96,9 +86,7 @@ describe('Store ng-add Schematic', () => {
   it('should import isDevMode correctly', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
@@ -109,7 +97,7 @@ describe('Store ng-add Schematic', () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync('ng-add', options, appTree);
+      await schematicRunner.runSchematic('ng-add', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -118,9 +106,7 @@ describe('Store ng-add Schematic', () => {
 
   it('should support a default root state interface name', async () => {
     const options = { ...defaultOptions, name: 'State' };
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
     );
@@ -135,9 +121,7 @@ describe('Store ng-add Schematic', () => {
       stateInterface: 'AppState',
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
 
     const content = tree.readContent(
       `${projectPath}/src/app/reducers/index.ts`
@@ -151,9 +135,7 @@ describe('Store ng-add Schematic', () => {
 
     appTree.create('.eslintrc.json', '{}');
 
-    await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    await schematicRunner.runSchematic('ng-add', options, appTree);
 
     expect(schematicRunner.tasks).toContainEqual({
       name: 'run-schematic',
@@ -168,9 +150,7 @@ describe('Store ng-add Schematic', () => {
   it('ignores the @ngrx/eslint-plugin schematic when skipped', async () => {
     const options = { ...defaultOptions, skipESLintPlugin: true };
 
-    await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    await schematicRunner.runSchematic('ng-add', options, appTree);
 
     expect(schematicRunner.tasks).not.toContainEqual({
       name: 'run-schematic',

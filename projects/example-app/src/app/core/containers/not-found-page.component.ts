@@ -21,6 +21,16 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       :host {
         text-align: center;
       }
+
+      mat-card-title,
+      mat-card-content {
+        margin-top: 1rem;
+      }
+
+      mat-card-actions {
+        justify-content: center;
+        margin-top: 1rem;
+      }
     `,
   ],
 })

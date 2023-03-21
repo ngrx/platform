@@ -37,9 +37,11 @@ describe('Container Schematic', () => {
 
   it('should respect the state option if not provided', async () => {
     const options = { ...defaultOptions, state: undefined };
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
@@ -49,9 +51,11 @@ describe('Container Schematic', () => {
   it('should import the state path if provided', async () => {
     const options = { ...defaultOptions, state: 'reducers' };
     appTree.create(`${projectPath}/src/app/reducers`, '');
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
@@ -61,9 +65,11 @@ describe('Container Schematic', () => {
   it('should remove .ts from the state path if provided', async () => {
     const options = { ...defaultOptions, state: 'reducers/foo.ts' };
     appTree.create(`${projectPath}/src/app/reducers/foo.ts`, '');
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
@@ -73,9 +79,11 @@ describe('Container Schematic', () => {
   it('should remove index.ts from the state path if provided', async () => {
     const options = { ...defaultOptions, state: 'reducers/index.ts' };
     appTree.create(`${projectPath}/src/app/reducers/index.ts`, '');
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
@@ -85,9 +93,11 @@ describe('Container Schematic', () => {
   it('should import Store into the component', async () => {
     const options = { ...defaultOptions, state: 'reducers' };
     appTree.create(`${projectPath}/src/app/reducers`, '');
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
@@ -97,9 +107,11 @@ describe('Container Schematic', () => {
   it('should update the component constructor if the state path if provided', async () => {
     const options = { ...defaultOptions, state: 'reducers' };
     appTree.create(`${projectPath}/src/app/reducers`, '');
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.ts`
     );
@@ -109,9 +121,11 @@ describe('Container Schematic', () => {
 
   it('should update the component spec', async () => {
     const options = { ...defaultOptions, testDepth: 'unit' };
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.spec.ts`
     );
@@ -122,9 +136,11 @@ describe('Container Schematic', () => {
 
   it('should use the provideMockStore helper if unit', async () => {
     const options = { ...defaultOptions, testDepth: 'unit' };
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.spec.ts`
     );
@@ -133,9 +149,11 @@ describe('Container Schematic', () => {
 
   it('should inject Store correctly', async () => {
     const options = { ...defaultOptions };
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.spec.ts`
     );
@@ -144,9 +162,11 @@ describe('Container Schematic', () => {
 
   it('should use StoreModule if integration test', async () => {
     const options = { ...defaultOptions };
-    const tree = await schematicRunner
-      .runSchematicAsync('container', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'container',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.component.spec.ts`
     );
@@ -158,9 +178,11 @@ describe('Container Schematic', () => {
   describe('standalone', () => {
     it('should be disabled by default', async () => {
       const options = { ...defaultOptions, standalone: false };
-      const tree = await schematicRunner
-        .runSchematicAsync('container', options, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'container',
+        options,
+        appTree
+      );
       const content = tree.readContent(
         `${projectPath}/src/app/foo/foo.component.ts`
       );
@@ -169,9 +191,11 @@ describe('Container Schematic', () => {
 
     it('should create a standalone component if true', async () => {
       const options = { ...defaultOptions, standalone: true };
-      const tree = await schematicRunner
-        .runSchematicAsync('container', options, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'container',
+        options,
+        appTree
+      );
       const content = tree.readContent(
         `${projectPath}/src/app/foo/foo.component.ts`
       );
@@ -182,9 +206,11 @@ describe('Container Schematic', () => {
   describe('display-block', () => {
     it('should be disabled by default', async () => {
       const options = { ...defaultOptions, displayBlock: false };
-      const tree = await schematicRunner
-        .runSchematicAsync('container', options, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'container',
+        options,
+        appTree
+      );
       const content = tree.readContent(
         `${projectPath}/src/app/foo/foo.component.css`
       );
@@ -193,9 +219,11 @@ describe('Container Schematic', () => {
 
     it('should create add style if true', async () => {
       const options = { ...defaultOptions, displayBlock: true };
-      const tree = await schematicRunner
-        .runSchematicAsync('container', options, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'container',
+        options,
+        appTree
+      );
       const content = tree.readContent(
         `${projectPath}/src/app/foo/foo.component.css`
       );
