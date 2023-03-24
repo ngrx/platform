@@ -2,9 +2,8 @@
 export default {
   displayName: 'standalone-app',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {},
   coverageDirectory: '../../coverage/projects/standalone-app',
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

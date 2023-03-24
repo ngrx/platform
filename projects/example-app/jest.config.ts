@@ -4,9 +4,8 @@ export default {
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/projects/example-app',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {},
   transform: {
-    '^.+\\.(ts|js|mjs|html)$': [
+    '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -14,9 +13,11 @@ export default {
       },
     ],
   },
-  transformIgnorePatterns: ['node_modules/(?!@angular|tslib)'],
-  moduleNameMapper: {
-    tslib: '<rootDir>../../node_modules/tslib/tslib.es6.js',
-  },
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
+  snapshotSerializers: [
+    'jest-preset-angular/build/serializers/no-ng-attributes',
+    'jest-preset-angular/build/serializers/ng-snapshot',
+    'jest-preset-angular/build/serializers/html-comment',
+  ],
   testRunner: 'jest-circus/runner',
 };
