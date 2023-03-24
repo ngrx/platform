@@ -28,7 +28,7 @@
     "prepare": "husky install"
   },
   "engines": {
-    "node": "^14.20.0 || ^16.13.0 || >=18.10.0",
+    "node": "^16.13.0 || >=18.10.0",
     "yarn": ">=1.22.4 <2",
     "npm": "Please use yarn instead of NPM to install dependencies"
   },
