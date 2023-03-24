@@ -4,7 +4,6 @@ export default {
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/modules/schematics',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
-  testEnvironment: 'node',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
