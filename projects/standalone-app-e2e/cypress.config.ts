@@ -16,5 +16,6 @@ export default defineConfig({
   e2e: {
     ...nxE2EPreset(__dirname),
     ...cypressJsonConfig,
+    testIsolation: false,
   },
 });

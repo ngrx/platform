@@ -243,9 +243,11 @@ describe('Effects Migration 13_0_0', () => {
       const effectPath = '/some.effects.ts';
       appTree.create(effectPath, input);
 
-      const tree = await schematicRunner
-        .runSchematicAsync(`ngrx-effects-migration-03`, {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        `ngrx-effects-migration-03`,
+        {},
+        appTree
+      );
 
       const actual = tree.readContent(effectPath);
 

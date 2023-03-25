@@ -28,6 +28,7 @@ import * as fromBooks from '@example-app/books/reducers';
       mat-card-title {
         display: flex;
         justify-content: center;
+        padding: 1rem;
       }
     `,
   ],

@@ -16,7 +16,7 @@ test('registers the plugin with the recommended config', async () => {
   const initialConfig = {};
   appTree.create('./.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
-  await schematicRunner.runSchematicAsync('ng-add', {}, appTree).toPromise();
+  await schematicRunner.runSchematic('ng-add', {}, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
   const eslintJson = JSON.parse(eslintContent);
@@ -32,9 +32,7 @@ test('registers the plugin with a different config', async () => {
   appTree.create('./.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
   const options = { config: 'strict' };
-  await schematicRunner
-    .runSchematicAsync('ng-add', options, appTree)
-    .toPromise();
+  await schematicRunner.runSchematic('ng-add', options, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
   const eslintJson = JSON.parse(eslintContent);
@@ -81,7 +79,7 @@ test('registers the plugin in overrides when it supports TS', async () => {
   };
   appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
-  await schematicRunner.runSchematicAsync('ng-add', {}, appTree).toPromise();
+  await schematicRunner.runSchematic('ng-add', {}, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
   const eslintJson = JSON.parse(eslintContent);
@@ -126,7 +124,7 @@ test('does not add the plugin if it is already added manually', async () => {
   };
   appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
-  await schematicRunner.runSchematicAsync('ng-add', {}, appTree).toPromise();
+  await schematicRunner.runSchematic('ng-add', {}, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
   const eslintJson = JSON.parse(eslintContent);
@@ -145,7 +143,7 @@ test('does not add the plugin if it is already added manually as an override', a
   };
   appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
-  await schematicRunner.runSchematicAsync('ng-add', {}, appTree).toPromise();
+  await schematicRunner.runSchematic('ng-add', {}, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
   const eslintJson = JSON.parse(eslintContent);

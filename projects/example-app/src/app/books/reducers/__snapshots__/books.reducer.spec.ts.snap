@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BooksReducer LOAD should add a single book, if the book does not exist 1`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -23,7 +23,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
   ],
   "selectedBookId": null,
@@ -31,17 +31,17 @@ Object {
 `;
 
 exports[`BooksReducer LOAD should return the existing state if the book exists 1`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -53,7 +53,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
   ],
   "selectedBookId": null,
@@ -61,17 +61,17 @@ Object {
 `;
 
 exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add all books in the payload when none exist 1`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -82,15 +82,15 @@ Object {
         "title": "title",
       },
     },
-    "222": Object {
+    "222": {
       "id": "222",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -102,7 +102,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
     "222",
   ],
@@ -111,17 +111,17 @@ Object {
 `;
 
 exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add all books in the payload when none exist 2`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -132,15 +132,15 @@ Object {
         "title": "title",
       },
     },
-    "222": Object {
+    "222": {
       "id": "222",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -152,7 +152,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
     "222",
   ],
@@ -161,17 +161,17 @@ Object {
 `;
 
 exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when books already exist 1`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -182,15 +182,15 @@ Object {
         "title": "title",
       },
     },
-    "222": Object {
+    "222": {
       "id": "222",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -201,15 +201,15 @@ Object {
         "title": "title",
       },
     },
-    "333": Object {
+    "333": {
       "id": "333",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -221,7 +221,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
     "222",
     "333",
@@ -231,17 +231,17 @@ Object {
 `;
 
 exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when books already exist 2`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -252,15 +252,15 @@ Object {
         "title": "title",
       },
     },
-    "222": Object {
+    "222": {
       "id": "222",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -271,15 +271,15 @@ Object {
         "title": "title",
       },
     },
-    "333": Object {
+    "333": {
       "id": "333",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -291,7 +291,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
     "222",
     "333",
@@ -301,17 +301,17 @@ Object {
 `;
 
 exports[`BooksReducer SELECT should set the selected book id on the state 1`] = `
-Object {
-  "entities": Object {
-    "1": Object {
+{
+  "entities": {
+    "1": {
       "id": "1",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -322,15 +322,15 @@ Object {
         "title": "title",
       },
     },
-    "222": Object {
+    "222": {
       "id": "222",
-      "volumeInfo": Object {
-        "authors": Array [
+      "volumeInfo": {
+        "authors": [
           "author",
         ],
         "averageRating": 3,
         "description": "description",
-        "imageLinks": Object {
+        "imageLinks": {
           "smallThumbnail": "string",
           "thumbnail": "string",
         },
@@ -342,7 +342,7 @@ Object {
       },
     },
   },
-  "ids": Array [
+  "ids": [
     "1",
     "222",
   ],
@@ -353,9 +353,9 @@ Object {
 exports[`BooksReducer Selectors selectId should return the selected id 1`] = `"1"`;
 
 exports[`BooksReducer undefined action should return the default state 1`] = `
-Object {
-  "entities": Object {},
-  "ids": Array [],
+{
+  "entities": {},
+  "ids": [],
   "selectedBookId": null,
 }
 `;

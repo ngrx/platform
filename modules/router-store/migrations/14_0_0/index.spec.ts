@@ -26,10 +26,8 @@ describe('Router Store Migration 14_0_0', () => {
   });
 
   describe('Rename serializers', () => {
-    it(
-      `should rename the DefaultRouterStateSerializer to FullRouterStateSerializer`,
-      waitForAsync(async () => {
-        const input = `
+    it(`should rename the DefaultRouterStateSerializer to FullRouterStateSerializer`, waitForAsync(async () => {
+      const input = `
       import { DefaultRouterStateSerializer } from '@ngrx/router-store';
 
       const fullSerializer: DefaultRouterStateSerializer;
@@ -45,7 +43,7 @@ describe('Router Store Migration 14_0_0', () => {
       })
       export class AppModule {}
     `;
-        const expected = `
+      const expected = `
       import { FullRouterStateSerializer } from '@ngrx/router-store';
 
       const fullSerializer: FullRouterStateSerializer;
@@ -62,16 +60,17 @@ describe('Router Store Migration 14_0_0', () => {
       export class AppModule {}
     `;
 
-        appTree.create('./app.module.ts', input);
-        const runner = new SchematicTestRunner('schematics', collectionPath);
+      appTree.create('./app.module.ts', input);
+      const runner = new SchematicTestRunner('schematics', collectionPath);
 
-        const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-04`, {}, appTree)
-          .toPromise();
-        const file = newTree.readContent('app.module.ts');
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-04`,
+        {},
+        appTree
+      );
+      const file = newTree.readContent('app.module.ts');
 
-        expect(file).toBe(expected);
-      })
-    );
+      expect(file).toBe(expected);
+    }));
   });
 });

@@ -4,15 +4,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   selector: 'bc-nav-item',
   template: `
     <a mat-list-item [routerLink]="routerLink" (click)="navigate.emit()">
-      <mat-icon mat-list-icon>{{ icon }}</mat-icon>
-      <span mat-line><ng-content></ng-content></span>
-      <span mat-line class="secondary">{{ hint }}</span>
+      <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+      <div matListItemTitle><ng-content></ng-content></div>
+      <div *ngIf="hint" matListItemLine>{{ hint }}</div>
     </a>
   `,
   styles: [
     `
-      .secondary {
-        color: rgba(0, 0, 0, 0.54);
+      a:hover {
+        cursor: pointer;
       }
     `,
   ],

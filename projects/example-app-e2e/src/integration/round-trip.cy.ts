@@ -13,16 +13,16 @@ context('Full round trip', () => {
   });
 
   it('shows a message when the credentials are wrong', () => {
-    cy.findByRole('textbox', { name: /username/i })
+    cy.findByPlaceholderText(/username/i)
       .clear()
       .type('wronguser');
-    cy.findByLabelText(/password/i).type('supersafepassword');
+    cy.findByPlaceholderText(/password/i).type('supersafepassword');
     cy.findByRole('button', { name: /login/i }).click();
     cy.contains('Invalid username or password').should('be.visible');
   });
 
   it('is possible to login', () => {
-    cy.findByRole('textbox', { name: /username/i })
+    cy.findByPlaceholderText(/username/i)
       .clear()
       .type('test{enter}');
   });
@@ -31,9 +31,7 @@ context('Full round trip', () => {
     cy.contains('My Collection');
     cy.findByRole('button', { name: /menu/i }).click();
     cy.findByText(/browse books/i).click();
-    cy.findByRole('textbox', { name: /search for a book/i }).type(
-      'The Alchemist'
-    );
+    cy.findByPlaceholderText(/search for a book/i).type('The Alchemist');
     cy.get('bc-book-preview').its('length').should('be.gte', 1);
   });
 
@@ -68,7 +66,7 @@ context('Full round trip', () => {
     cy.findByRole('button', { name: /menu/i }).click();
     cy.findByText(/sign out/i).click();
     cy.findByRole('button', { name: /ok/i }).click();
-    cy.findByRole('textbox', { name: /username/i }).should('exist');
-    cy.findByLabelText(/password/i).should('exist');
+    cy.findByPlaceholderText(/username/i).should('exist');
+    cy.findByPlaceholderText(/password/i).should('exist');
   });
 });

@@ -44,9 +44,11 @@ const featureSelector7 = createFeatureSelector< fromFeat.State>('feature7');
     appTree.create('./fixture.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-13-beta`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-${pkgName}-migration-13-beta`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('fixture.ts');
 
     expect(file).toBe(expected);

@@ -6,12 +6,11 @@ import {
   MockState,
   MockStore,
   provideMockStore,
-} from '@ngrx/store/testing';
+} from '../index';
 import {
   Store,
   createSelector,
   select,
-  StoreModule,
   MemoizedSelector,
   createFeatureSelector,
   isNgrxMockEnvironment,

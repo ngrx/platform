@@ -31,13 +31,13 @@ import { Credentials } from '@example-app/auth/models';
             </mat-form-field>
           </p>
 
-          <p *ngIf="errorMessage" class="loginError">
+          <p *ngIf="errorMessage" class="login-error">
             {{ errorMessage }}
           </p>
 
-          <p class="loginButtons">
+          <div class="login-buttons">
             <button type="submit" mat-button>Login</button>
-          </p>
+          </div>
         </form>
       </mat-card-content>
     </mat-card>
@@ -47,28 +47,31 @@ import { Credentials } from '@example-app/auth/models';
       :host {
         display: flex;
         justify-content: center;
-        margin: 72px 0;
+        margin: 4.5rem 0;
       }
 
-      .mat-form-field {
+      .mat-mdc-form-field {
         width: 100%;
         min-width: 300px;
       }
 
-      mat-card-title,
+      mat-card-title {
+        text-align: center;
+        margin: 1rem 0;
+      }
+
       mat-card-content {
-        display: flex;
         justify-content: center;
       }
 
-      .loginError {
-        padding: 16px;
+      .login-error {
+        padding: 1rem;
         width: 300px;
         color: white;
         background-color: red;
       }
 
-      .loginButtons {
+      .login-buttons {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;

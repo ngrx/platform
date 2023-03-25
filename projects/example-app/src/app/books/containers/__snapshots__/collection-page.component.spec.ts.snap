@@ -2,15 +2,14 @@
 
 exports[`Collection Page should compile 1`] = `
 <bc-collection-page
-  __ngContext__="0"
   books$={[Function Store]}
   store={[Function MockStore]}
 >
   <mat-card
-    class="mat-card mat-focus-indicator _mat-animation-noopable"
+    class="mat-mdc-card mdc-card"
   >
     <mat-card-title
-      class="mat-card-title"
+      class="mat-mdc-card-title"
     >
       My Collection
     </mat-card-title>

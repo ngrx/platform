@@ -2,7 +2,7 @@ import { expecter } from 'ts-snippet';
 
 export const compilerOptions = () => ({
   moduleResolution: 'node',
-  target: 'es2017',
+  target: 'ES2022',
   baseUrl: '.',
   experimentalDecorators: true,
   strict: true,
