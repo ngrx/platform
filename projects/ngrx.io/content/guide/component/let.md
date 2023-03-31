@@ -5,8 +5,27 @@ The `*ngrxLet` directive serves a convenient way of binding observables to a vie
 
 ## Usage
 
-The `*ngrxLet` directive is provided through the `LetModule`.
-To use it, add the `LetModule` to the `imports` of your standalone component or NgModule:
+The `*ngrxLet` directive is a standalone directive.
+To use it, add the `LetDirective` to the `imports` of your standalone component or NgModule. Alternatively, you can use `LetModule`, however, keep in mind that the `LetModule` is deprecated.
+
+Using the standalone `LetDirective`:
+
+```ts
+import { Component } from '@angular/core';
+import { LetDirective } from '@ngrx/component';
+
+@Component({
+  // ... other metadata
+  standalone: true,
+  imports: [
+    // ... other imports
+    LetDirective,
+  ],
+})
+export class MyStandaloneComponent {}
+```
+
+@deprecated Using `LetModule`:
 
 ```ts
 import { Component } from '@angular/core';

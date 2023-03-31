@@ -6,8 +6,27 @@ running in zone-full as well as zone-less mode without any changes to the code.
 
 ## Usage
 
-The `ngrxPush` pipe is provided through the `PushModule`.
-To use it, add the `PushModule` to the `imports` of your standalone component or NgModule:
+The `ngrxPush` pipe is a standalone Pipe.
+To use it, add the `PushPipe` to the `imports` of your standalone component or NgModule. Alternatively, you can use `PushModule`, however, keep in mind that the `PushModule` is deprecated.
+
+Using the standalone `PushPipe`:
+
+```ts
+import { Component } from '@angular/core';
+import { PushPipe } from '@ngrx/component';
+
+@Component({
+  // ... other metadata
+  standalone: true,
+  imports: [
+    // ... other imports
+    PushPipe,
+  ],
+})
+export class MyStandaloneComponent {}
+```
+
+@deprecated Using the standalone `PushModule`:
 
 ```ts
 import { Component } from '@angular/core';

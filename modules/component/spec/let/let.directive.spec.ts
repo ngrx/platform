@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -39,6 +40,19 @@ import { stripSpaces } from '../helpers';
   `,
 })
 class LetDirectiveTestComponent {
+  value$: unknown;
+}
+
+@Component({
+  standalone: true,
+  template: `
+    <ng-container *ngrxLet="value$ as value">{{
+      value === null ? 'null' : (value | json) || 'undefined'
+    }}</ng-container>
+  `,
+  imports: [LetDirective, JsonPipe],
+})
+class LetDirectiveTestStandaloneComponent {
   value$: unknown;
 }
 
@@ -117,7 +131,8 @@ let componentNativeElement: any;
 
 const setupLetDirectiveTestComponent = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestComponent, LetDirective],
+    declarations: [LetDirectiveTestComponent],
+    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       TemplateRef,
@@ -132,9 +147,27 @@ const setupLetDirectiveTestComponent = (): void => {
   componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
 };
 
+const setupLetDirectiveTestStandaloneComponent = (): void => {
+  TestBed.configureTestingModule({
+    imports: [LetDirectiveTestStandaloneComponent],
+    providers: [
+      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
+      TemplateRef,
+      ViewContainerRef,
+    ],
+  });
+  fixtureLetDirectiveTestComponent = TestBed.createComponent(
+    LetDirectiveTestStandaloneComponent
+  );
+  letDirectiveTestComponent =
+    fixtureLetDirectiveTestComponent.componentInstance;
+  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
+};
+
 const setupLetDirectiveTestComponentError = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestErrorComponent, LetDirective],
+    declarations: [LetDirectiveTestErrorComponent],
+    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
@@ -153,7 +186,8 @@ const setupLetDirectiveTestComponentError = (): void => {
 
 const setupLetDirectiveTestComponentComplete = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestCompleteComponent, LetDirective],
+    declarations: [LetDirectiveTestCompleteComponent],
+    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       TemplateRef,
@@ -171,7 +205,8 @@ const setupLetDirectiveTestComponentComplete = (): void => {
 
 const setupLetDirectiveTestComponentSuspense = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestSuspenseComponent, LetDirective],
+    declarations: [LetDirectiveTestSuspenseComponent],
+    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
@@ -190,7 +225,8 @@ const setupLetDirectiveTestComponentSuspense = (): void => {
 
 const setupLetDirectiveTestComponentSuspenseTpl = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestSuspenseTplComponent, LetDirective],
+    declarations: [LetDirectiveTestSuspenseTplComponent],
+    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
@@ -210,11 +246,8 @@ const setupLetDirectiveTestComponentSuspenseTpl = (): void => {
 const setupLetDirectiveTestRecursionComponent = (): void => {
   const subject = new BehaviorSubject(0);
   TestBed.configureTestingModule({
-    declarations: [
-      LetDirectiveTestRecursionComponent,
-      RecursiveDirective,
-      LetDirective,
-    ],
+    declarations: [LetDirectiveTestRecursionComponent, RecursiveDirective],
+    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       TemplateRef,
@@ -399,6 +432,28 @@ describe('LetDirective', () => {
     });
   });
 
+  describe('when a standalone component is used', () => {
+    beforeEach(waitForAsync(setupLetDirectiveTestStandaloneComponent));
+
+    it('should be instantiable', () => {
+      expect(fixtureLetDirectiveTestComponent).toBeDefined();
+      expect(letDirectiveTestComponent).toBeDefined();
+      expect(componentNativeElement).toBeDefined();
+    });
+
+    it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
+      letDirectiveTestComponent.value$ = undefined;
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('undefined');
+    });
+
+    it('should render initially passed number', () => {
+      letDirectiveTestComponent.value$ = 10;
+      fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('10');
+    });
+  });
+
   describe('when error', () => {
     beforeEach(waitForAsync(setupLetDirectiveTestComponentError));
 
@@ -541,7 +596,8 @@ describe('LetDirective', () => {
       }
 
       TestBed.configureTestingModule({
-        declarations: [LetDirectiveTestComponent, LetDirective],
+        declarations: [LetDirectiveTestComponent],
+        imports: [LetDirective],
         providers: [
           { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
           { provide: ErrorHandler, useClass: MockErrorHandler },

@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, ErrorHandler } from '@angular/core';
 import {
   ComponentFixture,
@@ -17,6 +18,15 @@ let pushPipe: PushPipe;
   template: ` {{ (value$ | ngrxPush | json) || 'undefined' }} `,
 })
 class PushPipeTestComponent {
+  value$: unknown = of(42);
+}
+
+@Component({
+  standalone: true,
+  template: ` {{ (value$ | ngrxPush | json) || 'undefined' }} `,
+  imports: [PushPipe, JsonPipe],
+})
+class PushPipeTestStandaloneComponent {
   value$: unknown = of(42);
 }
 
@@ -163,7 +173,8 @@ describe('PushPipe', () => {
   describe('used as a Pipe', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [PushPipe, PushPipeTestComponent],
+        declarations: [PushPipeTestComponent],
+        imports: [PushPipe],
         providers: [{ provide: ErrorHandler, useClass: MockErrorHandler }],
       });
 
@@ -387,6 +398,48 @@ describe('PushPipe', () => {
         pushPipeTestComponent.value$ = 100;
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('100'));
+      });
+    });
+  });
+
+  describe('used as a Pipe in a standalone component', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [PushPipe, PushPipeTestStandaloneComponent],
+      });
+
+      fixturePushPipeTestComponent = TestBed.createComponent(
+        PushPipeTestStandaloneComponent
+      );
+      pushPipeTestComponent = fixturePushPipeTestComponent.componentInstance;
+      componentNativeElement = fixturePushPipeTestComponent.nativeElement;
+    });
+
+    it('should be instantiable', () => {
+      expect(fixturePushPipeTestComponent).toBeDefined();
+      expect(pushPipeTestComponent).toBeDefined();
+      expect(componentNativeElement).toBeDefined();
+    });
+
+    describe('transform function', () => {
+      it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
+        pushPipeTestComponent.value$ = undefined;
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(
+          wrapWithSpace('undefined')
+        );
+      });
+
+      it('should render null as value when initially null was passed (as no value ever was emitted)', () => {
+        pushPipeTestComponent.value$ = null;
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('null'));
+      });
+
+      it('should render initially passed number', () => {
+        pushPipeTestComponent.value$ = 1000;
+        fixturePushPipeTestComponent.detectChanges();
+        expect(componentNativeElement.textContent).toBe(wrapWithSpace('1000'));
       });
     });
   });
