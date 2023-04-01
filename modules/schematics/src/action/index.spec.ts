@@ -99,9 +99,9 @@ describe('Action Schematic', () => {
 
     expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
     expect(fileContent).toMatch(/\[Foo\] Load Foos Success/);
-    expect(fileContent).toMatch(/props<{ data: any }>\(\)/);
+    expect(fileContent).toMatch(/props<{ data: unknown }>\(\)/);
     expect(fileContent).toMatch(/\[Foo\] Load Foos Failure/);
-    expect(fileContent).toMatch(/props<{ error: any }>\(\)/);
+    expect(fileContent).toMatch(/props<{ error: unknown }>\(\)/);
   });
 
   it.each(['load', 'delete', 'update'])(

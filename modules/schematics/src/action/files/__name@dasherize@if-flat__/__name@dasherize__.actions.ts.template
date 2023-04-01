@@ -6,10 +6,10 @@ export const <%= prefix %><%= classify(name) %>s = createAction(
 
 <% if (api) { %>export const <%= prefix %><%= classify(name) %>sSuccess = createAction(
   '[<%= classify(name) %>] <%= classify(prefix) %> <%= classify(name) %>s Success',
-  props<{ data: any }>()
+  props<{ data: unknown }>()
 );<% } %>
 
 <% if (api) { %>export const <%= prefix %><%= classify(name) %>sFailure = createAction(
   '[<%= classify(name) %>] <%= classify(prefix) %> <%= classify(name) %>s Failure',
-  props<{ error: any }>()
+  props<{ error: unknown }>()
 );<% } %>
