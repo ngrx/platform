@@ -43,6 +43,59 @@ describe('tapResponse', () => {
     expect(completeCallback).toHaveBeenCalledWith();
   });
 
+  it('should invoke finalize callback after next and complete', () => {
+    const executionOrder: number[] = [];
+
+    of('ngrx')
+      .pipe(
+        tapResponse({
+          next: () => executionOrder.push(1),
+          error: () => executionOrder.push(-1),
+          complete: () => executionOrder.push(2),
+          finalize: () => executionOrder.push(3),
+        })
+      )
+      .subscribe();
+
+    expect(executionOrder).toEqual([1, 2, 3]);
+  });
+
+  it('should invoke finalize callback after error', () => {
+    const executionOrder: number[] = [];
+
+    throwError(() => 'error!')
+      .pipe(
+        tapResponse({
+          next: () => executionOrder.push(-1),
+          error: () => executionOrder.push(1),
+          complete: () => executionOrder.push(-1),
+          finalize: () => executionOrder.push(2),
+        })
+      )
+      .subscribe();
+
+    expect(executionOrder).toEqual([1, 2]);
+  });
+
+  it('should invoke finalize callback after error when exception is thrown in next', () => {
+    const executionOrder: number[] = [];
+
+    of('ngrx')
+      .pipe(
+        tapResponse({
+          next: () => {
+            throw new Error('error!');
+          },
+          error: () => executionOrder.push(1),
+          complete: () => executionOrder.push(-1),
+          finalize: () => executionOrder.push(2),
+        })
+      )
+      .subscribe();
+
+    expect(executionOrder).toEqual([1, 2]);
+  });
+
   it('should not unsubscribe from outer observable on inner observable error', () => {
     const innerCompleteCallback = jest.fn<void, []>();
     const outerCompleteCallback = jest.fn<void, []>();
