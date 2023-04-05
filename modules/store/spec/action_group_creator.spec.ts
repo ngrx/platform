@@ -14,16 +14,21 @@ describe('createActionGroup', () => {
     source: 'Books API',
     events: {
       ' Load BOOKS  suCCess  ': emptyProps(),
+      loadBooksFailure: emptyProps(),
     },
   });
 
   it('should create action name by camel casing the event name', () => {
-    expect(booksApiActions.loadBooksSuccess).toBeDefined();
+    expect(booksApiActions.loadBOOKSSuCCess).toBeDefined();
+    expect(booksApiActions.loadBooksFailure).toBeDefined();
   });
 
   it('should create action type using the "[Source] Event" pattern', () => {
-    expect(booksApiActions.loadBooksSuccess().type).toBe(
+    expect(booksApiActions.loadBOOKSSuCCess().type).toBe(
       '[Books API]  Load BOOKS  suCCess  '
+    );
+    expect(booksApiActions.loadBooksFailure().type).toBe(
+      '[Books API] loadBooksFailure'
     );
   });
 

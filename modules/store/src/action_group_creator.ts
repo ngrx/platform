@@ -1,6 +1,6 @@
 import { createAction, props } from './action_creator';
 import { ActionCreatorProps, Creator } from './models';
-import { capitalize } from './helpers';
+import { capitalize, uncapitalize } from './helpers';
 import {
   ActionGroup,
   ActionGroupConfig,
@@ -75,9 +75,8 @@ function toActionName<EventName extends string>(
 ): ActionName<EventName> {
   return eventName
     .trim()
-    .toLowerCase()
     .split(' ')
-    .map((word, i) => (i === 0 ? word : capitalize(word)))
+    .map((word, i) => (i === 0 ? uncapitalize(word) : capitalize(word)))
     .join('') as ActionName<EventName>;
 }
 
