@@ -2,11 +2,11 @@
 
 exports[`Find Book Page should compile 1`] = `
 <bc-find-book-page
-  books$={[Function Store]}
-  error$={[Function Store]}
-  loading$={[Function Store]}
-  searchQuery$={[Function Store]}
-  store={[Function MockStore]}
+  books$={[Function _Store]}
+  error$={[Function _Store]}
+  loading$={[Function _Store]}
+  searchQuery$={[Function _Store]}
+  store={[Function _MockStore]}
 >
   <bc-book-search>
     <mat-card
@@ -68,7 +68,7 @@ exports[`Find Book Page should compile 1`] = `
           class="mat-mdc-progress-spinner mdc-circular-progress mat-primary _mat-animation-noopable mdc-circular-progress--indeterminate"
           mode="indeterminate"
           role="progressbar"
-          style="width: 30px; height: 30px;"
+          style="width: 30px; height: 30px; --mdc-circular-progress-size: 30px; --mdc-circular-progress-active-indicator-width: 30px;"
           tabindex="-1"
         >
           <div
