@@ -103,9 +103,11 @@ export interface ActionGroupConfig<
   Events extends Record<string, ActionCreatorProps<unknown> | Creator>
 > {
   source: Source & StringLiteralCheck<Source, 'source'>;
-  events: {
-    [EventName in keyof Events]: Events[EventName] &
-      EmptyStringCheck<EventName & string, 'event name'> &
+  events: Events & {
+    [EventName in keyof Events]: EmptyStringCheck<
+      EventName & string,
+      'event name'
+    > &
       StringLiteralCheck<EventName & string, 'event name'> &
       ForbiddenCharactersCheck<EventName & string, 'event name'> &
       UniqueEventNameCheck<keyof Events & string, EventName & string> &

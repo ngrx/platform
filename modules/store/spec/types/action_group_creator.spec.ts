@@ -70,6 +70,17 @@ describe('createActionGroup', () => {
       });
     });
 
+    describe('events', () => {
+      it('should infer events defined as an empty object', () => {
+        expectSnippet(`
+          const authApiActions = createActionGroup({
+            source: 'Auth API',
+            events: {},
+          });
+      `).toInfer('authApiActions', 'ActionGroup<"Auth API", {}>');
+      });
+    });
+
     describe('event name', () => {
       it('should create action name by camel casing the event name', () => {
         expectSnippet(`
