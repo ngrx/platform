@@ -2,9 +2,9 @@
 
 exports[`Login Page should compile 1`] = `
 <bc-login-page
-  error$={[Function _Store]}
-  pending$={[Function _Store]}
-  store={[Function _MockStore]}
+  error$={[Function Store]}
+  pending$={[Function Store]}
+  store={[Function MockStore]}
 >
   <bc-login-form>
     <mat-card
