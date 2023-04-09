@@ -71,13 +71,28 @@ describe('createActionGroup', () => {
     });
 
     describe('events', () => {
+      it('should infer events dictionary', () => {
+        expectSnippet(`
+          const authApiActions = createActionGroup({
+            source: 'Auth API',
+            events: {
+              'Login Success': props<{ token: string; }>,
+              'Login Failure': (message: string) => ({ message }),
+            },
+          });
+        `).toInfer(
+          'authApiActions',
+          "ActionGroup<\"Auth API\", { 'Login Success': () => ActionCreatorProps<{ token: string; }>; 'Login Failure': (message: string) => { message: string; }; }>"
+        );
+      });
+
       it('should infer events defined as an empty object', () => {
         expectSnippet(`
           const authApiActions = createActionGroup({
             source: 'Auth API',
             events: {},
           });
-      `).toInfer('authApiActions', 'ActionGroup<"Auth API", {}>');
+        `).toInfer('authApiActions', 'ActionGroup<"Auth API", {}>');
       });
     });
 
