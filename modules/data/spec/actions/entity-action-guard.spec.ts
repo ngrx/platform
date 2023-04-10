@@ -114,6 +114,11 @@ describe('EntityActionGuard', () => {
       action = createAction(1);
       expect(guard.mustBeKey(action)).toBe(1);
     });
+
+    it('should not throw if key is 0', () => {
+      action = createAction(0);
+      expect(guard.mustBeKey(action)).toBe(0);
+    });
   });
 
   describe('mustBeKeys', () => {

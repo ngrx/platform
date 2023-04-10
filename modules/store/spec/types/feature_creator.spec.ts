@@ -71,15 +71,15 @@ describe('createFeature()', () => {
       snippet.toInfer('reducer', 'ActionReducer<State, Action>');
       snippet.toInfer(
         'selectProductsState',
-        'MemoizedSelector<Record<string, any>, State, DefaultProjectorFn<State>>'
+        'MemoizedSelector<Record<string, any>, State, (featureState: State) => State>'
       );
       snippet.toInfer(
         'selectProducts',
-        'MemoizedSelector<Record<string, any>, string[] | null, DefaultProjectorFn<string[] | null>>'
+        'MemoizedSelector<Record<string, any>, string[] | null, (featureState: State) => string[] | null>'
       );
       snippet.toInfer(
         'selectQuery',
-        'MemoizedSelector<Record<string, any>, string, DefaultProjectorFn<string>>'
+        'MemoizedSelector<Record<string, any>, string, (featureState: State) => string>'
       );
       snippet.toInfer(
         'productsFeatureKeys',
@@ -107,11 +107,11 @@ describe('createFeature()', () => {
       snippet.toInfer('reducer', 'ActionReducer<{ count: number; }, Action>');
       snippet.toInfer(
         'selectCounterState',
-        'MemoizedSelector<Record<string, any>, { count: number; }, DefaultProjectorFn<{ count: number; }>>'
+        'MemoizedSelector<Record<string, any>, { count: number; }, (featureState: { count: number; }) => { count: number; }>'
       );
       snippet.toInfer(
         'selectCount',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: { count: number; }) => number>'
       );
     });
 
@@ -265,11 +265,11 @@ describe('createFeature()', () => {
       snippet.toInfer('reducer', 'ActionReducer<State, Action>');
       snippet.toInfer(
         'selectCounterState',
-        'MemoizedSelector<Record<string, any>, State, DefaultProjectorFn<State>>'
+        'MemoizedSelector<Record<string, any>, State, (featureState: State) => State>'
       );
       snippet.toInfer(
         'selectCount',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: State) => number>'
       );
       snippet.toInfer(
         'selectCounterState2',
@@ -319,11 +319,11 @@ describe('createFeature()', () => {
       snippet.toInfer('reducer', 'ActionReducer<{ count: number; }, Action>');
       snippet.toInfer(
         'selectCounterState',
-        'MemoizedSelector<Record<string, any>, { count: number; }, DefaultProjectorFn<{ count: number; }>>'
+        'MemoizedSelector<Record<string, any>, { count: number; }, (featureState: { count: number; }) => { count: number; }>'
       );
       snippet.toInfer(
         'selectCount',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: { count: number; }) => number>'
       );
       snippet.toInfer(
         'selectSquaredCount',
@@ -370,7 +370,7 @@ describe('createFeature()', () => {
       );
       snippet.toInfer(
         'selectCount2',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: { count1: number; count2: number; }) => number>'
       );
       snippet.toInfer(
         'selectCount10',
@@ -417,11 +417,11 @@ describe('createFeature()', () => {
 
       snippet.toInfer(
         'selectCounter1State',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: number) => number>'
       );
       snippet.toInfer(
         'selectCounter2State',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: number) => number>'
       );
       snippet.toInfer(
         'counterFeature1Keys',
@@ -447,7 +447,7 @@ describe('createFeature()', () => {
 
       snippet.toInfer(
         'selectCounterState',
-        'MemoizedSelector<Record<string, any>, number, DefaultProjectorFn<number>>'
+        'MemoizedSelector<Record<string, any>, number, (featureState: number) => number>'
       );
       snippet.toInfer(
         'counterFeatureKeys',

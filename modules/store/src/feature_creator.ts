@@ -158,7 +158,7 @@ export function createFeature<FeatureName extends string, FeatureState>(
  *   name: 'products',
  *   reducer: createReducer(initialState),
  *   extraSelectors: ({ selectProductsState, selectCallState }) => ({
- *     ...adapter.getSelectors(selectBooksState),
+ *     ...adapter.getSelectors(selectProductsState),
  *     ...getCallStateSelectors(selectCallState)
  *   }),
  * });
