@@ -49,7 +49,7 @@ export function concatLatestFrom<
   return concatMap(
     (value) =>
       forkJoin(observablesFactory(value)).pipe(
-        map((others) => [value, ...others])
+        map((others: unknown[]) => [value, ...others])
       ) as Observable<R>
   );
 }
