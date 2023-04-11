@@ -25,5 +25,5 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SidenavComponent {
   @Input() open = false;
-  @Output() closeMenu = new EventEmitter();
+  @Output() closeMenu = new EventEmitter<void>();
 }
