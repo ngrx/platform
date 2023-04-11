@@ -1,4 +1,5 @@
-import { Observable, ObservableInput, ObservedValueOf, OperatorFunction, concatMap, forkJoin } from 'rxjs';
+import { Observable, ObservableInput, ObservedValueOf, OperatorFunction, forkJoin } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 
 // The array overload is needed first because we want to maintain the proper order in the resulting tuple
 export function concatLatestFrom<T extends Observable<unknown>[], V>(
