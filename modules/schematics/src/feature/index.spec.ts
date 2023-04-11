@@ -34,9 +34,11 @@ describe('Feature Schematic', () => {
   it('should create all files of a feature', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.includes(`${projectPath}/src/app/foo.actions.ts`)
@@ -67,9 +69,11 @@ describe('Feature Schematic', () => {
   it('should not create test files', async () => {
     const options = { ...defaultOptions, skipTests: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.includes(`${projectPath}/src/app/foo.actions.ts`)
@@ -108,9 +112,11 @@ describe('Feature Schematic', () => {
       name: 'baz',
     });
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.includes(`${specifiedProjectPath}/src/lib/foo.actions.ts`)
@@ -141,9 +147,11 @@ describe('Feature Schematic', () => {
   it('should create all files of a feature within grouped folders if group is set', async () => {
     const options = { ...defaultOptions, group: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.includes(`${projectPath}/src/app/actions/foo.actions.ts`)
@@ -176,9 +184,11 @@ describe('Feature Schematic', () => {
       module: 'app',
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const moduleFileContent = tree.readContent(
       `${projectPath}/src/app/app.module.ts`
     );
@@ -197,9 +207,11 @@ describe('Feature Schematic', () => {
       api: true,
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.effects.ts`
     );
@@ -237,9 +249,11 @@ describe('Feature Schematic', () => {
       api: true,
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.reducer.ts`
     );
@@ -260,9 +274,11 @@ describe('Feature Schematic', () => {
       prefix: 'custom',
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.effects.ts`
     );
@@ -285,9 +301,11 @@ describe('Feature Schematic', () => {
       prefix: 'custom',
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('feature', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.reducer.ts`
     );

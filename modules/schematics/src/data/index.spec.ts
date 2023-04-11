@@ -39,9 +39,7 @@ describe('Data Schematic', () => {
       name: 'baz',
     });
 
-    const tree = await schematicRunner
-      .runSchematicAsync('data', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('data', options, appTree);
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.service.ts`)
@@ -52,9 +50,11 @@ describe('Data Schematic', () => {
   });
 
   it('should create the service and model files', async () => {
-    const tree = await schematicRunner
-      .runSchematicAsync('data', defaultOptions, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'data',
+      defaultOptions,
+      appTree
+    );
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.service.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -67,9 +67,7 @@ describe('Data Schematic', () => {
     const options = {
       ...defaultOptions,
     };
-    const tree = await schematicRunner
-      .runSchematicAsync('data', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('data', options, appTree);
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.service.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -81,9 +79,7 @@ describe('Data Schematic', () => {
   describe('service class', () => {
     it('should import the correct model', async () => {
       const options = { ...defaultOptions };
-      const tree = await schematicRunner
-        .runSchematicAsync('data', options, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic('data', options, appTree);
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.service.ts`
       );
@@ -93,9 +89,7 @@ describe('Data Schematic', () => {
 
     it('should extending EntityCollectionServiceBase', async () => {
       const options = { ...defaultOptions };
-      const tree = await schematicRunner
-        .runSchematicAsync('data', options, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic('data', options, appTree);
       const fileContent = tree.readContent(
         `${projectPath}/src/app/foo.service.ts`
       );
@@ -110,20 +104,16 @@ describe('Data Schematic', () => {
 
   it('should create model', async () => {
     const options = { ...defaultOptions };
-    const tree = await schematicRunner
-      .runSchematicAsync('data', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('data', options, appTree);
     const fileContent = tree.readContent(`${projectPath}/src/app/foo.ts`);
 
     expect(fileContent).toMatch(/export interface Foo {/);
-    expect(fileContent).toMatch(/id\?: any;/);
+    expect(fileContent).toMatch(/id\?: unknown;/);
   });
 
   it('should create spec class with right imports', async () => {
     const options = { ...defaultOptions };
-    const tree = await schematicRunner
-      .runSchematicAsync('data', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('data', options, appTree);
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.service.spec.ts`
     );

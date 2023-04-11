@@ -11,7 +11,7 @@ html {
   overflow: auto;
 }
 
-.mat-progress-spinner svg {
+.mat-mdc-progress-spinner svg {
   width: 30px !important;
   height: 30px !important;
 }

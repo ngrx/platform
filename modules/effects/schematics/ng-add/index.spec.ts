@@ -2,7 +2,6 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
-import { getFileContent } from '@schematics/angular/utility/test';
 import * as path from 'path';
 import { Schema as RootEffectOptions } from './schema';
 import {
@@ -38,9 +37,7 @@ describe('Effects ng-add Schematic', () => {
   it('should update package.json', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/effects']).toBeDefined();
@@ -49,9 +46,7 @@ describe('Effects ng-add Schematic', () => {
   it('should skip package.json update', async () => {
     const options = { ...defaultOptions, skipPackageJson: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/effects']).toBeUndefined();
@@ -60,9 +55,7 @@ describe('Effects ng-add Schematic', () => {
   it('should create an effect', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/foo/foo.effects.spec.ts`)
@@ -75,9 +68,7 @@ describe('Effects ng-add Schematic', () => {
   it('should not create an effect if the minimal flag is provided', async () => {
     const options = { ...defaultOptions, minimal: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
@@ -95,9 +86,7 @@ describe('Effects ng-add Schematic', () => {
       module: 'app.module.ts',
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).not.toMatch(
       /import { FooEffects } from '.\/foo\/foo.effects'/
@@ -107,9 +96,7 @@ describe('Effects ng-add Schematic', () => {
   it('should be provided by default', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/import { FooEffects } from '.\/foo\/foo.effects'/);
   });
@@ -117,9 +104,7 @@ describe('Effects ng-add Schematic', () => {
   it('should import into a specified module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/import { FooEffects } from '.\/foo\/foo.effects'/);
   });
@@ -131,7 +116,7 @@ describe('Effects ng-add Schematic', () => {
     };
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync('effects', options, appTree);
+      await schematicRunner.runSchematic('effects', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -141,9 +126,7 @@ describe('Effects ng-add Schematic', () => {
   it('should respect the skipTests flag', async () => {
     const options = { ...defaultOptions, skipTests: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/foo/foo.effects.ts`)
@@ -156,9 +139,7 @@ describe('Effects ng-add Schematic', () => {
   it('should register the root effect in the provided module', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
     expect(content).toMatch(/EffectsModule\.forRoot\(\[FooEffects\]\)/);
@@ -176,9 +157,7 @@ describe('Effects ng-add Schematic', () => {
       'EffectsModule.forRoot([])'
     );
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(storeModule);
 
     expect(content).toMatch(/EffectsModule\.forRoot\(\[FooEffects\]\)/);
@@ -196,9 +175,7 @@ describe('Effects ng-add Schematic', () => {
       'EffectsModule.forRoot([UserEffects])'
     );
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(storeModule);
 
     expect(content).toMatch(
@@ -215,9 +192,7 @@ describe('Effects ng-add Schematic', () => {
       'EffectsModule.forRoot(effects)'
     );
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(storeModule);
 
     expect(content).not.toMatch(/EffectsModule\.forRoot\(\[FooEffects\]\)/);
@@ -231,9 +206,7 @@ describe('Effects ng-add Schematic', () => {
       group: true,
     };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/effects/foo.effects.ts`)
@@ -242,9 +215,7 @@ describe('Effects ng-add Schematic', () => {
 
   it('should inject the effect service correctly', async () => {
     const options = { ...defaultOptions, skipTests: false };
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.effects.spec.ts`
     );

@@ -35,9 +35,7 @@ describe('ng-add Schematic', () => {
       )
     );
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', {}, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', {}, appTree);
     const workspace = JSON.parse(tree.readContent('/angular.json'));
     expect(workspace.cli.schematicCollections).toEqual([
       'existingCollection',
@@ -51,9 +49,7 @@ describe('ng-add Schematic', () => {
       JSON.stringify(defaultWorkspace, undefined, 2)
     );
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', {}, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', {}, appTree);
     const workspace = JSON.parse(tree.readContent('/angular.json'));
     expect(workspace.cli.schematicCollections).toEqual(['@ngrx/schematics']);
   });
@@ -71,9 +67,7 @@ describe('ng-add Schematic', () => {
       )
     );
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', {}, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', {}, appTree);
     const workspace = JSON.parse(tree.readContent('/angular.json'));
     expect(workspace.cli.schematicCollections).toEqual([
       'existingCollection',

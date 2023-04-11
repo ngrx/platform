@@ -502,6 +502,10 @@
       "title": "Migrations",
       "children": [
         {
+          "title": "V16",
+          "url": "guide/migration/v16"
+        },
+        {
           "title": "V15",
           "url": "guide/migration/v15"
         },

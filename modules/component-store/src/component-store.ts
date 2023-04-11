@@ -267,8 +267,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
       (projector
         ? map((projectorArgs) =>
             // projectorArgs could be an Array in case where the entire state is an Array, so adding this check
-            observablesOrSelectorsObject.length > 0 &&
-            Array.isArray(projectorArgs)
+            (observablesOrSelectorsObject as Observable<unknown>[]).length >
+              0 && Array.isArray(projectorArgs)
               ? projector(...projectorArgs)
               : projector(projectorArgs)
           )

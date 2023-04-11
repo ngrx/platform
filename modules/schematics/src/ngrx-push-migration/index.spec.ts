@@ -35,9 +35,11 @@ describe('NgrxPush migration', () => {
       export class SUTComponent { }`
       );
 
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.component.ts');
       expect(actual).not.toContain('async');
@@ -55,9 +57,11 @@ describe('NgrxPush migration', () => {
       );
       appTree.create('./sut.component.html', TEMPLATE);
 
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.component.html');
       expect(actual).not.toContain('async');
@@ -67,9 +71,11 @@ describe('NgrxPush migration', () => {
     it('should not touch templates that are not referenced', async () => {
       appTree.create('./sut.component.html', TEMPLATE);
 
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.component.html');
       expect(actual).toBe(TEMPLATE);
@@ -95,9 +101,11 @@ describe('NgrxPush migration', () => {
           export class AppModule { }
       `
       );
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.module.ts');
       expect(actual).toMatch(/imports: \[ BrowserModule, PushModule \],/);
@@ -122,9 +130,11 @@ describe('NgrxPush migration', () => {
           export class AppModule { }
       `
       );
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.module.ts');
       expect(actual).toMatch(/imports: \[ CommonModule, PushModule \],/);
@@ -145,9 +155,11 @@ describe('NgrxPush migration', () => {
           export class AppModule { }
       `
       );
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.module.ts');
       expect(actual).not.toMatch(/imports: \[ CommonModule, PushModule \],/);
@@ -176,9 +188,11 @@ describe('NgrxPush migration', () => {
           export class AppModule { }
       `
       );
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.module.ts');
       expect(actual).toMatch(/exports: \[ BrowserModule, PushModule \],/);
@@ -203,9 +217,11 @@ describe('NgrxPush migration', () => {
           export class AppModule { }
       `
       );
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.module.ts');
       expect(actual).toMatch(/exports: \[ CommonModule, PushModule \],/);
@@ -226,9 +242,11 @@ describe('NgrxPush migration', () => {
           export class AppModule { }
       `
       );
-      const tree = await schematicRunner
-        .runSchematicAsync('ngrx-push-migration', {}, appTree)
-        .toPromise();
+      const tree = await schematicRunner.runSchematic(
+        'ngrx-push-migration',
+        {},
+        appTree
+      );
 
       const actual = tree.readContent('./sut.module.ts');
       expect(actual).not.toMatch(/exports: \[ CommonModule, PushModule \],/);

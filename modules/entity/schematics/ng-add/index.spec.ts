@@ -24,9 +24,7 @@ describe('Entity ng-add Schematic', () => {
   it('should update package.json', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/entity']).toBeDefined();
@@ -35,9 +33,7 @@ describe('Entity ng-add Schematic', () => {
   it('should skip package.json update', async () => {
     const options = { ...defaultOptions, skipPackageJson: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('ng-add', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const packageJson = JSON.parse(tree.readContent('/package.json'));
 
     expect(packageJson.dependencies['@ngrx/entity']).toBeUndefined();

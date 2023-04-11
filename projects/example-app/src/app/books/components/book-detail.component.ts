@@ -43,28 +43,27 @@ import { Book } from '@example-app/books/models';
       :host {
         display: flex;
         justify-content: center;
-        margin: 75px 0;
+        margin: 4.5rem 0;
       }
+
       mat-card {
+        padding: 1rem;
         max-width: 600px;
       }
-      mat-card-title-group {
-        margin-left: 0;
-      }
+
       img {
         width: 60px;
         min-width: 60px;
         margin-left: 5px;
       }
+
       mat-card-content {
-        margin: 15px 0 50px;
+        padding: 0;
+        margin: 1rem 0;
       }
+
       mat-card-actions {
-        margin: 25px 0 0 !important;
-      }
-      mat-card-footer {
-        padding: 0 25px 25px;
-        position: relative;
+        justify-content: center;
       }
     `,
   ],

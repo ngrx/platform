@@ -13,7 +13,8 @@ export type FeatureSelector<
 > = {
   [K in FeatureName as `select${Capitalize<K>}State`]: MemoizedSelector<
     AppState,
-    FeatureState
+    FeatureState,
+    (featureState: FeatureState) => FeatureState
   >;
 };
 
@@ -26,6 +27,7 @@ export type NestedSelectors<
       [K in keyof FeatureState &
         string as `select${Capitalize<K>}`]: MemoizedSelector<
         AppState,
-        FeatureState[K]
+        FeatureState[K],
+        (featureState: FeatureState) => FeatureState[K]
       >;
     };

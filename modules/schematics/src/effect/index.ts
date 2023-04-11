@@ -108,7 +108,7 @@ function getEffectStart(name: string, effectPrefix: string): string {
 
   return (
     `${effectMethodPrefix}${effectName}s$ = createEffect(() => {` +
-    '\n    return this.actions$.pipe( \n'
+    '\n    return this.actions$.pipe(\n'
   );
 }
 

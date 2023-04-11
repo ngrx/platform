@@ -2,7 +2,6 @@
 
 exports[`Selected Book Page should compile 1`] = `
 <bc-selected-book-page
-  __ngContext__="0"
   book$={[Function Store]}
   isSelectedBookInCollection$={[Function Store]}
   store={[Function MockStore]}

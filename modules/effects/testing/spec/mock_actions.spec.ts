@@ -1,6 +1,6 @@
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
+import { provideMockActions } from '../index';
 import { Actions } from '@ngrx/effects';
 import { Injector } from '@angular/core';
 

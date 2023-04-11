@@ -43,9 +43,7 @@ describe('component-store', () => {
       name: 'baz',
     });
 
-    const tree = await schematicRunner
-      .runSchematicAsync('cs', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic('cs', options, appTree);
     const files = tree.files;
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo/foo.store.spec.ts`)
@@ -58,9 +56,11 @@ describe('component-store', () => {
   it('should create an component store with a spec file', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/foo/foo.store.spec.ts`)
@@ -73,9 +73,11 @@ describe('component-store', () => {
   it('should not be provided by default', async () => {
     const options = { ...defaultOptions };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).not.toMatch(/import { FooStore } from '.\/foo\/foo.store'/);
   });
@@ -83,9 +85,11 @@ describe('component-store', () => {
   it('should import into a specified module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/import { FooStore } from '.\/foo\/foo.store'/);
   });
@@ -97,11 +101,7 @@ describe('component-store', () => {
     };
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync(
-        'component-store',
-        options,
-        appTree
-      );
+      await schematicRunner.runSchematic('component-store', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -111,9 +111,11 @@ describe('component-store', () => {
   it('should respect the skipTests flag', async () => {
     const options = { ...defaultOptions, skipTests: true };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const files = tree.files;
     expect(
       files.indexOf(`${projectPath}/src/app/foo/foo.store.ts`)
@@ -126,9 +128,11 @@ describe('component-store', () => {
   it('should register the component store in the provided module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
     expect(content).toMatch(/FooStore/);
@@ -137,9 +141,11 @@ describe('component-store', () => {
   it('should register the component store in the provided component', async () => {
     const options = { ...defaultOptions, component: 'app.component.ts' };
 
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const content = tree.readContent(`${projectPath}/src/app/app.component.ts`);
 
     expect(content).toMatch(/FooStore/);
@@ -152,11 +158,7 @@ describe('component-store', () => {
     };
     let thrownError: Error | null = null;
     try {
-      await schematicRunner.runSchematicAsync(
-        'component-store',
-        options,
-        appTree
-      );
+      await schematicRunner.runSchematic('component-store', options, appTree);
     } catch (err: any) {
       thrownError = err;
     }
@@ -165,9 +167,11 @@ describe('component-store', () => {
 
   it('should inject the component store correctly', async () => {
     const options = { ...defaultOptions };
-    const tree = await schematicRunner
-      .runSchematicAsync('component-store', options, appTree)
-      .toPromise();
+    const tree = await schematicRunner.runSchematic(
+      'component-store',
+      options,
+      appTree
+    );
     const content = tree.readContent(
       `${projectPath}/src/app/foo/foo.store.spec.ts`
     );

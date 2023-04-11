@@ -35,9 +35,11 @@ describe('Store Migration 15_2_0', () => {
     appTree.create('./fixture.ts', input);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-15-2-0`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-${pkgName}-migration-15-2-0`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('fixture.ts');
 
     expect(file).toBe(expected);
@@ -56,9 +58,11 @@ describe('Store Migration 15_2_0', () => {
     appTree.create('./fixture.ts', input);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-15-2-0`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-${pkgName}-migration-15-2-0`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('fixture.ts');
 
     expect(file).toBe(input);

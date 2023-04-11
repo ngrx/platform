@@ -26,10 +26,8 @@ describe('Component Migration 15_0_0-beta', () => {
   });
 
   describe('Replace ReactiveComponentModule', () => {
-    it(
-      `should replace the ReactiveComponentModule in NgModules with LetModule and PushModule`,
-      waitForAsync(async () => {
-        const input = `
+    it(`should replace the ReactiveComponentModule in NgModules with LetModule and PushModule`, waitForAsync(async () => {
+      const input = `
       import { ReactiveComponentModule } from '@ngrx/component';
 
       @NgModule({
@@ -44,7 +42,7 @@ describe('Component Migration 15_0_0-beta', () => {
       })
       export class AppModule {}
     `;
-        const expected = `
+      const expected = `
       import { LetModule, PushModule } from '@ngrx/component';
 
       @NgModule({
@@ -60,21 +58,20 @@ describe('Component Migration 15_0_0-beta', () => {
       export class AppModule {}
     `;
 
-        appTree.create('./app.module.ts', input);
-        const runner = new SchematicTestRunner('schematics', collectionPath);
+      appTree.create('./app.module.ts', input);
+      const runner = new SchematicTestRunner('schematics', collectionPath);
 
-        const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-15-beta`, {}, appTree)
-          .toPromise();
-        const file = newTree.readContent('app.module.ts');
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-15-beta`,
+        {},
+        appTree
+      );
+      const file = newTree.readContent('app.module.ts');
 
-        expect(file).toBe(expected);
-      })
-    );
-    it(
-      `should replace the ReactiveComponentModule in standalone components with LetModule and PushModule`,
-      waitForAsync(async () => {
-        const input = `
+      expect(file).toBe(expected);
+    }));
+    it(`should replace the ReactiveComponentModule in standalone components with LetModule and PushModule`, waitForAsync(async () => {
+      const input = `
       import { ReactiveComponentModule } from '@ngrx/component';
 
       @Component({
@@ -85,7 +82,7 @@ describe('Component Migration 15_0_0-beta', () => {
       })
       export class SomeStandaloneComponent {}
     `;
-        const expected = `
+      const expected = `
       import { LetModule, PushModule } from '@ngrx/component';
 
       @Component({
@@ -97,21 +94,20 @@ describe('Component Migration 15_0_0-beta', () => {
       export class SomeStandaloneComponent {}
     `;
 
-        appTree.create('./app.module.ts', input);
-        const runner = new SchematicTestRunner('schematics', collectionPath);
+      appTree.create('./app.module.ts', input);
+      const runner = new SchematicTestRunner('schematics', collectionPath);
 
-        const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-15-beta`, {}, appTree)
-          .toPromise();
-        const file = newTree.readContent('app.module.ts');
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-15-beta`,
+        {},
+        appTree
+      );
+      const file = newTree.readContent('app.module.ts');
 
-        expect(file).toBe(expected);
-      })
-    );
-    it(
-      `should not remove the ReactiveComponentModule JS import when used as a type`,
-      waitForAsync(async () => {
-        const input = `
+      expect(file).toBe(expected);
+    }));
+    it(`should not remove the ReactiveComponentModule JS import when used as a type`, waitForAsync(async () => {
+      const input = `
       import { ReactiveComponentModule } from '@ngrx/component';
 
       const reactiveComponentModule: ReactiveComponentModule;
@@ -127,7 +123,7 @@ describe('Component Migration 15_0_0-beta', () => {
       })
       export class AppModule {}
     `;
-        const expected = `
+      const expected = `
       import { ReactiveComponentModule, LetModule, PushModule } from '@ngrx/component';
 
       const reactiveComponentModule: ReactiveComponentModule;
@@ -144,16 +140,17 @@ describe('Component Migration 15_0_0-beta', () => {
       export class AppModule {}
     `;
 
-        appTree.create('./app.module.ts', input);
-        const runner = new SchematicTestRunner('schematics', collectionPath);
+      appTree.create('./app.module.ts', input);
+      const runner = new SchematicTestRunner('schematics', collectionPath);
 
-        const newTree = await runner
-          .runSchematicAsync(`ngrx-${pkgName}-migration-15-beta`, {}, appTree)
-          .toPromise();
-        const file = newTree.readContent('app.module.ts');
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-15-beta`,
+        {},
+        appTree
+      );
+      const file = newTree.readContent('app.module.ts');
 
-        expect(file).toBe(expected);
-      })
-    );
+      expect(file).toBe(expected);
+    }));
   });
 });

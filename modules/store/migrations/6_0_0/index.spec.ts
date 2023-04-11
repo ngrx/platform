@@ -25,9 +25,11 @@ describe('Store Migration 6_0_0', () => {
       const runner = new SchematicTestRunner('schematics', collectionPath);
       const tree = createPackageJson(prefix, pkgName, appTree);
 
-      const newTree = await runner
-        .runSchematicAsync(`ngrx-${pkgName}-migration-01`, {}, tree)
-        .toPromise();
+      const newTree = await runner.runSchematic(
+        `ngrx-${pkgName}-migration-01`,
+        {},
+        tree
+      );
       const pkg = JSON.parse(newTree.readContent(packagePath));
       expect(pkg.dependencies[`@ngrx/${pkgName}`]).toBe(
         `${prefix}${upgradeVersion}`

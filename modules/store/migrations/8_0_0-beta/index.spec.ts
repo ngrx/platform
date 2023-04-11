@@ -46,9 +46,11 @@ describe('Store Migration 8_0_0 beta', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-${pkgName}-migration-02`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(expected);
@@ -99,9 +101,11 @@ describe('Store Migration 8_0_0 beta', () => {
     appTree.create('./app.module.ts', contents);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-${pkgName}-migration-02`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(expected);
@@ -138,9 +142,11 @@ describe('Store Migration 8_0_0 beta', () => {
     const logs: string[] = [];
     runner.logger.subscribe((log) => logs.push(log.message));
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-${pkgName}-migration-02`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-${pkgName}-migration-02`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('app.module.ts');
 
     expect(file).toBe(contents);
