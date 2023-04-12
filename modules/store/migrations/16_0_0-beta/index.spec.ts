@@ -38,9 +38,11 @@ describe('Store Migration 16_0_0-beta', () => {
     appTree.create('./fixture.ts', input);
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const newTree = await runner
-      .runSchematicAsync(`ngrx-store-migration-16-0-0-beta`, {}, appTree)
-      .toPromise();
+    const newTree = await runner.runSchematic(
+      `ngrx-store-migration-16-0-0-beta`,
+      {},
+      appTree
+    );
     const file = newTree.readContent('fixture.ts');
 
     expect(file).toBe(expected);
