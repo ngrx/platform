@@ -1,6 +1,12 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", "schematics-core"],
+  "ignorePatterns": [
+    "!**/*",
+    "schematics-core",
+    "data-persistence/src/public_api.ts",
+    "data-persistence/src/operators.ts",
+    "data-persistence/index.ts"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],
