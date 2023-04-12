@@ -21,5 +21,5 @@ export class NavItemComponent {
   @Input() icon = '';
   @Input() hint = '';
   @Input() routerLink: string | any[] = '/';
-  @Output() navigate = new EventEmitter();
+  @Output() navigate = new EventEmitter<void>();
 }
