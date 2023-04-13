@@ -33,7 +33,7 @@ For time dependant effects, for example `debounceTime`, we must be able override
 That's why we create the effect as a function with parameters. By doing this we can assign default parameter values for the effect, and override these values later in the test cases.
 
 This practice also allows us to hide the implementation details of the effect.
-In the `debounceTime` test case, we can we can set the debounce time to a controlled value.
+In the `debounceTime` test case, we can set the debounce time to a controlled value.
 
 <code-example header="my.effects.ts">
 search$ = createEffect(() => ({
