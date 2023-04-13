@@ -1,1 +1,6 @@
-export * from './src/operators';
+export {
+  fetch,
+  navigation,
+  optimisticUpdate,
+  pessimisticUpdate,
+} from './src/operators';
