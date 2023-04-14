@@ -1,5 +1,5 @@
-import { Observable, ObservableInput, ObservedValueOf, OperatorFunction, forkJoin } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { Observable, ObservableInput, ObservedValueOf, OperatorFunction, combineLatest } from 'rxjs';
+import { concatMap, map, take } from 'rxjs/operators';
 
 // The array overload is needed first because we want to maintain the proper order in the resulting tuple
 export function concatLatestFrom<T extends Observable<unknown>[], V>(
@@ -49,7 +49,8 @@ export function concatLatestFrom<
 >(observablesFactory: (value: V) => T): OperatorFunction<V, R> {
   return concatMap(
     (value) =>
-      forkJoin(observablesFactory(value)).pipe(
+      combineLatest(observablesFactory(value)).pipe(
+        take(1),
         map((others: unknown[]) => [value, ...others])
       ) as Observable<R>
   );
