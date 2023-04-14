@@ -1,4 +1,4 @@
-import { Observable, ObservableInput, ObservedValueOf, OperatorFunction } from 'rxjs';
+import { Observable, ObservableInput, of, ObservedValueOf, OperatorFunction } from 'rxjs';
 import { concatMap, withLatestFrom } from 'rxjs/operators';
 
 // The array overload is needed first because we want to maintain the proper order in the resulting tuple
