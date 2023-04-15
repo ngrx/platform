@@ -6,7 +6,7 @@ import {
   FindBookPageComponent,
   ViewBookPageComponent,
 } from '@example-app/books/containers';
-import { BookExistsGuard } from '@example-app/books/guards';
+import { bookExistsGuard } from '@example-app/books/guards';
 
 export const routes: Routes = [
   {
@@ -17,7 +17,7 @@ export const routes: Routes = [
   {
     path: ':id',
     component: ViewBookPageComponent,
-    canActivate: [BookExistsGuard],
+    canActivate: [bookExistsGuard],
     data: { title: 'Book details' },
   },
   {

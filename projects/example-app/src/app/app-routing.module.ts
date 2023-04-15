@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from '@example-app/auth/services';
+import { authGuard } from '@example-app/auth/services';
 import { NotFoundPageComponent } from '@example-app/core/containers';
 
 export const routes: Routes = [
@@ -10,7 +10,7 @@ export const routes: Routes = [
     path: 'books',
     loadChildren: () =>
       import('@example-app/books/books.module').then((m) => m.BooksModule),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: '**',
