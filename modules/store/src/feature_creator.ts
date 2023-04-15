@@ -93,18 +93,6 @@ export function createFeature<FeatureName extends string, FeatureState>(
     NotAllowedFeatureStateCheck<FeatureState>
 ): Feature<Record<string, any>, FeatureName, FeatureState>;
 /**
- * @deprecated Use the `createFeature` signature without root state instead.
- * For more info see: https://github.com/ngrx/platform/issues/3737
- */
-export function createFeature<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string = keyof AppState & string,
-  FeatureState extends AppState[FeatureName] = AppState[FeatureName]
->(
-  featureConfig: FeatureConfig<FeatureName, FeatureState> &
-    NotAllowedFeatureStateCheck<FeatureState>
-): Feature<AppState, FeatureName, FeatureState>;
-/**
  * @description
  * A function that accepts a feature name and a feature reducer, and creates
  * a feature selector and a selector for each feature state property.
