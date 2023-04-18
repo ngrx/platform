@@ -1,4 +1,4 @@
-import { NgModule, Injectable } from '@angular/core';
+import { NgModule, Injectable, InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
@@ -111,6 +111,34 @@ describe('NgRx Effects Integration spec', () => {
 
     expect(classEffectRun).toHaveBeenCalledTimes(2);
     expect(functionalEffectRun).toHaveBeenCalledTimes(2);
+  });
+
+  it('runs user provided effects defined as injection token', () => {
+    const userProvidedEffectRun = jest.fn<void, []>();
+
+    const TOKEN_EFFECTS = new InjectionToken('Token Effects', {
+      providedIn: 'root',
+      factory: () => ({
+        userProvidedEffect$: createEffect(
+          () => concat(of('ngrx'), NEVER).pipe(tap(userProvidedEffectRun)),
+          { dispatch: false }
+        ),
+      }),
+    });
+
+    TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot({}), EffectsModule.forRoot([])],
+      providers: [
+        {
+          provide: USER_PROVIDED_EFFECTS,
+          useValue: [TOKEN_EFFECTS],
+          multi: true,
+        },
+      ],
+    });
+    TestBed.inject(EffectSources);
+
+    expect(userProvidedEffectRun).toHaveBeenCalledTimes(1);
   });
 
   describe('actions', () => {

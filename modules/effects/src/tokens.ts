@@ -8,9 +8,9 @@ import { FunctionalEffect } from './models';
 export const _ROOT_EFFECTS_GUARD = new InjectionToken<void>(
   '@ngrx/effects Internal Root Guard'
 );
-export const USER_PROVIDED_EFFECTS = new InjectionToken<Type<unknown>[][]>(
-  '@ngrx/effects User Provided Effects'
-);
+export const USER_PROVIDED_EFFECTS = new InjectionToken<
+  Array<Type<unknown> | InjectionToken<unknown>>[]
+>('@ngrx/effects User Provided Effects');
 export const _ROOT_EFFECTS = new InjectionToken<
   [Array<Type<unknown> | Record<string, FunctionalEffect>>]
 >('@ngrx/effects Internal Root Effects');

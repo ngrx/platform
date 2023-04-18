@@ -3,7 +3,9 @@ import {
   getSourceForInstance,
   isClass,
   isClassInstance,
+  isToken,
 } from '../src/utils';
+import { InjectionToken } from '@angular/core';
 
 describe('getSourceForInstance', () => {
   it('gets the prototype for an instance of a source', () => {
@@ -53,5 +55,19 @@ describe('getClasses', () => {
 
     const classes = getClasses([C1, {}, C2, C3, { foo: 'bar' }]);
     expect(classes).toEqual([C1, C2, C3]);
+  });
+});
+
+describe('isToken', () => {
+  it('returns true for a class', () => {
+    expect(isToken(class C {})).toBe(true);
+  });
+
+  it('returns true for an injection token', () => {
+    expect(isToken(new InjectionToken('foo'))).toBe(true);
+  });
+
+  it('returns false for a record', () => {
+    expect(isToken({ foo: 'bar' })).toBe(false);
   });
 });
