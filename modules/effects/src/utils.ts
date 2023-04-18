@@ -1,4 +1,4 @@
-import { Type } from '@angular/core';
+import { InjectionToken, Type } from '@angular/core';
 
 export function getSourceForInstance<T>(instance: T): T {
   return Object.getPrototypeOf(instance);
@@ -20,6 +20,15 @@ export function getClasses(
   classesAndRecords: Array<Type<unknown> | Record<string, unknown>>
 ): Type<unknown>[] {
   return classesAndRecords.filter(isClass);
+}
+
+export function isToken(
+  tokenOrRecord:
+    | Type<unknown>
+    | InjectionToken<unknown>
+    | Record<string, unknown>
+): tokenOrRecord is Type<unknown> | InjectionToken<unknown> {
+  return tokenOrRecord instanceof InjectionToken || isClass(tokenOrRecord);
 }
 
 // TODO: replace with RxJS interfaces when possible
