@@ -215,8 +215,10 @@ describe('Entity Schematic', () => {
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.actions.ts`
     );
-    expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-    expect(fileContent).toMatch(/\[Foo\/API\] Load Foos'/);
+    expect(fileContent).toMatch(
+      /export const FooActions = createActionGroup\(/
+    );
+    expect(fileContent).toMatch(/'Load Foos'/);
     expect(fileContent).toMatch(/props<\{ foos: Foo\[\] }>\(\)/);
   });
 
@@ -230,7 +232,7 @@ describe('Entity Schematic', () => {
       `${projectPath}/src/app/foo.reducer.ts`
     );
     expect(fileContent).toMatch(
-      /import \* as FooActions from '\.\/foo.actions';/
+      /import { FooActions } from '\.\/foo.actions';/
     );
     expect(fileContent).toMatch(/on\(FooActions.addFoo,/);
     expect(fileContent).toMatch(

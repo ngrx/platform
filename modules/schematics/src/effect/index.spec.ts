@@ -279,7 +279,7 @@ describe('Effect Schematic', () => {
 
       import { concatMap } from 'rxjs/operators';
       import { Observable, EMPTY } from 'rxjs';
-      import * as FooActions from '../../actions/foo/foo.actions';
+      import { FooActions } from '../../actions/foo/foo.actions';
 
       @Injectable()
       export class FooEffects {
@@ -313,7 +313,7 @@ describe('Effect Schematic', () => {
 
       import { concatMap } from 'rxjs/operators';
       import { Observable, EMPTY } from 'rxjs';
-      import * as FooActions from './foo.actions';
+      import { FooActions } from './foo.actions';
 
       @Injectable()
       export class FooEffects {
@@ -370,7 +370,7 @@ describe('Effect Schematic', () => {
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       import { catchError, map, concatMap } from 'rxjs/operators';
       import { Observable, EMPTY, of } from 'rxjs';
-      import * as FooActions from './foo.actions';
+      import { FooActions } from './foo.actions';
 
 
       @Injectable()
@@ -409,7 +409,7 @@ describe('Effect Schematic', () => {
 
       import { concatMap } from 'rxjs/operators';
       import { Observable, EMPTY } from 'rxjs';
-      import * as FooActions from './foo.actions';
+      import { FooActions } from './foo.actions';
 
       @Injectable()
       export class FooEffects {
@@ -447,7 +447,7 @@ describe('Effect Schematic', () => {
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       import { catchError, map, concatMap } from 'rxjs/operators';
       import { Observable, EMPTY, of } from 'rxjs';
-      import * as FooActions from './foo.actions';
+      import { FooActions } from './foo.actions';
 
 
       @Injectable()
@@ -470,7 +470,7 @@ describe('Effect Schematic', () => {
         constructor(private actions$: Actions) {}
       }
       "
-    `);
+`);
   });
 
   it('should inject the effect service correctly', async () => {
@@ -501,7 +501,7 @@ describe('Effect Schematic', () => {
       import { Actions, createEffect, ofType } from '@ngrx/effects';
       import { catchError, map, concatMap } from 'rxjs/operators';
       import { Observable, EMPTY, of } from 'rxjs';
-      import * as FooActions from './foo.actions';
+      import { FooActions } from './foo.actions';
 
 
       @Injectable()

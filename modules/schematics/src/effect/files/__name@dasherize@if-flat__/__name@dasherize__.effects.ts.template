@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, <%= effectMethod %><% if (feature) { %>, ofType<% } %> } from '@ngrx/effects';
 <% if (feature && api) { %>import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
-import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+import { <%= classify(name) %>Actions } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 <% if (feature && !api) { %>import { concatMap } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
-import * as <%= classify(name) %>Actions from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
+import { <%= classify(name) %>Actions } from '<%= featurePath(group, flat, "actions", dasherize(name)) %><%= dasherize(name) %>.actions';<% } %>
 
 @Injectable()
 export class <%= classify(name) %>Effects {
