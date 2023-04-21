@@ -82,8 +82,11 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-    expect(fileContent).toMatch(/\[Foo\] Load Foos'/);
+    expect(fileContent).toMatch(
+      /export const FooActions = createActionGroup\(/
+    );
+    expect(fileContent).toMatch(new RegExp(`source: 'Foo'`));
+    expect(fileContent).toMatch(/Load Foos'/);
   });
 
   it('should create success/error actions when the api flag is set', async () => {
@@ -97,10 +100,13 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(/export const loadFoos = createAction\(/);
-    expect(fileContent).toMatch(/\[Foo\] Load Foos Success/);
+    expect(fileContent).toMatch(
+      /export const FooActions = createActionGroup\(/
+    );
+    expect(fileContent).toMatch(new RegExp(`source: 'Foo'`));
+    expect(fileContent).toMatch(/Load Foos Success/);
     expect(fileContent).toMatch(/props<{ data: unknown }>\(\)/);
-    expect(fileContent).toMatch(/\[Foo\] Load Foos Failure/);
+    expect(fileContent).toMatch(/Load Foos Failure/);
     expect(fileContent).toMatch(/props<{ error: unknown }>\(\)/);
   });
 
@@ -121,10 +127,11 @@ describe('Action Schematic', () => {
         `${projectPath}/src/app/foo.actions.ts`
       );
       expect(fileContent).toMatch(
-        new RegExp(`export const ${prefix}Foos = createAction`)
+        new RegExp(`export const FooActions = createActionGroup`)
       );
+      expect(fileContent).toMatch(new RegExp(`source: 'Foo'`));
       expect(fileContent).toMatch(
-        new RegExp(`'\\[Foo] ${capitalize(prefix)} Foos'`)
+        new RegExp(`'${capitalize(prefix)} Foos': emptyProps\\(\\),`)
       );
     }
   );
@@ -158,7 +165,7 @@ describe('Action Schematic', () => {
       );
 
       expect(fileContent).toMatch(
-        /export const loadFoosSuccess = createAction\(\r?\n?\s*'\[Foo\] Load Foos Success'\r?\n?\s*,/
+        /'Load Foos Success': props<\{ data: unknown }>\(\),/
       );
     });
 
@@ -176,7 +183,7 @@ describe('Action Schematic', () => {
       );
 
       expect(fileContent).toMatch(
-        /export const loadFoosFailure = createAction\(\r?\n?\s*'\[Foo\] Load Foos Failure'\r?\n?\s*,/
+        /'Load Foos Failure': props<\{ error: unknown }>\(\),/
       );
     });
   });

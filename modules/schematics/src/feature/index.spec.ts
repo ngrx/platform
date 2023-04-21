@@ -225,9 +225,7 @@ describe('Feature Schematic', () => {
     expect(fileContent).toMatch(
       /import { Observable, EMPTY, of } from 'rxjs';/
     );
-    expect(fileContent).toMatch(
-      /import \* as FooActions from '.\/foo.actions';/
-    );
+    expect(fileContent).toMatch(/import { FooActions } from '.\/foo.actions';/);
 
     expect(fileContent).toMatch(/export class FooEffects/);
     expect(fileContent).toMatch(/loadFoos\$ = createEffect\(\(\) => {/);
