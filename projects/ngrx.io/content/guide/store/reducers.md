@@ -272,6 +272,30 @@ After the feature is loaded, the `game` key becomes a property in the object and
 ```
 
 Whether your feature states are loaded eagerly or lazily depends on the needs of your application. You use feature states to build up your state object over time and through different feature areas.
+  
+## Standalone API in module-based apps
+
+If you have a module-based Angular application, you can still use standalone components. NgRx standalone APIs support this workflow as well.
+
+For module-based apps, you have the `StoreModule.forRoot({...})` included in the `imports` array of your `AppModule`, which registers the root store for dependency injection. Standalone components look for a different injection token that can only be provided by the `provideStore({...})` function detailed above. In order to use NgRx in a standalone component, you must first add the `provideStore({...})` function the the `providers` array in your `AppModule` with the same configuration you have inside of your `forRoot({...})`. For module-based apps with standalone components, you will simply have both. 
+
+<code-example header="app.module.ts">
+  import { NgModule } from '@angular/core';
+  import { StoreModule } from '@ngrx/store';
+  import { scoreboardReducer } from './reducers/scoreboard.reducer';
+
+  @NgModule({
+    imports: [
+      StoreModule.forRoot({ game: scoreboardReducer })
+    ],
+    providers: [
+      provideStore({ game: scoreboardReducer })
+    ]
+  })
+  export class AppModule {}
+</code-example>
+  
+Note: Similarly, if you are using effects, you will need to register both `EffectsModule.forRoot([...])` and `provideEffects([...])`. For more info, see [Effects](guide/effects).
 
 ## Next Steps
 
