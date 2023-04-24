@@ -172,7 +172,15 @@ export function createConfig(
   const logOnly = options.logOnly
     ? { pause: true, export: true, test: true }
     : false;
-  const features = options.features || logOnly || DEFAULT_OPTIONS.features;
+  const features: NonNullable<Partial<StoreDevtoolsConfig['features']>> =
+    options.features ||
+    logOnly ||
+    (DEFAULT_OPTIONS.features as NonNullable<
+      Partial<StoreDevtoolsConfig['features']>
+    >);
+  if (features.import === true) {
+    features.import = 'custom';
+  }
   const config = Object.assign({}, DEFAULT_OPTIONS, { features }, options);
 
   if (config.maxAge && config.maxAge < 2) {
