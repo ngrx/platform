@@ -1,7 +1,7 @@
 import { Data, Params } from '@angular/router';
 import { MemoizedSelector } from '@ngrx/store';
 
-export interface RouterStateSelectors<V> {
+export type RouterStateSelectors<V> = {
   selectCurrentRoute: MemoizedSelector<V, any>;
   selectFragment: MemoizedSelector<V, string | undefined>;
   selectQueryParams: MemoizedSelector<V, Params>;
@@ -14,4 +14,4 @@ export interface RouterStateSelectors<V> {
   ) => MemoizedSelector<V, string | undefined>;
   selectUrl: MemoizedSelector<V, string>;
   selectTitle: MemoizedSelector<V, string | undefined>;
-}
+};
