@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { EntityState, EntitySelectors, Dictionary } from './models';
+import { EntityState, EntitySelectors } from './models';
 
 export function createSelectorsFactory<T>() {
   function getSelectors(): EntitySelectors<T, EntityState<T>>;
