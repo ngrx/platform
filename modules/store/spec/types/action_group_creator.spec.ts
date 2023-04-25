@@ -98,20 +98,31 @@ describe('createActionGroup', () => {
 
     describe('event name', () => {
       it('should create action name by camel casing the event name', () => {
-        expectSnippet(`
+        const snippet = expectSnippet(`
           const booksApiActions = createActionGroup({
             source: 'Books API',
             events: {
               ' Load BOOKS  suCCess  ': emptyProps(),
+              loadBooksFailure: emptyProps(),
             },
           });
 
-          let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
-        `).toInfer(
+          let loadBooksSuccess: typeof booksApiActions.loadBOOKSSuCCess;
+          let loadBooksFailure: typeof booksApiActions.loadBooksFailure;
+        `);
+
+        snippet.toInfer(
           'loadBooksSuccess',
           `ActionCreator<
             "[Books API]  Load BOOKS  suCCess  ",
             () => TypedAction<"[Books API]  Load BOOKS  suCCess  ">
+          >`
+        );
+        snippet.toInfer(
+          'loadBooksFailure',
+          `ActionCreator<
+            "[Books API] loadBooksFailure",
+            () => TypedAction<"[Books API] loadBooksFailure">
           >`
         );
       });
@@ -222,7 +233,7 @@ describe('createActionGroup', () => {
           const booksApiActions = createActionGroup({
             source: 'Books API',
             events: {
-              '  Load BOOks  success ': emptyProps(),
+              '  Load Books  success ': emptyProps(),
               'load Books Success': props<{ books: string[] }>(),
             }
           });
