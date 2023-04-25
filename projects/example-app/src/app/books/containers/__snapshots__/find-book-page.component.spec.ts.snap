@@ -54,7 +54,7 @@ exports[`Find Book Page should compile 1`] = `
           >
             <div
               class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
-              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+              style="opacity: 1; transform: translateY(0%);"
             >
               <div
                 class="mat-mdc-form-field-hint-spacer"
