@@ -69,11 +69,12 @@ export class ProductsComponent implements OnInit {
 
 ```
 
-## Limitations and Restrictions
+## Limitations
 
-An action group uses the event descriptions to create properties within the group that represent the action(s). 
-The property names are auto-generated and are the camelCased version of the event description. For example `Query Changed` becomes `queryChanged`.
-This has the drawback that not all characters can be used to describe an event because some characters can't be used to create a valid name. For example, any of the following characters are not allowed and result in a compile error `/ \\ | < > [ ] { } ( ) . , ! ? # % ^ & * + - ~ \' "`.
+An action group uses the event names to create properties within the group that represent the action creators. 
+The action creator names are generated and are the camelCased version of the event names.
+For example, for the event name `Query Changed`, the action creator name will be `queryChanged`.
+Therefore, it is not possible to define action creators whose names differ from their event names using the `createActionGroup` function.
 
 You can read more about Action Groups:
 

@@ -127,32 +127,6 @@ describe('createActionGroup', () => {
         );
       });
 
-      it('should fail when event name is an empty string', () => {
-        expectSnippet(`
-          const booksApiActions = createActionGroup({
-            source: 'Books API',
-            events: {
-              '': emptyProps(),
-            },
-          });
-        `).toFail(
-          /event name cannot be an empty string or contain only spaces/
-        );
-      });
-
-      it('should fail when event name contains only spaces', () => {
-        expectSnippet(`
-          const booksApiActions = createActionGroup({
-            source: 'Books API',
-            events: {
-              ' ': emptyProps(),
-            },
-          });
-        `).toFail(
-          /event name cannot be an empty string or contain only spaces/
-        );
-      });
-
       it('should fail when event name is not a string literal type', () => {
         expectSnippet(`
           const booksApiActions = createActionGroup({
@@ -162,70 +136,6 @@ describe('createActionGroup', () => {
             },
           });
         `).toFail(/event name must be a string literal type/);
-      });
-
-      describe('forbidden characters', () => {
-        [
-          String.raw`\\`,
-          '/',
-          '|',
-          '<',
-          '>',
-          '[',
-          ']',
-          '{',
-          '}',
-          '(',
-          ')',
-          '.',
-          ',',
-          '!',
-          '?',
-          '#',
-          '%',
-          '^',
-          '&',
-          '*',
-          '+',
-          '-',
-          '~',
-          '"',
-          String.raw`\'`,
-          '`',
-        ].forEach((char) => {
-          it(`should fail when event name contains ${char} in the beginning`, () => {
-            expectSnippet(`
-              const booksApiActions = createActionGroup({
-                source: 'Books API',
-                events: {
-                  '${char}Load Books Success': emptyProps(),
-                },
-              });
-          `).toFail(/event name cannot contain the following characters:/);
-          });
-
-          it(`should fail when event name contains ${char} in the middle`, () => {
-            expectSnippet(`
-              const booksApiActions = createActionGroup({
-                source: 'Books API',
-                events: {
-                  'Load Books ${char} Success': emptyProps(),
-                },
-              });
-          `).toFail(/event name cannot contain the following characters:/);
-          });
-
-          it(`should fail when event name contains ${char} in the end`, () => {
-            expectSnippet(`
-              const booksApiActions = createActionGroup({
-                source: 'Books API',
-                events: {
-                  'Load Books Success${char}': emptyProps(),
-                },
-              });
-          `).toFail(/event name cannot contain the following characters:/);
-          });
-        });
       });
 
       it('should fail when two event names are mapped to the same action name', () => {
