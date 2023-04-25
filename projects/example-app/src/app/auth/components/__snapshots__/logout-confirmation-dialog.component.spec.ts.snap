@@ -17,6 +17,8 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     <button
       class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
       mat-button=""
+      mat-button-is-fab="false"
+      mat-button-ripple-uninitialized=""
       type="button"
     >
       <span
@@ -31,16 +33,14 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
         class="mat-mdc-focus-indicator"
       />
       <span
-        class="mat-ripple mat-mdc-button-ripple"
-        matripple=""
-      />
-      <span
         class="mat-mdc-button-touch-target"
       />
     </button>
     <button
       class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
       mat-button=""
+      mat-button-is-fab="false"
+      mat-button-ripple-uninitialized=""
       type="button"
     >
       <span
@@ -53,10 +53,6 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       </span>
       <span
         class="mat-mdc-focus-indicator"
-      />
-      <span
-        class="mat-ripple mat-mdc-button-ripple"
-        matripple=""
       />
       <span
         class="mat-mdc-button-touch-target"
