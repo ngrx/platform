@@ -157,6 +157,23 @@ export function commandDispatchTest(
         expect(data).toBe(hero);
       });
 
+      it('#add(hero) dispatches SAVE_ADD pessimistically with partial hero', () => {
+        const hero: Partial<Hero> = { name: 'test' };
+        dispatcher.add(hero);
+        const { entityOp, isOptimistic, data } = dispatchedAction().payload;
+        expect(entityOp).toBe(EntityOp.SAVE_ADD_ONE);
+        expect(isOptimistic).toBe(false);
+        expect(data).toBe(hero);
+
+        testStore.dispatch.calls.reset();
+
+        dispatcher.add(hero, { isOptimistic: false });
+        const specificallyPessimistic = dispatchedAction().payload;
+        expect(specificallyPessimistic.entityOp).toBe(EntityOp.SAVE_ADD_ONE);
+        expect(specificallyPessimistic.isOptimistic).toBe(false);
+        expect(specificallyPessimistic.data).toBe(hero);
+      });
+
       it('#delete(42) can dispatch SAVE_DELETE pessimistically for the id:42', () => {
         dispatcher.delete(42, { isOptimistic: false }); // optimistic by default
         const { entityOp, isOptimistic, data } = dispatchedAction().payload;
