@@ -137,7 +137,7 @@ describe('ComponentStore types', () => {
         expectSnippet(
           `componentStore.effect((e: Observable<string>) => number$)(5);`
         ).toFail(
-          /Argument of type 'number' is not assignable to parameter of type 'string \| Observable<string>'./
+          /Argument of type 'number' is not assignable to parameter of type 'string \| Observable<string> | Signal<string>'./
         );
       });
 
@@ -145,7 +145,7 @@ describe('ComponentStore types', () => {
         expectSnippet(
           `componentStore.effect((e: Observable<string>) => string$)(number$);`
         ).toFail(
-          /Argument of type 'Observable<number>' is not assignable to parameter of type 'string \| Observable<string>'/
+          /Argument of type 'Observable<number>' is not assignable to parameter of type 'string \| Observable<string> | Signal<string>'/
         );
       });
 
@@ -159,13 +159,13 @@ describe('ComponentStore types', () => {
         expectSnippet(
           `componentStore.effect<string>((e) => number$)(5);`
         ).toFail(
-          /Argument of type 'number' is not assignable to parameter of type 'string \| Observable<string>'/
+          /Argument of type 'number' is not assignable to parameter of type 'string \| Observable<string> | Signal<string>'/
         );
       });
 
       it('when generic type is specified as void and a variable with incorrect type is passed', () => {
         expectSnippet(`componentStore.effect<void>((e) => number$)(5);`).toFail(
-          /Argument of type 'number' is not assignable to parameter of type 'void \| Observable<void>'/
+          /Argument of type 'number' is not assignable to parameter of type 'void \| Observable<void> | Signal<void>'/
         );
       });
 
