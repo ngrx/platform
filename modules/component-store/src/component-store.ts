@@ -34,10 +34,7 @@ import {
   isDevMode,
   Signal,
   computed,
-  isSignal,
-  Injector,
 } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from './to-signal';
 
@@ -71,7 +68,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
   private ɵhasProvider = false;
-  private ɵinjector?: Injector;
 
   // Signal of state$
   private readonly state: Signal<T>;
@@ -323,16 +319,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
     // Return either an optional callback or a function requiring specific types as inputs
     ReturnType = ProvidedType | ObservableType extends void
       ? (
-          observableOrValue?:
-            | ObservableType
-            | Observable<ObservableType>
-            | Signal<ObservableType>
+          observableOrValue?: ObservableType | Observable<ObservableType>
         ) => Subscription
       : (
-          observableOrValue:
-            | ObservableType
-            | Observable<ObservableType>
-            | Signal<ObservableType>
+          observableOrValue: ObservableType | Observable<ObservableType>
         ) => Subscription
   >(generator: (origin$: OriginType) => Observable<unknown>): ReturnType {
     const origin$ = new Subject<ObservableType>();
@@ -342,18 +332,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
       .subscribe();
 
     return ((
-      observableOrValue?:
-        | ObservableType
-        | Signal<ObservableType>
-        | Observable<ObservableType>
+      observableOrValue?: ObservableType | Observable<ObservableType>
     ): Subscription => {
       const observable$ = isObservable(observableOrValue)
         ? observableOrValue
-        : !!observableOrValue &&
-          isSignal(observableOrValue as Signal<ObservableType>)
-        ? toObservable(observableOrValue as Signal<ObservableType>, {
-            injector: this['ɵinjector'],
-          })
         : of(observableOrValue);
       return observable$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
         // any new 👇 value is pushed into a stream

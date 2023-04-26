@@ -1,10 +1,4 @@
-import {
-  Provider,
-  InjectionToken,
-  Type,
-  inject,
-  Injector,
-} from '@angular/core';
+import { Provider, InjectionToken, Type, inject } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ComponentStore } from './component-store';
 
@@ -104,9 +98,6 @@ export function provideComponentStore<T extends object>(
       provide: componentStoreClass,
       useFactory: () => {
         const componentStore = inject(CS_WITH_HOOKS);
-
-        // Set private property on CS for injection context
-        componentStore['ɵinjector'] = inject(Injector);
 
         // Set private property that CS has been provided with lifecycle hooks
         componentStore['ɵhasProvider'] = true;
