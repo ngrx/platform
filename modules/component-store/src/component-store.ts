@@ -290,12 +290,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
   }
 
   /**
-   * Returns a signal of the provided selector.
+   * Returns a signal of the provided projector function.
    *
-   * @param selector selector function
+   * @param projector projector function
    */
-  selectSignal<K>(selector: (state: T) => K): Signal<K> {
-    return computed(() => selector(this.state()));
+  selectSignal<K>(projector: (state: T) => K): Signal<K> {
+    return computed(() => projector(this.state()));
   }
 
   /**
