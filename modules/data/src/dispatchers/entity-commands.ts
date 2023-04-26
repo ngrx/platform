@@ -11,6 +11,10 @@ export interface EntityServerCommands<T> {
    * @returns A terminating Observable of the entity
    * after server reports successful save or the save error.
    */
+  add(
+    entity: Partial<T>,
+    options: EntityActionOptions & { isOptimistic: false }
+  ): Observable<T>;
   add(entity: T, options?: EntityActionOptions): Observable<T>;
 
   /**
@@ -101,10 +105,10 @@ export interface EntityServerCommands<T> {
    * after server reports successful query or the query error.
    * @see getWithQuery
    */
-  loadWithQuery(queryParams: QueryParams | string,
-                options?: EntityActionOptions
+  loadWithQuery(
+    queryParams: QueryParams | string,
+    options?: EntityActionOptions
   ): Observable<T[]>;
-
 
   /**
    * Dispatch action to save the updated entity (or partial entity) in remote storage.
