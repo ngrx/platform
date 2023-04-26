@@ -99,9 +99,8 @@ export class Store<T = object>
 
   /**
    * Returns a signal of the provided selector.
-   * This method must be run within in injection context.
    *
-   * @param selectorFn selector function
+   * @param selector selector function
    */
   selectSignal<K>(selector: (state: T) => K): Signal<K> {
     return computed(() => selector(this.state()));
