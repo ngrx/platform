@@ -32,8 +32,11 @@ import {
   InjectionToken,
   Inject,
   isDevMode,
+  Signal,
+  computed,
 } from '@angular/core';
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
+import { toSignal } from './to-signal';
 
 export interface SelectConfig {
   debounce?: boolean;
@@ -66,6 +69,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
   readonly state$: Observable<T> = this.select((s) => s);
   private ɵhasProvider = false;
 
+  // Signal of state$
+  readonly state: Signal<T>;
+
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
     if (defaultState) {
@@ -73,6 +79,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
 
     this.checkProviderForHooks();
+    this.state = toSignal(this.stateSubject$.pipe(takeUntil(this.destroy$)), {
+      requireSync: false,
+      manualCleanup: true,
+    });
   }
 
   /** Completes all relevant Observable streams. */
@@ -280,6 +290,15 @@ export class ComponentStore<T extends object> implements OnDestroy {
       }),
       takeUntil(this.destroy$)
     );
+  }
+
+  /**
+   * Returns a signal of the provided projector function.
+   *
+   * @param projector projector function
+   */
+  selectSignal<K>(projector: (state: T) => K): Signal<K> {
+    return computed(() => projector(this.state()));
   }
 
   /**
