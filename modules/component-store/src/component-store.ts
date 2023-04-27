@@ -70,7 +70,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   private ɵhasProvider = false;
 
   // Signal of state$
-  private readonly state: Signal<T>;
+  readonly state: Signal<T>;
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
@@ -79,7 +79,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
 
     this.checkProviderForHooks();
-    this.state = toSignal(this.stateSubject$, this.destroy$);
+    this.state = toSignal(this.stateSubject$.pipe(takeUntil(this.destroy$)));
   }
 
   /** Completes all relevant Observable streams. */

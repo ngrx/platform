@@ -1,5 +1,5 @@
 import { computed, signal, Signal } from '@angular/core';
-import { Observable, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 
 /**
  * Get the current value of an `State` as a reactive `Signal`.
@@ -16,13 +16,10 @@ import { Observable, takeUntil } from 'rxjs';
  * the injection context to unsubscribe from the provided observable.
  *
  */
-export function toSignal<T>(
-  state$: Observable<T>,
-  destroy$: Observable<void>
-): Signal<T> {
+export function toSignal<T>(state$: Observable<T>): Signal<T> {
   const state = signal<State<T>>({ kind: StateKind.NoValue });
 
-  state$.pipe(takeUntil(destroy$)).subscribe({
+  state$.subscribe({
     next: (value) => state.set({ kind: StateKind.Value, value }),
     error: (error) => state.set({ kind: StateKind.Error, error }),
   });
