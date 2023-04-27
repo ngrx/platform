@@ -79,7 +79,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
 
     this.checkProviderForHooks();
-    this.state = toSignal(this.stateSubject$.pipe(takeUntil(this.destroy$)));
+    this.state = toSignal(this.stateSubject$.pipe(takeUntil(this.destroy$)), {
+      requireSync: false,
+      manualCleanup: true,
+    });
   }
 
   /** Completes all relevant Observable streams. */
