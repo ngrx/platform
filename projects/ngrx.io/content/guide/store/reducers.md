@@ -281,7 +281,7 @@ For module-based apps, you have the `StoreModule.forRoot({...})` included in the
 
 <code-example header="app.module.ts">
   import { NgModule } from '@angular/core';
-  import { StoreModule } from '@ngrx/store';
+  import { StoreModule, provideStore } from '@ngrx/store';
   import { scoreboardReducer } from './reducers/scoreboard.reducer';
 
   @NgModule({
