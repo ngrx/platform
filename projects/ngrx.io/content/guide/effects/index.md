@@ -354,7 +354,7 @@ For module-based apps, you have the `EffectsModule.forRoot([...])` included in t
 
 <code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
+import { EffectsModule, provideEffects } from '@ngrx/effects';
 
 import { MoviesEffects } from './effects/movies.effects';
 import * as actorsEffects from './effects/actors.effects';
