@@ -56,6 +56,14 @@ export type Projector<Selectors extends Observable<unknown>[], Result> = (
   ...args: SelectorResults<Selectors>
 ) => Result;
 
+type SignalsProjector<Signals extends Signal<unknown>[], Result> = (
+  ...values: {
+    [Key in keyof Signals]: Signals[Key] extends Signal<infer Value>
+      ? Value
+      : never;
+  }
+) => Result;
+
 @Injectable()
 export class ComponentStore<T extends object> implements OnDestroy {
   // Should be used only in ngOnDestroy.
@@ -67,10 +75,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
   private isInitialized = false;
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
-  private ɵhasProvider = false;
-
   // Signal of state$
-  readonly state: Signal<T>;
+  readonly state: Signal<T> = toSignal(
+    this.state$.pipe(takeUntil(this.destroy$)),
+    { requireSync: false, manualCleanup: true }
+  );
+  private ɵhasProvider = false;
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
     // State can be initialized either through constructor or setState.
@@ -79,10 +89,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }
 
     this.checkProviderForHooks();
-    this.state = toSignal(this.stateSubject$.pipe(takeUntil(this.destroy$)), {
-      requireSync: false,
-      manualCleanup: true,
-    });
   }
 
   /** Completes all relevant Observable streams. */
@@ -293,12 +299,40 @@ export class ComponentStore<T extends object> implements OnDestroy {
   }
 
   /**
-   * Returns a signal of the provided projector function.
-   *
-   * @param projector projector function
+   * Creates a signal from the provided state projector function.
    */
-  selectSignal<K>(projector: (state: T) => K): Signal<K> {
-    return computed(() => projector(this.state()));
+  selectSignal<Result>(projector: (state: T) => Result): Signal<Result>;
+  /**
+   * Creates a signal by combining provided signals.
+   */
+  selectSignal<Signals extends Signal<unknown>[], Result>(
+    ...signalsWithProjector: [
+      ...selectors: Signals,
+      projector: SignalsProjector<Signals, Result>
+    ]
+  ): Signal<Result>;
+  selectSignal(
+    ...args:
+      | [(state: T) => unknown]
+      | [
+          ...signals: Signal<unknown>[],
+          projector: (...values: unknown[]) => unknown
+        ]
+  ): Signal<unknown> {
+    if (args.length === 1) {
+      const projector = args[0] as (state: T) => unknown;
+      return computed(() => projector(this.state()));
+    }
+
+    const signals = args.slice(0, -1) as Signal<unknown>[];
+    const projector = args[args.length - 1] as (
+      ...values: unknown[]
+    ) => unknown;
+
+    return computed(() => {
+      const values = signals.map((signal) => signal());
+      return projector(...values);
+    });
   }
 
   /**
