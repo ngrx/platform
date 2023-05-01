@@ -4,7 +4,12 @@ import { Observable, Observer, Operator } from 'rxjs';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
 import { ActionsSubject } from './actions_subject';
-import { Action, ActionReducer, FunctionIsNotAllowed } from './models';
+import {
+  Action,
+  ActionReducer,
+  SelectSignalOptions,
+  FunctionIsNotAllowed,
+} from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
 import { toSignal } from './to_signal';
@@ -101,9 +106,13 @@ export class Store<T = object>
    * Returns a signal of the provided selector.
    *
    * @param selector selector function
+   * @param options select signal options
    */
-  selectSignal<K>(selector: (state: T) => K): Signal<K> {
-    return computed(() => selector(this.state()));
+  selectSignal<K>(
+    selector: (state: T) => K,
+    options?: SelectSignalOptions<K>
+  ): Signal<K> {
+    return computed(() => selector(this.state()), { equal: options?.equal });
   }
 
   override lift<R>(operator: Operator<T, R>): Store<R> {
