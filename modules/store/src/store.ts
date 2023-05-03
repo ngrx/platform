@@ -2,12 +2,12 @@
 import { computed, Injectable, Provider, Signal } from '@angular/core';
 import { Observable, Observer, Operator } from 'rxjs';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ActionsSubject } from './actions_subject';
 import { Action, ActionReducer, FunctionIsNotAllowed } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
-import { toSignal } from './to_signal';
 
 @Injectable()
 export class Store<T = object>
@@ -24,7 +24,7 @@ export class Store<T = object>
     super();
 
     this.source = state$;
-    this.state = toSignal(state$);
+    this.state = toSignal(state$, { manualCleanup: true });
   }
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
