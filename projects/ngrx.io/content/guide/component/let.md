@@ -25,23 +25,6 @@ import { LetDirective } from '@ngrx/component';
 export class MyStandaloneComponent {}
 ```
 
-@deprecated Using `LetModule`:
-
-```ts
-import { Component } from '@angular/core';
-import { LetModule } from '@ngrx/component';
-
-@Component({
-  // ... other metadata
-  standalone: true,
-  imports: [
-    // ... other imports
-    LetModule,
-  ],
-})
-export class MyStandaloneComponent {}
-```
-
 ## Comparison with `*ngIf` and `async`
 
 The current way of binding an observable to the view looks like this:

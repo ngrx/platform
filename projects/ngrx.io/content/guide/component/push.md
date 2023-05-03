@@ -26,23 +26,6 @@ import { PushPipe } from '@ngrx/component';
 export class MyStandaloneComponent {}
 ```
 
-@deprecated Using the standalone `PushModule`:
-
-```ts
-import { Component } from '@angular/core';
-import { PushModule } from '@ngrx/component';
-
-@Component({
-  // ... other metadata
-  standalone: true,
-  imports: [
-    // ... other imports
-    PushModule,
-  ],
-})
-export class MyStandaloneComponent {}
-```
-
 ## Comparison with `async` Pipe
 
 The current way of binding an observable to the view looks like this:
