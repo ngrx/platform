@@ -186,7 +186,7 @@ To create a functional effect, add the `functional: true` flag to the effect con
 
 <code-example header="actors.effects.ts">
 import { inject } from '@angular/core';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ActorsService } from './actors.service';
