@@ -1,4 +1,10 @@
-import { inject, ModuleWithProviders, NgModule, Type } from '@angular/core';
+import {
+  inject,
+  InjectionToken,
+  ModuleWithProviders,
+  NgModule,
+  Type,
+} from '@angular/core';
 import { EffectsFeatureModule } from './effects_feature_module';
 import { EffectsRootModule } from './effects_root_module';
 import { EffectsRunner } from './effects_runner';
@@ -11,7 +17,7 @@ import {
   USER_PROVIDED_EFFECTS,
 } from './tokens';
 import { FunctionalEffect } from './models';
-import { getClasses, isClass } from './utils';
+import { getClasses, isToken } from './utils';
 
 @NgModule({})
 export class EffectsModule {
@@ -94,9 +100,11 @@ export class EffectsModule {
 
 function createEffectsInstances(
   effectsGroups: Array<Type<unknown> | Record<string, FunctionalEffect>>[],
-  userProvidedEffectsGroups: Type<unknown>[][]
+  userProvidedEffectsGroups: Array<Type<unknown> | InjectionToken<unknown>>[]
 ): unknown[] {
-  const effects: Array<Type<unknown> | Record<string, FunctionalEffect>> = [];
+  const effects: Array<
+    Type<unknown> | Record<string, FunctionalEffect> | InjectionToken<unknown>
+  > = [];
 
   for (const effectsGroup of effectsGroups) {
     effects.push(...effectsGroup);
@@ -106,10 +114,10 @@ function createEffectsInstances(
     effects.push(...userProvidedEffectsGroup);
   }
 
-  return effects.map((effectsClassOrRecord) =>
-    isClass(effectsClassOrRecord)
-      ? inject(effectsClassOrRecord)
-      : effectsClassOrRecord
+  return effects.map((effectsTokenOrRecord) =>
+    isToken(effectsTokenOrRecord)
+      ? inject(effectsTokenOrRecord)
+      : effectsTokenOrRecord
   );
 }
 

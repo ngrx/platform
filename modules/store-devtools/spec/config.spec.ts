@@ -109,4 +109,30 @@ describe('StoreDevtoolsOptions', () => {
       },
     });
   });
+
+  it('import "true" is updated to "custom"', () => {
+    // setting import to true results in an error while importing a persisted state into the devtools
+    // the imported state only contains the new state without the actions (and config)
+    // while testing this, the imported state also wasn't correct and contained the initial state values
+    const config = createConfig({
+      features: {
+        import: true,
+      },
+    });
+    expect(config).toEqual({
+      maxAge: false,
+      monitor: noMonitor,
+      actionSanitizer: undefined,
+      stateSanitizer: undefined,
+      name: DEFAULT_NAME,
+      serialize: false,
+      logOnly: false,
+      autoPause: false,
+      features: {
+        import: 'custom',
+      },
+      trace: false,
+      traceLimit: 75,
+    });
+  });
 });

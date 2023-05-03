@@ -108,7 +108,7 @@ describe('Data Schematic', () => {
     const fileContent = tree.readContent(`${projectPath}/src/app/foo.ts`);
 
     expect(fileContent).toMatch(/export interface Foo {/);
-    expect(fileContent).toMatch(/id\?: any;/);
+    expect(fileContent).toMatch(/id\?: unknown;/);
   });
 
   it('should create spec class with right imports', async () => {

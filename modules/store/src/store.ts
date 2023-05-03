@@ -1,5 +1,5 @@
 // disabled because we have lowercase generics for `select`
-import { Injectable, Provider } from '@angular/core';
+import { computed, Injectable, Provider, Signal } from '@angular/core';
 import { Observable, Observer, Operator } from 'rxjs';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
@@ -7,12 +7,15 @@ import { ActionsSubject } from './actions_subject';
 import { Action, ActionReducer, FunctionIsNotAllowed } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
+import { toSignal } from './to_signal';
 
 @Injectable()
 export class Store<T = object>
   extends Observable<T>
   implements Observer<Action>
 {
+  private readonly state: Signal<T>;
+
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,
@@ -21,6 +24,7 @@ export class Store<T = object>
     super();
 
     this.source = state$;
+    this.state = toSignal(state$);
   }
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
@@ -91,6 +95,15 @@ export class Store<T = object>
     ...paths: string[]
   ): Observable<any> {
     return (select as any).call(null, pathOrMapFn, ...paths)(this);
+  }
+
+  /**
+   * Returns a signal of the provided selector.
+   *
+   * @param selector selector function
+   */
+  selectSignal<K>(selector: (state: T) => K): Signal<K> {
+    return computed(() => selector(this.state()));
   }
 
   override lift<R>(operator: Operator<T, R>): Store<R> {

@@ -18,39 +18,10 @@ type Join<
   ? Join<`${First}${Rest}`, Separator>
   : Str;
 
-type Trim<Str extends string> = Str extends ` ${infer S}`
-  ? Trim<S>
-  : Str extends `${infer S} `
-  ? Trim<S>
-  : Str;
-
-type TitleCase<Str extends string> = Str extends `${infer First} ${infer Rest}`
-  ? `${Capitalize<First>} ${TitleCase<Rest>}`
-  : Capitalize<Str>;
-
-type ForbiddenCharactersStr =
-  '/ \\ | < > [ ] { } ( ) . , ! ? # % ^ & * + - ~ \' " `';
-
-type ForbiddenCharacters<Str extends string = ForbiddenCharactersStr> =
+type CapitalizeWords<Str extends string> =
   Str extends `${infer First} ${infer Rest}`
-    ? First | ForbiddenCharacters<Rest>
-    : Str extends ''
-    ? never
-    : Str;
-
-type ForbiddenCharactersCheck<
-  Str extends string,
-  Name extends string
-> = Str extends `${infer _}${ForbiddenCharacters}${infer _}`
-  ? `${Name} cannot contain the following characters: ${ForbiddenCharactersStr}`
-  : unknown;
-
-type EmptyStringCheck<
-  Str extends string,
-  Name extends string
-> = Trim<Str> extends ''
-  ? `${Name} cannot be an empty string or contain only spaces`
-  : unknown;
+    ? `${Capitalize<First>} ${CapitalizeWords<Rest>}`
+    : Capitalize<Str>;
 
 type StringLiteralCheck<
   Str extends string,
@@ -95,7 +66,7 @@ type EventCreator<
   : never;
 
 export type ActionName<EventName extends string> = Uncapitalize<
-  Join<TitleCase<Lowercase<Trim<EventName>>>>
+  Join<CapitalizeWords<EventName>>
 >;
 
 export interface ActionGroupConfig<
@@ -103,11 +74,11 @@ export interface ActionGroupConfig<
   Events extends Record<string, ActionCreatorProps<unknown> | Creator>
 > {
   source: Source & StringLiteralCheck<Source, 'source'>;
-  events: {
-    [EventName in keyof Events]: Events[EventName] &
-      EmptyStringCheck<EventName & string, 'event name'> &
-      StringLiteralCheck<EventName & string, 'event name'> &
-      ForbiddenCharactersCheck<EventName & string, 'event name'> &
+  events: Events & {
+    [EventName in keyof Events]: StringLiteralCheck<
+      EventName & string,
+      'event name'
+    > &
       UniqueEventNameCheck<keyof Events & string, EventName & string> &
       NotAllowedEventPropsCheck<Events[EventName]>;
   };

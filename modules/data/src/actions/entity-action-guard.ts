@@ -43,7 +43,7 @@ export class EntityActionGuard<T> {
   /** Throw if the action payload is not a single, valid key */
   mustBeKey(action: EntityAction<string | number>): string | number | never {
     const data = this.extractData(action);
-    if (!data) {
+    if (data === undefined) {
       throw new Error(`should be a single entity key`);
     }
     if (this.isNotKeyType(data)) {

@@ -70,49 +70,60 @@ describe('createActionGroup', () => {
       });
     });
 
+    describe('events', () => {
+      it('should infer events dictionary', () => {
+        expectSnippet(`
+          const authApiActions = createActionGroup({
+            source: 'Auth API',
+            events: {
+              'Login Success': props<{ token: string; }>,
+              'Login Failure': (message: string) => ({ message }),
+            },
+          });
+        `).toInfer(
+          'authApiActions',
+          "ActionGroup<\"Auth API\", { 'Login Success': () => ActionCreatorProps<{ token: string; }>; 'Login Failure': (message: string) => { message: string; }; }>"
+        );
+      });
+
+      it('should infer events defined as an empty object', () => {
+        expectSnippet(`
+          const authApiActions = createActionGroup({
+            source: 'Auth API',
+            events: {},
+          });
+        `).toInfer('authApiActions', 'ActionGroup<"Auth API", {}>');
+      });
+    });
+
     describe('event name', () => {
       it('should create action name by camel casing the event name', () => {
-        expectSnippet(`
+        const snippet = expectSnippet(`
           const booksApiActions = createActionGroup({
             source: 'Books API',
             events: {
               ' Load BOOKS  suCCess  ': emptyProps(),
+              loadBooksFailure: emptyProps(),
             },
           });
 
-          let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
-        `).toInfer(
+          let loadBooksSuccess: typeof booksApiActions.loadBOOKSSuCCess;
+          let loadBooksFailure: typeof booksApiActions.loadBooksFailure;
+        `);
+
+        snippet.toInfer(
           'loadBooksSuccess',
           `ActionCreator<
             "[Books API]  Load BOOKS  suCCess  ",
             () => TypedAction<"[Books API]  Load BOOKS  suCCess  ">
           >`
         );
-      });
-
-      it('should fail when event name is an empty string', () => {
-        expectSnippet(`
-          const booksApiActions = createActionGroup({
-            source: 'Books API',
-            events: {
-              '': emptyProps(),
-            },
-          });
-        `).toFail(
-          /event name cannot be an empty string or contain only spaces/
-        );
-      });
-
-      it('should fail when event name contains only spaces', () => {
-        expectSnippet(`
-          const booksApiActions = createActionGroup({
-            source: 'Books API',
-            events: {
-              ' ': emptyProps(),
-            },
-          });
-        `).toFail(
-          /event name cannot be an empty string or contain only spaces/
+        snippet.toInfer(
+          'loadBooksFailure',
+          `ActionCreator<
+            "[Books API] loadBooksFailure",
+            () => TypedAction<"[Books API] loadBooksFailure">
+          >`
         );
       });
 
@@ -127,76 +138,12 @@ describe('createActionGroup', () => {
         `).toFail(/event name must be a string literal type/);
       });
 
-      describe('forbidden characters', () => {
-        [
-          String.raw`\\`,
-          '/',
-          '|',
-          '<',
-          '>',
-          '[',
-          ']',
-          '{',
-          '}',
-          '(',
-          ')',
-          '.',
-          ',',
-          '!',
-          '?',
-          '#',
-          '%',
-          '^',
-          '&',
-          '*',
-          '+',
-          '-',
-          '~',
-          '"',
-          String.raw`\'`,
-          '`',
-        ].forEach((char) => {
-          it(`should fail when event name contains ${char} in the beginning`, () => {
-            expectSnippet(`
-              const booksApiActions = createActionGroup({
-                source: 'Books API',
-                events: {
-                  '${char}Load Books Success': emptyProps(),
-                },
-              });
-          `).toFail(/event name cannot contain the following characters:/);
-          });
-
-          it(`should fail when event name contains ${char} in the middle`, () => {
-            expectSnippet(`
-              const booksApiActions = createActionGroup({
-                source: 'Books API',
-                events: {
-                  'Load Books ${char} Success': emptyProps(),
-                },
-              });
-          `).toFail(/event name cannot contain the following characters:/);
-          });
-
-          it(`should fail when event name contains ${char} in the end`, () => {
-            expectSnippet(`
-              const booksApiActions = createActionGroup({
-                source: 'Books API',
-                events: {
-                  'Load Books Success${char}': emptyProps(),
-                },
-              });
-          `).toFail(/event name cannot contain the following characters:/);
-          });
-        });
-      });
-
       it('should fail when two event names are mapped to the same action name', () => {
         expectSnippet(`
           const booksApiActions = createActionGroup({
             source: 'Books API',
             events: {
-              '  Load BOOks  success ': emptyProps(),
+              '  Load Books  success ': emptyProps(),
               'load Books Success': props<{ books: string[] }>(),
             }
           });

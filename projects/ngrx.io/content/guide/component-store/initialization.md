@@ -43,9 +43,7 @@ would be to initialize the state lazily by calling [`setState`](guide/component-
   providers: [ComponentStore],
 })
 export class MoviesPageComponent {
-  readonly movies$ = this.componentStore.state$.pipe(
-    map(state => state.movies),
-  );
+  readonly movies$ = this.componentStore.select(state => state.movies);
 
   constructor(
     private readonly componentStore: ComponentStore&lt;{movies: Movie[]}&gt;

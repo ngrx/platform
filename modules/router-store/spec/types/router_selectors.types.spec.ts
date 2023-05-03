@@ -1,7 +1,7 @@
 import { expecter } from 'ts-snippet';
 import { compilerOptions } from './utils';
 
-describe('router selectors', () => {
+describe('getRouterSelectors', () => {
   const expectSnippet = expecter(
     (code) => `
       import { getRouterSelectors, RouterReducerState } from '@ngrx/router-store';
@@ -122,5 +122,34 @@ describe('router selectors', () => {
       'selector',
       'MemoizedSelector<State, string, (s1: string) => string>'
     );
+  });
+});
+
+describe('RouterStateSelectors', () => {
+  const expectSnippet = expecter(
+    (code) => `
+      import { Selector } from '@ngrx/store';
+      import { RouterStateSelectors } from './modules/router-store/src/models';
+
+      ${code}
+    `,
+    compilerOptions()
+  );
+
+  it('is compatible with a dictionary of selectors', () => {
+    expectSnippet(`
+      type SelectorsDictionary = Record<
+        string,
+        | Selector<Record<string, any>, unknown>
+        | ((...args: any[]) => Selector<Record<string, any>, unknown>)
+      >;
+      type ExtendsSelectorsDictionary<T> = T extends SelectorsDictionary
+        ? true
+        : false;
+
+      let result: ExtendsSelectorsDictionary<
+        RouterStateSelectors<Record<string, any>>
+      >;
+    `).toInfer('result', 'true');
   });
 });

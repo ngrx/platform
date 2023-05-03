@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
@@ -13,23 +13,21 @@ import * as fromBooks from '@example-app/books/reducers';
  * to inform the router's navigation process whether the route should continue
  * to activate this route. Guards must return an observable of true or false.
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class BookExistsGuard implements CanActivate {
-  constructor(
-    private store: Store,
-    private googleBooks: GoogleBooksService,
-    private router: Router
-  ) {}
+
+export const bookExistsGuard = (
+  route: ActivatedRouteSnapshot
+): Observable<boolean> => {
+  const store = inject(Store);
+  const googleBooks = inject(GoogleBooksService);
+  const router = inject(Router);
 
   /**
    * This method creates an observable that waits for the `loaded` property
    * of the collection state to turn `true`, emitting one time once loading
    * has finished.
    */
-  waitForCollectionToLoad(): Observable<boolean> {
-    return this.store.select(fromBooks.selectCollectionLoaded).pipe(
+  function waitForCollectionToLoad(): Observable<boolean> {
+    return store.select(fromBooks.selectCollectionLoaded).pipe(
       filter((loaded) => loaded),
       take(1)
     );
@@ -39,8 +37,8 @@ export class BookExistsGuard implements CanActivate {
    * This method checks if a book with the given ID is already registered
    * in the Store
    */
-  hasBookInStore(id: string): Observable<boolean> {
-    return this.store.select(fromBooks.selectBookEntities).pipe(
+  function hasBookInStore(id: string): Observable<boolean> {
+    return store.select(fromBooks.selectBookEntities).pipe(
       map((entities) => !!entities[id]),
       take(1)
     );
@@ -50,13 +48,13 @@ export class BookExistsGuard implements CanActivate {
    * This method loads a book with the given ID from the API and caches
    * it in the store, returning `true` or `false` if it was found.
    */
-  hasBookInApi(id: string): Observable<boolean> {
-    return this.googleBooks.retrieveBook(id).pipe(
+  function hasBookInApi(id: string): Observable<boolean> {
+    return googleBooks.retrieveBook(id).pipe(
       map((bookEntity) => BookActions.loadBook({ book: bookEntity })),
-      tap((action) => this.store.dispatch(action)),
+      tap((action) => store.dispatch(action)),
       map((book) => !!book),
       catchError(() => {
-        this.router.navigate(['/404']);
+        router.navigate(['/404']);
         return of(false);
       })
     );
@@ -67,14 +65,14 @@ export class BookExistsGuard implements CanActivate {
    * if the book is in store, and if not it then checks if it is in the
    * API.
    */
-  hasBook(id: string): Observable<boolean> {
-    return this.hasBookInStore(id).pipe(
+  function hasBook(id: string): Observable<boolean> {
+    return hasBookInStore(id).pipe(
       switchMap((inStore) => {
         if (inStore) {
           return of(inStore);
         }
 
-        return this.hasBookInApi(id);
+        return hasBookInApi(id);
       })
     );
   }
@@ -92,9 +90,7 @@ export class BookExistsGuard implements CanActivate {
    * on to the next candidate route. In this case, it will move on
    * to the 404 page.
    */
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.waitForCollectionToLoad().pipe(
-      switchMap(() => this.hasBook(route.params['id']))
-    );
-  }
-}
+  return waitForCollectionToLoad().pipe(
+    switchMap(() => hasBook(route.params['id']))
+  );
+};

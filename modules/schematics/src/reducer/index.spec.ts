@@ -245,7 +245,7 @@ describe('Reducer Schematic', () => {
     );
 
     expect(content).toMatch(
-      /import \* as FooActions from '..\/..\/actions\/foo\/foo.actions';/
+      /import { FooActions } from '..\/..\/actions\/foo\/foo.actions';/
     );
   });
 

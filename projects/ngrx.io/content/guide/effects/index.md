@@ -186,7 +186,7 @@ To create a functional effect, add the `functional: true` flag to the effect con
 
 <code-example header="actors.effects.ts">
 import { inject } from '@angular/core';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ActorsService } from './actors.service';
@@ -345,6 +345,32 @@ providers: [
 The `EffectsModule.forFeature()` method or `provideEffects()` function must be added to the module imports/route config even if you only provide effects over token, and don't pass them through parameters. (Same goes for `EffectsModule.forRoot()`)
 
 </div>
+
+## Standalone API in module-based apps
+
+If you have a module-based Angular application, you can still use standalone components. NgRx standalone APIs support this workflow as well.
+
+For module-based apps, you have the `EffectsModule.forRoot([...])` included in the `imports` array of your `AppModule`, which registers the root effects for dependency injection. For a standalone component with feature state/effects registered in its route configuration to successfully run effects, you will need to use the `provideEffects([...])` function in the `providers` array of your `AppModule` to register the injection token. For module-based with standalone components, you will simply have both. 
+
+<code-example header="app.module.ts">
+import { NgModule } from '@angular/core';
+import { EffectsModule, provideEffects } from '@ngrx/effects';
+
+import { MoviesEffects } from './effects/movies.effects';
+import * as actorsEffects from './effects/actors.effects';
+
+@NgModule({
+  imports: [
+    EffectsModule.forRoot(MoviesEffects, actorsEffects),
+  ],
+  providers: [
+    provideEffects(MoviesEffects, actorsEffects)
+  ]
+})
+export class AppModule {}
+</code-example>
+
+<div class="alert is-critical">
 
 ## Incorporating State
 

@@ -73,9 +73,11 @@ export class MovieComponent {
 </code-example>
 
 ## tapResponse
+
 An easy way to handle the response in ComponentStore effects in a safe way, without additional boilerplate is to use the `tapResponse` operator. It enforces that the error case is handled and that the effect would still be running should an error occur. It is essentially a simple wrapper around two operators:
-- `tap` that handles success and error
-- `catchError(() => EMPTY)` that ensures that the effect continues to run after the error.  
+
+- `tap` that handles success and error cases.
+- `catchError(() => EMPTY)` that ensures that the effect continues to run after the error.
 
 <code-example header="movies.store.ts">
   readonly getMovie = this.effect((movieId$: Observable&lt;string&gt;) => {
@@ -92,6 +94,25 @@ An easy way to handle the response in ComponentStore effects in a safe way, with
   });
 </code-example>
 
+There is also another signature of the `tapResponse` operator that accepts the observer object as an input argument. In addition to the `next` and `error` callbacks, it provides the ability to pass `complete` and/or `finalize` callbacks:
+
+<code-example header="movies.store.ts">
+  readonly getMoviesByQuery = this.effect&lt;string&gt;((query$) => {
+    return query$.pipe(
+      tap(() => this.patchState({ loading: true }),
+      switchMap((query) =>
+        this.moviesService.fetchMoviesByQuery(query).pipe(
+          tapResponse({
+            next: (movies) => this.patchState({ movies }),
+            error: (error: HttpErrorResponse) => this.logError(error),
+            finalize: () => this.patchState({ loading: false }),
+          })
+        )
+      )
+    );
+  });
+</code-example>
+
 ## Calling an `effect` without parameters
 
 A common use case is to call the `effect` method without any parameters. 
@@ -101,13 +122,15 @@ To make this possible set the generic type of the `effect` method to `void`.
   readonly getAllMovies = this.effect&lt;void&gt;(
     // The name of the source stream doesn't matter: `trigger$`, `source$` or `$` are good 
     // names. We encourage to choose one of these and use them consistently in your codebase.
-    trigger$ => trigger$.pipe(
-      exhaustMap(() => this.moviesService.fetchAllMovies().pipe(
-        tapResponse(
-          movies => this.addAllMovies(movies),
-          (error) => this.logError(error),
+    (trigger$) => trigger$.pipe(
+      exhaustMap(() =>
+        this.moviesService.fetchAllMovies().pipe(
+          tapResponse({
+            next: (movies) => this.addAllMovies(movies),
+            error: (error: HttpErrorResponse) => this.logError(error),
+          })
         )
       )
     )
-  ));
+  );
 </code-example>

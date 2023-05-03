@@ -78,12 +78,12 @@ export interface EntityStateAdapter<T> {
   map<S extends EntityState<T>>(map: EntityMap<T>, state: S): S;
 }
 
-export interface EntitySelectors<T, V> {
+export type EntitySelectors<T, V> = {
   selectIds: (state: V) => string[] | number[];
   selectEntities: (state: V) => Dictionary<T>;
   selectAll: (state: V) => T[];
   selectTotal: (state: V) => number;
-}
+};
 
 export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   selectId: IdSelector<T>;

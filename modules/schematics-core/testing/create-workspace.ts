@@ -37,31 +37,25 @@ export async function createWorkspace(
   appOptions = defaultAppOptions,
   libOptions = defaultLibOptions
 ) {
-  appTree = await schematicRunner
-    .runExternalSchematicAsync(
-      '@schematics/angular',
-      'workspace',
-      workspaceOptions
-    )
-    .toPromise();
+  appTree = await schematicRunner.runExternalSchematic(
+    '@schematics/angular',
+    'workspace',
+    workspaceOptions
+  );
 
-  appTree = await schematicRunner
-    .runExternalSchematicAsync(
-      '@schematics/angular',
-      'application',
-      appOptions,
-      appTree
-    )
-    .toPromise();
+  appTree = await schematicRunner.runExternalSchematic(
+    '@schematics/angular',
+    'application',
+    appOptions,
+    appTree
+  );
 
-  appTree = await schematicRunner
-    .runExternalSchematicAsync(
-      '@schematics/angular',
-      'library',
-      libOptions,
-      appTree
-    )
-    .toPromise();
+  appTree = await schematicRunner.runExternalSchematic(
+    '@schematics/angular',
+    'library',
+    libOptions,
+    appTree
+  );
 
   return appTree;
 }
