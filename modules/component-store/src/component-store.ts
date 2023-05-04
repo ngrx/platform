@@ -37,7 +37,7 @@ import {
   type ValueEqualityFn,
 } from '@angular/core';
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
-import { toSignal } from './to-signal';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface SelectConfig {
   debounce?: boolean;
@@ -87,7 +87,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   readonly state: Signal<T> = toSignal(
     this.state$.pipe(takeUntil(this.destroy$)),
     { requireSync: false, manualCleanup: true }
-  );
+  ) as Signal<T>;
   private ɵhasProvider = false;
 
   constructor(@Optional() @Inject(INITIAL_STATE_TOKEN) defaultState?: T) {
