@@ -5,6 +5,11 @@
       "description": "As of NgRx v14, `ReactiveComponentModule` is deprecated. It is replaced by `LetModule` and `PushModule`.",
       "version": "15.0.0-beta",
       "factory": "./15_0_0-beta/index"
+    },
+    "ngrx-component-migration-16": {
+      "description": "As of NgRx v16, `LetModule` and `PushModule` are deprecated in favor of standalone `LetDirective` and `PushPipe`.",
+      "version": "16.0.0",
+      "factory": "./16_0_0/index"
     }
   }
 }
