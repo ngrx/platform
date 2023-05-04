@@ -1,5 +1,5 @@
-import { ApplicationRef, ReflectiveInjector } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
+import { ApplicationRef } from '@angular/core';
+import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { SwUpdate } from '@angular/service-worker';
 import { Subject } from 'rxjs';
 
@@ -7,7 +7,6 @@ import { Logger } from 'app/shared/logger.service';
 import { SwUpdatesService } from './sw-updates.service';
 
 describe('SwUpdatesService', () => {
-    let injector: ReflectiveInjector;
     let appRef: MockApplicationRef;
     let service: SwUpdatesService;
     let swu: MockSwUpdate;
@@ -20,19 +19,21 @@ describe('SwUpdatesService', () => {
     //   run `setup()`/`tearDown()` in `beforeEach()`/`afterEach()` blocks. We use the `run()` helper
     //   to call them inside each test's zone.
     const setup = (isSwUpdateEnabled: boolean) => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            { provide: ApplicationRef, useClass: MockApplicationRef },
-            { provide: Logger, useClass: MockLogger },
-            {
-                provide: SwUpdate,
-                useFactory: () => new MockSwUpdate(isSwUpdateEnabled),
-            },
-            SwUpdatesService,
-        ]);
+        TestBed.configureTestingModule({
+            providers: [
+                { provide: ApplicationRef, useClass: MockApplicationRef },
+                { provide: Logger, useClass: MockLogger },
+                {
+                  provide: SwUpdate,
+                  useFactory: () => new MockSwUpdate(isSwUpdateEnabled),
+                },
+                SwUpdatesService,
+            ],
+        });
 
-        appRef = injector.get(ApplicationRef);
-        service = injector.get(SwUpdatesService);
-        swu = injector.get(SwUpdate);
+        appRef = TestBed.inject(ApplicationRef) as unknown as MockApplicationRef;
+        service = TestBed.inject(SwUpdatesService);
+        swu = TestBed.inject(SwUpdate) as unknown as MockSwUpdate;
         checkInterval = (service as any).checkInterval;
     };
     const tearDown = () => service.ngOnDestroy();

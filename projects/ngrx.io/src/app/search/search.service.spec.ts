@@ -1,12 +1,11 @@
-import { ReflectiveInjector, NgZone } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { NgZone } from '@angular/core';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { SearchService } from './search.service';
 import { WebWorkerClient } from 'app/shared/web-worker';
 
 describe('SearchService', () => {
 
-    let injector: ReflectiveInjector;
     let service: SearchService;
     let sendMessageSpy: jasmine.Spy;
     let mockWorker: WebWorkerClient;
@@ -16,11 +15,16 @@ describe('SearchService', () => {
         mockWorker = { sendMessage: sendMessageSpy } as any;
         spyOn(WebWorkerClient, 'create').and.returnValue(mockWorker);
 
-        injector = ReflectiveInjector.resolveAndCreate([
-            SearchService,
-            { provide: NgZone, useFactory: () => new NgZone({ enableLongStackTrace: false }) }
-        ]);
-        service = injector.get(SearchService);
+        TestBed.configureTestingModule({
+            providers: [
+                SearchService,
+                {
+                  provide: NgZone,
+                  useFactory: () => new NgZone({ enableLongStackTrace: false }),
+                },
+            ]
+        });
+        service = TestBed.inject(SearchService);
     });
 
     describe('initWorker', () => {

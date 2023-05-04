@@ -1,22 +1,23 @@
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { GaService } from 'app/shared/ga.service';
 import { WindowToken } from 'app/shared/window';
 
 describe('GaService', () => {
     let gaService: GaService;
-    let injector: ReflectiveInjector;
     let gaSpy: jasmine.Spy;
     let mockWindow: any;
 
     beforeEach(() => {
         gaSpy = jasmine.createSpy('ga');
         mockWindow = { ga: gaSpy };
-        injector = ReflectiveInjector.resolveAndCreate([
-            GaService,
-            { provide: WindowToken, useFactory: () => mockWindow },
-        ]);
-        gaService = injector.get(GaService);
+        TestBed.configureTestingModule({
+            providers: [
+                GaService,
+                { provide: WindowToken, useFactory: () => mockWindow },
+            ],
+        });
+        gaService = TestBed.inject(GaService);
     });
 
     it('should initialize ga with "create" when constructed', () => {

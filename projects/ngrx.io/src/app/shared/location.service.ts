@@ -17,7 +17,7 @@ export class LocationService {
     currentUrl = this.urlSubject.pipe(map(url => this.stripSlashes(url)));
 
     currentPath = this.currentUrl.pipe(
-        map(url => (url.match(/[^?#]*/) || [])[0]), // strip query and hash
+        map(url => (url.match(/[^?#]*/) || [])[0] as string), // strip query and hash
         tap(path => this.gaService.locationChanged(path))
     );
 

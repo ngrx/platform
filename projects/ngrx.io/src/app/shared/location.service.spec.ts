@@ -1,4 +1,4 @@
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Location, LocationStrategy, PlatformLocation } from '@angular/common';
 import { MockLocationStrategy } from '@angular/common/testing';
 import { Subject } from 'rxjs';
@@ -8,24 +8,25 @@ import { SwUpdatesService } from 'app/sw-updates/sw-updates.service';
 import { LocationService } from './location.service';
 
 describe('LocationService', () => {
-    let injector: ReflectiveInjector;
     let location: MockLocationStrategy;
     let service: LocationService;
     let swUpdates: MockSwUpdatesService;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            LocationService,
-            Location,
-            { provide: GaService, useClass: TestGaService },
-            { provide: LocationStrategy, useClass: MockLocationStrategy },
-            { provide: PlatformLocation, useClass: MockPlatformLocation },
-            { provide: SwUpdatesService, useClass: MockSwUpdatesService },
-        ]);
+        TestBed.configureTestingModule({
+            providers: [
+                LocationService,
+                Location,
+                { provide: GaService, useClass: TestGaService },
+                { provide: LocationStrategy, useClass: MockLocationStrategy },
+                { provide: PlatformLocation, useClass: MockPlatformLocation },
+                { provide: SwUpdatesService, useClass: MockSwUpdatesService },
+            ],
+        });
 
-        location = injector.get(LocationStrategy);
-        service = injector.get(LocationService);
-        swUpdates = injector.get(SwUpdatesService);
+        location = TestBed.inject(LocationStrategy) as MockLocationStrategy;
+        service = TestBed.inject(LocationService);
+        swUpdates = TestBed.inject(SwUpdatesService) as unknown as MockSwUpdatesService;
     });
 
     describe('currentUrl', () => {
@@ -340,7 +341,7 @@ describe('LocationService', () => {
         let platformLocation: MockPlatformLocation;
 
         beforeEach(() => {
-            platformLocation = injector.get(PlatformLocation);
+            platformLocation = TestBed.inject(PlatformLocation) as unknown as MockPlatformLocation;
         });
 
         it('should call replaceState on PlatformLocation', () => {
@@ -558,7 +559,7 @@ describe('LocationService', () => {
         let gaLocationChanged: jasmine.Spy;
 
         beforeEach(() => {
-            const gaService = injector.get(GaService);
+            const gaService = TestBed.inject(GaService) as unknown as TestGaService;
             gaLocationChanged = gaService.locationChanged;
             // execute currentPath observable so that gaLocationChanged is called
             service.currentPath.subscribe();

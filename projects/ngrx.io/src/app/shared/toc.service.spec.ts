@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
@@ -11,7 +11,6 @@ import {
 import { TocItem, TocService } from './toc.service';
 
 describe('TocService', () => {
-    let injector: ReflectiveInjector;
     let scrollSpyService: MockScrollSpyService;
     let tocService: TocService;
     let lastTocList: TocItem[];
@@ -25,14 +24,16 @@ describe('TocService', () => {
     }
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            { provide: DomSanitizer, useClass: TestDomSanitizer },
-            { provide: DOCUMENT, useValue: document },
-            { provide: ScrollSpyService, useClass: MockScrollSpyService },
-            TocService,
-        ]);
-        scrollSpyService = injector.get(ScrollSpyService);
-        tocService = injector.get(TocService);
+        TestBed.configureTestingModule({
+            providers: [
+                { provide: DomSanitizer, useClass: TestDomSanitizer },
+                { provide: DOCUMENT, useValue: document },
+                { provide: ScrollSpyService, useClass: MockScrollSpyService },
+                TocService,
+            ],
+        });
+        scrollSpyService = TestBed.inject(ScrollSpyService) as unknown as MockScrollSpyService;
+        tocService = TestBed.inject(TocService);
         tocService.tocList.subscribe(tocList => (lastTocList = tocList));
     });
 
@@ -340,7 +341,7 @@ describe('TocService', () => {
         });
 
         it('should have bypassed HTML sanitizing of heading\'s innerHTML ', () => {
-            const domSanitizer: TestDomSanitizer = injector.get(DomSanitizer);
+            const domSanitizer: TestDomSanitizer = TestBed.inject(DomSanitizer) as unknown as TestDomSanitizer;
             expect(domSanitizer.bypassSecurityTrustHtml).toHaveBeenCalledWith(
                 'Setup to develop <i>locally</i>.'
             );

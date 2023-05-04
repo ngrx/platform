@@ -1,11 +1,9 @@
-import { ReflectiveInjector } from '@angular/core';
-import { PlatformLocation, DOCUMENT } from '@angular/common';
+import { PlatformLocation } from '@angular/common';
 
 import { ScrollService, topMargin } from './scroll.service';
 
 describe('ScrollService', () => {
     const topOfPageElem = {} as Element;
-    let injector: ReflectiveInjector;
     let document: MockDocument;
     let location: MockPlatformLocation;
     let scrollService: ScrollService;
@@ -34,14 +32,9 @@ describe('ScrollService', () => {
     });
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            ScrollService,
-            { provide: DOCUMENT, useClass: MockDocument },
-            { provide: PlatformLocation, useClass: MockPlatformLocation },
-        ]);
-        location = injector.get(PlatformLocation);
-        document = injector.get(DOCUMENT);
-        scrollService = injector.get(ScrollService);
+        location = new MockPlatformLocation();
+        document = new MockDocument();
+        scrollService = new ScrollService(document, location as PlatformLocation);
     });
 
     describe('#topOffset', () => {
