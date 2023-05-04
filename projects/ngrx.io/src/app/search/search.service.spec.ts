@@ -19,10 +19,10 @@ describe('SearchService', () => {
             providers: [
                 SearchService,
                 {
-                  provide: NgZone,
-                  useFactory: () => new NgZone({ enableLongStackTrace: false }),
+                    provide: NgZone,
+                    useFactory: () => new NgZone({ enableLongStackTrace: false }),
                 },
-            ]
+            ],
         });
         service = TestBed.inject(SearchService);
     });

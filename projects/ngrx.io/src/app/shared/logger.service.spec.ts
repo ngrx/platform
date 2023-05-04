@@ -15,7 +15,7 @@ describe('logger service', () => {
             providers: [
                 Logger,
                 { provide: ErrorHandler, useClass: MockErrorHandler },
-            ]
+            ],
         });
         logger = TestBed.inject(Logger);
         errorHandler = TestBed.inject(ErrorHandler);

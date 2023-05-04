@@ -24,8 +24,8 @@ describe('SwUpdatesService', () => {
                 { provide: ApplicationRef, useClass: MockApplicationRef },
                 { provide: Logger, useClass: MockLogger },
                 {
-                  provide: SwUpdate,
-                  useFactory: () => new MockSwUpdate(isSwUpdateEnabled),
+                    provide: SwUpdate,
+                    useFactory: () => new MockSwUpdate(isSwUpdateEnabled),
                 },
                 SwUpdatesService,
             ],

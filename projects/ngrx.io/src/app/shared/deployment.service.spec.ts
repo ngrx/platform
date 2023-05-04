@@ -7,12 +7,12 @@ import { Deployment } from './deployment.service';
 describe('Deployment service', () => {
     describe('mode', () => {
         beforeEach(() => {
-           TestBed.configureTestingModule({
-               providers: [
-                   Deployment,
-                   { provide: LocationService, useFactory: () => new MockLocationService('') },
-               ],
-           });
+            TestBed.configureTestingModule({
+                providers: [
+                    Deployment,
+                    { provide: LocationService, useFactory: () => new MockLocationService('') },
+                ],
+            });
         });
 
         it('should get the mode from the environment', () => {
