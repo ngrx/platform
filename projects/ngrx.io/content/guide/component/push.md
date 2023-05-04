@@ -6,10 +6,8 @@ running in zone-full as well as zone-less mode without any changes to the code.
 
 ## Usage
 
-The `ngrxPush` pipe is a standalone Pipe.
-To use it, add the `PushPipe` to the `imports` of your standalone component or NgModule. Alternatively, you can use `PushModule`, however, keep in mind that the `PushModule` is deprecated.
-
-Using the standalone `PushPipe`:
+The `ngrxPush` pipe is a standalone pipe.
+To use it, add the `PushPipe` to the `imports` of your standalone component or NgModule:
 
 ```ts
 import { Component } from '@angular/core';
@@ -25,6 +23,14 @@ import { PushPipe } from '@ngrx/component';
 })
 export class MyStandaloneComponent {}
 ```
+
+<div class="alert is-critical">
+
+The `ngrxPush` pipe can be also used by importing the `PushModule`.
+However, the `PushModule` is deprecated in favor of the standalone `PushPipe`.
+See the [migration guide](guide/migration/v16#pushmodule) for more information.
+
+</div>
 
 ## Comparison with `async` Pipe
 

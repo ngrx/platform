@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -40,19 +39,6 @@ import { stripSpaces } from '../helpers';
   `,
 })
 class LetDirectiveTestComponent {
-  value$: unknown;
-}
-
-@Component({
-  standalone: true,
-  template: `
-    <ng-container *ngrxLet="value$ as value">{{
-      value === null ? 'null' : (value | json) || 'undefined'
-    }}</ng-container>
-  `,
-  imports: [LetDirective, JsonPipe],
-})
-class LetDirectiveTestStandaloneComponent {
   value$: unknown;
 }
 
@@ -141,23 +127,6 @@ const setupLetDirectiveTestComponent = (): void => {
   });
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
     LetDirectiveTestComponent
-  );
-  letDirectiveTestComponent =
-    fixtureLetDirectiveTestComponent.componentInstance;
-  componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
-};
-
-const setupLetDirectiveTestStandaloneComponent = (): void => {
-  TestBed.configureTestingModule({
-    imports: [LetDirectiveTestStandaloneComponent],
-    providers: [
-      { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
-    ],
-  });
-  fixtureLetDirectiveTestComponent = TestBed.createComponent(
-    LetDirectiveTestStandaloneComponent
   );
   letDirectiveTestComponent =
     fixtureLetDirectiveTestComponent.componentInstance;
@@ -429,28 +398,6 @@ describe('LetDirective', () => {
       letDirectiveTestComponent.value$ = 'component';
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('"component"');
-    });
-  });
-
-  describe('when a standalone component is used', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestStandaloneComponent));
-
-    it('should be instantiable', () => {
-      expect(fixtureLetDirectiveTestComponent).toBeDefined();
-      expect(letDirectiveTestComponent).toBeDefined();
-      expect(componentNativeElement).toBeDefined();
-    });
-
-    it('should render undefined as value when initially undefined was passed (as no value ever was emitted)', () => {
-      letDirectiveTestComponent.value$ = undefined;
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('undefined');
-    });
-
-    it('should render initially passed number', () => {
-      letDirectiveTestComponent.value$ = 10;
-      fixtureLetDirectiveTestComponent.detectChanges();
-      expect(componentNativeElement.textContent).toBe('10');
     });
   });
 
