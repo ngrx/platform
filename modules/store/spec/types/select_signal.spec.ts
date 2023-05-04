@@ -41,12 +41,28 @@ describe('Store.selectSignal()', () => {
           `const selector = store.selectSignal(s => s.foo.bar);`
         ).toInfer('selector', 'Signal<{ baz: []; }>');
       });
+
+      it('should infer correctly (with options)', () => {
+        expectSnippet(
+          `const selector = store.selectSignal(s => s.foo, {equal: (a, b) => a === b});`
+        ).toInfer('selector', 'Signal<{ bar: { baz: []; }; }>');
+      });
     });
 
     describe('with selectors', () => {
       it('should infer correctly', () => {
         expectSnippet(
           `const selector = store.selectSignal(fooSelector);`
+        ).toInfer('selector', 'Signal<{ bar: { baz: []; }; }>');
+
+        expectSnippet(
+          `const selector = store.selectSignal(barSelector);`
+        ).toInfer('selector', 'Signal<{ baz: []; }>');
+      });
+
+      it('should infer correctly (with options)', () => {
+        expectSnippet(
+          `const selector = store.selectSignal(fooSelector, {equal: (a,b) => a === b});`
         ).toInfer('selector', 'Signal<{ bar: { baz: []; }; }>');
 
         expectSnippet(

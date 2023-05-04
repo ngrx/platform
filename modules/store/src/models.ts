@@ -1,3 +1,5 @@
+import { type ValueEqualityFn } from '@angular/core';
+
 export interface Action {
   type: string;
 }
@@ -168,4 +170,11 @@ export interface RuntimeChecks {
    * Verifies that action types are not registered more than once
    */
   strictActionTypeUniqueness?: boolean;
+}
+
+export interface SelectSignalOptions<T> {
+  /**
+   *  A comparison function which defines equality for select results.
+   */
+  equal?: ValueEqualityFn<T>;
 }

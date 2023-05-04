@@ -1,3 +1,17 @@
+<a name="16.0.0-rc.0"></a>
+
+# [16.0.0-rc.0](https://github.com/ngrx/platform/compare/16.0.0-beta.0...16.0.0-rc.0) (2023-05-04)
+
+### Bug Fixes
+
+- **data:** make non-optimistic add command entity partial ([#3859](https://github.com/ngrx/platform/issues/3859)) ([93ee1db](https://github.com/ngrx/platform/commit/93ee1db))
+
+### Features
+
+- **component-store:** add selectSignal options ([503e9d8](https://github.com/ngrx/platform/commit/503e9d8))
+- **component-store:** add selectSignal signature that combines provided signals ([#3863](https://github.com/ngrx/platform/issues/3863)) ([07ba3fa](https://github.com/ngrx/platform/commit/07ba3fa))
+- **store:** add selectSignal options ([0a13c4d](https://github.com/ngrx/platform/commit/0a13c4d))
+
 <a name="16.0.0-beta.0"></a>
 
 # [16.0.0-beta.0](https://github.com/ngrx/platform/compare/15.4.0...16.0.0-beta.0) (2023-04-27)
