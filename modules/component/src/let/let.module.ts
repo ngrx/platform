@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { LetDirective } from './let.directive';
 
+/**
+ * @deprecated This module is deprecated in favor of the standalone `LetDirective`.
+ */
 @NgModule({
-  declarations: [LetDirective],
+  imports: [LetDirective],
   exports: [LetDirective],
 })
 export class LetModule {}

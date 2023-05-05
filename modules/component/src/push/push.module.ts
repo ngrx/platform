@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PushPipe } from './push.pipe';
 
+/**
+ * @deprecated This module is deprecated in favor of the standalone `PushPipe`.
+ */
 @NgModule({
-  declarations: [PushPipe],
+  imports: [PushPipe],
   exports: [PushPipe],
 })
 export class PushModule {}

@@ -163,7 +163,8 @@ describe('PushPipe', () => {
   describe('used as a Pipe', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [PushPipe, PushPipeTestComponent],
+        declarations: [PushPipeTestComponent],
+        imports: [PushPipe],
         providers: [{ provide: ErrorHandler, useClass: MockErrorHandler }],
       });
 

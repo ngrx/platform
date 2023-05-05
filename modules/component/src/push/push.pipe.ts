@@ -37,7 +37,11 @@ type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
  *
  * @publicApi
  */
-@Pipe({ name: 'ngrxPush', pure: false })
+@Pipe({
+  standalone: true,
+  name: 'ngrxPush',
+  pure: false,
+})
 export class PushPipe implements PipeTransform, OnDestroy {
   private renderedValue: unknown;
   private readonly renderScheduler = createRenderScheduler();

@@ -5,23 +5,31 @@ The `*ngrxLet` directive serves a convenient way of binding observables to a vie
 
 ## Usage
 
-The `*ngrxLet` directive is provided through the `LetModule`.
-To use it, add the `LetModule` to the `imports` of your standalone component or NgModule:
+The `*ngrxLet` directive is a standalone directive.
+To use it, add the `LetDirective` to the `imports` of your standalone component or NgModule:
 
 ```ts
 import { Component } from '@angular/core';
-import { LetModule } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 
 @Component({
   // ... other metadata
   standalone: true,
   imports: [
     // ... other imports
-    LetModule,
+    LetDirective,
   ],
 })
 export class MyStandaloneComponent {}
 ```
+
+<div class="alert is-critical">
+
+The `*ngrxLet` directive can be also used by importing the `LetModule`.
+However, the `LetModule` is deprecated in favor of the standalone `LetDirective`.
+See the [migration guide](guide/migration/v16#letmodule) for more information.
+
+</div>
 
 ## Comparison with `*ngIf` and `async`
 
