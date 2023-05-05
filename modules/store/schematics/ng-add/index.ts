@@ -31,6 +31,11 @@ import {
   parseName,
 } from '../../schematics-core';
 import { Schema as RootStoreOptions } from './schema';
+import {
+  addFunctionalProvidersToStandaloneBootstrap,
+  callsProvidersFunction,
+} from '@schematics/angular/private/standalone';
+import { getProjectMainFile } from '../../schematics-core/utility/project';
 
 function addImportToNgModule(options: RootStoreOptions): Rule {
   return (host: Tree) => {
@@ -138,6 +143,73 @@ function addNgRxESLintPlugin() {
   };
 }
 
+function addStandaloneConfig(options: RootStoreOptions): Rule {
+  return (host: Tree) => {
+    const mainFile = getProjectMainFile(host, options);
+
+    if (host.exists(mainFile)) {
+      const storeProviderFn = 'provideStore';
+
+      if (callsProvidersFunction(host, mainFile, storeProviderFn)) {
+        // exit because the store config is already provided
+        return host;
+      }
+      const storeProviderOptions = options.minimal
+        ? []
+        : [
+            ts.factory.createIdentifier('reducers'),
+            ts.factory.createIdentifier('{ metaReducers }'),
+          ];
+      const patchedConfigFile = addFunctionalProvidersToStandaloneBootstrap(
+        host,
+        mainFile,
+        storeProviderFn,
+        '@ngrx/store',
+        storeProviderOptions
+      );
+
+      if (options.minimal) {
+        // no need to add imports if it is minimal
+        return host;
+      }
+
+      // insert reducers import into the patched file
+      const configFileContent = host.read(patchedConfigFile);
+      const source = ts.createSourceFile(
+        patchedConfigFile,
+        configFileContent?.toString('utf-8') || '',
+        ts.ScriptTarget.Latest,
+        true
+      );
+      const statePath = `/${options.path}/${options.statePath}`;
+      const relativePath = buildRelativePath(
+        `/${patchedConfigFile}`,
+        statePath
+      );
+
+      const recorder = host.beginUpdate(patchedConfigFile);
+
+      const change = insertImport(
+        source,
+        patchedConfigFile,
+        'reducers, metaReducers',
+        relativePath
+      );
+
+      if (change instanceof InsertChange) {
+        recorder.insertLeft(change.pos, change.toAdd);
+      }
+
+      host.commitUpdate(recorder);
+
+      return host;
+    }
+    throw new SchematicsException(
+      `Main file not found for a project ${options.project}`
+    );
+  };
+}
+
 export default function (options: RootStoreOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
@@ -145,7 +217,7 @@ export default function (options: RootStoreOptions): Rule {
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
 
-    if (options.module) {
+    if (options.module && !options.standalone) {
       options.module = findModuleFromOptions(host, {
         name: '',
         module: options.module,
@@ -166,10 +238,12 @@ export default function (options: RootStoreOptions): Rule {
       move(parsedPath.path),
     ]);
 
+    const configOrModuleUpdate = options.standalone
+      ? addStandaloneConfig(options)
+      : addImportToNgModule(options);
+
     return chain([
-      branchAndMerge(
-        chain([addImportToNgModule(options), mergeWith(templateSource)])
-      ),
+      branchAndMerge(chain([configOrModuleUpdate, mergeWith(templateSource)])),
       options && options.skipPackageJson ? noop() : addNgRxStoreToPackageJson(),
       options && options.skipESLintPlugin ? noop() : addNgRxESLintPlugin(),
     ])(host, context);
