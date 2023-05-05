@@ -5,15 +5,18 @@ import {
   INITIAL_STATE_TOKEN,
   provideComponentStore,
 } from '@ngrx/component-store';
+import { TestPipe } from './test.pipe';
 
 @Component({
   selector: 'ngrx-root',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, TestPipe],
   template: `
     <h1>Welcome {{ title }} {{ val() }}</h1>
 
     <a routerLink="/feature">Load Feature</a>
+
+    {{ 3 | test }}
 
     <router-outlet></router-outlet>
   `,

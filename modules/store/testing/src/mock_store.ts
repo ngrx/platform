@@ -32,7 +32,7 @@ export class MockStore<T = object> extends Store<T> {
   private lastState?: T;
 
   constructor(
-    private state$: MockState<T>,
+    override state$: MockState<T>,
     actionsObserver: ActionsSubject,
     reducerManager: ReducerManager,
     @Inject(INITIAL_STATE) private initialState: T,
