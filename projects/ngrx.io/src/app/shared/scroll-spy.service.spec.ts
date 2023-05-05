@@ -1,6 +1,4 @@
-import { Injector, ReflectiveInjector } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { DOCUMENT } from '@angular/common';
 
 import { ScrollService } from 'app/shared/scroll.service';
 import {
@@ -154,17 +152,12 @@ describe('ScrollSpiedElementGroup', () => {
 });
 
 describe('ScrollSpyService', () => {
-    let injector: Injector;
     let scrollSpyService: ScrollSpyService;
+    let document: Document;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            { provide: DOCUMENT, useValue: { body: {} } },
-            { provide: ScrollService, useValue: { topOffset: 50 } },
-            ScrollSpyService,
-        ]);
-
-        scrollSpyService = injector.get(ScrollSpyService);
+        document = { body: {} } as Document;
+        scrollSpyService = new ScrollSpyService(document, { topOffset: 50 } as ScrollService);
     });
 
     describe('#spyOn()', () => {
@@ -520,7 +513,7 @@ describe('ScrollSpyService', () => {
         });
 
         it('should first re-calibrate if the content height has changed', () => {
-            const body = injector.get(DOCUMENT).body as any;
+            const body = document.body as any;
 
             scrollSpyService.spyOn([]);
             scrollSpyService.spyOn([]);

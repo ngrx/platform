@@ -1,4 +1,4 @@
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { PlatformLocation } from '@angular/common';
 
 import { of } from 'rxjs';
@@ -12,17 +12,18 @@ import { Category } from './resource.model';
 // Let e2e tests verify how it displays.
 describe('ResourceListComponent', () => {
 
-    let injector: ReflectiveInjector;
     let location: TestPlatformLocation;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            ResourceListComponent,
-            {provide: PlatformLocation, useClass: TestPlatformLocation },
-            {provide: ResourceService, useClass: TestResourceService }
-        ]);
+        TestBed.configureTestingModule({
+            providers: [
+                ResourceListComponent,
+                { provide: PlatformLocation, useClass: TestPlatformLocation },
+                { provide: ResourceService, useClass: TestResourceService },
+            ],
+        });
 
-        location = injector.get(PlatformLocation);
+        location = TestBed.inject(PlatformLocation);
     });
 
     it('should set the location w/o leading slashes', () => {
@@ -63,7 +64,7 @@ describe('ResourceListComponent', () => {
 
     /// / Test Helpers ////
     function  getComponent(): ResourceListComponent {
-        return injector.get(ResourceListComponent);
+        return TestBed.inject(ResourceListComponent);
     }
 
     class TestPlatformLocation {

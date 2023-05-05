@@ -1,4 +1,5 @@
-import { ErrorHandler, ReflectiveInjector } from '@angular/core';
+import { ErrorHandler } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Logger } from './logger.service';
 
 describe('logger service', () => {
@@ -10,12 +11,14 @@ describe('logger service', () => {
     beforeEach(() => {
         logSpy = spyOn(console, 'log');
         warnSpy = spyOn(console, 'warn');
-        const injector = ReflectiveInjector.resolveAndCreate([
-            Logger,
-            { provide: ErrorHandler, useClass: MockErrorHandler },
-        ]);
-        logger = injector.get(Logger);
-        errorHandler = injector.get(ErrorHandler);
+        TestBed.configureTestingModule({
+            providers: [
+                Logger,
+                { provide: ErrorHandler, useClass: MockErrorHandler },
+            ],
+        });
+        logger = TestBed.inject(Logger);
+        errorHandler = TestBed.inject(ErrorHandler);
     });
 
     describe('log', () => {
