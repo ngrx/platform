@@ -31,7 +31,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/component/*/**/*.ts",
@@ -41,7 +41,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/component/jest.config.ts",
             "runInBand": true
@@ -82,7 +82,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/component-store/*/**/*.ts",
@@ -92,7 +92,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/component-store/jest.config.ts",
             "runInBand": true
@@ -133,7 +133,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/data/*/**/*.ts",
@@ -143,7 +143,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/data/jest.config.ts",
             "runInBand": true
@@ -158,7 +158,7 @@
       "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "schematics": {
-        "@nrwl/angular:component": {
+        "@nx/angular:component": {
           "style": "scss"
         }
       },
@@ -228,7 +228,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "projects/data-example-app/*/**/*.ts",
@@ -238,7 +238,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "projects/data-example-app/jest.config.ts",
             "runInBand": true,
@@ -298,7 +298,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "projects/ngrx.io/src/*/**/*.ts",
@@ -360,7 +360,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/effects/*/**/*.ts",
@@ -370,7 +370,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/effects/jest.config.ts",
             "runInBand": true
@@ -420,7 +420,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/entity/*/**/*.ts",
@@ -430,7 +430,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/entity/jest.config.ts",
             "runInBand": true
@@ -449,7 +449,7 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/eslint-plugin/*/**/*.ts",
@@ -459,7 +459,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/eslint-plugin/jest.config.ts",
             "runInBand": true
@@ -467,7 +467,7 @@
           "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
         },
         "build-package": {
-          "builder": "@nrwl/js:tsc",
+          "builder": "@nx/js:tsc",
           "options": {
             "outputPath": "dist/modules/eslint-plugin",
             "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
@@ -580,7 +580,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "projects/example-app/*/**/*.ts",
@@ -590,7 +590,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "projects/example-app/jest.config.ts",
             "runInBand": true
@@ -607,7 +607,7 @@
       "projectType": "application",
       "architect": {
         "e2e": {
-          "builder": "@nrwl/cypress:cypress",
+          "builder": "@nx/cypress:cypress",
           "options": {
             "cypressConfig": "projects/example-app-e2e/cypress.config.ts",
             "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
@@ -624,7 +624,7 @@
           "defaultConfiguration": "production"
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": ["projects/example-app-e2e/**/*.{js,ts}"]
           },
@@ -664,7 +664,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/router-store/*/**/*.ts",
@@ -674,7 +674,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/router-store/jest.config.ts",
             "runInBand": true
@@ -693,7 +693,7 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/schematics/*/**/*.ts",
@@ -703,7 +703,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/schematics/jest.config.ts",
             "runInBand": true
@@ -711,7 +711,7 @@
           "outputs": ["{workspaceRoot}/coverage/modules/schematics"]
         },
         "build-package": {
-          "builder": "@nrwl/js:tsc",
+          "builder": "@nx/js:tsc",
           "options": {
             "outputPath": "dist/modules/schematics",
             "tsConfig": "modules/schematics/tsconfig.build.json",
@@ -777,7 +777,7 @@
       "prefix": "ngrx",
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/schematics-core/*/**/*.ts",
@@ -787,7 +787,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/schematics-core/jest.config.ts",
             "passWithNoTests": true
@@ -867,7 +867,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "projects/standalone-app/**/*.ts",
@@ -876,7 +876,7 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "outputs": ["{workspaceRoot}/coverage/projects/standalone-app"],
           "options": {
             "jestConfig": "projects/standalone-app/jest.config.ts",
@@ -893,7 +893,7 @@
       "projectType": "application",
       "architect": {
         "e2e": {
-          "builder": "@nrwl/cypress:cypress",
+          "builder": "@nx/cypress:cypress",
           "options": {
             "cypressConfig": "projects/standalone-app-e2e/cypress.config.ts",
             "devServerTarget": "standalone-app:serve:development",
@@ -906,7 +906,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["projects/standalone-app-e2e/**/*.{js,ts}"]
@@ -955,7 +955,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/store/*/**/*.ts",
@@ -965,7 +965,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/store/jest.config.ts",
             "runInBand": true
@@ -1006,7 +1006,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "modules/store-devtools/*/**/*.ts",
@@ -1016,7 +1016,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@nx/jest:jest",
           "options": {
             "jestConfig": "modules/store-devtools/jest.config.ts",
             "runInBand": true

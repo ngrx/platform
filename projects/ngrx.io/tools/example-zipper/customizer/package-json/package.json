@@ -3,17 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "Example project from an angular.io guide.",
-  "scripts": {
-
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-
-  },
-  "devDependencies": {
-
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "repository": {}
 }

@@ -19,7 +19,6 @@
     "pretest:once": "npm run build",
     "test:once": "karma start karma.conf.js --single-run",
     "lint": "tslint ./src/**/*.ts -t verbose",
-
     "build:upgrade": "tsc",
     "serve:upgrade": "http-server",
     "build:cli": "ng build --no-progress",
@@ -27,7 +26,6 @@
     "build:aot": "ngc -p tsconfig-aot.json && rollup -c rollup-config.js",
     "serve:aot": "lite-server -c bs-config.aot.json",
     "build:babel": "babel src -d src --extensions \".es6\" --source-maps",
-
     "clean": "rimraf src/dist && rimraf src/app/*.js* && rimraf src/universal/*.js* && rimraf src/main.js*",
     "copy-dist-files": "node ./copy-dist-files.js",
     "i18n": "ng-xi18n"
