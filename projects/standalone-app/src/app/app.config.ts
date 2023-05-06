@@ -6,10 +6,10 @@ import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
-import { AppComponent } from './app/app.component';
 import { isDevMode } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
-import { AppEffects } from './app/app.effects';
+import { AppEffects } from './app.effects';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideStore({ router: routerReducer }),
@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
         {
           path: 'feature',
           loadChildren: () =>
-            import('./app/lazy/feature.routes').then((m) => m.routes),
+            import('./lazy/feature.routes').then((m) => m.routes),
         },
       ],
       withEnabledBlockingInitialNavigation()
