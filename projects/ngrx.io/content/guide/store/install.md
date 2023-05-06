@@ -24,7 +24,7 @@ This command will automate the following steps:
 1. Update `package.json` > `dependencies` with `@ngrx/store`.
 2. Run `npm install` to install those dependencies.
 3. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot({})`
-4. If the flag `--standalone` is provided, it will add `provideStore()` into an applicaiton config.
+4. If the flag `--standalone` is provided, it adds `provideStore()` into the application config.
 
 ```sh
 ng add @ngrx/store@latest --no-minimal
