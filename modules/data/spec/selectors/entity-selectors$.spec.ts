@@ -1,4 +1,5 @@
-import { Action, MemoizedSelector, Store } from '@ngrx/store';
+import { Signal, signal } from '@angular/core';
+import { Action, MemoizedSelector, StateObservable, Store } from '@ngrx/store';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
@@ -75,7 +76,7 @@ describe('EntitySelectors$', () => {
       actions$ = new Subject<Action>();
       state$ = new BehaviorSubject({ entityCache: emptyCache });
       store = new Store<{ entityCache: EntityCache }>(
-        state$,
+        state$ as unknown as StateObservable,
         null as any,
         null as any
       );

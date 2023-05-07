@@ -18,7 +18,10 @@ export class Store<T = object>
   extends Observable<T>
   implements Observer<Action>
 {
-  state: Signal<T>;
+  /**
+   * @internal
+   */
+  readonly state: Signal<T>;
 
   constructor(
     readonly state$: StateObservable,
