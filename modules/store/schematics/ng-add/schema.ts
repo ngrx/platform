@@ -10,4 +10,5 @@ export interface Schema {
    */
   minimal?: boolean;
   skipESLintPlugin?: boolean;
+  standalone?: boolean;
 }

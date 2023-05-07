@@ -161,4 +161,54 @@ describe('Store ng-add Schematic', () => {
       },
     });
   });
+
+  describe('Store ng-add Schematic for standalone application', () => {
+    const projectPath = getTestProjectPath(undefined, {
+      name: 'bar-standalone',
+    });
+    const standaloneDefaultOptions = {
+      ...defaultOptions,
+      project: 'bar-standalone',
+      standalone: true,
+    };
+
+    it('provides minimal store setup', async () => {
+      const options = { ...standaloneDefaultOptions, minimal: true };
+      const tree = await schematicRunner.runSchematic(
+        'ng-add',
+        options,
+        appTree
+      );
+
+      const content = tree.readContent(`${projectPath}/src/app/app.config.ts`);
+      const files = tree.files;
+
+      expect(content).toMatch(/provideStore\(\)/);
+      expect(content).not.toMatch(
+        /import { reducers, metaReducers } from '\.\/reducers';/
+      );
+      expect(files.indexOf(`${projectPath}/src/app/reducers/index.ts`)).toBe(
+        -1
+      );
+    });
+    it('provides full store setup', async () => {
+      const options = { ...standaloneDefaultOptions };
+      const tree = await schematicRunner.runSchematic(
+        'ng-add',
+        options,
+        appTree
+      );
+
+      const content = tree.readContent(`${projectPath}/src/app/app.config.ts`);
+      const files = tree.files;
+
+      expect(content).toMatch(/provideStore\(reducers, \{ metaReducers \}\)/);
+      expect(content).toMatch(
+        /import { reducers, metaReducers } from '\.\/reducers';/
+      );
+      expect(
+        files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
+      ).toBeGreaterThanOrEqual(0);
+    });
+  });
 });
