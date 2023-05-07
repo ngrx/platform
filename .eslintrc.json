@@ -17,7 +17,9 @@
               }
             ]
           }
-        ]
+        ],
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/no-inferrable-types": "warn"
       }
     },
     {

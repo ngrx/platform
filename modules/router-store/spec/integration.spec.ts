@@ -29,7 +29,7 @@ import { createTestModule } from './utils';
 
 describe('integration spec', () => {
   it('should work', (done: any) => {
-    const reducer = (state: string = '', action: RouterAction<any>) => {
+    const reducer = (state = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
       } else {
@@ -92,7 +92,7 @@ describe('integration spec', () => {
 
   it('should have the routerState in the payload', (done: any) => {
     const actionLog: RouterAction<any>[] = [];
-    const reducer = (state: string = '', action: RouterAction<any>) => {
+    const reducer = (state = '', action: RouterAction<any>) => {
       switch (action.type) {
         case ROUTER_CANCEL:
         case ROUTER_ERROR:
@@ -136,7 +136,7 @@ describe('integration spec', () => {
   });
 
   xit('should support preventing navigation', (done: any) => {
-    const reducer = (state: string = '', action: RouterAction<any>) => {
+    const reducer = (state = '', action: RouterAction<any>) => {
       if (
         action.type === ROUTER_NAVIGATION &&
         action.payload.routerState.url.toString() === '/next'
@@ -197,7 +197,7 @@ describe('integration spec', () => {
   });
 
   it('should support rolling back if navigation gets canceled (navigation initialized through router)', (done: any) => {
-    const reducer = (state: string = '', action: RouterAction<any>): any => {
+    const reducer = (state = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
           url: action.payload.routerState.url.toString(),
@@ -333,7 +333,7 @@ describe('integration spec', () => {
   });
 
   it('should support rolling back if navigation errors (navigation initialized through router)', (done: any) => {
-    const reducer = (state: string = '', action: RouterAction<any>): any => {
+    const reducer = (state = '', action: RouterAction<any>): any => {
       if (action.type === ROUTER_NAVIGATION) {
         return {
           url: action.payload.routerState.url.toString(),
@@ -674,7 +674,7 @@ describe('integration spec', () => {
 
     @Injectable()
     class CustomSerializer implements RouterStateSerializer<SerializedState> {
-      constructor(store: Store<any>) {
+      constructor(_store: Store<any>) {
         // Requiring store to test Serializer with injected arguments works.
       }
       serialize(routerState: RouterStateSnapshot): SerializedState {
@@ -790,7 +790,7 @@ describe('integration spec', () => {
   });
 
   it('should work when defining state key', (done: any) => {
-    const reducer = (state: string = '', action: RouterAction<any>) => {
+    const reducer = (state = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
       } else {
@@ -852,7 +852,7 @@ describe('integration spec', () => {
   });
 
   it('should work when defining state selector', (done: any) => {
-    const reducer = (state: string = '', action: RouterAction<any>) => {
+    const reducer = (state = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
       } else {
@@ -973,7 +973,7 @@ describe('integration spec', () => {
   });
 
   it('should dispatch ROUTER_NAVIGATION later when config options set to true', () => {
-    const reducer = (state: string = '', action: RouterAction<any>) => {
+    const reducer = (state = '', action: RouterAction<any>) => {
       if (action.type === ROUTER_NAVIGATION) {
         return action.payload.routerState.url.toString();
       } else {

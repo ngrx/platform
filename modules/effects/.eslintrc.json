@@ -1,6 +1,6 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", "schematics-core", "testing/src/public_api.ts"],
+  "ignorePatterns": ["!**/*", "schematics-core"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -14,6 +14,20 @@
       "rules": {
         "@angular-eslint/directive-selector": "off",
         "@angular-eslint/component-selector": "off"
+      },
+      "plugins": ["@typescript-eslint"]
+    },
+    {
+      "files": ["testing/**/*.ts"],
+      "extends": [
+        "plugin:@nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "parserOptions": {
+        "project": ["modules/effects/testing/tsconfig.*?.json"]
+      },
+      "rules": {
+        "@nx/enforce-module-boundaries": "off"
       },
       "plugins": ["@typescript-eslint"]
     },

@@ -1,5 +1,5 @@
 import { EMPTY, noop, Observable, of, throwError } from 'rxjs';
-import { tapResponse } from '@ngrx/component-store';
+import { tapResponse } from '..';
 import { concatMap, finalize } from 'rxjs/operators';
 
 describe('tapResponse', () => {

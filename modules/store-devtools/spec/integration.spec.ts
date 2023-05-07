@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { StoreModule, Store, Action } from '@ngrx/store';
-import {
-  StoreDevtoolsModule,
-  StoreDevtools,
-  StoreDevtoolsOptions,
-} from '@ngrx/store-devtools';
+import { StoreDevtoolsModule, StoreDevtools, StoreDevtoolsOptions } from '..';
 
 describe('Devtools Integration', () => {
   function setup(options: Partial<StoreDevtoolsOptions> = {}) {
