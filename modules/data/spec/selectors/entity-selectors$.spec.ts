@@ -1,4 +1,3 @@
-import { Signal, signal } from '@angular/core';
 import { Action, MemoizedSelector, StateObservable, Store } from '@ngrx/store';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';

@@ -24,7 +24,7 @@ export class Store<T = object>
   readonly state: Signal<T>;
 
   constructor(
-    readonly state$: StateObservable,
+    state$: StateObservable,
     private actionsObserver: ActionsSubject,
     private reducerManager: ReducerManager
   ) {

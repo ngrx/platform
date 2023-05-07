@@ -15,7 +15,10 @@ import { ScannedActionsSubject } from './scanned_actions_subject';
 import { INITIAL_STATE } from './tokens';
 
 export abstract class StateObservable extends Observable<any> {
-  state!: Signal<any>;
+  /**
+   * @internal
+   */
+  abstract readonly state: Signal<any>;
 }
 
 @Injectable()
@@ -24,6 +27,9 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
 
   private stateSubscription: Subscription;
 
+  /**
+   * @internal
+   */
   public state: Signal<T>;
 
   constructor(
@@ -56,7 +62,7 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
       scannedActions.next(action as Action);
     });
 
-    this.state = toSignal(this, { manualCleanup: true });
+    this.state = toSignal(this, { manualCleanup: true, requireSync: true });
   }
 
   ngOnDestroy() {
