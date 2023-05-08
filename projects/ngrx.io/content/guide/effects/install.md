@@ -19,12 +19,14 @@ ng add @ngrx/effects@latest
 | `--module` | Name of file containing the module that you wish to add the import for the `EffectsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts` | `string` | `app`
 | `--minimal` | When true, only provide minimal setup for the root effects setup. Only registers `EffectsModule.forRoot()` in the provided `module` with an empty array. | `boolean` | `true`
 | `--group` | Group effects file within `effects` folder. | `boolean` | `false`
+| `--standalone` | Flag to configure `@ngrx/effects` in the standalone application config. | `boolean` |`false` |
 
 This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/effects`.
 2. Run `npm install` to install those dependencies. 
 3. Update your `src/app/app.module.ts` > `imports` array with `EffectsModule.forRoot([AppEffects])`. If you provided flags then the command will attempt to locate and update module found by the flags.
+4. If the flag `--standalone` is provided, it adds `provideEffects()` into the application config.
 
 ## Installing with `npm`
 

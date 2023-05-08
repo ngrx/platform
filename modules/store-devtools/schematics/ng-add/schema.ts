@@ -5,4 +5,5 @@ export interface Schema {
   module?: string;
   maxAge?: number;
   autoPause?: boolean;
+  standalone?: boolean;
 }

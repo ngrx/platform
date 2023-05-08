@@ -16,13 +16,14 @@ ng add @ngrx/store-devtools@latest
 | `--project` | Name of the project defined in your `angular.json` to help locating the module to add the `StoreDevtoolsModule` to. | `string` | 
 | `--module` | Name of file containing the module that you wish to add the import for the `StoreDevtoolsModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`. | `string` | `app`
 | `--maxAge` | Maximum allowed actions to be stored in the history tree. The oldest actions are removed once maxAge is reached. It's critical for performance. 0 is infinite. Must be greater than 1 or 0. | `number` | `25`
+| `--standalone` | Flag to configure `@ngrx/store-devtools` in the standalone application config. | `boolean` |`false` |
 
 This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/store-devtools`.
 2. Run `npm install` to install those dependencies. 
 3. Update your `src/app.module.ts` > `imports` array with `StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })`. The maxAge property will be set to the flag `maxAge` if provided. 
-
+4. If the flag `--standalone` is provided, it adds `provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })` into the application config.
 
 ## Installing with `npm`
 

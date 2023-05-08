@@ -222,4 +222,49 @@ describe('Effects ng-add Schematic', () => {
 
     expect(content).toMatch(/effects = TestBed\.inject\(FooEffects\);/);
   });
+
+  describe('Effects ng-add Schematic for standalone application', () => {
+    const projectPath = getTestProjectPath(undefined, {
+      name: 'bar-standalone',
+    });
+
+    const standaloneDefaultOptions = {
+      ...defaultOptions,
+      project: 'bar-standalone',
+      standalone: true,
+    };
+
+    it('provides minimal effects setup', async () => {
+      const options = { ...standaloneDefaultOptions, minimal: true };
+      const tree = await schematicRunner.runSchematic(
+        'ng-add',
+        options,
+        appTree
+      );
+
+      const content = tree.readContent(`${projectPath}/src/app/app.config.ts`);
+
+      expect(content).toMatchSnapshot();
+    });
+
+    it('provides full effects setup', async () => {
+      const options = { ...standaloneDefaultOptions };
+      const tree = await schematicRunner.runSchematic(
+        'ng-add',
+        options,
+        appTree
+      );
+
+      const content = tree.readContent(`${projectPath}/src/app/app.config.ts`);
+      const files = tree.files;
+
+      expect(content).toMatchSnapshot();
+      expect(
+        files.indexOf(`${projectPath}/src/app/foo/foo.effects.spec.ts`)
+      ).toBeGreaterThanOrEqual(0);
+      expect(
+        files.indexOf(`${projectPath}/src/app/foo/foo.effects.ts`)
+      ).toBeGreaterThanOrEqual(0);
+    });
+  });
 });
