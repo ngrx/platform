@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
+  computed,
   Inject,
   Injectable,
   InjectionToken,
@@ -1498,6 +1499,60 @@ describe('Component Store', () => {
       xPlusY();
       expect(xPlusY()).toBe(11.8);
       expect(projectorExecutionCount).toBe(3);
+    });
+
+    it('uses default equality function when equality function is not provided', () => {
+      type TestState = { foo: number; bar: { baz: number } };
+
+      class TestStore extends ComponentStore<TestState> {
+        readonly foo = this.selectSignal((s) => s.foo);
+        readonly bar = this.selectSignal((s) => s.bar);
+
+        #fooExecutionCount = 0;
+        readonly fooExecutionCount = computed(() => {
+          this.foo();
+          return ++this.#fooExecutionCount;
+        });
+
+        #barExecutionCount = 0;
+        readonly barExecutionCount = computed(() => {
+          this.bar();
+          return ++this.#barExecutionCount;
+        });
+
+        constructor() {
+          super({ foo: 0, bar: { baz: 0 } });
+        }
+      }
+
+      const store = new TestStore();
+      expect(store.fooExecutionCount()).toBe(1);
+      expect(store.barExecutionCount()).toBe(1);
+
+      store.patchState({ foo: 10 });
+      expect(store.fooExecutionCount()).toBe(2);
+      // bar should not be executed
+      expect(store.barExecutionCount()).toBe(1);
+
+      store.patchState({ foo: 10 });
+      // nothing updated, so execution count should remain the same
+      expect(store.fooExecutionCount()).toBe(2);
+      expect(store.barExecutionCount()).toBe(1);
+
+      store.patchState({ bar: { baz: 100 } });
+      // foo should not be executed
+      expect(store.fooExecutionCount()).toBe(2);
+      expect(store.barExecutionCount()).toBe(2);
+
+      store.patchState(({ bar }) => ({ bar }));
+      // nothing updated, so execution count should remain the same
+      expect(store.fooExecutionCount()).toBe(2);
+      expect(store.barExecutionCount()).toBe(2);
+
+      store.patchState({ foo: 1000 });
+      expect(store.fooExecutionCount()).toBe(3);
+      // bar should not be executed
+      expect(store.barExecutionCount()).toBe(2);
     });
 
     it('throws an error when the signal is read before the state initialization', () => {
