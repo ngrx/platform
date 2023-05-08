@@ -12,7 +12,18 @@ NgRx is a community-maintained project that thrives due to the contributions of 
 
 Watch as Brandon Roberts and Jan-Niklas Wortmann walk through how to contribute to RxJS and NgRx through the docs. They will cover finding issues, making changes, and submitting a pull request.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ug0c1tUegm4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="video-container">
+  <div class="video-responsive-wrapper">
+
+    <iframe
+      src="https://www.youtube.com/embed/ug0c1tUegm4"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      frameborder="0"
+    ></iframe>
+
+  </div>
+</div>
 
 ### Folder Structure
 Source code for the NgRx docs and the ngrx.io website exist under the `projects/ngrx.io/content` folder. If you are planning to contribute features and/or bug fixes relating to the docs or the website, the code is there. The structure is split up between the following subfolders and key files:
