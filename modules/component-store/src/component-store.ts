@@ -83,9 +83,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
   private isInitialized = false;
   // Needs to be after destroy$ is declared because it's used in select.
   readonly state$: Observable<T> = this.select((s) => s);
-  // Signal of state$
   readonly state: Signal<T> = toSignal(
-    this.state$.pipe(takeUntil(this.destroy$)),
+    this.stateSubject$.pipe(takeUntil(this.destroy$)),
     { requireSync: false, manualCleanup: true }
   ) as Signal<T>;
   private ɵhasProvider = false;
