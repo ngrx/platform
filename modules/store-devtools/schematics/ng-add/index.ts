@@ -20,6 +20,11 @@ import {
   parseName,
 } from '../../schematics-core';
 import { Schema as StoreDevtoolsOptions } from './schema';
+import {
+  addFunctionalProvidersToStandaloneBootstrap,
+  callsProvidersFunction,
+} from '@schematics/angular/private/standalone';
+import { getProjectMainFile } from '../../schematics-core/utility/project';
 
 function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
   return (host: Tree) => {
@@ -89,11 +94,69 @@ function addNgRxStoreDevToolsToPackageJson() {
   };
 }
 
+function addStandaloneConfig(options: StoreDevtoolsOptions): Rule {
+  return (host: Tree) => {
+    const mainFile = getProjectMainFile(host, options);
+
+    if (host.exists(mainFile)) {
+      const providerFn = 'provideStoreDevtools';
+
+      if (callsProvidersFunction(host, mainFile, providerFn)) {
+        // exit because the store config is already provided
+        return host;
+      }
+
+      const providerOptions = [
+        ts.factory.createIdentifier(
+          `{ maxAge: ${options.maxAge}, logOnly: !isDevMode() }`
+        ),
+      ];
+
+      const patchedConfigFile = addFunctionalProvidersToStandaloneBootstrap(
+        host,
+        mainFile,
+        providerFn,
+        '@ngrx/store-devtools',
+        providerOptions
+      );
+
+      // insert reducers import into the patched file
+      const configFileContent = host.read(patchedConfigFile);
+      const source = ts.createSourceFile(
+        patchedConfigFile,
+        configFileContent?.toString('utf-8') || '',
+        ts.ScriptTarget.Latest,
+        true
+      );
+
+      const recorder = host.beginUpdate(patchedConfigFile);
+
+      const changes = [
+        insertImport(source, patchedConfigFile, 'isDevMode', '@angular/core'),
+      ];
+
+      for (const change of changes) {
+        if (change instanceof InsertChange) {
+          recorder.insertLeft(change.pos, change.toAdd);
+        }
+      }
+
+      host.commitUpdate(recorder);
+
+      return host;
+    }
+
+    throw new SchematicsException(
+      `Main file not found for a project ${options.project}`
+    );
+  };
+}
+
 export default function (options: StoreDevtoolsOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
-    if (options.module) {
+    if (options.module && !options.standalone) {
       options.module = findModuleFromOptions(host, {
         name: '',
         module: options.module,
@@ -110,8 +173,12 @@ export default function (options: StoreDevtoolsOptions): Rule {
       );
     }
 
+    const configOrModuleUpdate = options.standalone
+      ? addStandaloneConfig(options)
+      : addImportToNgModule(options);
+
     return chain([
-      branchAndMerge(chain([addImportToNgModule(options)])),
+      branchAndMerge(chain([configOrModuleUpdate])),
       options && options.skipPackageJson
         ? noop()
         : addNgRxStoreDevToolsToPackageJson(),

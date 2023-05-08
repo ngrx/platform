@@ -125,4 +125,29 @@ describe('Store-Devtools ng-add Schematic', () => {
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
     expect(content).toMatch(/maxAge: 5/);
   });
+
+  describe('Store Devtools ng-add Schematic for standalone application', () => {
+    const projectPath = getTestProjectPath(undefined, {
+      name: 'bar-standalone',
+    });
+
+    const standaloneDefaultOptions = {
+      ...defaultOptions,
+      project: 'bar-standalone',
+      standalone: true,
+    };
+
+    it('provides initial setup', async () => {
+      const options = { ...standaloneDefaultOptions };
+      const tree = await schematicRunner.runSchematic(
+        'ng-add',
+        options,
+        appTree
+      );
+
+      const content = tree.readContent(`${projectPath}/src/app/app.config.ts`);
+
+      expect(content).toMatchSnapshot();
+    });
+  });
 });
