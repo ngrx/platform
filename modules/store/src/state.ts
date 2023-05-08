@@ -1,4 +1,5 @@
-import { Inject, Injectable, OnDestroy, Provider } from '@angular/core';
+import { Inject, Injectable, OnDestroy, Provider, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   BehaviorSubject,
   Observable,
@@ -13,13 +14,23 @@ import { ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
 import { INITIAL_STATE } from './tokens';
 
-export abstract class StateObservable extends Observable<any> {}
+export abstract class StateObservable extends Observable<any> {
+  /**
+   * @internal
+   */
+  abstract readonly state: Signal<any>;
+}
 
 @Injectable()
 export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   static readonly INIT = INIT;
 
   private stateSubscription: Subscription;
+
+  /**
+   * @internal
+   */
+  public state: Signal<T>;
 
   constructor(
     actions$: ActionsSubject,
@@ -50,6 +61,8 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
       this.next(state);
       scannedActions.next(action as Action);
     });
+
+    this.state = toSignal(this, { manualCleanup: true, requireSync: true });
   }
 
   ngOnDestroy() {

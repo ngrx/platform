@@ -2,7 +2,6 @@
 import { computed, Injectable, Provider, Signal } from '@angular/core';
 import { Observable, Observer, Operator } from 'rxjs';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ActionsSubject } from './actions_subject';
 import {
@@ -19,7 +18,10 @@ export class Store<T = object>
   extends Observable<T>
   implements Observer<Action>
 {
-  private readonly state: Signal<T>;
+  /**
+   * @internal
+   */
+  readonly state: Signal<T>;
 
   constructor(
     state$: StateObservable,
@@ -29,7 +31,7 @@ export class Store<T = object>
     super();
 
     this.source = state$;
-    this.state = toSignal(state$, { manualCleanup: true });
+    this.state = state$.state;
   }
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
