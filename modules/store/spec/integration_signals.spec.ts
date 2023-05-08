@@ -136,16 +136,12 @@ describe('NgRx and Signals Integration spec', () => {
     it('Store.selectSignal should not trigger on unrelated global state changes', () => {
       let todosTriggerCount = 0;
 
-      const todos = TestBed.runInInjectionContext(() =>
-        store.selectSignal((state) => state.todos)
-      );
+      const todos = store.selectSignal((state) => state.todos);
 
-      const todosTriggerState = TestBed.runInInjectionContext(() =>
-        computed(() => {
-          todos();
-          return ++todosTriggerCount;
-        })
-      );
+      const todosTriggerState = computed(() => {
+        todos();
+        return ++todosTriggerCount;
+      });
 
       store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
       expect(todosTriggerState()).toBe(1);
