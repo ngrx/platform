@@ -76,4 +76,29 @@ describe('Router Store ng-add Schematic', () => {
     }
     expect(thrownError).toBeDefined();
   });
+
+  describe('Router Store ng-add Schematic for standalone application', () => {
+    const projectPath = getTestProjectPath(undefined, {
+      name: 'bar-standalone',
+    });
+
+    const standaloneDefaultOptions = {
+      ...defaultOptions,
+      project: 'bar-standalone',
+      standalone: true,
+    };
+
+    it('provides initial setup', async () => {
+      const options = { ...standaloneDefaultOptions };
+      const tree = await schematicRunner.runSchematic(
+        'ng-add',
+        options,
+        appTree
+      );
+
+      const content = tree.readContent(`${projectPath}/src/app/app.config.ts`);
+
+      expect(content).toMatchSnapshot();
+    });
+  });
 });
