@@ -11,4 +11,5 @@ export interface Schema {
    * Setup root effects module without registering initial effects.
    */
   minimal?: boolean;
+  standalone?: boolean;
 }

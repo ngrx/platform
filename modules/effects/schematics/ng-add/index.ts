@@ -28,6 +28,11 @@ import {
 } from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import {
+  addFunctionalProvidersToStandaloneBootstrap,
+  callsProvidersFunction,
+} from '@schematics/angular/private/standalone';
+import { getProjectMainFile } from '../../schematics-core/utility/project';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
@@ -116,11 +121,87 @@ function addNgRxEffectsToPackageJson() {
   };
 }
 
+function addStandaloneConfig(options: EffectOptions): Rule {
+  return (host: Tree) => {
+    const mainFile = getProjectMainFile(host, options);
+
+    if (host.exists(mainFile)) {
+      const providerFn = 'provideEffects';
+
+      if (callsProvidersFunction(host, mainFile, providerFn)) {
+        // exit because the store config is already provided
+        return host;
+      }
+
+      const effectsName = `${stringUtils.classify(`${options.name}Effects`)}`;
+
+      const providerOptions = options.minimal
+        ? []
+        : [ts.factory.createIdentifier(effectsName)];
+
+      const patchedConfigFile = addFunctionalProvidersToStandaloneBootstrap(
+        host,
+        mainFile,
+        providerFn,
+        '@ngrx/effects',
+        providerOptions
+      );
+
+      if (options.minimal) {
+        // no need to add imports if it is minimal
+        return host;
+      }
+
+      // insert effects import into the patched file
+      const configFileContent = host.read(patchedConfigFile);
+      const source = ts.createSourceFile(
+        patchedConfigFile,
+        configFileContent?.toString('utf-8') || '',
+        ts.ScriptTarget.Latest,
+        true
+      );
+
+      const effectsPath =
+        `/${options.path}/` +
+        (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
+        (options.group ? 'effects/' : '') +
+        stringUtils.dasherize(options.name) +
+        '.effects';
+
+      const relativePath = buildRelativePath(
+        `/${patchedConfigFile}`,
+        effectsPath
+      );
+
+      const change = insertImport(
+        source,
+        patchedConfigFile,
+        effectsName,
+        relativePath
+      );
+
+      const recorder = host.beginUpdate(patchedConfigFile);
+
+      if (change instanceof InsertChange) {
+        recorder.insertLeft(change.pos, change.toAdd);
+      }
+
+      host.commitUpdate(recorder);
+
+      return host;
+    }
+
+    throw new SchematicsException(
+      `Main file not found for a project ${options.project}`
+    );
+  };
+}
+
 export default function (options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     options.path = getProjectPath(host, options);
 
-    if (options.module) {
+    if (options.module && !options.standalone) {
       options.module = findModuleFromOptions(host, options);
     }
 
@@ -145,10 +226,12 @@ export default function (options: EffectOptions): Rule {
       move(parsedPath.path),
     ]);
 
+    const configOrModuleUpdate = options.standalone
+      ? addStandaloneConfig(options)
+      : addImportToNgModule(options);
+
     return chain([
-      branchAndMerge(
-        chain([addImportToNgModule(options), mergeWith(templateSource)])
-      ),
+      branchAndMerge(chain([configOrModuleUpdate, mergeWith(templateSource)])),
       options && options.skipPackageJson
         ? noop()
         : addNgRxEffectsToPackageJson(),
