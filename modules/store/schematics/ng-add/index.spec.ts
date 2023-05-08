@@ -169,7 +169,6 @@ describe('Store ng-add Schematic', () => {
     const standaloneDefaultOptions = {
       ...defaultOptions,
       project: 'bar-standalone',
-      standalone: true,
     };
 
     it('provides minimal store setup', async () => {

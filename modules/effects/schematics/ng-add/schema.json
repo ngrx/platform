@@ -55,11 +55,6 @@
       "type": "boolean",
       "default": true,
       "description": "Setup root effects module without registering initial effects."
-    },
-    "standalone": {
-      "type": "boolean",
-      "default": false,
-      "description": "Configure @ngrx/effects for standalone application"
     }
   },
   "required": []

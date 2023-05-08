@@ -29,11 +29,6 @@
       "description": "Allows specification of the declaring module.",
       "alias": "m",
       "subtype": "filepath"
-    },
-    "standalone": {
-      "type": "boolean",
-      "default": false,
-      "description": "Configure @ngrx/router-store for standalone application"
     }
   },
   "required": []

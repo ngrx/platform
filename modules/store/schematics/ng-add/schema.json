@@ -49,11 +49,6 @@
       "type": "boolean",
       "default": false,
       "description": "Do not register the NgRx ESLint Plugin."
-    },
-    "standalone": {
-      "type": "boolean",
-      "default": false,
-      "description": "Configure store for standalone application"
     }
   },
   "required": []

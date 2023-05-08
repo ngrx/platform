@@ -85,7 +85,6 @@ describe('Router Store ng-add Schematic', () => {
     const standaloneDefaultOptions = {
       ...defaultOptions,
       project: 'bar-standalone',
-      standalone: true,
     };
 
     it('provides initial setup', async () => {
