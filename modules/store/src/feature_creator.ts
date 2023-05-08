@@ -1,12 +1,11 @@
 import { capitalize } from './helpers';
-import { ActionReducer, Selector } from './models';
+import { ActionReducer, Primitive, Selector } from './models';
 import { isPlainObject } from './meta-reducers/utils';
 import {
   createFeatureSelector,
   createSelector,
   MemoizedSelector,
 } from './selector';
-import { FeatureSelector, NestedSelectors } from './feature_creator_models';
 
 export interface FeatureConfig<FeatureName extends string, FeatureState> {
   name: FeatureName;
@@ -31,6 +30,32 @@ type FeatureWithExtraSelectors<
       keyof ExtraSelectors
     > &
       ExtraSelectors;
+
+type FeatureSelector<
+  AppState extends Record<string, any>,
+  FeatureName extends keyof AppState & string,
+  FeatureState extends AppState[FeatureName]
+> = {
+  [K in FeatureName as `select${Capitalize<K>}State`]: MemoizedSelector<
+    AppState,
+    FeatureState,
+    (featureState: FeatureState) => FeatureState
+  >;
+};
+
+type NestedSelectors<
+  AppState extends Record<string, any>,
+  FeatureState
+> = FeatureState extends Primitive | unknown[] | Date
+  ? {}
+  : {
+      [K in keyof FeatureState &
+        string as `select${Capitalize<K>}`]: MemoizedSelector<
+        AppState,
+        FeatureState[K],
+        (featureState: FeatureState) => FeatureState[K]
+      >;
+    };
 
 type BaseSelectors<
   AppState extends Record<string, any>,
