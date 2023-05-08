@@ -20,7 +20,11 @@ export const packages: PackageDescription[] = fs
       return false;
     }
 
-    const hasBuild = fs.existsSync(`${modulesDir}${path}/BUILD`);
+    if (path.includes('eslint-plugin')) {
+      return false;
+    }
+
+    const hasBuild = fs.existsSync(`${modulesDir}${path}/tsconfig.build.json`);
 
     return hasBuild;
   })
