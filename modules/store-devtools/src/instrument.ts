@@ -1,12 +1,12 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { Observable } from 'rxjs';
+import { StateObservable } from '@ngrx/store';
 import { StoreDevtoolsOptions } from './config';
 import { StoreDevtools } from './devtools';
 import { provideStoreDevtools } from './provide-store-devtools';
 
 export function createStateObservable(
   devtools: StoreDevtools
-): Observable<any> {
+): StateObservable {
   return devtools.state;
 }
 
