@@ -5,7 +5,7 @@
 ## Overview
 
 Generates an action file that includes a sample action,
-defined using the `createAction` function.
+defined using the `createActionGroup` function.
 
 ## Command
 
