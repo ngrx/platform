@@ -17,14 +17,13 @@ ng add @ngrx/store@latest
 | `--minimal` | Flag to only provide minimal setup for the root state management. Only registers `StoreModule.forRoot()` in the provided `module` with an empty object, and default runtime checks. | `boolean` |`true`
 | `--statePath` | The file path to create the state in. | `string` | `reducers` |
 | `--stateInterface` | The type literal of the defined interface for the state. | `string` | `State` |
-| `--standalone` | Flag to configure store for standalone application. | `boolean` |`false` |
 
 This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/store`.
 2. Run `npm install` to install those dependencies.
 3. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot({})`
-4. If the flag `--standalone` is provided, it adds `provideStore()` into the application config.
+4. If the project is using a `standalone bootstrap`, it adds `provideStore()` into the application config.
 
 ```sh
 ng add @ngrx/store@latest --no-minimal

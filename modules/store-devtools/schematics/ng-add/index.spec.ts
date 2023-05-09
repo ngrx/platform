@@ -134,7 +134,6 @@ describe('Store-Devtools ng-add Schematic', () => {
     const standaloneDefaultOptions = {
       ...defaultOptions,
       project: 'bar-standalone',
-      standalone: true,
     };
 
     it('provides initial setup', async () => {

@@ -231,7 +231,6 @@ describe('Effects ng-add Schematic', () => {
     const standaloneDefaultOptions = {
       ...defaultOptions,
       project: 'bar-standalone',
-      standalone: true,
     };
 
     it('provides minimal effects setup', async () => {

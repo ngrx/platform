@@ -33,6 +33,7 @@ import {
   callsProvidersFunction,
 } from '@schematics/angular/private/standalone';
 import { getProjectMainFile } from '../../schematics-core/utility/project';
+import { isStandaloneApp } from '../../schematics-core/utility/standalone';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {
@@ -199,9 +200,12 @@ function addStandaloneConfig(options: EffectOptions): Rule {
 
 export default function (options: EffectOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
+    const mainFile = getProjectMainFile(host, options);
+    const isStandalone = isStandaloneApp(host, mainFile);
+
     options.path = getProjectPath(host, options);
 
-    if (options.module && !options.standalone) {
+    if (options.module && !isStandalone) {
       options.module = findModuleFromOptions(host, options);
     }
 
@@ -226,7 +230,7 @@ export default function (options: EffectOptions): Rule {
       move(parsedPath.path),
     ]);
 
-    const configOrModuleUpdate = options.standalone
+    const configOrModuleUpdate = isStandalone
       ? addStandaloneConfig(options)
       : addImportToNgModule(options);
 
