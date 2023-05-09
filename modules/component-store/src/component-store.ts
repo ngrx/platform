@@ -35,6 +35,7 @@ import {
   Signal,
   computed,
   type ValueEqualityFn,
+  type CreateComputedOptions,
 } from '@angular/core';
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -341,36 +342,32 @@ export class ComponentStore<T extends object> implements OnDestroy {
           options: SelectSignalOptions<unknown>
         ]
   ): Signal<unknown> {
-    if (args.length === 1) {
-      const projector = args[0] as (state: T) => unknown;
-      return computed(() => projector(this.state()));
-    }
+    const selectSignalArgs = [...args];
+    const defaultEqualityFn: ValueEqualityFn<unknown> = (previous, current) =>
+      previous === current;
 
-    const optionsOrProjector = args[args.length - 1] as (
-      ...values: unknown[]
-    ) => unknown | SelectSignalOptions<unknown>;
-    if (typeof optionsOrProjector === 'function') {
-      const signals = args.slice(0, -1) as Signal<unknown>[];
-
-      return computed(() => {
-        const values = signals.map((signal) => signal());
-        return optionsOrProjector(...values);
-      });
-    }
-
-    if (args.length === 2) {
-      const projector = args[0] as (state: T) => unknown;
-      return computed(() => projector(this.state()), optionsOrProjector);
-    }
-
-    const signals = args.slice(0, -2) as Signal<unknown>[];
-    const projector = args[args.length - 2] as (
+    const options: CreateComputedOptions<unknown> =
+      typeof selectSignalArgs[args.length - 1] === 'object'
+        ? {
+            equal:
+              (selectSignalArgs.pop() as SelectSignalOptions<unknown>).equal ||
+              defaultEqualityFn,
+          }
+        : { equal: defaultEqualityFn };
+    const projector = selectSignalArgs.pop() as (
       ...values: unknown[]
     ) => unknown;
-    return computed(() => {
-      const values = signals.map((signal) => signal());
-      return projector(...values);
-    }, optionsOrProjector);
+    const signals = selectSignalArgs as Signal<unknown>[];
+
+    const computation =
+      signals.length === 0
+        ? () => projector(this.state())
+        : () => {
+            const values = signals.map((signal) => signal());
+            return projector(...values);
+          };
+
+    return computed(computation, options);
   }
 
   /**
