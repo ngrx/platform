@@ -1,3 +1,21 @@
+<a name="16.0.0"></a>
+
+# [16.0.0](https://github.com/ngrx/platform/compare/16.0.0-rc.0...16.0.0) (2023-05-09)
+
+### Bug Fixes
+
+- **component-store:** use default equality function for selectSignal ([#3884](https://github.com/ngrx/platform/issues/3884)) ([5843e7f](https://github.com/ngrx/platform/commit/5843e7f))
+- **store:** add Signal equal function for immutable object comparison ([#3883](https://github.com/ngrx/platform/issues/3883)) ([634fdcb](https://github.com/ngrx/platform/commit/634fdcb))
+- **store:** move Angular Signal interop into State service ([#3879](https://github.com/ngrx/platform/issues/3879)) ([8cb5795](https://github.com/ngrx/platform/commit/8cb5795)), closes [#3869](https://github.com/ngrx/platform/issues/3869)
+- **store-devtools:** add state signal to StateObservable ([#3889](https://github.com/ngrx/platform/issues/3889)) ([ad6e14a](https://github.com/ngrx/platform/commit/ad6e14a))
+
+### Features
+
+- add ng add support for standalone config to NgRx packages ([#3881](https://github.com/ngrx/platform/issues/3881)) ([58508e3](https://github.com/ngrx/platform/commit/58508e3))
+- **component:** add migration for LetModule and PushModule ([#3872](https://github.com/ngrx/platform/issues/3872)) ([5f07eda](https://github.com/ngrx/platform/commit/5f07eda))
+- **component:** make LetDirective and PushPipe standalone ([#3826](https://github.com/ngrx/platform/issues/3826)) ([985d80c](https://github.com/ngrx/platform/commit/985d80c)), closes [#3804](https://github.com/ngrx/platform/issues/3804)
+- **store:** add support of standalone API for ng add store ([#3874](https://github.com/ngrx/platform/issues/3874)) ([7aec84d](https://github.com/ngrx/platform/commit/7aec84d))
+
 <a name="16.0.0-rc.1"></a>
 
 # [16.0.0-rc.1](https://github.com/ngrx/platform/compare/16.0.0-rc.0...16.0.0-rc.1) (2023-05-09)
