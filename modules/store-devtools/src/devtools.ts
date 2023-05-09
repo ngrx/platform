@@ -1,4 +1,5 @@
 import { Injectable, Inject, ErrorHandler } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Action,
   ActionReducer,
@@ -6,6 +7,7 @@ import {
   INITIAL_STATE,
   ReducerObservable,
   ScannedActionsSubject,
+  StateObservable,
 } from '@ngrx/store';
 import {
   merge,
@@ -36,7 +38,7 @@ export class StoreDevtools implements Observer<any> {
   private extensionStartSubscription: Subscription;
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
-  public state: Observable<any>;
+  public state: StateObservable;
 
   constructor(
     dispatcher: DevtoolsDispatcher,
@@ -114,7 +116,10 @@ export class StoreDevtools implements Observer<any> {
 
     const liftedState$ =
       liftedStateSubject.asObservable() as Observable<LiftedState>;
-    const state$ = liftedState$.pipe(map(unliftState));
+    const state$ = liftedState$.pipe(map(unliftState)) as StateObservable;
+    Object.defineProperty(state$, 'state', {
+      value: toSignal(state$, { manualCleanup: true, requireSync: true }),
+    });
 
     this.extensionStartSubscription = extensionStartSubscription;
     this.stateSubscription = liftedStateSubscription;

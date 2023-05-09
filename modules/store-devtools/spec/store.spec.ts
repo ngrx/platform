@@ -885,4 +885,17 @@ describe('Store Devtools', () => {
       expect(oldComputedStates).not.toBe(liftedState.computedStates);
     });
   });
+
+  describe('StateObservable', () => {
+    it('should contain state signal that is updated on state changes', () => {
+      const { state, store } = createStore(counter);
+      expect(state.state()).toEqual({ state: 0 });
+
+      store.dispatch({ type: 'INCREMENT' });
+      expect(store.state()).toEqual({ state: 1 });
+
+      store.dispatch({ type: 'DECREMENT' });
+      expect(store.state()).toEqual({ state: 0 });
+    });
+  });
 });
