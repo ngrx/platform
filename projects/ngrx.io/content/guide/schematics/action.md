@@ -4,8 +4,8 @@
 
 ## Overview
 
-Generates an action file that contains an enum of action types,
-an example action class and an exported type union of action classes.
+Generates an action file that includes a sample action,
+defined using the `createAction` function.
 
 ## Command
 
@@ -27,6 +27,13 @@ Provide the project name where the action files will be created.
   - Alias: `-p`
   - Type: `string`
 
+Specify the path to create the action file.
+- `--path`
+  - Type: `string`
+  - Format: `path`
+  - Visible: `false`
+  - Default: `working directory`
+
 Nest the actions file within a folder based on the action `name`.
 
 - `--flat`
@@ -47,11 +54,6 @@ Specifies if api success and failure actions should be generated.
   - Type: `boolean`
   - Default: `false`  
 
-Generate a spec file alongside the action file.
-
-- `--skip-tests`
-  - Type: `boolean`
-  - Default: `false`
 
 Specify the prefix for the actions.
 
