@@ -82,7 +82,7 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
   protected getResourceUrls(
     entityName: string,
     root: string,
-    trailingSlashEndpoints: boolean = false
+    trailingSlashEndpoints = false
   ): HttpResourceUrls {
     let resourceUrls = this.knownHttpResourceUrls[entityName];
     if (!resourceUrls) {

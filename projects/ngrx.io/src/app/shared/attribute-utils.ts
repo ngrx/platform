@@ -36,7 +36,7 @@ export function getAttrValue(attrs: AttrMap, attr: string | string[]): string | 
  * @param attrValue The string value of some attribute (or undefined if attribute not present).
  * @param def Default boolean value when attribute is undefined.
  */
-export function boolFromValue(attrValue: string | undefined, def: boolean = false) {
+export function boolFromValue(attrValue: string | undefined, def = false) {
     return attrValue === undefined ? def : attrValue.trim() !== 'false';
 }
 
@@ -49,6 +49,6 @@ export function boolFromValue(attrValue: string | undefined, def: boolean = fals
 export function getBoolFromAttribute(
     el:  HTMLElement | ElementRef,
     attr: string | string[],
-    def: boolean = false): boolean {
+    def = false): boolean {
     return boolFromValue(getAttrValue(getAttrs(el), attr), def);
 }

@@ -1,8 +1,5 @@
 import { RouterStateSnapshot } from '@angular/router';
-import {
-  FullRouterStateSerializer,
-  MinimalRouterStateSerializer,
-} from '../src';
+import { FullRouterStateSerializer, MinimalRouterStateSerializer } from '..';
 
 describe('full serializer', () => {
   it('should serialize all properties', () => {

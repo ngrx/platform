@@ -89,7 +89,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nx/linter:eslint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }

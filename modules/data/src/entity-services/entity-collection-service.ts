@@ -5,8 +5,6 @@ import { EntityOp } from '../actions/entity-op';
 import { EntitySelectors$ } from '../selectors/entity-selectors$';
 import { EntitySelectors } from '../selectors/entity-selectors';
 
-/* eslint-disable @typescript-eslint/member-ordering */
-
 /**
  * A facade for managing
  * a cached collection of T entities in the ngrx store.

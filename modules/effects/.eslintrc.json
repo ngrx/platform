@@ -1,11 +1,11 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", "schematics-core", "testing/src/public_api.ts"],
+  "ignorePatterns": ["!**/*", "schematics-core"],
   "overrides": [
     {
       "files": ["*.ts"],
       "extends": [
-        "plugin:@nrwl/nx/angular",
+        "plugin:@nx/angular",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "parserOptions": {
@@ -18,8 +18,22 @@
       "plugins": ["@typescript-eslint"]
     },
     {
+      "files": ["testing/**/*.ts"],
+      "extends": [
+        "plugin:@nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "parserOptions": {
+        "project": ["modules/effects/testing/tsconfig.*?.json"]
+      },
+      "rules": {
+        "@nx/enforce-module-boundaries": "off"
+      },
+      "plugins": ["@typescript-eslint"]
+    },
+    {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {}
     }
   ]

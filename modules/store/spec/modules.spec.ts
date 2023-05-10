@@ -6,7 +6,7 @@ import {
   combineReducers,
   Store,
   StoreModule,
-} from '@ngrx/store';
+} from '..';
 import { take } from 'rxjs/operators';
 
 describe(`Store Modules`, () => {

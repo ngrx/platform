@@ -293,7 +293,6 @@ describe('CodeComponent', () => {
 });
 
 /// / Test helpers ////
-/* eslint-disable @typescript-eslint/member-ordering */
 @Component({
     selector: 'aio-host-comp',
     template: `

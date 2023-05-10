@@ -1,4 +1,4 @@
-import { ComponentStore } from '@ngrx/component-store';
+import { ComponentStore } from '..';
 
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',

@@ -1,5 +1,5 @@
 import { TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { INIT, Store, StoreModule, Action } from '@ngrx/store';
+import { INIT, Store, StoreModule, Action } from '..';
 
 describe('ngRx State', () => {
   it('should call the reducer to scan over the dispatcher', () => {

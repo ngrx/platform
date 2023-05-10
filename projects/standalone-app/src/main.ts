@@ -1,37 +1,5 @@
-import { isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import {
-  provideRouter,
-  withEnabledBlockingInitialNavigation,
-} from '@angular/router';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
-
 import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-import { AppEffects } from './app/app.effects';
-
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideStore({ router: routerReducer }),
-    provideRouter(
-      [
-        {
-          path: 'feature',
-          loadChildren: () =>
-            import('./app/lazy/feature.routes').then((m) => m.routes),
-        },
-      ],
-      withEnabledBlockingInitialNavigation()
-    ),
-    provideStoreDevtools({
-      maxAge: 25,
-      logOnly: !isDevMode(),
-      name: 'NgRx Standalone App',
-    }),
-    provideRouterStore(),
-    provideEffects(AppEffects),
-  ],
-});
+bootstrapApplication(AppComponent, appConfig);

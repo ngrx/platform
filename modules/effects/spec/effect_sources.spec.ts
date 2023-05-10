@@ -196,7 +196,7 @@ describe('EffectSources', () => {
           return this.effectIdentifier;
         }
 
-        constructor(private actions$: Actions, identifier: string = '') {
+        constructor(private actions$: Actions, identifier = '') {
           this.effectIdentifier = identifier;
         }
       }

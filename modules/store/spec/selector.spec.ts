@@ -7,7 +7,7 @@ import {
   createSelectorFactory,
   resultMemoize,
   MemoizedProjection,
-} from '@ngrx/store';
+} from '..';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { setNgrxMockEnvironment } from '../src';
 

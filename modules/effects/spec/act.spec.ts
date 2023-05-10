@@ -1,7 +1,7 @@
 import { cold, hot } from 'jasmine-marbles';
-import { mergeMap, take, switchMap } from 'rxjs/operators';
+import { mergeMap, switchMap } from 'rxjs/operators';
 import { createAction, Action } from '@ngrx/store';
-import { act } from '@ngrx/effects';
+import { act } from '../';
 import { throwError, Subject } from 'rxjs';
 
 describe('act operator', () => {

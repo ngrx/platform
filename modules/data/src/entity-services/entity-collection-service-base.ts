@@ -17,8 +17,6 @@ import { EntitySelectors } from '../selectors/entity-selectors';
 import { EntitySelectors$ } from '../selectors/entity-selectors$';
 import { QueryParams } from '../dataservices/interfaces';
 
-/* eslint-disable @typescript-eslint/member-ordering */
-
 /**
  * Base class for a concrete EntityCollectionService<T>.
  * Can be instantiated. Cannot be injected. Use EntityCollectionServiceFactory to create.
@@ -254,8 +252,9 @@ export class EntityCollectionServiceBase<
    * @returns Observable of the queried entities
    * after server reports successful query or the query error.
    */
-  loadWithQuery(queryParams: QueryParams | string,
-       options?: EntityActionOptions
+  loadWithQuery(
+    queryParams: QueryParams | string,
+    options?: EntityActionOptions
   ): Observable<T[]> {
     return this.dispatcher.loadWithQuery(queryParams, options);
   }

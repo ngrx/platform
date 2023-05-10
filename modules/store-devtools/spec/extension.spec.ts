@@ -11,7 +11,7 @@ import { createConfig, DevToolsFeatureOptions } from '../src/config';
 import { unliftState } from '../src/utils';
 
 function createOptions(
-  name: string = 'NgRx Store DevTools',
+  name = 'NgRx Store DevTools',
   features: DevToolsFeatureOptions = {
     pause: true,
     lock: true,
@@ -26,9 +26,9 @@ function createOptions(
   },
   serialize: boolean | undefined = false,
   maxAge: false | number = false,
-  autoPause: boolean = false,
-  trace: boolean = false,
-  traceLimit: number = 75
+  autoPause = false,
+  trace = false,
+  traceLimit = 75
 ) {
   const options: ReduxDevtoolsExtensionConfig = {
     name,

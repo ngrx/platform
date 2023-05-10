@@ -7,7 +7,7 @@ import {
   StoreModule,
   createFeatureSelector,
   createSelector,
-} from '@ngrx/store';
+} from '..';
 import { combineLatest } from 'rxjs';
 import { first, toArray, take, map } from 'rxjs/operators';
 
