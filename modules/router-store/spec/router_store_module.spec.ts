@@ -8,7 +8,7 @@ import {
   RouterReducerState,
   RouterState,
   RouterStateSerializer,
-} from '@ngrx/router-store';
+} from '..';
 import { ActionsSubject, select, Store } from '@ngrx/store';
 import { filter, withLatestFrom } from 'rxjs/operators';
 

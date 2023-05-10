@@ -4,7 +4,6 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { createSelector } from '@ngrx/store';
 
 describe('Store Migration 13_0_1', () => {
   const collectionPath = path.join(__dirname, '../migration.json');

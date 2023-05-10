@@ -1,11 +1,4 @@
-import {
-  ActionType,
-  on,
-  createReducer,
-  createAction,
-  props,
-  union,
-} from '@ngrx/store';
+import { ActionType, on, createReducer, createAction, props, union } from '..';
 
 describe('classes/reducer', function (): void {
   describe('base', () => {
@@ -13,7 +6,7 @@ describe('classes/reducer', function (): void {
     const foo = createAction('[foobar] FOO', props<{ foo: number }>());
     const withDefaultParameter = createAction(
       '[foobar] withDefaultParameter',
-      (foo: number = 4, bar: number = 7) => ({
+      (foo = 4, bar = 7) => ({
         foo,
         bar,
       })

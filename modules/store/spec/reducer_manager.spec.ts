@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { createReducer, ReducerManager, StoreModule } from '@ngrx/store';
+import { createReducer, ReducerManager, StoreModule } from '..';
 
 describe(ReducerManager.name, () => {
   it('should provide reducers being registered in store', () => {

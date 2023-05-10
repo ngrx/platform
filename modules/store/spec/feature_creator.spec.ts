@@ -4,7 +4,7 @@ import {
   createSelector,
   Store,
   StoreModule,
-} from '@ngrx/store';
+} from '..';
 import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs/operators';
 

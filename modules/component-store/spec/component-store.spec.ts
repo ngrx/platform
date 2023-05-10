@@ -13,7 +13,7 @@ import {
   OnStateInit,
   OnStoreInit,
   provideComponentStore,
-} from '@ngrx/component-store';
+} from '..';
 import { createSelector } from '@ngrx/store';
 import {
   asyncScheduler,

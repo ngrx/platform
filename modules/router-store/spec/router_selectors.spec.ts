@@ -3,7 +3,7 @@ import {
   RouterReducerState,
   DEFAULT_ROUTER_FEATURENAME,
   createRouterSelector,
-} from '@ngrx/router-store';
+} from '..';
 import { RouterStateSelectors } from '../src/models';
 
 const mockData = {

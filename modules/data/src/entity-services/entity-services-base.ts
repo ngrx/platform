@@ -11,8 +11,6 @@ import { EntityCollectionServiceMap, EntityServices } from './entity-services';
 import { EntitySelectors$ } from '../selectors/entity-selectors$';
 import { EntityServicesElements } from './entity-services-elements';
 
-/* eslint-disable @typescript-eslint/member-ordering */
-
 /**
  * Base/default class of a central registry of EntityCollectionServices for all entity types.
  * Create your own subclass to add app-specific members for an improved developer experience.

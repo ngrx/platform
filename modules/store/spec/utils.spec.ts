@@ -1,5 +1,5 @@
 import { omit, createFeatureReducerFactory } from '../src/utils';
-import { combineReducers, compose } from '@ngrx/store';
+import { combineReducers, compose } from '..';
 
 describe(`Store utils`, () => {
   describe(`combineReducers()`, () => {

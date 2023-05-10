@@ -1,4 +1,4 @@
-import { createAction, props, union } from '@ngrx/store';
+import { createAction, props, union } from '..';
 
 describe('Action Creators', () => {
   let originalTimeout: number;

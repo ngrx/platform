@@ -36,7 +36,7 @@ describe('DocumentService', () => {
         });
     }
 
-    function getServices(initialUrl: string = '') {
+    function getServices(initialUrl = '') {
         const injector = createInjector(initialUrl);
         httpMock = injector.get(HttpTestingController) as HttpTestingController;
         return {

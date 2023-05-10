@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActionReducerMap, Store, provideStore } from '@ngrx/store';
+import { ActionReducerMap, Store, provideStore } from '..';
 
 import { State } from '../src/private_export';
 import {
