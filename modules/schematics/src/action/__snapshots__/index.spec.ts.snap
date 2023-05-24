@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Action Schematic api should create api actions 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+
+export const FooActions = createActionGroup({
+  source: 'Foo',
+  events: {
+    'Load Foos': emptyProps(),
+    'Load Foos Success': props<{ data: unknown }>(),
+    'Load Foos Failure': props<{ error: unknown }>(),
+  }
+});
+"
+`;
+
+exports[`Action Schematic should create an action with the defined prefix 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+
+export const FooActions = createActionGroup({
+  source: 'Foo',
+  events: {
+    'Prefix Foos': emptyProps(),
+    
+    
+  }
+});
+"
+`;
+
+exports[`Action Schematic should create api actions (load, success, error) when the api flag is set 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+
+export const FooActions = createActionGroup({
+  source: 'Foo',
+  events: {
+    'Load Foos': emptyProps(),
+    'Load Foos Success': props<{ data: unknown }>(),
+    'Load Foos Failure': props<{ error: unknown }>(),
+  }
+});
+"
+`;
+
+exports[`Action Schematic should define actions using createActionGroup 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+
+export const FooActions = createActionGroup({
+  source: 'Foo',
+  events: {
+    'Load Foos': emptyProps(),
+    
+    
+  }
+});
+"
+`;
