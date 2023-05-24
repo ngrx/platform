@@ -36,4 +36,9 @@ export interface Schema {
    */
 
   group?: boolean;
+
+  /**
+   * Specifies if this is grouped within a feature
+   */
+  feature?: boolean;
 }

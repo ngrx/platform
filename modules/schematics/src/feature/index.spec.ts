@@ -21,6 +21,7 @@ describe('Feature Schematic', () => {
     project: 'bar',
     module: '',
     group: false,
+    entity: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -64,6 +65,7 @@ describe('Feature Schematic', () => {
     expect(
       files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
     ).toBeTruthy();
+    expect(files.includes(`${projectPath}/src/app/foo.model.ts`)).toBeFalsy();
   });
 
   it('should not create test files', async () => {
@@ -315,5 +317,41 @@ describe('Feature Schematic', () => {
     expect(fileContent).toMatch(
       /on\(FooActions.customFoosFailure, \(state, action\) => state\),/
     );
+  });
+
+  it('should create all files of a feature with an entity', async () => {
+    const options = { ...defaultOptions, entity: true };
+
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
+    const files = tree.files;
+    expect(
+      files.includes(`${projectPath}/src/app/foo.actions.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.actions.spec.ts`)
+    ).toBeFalsy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.reducer.spec.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.effects.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.effects.spec.ts`)
+    ).toBeTruthy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.selectors.ts`)
+    ).toBeFalsy();
+    expect(
+      files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
+    ).toBeFalsy();
+    expect(files.includes(`${projectPath}/src/app/foo.model.ts`)).toBeTruthy();
   });
 });

@@ -65,6 +65,13 @@
       "type": "string",
       "default": "load",
       "x-prompt": "What should be the prefix of the action, effect and reducer?"
+    },
+    "entity": {
+      "description": "Toggle whether an entity is created as part of the feature",
+      "type": "boolean",
+      "aliases": ["e"],
+      "x-prompt": "Should we use @ngrx/entity to create the reducer?",
+      "default": "false"
     }
   },
   "required": []
