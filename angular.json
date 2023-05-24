@@ -25,6 +25,9 @@
               },
               {
                 "command": "yarn tsc -p modules/component/tsconfig.schematics.json"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/component"
               }
             ],
             "outputPath": ["dist/modules/component"]
@@ -76,6 +79,9 @@
               },
               {
                 "command": "yarn tsc -p modules/component-store/tsconfig.schematics.json"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/component-store"
               }
             ],
             "outputPath": ["dist/modules/component-store"]
@@ -127,6 +133,9 @@
               },
               {
                 "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/data"
               }
             ],
             "outputPath": ["dist/modules/data"]
@@ -354,6 +363,9 @@
               },
               {
                 "command": "ncp dist/modules/effects node_modules/@ngrx/effects"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/effects"
               }
             ],
             "outputPath": ["dist/modules/effects", "node_modules/@ngrx/effects"]
@@ -414,6 +426,9 @@
               },
               {
                 "command": "ncp dist/modules/entity node_modules/@ngrx/entity"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/entity"
               }
             ],
             "outputPath": ["dist/modules/entity", "node_modules/@ngrx/entity"]
@@ -508,6 +523,9 @@
               },
               {
                 "command": "cpy modules/eslint-plugin/schematics/ng-add/schema.json dist/modules/eslint-plugin/schematics/ng-add"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/eslint-plugin"
               }
             ],
             "outputPath": ["dist/modules/eslint-plugin"]
@@ -658,6 +676,9 @@
               },
               {
                 "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/router-store"
               }
             ],
             "outputPath": ["dist/modules/router-store"]
@@ -761,6 +782,9 @@
               },
               {
                 "command": "cpy modules/schematics/src/**/schema.json dist/ --parents"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/schematics"
               }
             ],
             "outputPath": ["dist/modules/schematics"]
@@ -949,6 +973,9 @@
               },
               {
                 "command": "ncp dist/modules/store node_modules/@ngrx/store"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/store"
               }
             ],
             "outputPath": ["dist/modules/store", "node_modules/@ngrx/store"]
@@ -1000,6 +1027,9 @@
               },
               {
                 "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
+              },
+              {
+                "command": "cpy LICENSE dist/modules/store-devtools"
               }
             ],
             "outputPath": ["dist/modules/store-devtools"]
