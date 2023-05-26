@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container Schematic display-block should be disabled by default 1`] = `""`;
+
+exports[`Container Schematic display-block should create add style if true 1`] = `
+":host {
+  display: block;
+}
+"
+`;
+
+exports[`Container Schematic should import Store into the component 1`] = `
+"import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromStore from '../reducers';
+
+@Component({
+  selector: 'app-foo',
+  templateUrl: './foo.component.html',
+  styleUrls: ['./foo.component.css']
+})
+export class FooComponent {
+  constructor(private store: Store) {}
+}
+"
+`;
+
+exports[`Container Schematic should respect the state option if not provided 1`] = `
+"import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+@Component({
+  selector: 'app-foo',
+  templateUrl: './foo.component.html',
+  styleUrls: ['./foo.component.css']
+})
+export class FooComponent {
+  constructor(private store: Store) {}
+}
+"
+`;
+
+exports[`Container Schematic should update the component spec 1`] = `
+"import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { FooComponent } from './foo.component';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+
+describe('FooComponent', () => {
+  let component: FooComponent;
+  let fixture: ComponentFixture<FooComponent>;
+  let store: MockStore;
+
+  beforeEach(async() => {
+    TestBed.configureTestingModule({
+      providers: [ provideMockStore() ],
+      declarations: [ FooComponent ]
+    });
+
+    await TestBed.compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FooComponent);
+    component = fixture.componentInstance;
+    store = TestBed.inject(Store);
+
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+"
+`;
+
+exports[`Container Schematic should use StoreModule if integration test 1`] = `
+"import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { FooComponent } from './foo.component';
+import { Store, StoreModule } from '@ngrx/store';
+
+describe('FooComponent', () => {
+  let component: FooComponent;
+  let fixture: ComponentFixture<FooComponent>;
+  let store: Store;
+
+  beforeEach(async() => {
+    TestBed.configureTestingModule({
+      imports: [ StoreModule.forRoot({}) ],
+      declarations: [ FooComponent ]
+    });
+
+    await TestBed.compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FooComponent);
+    component = fixture.componentInstance;
+    store = TestBed.inject(Store);
+
+    spyOn(store, 'dispatch').and.callThrough();
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+"
+`;
+
+exports[`Container Schematic standalone should create a standalone component if true 1`] = `
+"import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+
+@Component({
+  selector: 'app-foo',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './foo.component.html',
+  styleUrls: ['./foo.component.css']
+})
+export class FooComponent {
+  constructor(private store: Store) {}
+}
+"
+`;
