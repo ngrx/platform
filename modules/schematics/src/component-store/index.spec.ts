@@ -70,7 +70,7 @@ describe('component-store', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not be provided by default', async () => {
+  it('should not be provided into the module by default', async () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic(
@@ -79,10 +79,11 @@ describe('component-store', () => {
       appTree
     );
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).not.toMatch(/import { FooStore } from '.\/foo\/foo.store'/);
+    expect(content).not.toMatch(/FooStore/i);
+    expect(content).toMatchSnapshot();
   });
 
-  it('should import into a specified module', async () => {
+  it('should import into a specified module when the module provided', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = await schematicRunner.runSchematic(
@@ -91,7 +92,9 @@ describe('component-store', () => {
       appTree
     );
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(/import { FooStore } from '.\/foo\/foo.store'/);
+
+    expect(content).toMatch(/FooStore/i);
+    expect(content).toMatchSnapshot();
   });
 
   it('should fail if specified module does not exist', async () => {
@@ -125,19 +128,6 @@ describe('component-store', () => {
     ).toEqual(-1);
   });
 
-  it('should register the component store in the provided module', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
-
-    const tree = await schematicRunner.runSchematic(
-      'component-store',
-      options,
-      appTree
-    );
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-
-    expect(content).toMatch(/FooStore/);
-  });
-
   it('should register the component store in the provided component', async () => {
     const options = { ...defaultOptions, component: 'app.component.ts' };
 
@@ -148,7 +138,8 @@ describe('component-store', () => {
     );
     const content = tree.readContent(`${projectPath}/src/app/app.component.ts`);
 
-    expect(content).toMatch(/FooStore/);
+    expect(content).toMatch(/FooStore/i);
+    expect(content).toMatchSnapshot();
   });
 
   it('should fail if specified component does not exist', async () => {
@@ -156,16 +147,13 @@ describe('component-store', () => {
       ...defaultOptions,
       component: `${projectPath}/src/app/app.componentXXX.ts`,
     };
-    let thrownError: Error | null = null;
-    try {
-      await schematicRunner.runSchematic('component-store', options, appTree);
-    } catch (err: any) {
-      thrownError = err;
-    }
-    expect(thrownError).toBeDefined();
+    const thrownError: Error | null = null;
+    await expect(
+      schematicRunner.runSchematic('component-store', options, appTree)
+    ).rejects.toThrowError();
   });
 
-  it('should inject the component store correctly', async () => {
+  it('should inject the component store correctly into the spec', async () => {
     const options = { ...defaultOptions };
     const tree = await schematicRunner.runSchematic(
       'component-store',
@@ -176,6 +164,7 @@ describe('component-store', () => {
       `${projectPath}/src/app/foo/foo.store.spec.ts`
     );
 
-    expect(content).toMatch(/componentStore = new FooStore()/);
+    expect(content).toMatch(/FooStore/i);
+    expect(content).toMatchSnapshot();
   });
 });
