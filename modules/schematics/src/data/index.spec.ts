@@ -76,48 +76,31 @@ describe('Data Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  describe('service class', () => {
-    it('should import the correct model', async () => {
-      const options = { ...defaultOptions };
-      const tree = await schematicRunner.runSchematic('data', options, appTree);
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.service.ts`
-      );
+  it('should create a service class', async () => {
+    const options = { ...defaultOptions };
+    const tree = await schematicRunner.runSchematic('data', options, appTree);
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.service.ts`
+    );
 
-      expect(fileContent).toMatch(/import { Foo } from '.\/foo';/);
-    });
-
-    it('should extending EntityCollectionServiceBase', async () => {
-      const options = { ...defaultOptions };
-      const tree = await schematicRunner.runSchematic('data', options, appTree);
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.service.ts`
-      );
-
-      expect(fileContent).toMatch(
-        /export class FooService extends EntityCollectionServiceBase<Foo>/
-      );
-
-      expect(fileContent).toMatch(/super\('Foo', serviceElementsFactory\);/);
-    });
+    expect(fileContent).toMatchSnapshot();
   });
 
-  it('should create model', async () => {
+  it('should create a model interface', async () => {
     const options = { ...defaultOptions };
     const tree = await schematicRunner.runSchematic('data', options, appTree);
     const fileContent = tree.readContent(`${projectPath}/src/app/foo.ts`);
 
-    expect(fileContent).toMatch(/export interface Foo {/);
-    expect(fileContent).toMatch(/id\?: unknown;/);
+    expect(fileContent).toMatchSnapshot();
   });
 
-  it('should create spec class with right imports', async () => {
+  it('should create a spec class', async () => {
     const options = { ...defaultOptions };
     const tree = await schematicRunner.runSchematic('data', options, appTree);
     const fileContent = tree.readContent(
       `${projectPath}/src/app/foo.service.spec.ts`
     );
 
-    expect(fileContent).toMatch(/import { FooService } from '.\/foo.service'/);
+    expect(fileContent).toMatchSnapshot();
   });
 });

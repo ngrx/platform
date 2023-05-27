@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data Schematic should create a model interface 1`] = `
+"export interface Foo {
+  id?: unknown;
+}
+"
+`;
+
+exports[`Data Schematic should create a service class 1`] = `
+"import { Injectable } from '@angular/core';
+import {
+  EntityCollectionServiceBase,
+  EntityCollectionServiceElementsFactory
+} from '@ngrx/data';
+import { Foo } from './foo';
+
+@Injectable({ providedIn: 'root' })
+export class FooService extends EntityCollectionServiceBase<Foo> {
+  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+    super('Foo', serviceElementsFactory);
+  }
+}
+"
+`;
+
+exports[`Data Schematic should create a spec class 1`] = `
+"import { TestBed } from '@angular/core/testing';
+import {
+  EntityCollectionServiceElementsFactory
+} from '@ngrx/data';
+import { FooService } from './foo.service';
+
+describe('FooService', () => {
+  let service: FooService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [
+        EntityCollectionServiceElementsFactory,
+        FooService
+      ]
+    });
+
+    await TestBed.compileComponents();
+  });
+
+  beforeEach(() => {
+    service = TestBed.inject(FooService);
+  });
+
+  it('should create an instance', () => {
+    expect(service).toBeTruthy();
+  });
+});
+"
+`;
