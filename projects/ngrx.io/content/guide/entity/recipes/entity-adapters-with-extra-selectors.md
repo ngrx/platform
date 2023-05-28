@@ -1,4 +1,4 @@
-# Using entity adapters with extra selectors of a feature
+# Using Entity Adapters with Extra Selectors
 
 This example demonstrates a User state management using NgRx Store with `Entity Adapters` and `Extra Selectors` for a feature.
 
