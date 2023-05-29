@@ -147,7 +147,7 @@ describe('component-store', () => {
       ...defaultOptions,
       component: `${projectPath}/src/app/app.componentXXX.ts`,
     };
-    const thrownError: Error | null = null;
+
     await expect(
       schematicRunner.runSchematic('component-store', options, appTree)
     ).rejects.toThrowError();
