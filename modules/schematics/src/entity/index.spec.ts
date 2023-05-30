@@ -45,6 +45,16 @@ describe('Entity Schematic', () => {
     expect(
       tree.files.indexOf(`${projectPath}/src/app/foo.reducer.ts`)
     ).toBeGreaterThanOrEqual(0);
+
+    expect(
+      tree.readContent(`${projectPath}/src/app/foo.actions.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/foo.model.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/foo.reducer.ts`)
+    ).toMatchSnapshot();
   });
 
   it('should create 3 files of an entity to specified project if provided', async () => {
@@ -69,6 +79,16 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${specifiedProjectPath}/src/lib/foo.reducer.ts`)
     ).toBeGreaterThanOrEqual(0);
+
+    expect(
+      tree.readContent(`${projectPath}/src/lib/foo.actions.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/lib/foo.model.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/lib/foo.reducer.ts`)
+    ).toMatchSnapshot();
   });
 
   it('should create a folder if flat is false', async () => {
@@ -117,9 +137,8 @@ describe('Entity Schematic', () => {
     const tree = await schematicRunner.runSchematic('entity', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
-    expect(content).toMatch(/import \* as fromFoo from '\.\/foo.reducer';/);
+    expect(content).toMatchSnapshot();
   });
-
   it('should create all files of an entity within grouped and nested folders', async () => {
     const options = { ...defaultOptions, flat: false, group: true };
 
@@ -138,6 +157,21 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/foo/reducers/foo.reducer.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
+
+    expect(
+      tree.readContent(`${projectPath}/src/app/foo/actions/foo.actions.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/foo/models/foo.model.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/foo/reducers/foo.reducer.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(
+        `${projectPath}/src/app/foo/reducers/foo.reducer.spec.ts`
+      )
+    ).toMatchSnapshot();
   });
 
   it('should create all files of an entity within grouped folders if group is set', async () => {
@@ -158,6 +192,19 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/reducers/foo.reducer.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
+
+    expect(
+      tree.readContent(`${projectPath}/src/app/actions/foo.actions.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/models/foo.model.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/reducers/foo.reducer.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/reducers/foo.reducer.spec.ts`)
+    ).toMatchSnapshot();
   });
 
   it('should update the state to plural', async () => {
@@ -174,9 +221,6 @@ describe('Entity Schematic', () => {
     );
     const tree = await schematicRunner.runSchematic('entity', options, appTree);
     const files = tree.files;
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
     expect(
       files.indexOf(`${projectPath}/src/app/user.actions.ts`)
     ).toBeGreaterThanOrEqual(0);
@@ -189,69 +233,21 @@ describe('Entity Schematic', () => {
     expect(
       files.indexOf(`${projectPath}/src/app/user.reducer.spec.ts`)
     ).toBeGreaterThanOrEqual(0);
-    expect(content).toMatch(/\[fromUser.usersFeatureKey\]: fromUser.State/);
-    expect(content).toMatch(/\[fromUser.usersFeatureKey\]: fromUser.reducer/);
-  });
 
-  it('should create a plural featureKey', async () => {
-    const tree = await schematicRunner.runSchematic(
-      'entity',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
-
-    expect(fileContent).toMatch(/foosFeatureKey = 'foos'/);
-  });
-
-  it('should create a const for the action creator', async () => {
-    const tree = await schematicRunner.runSchematic(
-      'entity',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.actions.ts`
-    );
-    expect(fileContent).toMatch(
-      /export const FooActions = createActionGroup\(/
-    );
-    expect(fileContent).toMatch(/'Load Foos'/);
-    expect(fileContent).toMatch(/props<\{ foos: Foo\[\] }>\(\)/);
-  });
-
-  it('should use action creator types in the reducer', async () => {
-    const tree = await schematicRunner.runSchematic(
-      'entity',
-      defaultOptions,
-      appTree
-    );
-    const fileContent = tree.readContent(
-      `${projectPath}/src/app/foo.reducer.ts`
-    );
-    expect(fileContent).toMatch(
-      /import { FooActions } from '\.\/foo.actions';/
-    );
-    expect(fileContent).toMatch(/on\(FooActions.addFoo,/);
-    expect(fileContent).toMatch(
-      /\(state, action\) => adapter\.addOne\(action.foo, state\)/
-    );
-  });
-
-  describe('Ivy', () => {
-    it('should create and export a reducer', async () => {
-      const tree = await schematicRunner.runSchematic(
-        'reducer',
-        defaultOptions,
-        appTree
-      );
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.reducer.ts`
-      );
-
-      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
-    });
+    expect(
+      tree.readContent(`${projectPath}/src/app/user.actions.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/user.model.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/user.reducer.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/user.reducer.spec.ts`)
+    ).toMatchSnapshot();
+    expect(
+      tree.readContent(`${projectPath}/src/app/reducers/index.ts`)
+    ).toMatchSnapshot();
   });
 });
