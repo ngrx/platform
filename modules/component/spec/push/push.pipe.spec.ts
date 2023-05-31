@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, ErrorHandler } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ErrorHandler,
+  computed,
+  signal,
+} from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -6,7 +12,15 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { BehaviorSubject, delay, EMPTY, NEVER, of, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  delay,
+  EMPTY,
+  NEVER,
+  Observable,
+  of,
+  throwError,
+} from 'rxjs';
 import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
 import { stripSpaces, wrapWithSpace } from '../helpers';
@@ -156,6 +170,29 @@ describe('PushPipe', () => {
       it('should return non-observable value when it was passed after another non-observable', () => {
         expect(pushPipe.transform(100)).toBe(100);
         expect(pushPipe.transform('ngrx')).toBe('ngrx');
+      });
+
+      it('should not track signal reads in subscriptions', () => {
+        const trigger = signal(false);
+
+        const obs = new Observable(() => {
+          // Whenever `obs` is subscribed, synchronously read `trigger`.
+          trigger();
+        });
+
+        let trackCount = 0;
+        const tracker = computed(() => {
+          // Subscribe to `obs` within this `computed`. If the subscription side effect runs
+          // within the computed, then changes to `trigger` will invalidate this computed.
+          pushPipe.transform(obs);
+
+          // The computed returns how many times it's run.
+          return ++trackCount;
+        });
+
+        expect(tracker()).toBe(1);
+        trigger.set(true);
+        expect(tracker()).toBe(1);
       });
     });
   });
