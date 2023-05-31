@@ -622,7 +622,7 @@
       "title": "Community",
       "children": [
         {
-          "url": "https://github.com/ngrx/platform/blob/master/CODE_OF_CONDUCT.md",
+          "url": "https://github.com/ngrx/platform/blob/main/CODE_OF_CONDUCT.md",
           "title": "Code of Conduct",
           "tooltip": "Code of Conduct"
         },
