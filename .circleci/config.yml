@@ -63,7 +63,7 @@ jobs:
       # Build and Test
       - run:
           name: Run Affected Lint Checks
-          command: yarn nx affected:lint --head=$CIRCLE_SHA1 --parallel=1
+          command: yarn nx affected:lint --base=main --head=$CIRCLE_SHA1 --parallel=1
 
   test:
     <<: *run_in_browser
@@ -95,7 +95,7 @@ jobs:
       # Build and Test
       - run:
           name: Run Affected Unit Tests
-          command: yarn nx affected:test --head=$CIRCLE_SHA1 --parallel=1
+          command: yarn nx affected:test --base=main --head=$CIRCLE_SHA1 --parallel=1
 
   build:
     <<: *run_in_node
@@ -138,7 +138,7 @@ jobs:
       - run: yarn
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --head=$CIRCLE_SHA1
+          command: yarn nx affected --target=build --base=main --head=$CIRCLE_SHA1
 
   schematics-core-check:
     <<: *run_in_browser
@@ -162,7 +162,7 @@ jobs:
       - run: yarn
       - run:
           name: Run Affected E2E Tests
-          command: yarn nx affected --target=e2e --head=$CIRCLE_SHA1 --parallel=1 --exclude=docs-app
+          command: yarn nx affected --target=e2e --base=main --head=$CIRCLE_SHA1 --parallel=1 --exclude=docs-app
 
   deploy:
     <<: *run_in_node
