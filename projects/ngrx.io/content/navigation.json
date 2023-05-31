@@ -232,6 +232,10 @@
                 {
                   "title": "Additional State Properties",
                   "url": "guide/entity/recipes/additional-state-properties"
+                },
+                {
+                  "title": "Entity Adapter with Feature Creator",
+                  "url": "guide/entity/recipes/entity-adapter-with-feature-creator"
                 }
               ]
             }
