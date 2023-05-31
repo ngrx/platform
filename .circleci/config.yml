@@ -21,13 +21,6 @@ var_5: &run_in_browser
 orbs:
   browser-tools: circleci/browser-tools@1.3.0
 
-commands:
-  write_main_hash:
-    steps:
-      - run: git remote add upstream git@github.com:ngrx/platform.git
-      - run: git fetch upstream main
-      - run: git log --format='%h' -n 1 upstream/main > ~/project/main.txt
-
 jobs:
   install:
     <<: *run_in_node
@@ -68,10 +61,9 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - write_main_hash
       - run:
           name: Run Affected Lint Checks
-          command: yarn nx affected:lint --base=$(cat ~/project/main.txt) --head=$CIRCLE_SHA1 --parallel=1
+          command: yarn nx affected:lint --head=$CIRCLE_SHA1 --parallel=1
 
   test:
     <<: *run_in_browser
@@ -101,10 +93,9 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - write_main_hash
       - run:
           name: Run Affected Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/main.txt) --head=$CIRCLE_SHA1 --parallel=1
+          command: yarn nx affected:test --head=$CIRCLE_SHA1 --parallel=1
 
   build:
     <<: *run_in_node
@@ -145,10 +136,9 @@ jobs:
 
       # Build
       - run: yarn
-      - write_main_hash
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --base=$(cat ~/project/main.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected --target=build --head=$CIRCLE_SHA1
 
   schematics-core-check:
     <<: *run_in_browser
@@ -170,10 +160,9 @@ jobs:
           keys:
             - *cache_key
       - run: yarn
-      - write_main_hash
       - run:
           name: Run Affected E2E Tests
-          command: yarn nx affected --target=e2e --base=$(cat ~/project/main.txt) --head=$CIRCLE_SHA1 --parallel=1 --exclude=docs-app
+          command: yarn nx affected --target=e2e --head=$CIRCLE_SHA1 --parallel=1 --exclude=docs-app
 
   deploy:
     <<: *run_in_node
