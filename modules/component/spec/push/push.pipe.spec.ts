@@ -51,7 +51,7 @@ const setupPushPipeComponent = () => {
   pushPipe = TestBed.inject(PushPipe);
 };
 
-fdescribe('PushPipe', () => {
+describe('PushPipe', () => {
   describe('used as a Service', () => {
     beforeEach(waitForAsync(setupPushPipeComponent));
 
