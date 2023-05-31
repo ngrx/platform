@@ -56,7 +56,7 @@ export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
 });
 
-export const userReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(UserActions.selectUser, (state, { userId }) => {
     return { ...state, selectedUserId: userId };
@@ -66,7 +66,4 @@ export const userReducer = createReducer(
   })
 );
 
-export function reducer(state: State | undefined, action: Action) {
-  return userReducer(state, action);
-}
 </code-example>
