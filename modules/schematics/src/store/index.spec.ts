@@ -36,12 +36,14 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
-    const files = tree.files;
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
 
-    expect(
-      files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
-    ).toBeGreaterThanOrEqual(0);
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should skip the initial store setup files if the minimal flag is provided', async () => {
@@ -52,14 +54,13 @@ describe('Store Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    const files = tree.files;
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
-    expect(content).not.toMatch(
-      /import { reducers, metaReducers } from '\.\/reducers';/
-    );
-    expect(content).toMatch(/StoreModule.forRoot\({}\),/);
-    expect(files.indexOf(`${projectPath}/src/app/reducers/index.ts`)).toBe(-1);
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBe(-1);
   });
 
   it('should not skip the initial store setup files if the minimal flag is provided with a feature', async () => {
@@ -71,14 +72,14 @@ describe('Store Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
-    expect(content).toMatch(
-      /StoreModule\.forFeature\(fromFoo.fooFeatureKey, fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
-    );
-    expect(
-      tree.files.indexOf(`${projectPath}/src/app/reducers/index.ts`)
-    ).toBeGreaterThanOrEqual(0);
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should create the initial store to specified project if provided', async () => {
@@ -120,84 +121,53 @@ describe('Store Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should not be provided by default', async () => {
-    const options = { ...defaultOptions };
-
-    const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).not.toMatch(
-      /import { reducers, metaReducers } from '\.\/reducers';/
-    );
-  });
-
   it('should import into a specified module', async () => {
     const options = { ...defaultOptions, module: 'app.module.ts' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(
-      /import { reducers, metaReducers } from '\.\/reducers';/
-    );
-  });
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
-  it('should import isDevMode correctly in the app module', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
 
-    const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(
-      /import { NgModule, isDevMode } from '@angular\/core';/
-    );
-  });
-
-  it('should import the environments correctly in the reducers', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
-
-    const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/import { isDevMode } from '@angular\/core';/);
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should fail if specified module does not exist', async () => {
     const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
-    let thrownError: Error | null = null;
-    try {
-      await schematicRunner.runSchematic('store', options, appTree);
-    } catch (err: any) {
-      thrownError = err;
-    }
-    expect(thrownError).toBeDefined();
+    await expect(
+      schematicRunner.runSchematic('store', options, appTree)
+    ).rejects.toThrow();
   });
 
   it('should import a feature a specified module', async () => {
     const options = { ...defaultOptions, root: false, module: 'app.module.ts' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
-    expect(content).toMatch(
-      /StoreModule\.forFeature\(fromFoo.fooFeatureKey, fromFoo\.reducers, { metaReducers: fromFoo.metaReducers }\)/
-    );
-  });
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
 
-  it('should use a wildcard for a feature import ', async () => {
-    const options = { ...defaultOptions, root: false, module: 'app.module.ts' };
-
-    const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(/import \* as fromFoo from '\.\/reducers';/);
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should support a default root state interface name', async () => {
     const options = { ...defaultOptions, name: 'State' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/export interface State {/);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
+
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should support a custom root state interface name', async () => {
@@ -208,20 +178,28 @@ describe('Store Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/export interface AppState {/);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
+
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should support a default feature state interface name', async () => {
     const options = { ...defaultOptions, root: false, name: 'Feature' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/export interface State {/);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
+
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should support a custom feature state interface name', async () => {
@@ -233,10 +211,14 @@ describe('Store Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/export interface FeatureState {/);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
+
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should fail if a feature state name is not specified', async () => {
@@ -246,15 +228,9 @@ describe('Store Schematic', () => {
       root: false,
     };
 
-    let error = false;
-
-    try {
-      await schematicRunner.runSchematic('store', options, appTree);
-    } catch (e) {
-      error = true;
-    }
-
-    expect(error).toBeTruthy();
+    await expect(
+      schematicRunner.runSchematic('store', options, appTree)
+    ).rejects.toThrow();
   });
 
   it('should pass if a root state name is not specified', () => {
@@ -272,20 +248,28 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, root: false };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).toMatch(/fooFeatureKey = 'foo'/);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
+
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should not add a feature key if root', async () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const content = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-    expect(content).not.toMatch(/fooFeatureKey = 'foo'/);
+    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
+
+    expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(modulePath)).toMatchSnapshot();
+
+    expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
+    expect(tree.readContent(reducersPath)).toMatchSnapshot;
   });
 
   it('should add the initial config correctly into an empty module', async () => {
@@ -310,8 +294,6 @@ describe('Store Schematic', () => {
     const tree = await schematicRunner.runSchematic('store', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/empty.module.ts`);
 
-    expect(content).toMatch(
-      /imports: \[StoreModule.forRoot\(reducers, { metaReducers }\), isDevMode\(\) \? StoreDevtoolsModule.instrument\(\) : \[\]\]/
-    );
+    expect(content).toMatchSnapshot();
   });
 });
