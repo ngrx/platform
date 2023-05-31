@@ -219,7 +219,7 @@ export const routes: Route[] = [
   {
     path: 'scoreboard',
     providers: [
-      provideState({ name:scoreboardFeatureKey, reducer: scoreboardReducer })
+      provideState({ name: scoreboardFeatureKey, reducer: scoreboardReducer })
     ]
   }
 ];
