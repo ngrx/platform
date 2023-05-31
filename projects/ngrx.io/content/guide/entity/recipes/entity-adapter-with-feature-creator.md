@@ -25,7 +25,8 @@ export const initialState: State = adapter.getInitialState({
 
 Then, we define the `User` actions: `addUser` and `selectUser`.
 
-<code-example header="user.actions.ts">
+<code-example header="user-list-page.actions.ts">
+
 
 import { createActionGroup, props } from '@ngrx/store';
 import { User } from './user.model';
