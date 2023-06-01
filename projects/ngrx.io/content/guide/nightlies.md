@@ -1,6 +1,6 @@
 # Nightly builds
 
-Nightly builds are provided to allow developers to use the latest features that haven't been released yet. The nightly builds of each package are published on each successful build of the master branch. Use the installation instructions below for each respective package.
+Nightly builds are provided to allow developers to use the latest features that haven't been released yet. The nightly builds of each package are published on each successful build of the main branch. Use the installation instructions below for each respective package.
 
 ### Store
 

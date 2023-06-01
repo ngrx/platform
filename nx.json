@@ -1,6 +1,6 @@
 {
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "npmScope": "ngrx",
   "tasksRunnerOptions": {

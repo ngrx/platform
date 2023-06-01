@@ -62,21 +62,21 @@ Some rules also allow automatic fixes with `ng lint --fix`.
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name                                                                                                                                                               |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [all-requiring-type-checking](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/all-requiring-type-checking.ts)                       |
-| [all](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/all.ts)                                                                       |
-| [component-store-strict](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/component-store-strict.ts)                                 |
-| [component-store](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/component-store.ts)                                               |
-| [effects-requiring-type-checking](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/effects-requiring-type-checking.ts)               |
-| [effects-strict-requiring-type-checking](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/effects-strict-requiring-type-checking.ts) |
-| [effects-strict](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/effects-strict.ts)                                                 |
-| [effects](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/effects.ts)                                                               |
-| [recommended-requiring-type-checking](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/recommended-requiring-type-checking.ts)       |
-| [recommended](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/recommended.ts)                                                       |
-| [store-strict](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/store-strict.ts)                                                     |
-| [store](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/store.ts)                                                                   |
-| [strict-requiring-type-checking](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/strict-requiring-type-checking.ts)                 |
-| [strict](https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs/strict.ts)                                                                 |
+| Name                                                                                                                                                             |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [all-requiring-type-checking](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all-requiring-type-checking.ts)                       |
+| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.ts)                                                                       |
+| [component-store-strict](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store-strict.ts)                                 |
+| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.ts)                                               |
+| [effects-requiring-type-checking](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-requiring-type-checking.ts)               |
+| [effects-strict-requiring-type-checking](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-strict-requiring-type-checking.ts) |
+| [effects-strict](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-strict.ts)                                                 |
+| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.ts)                                                               |
+| [recommended-requiring-type-checking](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/recommended-requiring-type-checking.ts)       |
+| [recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/recommended.ts)                                                       |
+| [store-strict](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store-strict.ts)                                                     |
+| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.ts)                                                                   |
+| [strict-requiring-type-checking](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/strict-requiring-type-checking.ts)                 |
+| [strict](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/strict.ts)                                                                 |
 
   <!-- CONFIGURATIONS-CONFIG:END -->

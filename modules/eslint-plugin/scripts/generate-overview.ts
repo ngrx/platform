@@ -7,7 +7,7 @@ import { configs } from '../src/configs';
 const prettierConfig = resolveConfig.sync(__dirname);
 const OVERVIEW = './projects/ngrx.io/content/guide/eslint-plugin/index.md';
 const GH_CONFIGS =
-  'https://github.com/ngrx/platform/blob/master/modules/eslint-plugin/src/configs';
+  'https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs';
 
 generateRules();
 generateConfigurations();

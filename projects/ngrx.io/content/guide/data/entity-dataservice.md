@@ -62,7 +62,7 @@ You can add custom data services to it by creating instances of those classes an
 
 <div class="alert is-helpful">
 
-You can create and import a module that registers your custom data services as shown in the _EntityDataService_ [tests](https://github.com/ngrx/platform/blob/master/modules/data/spec/dataservices/entity-data.service.spec.ts)
+You can create and import a module that registers your custom data services as shown in the _EntityDataService_ [tests](https://github.com/ngrx/platform/blob/main/modules/data/spec/dataservices/entity-data.service.spec.ts)
 
 </div>
 
