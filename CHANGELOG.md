@@ -1,3 +1,12 @@
+<a name="16.0.1"></a>
+
+## [16.0.1](https://github.com/ngrx/platform/compare/16.0.0...16.0.1) (2023-06-01)
+
+### Bug Fixes
+
+- **component:** untrack subscription in ngrxPush pipe ([#3918](https://github.com/ngrx/platform/issues/3918)) ([a1688e4](https://github.com/ngrx/platform/commit/a1688e4))
+- **ngrx.io:** preserve sidenav width for larger menu items ([#3923](https://github.com/ngrx/platform/issues/3923)) ([ef73714](https://github.com/ngrx/platform/commit/ef73714))
+
 <a name="16.0.0"></a>
 
 # [16.0.0](https://github.com/ngrx/platform/compare/16.0.0-rc.0...16.0.0) (2023-05-09)
