@@ -72,7 +72,7 @@ describe('Action Schematic', () => {
     ).toBe(false);
   });
 
-  it('should create a const for the action creator', async () => {
+  it('should define actions using createActionGroup', async () => {
     const options = {
       ...defaultOptions,
     };
@@ -82,14 +82,10 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(
-      /export const FooActions = createActionGroup\(/
-    );
-    expect(fileContent).toMatch(new RegExp(`source: 'Foo'`));
-    expect(fileContent).toMatch(/Load Foos'/);
+    expect(fileContent).toMatchSnapshot();
   });
 
-  it('should create success/error actions when the api flag is set', async () => {
+  it('should create api actions (load, success, error) when the api flag is set', async () => {
     const options = {
       ...defaultOptions,
       api: true,
@@ -100,41 +96,21 @@ describe('Action Schematic', () => {
       `${projectPath}/src/app/foo.actions.ts`
     );
 
-    expect(fileContent).toMatch(
-      /export const FooActions = createActionGroup\(/
-    );
-    expect(fileContent).toMatch(new RegExp(`source: 'Foo'`));
-    expect(fileContent).toMatch(/Load Foos Success/);
-    expect(fileContent).toMatch(/props<{ data: unknown }>\(\)/);
-    expect(fileContent).toMatch(/Load Foos Failure/);
-    expect(fileContent).toMatch(/props<{ error: unknown }>\(\)/);
+    expect(fileContent).toMatchSnapshot();
   });
 
-  it.each(['load', 'delete', 'update'])(
-    'should create a action with prefix',
-    async (prefix) => {
-      const options = {
-        ...defaultOptions,
-        prefix: prefix,
-      };
+  it('should create an action with the defined prefix', async () => {
+    const options = {
+      ...defaultOptions,
+      prefix: 'prefix',
+    };
 
-      const tree = await schematicRunner.runSchematic(
-        'action',
-        options,
-        appTree
-      );
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
-      expect(fileContent).toMatch(
-        new RegExp(`export const FooActions = createActionGroup`)
-      );
-      expect(fileContent).toMatch(new RegExp(`source: 'Foo'`));
-      expect(fileContent).toMatch(
-        new RegExp(`'${capitalize(prefix)} Foos': emptyProps\\(\\),`)
-      );
-    }
-  );
+    const tree = await schematicRunner.runSchematic('action', options, appTree);
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.actions.ts`
+    );
+    expect(fileContent).toMatchSnapshot();
+  });
 
   describe('api', () => {
     it('should group within an "actions" folder if group is set', async () => {
@@ -151,7 +127,7 @@ describe('Action Schematic', () => {
       ).toBeTruthy();
     });
 
-    it('should create a success class based on the provided name, given api', async () => {
+    it('should create api actions', async () => {
       const tree = await schematicRunner.runSchematic(
         'action',
         {
@@ -164,27 +140,7 @@ describe('Action Schematic', () => {
         `${projectPath}/src/app/foo.actions.ts`
       );
 
-      expect(fileContent).toMatch(
-        /'Load Foos Success': props<\{ data: unknown }>\(\),/
-      );
-    });
-
-    it('should create a failure class based on the provided name, given api', async () => {
-      const tree = await schematicRunner.runSchematic(
-        'action',
-        {
-          ...defaultOptions,
-          api: true,
-        },
-        appTree
-      );
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.actions.ts`
-      );
-
-      expect(fileContent).toMatch(
-        /'Load Foos Failure': props<\{ error: unknown }>\(\),/
-      );
+      expect(fileContent).toMatchSnapshot();
     });
   });
 });

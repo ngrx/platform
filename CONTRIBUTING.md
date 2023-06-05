@@ -4,7 +4,7 @@
 
 To get started, create a codespace for this repository by clicking this 👇
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=83716883)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=83716883)
 
 A codespace will open in a web-based version of Visual Studio Code. The [dev container](.devcontainer/devcontainer.json) is fully configured with software needed for this project.
 
@@ -40,7 +40,7 @@ yarn jest <relative path> --watch
 
 **Please follow these basic steps to simplify pull request reviews. If you don't you'll probably just be asked to anyway.**
 
-- Please rebase your branch against the current master.
+- Please rebase your branch against the current main.
 - Run the `Setup` command to make sure your development dependencies are up-to-date.
 - Please ensure the test suite passes before submitting a PR.
 - If you've added new functionality, **please** include tests which validate its behavior.
@@ -94,7 +94,7 @@ to read on GitHub as well as in various git tools.
 
 The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
-Samples: (even more [samples](https://github.com/ngrx/platform/commits/master))
+Samples: (even more [samples](https://github.com/ngrx/platform/commits/main))
 
 ```
 docs(changelog): update changelog to beta.5

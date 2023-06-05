@@ -8,6 +8,7 @@
 aio-nav-menu {
   display: block;
   margin: 0 auto;
+  max-width: 268px;
   @include typescale-small;
   ul, a {
     padding: 0;

@@ -2,7 +2,7 @@
 
 Reactive libraries for Angular
 
-[![CircleCI](https://circleci.com/gh/ngrx/platform/tree/master.svg?style=shield)](https://circleci.com/gh/ngrx/workflows/platform/tree/master)
+[![CircleCI](https://circleci.com/gh/ngrx/platform/tree/main.svg?style=shield)](https://circleci.com/gh/ngrx/workflows/platform/tree/main)
 [![Join the chat at https://gitter.im/ngrx/platform](https://badges.gitter.im/ngrx/platform.svg)](https://gitter.im/ngrx/platform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Join the discord server at https://discord.com/invite/ngrx](https://img.shields.io/discord/740557383109050469.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff&style=flat-square)](https://discord.com/invite/ngrx)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](https://commitizen.github.io/cz-cli/)

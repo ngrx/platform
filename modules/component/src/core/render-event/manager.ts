@@ -6,6 +6,7 @@ import {
   fromPotentialObservable,
   PotentialObservableResult,
 } from '../potential-observable';
+import { untracked } from '@angular/core';
 
 export interface RenderEventManager<PO> {
   nextPotentialObservable(potentialObservable: PO): void;
@@ -46,20 +47,22 @@ function switchMapToRenderEvent<PO>(): (
 
       return new Observable<RenderEvent<PotentialObservableResult<PO>>>(
         (subscriber) => {
-          const subscription = observable$.subscribe({
-            next(value) {
-              subscriber.next({ type: 'next', value, reset, synchronous });
-              reset = false;
-            },
-            error(error) {
-              subscriber.next({ type: 'error', error, reset, synchronous });
-              reset = false;
-            },
-            complete() {
-              subscriber.next({ type: 'complete', reset, synchronous });
-              reset = false;
-            },
-          });
+          const subscription = untracked(() =>
+            observable$.subscribe({
+              next(value) {
+                subscriber.next({ type: 'next', value, reset, synchronous });
+                reset = false;
+              },
+              error(error) {
+                subscriber.next({ type: 'error', error, reset, synchronous });
+                reset = false;
+              },
+              complete() {
+                subscriber.next({ type: 'complete', reset, synchronous });
+                reset = false;
+              },
+            })
+          );
 
           if (reset) {
             subscriber.next({ type: 'suspense', reset, synchronous: true });

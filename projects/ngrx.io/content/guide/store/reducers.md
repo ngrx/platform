@@ -135,7 +135,7 @@ import { scoreboardReducer } from './reducers/scoreboard.reducer';
 bootstrapApplication(AppComponent, {
   providers: [
     provideStore(),
-    provideState({ game: scoreboardReducer })
+    provideState({ name: 'game', reducer: scoreboardReducer })
   ],
 });
 </code-example>
@@ -219,7 +219,7 @@ export const routes: Route[] = [
   {
     path: 'scoreboard',
     providers: [
-      provideState({ [scoreboardFeatureKey]: scoreboardReducer })
+      provideState({ name: scoreboardFeatureKey, reducer: scoreboardReducer })
     ]
   }
 ];

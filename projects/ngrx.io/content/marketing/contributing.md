@@ -126,7 +126,7 @@ yarn test
 
 **Please follow these basic steps to simplify pull request reviews. If you don't you'll probably just be asked to anyway.**
 
-- Please rebase your branch against the current master.
+- Please rebase your branch against the current main.
 - Run the `Setup` instructions to make sure your development dependencies are up-to-date.
 - Please ensure the test suite passes before submitting a PR.
 - If you've added new functionality, **please** include tests which validate its behavior.
@@ -180,7 +180,7 @@ feat(router-store): add routerState config option
 Closes #1834
 ```
 
-Samples: (even more [samples](https://github.com/ngrx/platform/commits/master))
+Samples: (even more [samples](https://github.com/ngrx/platform/commits/main))
 
 ```
 docs: add new example to selectors guide
