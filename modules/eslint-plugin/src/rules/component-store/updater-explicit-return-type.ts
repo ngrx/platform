@@ -33,7 +33,7 @@ export default createRule<Options, MessageIds>({
     const storeNames = identifiers.length > 0 ? asPattern(identifiers) : null;
     const withoutTypeAnnotation = `ArrowFunctionExpression:not([returnType.typeAnnotation])`;
     const selectors = [
-      `ClassDeclaration[superClass.name='ComponentStore'] CallExpression[callee.object.type='ThisExpression'][callee.property.name='updater'] > ${withoutTypeAnnotation}`,
+      `ClassDeclaration[superClass.name=/Store/] CallExpression[callee.object.type='ThisExpression'][callee.property.name='updater'] > ${withoutTypeAnnotation}`,
       storeNames &&
         `${namedExpression(
           storeNames
