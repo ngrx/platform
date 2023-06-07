@@ -123,6 +123,16 @@ class NotOk3 {
     updater()
   }
 }`),
+  fromFixture(`
+@Injectable()
+export class CompetitorsStore2 extends CompetitorsStore1 {
+  override updateName = this.updater<string>((state, name: string) => ({ ...state, name }));
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+
+
+  updateName2 = this.updater(() => ({ name: 'test' }));
+                             ~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+}`),
 ];
 
 ruleTester().run(path.parse(__filename).name, rule, {

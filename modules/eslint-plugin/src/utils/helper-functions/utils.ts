@@ -260,10 +260,6 @@ export function getLast<T extends readonly unknown[]>(items: T): T[number] {
   return items.slice(-1)[0];
 }
 
-export function getDecoratorArguments({ expression }: TSESTree.Decorator) {
-  return isCallExpression(expression) ? expression.arguments : [];
-}
-
 export function getDecoratorName({
   expression,
 }: TSESTree.Decorator): string | undefined {
@@ -274,20 +270,6 @@ export function getDecoratorName({
   return isCallExpression(expression) && isIdentifier(expression.callee)
     ? expression.callee.name
     : undefined;
-}
-
-export function getDecorator(
-  {
-    decorators,
-  }:
-    | TSESTree.PropertyDefinition
-    | TSESTree.ClassDeclaration
-    | TSESTree.MethodDefinition,
-  decoratorName: string
-): TSESTree.Decorator | undefined {
-  return decorators?.find(
-    (decorator) => getDecoratorName(decorator) === decoratorName
-  );
 }
 
 export function getRawText(node: TSESTree.Node): string | null {
