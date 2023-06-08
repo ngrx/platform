@@ -232,6 +232,10 @@
                 {
                   "title": "Additional State Properties",
                   "url": "guide/entity/recipes/additional-state-properties"
+                },
+                {
+                  "title": "Entity Adapter with Feature Creator",
+                  "url": "guide/entity/recipes/entity-adapter-with-feature-creator"
                 }
               ]
             }
@@ -618,7 +622,7 @@
       "title": "Community",
       "children": [
         {
-          "url": "https://github.com/ngrx/platform/blob/master/CODE_OF_CONDUCT.md",
+          "url": "https://github.com/ngrx/platform/blob/main/CODE_OF_CONDUCT.md",
           "title": "Code of Conduct",
           "tooltip": "Code of Conduct"
         },

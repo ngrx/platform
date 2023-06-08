@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, provideStore } from '@ngrx/store';
+import { Store, provideStore } from '..';
 import { Component, inject, Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'test', standalone: true })

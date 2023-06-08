@@ -81,9 +81,9 @@ export async function prepareAndPublish(
   await process.chdir(`${repoDir}`);
   await util.git([`init`]);
   await util.git([`remote add origin ${repoUrl}`]);
-  await util.git([`fetch origin master${depth ? ` --depth=${depth}` : ''}`]);
-  await util.git(['checkout origin/master']);
-  await util.git(['checkout -b master']);
+  await util.git([`fetch origin main${depth ? ` --depth=${depth}` : ''}`]);
+  await util.git(['checkout origin/main']);
+  await util.git(['checkout -b main']);
   await process.chdir('../../');
 
   if (clean) {
@@ -99,6 +99,6 @@ export async function prepareAndPublish(
   await util.git([`commit -F commit_message`]);
   await util.cmd('rm', ['commit_message']);
 
-  await util.git(['push origin master --force']);
+  await util.git(['push origin main --force']);
   await process.chdir('../../');
 }
