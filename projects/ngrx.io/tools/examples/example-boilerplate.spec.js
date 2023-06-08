@@ -20,12 +20,6 @@ describe('example-boilerplate tool', () => {
       spyOn(exampleBoilerPlate, 'loadJsonFile').and.returnValue({});
     });
 
-    it('should run `ngcc`', () => {
-      exampleBoilerPlate.add();
-      expect(shelljs.exec).toHaveBeenCalledWith(
-          `yarn --cwd ${sharedDir} ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points`);
-    });
-
     it('should process all the example folders', () => {
       const examplesDir = path.resolve(__dirname, '../../content/examples');
       exampleBoilerPlate.add();
@@ -135,11 +129,6 @@ describe('example-boilerplate tool', () => {
     });
 
     describe('(viewengine: true)', () => {
-      it('should not run `ngcc`', () => {
-        exampleBoilerPlate.add(true);
-        expect(shelljs.exec).not.toHaveBeenCalled();
-      });
-
       it('should copy all the source boilerplate files for systemjs', () => {
         const boilerplateDir = path.resolve(sharedDir, 'boilerplate');
         exampleBoilerPlate.loadJsonFile.and.returnValue({ projectType: 'systemjs' });
