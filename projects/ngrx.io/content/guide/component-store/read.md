@@ -137,6 +137,28 @@ export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
 }
 </code-example>
 
+## Using a custom equality function
+
+The observable created by the `select` method compares the newly emitted value with the previous one using the default equality check (`===`) and emits only if the value has changed. However, the default behavior can be overridden by passing a custom equality function to the `select` method config.
+
+<code-example header="movies.store.ts">
+export interface MoviesState {
+  movies: Movie[];
+}
+
+@Injectable()
+export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
+  
+  constructor() {
+    super({movies:[]});
+  }
+
+  readonly movies$: Observable&lt;Movie[]&gt; = this.select(
+    state => state.movies,
+    {equal: (prev, curr) => prev.length === curr.length} // 👈 custom equality function
+  );
+}
+</code-example>
 
 ## Selecting from global `@ngrx/store`
 
