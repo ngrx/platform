@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reducer Schematic should create a reducer 1`] = `
+"import { createReducer, on } from '@ngrx/store';
+import { FooActions } from './foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+);
+
+"
+`;
+
+exports[`Reducer Schematic should create a reducer with prefix in an api feature 1`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { FooActions } from './foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.customFoos, state => state),
+  on(FooActions.customFoosSuccess, (state, action) => state),
+  on(FooActions.customFoosFailure, (state, action) => state),
+);
+
+export const fooFeature = createFeature({
+  name: fooFeatureKey,
+  reducer,
+});
+
+"
+`;
+
+exports[`Reducer Schematic should create a reducers barrel file 1`] = `
+"
+    import { isDevMode } from '@angular/core';
+    import {
+      ActionReducer,
+      ActionReducerMap,
+      createFeatureSelector,
+      createSelector,
+      MetaReducer
+    } from '@ngrx/store';
+import * as fromFoo from '../foo.reducer';
+
+    export interface State {
+
+      [fromFoo.fooFeatureKey]: fromFoo.State;
+}
+
+    export const reducers: ActionReducerMap<State> = {
+
+      [fromFoo.fooFeatureKey]: fromFoo.reducer,
+};
+
+
+    export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+  "
+`;
+
+exports[`Reducer Schematic should create and export a reducer in a feature 1`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { FooActions } from './foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.loadFoos, state => state),
+
+);
+
+export const fooFeature = createFeature({
+  name: fooFeatureKey,
+  reducer,
+});
+
+"
+`;
+
+exports[`Reducer Schematic should create and export a reducer in an api feature 1`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { FooActions } from './foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.loadFoos, state => state),
+  on(FooActions.loadFoosSuccess, (state, action) => state),
+  on(FooActions.loadFoosFailure, (state, action) => state),
+);
+
+export const fooFeature = createFeature({
+  name: fooFeatureKey,
+  reducer,
+});
+
+"
+`;
+
+exports[`Reducer Schematic should group and nest the reducer within a feature 1`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { FooActions } from '../../actions/foo/foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.loadFoos, state => state),
+
+);
+
+export const fooFeature = createFeature({
+  name: fooFeatureKey,
+  reducer,
+});
+
+"
+`;
+
+exports[`Reducer Schematic should group within a "reducers" folder if group is set 1`] = `
+"import { createReducer, on } from '@ngrx/store';
+import { FooActions } from '../actions/foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+);
+
+"
+`;
+
+exports[`Reducer Schematic should import into a specified module 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromFoo from './foo.reducer';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducer)
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;
