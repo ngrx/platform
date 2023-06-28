@@ -40,8 +40,9 @@ import {
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-export interface SelectConfig {
+export interface SelectConfig<T = unknown> {
   debounce?: boolean;
+  equal?: ValueEqualityFn<T>;
 }
 
 export const INITIAL_STATE_TOKEN = new InjectionToken(
@@ -248,11 +249,13 @@ export class ComponentStore<T extends object> implements OnDestroy {
    */
   select<Result>(
     projector: (s: T) => Result,
-    config?: SelectConfig
+    config?: SelectConfig<Result>
   ): Observable<Result>;
   select<SelectorsObject extends Record<string, Observable<unknown>>>(
     selectorsObject: SelectorsObject,
-    config?: SelectConfig
+    config?: SelectConfig<{
+      [K in keyof SelectorsObject]: ObservedValueOf<SelectorsObject[K]>;
+    }>
   ): Observable<{
     [K in keyof SelectorsObject]: ObservedValueOf<SelectorsObject[K]>;
   }>;
@@ -266,12 +269,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
     ...selectorsWithProjectorAndConfig: [
       ...selectors: Selectors,
       projector: Projector<Selectors, Result>,
-      config: SelectConfig
+      config: SelectConfig<Result>
     ]
   ): Observable<Result>;
   select<
     Selectors extends Array<
-      Observable<unknown> | SelectConfig | ProjectorFn | SelectorsObject
+      Observable<unknown> | SelectConfig<Result> | ProjectorFn | SelectorsObject
     >,
     Result,
     ProjectorFn extends (...a: unknown[]) => Result,
@@ -297,7 +300,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
               : projector(projectorArgs)
           )
         : noopOperator()) as () => Observable<Result>,
-      distinctUntilChanged(),
+      distinctUntilChanged(config.equal),
       shareReplay({
         refCount: true,
         bufferSize: 1,
@@ -456,7 +459,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
 
 function processSelectorArgs<
   Selectors extends Array<
-    Observable<unknown> | SelectConfig | ProjectorFn | SelectorsObject
+    Observable<unknown> | SelectConfig<Result> | ProjectorFn | SelectorsObject
   >,
   Result,
   ProjectorFn extends (...a: unknown[]) => Result,
@@ -467,16 +470,22 @@ function processSelectorArgs<
   | {
       observablesOrSelectorsObject: Observable<unknown>[];
       projector: ProjectorFn;
-      config: Required<SelectConfig>;
+      config: Required<SelectConfig<Result>>;
     }
   | {
       observablesOrSelectorsObject: SelectorsObject;
       projector: undefined;
-      config: Required<SelectConfig>;
+      config: Required<SelectConfig<Result>>;
     } {
   const selectorArgs = Array.from(args);
+  const defaultEqualityFn: ValueEqualityFn<Result> = (previous, current) =>
+    previous === current;
+
   // Assign default values.
-  let config: Required<SelectConfig> = { debounce: false };
+  let config: Required<SelectConfig<Result>> = {
+    debounce: false,
+    equal: defaultEqualityFn,
+  };
 
   // Last argument is either config or projector or selectorsObject
   if (isSelectConfig(selectorArgs[selectorArgs.length - 1])) {
@@ -504,8 +513,14 @@ function processSelectorArgs<
   };
 }
 
-function isSelectConfig(arg: SelectConfig | unknown): arg is SelectConfig {
-  return typeof (arg as SelectConfig).debounce !== 'undefined';
+function isSelectConfig(
+  arg: SelectConfig<unknown> | unknown
+): arg is SelectConfig<unknown> {
+  const typedArg = arg as SelectConfig<unknown>;
+  return (
+    typeof typedArg.debounce !== 'undefined' ||
+    typeof typedArg.equal !== 'undefined'
+  );
 }
 
 function hasProjectFnOnly(

@@ -1,4 +1,3 @@
-import { tags } from '@angular-devkit/core';
 import {
   SchematicTestRunner,
   UnitTestTree,
@@ -35,27 +34,14 @@ describe('Selector Schematic', () => {
       appTree
     );
 
-    const selectorsContent = tree.readContent(
-      `${projectPath}/src/app/foo.selectors.ts`
-    );
-    const specContent = tree.readContent(
-      `${projectPath}/src/app/foo.selectors.spec.ts`
-    );
+    const selectorPath = `${projectPath}/src/app/foo.selectors.ts`;
+    const specPath = `${projectPath}/src/app/foo.selectors.spec.ts`;
 
-    expect(cleanString(selectorsContent)).toBe(
-      cleanString(
-        tags.stripIndent`import { createFeatureSelector, createSelector } from '@ngrx/${'store'}';`
-      )
-    );
+    expect(tree.files.includes(selectorPath)).toBeTruthy();
+    expect(tree.files.includes(specPath)).toBeTruthy();
 
-    expect(cleanString(specContent)).toBe(
-      cleanString(tags.stripIndent`
-        describe('Foo Selectors', () => {
-          it('should select the feature state', () => {
-            **
-          });
-        });`)
-    );
+    expect(tree.readContent(selectorPath)).toMatchSnapshot();
+    expect(tree.readContent(specPath)).toMatchSnapshot();
   });
 
   it('should not create a spec file if spec is false', async () => {
@@ -85,14 +71,14 @@ describe('Selector Schematic', () => {
       appTree
     );
 
-    expect(
-      tree.files.includes(`${projectPath}/src/app/selectors/foo.selectors.ts`)
-    ).toBeTruthy();
-    expect(
-      tree.files.includes(
-        `${projectPath}/src/app/selectors/foo.selectors.spec.ts`
-      )
-    ).toBeTruthy();
+    const selectorPath = `${projectPath}/src/app/selectors/foo.selectors.ts`;
+    const specPath = `${projectPath}/src/app/selectors/foo.selectors.spec.ts`;
+
+    expect(tree.files.includes(selectorPath)).toBeTruthy();
+    expect(tree.files.includes(specPath)).toBeTruthy();
+
+    expect(tree.readContent(selectorPath)).toMatchSnapshot();
+    expect(tree.readContent(specPath)).toMatchSnapshot();
   });
 
   it('should not flatten selectors if flat is false', async () => {
@@ -106,12 +92,14 @@ describe('Selector Schematic', () => {
       appTree
     );
 
-    expect(
-      tree.files.includes(`${projectPath}/src/app/foo/foo.selectors.ts`)
-    ).toBeTruthy();
-    expect(
-      tree.files.includes(`${projectPath}/src/app/foo/foo.selectors.spec.ts`)
-    ).toBeTruthy();
+    const selectorPath = `${projectPath}/src/app/foo/foo.selectors.ts`;
+    const specPath = `${projectPath}/src/app/foo/foo.selectors.spec.ts`;
+
+    expect(tree.files.includes(selectorPath)).toBeTruthy();
+    expect(tree.files.includes(specPath)).toBeTruthy();
+
+    expect(tree.readContent(selectorPath)).toMatchSnapshot();
+    expect(tree.readContent(specPath)).toMatchSnapshot();
   });
 
   describe('With feature flag', () => {
@@ -126,40 +114,15 @@ describe('Selector Schematic', () => {
         options,
         appTree
       );
-      const selectorsContent = tree.readContent(
-        `${projectPath}/src/app/foo.selectors.ts`
-      );
-      const specContent = tree.readContent(
-        `${projectPath}/src/app/foo.selectors.spec.ts`
-      );
 
-      expect(cleanString(selectorsContent)).toBe(
-        cleanString(tags.stripIndent`
-        import { createFeatureSelector, createSelector } from '@ngrx/${'store'}';
-        import * as fromFoo from './foo.reducer';
+      const selectorPath = `${projectPath}/src/app/foo.selectors.ts`;
+      const specPath = `${projectPath}/src/app/foo.selectors.spec.ts`;
 
-        export const selectFooState = createFeatureSelector<fromFoo.State>(
-          fromFoo.fooFeatureKey
-        );
-      `)
-      );
+      expect(tree.files.includes(selectorPath)).toBeTruthy();
+      expect(tree.files.includes(specPath)).toBeTruthy();
 
-      expect(cleanString(specContent)).toBe(
-        cleanString(tags.stripIndent`
-        import * as fromFoo from './foo.reducer';
-        import { selectFooState } from './foo.selectors';
-
-        describe('Foo Selectors', () => {
-          it('should select the feature state', () => {
-            const result = selectFooState({
-              [fromFoo.fooFeatureKey]: {}
-            });
-
-            expect(result).toEqual({});
-          });
-        });
-      `)
-      );
+      expect(tree.readContent(selectorPath)).toMatchSnapshot();
+      expect(tree.readContent(specPath)).toMatchSnapshot();
     });
 
     it('should group and nest the selectors within a feature', async () => {
@@ -181,23 +144,8 @@ describe('Selector Schematic', () => {
       expect(tree.files.includes(selectorPath)).toBeTruthy();
       expect(tree.files.includes(specPath)).toBeTruthy();
 
-      const selectorContent = tree.readContent(selectorPath);
-      expect(selectorContent).toMatch(
-        /import \* as fromFoo from '\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
-      );
-
-      const specContent = tree.readContent(specPath);
-      expect(specContent).toMatch(
-        /import \* as fromFoo from '\.\.\/\.\.\/reducers\/foo\/foo\.reducer';/
-      );
-      expect(specContent).toMatch(
-        /import \{ selectFooState \} from '\.\/foo\.selectors';/
-      );
+      expect(tree.readContent(selectorPath)).toMatchSnapshot();
+      expect(tree.readContent(specPath)).toMatchSnapshot();
     });
   });
-
-  function cleanString(value: string) {
-    // ** to mark an empty line (VSCode removes whitespace lines)
-    return value.replace(/\r\n/g, '\n').replace(/\*\*/g, '').trim();
-  }
 });

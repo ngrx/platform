@@ -82,7 +82,7 @@ describe('Reducer Schematic', () => {
     ).toBeGreaterThanOrEqual(0);
   });
 
-  it('should create a featureKey', async () => {
+  it('should create a reducer', async () => {
     const tree = await schematicRunner.runSchematic(
       'reducer',
       defaultOptions,
@@ -92,60 +92,32 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/foo.reducer.ts`
     );
 
-    expect(fileContent).toMatch(/fooFeatureKey = 'foo'/);
+    expect(fileContent).toMatchSnapshot();
   });
 
-  describe('Ivy', () => {
-    it('should create and export a reducer', async () => {
-      const tree = await schematicRunner.runSchematic(
-        'reducer',
-        defaultOptions,
-        appTree
-      );
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.reducer.ts`
-      );
+  it('should create and export a reducer in a feature', async () => {
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      { ...defaultOptions, feature: true },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
+    expect(fileContent).toMatchSnapshot();
+  });
 
-      expect(fileContent).toMatch(/export const reducer = createReducer\(/);
-    });
+  it('should create and export a reducer in an api feature', async () => {
+    const tree = await schematicRunner.runSchematic(
+      'reducer',
+      { ...defaultOptions, feature: true, api: true },
+      appTree
+    );
+    const fileContent = tree.readContent(
+      `${projectPath}/src/app/foo.reducer.ts`
+    );
 
-    it('should create and export a reducer in a feature', async () => {
-      const tree = await schematicRunner.runSchematic(
-        'reducer',
-        { ...defaultOptions, feature: true },
-        appTree
-      );
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.reducer.ts`
-      );
-
-      expect(fileContent).toMatch(/export const fooFeature = createFeature\(/);
-      expect(fileContent).toMatch(/name: fooFeatureKey,/);
-      expect(fileContent).toMatch(/= createReducer\(/);
-      expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
-    });
-
-    it('should create and export a reducer in an api feature', async () => {
-      const tree = await schematicRunner.runSchematic(
-        'reducer',
-        { ...defaultOptions, feature: true, api: true },
-        appTree
-      );
-      const fileContent = tree.readContent(
-        `${projectPath}/src/app/foo.reducer.ts`
-      );
-
-      expect(fileContent).toMatch(/export const fooFeature = createFeature\(/);
-      expect(fileContent).toMatch(/name: fooFeatureKey,/);
-      expect(fileContent).toMatch(/= createReducer\(/);
-      expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\)/);
-      expect(fileContent).toMatch(
-        /on\(FooActions.loadFoosSuccess, \(state, action\) => state\)/
-      );
-      expect(fileContent).toMatch(
-        /on\(FooActions.loadFoosFailure, \(state, action\) => state\)/
-      );
-    });
+    expect(fileContent).toMatchSnapshot();
   });
 
   it('should import into a specified module', async () => {
@@ -158,10 +130,10 @@ describe('Reducer Schematic', () => {
     );
     const appModule = tree.readContent(`${projectPath}/src/app/app.module.ts`);
 
-    expect(appModule).toMatch(/import \* as fromFoo from '.\/foo.reducer'/);
+    expect(appModule).toMatchSnapshot();
   });
 
-  it('should import into a specified reducers file', async () => {
+  it('should create a reducers barrel file', async () => {
     const options = { ...defaultOptions, reducers: `reducers/index.ts` };
 
     const tree = await schematicRunner.runSchematic(
@@ -173,37 +145,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/index.ts`
     );
 
-    expect(reducers).toMatch(/import \* as fromFoo from '..\/foo.reducer'/);
-  });
-
-  it('should add the reducer State to the State interface', async () => {
-    const options = { ...defaultOptions, reducers: 'reducers/index.ts' };
-
-    const tree = await schematicRunner.runSchematic(
-      'reducer',
-      options,
-      appTree
-    );
-    const reducers = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-
-    expect(reducers).toMatch(/\[fromFoo.fooFeatureKey\]: fromFoo.State/);
-  });
-
-  it('should add the reducer function to the ActionReducerMap', async () => {
-    const options = { ...defaultOptions, reducers: 'reducers/index.ts' };
-
-    const tree = await schematicRunner.runSchematic(
-      'reducer',
-      options,
-      appTree
-    );
-    const reducers = tree.readContent(
-      `${projectPath}/src/app/reducers/index.ts`
-    );
-
-    expect(reducers).toMatch(/\[fromFoo.fooFeatureKey\]: fromFoo.reducer/);
+    expect(reducers).toMatchSnapshot();
   });
 
   it('should group within a "reducers" folder if group is set', async () => {
@@ -219,6 +161,10 @@ describe('Reducer Schematic', () => {
     expect(
       tree.files.indexOf(`${projectPath}/src/app/reducers/foo.reducer.ts`)
     ).toBeGreaterThanOrEqual(0);
+
+    expect(
+      tree.readContent(`${projectPath}/src/app/reducers/foo.reducer.ts`)
+    ).toMatchSnapshot();
   });
 
   it('should group and nest the reducer within a feature', async () => {
@@ -244,9 +190,7 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/reducers/foo/foo.reducer.ts`
     );
 
-    expect(content).toMatch(
-      /import { FooActions } from '..\/..\/actions\/foo\/foo.actions';/
-    );
+    expect(content).toMatchSnapshot();
   });
 
   it('should create a reducer with prefix in an api feature', async () => {
@@ -259,12 +203,6 @@ describe('Reducer Schematic', () => {
       `${projectPath}/src/app/foo.reducer.ts`
     );
 
-    expect(fileContent).toMatch(/on\(FooActions.customFoos, state => state\)/);
-    expect(fileContent).toMatch(
-      /on\(FooActions.customFoosSuccess, \(state, action\) => state\)/
-    );
-    expect(fileContent).toMatch(
-      /on\(FooActions.customFoosFailure, \(state, action\) => state\)/
-    );
+    expect(fileContent).toMatchSnapshot();
   });
 });

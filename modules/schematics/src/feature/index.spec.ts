@@ -68,7 +68,7 @@ describe('Feature Schematic', () => {
     expect(files.includes(`${projectPath}/src/app/foo.model.ts`)).toBeFalsy();
   });
 
-  it('should not create test files', async () => {
+  it('should not create test files when skipTests is true', async () => {
     const options = { ...defaultOptions, skipTests: true };
 
     const tree = await schematicRunner.runSchematic(
@@ -195,12 +195,7 @@ describe('Feature Schematic', () => {
       `${projectPath}/src/app/app.module.ts`
     );
 
-    expect(moduleFileContent).toMatch(
-      /import { FooEffects } from '.\/foo\/effects\/foo.effects';/
-    );
-    expect(moduleFileContent).toMatch(
-      /import \* as fromFoo from '.\/foo\/reducers\/foo.reducer';/
-    );
+    expect(moduleFileContent).toMatchSnapshot();
   });
 
   it('should have all api effect if api flag enabled', async () => {
@@ -218,29 +213,7 @@ describe('Feature Schematic', () => {
       `${projectPath}/src/app/foo.effects.ts`
     );
 
-    expect(fileContent).toMatch(
-      /import { Actions, createEffect, ofType } from '@ngrx\/effects';/
-    );
-    expect(fileContent).toMatch(
-      /import { catchError, map, concatMap } from 'rxjs\/operators';/
-    );
-    expect(fileContent).toMatch(
-      /import { Observable, EMPTY, of } from 'rxjs';/
-    );
-    expect(fileContent).toMatch(/import { FooActions } from '.\/foo.actions';/);
-
-    expect(fileContent).toMatch(/export class FooEffects/);
-    expect(fileContent).toMatch(/loadFoos\$ = createEffect\(\(\) => {/);
-    expect(fileContent).toMatch(/return this.actions\$.pipe\(/);
-    expect(fileContent).toMatch(/ofType\(FooActions.loadFoos\),/);
-    expect(fileContent).toMatch(/concatMap\(\(\) =>/);
-    expect(fileContent).toMatch(/EMPTY.pipe\(/);
-    expect(fileContent).toMatch(
-      /map\(data => FooActions.loadFoosSuccess\({ data }\)\),/
-    );
-    expect(fileContent).toMatch(
-      /catchError\(error => of\(FooActions.loadFoosFailure\({ error }\)\)\)\)/
-    );
+    expect(fileContent).toMatchSnapshot();
   });
 
   it('should have all api actions in reducer if api flag enabled', async () => {
@@ -258,13 +231,7 @@ describe('Feature Schematic', () => {
       `${projectPath}/src/app/foo.reducer.ts`
     );
 
-    expect(fileContent).toMatch(/on\(FooActions.loadFoos, state => state\),/);
-    expect(fileContent).toMatch(
-      /on\(FooActions.loadFoosSuccess, \(state, action\) => state\),/
-    );
-    expect(fileContent).toMatch(
-      /on\(FooActions.loadFoosFailure, \(state, action\) => state\),/
-    );
+    expect(fileContent).toMatchSnapshot();
   });
 
   it('should have all api effect with prefix if api flag enabled', async () => {
@@ -283,15 +250,7 @@ describe('Feature Schematic', () => {
       `${projectPath}/src/app/foo.effects.ts`
     );
 
-    expect(fileContent).toMatch(/customFoos\$ = createEffect\(\(\) => {/);
-    expect(fileContent).toMatch(/ofType\(FooActions.customFoos\),/);
-
-    expect(fileContent).toMatch(
-      /map\(data => FooActions.customFoosSuccess\({ data }\)\),/
-    );
-    expect(fileContent).toMatch(
-      /catchError\(error => of\(FooActions.customFoosFailure\({ error }\)\)\)\)/
-    );
+    expect(fileContent).toMatchSnapshot();
   });
 
   it('should have all api actions with prefix in reducer if api flag enabled', async () => {
@@ -310,13 +269,7 @@ describe('Feature Schematic', () => {
       `${projectPath}/src/app/foo.reducer.ts`
     );
 
-    expect(fileContent).toMatch(/on\(FooActions.customFoos, state => state\),/);
-    expect(fileContent).toMatch(
-      /on\(FooActions.customFoosSuccess, \(state, action\) => state\),/
-    );
-    expect(fileContent).toMatch(
-      /on\(FooActions.customFoosFailure, \(state, action\) => state\),/
-    );
+    expect(fileContent).toMatchSnapshot();
   });
 
   it('should create all files of a feature with an entity', async () => {
