@@ -49,6 +49,18 @@ class Ok3 {
 }`,
   `
 import { Store } from '@ngrx/store'
+
+class Ok4 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+
+  constructor(store: Store) {
+    this.items$ = store.pipe(select(selectItems))
+    this.metrics$ = store.select(selectMetrics)
+  }
+}`,
+  `
+import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
 
 class Ok5 {
@@ -151,7 +163,7 @@ class NotOk6 {
   fromFixture(`
 import { Store } from '@ngrx/store'
 
-class NotOk6 {
+class NotOk7 {
   readonly items: readonly Item[]
 
   constructor(store: Store) {
@@ -162,7 +174,7 @@ class NotOk6 {
   fromFixture(`
 import { Store } from '@ngrx/store'
 
-class NotOk7 {
+class NotOk8 {
   readonly control = new FormControl()
 
   constructor(store: Store) {
@@ -176,7 +188,7 @@ class NotOk7 {
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
 
-class NotOk8 {
+class NotOk9 {
   readonly control = new FormControl()
   store = inject(Store)
 
@@ -191,7 +203,7 @@ class NotOk8 {
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
 
-class NotOk9 {
+class NotOk10 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
   readonly store = inject(Store)
