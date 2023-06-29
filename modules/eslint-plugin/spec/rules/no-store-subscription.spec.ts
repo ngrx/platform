@@ -48,6 +48,16 @@ class Ok3 {
   constructor(private store: Store) {}
 }`,
   `
+class Ok4 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+
+  constructor(store: Store) {
+    this.items$ = store.pipe(select(selectItems))
+    this.metrics$ = store.select(selectMetrics)
+  }
+}`,
+  `
 import { Store } from '@ngrx/store'
 
 class Ok4 {
