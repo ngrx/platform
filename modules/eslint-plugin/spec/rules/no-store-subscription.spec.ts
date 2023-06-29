@@ -60,7 +60,7 @@ class Ok4 {
   `
 import { Store } from '@ngrx/store'
 
-class Ok4 {
+class Ok5 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
 
@@ -73,7 +73,7 @@ class Ok4 {
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
 
-class Ok5 {
+class Ok6 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
   readonly store = inject(Store)
@@ -87,7 +87,7 @@ class Ok5 {
 import { Store } from '@ngrx/store'
 import { inject } from 'some-other-package'
 
-class Ok6 {
+class Ok7 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
   readonly store = inject(Store)
