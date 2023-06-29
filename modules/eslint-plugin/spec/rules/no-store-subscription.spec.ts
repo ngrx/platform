@@ -49,14 +49,29 @@ class Ok3 {
 }`,
   `
 import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
 
-class Ok4 {
+class Ok5 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
+  readonly store = inject(Store)
 
-  constructor(store: Store) {
+  constructor() {
     this.items$ = store.pipe(select(selectItems))
     this.metrics$ = store.select(selectMetrics)
+  }
+}`,
+  `
+import { Store } from '@ngrx/store'
+import { inject } from 'some-other-package'
+
+class Ok6 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+  readonly store = inject(Store)
+
+  constructor() {
+    store.pipe(select(selectItems)).subscribe()
   }
 }`,
 ];
@@ -155,6 +170,35 @@ class NotOk7 {
       store.pipe(select(selectItems)).subscribe()
                                       ~~~~~~~~~ [${messageId}]
     })
+  }
+}`),
+  fromFixture(`
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk8 {
+  readonly control = new FormControl()
+  store = inject(Store)
+
+  constructor() {
+    this.control.valueChanges.subscribe(() => {
+      store.pipe(select(selectItems)).subscribe()
+                                      ~~~~~~~~~ [${messageId}]
+    })
+  }
+}`),
+  fromFixture(`
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk9 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+  readonly store = inject(Store)
+
+  constructor() {
+    store.pipe(select(selectItems)).subscribe()
+                                    ~~~~~~~~~ [${messageId}] 
   }
 }`),
 ];
