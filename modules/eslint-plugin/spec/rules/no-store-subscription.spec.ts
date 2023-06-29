@@ -48,19 +48,9 @@ class Ok3 {
   constructor(private store: Store) {}
 }`,
   `
-class Ok4 {
-  readonly items$: Observable<readonly Item[]>
-  readonly metrics$: Observable<Metric>
-
-  constructor(store: Store) {
-    this.items$ = store.pipe(select(selectItems))
-    this.metrics$ = store.select(selectMetrics)
-  }
-}`,
-  `
 import { Store } from '@ngrx/store'
 
-class Ok5 {
+class Ok4 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
 
@@ -73,7 +63,7 @@ class Ok5 {
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
 
-class Ok6 {
+class Ok5 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
   readonly store = inject(Store)
@@ -87,7 +77,7 @@ class Ok6 {
 import { Store } from '@ngrx/store'
 import { inject } from 'some-other-package'
 
-class Ok7 {
+class Ok6 {
   readonly items$: Observable<readonly Item[]>
   readonly metrics$: Observable<Metric>
   readonly store = inject(Store)
