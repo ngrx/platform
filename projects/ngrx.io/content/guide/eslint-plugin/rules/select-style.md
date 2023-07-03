@@ -45,7 +45,7 @@ To prefer the **method** syntax (`this.store.select(selector)`) use:
 
 ```json
 "rules": {
-  "ngrx/select-style": ["warn", "method"]
+  "@ngrx/select-style": ["warn", "method"]
 }
 ```
 
@@ -53,6 +53,6 @@ To prefer the **operator** syntax (`this.store.pipe(select(selector))`) use:
 
 ```json
 "rules": {
-  "ngrx/select-style": ["warn", "operator"]
+  "@ngrx/select-style": ["warn", "operator"]
 }
 ```
