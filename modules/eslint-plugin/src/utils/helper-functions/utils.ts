@@ -13,10 +13,10 @@ import {
   isProgram,
   isProperty,
   isPropertyDefinition,
-  isTemplateElement,
-  isTemplateLiteral,
   isTSTypeAnnotation,
   isTSTypeReference,
+  isTemplateElement,
+  isTemplateLiteral,
 } from './guards';
 import { NGRX_MODULE_PATHS } from './ngrx-modules';
 
@@ -30,7 +30,8 @@ type InjectedParameter =
         | ConstructorFunctionExpression
         | (TSESTree.TSParameterProperty & {
             parent: ConstructorFunctionExpression;
-          });
+          })
+        | TSESTree.PropertyDefinition;
     };
 type InjectedParameterWithSourceCode = Readonly<{
   identifiers?: readonly InjectedParameter[];
@@ -315,6 +316,12 @@ function getInjectedParametersWithSourceCode(
   const { importSpecifier } =
     getImportDeclarationSpecifier(importDeclarations, importName) ?? {};
 
+  const injectImportDeclarations =
+    getImportDeclarations(sourceCode.ast, '@angular/core') ?? [];
+
+  const { importSpecifier: injectImportSpecifier } =
+    getImportDeclarationSpecifier(injectImportDeclarations, 'inject') ?? {};
+
   if (!importSpecifier) {
     return { sourceCode };
   }
@@ -333,6 +340,19 @@ function getInjectedParametersWithSourceCode(
       isIdentifier(parent.parent.parent)
     ) {
       return identifiers.concat(parent.parent.parent as InjectedParameter);
+    }
+
+    if (
+      parent &&
+      isCallExpression(parent) &&
+      isIdentifier(parent.callee) &&
+      parent.callee.name == 'inject' &&
+      parent.parent &&
+      isPropertyDefinition(parent.parent) &&
+      isIdentifier(parent.parent.key) &&
+      injectImportSpecifier
+    ) {
+      return identifiers.concat(parent.parent.key as InjectedParameter);
     }
 
     return identifiers;
