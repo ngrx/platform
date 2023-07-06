@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "16.0.1",
+  "version": "16.1.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "ng": "ng",
@@ -23,6 +23,7 @@
     "update": "nx migrate latest",
     "update:check": "ng update",
     "update:versions": "ts-node ./build/update-version-numbers.ts",
+    "postupdate:versions": "npm run changelog",
     "lint": "nx workspace-lint && ng lint",
     "eslint-plugin:update": "ts-node ./build/generate-eslint-plugin.ts",
     "prepare": "husky install"
