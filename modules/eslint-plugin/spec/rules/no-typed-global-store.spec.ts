@@ -14,13 +14,16 @@ type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const validConstructor: () => RunTests['valid'] = () => [
   `
 import { Store } from '@ngrx/store'
 
 export class Ok {
   constructor(store: Store) {}
 }`,
+];
+
+const validInject: () => RunTests['valid'] = () => [
   // https://github.com/ngrx/platform/issues/3950
   `
 import { inject } from '@angular/core';
@@ -32,7 +35,7 @@ export class AppComponent {
 }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const invalidConstructor: () => RunTests['invalid'] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -131,6 +134,9 @@ class NotOk3 {
       ],
     }
   ),
+];
+
+const invalidInject: () => RunTests['invalid'] = () => [
   fromFixture(
     `
 import { inject } from '@angular/core';
@@ -158,6 +164,6 @@ export class NotOk4 {
 ];
 
 ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
+  valid: [...validConstructor(), ...validInject()],
+  invalid: [...invalidConstructor(), ...invalidInject()],
 });
