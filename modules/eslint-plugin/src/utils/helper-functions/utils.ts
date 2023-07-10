@@ -17,6 +17,7 @@ import {
   isTSTypeReference,
   isTemplateElement,
   isTemplateLiteral,
+  isTSInstantiationExpression,
 } from './guards';
 import { NGRX_MODULE_PATHS } from './ngrx-modules';
 
@@ -331,8 +332,11 @@ function getInjectedParametersWithSourceCode(
   const identifiers = typedVariable?.references?.reduce<
     readonly InjectedParameter[]
   >((identifiers, { identifier: { parent } }) => {
+    if (!parent) {
+      return identifiers;
+    }
+
     if (
-      parent &&
       isTSTypeReference(parent) &&
       parent.parent &&
       isTSTypeAnnotation(parent.parent) &&
@@ -342,17 +346,21 @@ function getInjectedParametersWithSourceCode(
       return identifiers.concat(parent.parent.parent as InjectedParameter);
     }
 
+    const parentToCheck = isTSInstantiationExpression(parent)
+      ? parent.parent
+      : parent;
+
     if (
-      parent &&
-      isCallExpression(parent) &&
-      isIdentifier(parent.callee) &&
-      parent.callee.name == 'inject' &&
-      parent.parent &&
-      isPropertyDefinition(parent.parent) &&
-      isIdentifier(parent.parent.key) &&
+      parentToCheck &&
+      isCallExpression(parentToCheck) &&
+      isIdentifier(parentToCheck.callee) &&
+      parentToCheck.callee.name == 'inject' &&
+      parentToCheck.parent &&
+      isPropertyDefinition(parentToCheck.parent) &&
+      isIdentifier(parentToCheck.parent.key) &&
       injectImportSpecifier
     ) {
-      return identifiers.concat(parent.parent.key as InjectedParameter);
+      return identifiers.concat(parentToCheck.parent.key as InjectedParameter);
     }
 
     return identifiers;

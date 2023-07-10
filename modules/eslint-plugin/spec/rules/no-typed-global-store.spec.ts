@@ -21,6 +21,15 @@ import { Store } from '@ngrx/store'
 export class Ok {
   constructor(store: Store) {}
 }`,
+  // https://github.com/ngrx/platform/issues/3950
+  `
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class AppComponent {
+  store = inject(Store);
+  otherName = inject(Store);
+}`,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [
@@ -117,6 +126,30 @@ import { Store } from '@ngrx/store'
 
 class NotOk3 {
   constructor(store: Store<{}>, private customStore: Store) {}
+}`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class NotOk4 {
+  store = inject(Store<{}>);
+                      ~~~~ [${noTypedStore} suggest] 
+}`,
+    {
+      suggestions: [
+        {
+          messageId: noTypedStoreSuggest,
+          output: `
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class NotOk4 {
+  store = inject(Store);
 }`,
         },
       ],
