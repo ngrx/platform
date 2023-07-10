@@ -33,6 +33,14 @@ export class AppComponent {
   store = inject(Store);
   otherName = inject(Store);
 }`,
+  `
+import { somethingElse } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class AppComponent {
+  store = somethingElse(Store<{}>);
+}
+`,
 ];
 
 const invalidConstructor: () => RunTests['invalid'] = () => [
