@@ -70,6 +70,47 @@ const valid: () => RunTests['valid'] = () => [
     )
     constructor(private readonly actions$: Actions) {}
   }`,
+  `
+  import { Actions } from '@ngrx/effects'
+  import { of, withLatestFrom } from 'rxjs'
+  import { inject } from '@angular/core'
+  class Ok3 {
+    readonly effect: CreateEffectMetadata
+    readonly actions$ = inject(Actions)
+    constructor() {
+      this.effect = createEffect(() => ({ scheduler = asyncScheduler } = {}) => {
+        return actions$.pipe(
+          ofType(ProductDetailPage.loaded),
+          concatMap((action) =>
+            of(action).pipe(withLatestFrom(this.store.select(selectProducts))),
+          ),
+          mergeMapTo(of({ type: 'noop' })),
+        )
+      }, { dispatch: false })
+    }
+  }`,
+  `
+  import { Actions } from '@ngrx/effects'
+  import { of, withLatestFrom } from 'rxjs'
+  import { inject } from '@angular/core'
+  class Ok4 {
+    private readonly actions$ = inject(Actions)
+    effect = createEffect(() =>
+      condition
+        ? this.actions$.pipe(
+            ofType(ProductDetailPage.loaded),
+            concatMap((action) =>
+              of(action).pipe(
+                withLatestFrom(this.store.select$(something), (one, other) =>
+                  somethingElse(),
+                ),
+              ),
+            ),
+            mergeMap(([action, products]) => of(products)),
+          )
+        : this.actions$.pipe(),
+    )
+  }`,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [
@@ -265,6 +306,104 @@ class NotOk3 {
         )
       : this.actions$.pipe()
   })
+}`,
+    }
+  ),
+  fromFixture(
+    `
+import { Actions } from '@ngrx/effects'
+import { of, withLatestFrom } from 'rxjs'
+import { inject } from '@angular/core'
+
+class NotOk4 {
+  private readonly actions$ = inject(Actions);
+  effect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CollectionApiActions.addBookSuccess),
+      withLatestFrom((action) =>
+      ~~~~~~~~~~~~~~ [${messageId}]
+        this.store.select(fromBooks.selectCollectionBookIds),
+      ),
+      switchMap(([action, bookCollection]) => {
+        return of({ type: 'noop' })
+      }),
+    ),
+  )
+}`,
+    {
+      output: `
+import { Actions, concatLatestFrom } from '@ngrx/effects'
+import { of, withLatestFrom } from 'rxjs'
+import { inject } from '@angular/core'
+
+class NotOk4 {
+  private readonly actions$ = inject(Actions);
+  effect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CollectionApiActions.addBookSuccess),
+      concatLatestFrom((action) =>
+        this.store.select(fromBooks.selectCollectionBookIds),
+      ),
+      switchMap(([action, bookCollection]) => {
+        return of({ type: 'noop' })
+      }),
+    ),
+  )
+}`,
+    }
+  ),
+  fromFixture(
+    `
+import { Actions } from '@ngrx/effects'
+import { of, withLatestFrom } from 'rxjs'
+import { inject } from '@angular/core'
+
+class NotOk5 {
+  readonly effect: CreateEffectMetadata
+  readonly actions$ = inject(Actions)
+
+  constructor() {
+    this.effect = createEffect(
+      () =>
+        ({ debounce = 300 } = {}) =>
+          condition
+            ? actions$.pipe()
+            : actions$.pipe(
+                ofType(CollectionApiActions.addBookSuccess),
+                withLatestFrom(() => this.store.select(fromBooks.selectCollectionBookIds)),
+                ~~~~~~~~~~~~~~ [${messageId}]
+                switchMap(([action, bookCollection]) => {
+                  return of({ type: 'noop' })
+                }),
+              ),
+    )
+  }
+}`,
+    {
+      output: `
+import { Actions, concatLatestFrom } from '@ngrx/effects'
+import { of, withLatestFrom } from 'rxjs'
+import { inject } from '@angular/core'
+
+class NotOk5 {
+  readonly effect: CreateEffectMetadata
+  readonly actions$ = inject(Actions)
+
+  constructor() {
+    this.effect = createEffect(
+      () =>
+        ({ debounce = 300 } = {}) =>
+          condition
+            ? actions$.pipe()
+            : actions$.pipe(
+                ofType(CollectionApiActions.addBookSuccess),
+                concatLatestFrom(() => this.store.select(fromBooks.selectCollectionBookIds)),
+                switchMap(([action, bookCollection]) => {
+                  return of({ type: 'noop' })
+                }),
+              ),
+    )
+  }
 }`,
     }
   ),
