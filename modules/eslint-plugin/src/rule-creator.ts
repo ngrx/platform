@@ -52,5 +52,11 @@ export function createRule<
     },
   };
 
+  for (const [key, message] of Object.entries(configOverwrite.meta.messages)) {
+    (configOverwrite.meta.messages as any)[key] = `${message} (${docsUrl(
+      config.name
+    )})`;
+  }
+
   return ESLintUtils.RuleCreator(docsUrl)(configOverwrite);
 }
