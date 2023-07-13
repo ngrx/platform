@@ -183,6 +183,7 @@ export const selectCreateSelect = createSelectorFactory((projectionFun) =>
       ],
     }
   ),
+  // https://github.com/ngrx/platform/issues/3956
   fromFixture(
     `
 import {createFeatureSelector} from '@ngrx/store';
