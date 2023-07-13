@@ -183,6 +183,35 @@ export const selectCreateSelect = createSelectorFactory((projectionFun) =>
       ],
     }
   ),
+  fromFixture(
+    `
+import {createFeatureSelector} from '@ngrx/store';
+
+export interface FileListResponseState {
+  loading: boolean;
+}
+
+const featureSelector = createFeatureSelector<FileListResponseState>("name");
+      ~~~~~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: {
+            name: 'selectFeatureSelector',
+          },
+          output: `
+import {createFeatureSelector} from '@ngrx/store';
+
+export interface FileListResponseState {
+  loading: boolean;
+}
+
+const selectFeatureSelector = createFeatureSelector<FileListResponseState>("name");`,
+        },
+      ],
+    }
+  ),
 ];
 
 ruleTester().run(path.parse(__filename).name, rule, {

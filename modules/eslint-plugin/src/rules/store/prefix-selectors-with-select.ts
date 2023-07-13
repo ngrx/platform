@@ -38,12 +38,20 @@ export default createRule<Options, MessageIds>({
         id,
       }: TSESTree.VariableDeclarator & { id: TSESTree.Identifier }) {
         const suggestedName = getSuggestedName(id.name);
+        console.log(
+          suggestedName,
+          id.loc.end,
+          id.typeAnnotation?.range[0],
+          id.range[1]
+        );
         context.report({
           loc: {
             ...id.loc,
             end: {
               ...id.loc.end,
-              column: (id.typeAnnotation?.range[0] ?? id.range[1]) - 1,
+              column: id.typeAnnotation?.range[0]
+                ? id.typeAnnotation.range[0] - 1
+                : id.loc.end.column,
             },
           },
           messageId: prefixSelectorsWithSelect,
