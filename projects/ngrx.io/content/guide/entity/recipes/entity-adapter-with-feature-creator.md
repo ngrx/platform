@@ -11,11 +11,11 @@ Start by defining the state for the `User` feature.
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { User } from './user.model';
 
-export interface State extends EntityState&lt;User&lt; {
+export interface State extends EntityState&lt;User&gt; {
   selectedUserId: string | null;
 }
 
-const adapter = createEntityAdapter&lt;User&lt;();
+const adapter = createEntityAdapter&lt;User&gt;();
 
 export const initialState: State = adapter.getInitialState({
   selectedUserId: null,
