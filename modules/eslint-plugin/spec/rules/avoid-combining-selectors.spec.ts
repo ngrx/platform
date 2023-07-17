@@ -13,51 +13,91 @@ type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const validConstructor: () => RunTests['valid'] = () => [
+  `
+  import { Store } from '@ngrx/store'
+  
+  class Ok {
+    readonly test$ = somethingOutside();
+  }`,
+  `
+  import { Store } from '@ngrx/store'
+  
+  class Ok1 {
+    readonly vm$: Observable<unknown>
+  
+    constructor(store: Store) {
+      this.vm$ = store.select(selectItems)
+    }
+  }`,
+  `
+  import { Store, select } from '@ngrx/store'
+  
+  class Ok2 {
+    vm$ = this.store.pipe(select(selectItems))
+  
+    constructor(private store: Store) {}
+  }`,
+  `
+  import { Store } from '@ngrx/store'
+  
+  class Ok3 {
+    vm$ = combineLatest(this.store$.select(selectItems), this.somethingElse())
+  
+    constructor(private store$: Store) {}
+  }`,
+  `
+  import { Store } from '@ngrx/store'
+  
+  @Pipe()
+  class Ok4 {
+    vm$ = combineLatest(this.somethingElse(), this.store.select(selectItems))
+  
+    constructor(private readonly store: Store) {}
+  }`,
+];
+
+const validInject: () => RunTests['valid'] = () => [
   `
 import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
 
-class Ok {
-  readonly test$ = somethingOutside();
-}`,
-  `
-import { Store } from '@ngrx/store'
-
-class Ok1 {
+class Ok5 {
   readonly vm$: Observable<unknown>
+  readonly store = inject(Store)
 
-  constructor(store: Store) {
+  constructor() {
     this.vm$ = store.select(selectItems)
   }
 }`,
   `
 import { Store, select } from '@ngrx/store'
+import { inject } from '@angular/core'
 
-class Ok2 {
+class Ok6 {
+  readonly store = inject(Store)
   vm$ = this.store.pipe(select(selectItems))
-
-  constructor(private store: Store) {}
 }`,
   `
 import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
 
-class Ok3 {
+class Ok7 {
+  readonly store = inject(Store)
   vm$ = combineLatest(this.store$.select(selectItems), this.somethingElse())
-
-  constructor(private store$: Store) {}
 }`,
   `
 import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
 
 @Pipe()
-class Ok4 {
+class Ok8 {
+  private readonly store = inject(Store)
   vm$ = combineLatest(this.somethingElse(), this.store.select(selectItems))
-
-  constructor(private readonly store: Store) {}
 }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const invalidConstructor: () => RunTests['invalid'] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -167,7 +207,6 @@ class NotOk4 {
   constructor(private store: Store) {}
 }`
   ),
-
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -186,7 +225,142 @@ class NotOk5 {
   ),
 ];
 
+const invalidInject: () => RunTests['invalid'] = () => [
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk6 {
+  readonly vm$: Observable<unknown>
+  readonly store = inject(Store)
+  readonly store2 = inject(Store)
+
+  constructor() {
+    this.vm$ = combineLatest(
+      store.select(selectItems),
+      store.select(selectOtherItems),
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+      this.store2.select(selectOtherItems),
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    )
+  }
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOkWithArrays1 {
+  readonly vm$: Observable<unknown>
+  readonly store = inject(Store)
+  readonly store2 = inject(Store)
+
+  constructor() {
+    this.vm$ = combineLatest([
+      store.select(selectItems),
+      store.select(selectOtherItems),
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+      this.store2.select(selectOtherItems),
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    ])
+  }
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk7 {
+  private readonly store = inject(Store)
+  vm$ = combineLatest(
+    this.store.pipe(select(selectItems)),
+    this.store.pipe(select(selectOtherItems)),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  )
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOkWithArray1 {
+  private readonly store = inject(Store)
+  vm$ = combineLatest([
+    this.store.pipe(select(selectItems)),
+    this.store.pipe(select(selectOtherItems)),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  ])
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk8 {
+  private readonly customName = inject(Store)
+  vm$ = combineLatest(
+    this.customName.select(selectItems),
+    this.customName.select(selectOtherItems),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    this.somethingElse(),
+  )
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+@Pipe()
+class NotOk9 {
+  private readonly customName = inject(Store)
+  vm$ = combineLatest(
+    this.customName.select(selectItems),
+    this.customName.pipe(select(selectOtherItems)),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    this.somethingElse(),
+  )
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk10 {
+  private readonly store = inject(Store)
+  vm$ = combineLatest(
+    this.store.pipe(select(selectItems)),
+    this.store.select(selectOtherItems),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  )
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk11 {
+  private readonly store = inject(Store)
+  private readonly store2 = inject(Store)
+  vm$ = combineLatest(
+    this.store.select(selectItems),
+    this.store.pipe(select(selectOtherItems)),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    this.store2.pipe(select(selectOtherItems)),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  )
+}`
+  ),
+];
+
 ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
+  valid: [...validConstructor(), ...validInject()],
+  invalid: [...invalidConstructor(), ...invalidInject()],
 });
