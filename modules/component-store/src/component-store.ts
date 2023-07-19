@@ -12,6 +12,7 @@ import {
   asapScheduler,
   EMPTY,
   ObservedValueOf,
+  retry,
 } from 'rxjs';
 import {
   takeUntil,
@@ -403,14 +404,14 @@ export class ComponentStore<T extends object> implements OnDestroy {
     const origin$ = new Subject<ObservableType>();
     generator(origin$ as OriginType)
       // tied to the lifecycle 👇 of ComponentStore
-      .pipe(takeUntil(this.destroy$))
+      .pipe(retry(), takeUntil(this.destroy$))
       .subscribe();
 
     return ((
       observableOrValue?: ObservableType | Observable<ObservableType>
     ): Subscription => {
       const observable$ = isObservable(observableOrValue)
-        ? observableOrValue
+        ? observableOrValue.pipe(retry())
         : of(observableOrValue);
       return observable$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
         // any new 👇 value is pushed into a stream
