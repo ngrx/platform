@@ -2,7 +2,6 @@
   "affected": {
     "defaultBase": "main"
   },
-  "npmScope": "ngrx",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx-cloud",
@@ -17,7 +16,7 @@
         ],
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "parallel": 3
+        "parallel": 1
       }
     }
   },
