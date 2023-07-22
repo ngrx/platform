@@ -8,7 +8,6 @@
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "projects/example-app-e2e/cypress.config.ts",
-        "tsConfig": "projects/example-app-e2e/tsconfig.e2e.json",
         "testingType": "e2e"
       },
       "configurations": {

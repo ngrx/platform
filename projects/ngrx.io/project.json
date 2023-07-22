@@ -27,10 +27,9 @@
           {
             "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/CNAME projects/ngrx.io/dist/ngrx.io/"
           }
-        ],
-        "outputPath": ["projects/ngrx.io/dist/ngrx.io"]
+        ]
       },
-      "outputs": ["{options.outputPath}"]
+      "outputs": ["{workspaceRoot}/projects/ngrx.io/dist/ngrx.io"]
     },
     "test": {
       "executor": "nx:run-commands",

@@ -18,7 +18,7 @@
         "parallel": false,
         "commands": [
           {
-            "command": "ng run component-store:build-package"
+            "command": "nx build-package component-store"
           },
           {
             "command": "yarn tsc -p modules/component-store/tsconfig.schematics.json"
@@ -26,9 +26,9 @@
           {
             "command": "cpy LICENSE dist/modules/component-store"
           }
-        ],
-        "outputPath": ["dist/modules/component-store"]
-      }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/component-store"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",

@@ -18,7 +18,7 @@
         "parallel": false,
         "commands": [
           {
-            "command": "ng run store-devtools:build-package"
+            "command": "nx build-package store-devtools"
           },
           {
             "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
@@ -26,9 +26,9 @@
           {
             "command": "cpy LICENSE dist/modules/store-devtools"
           }
-        ],
-        "outputPath": ["dist/modules/store-devtools"]
-      }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/store-devtools"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",

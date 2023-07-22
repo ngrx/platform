@@ -18,7 +18,7 @@
         "parallel": false,
         "commands": [
           {
-            "command": "ng run data:build-package"
+            "command": "nx build-package data"
           },
           {
             "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
@@ -26,9 +26,9 @@
           {
             "command": "cpy LICENSE dist/modules/data"
           }
-        ],
-        "outputPath": ["dist/modules/data"]
-      }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/data"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",

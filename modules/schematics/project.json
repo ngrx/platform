@@ -78,9 +78,9 @@
           {
             "command": "cpy LICENSE dist/modules/schematics"
           }
-        ],
-        "outputPath": ["dist/modules/schematics"]
-      }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/schematics"]
     }
   },
   "tags": []

@@ -18,7 +18,7 @@
         "parallel": false,
         "commands": [
           {
-            "command": "ng run entity:build-package"
+            "command": "nx build-package entity"
           },
           {
             "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
@@ -35,9 +35,12 @@
           {
             "command": "cpy LICENSE dist/modules/entity"
           }
-        ],
-        "outputPath": ["dist/modules/entity", "node_modules/@ngrx/entity"]
-      }
+        ]
+      },
+      "outputs": [
+        "{workspaceRoot}/dist/modules/entity",
+        "{workspaceRoot}/node_modules/@ngrx/entity"
+      ]
     },
     "lint": {
       "executor": "@nx/linter:eslint",

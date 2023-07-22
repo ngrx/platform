@@ -18,7 +18,7 @@
         "parallel": false,
         "commands": [
           {
-            "command": "ng run effects:build-package"
+            "command": "nx build-package effects"
           },
           {
             "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
@@ -35,9 +35,12 @@
           {
             "command": "cpy LICENSE dist/modules/effects"
           }
-        ],
-        "outputPath": ["dist/modules/effects", "node_modules/@ngrx/effects"]
-      }
+        ]
+      },
+      "outputs": [
+        "{workspaceRoot}/dist/modules/effects",
+        "{workspaceRoot}/node_modules/@ngrx/effects"
+      ]
     },
     "lint": {
       "executor": "@nx/linter:eslint",
