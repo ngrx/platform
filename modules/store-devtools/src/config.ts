@@ -114,6 +114,12 @@ export class StoreDevtoolsConfig {
    * Maximum stack trace frames to be stored (in case trace option was provided as true).
    */
   traceLimit?: number;
+
+  /**
+   * The property determines whether the extension connection is established within the
+   * Angular zone or not. It is set to `false` by default.
+   */
+  connectOutsideZone?: boolean;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
@@ -165,6 +171,7 @@ export function createConfig(
       dispatch: true, // Dispatch custom actions or action creators
       test: true, // Generate tests for the selected actions
     },
+    connectOutsideZone: false,
   };
 
   const options =
