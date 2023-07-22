@@ -16,8 +16,7 @@
           "e2e"
         ],
         "canTrackAnalytics": false,
-        "showUsageWarnings": true,
-        "parallel": 1
+        "showUsageWarnings": true
       }
     }
   },
