@@ -17,7 +17,6 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     <button
       class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
       mat-button=""
-      mat-button-is-fab="false"
       mat-button-ripple-uninitialized=""
       type="button"
     >
@@ -39,7 +38,6 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     <button
       class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
       mat-button=""
-      mat-button-is-fab="false"
       mat-button-ripple-uninitialized=""
       type="button"
     >
