@@ -1,0 +1,63 @@
+{
+  "name": "effects",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/effects/src",
+  "prefix": "ngrx",
+  "targets": {
+    "build-package": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "modules/effects/tsconfig.build.json",
+        "project": "modules/effects/ng-package.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "ng run effects:build-package"
+          },
+          {
+            "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
+          },
+          {
+            "command": "yarn rimraf node_modules/@ngrx/effects"
+          },
+          {
+            "command": "yarn mkdirp node_modules/@ngrx/effects"
+          },
+          {
+            "command": "ncp dist/modules/effects node_modules/@ngrx/effects"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/effects"
+          }
+        ],
+        "outputPath": ["dist/modules/effects", "node_modules/@ngrx/effects"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/effects/*/**/*.ts",
+          "modules/effects/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/effects/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/effects"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}
