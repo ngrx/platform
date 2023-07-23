@@ -1,4 +1,4 @@
-import { Injectable, Inject, ErrorHandler } from '@angular/core';
+import { Injectable, Inject, ErrorHandler, OnDestroy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Action,
@@ -33,8 +33,8 @@ import { DevtoolsDispatcher } from './devtools-dispatcher';
 import { PERFORM_ACTION } from './actions';
 
 @Injectable()
-export class StoreDevtools implements Observer<any> {
-  private stateSubscription: Subscription;
+export class StoreDevtools implements Observer<any>, OnDestroy {
+  private liftedStateSubscription: Subscription;
   private extensionStartSubscription: Subscription;
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
@@ -71,7 +71,7 @@ export class StoreDevtools implements Observer<any> {
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
 
-    const liftedStateSubscription = liftedAction$
+    this.liftedStateSubscription = liftedAction$
       .pipe(
         withLatestFrom(liftedReducer$),
         scan<
@@ -110,7 +110,7 @@ export class StoreDevtools implements Observer<any> {
         }
       });
 
-    const extensionStartSubscription = extension.start$.subscribe(() => {
+    this.extensionStartSubscription = extension.start$.subscribe(() => {
       this.refresh();
     });
 
@@ -121,11 +121,19 @@ export class StoreDevtools implements Observer<any> {
       value: toSignal(state$, { manualCleanup: true, requireSync: true }),
     });
 
-    this.extensionStartSubscription = extensionStartSubscription;
-    this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;
     this.liftedState = liftedState$;
     this.state = state$;
+  }
+
+  ngOnDestroy(): void {
+    // Even though the store devtools plugin is recommended to be
+    // used only in development mode, it can still cause a memory leak
+    // in microfrontend applications that are being created and destroyed
+    // multiple times during development. This results in excessive memory
+    // consumption, as it prevents entire apps from being garbage collected.
+    this.liftedStateSubscription.unsubscribe();
+    this.extensionStartSubscription.unsubscribe();
   }
 
   dispatch(action: Action) {
