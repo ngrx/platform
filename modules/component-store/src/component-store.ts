@@ -40,6 +40,12 @@ import {
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+// This is a global variable provided by Angular in development mode
+// (when running `serve`, for example) or by Terser (through its global definitions)
+// when running build with optimizer enabled. This allows us to tree-shake the code
+// from production bundles, ensuring that it is only called during development when needed.
+declare const ngDevMode: boolean;
+
 export interface SelectConfig<T = unknown> {
   debounce?: boolean;
   equal?: ValueEqualityFn<T>;
@@ -97,7 +103,9 @@ export class ComponentStore<T extends object> implements OnDestroy {
       this.initState(defaultState);
     }
 
-    this.checkProviderForHooks();
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      checkProviderForHooks(this);
+    }
   }
 
   /** Completes all relevant Observable streams. */
@@ -419,34 +427,6 @@ export class ComponentStore<T extends object> implements OnDestroy {
     }) as unknown as ReturnType;
   }
 
-  /**
-   * Used to check if lifecycle hooks are defined
-   * but not used with provideComponentStore()
-   */
-  private checkProviderForHooks() {
-    asapScheduler.schedule(() => {
-      if (
-        isDevMode() &&
-        (isOnStoreInitDefined(this) || isOnStateInitDefined(this)) &&
-        !this.ɵhasProvider
-      ) {
-        const warnings = [
-          isOnStoreInitDefined(this) ? 'OnStoreInit' : '',
-          isOnStateInitDefined(this) ? 'OnStateInit' : '',
-        ].filter((defined) => defined);
-
-        console.warn(
-          `@ngrx/component-store: ${
-            this.constructor.name
-          } has the ${warnings.join(' and ')} ` +
-            'lifecycle hook(s) implemented without being provided using the ' +
-            `provideComponentStore(${this.constructor.name}) function. ` +
-            `To resolve this, provide the component store via provideComponentStore(${this.constructor.name})`
-        );
-      }
-    });
-  }
-
   private assertStateIsInitialized(): void {
     if (!this.isInitialized) {
       throw new Error(
@@ -536,4 +516,31 @@ function hasProjectFnOnly(
 
 function noopOperator(): <T>(source$: Observable<T>) => typeof source$ {
   return (source$) => source$;
+}
+
+/**
+ * Used to check if lifecycle hooks are defined
+ * but not used with provideComponentStore()
+ */
+function checkProviderForHooks(ctx: ComponentStore<any>) {
+  asapScheduler.schedule(() => {
+    if (
+      (isOnStoreInitDefined(ctx) || isOnStateInitDefined(ctx)) &&
+      !ctx['ɵhasProvider']
+    ) {
+      const warnings = [
+        isOnStoreInitDefined(ctx) ? 'OnStoreInit' : '',
+        isOnStateInitDefined(ctx) ? 'OnStateInit' : '',
+      ].filter((defined) => defined);
+
+      console.warn(
+        `@ngrx/component-store: ${ctx.constructor.name} has the ${warnings.join(
+          ' and '
+        )} ` +
+          'lifecycle hook(s) implemented without being provided using the ' +
+          `provideComponentStore(${ctx.constructor.name}) function. ` +
+          `To resolve this, provide the component store via provideComponentStore(${ctx.constructor.name})`
+      );
+    }
+  });
 }
