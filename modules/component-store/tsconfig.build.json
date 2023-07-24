@@ -21,6 +21,8 @@
     "skipLibCheck": true
   },
   "files": ["public_api.ts"],
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "compilationMode": "partial",
