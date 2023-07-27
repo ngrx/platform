@@ -20,4 +20,11 @@ export default {
     'jest-preset-angular/build/serializers/html-comment',
   ],
   testRunner: 'jest-jasmine2',
+  moduleNameMapper: {
+    '^rxjs(/operators$)?$':
+      '<rootDir>../../node_modules/rxjs/dist/bundles/rxjs.umd.js',
+    '^rxjs/testing$':
+      '<rootDir>../../node_modules/rxjs/dist/cjs/testing/index.js',
+  },
+  maxWorkers: 8,
 };

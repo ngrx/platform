@@ -1,0 +1,54 @@
+{
+  "name": "component",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/component/src",
+  "prefix": "ngrx",
+  "targets": {
+    "build-package": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "modules/component/tsconfig.build.json",
+        "project": "modules/component/ng-package.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "nx build-package component"
+          },
+          {
+            "command": "yarn tsc -p modules/component/tsconfig.schematics.json"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/component"
+          }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/component"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/component/*/**/*.ts",
+          "modules/component/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/component/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/component"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}
