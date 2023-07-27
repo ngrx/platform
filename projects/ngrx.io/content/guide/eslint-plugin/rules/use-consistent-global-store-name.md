@@ -49,6 +49,6 @@ To change the name of the global store use:
 
 ```json
 "rules": {
-  "ngrx/use-consistent-global-store-name": ["warn", "store$"]
+  "@ngrx/use-consistent-global-store-name": ["warn", "store$"]
 }
 ```
