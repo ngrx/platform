@@ -12,57 +12,48 @@ export interface FeatureConfig<FeatureName extends string, FeatureState> {
   reducer: ActionReducer<FeatureState>;
 }
 
-type Feature<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string,
-  FeatureState extends AppState[FeatureName]
-> = FeatureConfig<FeatureName, FeatureState> &
-  BaseSelectors<AppState, FeatureName, FeatureState>;
+type Feature<FeatureName extends string, FeatureState> = FeatureConfig<
+  FeatureName,
+  FeatureState
+> &
+  BaseSelectors<FeatureName, FeatureState>;
 
 type FeatureWithExtraSelectors<
   FeatureName extends string,
   FeatureState,
   ExtraSelectors extends SelectorsDictionary
 > = string extends keyof ExtraSelectors
-  ? Feature<Record<string, any>, FeatureName, FeatureState>
-  : Omit<
-      Feature<Record<string, any>, FeatureName, FeatureState>,
-      keyof ExtraSelectors
-    > &
+  ? Feature<FeatureName, FeatureState>
+  : Omit<Feature<FeatureName, FeatureState>, keyof ExtraSelectors> &
       ExtraSelectors;
 
-type FeatureSelector<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string,
-  FeatureState extends AppState[FeatureName]
-> = {
+type FeatureSelector<FeatureName extends string, FeatureState> = {
   [K in FeatureName as `select${Capitalize<K>}State`]: MemoizedSelector<
-    AppState,
+    Record<string, any>,
     FeatureState,
     (featureState: FeatureState) => FeatureState
   >;
 };
 
-type NestedSelectors<
-  AppState extends Record<string, any>,
-  FeatureState
-> = FeatureState extends Primitive | unknown[] | Date
+type NestedSelectors<FeatureState> = FeatureState extends
+  | Primitive
+  | unknown[]
+  | Date
   ? {}
   : {
       [K in keyof FeatureState &
         string as `select${Capitalize<K>}`]: MemoizedSelector<
-        AppState,
+        Record<string, any>,
         FeatureState[K],
         (featureState: FeatureState) => FeatureState[K]
       >;
     };
 
-type BaseSelectors<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string,
-  FeatureState extends AppState[FeatureName]
-> = FeatureSelector<AppState, FeatureName, FeatureState> &
-  NestedSelectors<AppState, FeatureState>;
+type BaseSelectors<FeatureName extends string, FeatureState> = FeatureSelector<
+  FeatureName,
+  FeatureState
+> &
+  NestedSelectors<FeatureState>;
 
 type SelectorsDictionary = Record<
   string,
@@ -74,9 +65,7 @@ type ExtraSelectorsFactory<
   FeatureName extends string,
   FeatureState,
   ExtraSelectors extends SelectorsDictionary
-> = (
-  baseSelectors: BaseSelectors<Record<string, any>, FeatureName, FeatureState>
-) => ExtraSelectors;
+> = (baseSelectors: BaseSelectors<FeatureName, FeatureState>) => ExtraSelectors;
 
 type NotAllowedFeatureStateCheck<FeatureState> =
   FeatureState extends Required<FeatureState>
@@ -116,7 +105,7 @@ export function createFeature<
 export function createFeature<FeatureName extends string, FeatureState>(
   featureConfig: FeatureConfig<FeatureName, FeatureState> &
     NotAllowedFeatureStateCheck<FeatureState>
-): Feature<Record<string, any>, FeatureName, FeatureState>;
+): Feature<FeatureName, FeatureState>;
 /**
  * @description
  * A function that accepts a feature name and a feature reducer, and creates
@@ -208,9 +197,8 @@ export function createFeature<FeatureName extends string, FeatureState>(
  * ```
  */
 export function createFeature<
-  AppState extends Record<string, any>,
-  FeatureName extends keyof AppState & string,
-  FeatureState extends AppState[FeatureName],
+  FeatureName extends string,
+  FeatureState,
   ExtraSelectors extends SelectorsDictionary
 >(
   featureConfig: FeatureConfig<FeatureName, FeatureState> & {
@@ -220,7 +208,7 @@ export function createFeature<
       ExtraSelectors
     >;
   }
-): Feature<AppState, FeatureName, FeatureState> & ExtraSelectors {
+): Feature<FeatureName, FeatureState> & ExtraSelectors {
   const {
     name,
     reducer,
@@ -232,7 +220,7 @@ export function createFeature<
   const baseSelectors = {
     [`select${capitalize(name)}State`]: featureSelector,
     ...nestedSelectors,
-  } as BaseSelectors<Record<string, any>, FeatureName, FeatureState>;
+  } as BaseSelectors<FeatureName, FeatureState>;
   const extraSelectors = extraSelectorsFactory
     ? extraSelectorsFactory(baseSelectors)
     : {};
@@ -242,16 +230,13 @@ export function createFeature<
     reducer,
     ...baseSelectors,
     ...extraSelectors,
-  } as Feature<AppState, FeatureName, FeatureState> & ExtraSelectors;
+  } as Feature<FeatureName, FeatureState> & ExtraSelectors;
 }
 
-function createNestedSelectors<
-  AppState extends Record<string, any>,
-  FeatureState
->(
-  featureSelector: MemoizedSelector<AppState, FeatureState>,
+function createNestedSelectors<FeatureState>(
+  featureSelector: MemoizedSelector<Record<string, any>, FeatureState>,
   reducer: ActionReducer<FeatureState>
-): NestedSelectors<AppState, FeatureState> {
+): NestedSelectors<FeatureState> {
   const initialState = getInitialState(reducer);
   const nestedKeys = (
     isPlainObject(initialState) ? Object.keys(initialState) : []
@@ -265,7 +250,7 @@ function createNestedSelectors<
         (parentState) => parentState?.[nestedKey]
       ),
     }),
-    {} as NestedSelectors<AppState, FeatureState>
+    {} as NestedSelectors<FeatureState>
   );
 }
 
