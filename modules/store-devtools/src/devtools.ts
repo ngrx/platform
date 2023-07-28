@@ -11,6 +11,7 @@ import {
 } from '@ngrx/store';
 import {
   merge,
+  MonoTypeOperatorFunction,
   Observable,
   Observer,
   queueScheduler,
@@ -31,6 +32,7 @@ import {
 } from './utils';
 import { DevtoolsDispatcher } from './devtools-dispatcher';
 import { PERFORM_ACTION } from './actions';
+import { ZoneConfig, injectZoneConfig } from './zone-config';
 
 @Injectable()
 export class StoreDevtools implements Observer<any>, OnDestroy {
@@ -69,11 +71,20 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
 
     const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
+    const zoneConfig = injectZoneConfig(config.connectOutsideZone!);
+
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
 
     this.liftedStateSubscription = liftedAction$
       .pipe(
         withLatestFrom(liftedReducer$),
+        // The extension would post messages back outside of the Angular zone
+        // because we call `connect()` wrapped with `runOutsideAngular`. We run change
+        // detection only once at the end after all the required asynchronous tasks have
+        // been processed (for instance, `setInterval` scheduled by the `timeout` operator).
+        // We have to re-enter the Angular zone before the `scan` since it runs the reducer
+        // which must be run within the Angular zone.
+        emitInZone(zoneConfig),
         scan<
           [any, ActionReducer<LiftedState, Actions.All>],
           {
@@ -110,9 +121,11 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
         }
       });
 
-    this.extensionStartSubscription = extension.start$.subscribe(() => {
-      this.refresh();
-    });
+    this.extensionStartSubscription = extension.start$
+      .pipe(emitInZone(zoneConfig))
+      .subscribe(() => {
+        this.refresh();
+      });
 
     const liftedState$ =
       liftedStateSubject.asObservable() as Observable<LiftedState>;
@@ -195,4 +208,24 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
   pauseRecording(status: boolean) {
     this.dispatch(new Actions.PauseRecording(status));
   }
+}
+
+/**
+ * If the devtools extension is connected out of the Angular zone,
+ * this operator will emit all events within the zone.
+ */
+function emitInZone<T>({
+  ngZone,
+  connectOutsideZone,
+}: ZoneConfig): MonoTypeOperatorFunction<T> {
+  return (source) =>
+    connectOutsideZone
+      ? new Observable<T>((subscriber) =>
+          source.subscribe({
+            next: (value) => ngZone.run(() => subscriber.next(value)),
+            error: (error) => ngZone.run(() => subscriber.error(error)),
+            complete: () => ngZone.run(() => subscriber.complete()),
+          })
+        )
+      : source;
 }
