@@ -22,155 +22,153 @@ describe('createFeature()', () => {
     { ...compilerOptions(), strict: true }
   );
 
-  describe('with default app state type', () => {
-    it('should create', () => {
-      const snippet = expectSnippet(`
-        const search = createAction(
-          '[Products Page] Search',
-          props<{ query: string }>()
-        );
-        const loadProductsSuccess = createAction(
-          '[Products API] Load Products Success',
-          props<{ products: string[] }>()
-        );
-
-        interface State {
-          products: string[] | null;
-          query: string;
-        }
-
-        const initialState: State = {
-          products: null,
-          query: '',
-        };
-
-        const productsFeature = createFeature({
-          name: 'products',
-          reducer: createReducer(
-            initialState,
-            on(search, (state, { query }) => ({ ...state, query })),
-            on(loadProductsSuccess, (state, { products }) => ({
-              ...state,
-              products,
-            }))
-          ),
-        });
-
-        let {
-          name,
-          reducer,
-          selectProductsState,
-          selectProducts,
-          selectQuery,
-        } = productsFeature;
-
-        let productsFeatureKeys: keyof typeof productsFeature;
-      `);
-
-      snippet.toInfer('name', '"products"');
-      snippet.toInfer('reducer', 'ActionReducer<State, Action>');
-      snippet.toInfer(
-        'selectProductsState',
-        'MemoizedSelector<Record<string, any>, State, (featureState: State) => State>'
+  it('should create', () => {
+    const snippet = expectSnippet(`
+      const search = createAction(
+        '[Products Page] Search',
+        props<{ query: string }>()
       );
-      snippet.toInfer(
-        'selectProducts',
-        'MemoizedSelector<Record<string, any>, string[] | null, (featureState: State) => string[] | null>'
+      const loadProductsSuccess = createAction(
+        '[Products API] Load Products Success',
+        props<{ products: string[] }>()
       );
-      snippet.toInfer(
-        'selectQuery',
-        'MemoizedSelector<Record<string, any>, string, (featureState: State) => string>'
-      );
-      snippet.toInfer(
-        'productsFeatureKeys',
-        '"selectProductsState" | "selectQuery" | "selectProducts" | keyof FeatureConfig<"products", State>'
-      );
-    });
 
-    it('should create a feature when reducer is created outside', () => {
-      const snippet = expectSnippet(`
-        const counterReducer = createReducer({ count: 0 });
-        const counterFeature = createFeature({
-          name: 'counter',
-          reducer: counterReducer,
-        });
+      interface State {
+        products: string[] | null;
+        query: string;
+      }
 
-        const {
-          name,
-          reducer,
-          selectCounterState,
-          selectCount,
-        } = counterFeature;
-      `);
+      const initialState: State = {
+        products: null,
+        query: '',
+      };
 
-      snippet.toInfer('name', '"counter"');
-      snippet.toInfer('reducer', 'ActionReducer<{ count: number; }, Action>');
-      snippet.toInfer(
-        'selectCounterState',
-        'MemoizedSelector<Record<string, any>, { count: number; }, (featureState: { count: number; }) => { count: number; }>'
-      );
-      snippet.toInfer(
-        'selectCount',
-        'MemoizedSelector<Record<string, any>, number, (featureState: { count: number; }) => number>'
-      );
-    });
+      const productsFeature = createFeature({
+        name: 'products',
+        reducer: createReducer(
+          initialState,
+          on(search, (state, { query }) => ({ ...state, query })),
+          on(loadProductsSuccess, (state, { products }) => ({
+            ...state,
+            products,
+          }))
+        ),
+      });
 
-    it('should allow use with StoreModule.forFeature', () => {
-      expectSnippet(`
-        const counterFeature = createFeature({
-          name: 'counter',
-          reducer: createReducer(0),
-        });
+      let {
+        name,
+        reducer,
+        selectProductsState,
+        selectProducts,
+        selectQuery,
+      } = productsFeature;
 
-        StoreModule.forFeature(counterFeature);
-      `).toSucceed();
-    });
+      let productsFeatureKeys: keyof typeof productsFeature;
+    `);
 
-    it('should allow use with untyped store.select', () => {
-      const snippet = expectSnippet(`
-        const { selectCounterState, selectCount } = createFeature({
-          name: 'counter',
-          reducer: createReducer({ count: 0 }),
-        });
+    snippet.toInfer('name', '"products"');
+    snippet.toInfer('reducer', 'ActionReducer<State, Action>');
+    snippet.toInfer(
+      'selectProductsState',
+      'MemoizedSelector<Record<string, any>, State, (featureState: State) => State>'
+    );
+    snippet.toInfer(
+      'selectProducts',
+      'MemoizedSelector<Record<string, any>, string[] | null, (featureState: State) => string[] | null>'
+    );
+    snippet.toInfer(
+      'selectQuery',
+      'MemoizedSelector<Record<string, any>, string, (featureState: State) => string>'
+    );
+    snippet.toInfer(
+      'productsFeatureKeys',
+      '"selectProductsState" | "selectQuery" | "selectProducts" | keyof FeatureConfig<"products", State>'
+    );
+  });
 
-        let store!: Store;
-        const counterState$ = store.select(selectCounterState);
-        const count$ = store.select(selectCount);
-      `);
+  it('should create a feature when reducer is created outside', () => {
+    const snippet = expectSnippet(`
+      const counterReducer = createReducer({ count: 0 });
+      const counterFeature = createFeature({
+        name: 'counter',
+        reducer: counterReducer,
+      });
 
-      snippet.toInfer('counterState$', 'Observable<{ count: number; }>');
-      snippet.toInfer('count$', 'Observable<number>');
-    });
+      const {
+        name,
+        reducer,
+        selectCounterState,
+        selectCount,
+      } = counterFeature;
+    `);
 
-    it('should allow use with typed store.select', () => {
-      const snippet = expectSnippet(`
-        const { selectCounterState } = createFeature({
-          name: 'counter',
-          reducer: createReducer(0),
-        });
+    snippet.toInfer('name', '"counter"');
+    snippet.toInfer('reducer', 'ActionReducer<{ count: number; }, Action>');
+    snippet.toInfer(
+      'selectCounterState',
+      'MemoizedSelector<Record<string, any>, { count: number; }, (featureState: { count: number; }) => { count: number; }>'
+    );
+    snippet.toInfer(
+      'selectCount',
+      'MemoizedSelector<Record<string, any>, number, (featureState: { count: number; }) => number>'
+    );
+  });
 
-        let store!: Store<{ counter: number }>;
-        const counterState$ = store.select(selectCounterState);
-      `);
+  it('should allow use with StoreModule.forFeature', () => {
+    expectSnippet(`
+      const counterFeature = createFeature({
+        name: 'counter',
+        reducer: createReducer(0),
+      });
 
-      snippet.toInfer('counterState$', 'Observable<number>');
-    });
+      StoreModule.forFeature(counterFeature);
+    `).toSucceed();
+  });
 
-    it('should fail when feature state contains optional properties', () => {
-      expectSnippet(`
-        interface State {
-          movies: string[];
-          activeProductId?: number;
-        }
+  it('should allow use with untyped store.select', () => {
+    const snippet = expectSnippet(`
+      const { selectCounterState, selectCount } = createFeature({
+        name: 'counter',
+        reducer: createReducer({ count: 0 }),
+      });
 
-        const initialState: State = { movies: [], activeProductId: undefined };
+      let store!: Store;
+      const counterState$ = store.select(selectCounterState);
+      const count$ = store.select(selectCount);
+    `);
 
-        const counterFeature = createFeature({
-          name: 'movies',
-          reducer: createReducer(initialState),
-        });
-      `).toFail(/optional properties are not allowed in the feature state/);
-    });
+    snippet.toInfer('counterState$', 'Observable<{ count: number; }>');
+    snippet.toInfer('count$', 'Observable<number>');
+  });
+
+  it('should allow use with typed store.select', () => {
+    const snippet = expectSnippet(`
+      const { selectCounterState } = createFeature({
+        name: 'counter',
+        reducer: createReducer(0),
+      });
+
+      let store!: Store<{ counter: number }>;
+      const counterState$ = store.select(selectCounterState);
+    `);
+
+    snippet.toInfer('counterState$', 'Observable<number>');
+  });
+
+  it('should fail when feature state contains optional properties', () => {
+    expectSnippet(`
+      interface State {
+        movies: string[];
+        activeProductId?: number;
+      }
+
+      const initialState: State = { movies: [], activeProductId: undefined };
+
+      const counterFeature = createFeature({
+        name: 'movies',
+        reducer: createReducer(initialState),
+      });
+    `).toFail(/optional properties are not allowed in the feature state/);
   });
 
   describe('nested selectors', () => {
