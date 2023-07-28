@@ -1,0 +1,54 @@
+{
+  "name": "router-store",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/router-store/src",
+  "prefix": "ngrx",
+  "targets": {
+    "build-package": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "modules/router-store/tsconfig.build.json",
+        "project": "modules/router-store/ng-package.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "nx build-package router-store"
+          },
+          {
+            "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/router-store"
+          }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/router-store"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/router-store/*/**/*.ts",
+          "modules/router-store/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/router-store/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/router-store"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}

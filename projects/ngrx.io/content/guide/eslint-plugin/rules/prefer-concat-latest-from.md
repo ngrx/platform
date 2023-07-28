@@ -61,7 +61,7 @@ To always report the uses of `withLatestFrom` use:
 
 ```json
 "rules": {
-  "ngrx/prefer-concat-latest-from": ["warn", { "strict": true }]
+  "@ngrx/prefer-concat-latest-from": ["warn", { "strict": true }]
 }
 ```
 
@@ -69,7 +69,7 @@ To report only needed uses of `withLatestFrom` use:
 
 ```json
 "rules": {
-  "ngrx/prefer-concat-latest-from": ["warn", { "strict": false }]
+  "@ngrx/prefer-concat-latest-from": ["warn", { "strict": false }]
 }
 ```
 

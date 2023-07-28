@@ -1,0 +1,87 @@
+{
+  "name": "schematics",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/schematics/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/schematics/*/**/*.ts",
+          "modules/schematics/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/schematics/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/schematics"]
+    },
+    "build-package": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/modules/schematics",
+        "tsConfig": "modules/schematics/tsconfig.build.json",
+        "packageJson": "modules/schematics/package.json",
+        "main": "modules/schematics/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
+        "sourceMap": false,
+        "assets": [
+          "collection.json",
+          {
+            "input": "./modules/schematics/src",
+            "glob": "**/*.!(ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./modules/schematics",
+            "glob": "collection.json",
+            "output": "."
+          }
+        ],
+        "srcRootForCompilationRoot": "modules/schematics"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "nx build-package schematics"
+          },
+          {
+            "command": "yarn tsc -p modules/schematics/tsconfig.schematics.json"
+          },
+          {
+            "command": "cpy modules/schematics/collection.json dist/modules/schematics"
+          },
+          {
+            "command": "cpy modules/schematics/migrations/migration.json dist/modules/schematics/migrations"
+          },
+          {
+            "command": "cpy modules/schematics/src/**/files/**/*.* dist/ --parents"
+          },
+          {
+            "command": "cpy modules/schematics/src/**/integration-files/**/*.* dist/ --parents"
+          },
+          {
+            "command": "cpy modules/schematics/src/**/schema.json dist/ --parents"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/schematics"
+          }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/schematics"]
+    }
+  },
+  "tags": []
+}
