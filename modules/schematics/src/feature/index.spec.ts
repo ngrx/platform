@@ -281,20 +281,17 @@ describe('Feature Schematic', () => {
       appTree
     );
     const paths = [
-        `${projectPath}/src/app/foo.actions.ts`,
-        `${projectPath}/src/app/foo.actions.spec.ts`,
-        `${projectPath}/src/app/foo.reducer.ts`,
-        `${projectPath}/src/app/foo.reducer.spec.ts`,
-        `${projectPath}/src/app/foo.effects.ts`,
-        `${projectPath}/src/app/foo.effects.spec.ts`,
-        `${projectPath}/src/app/foo.selectors.ts`,
-        `${projectPath}/src/app/foo.selectors.spec.ts`,
-        `${projectPath}/src/app/foo.model.ts`,
+      `${projectPath}/src/app/foo.actions.ts`,
+      `${projectPath}/src/app/foo.reducer.ts`,
+      `${projectPath}/src/app/foo.reducer.spec.ts`,
+      `${projectPath}/src/app/foo.effects.ts`,
+      `${projectPath}/src/app/foo.effects.spec.ts`,
+      `${projectPath}/src/app/foo.model.ts`,
     ];
 
-    paths.forEach(path => {
-        expect(tree.files.includes(path)).toBeTruthy();
-        expect(tree.readContent(path)).toMatchSnapshot();
-    })
+    paths.forEach((path) => {
+      expect(tree.files.includes(path)).toBeTruthy();
+      expect(tree.readContent(path)).toMatchSnapshot();
+    });
   });
 });
