@@ -171,6 +171,7 @@ describe('EffectSources', () => {
           this.effectIdentifier = identifier;
         }
       }
+
       class SourceWithInitAction implements OnInitEffects, OnIdentifyEffects {
         effectIdentifier: string;
 
@@ -207,6 +208,10 @@ describe('EffectSources', () => {
       const recordB = {
         b: createEffect(() => alwaysOf(b), { functional: true }),
       };
+      const recordC = Object.freeze({
+        __proto__: null,
+        c: createEffect(() => alwaysOf(c), { functional: true }),
+      });
 
       it('should resolve effects from class instances', () => {
         const sources$ = cold('--a--b--', {
@@ -221,8 +226,12 @@ describe('EffectSources', () => {
       });
 
       it('should resolve effects from records', () => {
-        const sources$ = cold('--a--b--', { a: recordA, b: recordB });
-        const expected = cold('--a--b--', { a, b });
+        const sources$ = cold('--a--b--c--', {
+          a: recordA,
+          b: recordB,
+          c: recordC,
+        });
+        const expected = cold('--a--b--c--', { a, b, c });
 
         const output = toActions(sources$);
 

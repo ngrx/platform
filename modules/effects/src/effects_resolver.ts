@@ -13,7 +13,8 @@ export function mergeEffects(
   globalErrorHandler: ErrorHandler,
   effectsErrorHandler: EffectsErrorHandler
 ): Observable<EffectNotification> {
-  const sourceName = getSourceForInstance(sourceInstance).constructor.name;
+  const source = getSourceForInstance(sourceInstance);
+  const sourceName = source ? source.constructor.name : 'Object';
 
   const observables$: Observable<any>[] = getSourceMetadata(sourceInstance).map(
     ({
