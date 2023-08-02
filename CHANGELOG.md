@@ -1,3 +1,16 @@
+<a name="16.1.0"></a>
+
+# [16.1.0](https://github.com/ngrx/platform/compare/16.0.1...16.1.0) (2023-07-06)
+
+### Bug Fixes
+
+- **eslint:** fix inject function based injection not detecting store ([#3936](https://github.com/ngrx/platform/issues/3936)) ([8a5884d](https://github.com/ngrx/platform/commit/8a5884d)), closes [#3834](https://github.com/ngrx/platform/issues/3834)
+- **eslint:** updater-explicit-return-type not applied when inheritance ([#3928](https://github.com/ngrx/platform/issues/3928)) ([41a5076](https://github.com/ngrx/platform/commit/41a5076))
+
+### Features
+
+- **component-store:** added custom equal option in select ([#3933](https://github.com/ngrx/platform/issues/3933)) ([c4b5cc5](https://github.com/ngrx/platform/commit/c4b5cc5))
+
 <a name="16.0.1"></a>
 
 ## [16.0.1](https://github.com/ngrx/platform/compare/16.0.0...16.0.1) (2023-06-01)

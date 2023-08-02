@@ -1,0 +1,61 @@
+{
+  "name": "store-devtools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/store-devtools/src",
+  "prefix": "ngrx",
+  "targets": {
+    "build-package": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "modules/store-devtools/tsconfig.build.json",
+        "project": "modules/store-devtools/ng-package.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "nx build-package store-devtools"
+          },
+          {
+            "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/store-devtools"
+          }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/store-devtools"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/store-devtools/*/**/*.ts",
+          "modules/store-devtools/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/store-devtools/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/store-devtools"]
+    }
+  },
+  "generators": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  },
+  "tags": []
+}

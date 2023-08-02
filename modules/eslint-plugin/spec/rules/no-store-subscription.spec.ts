@@ -59,6 +59,33 @@ class Ok4 {
     this.metrics$ = store.select(selectMetrics)
   }
 }`,
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok5 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+  readonly store = inject(Store)
+
+  constructor() {
+    this.items$ = store.pipe(select(selectItems))
+    this.metrics$ = store.select(selectMetrics)
+  }
+}`,
+  `
+import { Store } from '@ngrx/store'
+import { inject } from 'some-other-package'
+
+class Ok6 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+  readonly store = inject(Store)
+
+  constructor() {
+    store.pipe(select(selectItems)).subscribe()
+  }
+}`,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [
@@ -136,7 +163,7 @@ class NotOk6 {
   fromFixture(`
 import { Store } from '@ngrx/store'
 
-class NotOk6 {
+class NotOk7 {
   readonly items: readonly Item[]
 
   constructor(store: Store) {
@@ -147,7 +174,7 @@ class NotOk6 {
   fromFixture(`
 import { Store } from '@ngrx/store'
 
-class NotOk7 {
+class NotOk8 {
   readonly control = new FormControl()
 
   constructor(store: Store) {
@@ -155,6 +182,35 @@ class NotOk7 {
       store.pipe(select(selectItems)).subscribe()
                                       ~~~~~~~~~ [${messageId}]
     })
+  }
+}`),
+  fromFixture(`
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk9 {
+  readonly control = new FormControl()
+  store = inject(Store)
+
+  constructor() {
+    this.control.valueChanges.subscribe(() => {
+      store.pipe(select(selectItems)).subscribe()
+                                      ~~~~~~~~~ [${messageId}]
+    })
+  }
+}`),
+  fromFixture(`
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk10 {
+  readonly items$: Observable<readonly Item[]>
+  readonly metrics$: Observable<Metric>
+  readonly store = inject(Store)
+
+  constructor() {
+    store.pipe(select(selectItems)).subscribe()
+                                    ~~~~~~~~~ [${messageId}] 
   }
 }`),
 ];

@@ -120,7 +120,6 @@ exports[`Login Page should compile 1`] = `
             <button
               class="mdc-button mat-mdc-button _mat-animation-noopable mat-unthemed mat-mdc-button-base"
               mat-button=""
-              mat-button-is-fab="false"
               mat-button-ripple-uninitialized=""
               type="submit"
             >

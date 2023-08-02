@@ -11,7 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AuthModule } from '@example-app/auth';
 
-import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
+import { rootReducers, metaReducers } from '@example-app/reducers';
 
 import { CoreModule } from '@example-app/core';
 import { AppRoutingModule } from '@example-app/app-routing.module';
@@ -34,7 +34,7 @@ import { AppComponent } from '@example-app/core/containers';
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    StoreModule.forRoot(ROOT_REDUCERS, {
+    StoreModule.forRoot(rootReducers, {
       metaReducers,
       runtimeChecks: {
         // strictStateImmutability and strictActionImmutability are enabled by default

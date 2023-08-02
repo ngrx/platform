@@ -2,52 +2,74 @@
 
 To prevent Store Devtools from being included in your bundle, you can exclude it from the build process.
 
+## Step 1: Put Store Devtools In `environment.ts`
 
-## Step 1: Create build specific files
+To exclude the DevTools, put `@ngrx/store-devtools` into an `environment.ts` file, which is replaced with `environment.prod.ts`.
 
-Create a folder for your build specific files. In this case, it is `build-specifics`. Now create a file for a common build. Within this file, export an array that defines the `StoreDevtoolsModule`.
+<div class="alert is-helpful">
+If the environment files don't exist in your project you can use the `ng generate environments` command to create them.
+</div>
 
-<code-example header="build-specifics/index.ts">
+Given the below example:
+
+<code-example header="environments/environment.ts">
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-export const extModules = [
-    StoreDevtoolsModule.instrument({
-        maxAge: 25
-    })
-];
+export const environment = {
+    production: false,
+    imports: [
+        StoreDevtoolsModule.instrument({ maxAge: 25 })
+    ],
+};
 </code-example>
 
-Now create a file for a production build (`ng build --prod=true`) that simply exports an empty array.
+When using the standalone API, use the `providers` array instead of `imports`:
 
-<code-example header="build-specifics/index.prod.ts">
-export const extModules = [];
+<code-example header="environments/environment.ts">
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+
+export const environment = {
+    production: false,
+    providers: [
+        provideStoreDevtools({ maxAge: 25 })
+    ],
+};
 </code-example>
 
-## Step 2: Import extModules
+Now, let's add an empty `imports` property to the production environment file:
 
-Modify `app.module.ts` to include `extModules` in the `imports` array.
+<code-example header="environments/environment.prod.ts">
+export const environment = {
+    production: true,
+    imports: [],
+};
+</code-example>
+
+## Step 2: Import Environment File
+
+Modify `app.module.ts` to include `environment.imports` in the `imports` array.
 
 <code-example header="app.module.ts">
-import { extModules } from './build-specifics';
+import { environment } from '../environments/environment';
 
 @NgModule({
     imports: [
         StoreModule.forRoot(reducers),
         // Instrumentation must be imported after importing StoreModule
-        extModules,
+        environment.imports,
     ],
 })
 </code-example>
 
-## Step 3: Modify angular.json
+When using the standalone API, modify the `app.config.ts` file, where your application configuration resides, to specify `environment.providers`:
 
-Add a new entry in the `fileReplacements` section in your `angular.json`. For more information on this topic, look at the build section of the angular documentation. [Configure target-specific file replacements](https://angular.io/guide/build#configure-target-specific-file-replacements)
+<code-example header="app.config.ts">
+import { environment } from '../environments/environment';
 
-<code-example header="angular.json">
-"fileReplacements": [
-    {
-        "replace": "src/app/build-specifics/index.ts",
-        "with": "src/app/build-specifics/index.prod.ts"
-    }
-]
+export const appConfig: ApplicationConfig = {
+    providers: [
+        provideStore(),
+        environment.providers,
+    ]
+};
 </code-example>

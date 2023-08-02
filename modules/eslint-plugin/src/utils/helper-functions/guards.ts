@@ -42,6 +42,9 @@ export const isTSParameterProperty = isNodeOfType(
 );
 export const isTSTypeAnnotation = isNodeOfType(AST_NODE_TYPES.TSTypeAnnotation);
 export const isTSTypeReference = isNodeOfType(AST_NODE_TYPES.TSTypeReference);
+export const isTSInstantiationExpression = isNodeOfType(
+  AST_NODE_TYPES.TSInstantiationExpression
+);
 export const isObjectExpression = isNodeOfType(AST_NODE_TYPES.ObjectExpression);
 export const isProperty = isNodeOfType(AST_NODE_TYPES.Property);
 

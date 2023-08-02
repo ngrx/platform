@@ -14,7 +14,7 @@ type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const validConstructor: () => RunTests['valid'] = () => [
   `
 import { Store } from '@ngrx/store'
 
@@ -23,7 +23,27 @@ export class Ok {
 }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const validInject: () => RunTests['valid'] = () => [
+  // https://github.com/ngrx/platform/issues/3950
+  `
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class AppComponent {
+  store = inject(Store);
+  otherName = inject(Store);
+}`,
+  `
+import { somethingElse } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class AppComponent {
+  store = somethingElse(Store<{}>);
+}
+`,
+];
+
+const invalidConstructor: () => RunTests['invalid'] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -124,7 +144,34 @@ class NotOk3 {
   ),
 ];
 
+const invalidInject: () => RunTests['invalid'] = () => [
+  fromFixture(
+    `
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class NotOk4 {
+  store = inject(Store<{}>);
+                      ~~~~ [${noTypedStore} suggest] 
+}`,
+    {
+      suggestions: [
+        {
+          messageId: noTypedStoreSuggest,
+          output: `
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class NotOk4 {
+  store = inject(Store);
+}`,
+        },
+      ],
+    }
+  ),
+];
+
 ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
+  valid: [...validConstructor(), ...validInject()],
+  invalid: [...invalidConstructor(), ...invalidInject()],
 });
