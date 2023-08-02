@@ -280,31 +280,21 @@ describe('Feature Schematic', () => {
       options,
       appTree
     );
-    const files = tree.files;
-    expect(
-      files.includes(`${projectPath}/src/app/foo.actions.ts`)
-    ).toBeTruthy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.actions.spec.ts`)
-    ).toBeFalsy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.reducer.ts`)
-    ).toBeTruthy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.reducer.spec.ts`)
-    ).toBeTruthy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.effects.ts`)
-    ).toBeTruthy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.effects.spec.ts`)
-    ).toBeTruthy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.selectors.ts`)
-    ).toBeFalsy();
-    expect(
-      files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
-    ).toBeFalsy();
-    expect(files.includes(`${projectPath}/src/app/foo.model.ts`)).toBeTruthy();
+    const paths = [
+        `${projectPath}/src/app/foo.actions.ts`,
+        `${projectPath}/src/app/foo.actions.spec.ts`,
+        `${projectPath}/src/app/foo.reducer.ts`,
+        `${projectPath}/src/app/foo.reducer.spec.ts`,
+        `${projectPath}/src/app/foo.effects.ts`,
+        `${projectPath}/src/app/foo.effects.spec.ts`,
+        `${projectPath}/src/app/foo.selectors.ts`,
+        `${projectPath}/src/app/foo.selectors.spec.ts`,
+        `${projectPath}/src/app/foo.model.ts`,
+    ];
+
+    paths.forEach(path => {
+        expect(tree.files.includes(path)).toBeTruthy();
+        expect(tree.readContent(path)).toMatchSnapshot();
+    })
   });
 });
