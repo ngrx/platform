@@ -208,8 +208,9 @@ describe('EffectSources', () => {
       const recordB = {
         b: createEffect(() => alwaysOf(b), { functional: true }),
       };
-      // named imports from built packages that contain functional effects
-      // don't have a prototype
+      // a record with functional effects that is defined as
+      // a named import in a built package doesn't have a prototype
+      // for more info see: https://github.com/ngrx/platform/issues/3972
       const recordC = Object.freeze({
         __proto__: null,
         c: createEffect(() => alwaysOf(c), { functional: true }),
