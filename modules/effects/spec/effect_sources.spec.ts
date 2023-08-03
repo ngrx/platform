@@ -208,9 +208,15 @@ describe('EffectSources', () => {
       const recordB = {
         b: createEffect(() => alwaysOf(b), { functional: true }),
       };
+      // named imports from built packages that contain functional effects
+      // don't have a prototype
       const recordC = Object.freeze({
         __proto__: null,
         c: createEffect(() => alwaysOf(c), { functional: true }),
+      });
+      const recordD = Object.freeze({
+        __proto__: null,
+        d: createEffect(() => alwaysOf(d as any), { functional: true }),
       });
 
       it('should resolve effects from class instances', () => {
@@ -347,7 +353,7 @@ describe('EffectSources', () => {
         expect(output).toBeObservable(expected);
       });
 
-      it('should report an error if an effect dispatches an invalid action', () => {
+      it('should report an error if a class-based effect dispatches an invalid action', () => {
         const sources$ = of(new SourceD());
 
         toActions(sources$).subscribe();
@@ -355,6 +361,18 @@ describe('EffectSources', () => {
         expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
           new Error(
             'Effect "SourceD.d$" dispatched an invalid action: {"not":"a valid action"}'
+          )
+        );
+      });
+
+      it('should report an error if a functional effect dispatches an invalid action', () => {
+        const sources$ = of(recordD);
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "d()" dispatched an invalid action: {"not":"a valid action"}'
           )
         );
       });

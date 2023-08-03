@@ -14,7 +14,8 @@ export function mergeEffects(
   effectsErrorHandler: EffectsErrorHandler
 ): Observable<EffectNotification> {
   const source = getSourceForInstance(sourceInstance);
-  const sourceName = source ? source.constructor.name : 'Object';
+  const isClassBasedEffect = !!source && source.constructor.name !== 'Object';
+  const sourceName = isClassBasedEffect ? source.constructor.name : null;
 
   const observables$: Observable<any>[] = getSourceMetadata(sourceInstance).map(
     ({
