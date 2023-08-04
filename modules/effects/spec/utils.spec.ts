@@ -35,6 +35,15 @@ describe('isClassInstance', () => {
   it('returns false for a function', () => {
     expect(isClassInstance(() => {})).toBe(false);
   });
+
+  it('returns false for an object without prototype', () => {
+    const obj = Object.freeze({
+      __proto__: null,
+      foo: 'bar',
+    });
+
+    expect(isClassInstance(obj)).toBe(false);
+  });
 });
 
 describe('isClass', () => {

@@ -171,6 +171,7 @@ describe('EffectSources', () => {
           this.effectIdentifier = identifier;
         }
       }
+
       class SourceWithInitAction implements OnInitEffects, OnIdentifyEffects {
         effectIdentifier: string;
 
@@ -207,6 +208,17 @@ describe('EffectSources', () => {
       const recordB = {
         b: createEffect(() => alwaysOf(b), { functional: true }),
       };
+      // a record with functional effects that is defined as
+      // a named import in a built package doesn't have a prototype
+      // for more info see: https://github.com/ngrx/platform/issues/3972
+      const recordC = Object.freeze({
+        __proto__: null,
+        c: createEffect(() => alwaysOf(c), { functional: true }),
+      });
+      const recordD = Object.freeze({
+        __proto__: null,
+        d: createEffect(() => alwaysOf(d as any), { functional: true }),
+      });
 
       it('should resolve effects from class instances', () => {
         const sources$ = cold('--a--b--', {
@@ -221,8 +233,12 @@ describe('EffectSources', () => {
       });
 
       it('should resolve effects from records', () => {
-        const sources$ = cold('--a--b--', { a: recordA, b: recordB });
-        const expected = cold('--a--b--', { a, b });
+        const sources$ = cold('--a--b--c--', {
+          a: recordA,
+          b: recordB,
+          c: recordC,
+        });
+        const expected = cold('--a--b--c--', { a, b, c });
 
         const output = toActions(sources$);
 
@@ -338,7 +354,7 @@ describe('EffectSources', () => {
         expect(output).toBeObservable(expected);
       });
 
-      it('should report an error if an effect dispatches an invalid action', () => {
+      it('should report an error if a class-based effect dispatches an invalid action', () => {
         const sources$ = of(new SourceD());
 
         toActions(sources$).subscribe();
@@ -346,6 +362,18 @@ describe('EffectSources', () => {
         expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
           new Error(
             'Effect "SourceD.d$" dispatched an invalid action: {"not":"a valid action"}'
+          )
+        );
+      });
+
+      it('should report an error if a functional effect dispatches an invalid action', () => {
+        const sources$ = of(recordD);
+
+        toActions(sources$).subscribe();
+
+        expect(mockErrorReporter.handleError).toHaveBeenCalledWith(
+          new Error(
+            'Effect "d()" dispatched an invalid action: {"not":"a valid action"}'
           )
         );
       });
