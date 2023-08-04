@@ -370,7 +370,6 @@ import * as actorsEffects from './effects/actors.effects';
 export class AppModule {}
 </code-example>
 
-<div class="alert is-critical">
 
 ## Incorporating State
 
