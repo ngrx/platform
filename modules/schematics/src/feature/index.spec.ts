@@ -21,6 +21,7 @@ describe('Feature Schematic', () => {
     project: 'bar',
     module: '',
     group: false,
+    entity: false,
   };
 
   const projectPath = getTestProjectPath();
@@ -64,6 +65,7 @@ describe('Feature Schematic', () => {
     expect(
       files.includes(`${projectPath}/src/app/foo.selectors.spec.ts`)
     ).toBeTruthy();
+    expect(files.includes(`${projectPath}/src/app/foo.model.ts`)).toBeFalsy();
   });
 
   it('should not create test files when skipTests is true', async () => {
@@ -268,5 +270,28 @@ describe('Feature Schematic', () => {
     );
 
     expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should create all files of a feature with an entity', async () => {
+    const options = { ...defaultOptions, entity: true };
+
+    const tree = await schematicRunner.runSchematic(
+      'feature',
+      options,
+      appTree
+    );
+    const paths = [
+      `${projectPath}/src/app/foo.actions.ts`,
+      `${projectPath}/src/app/foo.reducer.ts`,
+      `${projectPath}/src/app/foo.reducer.spec.ts`,
+      `${projectPath}/src/app/foo.effects.ts`,
+      `${projectPath}/src/app/foo.effects.spec.ts`,
+      `${projectPath}/src/app/foo.model.ts`,
+    ];
+
+    paths.forEach((path) => {
+      expect(tree.files.includes(path)).toBeTruthy();
+      expect(tree.readContent(path)).toMatchSnapshot();
+    });
   });
 });
