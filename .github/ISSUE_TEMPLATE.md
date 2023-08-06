@@ -1,4 +1,4 @@
-<!-- ❤️ ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate) -->
+<!-- ❤️ ngrx? Please consider sponsoring us: 👉  [sponsor](https://github.com/sponsors/ngrx) -->
 
 ## I'm submitting a...
 
