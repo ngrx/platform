@@ -1,6 +1,6 @@
 # Contributing
 
-NgRx is a community-maintained project that thrives due to the contributions of fellow developers. Whether it be documentation, issues, features, or tests, all contributions help this project in a meaningful way. This page serves as a "Getting Started Guide" on how to contribute to NgRx in different areas. If you also want to donate or sponsor this project, visit our [Open Collective](https://opencollective.com/ngrx) page.
+NgRx is a community-maintained project that thrives due to the contributions of fellow developers. Whether it be documentation, issues, features, or tests, all contributions help this project in a meaningful way. This page serves as a "Getting Started Guide" on how to contribute to NgRx in different areas. If you also want to donate or sponsor this project, visit our [GitHub Sponsors](https://github.com/sponsors/ngrx) page.
 
 ## Prerequisites
 
