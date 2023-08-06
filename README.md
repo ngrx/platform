@@ -18,35 +18,22 @@ NgRx is a community-driven project. Read our [contributing guidelines](./CONTRIB
 
 ## Sponsoring NgRx
 
-[![Backers on Open Collective](https://opencollective.com/ngrx/tiers/backers/badge.svg)](#backers)
+### Gold Sponsors
+
+<a href="https://nx.dev" target="_blank">
+  <img src="https://github.com/ngrx/platform/blob/main/projects/ngrx.io/src/assets/images/sponsors/nx.svg" width="100px" height="100px" alt="NxDevTools logo">
+</a>
 
 Become a gold sponsor and get your logo on our README on GitHub and the front page of [ngrx.io](https://ngrx.io).
 
-### Gold Sponsors
-
-<a href="https://opencollective.com/ngrx/tiers/gold-sponsors/0/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/gold-sponsors/0/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/gold-sponsors/1/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/gold-sponsors/1/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/gold-sponsors/2/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/gold-sponsors/2/avatar.svg"></a>
-
 ### Silver Sponsors
 
-Become a silver sponsor and get your logo on our README on GitHub and our website [ngrx.io](https://ngrx.io).
+<a href="https://houseofangular.io" target="_blank">
+  <img src="https://github.com/ngrx/platform/blob/main/projects/ngrx.io/src/assets/images/sponsors/house-of-angular.png" width="100px" height="100px" alt="House of Angular" />
+</a>
 
-<a href="https://opencollective.com/ngrx/tiers/silver-sponsors/0/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/silver-sponsors/0/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/silver-sponsors/1/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/silver-sponsors/1/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/silver-sponsors/2/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/silver-sponsors/2/avatar.svg"></a>
+Become a silver sponsor and get your logo on our README on GitHub.
 
 ### Bronze Sponsors
 
 Become a bronze sponsor and get your logo on our README on GitHub.
-
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/0/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/0/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/1/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/1/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/2/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/2/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/3/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/3/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/4/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/4/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/5/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/5/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/6/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/6/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/7/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/7/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/8/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/8/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/tiers/bronze-sponsors/9/website" target="_blank"><img src="https://opencollective.com/ngrx/tiers/bronze-sponsors/9/avatar.svg"></a>
