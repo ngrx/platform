@@ -13,7 +13,7 @@ type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const validConstructor: () => RunTests['valid'] = () => [
   `
 class Ok {
   readonly test$ = somethingOutside();
@@ -74,7 +74,60 @@ class Ok6 {
 }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const validInject: () => RunTests['valid'] = () => [
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok7 {
+  store = inject(Store)
+  view$ = this.store.pipe(select(selectCustomers))
+}`,
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok8 {
+  private store = inject(Store)
+  view$ = this.store.select(selectCustomers)
+}`,
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok9 {
+  private store = inject(Store)
+  view$ = this.store.pipe(select(CustomerSelectors.selectCustomers))
+}`,
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok10 {
+  private readonly store = inject(Store)
+  view$ = this.store.select(selectCustomers)
+}`,
+  // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/41
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok11 {
+  private store = inject(Store)
+  view$ = this.store.pipe(select(selectQueryParam('parameter')))
+}`,
+  // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/135
+  `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class Ok12 {
+  private readonly store = inject(Store)
+  view$ = this.store.select(this.store.select(hasAuthorization, 'ADMIN'));
+}`,
+];
+
+const invalidConstructor: () => RunTests['invalid'] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -169,7 +222,100 @@ class NotOk7 {
   ),
 ];
 
+const invalidInject: () => RunTests['invalid'] = () => [
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk8 {
+  store = inject(Store)
+  view$ = this.store.pipe(select('customers'))
+                                 ~~~~~~~~~~~  [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk9 {
+  private store = inject(Store)
+  view$ = this.store.select('customers')
+                            ~~~~~~~~~~~  [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk10 {
+  private readonly store = inject(Store)
+  view$ = this.store.pipe(select('customers', 'orders'))
+                                 ~~~~~~~~~~~            [${messageId}]
+                                              ~~~~~~~~  [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk11 {
+  private store = inject(Store)
+  view$ = this.store.select('customers', 'orders')
+                            ~~~~~~~~~~~               [${messageId}]
+                                         ~~~~~~~~     [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk12 {
+  private store = inject(Store)
+  view$ = this.store.pipe(select(s => s.customers))
+                                 ~~~~~~~~~~~~~~~~  [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk13 {
+  readonly store = inject(Store)
+  view$ = this.store.select(s => s.customers)
+                            ~~~~~~~~~~~~~~~~  [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk14 {
+  private store$ = inject(Store)
+  view$ = this.store$.select(s => s.customers)
+                             ~~~~~~~~~~~~~~~~  [${messageId}]
+}`
+  ),
+  fromFixture(
+    `
+import { Store } from '@ngrx/store'
+import { inject } from '@angular/core'
+
+class NotOk15 {
+  private readonly store$ = inject(Store)
+  view$ = this.store$.pipe(select('customers'))
+                                  ~~~~~~~~~~~  [${messageId}]
+}`
+  ),
+];
+
 ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
+  valid: [...validConstructor(), ...validInject()],
+  invalid: [...invalidConstructor(), ...invalidInject()],
 });
