@@ -115,7 +115,6 @@ class Ok11 {
   private store = inject(Store)
   view$ = this.store.pipe(select(selectQueryParam('parameter')))
 }`,
-  // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/135
   `
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
