@@ -107,7 +107,6 @@ class Ok10 {
   private readonly store = inject(Store)
   view$ = this.store.select(selectCustomers)
 }`,
-  // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/41
   `
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
