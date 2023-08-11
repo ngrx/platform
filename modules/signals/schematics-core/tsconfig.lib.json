@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "outDir": "../../dist/modules/schematics-score",
+    "sourceMap": true,
+    "inlineSources": true,
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts", "test-setup.ts"],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true,
+    "enableSummariesForJit": false,
+    "enableIvy": false
+  }
+}

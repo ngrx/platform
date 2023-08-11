@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsNgRxSignals",
+  "title": "NgRx Signals Schema",
+  "type": "object",
+  "properties": {
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add @ngrx/signals as dependency to package.json (e.g., --skipPackageJson)."
+    }
+  },
+  "required": []
+}

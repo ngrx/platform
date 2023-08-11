@@ -1,0 +1,35 @@
+{
+  "name": "@ngrx/signals",
+  "version": "0.0.0",
+  "description": "Powerful Extensions for Angular Signals",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "Angular",
+    "NgRx",
+    "Signals",
+    "Signal Store",
+    "Signal State",
+    "State Management"
+  ],
+  "author": "NgRx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "peerDependencies": {
+    "@angular/core": "^16.1.0"
+  },
+  "schematics": "./schematics/collection.json",
+  "sideEffects": false,
+  "ng-update": {
+    "packageGroup": ["@ngrx/signals"],
+    "migrations": "./migrations/migration.json"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

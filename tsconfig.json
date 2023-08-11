@@ -42,6 +42,8 @@
       "@ngrx/schematics/schematics-core": [
         "./modules/schematics/schematics-core"
       ],
+      "@ngrx/signals": ["./modules/signals"],
+      "@ngrx/signals/schematics-core": ["./modules/signals/schematics-core"],
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
       "@ngrx/store-devtools/schematics-core": [
