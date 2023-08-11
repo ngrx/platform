@@ -14,6 +14,18 @@ Currently, Angular provides initializer tokens in a few areas. The `APP_INITIALI
 
 </div>
 
+<div class="alert is-important">
+
+**Note:** If you override the `ngOnDestroy` method in your component store, you need to call `super.ngOnDestroy()`. Otherwise a memory leak may occur.
+```ts
+  override ngOnDestroy(): void {
+    // 👇 add this line
+    super.ngOnDestroy();
+  }
+```
+
+</div>
+
 ## OnStoreInit
 
 The `OnStoreInit` interface is used to implement the `ngrxOnStoreInit` method in the ComponentStore class. This lifecycle method is called immediately after the ComponentStore class is instantiated.
