@@ -1,7 +1,7 @@
 {
   "name": "@ngrx/signals",
   "version": "0.0.0",
-  "description": "Powerful Extensions for Angular Signals",
+  "description": "Reactive State Management with Angular Signals",
   "repository": {
     "type": "git",
     "url": "https://github.com/ngrx/platform.git"
