@@ -144,12 +144,20 @@ It also exposes a `destroy$` property on the ComponentStore class that can be us
 
 </div>
 
-```ts
+<code-example header="movies.store.ts">
+@Injectable()
+export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
+  
+  constructor() {
+    super({movies: []});
+  }
+
   override ngOnDestroy(): void {
     // 👇 add this line
     super.ngOnDestroy();
   }
-```
+}
+</code-example>
 
 <code-example header="books-page.component.ts">
 @Component({
