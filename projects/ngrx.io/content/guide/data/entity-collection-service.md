@@ -157,8 +157,10 @@ An entity argument **must never be a cached entity object**.
 It can be a _copy_ of a cached entity object and it often is.
 The demo application always calls these command methods with copies of the entity data.
 
-All _command methods_ return `void`.
+All _command methods_ return `void` or an `Observable`.
 A core principle of the _redux pattern_ is that _commands_ never return a value. They just _do things_ that have side-effects.
+Thus, the action is only dispatched when the command is invoked, and re-subscribing to a command's returned `Observable` will not
+dispatch another action.
 
 Rather than expect a result from the command,
 you subscribe to a _selector$_ property that reflects
