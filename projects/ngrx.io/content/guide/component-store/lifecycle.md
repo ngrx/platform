@@ -141,14 +141,15 @@ It also exposes a `destroy$` property on the ComponentStore class that can be us
 <div class="alert is-important">
 
 **Note:** If you override the `ngOnDestroy` method in your component store, you need to call `super.ngOnDestroy()`. Otherwise a memory leak may occur.
+
+</div>
+
 ```ts
   override ngOnDestroy(): void {
     // 👇 add this line
     super.ngOnDestroy();
   }
 ```
-
-</div>
 
 <code-example header="books-page.component.ts">
 @Component({
