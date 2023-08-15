@@ -146,7 +146,7 @@ It also exposes a `destroy$` property on the ComponentStore class that can be us
 
 <code-example header="movies.store.ts">
 @Injectable()
-export class MoviesStore extends ComponentStore&lt;MoviesState&gt; {
+export class MoviesStore extends ComponentStore&lt;MoviesState&gt; implements OnDestroy {
   
   constructor() {
     super({movies: []});
