@@ -1,4 +1,4 @@
-import { effect } from '@angular/core';
+import { effect, isSignal } from '@angular/core';
 import { signalState } from '../src';
 import { testEffects } from './helpers';
 
@@ -83,11 +83,22 @@ describe('signalState', () => {
       const state = signalState(initialState);
 
       expect(state()).toBe(initialState);
+      expect(isSignal(state)).toBe(true);
+
       expect(state.user()).toBe(initialState.user);
+      expect(isSignal(state.user)).toBe(true);
+
       expect(state.user.firstName()).toBe(initialState.user.firstName);
+      expect(isSignal(state.user.firstName)).toBe(true);
+
       expect(state.foo()).toBe(initialState.foo);
+      expect(isSignal(state.foo)).toBe(true);
+
       expect(state.numbers()).toBe(initialState.numbers);
+      expect(isSignal(state.numbers)).toBe(true);
+
       expect(state.ngrx()).toBe(initialState.ngrx);
+      expect(isSignal(state.ngrx)).toBe(true);
     });
 
     it('does not modify props that are not state slices', () => {
