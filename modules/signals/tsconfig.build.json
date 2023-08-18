@@ -15,7 +15,12 @@
     "lib": ["ES2022", "dom"],
     "target": "ES2022",
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
   "files": ["public_api.ts"],
   "include": ["**/*.ts"],
