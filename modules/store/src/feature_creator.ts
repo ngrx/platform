@@ -1,5 +1,5 @@
 import { capitalize } from './helpers';
-import { ActionReducer, Primitive, Selector } from './models';
+import { ActionReducer, Prettify, Primitive, Selector } from './models';
 import { isPlainObject } from './meta-reducers/utils';
 import {
   createFeatureSelector,
@@ -93,7 +93,9 @@ export function createFeature<
       ExtraSelectors
     >;
   } & NotAllowedFeatureStateCheck<FeatureState>
-): FeatureWithExtraSelectors<FeatureName, FeatureState, ExtraSelectors>;
+): Prettify<
+  FeatureWithExtraSelectors<FeatureName, FeatureState, ExtraSelectors>
+>;
 /**
  * Creates a feature object.
  *
@@ -105,7 +107,7 @@ export function createFeature<
 export function createFeature<FeatureName extends string, FeatureState>(
   featureConfig: FeatureConfig<FeatureName, FeatureState> &
     NotAllowedFeatureStateCheck<FeatureState>
-): Feature<FeatureName, FeatureState>;
+): Prettify<Feature<FeatureName, FeatureState>>;
 /**
  * @description
  * A function that accepts a feature name and a feature reducer, and creates
