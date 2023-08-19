@@ -13,7 +13,7 @@ type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const validConstructor: () => RunTests['valid'] = () => [
   `
 import { ComponentStore } from '@ngrx/component-store'
 
@@ -66,7 +66,38 @@ class Ok3 {
 }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const validInject: () => RunTests['valid'] = () => [
+  `
+import { ComponentStore } from '@ngrx/component-store'
+import { inject } from '@angular/core'
+
+class Ok4 {
+  private readonly store = inject(ComponentStore<MoviesState>);
+  readonly addMovie = this.store.updater<Movie>(
+    (state, movie): MoviesState => ({
+      movies: [...state.movies, movie],
+    }),
+  )
+}`,
+  `
+import { ComponentStore } from '@ngrx/component-store'
+import { inject } from '@angular/core'
+
+class Ok5 {
+  readonly addMovie: Observable<unknown>
+  customStore = inject(ComponentStore<MoviesState>)
+
+  constructor() {
+    this.addMovie = this.customStore.updater<Movie>(
+      (state, movie): MoviesState => ({
+        movies: [...state.movies, movie],
+      }),
+    )
+  }
+}`,
+];
+
+const invalidConstructor: () => RunTests['invalid'] = () => [
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store'
 
@@ -135,7 +166,54 @@ export class CompetitorsStore2 extends CompetitorsStore1 {
 }`),
 ];
 
+const invalidInject: () => RunTests['invalid'] = () => [
+  fromFixture(`
+import { ComponentStore } from '@ngrx/component-store'
+import { inject } from '@angular/core'
+
+class NotOk4 {
+  componentStore = inject(ComponentStore<MoviesState>)
+  readonly updateMovie: Observable<unknown>
+
+  constructor() {
+    this.updateMovie = this.componentStore.updater(() => ({ movies: MOVIES }))
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  }
+}`),
+  fromFixture(`
+import { ComponentStore } from '@ngrx/component-store'
+import { inject } from '@angular/core'
+
+class NotOk5 {
+  private readonly store = inject(ComponentStore<MoviesState>)
+  readonly addMovie = this.store.updater((state, movie) => ({ movies: [...state.movies, movie] }))
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+}`),
+  fromFixture(`
+import { ComponentStore } from '@ngrx/component-store'
+import { inject } from '@angular/core'
+
+class NotOk6 {
+  customStore = inject(ComponentStore<MoviesState>)
+  private readonly store = inject(ComponentStore<MoviesState>)
+  readonly addMovie: Observable<unknown>
+  readonly updateMovie: Observable<unknown>
+
+  constructor() {
+    this.addMovie = this.customStore.updater<Movie>((state, movie) => ({ movies: [...state.movies, movie] }))
+                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+    this.updateMovie = this.store.updater(() => ({ movies: MOVIES }))
+                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+  }
+
+  ngOnInit() {
+    const updater = (item: Movie) => item
+    updater()
+  }
+}`),
+];
+
 ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
+  valid: [...validConstructor(), ...validInject()],
+  invalid: [...invalidConstructor(), ...invalidInject()],
 });
