@@ -177,4 +177,4 @@ export class BooksPageComponent implements OnInit {
 }
 </code-example>
 
-The `provideComponentStore()` function is not required to listen to the `destroy$` property on the ComoponentStore.
+The `provideComponentStore()` function is not required to listen to the `destroy$` property on the ComponentStore.
