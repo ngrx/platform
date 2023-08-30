@@ -26,7 +26,7 @@ yarn test
 
 ```shell
 yarn nx test effects --watchAll
-yarn nx test <library name that matches angular.json entry> --watchAll
+yarn nx test <module-name> --watchAll
 ```
 
 ### Testing for a specific schematic unit test
