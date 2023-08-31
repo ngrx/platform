@@ -69,7 +69,7 @@ jobs:
     <<: *run_in_browser
     steps:
       - checkout
-      - browser-tools/install-browser-tools
+      - browser-tools/install-chrome
       - run: |
           node --version
           google-chrome --version
