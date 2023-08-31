@@ -17,6 +17,7 @@ import { EffectConfig } from '@ngrx/effects'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { createAction } from '@ngrx/store'
 import { map, tap } from 'rxjs/operators'
+import { inject } from '@angular/core';
 
 const foo = createAction('FOO')
 const bar = createAction('BAR')
@@ -30,7 +31,7 @@ const genericFoo = createAction(\`$\{subject} FOO\`)
 const genericBar = createAction(\`$\{subject} BAR\`)
 `;
 
-const valid: () => RunTests['valid'] = () => [
+const validConstructor: () => RunTests['valid'] = () => [
   `
 ${setup}
 class Effect {
@@ -152,7 +153,105 @@ class Effect {
 }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const validInject: () => RunTests['valid'] = () => [
+  `
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(foo),
+      map(() => bar()),
+    ),
+  )
+}`,
+  `
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(foo),
+      map(() => bar()),
+    )
+  })
+}`,
+  `
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromFoo.foo),
+      map(() => fromFoo.bar()),
+    )
+  })
+}`,
+  `
+${setup}
+class Effect {
+  private actions = inject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(foo),
+      mapTo(bar()),
+    )
+  })
+}`,
+  `
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(foo),
+      tap(() => alert('hi'))
+    )
+    }, { dispatch: false }
+  )
+}`,
+  `
+${setup}
+class Effect {
+  foo$: CreateEffectMetadata
+  private actions$ = inject(Actions);
+
+  constructor() {
+    this.foo$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(genericFoo),
+        map(() => genericBar()),
+      ),
+    )
+  }
+}`,
+  `
+${setup}
+class Effect {
+  private actions$ = otherInject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(foo),
+      tap(() => alert('hi'))
+    )
+    }, { dispatch: false }
+  )
+}`,
+  `
+${setup}
+class Effect {
+  private actions$ = inject(OtherActions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(foo),
+      tap(() => alert('hi'))
+    )
+    }, { dispatch: false }
+  )
+}`,
+];
+
+const invalidConstructor: () => RunTests['invalid'] = () => [
   fromFixture(`
 ${setup}
 class Effect {
@@ -266,7 +365,77 @@ class Effect {
 }`),
 ];
 
+const invalidInject: () => RunTests['invalid'] = () => [
+  fromFixture(`
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() =>
+    this.actions$.pipe(
+    ~~~~~~~~~~~~~~~~~~ [${messageId}]
+      ofType(foo),
+      tap(() => alert('hi'))
+    ),
+  )
+}`),
+  fromFixture(`
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+           ~~~~~~~~~~~~~~~~~~ [${messageId}]
+      ofType(foo),
+      tap(() => alert('hi'))
+    )
+  })
+}`),
+  fromFixture(`
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(() => {
+    return this.actions$.pipe(
+           ~~~~~~~~~~~~~~~~~~ [${messageId}]
+      ofType(foo),
+      tap(() => alert('hi'))
+    )
+  }, { dispatch: true });
+}`),
+  fromFixture(`
+${setup}
+class Effect {
+  private actions$ = inject(Actions);
+  foo$ = createEffect(
+    () =>
+      ({ debounce = 100 } = {}) =>
+        debounce
+          ? this.actions$.pipe(
+            ~~~~~~~~~~~~~~~~~~ [${messageId}]
+              ofType(fromFoo.foo),
+              tap(() => alert('hi')),
+            )
+          : this.actions$.pipe(),
+  );
+}`),
+  fromFixture(`
+${setup}
+class Effect {
+  foo$: CreateEffectMetadata
+  private actions$ = inject(Actions);
+
+  constructor() {
+    this.foo$ = createEffect(() =>
+      this.actions$.pipe(
+      ~~~~~~~~~~~~~~~~~~ [${messageId}]
+        ofType(genericFoo),
+      ),
+    )
+  }
+}`),
+];
+
 ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
+  valid: [...validConstructor(), ...validInject()],
+  invalid: [...invalidConstructor(), ...invalidInject()],
 });
