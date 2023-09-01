@@ -7,8 +7,8 @@ import * as path from 'path';
 import rule, {
   preferOneGenericInCreateForFeatureSelector,
   preferOneGenericInCreateForFeatureSelectorSuggest,
-} from '../../src/rules/store/prefer-one-generic-in-create-for-feature-selector';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/prefer-one-generic-in-create-for-feature-selector';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

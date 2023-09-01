@@ -4,8 +4,8 @@ import type {
 } from '@typescript-eslint/experimental-utils';
 import { fromFixture } from 'eslint-etc';
 import * as path from 'path';
-import rule, { messageId } from '../../src/rules/store/good-action-hygiene';
-import { ruleTester } from '../utils';
+import rule, { messageId } from '../../../src/rules/store/good-action-hygiene';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

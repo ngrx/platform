@@ -6,8 +6,8 @@ import * as path from 'path';
 import rule, {
   avoidDuplicateActionsInReducer,
   avoidDuplicateActionsInReducerSuggest,
-} from '../../src/rules/store/avoid-duplicate-actions-in-reducer';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/avoid-duplicate-actions-in-reducer';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

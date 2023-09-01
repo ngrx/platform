@@ -7,8 +7,8 @@ import * as path from 'path';
 import rule, {
   useConsistentGlobalStoreName,
   useConsistentGlobalStoreNameSuggest,
-} from '../../src/rules/store/use-consistent-global-store-name';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/use-consistent-global-store-name';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
