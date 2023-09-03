@@ -187,17 +187,17 @@ type UsersState = { users: User[]; query: string };
 
 @Injectable()
 export class UsersStore extends ComponentStore&lt;UsersState&gt; {
-// type: Signal<User[]>
-readonly users = this.selectSignal((s) => s.users);
-// type: Signal<string>
-readonly query = this.selectSignal((s) => s.query);
-// type: Signal<User[]>
-readonly filteredUsers = this.selectSignal(
-this.users,
-this.query,
-(users, query) =>
-users.filter(({ name }) => name.includes(query))
-);
+  // type: Signal<User[]>
+  readonly users = this.selectSignal((s) => s.users);
+  // type: Signal<string>
+  readonly query = this.selectSignal((s) => s.query);
+  // type: Signal<User[]>
+  readonly filteredUsers = this.selectSignal(
+    this.users,
+    this.query,
+    (users, query) =>
+      users.filter(({ name }) => name.includes(query))
+  );
 }
 </code-example>
 
@@ -215,12 +215,12 @@ type UsersState = { users: User[]; query: string };
 
 @Injectable()
 export class UsersStore extends ComponentStore&lt;UsersState&gt; {
-readonly users = computed(() => this.state().users);
-readonly query = computed(() => this.state().query);
-
-readonly filteredUsers = computed(() =>
-this.users().filter(({ name }) => name.includes(this.query()))
-);
+  readonly users = computed(() => this.state().users);
+  readonly query = computed(() => this.state().query);
+  
+  readonly filteredUsers = computed(() =>
+    this.users().filter(({ name }) => name.includes(this.query()))
+  );
 }
 </code-example>
 
