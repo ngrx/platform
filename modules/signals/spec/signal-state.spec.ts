@@ -1,5 +1,5 @@
 import { effect, isSignal } from '@angular/core';
-import { signalState } from '../src';
+import { patchState, signalState } from '../src';
 import { testEffects } from './helpers';
 
 describe('signalState', () => {
@@ -13,11 +13,11 @@ describe('signalState', () => {
     ngrx: 'signals',
   };
 
-  describe('$update', () => {
+  describe('patch', () => {
     it('updates state via partial state object', () => {
       const state = signalState(initialState);
 
-      state.$update({
+      patchState(state, {
         user: { firstName: 'Johannes', lastName: 'Schmidt' },
         foo: 'baz',
       });
@@ -32,7 +32,7 @@ describe('signalState', () => {
     it('updates state via updater function', () => {
       const state = signalState(initialState);
 
-      state.$update((state) => ({
+      patchState(state, (state) => ({
         numbers: [...state.numbers, 4],
         ngrx: 'rocks',
       }));
@@ -47,7 +47,8 @@ describe('signalState', () => {
     it('updates state via sequence of partial state objects and updater functions', () => {
       const state = signalState(initialState);
 
-      state.$update(
+      patchState(
+        state,
         { user: { firstName: 'Johannes', lastName: 'Schmidt' } },
         (state) => ({ numbers: [...state.numbers, 4], foo: 'baz' }),
         (state) => ({ user: { ...state.user, firstName: 'Jovan' } }),
@@ -65,7 +66,7 @@ describe('signalState', () => {
     it('updates state immutably', () => {
       const state = signalState(initialState);
 
-      state.$update({
+      patchState(state, {
         foo: 'bar',
         numbers: [3, 2, 1],
         ngrx: 'rocks',
@@ -149,14 +150,14 @@ describe('signalState', () => {
         expect(userEmitted).toBe(1);
         expect(firstNameEmitted).toBe(1);
 
-        state.$update({ numbers: [1, 2, 3] });
+        patchState(state, { numbers: [1, 2, 3] });
         tick();
 
         expect(numbersEmitted).toBe(2);
         expect(userEmitted).toBe(1);
         expect(firstNameEmitted).toBe(1);
 
-        state.$update((state) => ({
+        patchState(state, (state) => ({
           user: { ...state.user, lastName: 'Schmidt' },
         }));
         tick();
@@ -165,7 +166,7 @@ describe('signalState', () => {
         expect(userEmitted).toBe(2);
         expect(firstNameEmitted).toBe(1);
 
-        state.$update((state) => ({
+        patchState(state, (state) => ({
           user: { ...state.user, firstName: 'Johannes' },
         }));
         tick();
