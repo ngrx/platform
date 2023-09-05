@@ -1,2 +1,3 @@
+export { PartialStateUpdater, patchState } from './patch-state';
 export { selectSignal } from './select-signal';
-export { patchState, signalState, PartialStateUpdater } from './signal-state';
+export { signalState } from './signal-state';
