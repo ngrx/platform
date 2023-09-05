@@ -187,11 +187,11 @@ type UsersState = { users: User[]; query: string };
 
 @Injectable()
 export class UsersStore extends ComponentStore&lt;UsersState&gt; {
-  // type: Signal<User[]>
+  // type: Signal&lt;User[]&gt;
   readonly users = this.selectSignal((s) => s.users);
-  // type: Signal<string>
+  // type: Signal&lt;string&gt;
   readonly query = this.selectSignal((s) => s.query);
-  // type: Signal<User[]>
+  // type: Signal&lt;User[]&gt;
   readonly filteredUsers = this.selectSignal(
     this.users,
     this.query,
