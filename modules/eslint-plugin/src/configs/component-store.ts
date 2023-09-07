@@ -7,5 +7,8 @@ export = {
   parser: '@typescript-eslint/parser',
 
   plugins: ['@ngrx'],
-  rules: { '@ngrx/updater-explicit-return-type': 'warn' },
+  rules: {
+    '@ngrx/avoid-combining-component-store-selectors': 'warn',
+    '@ngrx/updater-explicit-return-type': 'warn',
+  },
 };
