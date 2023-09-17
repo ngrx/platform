@@ -22,6 +22,7 @@ body:
         - eslint-plugin
         - router-store
         - schematics
+        - signals
         - store-devtools
         - store
       multiple: true

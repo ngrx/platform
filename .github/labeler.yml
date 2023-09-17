@@ -33,6 +33,11 @@
   - modules/entity/*
   - modules/entity/**/*
 
+# Add 'Project: ESLint-Plugin' label to any change within the 'signals' package
+'Project: ESLint-Plugin':
+  - modules/eslint-plugin/*
+  - modules/eslint-plugin/**/*
+
 # Add 'Project: Router Store' label to any change within the 'router-store' package
 'Project: Router Store':
   - modules/router-store/*
@@ -42,6 +47,11 @@
 'Project: Schematics':
   - modules/schematics/*
   - modules/schematics/**/*
+
+# Add 'Project: Signals' label to any change within the 'signals' package
+'Project: Signals':
+  - modules/signals/*
+  - modules/signals/**/*
 
 # Add 'Project: Store' label to any change within the 'store' package
 'Project: Store':
