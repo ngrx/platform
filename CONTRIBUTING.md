@@ -135,12 +135,13 @@ The following is the list of supported scopes:
 - **data**
 - **effects**
 - **entity**
+- **eslint-plugin**
 - **example**
 - **router-store**
 - **schematics**
+- **signals**
 - **store**
 - **store-devtools**
-- **eslint-plugin**
 
 ### Subject
 
