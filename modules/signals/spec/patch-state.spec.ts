@@ -1,5 +1,8 @@
 import { patchState, signalState, signalStore, withState } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
+import { patchState, signalState } from '../src';
+import { testEffects } from './helpers';
+import { effect } from '@angular/core';
 
 describe('patchState', () => {
   const initialState = {
@@ -91,4 +94,20 @@ describe('patchState', () => {
       });
     });
   });
+
+  it(
+    'should not emit if there was no change',
+    testEffects((tick) => {
+      let emitCount = 0;
+      const state = signalState(initialState);
+      effect(() => emitCount++);
+
+      tick();
+      expect(emitCount).toBe(1);
+      patchState(state, {});
+      patchState(state, (state) => state);
+
+      expect(emitCount).toBe(1);
+    })
+  );
 });
