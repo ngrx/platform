@@ -84,7 +84,7 @@ import { inject } from '@angular/core'
 
 class Ok7 {
   readonly store = inject(Store)
-  vm$ = combineLatest(this.store$.select(selectItems), this.somethingElse())
+  vm$ = combineLatest(this.store.select(selectItems), this.somethingElse())
 }`,
   `
 import { Store } from '@ngrx/store'
