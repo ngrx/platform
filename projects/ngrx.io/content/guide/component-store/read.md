@@ -175,7 +175,9 @@ private readonly fetchMoviesData$ = this.select(
 
 ## `selectSignal` method
 
-ComponentStore also provides the `selectSignal` method, which has two signatures. The first signature creates a signal from the provided state projector function, while the second creates a signal by combining provided signals, similar to the select method that combines provided observables.
+ComponentStore also provides the `selectSignal` method, which has two signatures. 
+The first signature creates a signal from the provided state projector function. 
+The second signature creates a signal by combining the provided signals, this is similar to the `select` method that combines the provided observables.
 
 <code-example header="users.store.ts">
 import { Injectable } from '@angular/core';
