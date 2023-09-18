@@ -205,7 +205,9 @@ The `selectSignal` method also accepts an equality function to stop the recomput
 
 ## `state` signal
 
-The `state` signal is another addition to the ComponentStore. Instead of using `selectSignal`, it can be used together with the `computed` function to create derived signals.
+The `state` signal returns the entire state of the ComponentStore.
+
+Use the `state` signal to create computed signals that derives its value from the state.
 
 <code-example header="users.store.ts">
 import { computed, Injectable } from '@angular/core';
