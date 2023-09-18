@@ -15,9 +15,11 @@ Some rules also allow automatic fixes with `ng lint --fix`.
 
 ### component-store
 
-| Name                                                                                          | Description                                    | Recommended | Category | Fixable | Has suggestions | Configurable | Requires type information |
-| --------------------------------------------------------------------------------------------- | ---------------------------------------------- | ----------- | -------- | ------- | --------------- | ------------ | ------------------------- |
-| [@ngrx/updater-explicit-return-type](/guide/eslint-plugin/rules/updater-explicit-return-type) | `Updater` should have an explicit return type. | problem     | warn     | No      | No              | No           | No                        |
+| Name                                                                                                                    | Description                                       | Recommended | Category | Fixable | Has suggestions | Configurable | Requires type information |
+| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ----------- | -------- | ------- | --------------- | ------------ | ------------------------- |
+| [@ngrx/avoid-combining-component-store-selectors](/guide/eslint-plugin/rules/avoid-combining-component-store-selectors) | Prefer combining selectors at the selector level. | suggestion  | warn     | No      | No              | No           | No                        |
+| [@ngrx/avoid-mapping-component-store-selectors](/guide/eslint-plugin/rules/avoid-mapping-component-store-selectors)     | Avoid mapping logic outside the selector level.   | problem     | warn     | No      | No              | No           | No                        |
+| [@ngrx/updater-explicit-return-type](/guide/eslint-plugin/rules/updater-explicit-return-type)                           | `Updater` should have an explicit return type.    | problem     | warn     | No      | No              | No           | No                        |
 
 ### effects
 
@@ -63,7 +65,7 @@ Some rules also allow automatic fixes with `ng lint --fix`.
 <!-- CONFIGURATIONS-CONFIG:START -->
 
 | Name                                                                                                                                                             |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [all-requiring-type-checking](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all-requiring-type-checking.ts)                       |
 | [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.ts)                                                                       |
 | [component-store-strict](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store-strict.ts)                                 |

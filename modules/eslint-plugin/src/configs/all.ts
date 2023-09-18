@@ -8,6 +8,8 @@ export = {
 
   plugins: ['@ngrx'],
   rules: {
+    '@ngrx/avoid-combining-component-store-selectors': 'warn',
+    '@ngrx/avoid-mapping-component-store-selectors': 'warn',
     '@ngrx/updater-explicit-return-type': 'warn',
     '@ngrx/no-dispatch-in-effects': 'warn',
     '@ngrx/no-effects-in-providers': 'error',

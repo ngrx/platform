@@ -3,13 +3,14 @@ import { Path } from '@angular-devkit/core';
 import {
   apply,
   applyTemplates,
+  branchAndMerge,
   chain,
   mergeWith,
   move,
-  noop,
   Rule,
   SchematicContext,
   SchematicsException,
+  noop,
   Tree,
   url,
 } from '@angular-devkit/schematics';
@@ -29,6 +30,12 @@ import {
   visitTSSourceFiles,
 } from '../../schematics-core';
 import { Schema as EntityDataOptions } from './schema';
+import { getProjectMainFile } from '../../schematics-core/utility/project';
+import { isStandaloneApp } from '../../schematics-core/utility/standalone';
+import {
+  addFunctionalProvidersToStandaloneBootstrap,
+  callsProvidersFunction,
+} from '@schematics/angular/private/standalone';
 
 function addNgRxDataToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
@@ -92,6 +99,83 @@ function addEntityDataToNgModule(options: EntityDataOptions): Rule {
     commitChanges(host, source.fileName, changes);
 
     return host;
+  };
+}
+
+function addStandaloneConfig(options: EntityDataOptions): Rule {
+  return (host: Tree) => {
+    const mainFile = getProjectMainFile(host, options);
+    if (host.exists(mainFile)) {
+      const providerFn = 'provideEntityData';
+
+      if (callsProvidersFunction(host, mainFile, providerFn)) {
+        // exit because the store config is already provided
+        return host;
+      }
+
+      const providerOptions = [
+        ...(options.entityConfig
+          ? [ts.factory.createIdentifier(`entityConfig`)]
+          : [ts.factory.createIdentifier(`{}`)]),
+        ...(options.effects
+          ? [ts.factory.createIdentifier(`withEffects()`)]
+          : []),
+      ];
+
+      const patchedConfigFile = addFunctionalProvidersToStandaloneBootstrap(
+        host,
+        mainFile,
+        providerFn,
+        '@ngrx/data',
+        providerOptions
+      );
+
+      const configFileContent = host.read(patchedConfigFile);
+      const source = ts.createSourceFile(
+        patchedConfigFile,
+        configFileContent?.toString('utf-8') || '',
+        ts.ScriptTarget.Latest,
+        true
+      );
+
+      const recorder = host.beginUpdate(patchedConfigFile);
+
+      const changes = [];
+
+      if (options.effects) {
+        const withEffectsImport = insertImport(
+          source,
+          patchedConfigFile,
+          'withEffects',
+          '@ngrx/data'
+        );
+
+        changes.push(withEffectsImport);
+      }
+
+      if (options.entityConfig) {
+        const entityConfigImport = insertImport(
+          source,
+          patchedConfigFile,
+          'entityConfig',
+          './entity-metadata'
+        );
+
+        changes.push(entityConfigImport);
+      }
+
+      changes.forEach((change: any) => {
+        recorder.insertLeft(change.pos, change.toAdd);
+      });
+
+      host.commitUpdate(recorder);
+
+      return host;
+    }
+
+    throw new SchematicsException(
+      `Main file not found for a project ${options.project}`
+    );
   };
 }
 
@@ -285,13 +369,20 @@ export default function (options: EntityDataOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     (options as any).name = '';
     options.path = getProjectPath(host, options);
+    const mainFile = getProjectMainFile(host, options);
+    const isStandalone = isStandaloneApp(host, mainFile);
     options.effects = options.effects === undefined ? true : options.effects;
-    options.module = options.module
-      ? findModuleFromOptions(host, options as any)
-      : options.module;
+    options.module =
+      options.module && !isStandalone
+        ? findModuleFromOptions(host, options as any)
+        : options.module;
 
     const parsedPath = parseName(options.path, '');
     options.path = parsedPath.path;
+
+    const configOrModuleUpdate = isStandalone
+      ? addStandaloneConfig(options)
+      : addEntityDataToNgModule(options);
 
     return chain([
       options && options.skipPackageJson ? noop() : addNgRxDataToPackageJson(),
@@ -300,7 +391,7 @@ export default function (options: EntityDataOptions): Rule {
             removeAngularNgRxDataFromPackageJson(),
             renameNgrxDataModule(),
           ])
-        : addEntityDataToNgModule(options),
+        : branchAndMerge(chain([configOrModuleUpdate])),
       options.entityConfig
         ? createEntityConfigFile(options, parsedPath.path)
         : noop(),

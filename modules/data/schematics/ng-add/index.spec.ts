@@ -367,5 +367,61 @@ describe('Data ng-add Schematic', () => {
 
       expect(actual).toBe(output);
     });
+
+    describe('Data ng-add Schematic for standalone application', () => {
+      const projectPath = getTestProjectPath(undefined, {
+        name: 'bar-standalone',
+      });
+
+      const standaloneDefaultOptions = {
+        ...defaultOptions,
+        project: 'bar-standalone',
+      };
+
+      it('provides default data setup', async () => {
+        const options = { ...standaloneDefaultOptions };
+        const tree = await schematicRunner.runSchematic(
+          'ng-add',
+          options,
+          appTree
+        );
+
+        const content = tree.readContent(
+          `${projectPath}/src/app/app.config.ts`
+        );
+
+        expect(content).toMatchSnapshot();
+      });
+
+      it('provides data without effects', async () => {
+        const options = { ...standaloneDefaultOptions, effects: false };
+        const tree = await schematicRunner.runSchematic(
+          'ng-add',
+          options,
+          appTree
+        );
+
+        const content = tree.readContent(
+          `${projectPath}/src/app/app.config.ts`
+        );
+
+        expect(content).toMatchSnapshot();
+      });
+
+      it('provides data without entityConfig', async () => {
+        const options = { ...standaloneDefaultOptions, entityConfig: false };
+        const tree = await schematicRunner.runSchematic(
+          'ng-add',
+          options,
+          appTree
+        );
+
+        const content = tree.readContent(
+          `${projectPath}/src/app/app.config.ts`
+        );
+
+        expect(content).toMatchSnapshot();
+      });
+    });
   });
 });
