@@ -6,8 +6,8 @@ import * as path from 'path';
 import rule, {
   preferInlineActionProps,
   preferInlineActionPropsSuggest,
-} from '../../src/rules/store/prefer-inline-action-props';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/prefer-inline-action-props';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

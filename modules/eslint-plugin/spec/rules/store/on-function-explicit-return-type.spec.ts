@@ -6,8 +6,8 @@ import * as path from 'path';
 import rule, {
   onFunctionExplicitReturnType,
   onFunctionExplicitReturnTypeSuggest,
-} from '../../src/rules/store/on-function-explicit-return-type';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/on-function-explicit-return-type';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

@@ -6,8 +6,8 @@ import * as path from 'path';
 import rule, {
   noReducerInKeyNames,
   noReducerInKeyNamesSuggest,
-} from '../../src/rules/store/no-reducer-in-key-names';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/no-reducer-in-key-names';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

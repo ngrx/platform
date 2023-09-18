@@ -22,11 +22,11 @@ Examples of **incorrect** code for this rule:
 export class Component extends ComponentStore<MoviesState> {
   all$ = combineLatest(
     this.select((state) => state.movies),
-    this.select((state) => state.books),
+    this.select((state) => state.books)
   );
 
   constructor() {
-    super({ movies: [], books: [] })
+    super({ movies: [], books: [] });
   }
 }
 ```
@@ -37,13 +37,11 @@ export class Component extends ComponentStore<MoviesState> {
 export class Component extends ComponentStore<MoviesState> {
   movie$ = combineLatest(
     this.select((state) => state.movies),
-    this.select((state) => state.selectedId),
-  ).pipe(
-    map(([movies, selectedId]) => movies[selectedId])
-  );
+    this.select((state) => state.selectedId)
+  ).pipe(map(([movies, selectedId]) => movies[selectedId]));
 
   constructor() {
-    super({ movies: [] })
+    super({ movies: [] });
   }
 }
 ```
@@ -56,19 +54,15 @@ Examples of **correct** code for this rule:
 export class Component extends ComponentStore<StoreState> {
   movies$ = this.select((state) => state.movies);
   books$ = this.select((state) => state.books);
-  all$ = this.select(
-    this.movies$,
-    this.books$,
-    ([movies, books]) => {
-        return {
-            movies,
-            books
-        }
-    }
-  );
+  all$ = this.select(this.movies$, this.books$, ([movies, books]) => {
+    return {
+      movies,
+      books,
+    };
+  });
 
   constructor() {
-    super({ movies: [], books: [] })
+    super({ movies: [], books: [] });
   }
 }
 ```
@@ -86,7 +80,7 @@ export class Component extends ComponentStore<MoviesState> {
   );
 
   constructor() {
-    super({ movies: [] })
+    super({ movies: [] });
   }
 }
 ```

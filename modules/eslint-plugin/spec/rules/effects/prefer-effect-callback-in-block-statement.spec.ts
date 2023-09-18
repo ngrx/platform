@@ -6,8 +6,8 @@ import { fromFixture } from 'eslint-etc';
 import * as path from 'path';
 import rule, {
   messageId,
-} from '../../src/rules/effects/prefer-effect-callback-in-block-statement';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/effects/prefer-effect-callback-in-block-statement';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

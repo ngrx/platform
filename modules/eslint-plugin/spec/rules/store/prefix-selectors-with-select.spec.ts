@@ -7,8 +7,8 @@ import * as path from 'path';
 import rule, {
   prefixSelectorsWithSelect,
   prefixSelectorsWithSelectSuggest,
-} from '../../src/rules/store/prefix-selectors-with-select';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/prefix-selectors-with-select';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import * as path from 'path';
 import { format, resolveConfig } from 'prettier';
 import { rules } from '../src/rules';
@@ -9,6 +9,9 @@ const RULES_PATH = './projects/ngrx.io/content/guide/eslint-plugin/rules';
 
 for (const [ruleName, { meta }] of Object.entries(rules)) {
   const docPath = path.join(RULES_PATH, `${ruleName}.md`);
+  if (!existsSync(docPath)) {
+    writeFileSync(docPath, ``);
+  }
   const doc = readFileSync(docPath, 'utf-8');
   const docContent = doc.substring(
     doc.indexOf(PLACEHOLDER) + PLACEHOLDER.length

@@ -13,6 +13,7 @@ export = {
   plugins: ['@ngrx'],
   rules: {
     '@ngrx/avoid-combining-component-store-selectors': 'error',
+    '@ngrx/avoid-mapping-component-store-selectors': 'error',
     '@ngrx/updater-explicit-return-type': 'error',
     '@ngrx/avoid-cyclic-effects': 'error',
     '@ngrx/no-dispatch-in-effects': 'error',

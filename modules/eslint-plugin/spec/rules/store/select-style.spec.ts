@@ -4,8 +4,8 @@ import type {
 } from '@typescript-eslint/experimental-utils';
 import { fromFixture } from 'eslint-etc';
 import * as path from 'path';
-import rule, { SelectStyle } from '../../src/rules/store/select-style';
-import { ruleTester } from '../utils';
+import rule, { SelectStyle } from '../../../src/rules/store/select-style';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];

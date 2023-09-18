@@ -7,8 +7,8 @@ import * as path from 'path';
 import rule, {
   noDispatchInEffects,
   noDispatchInEffectsSuggest,
-} from '../../src/rules/effects/no-dispatch-in-effects';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/effects/no-dispatch-in-effects';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

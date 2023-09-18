@@ -3,9 +3,9 @@ import type {
   TSESLint,
 } from '@typescript-eslint/experimental-utils';
 import * as path from 'path';
-import rule from '../../src/rules/effects/prefer-concat-latest-from';
-import { NGRX_MODULE_PATHS } from '../../src/utils';
-import { ruleTester } from '../utils';
+import rule from '../../../src/rules/effects/prefer-concat-latest-from';
+import { NGRX_MODULE_PATHS } from '../../../src/utils';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];

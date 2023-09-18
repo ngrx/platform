@@ -6,8 +6,8 @@ import { fromFixture } from 'eslint-etc';
 import * as path from 'path';
 import rule, {
   messageId,
-} from '../../src/rules/store/prefer-action-creator-in-dispatch';
-import { ruleTester } from '../utils';
+} from '../../../src/rules/store/prefer-action-creator-in-dispatch';
+import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
