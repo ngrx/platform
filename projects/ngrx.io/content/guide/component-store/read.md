@@ -201,7 +201,7 @@ export class UsersStore extends ComponentStore&lt;UsersState&gt; {
 }
 </code-example>
 
-Similar to the `computed` function, the `selectSignal` method also accepts the equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
+The `selectSignal` method also accepts an equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
 
 ## `state` signal
 
