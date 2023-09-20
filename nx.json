@@ -16,7 +16,8 @@
         ],
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "parallel": 1
+        "parallel": 1,
+        "useLightClient": true
       }
     }
   },
