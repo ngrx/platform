@@ -173,6 +173,63 @@ private readonly fetchMoviesData$ = this.select(
 );
 </code-example>
 
+## `selectSignal` method
+
+ComponentStore also provides the `selectSignal` method, which has two signatures. 
+The first signature creates a signal from the provided state projector function. 
+The second signature creates a signal by combining the provided signals, this is similar to the `select` method that combines the provided observables.
+
+<code-example header="users.store.ts">
+import { Injectable } from '@angular/core';
+import { ComponentStore } from '@ngrx/component-store';
+
+import { User } from './user.model';
+
+type UsersState = { users: User[]; query: string };
+
+@Injectable()
+export class UsersStore extends ComponentStore&lt;UsersState&gt; {
+  // type: Signal&lt;User[]&gt;
+  readonly users = this.selectSignal((s) => s.users);
+  // type: Signal&lt;string&gt;
+  readonly query = this.selectSignal((s) => s.query);
+  // type: Signal&lt;User[]&gt;
+  readonly filteredUsers = this.selectSignal(
+    this.users,
+    this.query,
+    (users, query) =>
+      users.filter(({ name }) => name.includes(query))
+  );
+}
+</code-example>
+
+The `selectSignal` method also accepts an equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
+
+## `state` signal
+
+The `state` signal returns the entire state of the ComponentStore.
+
+Use the `state` signal to create computed signals that derives its value from the state.
+
+<code-example header="users.store.ts">
+import { computed, Injectable } from '@angular/core';
+import { ComponentStore } from '@ngrx/component-store';
+
+import { User } from './user.model';
+
+type UsersState = { users: User[]; query: string };
+
+@Injectable()
+export class UsersStore extends ComponentStore&lt;UsersState&gt; {
+  readonly users = computed(() => this.state().users);
+  readonly query = computed(() => this.state().query);
+  
+  readonly filteredUsers = computed(() =>
+    this.users().filter(({ name }) => name.includes(this.query()))
+  );
+}
+</code-example>
+
 ## `get` method
 
 While a selector provides a reactive way to read the state from ComponentStore via Observable, sometimes an imperative read is needed.
