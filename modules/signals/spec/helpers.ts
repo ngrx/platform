@@ -14,19 +14,19 @@ export function testEffects(testFn: (tick: () => void) => void): () => void {
   };
 }
 
-export function initializeLocalStore<StoreClass extends Type<unknown>>(
-  Store: StoreClass
+export function createLocalStore<Store extends Type<unknown>>(
+  storeToken: Store
 ): {
-  store: InstanceType<StoreClass>;
+  store: InstanceType<Store>;
   destroy: () => void;
 } {
   @Component({
     standalone: true,
     template: '',
-    providers: [Store],
+    providers: [storeToken],
   })
   class TestComponent {
-    store = inject(Store);
+    store = inject(storeToken);
   }
 
   const fixture = TestBed.configureTestingModule({
