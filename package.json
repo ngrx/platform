@@ -77,7 +77,7 @@
     "@angular/platform-browser-dynamic": "16.2.3",
     "@angular/platform-server": "16.2.3",
     "@angular/router": "16.2.3",
-    "@nx/angular": "16.8.0",
+    "@nx/angular": "16.8.1",
     "ajv-formats": "^2.1.1",
     "core-js": "^2.5.4",
     "eslint-etc": "^5.1.0",
@@ -101,12 +101,12 @@
     "@angular/compiler-cli": "16.2.3",
     "@angular/language-service": "16.2.3",
     "@babel/core": "7.9.0",
-    "@nx/cypress": "16.8.0",
-    "@nx/eslint-plugin": "16.8.0",
-    "@nx/jest": "16.8.0",
-    "@nx/linter": "16.8.0",
-    "@nx/node": "16.8.0",
-    "@nx/workspace": "16.8.0",
+    "@nx/cypress": "16.8.1",
+    "@nx/eslint-plugin": "16.8.1",
+    "@nx/jest": "16.8.1",
+    "@nx/linter": "16.8.1",
+    "@nx/node": "16.8.1",
+    "@nx/workspace": "16.8.1",
     "@octokit/rest": "^15.17.0",
     "@schematics/angular": "16.2.1",
     "@testing-library/cypress": "9.0.0",
@@ -161,8 +161,8 @@
     "ncp": "^2.0.0",
     "ng-packagr": "16.2.2",
     "npm-run-all": "^4.1.5",
-    "nx": "16.8.0",
-    "nx-cloud": "16.3.0",
+    "nx": "16.8.1",
+    "nx-cloud": "16.4.0",
     "nyc": "^10.1.2",
     "ora": "^1.3.0",
     "prettier": "^2.7.1",
@@ -198,3 +198,4 @@
     "lodash": "^4.17.11"
   }
 }
+
