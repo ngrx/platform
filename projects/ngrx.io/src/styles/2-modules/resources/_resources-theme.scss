@@ -1,0 +1,53 @@
+@use '../../constants';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  $is-dark-theme: map-get($theme, is-dark);
+
+  aio-resource-list {
+    .shadow-1 {
+      box-shadow: 0 1px 4px 0 rgba(constants.$black, 0.37);
+    }
+
+    c-resource-nav {
+      background-color: #fff;
+
+      a {
+        color: #373E41;
+      }
+
+      .category {
+        .category-link {
+          &:hover {
+            background: #edf0f2;
+            color: #2B85E7;
+          }
+        }
+      }
+
+      .subcategory {
+        .subcategory-link {
+          &:hover {
+            background: #edf0f2;
+            color: #2B85E7;
+          }
+        }
+      }
+    }
+
+    .subcategory-title {
+      background-color: if($is-dark-theme, constants.$darkgray, constants.$mist);
+      color: if($is-dark-theme, constants.$white, #373E41) ;
+    }
+
+    .resource-row-link {
+      color: if($is-dark-theme, constants.$offwhite, #1a2326);
+
+      &:hover {
+        color: if($is-dark-theme, constants.$offwhite, #1a2326);
+        border-color: if($is-dark-theme, rgba(constants.$accentblue, 0.5), rgba(constants.$blue, 0.5));
+        box-shadow: 0 8px 8px rgb(1 131 163 / 24%), 0 0 8px rgb(1 67 163 / 12%), 0 6px 18px rgb(43 133 231 / 12%);
+      }
+    }
+  }
+}

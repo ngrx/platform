@@ -1,0 +1,108 @@
+@use '../../constants';
+@use '../../mixins';
+@use '../../ngrx';
+
+@mixin theme($theme) {
+  $is-dark-theme: map-get($theme, is-dark);
+
+  aio-api-list {
+    .api-filter {
+      .form-search {
+        input {
+          box-shadow: 0 2px 2px rgba(constants.$black, 0.24), 0 0 2px rgba(constants.$black, 0.12);
+          border: 1px solid if($is-dark-theme, constants.$darkgray, constants.$white);
+          background-color: if($is-dark-theme, constants.$darkgray, constants.$white);
+          color: if($is-dark-theme, constants.$purple-700, constants.$purple-600);
+
+          &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: constants.$purple-grey-100;
+          }
+          &::-moz-placeholder { /* Firefox 19+ */
+            color: constants.$purple-grey-100;
+          }
+          &:-ms-input-placeholder { /* IE 10+ */
+            color: constants.$purple-grey-100;
+          }
+          &:-moz-placeholder { /* Firefox 18- */
+            color: constants.$purple-grey-100;
+          }
+
+          &:focus {
+            border: 1px solid constants.$purple-400;
+            box-shadow: 0 2px 2px rgba(constants.$purple-400, 0.24), 0 0 2px rgba(constants.$purple-400, 0.12);
+          }
+        }
+
+        .material-icons {
+          // TODO: verify
+          color: constants.$purple-grey-100;
+        }
+      }
+    }
+
+    .api-list-container {
+      a {
+        color: if($is-dark-theme, constants.$purple-700, constants.$lightpurple);
+      }
+
+      .api-list {
+        li {
+          a {
+            color: if($is-dark-theme, constants.$white, constants.$purple-grey-600);
+
+            &:hover {
+              background: if($is-dark-theme, transparent, constants.$purple-grey-50);
+              color: constants.$purple-500
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .symbol {
+    box-shadow: 0 1px 2px rgba(constants.$black, .24);
+    color: constants.$white;
+
+    // SYMBOL TYPES
+    // Symbol mapping variables in *constants*
+    @each $name, $symbol in constants.$api-symbols {
+      &.#{$name} {
+        background: map-get($symbol, background);
+
+        &:before {
+          content: map-get($symbol, content);
+        }
+      }
+    }
+  }
+
+  .docs-content .api-list {
+    a {
+      color: constants.$purple-grey-600;
+
+      &:hover {
+        background: constants.$purple-grey-50;
+        color: constants.$purple-500;
+      }
+    }
+  }
+
+  .code-links {
+    a {
+      code, .api-doc-code {
+        color: #1E88E5 !important;
+      }
+    }
+  }
+
+  .code-background {
+    span.pln {
+      color: #1E88E5 !important;
+    }
+  }
+
+  .api-doc-code {
+    color: #1a2326;
+  }
+}

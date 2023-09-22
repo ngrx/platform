@@ -1,0 +1,9 @@
+body::-webkit-scrollbar, mat-sidenav.sidenav::-webkit-scrollbar, .mat-sidenav-content::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.search-results::-webkit-scrollbar, .toc-container::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}

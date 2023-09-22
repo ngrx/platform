@@ -1,0 +1,12 @@
+@use '../../mixins';
+
+.edit-page-cta {
+    font-weight: 400;
+    @include mixins.typescale-default;
+
+    text-align: right;
+    margin-right: 32px;
+    display: block;
+    position: absolute;
+    right: 0;
+}

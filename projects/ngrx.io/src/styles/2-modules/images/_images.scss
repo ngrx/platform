@@ -1,0 +1,43 @@
+.content {
+  img {
+    &.right {
+      clear: both;
+      float: right;
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    &.left {
+      clear: both;
+      float: left;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 1300px) {
+      max-width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 600px) {
+      float: none !important;
+      &.right {
+        margin-left: 0;
+      }
+      &.left {
+        margin-right: 0;
+      }
+    }
+  }
+
+  figure {
+    border-radius: 4px;
+    padding: 20px;
+    display: inline-block;
+    margin: 0 0 14px 0;
+
+    img {
+      border-radius: 4px;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@use '../../constants';
+@use '../../mixins';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  $primary: map-get($theme, primary);
+  $is-dark-theme: map-get($theme, is-dark);
+
+  mat-toolbar.mat-toolbar {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+
+    mat-icon {
+      color: constants.$white;
+    }
+  }
+
+  // HOME PAGE OVERRIDE: TOPNAV TOOLBAR
+  aio-shell.page-home mat-toolbar.mat-toolbar {
+    background: if($is-dark-theme,  mat.get-color-from-palette($primary, darker), constants.$purple);
+  }
+
+  // HAMBURGER BUTTON
+  .hamburger.mat-mdc-button {
+    &:hover {
+      color: constants.$offwhite;
+    }
+
+    > .mat-icon {
+      color: constants.$white;
+    }
+  }
+
+  .nav-link[href='enterprise-support'] {
+    background: #8000802e;
+  }
+
+  aio-top-menu {
+    ul {
+      li {
+        &:focus {
+          background-color: constants.$accentblue;
+        }
+      }
+    }
+
+    a.nav-link {
+      &:focus {
+        background: rgba(constants.$white, 0.15);
+      }
+    }
+  }
+
+  // SEARCH BOX
+  aio-search-box.search-container {
+    input {
+      color: constants.$darkgray;
+      background-color: constants.$offwhite;
+    }
+  }
+
+  aio-theme-toggle {
+    @media screen and (min-width: 351px) {
+      border-right: 1px solid constants.$white;
+    }
+  }
+}

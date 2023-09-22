@@ -1,0 +1,39 @@
+@use '../constants';
+
+@mixin theme($theme) {
+  $is-dark-theme: map-get($theme, is-dark);
+
+  body {
+    color: if($is-dark-theme, constants.$offwhite, constants.$darkgray);
+  }
+
+  h6 {
+    color: if($is-dark-theme, constants.$offwhite, constants.$mediumgray);
+  }
+
+  p,
+  ol,
+  ul,
+  ol,
+  li,
+  input,
+  a {
+    color: if($is-dark-theme, constants.$white, constants.$darkgray);
+  }
+
+  .app-toolbar a {
+    color: constants.$white;
+  }
+
+  code {
+    color: if($is-dark-theme, constants.$white, constants.$darkgray);
+  }
+
+  .sidenav-content a {
+    color: if($is-dark-theme, constants.$purple-700, constants.$lightpurple);
+
+    &:hover {
+      color: if($is-dark-theme, constants.$purple-600, constants.$mediumgray);
+    }
+  }
+}

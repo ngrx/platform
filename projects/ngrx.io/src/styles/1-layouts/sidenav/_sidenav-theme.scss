@@ -1,0 +1,64 @@
+@use '../../constants';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  $background: map-get($theme, background);
+  $is-dark-theme: map-get($theme, is-dark);
+
+  mat-sidenav-container.sidenav-container {
+    background-color: if($is-dark-theme, mat.get-color-from-palette($background, background), constants.$offwhite);
+
+    mat-sidenav.sidenav {
+      background-color: if($is-dark-theme, constants.$deepgray, constants.$white);
+      border-right: 1px solid if($is-dark-theme, constants.$darkgray, constants.$lightgray);
+
+      .doc-version {
+        border-top: 1px solid if($is-dark-theme, constants.$darkgray, constants.$lightgray);
+
+        select {
+          // Verify
+          color: constants.$darkgray;
+          background: rgba(constants.$lightgray, 0.5);
+        }
+      }
+    }
+  }
+
+  aio-nav-menu {
+    aio-nav-item {
+      .vertical-menu-item {
+        color: if($is-dark-theme, constants.$offwhite, constants.$darkgray);
+
+        &.level-2  {
+          color: if($is-dark-theme, constants.$offwhite, constants.$mediumgray);
+        }
+
+        &.level-3  {
+          color: if($is-dark-theme, constants.$offwhite, constants.$mediumgray);
+        }
+
+        &.level-4  {
+          color: if($is-dark-theme, constants.$offwhite, constants.$mediumgray);
+        }
+
+        &:hover {
+          background-color: if($is-dark-theme, constants.$purple-grey-800, constants.$lightgray);
+          color: if($is-dark-theme, constants.$purple-700, constants.$purple);
+          text-shadow: 0 0 5px if($is-dark-theme, constants.$black, constants.$white);
+
+          &.selected {
+            color: if($is-dark-theme, constants.$purple-700, constants.$purple);
+          }
+        }
+
+        &.selected {
+          color: if($is-dark-theme, constants.$purple-700, constants.$purple);
+        }
+      }
+    }
+  }
+
+  .heading {
+    color: if($is-dark-theme, constants.$offwhite, constants.$darkgray);
+  }
+}
