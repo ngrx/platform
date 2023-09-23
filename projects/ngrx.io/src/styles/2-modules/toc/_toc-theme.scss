@@ -56,11 +56,11 @@
 
         &.active {
           * {
-            color: if($is-dark-theme, constants.$purple-700, constants.$purple);
+            color: if($is-dark-theme, constants.$dull-magenta-700, constants.$purple);
           }
 
           a:before {
-            background: if($is-dark-theme, constants.$purple-700, constants.$purple);
+            background: if($is-dark-theme, constants.$dull-magenta-700, constants.$purple);
           }
         }
       }

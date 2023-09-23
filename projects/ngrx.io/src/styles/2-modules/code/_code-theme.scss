@@ -64,7 +64,7 @@
         color: constants.$purple-grey-200;
 
         &:hover {
-          color: constants.$mediumgray;
+          color: if($is-dark-theme, constants.$purple-grey-300,  constants.$mediumgray);
         }
       }
 
@@ -129,7 +129,7 @@
       color: if($is-dark-theme, $code-lightgreen, #800);
     } /* string content */
     .kwd {
-      color: if($is-dark-theme, mat.get-color-from-palette(ngrx.$gold, 900), #00f);
+      color: if($is-dark-theme, $code-lightteal, #00f);
     } /* a keyword */
     .com {
       color: if($is-dark-theme, $code-grey, #060);

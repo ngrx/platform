@@ -30,10 +30,10 @@
   }
 
   .sidenav-content a {
-    color: if($is-dark-theme, constants.$purple-700, constants.$lightpurple);
+    color: if($is-dark-theme, constants.$dull-magenta-700, constants.$lightpurple);
 
     &:hover {
-      color: if($is-dark-theme, constants.$purple-600, constants.$mediumgray);
+      color: if($is-dark-theme, constants.$purple-700, constants.$mediumgray);
     }
   }
 }
