@@ -13,6 +13,7 @@ context('Full round trip', () => {
   });
 
   it('shows a message when the credentials are wrong', () => {
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.findByPlaceholderText(/username/i)
       .clear()
       .type('wronguser');
@@ -22,6 +23,7 @@ context('Full round trip', () => {
   });
 
   it('is possible to login', () => {
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.findByPlaceholderText(/username/i)
       .clear()
       .type('test{enter}');
