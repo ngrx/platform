@@ -1,5 +1,6 @@
 import { effect, isSignal } from '@angular/core';
 import { patchState, signalState } from '../src';
+import { STATE_SIGNAL } from '../src/signal-state';
 import { testEffects } from './helpers';
 
 describe('signalState', () => {
@@ -12,6 +13,14 @@ describe('signalState', () => {
     numbers: [1, 2, 3],
     ngrx: 'signals',
   };
+
+  it('has state signal', () => {
+    const state = signalState({});
+    const stateSignal = state[STATE_SIGNAL];
+
+    expect(isSignal(stateSignal)).toBe(true);
+    expect(typeof stateSignal.update === 'function').toBe(true);
+  });
 
   it('creates signals for nested state slices', () => {
     const state = signalState(initialState);
