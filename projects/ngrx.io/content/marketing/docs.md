@@ -1,4 +1,4 @@
-<h1 class="no-toc">What is NgRx?</h1>
+<h1 class="no-toc">What is ngRx?</h1>
 
 NgRx is a framework for building reactive applications in Angular. NgRx provides libraries for:
 
