@@ -5,9 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import {
-  Location,
-  LocationStrategy,
-  PathLocationStrategy,
+    Location,
+    LocationStrategy,
+    PathLocationStrategy,
 } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -53,118 +53,118 @@ import { ThemeToggleComponent } from './shared/theme-picker/theme-picker.compone
 // These are the hardcoded inline svg sources to be used by the `<mat-icon>` component.
 /* eslint-disable max-len */
 export const svgIconProviders = [
-  {
-    provide: SVG_ICONS,
-    useValue: {
-      name: 'close',
-      svgSource:
+    {
+        provide: SVG_ICONS,
+        useValue: {
+            name: 'close',
+            svgSource:
         '<svg fill="#ffffff" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
         '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />' +
         '<path d="M0 0h24v24H0z" fill="none" />' +
         '</svg>',
+        },
+        multi: true,
     },
-    multi: true,
-  },
-  {
-    provide: SVG_ICONS,
-    useValue: {
-      name: 'error_outline',
-      svgSource:
+    {
+        provide: SVG_ICONS,
+        useValue: {
+            name: 'error_outline',
+            svgSource:
         '<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
         '<path d="M0 0h24v24H0V0z" fill="none" />' +
         '<path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />' +
         '</svg>',
+        },
+        multi: true,
     },
-    multi: true,
-  },
-  {
-    provide: SVG_ICONS,
-    useValue: {
-      name: 'insert_comment',
-      svgSource:
+    {
+        provide: SVG_ICONS,
+        useValue: {
+            name: 'insert_comment',
+            svgSource:
         '<svg fill="#ffffff" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
         '<path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />' +
         '<path d="M0 0h24v24H0z" fill="none" />' +
         '</svg>',
+        },
+        multi: true,
     },
-    multi: true,
-  },
-  {
-    provide: SVG_ICONS,
-    useValue: {
-      name: 'keyboard_arrow_right',
-      svgSource:
+    {
+        provide: SVG_ICONS,
+        useValue: {
+            name: 'keyboard_arrow_right',
+            svgSource:
         '<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
         '<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />' +
         '</svg>',
+        },
+        multi: true,
     },
-    multi: true,
-  },
 ];
 
 /* eslint-enable max-len */
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    CustomElementsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    SwUpdatesModule,
-    SharedModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', {
-      enabled: environment.production,
-    }),
-    provideFirebaseApp(() =>
-      initializeApp({
-        apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
-        authDomain: 'ngrx-io-dev.firebaseapp.com',
-        databaseURL: 'https://ngrx-io-dev.firebaseio.com',
-        projectId: 'ngrx-io-dev',
-        storageBucket: 'ngrx-io-dev.appspot.com',
-        messagingSenderId: '670550641358',
-        appId: '1:670550641358:web:cd7543509875b279a71e9f',
-      })
-    ),
-    provideFirestore(() => getFirestore()),
-    ThemeToggleComponent,
-  ],
-  declarations: [
-    AppComponent,
-    DocViewerComponent,
-    DtComponent,
-    FooterComponent,
-    ModeBannerComponent,
-    NavMenuComponent,
-    NavItemComponent,
-    SearchBoxComponent,
-    NotificationComponent,
-    TopMenuComponent,
-  ],
-  providers: [
-    Deployment,
-    DocumentService,
-    { provide: ErrorHandler, useClass: ReportingErrorHandler },
-    GaService,
-    Logger,
-    Location,
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
-    LocationService,
-    { provide: MatIconRegistry, useClass: CustomIconRegistry },
-    NavigationService,
-    ScrollService,
-    ScrollSpyService,
-    SearchService,
-    svgIconProviders,
-    TocService,
-    { provide: CurrentDateToken, useFactory: currentDateProvider },
-    { provide: WindowToken, useFactory: windowProvider },
-  ],
-  bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        CustomElementsModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        SwUpdatesModule,
+        SharedModule,
+        ServiceWorkerModule.register('/ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+        provideFirebaseApp(() =>
+            initializeApp({
+                apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
+                authDomain: 'ngrx-io-dev.firebaseapp.com',
+                databaseURL: 'https://ngrx-io-dev.firebaseio.com',
+                projectId: 'ngrx-io-dev',
+                storageBucket: 'ngrx-io-dev.appspot.com',
+                messagingSenderId: '670550641358',
+                appId: '1:670550641358:web:cd7543509875b279a71e9f',
+            })
+        ),
+        provideFirestore(() => getFirestore()),
+        ThemeToggleComponent,
+    ],
+    declarations: [
+        AppComponent,
+        DocViewerComponent,
+        DtComponent,
+        FooterComponent,
+        ModeBannerComponent,
+        NavMenuComponent,
+        NavItemComponent,
+        SearchBoxComponent,
+        NotificationComponent,
+        TopMenuComponent,
+    ],
+    providers: [
+        Deployment,
+        DocumentService,
+        { provide: ErrorHandler, useClass: ReportingErrorHandler },
+        GaService,
+        Logger,
+        Location,
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
+        LocationService,
+        { provide: MatIconRegistry, useClass: CustomIconRegistry },
+        NavigationService,
+        ScrollService,
+        ScrollSpyService,
+        SearchService,
+        svgIconProviders,
+        TocService,
+        { provide: CurrentDateToken, useFactory: currentDateProvider },
+        { provide: WindowToken, useFactory: windowProvider },
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

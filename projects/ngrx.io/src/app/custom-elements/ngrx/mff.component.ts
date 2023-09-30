@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ngrx-mff',
-  template: `
+    selector: 'ngrx-mff',
+    template: `
     <p>
       The NgRx Team asks our community to support the people of Ukraine who are
       being invaded by Russia.
@@ -10,8 +10,8 @@ import { Component } from '@angular/core';
 
     <a href="https://supportukrainenow.org/" target="_blank"> Donate Now </a>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: flex;
         flex-direction: column;
@@ -47,6 +47,6 @@ import { Component } from '@angular/core';
         }
       }
     `,
-  ],
+    ],
 })
 export class MffComponent {}
