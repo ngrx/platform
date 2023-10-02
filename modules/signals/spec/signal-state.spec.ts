@@ -2,6 +2,7 @@ import { effect, isSignal } from '@angular/core';
 import * as angular from '@angular/core';
 import { patchState, signalState } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
+import { patchState, selectSignal, signalState } from '../src';
 import { testEffects } from './helpers';
 
 describe('signalState', () => {
@@ -142,6 +143,40 @@ describe('signalState', () => {
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(3);
       expect(firstNameEmitted).toBe(2);
+    })
+  );
+
+  it(
+    'should not emit if there was no change',
+    testEffects((tick) => {
+      let stateCounter = 0;
+      let userCounter = 0;
+      const state = signalState(initialState);
+      const user = state.user;
+
+      effect(() => {
+        state();
+        stateCounter++;
+      });
+
+      effect(() => {
+        user();
+        userCounter++;
+      });
+
+      tick();
+      expect(stateCounter).toBe(1);
+      expect(userCounter).toBe(1);
+
+      patchState(state, {});
+      tick();
+      expect(stateCounter).toBe(2);
+      expect(userCounter).toBe(1);
+
+      patchState(state, (state) => state);
+      tick();
+      expect(stateCounter).toBe(3);
+      expect(userCounter).toBe(1);
     })
   );
 });
