@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "16.2.0",
+  "version": "16.3.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "ng": "ng",
@@ -198,4 +198,3 @@
     "lodash": "^4.17.11"
   }
 }
-

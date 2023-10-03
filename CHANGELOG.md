@@ -1,3 +1,22 @@
+<a name="16.3.0"></a>
+
+# [16.3.0](https://github.com/ngrx/platform/compare/16.2.0...16.3.0) (2023-10-03)
+
+### Bug Fixes
+
+- **schematics:** make action props plural ([#4017](https://github.com/ngrx/platform/issues/4017)) ([3a56412](https://github.com/ngrx/platform/commit/3a56412))
+
+### Features
+
+- **data:** standalone support for ng add [@ngrx](https://github.com/ngrx)/data ([#4019](https://github.com/ngrx/platform/issues/4019)) ([fdd701e](https://github.com/ngrx/platform/commit/fdd701e)), closes [#3935](https://github.com/ngrx/platform/issues/3935)
+- **eslint-plugin:** add avoid-combining-component-store-selectors rule ([#4043](https://github.com/ngrx/platform/issues/4043)) ([0bff440](https://github.com/ngrx/platform/commit/0bff440))
+- **eslint-plugin:** add new avoid-mapping-component-store-selectors rule ([#4026](https://github.com/ngrx/platform/issues/4026)) ([40477dd](https://github.com/ngrx/platform/commit/40477dd)), closes [#3940](https://github.com/ngrx/platform/issues/3940)
+- **signals:** add `patchState` function and remove `$update` method ([#4037](https://github.com/ngrx/platform/issues/4037)) ([f2514ba](https://github.com/ngrx/platform/commit/f2514ba))
+- **signals:** add signalState and selectSignal APIs ([#4007](https://github.com/ngrx/platform/issues/4007)) ([745d91f](https://github.com/ngrx/platform/commit/745d91f)), closes [#3993](https://github.com/ngrx/platform/issues/3993)
+- **signals:** add signalStore and signalStoreFeature ([#4049](https://github.com/ngrx/platform/issues/4049)) ([0010281](https://github.com/ngrx/platform/commit/0010281)), closes [#4000](https://github.com/ngrx/platform/issues/4000)
+- **signals:** initial setup ([#4002](https://github.com/ngrx/platform/issues/4002)) ([b0d63fd](https://github.com/ngrx/platform/commit/b0d63fd)), closes [#3992](https://github.com/ngrx/platform/issues/3992)
+- **store:** prettify createFeature result ([#4014](https://github.com/ngrx/platform/issues/4014)) ([f179316](https://github.com/ngrx/platform/commit/f179316))
+
 <a name="16.2.0"></a>
 
 # [16.2.0](https://github.com/ngrx/platform/compare/16.1.0...16.2.0) (2023-08-07)

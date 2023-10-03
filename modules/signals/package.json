@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/signals",
-  "version": "0.0.0",
+  "version": "16.3.0",
   "description": "Reactive State Management with Angular Signals",
   "repository": {
     "type": "git",
@@ -21,12 +21,14 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^16.1.0"
+    "@angular/core": "^16.0.0"
   },
   "schematics": "./schematics/collection.json",
   "sideEffects": false,
   "ng-update": {
-    "packageGroup": ["@ngrx/signals"],
+    "packageGroup": [
+      "@ngrx/signals"
+    ],
     "migrations": "./migrations/migration.json"
   },
   "dependencies": {
