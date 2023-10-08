@@ -1,4 +1,4 @@
-import { isSignal, Signal, untracked } from '@angular/core';
+import { Signal, untracked } from '@angular/core';
 import { selectSignal } from './select-signal';
 
 export type DeepSignal<T> = Signal<T> &
@@ -14,11 +14,15 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
 
   return new Proxy(signal, {
     get(target: any, prop) {
-      if (prop in value && !target[prop]) {
+      if (!(prop in value)) {
+        return target[prop];
+      }
+
+      if (!target[prop]) {
         target[prop] = selectSignal(() => target()[prop]);
       }
 
-      return isSignal(target[prop]) ? toDeepSignal(target[prop]) : target[prop];
+      return toDeepSignal(target[prop]);
     },
   });
 }
