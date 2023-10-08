@@ -14,19 +14,20 @@ export function testEffects(testFn: (tick: () => void) => void): () => void {
   };
 }
 
-export function createLocalStore<Store extends Type<unknown>>(
-  storeToken: Store
+export function createLocalService<Service extends Type<unknown>>(
+  serviceToken: Service
 ): {
-  store: InstanceType<Store>;
+  service: InstanceType<Service>;
+  tick: () => void;
   destroy: () => void;
 } {
   @Component({
     standalone: true,
     template: '',
-    providers: [storeToken],
+    providers: [serviceToken],
   })
   class TestComponent {
-    store = inject(storeToken);
+    service = inject(serviceToken);
   }
 
   const fixture = TestBed.configureTestingModule({
@@ -34,7 +35,8 @@ export function createLocalStore<Store extends Type<unknown>>(
   }).createComponent(TestComponent);
 
   return {
-    store: fixture.componentInstance.store,
+    service: fixture.componentInstance.service,
+    tick: () => fixture.detectChanges(),
     destroy: () => fixture.destroy(),
   };
 }

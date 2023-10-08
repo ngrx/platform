@@ -22,7 +22,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "files": ["public_api.ts"],
+  "files": ["index.ts"],
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {

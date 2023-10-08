@@ -8,7 +8,7 @@ import {
   withState,
 } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
-import { createLocalStore } from './helpers';
+import { createLocalService } from './helpers';
 
 describe('signalStore', () => {
   describe('creation', () => {
@@ -190,7 +190,7 @@ describe('signalStore', () => {
         })
       );
 
-      createLocalStore(Store).destroy();
+      createLocalService(Store).destroy();
 
       expect(message).toBe('onDestroy');
     });
@@ -233,7 +233,7 @@ describe('signalStore', () => {
         })
       );
 
-      createLocalStore(Store).destroy();
+      createLocalService(Store).destroy();
 
       expect(message).toBe('onDestroy');
     });
@@ -256,7 +256,7 @@ describe('signalStore', () => {
           },
         })
       );
-      const { destroy } = createLocalStore(Store);
+      const { destroy } = createLocalService(Store);
 
       expect(messages).toEqual(['onInit']);
 
