@@ -1,13 +1,12 @@
 import {
   assertInInjectionContext,
   DestroyRef,
-  effect,
   inject,
   Injector,
   isSignal,
   Signal,
-  untracked,
 } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { isObservable, Observable, of, Subject, Unsubscribable } from 'rxjs';
 
 type RxMethodInput<Input> = Input | Observable<Input> | Signal<Input>;
@@ -34,7 +33,7 @@ export function rxMethod<Input>(
     let input$: Observable<Input>;
 
     if (isSignal(input)) {
-      input$ = toObservable(input, injector);
+      input$ = toObservable(input, { injector });
     } else if (isObservable(input)) {
       input$ = input;
     } else {
@@ -49,33 +48,4 @@ export function rxMethod<Input>(
   rxMethodFn.unsubscribe = sourceSub.unsubscribe.bind(sourceSub);
 
   return rxMethodFn;
-}
-
-/**
- * A custom `toObservable` function that uses `Subject`
- * instead of `ReplaySubject` to reduce the bundle size.
- */
-function toObservable<T>(source: Signal<T>, injector: Injector): Observable<T> {
-  const subject = new Subject<T>();
-
-  const watcher = effect(
-    () => {
-      let value: T;
-      try {
-        value = source();
-      } catch (err) {
-        untracked(() => subject.error(err));
-        return;
-      }
-      untracked(() => subject.next(value));
-    },
-    { injector, manualCleanup: true }
-  );
-
-  injector.get(DestroyRef).onDestroy(() => {
-    watcher.destroy();
-    subject.complete();
-  });
-
-  return subject.asObservable();
 }
