@@ -59,6 +59,15 @@ describe('signalState', () => {
     expect((state.user.firstName as any).y).toBe(undefined);
   });
 
+  it('does not modify STATE_SIGNAL', () => {
+    const state = signalState(initialState);
+
+    expect((state[STATE_SIGNAL] as any).user).toBe(undefined);
+    expect((state[STATE_SIGNAL] as any).foo).toBe(undefined);
+    expect((state[STATE_SIGNAL] as any).numbers).toBe(undefined);
+    expect((state[STATE_SIGNAL] as any).ngrx).toBe(undefined);
+  });
+
   it(
     'emits new values only for affected signals',
     testEffects((tick) => {
