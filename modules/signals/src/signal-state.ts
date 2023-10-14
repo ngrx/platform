@@ -9,19 +9,27 @@ export type SignalStateMeta<State extends Record<string, unknown>> = {
 };
 
 /**
- * Signal state cannot contain optional properties.
+ * Signal state cannot properties that exist on the function object
+ * because signal is a function.
  */
-export type NotAllowedStateCheck<State> = State extends Required<State>
-  ? State extends Record<string, unknown>
-    ? { [K in keyof State]: State[K] & NotAllowedStateCheck<State[K]> }
-    : unknown
-  : never;
+export type SignalStateInput<State> = State extends Record<string, unknown>
+  ? ContainsFunctionProps<State> extends false
+    ? { [K in keyof State]: SignalStateInput<State[K]> }
+    : '@ngrx/signals: function properties are not allowed'
+  : State;
+
+type ContainsFunctionProps<State> = Exclude<
+  {
+    [K in keyof State]: K extends keyof Function ? true : false;
+  }[keyof State],
+  undefined
+>;
 
 type SignalState<State extends Record<string, unknown>> = DeepSignal<State> &
   SignalStateMeta<State>;
 
 export function signalState<State extends Record<string, unknown>>(
-  initialState: State & NotAllowedStateCheck<State>
+  initialState: SignalStateInput<State>
 ): SignalState<State> {
   const stateSignal = signal(initialState as State, { equal: defaultEqual });
   const deepSignal = toDeepSignal(stateSignal.asReadonly());

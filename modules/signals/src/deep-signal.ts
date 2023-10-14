@@ -3,7 +3,11 @@ import { selectSignal } from './select-signal';
 
 export type DeepSignal<T> = Signal<T> &
   (T extends Record<string, unknown>
-    ? Readonly<{ [K in keyof T]: DeepSignal<T[K]> }>
+    ? Readonly<{
+        [K in keyof T]: T[K] extends Record<string, unknown>
+          ? DeepSignal<T[K]>
+          : Signal<T[K]>;
+      }>
     : unknown);
 
 export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {

@@ -7,7 +7,9 @@ export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 export type SignalStoreConfig = { providedIn: 'root' };
 
 export type SignalStoreSlices<State> = {
-  [Key in keyof State]: DeepSignal<State[Key]>;
+  [Key in keyof State]: State[Key] extends Record<string, unknown>
+    ? DeepSignal<State[Key]>
+    : Signal<State[Key]>;
 };
 
 export type SignalStore<FeatureResult extends SignalStoreFeatureResult> =

@@ -2,7 +2,7 @@ import { toDeepSignal } from './deep-signal';
 import { excludeKeys } from './helpers';
 import { patchState } from './patch-state';
 import { selectSignal } from './select-signal';
-import { NotAllowedStateCheck, STATE_SIGNAL } from './signal-state';
+import { SignalStateInput, STATE_SIGNAL } from './signal-state';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
@@ -11,21 +11,26 @@ import {
   SignalStoreFeatureResult,
 } from './signal-store-models';
 
+/**
+ * Root state slices cannot be optional.
+ */
+type WithStateInput<State> = State & {} extends Required<State>
+  ? keyof State extends never
+    ? State
+    : { [K in keyof State]: SignalStateInput<State[K]> }
+  : '@ngrx/signals: optional properties are not allowed';
+
 export function withState<State extends Record<string, unknown>>(
-  state: State & NotAllowedStateCheck<State>
+  state: WithStateInput<State>
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  EmptyFeatureResult & {
-    state: State;
-  }
+  EmptyFeatureResult & { state: State }
 >;
 export function withState<State extends Record<string, unknown>>(
-  stateFactory: () => State & NotAllowedStateCheck<State>
+  stateFactory: () => WithStateInput<State>
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  EmptyFeatureResult & {
-    state: State;
-  }
+  EmptyFeatureResult & { state: State }
 >;
 export function withState<State extends Record<string, unknown>>(
   stateOrFactory: State | (() => State)
