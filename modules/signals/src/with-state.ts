@@ -18,7 +18,7 @@ type WithStateInput<State> = State & {} extends Required<State>
   ? keyof State extends never
     ? State
     : { [K in keyof State]: SignalStateInput<State[K]> }
-  : '@ngrx/signals: optional properties are not allowed';
+  : '@ngrx/signals: state cannot contain optional properties';
 
 export function withState<State extends Record<string, unknown>>(
   state: WithStateInput<State>

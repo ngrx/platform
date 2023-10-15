@@ -9,13 +9,13 @@ export type SignalStateMeta<State extends Record<string, unknown>> = {
 };
 
 /**
- * Signal state cannot properties that exist on the function object
- * because signal is a function.
+ * State cannot contain properties that exist on the `Function` object
+ * because `Signal` is a function.
  */
 export type SignalStateInput<State> = State extends Record<string, unknown>
   ? ContainsFunctionProps<State> extends false
     ? { [K in keyof State]: SignalStateInput<State[K]> }
-    : '@ngrx/signals: function properties are not allowed'
+    : '@ngrx/signals: state cannot contain `Function` properties'
   : State;
 
 type ContainsFunctionProps<State> = Exclude<

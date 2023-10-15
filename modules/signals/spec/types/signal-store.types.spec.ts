@@ -62,15 +62,19 @@ describe('signalStore', () => {
       'store',
       '{ user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; [STATE_SIGNAL]: WritableSignal<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>; }'
     );
+
     expectSnippet(snippet).toInfer(
       'user',
       'DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'details',
       'DeepSignal<{ first: string; flags: boolean[]; }>'
     );
+
     expectSnippet(snippet).toInfer('first', 'Signal<string>');
+
     expectSnippet(snippet).toInfer('flags', 'Signal<boolean[]>');
   });
 
@@ -127,20 +131,26 @@ describe('signalStore', () => {
       'store',
       '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; [STATE_SIGNAL]: WritableSignal<...>; }'
     );
+
     expectSnippet(snippet).toInfer('foo', 'Signal<number | { s: string; }>');
+
     expectSnippet(snippet).toInfer(
       'bar',
       'DeepSignal<{ baz: { b: boolean; } | null; }>'
     );
+
     expectSnippet(snippet).toInfer('baz', 'Signal<{ b: boolean; } | null>');
+
     expectSnippet(snippet).toInfer(
       'x',
       'DeepSignal<{ y: { z: number | undefined; }; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'y',
       'DeepSignal<{ z: number | undefined; }>'
     );
+
     expectSnippet(snippet).toInfer('z', 'Signal<number | undefined>');
   });
 
@@ -187,43 +197,43 @@ describe('signalStore', () => {
   it('fails when nested state slices contain function properties', () => {
     expectSnippet(`
       const Store = signalStore(withState({ x: { name?: '' } }));
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(withState({ x: { arguments: [] } }));
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(
         withState({ x: { bar: { call: false }, baz: 1 } })
       );
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(
         withState({ x: { apply: 'apply', bar: true } })
       )
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(
         withState({ x: { bind: { foo: 'bar' } } })
       );
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(
         withState({ x: { bar: { prototype: [] }; baz: 1 } })
       );
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(withState({ x: { length: 10 } }));
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`
       const Store = signalStore(withState({ x: { caller: '' } }));
-    `).toFail(/@ngrx\/signals: function properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
   });
 
   it('succeeds when nested state slices are optional', () => {
@@ -246,18 +256,22 @@ describe('signalStore', () => {
       'store',
       '{ bar: DeepSignal<{ baz?: number | undefined; }>; x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; [STATE_SIGNAL]: WritableSignal<{ bar: { baz?: number | undefined; }; x: { y?: { ...; } | undefined; }; }>; }'
     );
+
     expectSnippet(snippet).toInfer(
       'bar',
       'DeepSignal<{ baz?: number | undefined; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'baz',
       'Signal<number | undefined> | undefined'
     );
+
     expectSnippet(snippet).toInfer(
       'x',
       'DeepSignal<{ y?: { z: boolean; } | undefined; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'y',
       'Signal<{ z: boolean; } | undefined> | undefined'
@@ -268,19 +282,24 @@ describe('signalStore', () => {
     expectSnippet(`
       type State = {
         foo?: { s: string };
+        bar: number;
       };
 
       const Store = signalStore(
-        withState<State>({ foo: { s: '' } })
+        withState<State>({ foo: { s: '' }, bar: 1 })
       );
-    `).toFail(/@ngrx\/signals: optional properties are not allowed/);
+    `).toFail(/@ngrx\/signals: state cannot contain optional properties/);
   });
 
   it('fails when state is not an object', () => {
     expectSnippet(`const Store = signalStore(withState(10));`).toFail();
+
     expectSnippet(`const Store = signalStore(withState(''));`).toFail();
+
     expectSnippet(`const Store = signalStore(withState(null));`).toFail();
+
     expectSnippet(`const Store = signalStore(withState(true));`).toFail();
+
     expectSnippet(
       `const Store = signalStore(withState(['ng', 'rx']));`
     ).toFail();

@@ -49,18 +49,25 @@ describe('signalState', () => {
       'state',
       'SignalState<{ user: { age: number; details: { first: string; last: string; }; address: string[]; }; numbers: number[]; ngrx: string; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'user',
       'DeepSignal<{ age: number; details: { first: string; last: string; }; address: string[]; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'details',
       'DeepSignal<{ first: string; last: string; }>'
     );
+
     expectSnippet(snippet).toInfer('first', 'Signal<string>');
+
     expectSnippet(snippet).toInfer('last', 'Signal<string>');
+
     expectSnippet(snippet).toInfer('address', 'Signal<string[]>');
+
     expectSnippet(snippet).toInfer('numbers', 'Signal<number[]>');
+
     expectSnippet(snippet).toInfer('ngrx', 'Signal<string>');
   });
 
@@ -94,18 +101,22 @@ describe('signalState', () => {
     `;
 
     expectSnippet(snippet).toInfer('state', 'SignalState<State>');
+
     expectSnippet(snippet).toInfer(
       'foo',
       'Signal<string | undefined> | undefined'
     );
+
     expectSnippet(snippet).toInfer(
       'bar',
       'DeepSignal<{ baz?: number | undefined; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'baz',
       'Signal<number | undefined> | undefined'
     );
+
     expectSnippet(snippet).toInfer(
       'x',
       'Signal<{ y: { z?: boolean | undefined; }; } | undefined> | undefined'
@@ -141,62 +152,72 @@ describe('signalState', () => {
     `;
 
     expectSnippet(snippet).toInfer('state', 'SignalState<State>');
+
     expectSnippet(snippet).toInfer('foo', 'Signal<number | { s: string; }>');
+
     expectSnippet(snippet).toInfer(
       'bar',
       'DeepSignal<{ baz: { n: number; } | null; }>'
     );
+
     expectSnippet(snippet).toInfer('baz', 'Signal<{ n: number; } | null>');
+
     expectSnippet(snippet).toInfer(
       'x',
       'DeepSignal<{ y: { z: boolean | undefined; }; }>'
     );
+
     expectSnippet(snippet).toInfer(
       'y',
       'DeepSignal<{ z: boolean | undefined; }>'
     );
+
     expectSnippet(snippet).toInfer('z', 'Signal<boolean | undefined>');
   });
 
   it('fails when state contains function properties', () => {
     expectSnippet(`const state = signalState({ name: '' })`).toFail(
-      /@ngrx\/signals: function properties are not allowed/
+      /@ngrx\/signals: state cannot contain `Function` properties/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { arguments: [] } })`
-    ).toFail(/@ngrx\/signals: function properties are not allowed/);
+    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(
       `const state = signalState({ foo: { bar: { call: false }, baz: 1 } })`
-    ).toFail(/@ngrx\/signals: function properties are not allowed/);
+    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(
       `const state = signalState({ foo: { apply: 'apply', bar: true } })`
-    ).toFail(/@ngrx\/signals: function properties are not allowed/);
+    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`const state = signalState({ bind: { foo: 'bar' } })`).toFail(
-      /@ngrx\/signals: function properties are not allowed/
+      /@ngrx\/signals: state cannot contain `Function` properties/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { bar: { prototype: [] }; baz: 1 } })`
-    ).toFail(/@ngrx\/signals: function properties are not allowed/);
+    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
 
     expectSnippet(`const state = signalState({ foo: { length: 10 } })`).toFail(
-      /@ngrx\/signals: function properties are not allowed/
+      /@ngrx\/signals: state cannot contain `Function` properties/
     );
 
     expectSnippet(`const state = signalState({ caller: '' })`).toFail(
-      /@ngrx\/signals: function properties are not allowed/
+      /@ngrx\/signals: state cannot contain `Function` properties/
     );
   });
 
   it('fails when state is not an object', () => {
     expectSnippet(`const state = signalState(10);`).toFail();
+
     expectSnippet(`const state = signalState('');`).toFail();
+
     expectSnippet(`const state = signalState(null);`).toFail();
+
     expectSnippet(`const state = signalState(true);`).toFail();
+
     expectSnippet(`const state = signalState(['ng', 'rx']);`).toFail();
   });
 
