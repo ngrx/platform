@@ -1,13 +1,18 @@
 import { Signal, untracked } from '@angular/core';
 import { selectSignal } from './select-signal';
+import { IsUnknownRecord } from './ts-helpers';
 
 export type DeepSignal<T> = Signal<T> &
   (T extends Record<string, unknown>
-    ? Readonly<{
-        [K in keyof T]: T[K] extends Record<string, unknown>
-          ? DeepSignal<T[K]>
-          : Signal<T[K]>;
-      }>
+    ? IsUnknownRecord<T> extends true
+      ? unknown
+      : Readonly<{
+          [K in keyof T]: T[K] extends Record<string, unknown>
+            ? IsUnknownRecord<T[K]> extends true
+              ? Signal<T[K]>
+              : DeepSignal<T[K]>
+            : Signal<T[K]>;
+        }>
     : unknown);
 
 export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {

@@ -1,11 +1,11 @@
 import { STATE_SIGNAL, SignalStateMeta } from './signal-state';
 import {
   EmptyFeatureResult,
-  Prettify,
   SignalStoreFeature,
   SignalStoreSlices,
   SignalStoreFeatureResult,
 } from './signal-store-models';
+import { Prettify } from './ts-helpers';
 
 type HooksFactory<Input extends SignalStoreFeatureResult> = (
   store: Prettify<

@@ -2,7 +2,7 @@ import { toDeepSignal } from './deep-signal';
 import { excludeKeys } from './helpers';
 import { patchState } from './patch-state';
 import { selectSignal } from './select-signal';
-import { SignalStateInput, STATE_SIGNAL } from './signal-state';
+import { STATE_SIGNAL } from './signal-state';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
@@ -10,24 +10,28 @@ import {
   SignalStoreFeature,
   SignalStoreFeatureResult,
 } from './signal-store-models';
+import {
+  HasNestedFunctionKeys,
+  HasOptionalProps,
+  IsUnknownRecord,
+} from './ts-helpers';
 
-/**
- * Root state slices cannot be optional.
- */
-type WithStateInput<State> = State & {} extends Required<State>
-  ? keyof State extends never
-    ? State
-    : { [K in keyof State]: SignalStateInput<State[K]> }
-  : '@ngrx/signals: state cannot contain optional properties';
+type WithStateCheck<State> = IsUnknownRecord<State> extends true
+  ? '@ngrx/signals: root state keys must be string literals'
+  : HasOptionalProps<State> extends true
+  ? '@ngrx/signals: root state slices cannot be optional'
+  : HasNestedFunctionKeys<State> extends false | undefined
+  ? unknown
+  : '@ngrx/signals: nested state slices must be different from `Function` properties';
 
 export function withState<State extends Record<string, unknown>>(
-  state: WithStateInput<State>
+  state: State & WithStateCheck<State>
 ): SignalStoreFeature<
   EmptyFeatureResult,
   EmptyFeatureResult & { state: State }
 >;
 export function withState<State extends Record<string, unknown>>(
-  stateFactory: () => WithStateInput<State>
+  stateFactory: () => State & WithStateCheck<State>
 ): SignalStoreFeature<
   EmptyFeatureResult,
   EmptyFeatureResult & { state: State }

@@ -25,10 +25,14 @@ describe('signalState', () => {
   );
 
   it('allows passing state as a generic argument', () => {
-    expectSnippet(`
+    const snippet = `
       type FooState = { foo: string; bar: number };
       const state = signalState<FooState>({ foo: 'bar', bar: 1 });
-    `).toInfer('state', 'SignalState<FooState>');
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('state', 'SignalState<FooState>');
   });
 
   it('creates deep signals for nested state slices', () => {
@@ -44,6 +48,8 @@ describe('signalState', () => {
       const numbers = state.numbers;
       const ngrx = state.ngrx;
     `;
+
+    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
       'state',
@@ -72,7 +78,7 @@ describe('signalState', () => {
   });
 
   it('does not create deep signals when state slice type is an interface', () => {
-    expectSnippet(`
+    const snippet = `
       interface User {
         firstName: string;
         lastName: string;
@@ -82,7 +88,11 @@ describe('signalState', () => {
 
       const state = signalState<State>({ user: { firstName: 'John', lastName: 'Smith' } });
       const user = state.user;
-    `).toInfer('user', 'Signal<User>');
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('user', 'Signal<User>');
   });
 
   it('does not create deep signals for optional state slices', () => {
@@ -99,6 +109,8 @@ describe('signalState', () => {
       const baz = state.bar.baz;
       const x = state.x;
     `;
+
+    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer('state', 'SignalState<State>');
 
@@ -123,11 +135,92 @@ describe('signalState', () => {
     );
   });
 
-  it('succeeds when state is an empty object', () => {
-    expectSnippet(`const state = signalState({})`).toInfer(
-      'state',
-      'SignalState<{}>'
+  it('does not create deep signals for unknown records', () => {
+    const snippet = `
+      const state1 = signalState<{ [key: string]: number }>({});
+      declare const state1Keys: keyof typeof state1;
+
+      const state2 = signalState<{ [key: number]: { foo: string } }>({
+         1: { foo: 'bar' },
+      });
+      declare const state2Keys: keyof typeof state2;
+
+      const state3 = signalState<Record<string, { bar: number }>>({});
+      declare const state3Keys: keyof typeof state3;
+
+      const state4 = signalState({
+        foo: {} as Record<string, { bar: boolean } | number>,
+      });
+      const foo = state4.foo;
+
+      const state5 = signalState({
+        bar: { baz: {} as Record<number, unknown> }
+      });
+      const bar = state5.bar;
+      const baz = bar.baz;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'state1',
+      'SignalState<{ [key: string]: number; }>'
     );
+
+    expectSnippet(snippet).toInfer(
+      'state1Keys',
+      'unique symbol | unique symbol'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'state2',
+      'SignalState<{ [key: number]: { foo: string; }; }>'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'state2Keys',
+      'unique symbol | unique symbol'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'state3',
+      'SignalState<Record<string, { bar: number; }>>'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'state3Keys',
+      'unique symbol | unique symbol'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'state4',
+      'SignalState<{ foo: Record<string, number | { bar: boolean; }>; }>'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'foo',
+      'Signal<Record<string, number | { bar: boolean; }>>'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'state5',
+      'SignalState<{ bar: { baz: Record<number, unknown>; }; }>'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'bar',
+      'DeepSignal<{ baz: Record<number, unknown>; }>'
+    );
+
+    expectSnippet(snippet).toInfer('baz', 'Signal<Record<number, unknown>>');
+  });
+
+  it('succeeds when state is an empty object', () => {
+    const snippet = `const state = signalState({})`;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('state', 'SignalState<{}>');
   });
 
   it('succeeds when state slices are union types', () => {
@@ -150,6 +243,8 @@ describe('signalState', () => {
       const y = state.x.y;
       const z = state.x.y.z;
     `;
+
+    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer('state', 'SignalState<State>');
 
@@ -175,37 +270,49 @@ describe('signalState', () => {
     expectSnippet(snippet).toInfer('z', 'Signal<boolean | undefined>');
   });
 
-  it('fails when state contains function properties', () => {
+  it('fails when state contains Function properties', () => {
     expectSnippet(`const state = signalState({ name: '' })`).toFail(
-      /@ngrx\/signals: state cannot contain `Function` properties/
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { arguments: [] } })`
-    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
+    ).toFail(
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+    );
 
-    expectSnippet(
-      `const state = signalState({ foo: { bar: { call: false }, baz: 1 } })`
-    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
+    expectSnippet(`
+      type State = { foo: { bar: { call?: boolean }; baz: number } };
+      const state = signalState<State>({ foo: { bar: {}, baz: 1 } });
+    `).toFail(
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+    );
 
     expectSnippet(
       `const state = signalState({ foo: { apply: 'apply', bar: true } })`
-    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
+    ).toFail(
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+    );
 
-    expectSnippet(`const state = signalState({ bind: { foo: 'bar' } })`).toFail(
-      /@ngrx\/signals: state cannot contain `Function` properties/
+    expectSnippet(`
+      type State = { bind?: { foo: string } };
+      const state = signalState<State>({ bind: { foo: 'bar' } });
+    `).toFail(
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { bar: { prototype: [] }; baz: 1 } })`
-    ).toFail(/@ngrx\/signals: state cannot contain `Function` properties/);
+    ).toFail(
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+    );
 
     expectSnippet(`const state = signalState({ foo: { length: 10 } })`).toFail(
-      /@ngrx\/signals: state cannot contain `Function` properties/
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
     );
 
     expectSnippet(`const state = signalState({ caller: '' })`).toFail(
-      /@ngrx\/signals: state cannot contain `Function` properties/
+      /@ngrx\/signals: signal state properties must be different from `Function` properties/
     );
   });
 

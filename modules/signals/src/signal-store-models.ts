@@ -1,14 +1,15 @@
 import { Signal } from '@angular/core';
 import { DeepSignal } from './deep-signal';
 import { SignalStateMeta } from './signal-state';
-
-export type Prettify<T> = { [K in keyof T]: T[K] } & {};
+import { IsUnknownRecord, Prettify } from './ts-helpers';
 
 export type SignalStoreConfig = { providedIn: 'root' };
 
 export type SignalStoreSlices<State> = {
   [Key in keyof State]: State[Key] extends Record<string, unknown>
-    ? DeepSignal<State[Key]>
+    ? IsUnknownRecord<State[Key]> extends true
+      ? Signal<State[Key]>
+      : DeepSignal<State[Key]>
     : Signal<State[Key]>;
 };
 
