@@ -43,6 +43,7 @@
         "./modules/schematics/schematics-core"
       ],
       "@ngrx/signals": ["./modules/signals"],
+      "@ngrx/signals/rxjs-interop": ["./modules/signals/rxjs-interop"],
       "@ngrx/signals/schematics-core": ["./modules/signals/schematics-core"],
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
