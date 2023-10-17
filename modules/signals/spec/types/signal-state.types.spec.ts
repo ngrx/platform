@@ -272,47 +272,47 @@ describe('signalState', () => {
 
   it('fails when state contains Function properties', () => {
     expectSnippet(`const state = signalState({ name: '' })`).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { arguments: [] } })`
     ).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
       type State = { foo: { bar: { call?: boolean }; baz: number } };
       const state = signalState<State>({ foo: { bar: {}, baz: 1 } });
     `).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { apply: 'apply', bar: true } })`
     ).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
       type State = { bind?: { foo: string } };
       const state = signalState<State>({ bind: { foo: 'bar' } });
     `).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(
       `const state = signalState({ foo: { bar: { prototype: [] }; baz: 1 } })`
     ).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(`const state = signalState({ foo: { length: 10 } })`).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
 
     expectSnippet(`const state = signalState({ caller: '' })`).toFail(
-      /@ngrx\/signals: signal state properties must be different from `Function` properties/
+      /@ngrx\/signals: signal state cannot contain `Function` property or method names/
     );
   });
 

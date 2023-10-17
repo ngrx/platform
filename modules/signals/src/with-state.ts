@@ -22,7 +22,7 @@ type WithStateCheck<State> = IsUnknownRecord<State> extends true
   ? '@ngrx/signals: root state slices cannot be optional'
   : HasNestedFunctionKeys<State> extends false | undefined
   ? unknown
-  : '@ngrx/signals: nested state slices must be different from `Function` properties';
+  : '@ngrx/signals: nested state slices cannot contain `Function` property or method names';
 
 export function withState<State extends Record<string, unknown>>(
   state: State & WithStateCheck<State>

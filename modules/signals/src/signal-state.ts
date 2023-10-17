@@ -11,7 +11,7 @@ export type SignalStateMeta<State extends Record<string, unknown>> = {
 
 type SignalStateCheck<State> = HasFunctionKeys<State> extends false | undefined
   ? unknown
-  : '@ngrx/signals: signal state properties must be different from `Function` properties';
+  : '@ngrx/signals: signal state cannot contain `Function` property or method names';
 
 type SignalState<State extends Record<string, unknown>> = DeepSignal<State> &
   SignalStateMeta<State>;

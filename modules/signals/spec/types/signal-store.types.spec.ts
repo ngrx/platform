@@ -258,13 +258,13 @@ describe('signalStore', () => {
     expectSnippet(`
       const Store = signalStore(withState({ x: { name?: '' } }));
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
       const Store = signalStore(withState({ x: { arguments: [] } }));
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
@@ -272,7 +272,7 @@ describe('signalStore', () => {
         withState({ x: { bar: { call: false }, baz: 1 } })
       );
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
@@ -280,7 +280,7 @@ describe('signalStore', () => {
         withState({ x: { apply: 'apply', bar: true } })
       )
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
@@ -288,7 +288,7 @@ describe('signalStore', () => {
         withState({ x: { bind: { foo: 'bar' } } })
       );
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
@@ -296,19 +296,19 @@ describe('signalStore', () => {
         withState({ x: { bar: { prototype: [] }; baz: 1 } })
       );
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
       const Store = signalStore(withState({ x: { length: 10 } }));
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
 
     expectSnippet(`
       const Store = signalStore(withState({ x: { caller: '' } }));
     `).toFail(
-      /@ngrx\/signals: nested state slices must be different from `Function` properties/
+      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
     );
   });
 
