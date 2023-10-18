@@ -532,6 +532,7 @@ describe('Selectors', () => {
           expect(warnSpy).not.toHaveBeenCalled();
 
           ngSpy.mockReset();
+          ngSpy.mockReturnValue(true);
         });
 
         it('the feature key exist but is falsy', () => {
@@ -543,6 +544,7 @@ describe('Selectors', () => {
           expect(warnSpy).not.toHaveBeenCalled();
 
           ngSpy.mockReset();
+          ngSpy.mockReturnValue(true);
         });
 
         it('not in development mode', () => {
@@ -554,6 +556,7 @@ describe('Selectors', () => {
           expect(warnSpy).not.toHaveBeenCalled();
 
           ngSpy.mockReset();
+          ngSpy.mockReturnValue(true);
         });
       });
 
