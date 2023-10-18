@@ -4,12 +4,12 @@ import {
   EmptyFeatureResult,
   InnerSignalStore,
   MethodsDictionary,
-  Prettify,
   SignalsDictionary,
   SignalStoreFeature,
   SignalStoreFeatureResult,
   SignalStoreSlices,
 } from './signal-store-models';
+import { Prettify } from './ts-helpers';
 
 export function withMethods<
   Input extends SignalStoreFeatureResult,
