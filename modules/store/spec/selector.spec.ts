@@ -521,7 +521,7 @@ describe('Selectors', () => {
       expect(featureState$).toBeObservable(expected$);
     });
 
-    xdescribe('Warning', () => {
+    describe('Warning', () => {
       describe('should not log when: ', () => {
         it('the feature does exist', () => {
           const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
