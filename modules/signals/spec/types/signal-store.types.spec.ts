@@ -4,16 +4,15 @@ import { compilerOptions } from './helpers';
 describe('signalStore', () => {
   const expectSnippet = expecter(
     (code) => `
-        import { inject, Signal } from '@angular/core';
+        import { computed, inject, Signal } from '@angular/core';
         import {
           patchState,
-          selectSignal,
           signalStore,
           signalStoreFeature,
           type,
+          withComputed,
           withHooks,
           withMethods,
-          withSignals,
           withState,
         } from '@ngrx/signals';
 
@@ -540,7 +539,7 @@ describe('signalStore', () => {
     const snippet = `
       const Store = signalStore(
         withState({ ngrx: 'rocks', x: { y: 'z' } }),
-        withSignals(() => ({ signals: selectSignal(() => [1, 2, 3]) })),
+        withComputed(() => ({ signals: computed(() => [1, 2, 3]) })),
         withMethods(() => ({
           mgmt(arg: boolean): number {
             return 1;
@@ -563,7 +562,7 @@ describe('signalStore', () => {
     const snippet = `
       const Store = signalStore(
         withState({ foo: 10 }),
-        withSignals(({ foo }) => ({ bar: selectSignal(() => foo() + '1') })),
+        withComputed(({ foo }) => ({ bar: computed(() => foo() + '1') })),
         withMethods(() => ({
           baz(x: number): void {}
         }))
@@ -603,7 +602,7 @@ describe('signalStore', () => {
             signals: type<{ sig: Signal<boolean> }>(),
           },
           withState({ y: initialY }),
-          withSignals(() => ({ sigY: selectSignal(() => 'sigY') })),
+          withComputed(() => ({ sigY: computed(() => 'sigY') })),
           withHooks({
             onInit({ q1, y, sigY, ...store }) {
               patchState(store, { q1: '', y: { a: 'a', b: 2 } });
@@ -670,13 +669,13 @@ describe('signalStore', () => {
         ${baseSnippet}
 
         const Store = signalStore(
-          withSignals(() => ({ sig: selectSignal(() => 1) })),
+          withComputed(() => ({ sig: computed(() => 1) })),
           withMethods(() => ({ q1: () => false })),
-          withSignals(() => ({ sig: selectSignal(() => false) })),
+          withComputed(() => ({ sig: computed(() => false) })),
           withState({ q1: 'q1', q2: 'q2' }),
           withX(),
           withY(),
-          withSignals(() => ({ q1: selectSignal(() => 10) })),
+          withComputed(() => ({ q1: computed(() => 10) })),
           withMethods((store) => ({
             f() {
               patchState(store, { x: 1, y: { a: '', b: 0 }, q2: 'q2new' });
@@ -713,13 +712,13 @@ describe('signalStore', () => {
         ${baseSnippet}
 
         const Store = signalStore(
-          withSignals(() => ({ sig: selectSignal(() => 1) })),
+          withComputed(() => ({ sig: computed(() => 1) })),
           withState({ q1: 'q1', q2: 'q2' }),
           withState({ q1: 1 }),
-          withSignals(() => ({ sig: selectSignal(() => false) })),
+          withComputed(() => ({ sig: computed(() => false) })),
           withX(),
           withY(),
-          withSignals(() => ({ q1: selectSignal(() => 10) })),
+          withComputed(() => ({ q1: computed(() => 10) })),
           withMethods((store) => ({
             f() {
               patchState(store, { x: 1, y: { a: '', b: 0 }, q2: 'q2new' });
@@ -733,7 +732,7 @@ describe('signalStore', () => {
 
         const feature = signalStoreFeature(
           { signals: type<{ sig: Signal<boolean> }>() },
-          withSignals(() => ({ sig: selectSignal(() => 1) })),
+          withComputed(() => ({ sig: computed(() => 1) })),
           withX(),
           withState({ q1: 'q1' }),
           withY(),
@@ -749,13 +748,13 @@ describe('signalStore', () => {
         ${baseSnippet}
 
         const Store = signalStore(
-          withSignals(() => ({ sig: selectSignal(() => 1) })),
+          withComputed(() => ({ sig: computed(() => 1) })),
           withState({ q1: 1 }),
           withState({ q1: 'q1', q2: 'q2' }),
-          withSignals(() => ({ sig: selectSignal(() => false) })),
+          withComputed(() => ({ sig: computed(() => false) })),
           withX(),
           withY(),
-          withSignals(() => ({ q1: selectSignal(() => 10) })),
+          withComputed(() => ({ q1: computed(() => 10) })),
           withMethods((store) => ({
             f() {
               patchState(store, { x: 1, y: { a: '', b: 0 }, q2: 'q2new' });
@@ -765,10 +764,10 @@ describe('signalStore', () => {
 
         const feature = signalStoreFeature(
           { signals: type<{ sig: Signal<boolean> }>() },
-          withSignals(() => ({ sig: selectSignal(() => 1) })),
+          withComputed(() => ({ sig: computed(() => 1) })),
           withX(),
           withState({ q1: 'q1' }),
-          withSignals(() => ({ sig: selectSignal(() => false) })),
+          withComputed(() => ({ sig: computed(() => false) })),
           withY(),
           withMethods((store) => ({
             f() {
@@ -790,8 +789,8 @@ describe('signalStore', () => {
             };
           }>(),
           withState({ selectedEntity: null as Entity | null }),
-          withSignals(({ selectedEntity, entities }) => ({
-            selectedEntity2: selectSignal(() =>
+          withComputed(({ selectedEntity, entities }) => ({
+            selectedEntity2: computed(() =>
               selectedEntity()
                 ? entities().find((e) => e === selectedEntity())
                 : undefined

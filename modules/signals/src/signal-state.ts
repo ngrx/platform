@@ -1,6 +1,5 @@
 import { signal, WritableSignal } from '@angular/core';
 import { DeepSignal, toDeepSignal } from './deep-signal';
-import { defaultEqual } from './select-signal';
 import { HasFunctionKeys } from './ts-helpers';
 
 export const STATE_SIGNAL = Symbol('STATE_SIGNAL');
@@ -19,7 +18,7 @@ type SignalState<State extends Record<string, unknown>> = DeepSignal<State> &
 export function signalState<State extends Record<string, unknown>>(
   initialState: State & SignalStateCheck<State>
 ): SignalState<State> {
-  const stateSignal = signal(initialState as State, { equal: defaultEqual });
+  const stateSignal = signal(initialState as State);
   const deepSignal = toDeepSignal(stateSignal.asReadonly());
   Object.defineProperty(deepSignal, STATE_SIGNAL, {
     value: stateSignal,

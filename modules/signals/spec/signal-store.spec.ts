@@ -2,9 +2,9 @@ import { inject, InjectionToken, isSignal, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   signalStore,
+  withComputed,
   withHooks,
   withMethods,
-  withSignals,
   withState,
 } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
@@ -84,12 +84,12 @@ describe('signalStore', () => {
     });
   });
 
-  describe('withSignals', () => {
+  describe('withComputed', () => {
     it('provides previously defined state slices and computed signals as input argument', () => {
       const Store = signalStore(
         withState(() => ({ foo: 'foo' })),
-        withSignals(() => ({ bar: signal('bar').asReadonly() })),
-        withSignals(({ foo, bar }) => {
+        withComputed(() => ({ bar: signal('bar').asReadonly() })),
+        withComputed(({ foo, bar }) => {
           expect(foo()).toBe('foo');
           expect(bar()).toBe('bar');
 
@@ -105,12 +105,12 @@ describe('signalStore', () => {
       expect(store.baz()).toBe('baz');
     });
 
-    it('executes withSignals factory in injection context', () => {
+    it('executes withComputed factory in injection context', () => {
       const TOKEN = new InjectionToken('TOKEN', {
         providedIn: 'root',
         factory: () => ({ bar: signal('bar').asReadonly() }),
       });
-      const Store = signalStore(withSignals(() => inject(TOKEN)));
+      const Store = signalStore(withComputed(() => inject(TOKEN)));
 
       TestBed.configureTestingModule({ providers: [Store] });
       const store = TestBed.inject(Store);
@@ -123,7 +123,7 @@ describe('signalStore', () => {
     it('provides previously defined store properties as an input argument', () => {
       const Store = signalStore(
         withState(() => ({ foo: 'foo' })),
-        withSignals(() => ({ bar: signal('bar').asReadonly() })),
+        withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
         withMethods((store) => {
           expect(store[STATE_SIGNAL]()).toEqual({ foo: 'foo' });
@@ -199,7 +199,7 @@ describe('signalStore', () => {
       let message = '';
       const Store = signalStore(
         withState(() => ({ foo: 'foo' })),
-        withSignals(() => ({ bar: signal('bar').asReadonly() })),
+        withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
         withHooks({
           onInit(store) {
@@ -221,7 +221,7 @@ describe('signalStore', () => {
       let message = '';
       const Store = signalStore(
         withState(() => ({ foo: 'foo' })),
-        withSignals(() => ({ bar: signal('bar').asReadonly() })),
+        withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
         withHooks({
           onDestroy(store) {
@@ -269,7 +269,7 @@ describe('signalStore', () => {
     it('overrides previously defined store properties immutably', () => {
       const Store = signalStore(
         withState({ i: 1, j: 2, k: 3, l: 4 }),
-        withSignals(({ i, j, k, l }) => {
+        withComputed(({ i, j, k, l }) => {
           expect(i()).toBe(1);
           expect(j()).toBe(2);
           expect(k()).toBe(3);
