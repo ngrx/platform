@@ -10,7 +10,8 @@ import { ncp } from 'ncp';
  */
 export async function copySchematicsCore(config: Config) {
   (ncp as any).limit = 1;
-  const filter = (name: string) => !name.endsWith('.eslintrc.json');
+  const filter = (name: string) =>
+    !name.endsWith('.eslintrc.json') && !name.endsWith('project.json');
 
   for (let pkg of util.getTopLevelPackages(config)) {
     const packageJson = fs
