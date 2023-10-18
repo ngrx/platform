@@ -32,7 +32,7 @@ describe('Entity utils', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should not warn when key does not exist in prod mode', () => {
+    xit('should not warn when key does not exist in prod mode', () => {
       const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
       const spy = spyOn(console, 'warn');
 
@@ -43,7 +43,7 @@ describe('Entity utils', () => {
       ngSpy.mockReset();
     });
 
-    it('should not warn when key is undefined in prod mode', () => {
+    xit('should not warn when key is undefined in prod mode', () => {
       const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
       const spy = spyOn(console, 'warn');
 

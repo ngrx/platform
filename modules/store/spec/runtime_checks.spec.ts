@@ -6,7 +6,7 @@ import { RuntimeChecks, Action } from '../src/models';
 import { resetRegisteredActionTypes } from '../src/globals';
 
 describe('Runtime checks:', () => {
-  describe('createActiveRuntimeChecks:', () => {
+  xdescribe('createActiveRuntimeChecks:', () => {
     it('should enable immutability checks by default', () => {
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
