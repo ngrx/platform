@@ -67,9 +67,9 @@ export function getProjectMainFile(
   const project = getProject(host, options);
   const projectOptions = project.architect['build'].options;
 
-  if (!projectOptions?.main) {
-    throw new SchematicsException(`Could not find the main file`);
+  if (!projectOptions?.main && !projectOptions?.browser) {
+    throw new SchematicsException(`Could not find the main file ${project}`);
   }
 
-  return projectOptions.main as string;
+  return (projectOptions.browser || projectOptions.main) as string;
 }
