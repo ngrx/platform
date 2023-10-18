@@ -1,0 +1,18 @@
+@use "../../mixins";
+
+.alert {
+    padding: 16px;
+    margin: 24px 0px;
+    @include mixins.typescale-default;
+    width: 100%;
+    box-sizing: border-box;
+    clear: both;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 500;
+    }
+
+    > * {
+        margin: 8px 16px;
+    }
+}

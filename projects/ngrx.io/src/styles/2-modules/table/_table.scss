@@ -1,0 +1,100 @@
+@use '../../mixins';
+
+table {
+  margin: 24px 0px;
+  border-radius: 2px;
+
+  &.is-full-width {
+    width: 100%;
+  }
+
+  &.is-fixed-layout {
+    table-layout: fixed;
+  }
+
+  thead > {
+    tr {
+      vertical-align: inherit;
+      border-color: inherit;
+    }
+
+    tr > th {
+      @include mixins.typescale-small;
+      line-height: 28px;
+      font-weight: 500;
+      padding: 8px 24px;
+      text-align: left;
+      text-transform: uppercase;
+    }
+  }
+
+  tbody > tr > {
+    th,
+    td {
+      padding: 16px;
+      text-align: left;
+      line-height: 24px;
+      vertical-align: top;
+
+      @media (max-width: 480px) {
+        &:before {
+          // content: **ADD TABLE HEADER**;
+          display: inline-block;
+        }
+      }
+    }
+
+    td {
+      letter-spacing: 0.3px;
+    }
+
+    th {
+      font-weight: 600;
+      max-width: 100px;
+    }
+  }
+
+  tbody > tr {
+    &:last-child td {
+      border: none;
+    }
+  }
+}
+
+#cheatsheet {
+  table tbody td {
+    overflow: auto;
+  }
+
+  @media only screen and (max-width: 990px) {
+    /* Force table to not be like tables anymore */
+    table,
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    th,
+    td {
+      display: block;
+      position: relative;
+      max-width: 100%;
+
+      code {
+        padding: 0;
+        background-color: inherit;
+      }
+    }
+
+    th {
+      border-right: none;
+    }
+
+    th,
+    td {
+      &:not(:last-child) {
+        border-bottom: none;
+        padding-bottom: 0px;
+      }
+    }
+  }
+}
