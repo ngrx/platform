@@ -17,6 +17,7 @@ export const defaultAppOptions = {
   routing: false,
   style: 'css',
   skipTests: false,
+  standalone: false,
 };
 
 const defaultLibOptions = {
