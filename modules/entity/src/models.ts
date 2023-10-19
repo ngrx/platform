@@ -1,3 +1,5 @@
+import { MemoizedSelector } from '@ngrx/store';
+
 export type Comparer<T> = (a: T, b: T) => number;
 
 export type IdSelectorStr<T> = (model: T) => string;
@@ -85,6 +87,25 @@ export type EntitySelectors<T, V> = {
   selectTotal: (state: V) => number;
 };
 
+export type MemoizedEntitySelectors<T, V> = {
+  selectIds: MemoizedSelector<
+    V,
+    string[] | number[],
+    (entityState: EntityState<T>) => string[] | number[]
+  >;
+  selectEntities: MemoizedSelector<
+    V,
+    Dictionary<T>,
+    (entityState: EntityState<T>) => Dictionary<T>
+  >;
+  selectAll: MemoizedSelector<V, T[], (entityState: EntityState<T>) => T[]>;
+  selectTotal: MemoizedSelector<
+    V,
+    number,
+    (entityState: EntityState<T>) => number
+  >;
+};
+
 export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   selectId: IdSelector<T>;
   sortComparer: false | Comparer<T>;
@@ -93,5 +114,5 @@ export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   getSelectors(): EntitySelectors<T, EntityState<T>>;
   getSelectors<V>(
     selectState: (state: V) => EntityState<T>
-  ): EntitySelectors<T, V>;
+  ): MemoizedEntitySelectors<T, V>;
 }

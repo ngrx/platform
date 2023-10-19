@@ -1,11 +1,15 @@
 import { createSelector } from '@ngrx/store';
-import { EntityState, EntitySelectors } from './models';
+import {
+  EntityState,
+  EntitySelectors,
+  MemoizedEntitySelectors,
+} from './models';
 
 export function createSelectorsFactory<T>() {
   function getSelectors(): EntitySelectors<T, EntityState<T>>;
   function getSelectors<V>(
     selectState: (state: V) => EntityState<T>
-  ): EntitySelectors<T, V>;
+  ): MemoizedEntitySelectors<T, V>;
   function getSelectors(
     selectState?: (state: any) => EntityState<T>
   ): EntitySelectors<T, any> {
