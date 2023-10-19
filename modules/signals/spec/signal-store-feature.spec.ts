@@ -1,11 +1,10 @@
-import { Signal, signal } from '@angular/core';
+import { computed, Signal, signal } from '@angular/core';
 import {
-  selectSignal,
   signalStore,
   signalStoreFeature,
   type,
+  withComputed,
   withMethods,
-  withSignals,
   withState,
 } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
@@ -14,7 +13,7 @@ describe('signalStoreFeature', () => {
   function withCustomFeature1() {
     return signalStoreFeature(
       withState({ foo: 'foo' }),
-      withSignals(({ foo }) => ({ bar: selectSignal(() => foo() + 1) })),
+      withComputed(({ foo }) => ({ bar: computed(() => foo() + 1) })),
       withMethods(({ foo, bar }) => ({
         baz: () => foo() + bar() + 2,
       }))
@@ -45,8 +44,8 @@ describe('signalStoreFeature', () => {
   it('creates a custom feature by combining base features', () => {
     const Store = signalStore(
       withCustomFeature1(),
-      withSignals(({ bar }) => ({
-        s: selectSignal(() => bar() + 's'),
+      withComputed(({ bar }) => ({
+        s: computed(() => bar() + 's'),
       }))
     );
 
@@ -77,7 +76,7 @@ describe('signalStoreFeature', () => {
   it('creates a custom feature with input', () => {
     const Store = signalStore(
       withCustomFeature1(),
-      withSignals(() => ({ s: signal(1).asReadonly() })),
+      withComputed(() => ({ s: signal(1).asReadonly() })),
       withCustomFeatureWithInput()
     );
 

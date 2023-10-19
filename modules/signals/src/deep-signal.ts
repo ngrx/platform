@@ -1,5 +1,4 @@
-import { Signal, untracked } from '@angular/core';
-import { selectSignal } from './select-signal';
+import { computed, Signal, untracked } from '@angular/core';
 import { IsUnknownRecord } from './ts-helpers';
 
 export type DeepSignal<T> = Signal<T> &
@@ -28,7 +27,7 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
       }
 
       if (!target[prop]) {
-        target[prop] = selectSignal(() => target()[prop]);
+        target[prop] = computed(() => target()[prop]);
       }
 
       return toDeepSignal(target[prop]);

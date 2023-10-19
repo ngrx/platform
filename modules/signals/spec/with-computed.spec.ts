@@ -1,15 +1,15 @@
 import { signal } from '@angular/core';
-import { withMethods, withSignals, withState } from '../src';
+import { withComputed, withMethods, withState } from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
 
-describe('withSignals', () => {
+describe('withComputed', () => {
   it('adds signals to the store immutably', () => {
     const initialStore = getInitialInnerStore();
 
     const s1 = signal('s1').asReadonly();
     const s2 = signal(10).asReadonly();
 
-    const store = withSignals(() => ({ s1, s2 }))(initialStore);
+    const store = withComputed(() => ({ s1, s2 }))(initialStore);
 
     expect(Object.keys(store.signals)).toEqual(['s1', 's2']);
     expect(Object.keys(initialStore.signals)).toEqual([]);
@@ -24,7 +24,7 @@ describe('withSignals', () => {
         p1: 10,
         p2: 'p2',
       }),
-      withSignals(() => ({
+      withComputed(() => ({
         s1: signal('s1').asReadonly(),
         s2: signal({ s: 2 }).asReadonly(),
       })),
@@ -35,7 +35,7 @@ describe('withSignals', () => {
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
 
     const s2 = signal(10).asReadonly();
-    const store = withSignals(() => ({
+    const store = withComputed(() => ({
       p1: signal('p1').asReadonly(),
       s2,
       m1: signal({ m: 1 }).asReadonly(),

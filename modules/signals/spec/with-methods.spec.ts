@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { withMethods, withSignals, withState } from '../src';
+import { withComputed, withMethods, withState } from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
 
 describe('withMethods', () => {
@@ -24,7 +24,7 @@ describe('withMethods', () => {
         p1: 'p1',
         p2: false,
       }),
-      withSignals(() => ({
+      withComputed(() => ({
         s1: signal(true).asReadonly(),
         s2: signal({ s: 2 }).asReadonly(),
       })),

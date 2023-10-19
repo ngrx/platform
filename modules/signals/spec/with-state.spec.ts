@@ -1,5 +1,5 @@
 import { isSignal, signal } from '@angular/core';
-import { withMethods, withSignals, withState } from '../src';
+import { withComputed, withMethods, withState } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
 import { getInitialInnerStore } from '../src/signal-store';
 
@@ -60,7 +60,7 @@ describe('withState', () => {
         p1: 10,
         p2: 'p2',
       }),
-      withSignals(() => ({
+      withComputed(() => ({
         s1: signal('s1').asReadonly(),
         s2: signal({ s: 2 }).asReadonly(),
       })),

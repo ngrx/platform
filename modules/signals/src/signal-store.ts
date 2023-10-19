@@ -7,7 +7,6 @@ import {
   signal,
   Type,
 } from '@angular/core';
-import { defaultEqual } from './select-signal';
 import { STATE_SIGNAL } from './signal-state';
 import {
   EmptyFeatureResult,
@@ -312,7 +311,7 @@ export function signalStore(
 
 export function getInitialInnerStore(): InnerSignalStore {
   return {
-    [STATE_SIGNAL]: signal({}, { equal: defaultEqual }),
+    [STATE_SIGNAL]: signal({}),
     slices: {},
     signals: {},
     methods: {},
