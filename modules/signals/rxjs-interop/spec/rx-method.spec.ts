@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
-import { createLocalService, testEffects } from '../../spec/helpers';
+import { createLocalService } from '../../spec/helpers';
 
 describe('rxMethod', () => {
   it('runs with a value', () => {
@@ -37,9 +37,8 @@ describe('rxMethod', () => {
     expect(results[1]).toBe('rocks');
   });
 
-  it(
-    'runs with a signal',
-    testEffects((tick) => {
+  it('runs with a signal', () =>
+    TestBed.runInInjectionContext(() => {
       const results: number[] = [];
       const method = rxMethod<number>(
         pipe(tap((value) => results.push(value)))
@@ -49,16 +48,15 @@ describe('rxMethod', () => {
       method(sig);
       expect(results.length).toBe(0);
 
-      tick();
+      TestBed.flushEffects();
       expect(results[0]).toBe(1);
 
       sig.set(10);
       expect(results.length).toBe(1);
 
-      tick();
+      TestBed.flushEffects();
       expect(results[1]).toBe(10);
-    })
-  );
+    }));
 
   it('runs with void input', () => {
     const results: number[] = [];
@@ -77,9 +75,8 @@ describe('rxMethod', () => {
     expect(results.length).toBe(2);
   });
 
-  it(
-    'manually unsubscribes from method instance',
-    testEffects((tick) => {
+  it('manually unsubscribes from method instance', () =>
+    TestBed.runInInjectionContext(() => {
       const results: number[] = [];
       const method = rxMethod<number>(
         pipe(tap((value) => results.push(value)))
@@ -93,21 +90,20 @@ describe('rxMethod', () => {
 
       subject$.next(1);
       sig.set(1);
-      tick();
+      TestBed.flushEffects();
       expect(results).toEqual([1, 1]);
 
       sub1.unsubscribe();
       subject$.next(2);
       sig.set(2);
-      tick();
+      TestBed.flushEffects();
       expect(results).toEqual([1, 1, 2]);
 
       sub2.unsubscribe();
       sig.set(3);
-      tick();
+      TestBed.flushEffects();
       expect(results).toEqual([1, 1, 2]);
-    })
-  );
+    }));
 
   it('manually unsubscribes from method and all instances', () => {
     const results: number[] = [];
@@ -157,12 +153,12 @@ describe('rxMethod', () => {
       );
     }
 
-    const { service, tick, destroy } = createLocalService(TestService);
+    const { service, flushEffects, destroy } = createLocalService(TestService);
 
     service.method(subject$);
     service.method(sig);
     service.method(1);
-    tick();
+    flushEffects();
     expect(results).toEqual([1, 1, 1]);
 
     destroy();
@@ -171,7 +167,7 @@ describe('rxMethod', () => {
     subject$.next(2);
     sig.set(2);
     service.method(2);
-    tick();
+    flushEffects();
     expect(results).toEqual([1, 1, 1]);
   });
 });
