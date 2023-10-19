@@ -1,4 +1,5 @@
 import { effect, isSignal } from '@angular/core';
+import * as angular from '@angular/core';
 import { patchState, signalState } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
 import { testEffects } from './helpers';
@@ -42,6 +43,22 @@ describe('signalState', () => {
 
     expect(state.ngrx()).toBe(initialState.ngrx);
     expect(isSignal(state.ngrx)).toBe(true);
+  });
+
+  it('caches previously created signals', () => {
+    jest.spyOn(angular, 'computed');
+
+    const state = signalState(initialState);
+    const user1 = state.user;
+    const user2 = state.user;
+
+    expect(angular.computed).toHaveBeenCalledTimes(1);
+
+    const _ = state.user.firstName;
+    const __ = user1.firstName;
+    const ___ = user2.firstName;
+
+    expect(angular.computed).toHaveBeenCalledTimes(2);
   });
 
   it('does not modify props that are not state slices', () => {
