@@ -114,9 +114,7 @@ export class Store<T = object>
     selector: (state: T) => K,
     options?: SelectSignalOptions<K>
   ): Signal<K> {
-    return computed(() => selector(this.state()), {
-      equal: options?.equal || ((previous, current) => previous === current),
-    });
+    return computed(() => selector(this.state()), options);
   }
 
   override lift<R>(operator: Operator<T, R>): Store<R> {
