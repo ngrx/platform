@@ -329,7 +329,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
                 options?: EntityActionOptions
   ): Observable<T[]> {
     options = this.setQueryEntityActionOptions(options);
-    const action = this.createEntityAction(EntityOp.QUERY_MANY, queryParams, options);
+    const action = this.createEntityAction(EntityOp.QUERY_LOAD, queryParams, options);
     this.dispatch(action);
     return this.getResponseData$<T[]>(options.correlationId).pipe(
       shareReplay(1)
