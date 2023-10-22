@@ -34,9 +34,19 @@ export function withEntities<Entity, Collection extends string>(config: {
     methods: {};
   }
 >;
+export function withEntities<Entity>(config: {
+  entity: Entity;
+}): SignalStoreFeature<
+  { state: {}; signals: {}; methods: {} },
+  {
+    state: EntityState<Entity>;
+    signals: EntitySignals<Entity>;
+    methods: {};
+  }
+>;
 export function withEntities<Entity>(config?: {
   entity: Entity;
-  collection: string;
+  collection?: string;
 }): SignalStoreFeature {
   const { entityMapKey, idsKey, entitiesKey } = getEntityStateKeys(config);
 

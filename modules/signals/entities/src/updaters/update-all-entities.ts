@@ -21,12 +21,16 @@ export function updateAllEntities<
 export function updateAllEntities(
   changes: EntityChanges<any>,
   config?: { collection?: string }
-): PartialStateUpdater<EntityState<any>> {
+): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const stateKeys = getEntityStateKeys(config);
 
   return (state) => {
     const clonedState = cloneEntityState(state, stateKeys);
-    const didMutate = updateEntitiesMutably(clonedState, state.ids, changes);
+    const didMutate = updateEntitiesMutably(
+      clonedState,
+      (state as Record<string, any>)[stateKeys.idsKey],
+      changes
+    );
 
     return getEntityUpdaterResult(clonedState, stateKeys, didMutate);
   };

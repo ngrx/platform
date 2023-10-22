@@ -8,7 +8,7 @@ export function removeAllEntities<Collection extends string>(config: {
 }): PartialStateUpdater<NamedEntityState<any, Collection>>;
 export function removeAllEntities(config?: {
   collection?: string;
-}): PartialStateUpdater<EntityState<any>> {
+}): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const stateKeys = getEntityStateKeys(config);
 
   return () => ({

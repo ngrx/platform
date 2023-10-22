@@ -84,14 +84,17 @@ export function addEntitiesMutably(
   entities: any[],
   idKey: string
 ): DidMutate {
-  let didMutate = false;
+  let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    didMutate =
-      addEntityMutably(state, entity, idKey) !== DidMutate.None || didMutate;
+    const result = addEntityMutably(state, entity, idKey);
+
+    if (result === DidMutate.Both) {
+      didMutate = result;
+    }
   }
 
-  return didMutate ? DidMutate.Both : DidMutate.None;
+  return didMutate;
 }
 
 export function setEntityMutably(
@@ -169,7 +172,9 @@ export function updateEntitiesMutably(
     const entity = state.entityMap[id];
 
     if (entity) {
-      state.entityMap[id] = { ...entity, ...changes };
+      const changesRecord =
+        typeof changes === 'function' ? changes(entity) : changes;
+      state.entityMap[id] = { ...entity, ...changesRecord };
       didMutate = DidMutate.Entities;
     }
   }

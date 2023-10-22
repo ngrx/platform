@@ -16,6 +16,10 @@ import {
 export function addEntity<Entity extends { id: EntityId }>(
   entity: Entity
 ): PartialStateUpdater<EntityState<Entity>>;
+export function addEntity<Entity, Collection extends string>(
+  entity: Entity,
+  config: { collection: Collection; idKey: EntityIdKey<Entity> }
+): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function addEntity<
   Entity extends { id: EntityId },
   Collection extends string
@@ -27,14 +31,10 @@ export function addEntity<Entity>(
   entity: Entity,
   config: { idKey: EntityIdKey<Entity> }
 ): PartialStateUpdater<EntityState<Entity>>;
-export function addEntity<Entity, Collection extends string>(
-  entity: Entity,
-  config: { collection: Collection; idKey: EntityIdKey<Entity> }
-): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function addEntity(
   entity: any,
   config?: { collection?: string; idKey?: string }
-): PartialStateUpdater<EntityState<any>> {
+): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const idKey = getEntityIdKey(config);
   const stateKeys = getEntityStateKeys(config);
 

@@ -33,7 +33,7 @@ export function removeEntities<
 export function removeEntities(
   idsOrPredicate: EntityId[] | EntityPredicate<any>,
   config?: { collection?: string }
-): PartialStateUpdater<EntityState<any>> {
+): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const stateKeys = getEntityStateKeys(config);
 
   return (state) => {

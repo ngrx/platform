@@ -48,7 +48,7 @@ export function updateEntities(
     changes: EntityChanges<any>;
   },
   config?: { collection?: string }
-): PartialStateUpdater<EntityState<any>> {
+): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const stateKeys = getEntityStateKeys(config);
   const idsOrPredicate = 'ids' in update ? update.ids : update.predicate;
 

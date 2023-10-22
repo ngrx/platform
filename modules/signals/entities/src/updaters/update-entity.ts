@@ -33,7 +33,7 @@ export function updateEntity(
     changes: EntityChanges<any>;
   },
   config?: { collection?: string }
-): PartialStateUpdater<EntityState<any>> {
+): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const stateKeys = getEntityStateKeys(config);
 
   return (state) => {

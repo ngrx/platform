@@ -17,7 +17,7 @@ export function removeEntity<Collection extends string>(
 export function removeEntity(
   id: EntityId,
   config?: { collection?: string }
-): PartialStateUpdater<EntityState<any>> {
+): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
   const stateKeys = getEntityStateKeys(config);
 
   return (state) => {
