@@ -1,4 +1,9 @@
-import { Injectable, signal } from '@angular/core';
+import {
+  createEnvironmentInjector,
+  EnvironmentInjector,
+  Injectable,
+  signal,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
@@ -173,5 +178,48 @@ describe('rxMethod', () => {
     service.method(2);
     tick();
     expect(results).toEqual([1, 1, 1]);
+  });
+
+  it('unsubscribes from method and all instances on provided injector destroy', () => {
+    const injector = createEnvironmentInjector(
+      [],
+      TestBed.inject(EnvironmentInjector)
+    );
+    const results: number[] = [];
+    let destroyed = false;
+
+    const method = rxMethod<number>(
+      tap({
+        next: (value) => results.push(value),
+        finalize: () => (destroyed = true),
+      }),
+      { injector }
+    );
+
+    const subject$ = new BehaviorSubject(1);
+    const sig = signal(1);
+
+    method(subject$);
+    method(sig);
+    method(1);
+
+    TestBed.flushEffects();
+    expect(results).toEqual([1, 1, 1]);
+
+    injector.destroy();
+    expect(destroyed).toBe(true);
+
+    subject$.next(2);
+    sig.set(2);
+    method(2);
+
+    TestBed.flushEffects();
+    expect(results).toEqual([1, 1, 1]);
+  });
+
+  it('throws an error when it is called out of injection context', () => {
+    expect(() => rxMethod(($) => $)).toThrow(
+      /NG0203: rxMethod\(\) can only be used within an injection context/
+    );
   });
 });
