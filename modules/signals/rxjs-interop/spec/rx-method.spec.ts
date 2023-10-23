@@ -174,4 +174,10 @@ describe('rxMethod', () => {
     tick();
     expect(results).toEqual([1, 1, 1]);
   });
+
+  it('throws an error when it is called out of injection context', () => {
+    expect(() => rxMethod(($) => $)).toThrow(
+      /NG0203: rxMethod\(\) can only be used within an injection context/
+    );
+  });
 });
