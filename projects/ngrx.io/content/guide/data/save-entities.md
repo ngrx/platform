@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/data` package is in <a href="https://github.com/ngrx/platform/issues/4011" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Saving Multiple Entities
 
 Many apps must save several entities at the same time in the same transaction.
