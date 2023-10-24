@@ -22,13 +22,12 @@
   }
 
   .form-select-dropdown {
-    background: constants.$white;
+    background: mat.get-color-from-palette($background, background);
     box-shadow: 0 16px 16px rgba(constants.$black, 0.24), 0 0 16px rgba(constants.$black, 0.12);
 
     li {
       &:hover {
-        background-color: if($is-dark-theme, constants.$darkgray, constants.$purple-grey-50);
-        color: if($is-dark-theme, constants.$purple-grey-400, constants.$purple-grey-500);
+        background-color: if($is-dark-theme, #444, constants.$purple-grey-50);
       }
 
       &.selected {
