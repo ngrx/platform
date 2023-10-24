@@ -23,14 +23,6 @@ import { LetDirective } from '@ngrx/component';
 export class MyStandaloneComponent {}
 ```
 
-<div class="alert is-critical">
-
-The `*ngrxLet` directive can be also used by importing the `LetModule`.
-However, the `LetModule` is deprecated in favor of the standalone `LetDirective`.
-See the [migration guide](guide/migration/v16#letmodule) for more information.
-
-</div>
-
 ## Comparison with `*ngIf` and `async`
 
 The current way of binding an observable to the view looks like this:
