@@ -33,6 +33,16 @@
   "sideEffects": false,
   "ng-update": {
     "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools",
+      "@ngrx/component-store",
+      "@ngrx/component",
+      "@ngrx/eslint-plugin",
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"
