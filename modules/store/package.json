@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "16.3.0",
+  "version": "17.0.0-beta.0",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^16.0.0",
+    "@angular/core": "^17.0.0-rc.0",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",
@@ -36,7 +36,8 @@
       "@ngrx/store-devtools",
       "@ngrx/component-store",
       "@ngrx/component",
-      "@ngrx/eslint-plugin"
+      "@ngrx/eslint-plugin",
+      "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"
   },

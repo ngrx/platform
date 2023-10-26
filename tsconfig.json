@@ -33,6 +33,7 @@
       "@ngrx/effects/testing": ["./modules/effects/testing"],
       "@ngrx/entity": ["./modules/entity"],
       "@ngrx/entity/schematics-core": ["./modules/entity/schematics-core"],
+      "@ngrx/operators": ["./modules/operators"],
       "@ngrx/router-store": ["./modules/router-store"],
       "@ngrx/router-store/schematics-core": [
         "./modules/router-store/schematics-core"
