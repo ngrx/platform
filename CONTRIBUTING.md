@@ -137,6 +137,7 @@ The following is the list of supported scopes:
 - **entity**
 - **eslint-plugin**
 - **example**
+- **operators**
 - **router-store**
 - **schematics**
 - **signals**

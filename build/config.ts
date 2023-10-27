@@ -20,8 +20,7 @@ export const packages: PackageDescription[] = fs
       return false;
     }
 
-    // TODO: Remove signals when released as a stable package
-    if (path.includes('eslint-plugin') || path.includes('signals')) {
+    if (path.includes('eslint-plugin')) {
       return false;
     }
 

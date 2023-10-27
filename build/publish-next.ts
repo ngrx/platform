@@ -17,6 +17,8 @@ export async function publishNextToNpm() {
     'schematics',
     'eslint-plugin',
     'data',
+    'signals',
+    'operators',
   ];
 
   for (let pkg of publishablePackages) {

@@ -346,17 +346,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
         ]
   ): Signal<unknown> {
     const selectSignalArgs = [...args];
-    const defaultEqualityFn: ValueEqualityFn<unknown> = (previous, current) =>
-      previous === current;
-
     const options: CreateComputedOptions<unknown> =
       typeof selectSignalArgs[args.length - 1] === 'object'
-        ? {
-            equal:
-              (selectSignalArgs.pop() as SelectSignalOptions<unknown>).equal ||
-              defaultEqualityFn,
-          }
-        : { equal: defaultEqualityFn };
+        ? (selectSignalArgs.pop() as SelectSignalOptions<unknown>)
+        : {};
     const projector = selectSignalArgs.pop() as (
       ...values: unknown[]
     ) => unknown;

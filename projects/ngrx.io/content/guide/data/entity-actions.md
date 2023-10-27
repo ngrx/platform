@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/data` package is in <a href="https://github.com/ngrx/platform/issues/4011" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Entity Actions
 
 The [`EntityCollectionService`](guide/data/entity-services) dispatches an `EntityAction` to the _NgRx store_ when you call one of its commands to query or update entities in a cached collection.

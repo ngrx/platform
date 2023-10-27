@@ -8,8 +8,7 @@ const copySchematics = createBuilder([
 
 copySchematics({
   scope: '@ngrx',
-  // TODO: Remove signals when released as a stable package
-  packages: [...packages, { name: 'signals' }],
+  packages: [...packages],
 }).catch((err) => {
   console.error(err);
   process.exit(1);
