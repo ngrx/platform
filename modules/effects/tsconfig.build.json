@@ -11,7 +11,9 @@
     "noImplicitReturns": true,
     "downlevelIteration": true,
     "outDir": "../../dist/modules/effects",
-    "paths": {},
+    "paths": {
+      "@ngrx/operators": ["./dist/modules/operators"]
+    },
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,

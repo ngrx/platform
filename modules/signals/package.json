@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/signals",
-  "version": "16.3.0",
+  "version": "17.0.0-beta.0",
   "description": "Reactive State Management with Angular Signals",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^16.0.0",
+    "@angular/core": "^17.0.0-rc.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "peerDependenciesMeta": {
@@ -33,6 +33,16 @@
   "sideEffects": false,
   "ng-update": {
     "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools",
+      "@ngrx/component-store",
+      "@ngrx/component",
+      "@ngrx/eslint-plugin",
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"

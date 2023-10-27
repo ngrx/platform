@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     imports: [CommonModule, MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule],
-    declarations: [ ContactFormComponent],
+    declarations: [ContactFormComponent],
 })
 export class ContactFormModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = ContactFormComponent;
