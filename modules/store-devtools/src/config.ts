@@ -117,7 +117,7 @@ export class StoreDevtoolsConfig {
 
   /**
    * The property determines whether the extension connection is established within the
-   * Angular zone or not. It is set to `false` by default.
+   * Angular zone or not. It is set to `true` by default.
    */
   connectOutsideZone?: boolean;
 }
@@ -171,7 +171,7 @@ export function createConfig(
       dispatch: true, // Dispatch custom actions or action creators
       test: true, // Generate tests for the selected actions
     },
-    connectOutsideZone: false,
+    connectOutsideZone: true,
   };
 
   const options =

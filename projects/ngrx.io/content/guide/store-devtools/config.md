@@ -52,7 +52,7 @@ function - called for every action before sending, takes state and action object
 
 ### `connectOutsideZone`
 
-boolean - property determines whether the extension connection is established within the Angular zone or not. When `true`, the connection is established outside the Angular zone to prevent unnecessary change detection cycles. Default is `false`.
+boolean - property determines whether the extension connection is established within the Angular zone or not. When `true`, the connection is established outside the Angular zone to prevent unnecessary change detection cycles. Default is `true`.
 
 ### `features`
 

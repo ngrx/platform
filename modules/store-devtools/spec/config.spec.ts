@@ -30,7 +30,7 @@ describe('StoreDevtoolsOptions', () => {
       features: defaultFeatures,
       trace: false,
       traceLimit: 75,
-      connectOutsideZone: false,
+      connectOutsideZone: true,
     });
   });
 
@@ -68,7 +68,7 @@ describe('StoreDevtoolsOptions', () => {
       features: {
         test: true,
       },
-      connectOutsideZone: false,
+      connectOutsideZone: true,
     });
   });
 
@@ -86,7 +86,7 @@ describe('StoreDevtoolsOptions', () => {
       trace: false,
       traceLimit: 75,
       features: defaultFeatures,
-      connectOutsideZone: false,
+      connectOutsideZone: true,
     });
   });
 
@@ -110,7 +110,7 @@ describe('StoreDevtoolsOptions', () => {
         export: true,
         test: true,
       },
-      connectOutsideZone: false,
+      connectOutsideZone: true,
     });
   });
 
@@ -137,7 +137,7 @@ describe('StoreDevtoolsOptions', () => {
       },
       trace: false,
       traceLimit: 75,
-      connectOutsideZone: false,
+      connectOutsideZone: true,
     });
   });
 });
