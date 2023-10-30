@@ -1,4 +1,11 @@
-import { Injectable, Inject, ErrorHandler, OnDestroy } from '@angular/core';
+import {
+  Injectable,
+  Inject,
+  ErrorHandler,
+  OnDestroy,
+  NgZone,
+  inject,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Action,
@@ -41,6 +48,7 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
   public state: StateObservable;
+  zone = inject(NgZone);
 
   constructor(
     dispatcher: DevtoolsDispatcher,
