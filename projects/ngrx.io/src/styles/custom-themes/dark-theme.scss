@@ -13,6 +13,5 @@ $ngrx-io-theme: mat.define-dark-theme((
 
 // Apply the dark theme by default
 @include mat.core-theme($ngrx-io-theme);
-@include mat.button-theme($ngrx-io-theme);
-@include mat.all-legacy-component-themes($ngrx-io-theme);
+@include mat.all-component-themes($ngrx-io-theme);
 @include app-theme.theme($ngrx-io-theme);

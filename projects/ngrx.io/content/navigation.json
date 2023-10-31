@@ -17,14 +17,6 @@
       "title": "Blog"
     },
     {
-      "url": "resources",
-      "title": "Resources"
-    },
-    {
-      "url": "events",
-      "title": "Events"
-    },
-    {
       "url": "https://github.com/sponsors/ngrx",
       "title": "Sponsor"
     }
@@ -48,14 +40,6 @@
         {
           "url": "https://blog.ngrx.io",
           "title": "Blog"
-        },
-        {
-          "url": "resources",
-          "title": "Resources"
-        },
-        {
-          "url": "events",
-          "title": "Events"
         },
         {
           "url": "https://github.com/ngrx/platform",
@@ -605,11 +589,6 @@
           "url": "https://discord.com/invite/ngrx",
           "title": "Discord Server",
           "tooltip": "NgRx Community Discord Server - chat with other members of the community."
-        },
-        {
-          "url": "https://gitter.im/ngrx/platform",
-          "title": "Gitter",
-          "tooltip": "Chat about NgRx with other members of the community."
         },
         {
           "url": "https://github.com/ngrx/platform/issues/new/choose",

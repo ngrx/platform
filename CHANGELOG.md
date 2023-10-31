@@ -1,3 +1,118 @@
+<a name="17.0.0-beta.0"></a>
+
+# [17.0.0-beta.0](https://github.com/ngrx/platform/compare/16.3.0...17.0.0-beta.0) (2023-10-30)
+
+### Bug Fixes
+
+- **entity:** set correct return type for getSelectors signature with parent selector ([#4074](https://github.com/ngrx/platform/issues/4074)) ([b3b571e](https://github.com/ngrx/platform/commit/b3b571e))
+- **signals:** do not create nested signals for STATE_SIGNAL property ([#4062](https://github.com/ngrx/platform/issues/4062)) ([71a9d7f](https://github.com/ngrx/platform/commit/71a9d7f))
+- **signals:** improve state type and add type tests ([#4064](https://github.com/ngrx/platform/issues/4064)) ([10c93ed](https://github.com/ngrx/platform/commit/10c93ed)), closes [#4065](https://github.com/ngrx/platform/issues/4065)
+
+### Features
+
+- **component:** remove `LetModule` ([#4087](https://github.com/ngrx/platform/issues/4087)) ([f28ea71](https://github.com/ngrx/platform/commit/f28ea71)), closes [#4077](https://github.com/ngrx/platform/issues/4077)
+- **component:** remove PushModule ([7316d1a](https://github.com/ngrx/platform/commit/7316d1a))
+- **effects:** deprecate act operator ([#4073](https://github.com/ngrx/platform/issues/4073)) ([3dbcadc](https://github.com/ngrx/platform/commit/3dbcadc))
+- **operators:** introduce [@ngrx](https://github.com/ngrx)/operators package ([#4097](https://github.com/ngrx/platform/issues/4097)) ([e93ead4](https://github.com/ngrx/platform/commit/e93ead4)), closes [#4057](https://github.com/ngrx/platform/issues/4057)
+- **signals:** remove selectSignal and rename withSignals to withComputed ([#4075](https://github.com/ngrx/platform/issues/4075)) ([25f95bc](https://github.com/ngrx/platform/commit/25f95bc))
+- upgrade Angular dependencies to v17 pre-release versions ([#4068](https://github.com/ngrx/platform/issues/4068)) ([3d25047](https://github.com/ngrx/platform/commit/3d25047))
+- **signals:** add rxjs-interop subpackage ([#4061](https://github.com/ngrx/platform/issues/4061)) ([fd565ed](https://github.com/ngrx/platform/commit/fd565ed))
+
+### BREAKING CHANGES
+
+- **component:** The LetModule is removed in favor of the standalone LetDirective.
+
+BEFORE:
+
+import { LetModule } from '@ngrx/component';
+
+@NgModule({
+imports: [
+// ... other imports
+LetModule,
+],
+})
+export class MyFeatureModule {}
+
+AFTER:
+
+import { LetDirective } from '@ngrx/component';
+
+@NgModule({
+imports: [
+// ... other imports
+LetDirective,
+],
+})
+export class MyFeatureModule {}
+
+- **component:** The `PushModule` is deprecated in favor of the standalone `PushPipe`.
+
+BEFORE:
+
+```ts
+import { PushModule } from '@ngrx/component';
+
+@NgModule({
+  imports: [
+    // ... other imports
+    PushModule,
+  ],
+})
+export class MyFeatureModule {}
+```
+
+AFTER:
+
+```ts
+import { Component } from '@angular/core';
+import { PushPipe } from '@ngrx/component';
+
+@Component({
+  // ... other metadata
+  standalone: true,
+  imports: [
+    // ... other imports
+    PushPipe,
+  ],
+})
+export class MyStandaloneComponent {}
+```
+
+- **entity:** Selectors returned by the `adapter.getSelectors` signature that accepts a parent selector are strongly typed.
+
+BEFORE:
+
+```ts
+const {
+  selectIds, // type: (state: object) => string[] | number[]
+  selectEntities, // type: (state: object) => Dictionary<Book>
+  selectAll, // type: (state: object) => Book[]
+  selectTotal, // type: (state: object) => number
+} = adapter.getSelectors(selectBooksState);
+```
+
+AFTER:
+
+```ts
+const {
+  selectIds, // type: MemoizedSelector<object, string[] | number[]>
+  selectEntities, // type: MemoizedSelector<object, Dictionary<Book>>
+  selectAll, // type: MemoizedSelector<object, Book[]>
+  selectTotal, // type: MemoizedSelector<object, number>
+} = adapter.getSelectors(selectBooksState);
+```
+
+- The minimum required version of Angular has been updated
+
+BEFORE:
+
+The minimum required version of Angular is 16.x
+
+AFTER:
+
+The minimum required version of Angular is 17.x
+
 <a name="16.3.0"></a>
 
 # [16.3.0](https://github.com/ngrx/platform/compare/16.2.0...16.3.0) (2023-10-03)

@@ -11,8 +11,7 @@ $ngrx-io-theme: mat.define-light-theme((
   typography: mat.define-typography-config(),
 ));
 
-// Apply the dark theme by default
+// Apply the light theme by default
 @include mat.core-theme($ngrx-io-theme);
-@include mat.button-theme($ngrx-io-theme);
-@include mat.all-legacy-component-themes($ngrx-io-theme);
+@include mat.all-component-themes($ngrx-io-theme);
 @include app-theme.theme($ngrx-io-theme);

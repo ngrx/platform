@@ -129,7 +129,7 @@
       color: if($is-dark-theme, $code-lightgreen, #800);
     } /* string content */
     .kwd {
-      color: if($is-dark-theme, $code-lightteal, #00f);
+      color: if($is-dark-theme, $code-lightteal, #D86703);
     } /* a keyword */
     .com {
       color: if($is-dark-theme, $code-grey, #060);
@@ -138,7 +138,7 @@
       color: if($is-dark-theme, $code-lightred, purple);
     } /* a type name */
     .lit {
-      color: if($is-dark-theme, $code-lightpurple, mat.get-color-from-palette(ngrx.$gold, 900));
+      color: if($is-dark-theme, $code-lightpurple, #D86703);
     } /* a literal value */
     /* punctuation, lisp open bracket, lisp close bracket */
     .pun,
