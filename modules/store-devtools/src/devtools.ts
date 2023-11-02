@@ -48,7 +48,6 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
   public state: StateObservable;
-  zone = inject(NgZone);
 
   constructor(
     dispatcher: DevtoolsDispatcher,
@@ -79,7 +78,7 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
 
     const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
-    const zoneConfig = injectZoneConfig(config.connectOutsideZone!);
+    const zoneConfig = injectZoneConfig(config.connectInZone!);
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
 
@@ -224,10 +223,10 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
  */
 function emitInZone<T>({
   ngZone,
-  connectOutsideZone,
+  connectInZone,
 }: ZoneConfig): MonoTypeOperatorFunction<T> {
   return (source) =>
-    connectOutsideZone
+    connectInZone
       ? new Observable<T>((subscriber) =>
           source.subscribe({
             next: (value) => ngZone.run(() => subscriber.next(value)),

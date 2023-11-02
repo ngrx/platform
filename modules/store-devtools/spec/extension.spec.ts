@@ -75,7 +75,7 @@ function createState(
         error: null,
       },
     ],
-    connectOutsideZone: false,
+    connectInZone: false,
     isLocked,
     isPaused,
   };
