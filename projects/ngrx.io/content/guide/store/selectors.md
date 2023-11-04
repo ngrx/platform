@@ -8,6 +8,23 @@ Selectors are pure functions used for obtaining slices of store state. @ngrx/sto
 - Testability
 - Type Safety
 
+# Deeper Dive into these features
+
+- Portability
+Portability is a measure of how easily an application can be transferred from one computer environment to another. As it relates to NgRx, portability means that our selector functions can be used seamlessly across all portions of Angular applications, no matter where in the application they are called. 
+
+- Memoization
+Memoization is a method of making our calls to state more efficient. Selector functions can remember the results of previous calls to state, thereby eliminating the need to make the call again if state remains the same. This cuts down on our usage of resources significantly.
+
+- Composition
+Composition is a design principle in programming that relates methods to each other. With NgRx, we can understand the relationship between different selector methods more easily.
+
+- Testability
+NgRx selector functions are simple to understand and are designed to only perform one specific type of function, thus making them more modular and easier to test.
+
+- Type Safety
+NgRx selectors are written entirely in TypeScript, giving them guards against incorrectly implemented features. This makes it easier to understand when features are implemented incorrectly and easier to troubleshoot how to fix problems. 
+
 When using the `createSelector` and `createFeatureSelector` functions @ngrx/store keeps track of the latest arguments in which your selector function was invoked. Because selectors are [pure functions](https://en.wikipedia.org/wiki/Pure_function), the last result can be returned when the arguments match without reinvoking your selector function. This can provide performance benefits, particularly with selectors that perform expensive computation. This practice is known as [memoization](https://en.wikipedia.org/wiki/Memoization).
 
 ### Using a selector for one piece of state

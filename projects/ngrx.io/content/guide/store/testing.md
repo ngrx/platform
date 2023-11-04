@@ -2,8 +2,9 @@
 
 ### Using a Mock Store
 
-The `provideMockStore()` function registers providers that allow you to mock out the `Store` for testing functionality that has a dependency on `Store` without setting up reducers.
-You can write tests validating behaviors corresponding to the specific state snapshot easily.
+The provideMockStore() function registers providers that allow you to mock out a Store. This mock store can then be used to test functionality in your application that depends on the presence of a Store.
+
+More importantly, provideMockStore() also allows you to create a mock store without having to set up any mock reducers. You can simply create a snapshot of a specific state and use this snapshot to validate behaviors in your application that should correspond to this state.
 
 <div class="alert is-helpful">
 
@@ -59,15 +60,60 @@ describe('Auth Guard', () => {
 
 ### Using Mock Selectors
 
-`MockStore` also provides the ability to mock individual selectors to return a passed value using the `overrideSelector()` method. When the selector is invoked by the `select` method, the returned value is overridden by the passed value, regardless of the current state in the store.
+MockStore also provides that ability to mock individual selectors and make these mock selectors return a value that you as the tester provide manually. This gives you the ability to feed mock selectors a specific mock value depending on what value you need for any given test. You can feed values to mock selectors using the `overrideSelector` method.
+
+When the selector is invoked by the `select` method, the returned value is overridden by the passed value, regardless of the current state in the store.
 
 `overrideSelector()` returns a `MemoizedSelector`. To update the mock selector to return a different value, use the `MemoizedSelector`'s `setResult()` method. Updating a selector's mock value will not cause it to emit automatically. To trigger an emission from all selectors, use the `MockStore.refreshState()` method after updating the desired selectors.
 
 `overrideSelector()` supports mocking the `select` method (used in RxJS pipe) and the `Store` `select` instance method using a string or selector.
 
-Usage:
+Usage of `overrideSelector()` is given below:
 
 <code-example header="src/app/state/books.selectors.ts" path="testing-store/src/app/state/books.selectors.ts"></code-example>
+
+<code-example>
+mockBooksSelector = store.overrideSelector(selectBooks, [
+  {
+    id: 'firstId',
+    volumeInfo: {
+      title: 'First Title',
+      authors: ['First Author'],
+    },
+  },
+  {
+    id: 'secondId',
+    volumeInfo: {
+      title: 'Second Title',
+      authors: ['Second Author'],
+    },
+  },
+  {
+    id: 'thirdId',
+    volumeInfo: {
+      title: 'Third Title',
+      authors: ['Third Author'],
+    },
+  },
+  {
+    id: 'fourthId',
+    volumeInfo: {
+      title: 'Fourth Title',
+      authors: ['Fourth Author'],
+    },
+  },
+]);
+
+mockBookCollectionSelector = store.overrideSelector(selectBookCollection, [
+  {
+    id: 'thirdId',
+    volumeInfo: {
+      title: 'Third Title',
+      authors: ['Third Author'],
+    },
+  },
+]);
+</code-example>
 
 <code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="mockSelector"></code-example>
 

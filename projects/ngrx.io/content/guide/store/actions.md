@@ -16,7 +16,7 @@ interface Action {
 }
 </code-example>
 
-The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event` and is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action.
+The interface has a single property, the `type`, represented as a string. The `type` property is for describing the action that will be dispatched in your application. The value of the type comes in the form of `[Source] Event`. By `[Source]`, we are referring to _where_ the action comes from and by `Event` we are talking about _what kind_ of action is being triggered. The value of the type is used to provide a context of what category of action it is, and where an action was dispatched from. You add properties to an action to provide additional context or metadata for an action.
 
 Listed below are examples of actions written as plain old JavaScript objects (POJOs):
 
@@ -61,9 +61,9 @@ export const login = createAction(
 );
 </code-example>
 
-The `createAction` function returns a function, that when called returns an object in the shape of the `Action` interface. The `props` method is used to define any additional metadata needed for the handling of the action. Action creators provide a consistent, type-safe way to construct an action that is being dispatched.
+The `createAction` function returns a function, that when called, returns an object in the shape of the `Action` interface. The `props` method is used to define any additional metadata needed for the handling of the action. This type of function is called an _Action creator_. Action creators provide a consistent, type-safe way to construct an action that is being dispatched.
 
-Use the action creator to return the `Action` when dispatching.
+Use the action creator to return the `Action` when dispatching. The example below descibes how to use this action creator.
 
 <code-example header="login-page.component.ts">
   onSubmit(username: string, password: string) {
