@@ -1,4 +1,11 @@
-import { Injectable, Inject, ErrorHandler, OnDestroy } from '@angular/core';
+import {
+  Injectable,
+  Inject,
+  ErrorHandler,
+  OnDestroy,
+  NgZone,
+  inject,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Action,
@@ -71,7 +78,7 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
 
     const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
-    const zoneConfig = injectZoneConfig(config.connectOutsideZone!);
+    const zoneConfig = injectZoneConfig(config.connectInZone!);
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
 
@@ -216,10 +223,10 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
  */
 function emitInZone<T>({
   ngZone,
-  connectOutsideZone,
+  connectInZone,
 }: ZoneConfig): MonoTypeOperatorFunction<T> {
   return (source) =>
-    connectOutsideZone
+    connectInZone
       ? new Observable<T>((subscriber) =>
           source.subscribe({
             next: (value) => ngZone.run(() => subscriber.next(value)),

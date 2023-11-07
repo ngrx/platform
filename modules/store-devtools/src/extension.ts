@@ -78,7 +78,7 @@ export class DevtoolsExtension {
   actions$!: Observable<any>;
   start$!: Observable<any>;
 
-  private zoneConfig = injectZoneConfig(this.config.connectOutsideZone!);
+  private zoneConfig = injectZoneConfig(this.config.connectInZone!);
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
@@ -171,7 +171,7 @@ export class DevtoolsExtension {
     }
 
     return new Observable((subscriber) => {
-      const connection = this.zoneConfig.connectOutsideZone
+      const connection = this.zoneConfig.connectInZone
         ? // To reduce change detection cycles, we need to run the `connect` method
           // outside of the Angular zone. The `connect` method adds a `message`
           // event listener to communicate with an extension using `window.postMessage`
