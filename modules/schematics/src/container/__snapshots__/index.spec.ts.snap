@@ -20,7 +20,7 @@ import * as fromStore from '../reducers';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './foo.component.html',
-  styleUrls: ['./foo.component.css']
+  styleUrl: './foo.component.css'
 })
 export class FooComponent {
   constructor(private store: Store) {}
@@ -38,7 +38,7 @@ import { Store } from '@ngrx/store';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './foo.component.html',
-  styleUrls: ['./foo.component.css']
+  styleUrl: './foo.component.css'
 })
 export class FooComponent {
   constructor(private store: Store) {}
@@ -127,7 +127,7 @@ import { Store } from '@ngrx/store';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './foo.component.html',
-  styleUrls: ['./foo.component.css']
+  styleUrl: './foo.component.css'
 })
 export class FooComponent {
   constructor(private store: Store) {}
