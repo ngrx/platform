@@ -325,30 +325,6 @@ export class UsersComponent {
 }
 ```
 
-### ComponentStore Selectors
-ComponentStore also provides the `selectSignal` method, which has two signatures. The first signature creates a signal from the provided state projector function, while the second creates a signal by combining provided signals, similar to the `select` method that combines provided observables.
-```typescript
-import { Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
-
-import { User } from './user.model';
-
-type UsersState = { users: User[]; query: string };
-
-@Injectable()
-export class UsersStore extends ComponentStore<UsersState> {
-  // type: Signal<User[]>
-  readonly users = this.selectSignal((s) => s.users);
-  // type: Signal<string>
-  readonly query = this.selectSignal((s) => s.query);
-  // type: Signal<User[]>
-  readonly filteredUsers = this.selectSignal(
-    this.users,
-    this.query,
-    (users, query) => users.filter(({ name }) => name.includes(query))
-  );
-}
-```
 ### Selecting with Equality Function
 Similar to the `computed` function, the `selectSignal` method also accepts the equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
 ### State Signal in ComponentStore
