@@ -36,6 +36,8 @@
         "lintFilePatterns": [
           "modules/signals/*/**/*.ts",
           "modules/signals/*/**/*.html",
+          "modules/signals/entities/**/*.ts",
+          "modules/signals/entities/**/*.html",
           "modules/signals/rxjs-interop/**/*.ts",
           "modules/signals/rxjs-interop/**/*.html"
         ]
