@@ -20,6 +20,7 @@ export function createLocalService<Service extends Type<unknown>>(
   const fixture = TestBed.configureTestingModule({
     imports: [TestComponent],
   }).createComponent(TestComponent);
+  fixture.detectChanges();
 
   return {
     service: fixture.componentInstance.service,
