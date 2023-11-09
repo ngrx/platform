@@ -15,6 +15,9 @@ import { EffectSources } from './effect_sources';
 import { rootEffectsInit as effectsInit } from './effects_actions';
 import { FunctionalEffect } from './models';
 import { getClasses, isClass } from './utils';
+import { EFFECTS_ERROR_HANDLER } from './tokens';
+import { defaultEffectsErrorHandler } from './effects_error_handler';
+import { Actions } from './actions';
 
 /**
  * Runs the provided effects.
@@ -66,6 +69,13 @@ export function provideEffects(
 
   return makeEnvironmentProviders([
     effectsClasses,
+    EffectSources,
+    EffectsRunner,
+    Actions,
+    {
+      provide: EFFECTS_ERROR_HANDLER,
+      useFactory: () => defaultEffectsErrorHandler,
+    },
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,

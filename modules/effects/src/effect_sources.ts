@@ -29,7 +29,7 @@ import {
   ObservableNotification,
 } from './utils';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class EffectSources extends Subject<any> {
   constructor(
     private errorHandler: ErrorHandler,
