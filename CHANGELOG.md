@@ -1,3 +1,14 @@
+<a name="17.0.0-rc.0"></a>
+
+# [17.0.0-rc.0](https://github.com/ngrx/platform/compare/17.0.0-beta.0...17.0.0-rc.0) (2023-11-10)
+
+### Features
+
+- **signals:** add `getState` function ([#4118](https://github.com/ngrx/platform/issues/4118)) ([79b0708](https://github.com/ngrx/platform/commit/79b0708))
+- **signals:** add entities subpackage ([#4090](https://github.com/ngrx/platform/issues/4090)) ([f01bcd1](https://github.com/ngrx/platform/commit/f01bcd1))
+- **store-devtools:** add migration for connectInZone ([#4106](https://github.com/ngrx/platform/issues/4106)) ([73fda59](https://github.com/ngrx/platform/commit/73fda59))
+- **store-devtools:** change connectOutsideZone to be 'true' by default ([#4103](https://github.com/ngrx/platform/issues/4103)) ([d3b4db0](https://github.com/ngrx/platform/commit/d3b4db0)), closes [#4093](https://github.com/ngrx/platform/issues/4093)
+
 <a name="17.0.0-beta.0"></a>
 
 # [17.0.0-beta.0](https://github.com/ngrx/platform/compare/16.3.0...17.0.0-beta.0) (2023-10-30)

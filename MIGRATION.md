@@ -1,3 +1,3 @@
-# V16 Migration guide
+# V17 Migration guide
 
-This document has been moved to https://ngrx.io/guide/migration/v16.
+This document has been moved to https://ngrx.io/guide/migration/v17.
