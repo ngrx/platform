@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/data` package is in <a href="https://github.com/ngrx/platform/issues/4011" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Entity Metadata
 
 The NgRx Data library maintains a **_cache_** of entity collection data in the _NgRx store_.
@@ -149,7 +156,7 @@ Not every entity will have a primary key property named `id`. For some entities,
 
 In these cases, you specify a `selectId` function that, given an entity instance, returns an integer or string primary key value.
 
-In the _EntityCollectionReducer_ [tests](https://github.com/ngrx/platform/blob/master/modules/data/spec/reducers/entity-collection-reducer.spec.ts),
+In the _EntityCollectionReducer_ [tests](https://github.com/ngrx/platform/blob/main/modules/data/spec/reducers/entity-collection-reducer.spec.ts),
 the `Villain` type has a string primary key property named `key`.
 The `selectorId` function is this:
 
@@ -206,7 +213,7 @@ Each NgRx Data entity collection in the store has
 
 You can add your own collection properties by setting the `additionalCollectionState` property to an object with those custom collection properties.
 
-The _EntitySelectors_ [tests](https://github.com/ngrx/platform/blob/master/modules/data/spec/selectors/entity-selectors.spec.ts)
+The _EntitySelectors_ [tests](https://github.com/ngrx/platform/blob/main/modules/data/spec/selectors/entity-selectors.spec.ts)
 illustrate by adding `foo` and `bar` collection properties to test hero metadata.
 
 ```typescript
@@ -224,7 +231,7 @@ If the property you want to add comes from `backend`, you will need some additio
 
 #### Step 1: Implement `PersistenceResultHandler` to save data from backend to action.payload
 
-Create a new class `AdditionalPersistenceResultHandler` that `extends DefaultPersistenceResultHandler` and overwrite the [handleSuccess](https://github.com/ngrx/platform/blob/master/modules/data/src/dataservices/persistence-result-handler.service.ts) method, the purpose is to parse the data received from `DataService`, retrieve the additional property, and then save this to the `action.payload`. Note that the default reducer for success actions requires that `action.payload.data` is an array of entities or an entity. This would need to be set after retrieving the additional property, not shown in the example below.
+Create a new class `AdditionalPersistenceResultHandler` that `extends DefaultPersistenceResultHandler` and overwrite the [handleSuccess](https://github.com/ngrx/platform/blob/main/modules/data/src/dataservices/persistence-result-handler.service.ts) method, the purpose is to parse the data received from `DataService`, retrieve the additional property, and then save this to the `action.payload`. Note that the default reducer for success actions requires that `action.payload.data` is an array of entities or an entity. This would need to be set after retrieving the additional property, not shown in the example below.
 
 ```typescript
 export class AdditionalPersistenceResultHandler extends DefaultPersistenceResultHandler {

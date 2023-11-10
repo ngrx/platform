@@ -138,6 +138,27 @@ ComponentStore also implements the `OnDestroy` interface from `@angulare/core` t
 
 It also exposes a `destroy$` property on the ComponentStore class that can be used instead of manually creating a `Subject` to unsubscribe from any observables created in the component.
 
+<div class="alert is-important">
+
+**Note:** If you override the `ngOnDestroy` method in your component store, you need to call `super.ngOnDestroy()`. Otherwise a memory leak may occur.
+
+</div>
+
+<code-example header="movies.store.ts">
+@Injectable()
+export class MoviesStore extends ComponentStore&lt;MoviesState&gt; implements OnDestroy {
+  
+  constructor() {
+    super({movies: []});
+  }
+
+  override ngOnDestroy(): void {
+    // 👇 add this line
+    super.ngOnDestroy();
+  }
+}
+</code-example>
+
 <code-example header="books-page.component.ts">
 @Component({
   // ... other metadata
@@ -156,4 +177,4 @@ export class BooksPageComponent implements OnInit {
 }
 </code-example>
 
-The `provideComponentStore()` function is not required to listen to the `destroy$` property on the ComoponentStore.
+The `provideComponentStore()` function is not required to listen to the `destroy$` property on the ComponentStore.

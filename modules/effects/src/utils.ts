@@ -6,7 +6,9 @@ export function getSourceForInstance<T>(instance: T): T {
 
 export function isClassInstance(obj: object): boolean {
   return (
-    obj.constructor.name !== 'Object' && obj.constructor.name !== 'Function'
+    !!obj.constructor &&
+    obj.constructor.name !== 'Object' &&
+    obj.constructor.name !== 'Function'
   );
 }
 

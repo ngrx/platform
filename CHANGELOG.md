@@ -1,3 +1,190 @@
+<a name="17.0.0-rc.0"></a>
+
+# [17.0.0-rc.0](https://github.com/ngrx/platform/compare/17.0.0-beta.0...17.0.0-rc.0) (2023-11-10)
+
+### Features
+
+- **signals:** add `getState` function ([#4118](https://github.com/ngrx/platform/issues/4118)) ([79b0708](https://github.com/ngrx/platform/commit/79b0708))
+- **signals:** add entities subpackage ([#4090](https://github.com/ngrx/platform/issues/4090)) ([f01bcd1](https://github.com/ngrx/platform/commit/f01bcd1))
+- **store-devtools:** add migration for connectInZone ([#4106](https://github.com/ngrx/platform/issues/4106)) ([73fda59](https://github.com/ngrx/platform/commit/73fda59))
+- **store-devtools:** change connectOutsideZone to be 'true' by default ([#4103](https://github.com/ngrx/platform/issues/4103)) ([d3b4db0](https://github.com/ngrx/platform/commit/d3b4db0)), closes [#4093](https://github.com/ngrx/platform/issues/4093)
+
+<a name="17.0.0-beta.0"></a>
+
+# [17.0.0-beta.0](https://github.com/ngrx/platform/compare/16.3.0...17.0.0-beta.0) (2023-10-30)
+
+### Bug Fixes
+
+- **entity:** set correct return type for getSelectors signature with parent selector ([#4074](https://github.com/ngrx/platform/issues/4074)) ([b3b571e](https://github.com/ngrx/platform/commit/b3b571e))
+- **signals:** do not create nested signals for STATE_SIGNAL property ([#4062](https://github.com/ngrx/platform/issues/4062)) ([71a9d7f](https://github.com/ngrx/platform/commit/71a9d7f))
+- **signals:** improve state type and add type tests ([#4064](https://github.com/ngrx/platform/issues/4064)) ([10c93ed](https://github.com/ngrx/platform/commit/10c93ed)), closes [#4065](https://github.com/ngrx/platform/issues/4065)
+
+### Features
+
+- **component:** remove `LetModule` ([#4087](https://github.com/ngrx/platform/issues/4087)) ([f28ea71](https://github.com/ngrx/platform/commit/f28ea71)), closes [#4077](https://github.com/ngrx/platform/issues/4077)
+- **component:** remove PushModule ([7316d1a](https://github.com/ngrx/platform/commit/7316d1a))
+- **effects:** deprecate act operator ([#4073](https://github.com/ngrx/platform/issues/4073)) ([3dbcadc](https://github.com/ngrx/platform/commit/3dbcadc))
+- **operators:** introduce [@ngrx](https://github.com/ngrx)/operators package ([#4097](https://github.com/ngrx/platform/issues/4097)) ([e93ead4](https://github.com/ngrx/platform/commit/e93ead4)), closes [#4057](https://github.com/ngrx/platform/issues/4057)
+- **signals:** remove selectSignal and rename withSignals to withComputed ([#4075](https://github.com/ngrx/platform/issues/4075)) ([25f95bc](https://github.com/ngrx/platform/commit/25f95bc))
+- upgrade Angular dependencies to v17 pre-release versions ([#4068](https://github.com/ngrx/platform/issues/4068)) ([3d25047](https://github.com/ngrx/platform/commit/3d25047))
+- **signals:** add rxjs-interop subpackage ([#4061](https://github.com/ngrx/platform/issues/4061)) ([fd565ed](https://github.com/ngrx/platform/commit/fd565ed))
+
+### BREAKING CHANGES
+
+- **component:** The LetModule is removed in favor of the standalone LetDirective.
+
+BEFORE:
+
+import { LetModule } from '@ngrx/component';
+
+@NgModule({
+imports: [
+// ... other imports
+LetModule,
+],
+})
+export class MyFeatureModule {}
+
+AFTER:
+
+import { LetDirective } from '@ngrx/component';
+
+@NgModule({
+imports: [
+// ... other imports
+LetDirective,
+],
+})
+export class MyFeatureModule {}
+
+- **component:** The `PushModule` is deprecated in favor of the standalone `PushPipe`.
+
+BEFORE:
+
+```ts
+import { PushModule } from '@ngrx/component';
+
+@NgModule({
+  imports: [
+    // ... other imports
+    PushModule,
+  ],
+})
+export class MyFeatureModule {}
+```
+
+AFTER:
+
+```ts
+import { Component } from '@angular/core';
+import { PushPipe } from '@ngrx/component';
+
+@Component({
+  // ... other metadata
+  standalone: true,
+  imports: [
+    // ... other imports
+    PushPipe,
+  ],
+})
+export class MyStandaloneComponent {}
+```
+
+- **entity:** Selectors returned by the `adapter.getSelectors` signature that accepts a parent selector are strongly typed.
+
+BEFORE:
+
+```ts
+const {
+  selectIds, // type: (state: object) => string[] | number[]
+  selectEntities, // type: (state: object) => Dictionary<Book>
+  selectAll, // type: (state: object) => Book[]
+  selectTotal, // type: (state: object) => number
+} = adapter.getSelectors(selectBooksState);
+```
+
+AFTER:
+
+```ts
+const {
+  selectIds, // type: MemoizedSelector<object, string[] | number[]>
+  selectEntities, // type: MemoizedSelector<object, Dictionary<Book>>
+  selectAll, // type: MemoizedSelector<object, Book[]>
+  selectTotal, // type: MemoizedSelector<object, number>
+} = adapter.getSelectors(selectBooksState);
+```
+
+- The minimum required version of Angular has been updated
+
+BEFORE:
+
+The minimum required version of Angular is 16.x
+
+AFTER:
+
+The minimum required version of Angular is 17.x
+
+<a name="16.3.0"></a>
+
+# [16.3.0](https://github.com/ngrx/platform/compare/16.2.0...16.3.0) (2023-10-03)
+
+### Bug Fixes
+
+- **schematics:** make action props plural ([#4017](https://github.com/ngrx/platform/issues/4017)) ([3a56412](https://github.com/ngrx/platform/commit/3a56412))
+
+### Features
+
+- **data:** standalone support for ng add [@ngrx](https://github.com/ngrx)/data ([#4019](https://github.com/ngrx/platform/issues/4019)) ([fdd701e](https://github.com/ngrx/platform/commit/fdd701e)), closes [#3935](https://github.com/ngrx/platform/issues/3935)
+- **eslint-plugin:** add avoid-combining-component-store-selectors rule ([#4043](https://github.com/ngrx/platform/issues/4043)) ([0bff440](https://github.com/ngrx/platform/commit/0bff440))
+- **eslint-plugin:** add new avoid-mapping-component-store-selectors rule ([#4026](https://github.com/ngrx/platform/issues/4026)) ([40477dd](https://github.com/ngrx/platform/commit/40477dd)), closes [#3940](https://github.com/ngrx/platform/issues/3940)
+- **signals:** add `patchState` function and remove `$update` method ([#4037](https://github.com/ngrx/platform/issues/4037)) ([f2514ba](https://github.com/ngrx/platform/commit/f2514ba))
+- **signals:** add signalState and selectSignal APIs ([#4007](https://github.com/ngrx/platform/issues/4007)) ([745d91f](https://github.com/ngrx/platform/commit/745d91f)), closes [#3993](https://github.com/ngrx/platform/issues/3993)
+- **signals:** add signalStore and signalStoreFeature ([#4049](https://github.com/ngrx/platform/issues/4049)) ([0010281](https://github.com/ngrx/platform/commit/0010281)), closes [#4000](https://github.com/ngrx/platform/issues/4000)
+- **signals:** initial setup ([#4002](https://github.com/ngrx/platform/issues/4002)) ([b0d63fd](https://github.com/ngrx/platform/commit/b0d63fd)), closes [#3992](https://github.com/ngrx/platform/issues/3992)
+- **store:** prettify createFeature result ([#4014](https://github.com/ngrx/platform/issues/4014)) ([f179316](https://github.com/ngrx/platform/commit/f179316))
+
+<a name="16.2.0"></a>
+
+# [16.2.0](https://github.com/ngrx/platform/compare/16.1.0...16.2.0) (2023-08-07)
+
+### Bug Fixes
+
+- **data:** make DataServiceError extend from Error ([#3988](https://github.com/ngrx/platform/issues/3988)) ([0b98a65](https://github.com/ngrx/platform/commit/0b98a65))
+- **effects:** register functional effects from object without prototype ([#3984](https://github.com/ngrx/platform/issues/3984)) ([1879cc9](https://github.com/ngrx/platform/commit/1879cc9)), closes [#3972](https://github.com/ngrx/platform/issues/3972)
+- **eslint-plugin:** fix prefer-contact-latest-from rule to detect inject ([#3946](https://github.com/ngrx/platform/issues/3946)) ([2efd805](https://github.com/ngrx/platform/commit/2efd805))
+- **eslint-plugin:** prefix-selectors-with-select suggestion ([#3959](https://github.com/ngrx/platform/issues/3959)) ([27f09df](https://github.com/ngrx/platform/commit/27f09df))
+- **eslint-plugin:** support inject for no-typed-global-store rule ([#3951](https://github.com/ngrx/platform/issues/3951)) ([d3e84d8](https://github.com/ngrx/platform/commit/d3e84d8))
+- **eslint-plugin:** support inject for use-consistent-global-store-name rule ([#3983](https://github.com/ngrx/platform/issues/3983)) ([caa74ff](https://github.com/ngrx/platform/commit/caa74ff))
+- **store-devtools:** resolve memory leak when devtools are destroyed ([#3965](https://github.com/ngrx/platform/issues/3965)) ([644f0b6](https://github.com/ngrx/platform/commit/644f0b6))
+
+### Features
+
+- **eslint-plugin:** include docs URL in lint message ([#3944](https://github.com/ngrx/platform/issues/3944)) ([a1576de](https://github.com/ngrx/platform/commit/a1576de))
+- **schematics:** add entity generation as part of feature schematic ([#3850](https://github.com/ngrx/platform/issues/3850)) ([19ebb0a](https://github.com/ngrx/platform/commit/19ebb0a))
+- **store-devtools:** provide the ability to connect extension outside of Angular zone ([#3970](https://github.com/ngrx/platform/issues/3970)) ([1ee80e5](https://github.com/ngrx/platform/commit/1ee80e5)), closes [#3839](https://github.com/ngrx/platform/issues/3839)
+
+<a name="16.1.0"></a>
+
+# [16.1.0](https://github.com/ngrx/platform/compare/16.0.1...16.1.0) (2023-07-06)
+
+### Bug Fixes
+
+- **eslint:** fix inject function based injection not detecting store ([#3936](https://github.com/ngrx/platform/issues/3936)) ([8a5884d](https://github.com/ngrx/platform/commit/8a5884d)), closes [#3834](https://github.com/ngrx/platform/issues/3834)
+- **eslint:** updater-explicit-return-type not applied when inheritance ([#3928](https://github.com/ngrx/platform/issues/3928)) ([41a5076](https://github.com/ngrx/platform/commit/41a5076))
+
+### Features
+
+- **component-store:** added custom equal option in select ([#3933](https://github.com/ngrx/platform/issues/3933)) ([c4b5cc5](https://github.com/ngrx/platform/commit/c4b5cc5))
+
+<a name="16.0.1"></a>
+
+## [16.0.1](https://github.com/ngrx/platform/compare/16.0.0...16.0.1) (2023-06-01)
+
+### Bug Fixes
+
+- **component:** untrack subscription in ngrxPush pipe ([#3918](https://github.com/ngrx/platform/issues/3918)) ([a1688e4](https://github.com/ngrx/platform/commit/a1688e4))
+- **ngrx.io:** preserve sidenav width for larger menu items ([#3923](https://github.com/ngrx/platform/issues/3923)) ([ef73714](https://github.com/ngrx/platform/commit/ef73714))
+
 <a name="16.0.0"></a>
 
 # [16.0.0](https://github.com/ngrx/platform/compare/16.0.0-rc.0...16.0.0) (2023-05-09)

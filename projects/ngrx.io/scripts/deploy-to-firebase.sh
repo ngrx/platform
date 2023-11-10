@@ -23,7 +23,7 @@ if [[ $CI_COMMIT != $latestCommit ]]; then
 fi
 
 # The deployment mode is computed based on the branch we are building
-if [[ $CI_BRANCH == master ]]; then
+if [[ $CI_BRANCH == main ]]; then
   readonly deployEnv=next
 elif [[ $CI_BRANCH == $CI_STABLE_BRANCH ]]; then
   readonly deployEnv=stable

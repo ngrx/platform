@@ -1,0 +1,362 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Effect Schematic feature effects should add an effect to the existing registered feature effects 1`] = `
+"
+    import { BrowserModule } from '@angular/platform-browser';
+    import { NgModule } from '@angular/core';
+    import { AppComponent } from './app.component';
+    import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+    @NgModule({
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        EffectsModule.forRoot([RootEffects])
+    EffectsModule.forFeature([UserEffects, FooEffects])
+      ],
+      providers: [],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+  "
+`;
+
+exports[`Effect Schematic feature effects should create an effect that describes a source of actions within a feature 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import { concatMap } from 'rxjs/operators';
+import { Observable, EMPTY } from 'rxjs';
+import { FooActions } from './foo.actions';
+
+@Injectable()
+export class FooEffects {
+
+
+  loadFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.loadFoos),
+      /** An EMPTY observable only emits completion. Replace with your own observable API request */
+      concatMap(() => EMPTY as Observable<{ type: string }>)
+    );
+  });
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Effect Schematic feature effects should not add an effect to registered effects defined with a variable 1`] = `
+"
+    import { BrowserModule } from '@angular/platform-browser';
+    import { NgModule } from '@angular/core';
+    import { AppComponent } from './app.component';
+    import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+    @NgModule({
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        EffectsModule.forRoot(effects),
+        EffectsModule.forFeature([FooEffects])
+      ],
+      providers: [],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+  "
+`;
+
+exports[`Effect Schematic feature effects should still register the feature effect module with an effect with the minimal flag 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    EffectsModule.forFeature([FooEffects])
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;
+
+exports[`Effect Schematic root effects should add an effect to the empty array of registered effects 1`] = `
+"
+    import { BrowserModule } from '@angular/platform-browser';
+    import { NgModule } from '@angular/core';
+    import { AppComponent } from './app.component';
+    import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+    @NgModule({
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        EffectsModule.forRoot([FooEffects])
+      ],
+      providers: [],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+  "
+`;
+
+exports[`Effect Schematic root effects should add an effect to the existing registered root effects 1`] = `
+"
+    import { BrowserModule } from '@angular/platform-browser';
+    import { NgModule } from '@angular/core';
+    import { AppComponent } from './app.component';
+    import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+    @NgModule({
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        EffectsModule.forRoot([UserEffects, FooEffects])
+      ],
+      providers: [],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+  "
+`;
+
+exports[`Effect Schematic root effects should create an effect that does not define a source of actions within the root 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect } from '@ngrx/effects';
+
+
+
+@Injectable()
+export class FooEffects {
+
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Effect Schematic root effects should register the root effect in the provided module 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    EffectsModule.forRoot([FooEffects])
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;
+
+exports[`Effect Schematic root effects should register the root effect module without effect with the minimal flag 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { EffectsModule } from '@ngrx/effects';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    EffectsModule.forRoot([])
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;
+
+exports[`Effect Schematic should add prefix to the effect 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, concatMap } from 'rxjs/operators';
+import { Observable, EMPTY, of } from 'rxjs';
+import { FooActions } from './foo.actions';
+
+
+@Injectable()
+export class FooEffects {
+
+  customFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.customFoos),
+      concatMap(() =>
+        /** An EMPTY observable only emits completion. Replace with your own observable API request */
+        EMPTY.pipe(
+          map(data => FooActions.customFoosSuccess({ data })),
+          catchError(error => of(FooActions.customFoosFailure({ error }))))
+      )
+    );
+  });
+
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Effect Schematic should create an api effect that describes a source of actions within a feature 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, concatMap } from 'rxjs/operators';
+import { Observable, EMPTY, of } from 'rxjs';
+import { FooActions } from './foo.actions';
+
+
+@Injectable()
+export class FooEffects {
+
+  loadFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.loadFoos),
+      concatMap(() =>
+        /** An EMPTY observable only emits completion. Replace with your own observable API request */
+        EMPTY.pipe(
+          map(data => FooActions.loadFoosSuccess({ data })),
+          catchError(error => of(FooActions.loadFoosFailure({ error }))))
+      )
+    );
+  });
+
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Effect Schematic should group and nest the effect within a feature 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import { concatMap } from 'rxjs/operators';
+import { Observable, EMPTY } from 'rxjs';
+import { FooActions } from '../../actions/foo/foo.actions';
+
+@Injectable()
+export class FooEffects {
+
+
+  loadFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.loadFoos),
+      /** An EMPTY observable only emits completion. Replace with your own observable API request */
+      concatMap(() => EMPTY as Observable<{ type: string }>)
+    );
+  });
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Effect Schematic should import into a specified module when provided 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/foo.effects';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    EffectsModule.forFeature([FooEffects])
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;
+
+exports[`Effect Schematic should inject the effect service correctly within the spec 1`] = `
+"import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
+
+import { FooEffects } from './foo.effects';
+
+describe('FooEffects', () => {
+  let actions$: Observable<any>;
+  let effects: FooEffects;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        FooEffects,
+        provideMockActions(() => actions$)
+      ]
+    });
+
+    effects = TestBed.inject(FooEffects);
+  });
+
+  it('should be created', () => {
+    expect(effects).toBeTruthy();
+  });
+});
+"
+`;
+
+exports[`Effect Schematic should not be provided by default 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;

@@ -42,7 +42,17 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/main.scss",
+              {
+                "inject": false,
+                "input": "src/styles/custom-themes/dark-theme.scss",
+                "bundleName": "dark-theme"
+              },
+              {
+                "inject": false,
+                "input": "src/styles/custom-themes/light-theme.scss",
+                "bundleName": "light-theme"
+              }
             ],
             "scripts": []
           },
@@ -115,7 +125,17 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "src/styles.scss"
+              "src/styles/main.scss",
+              {
+                "inject": false,
+                "input": "src/styles/custom-themes/dark-theme.scss",
+                "bundleName": "dark-theme"
+              },
+              {
+                "inject": false,
+                "input": "src/styles/custom-themes/light-theme.scss",
+                "bundleName": "light-theme"
+              }
             ],
             "assets": [
               "src/assets",

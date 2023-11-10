@@ -6,7 +6,7 @@ import { ObservableNotification } from './utils';
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);
   propertyName: PropertyKey;
-  sourceName: string;
+  sourceName: string | null;
   sourceInstance: any;
   notification: ObservableNotification<Action | null | undefined>;
 }
@@ -46,8 +46,11 @@ function getEffectName({
   sourceName,
 }: EffectNotification) {
   const isMethod = typeof sourceInstance[propertyName] === 'function';
+  const isClassBasedEffect = !!sourceName;
 
-  return `"${sourceName}.${String(propertyName)}${isMethod ? '()' : ''}"`;
+  return isClassBasedEffect
+    ? `"${sourceName}.${String(propertyName)}${isMethod ? '()' : ''}"`
+    : `"${String(propertyName)}()"`;
 }
 
 function stringify(action: Action | null | undefined) {

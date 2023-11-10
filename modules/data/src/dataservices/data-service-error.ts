@@ -7,13 +7,12 @@ import { RequestData } from './interfaces';
  * @param error the HttpErrorResponse or the error thrown by the service
  * @param requestData the HTTP request information such as the method and the url.
  */
-// If extend from Error, `dse instanceof DataServiceError` returns false
-// in some (all?) unit tests so don't bother trying.
-export class DataServiceError {
-  message: string | null;
-
+export class DataServiceError extends Error {
   constructor(public error: any, public requestData: RequestData | null) {
-    this.message = typeof error === 'string' ? error : extractMessage(error);
+    super(
+      typeof error === 'string' ? error : extractMessage(error) ?? undefined
+    );
+    this.name = this.constructor.name;
   }
 }
 

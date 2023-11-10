@@ -1,0 +1,58 @@
+{
+  "name": "signals",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/signals/src",
+  "prefix": "ngrx",
+  "targets": {
+    "build-package": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "modules/signals/tsconfig.build.json",
+        "project": "modules/signals/ng-package.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "nx build-package signals"
+          },
+          {
+            "command": "yarn tsc -p modules/signals/tsconfig.schematics.json"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/signals"
+          }
+        ]
+      },
+      "outputs": ["{workspaceRoot}/dist/modules/signals"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/signals/*/**/*.ts",
+          "modules/signals/*/**/*.html",
+          "modules/signals/entities/**/*.ts",
+          "modules/signals/entities/**/*.html",
+          "modules/signals/rxjs-interop/**/*.ts",
+          "modules/signals/rxjs-interop/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/signals/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/signals"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}

@@ -52,6 +52,12 @@
       "default": false,
       "description": "Group actions, reducers and effects within relative subfolders",
       "aliases": ["g"]
+    },
+    "feature": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flag to indicate if part of a feature schematic.",
+      "visible": false
     }
   },
   "required": []

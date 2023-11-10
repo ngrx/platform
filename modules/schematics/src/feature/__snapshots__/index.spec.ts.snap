@@ -1,0 +1,317 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature Schematic should create all files of a feature with an entity 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
+import { Foo } from './foo.model';
+
+export const FooActions = createActionGroup({
+  source: 'Foo/API',
+  events: {
+    'Load Foos': props<{ foos: Foo[] }>(),
+    'Add Foo': props<{ foo: Foo }>(),
+    'Upsert Foo': props<{ foo: Foo }>(),
+    'Add Foos': props<{ foos: Foo[] }>(),
+    'Upsert Foos': props<{ foos: Foo[] }>(),
+    'Update Foo': props<{ foo: Update<Foo> }>(),
+    'Update Foos': props<{ foos: Update<Foo>[] }>(),
+    'Delete Foo': props<{ id: string }>(),
+    'Delete Foos': props<{ ids: string[] }>(),
+    'Clear Foos': emptyProps(),
+  }
+});
+"
+`;
+
+exports[`Feature Schematic should create all files of a feature with an entity 2`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { Foo } from './foo.model';
+import { FooActions } from './foo.actions';
+
+export const foosFeatureKey = 'foos';
+
+export interface State extends EntityState<Foo> {
+  // additional entities state properties
+}
+
+export const adapter: EntityAdapter<Foo> = createEntityAdapter<Foo>();
+
+export const initialState: State = adapter.getInitialState({
+  // additional entity state properties
+});
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.addFoo,
+    (state, action) => adapter.addOne(action.foo, state)
+  ),
+  on(FooActions.upsertFoo,
+    (state, action) => adapter.upsertOne(action.foo, state)
+  ),
+  on(FooActions.addFoos,
+    (state, action) => adapter.addMany(action.foos, state)
+  ),
+  on(FooActions.upsertFoos,
+    (state, action) => adapter.upsertMany(action.foos, state)
+  ),
+  on(FooActions.updateFoo,
+    (state, action) => adapter.updateOne(action.foo, state)
+  ),
+  on(FooActions.updateFoos,
+    (state, action) => adapter.updateMany(action.foos, state)
+  ),
+  on(FooActions.deleteFoo,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(FooActions.deleteFoos,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(FooActions.loadFoos,
+    (state, action) => adapter.setAll(action.foos, state)
+  ),
+  on(FooActions.clearFoos,
+    state => adapter.removeAll(state)
+  ),
+);
+
+export const foosFeature = createFeature({
+  name: foosFeatureKey,
+  reducer,
+  extraSelectors: ({ selectFoosState }) => ({
+    ...adapter.getSelectors(selectFoosState)
+  }),
+});
+
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = foosFeature;
+"
+`;
+
+exports[`Feature Schematic should create all files of a feature with an entity 3`] = `
+"import { reducer, initialState } from './foo.reducer';
+
+describe('Foo Reducer', () => {
+  describe('unknown action', () => {
+    it('should return the previous state', () => {
+      const action = {} as any;
+
+      const result = reducer(initialState, action);
+
+      expect(result).toBe(initialState);
+    });
+  });
+});
+"
+`;
+
+exports[`Feature Schematic should create all files of a feature with an entity 4`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import { concatMap } from 'rxjs/operators';
+import { Observable, EMPTY } from 'rxjs';
+import { FooActions } from './foo.actions';
+
+@Injectable()
+export class FooEffects {
+
+
+  loadFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.loadFoos),
+      /** An EMPTY observable only emits completion. Replace with your own observable API request */
+      concatMap(() => EMPTY as Observable<{ type: string }>)
+    );
+  });
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Feature Schematic should create all files of a feature with an entity 5`] = `
+"import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
+
+import { FooEffects } from './foo.effects';
+
+describe('FooEffects', () => {
+  let actions$: Observable<any>;
+  let effects: FooEffects;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        FooEffects,
+        provideMockActions(() => actions$)
+      ]
+    });
+
+    effects = TestBed.inject(FooEffects);
+  });
+
+  it('should be created', () => {
+    expect(effects).toBeTruthy();
+  });
+});
+"
+`;
+
+exports[`Feature Schematic should create all files of a feature with an entity 6`] = `
+"export interface Foo {
+  id: string;
+}
+"
+`;
+
+exports[`Feature Schematic should have all api actions in reducer if api flag enabled 1`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { FooActions } from './foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.loadFoos, state => state),
+  on(FooActions.loadFoosSuccess, (state, action) => state),
+  on(FooActions.loadFoosFailure, (state, action) => state),
+);
+
+export const fooFeature = createFeature({
+  name: fooFeatureKey,
+  reducer,
+});
+
+"
+`;
+
+exports[`Feature Schematic should have all api actions with prefix in reducer if api flag enabled 1`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { FooActions } from './foo.actions';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const initialState: State = {
+
+};
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.customFoos, state => state),
+  on(FooActions.customFoosSuccess, (state, action) => state),
+  on(FooActions.customFoosFailure, (state, action) => state),
+);
+
+export const fooFeature = createFeature({
+  name: fooFeatureKey,
+  reducer,
+});
+
+"
+`;
+
+exports[`Feature Schematic should have all api effect if api flag enabled 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, concatMap } from 'rxjs/operators';
+import { Observable, EMPTY, of } from 'rxjs';
+import { FooActions } from './foo.actions';
+
+
+@Injectable()
+export class FooEffects {
+
+  loadFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.loadFoos),
+      concatMap(() =>
+        /** An EMPTY observable only emits completion. Replace with your own observable API request */
+        EMPTY.pipe(
+          map(data => FooActions.loadFoosSuccess({ data })),
+          catchError(error => of(FooActions.loadFoosFailure({ error }))))
+      )
+    );
+  });
+
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Feature Schematic should have all api effect with prefix if api flag enabled 1`] = `
+"import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, concatMap } from 'rxjs/operators';
+import { Observable, EMPTY, of } from 'rxjs';
+import { FooActions } from './foo.actions';
+
+
+@Injectable()
+export class FooEffects {
+
+  customFoos$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(FooActions.customFoos),
+      concatMap(() =>
+        /** An EMPTY observable only emits completion. Replace with your own observable API request */
+        EMPTY.pipe(
+          map(data => FooActions.customFoosSuccess({ data })),
+          catchError(error => of(FooActions.customFoosFailure({ error }))))
+      )
+    );
+  });
+
+
+  constructor(private actions$: Actions) {}
+}
+"
+`;
+
+exports[`Feature Schematic should respect the path provided for the feature name 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromFoo from './foo/reducers/foo.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { FooEffects } from './foo/effects/foo.effects';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducer),
+    EffectsModule.forFeature([FooEffects])
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;

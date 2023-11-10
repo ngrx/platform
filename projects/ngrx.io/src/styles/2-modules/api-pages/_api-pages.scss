@@ -1,0 +1,111 @@
+@use '../../mixins';
+
+.github-links {
+  float: right;
+  .material-icons {
+    border-radius: 4px;
+    padding: 4px;
+    @include mixins.typescale-large;
+  }
+}
+
+.api-header {
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.api-body {
+
+  .class-overview {
+    position: relative;
+
+    code-example {
+        clear: left;
+    }
+  }
+
+  .method-table, .option-table, .list-table {
+    .with-github-links {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+
+      .github-links {
+        a {
+          .material-icons:hover {
+            background: none;
+          }
+        }
+      }
+    }
+
+    h3 {
+      margin: 6px 0;
+      font-weight: bold;
+      clear: left;
+    }
+
+    h4 {
+      @include mixins.typescale-small;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+  }
+
+  .api-heading {
+    padding: 5px 0;
+    @include mixins.typescale-default;
+    font-weight: bold;
+  }
+
+  .short-description {
+    margin: 6px 0 0 10px;
+  }
+
+  .properties-table {
+    @include mixins.typescale-small;
+
+    thead th {
+      &:nth-child(1) {
+        width: 20%;
+      }
+      &:nth-child(2) {
+        width: 20%;
+      }
+    }
+  }
+
+  .parameters-table {
+    margin-top: 0;
+    @include mixins.typescale-small;
+    td:nth-child(1) {
+      width: 20%;
+    }
+  }
+
+  details.overloads {
+    margin-left: -8px;
+
+    summary {
+      height: inherit;
+      padding: 8px 12px;
+      h4 {
+        margin: 0;
+        clear: left;
+      }
+    }
+}
+
+  .from-constructor, .read-only-property {
+    font-style: italic;
+  }
+}
+
+.deprecated-api-item {
+  text-decoration: line-through;
+}

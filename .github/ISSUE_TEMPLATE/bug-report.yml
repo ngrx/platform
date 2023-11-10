@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        ❤️ ngrx? Please consider supporting our collective: 👉  [donate](https://opencollective.com/ngrx/donate)
+        ❤️ ngrx? Please consider sponsoring us: 👉  [sponsor](https://github.com/sponsors/ngrx)
         Please search GitHub for a similar issue or PR before submitting a new issue.
         If you need real-time help, join us on [Discord](https://discord.com/invite/ngrx).
 
@@ -22,6 +22,7 @@ body:
         - eslint-plugin
         - router-store
         - schematics
+        - signals
         - store-devtools
         - store
       multiple: true
@@ -40,7 +41,7 @@ body:
   - type: textarea
     id: expected_behavior
     attributes:
-      label: Minimal reproduction of the bug/regression with instructions
+      label: Expected behavior
       description: Describe what the expected behavior would be.
     validations:
       required: true

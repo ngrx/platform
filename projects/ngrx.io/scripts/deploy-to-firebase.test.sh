@@ -17,7 +17,7 @@ function check {
 }
 
 (
-  echo ===== master - skip deploy - not angular
+  echo ===== main - skip deploy - not angular
   actual=$(
     export BASH_ENV=/dev/null
     export CI_REPO_OWNER=angular
@@ -29,7 +29,7 @@ function check {
 )
 
 (
-  echo ===== master - skip deploy - angular fork
+  echo ===== main - skip deploy - angular fork
   actual=$(
     export BASH_ENV=/dev/null
     export CI_REPO_OWNER=notangular
@@ -41,7 +41,7 @@ function check {
 )
 
 (
-  echo ===== master - skip deploy - pull request
+  echo ===== main - skip deploy - pull request
   actual=$(
     export BASH_ENV=/dev/null
     export CI_REPO_OWNER=angular
@@ -54,18 +54,18 @@ function check {
 )
 
 (
-  echo ===== master - deploy success
+  echo ===== main - deploy success
   actual=$(
     export BASH_ENV=/dev/null
     export CI_REPO_OWNER=angular
     export CI_REPO_NAME=angular
     export CI_PULL_REQUEST=false
-    export CI_BRANCH=master
-    export CI_COMMIT=$(git ls-remote origin master | cut -c1-40)
+    export CI_BRANCH=main
+    export CI_COMMIT=$(git ls-remote origin main | cut -c1-40)
     export CI_SECRET_AIO_DEPLOY_FIREBASE_TOKEN=XXXXX
     $deployToFirebaseDryRun
   )
-  expected="Git branch        : master
+  expected="Git branch        : main
 Build/deploy mode : next
 Firebase project  : aio-staging
 Deployment URL    : https://next.angular.io/"
@@ -73,17 +73,17 @@ Deployment URL    : https://next.angular.io/"
 )
 
 (
-  echo ===== master - skip deploy - commit not HEAD
+  echo ===== main - skip deploy - commit not HEAD
   actual=$(
     export BASH_ENV=/dev/null
     export CI_REPO_OWNER=angular
     export CI_REPO_NAME=angular
     export CI_PULL_REQUEST=false
-    export CI_BRANCH=master
+    export CI_BRANCH=main
     export CI_COMMIT=DUMMY_TEST_COMMIT
     $deployToFirebaseDryRun
   )
-  expected="Skipping deploy because DUMMY_TEST_COMMIT is not the latest commit ($(git ls-remote origin master | cut -c1-40))."
+  expected="Skipping deploy because DUMMY_TEST_COMMIT is not the latest commit ($(git ls-remote origin main | cut -c1-40))."
   check "$actual" "$expected"
 )
 

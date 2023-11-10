@@ -7,8 +7,6 @@ import { createRenderEventManager } from '../core/render-event/manager';
 type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
 
 /**
- * @ngModule PushModule
- *
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.

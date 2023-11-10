@@ -31,6 +31,7 @@ import {
   shouldFilterActions,
   unliftState,
 } from './utils';
+import { injectZoneConfig } from './zone-config';
 
 export const ExtensionActionTypes = {
   START: 'START',
@@ -76,6 +77,8 @@ export class DevtoolsExtension {
   liftedActions$!: Observable<any>;
   actions$!: Observable<any>;
   start$!: Observable<any>;
+
+  private zoneConfig = injectZoneConfig(this.config.connectInZone!);
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,
@@ -168,9 +171,16 @@ export class DevtoolsExtension {
     }
 
     return new Observable((subscriber) => {
-      const connection = this.devtoolsExtension.connect(
-        this.getExtensionConfig(this.config)
-      );
+      const connection = this.zoneConfig.connectInZone
+        ? // To reduce change detection cycles, we need to run the `connect` method
+          // outside of the Angular zone. The `connect` method adds a `message`
+          // event listener to communicate with an extension using `window.postMessage`
+          // and handle message events.
+          this.zoneConfig.ngZone.runOutsideAngular(() =>
+            this.devtoolsExtension.connect(this.getExtensionConfig(this.config))
+          )
+        : this.devtoolsExtension.connect(this.getExtensionConfig(this.config));
+
       this.extensionConnection = connection;
       connection.init();
 

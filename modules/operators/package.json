@@ -1,0 +1,46 @@
+{
+  "name": "@ngrx/operators",
+  "version": "17.0.0-rc.0",
+  "description": "Shared RxJS Operators for NgRx libraries",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "Angular",
+    "NgRx",
+    "RxJS",
+    "Operators",
+    "State Management"
+  ],
+  "author": "NgRx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "peerDependencies": {
+    "rxjs": "^6.5.3 || ^7.4.0"
+  },
+  "schematics": "./schematics/collection.json",
+  "sideEffects": false,
+  "ng-update": {
+    "packageGroup": [
+      "@ngrx/store",
+      "@ngrx/effects",
+      "@ngrx/entity",
+      "@ngrx/router-store",
+      "@ngrx/data",
+      "@ngrx/schematics",
+      "@ngrx/store-devtools",
+      "@ngrx/component-store",
+      "@ngrx/component",
+      "@ngrx/eslint-plugin",
+      "@ngrx/signals"
+    ],
+    "migrations": "./migrations/migration.json"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

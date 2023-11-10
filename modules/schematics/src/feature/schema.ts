@@ -46,4 +46,6 @@ export interface Schema {
   api?: boolean;
 
   prefix?: string;
+
+  entity?: boolean;
 }

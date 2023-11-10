@@ -24,14 +24,6 @@ import { PushPipe } from '@ngrx/component';
 export class MyStandaloneComponent {}
 ```
 
-<div class="alert is-critical">
-
-The `ngrxPush` pipe can be also used by importing the `PushModule`.
-However, the `PushModule` is deprecated in favor of the standalone `PushPipe`.
-See the [migration guide](guide/migration/v16#pushmodule) for more information.
-
-</div>
-
 ## Comparison with `async` Pipe
 
 The current way of binding an observable to the view looks like this:

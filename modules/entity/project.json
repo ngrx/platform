@@ -1,0 +1,66 @@
+{
+  "name": "entity",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/entity/src",
+  "prefix": "ngrx",
+  "targets": {
+    "build-package": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "modules/entity/tsconfig.build.json",
+        "project": "modules/entity/ng-package.json"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "nx build-package entity"
+          },
+          {
+            "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
+          },
+          {
+            "command": "yarn rimraf node_modules/@ngrx/entity"
+          },
+          {
+            "command": "yarn mkdirp node_modules/@ngrx/entity"
+          },
+          {
+            "command": "ncp dist/modules/entity node_modules/@ngrx/entity"
+          },
+          {
+            "command": "cpy LICENSE dist/modules/entity"
+          }
+        ]
+      },
+      "outputs": [
+        "{workspaceRoot}/dist/modules/entity",
+        "{workspaceRoot}/node_modules/@ngrx/entity"
+      ]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/entity/*/**/*.ts",
+          "modules/entity/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/entity/jest.config.ts",
+        "runInBand": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/entity"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}

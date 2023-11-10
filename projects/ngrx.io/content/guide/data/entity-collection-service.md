@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/data` package is in <a href="https://github.com/ngrx/platform/issues/4011" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # EntityCollectionService
 
 An **`EntityCollectionService`** is a facade over the NgRx Data **dispatcher** and **selectors$** that manages an entity `T` collection cached in the _NgRx store_.
@@ -157,8 +164,10 @@ An entity argument **must never be a cached entity object**.
 It can be a _copy_ of a cached entity object and it often is.
 The demo application always calls these command methods with copies of the entity data.
 
-All _command methods_ return `void`.
+All _command methods_ return `void` or an `Observable`.
 A core principle of the _redux pattern_ is that _commands_ never return a value. They just _do things_ that have side-effects.
+Thus, the action is only dispatched when the command is invoked, and re-subscribing to a command's returned `Observable` will not
+dispatch another action.
 
 Rather than expect a result from the command,
 you subscribe to a _selector$_ property that reflects

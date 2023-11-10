@@ -50,6 +50,10 @@ array of strings as regex - actions types to be hidden / shown in the monitors, 
 
 function - called for every action before sending, takes state and action object, and returns `true` in case it allows sending the current data to the monitor, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#predicate).
 
+### `connectInZone`
+
+boolean - property determines whether the extension connection is established within the Angular zone or not. When `false`, the connection is established outside the Angular zone to prevent unnecessary change detection cycles. Default is `false`.
+
 ### `features`
 
 configuration object - containing properties for features than can be enabled or disabled in the browser extension Redux DevTools. These options are passed through to the browser extension verbatim. By default, all features are enabled. For more information visit the [Redux DevTools Docs](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#features)

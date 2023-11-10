@@ -39,67 +39,66 @@ describe('AppComponent', () => {
     let scrollService: ScrollService;
     let tocService: TocService;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [
-                    AppComponent,
-                    MockMatIconComponent,
-                    MockAioNotificationComponent,
-                    MockAioTopMenuComponent,
-                    SearchResultsComponent,
-                    MockAioNavMenuComponent,
-                    MockAioSelectComponent,
-                    MockAioModeBannerComponent,
-                    MockAioDocViewerComponent,
-                    MockAioDtComponent,
-                    MockAioLazyCeComponent,
-                    MockAioFooterComponent,
-                    MockAioSearchBoxComponent,
-                ],
-                imports: [
-                    MatProgressBarModule,
-                    MatToolbarModule,
-                    MatSidenavModule,
-                    BrowserAnimationsModule,
-                ],
-                providers: [
-                    {
-                        provide: Deployment,
-                        useClass: MockDeployment,
-                    },
-                    {
-                        provide: DocumentService,
-                        useClass: MockDocumentService,
-                    },
-                    {
-                        provide: ElementRef,
-                        useClass: MockElementRef,
-                    },
-                    {
-                        provide: LocationService,
-                        useClass: MockLocationService,
-                    },
-                    {
-                        provide: NavigationService,
-                        useClass: MockNavigationService,
-                    },
-                    {
-                        provide: ScrollService,
-                        useClass: MockScrollService,
-                    },
-                    {
-                        provide: SearchService,
-                        useClass: MockSearchService,
-                    },
-                    {
-                        provide: TocService,
-                        useClass: MockTocService,
-                    },
-                ],
-            }).compileComponents();
-        })
-    );
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent,
+                MockMatIconComponent,
+                MockAioNotificationComponent,
+                MockAioTopMenuComponent,
+                SearchResultsComponent,
+                MockAioNavMenuComponent,
+                MockAioSelectComponent,
+                MockAioModeBannerComponent,
+                MockAioDocViewerComponent,
+                MockAioDtComponent,
+                MockAioLazyCeComponent,
+                MockAioFooterComponent,
+                MockAioSearchBoxComponent,
+                MockAioThemeToggleComponent,
+            ],
+            imports: [
+                MatProgressBarModule,
+                MatToolbarModule,
+                MatSidenavModule,
+                BrowserAnimationsModule,
+            ],
+            providers: [
+                {
+                    provide: Deployment,
+                    useClass: MockDeployment,
+                },
+                {
+                    provide: DocumentService,
+                    useClass: MockDocumentService,
+                },
+                {
+                    provide: ElementRef,
+                    useClass: MockElementRef,
+                },
+                {
+                    provide: LocationService,
+                    useClass: MockLocationService,
+                },
+                {
+                    provide: NavigationService,
+                    useClass: MockNavigationService,
+                },
+                {
+                    provide: ScrollService,
+                    useClass: MockScrollService,
+                },
+                {
+                    provide: SearchService,
+                    useClass: MockSearchService,
+                },
+                {
+                    provide: TocService,
+                    useClass: MockTocService,
+                },
+            ],
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppComponent);
@@ -665,3 +664,9 @@ class MockAioFooterComponent {
     template: '',
 })
 class MockAioSearchBoxComponent {}
+
+@Component({
+    selector: 'aio-theme-toggle',
+    template: '',
+})
+class MockAioThemeToggleComponent {}

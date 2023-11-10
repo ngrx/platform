@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@use '../app-theme';
+@use '../ngrx';
+
+$ngrx-io-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(ngrx.$dull-magenta, 700, 600, 800),
+    accent: mat.define-palette(ngrx.$gold, 700, 600, 800),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+));
+
+// Apply the light theme by default
+@include mat.core-theme($ngrx-io-theme);
+@include mat.all-component-themes($ngrx-io-theme);
+@include app-theme.theme($ngrx-io-theme);

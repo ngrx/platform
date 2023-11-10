@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/data` package is in <a href="https://github.com/ngrx/platform/issues/4011" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Architecture overview
 
 You describe your entity model to NgRx Data in a few lines of [entity metadata](guide/data/entity-metadata) and let the library do the rest of the work.

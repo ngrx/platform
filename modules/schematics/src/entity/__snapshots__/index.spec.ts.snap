@@ -1,0 +1,509 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Entity Schematic should create 3 files 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
+import { Foo } from './foo.model';
+
+export const FooActions = createActionGroup({
+  source: 'Foo/API',
+  events: {
+    'Load Foos': props<{ foos: Foo[] }>(),
+    'Add Foo': props<{ foo: Foo }>(),
+    'Upsert Foo': props<{ foo: Foo }>(),
+    'Add Foos': props<{ foos: Foo[] }>(),
+    'Upsert Foos': props<{ foos: Foo[] }>(),
+    'Update Foo': props<{ foo: Update<Foo> }>(),
+    'Update Foos': props<{ foos: Update<Foo>[] }>(),
+    'Delete Foo': props<{ id: string }>(),
+    'Delete Foos': props<{ ids: string[] }>(),
+    'Clear Foos': emptyProps(),
+  }
+});
+"
+`;
+
+exports[`Entity Schematic should create 3 files 2`] = `
+"export interface Foo {
+  id: string;
+}
+"
+`;
+
+exports[`Entity Schematic should create 3 files 3`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { Foo } from './foo.model';
+import { FooActions } from './foo.actions';
+
+export const foosFeatureKey = 'foos';
+
+export interface State extends EntityState<Foo> {
+  // additional entities state properties
+}
+
+export const adapter: EntityAdapter<Foo> = createEntityAdapter<Foo>();
+
+export const initialState: State = adapter.getInitialState({
+  // additional entity state properties
+});
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.addFoo,
+    (state, action) => adapter.addOne(action.foo, state)
+  ),
+  on(FooActions.upsertFoo,
+    (state, action) => adapter.upsertOne(action.foo, state)
+  ),
+  on(FooActions.addFoos,
+    (state, action) => adapter.addMany(action.foos, state)
+  ),
+  on(FooActions.upsertFoos,
+    (state, action) => adapter.upsertMany(action.foos, state)
+  ),
+  on(FooActions.updateFoo,
+    (state, action) => adapter.updateOne(action.foo, state)
+  ),
+  on(FooActions.updateFoos,
+    (state, action) => adapter.updateMany(action.foos, state)
+  ),
+  on(FooActions.deleteFoo,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(FooActions.deleteFoos,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(FooActions.loadFoos,
+    (state, action) => adapter.setAll(action.foos, state)
+  ),
+  on(FooActions.clearFoos,
+    state => adapter.removeAll(state)
+  ),
+);
+
+export const foosFeature = createFeature({
+  name: foosFeatureKey,
+  reducer,
+  extraSelectors: ({ selectFoosState }) => ({
+    ...adapter.getSelectors(selectFoosState)
+  }),
+});
+
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = foosFeature;
+"
+`;
+
+exports[`Entity Schematic should create 3 files of an entity to specified project if provided 1`] = `""`;
+
+exports[`Entity Schematic should create 3 files of an entity to specified project if provided 2`] = `""`;
+
+exports[`Entity Schematic should create 3 files of an entity to specified project if provided 3`] = `""`;
+
+exports[`Entity Schematic should create all files of an entity within grouped and nested folders 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
+import { Foo } from '../../models/foo/foo.model';
+
+export const FooActions = createActionGroup({
+  source: 'Foo/API',
+  events: {
+    'Load Foos': props<{ foos: Foo[] }>(),
+    'Add Foo': props<{ foo: Foo }>(),
+    'Upsert Foo': props<{ foo: Foo }>(),
+    'Add Foos': props<{ foos: Foo[] }>(),
+    'Upsert Foos': props<{ foos: Foo[] }>(),
+    'Update Foo': props<{ foo: Update<Foo> }>(),
+    'Update Foos': props<{ foos: Update<Foo>[] }>(),
+    'Delete Foo': props<{ id: string }>(),
+    'Delete Foos': props<{ ids: string[] }>(),
+    'Clear Foos': emptyProps(),
+  }
+});
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped and nested folders 2`] = `
+"export interface Foo {
+  id: string;
+}
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped and nested folders 3`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { Foo } from '../../models/foo/foo.model';
+import { FooActions } from '../../actions/foo/foo.actions';
+
+export const foosFeatureKey = 'foos';
+
+export interface State extends EntityState<Foo> {
+  // additional entities state properties
+}
+
+export const adapter: EntityAdapter<Foo> = createEntityAdapter<Foo>();
+
+export const initialState: State = adapter.getInitialState({
+  // additional entity state properties
+});
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.addFoo,
+    (state, action) => adapter.addOne(action.foo, state)
+  ),
+  on(FooActions.upsertFoo,
+    (state, action) => adapter.upsertOne(action.foo, state)
+  ),
+  on(FooActions.addFoos,
+    (state, action) => adapter.addMany(action.foos, state)
+  ),
+  on(FooActions.upsertFoos,
+    (state, action) => adapter.upsertMany(action.foos, state)
+  ),
+  on(FooActions.updateFoo,
+    (state, action) => adapter.updateOne(action.foo, state)
+  ),
+  on(FooActions.updateFoos,
+    (state, action) => adapter.updateMany(action.foos, state)
+  ),
+  on(FooActions.deleteFoo,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(FooActions.deleteFoos,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(FooActions.loadFoos,
+    (state, action) => adapter.setAll(action.foos, state)
+  ),
+  on(FooActions.clearFoos,
+    state => adapter.removeAll(state)
+  ),
+);
+
+export const foosFeature = createFeature({
+  name: foosFeatureKey,
+  reducer,
+  extraSelectors: ({ selectFoosState }) => ({
+    ...adapter.getSelectors(selectFoosState)
+  }),
+});
+
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = foosFeature;
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped and nested folders 4`] = `
+"import { reducer, initialState } from '../../reducers/foo/foo.reducer';
+
+describe('Foo Reducer', () => {
+  describe('unknown action', () => {
+    it('should return the previous state', () => {
+      const action = {} as any;
+
+      const result = reducer(initialState, action);
+
+      expect(result).toBe(initialState);
+    });
+  });
+});
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
+import { Foo } from '../models/foo.model';
+
+export const FooActions = createActionGroup({
+  source: 'Foo/API',
+  events: {
+    'Load Foos': props<{ foos: Foo[] }>(),
+    'Add Foo': props<{ foo: Foo }>(),
+    'Upsert Foo': props<{ foo: Foo }>(),
+    'Add Foos': props<{ foos: Foo[] }>(),
+    'Upsert Foos': props<{ foos: Foo[] }>(),
+    'Update Foo': props<{ foo: Update<Foo> }>(),
+    'Update Foos': props<{ foos: Update<Foo>[] }>(),
+    'Delete Foo': props<{ id: string }>(),
+    'Delete Foos': props<{ ids: string[] }>(),
+    'Clear Foos': emptyProps(),
+  }
+});
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 2`] = `
+"export interface Foo {
+  id: string;
+}
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 3`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { Foo } from '../models/foo.model';
+import { FooActions } from '../actions/foo.actions';
+
+export const foosFeatureKey = 'foos';
+
+export interface State extends EntityState<Foo> {
+  // additional entities state properties
+}
+
+export const adapter: EntityAdapter<Foo> = createEntityAdapter<Foo>();
+
+export const initialState: State = adapter.getInitialState({
+  // additional entity state properties
+});
+
+export const reducer = createReducer(
+  initialState,
+  on(FooActions.addFoo,
+    (state, action) => adapter.addOne(action.foo, state)
+  ),
+  on(FooActions.upsertFoo,
+    (state, action) => adapter.upsertOne(action.foo, state)
+  ),
+  on(FooActions.addFoos,
+    (state, action) => adapter.addMany(action.foos, state)
+  ),
+  on(FooActions.upsertFoos,
+    (state, action) => adapter.upsertMany(action.foos, state)
+  ),
+  on(FooActions.updateFoo,
+    (state, action) => adapter.updateOne(action.foo, state)
+  ),
+  on(FooActions.updateFoos,
+    (state, action) => adapter.updateMany(action.foos, state)
+  ),
+  on(FooActions.deleteFoo,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(FooActions.deleteFoos,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(FooActions.loadFoos,
+    (state, action) => adapter.setAll(action.foos, state)
+  ),
+  on(FooActions.clearFoos,
+    state => adapter.removeAll(state)
+  ),
+);
+
+export const foosFeature = createFeature({
+  name: foosFeatureKey,
+  reducer,
+  extraSelectors: ({ selectFoosState }) => ({
+    ...adapter.getSelectors(selectFoosState)
+  }),
+});
+
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = foosFeature;
+"
+`;
+
+exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 4`] = `
+"import { reducer, initialState } from '../reducers/foo.reducer';
+
+describe('Foo Reducer', () => {
+  describe('unknown action', () => {
+    it('should return the previous state', () => {
+      const action = {} as any;
+
+      const result = reducer(initialState, action);
+
+      expect(result).toBe(initialState);
+    });
+  });
+});
+"
+`;
+
+exports[`Entity Schematic should import into a specified module 1`] = `
+"import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromFoo from './foo.reducer';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    StoreModule.forFeature(fromFoo.foosFeatureKey, fromFoo.reducer)
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+"
+`;
+
+exports[`Entity Schematic should update the state to plural 1`] = `
+"import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+
+import { User } from './user.model';
+
+export const UserActions = createActionGroup({
+  source: 'User/API',
+  events: {
+    'Load Users': props<{ users: User[] }>(),
+    'Add User': props<{ user: User }>(),
+    'Upsert User': props<{ user: User }>(),
+    'Add Users': props<{ users: User[] }>(),
+    'Upsert Users': props<{ users: User[] }>(),
+    'Update User': props<{ user: Update<User> }>(),
+    'Update Users': props<{ users: Update<User>[] }>(),
+    'Delete User': props<{ id: string }>(),
+    'Delete Users': props<{ ids: string[] }>(),
+    'Clear Users': emptyProps(),
+  }
+});
+"
+`;
+
+exports[`Entity Schematic should update the state to plural 2`] = `
+"export interface User {
+  id: string;
+}
+"
+`;
+
+exports[`Entity Schematic should update the state to plural 3`] = `
+"import { createFeature, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { User } from './user.model';
+import { UserActions } from './user.actions';
+
+export const usersFeatureKey = 'users';
+
+export interface State extends EntityState<User> {
+  // additional entities state properties
+}
+
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+
+export const initialState: State = adapter.getInitialState({
+  // additional entity state properties
+});
+
+export const reducer = createReducer(
+  initialState,
+  on(UserActions.addUser,
+    (state, action) => adapter.addOne(action.user, state)
+  ),
+  on(UserActions.upsertUser,
+    (state, action) => adapter.upsertOne(action.user, state)
+  ),
+  on(UserActions.addUsers,
+    (state, action) => adapter.addMany(action.users, state)
+  ),
+  on(UserActions.upsertUsers,
+    (state, action) => adapter.upsertMany(action.users, state)
+  ),
+  on(UserActions.updateUser,
+    (state, action) => adapter.updateOne(action.user, state)
+  ),
+  on(UserActions.updateUsers,
+    (state, action) => adapter.updateMany(action.users, state)
+  ),
+  on(UserActions.deleteUser,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
+  on(UserActions.deleteUsers,
+    (state, action) => adapter.removeMany(action.ids, state)
+  ),
+  on(UserActions.loadUsers,
+    (state, action) => adapter.setAll(action.users, state)
+  ),
+  on(UserActions.clearUsers,
+    state => adapter.removeAll(state)
+  ),
+);
+
+export const usersFeature = createFeature({
+  name: usersFeatureKey,
+  reducer,
+  extraSelectors: ({ selectUsersState }) => ({
+    ...adapter.getSelectors(selectUsersState)
+  }),
+});
+
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = usersFeature;
+"
+`;
+
+exports[`Entity Schematic should update the state to plural 4`] = `
+"import { reducer, initialState } from './user.reducer';
+
+describe('User Reducer', () => {
+  describe('unknown action', () => {
+    it('should return the previous state', () => {
+      const action = {} as any;
+
+      const result = reducer(initialState, action);
+
+      expect(result).toBe(initialState);
+    });
+  });
+});
+"
+`;
+
+exports[`Entity Schematic should update the state to plural 5`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+import * as fromUser from '../user.reducer';
+
+export const userFeatureKey = 'user';
+
+export interface State {
+
+  [fromUser.usersFeatureKey]: fromUser.State;
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+  [fromUser.usersFeatureKey]: fromUser.reducer,
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+"
+`;

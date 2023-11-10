@@ -13,20 +13,13 @@ version: 2.1
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.14.1
 var_2: &run_in_node
   docker:
-    - image: cimg/node:16.16.0
+    - image: cimg/node:18.16
 var_5: &run_in_browser
   docker:
-    - image: cimg/node:16.16.0-browsers
+    - image: cimg/node:18.16-browsers
 
 orbs:
-  browser-tools: circleci/browser-tools@1.3.0
-
-commands:
-  write_master_hash:
-    steps:
-      - run: git remote add upstream git@github.com:ngrx/platform.git
-      - run: git fetch upstream master
-      - run: git log --format='%h' -n 1 upstream/master > ~/project/master.txt
+  browser-tools: circleci/browser-tools@1.4.4
 
 jobs:
   install:
@@ -56,7 +49,7 @@ jobs:
       # Test
       - run:
           name: Run All Lint Checks
-          command: yarn nx run-many --target=lint --all --parallel=1
+          command: yarn nx run-many -t lint
 
   lint-affected:
     <<: *run_in_node
@@ -68,16 +61,15 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - write_master_hash
       - run:
           name: Run Affected Lint Checks
-          command: yarn nx affected:lint --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel=1
+          command: yarn nx affected -t lint --base=main --head=$CIRCLE_SHA1
 
   test:
     <<: *run_in_browser
     steps:
       - checkout
-      - browser-tools/install-browser-tools
+      - browser-tools/install-chrome
       - run: |
           node --version
           google-chrome --version
@@ -89,7 +81,7 @@ jobs:
       # Test
       - run:
           name: Run All Unit Tests
-          command: yarn nx run-many --target=test --all --parallel=1
+          command: yarn nx run-many -t test
 
   test-affected:
     <<: *run_in_browser
@@ -101,10 +93,9 @@ jobs:
             - *cache_key
 
       # Build and Test
-      - write_master_hash
       - run:
           name: Run Affected Unit Tests
-          command: yarn nx affected:test --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel=1
+          command: yarn nx affected -t test --base=main --head=$CIRCLE_SHA1
 
   build:
     <<: *run_in_node
@@ -118,12 +109,12 @@ jobs:
       - run:
           name: Setup Environment Variables
           command: |
-            echo 'export NX_CLOUD_AUTH_TOKEN=$NX_CLOUD_TOKEN' >> $BASH_ENV
+            echo 'export NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_TOKEN' >> $BASH_ENV
             source $BASH_ENV
       - run: yarn
       - run:
           name: Build All Release Packages
-          command: yarn build --parallel --skip-nx-cache
+          command: yarn build --skip-nx-cache
       # Store artifacts from packages build
       - persist_to_workspace:
           root: dist
@@ -145,10 +136,9 @@ jobs:
 
       # Build
       - run: yarn
-      - write_master_hash
       - run:
           name: Run Affected Builds
-          command: yarn nx affected --target=build --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1
+          command: yarn nx affected -t build --base=main --head=$CIRCLE_SHA1
 
   schematics-core-check:
     <<: *run_in_browser
@@ -170,10 +160,9 @@ jobs:
           keys:
             - *cache_key
       - run: yarn
-      - write_master_hash
       - run:
           name: Run Affected E2E Tests
-          command: yarn nx affected --target=e2e --base=$(cat ~/project/master.txt) --head=$CIRCLE_SHA1 --parallel=1 --exclude=docs-app
+          command: yarn nx affected -t e2e --base=main --head=$CIRCLE_SHA1 --exclude=docs-app
 
   deploy:
     <<: *run_in_node
@@ -236,7 +225,7 @@ workflows:
             - install
           filters:
             branches:
-              only: master
+              only: main
             tags:
               only: /.*/
       - lint-affected:
@@ -244,7 +233,7 @@ workflows:
             - install
           filters:
             branches:
-              ignore: master
+              ignore: main
       - test:
           requires:
             - install
@@ -256,13 +245,13 @@ workflows:
       #       - install
       #     filters:
       #       branches:
-      #         ignore: master
+      #         ignore: main
       - build:
           requires:
             - install
           filters:
             branches:
-              only: master
+              only: main
             tags:
               only: /.*/
       - build-affected:
@@ -270,25 +259,25 @@ workflows:
             - install
           filters:
             branches:
-              ignore: master
+              ignore: main
       - e2e-affected:
           requires:
             - install
           filters:
             branches:
-              ignore: master
+              ignore: main
       - schematics-core-check:
           requires:
             - install
           filters:
             branches:
-              ignore: master
+              ignore: main
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only: main
       - publish-stable:
           requires:
             - build

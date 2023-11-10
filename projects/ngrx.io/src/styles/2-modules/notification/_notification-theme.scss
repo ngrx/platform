@@ -1,0 +1,24 @@
+@use '../../constants';
+@use '../../ngrx';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+  aio-notification {
+    background: constants.$purple;
+
+    .close-button {
+      background: constants.$darkgray;
+    }
+
+    .content {
+      .message {
+        color: constants.$offwhite;
+      }
+
+      .action-button {
+        background: mat.get-color-from-palette(ngrx.$dull-magenta, 700);
+        color: constants.$offwhite;
+      }
+    }
+  }
+}

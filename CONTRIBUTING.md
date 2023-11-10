@@ -4,7 +4,7 @@
 
 To get started, create a codespace for this repository by clicking this 👇
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=83716883)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=83716883)
 
 A codespace will open in a web-based version of Visual Studio Code. The [dev container](.devcontainer/devcontainer.json) is fully configured with software needed for this project.
 
@@ -26,7 +26,7 @@ yarn test
 
 ```shell
 yarn nx test effects --watchAll
-yarn nx test <library name that matches angular.json entry> --watchAll
+yarn nx test <module-name> --watchAll
 ```
 
 ### Testing for a specific schematic unit test
@@ -40,7 +40,7 @@ yarn jest <relative path> --watch
 
 **Please follow these basic steps to simplify pull request reviews. If you don't you'll probably just be asked to anyway.**
 
-- Please rebase your branch against the current master.
+- Please rebase your branch against the current main.
 - Run the `Setup` command to make sure your development dependencies are up-to-date.
 - Please ensure the test suite passes before submitting a PR.
 - If you've added new functionality, **please** include tests which validate its behavior.
@@ -94,7 +94,7 @@ to read on GitHub as well as in various git tools.
 
 The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
-Samples: (even more [samples](https://github.com/ngrx/platform/commits/master))
+Samples: (even more [samples](https://github.com/ngrx/platform/commits/main))
 
 ```
 docs(changelog): update changelog to beta.5
@@ -135,12 +135,14 @@ The following is the list of supported scopes:
 - **data**
 - **effects**
 - **entity**
+- **eslint-plugin**
 - **example**
+- **operators**
 - **router-store**
 - **schematics**
+- **signals**
 - **store**
 - **store-devtools**
-- **eslint-plugin**
 
 ### Subject
 
@@ -180,35 +182,8 @@ AFTER:
 New code example here
 ```
 
-## Financial contributions
+## Financial Contributions
 
-We also welcome financial contributions in full transparency on our [open collective](https://opencollective.com/ngrx).
-Anyone can file an expense. If the expense makes sense for the development of the community, it will be "merged" in the ledger of our open collective by the core contributors and the person who filed the expense will be reimbursed.
-
-## Credits
-
-### Contributors
+We also welcome sponsorships through [GitHub Sponsors](https://github.com/sponsors/ngrx). Sponsorships aid in the continued development of NgRx libraries, along with supporting core contributors on the project. If you are looking for more hands-on support such as training or workshops, check out our [Enterprise Support](https://ngrx.io/enterprise-support) page.
 
 Thank you to all the people who have already contributed to NgRx!
-<a href="https://github.com/ngrx/platform/graphs/contributors"><img src="https://opencollective.com/ngrx/contributors.svg?width=890" /></a>
-
-### Backers
-
-Thank you to all our backers! [[Become a backer](https://opencollective.com/ngrx#backer)]
-
-<a href="https://opencollective.com/ngrx#backers" target="_blank"><img src="https://opencollective.com/ngrx/backers.svg?width=890"></a>
-
-### Sponsors
-
-Thank you to all our sponsors! (please ask your company to also support this open source project by [becoming a sponsor](https://opencollective.com/ngrx#sponsor))
-
-<a href="https://opencollective.com/ngrx/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/1/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/2/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/3/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/4/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/5/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/6/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/ngrx/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ngrx/sponsor/9/avatar.svg"></a>

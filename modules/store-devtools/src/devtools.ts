@@ -1,4 +1,11 @@
-import { Injectable, Inject, ErrorHandler } from '@angular/core';
+import {
+  Injectable,
+  Inject,
+  ErrorHandler,
+  OnDestroy,
+  NgZone,
+  inject,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Action,
@@ -11,6 +18,7 @@ import {
 } from '@ngrx/store';
 import {
   merge,
+  MonoTypeOperatorFunction,
   Observable,
   Observer,
   queueScheduler,
@@ -31,10 +39,11 @@ import {
 } from './utils';
 import { DevtoolsDispatcher } from './devtools-dispatcher';
 import { PERFORM_ACTION } from './actions';
+import { ZoneConfig, injectZoneConfig } from './zone-config';
 
 @Injectable()
-export class StoreDevtools implements Observer<any> {
-  private stateSubscription: Subscription;
+export class StoreDevtools implements Observer<any>, OnDestroy {
+  private liftedStateSubscription: Subscription;
   private extensionStartSubscription: Subscription;
   public dispatcher: ActionsSubject;
   public liftedState: Observable<LiftedState>;
@@ -69,11 +78,20 @@ export class StoreDevtools implements Observer<any> {
 
     const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
+    const zoneConfig = injectZoneConfig(config.connectInZone!);
+
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
 
-    const liftedStateSubscription = liftedAction$
+    this.liftedStateSubscription = liftedAction$
       .pipe(
         withLatestFrom(liftedReducer$),
+        // The extension would post messages back outside of the Angular zone
+        // because we call `connect()` wrapped with `runOutsideAngular`. We run change
+        // detection only once at the end after all the required asynchronous tasks have
+        // been processed (for instance, `setInterval` scheduled by the `timeout` operator).
+        // We have to re-enter the Angular zone before the `scan` since it runs the reducer
+        // which must be run within the Angular zone.
+        emitInZone(zoneConfig),
         scan<
           [any, ActionReducer<LiftedState, Actions.All>],
           {
@@ -110,9 +128,11 @@ export class StoreDevtools implements Observer<any> {
         }
       });
 
-    const extensionStartSubscription = extension.start$.subscribe(() => {
-      this.refresh();
-    });
+    this.extensionStartSubscription = extension.start$
+      .pipe(emitInZone(zoneConfig))
+      .subscribe(() => {
+        this.refresh();
+      });
 
     const liftedState$ =
       liftedStateSubject.asObservable() as Observable<LiftedState>;
@@ -121,11 +141,19 @@ export class StoreDevtools implements Observer<any> {
       value: toSignal(state$, { manualCleanup: true, requireSync: true }),
     });
 
-    this.extensionStartSubscription = extensionStartSubscription;
-    this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;
     this.liftedState = liftedState$;
     this.state = state$;
+  }
+
+  ngOnDestroy(): void {
+    // Even though the store devtools plugin is recommended to be
+    // used only in development mode, it can still cause a memory leak
+    // in microfrontend applications that are being created and destroyed
+    // multiple times during development. This results in excessive memory
+    // consumption, as it prevents entire apps from being garbage collected.
+    this.liftedStateSubscription.unsubscribe();
+    this.extensionStartSubscription.unsubscribe();
   }
 
   dispatch(action: Action) {
@@ -187,4 +215,24 @@ export class StoreDevtools implements Observer<any> {
   pauseRecording(status: boolean) {
     this.dispatch(new Actions.PauseRecording(status));
   }
+}
+
+/**
+ * If the devtools extension is connected out of the Angular zone,
+ * this operator will emit all events within the zone.
+ */
+function emitInZone<T>({
+  ngZone,
+  connectInZone,
+}: ZoneConfig): MonoTypeOperatorFunction<T> {
+  return (source) =>
+    connectInZone
+      ? new Observable<T>((subscriber) =>
+          source.subscribe({
+            next: (value) => ngZone.run(() => subscriber.next(value)),
+            error: (error) => ngZone.run(() => subscriber.error(error)),
+            complete: () => ngZone.run(() => subscriber.complete()),
+          })
+        )
+      : source;
 }

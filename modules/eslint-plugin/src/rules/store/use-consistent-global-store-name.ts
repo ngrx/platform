@@ -62,7 +62,7 @@ export default createRule<Options, MessageIds>({
                 data,
                 fix: (fixer) =>
                   fixer.replaceTextRange(
-                    [range[0], typeAnnotation.range[0]],
+                    [range[0], typeAnnotation?.range[0] ?? range[1]],
                     storeName
                   ),
               },

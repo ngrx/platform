@@ -1,8 +1,7 @@
 {
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
-  "npmScope": "ngrx",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx-cloud",
@@ -17,7 +16,8 @@
         ],
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "parallel": 1
+        "parallel": 1,
+        "useLightClient": true
       }
     }
   },
@@ -84,7 +84,8 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json"
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/src/test-setup.[jt]s"
     ]
   }
 }

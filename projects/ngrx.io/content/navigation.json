@@ -17,15 +17,7 @@
       "title": "Blog"
     },
     {
-      "url": "resources",
-      "title": "Resources"
-    },
-    {
-      "url": "events",
-      "title": "Events"
-    },
-    {
-      "url": "https://opencollective.com/ngrx",
+      "url": "https://github.com/sponsors/ngrx",
       "title": "Sponsor"
     }
   ],
@@ -50,19 +42,11 @@
           "title": "Blog"
         },
         {
-          "url": "resources",
-          "title": "Resources"
-        },
-        {
-          "url": "events",
-          "title": "Events"
-        },
-        {
           "url": "https://github.com/ngrx/platform",
           "title": "GitHub"
         },
         {
-          "url": "https://opencollective.com/ngrx",
+          "url": "https://github.com/sponsors/ngrx",
           "title": "Sponsor"
         }
       ]
@@ -232,6 +216,10 @@
                 {
                   "title": "Additional State Properties",
                   "url": "guide/entity/recipes/additional-state-properties"
+                },
+                {
+                  "title": "Entity Adapter with Feature Creator",
+                  "url": "guide/entity/recipes/entity-adapter-with-feature-creator"
                 }
               ]
             }
@@ -573,7 +561,7 @@
           "tooltip": "NgRx Team"
         },
         {
-          "url": "https://opencollective.com/ngrx",
+          "url": "https://github.com/sponsors/ngrx",
           "title": "Sponsor",
           "tooltip": "Sponsor NgRx Development"
         },
@@ -603,11 +591,6 @@
           "tooltip": "NgRx Community Discord Server - chat with other members of the community."
         },
         {
-          "url": "https://gitter.im/ngrx/platform",
-          "title": "Gitter",
-          "tooltip": "Chat about NgRx with other members of the community."
-        },
-        {
           "url": "https://github.com/ngrx/platform/issues/new/choose",
           "title": "Report Issues",
           "tooltip": "Post issues and suggestions on GitHub."
@@ -618,7 +601,7 @@
       "title": "Community",
       "children": [
         {
-          "url": "https://github.com/ngrx/platform/blob/master/CODE_OF_CONDUCT.md",
+          "url": "https://github.com/ngrx/platform/blob/main/CODE_OF_CONDUCT.md",
           "title": "Code of Conduct",
           "tooltip": "Code of Conduct"
         },

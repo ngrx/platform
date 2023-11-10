@@ -2,9 +2,8 @@ import {
   createSelector,
   createFeatureSelector,
   ActionReducer,
-  Action,
-  ActionReducerMap,
   MetaReducer,
+  ActionReducerMap,
 } from '@ngrx/store';
 import {
   getRouterSelectors,
@@ -20,7 +19,7 @@ import {
  */
 
 import * as fromLayout from '@example-app/core/reducers/layout.reducer';
-import { InjectionToken, isDevMode } from '@angular/core';
+import { isDevMode } from '@angular/core';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -28,7 +27,7 @@ import { InjectionToken, isDevMode } from '@angular/core';
  */
 export interface State {
   [fromLayout.layoutFeatureKey]: fromLayout.State;
-  router: RouterReducerState<any>;
+  router: RouterReducerState;
 }
 
 /**
@@ -36,14 +35,10 @@ export interface State {
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export const ROOT_REDUCERS = new InjectionToken<
-  ActionReducerMap<State, Action>
->('Root reducers token', {
-  factory: () => ({
-    [fromLayout.layoutFeatureKey]: fromLayout.reducer,
-    router: routerReducer,
-  }),
-});
+export const rootReducers: ActionReducerMap<State> = {
+  [fromLayout.layoutFeatureKey]: fromLayout.reducer,
+  router: routerReducer,
+};
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {

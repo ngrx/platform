@@ -6,6 +6,7 @@ import {
   InjectionToken,
   Injector,
   Provider,
+  ValueEqualityFn,
 } from '@angular/core';
 import { fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import {
@@ -1380,6 +1381,45 @@ describe('Component Store', () => {
 
       componentStore.ngOnDestroy();
     });
+  });
+
+  describe('selector with custom equal fn', () => {
+    interface State {
+      obj: StateValue;
+      updated?: boolean;
+    }
+    interface StateValue {
+      value: string;
+    }
+
+    const equal: ValueEqualityFn<StateValue> = (a, b) => a.value === b.value;
+    const INIT_STATE: State = { obj: { value: 'init' } };
+    let componentStore: ComponentStore<State>;
+
+    beforeEach(() => {
+      componentStore = new ComponentStore<State>(INIT_STATE);
+    });
+
+    it(
+      'does not emit the same value if it did not change',
+      marbles((m) => {
+        const selector = componentStore.select((s) => s.obj, {
+          equal,
+        });
+
+        const selectorResults: string[] = [];
+        selector.subscribe((value) => {
+          selectorResults.push(value.value);
+        });
+
+        m.flush();
+        componentStore.setState(() => ({ obj: { value: 'new value' } }));
+        componentStore.setState(() => ({ obj: { value: 'new value' } })); // 👈 emit twice
+
+        m.flush();
+        expect(selectorResults).toEqual(['init', 'new value']); // capture only one change
+      })
+    );
   });
 
   describe('selectSignal', () => {

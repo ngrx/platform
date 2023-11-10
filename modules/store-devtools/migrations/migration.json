@@ -5,6 +5,11 @@
       "description": "The road to v6",
       "version": "5.2",
       "factory": "./6_0_0/index"
+    },
+    "ngrx-store-devtools-migration-17-0-0-beta": {
+      "description": "The road to v17-beta.1",
+      "version": "17.0.0-beta",
+      "factory": "./17_0_0-beta/index"
     }
   }
 }

@@ -1,10 +1,10 @@
-@import '../mixins';
+@use '../constants';
+@use '../mixins';
 
 body {
-  @include typescale-default;
-  font-family: $main-font;
+  @include mixins.typescale-default;
+  font-family: constants.$main-font;
   margin: 0;
-  color: $darkgray;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,7 +12,7 @@ body {
 
 h1 {
   display: inline-block;
-  @include typescale-display;
+  @include mixins.typescale-display;
   font-weight: 500;
   margin: 8px 0px;
 
@@ -22,36 +22,35 @@ h1 {
 }
 
 h2 {
-  @include typescale-xlarge;
+  @include mixins.typescale-xlarge;
   font-weight: 500;
   margin: 32px 0px 24px;
   clear: both;
 }
 
 h3 {
-  @include typescale-large;
+  @include mixins.typescale-large;
   font-weight: 500;
   margin: 24px 0px 12px;
   clear: both;
 }
 
 h4 {
-  @include typescale-default;
+  @include mixins.typescale-default;
   font-weight: 500;
   margin: 8px 0px;
   clear: both;
 }
 
 h5 {
-  @include typescale-default;
+  @include mixins.typescale-default;
   font-weight: 400;
   margin: 8px 0px;
   clear: both;
 }
 
 h6 {
-  color: $mediumgray;
-  @include typescale-default;
+  @include mixins.typescale-default;
   font-weight: 400;
   margin: 8px 0px;
   clear: both;
@@ -72,7 +71,7 @@ h2, h3, h4, h5, h6 {
 }
 
 p, ol, ul, ol, li, input, a  {
-  @include typescale-default;
+  @include mixins.typescale-default;
   letter-spacing: 0.30px;
   font-weight: 400;
   & > em {
@@ -95,20 +94,19 @@ a {
 }
 
 .app-toolbar a {
-  @include typescale-large;
+  @include mixins.typescale-large;
   font-weight: 400;
-  color: $white;
-  font-family: $main-font;
+  font-family: constants.$main-font;
   text-transform: uppercase;
   padding: 21px 0;
 }
 
 aio-shell.page-home .app-toolbar a {
-  color: $purple;
+  color: constants.$purple;
 }
 
 strong {
-  font-weight: $bold-font-weight;
+  font-weight: constants.$bold-font-weight;
 }
 
 table {
@@ -135,31 +133,23 @@ td {
 }
 
 th {
-  @include typescale-default;
+  @include mixins.typescale-default;
   font-weight: 500;
   padding: 13px 32px;
   text-align: left;
 }
 
 p > code, li > code, td > code, th > code {
-  font-family: $code-font;
+  font-family: constants.$code-font;
   font-size: 85%;
-  color: $darkgray;
   letter-spacing: 0;
   line-height: 1;
   padding: 2px 0;
-  background-color: $backgroundgray;
+  background-color: constants.$backgroundgray;
   border-radius: 4px;
 }
 
 code {
-  font-family: $code-font;
+  font-family: constants.$code-font;
   font-size: 90%;
-}
-
-.sidenav-content a {
-  color: $lightpurple;
-  &:hover {
-    color: $mediumgray;
-  }
 }

@@ -1,0 +1,29 @@
+{
+  "name": "schematics-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/schematics-core",
+  "prefix": "ngrx",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/schematics-core/*/**/*.ts",
+          "modules/schematics-core/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/schematics-core/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/schematics-core"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}

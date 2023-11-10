@@ -43,7 +43,9 @@ export default createRule<Options, MessageIds>({
             ...id.loc,
             end: {
               ...id.loc.end,
-              column: (id.typeAnnotation?.range[0] ?? id.range[1]) - 1,
+              column: id.typeAnnotation?.range[0]
+                ? id.typeAnnotation.range[0] - 1
+                : id.loc.end.column,
             },
           },
           messageId: prefixSelectorsWithSelect,

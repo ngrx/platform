@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/data` package is in <a href="https://github.com/ngrx/platform/issues/4011" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Entity DataService
 
 The NgRx Data library expects to persist entity data with calls to a REST-like web api with endpoints for each entity type.
@@ -62,7 +69,7 @@ You can add custom data services to it by creating instances of those classes an
 
 <div class="alert is-helpful">
 
-You can create and import a module that registers your custom data services as shown in the _EntityDataService_ [tests](https://github.com/ngrx/platform/blob/master/modules/data/spec/dataservices/entity-data.service.spec.ts)
+You can create and import a module that registers your custom data services as shown in the _EntityDataService_ [tests](https://github.com/ngrx/platform/blob/main/modules/data/spec/dataservices/entity-data.service.spec.ts)
 
 </div>
 

@@ -13,10 +13,11 @@ import {
   isProgram,
   isProperty,
   isPropertyDefinition,
-  isTemplateElement,
-  isTemplateLiteral,
   isTSTypeAnnotation,
   isTSTypeReference,
+  isTemplateElement,
+  isTemplateLiteral,
+  isTSInstantiationExpression,
 } from './guards';
 import { NGRX_MODULE_PATHS } from './ngrx-modules';
 
@@ -30,7 +31,8 @@ type InjectedParameter =
         | ConstructorFunctionExpression
         | (TSESTree.TSParameterProperty & {
             parent: ConstructorFunctionExpression;
-          });
+          })
+        | TSESTree.PropertyDefinition;
     };
 type InjectedParameterWithSourceCode = Readonly<{
   identifiers?: readonly InjectedParameter[];
@@ -260,10 +262,6 @@ export function getLast<T extends readonly unknown[]>(items: T): T[number] {
   return items.slice(-1)[0];
 }
 
-export function getDecoratorArguments({ expression }: TSESTree.Decorator) {
-  return isCallExpression(expression) ? expression.arguments : [];
-}
-
 export function getDecoratorName({
   expression,
 }: TSESTree.Decorator): string | undefined {
@@ -274,20 +272,6 @@ export function getDecoratorName({
   return isCallExpression(expression) && isIdentifier(expression.callee)
     ? expression.callee.name
     : undefined;
-}
-
-export function getDecorator(
-  {
-    decorators,
-  }:
-    | TSESTree.PropertyDefinition
-    | TSESTree.ClassDeclaration
-    | TSESTree.MethodDefinition,
-  decoratorName: string
-): TSESTree.Decorator | undefined {
-  return decorators?.find(
-    (decorator) => getDecoratorName(decorator) === decoratorName
-  );
 }
 
 export function getRawText(node: TSESTree.Node): string | null {
@@ -333,6 +317,12 @@ function getInjectedParametersWithSourceCode(
   const { importSpecifier } =
     getImportDeclarationSpecifier(importDeclarations, importName) ?? {};
 
+  const injectImportDeclarations =
+    getImportDeclarations(sourceCode.ast, '@angular/core') ?? [];
+
+  const { importSpecifier: injectImportSpecifier } =
+    getImportDeclarationSpecifier(injectImportDeclarations, 'inject') ?? {};
+
   if (!importSpecifier) {
     return { sourceCode };
   }
@@ -342,8 +332,11 @@ function getInjectedParametersWithSourceCode(
   const identifiers = typedVariable?.references?.reduce<
     readonly InjectedParameter[]
   >((identifiers, { identifier: { parent } }) => {
+    if (!parent) {
+      return identifiers;
+    }
+
     if (
-      parent &&
       isTSTypeReference(parent) &&
       parent.parent &&
       isTSTypeAnnotation(parent.parent) &&
@@ -351,6 +344,23 @@ function getInjectedParametersWithSourceCode(
       isIdentifier(parent.parent.parent)
     ) {
       return identifiers.concat(parent.parent.parent as InjectedParameter);
+    }
+
+    const parentToCheck = isTSInstantiationExpression(parent)
+      ? parent.parent
+      : parent;
+
+    if (
+      parentToCheck &&
+      isCallExpression(parentToCheck) &&
+      isIdentifier(parentToCheck.callee) &&
+      parentToCheck.callee.name == 'inject' &&
+      parentToCheck.parent &&
+      isPropertyDefinition(parentToCheck.parent) &&
+      isIdentifier(parentToCheck.parent.key) &&
+      injectImportSpecifier
+    ) {
+      return identifiers.concat(parentToCheck.parent.key as InjectedParameter);
     }
 
     return identifiers;

@@ -38,6 +38,10 @@ export interface ActConfig<
   unsubscribe?: (count: number, input: Input) => UnsubscribeAction;
 }
 
+/**
+ * @deprecated Use plain RxJS operators instead.
+ * For more info see: https://github.com/ngrx/platform/issues/4072
+ */
 export function act<
   Input,
   OutputAction extends Action,
@@ -46,6 +50,10 @@ export function act<
   project: (input: Input, index: number) => Observable<OutputAction>,
   error: (error: any, input: Input) => ErrorAction
 ): (source: Observable<Input>) => Observable<OutputAction | ErrorAction>;
+/**
+ * @deprecated Use plain RxJS operators instead.
+ * For more info see: https://github.com/ngrx/platform/issues/4072
+ */
 export function act<
   Input,
   OutputAction extends Action,

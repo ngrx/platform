@@ -5,5 +5,6 @@ export const compilerOptions = () => ({
   experimentalDecorators: true,
   paths: {
     '@ngrx/component-store': ['./modules/component-store'],
+    '@ngrx/operators': ['./modules/operators'],
   },
 });
