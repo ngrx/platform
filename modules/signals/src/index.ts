@@ -1,3 +1,4 @@
+export { getState } from './get-state';
 export { PartialStateUpdater, patchState } from './patch-state';
 export { signalState } from './signal-state';
 export { signalStore } from './signal-store';
