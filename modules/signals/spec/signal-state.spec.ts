@@ -1,8 +1,8 @@
 import { effect, isSignal } from '@angular/core';
 import * as angular from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { patchState, signalState } from '../src';
 import { STATE_SIGNAL } from '../src/signal-state';
-import { TestBed } from '@angular/core/testing';
 
 describe('signalState', () => {
   const initialState = {
@@ -85,6 +85,25 @@ describe('signalState', () => {
     expect((state[STATE_SIGNAL] as any).ngrx).toBe(undefined);
   });
 
+  it('overrides Function properties if state keys have the same name', () => {
+    const initialState = { name: { length: { length: 'ngrx' }, name: 20 } };
+    const state = signalState(initialState);
+
+    expect(state()).toBe(initialState);
+
+    expect(state.name()).toBe(initialState.name);
+    expect(isSignal(state.name)).toBe(true);
+
+    expect(state.name.name()).toBe(20);
+    expect(isSignal(state.name.name)).toBe(true);
+
+    expect(state.name.length()).toBe(initialState.name.length);
+    expect(isSignal(state.name.length)).toBe(true);
+
+    expect(state.name.length.length()).toBe('ngrx');
+    expect(isSignal(state.name.length.length)).toBe(true);
+  });
+
   it('emits new values only for affected signals', () => {
     TestBed.runInInjectionContext(() => {
       const state = signalState(initialState);
@@ -144,7 +163,7 @@ describe('signalState', () => {
     });
   });
 
-  it('should not emit if there was no change', () =>
+  it('does not emit if there was no change', () =>
     TestBed.runInInjectionContext(() => {
       let stateCounter = 0;
       let userCounter = 0;

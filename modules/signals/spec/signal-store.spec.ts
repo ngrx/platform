@@ -1,6 +1,7 @@
 import { inject, InjectionToken, isSignal, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
+  patchState,
   signalStore,
   withComputed,
   withHooks,
@@ -68,6 +69,35 @@ describe('signalStore', () => {
       expect(store.x()).toEqual({ y: { z: 10 } });
       expect(store.x.y()).toEqual({ z: 10 });
       expect(store.x.y.z()).toBe(10);
+    });
+
+    it('overrides Function properties if nested state keys have the same name', () => {
+      const Store = signalStore(
+        withState({ name: { length: { name: false } } })
+      );
+      const store = new Store();
+
+      expect(store.name()).toEqual({ length: { name: false } });
+      expect(isSignal(store.name)).toBe(true);
+
+      expect(store.name.length()).toEqual({ name: false });
+      expect(isSignal(store.name.length)).toBe(true);
+
+      expect(store.name.length.name()).toBe(false);
+      expect(isSignal(store.name.length.name)).toBe(true);
+    });
+
+    it('does not create signals for optional state slices without initial value', () => {
+      type State = { x?: number; y?: { z: number } };
+
+      const Store = signalStore(withState<State>({ x: 10 }));
+      const store = new Store();
+
+      expect(store.x!()).toBe(10);
+      expect(store.y).toBe(undefined);
+
+      patchState(store, { y: { z: 100 } });
+      expect(store.y).toBe(undefined);
     });
 
     it('executes withState factory in injection context', () => {

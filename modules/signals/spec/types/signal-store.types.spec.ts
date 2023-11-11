@@ -253,62 +253,33 @@ describe('signalStore', () => {
     );
   });
 
-  it('fails when nested state slices contain Function properties', () => {
-    expectSnippet(`
-      const Store = signalStore(withState({ x: { name?: '' } }));
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
+  it('succeeds when nested state slices contain Function properties', () => {
+    const snippet1 = `
+      type State = { x: { name?: string } };
+      const Store = signalStore(withState<State>({ x: { name: '' } }));
+      const store = new Store();
+      const name = store.x.name;
+    `;
+    expectSnippet(snippet1).toSucceed();
+    expectSnippet(snippet1).toInfer(
+      'name',
+      'Signal<string | undefined> | undefined'
     );
 
-    expectSnippet(`
-      const Store = signalStore(withState({ x: { arguments: [] } }));
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
-    );
-
-    expectSnippet(`
+    const snippet2 = `
       const Store = signalStore(
-        withState({ x: { bar: { call: false }, baz: 1 } })
+        withState({ x: { length: { name: false }, baz: 1 } })
       );
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
+      const store = new Store();
+      const length = store.x.length;
+      const name = store.x.length.name;
+    `;
+    expectSnippet(snippet2).toSucceed();
+    expectSnippet(snippet2).toInfer(
+      'length',
+      'Signal<{ name: boolean; }> & Readonly<{ name: Signal<boolean>; }>'
     );
-
-    expectSnippet(`
-      const Store = signalStore(
-        withState({ x: { apply: 'apply', bar: true } })
-      )
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
-    );
-
-    expectSnippet(`
-      const Store = signalStore(
-        withState({ x: { bind: { foo: 'bar' } } })
-      );
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
-    );
-
-    expectSnippet(`
-      const Store = signalStore(
-        withState({ x: { bar: { prototype: [] }; baz: 1 } })
-      );
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
-    );
-
-    expectSnippet(`
-      const Store = signalStore(withState({ x: { length: 10 } }));
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
-    );
-
-    expectSnippet(`
-      const Store = signalStore(withState({ x: { caller: '' } }));
-    `).toFail(
-      /@ngrx\/signals: nested state slices cannot contain `Function` property or method names/
-    );
+    expectSnippet(snippet2).toInfer('name', 'Signal<boolean>');
   });
 
   it('succeeds when nested state slices are optional', () => {
@@ -355,8 +326,8 @@ describe('signalStore', () => {
     );
   });
 
-  it('fails when root state slices are optional', () => {
-    expectSnippet(`
+  it('succeeds when root state slices are optional', () => {
+    const snippet = `
       type State = {
         foo?: { s: string };
         bar: number;
@@ -365,26 +336,53 @@ describe('signalStore', () => {
       const Store = signalStore(
         withState<State>({ foo: { s: '' }, bar: 1 })
       );
-    `).toFail(/@ngrx\/signals: root state slices cannot be optional/);
+      const store = new Store();
+      const foo = store.foo;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+    expectSnippet(snippet).toInfer(
+      'foo',
+      'Signal<{ s: string; } | undefined> | undefined'
+    );
   });
 
-  it('fails when state is an unknown record', () => {
-    expectSnippet(`
-      const Store1 = signalStore(withState<{ [key: string]: number }>({}));
-    `).toFail(/@ngrx\/signals: root state keys must be string literals/);
+  it('succeeds when state is an unknown record', () => {
+    const snippet1 = `
+      const Store = signalStore(withState<{ [key: string]: number }>({}));
+      const store = new Store();
 
-    expectSnippet(`
-      const Store2 = signalStore(withState<{ [key: number]: { bar: string } }>({}));
-    `).toFail(/@ngrx\/signals: root state keys must be string literals/);
+      const x = store.x;
+      const y = store.y;
+    `;
+    expectSnippet(snippet1).toSucceed();
+    expectSnippet(snippet1).toInfer('x', 'Signal<number>');
+    expectSnippet(snippet1).toInfer('y', 'Signal<number>');
 
-    expectSnippet(`
-      const Store3 = signalStore(
+    const snippet2 = `
+      const Store = signalStore(
+        withState<{ [key: number]: { bar: string } }>({})
+      );
+      const store = new Store();
+      const x = store[0];
+      const y = store[1];
+    `;
+    expectSnippet(snippet2).toSucceed();
+    expectSnippet(snippet2).toInfer('x', 'DeepSignal<{ bar: string; }>');
+    expectSnippet(snippet2).toInfer('y', 'DeepSignal<{ bar: string; }>');
+
+    const snippet3 = `
+      const Store = signalStore(
         withState<Record<string, { foo: boolean } | number>>({
           x: { foo: true },
           y: 1,
         })
       );
-    `).toFail(/@ngrx\/signals: root state keys must be string literals/);
+      const store = new Store();
+      const m = store.m;
+    `;
+    expectSnippet(snippet3).toSucceed();
+    expectSnippet(snippet3).toInfer('m', 'Signal<number | { foo: boolean; }>');
   });
 
   it('fails when state is not an object', () => {
