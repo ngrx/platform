@@ -1,5 +1,17 @@
-import { computed, Signal, untracked } from '@angular/core';
+import {
+  computed,
+  isSignal,
+  Signal as NgSignal,
+  untracked,
+} from '@angular/core';
 import { IsUnknownRecord } from './ts-helpers';
+
+// An extended Signal type that enables the correct typing
+// of nested signals with the `name' or `length' key.
+interface Signal<T> extends NgSignal<T> {
+  name: unknown;
+  length: unknown;
+}
 
 export type DeepSignal<T> = Signal<T> &
   (T extends Record<string, unknown>
@@ -26,8 +38,10 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
         return target[prop];
       }
 
-      if (!target[prop]) {
-        target[prop] = computed(() => target()[prop]);
+      if (!isSignal(target[prop])) {
+        Object.defineProperty(target, prop, {
+          value: computed(() => target()[prop]),
+        });
       }
 
       return toDeepSignal(target[prop]);

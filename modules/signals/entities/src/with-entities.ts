@@ -54,7 +54,7 @@ export function withEntities<Entity>(config?: {
     withState({
       [entityMapKey]: {},
       [idsKey]: [],
-    } as any),
+    }),
     withComputed((store) => ({
       [entitiesKey]: computed(() => {
         const entityMap = store[entityMapKey]() as EntityMap<Entity>;
