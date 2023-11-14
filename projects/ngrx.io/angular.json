@@ -30,6 +30,7 @@
               "src/app/search/search-worker.js",
               "src/pwa-manifest.json",
               "src/google385281288605d160.html",
+              "src/_redirects",
               {
                 "glob": "custom-elements.min.js",
                 "input": "node_modules/@webcomponents/custom-elements",
