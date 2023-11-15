@@ -98,7 +98,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
   }
 
   getAll(options?: HttpOptions): Observable<T[]> {
-    return this.execute('GET', this.entitiesUrl, null, options);
+    return this.execute('GET', this.entitiesUrl, null, null, options);
   }
 
   getById(key: number | string, options?: HttpOptions): Observable<T> {
