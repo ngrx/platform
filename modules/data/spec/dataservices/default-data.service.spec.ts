@@ -216,6 +216,22 @@ describe('DefaultDataService', () => {
 
       req.error(errorEvent, { status: 404, statusText: 'Not Found' });
     });
+
+    it('should pass httpOptions', (done) => {
+      const expectedParams = new HttpParams({ fromObject: { test: 123 } });
+      service
+        .getAll({ httpParams: { fromObject: { test: 123 } } })
+        .subscribe((heroes) => {
+          expect(heroes.length).toEqual(0);
+          done();
+        }, fail);
+
+      const req = httpTestingController.expectOne(heroesUrl + '?test=123');
+
+      expect(req.request.params).toEqual(expectedParams);
+
+      req.flush([]); // Respond with no heroes
+    });
   });
 
   describe('#getById', () => {
