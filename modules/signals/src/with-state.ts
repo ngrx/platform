@@ -10,19 +10,19 @@ import {
   SignalStoreFeatureResult,
 } from './signal-store-models';
 
-export function withState<State extends Record<string, unknown>>(
-  state: State
-): SignalStoreFeature<
-  EmptyFeatureResult,
-  EmptyFeatureResult & { state: State }
->;
-export function withState<State extends Record<string, unknown>>(
+export function withState<State extends Record<string, any>>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
   EmptyFeatureResult & { state: State }
 >;
-export function withState<State extends Record<string, unknown>>(
+export function withState<State extends Record<string, any>>(
+  state: State
+): SignalStoreFeature<
+  EmptyFeatureResult,
+  EmptyFeatureResult & { state: State }
+>;
+export function withState<State extends Record<string, any>>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,

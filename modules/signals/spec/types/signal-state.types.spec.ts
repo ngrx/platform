@@ -77,22 +77,87 @@ describe('signalState', () => {
     expectSnippet(snippet).toInfer('ngrx', 'Signal<string>');
   });
 
-  it('does not create deep signals when state slice type is an interface', () => {
+  it('creates deep signals when state type is an interface', () => {
     const snippet = `
       interface User {
         firstName: string;
         lastName: string;
       }
 
-      type State = { user: User };
+      interface State {
+        user: User;
+        bool: boolean;
+        map: Map<string, string>;
+        set: Set<{ foo: number }>;
+      };
 
-      const state = signalState<State>({ user: { firstName: 'John', lastName: 'Smith' } });
+      const state = signalState<State>({
+        user: { firstName: 'John', lastName: 'Smith' },
+        bool: true,
+        map: new Map<string, string>(),
+        set: new Set<{ foo: number }>(),
+      });
+
       const user = state.user;
+      const lastName = state.user.lastName;
+      const bool = state.bool;
+      const map = state.map;
+      const set = state.set;
     `;
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer('user', 'Signal<User>');
+    expectSnippet(snippet).toInfer('user', 'DeepSignal<User>');
+
+    expectSnippet(snippet).toInfer('lastName', 'Signal<string>');
+
+    expectSnippet(snippet).toInfer('bool', 'Signal<boolean>');
+
+    expectSnippet(snippet).toInfer('map', 'Signal<Map<string, string>>');
+
+    expectSnippet(snippet).toInfer('set', 'Signal<Set<{ foo: number; }>>');
+  });
+
+  it('does not create deep signals for an array', () => {
+    const snippet = `
+      const state = signalState<string[]>([]);
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<string[]>'
+    );
+  });
+
+  it('does not create deep signals for Map', () => {
+    const snippet = `
+      const state = signalState(new Map<number, { bar: boolean }>());
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<Map<number, { bar: boolean; }>>'
+    );
+  });
+
+  it('does not create deep signals for Set', () => {
+    const snippet = `
+      const state = signalState(new Set<number>());
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<Set<number>>'
+    );
   });
 
   it('does not create deep signals for optional state slices', () => {
@@ -300,21 +365,6 @@ describe('signalState', () => {
     expectSnippet(`const state = signalState(null);`).toFail();
 
     expectSnippet(`const state = signalState(true);`).toFail();
-
-    expectSnippet(`const state = signalState(['ng', 'rx']);`).toFail();
-  });
-
-  it('fails when state type is defined as an interface', () => {
-    expectSnippet(`
-      interface User {
-        firstName: string;
-        lastName: string;
-      }
-
-      const state = signalState<User>({ firstName: 'John', lastName: 'Smith' });
-    `).toFail(
-      /Type 'User' does not satisfy the constraint 'Record<string, unknown>'/
-    );
   });
 
   it('patches state via sequence of partial state objects and updater functions', () => {

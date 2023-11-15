@@ -1,4 +1,4 @@
-import { computed } from '@angular/core';
+import { computed, Signal } from '@angular/core';
 import {
   SignalStoreFeature,
   signalStoreFeature,
@@ -55,7 +55,7 @@ export function withEntities<Entity>(config?: {
       [entityMapKey]: {},
       [idsKey]: [],
     }),
-    withComputed((store) => ({
+    withComputed((store: Record<string, Signal<unknown>>) => ({
       [entitiesKey]: computed(() => {
         const entityMap = store[entityMapKey]() as EntityMap<Entity>;
         const ids = store[idsKey]() as EntityId[];
