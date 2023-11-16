@@ -15,6 +15,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { PolarisModule } from '@getpolaris.ai/sdk-angular';
 
 import { AppComponent } from 'app/app.component';
 import { CustomIconRegistry, SVG_ICONS } from 'app/shared/custom-icon-registry';
@@ -133,6 +134,9 @@ export const svgIconProviders = [
         ),
         provideFirestore(() => getFirestore()),
         ThemeToggleComponent,
+        PolarisModule.forRoot({
+            apiKey: 'api:2YGmNa2ATCiq4CWviBVgTHxXJ6F'
+        }),
     ],
     declarations: [
         AppComponent,
