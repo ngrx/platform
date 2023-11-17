@@ -10,19 +10,19 @@ import {
   SignalStoreFeatureResult,
 } from './signal-store-models';
 
-export function withState<State extends Record<string, any>>(
+export function withState<State extends object>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
   EmptyFeatureResult & { state: State }
 >;
-export function withState<State extends Record<string, any>>(
+export function withState<State extends object>(
   state: State
 ): SignalStoreFeature<
   EmptyFeatureResult,
   EmptyFeatureResult & { state: State }
 >;
-export function withState<State extends Record<string, any>>(
+export function withState<State extends object>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,
@@ -39,7 +39,9 @@ export function withState<State extends Record<string, any>>(
     }));
 
     const slices = stateKeys.reduce((acc, key) => {
-      const slice = computed(() => store[STATE_SIGNAL]()[key]);
+      const slice = computed(
+        () => (store[STATE_SIGNAL]() as Record<string, unknown>)[key]
+      );
       return { ...acc, [key]: toDeepSignal(slice) };
     }, {} as SignalsDictionary);
     const signals = excludeKeys(store.signals, stateKeys);

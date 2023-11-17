@@ -1,6 +1,6 @@
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
-export type IsRecord<T> = T extends Record<string, any>
+export type IsRecord<T> = T extends object
   ? T extends unknown[]
     ? false
     : T extends Set<unknown>

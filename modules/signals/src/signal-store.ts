@@ -289,7 +289,7 @@ export function signalStore(
       (this as any)[STATE_SIGNAL] = innerStore[STATE_SIGNAL];
 
       for (const key in props) {
-        (this as any)[key] = (props as Record<string, unknown>)[key];
+        (this as any)[key] = props[key];
       }
 
       if (hooks.onInit) {

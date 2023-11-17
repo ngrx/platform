@@ -3,14 +3,14 @@ import { DeepSignal, toDeepSignal } from './deep-signal';
 
 export const STATE_SIGNAL = Symbol('STATE_SIGNAL');
 
-export type SignalStateMeta<State extends Record<string, any>> = {
+export type SignalStateMeta<State extends object> = {
   [STATE_SIGNAL]: WritableSignal<State>;
 };
 
-type SignalState<State extends Record<string, any>> = DeepSignal<State> &
+type SignalState<State extends object> = DeepSignal<State> &
   SignalStateMeta<State>;
 
-export function signalState<State extends Record<string, any>>(
+export function signalState<State extends object>(
   initialState: State
 ): SignalState<State> {
   const stateSignal = signal(initialState as State);

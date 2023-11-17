@@ -1,10 +1,10 @@
 import { STATE_SIGNAL, SignalStateMeta } from './signal-state';
 
-export type PartialStateUpdater<State extends Record<string, any>> = (
+export type PartialStateUpdater<State extends object> = (
   state: State
 ) => Partial<State>;
 
-export function patchState<State extends Record<string, any>>(
+export function patchState<State extends object>(
   signalState: SignalStateMeta<State>,
   ...updaters: Array<Partial<State & {}> | PartialStateUpdater<State & {}>>
 ): void {

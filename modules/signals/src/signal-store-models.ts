@@ -33,7 +33,7 @@ export type SignalStoreHooks = {
 };
 
 export type InnerSignalStore<
-  State extends Record<string, any> = Record<string, any>,
+  State extends object = object,
   Signals extends SignalsDictionary = SignalsDictionary,
   Methods extends MethodsDictionary = MethodsDictionary
 > = {
@@ -44,7 +44,7 @@ export type InnerSignalStore<
 } & SignalStateMeta<State>;
 
 export type SignalStoreFeatureResult = {
-  state: Record<string, any>;
+  state: object;
   signals: SignalsDictionary;
   methods: MethodsDictionary;
 };
