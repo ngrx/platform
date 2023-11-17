@@ -10,9 +10,10 @@ Some rules also allow automatic fixes with `ng lint --fix`.
 
 ## Adding rules
 
-Import the plugin via `plugins` or `extends` to setup the rules via the `rules`
+To use the a [rule](#rules), import the NgRx plugin via `plugins` or `extends`.
+You can add a rule by adding the rule to the `rules` collection.
 
-```
+```json
 {
       "plugins": ["@ngrx"],
       "rules": {
@@ -21,7 +22,7 @@ Import the plugin via `plugins` or `extends` to setup the rules via the `rules`
 }
 ```
 or 
-```
+```json
 {
       "extends": ["@ngrx/recommended"],
       "rules": {
@@ -29,8 +30,8 @@ or
       }
 }
 ```
-To use a preconfigured configuration, you can add it to `extends`:
-```
+Instead of manually configuring the rules, there are also [preconfigured configurations](#configurations). To use a configuration, add it to `extends`:
+```json
 {
       "extends": ["@ngrx/recommended-requiring-type-checking"],
       "rules": {}
