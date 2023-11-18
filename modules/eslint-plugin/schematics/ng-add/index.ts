@@ -4,7 +4,12 @@ import type { Schema } from './schema';
 
 export default function addNgRxESLintPlugin(schema: Schema): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const eslintConfigPath = '.eslintrc.json';
+    let eslintConfigPath = '.eslintrc.json';
+
+    if (!host.exists(eslintConfigPath)) {
+      eslintConfigPath = '.eslintrc.cjs';
+    }
+
     const docs = 'https://ngrx.io/guide/eslint-plugin';
 
     const eslint = host.read(eslintConfigPath)?.toString('utf-8');

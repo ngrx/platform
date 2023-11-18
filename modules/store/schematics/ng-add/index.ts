@@ -125,7 +125,13 @@ function addNgRxStoreToPackageJson() {
 
 function addNgRxESLintPlugin() {
   return (host: Tree, context: SchematicContext) => {
-    const eslint = host.read('.eslintrc.json')?.toString('utf-8');
+    let eslintConfigPath = '.eslintrc.json';
+
+    if (!host.exists(eslintConfigPath)) {
+      eslintConfigPath = '.eslintrc.cjs';
+    }
+
+    const eslint = host.read(eslintConfigPath)?.toString('utf-8');
     if (eslint) {
       addPackageToPackageJson(
         host,
