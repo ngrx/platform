@@ -1,12 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-import {
-  getState,
-  patchState,
-  signalState,
-  signalStore,
-  withState,
-} from '../src';
 import { effect } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { getState, patchState, signalStore, withState } from '../src';
 
 describe('getState', () => {
   const initialState = {
@@ -25,6 +19,10 @@ describe('getState', () => {
       const store = new Store();
 
       expect(getState(store)).toEqual(initialState);
+
+      patchState(store, { foo: 'baz' });
+
+      expect(getState(store)).toEqual({ ...initialState, foo: 'baz' });
     });
 
     it('executes in the reactive context', () => {
@@ -47,7 +45,6 @@ describe('getState', () => {
 
       TestBed.flushEffects();
       expect(executionCount).toBe(2);
-      expect(getState(store)).toEqual({ ...initialState, foo: 'baz' });
     });
   });
 });

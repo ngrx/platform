@@ -4,26 +4,22 @@ import {
   Signal as NgSignal,
   untracked,
 } from '@angular/core';
-import { IsUnknownRecord } from './ts-helpers';
+import { IsKnownRecord } from './ts-helpers';
 
 // An extended Signal type that enables the correct typing
-// of nested signals with the `name' or `length' key.
+// of nested signals with the `name` or `length` key.
 interface Signal<T> extends NgSignal<T> {
   name: unknown;
   length: unknown;
 }
 
 export type DeepSignal<T> = Signal<T> &
-  (T extends Record<string, unknown>
-    ? IsUnknownRecord<T> extends true
-      ? unknown
-      : Readonly<{
-          [K in keyof T]: T[K] extends Record<string, unknown>
-            ? IsUnknownRecord<T[K]> extends true
-              ? Signal<T[K]>
-              : DeepSignal<T[K]>
-            : Signal<T[K]>;
-        }>
+  (IsKnownRecord<T> extends true
+    ? Readonly<{
+        [K in keyof T]: IsKnownRecord<T[K]> extends true
+          ? DeepSignal<T[K]>
+          : Signal<T[K]>;
+      }>
     : unknown);
 
 export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {

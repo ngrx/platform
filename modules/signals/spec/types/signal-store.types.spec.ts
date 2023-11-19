@@ -115,26 +115,87 @@ describe('signalStore', () => {
     );
   });
 
-  it('does not create deep signals when state slice type is an interface', () => {
+  it('creates deep signals when state type is an interface', () => {
     const snippet = `
       interface User {
         firstName: string;
         lastName: string;
       }
 
-      type State = { user: User };
+      interface State {
+        user: User;
+        num: number;
+        map: Map<string, { foo: number }>;
+        set: Set<number>;
+      }
 
       const Store = signalStore(
-        withState<State>({ user: { firstName: 'John', lastName: 'Smith' } })
+        withState<State>({
+          user: { firstName: 'John', lastName: 'Smith' },
+          num: 10,
+          map: new Map<string, { foo: number }>(),
+          set: new Set<number>(),
+        })
       );
 
       const store = new Store();
       const user = store.user;
+      const firstName = store.user.firstName;
+      const num = store.num;
+      const map = store.map;
+      const set = store.set;
     `;
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer('user', 'Signal<User>');
+    expectSnippet(snippet).toInfer('user', 'DeepSignal<User>');
+
+    expectSnippet(snippet).toInfer('firstName', 'Signal<string>');
+
+    expectSnippet(snippet).toInfer('num', 'Signal<number>');
+
+    expectSnippet(snippet).toInfer(
+      'map',
+      'Signal<Map<string, { foo: number; }>>'
+    );
+
+    expectSnippet(snippet).toInfer('set', 'Signal<Set<number>>');
+  });
+
+  it('does not create deep signals when state type is an array', () => {
+    const snippet = `
+      const Store = signalStore(withState<number[]>([]));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+  });
+
+  it('does not create deep signals when state type is Map', () => {
+    const snippet = `
+      const Store = signalStore(withState(new Map<string, { foo: number }>()));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+  });
+
+  it('does not create deep signals when state type is Set', () => {
+    const snippet = `
+      const Store = signalStore(withState(new Set<{ foo: string }>()));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
   });
 
   it('succeeds when state is an empty object', () => {
@@ -260,6 +321,7 @@ describe('signalStore', () => {
       const store = new Store();
       const name = store.x.name;
     `;
+
     expectSnippet(snippet1).toSucceed();
     expectSnippet(snippet1).toInfer(
       'name',
@@ -274,6 +336,7 @@ describe('signalStore', () => {
       const length = store.x.length;
       const name = store.x.length.name;
     `;
+
     expectSnippet(snippet2).toSucceed();
     expectSnippet(snippet2).toInfer(
       'length',
@@ -347,29 +410,26 @@ describe('signalStore', () => {
     );
   });
 
-  it('succeeds when state is an unknown record', () => {
+  it('does not create deep signals when state is an unknown record', () => {
     const snippet1 = `
       const Store = signalStore(withState<{ [key: string]: number }>({}));
       const store = new Store();
-
-      const x = store.x;
-      const y = store.y;
+      declare const storeKeys: keyof typeof store;
     `;
+
     expectSnippet(snippet1).toSucceed();
-    expectSnippet(snippet1).toInfer('x', 'Signal<number>');
-    expectSnippet(snippet1).toInfer('y', 'Signal<number>');
+    expectSnippet(snippet1).toInfer('storeKeys', 'unique symbol');
 
     const snippet2 = `
       const Store = signalStore(
         withState<{ [key: number]: { bar: string } }>({})
       );
       const store = new Store();
-      const x = store[0];
-      const y = store[1];
+      declare const storeKeys: keyof typeof store;
     `;
+
     expectSnippet(snippet2).toSucceed();
-    expectSnippet(snippet2).toInfer('x', 'DeepSignal<{ bar: string; }>');
-    expectSnippet(snippet2).toInfer('y', 'DeepSignal<{ bar: string; }>');
+    expectSnippet(snippet2).toInfer('storeKeys', 'unique symbol');
 
     const snippet3 = `
       const Store = signalStore(
@@ -379,10 +439,11 @@ describe('signalStore', () => {
         })
       );
       const store = new Store();
-      const m = store.m;
+      declare const storeKeys: keyof typeof store;
     `;
+
     expectSnippet(snippet3).toSucceed();
-    expectSnippet(snippet3).toInfer('m', 'Signal<number | { foo: boolean; }>');
+    expectSnippet(snippet3).toInfer('storeKeys', 'unique symbol');
   });
 
   it('fails when state is not an object', () => {
@@ -393,25 +454,6 @@ describe('signalStore', () => {
     expectSnippet(`const Store = signalStore(withState(null));`).toFail();
 
     expectSnippet(`const Store = signalStore(withState(true));`).toFail();
-
-    expectSnippet(
-      `const Store = signalStore(withState(['ng', 'rx']));`
-    ).toFail();
-  });
-
-  it('fails when state type is defined as an interface', () => {
-    expectSnippet(`
-      interface User {
-        firstName: string;
-        lastName: string;
-      }
-
-      const Store = signalStore(
-        withState<User>({ firstName: 'John', lastName: 'Smith' })
-      );
-    `).toFail(
-      /Type 'User' does not satisfy the constraint 'Record<string, unknown>'/
-    );
   });
 
   it('patches state via sequence of partial state objects and updater functions', () => {
