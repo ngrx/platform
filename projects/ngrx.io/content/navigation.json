@@ -270,6 +270,23 @@
               "url": "guide/component-store/usage"
             }
           ]
+        },
+        {
+          "title": "@ngrx/operators",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/operators"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/operators/install"
+            },
+            {
+              "title": "Operators",
+              "url": "guide/operators/operators"
+            }
+          ]
         }
       ]
     },
