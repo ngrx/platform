@@ -8,6 +8,36 @@ The plugin comes with a number of rules that help address most popular NgRx malp
 
 Some rules also allow automatic fixes with `ng lint --fix`.
 
+## Adding rules
+
+To use the a [rule](#rules), import the NgRx plugin via `plugins` or `extends`.
+You can add a rule by adding the rule to the `rules` collection.
+
+```json
+{
+      "plugins": ["@ngrx"],
+      "rules": {
+        "@ngrx/good-action-hygiene": "error",
+      }
+}
+```
+or 
+```json
+{
+      "extends": ["@ngrx/recommended"],
+      "rules": {
+        "@ngrx/good-action-hygiene": "error",
+      }
+}
+```
+Instead of manually configuring the rules, there are also [preconfigured configurations](#configurations). To use a configuration, add it to `extends`:
+```json
+{
+      "extends": ["@ngrx/recommended-requiring-type-checking"],
+      "rules": {}
+}
+```
+
 ## Rules
 
 <!-- DO NOT EDIT, this table is automatically generated-->
