@@ -74,7 +74,7 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
     readTypeScriptModules.ignoreExportsMatching = [/^[_ɵ]|^VERSION$/];
     readTypeScriptModules.hidePrivateMembers = true;
 
-   
+
     readTypeScriptModules.sourceFiles = [
       'store/index.ts',
       'store/testing/index.ts',
@@ -88,6 +88,10 @@ module.exports = new Package('angular-api', [basePackage, typeScriptPackage])
       'schematics/index.ts',
       'component-store/index.ts',
       'component/index.ts',
+      'signals/index.ts',
+      'signals/entities/index.ts',
+      'signals/rxjs-interop/index.ts',
+      'operators/index.ts',
     ];
 
     readFilesProcessor.fileReaders.push(packageContentFileReader);
