@@ -87,6 +87,8 @@
     "@angular/platform-browser-dynamic": "16.2.9",
     "@angular/router": "16.2.9",
     "@angular/service-worker": "16.2.9",
+    "@getpolaris.ai/sdk": "^0.0.2",
+    "@getpolaris.ai/sdk-angular": "^0.0.2",
     "@webcomponents/custom-elements": "^1.2.0",
     "ajv-formats": "^2.1.1",
     "rxjs": "~7.5.0",
