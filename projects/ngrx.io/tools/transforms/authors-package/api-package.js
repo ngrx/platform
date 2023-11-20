@@ -14,11 +14,13 @@ const packageMap = {
   'store-devtools': ['store-devtools/index.ts'],
   effects: ['effects/index.ts', 'effects/testing/index.ts'],
   entity: ['entity/index.ts'],
-  'router-store': ['router-store/index.ts'],
+  'router-store': ['router-store/index.ts', 'router-store/data-persistence/index.ts'],
   data: ['data/index.ts'],
   schematics: ['schematics/index.ts'],
   'component-store': ['component-store/index.ts'],
   component: ['component/index.ts'],
+  signals: ['signals/index.ts', 'signals/entities/index.ts', 'signals/rxjs-interop/index.ts'],
+  operators: ['operators/index.ts'],
 };
 
 
