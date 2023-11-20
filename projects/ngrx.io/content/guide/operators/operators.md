@@ -5,8 +5,7 @@ used when managing state and side effects.
 
 ## `concatLatestFrom`
 
-The `concatLatestFrom` operator functions similarly to `withLatestFrom` with one important difference-
-it lazily evaluates the provided Observable factory.
+The `concatLatestFrom` operator functions similarly to `withLatestFrom` with one important difference - it lazily evaluates the provided Observable factory.
 
 This allows you to utilize the source value when selecting additional sources to concat.
 
@@ -23,18 +22,18 @@ import { Title } from '@angular/platform-browser';
 
 import { map, tap } from 'rxjs/operators';
 
-import {Actions, concatLatestFrom, createEffect, ofType} from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { routerNavigatedAction } from '@ngrx/router-store';
 
-import * as fromRoot from '@example-app/reducers';
+import { selectRouteData } from './router.selectors';
 
 @Injectable()
 export class RouterEffects {
   updateTitle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
-      concatLatestFrom(() => this.store.select(fromRoot.selectRouteData)),
+      concatLatestFrom(() => this.store.select(selectRouteData)),
       map(([, data]) => `Book Collection - ${data['title']}`),
       tap((title) => this.titleService.setTitle(title))
     ),
@@ -45,7 +44,7 @@ export class RouterEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromRoot.State>,
+    private store: Store,
     private titleService: Title
   ) {}
 }
