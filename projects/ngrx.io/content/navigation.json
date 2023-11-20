@@ -634,6 +634,10 @@
   ],
   "docVersions": [
     {
+      "title": "v16",
+      "url": "https://v16.ngrx.io"
+    },
+    {
       "title": "v15",
       "url": "https://v15.ngrx.io"
     },

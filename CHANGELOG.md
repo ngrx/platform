@@ -1,3 +1,16 @@
+<a name="17.0.0"></a>
+
+# [17.0.0](https://github.com/ngrx/platform/compare/17.0.0-rc.0...17.0.0) (2023-11-20)
+
+### Bug Fixes
+
+- **data:** DefaultDataService getAll httpOptions fix + test ([#4134](https://github.com/ngrx/platform/issues/4134)) ([213e4c9](https://github.com/ngrx/platform/commit/213e4c9))
+- **signals:** remove state checks for better DX ([#4124](https://github.com/ngrx/platform/issues/4124)) ([5749543](https://github.com/ngrx/platform/commit/5749543))
+
+### Features
+
+- **signals:** provide ability to use interface as state type ([#4133](https://github.com/ngrx/platform/issues/4133)) ([9c8304a](https://github.com/ngrx/platform/commit/9c8304a))
+
 <a name="17.0.0-rc.0"></a>
 
 # [17.0.0-rc.0](https://github.com/ngrx/platform/compare/17.0.0-beta.0...17.0.0-rc.0) (2023-11-10)

@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/signals",
-  "version": "17.0.0-rc.0",
+  "version": "17.0.0",
   "description": "Reactive State Management with Angular Signals",
   "repository": {
     "type": "git",
