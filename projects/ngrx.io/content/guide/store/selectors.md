@@ -327,26 +327,6 @@ export class UsersComponent {
 
 ### Selecting with Equality Function
 Similar to the `computed` function, the `selectSignal` method also accepts the equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
-### State Signal in ComponentStore
-The state signal is another addition to the ComponentStore. Instead of using selectSignal, it can be used together with the computed function to create derived signals.
-```typescript
-import { computed, Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
-
-import { User } from './user.model';
-
-type UsersState = { users: User[]; query: string };
-
-@Injectable()
-export class UsersStore extends ComponentStore<UsersState> {
-  readonly users = computed(() => this.state().users);
-  readonly query = computed(() => this.state().query);
-
-  readonly filteredUsers = computed(() =>
-    this.users().filter(({ name }) => name.includes(this.query()))
-  );
-}
-```
 ## Advanced Usage
 
 Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
