@@ -9,8 +9,8 @@
       "title": "Docs"
     },
     {
-      "url": "enterprise-support",
-      "title": "Enterprise Support"
+      "url": "workshops",
+      "title": "Workshops"
     },
     {
       "url": "https://blog.ngrx.io",
@@ -34,8 +34,8 @@
           "title": "Docs"
         },
         {
-          "url": "enterprise-support",
-          "title": "Enterprise Support"
+          "url": "workshops",
+          "title": "Workshops"
         },
         {
           "url": "https://blog.ngrx.io",
@@ -567,9 +567,9 @@
       "tooltip": "Contributing"
     },
     {
-      "url": "enterprise-support",
-      "title": "Enterprise Support",
-      "tooltip": "Enterprise Support"
+      "url": "workshops",
+      "title": "Workshops",
+      "tooltip": "Workshops"
     }
   ],
   "Footer": [
