@@ -60,12 +60,13 @@ export class ContactFormComponent {
         email: string;
         body: string;
     }) {
+        const toEmails = ['info@ts.dev', 'brandon@ngrx.io', 'marko@ngrx.io', 'alex@ngrx.io'];
         addDoc(collection(this.firestore, 'mail'), {
-            to: ['info@ts.dev', 'hello+ngrx@liveloveapp.com'],
+            to: toEmails,
             from: contact.email,
-            replyTo: [contact.email, 'info@ts.dev', 'hello+ngrx@liveloveapp.com'],
+            replyTo: [contact.email, ...toEmails],
             message: {
-                subject: 'NgRx Enterprise Support inquiry',
+                subject: 'NgRx Workshops contact',
                 text: `${contact.body}\n${contact.fromName}`
             }
         }).then(
