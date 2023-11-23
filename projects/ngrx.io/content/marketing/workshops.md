@@ -21,8 +21,8 @@ The workshop covers both NgRx global `Store` and local state management solution
 
 We have the following workshops:
 
-- January 17 to 19, 2024 in a US-friendly timezone (Start time is 8am PT / 11am ET). <a href="https://ti.to/ngrx/workshop-jan-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
-- February 21 to 23, 2024 in a Europe-friendly timezone (Start time is 10 am CET). <a href="https://ti.to/ngrx/workshop-feb-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
+- January 17 to 19, 2024 in a US-friendly timezone (Start time is 8am PT / 11am ET) <a href="https://ti.to/ngrx/workshop-jan-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
+- February 21 to 23, 2024 in a Europe-friendly timezone (Start time is 10am CET) <a href="https://ti.to/ngrx/workshop-feb-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
 
 ## Participating NgRx team members
 
@@ -49,7 +49,7 @@ We have the following workshops:
         a Google Developer Expert in Angular, and an organizer of the Angular Belgrade group.
         <p>Marko's contributions include <code>createFeature()</code>, overhaul of the <code>@ngrx/component</code>
             library, and continuous maintenance of NgRx libraries.</p>
-        <p>Additionally, Marko is a lead author of <code>@ngrx/signals</code> library</p>
+        <p>Additionally, Marko is a lead author of <code>@ngrx/signals</code> library.</p>
         <p>He enjoys contributing to open source software, sharing knowledge through technical articles and talks, and
             playing guitar.</p>
         <p>Marko is also a Master of Science in Software Engineering from the University of Belgrade.</p>
