@@ -294,6 +294,39 @@ export const selectFeatureCount = createSelector(
 );
 </code-example>
 
+## Using Signal Selector
+The `selectSignal` method expects a selector as an input argument and returns a signal of the selected state slice. It has a similar signature to the `select` method, but unlike `select`, `selectSignal` returns a signal instead of an observable.
+
+### Example Usage in Components
+```typescript
+import { Component, inject } from '@angular/core';
+import { NgFor } from '@angular/common';
+import { Store } from '@ngrx/store';
+
+import { selectUsers } from './users.selectors';
+
+@Component({
+  standalone: true,
+  imports: [NgFor],
+  template: `
+    <h1>Users</h1>
+    <ul>
+      <li *ngFor="let user of users()">
+        {{ user.name }}
+      </li>
+    </ul>
+  `
+})
+export class UsersComponent {
+  private readonly store = inject(Store);
+
+  // type: Signal<User[]>
+  readonly users = this.store.selectSignal(selectUsers);
+}
+```
+
+### Selecting with Equality Function
+Similar to the `computed` function, the `selectSignal` method also accepts the equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
 ## Advanced Usage
 
 Selectors empower you to compose a [read model for your application state](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs#solution).
