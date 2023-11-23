@@ -37,6 +37,7 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
       if (!isSignal(target[prop])) {
         Object.defineProperty(target, prop, {
           value: computed(() => target()[prop]),
+          configurable: true,
         });
       }
 
