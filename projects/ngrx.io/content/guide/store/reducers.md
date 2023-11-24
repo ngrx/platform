@@ -142,7 +142,7 @@ bootstrapApplication(AppComponent, {
 
 <div class="alert is-important">
 
-**Note:** Although you can register reducers in the `provideStore()` function, we recommened keeping `provideStore()` empty and using the `provideState()` function to register feature states in the root `providers` array.
+**Note:** Although you can register reducers in the `provideStore()` function, we recommend keeping `provideStore()` empty and using the `provideState()` function to register feature states in the root `providers` array.
 
 </div>
 
