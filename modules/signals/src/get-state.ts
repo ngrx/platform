@@ -1,7 +1,7 @@
-import { STATE_SIGNAL, SignalStateMeta } from './signal-state';
+import { STATE_SIGNAL, StateSignal } from './state-signal';
 
 export function getState<State extends object>(
-  signalState: SignalStateMeta<State>
+  stateSignal: StateSignal<State>
 ): State {
-  return signalState[STATE_SIGNAL]();
+  return stateSignal[STATE_SIGNAL]();
 }

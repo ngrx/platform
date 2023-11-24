@@ -8,7 +8,7 @@ import {
   withMethods,
   withState,
 } from '../src';
-import { STATE_SIGNAL } from '../src/signal-state';
+import { STATE_SIGNAL } from '../src/state-signal';
 import { createLocalService } from './helpers';
 
 describe('signalStore', () => {

@@ -1,8 +1,8 @@
-import { effect, isSignal } from '@angular/core';
 import * as angular from '@angular/core';
+import { effect, isSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { patchState, signalState } from '../src';
-import { STATE_SIGNAL } from '../src/signal-state';
+import { STATE_SIGNAL } from '../src/state-signal';
 
 describe('signalState', () => {
   const initialState = {

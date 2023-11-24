@@ -33,7 +33,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'Store',
-      'Type<{ foo: Signal<string>; bar: Signal<number[]>; [STATE_SIGNAL]: WritableSignal<{ foo: string; bar: number[]; }>; }>'
+      'Type<{ foo: Signal<string>; bar: Signal<number[]>; } & StateSignal<{ foo: string; bar: number[]; }>>'
     );
   });
 
@@ -63,7 +63,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'store',
-      '{ user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; [STATE_SIGNAL]: WritableSignal<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>; }'
+      '{ user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; } & StateSignal<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>'
     );
 
     expectSnippet(snippet).toInfer(
@@ -203,10 +203,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer(
-      'Store',
-      'Type<{ [STATE_SIGNAL]: WritableSignal<{}>; }>'
-    );
+    expectSnippet(snippet).toInfer('Store', 'Type<{} & StateSignal<{}>>');
   });
 
   it('succeeds when state slices are union types', () => {
@@ -237,7 +234,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'store',
-      '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; [STATE_SIGNAL]: WritableSignal<...>; }'
+      '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSignal<{ foo: number | { ...; }; bar: { ...; }; x: { ...; }; }>'
     );
 
     expectSnippet(snippet).toInfer('foo', 'Signal<number | { s: string; }>');
@@ -277,7 +274,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet1).toInfer(
       'Store',
-      'Type<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; [STATE_SIGNAL]: WritableSignal<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>; }>'
+      'Type<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; } & StateSignal<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
     );
 
     const snippet2 = `
@@ -294,7 +291,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet2).toInfer(
       'Store',
-      ' Type<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; [STATE_SIGNAL]: WritableSignal<{ apply: string; bind: { foo: string; }; prototype: string[]; }>; }>'
+      'Type<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; } & StateSignal<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
     );
 
     const snippet3 = `
@@ -310,7 +307,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet3).toInfer(
       'Store',
-      'Type<{ length: Signal<number>; caller: Signal<undefined>; [STATE_SIGNAL]: WritableSignal<{ length: number; caller: undefined; }>; }>'
+      'Type<{ length: Signal<number>; caller: Signal<undefined>; } & StateSignal<{ length: number; caller: undefined; }>>'
     );
   });
 
@@ -365,7 +362,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'store',
-      '{ bar: DeepSignal<{ baz?: number | undefined; }>; x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; [STATE_SIGNAL]: WritableSignal<{ bar: { baz?: number | undefined; }; x: { y?: { ...; } | undefined; }; }>; }'
+      '{ bar: DeepSignal<{ baz?: number | undefined; }>; x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; } & StateSignal<{ bar: { baz?: number | undefined; }; x: { y?: { z: boolean; } | undefined; }; }>'
     );
 
     expectSnippet(snippet).toInfer(
@@ -594,7 +591,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'store',
-      '{ ngrx: Signal<string>; x: DeepSignal<{ y: string; }>; signals: Signal<number[]>; mgmt: (arg: boolean) => number; [STATE_SIGNAL]: WritableSignal<{ ngrx: string; x: { y: string; }; }>; }'
+      '{ ngrx: Signal<string>; x: DeepSignal<{ y: string; }>; signals: Signal<number[]>; mgmt: (arg: boolean) => number; } & StateSignal<{ ngrx: string; x: { y: string; }; }>'
     );
   });
 
@@ -622,7 +619,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'store',
-      '{ foo: Signal<number>; bar: Signal<string>; baz: (x: number) => void; [STATE_SIGNAL]: WritableSignal<{ foo: number; }>; }'
+      '{ foo: Signal<number>; bar: Signal<string>; baz: (x: number) => void; } & StateSignal<{ foo: number; }>'
     );
   });
 

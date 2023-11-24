@@ -1,5 +1,5 @@
 import { excludeKeys } from './helpers';
-import { STATE_SIGNAL, SignalStateMeta } from './signal-state';
+import { STATE_SIGNAL, StateSignal } from './state-signal';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
@@ -20,7 +20,7 @@ export function withMethods<
       SignalStoreSlices<Input['state']> &
         Input['signals'] &
         Input['methods'] &
-        SignalStateMeta<Prettify<Input['state']>>
+        StateSignal<Prettify<Input['state']>>
     >
   ) => Methods
 ): SignalStoreFeature<Input, EmptyFeatureResult & { methods: Methods }> {

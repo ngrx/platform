@@ -8,7 +8,7 @@ import { IsKnownRecord } from './ts-helpers';
 
 // An extended Signal type that enables the correct typing
 // of nested signals with the `name` or `length` key.
-interface Signal<T> extends NgSignal<T> {
+export interface Signal<T> extends NgSignal<T> {
   name: unknown;
   length: unknown;
 }

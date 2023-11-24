@@ -1,9 +1,9 @@
-import { STATE_SIGNAL, SignalStateMeta } from './signal-state';
+import { STATE_SIGNAL, StateSignal } from './state-signal';
 import {
   EmptyFeatureResult,
   SignalStoreFeature,
-  SignalStoreSlices,
   SignalStoreFeatureResult,
+  SignalStoreSlices,
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
@@ -12,7 +12,7 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
     SignalStoreSlices<Input['state']> &
       Input['signals'] &
       Input['methods'] &
-      SignalStateMeta<Prettify<Input['state']>>
+      StateSignal<Prettify<Input['state']>>
   >
 ) => void;
 

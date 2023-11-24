@@ -7,7 +7,7 @@ import {
   withMethods,
   withState,
 } from '../src';
-import { STATE_SIGNAL } from '../src/signal-state';
+import { STATE_SIGNAL } from '../src/state-signal';
 
 describe('signalStoreFeature', () => {
   function withCustomFeature1() {
