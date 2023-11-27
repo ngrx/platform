@@ -134,7 +134,7 @@ export class BooksPageComponent implements OnInit {
 
 ## OnDestroy
 
-ComponentStore also implements the `OnDestroy` interface from `@angulare/core` to complete any internally created observables.
+ComponentStore also implements the `OnDestroy` interface from `@angular/core` to complete any internally created observables.
 
 It also exposes a `destroy$` property on the ComponentStore class that can be used instead of manually creating a `Subject` to unsubscribe from any observables created in the component.
 
