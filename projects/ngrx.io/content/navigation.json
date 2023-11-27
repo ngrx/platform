@@ -272,6 +272,31 @@
           ]
         },
         {
+          "title": "@ngrx/signals",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/signals"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/signals/install"
+            },
+            {
+              "title": "Signal State",
+              "url": "guide/signals/state"
+            }, 
+            {
+              "title": "Signal Store",
+              "url": "guide/signals/store"
+            },            
+            {
+              "title": "Lifecycle Hooks",
+              "url": "guide/signals/lifecycle-hooks"
+            }
+          ]
+        },
+        {
           "title": "@ngrx/operators",
           "children": [
             {
