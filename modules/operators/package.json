@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/operators",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "description": "Shared RxJS Operators for NgRx libraries",
   "repository": {
     "type": "git",

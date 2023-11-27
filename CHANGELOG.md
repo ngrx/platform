@@ -1,3 +1,12 @@
+<a name="17.0.1"></a>
+
+## [17.0.1](https://github.com/ngrx/platform/compare/17.0.0...17.0.1) (2023-11-27)
+
+### Bug Fixes
+
+- **signals:** allow using signalStore and signalState in TS libs ([#4152](https://github.com/ngrx/platform/issues/4152)) ([ecc247c](https://github.com/ngrx/platform/commit/ecc247c))
+- **signals:** define deep signals as configurable properties ([#4147](https://github.com/ngrx/platform/issues/4147)) ([890ca5b](https://github.com/ngrx/platform/commit/890ca5b))
+
 <a name="17.0.0"></a>
 
 # [17.0.0](https://github.com/ngrx/platform/compare/17.0.0-rc.0...17.0.0) (2023-11-20)
