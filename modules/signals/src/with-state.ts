@@ -1,7 +1,7 @@
 import { computed } from '@angular/core';
 import { toDeepSignal } from './deep-signal';
 import { excludeKeys } from './helpers';
-import { STATE_SIGNAL } from './signal-state';
+import { STATE_SIGNAL } from './state-signal';
 import {
   EmptyFeatureResult,
   InnerSignalStore,

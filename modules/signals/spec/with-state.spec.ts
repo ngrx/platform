@@ -1,6 +1,6 @@
 import { isSignal, signal } from '@angular/core';
 import { withComputed, withMethods, withState } from '../src';
-import { STATE_SIGNAL } from '../src/signal-state';
+import { STATE_SIGNAL } from '../src/state-signal';
 import { getInitialInnerStore } from '../src/signal-store';
 
 describe('withState', () => {

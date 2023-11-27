@@ -1,5 +1,5 @@
 import { patchState, signalState, signalStore, withState } from '../src';
-import { STATE_SIGNAL } from '../src/signal-state';
+import { STATE_SIGNAL } from '../src/state-signal';
 
 describe('patchState', () => {
   const initialState = {

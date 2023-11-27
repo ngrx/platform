@@ -1,14 +1,14 @@
-import { STATE_SIGNAL, SignalStateMeta } from './signal-state';
+import { STATE_SIGNAL, StateSignal } from './state-signal';
 
 export type PartialStateUpdater<State extends object> = (
   state: State
 ) => Partial<State>;
 
 export function patchState<State extends object>(
-  signalState: SignalStateMeta<State>,
+  stateSignal: StateSignal<State>,
   ...updaters: Array<Partial<State & {}> | PartialStateUpdater<State & {}>>
 ): void {
-  signalState[STATE_SIGNAL].update((currentState) =>
+  stateSignal[STATE_SIGNAL].update((currentState) =>
     updaters.reduce(
       (nextState: State, updater) => ({
         ...nextState,

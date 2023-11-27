@@ -1,6 +1,6 @@
 import { Signal } from '@angular/core';
 import { DeepSignal } from './deep-signal';
-import { SignalStateMeta } from './signal-state';
+import { StateSignal } from './state-signal';
 import { IsKnownRecord, Prettify } from './ts-helpers';
 
 export type SignalStoreConfig = { providedIn: 'root' };
@@ -15,12 +15,11 @@ export type SignalStoreSlices<State> = IsKnownRecord<
     }
   : {};
 
-export type SignalStore<FeatureResult extends SignalStoreFeatureResult> =
+export type SignalStoreProps<FeatureResult extends SignalStoreFeatureResult> =
   Prettify<
     SignalStoreSlices<FeatureResult['state']> &
       FeatureResult['signals'] &
-      FeatureResult['methods'] &
-      SignalStateMeta<Prettify<FeatureResult['state']>>
+      FeatureResult['methods']
   >;
 
 export type SignalsDictionary = Record<string, Signal<unknown>>;
@@ -41,7 +40,7 @@ export type InnerSignalStore<
   signals: Signals;
   methods: Methods;
   hooks: SignalStoreHooks;
-} & SignalStateMeta<State>;
+} & StateSignal<State>;
 
 export type SignalStoreFeatureResult = {
   state: object;
@@ -61,7 +60,7 @@ export type SignalStoreFeature<
 export type MergeFeatureResults<
   FeatureResults extends SignalStoreFeatureResult[]
 > = FeatureResults extends []
-  ? {}
+  ? EmptyFeatureResult
   : FeatureResults extends [infer First extends SignalStoreFeatureResult]
   ? First
   : FeatureResults extends [
