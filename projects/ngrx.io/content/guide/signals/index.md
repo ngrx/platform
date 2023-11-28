@@ -7,7 +7,7 @@ NgRx Signals is a standalone library that provides a reactive state management s
 - **Simple and Intuitive:** Designed with ease of use in mind, NgRx Signals provides a straightforward and intuitive API for developers to efficiently work with Angular Signals.
 - **Lightweight and Performant:** Keep your application size optimal with a lightweight library that adds minimal overhead to your projects and performs efficiently.
 - **Declarative:** NgRx Signals is built around the concept of declarative programming, ensuring clean and concise code.
-- **Modular and Scalable:** Designed with modularity in mind, NgRx Signals enables the creation of independent building blocks that can be easily combined for flexible and scalable implementations.
+- **Modular, Extensible, and Scalable:** Modularity and extensibility are the guiding principles of this library. NgRx Signals enables the creation of independent building blocks that can be easily combined for flexible and scalable implementations.
 - **Flexible, but Opinionated:** Strike a balance between flexibility and opinionation, offering customization where needed while providing thoughtful conventions for a smooth development experience.
 - **Type-safe:** NgRx Signals is designed with a strong focus on type safety, ensuring prevention of errors and misuse at compile time.
 
