@@ -272,6 +272,44 @@
           ]
         },
         {
+          "title": "@ngrx/signals",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/signals"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/signals/install"
+            },
+            {
+              "title": "SignalStore",
+              "children": [
+                {
+                  "title": "Core Concepts",
+                  "url": "guide/signals/signal-store"
+                },
+                {
+                  "title": "Custom Store Features",
+                  "url": "guide/signals/signal-store/custom-store-features"
+                },
+                {
+                  "title": "Entity Management",
+                  "url": "guide/signals/signal-store/entity-management"
+                }
+              ]
+            },
+            {
+              "title": "SignalState",
+              "url": "guide/signals/signal-state"
+            },
+            {
+              "title": "RxJS Integration",
+              "url": "guide/signals/rxjs-integration"
+            }
+          ]
+        },
+        {
           "title": "@ngrx/operators",
           "children": [
             {
