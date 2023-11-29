@@ -178,13 +178,6 @@
             "url": "https://github.com/LMFinney/ngrx-enums",
             "rev": true
           },
-          "ngrx-ducks": {
-            "title": "ngrx-ducks",
-            "desc":
-              "A plugin for NgRx creating dynamic store facades",
-              "url": "https://co-it.gitbook.io/ngrx-ducks/",
-              "rev": true
-          },
           "ngrx-handlers": {
             "title": "ngrx-handlers",
             "desc": "A plugin for generating actions and reducer based on the handler map",
