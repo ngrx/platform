@@ -19,6 +19,8 @@ NgRx packages are divided into a few main categories
 - [Router Store](guide/router-store) - Bindings to connect the Angular Router to @ngrx/store.
 - [Entity](guide/entity) - Entity State adapter for managing record collections.
 - [ComponentStore](guide/component-store) - Standalone library for managing local/component state.
+- [Signals](guide/signals) - Reactive store and set of utilities for Angular Signals.
+- [Operators](guide/operators) - Shared RxJS operators for NgRx libraries.
 
 ### Data
 
