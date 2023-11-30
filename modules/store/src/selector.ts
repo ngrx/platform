@@ -29,7 +29,7 @@ export interface MemoizedSelector<
 }
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue} or {@link https://ngrx.io/guide/migration/v12#ngrxstore suggested migration}
  */
 export interface MemoizedSelectorWithProps<
   State,
