@@ -293,6 +293,31 @@
             {
               "title": "Lifecycle Hooks",
               "url": "guide/signals/lifecycle-hooks"
+            },
+            {
+              "title": "SignalStore",
+              "children": [
+                {
+                  "title": "Core Concepts",
+                  "url": "guide/signals/signal-store"
+                },
+                {
+                  "title": "Custom Store Features",
+                  "url": "guide/signals/signal-store/custom-store-features"
+                },
+                {
+                  "title": "Entity Management",
+                  "url": "guide/signals/signal-store/entity-management"
+                }
+              ]
+            },
+            {
+              "title": "SignalState",
+              "url": "guide/signals/signal-state"
+            },
+            {
+              "title": "RxJS Integration",
+              "url": "guide/signals/rxjs-integration"
             }
           ]
         },
