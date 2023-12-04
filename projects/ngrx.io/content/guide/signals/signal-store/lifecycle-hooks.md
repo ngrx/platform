@@ -1,4 +1,4 @@
-## Lifecycle Hooks
+# Lifecycle Hooks
 
 You can also create lifecycle hooks that are called when the store is created and destroyed, to initialize fetching data, updating state, and more.
 
