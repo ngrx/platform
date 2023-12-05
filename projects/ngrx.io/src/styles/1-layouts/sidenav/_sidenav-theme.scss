@@ -42,7 +42,7 @@
         }
 
         &:hover {
-          background-color: if($is-dark-theme, constants.$purple-grey-800, constants.$lightgray);
+          background-color: if($is-dark-theme, constants.$darkgray, constants.$lightgray);
           color: if($is-dark-theme, constants.$dull-magenta-700, constants.$purple);
           text-shadow: 0 0 5px if($is-dark-theme, constants.$black, constants.$white);
 

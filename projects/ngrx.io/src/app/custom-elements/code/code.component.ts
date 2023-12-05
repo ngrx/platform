@@ -17,7 +17,7 @@ import { tap } from 'rxjs/operators';
  * If linenums is not set, this is the default maximum number of lines that
  * an example can display without line numbers.
  */
-const DEFAULT_LINE_NUMS_COUNT = 10;
+const DEFAULT_LINE_NUMS_COUNT = 1_000;
 
 /**
  * Formatted Code Block
