@@ -21,8 +21,7 @@ const smallMultiLineCode = `
   &lt;/hero-team&gt;
 &lt;/hero-details&gt;`;
 
-const bigMultiLineCode =
-  smallMultiLineCode + smallMultiLineCode + smallMultiLineCode;
+const bigMultiLineCode = smallMultiLineCode.repeat(1_000);
 
 describe('CodeComponent', () => {
     let hostComponent: HostComponent;

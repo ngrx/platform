@@ -7,7 +7,7 @@
 
   code-example {
     &:not(.no-box) {
-      background-color: if($is-dark-theme, constants.$darkgray, rgb(constants.$backgroundgray, 0.2));
+      background-color: if($is-dark-theme, constants.$deepgray, rgb(constants.$backgroundgray, 0.2));
       border: 0.5px solid if($is-dark-theme, constants.$darkgray, constants.$lightgray);
       color: constants.$darkgray;
     }
