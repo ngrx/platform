@@ -18,7 +18,7 @@ import type { OnRunEffects } from '@ngrx/effects'
 import { EffectConfig } from '@ngrx/effects'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { createAction } from '@ngrx/store'
-import { map, tap } from 'rxjs/operators'
+import { map, tap, timer, takeUntil, merge,  } from 'rxjs'
 import { inject } from '@angular/core';
 
 const foo = createAction('FOO')
@@ -157,99 +157,118 @@ class Effect {
 
 const validInject: () => RunTests['valid'] = () => [
   `
-${setup}
-class Effect {
-  private actions$ = inject(Actions);
-  foo$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(foo),
-      map(() => bar()),
-    ),
-  )
-}`,
-  `
-${setup}
-class Effect {
-  private actions$ = inject(Actions);
-  foo$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(foo),
-      map(() => bar()),
-    )
-  })
-}`,
-  `
-${setup}
-class Effect {
-  private actions$ = inject(Actions);
-  foo$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(fromFoo.foo),
-      map(() => fromFoo.bar()),
-    )
-  })
-}`,
-  `
-${setup}
-class Effect {
-  private actions = inject(Actions);
-  foo$ = createEffect(() => {
-    return this.actions.pipe(
-      ofType(foo),
-      mapTo(bar()),
-    )
-  })
-}`,
-  `
-${setup}
-class Effect {
-  private actions$ = inject(Actions);
-  foo$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(foo),
-      tap(() => alert('hi'))
-    )
-    }, { dispatch: false }
-  )
-}`,
-  `
-${setup}
-class Effect {
-  foo$: CreateEffectMetadata
-  private actions$ = inject(Actions);
-
-  constructor() {
-    this.foo$ = createEffect(() =>
+  ${setup}
+  class Effect {
+    private actions$ = inject(Actions);
+    foo$ = createEffect(() =>
       this.actions$.pipe(
-        ofType(genericFoo),
-        map(() => genericBar()),
+        ofType(foo),
+        map(() => bar()),
       ),
     )
-  }
-}`,
+  }`,
+  `
+  ${setup}
+  class Effect {
+    private actions$ = inject(Actions);
+    foo$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(foo),
+        map(() => bar()),
+      )
+    })
+  }`,
+  `
+  ${setup}
+  class Effect {
+    private actions$ = inject(Actions);
+    foo$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(fromFoo.foo),
+        map(() => fromFoo.bar()),
+      )
+    })
+  }`,
+  `
+  ${setup}
+  class Effect {
+    private actions = inject(Actions);
+    foo$ = createEffect(() => {
+      return this.actions.pipe(
+        ofType(foo),
+        mapTo(bar()),
+      )
+    })
+  }`,
+  `
+  ${setup}
+  class Effect {
+    private actions$ = inject(Actions);
+    foo$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(foo),
+        tap(() => alert('hi'))
+      )
+      }, { dispatch: false }
+    )
+  }`,
+  `
+  ${setup}
+  class Effect {
+    foo$: CreateEffectMetadata
+    private actions$ = inject(Actions);
+
+    constructor() {
+      this.foo$ = createEffect(() =>
+        this.actions$.pipe(
+          ofType(genericFoo),
+          map(() => genericBar()),
+        ),
+      )
+    }
+  }`,
+  `
+  ${setup}
+  class Effect {
+    private actions$ = otherInject(Actions);
+    foo$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(foo),
+        tap(() => alert('hi'))
+      )
+      }, { dispatch: false }
+    )
+  }`,
+  `
+  ${setup}
+  class Effect {
+    private actions$ = inject(OtherActions);
+    foo$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(foo),
+        tap(() => alert('hi'))
+      )
+      }, { dispatch: false }
+    )
+  }`,
+  // https://github.com/ngrx/platform/issues/4168
   `
 ${setup}
 class Effect {
-  private actions$ = otherInject(Actions);
+  actions$: Actions = inject(Actions);
   foo$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(foo),
-      tap(() => alert('hi'))
-    )
-    }, { dispatch: false }
-  )
-}`,
-  `
-${setup}
-class Effect {
-  private actions$ = inject(OtherActions);
-  foo$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(foo),
-      tap(() => alert('hi'))
-    )
-    }, { dispatch: false }
-  )
+      switchMap(() => {
+        return timer(500).pipe(
+          map(() => {
+            return bar();
+          }),
+          takeUntil(merge(timer(1000), this.actions$.pipe(ofType(foo))))
+        );
+      })
+    );
+  });
 }`,
 ];
 
