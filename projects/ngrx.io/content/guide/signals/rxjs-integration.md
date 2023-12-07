@@ -76,14 +76,14 @@ import { UsersStore } from './users.store';
   standalone: true,
   imports: [SearchBoxComponent, UserListComponent],
   template: `
-    <h1>Users (RxJS Integration)</h1>
+    &lt;h1&gt;Users (RxJS Integration)&lt;/h1&gt;
 
-    <app-search-box
+    &lt;app-search-box
       [query]="store.query()"
       (queryChange)="store.updateQuery($event)"
-    />
+    /&gt;
 
-    <app-user-list [users]="store.users()" [isLoading]="store.isLoading()" />
+    &lt;app-user-list [users]="store.users()" [isLoading]="store.isLoading()" /&gt;
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
