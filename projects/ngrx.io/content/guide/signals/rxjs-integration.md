@@ -1,10 +1,10 @@
-# Opt-In Interopability with RxJS
+# RxJS Integration
 
-RxJS is still a major part of NgRx and the Angular ecosystem, and the NgRx Signals package provides **opt-in** usage to interact with RxJS observables using the rxMethod function.
+RxJS is still a major part of NgRx and the Angular ecosystem, and the NgRx Signals package provides **opt-in** usage to interact with RxJS observables using the `rxMethod` function.
 
 The `rxMethod` function allows you to define a method that can receive a signal or observable, read its latest values, and perform additional operations with an observable.
 
-```ts
+<code-example header="users.store.ts">
 import { inject } from '@angular/core';
 import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
 import {
@@ -35,11 +35,6 @@ export const UsersStore = signalStore(
     updateQuery(query: string) {
       patchState(store, { query });
     },
-    async loadAll() {
-      patchState(store, { isLoading: true });
-      const users = await usersService.getAll();
-      patchState(store, { users, isLoading: false });
-    },
     loadByQuery: rxMethod&lt;;string&gt;(
       pipe(
         debounceTime(300),
@@ -63,13 +58,13 @@ export const UsersStore = signalStore(
     },
   }),
 );
-```
+</code-example>
 
 The example `UserStore` above uses the `rxMethod` operator to create a method that loads the users on initialization of the store based on a query string.
 
 The `UsersStore` can then be used in the component, along with its additional methods, providing a clean, structured way to manage state with signals, combined with the power of RxJS observable streams for asynchronous behavior.
 
-```ts
+<code-example header="users.component.ts">
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { SearchBoxComponent } from './ui/search-box.component';
@@ -95,4 +90,4 @@ import { UsersStore } from './users.store';
 export default class UsersComponent {
   readonly store = inject(UsersStore);
 }
-```
+</code-example>

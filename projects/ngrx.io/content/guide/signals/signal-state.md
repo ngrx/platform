@@ -2,7 +2,7 @@
 
 Not every piece of state needs its own store. For this use case, `@ngrx/signals` comes with a `signalState` utility.
 
-The `signlState` function is used: 
+The `signalState` function is used: 
 
 - To create and operate on small slices of state.
 - Directly in your component class, service, or a standalone function.
