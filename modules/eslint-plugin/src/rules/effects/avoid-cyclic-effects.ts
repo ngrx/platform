@@ -149,9 +149,21 @@ export default createRule<Options, MessageIds>({
       return [typeChecker.typeToString(actionType)];
     }
 
+    let firstPipe = true;
     return {
-      [`${createEffectExpression}:not([arguments.1]:has(Property[key.name='dispatch'][value.value=false])) CallExpression[callee.property.name='pipe'][callee.object.property.name=${actionsNames}]`]:
-        checkNode,
+      [`${createEffectExpression}:not([arguments.1]:has(Property[key.name='dispatch'][value.value=false])) CallExpression[callee.property.name='pipe'][callee.object.property.name=${actionsNames}]`](
+        node
+      ) {
+        if (firstPipe) {
+          checkNode(node);
+          firstPipe = false;
+          return;
+        }
+      },
+
+      [`${createEffectExpression}:not([arguments.1]:has(Property[key.name='dispatch'][value.value=false])) CallExpression[callee.property.name='pipe']:exit`]() {
+        firstPipe = true;
+      },
     };
   },
 });
