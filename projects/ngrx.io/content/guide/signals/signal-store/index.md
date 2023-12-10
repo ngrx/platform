@@ -101,7 +101,7 @@ export default class CounterComponent {
 
 You can also define a signal store to be used a global level. When defining the signal store, use the `providedIn` syntax:
 
-<code-example header="counter.component.ts">
+<code-example header="counter.store.ts">
 import { signalStore, withState } from '@ngrx/signals';
 
 export const CounterStore = signalStore(
@@ -112,7 +112,7 @@ export const CounterStore = signalStore(
 
 Now the store can be used globally across the application using a singleton instance.
 
-<code-example header="counter.store.ts" linenumbers="false">
+<code-example header="counter.component.ts" linenumbers="false">
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CounterStore } from './counter.store';
