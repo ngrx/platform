@@ -49,7 +49,7 @@ export class EntityComponent implements OnInit {
     // add a single entity
     patchState(this.todoStore, addEntity({ id: 1, name: 'Car Washing', finished: false }));
 
-    // add multiple entities
+    // add multipe entities
     patchState(
       this.todoStore,
       addEntities([
