@@ -46,7 +46,7 @@ You can also define methods that are exposed publicly to operate on the store wi
 
 <code-example header="counter.store.ts">
 import { computed } from '@angular/core';
-import { signalStore, patchState, withComputed, withMethods } from '@ngrx/signals';
+import { signalStore, patchState, withComputed, withMethods, withState } from '@ngrx/signals';
 
 export const CounterStore = signalStore(
   withState({ count: 0 }),
