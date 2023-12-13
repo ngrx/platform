@@ -92,7 +92,7 @@ Updating and removing entities follow the same patterns as adding or setting the
 
 If an entity does not exist, it will not throw an error. This rule applies to all update and remove functions.
 
-The following example shows how to add, update and remove an entity.
+The following example shows how to add, update, and remove an entity.
 
 ```typescript
 patchState(
