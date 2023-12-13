@@ -61,7 +61,7 @@ export class EntityComponent implements OnInit {
 }
 ```
 
-If you add an entity with an existing id, NgRx skips it silently, i.e., it doesn't throw an error.
+If you add an entity with an existing id, the original entity is not overwritten, and no error is thrown.
 
 In this example, the todo will stick to "Cat Feeding".
 
