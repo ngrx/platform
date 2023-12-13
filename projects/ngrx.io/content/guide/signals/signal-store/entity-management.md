@@ -159,7 +159,7 @@ patchState(
 
 For the predicate version, `updateEntities` requires an object literal with `predicate` and `changes`. `removeEntities` works with the simple predicate function.
 
-Note that the predicate function needs to return `false` or `true`. A truthy or falsy value is incorrect.
+Note that the predicate function needs to **explicitly** return `true` or `false`. A truthy or falsy value is incorrect.
 
 The alternative version with an array of ids goes like this:
 
