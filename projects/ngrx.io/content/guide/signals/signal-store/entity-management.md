@@ -392,6 +392,6 @@ function withPersistedEntities<Entity extends { id: number }>(EntityService: Pro
 const TodoStore = signalStore(withPersistedEntities<Todo>(TodoService), withHooks({ onInit: (store) => store.load() }));
 ```
 
-The `withPersistedEntities` uses internally `withEntities` and adds the communication with the API via requesting an `EntityService`.
+The `withPersistedEntities` uses internally `withEntities` and adds the communication with the API through requesting an `EntityService`.
 
 For the `Todo` entity, we provide the `TodoService` and have a fully functional CRUD with a few lines of code.
