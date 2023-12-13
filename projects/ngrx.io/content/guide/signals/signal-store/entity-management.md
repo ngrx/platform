@@ -63,7 +63,7 @@ export class EntityComponent implements OnInit {
 
 If you add an entity with an existing id, the original entity is not overwritten, and no error is thrown.
 
-In this example, the todo will stick to "Cat Feeding".
+In this example, the todo remains as "Cat Feeding".
 
 ```typescript
 patchState(this.todoStore, addEntity({ id: 1, name: 'Cat Feeding', finished: false }));
