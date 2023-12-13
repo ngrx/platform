@@ -215,7 +215,7 @@ patchState(
 patchState(this.todoStore, setEntity({ key: 4, name: 'Dog Feeding', finished: false }, { idKey: 'key' }));
 ```
 
-The `update*` and `remove*` methods, which expect an id value, will automatically pick the right one. That is possible because every entity belongs to a map with its id as the key.
+The `update*` and `remove*` methods, which expect an id value, automatically pick the right one. That is possible because every entity belongs to a map with its id as the key.
 
 Theoretically, adding the same entity twice with different id names would be possible. For obvious reasons, we discourage you from doing that.
 
