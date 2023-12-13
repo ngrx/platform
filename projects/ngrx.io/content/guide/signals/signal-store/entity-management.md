@@ -90,7 +90,7 @@ Updating and removing entities follow the same patterns as adding or setting the
 - Updating: `updateEntity`, `updateEntities`
 - Removing: `removeEntity`, `removeEntities`
 
-If an entity does not exist, it will not throw an error. This rule applies to all update and remove functions.
+No error is thrown If an entity does not exist. This rule applies to all update and remove functions.
 
 The following example shows how to add, update, and remove an entity.
 
