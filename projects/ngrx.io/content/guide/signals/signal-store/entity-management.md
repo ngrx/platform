@@ -108,7 +108,7 @@ patchState(this.todoStore, updateEntity({ id: 2, changes: { finished: true } }))
 patchState(this.todoStore, removeEntity(3));
 ```
 
-`updateEntity` requires as parameters the id to update and its changes (`Partial<Todo>`). `removeEntity` only requires the id.
+`updateEntity` requires both parameters the `id` to update and its `changes` (`Partial<Todo>`). `removeEntity` only requires the `id`.
 
 ---
 
