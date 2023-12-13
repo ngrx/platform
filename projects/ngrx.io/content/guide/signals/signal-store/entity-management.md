@@ -1,6 +1,6 @@
 # Entity Management
 
-`withEntities` is an extension to facilitate CRUD operations for managing entities. It shares similarities with @ngrx/entity but is part of the Signal Store.
+`withEntities` is an extension to facilitate CRUD operations for managing entities. It shares similarities with @ngrx/entity but is part of the SignalStore.
 
 It doesn't include methods for backend communication. You have to implement them separately.
 
