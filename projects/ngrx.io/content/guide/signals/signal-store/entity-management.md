@@ -330,8 +330,7 @@ const TodoStore = signalStore(
     return {
       async load() {
         const todos = await todoService.findAll();
-        patchState(store, removeAllEntities());
-        patchState(store, setEntities(todos));
+        patchState(store, setAllEntities(todos));
       },
 
       async add(name: string) {
