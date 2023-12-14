@@ -36,6 +36,7 @@ Here is an example on how to use them inside a component.
 
 ```typescript
 @Component({
+  selector: 'ngrx-todos',
   template: `
     <ul>
       @for (todo of todoStore.entities(); track todo.id) {
@@ -256,21 +257,18 @@ const TodoStore = signalStore(
 );
 
 @Component({
-  selector: 'ngrx-entity',
-  template: `@for (todo of todoStore.todoEntities(); track todo.id) {
-    <p>Current Ids: {{ todoStore.todoIds() }}</p>
+  selector: 'ngrx-todos',
+  template: `
     <ul>
-      <li [ngStyle]="{ 'font-weight': todo.finished ? 'bold' : 'normal' }">
-        {{ todo.name }}
-      </li>
+      @for (todo of todoStore.entities(); track todo.id) {
+        <li>{{ todo.name }}</li>
+      }
     </ul>
-
-    }`,
+  `,
   standalone: true,
   providers: [TodoStore],
-  imports: [NgStyle],
 })
-export class EntityComponent implements OnInit {
+export class TodosComponent implements OnInit {
   todoStore = inject(TodoStore);
 
   ngOnInit() {
@@ -366,48 +364,3 @@ const TodoStore = signalStore(
   withHooks({ onInit: (store) => store.load() })
 );
 ```
-
-If your API follows the same pattern, you can even create your own `with*` function:
-
-```typescript
-interface EntityService<Entity> {
-  findAll(): Promise<Entity[]>;
-
-  add(name: string): Promise<Entity>;
-
-  remove(id: number): Promise<void>;
-}
-
-function withPersistedEntities<Entity extends { id: number }>(EntityService: ProviderToken<EntityService<Entity>>) {
-  return signalStoreFeature(
-    withEntities<Entity>(),
-    withMethods((store) => {
-      const entityService = inject(EntityService);
-
-      return {
-        async load() {
-          const entities = await entityService.findAll();
-          patchState(store, removeAllEntities());
-          patchState(store, setEntities(entities));
-        },
-
-        async add(name: string) {
-          const entity = await entityService.add(name);
-          patchState(store, addEntity(entity));
-        },
-
-        async remove(id: number) {
-          await entityService.remove(id);
-          patchState(store, removeEntity(id));
-        },
-      };
-    })
-  );
-}
-
-const TodoStore = signalStore(withPersistedEntities<Todo>(TodoService), withHooks({ onInit: (store) => store.load() }));
-```
-
-The `withPersistedEntities` uses internally `withEntities` and adds the communication with the API through requesting an `EntityService`.
-
-For the `Todo` entity, we provide the `TodoService` and have a fully functional CRUD with a few lines of code.
