@@ -39,7 +39,9 @@
           "modules/signals/entities/**/*.ts",
           "modules/signals/entities/**/*.html",
           "modules/signals/rxjs-interop/**/*.ts",
-          "modules/signals/rxjs-interop/**/*.html"
+          "modules/signals/rxjs-interop/**/*.html",
+          "modules/signals/storage/**/*.ts",
+          "modules/signals/storage/**/*.html"
         ]
       },
       "outputs": ["{options.outputFile}"]
