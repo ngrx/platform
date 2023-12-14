@@ -12,7 +12,7 @@ A store implementing a `Todo` entity can have the following implementation:
 interface Todo {
   id: number;
   name: string;
-  description: string;
+  finished: boolean;
 }
 
 const TodoStore = signalStore(withEntities<Todo>());
