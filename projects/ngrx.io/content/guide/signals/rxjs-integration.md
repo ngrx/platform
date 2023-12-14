@@ -35,7 +35,7 @@ export const UsersStore = signalStore(
     updateQuery(query: string) {
       patchState(store, { query });
     },
-    loadByQuery: rxMethod&lt;;string&gt;(
+    loadByQuery: rxMethod&lt;string&gt;(
       pipe(
         debounceTime(300),
         distinctUntilChanged(),
