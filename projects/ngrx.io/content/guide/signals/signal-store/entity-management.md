@@ -34,15 +34,17 @@ Here is an example on how to use them inside a component.
 
 ```typescript
 @Component({
-  template: `@for (todo of todoStore.entities();track todo.id) {
+  template: `
     <ul>
-      <li>{{ todo.name }}</li>
+      @for (todo of todoStore.entities(); track todo.id) {
+        <li>{{ todo.name }}</li>
+      }
     </ul>
-    }`,
+  `,
   standalone: true,
   providers: [TodoStore],
 })
-export class EntityComponent implements OnInit {
+export class TodosComponent implements OnInit {
   todoStore = inject(TodoStore);
 
   ngOnInit() {
