@@ -302,7 +302,7 @@ patchState(
 );
 ```
 
-To add multiple entities to a state, execute `withEntities` multiple times:
+To add multiple entity collections to a store, execute `withEntities` multiple times:
 
 ```typescript
 const Store = signalStore(
