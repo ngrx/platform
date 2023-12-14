@@ -12,7 +12,7 @@ A store implementing a `Todo` entity can have the following implementation:
 interface Todo {
   id: number;
   name: string;
-  description: string;
+  finished: boolean;
 }
 
 const TodoStore = signalStore(withEntities<Todo>());
@@ -36,15 +36,17 @@ Here is an example on how to use them inside a component.
 
 ```typescript
 @Component({
-  template: `@for (todo of todoStore.entities();track todo.id) {
+  template: `
     <ul>
-      <li>{{ todo.name }}</li>
+      @for (todo of todoStore.entities(); track todo.id) {
+        <li>{{ todo.name }}</li>
+      }
     </ul>
-    }`,
+  `,
   standalone: true,
   providers: [TodoStore],
 })
-export class EntityComponent implements OnInit {
+export class TodosComponent implements OnInit {
   todoStore = inject(TodoStore);
 
   ngOnInit() {
@@ -75,7 +77,7 @@ patchState(this.todoStore, addEntity({ id: 1, name: 'Dog Feeding', finished: fal
 
 ---
 
-To override existing entities, use `setEntity` or `setEntities`.
+Updaters `setEntity` and `setEntities` are used to add new or replace existing entities from a collection.
 
 In this example, we add a new `Todo` entity with "Cat Feeding" and replace it with "Dog Feeding".
 
@@ -130,6 +132,11 @@ patchState(
     { id: 2, name: 'Car Washing', finished: false },
     { id: 3, name: 'Cat Feeding', finished: false },
   ])
+);
+
+patchState(
+  this.todoStore,
+  updateAllEntities((todo) => ({ finished: !todo.finished }))
 );
 
 patchState(this.todoStore, updateAllEntities({ finished: true }));
