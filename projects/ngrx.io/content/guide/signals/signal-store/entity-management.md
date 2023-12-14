@@ -309,7 +309,7 @@ patchState(
 );
 ```
 
-To add multiple entities to a state, execute `withEntities` multiple times:
+To add multiple entity collections to a store, execute `withEntities` multiple times:
 
 ```typescript
 const Store = signalStore(
@@ -337,8 +337,7 @@ const TodoStore = signalStore(
     return {
       async load() {
         const todos = await todoService.findAll();
-        patchState(store, removeAllEntities());
-        patchState(store, setEntities(todos));
+        patchState(store, setAllEntities(todos));
       },
 
       async add(name: string) {
