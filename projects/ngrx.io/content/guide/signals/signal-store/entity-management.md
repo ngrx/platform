@@ -24,6 +24,8 @@ const TodoStore = signalStore(withEntities<Todo>());
 - `entities: Signal<Todo[]>`: array of all entities
 - `entityMap: Signal<EntityMap<Todo>>`> map of entities where the key is the id (`EntityId`)
 
+`entityMap` is a computed Signal that derives from the non-computed Signals `ids` and `entities`.
+
 By default, `withEntities` requires your entity to have a property of name `id`, which serves as a unique identifier. `id` has to be of type `EntityId`, which is a `number` or a `string`.
 
 ## Adding & Setting
@@ -78,9 +80,16 @@ To override existing entities, use `setEntity` or `setEntities`.
 In this example, we add a new `Todo` entity with "Cat Feeding" and replace it with "Dog Feeding".
 
 ```typescript
-patchState(this.todoStore, setEntity({ id: 1, name: 'Cat Feeding', finished: false }));
+patchState(this.todoStore, setEntity({id: 1, name: 'Cat Feeding', finished: false}));
 
-patchState(this.todoStore, setEntity({ id: 1, name: 'Dog Feeding', finished: false }));
+patchState(this.todoStore, setEntity({id: 1, name: 'Dog Feeding', finished: false}));
+
+// version with setEntities and two different entities
+
+patchState(this.todoStore, setAllEntities([
+  {id: 1, name: 'Cat Feeding', finished: false},
+  {id: 2, name: 'Dog Feeding', finished: false}
+]));
 ```
 
 ## Updating & Removing
