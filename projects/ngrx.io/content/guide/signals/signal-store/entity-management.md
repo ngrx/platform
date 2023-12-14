@@ -73,7 +73,7 @@ patchState(this.todoStore, addEntity({ id: 1, name: 'Dog Feeding', finished: fal
 
 ---
 
-To override existing entities, use `setEntity` or `setEntities`.
+Updaters `setEntity` and `setEntities` are used to add new or replace existing entities from a collection.
 
 In this example, we add a new `Todo` entity with "Cat Feeding" and replace it with "Dog Feeding".
 
