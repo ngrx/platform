@@ -125,6 +125,11 @@ patchState(
   ])
 );
 
+patchState(
+  this.todoStore,
+  updateAllEntities((todo) => ({ finished: !todo.finished }))
+);
+
 patchState(this.todoStore, updateAllEntities({ finished: true }));
 
 patchState(this.todoStore, removeAllEntities());
