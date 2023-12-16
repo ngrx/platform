@@ -24,7 +24,7 @@ const TodoStore = signalStore(withEntities<Todo>());
 - `entities: Signal<Todo[]>`: array of all entities
 - `entityMap: Signal<EntityMap<Todo>>`> map of entities where the key is the id (`EntityId`)
 
-`entityMap` is a computed Signal that derives from the non-computed Signals `ids` and `entities`.
+`entities` is a computed Signal that derives from the non-computed Signals `ids` and `entityMap`.
 
 By default, `withEntities` requires your entity to have a property of name `id`, which serves as a unique identifier. `id` has to be of type `EntityId`, which is a `number` or a `string`.
 
