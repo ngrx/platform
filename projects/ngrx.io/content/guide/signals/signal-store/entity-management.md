@@ -260,7 +260,7 @@ const TodoStore = signalStore(
   selector: 'ngrx-todos',
   template: `
     <ul>
-      @for (todo of todoStore.entities(); track todo.id) {
+      @for (todo of todoStore.todoEntities(); track todo.id) {
         <li>{{ todo.name }}</li>
       }
     </ul>
