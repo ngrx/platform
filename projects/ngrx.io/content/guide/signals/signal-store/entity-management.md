@@ -89,10 +89,22 @@ patchState(this.todoStore, setEntity({id: 1, name: 'Dog Feeding', finished: fals
 
 // version with setEntities and two different entities
 
-patchState(this.todoStore, setAllEntities([
+patchState(this.todoStore, setEntities([
   {id: 1, name: 'Cat Feeding', finished: false},
   {id: 2, name: 'Dog Feeding', finished: false}
 ]));
+```
+
+In addition to the `setEntity` and `setEntities` updaters, the entities plugin also provides the `setAllEntities` updater which replaces the current collection with the provided one.
+
+```typescript
+patchState(
+  this.todoStore,
+  setAllEntities([
+    { id: 1, name: 'Room Cleaning', finished: false },
+    { id: 3, name: 'Car Washing', finished: false },
+  ])
+);
 ```
 
 ## Updating & Removing
