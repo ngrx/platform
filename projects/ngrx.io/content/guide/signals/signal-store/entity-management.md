@@ -22,7 +22,7 @@ const TodoStore = signalStore(withEntities<Todo>());
 
 - `ids: Signal<EntityId[]>`: ids of all entities
 - `entities: Signal<Todo[]>`: array of all entities
-- `entityMap: Signal<EntityMap<Todo>>`> map of entities where the key is the id (`EntityId`)
+- `entityMap: Signal<EntityMap<Todo>>`: map of entities where the key is the id (`EntityId`)
 
 `entities` is a computed Signal that derives from the non-computed Signals `ids` and `entityMap`.
 
