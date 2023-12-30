@@ -1,5 +1,12 @@
 # @ngrx/signals
 
+<div class="alert is-important">
+
+The `@ngrx/signals` package is in <a href="https://angular.dev/reference/releases#developer-preview" target="_blank">developer preview</a>.
+It is ready to try, but may change before becoming stable.
+
+</div>
+
 NgRx Signals is a standalone library that provides a reactive state management solution and a set of utilities for Angular Signals.
 
 ## Key Principles
