@@ -16,13 +16,24 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
   >
 ) => void;
 
-export function withHooks<Input extends SignalStoreFeatureResult>(hooks: {
+type HooksSupplier<Input extends SignalStoreFeatureResult> = () => {
   onInit?: HooksFactory<Input>;
   onDestroy?: HooksFactory<Input>;
-}): SignalStoreFeature<Input, EmptyFeatureResult> {
+};
+
+export function withHooks<Input extends SignalStoreFeatureResult>(
+  hooks:
+    | {
+        onInit?: HooksFactory<Input>;
+        onDestroy?: HooksFactory<Input>;
+      }
+    | HooksSupplier<Input>
+): SignalStoreFeature<Input, EmptyFeatureResult> {
   return (store) => {
-    const createHook = (name: keyof typeof hooks) => {
-      const hook = hooks[name];
+    const _hooks = typeof hooks === 'function' ? hooks() : hooks;
+
+    const createHook = (name: keyof typeof _hooks) => {
+      const hook = _hooks[name];
       const currentHook = store.hooks[name];
 
       return hook

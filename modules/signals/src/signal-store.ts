@@ -331,10 +331,9 @@ export function signalStore(
 
       if (hooks.onDestroy) {
         const injector = inject(Injector);
+        const { onDestroy } = hooks;
 
-        inject(DestroyRef).onDestroy(() => {
-          runInInjectionContext(injector, hooks.onDestroy!);
-        });
+        inject(DestroyRef).onDestroy(onDestroy);
       }
     }
   }

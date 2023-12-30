@@ -1,5 +1,11 @@
-import { inject, InjectionToken, isSignal, signal } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import {
+  inject,
+  Injectable,
+  InjectionToken,
+  isSignal,
+  signal,
+} from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import {
   patchState,
   signalStore,
@@ -275,15 +281,16 @@ describe('signalStore', () => {
         factory: () => 'ngrx',
       });
       const Store = signalStore(
-        withHooks({
-          onInit() {
-            inject(TOKEN);
-            messages.push('onInit');
-          },
-          onDestroy() {
-            inject(TOKEN);
-            messages.push('onDestroy');
-          },
+        withHooks(() => {
+          const token = inject(TOKEN);
+          return {
+            onInit() {
+              messages.push('onInit');
+            },
+            onDestroy() {
+              messages.push('onDestroy');
+            },
+          };
         })
       );
       const { destroy } = createLocalService(Store);
@@ -293,6 +300,29 @@ describe('signalStore', () => {
       destroy();
       expect(messages).toEqual(['onInit', 'onDestroy']);
     });
+
+    it('runs a destroy hook in a root-scoped store during instantiation', waitForAsync(() => {
+      const TOKEN = new InjectionToken('TOKEN', {
+        providedIn: 'root',
+        factory: () => 'ngrx',
+      });
+      let value = '';
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withHooks(() => {
+          const token = inject(TOKEN);
+          return {
+            onDestroy: () => {
+              value = token;
+            },
+          };
+        })
+      );
+
+      createLocalService(Store, false);
+      TestBed.resetTestEnvironment();
+      expect(value).toBe('ngrx');
+    }));
   });
 
   describe('composition', () => {

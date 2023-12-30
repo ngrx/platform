@@ -2,7 +2,8 @@ import { Component, inject, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 export function createLocalService<Service extends Type<unknown>>(
-  serviceToken: Service
+  serviceToken: Service,
+  provideLocally = true
 ): {
   service: InstanceType<Service>;
   flushEffects: () => void;
@@ -11,7 +12,7 @@ export function createLocalService<Service extends Type<unknown>>(
   @Component({
     standalone: true,
     template: '',
-    providers: [serviceToken],
+    providers: provideLocally ? [serviceToken] : [],
   })
   class TestComponent {
     service = inject(serviceToken);
