@@ -19,7 +19,6 @@ summary {
   @include mixins.typescale-default;
   position: relative;
   padding: 16px 24px;
-  height: 16px;
   display: block; // Remove the built in details marker in FF
 
   &::-webkit-details-marker {
@@ -37,8 +36,12 @@ summary {
 }
 
 details {
-  .detail-contents {
-    padding: 16px 24px;
+  .detail-contents, p {
+    padding: 0px 24px 16px 24px;
+  }
+
+  code-example {
+    padding: 0;
   }
 
   &[open] > summary::before {
