@@ -23,7 +23,7 @@
 
     &.is-important {
       border-left: 8px solid constants.$orange;
-      background-color: if($is-dark-theme, constants.$deepgray, rgba(constants.$orange, 0.05));
+      background-color: if($is-dark-theme, constants.$darkgray, rgba(constants.$orange, 0.05));
 
       h1,
       h2,
