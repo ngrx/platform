@@ -31,26 +31,6 @@ withMethods(() => {
 </details>
 
 <details>
-  <summary>How can I react/listen to state changes?</summary>
-
-    Use the `getState` function within an `effect` to know when a signal store's state changes.
-
-```ts
-import { getState } from '@ngrx/signals';
-
-withHooks({
-  onInit(store) {
-    effect(() => {
-      const state = getState(store);
-      // 👇 state will be logged on changes
-      console.log('state changed', state);  
-    });
-  }
-})
-```
-</details>
-
-<details>
   <summary>Can I  interact with my NgRx Actions within a signal store?</summary>
 
     Signals are not meant to have a concept of time. Also, the effect is somewhat tied to Angular change detection, so you can't observe every action that would be dispatched over time through some sort of Signal API.
