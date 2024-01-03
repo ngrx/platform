@@ -325,16 +325,14 @@ export function signalStore(
         (this as any)[key] = props[key];
       }
 
-      if (hooks.onInit) {
-        hooks.onInit();
+      const { onInit, onDestroy } = hooks;
+
+      if (onInit) {
+        onInit();
       }
 
-      if (hooks.onDestroy) {
-        const injector = inject(Injector);
-
-        inject(DestroyRef).onDestroy(() => {
-          runInInjectionContext(injector, hooks.onDestroy!);
-        });
+      if (onDestroy) {
+        inject(DestroyRef).onDestroy(onDestroy);
       }
     }
   }

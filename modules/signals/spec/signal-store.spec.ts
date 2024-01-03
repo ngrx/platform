@@ -268,6 +268,8 @@ describe('signalStore', () => {
       expect(message).toBe('onDestroy');
     });
 
+    // FIX: injection context will be provided for `onDestroy` in a separate PR
+    // see https://github.com/ngrx/platform/pull/4196#issuecomment-1875228588
     it('executes hooks in injection context', () => {
       const messages: string[] = [];
       const TOKEN = new InjectionToken('TOKEN', {
@@ -281,7 +283,7 @@ describe('signalStore', () => {
             messages.push('onInit');
           },
           onDestroy() {
-            inject(TOKEN);
+            // inject(TOKEN);
             messages.push('onDestroy');
           },
         })
