@@ -1,21 +1,13 @@
-import {
-  DestroyRef,
-  inject,
-  Injectable,
-  Injector,
-  runInInjectionContext,
-  signal,
-  Type,
-} from '@angular/core';
+import { DestroyRef, inject, Injectable, signal, Type } from '@angular/core';
 import { STATE_SIGNAL, StateSignal } from './state-signal';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
   MergeFeatureResults,
-  SignalStoreProps,
   SignalStoreConfig,
   SignalStoreFeature,
   SignalStoreFeatureResult,
+  SignalStoreProps,
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 

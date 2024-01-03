@@ -295,6 +295,23 @@ describe('signalStore', () => {
       destroy();
       expect(messages).toEqual(['onInit', 'onDestroy']);
     });
+
+    it('fails if onDestroy accesses DI', () => {
+      const TOKEN = new InjectionToken('TOKEN', {
+        providedIn: 'root',
+        factory: () => 'ngrx',
+      });
+      const Store = signalStore(
+        withHooks({
+          onDestroy() {
+            inject(TOKEN);
+          },
+        })
+      );
+      const { destroy } = createLocalService(Store);
+
+      expect(() => destroy()).toThrowError('NG0203');
+    });
   });
 
   describe('composition', () => {
