@@ -296,21 +296,20 @@ describe('signalStore', () => {
       expect(messages).toEqual(['onInit', 'onDestroy']);
     });
 
-    it('fails if onDestroy accesses DI', () => {
-      const TOKEN = new InjectionToken('TOKEN', {
-        providedIn: 'root',
-        factory: () => 'ngrx',
-      });
+    it('succeeds with onDestroy and providedIn: root', () => {
+      const messages: string[] = [];
       const Store = signalStore(
+        { providedIn: 'root' },
         withHooks({
           onDestroy() {
-            inject(TOKEN);
+            messages.push('ending...');
           },
         })
       );
-      const { destroy } = createLocalService(Store);
+      TestBed.inject(Store);
+      TestBed.resetTestEnvironment();
 
-      expect(() => destroy()).toThrowError('NG0203');
+      expect(messages).toEqual(['ending...']);
     });
   });
 
