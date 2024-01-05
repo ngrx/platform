@@ -86,6 +86,8 @@ type Store = {
   };
 };
 
+function foobar(a: ExposedStore<Store, ['prettyName']>, b: Store) {}
+
 declare function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -218,8 +220,8 @@ describe('Encapsulation Types', () => {
     it('should expose everything', () => {
       const Store = setup(['prettyName']);
       type Type<T extends { prettyName: Signal<string> }> = T;
-
-      type _T = Type<Store>;
+      const store = new Store();
+      const a: Type<typeof store> = store;
     });
   });
 });
