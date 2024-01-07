@@ -9,6 +9,10 @@
     box-shadow: 0 1px 4px 0 rgba(constants.$black, 0.37);
   }
 
+  details + details {
+    margin-top: 1em;
+  }
+  
   summary {
     color: if($is-dark-theme, constants.$white, constants.$black);
   }

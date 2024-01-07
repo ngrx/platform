@@ -310,6 +310,10 @@
             {
               "title": "RxJS Integration",
               "url": "guide/signals/rxjs-integration"
+            },
+            {
+              "title": "FAQ",
+              "url": "guide/signals/faq"
             }
           ]
         },
