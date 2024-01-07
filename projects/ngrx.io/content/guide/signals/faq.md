@@ -30,7 +30,7 @@ withMethods(() => {
 </details>
 
 <details>
-  <summary>Can I  interact with my NgRx Actions within a SignalStore?</summary>
+  <summary>Can I interact with my NgRx Actions within a SignalStore?</summary>
 
     Signals are not meant to have a concept of time. Also, the effect is somewhat tied to Angular change detection, so you can't observe every action that would be dispatched over time through some sort of Signal API.
     The global NgRx Store is still the best mechanism to dispatch action(s) over time and react to them across multiple features.
@@ -56,6 +56,43 @@ export class CounterStore extends signalStore(withState({ count: 0 })) {
   increment(): void {
     patchState(this, { count: this.count() + 1 });
   }
+}
+```
+</details>
+
+<details>
+  <summary>How can I get the type of a SignalStore?</summary>
+
+    To get the type of a SignalStore, use the `InstanceType` utility type.
+
+```ts
+const CounterStore = signalStore(withState({ count: 0 }));
+
+type CounterStore = InstanceType<typeof CounterStore>;
+
+function logCount(store: CounterStore): void {
+  console.log(store.count());
+}
+```
+</details>
+
+<details>
+  <summary>Can I inject a SignalStore via constructor?</summary>
+
+    To inject a SignalStore via constructor, define and export its type with the same name.
+
+```ts
+// counter.store.ts
+export const CounterStore = signalStore(withState({ count: 0 }));
+
+export type CounterStore = InstanceType<typeof CounterStore>;
+
+// counter.component.ts
+import { CounterStore } from './counter.store';
+
+@Component({ /* ... */ })
+export class CounterComponent {
+  constructor(readonly store: CounterStore) {}
 }
 ```
 </details>
