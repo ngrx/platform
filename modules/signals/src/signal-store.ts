@@ -1,21 +1,13 @@
-import {
-  DestroyRef,
-  inject,
-  Injectable,
-  Injector,
-  runInInjectionContext,
-  signal,
-  Type,
-} from '@angular/core';
+import { DestroyRef, inject, Injectable, signal, Type } from '@angular/core';
 import { STATE_SIGNAL, StateSignal } from './state-signal';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
   MergeFeatureResults,
-  SignalStoreProps,
   SignalStoreConfig,
   SignalStoreFeature,
   SignalStoreFeatureResult,
+  SignalStoreProps,
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
@@ -325,16 +317,14 @@ export function signalStore(
         (this as any)[key] = props[key];
       }
 
-      if (hooks.onInit) {
-        hooks.onInit();
+      const { onInit, onDestroy } = hooks;
+
+      if (onInit) {
+        onInit();
       }
 
-      if (hooks.onDestroy) {
-        const injector = inject(Injector);
-
-        inject(DestroyRef).onDestroy(() => {
-          runInInjectionContext(injector, hooks.onDestroy!);
-        });
+      if (onDestroy) {
+        inject(DestroyRef).onDestroy(onDestroy);
       }
     }
   }
