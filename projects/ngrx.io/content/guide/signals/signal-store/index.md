@@ -243,7 +243,7 @@ export const BooksStore = signalStore(
 
 The state of the SignalStore is updated using the `patchState` function.
 This function accepts a store instance as the first argument and a sequence of partial states or partial state updaters as rest arguments.
-For more details on the `patchState` function, refer to the [Updating State](/guide/signals/signal-state#updating-state) guide.
+For more details on the `patchState` function, refer to the [Updating State](/guide/signals/signal-state) guide.
 
 </div>
 
