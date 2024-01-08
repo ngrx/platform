@@ -84,6 +84,22 @@ export const BooksStore = signalStore(
 
 </code-example>
 
+The `BooksStore` instance will contain the following properties and methods:
+
+- State properties from `withEntities` feature:
+  - `entityMap: Signal<EntityMap<Book>>`
+  - `ids: Signal<EntityId[]>`
+- Computed properties from `withEntities` feature:
+  - `entities: Signal<Book[]>`
+- State properties from `withRequestStatus` feature:
+  - `requestStatus: Signal<RequestStatus>`
+- Computed properties from `withRequestStatus` feature:
+  - `isPending: Signal<boolean>`
+  - `isFulfilled: Signal<boolean>`
+  - `error: Signal<string | null>`
+- Methods:
+  - `loadAll(): Promise<void>`
+
 <div class="alert is-helpful">
 
 In this example, the `withEntities` feature from the `entities` plugin is utilized.
@@ -192,6 +208,18 @@ export const BooksStore = signalStore(
 );
 
 </code-example>
+
+The `BooksStore` instance will contain the following properties:
+
+- State properties from `withEntities` feature:
+  - `entityMap: Signal<EntityMap<Book>>`
+  - `ids: Signal<EntityId[]>`
+- Computed properties from `withEntities` feature:
+  - `entities: Signal<Book[]>`
+- State properties from `withSelectedEntity` feature:
+  - `selectedEntityId: Signal<EntityId | null>`
+- Computed properties from `withSelectedEntity` feature:
+  - `selectedEntity: Signal<Book | null>`
 
 The `@ngrx/signals` package offers high-level type safety.
 Therefore, if `BooksStore` does not contain state properties from the `EntityState` type, the compilation error will occur.
