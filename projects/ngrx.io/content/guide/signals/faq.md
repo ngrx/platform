@@ -77,9 +77,9 @@ function logCount(store: CounterStore): void {
 </details>
 
 <details>
-  <summary>Can I inject a SignalStore via constructor?</summary>
+  <summary>Can I inject a SignalStore via the constructor?</summary>
 
-    To inject a SignalStore via constructor, define and export its type with the same name.
+    To inject a SignalStore via the constructor, define and export its type with the same name.
 
 ```ts
 // counter.store.ts
