@@ -268,7 +268,7 @@ export const BooksStore = signalStore(
   withMethods((store, booksService = inject(BooksService)) => ({
     /* ... */
     // 👇 Defining a method to load all books.
-    async loadAll(): Promise<void> {
+    async loadAll(): Promise&lt;void&gt; {
       patchState(store, { isLoading: true });
 
       const books = await booksService.getAll();
@@ -279,8 +279,10 @@ export const BooksStore = signalStore(
 
 </code-example>
 
-However, in more complex scenarios, RxJS is a better choice.
-To leverage RxJS APIs, methods for performing asynchronous side effects can be created using the `rxMethod` function from the `rxjs-interop` plugin.
+### Reactive Store Methods
+
+In more complex scenarios, opting for RxJS to handle asynchronous side effects is advisable.
+To create a reactive SignalStore method that harnesses RxJS APIs, use the `rxMethod` function from the `rxjs-interop` plugin.
 
 <code-example header="books.store.ts">
 
