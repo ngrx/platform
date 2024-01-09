@@ -268,32 +268,37 @@ describe('signalStore', () => {
       expect(message).toBe('onDestroy');
     });
 
-    // FIX: injection context will be provided for `onDestroy` in a separate PR
-    // see https://github.com/ngrx/platform/pull/4196#issuecomment-1875228588
     it('executes hooks in injection context', () => {
       const messages: string[] = [];
-      const TOKEN = new InjectionToken('TOKEN', {
+      const TOKEN_INIT = new InjectionToken('TOKEN_INIT', {
         providedIn: 'root',
-        factory: () => 'ngrx',
+        factory: () => 'init',
+      });
+      const TOKEN_DESTROY = new InjectionToken('TOKEN_DESTROY', {
+        providedIn: 'root',
+        factory: () => 'destroy',
       });
       const Store = signalStore(
-        withHooks({
-          onInit() {
-            inject(TOKEN);
-            messages.push('onInit');
-          },
-          onDestroy() {
-            // inject(TOKEN);
-            messages.push('onDestroy');
-          },
+        withState({ name: 'NgRx Store' }),
+        withHooks(() => {
+          const tokenInit = inject(TOKEN_INIT);
+          const tokenDestroy = inject(TOKEN_DESTROY);
+          return {
+            onInit(store) {
+              messages.push(`${tokenInit} ${store.name()}`);
+            },
+            onDestroy(store) {
+              messages.push(`${tokenDestroy} ${store.name()}`);
+            },
+          };
         })
       );
       const { destroy } = createLocalService(Store);
 
-      expect(messages).toEqual(['onInit']);
+      expect(messages).toEqual(['init NgRx Store']);
 
       destroy();
-      expect(messages).toEqual(['onInit', 'onDestroy']);
+      expect(messages).toEqual(['init NgRx Store', 'destroy NgRx Store']);
     });
 
     it('succeeds with onDestroy and providedIn: root', () => {
