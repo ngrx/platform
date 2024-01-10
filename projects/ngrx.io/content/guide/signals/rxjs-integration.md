@@ -1,6 +1,6 @@
 # RxJS Integration
 
-RxJS is still a major part of NgRx and the Angular ecosystem, and the `@ngrx/signals` package provides **opt-in** integration RxJS APIs through the `rxjs-interop` plugin.
+RxJS is still a major part of NgRx and the Angular ecosystem, and the `@ngrx/signals` package provides **opt-in** integration with RxJS APIs through the `rxjs-interop` plugin.
 
 ## RxMethod
 
