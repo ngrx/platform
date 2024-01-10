@@ -55,7 +55,7 @@ export class NumbersComponent implements OnInit {
 }
 ```
 
-When a reactive method is called with a signal, the reactive chain will be executed every time the signal value changes.
+When a reactive method is called with a signal, the reactive chain is executed every time the signal value changes.
 
 ```ts
 import { Component, OnInit, signal } from '@angular/core';
