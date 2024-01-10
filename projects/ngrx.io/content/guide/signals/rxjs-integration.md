@@ -82,7 +82,7 @@ export class NumbersComponent implements OnInit {
 }
 ```
 
-When a reactive method is called with an observable, the reactive chain will be executed every time the observable emits a new value.
+When a reactive method is called with an observable, the reactive chain is executed every time the observable emits a new value.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
