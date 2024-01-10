@@ -280,17 +280,38 @@ describe('signalStore', () => {
       });
       const Store = signalStore(
         withState({ name: 'NgRx Store' }),
-        withHooks(() => {
+        withHooks((store) => {
           const tokenInit = inject(TOKEN_INIT);
           const tokenDestroy = inject(TOKEN_DESTROY);
           return {
-            onInit(store) {
+            onInit() {
               messages.push(`${tokenInit} ${store.name()}`);
             },
-            onDestroy(store) {
+            onDestroy() {
               messages.push(`${tokenDestroy} ${store.name()}`);
             },
           };
+        })
+      );
+      const { destroy } = createLocalService(Store);
+
+      expect(messages).toEqual(['init NgRx Store']);
+
+      destroy();
+      expect(messages).toEqual(['init NgRx Store', 'destroy NgRx Store']);
+    });
+
+    it('executes hooks without injection context', () => {
+      const messages: string[] = [];
+      const Store = signalStore(
+        withState({ name: 'NgRx Store' }),
+        withHooks({
+          onInit(store) {
+            messages.push(`init ${store.name()}`);
+          },
+          onDestroy(store) {
+            messages.push(`destroy ${store.name()}`);
+          },
         })
       );
       const { destroy } = createLocalService(Store);

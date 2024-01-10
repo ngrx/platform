@@ -7,7 +7,7 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
-type HooksFactory<Input extends SignalStoreFeatureResult> = (
+type HookFn<Input extends SignalStoreFeatureResult> = (
   store: Prettify<
     SignalStoreSlices<Input['state']> &
       Input['signals'] &
@@ -16,21 +16,44 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
   >
 ) => void;
 
-type HooksSupplier<Input extends SignalStoreFeatureResult> = () => {
-  onInit?: HooksFactory<Input>;
-  onDestroy?: HooksFactory<Input>;
+type HooksFactory<Input extends SignalStoreFeatureResult> = (
+  store: Prettify<
+    SignalStoreSlices<Input['state']> &
+      Input['signals'] &
+      Input['methods'] &
+      StateSignal<Prettify<Input['state']>>
+  >
+) => {
+  onInit?: () => void;
+  onDestroy?: () => void;
 };
+
+export function withHooks<Input extends SignalStoreFeatureResult>(hooks: {
+  onInit?: HookFn<Input>;
+  onDestroy?: HookFn<Input>;
+}): SignalStoreFeature<Input, EmptyFeatureResult>;
+export function withHooks<Input extends SignalStoreFeatureResult>(
+  hooks: HooksFactory<Input>
+): SignalStoreFeature<Input, EmptyFeatureResult>;
 
 export function withHooks<Input extends SignalStoreFeatureResult>(
   hooks:
     | {
-        onInit?: HooksFactory<Input>;
-        onDestroy?: HooksFactory<Input>;
+        onInit?: HookFn<Input>;
+        onDestroy?: HookFn<Input>;
       }
-    | HooksSupplier<Input>
+    | HooksFactory<Input>
 ): SignalStoreFeature<Input, EmptyFeatureResult> {
   return (store) => {
-    const _hooks = typeof hooks === 'function' ? hooks() : hooks;
+    const _hooks =
+      typeof hooks === 'function'
+        ? hooks({
+            [STATE_SIGNAL]: store[STATE_SIGNAL],
+            ...store.slices,
+            ...store.signals,
+            ...store.methods,
+          })
+        : hooks;
     const createHook = (name: keyof typeof _hooks) => {
       const hook = _hooks[name];
       const currentHook = store.hooks[name];
