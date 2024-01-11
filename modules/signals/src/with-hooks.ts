@@ -37,7 +37,7 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
 ): SignalStoreFeature<Input, EmptyFeatureResult>;
 
 export function withHooks<Input extends SignalStoreFeatureResult>(
-  hooks:
+  hooksOrFactory:
     | {
         onInit?: HookFn<Input>;
         onDestroy?: HookFn<Input>;
