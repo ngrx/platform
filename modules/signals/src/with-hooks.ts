@@ -45,11 +45,18 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
     | HooksFactory<Input>
 ): SignalStoreFeature<Input, EmptyFeatureResult> {
   return (store) => {
-    const hooks = typeof hooksOrFactory === 'function'
+    const storeProps = {
+      [STATE_SIGNAL]: store[STATE_SIGNAL],
+      ...store.slices,
+      ...store.signals,
+      ...store.methods,
+    };
+    const hooks =
+      typeof hooksOrFactory === 'function'
         ? hooksOrFactory(storeProps)
         : hooksOrFactory;
-    const createHook = (name: keyof typeof _hooks) => {
-      const hook = _hooks[name];
+    const createHook = (name: keyof typeof hooks) => {
+      const hook = hooks[name];
       const currentHook = store.hooks[name];
 
       return hook
