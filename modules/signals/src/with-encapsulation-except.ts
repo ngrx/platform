@@ -15,7 +15,7 @@ import { StateSignal } from './state-signal';
 import { Prettify } from './ts-helpers';
 
 /**
- * `withEncapsulation` has its limitations. We cannot forbit `patchState` to update
+ * `withEncapsulation` has its limitations. We cannot forbid `patchState` to update
  * the store and users have to use it always.
  *
  * It is good that it stands on top and does not depend on any position in the state.
