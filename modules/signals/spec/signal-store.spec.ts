@@ -268,7 +268,7 @@ describe('signalStore', () => {
       expect(message).toBe('onDestroy');
     });
 
-    it('executes hooks in injection context', () => {
+    it('executes hooks factory in injection context', () => {
       const messages: string[] = [];
       const TOKEN_INIT = new InjectionToken('TOKEN_INIT', {
         providedIn: 'root',
