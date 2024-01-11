@@ -65,12 +65,7 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
               currentHook();
             }
 
-            hook({
-              [STATE_SIGNAL]: store[STATE_SIGNAL],
-              ...store.slices,
-              ...store.signals,
-              ...store.methods,
-            });
+            hook(storeProps);
           }
         : currentHook;
     };
