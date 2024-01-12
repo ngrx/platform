@@ -111,7 +111,7 @@ export class NumbersComponent implements OnInit {
 ```
 
 By default, the `rxMethod` needs to be executed within an injection context.
-It will be tied to its lifecycle and automatically cleaned up when the injector is destroyed.
+It's tied to its lifecycle and is automatically cleaned up when the injector is destroyed.
 
 ### Handling API Calls
 
