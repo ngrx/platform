@@ -47,6 +47,8 @@ type ExposedStorePropertyName<
   ? PropertyName
   : PropertyName extends keyof Store['methods']
   ? PropertyName
+  : PropertyName extends keyof Store['state']
+  ? PropertyName
   : never;
 
 type ExposedStore<

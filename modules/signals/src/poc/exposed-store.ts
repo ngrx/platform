@@ -72,3 +72,5 @@ const Store = signalStore(
 
 const store = new Store();
 type T = typeof store.load;
+
+type Props = keyof typeof store;
