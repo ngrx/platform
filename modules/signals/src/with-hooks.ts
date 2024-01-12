@@ -7,7 +7,7 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
-type HooksFactory<Input extends SignalStoreFeatureResult> = (
+type HookFn<Input extends SignalStoreFeatureResult> = (
   store: Prettify<
     SignalStoreSlices<Input['state']> &
       Input['signals'] &
@@ -16,11 +16,45 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
   >
 ) => void;
 
+type HooksFactory<Input extends SignalStoreFeatureResult> = (
+  store: Prettify<
+    SignalStoreSlices<Input['state']> &
+      Input['signals'] &
+      Input['methods'] &
+      StateSignal<Prettify<Input['state']>>
+  >
+) => {
+  onInit?: () => void;
+  onDestroy?: () => void;
+};
+
 export function withHooks<Input extends SignalStoreFeatureResult>(hooks: {
-  onInit?: HooksFactory<Input>;
-  onDestroy?: HooksFactory<Input>;
-}): SignalStoreFeature<Input, EmptyFeatureResult> {
+  onInit?: HookFn<Input>;
+  onDestroy?: HookFn<Input>;
+}): SignalStoreFeature<Input, EmptyFeatureResult>;
+export function withHooks<Input extends SignalStoreFeatureResult>(
+  hooks: HooksFactory<Input>
+): SignalStoreFeature<Input, EmptyFeatureResult>;
+
+export function withHooks<Input extends SignalStoreFeatureResult>(
+  hooksOrFactory:
+    | {
+        onInit?: HookFn<Input>;
+        onDestroy?: HookFn<Input>;
+      }
+    | HooksFactory<Input>
+): SignalStoreFeature<Input, EmptyFeatureResult> {
   return (store) => {
+    const storeProps = {
+      [STATE_SIGNAL]: store[STATE_SIGNAL],
+      ...store.slices,
+      ...store.signals,
+      ...store.methods,
+    };
+    const hooks =
+      typeof hooksOrFactory === 'function'
+        ? hooksOrFactory(storeProps)
+        : hooksOrFactory;
     const createHook = (name: keyof typeof hooks) => {
       const hook = hooks[name];
       const currentHook = store.hooks[name];
@@ -31,12 +65,7 @@ export function withHooks<Input extends SignalStoreFeatureResult>(hooks: {
               currentHook();
             }
 
-            hook({
-              [STATE_SIGNAL]: store[STATE_SIGNAL],
-              ...store.slices,
-              ...store.signals,
-              ...store.methods,
-            });
+            hook(storeProps);
           }
         : currentHook;
     };
