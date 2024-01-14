@@ -71,7 +71,13 @@ describe('Store with Encapsulation', () => {
       });
       test('exposed with state', () => {
         type _T = Assert<
-          AreEqual<{ age: Signal<number> }, ExposedStore<Store, ['id', 'age']>>
+          AreEqual<
+            { age: Signal<number> },
+            ExposedStore<
+              Store,
+              ['id', 'firstname', 'surname', 'birthday', 'age']
+            >
+          >
         >;
       });
       test('exposed with only state properties', () => {

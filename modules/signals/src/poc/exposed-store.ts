@@ -1,13 +1,14 @@
 import {
+  patchState,
   SignalStoreFeature,
   withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { computed, Signal, Type } from '@angular/core';
+import { computed, Type } from '@angular/core';
 import {
   ExposableProperty,
-  ExposedState,
+  ExposedStateSignal,
   ExposedStore,
 } from './exposed.models';
 import {
@@ -30,6 +31,24 @@ import { Prettify } from '../ts-helpers';
  * If no state property is exposed, `patchUpdate` cannot be applied to the state.
  */
 
+/**
+ * This is a prototype of a `signalStore` version which supports encapsulation.
+ *
+ * `expose` defines those properties which are accessible from the outside.
+ * By default, everything is encapsulated. That also applies to `patchState`.
+ *
+ * Example with Store exposing
+ *
+ * It should be possible
+ *
+ * Following changes are necessary:
+ * 1. `SignalStoreConfig`  gets an optional property `encapsulation` which
+ * is expects an array of string values representing keys of the store's final
+ * properties.
+ * 2. The return type of `signalStore` needs to use the new types `ExposedStore`
+ * and `ExposedStateSignal`.
+ */
+
 export declare function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -41,14 +60,10 @@ export declare function signalStore<
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
   f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>
-): Type<
-  ExposedStore<R, Exposed> & StateSignal<Prettify<ExposedState<R, Exposed>>>
->;
-
-export function withExposed<Feature1 extends SignalStoreFeatureResult>() {}
+): Type<ExposedStore<R, Exposed> & ExposedStateSignal<R, Exposed>>;
 
 const Store = signalStore(
-  { providedIn: 'root', expose: ['prettyName', 'load'] },
+  { providedIn: 'root', expose: ['prettyName', 'load', 'id'] },
   withState({
     id: 1,
     firstname: 'John',
@@ -71,6 +86,18 @@ const Store = signalStore(
 );
 
 const store = new Store();
-type T = typeof store.load;
 
-type Props = keyof typeof store;
+const id = store.id; // exposed
+const age = store.age; // not exposed
+const birthday = store.birthday; // not exposed
+
+patchState(store, { id: 2 }); // exposed
+patchState(store, { firstname: 'Franz' }); // not exposed
+patchState(store, (value) => {
+  value.id = 2;
+  return value;
+}); // exposed update fn
+patchState(store, (value) => {
+  value.firstname = 'John';
+  return value;
+}); // not exposed update fn
