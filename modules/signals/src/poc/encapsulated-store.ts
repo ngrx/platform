@@ -67,7 +67,7 @@ export type EncapsulatedState<
   StoreFeatures extends SignalStoreFeatureResult,
   Config extends EncapsulationConfig<StoreFeatures>
 > = Config['readonly'] extends boolean
-  ? StateSignal<{}>
+  ? StateSignal<never>
   : Config['readonlyExpect'] extends Array<keyof StoreFeatures['state']>
   ? StateSignal<
       Prettify<
@@ -98,7 +98,7 @@ const Store = signalStore(
   {
     providedIn: 'root',
     private: ['id', 'firstname', 'surname', 'birthday'],
-    readonlyExpect: ['surname'],
+    readonlyExpect: ['firstname'],
   },
   withState({
     id: 1,
@@ -128,4 +128,4 @@ patchState(store, (value) => {
   return { ...value, id: 2 };
 });
 
-patchState(store, { firstname: 'hallo' });
+patchState(store, (value) => ({ firstname: 'hallo' }));
