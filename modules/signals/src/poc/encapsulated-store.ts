@@ -25,6 +25,7 @@ import {
 } from '../signal-store-models';
 
 import {
+  patchState,
   SignalStoreFeature,
   withComputed,
   withMethods,
@@ -32,41 +33,72 @@ import {
 } from '@ngrx/signals';
 import { computed, Type } from '@angular/core';
 import { StateSignal } from '../state-signal';
+import { Prettify } from '../ts-helpers';
+import { ExposedStateSignal } from './exposed.models';
 
 /**
  * union type of all property names of the resulting store.
  * 'all' is a shortcut to expose everything.
  */
-export type ExposableProperty<Features extends SignalStoreFeatureResult> =
-  // | keyof Features['signals']
-  // | keyof Features['methods']
-  keyof Features['state'];
 
-type ExposableState<Features extends SignalStoreFeatureResult> =
-  keyof Features['state'];
+type EncapsulationConfig<Features extends SignalStoreFeatureResult> = {
+  private?: Array<keyof SignalStoreProps<Features>>;
+} & (
+  | { readonly?: boolean; readonlyExpect?: never }
+  | {
+      readonly?: never;
+      readonlyExpect?: Array<keyof SignalStoreProps<Features>>;
+    }
+);
 
-export type EncapsulatedConfig<Features extends SignalStoreFeatureResult> = {
-  encapsulateState?: boolean;
-  encapsulatePropsExcept?: Array<ExposableProperty<Features>>;
-  encapsulateStateExcept?: Array<ExposableState<Features>>;
-};
+export type EncapsulatedStore<
+  StoreFeatures extends SignalStoreFeatureResult,
+  Config extends EncapsulationConfig<StoreFeatures>
+> = Config['private'] extends Array<keyof SignalStoreProps<StoreFeatures>>
+  ? Omit<
+      SignalStoreProps<StoreFeatures>,
+      keyof {
+        [PropName in Config['private'][number]]: true;
+      }
+    >
+  : SignalStoreProps<StoreFeatures>;
+
+export type EncapsulatedState<
+  StoreFeatures extends SignalStoreFeatureResult,
+  Config extends EncapsulationConfig<StoreFeatures>
+> = Config['readonly'] extends boolean
+  ? StateSignal<{}>
+  : Config['readonlyExpect'] extends Array<keyof StoreFeatures['state']>
+  ? StateSignal<
+      Prettify<
+        Pick<
+          StoreFeatures['state'],
+          keyof {
+            [PropName in Config['readonlyExpect'][number]]: true;
+          }
+        >
+      >
+    >
+  : StateSignal<Prettify<StoreFeatures['state']>>;
 
 export declare function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = MergeFeatureResults<[F1, F2, F3]>
+  R extends SignalStoreFeatureResult = MergeFeatureResults<[F1, F2, F3]>,
+  Config extends EncapsulationConfig<R> = {}
 >(
-  config: SignalStoreConfig & EncapsulatedConfig<R>,
+  config: SignalStoreConfig & Config,
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
   f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>
-): Type<SignalStoreProps<R> & StateSignal<R>>;
+): Type<EncapsulatedStore<R, Config> & EncapsulatedState<R, Config>>;
 
 const Store = signalStore(
   {
     providedIn: 'root',
-    encapsulatePropsExcept: ['load'],
+    private: ['id', 'firstname', 'surname', 'birthday'],
+    readonlyExpect: ['surname'],
   },
   withState({
     id: 1,
@@ -88,3 +120,12 @@ const Store = signalStore(
     };
   })
 );
+
+const store = new Store();
+const load = store.load;
+
+patchState(store, (value) => {
+  return { ...value, id: 2 };
+});
+
+patchState(store, { firstname: 'hallo' });
