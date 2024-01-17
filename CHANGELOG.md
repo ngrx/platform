@@ -1,3 +1,16 @@
+<a name="17.1.0"></a>
+
+# [17.1.0](https://github.com/ngrx/platform/compare/17.0.1...17.1.0) (2024-01-16)
+
+### Bug Fixes
+
+- **eslint-plugin:** only report main pipe violations ([#4169](https://github.com/ngrx/platform/issues/4169)) ([970514e](https://github.com/ngrx/platform/commit/970514e))
+- **signals:** run `onDestroy` outside of injection context ([#4200](https://github.com/ngrx/platform/issues/4200)) ([e21df19](https://github.com/ngrx/platform/commit/e21df19))
+
+### Features
+
+- **signals:** add `withHooks` signature with factory input ([#4208](https://github.com/ngrx/platform/issues/4208)) ([916fba0](https://github.com/ngrx/platform/commit/916fba0)), closes [#4201](https://github.com/ngrx/platform/issues/4201)
+
 <a name="17.0.1"></a>
 
 ## [17.0.1](https://github.com/ngrx/platform/compare/17.0.0...17.0.1) (2023-11-27)
