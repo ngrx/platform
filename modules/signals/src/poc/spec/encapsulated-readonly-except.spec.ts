@@ -76,4 +76,42 @@ describe('readonly except firstname and surname', () => {
     // @ts-expect-error not patchable
     patchState(store, (value) => ({ birthday: value.birthday }));
   });
+
+  it('should be fully exposed to the internal features', () => {
+    const Store = signalStore(
+      {
+        providedIn: 'root',
+        readonly: true,
+      },
+      withState({
+        id: 1,
+        firstname: 'John',
+        surname: 'List',
+        birthday: new Date(1987, 5, 12),
+      }),
+      withMethods(() => {
+        return { load: (id: number) => void true };
+      }),
+      withMethods((state) => {
+        return {
+          updateAll() {
+            patchState(state, {
+              id: 1,
+              firstname: 'Hugo',
+              surname: 'Smith',
+              birthday: new Date(1991, 1, 1),
+            });
+          },
+          updateAllViaProperties() {
+            patchState(state, (value) => ({
+              id: value.id,
+              firstname: value.firstname,
+              surname: value.surname,
+              birthday: value.birthday,
+            }));
+          },
+        };
+      })
+    );
+  });
 });
