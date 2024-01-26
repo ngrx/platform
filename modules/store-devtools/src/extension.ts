@@ -206,7 +206,7 @@ export class DevtoolsExtension {
     // Listen for lifted actions
     const liftedActions$ = changes$.pipe(
       filter((change) => change.type === ExtensionActionTypes.DISPATCH),
-      map((change) => this.unwrapAction(change.payload)),
+      map((change) => change.payload),
       concatMap((action: any) => {
         if (action.type === IMPORT_STATE) {
           // State imports may happen in two situations:
@@ -234,7 +234,7 @@ export class DevtoolsExtension {
     // Listen for unlifted actions
     const actions$ = changes$.pipe(
       filter((change) => change.type === ExtensionActionTypes.ACTION),
-      map((change) => this.unwrapAction(change.payload))
+      map((change) => change.payload)
     );
 
     const actionsUntilStop$ = actions$.pipe(takeUntil(stop$));
@@ -244,10 +244,6 @@ export class DevtoolsExtension {
     // Only take the action sources between the start/stop events
     this.actions$ = this.start$.pipe(switchMap(() => actionsUntilStop$));
     this.liftedActions$ = this.start$.pipe(switchMap(() => liftedUntilStop$));
-  }
-
-  private unwrapAction(action: Action) {
-    return typeof action === 'string' ? eval(`(${action})`) : action;
   }
 
   private getExtensionConfig(config: StoreDevtoolsConfig) {
