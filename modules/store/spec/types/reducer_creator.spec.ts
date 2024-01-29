@@ -25,7 +25,7 @@ describe('createReducer()', () => {
           on(setAction, (_, { value }) => value),
           on(resetAction, () => initialState),
         );
-      `).toInfer('reducer', 'ActionReducer<State, Action>');
+      `).toInfer('reducer', 'ActionReducer<State, Action<string>>');
     });
 
     it('should support arrays', () => {
@@ -40,7 +40,7 @@ describe('createReducer()', () => {
           on(setAction, (_, { value }) => value),
           on(resetAction, () => initialState),
         );
-      `).toInfer('reducer', 'ActionReducer<string[], Action>');
+      `).toInfer('reducer', 'ActionReducer<string[], Action<string>>');
     });
 
     it('should support primitive types', () => {
@@ -55,7 +55,7 @@ describe('createReducer()', () => {
           on(setAction, (_, { value }) => value),
           on(resetAction, () => initialState),
         );
-      `).toInfer('reducer', 'ActionReducer<number, Action>');
+      `).toInfer('reducer', 'ActionReducer<number, Action<string>>');
     });
 
     it('should support a generic reducer factory', () => {
@@ -105,7 +105,7 @@ describe('createReducer()', () => {
         foo: string;
     }) => {
         foo: string;
-    } & TypedAction<"FOO">>]>
+    } & Action<"FOO">>]>
     `
       );
     });
@@ -120,7 +120,7 @@ describe('createReducer()', () => {
         `
       ReducerTypes<{
         name: string;
-    }, [ActionCreator<"FOO", () => TypedAction<"FOO">>]>
+    }, [ActionCreator<"FOO", () => Action<"FOO">>]>
     `
       );
     });

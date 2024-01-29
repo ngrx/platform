@@ -22,7 +22,7 @@ describe('createEffect()', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }));
       `).toFail(
-        /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action>'./
+        /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action<string>>'./
       );
     });
 
@@ -50,7 +50,7 @@ describe('createEffect()', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }), { dispatch: true });
       `).toFail(
-        /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action>'./
+        /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action<string>>'./
       );
     });
 
@@ -176,7 +176,7 @@ describe('createEffect()', () => {
         );
       `).toInfer(
         'effect',
-        'FunctionalEffect<() => Observable<ActionCreator<"a", () => TypedAction<"a">>>>'
+        'FunctionalEffect<() => Observable<ActionCreator<"a", () => Action<"a">>>>'
       );
     });
 

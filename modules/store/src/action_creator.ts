@@ -1,7 +1,7 @@
 import {
   Creator,
   ActionCreator,
-  TypedAction,
+  Action,
   FunctionWithParametersType,
   NotAllowedCheck,
   ActionCreatorProps,
@@ -14,11 +14,11 @@ import { REGISTERED_ACTION_TYPES } from './globals';
 
 export function createAction<T extends string>(
   type: T
-): ActionCreator<T, () => TypedAction<T>>;
+): ActionCreator<T, () => Action<T>>;
 export function createAction<T extends string, P extends object>(
   type: T,
   config: ActionCreatorProps<P> & NotAllowedCheck<P>
-): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & TypedAction<T>>;
+): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & Action<T>>;
 export function createAction<
   T extends string,
   P extends any[],
@@ -26,7 +26,7 @@ export function createAction<
 >(
   type: T,
   creator: Creator<P, R & NotAllowedCheck<R>>
-): FunctionWithParametersType<P, R & TypedAction<T>> & TypedAction<T>;
+): FunctionWithParametersType<P, R & Action<T>> & Action<T>;
 /**
  * @description
  * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.

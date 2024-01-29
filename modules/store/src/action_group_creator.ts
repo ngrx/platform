@@ -5,7 +5,7 @@ import {
   Creator,
   FunctionWithParametersType,
   NotAllowedCheck,
-  TypedAction,
+  Action,
 } from './models';
 import { capitalize, uncapitalize } from './helpers';
 
@@ -48,19 +48,17 @@ type EventCreator<
   Type extends string
 > = PropsCreator extends ActionCreatorProps<infer Props>
   ? void extends Props
-    ? ActionCreator<Type, () => TypedAction<Type>>
+    ? ActionCreator<Type, () => Action<Type>>
     : ActionCreator<
         Type,
-        (
-          props: Props & NotAllowedCheck<Props & object>
-        ) => Props & TypedAction<Type>
+        (props: Props & NotAllowedCheck<Props & object>) => Props & Action<Type>
       >
   : PropsCreator extends Creator<infer Props, infer Result>
   ? FunctionWithParametersType<
       Props,
-      Result & NotAllowedCheck<Result> & TypedAction<Type>
+      Result & NotAllowedCheck<Result> & Action<Type>
     > &
-      TypedAction<Type>
+      Action<Type>
   : never;
 
 type ActionName<EventName extends string> = Uncapitalize<

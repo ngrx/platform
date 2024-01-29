@@ -32,7 +32,7 @@ describe('createActionGroup', () => {
         `ActionCreator<
           "[Auth API] Login Success",
           (props: { userId: number; token: string; }) =>
-            { userId: number; token: string; } & TypedAction<"[Auth API] Login Success">
+            { userId: number; token: string; } & Action<"[Auth API] Login Success">
         >`
       );
       snippet.toInfer(
@@ -40,22 +40,22 @@ describe('createActionGroup', () => {
         `ActionCreator<
           "[Auth API] Login Failure",
           (props: { error: string; }) =>
-            { error: string; } & TypedAction<"[Auth API] Login Failure">
+            { error: string; } & Action<"[Auth API] Login Failure">
         >`
       );
       snippet.toInfer(
         'logoutSuccess',
         `ActionCreator<
           "[Auth API] Logout Success",
-          () => TypedAction<"[Auth API] Logout Success">
+          () => Action<"[Auth API] Logout Success">
         >`
       );
       snippet.toInfer(
         'logoutFailure',
         `FunctionWithParametersType<
           [error: Error],
-          { error: Error; } & TypedAction<"[Auth API] Logout Failure">
-        > & TypedAction<"[Auth API] Logout Failure">`
+          { error: Error; } & Action<"[Auth API] Logout Failure">
+        > & Action<"[Auth API] Logout Failure">`
       );
     });
 
@@ -115,14 +115,14 @@ describe('createActionGroup', () => {
           'loadBooksSuccess',
           `ActionCreator<
             "[Books API]  Load BOOKS  suCCess  ",
-            () => TypedAction<"[Books API]  Load BOOKS  suCCess  ">
+            () => Action<"[Books API]  Load BOOKS  suCCess  ">
           >`
         );
         snippet.toInfer(
           'loadBooksFailure',
           `ActionCreator<
             "[Books API] loadBooksFailure",
-            () => TypedAction<"[Books API] loadBooksFailure">
+            () => Action<"[Books API] loadBooksFailure">
           >`
         );
       });
@@ -164,7 +164,7 @@ describe('createActionGroup', () => {
           let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
         `).toInfer(
           'loadBooksSuccess',
-          'ActionCreator<"[Books API] Load Books Success", (props: { books: string[]; total: number; } | { books: symbol[]; }) => ({ books: string[]; total: number; } | { books: symbol[]; }) & TypedAction<"[Books API] Load Books Success">>'
+          'ActionCreator<"[Books API] Load Books Success", (props: { books: string[]; total: number; } | { books: symbol[]; }) => ({ books: string[]; total: number; } | { books: symbol[]; }) & Action<"[Books API] Load Books Success">>'
         );
       });
 
@@ -180,7 +180,7 @@ describe('createActionGroup', () => {
           let loadBooksSuccess: typeof booksApiActions.loadBooksSuccess;
         `).toInfer(
           'loadBooksSuccess',
-          'ActionCreator<"[Books API] Load Books Success", (props: { books: string[]; } & { total: number; }) => { books: string[]; } & { total: number; } & TypedAction<"[Books API] Load Books Success">>'
+          'ActionCreator<"[Books API] Load Books Success", (props: { books: string[]; } & { total: number; }) => { books: string[]; } & { total: number; } & Action<"[Books API] Load Books Success">>'
         );
       });
 
