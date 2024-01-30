@@ -21,8 +21,8 @@ The workshop covers both NgRx global `Store` and local state management solution
 
 We have the following workshops:
 
-- January 17 to 19, 2024 in a US-friendly timezone (Start time is 8am PT / 11am ET) <a href="https://ti.to/ngrx/workshop-jan-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
 - February 21 to 23, 2024 in a Europe-friendly timezone (Start time is 10am CET) <a href="https://ti.to/ngrx/workshop-feb-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
+- April 24 to 26, 2024 in a US-friendly timezone (Start time is 8am PT / 11am ET) <a href="https://ti.to/ngrx/workshop-april-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
 
 ## Participating NgRx team members
 
