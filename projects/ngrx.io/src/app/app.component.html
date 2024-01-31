@@ -23,8 +23,8 @@
       <mat-icon>menu</mat-icon>
     </button>
     <a class="nav-link home" href="/" [ngSwitch]="isSideBySide">
-      <img *ngSwitchCase="true" src="assets/images/ngrx-badge-white.svg" width="37" height="40" title="Home" alt="Home">
-      <img *ngSwitchDefault src="assets/images/ngrx-badge-white.svg" width="37" height="40" title="Home" alt="Home">
+      <img *ngSwitchCase="true" src="assets/images/badge-white.svg" width="37" height="40" title="Home" alt="Home">
+      <img *ngSwitchDefault src="assets/images/badge-white.svg" width="37" height="40" title="Home" alt="Home">
     </a>
     <aio-top-menu *ngIf="isSideBySide" [nodes]="topMenuNodes">
       <aio-search-box class="search-container" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)"></aio-search-box>

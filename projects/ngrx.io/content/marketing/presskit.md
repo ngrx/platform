@@ -2,19 +2,29 @@
 The logo graphics available for download on this page are provided under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
 
 ## NgRx Logo
-<img src="assets/images/ngrx-badge.png" width="100" style="float:left; padding-right: 1rem;" />
-<div style="padding-top:1rem;">
-  Logo (png) - <a href="assets/images/ngrx-badge.png" download>Download</a><br />
+
+<div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center">
+  <img src="assets/images/badge.svg" width="100" style="padding: 0.5rem" />
+  <div>
+    Logo (svg) - <a href="assets/images/badge.svg" download="ngrx-logo.svg">Download</a><br />
+    Logo (png) - <a href="assets/images/badge.png" download="ngrx-logo.png">Download</a>
+  </div>
 </div>
 
-## NgRx Conference Logo
-<img src="generated/images/marketing/home/ngrx-conf-badge.svg" width="100" style="float:left; padding-right: 2rem;" />
-<div style="padding:1rem 0;">
-  Logo (svg) - <a href="generated/images/marketing/home/ngrx-conf-badge.svg" download>Download</a>
+<div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center">
+  <img src="assets/images/badge-white.svg" width="100" style="background: #303030; padding: 0.5rem" />
+  <div>
+    White Logo (svg) - <a href="assets/images/badge-white.svg" download="ngrx-logo-white.svg">Download</a><br />
+    White Logo (png) - <a href="assets/images/badge-white.png" download="ngrx-logo-white.png">Download</a>
+  </div>
 </div>
 
-## State Management Lifecycle Diagram PSD
+## State Management Lifecycle Diagram
 
-<img src="generated/images/guide/store/state-management-lifecycle.png" width="100" style="float:left; padding-right: 1rem;" />
-  Diagram (psd) - <a href="generated/images/guide/store/state-management-lifecycle.psd" download>Download</a><br />
-  Diagram (png) - <a href="generated/images/guide/store/state-management-lifecycle.png" download>Download</a>
+<div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center">
+  <img src="generated/images/guide/store/state-management-lifecycle.png" width="200" />
+  <div>
+    Diagram (psd) - <a href="generated/images/guide/store/state-management-lifecycle.psd" download>Download</a><br />
+    Diagram (png) - <a href="generated/images/guide/store/state-management-lifecycle.png" download>Download</a>
+  </div>
+</div>
