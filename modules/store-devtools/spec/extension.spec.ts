@@ -4,6 +4,7 @@ import {
   ReduxDevtoolsExtensionConnection,
   ReduxDevtoolsExtensionConfig,
   REDUX_DEVTOOLS_EXTENSION,
+  ExtensionActionTypes,
 } from './../src/extension';
 import { Action } from '@ngrx/store';
 
@@ -181,6 +182,36 @@ describe('DevtoolsExtension', () => {
       jasmine.objectContaining({ serialize: customSerializer })
     );
   });
+
+  for (const { payload, name } of [
+    {
+      payload: "{type: '[Books] Rent', id: 5, customerId: 12}",
+      name: 'evaluates payload because of string',
+    },
+    {
+      payload: { type: '[Books] Rent', id: 5, customerId: 12 },
+      name: 'passes payload through if not of type string',
+    },
+  ]) {
+    it(`should handle an unlifted action (dispatched by DevTools) - ${name}`, () => {
+      const { devtoolsExtension, extensionConnection } = testSetup({
+        config: createConfig({}),
+      });
+      let unwrappedAction: Action | undefined = undefined;
+      devtoolsExtension.actions$.subscribe((action) => {
+        return (unwrappedAction = action);
+      });
+
+      const [callback] = extensionConnection.subscribe.calls.mostRecent().args;
+      callback({ type: ExtensionActionTypes.START });
+      callback({ type: ExtensionActionTypes.ACTION, payload });
+      expect(unwrappedAction).toEqual({
+        type: '[Books] Rent',
+        id: 5,
+        customerId: 12,
+      });
+    });
+  }
 
   describe('notify', () => {
     it('should send notification with default options', () => {
