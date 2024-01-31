@@ -220,7 +220,7 @@ describe('rxMethod', () => {
     );
   });
 
-  it('should not run within an effect or computed', () => {
+  it('should run untracked, that is not throw an NG0600 error', () => {
     const Counter = signalStore(withState({ value: 1 }));
     const counter = new Counter();
     const incrementer = TestBed.runInInjectionContext(() =>
@@ -237,31 +237,5 @@ describe('rxMethod', () => {
     incrementer(trigger);
     TestBed.flushEffects();
     expect(counter.value()).toBe(4);
-  });
-
-  it('should not run within an effect or computed', () => {
-    const Counter = signalStore(
-      { providedIn: 'root' },
-      withState({ value: 1 }),
-      withMethods((store) => {
-        return {
-          increment: rxMethod<number>(
-            pipe(
-              tap((n) => {
-                patchState(store, ({ value }) => {
-                  return { value: value + n };
-                });
-              })
-            )
-          ),
-        };
-      })
-    );
-    const counter = TestBed.inject(Counter);
-
-    const trigger = signal(1);
-    counter.increment(trigger);
-    TestBed.flushEffects();
-    expect(counter.value()).toBe(2);
   });
 });

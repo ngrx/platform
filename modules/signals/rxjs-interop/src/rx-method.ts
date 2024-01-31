@@ -6,6 +6,7 @@ import {
   Injector,
   isSignal,
   Signal,
+  untracked,
 } from '@angular/core';
 import { isObservable, noop, Observable, Subject, Unsubscribable } from 'rxjs';
 
@@ -31,7 +32,13 @@ export function rxMethod<Input>(
 
   const rxMethodFn = (input: RxMethodInput<Input>) => {
     if (isSignal(input)) {
-      const watcher = effect(() => source$.next(input()), { injector });
+      const watcher = effect(
+        () => {
+          const value = input();
+          untracked(() => source$.next(value));
+        },
+        { injector }
+      );
       const instanceSub = { unsubscribe: () => watcher.destroy() };
       sourceSub.add(instanceSub);
 
