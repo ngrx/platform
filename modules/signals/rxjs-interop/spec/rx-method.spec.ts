@@ -8,6 +8,7 @@ import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
 import { createLocalService } from '../../spec/helpers';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 
 describe('rxMethod', () => {
   it('runs with a value', () => {
@@ -217,5 +218,50 @@ describe('rxMethod', () => {
     expect(() => rxMethod(($) => $)).toThrow(
       /NG0203: rxMethod\(\) can only be used within an injection context/
     );
+  });
+
+  it('should not run within an effect or computed', () => {
+    const Counter = signalStore(withState({ value: 1 }));
+    const counter = new Counter();
+    const incrementer = TestBed.runInInjectionContext(() =>
+      rxMethod<number>(
+        pipe(
+          tap((n) => {
+            patchState(counter, ({ value }) => ({ value: value + n }));
+          })
+        )
+      )
+    );
+
+    const trigger = signal(3);
+    incrementer(trigger);
+    TestBed.flushEffects();
+    expect(counter.value()).toBe(4);
+  });
+
+  it('should not run within an effect or computed', () => {
+    const Counter = signalStore(
+      { providedIn: 'root' },
+      withState({ value: 1 }),
+      withMethods((store) => {
+        return {
+          increment: rxMethod<number>(
+            pipe(
+              tap((n) => {
+                patchState(store, ({ value }) => {
+                  return { value: value + n };
+                });
+              })
+            )
+          ),
+        };
+      })
+    );
+    const counter = TestBed.inject(Counter);
+
+    const trigger = signal(1);
+    counter.increment(trigger);
+    TestBed.flushEffects();
+    expect(counter.value()).toBe(2);
   });
 });
