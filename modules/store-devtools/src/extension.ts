@@ -247,7 +247,8 @@ export class DevtoolsExtension {
   }
 
   private unwrapAction(action: Action) {
-    return typeof action === 'string' ? eval(`(${action})`) : action;
+    // indirect eval according to https://esbuild.github.io/content-types/#direct-eval
+    return typeof action === 'string' ? (0, eval)(`(${action})`) : action;
   }
 
   private getExtensionConfig(config: StoreDevtoolsConfig) {
