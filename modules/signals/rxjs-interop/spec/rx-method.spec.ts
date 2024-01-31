@@ -218,4 +218,17 @@ describe('rxMethod', () => {
       /NG0203: rxMethod\(\) can only be used within an injection context/
     );
   });
+
+  it('allows signal updates', () => {
+    const counter = signal(1);
+    const increment = TestBed.runInInjectionContext(() =>
+      rxMethod<number>(tap((n) => counter.update((value) => value + n)))
+    );
+
+    const num = signal(3);
+    increment(num);
+
+    TestBed.flushEffects();
+    expect(counter()).toBe(4);
+  });
 });
