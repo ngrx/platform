@@ -8,7 +8,6 @@ import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
 import { createLocalService } from '../../spec/helpers';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 
 describe('rxMethod', () => {
   it('runs with a value', () => {
@@ -220,22 +219,16 @@ describe('rxMethod', () => {
     );
   });
 
-  it('should run untracked, that is not throw an NG0600 error', () => {
-    const Counter = signalStore(withState({ value: 1 }));
-    const counter = new Counter();
-    const incrementer = TestBed.runInInjectionContext(() =>
-      rxMethod<number>(
-        pipe(
-          tap((n) => {
-            patchState(counter, ({ value }) => ({ value: value + n }));
-          })
-        )
-      )
+  it('allows signal updates', () => {
+    const counter = signal(1);
+    const increment = TestBed.runInInjectionContext(() =>
+      rxMethod<number>(tap((n) => counter.update((value) => value + n)))
     );
 
-    const trigger = signal(3);
-    incrementer(trigger);
+    const num = signal(3);
+    increment(num);
+
     TestBed.flushEffects();
-    expect(counter.value()).toBe(4);
+    expect(counter()).toBe(4);
   });
 });
