@@ -1,30 +1,36 @@
-
 <h1 class="banner-headline">Workshops</h1>
 
-In the ever-evolving world of web development, staying ahead is crucial. This workshop is designed for developers, architects, and teams who want to revamp their existing Angular applications and leverage the latest advancements in the Angular ecosystem, including Signals.
+Are you struggling to maintain and enhance your existing Angular applications? Do you want to harness the power of NgRx for state management and explore the cutting-edge features in Angular? Join us for transformative workshops that will empower you to architect and modernize your apps with confidence!
 
 Take your Angular knowledge to the next level with [participating NgRx team members](#participating-ngrx-team-members).
 
-**Key Workshop Highlights:**
+## NgRx and Modern Angular Architectures
 
-1. Architectural Excellence: Learn the art of crafting scalable, maintainable, and robust Angular applications. We'll delve deep into architectural patterns, best practices, and tools to structure your apps for success.
+In the ever-evolving world of web development, staying ahead is crucial. This workshop is designed for developers, architects, and teams who want to revamp their existing Angular applications and leverage the latest advancements in the Angular ecosystem, including Signals.
 
-2. NgRx for State Management: Gain a comprehensive understanding of NgRx, the go-to library for managing state in Angular apps. We'll explore actions, reducers, effects, and selectors to create a robust state management system and how it influences apps architecture.
+### Key Workshop Highlights
 
-3. Introduction to Signals: Signals or NgRx? They work well together. Dive into one of Angular's most exciting features – Signals. Discover how Signals can streamline communication within your application, making it more responsive, efficient, and user-friendly.
+1. **Architectural Excellence:** Learn the art of crafting scalable, maintainable, and robust Angular applications. We'll delve deep into architectural patterns, best practices, and tools to structure your apps for success.
+2. **NgRx for State Management:** Gain a comprehensive understanding of NgRx, the go-to library for managing state in Angular apps. We'll explore actions, reducers, effects, and selectors to create a robust state management system and how it influences app architecture.
+3. **Introduction to Signals:** Signals or NgRx? They work well together. Dive into one of Angular's most exciting features – Signals. Discover how Signals can streamline communication within your application, making it more responsive, efficient, and user-friendly.
+4. **NgRx SignalStore:** Explore a cutting-edge state management solution with native support for Angular Signals. From foundational concepts to advanced techniques, learn how to leverage SignalStore's robust and extensible design to efficiently manage application state.
+5. **State Management Patterns:** Understand the distinctions between local and global state as a prerequisite for developing well-designed applications that are easy to maintain and scale.
+6. **Migration Strategies:** If you have an existing Angular application, we'll guide you through effective strategies for migrating to the latest version of Angular while improving your app's architecture.
 
-Chose one, two or three full days of **NgRx workshop** that covers the basics of NgRx to the most advanced topics. Whether your teams are just starting with NgRx or have been using it for a while - they are guaranteed to learn new concepts during this workshop.
+### Agenda
 
-The workshop covers both NgRx global `Store` and local state management solutions like `ComponentStore` and `signalStore`.
+- **Day 1: NgRx Essentials** - NgRx Store, Actions, Reducers, and Selectors, Feature State, Functional and Class-Based Effects, Error Handling
+- **Day 2: Advanced NgRx** - Optimistic and Pessimistic Updates, Managing Request Status, Router Store, Feature Creator, Combining Selectors, View Models, Entities
+- **Day 3: NgRx SignalStore** - Introduction to Signals, SignalState, SignalStore, Custom Store Features, RxJS Integration, Entities, Global and Local State Management Patterns
 
-## Upcoming workshops
+Choose one, two, or three full days of the **NgRx and Modern Angular Architectures Workshop** that covers the basics of NgRx to the most advanced topics. Whether your teams are just starting with NgRx or have been using it for a while - they are guaranteed to learn new concepts during this workshop.
 
-We have the following workshops:
+## Upcoming Workshops
 
-- February 21 to 23, 2024 in a Europe-friendly timezone (Start time is 10am CET) <a href="https://ti.to/ngrx/workshop-feb-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
-- April 24 to 26, 2024 in a US-friendly timezone (Start time is 8am PT / 11am ET) <a href="https://ti.to/ngrx/workshop-april-2024?source=ngrx_io"><button mat-button color="primary">Click here to sign-up</button></a>
+- February 21 to 23, 2024 in a Europe-friendly timezone (Start time is 10 am CET) <a href="https://ti.to/ngrx/workshop-feb-2024?source=ngrx_io" target="_blank">Click here to register</a>
+- April 24 to 26, 2024 in a US-friendly timezone (Start time is 8 am PT / 11 am ET) <a href="https://ti.to/ngrx/workshop-april-2024?source=ngrx_io" target="_blank">Click here to register</a>
 
-## Participating NgRx team members
+## Participating NgRx Team Members
 
 <div class="team-grid">
     <ngrx-contributor json='{"name": "Brandon Roberts", "picture": "brandonroberts.jpg"}'></ngrx-contributor>
@@ -47,22 +53,21 @@ We have the following workshops:
     <ngrx-contributor json='{"name": "Marko Stanimirović", "picture":"marko.jpg"}'></ngrx-contributor>
     <div class="member-description">Marko Stanimirović is a core member of the NgRx team (contributing since 2020),
         a Google Developer Expert in Angular, and an organizer of the Angular Belgrade group.
-        <p>Marko's contributions include <code>createFeature()</code>, overhaul of the <code>@ngrx/component</code>
-            library, and continuous maintenance of NgRx libraries.</p>
-        <p>Additionally, Marko is a lead author of <code>@ngrx/signals</code> library.</p>
-        <p>He enjoys contributing to open source software, sharing knowledge through technical articles and talks, and
+        <p>Marko's contributions include <code>createFeature()</code>, <code>createActionGroup()</code>, functional effects,
+            overhaul of the <code>@ngrx/component</code> library, and continuous maintenance of NgRx libraries.
+            Additionally, he is a lead author of the <code>@ngrx/signals</code> library.</p>
+        <p>He enjoys contributing to open-source software, sharing knowledge through technical articles and talks, and
             playing guitar.</p>
-        <p>Marko is also a Master of Science in Software Engineering from the University of Belgrade.</p>
+        <p>Marko holds a Master of Science in Software Engineering from the University of Belgrade.</p>
     </div>
 </div>
 
-## Get on the list
+## Get on the List
 
-Are current dates not working for you? No problem, get on the list and we'll send the update whenever we open any future workshops. [Fill up the form.](https://docs.google.com/forms/d/e/1FAIpQLSeDb1I3cwi0vuT_cR8tG_W4yBXUJI2Y65ZlMcMVAWoD0_1Whw/viewform)
+Are current dates not working for you? No problem, get on the list and we'll send the update whenever we open any future workshops. [Fill out the form.](https://docs.google.com/forms/d/e/1FAIpQLSeDb1I3cwi0vuT_cR8tG_W4yBXUJI2Y65ZlMcMVAWoD0_1Whw/viewform)
 
+## Contact Us
 
-## Contact
-
-Do you have a larger team and would like to do an in-person workshop? Any questions about the workshops? Please reach out to us directly.
+Are you interested in a dedicated in-person or online workshop for your team? Any questions about the workshops? Please reach out to us directly.
 
 <ngrx-contact-form></ngrx-contact-form>
