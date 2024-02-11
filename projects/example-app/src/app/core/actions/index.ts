@@ -1,4 +1,4 @@
-import * as LayoutActions from './layout.actions';
-import * as UserActions from './user.actions';
+import { layoutActions as LayoutActions } from './layout.actions';
+import { userActions as UserActions } from './user.actions';
 
 export { LayoutActions, UserActions };

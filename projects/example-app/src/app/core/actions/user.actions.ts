@@ -1,3 +1,8 @@
-import { createAction } from '@ngrx/store';
+import { createActionGroup, emptyProps } from '@ngrx/store';
 
-export const idleTimeout = createAction('[User] Idle Timeout');
+export const userActions = createActionGroup({
+  source: 'User',
+  events: {
+    'Idle Timeout': emptyProps(),
+  },
+});

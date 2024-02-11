@@ -1,7 +1,9 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 import { Credentials } from '@example-app/auth/models';
 
-export const login = createAction(
-  '[Login Page] Login',
-  props<{ credentials: Credentials }>()
-);
+export const loginPageActions = createActionGroup({
+  source: 'Login Page',
+  events: {
+    Login: props<{ credentials: Credentials }>(),
+  },
+});
