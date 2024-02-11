@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from '@example-app/auth/containers';
 import { LoginFormComponent } from '@example-app/auth/components';
 import * as fromAuth from '@example-app/auth/reducers';
-import { LoginPageActions } from '@example-app/auth/actions';
+import { loginPageActions } from '@example-app/auth/actions/login-page.actions';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { MaterialModule } from '@example-app/material';
 
@@ -56,7 +56,7 @@ describe('Login Page', () => {
 
   it('should dispatch a login event on submit', () => {
     const credentials: any = {};
-    const action = LoginPageActions.login({ credentials });
+    const action = loginPageActions.login({ credentials });
 
     instance.onSubmit(credentials);
 

@@ -4,11 +4,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { defer, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 
-import {
-  CollectionApiActions,
-  CollectionPageActions,
-  SelectedBookPageActions,
-} from '@example-app/books/actions';
+import { collectionApiActions } from '@example-app/books/actions/collection-api.actions';
+import { collectionPageActions } from '@example-app/books/actions/collection-page.actions';
+import { selectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import { Book } from '@example-app/books/models';
 import { BookStorageService } from '@example-app/core/services';
 
@@ -31,14 +29,14 @@ export class CollectionEffects {
 
   loadCollection$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CollectionPageActions.enter),
+      ofType(collectionPageActions.enter),
       switchMap(() =>
         this.storageService.getCollection().pipe(
           map((books: Book[]) =>
-            CollectionApiActions.loadBooksSuccess({ books })
+            collectionApiActions.loadBooksSuccess({ books })
           ),
           catchError((error) =>
-            of(CollectionApiActions.loadBooksFailure({ error }))
+            of(collectionApiActions.loadBooksFailure({ error }))
           )
         )
       )
@@ -47,11 +45,11 @@ export class CollectionEffects {
 
   addBookToCollection$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SelectedBookPageActions.addBook),
+      ofType(selectedBookPageActions.addBook),
       mergeMap(({ book }) =>
         this.storageService.addToCollection([book]).pipe(
-          map(() => CollectionApiActions.addBookSuccess({ book })),
-          catchError(() => of(CollectionApiActions.addBookFailure({ book })))
+          map(() => collectionApiActions.addBookSuccess({ book })),
+          catchError(() => of(collectionApiActions.addBookFailure({ book })))
         )
       )
     )
@@ -59,11 +57,11 @@ export class CollectionEffects {
 
   removeBookFromCollection$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SelectedBookPageActions.removeBook),
+      ofType(selectedBookPageActions.removeBook),
       mergeMap(({ book }) =>
         this.storageService.removeFromCollection([book.id]).pipe(
-          map(() => CollectionApiActions.removeBookSuccess({ book })),
-          catchError(() => of(CollectionApiActions.removeBookFailure({ book })))
+          map(() => collectionApiActions.removeBookSuccess({ book })),
+          catchError(() => of(collectionApiActions.removeBookFailure({ book })))
         )
       )
     )

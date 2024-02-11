@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { GoogleBooksService } from '@example-app/core/services';
-import { BookActions } from '@example-app/books/actions';
+import { bookActions } from '@example-app/books/actions/book.actions';
 import * as fromBooks from '@example-app/books/reducers';
 
 /**
@@ -50,7 +50,7 @@ export const bookExistsGuard = (
    */
   function hasBookInApi(id: string): Observable<boolean> {
     return googleBooks.retrieveBook(id).pipe(
-      map((bookEntity) => BookActions.loadBook({ book: bookEntity })),
+      map((bookEntity) => bookActions.loadBook({ book: bookEntity })),
       tap((action) => store.dispatch(action)),
       map((book) => !!book),
       catchError(() => {

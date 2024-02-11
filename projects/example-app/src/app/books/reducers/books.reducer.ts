@@ -1,12 +1,10 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
-import {
-  BookActions,
-  BooksApiActions,
-  CollectionApiActions,
-  ViewBookPageActions,
-} from '@example-app/books/actions';
+import { booksApiActions } from '@example-app/books/actions/books-api.actions';
+import { bookActions } from '@example-app/books/actions/book.actions';
+import { collectionApiActions } from '@example-app/books/actions/collection-api.actions';
+import { viewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { Book } from '@example-app/books/models';
 
 export const booksFeatureKey = 'books';
@@ -54,8 +52,8 @@ export const reducer = createReducer(
    * sort each record upon entry into the sorted array.
    */
   on(
-    BooksApiActions.searchSuccess,
-    CollectionApiActions.loadBooksSuccess,
+    booksApiActions.searchSuccess,
+    collectionApiActions.loadBooksSuccess,
     (state, { books }) => adapter.addMany(books, state)
   ),
   /**
@@ -65,8 +63,8 @@ export const reducer = createReducer(
    * exist already. If the collection is to be sorted, the adapter will
    * insert the new record into the sorted array.
    */
-  on(BookActions.loadBook, (state, { book }) => adapter.addOne(book, state)),
-  on(ViewBookPageActions.selectBook, (state, { id }) => ({
+  on(bookActions.loadBook, (state, { book }) => adapter.addOne(book, state)),
+  on(viewBookPageActions.selectBook, (state, { id }) => ({
     ...state,
     selectedBookId: id,
   }))

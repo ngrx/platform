@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { CollectionPageActions } from '@example-app/books/actions';
+import { collectionPageActions } from '@example-app/books/actions/collection-page.actions';
 import {
   BookAuthorsComponent,
   BookPreviewComponent,
@@ -51,7 +51,7 @@ describe('Collection Page', () => {
   });
 
   it('should dispatch a collection.Load on init', () => {
-    const action = CollectionPageActions.enter();
+    const action = collectionPageActions.enter();
 
     fixture.detectChanges();
 

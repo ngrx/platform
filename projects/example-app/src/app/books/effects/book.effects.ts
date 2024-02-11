@@ -12,10 +12,8 @@ import {
 } from 'rxjs/operators';
 
 import { Book } from '@example-app/books/models';
-import {
-  BooksApiActions,
-  FindBookPageActions,
-} from '@example-app/books/actions';
+import { booksApiActions } from '@example-app/books/actions/books-api.actions';
+import { findBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { GoogleBooksService } from '@example-app/core/services';
 
 /**
@@ -35,7 +33,7 @@ export class BookEffects {
     () =>
       ({ debounce = 300, scheduler = asyncScheduler } = {}) =>
         this.actions$.pipe(
-          ofType(FindBookPageActions.searchBooks),
+          ofType(findBookPageActions.searchBooks),
           debounceTime(debounce, scheduler),
           switchMap(({ query }) => {
             if (query === '') {
@@ -43,15 +41,15 @@ export class BookEffects {
             }
 
             const nextSearch$ = this.actions$.pipe(
-              ofType(FindBookPageActions.searchBooks),
+              ofType(findBookPageActions.searchBooks),
               skip(1)
             );
 
             return this.googleBooks.searchBooks(query).pipe(
               takeUntil(nextSearch$),
-              map((books: Book[]) => BooksApiActions.searchSuccess({ books })),
+              map((books: Book[]) => booksApiActions.searchSuccess({ books })),
               catchError((err) =>
-                of(BooksApiActions.searchFailure({ errorMsg: err.message }))
+                of(booksApiActions.searchFailure({ errorMsg: err.message }))
               )
             );
           })

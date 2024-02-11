@@ -1,10 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 
-import {
-  CollectionApiActions,
-  CollectionPageActions,
-  SelectedBookPageActions,
-} from '@example-app/books/actions';
+import { collectionApiActions } from '@example-app/books/actions/collection-api.actions';
+import { collectionPageActions } from '@example-app/books/actions/collection-page.actions';
+import { selectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 
 export const collectionFeatureKey = 'collection';
 
@@ -22,11 +20,11 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(CollectionPageActions.enter, (state) => ({
+  on(collectionPageActions.enter, (state) => ({
     ...state,
     loading: true,
   })),
-  on(CollectionApiActions.loadBooksSuccess, (_state, { books }) => ({
+  on(collectionApiActions.loadBooksSuccess, (_state, { books }) => ({
     loaded: true,
     loading: false,
     ids: books.map((book) => book.id),
@@ -39,8 +37,8 @@ export const reducer = createReducer(
    * `on` supports handling multiple types of actions
    */
   on(
-    SelectedBookPageActions.addBook,
-    CollectionApiActions.removeBookFailure,
+    selectedBookPageActions.addBook,
+    collectionApiActions.removeBookFailure,
     (state, { book }) => {
       if (state.ids.indexOf(book.id) > -1) {
         return state;
@@ -56,8 +54,8 @@ export const reducer = createReducer(
    * If addBook fails, we "undo" adding the book.
    */
   on(
-    SelectedBookPageActions.removeBook,
-    CollectionApiActions.addBookFailure,
+    selectedBookPageActions.removeBook,
+    collectionApiActions.addBookFailure,
     (state, { book }) => ({
       ...state,
       ids: state.ids.filter((id) => id !== book.id),

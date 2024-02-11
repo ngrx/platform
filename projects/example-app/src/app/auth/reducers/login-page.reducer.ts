@@ -1,4 +1,5 @@
-import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
+import { authApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { loginPageActions } from '@example-app/auth/actions/login-page.actions';
 import { createReducer, on } from '@ngrx/store';
 
 export const loginPageFeatureKey = 'loginPage';
@@ -15,18 +16,18 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(LoginPageActions.login, (state) => ({
+  on(loginPageActions.login, (state) => ({
     ...state,
     error: null,
     pending: true,
   })),
 
-  on(AuthApiActions.loginSuccess, (state) => ({
+  on(authApiActions.loginSuccess, (state) => ({
     ...state,
     error: null,
     pending: false,
   })),
-  on(AuthApiActions.loginFailure, (state, { error }) => ({
+  on(authApiActions.loginFailure, (state, { error }) => ({
     ...state,
     error,
     pending: false,

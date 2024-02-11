@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { AuthApiActions, AuthActions } from '@example-app/auth/actions';
+import { authApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { authActions } from '@example-app/auth/actions/auth.actions';
 import { User } from '@example-app/auth/models';
 
 export const statusFeatureKey = 'status';
@@ -14,8 +15,8 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
-  on(AuthActions.logout, () => initialState)
+  on(authApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
+  on(authActions.logout, () => initialState)
 );
 
 export const getUser = (state: State) => state.user;

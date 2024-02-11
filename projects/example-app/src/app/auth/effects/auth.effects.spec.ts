@@ -5,11 +5,9 @@ import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
-import {
-  LoginPageActions,
-  AuthActions,
-  AuthApiActions,
-} from '@example-app/auth/actions';
+import { loginPageActions } from '@example-app/auth/actions/login-page.actions';
+import { authApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { authActions } from '@example-app/auth/actions/auth.actions';
 
 import { Credentials, User } from '@example-app/auth/models';
 import { AuthService } from '@example-app/auth/services';
@@ -57,8 +55,8 @@ describe('AuthEffects', () => {
     it('should return an auth.loginSuccess action, with user information if login succeeds', () => {
       const credentials: Credentials = { username: 'test', password: '' };
       const user = { name: 'User' } as User;
-      const action = LoginPageActions.login({ credentials });
-      const completion = AuthApiActions.loginSuccess({ user });
+      const action = loginPageActions.login({ credentials });
+      const completion = authApiActions.loginSuccess({ user });
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: user });
@@ -70,8 +68,8 @@ describe('AuthEffects', () => {
 
     it('should return a new auth.loginFailure if the login service throws', () => {
       const credentials: Credentials = { username: 'someOne', password: '' };
-      const action = LoginPageActions.login({ credentials });
-      const completion = AuthApiActions.loginFailure({
+      const action = loginPageActions.login({ credentials });
+      const completion = authApiActions.loginFailure({
         error: 'Invalid username or password',
       });
       const error = 'Invalid username or password';
@@ -88,7 +86,7 @@ describe('AuthEffects', () => {
   describe('loginSuccess$', () => {
     it('should dispatch a RouterNavigation action', (done: any) => {
       const user = { name: 'User' } as User;
-      const action = AuthApiActions.loginSuccess({ user });
+      const action = authApiActions.loginSuccess({ user });
 
       actions$ = of(action);
 
@@ -101,7 +99,7 @@ describe('AuthEffects', () => {
 
   describe('loginRedirect$', () => {
     it('should dispatch a RouterNavigation action when auth.loginRedirect is dispatched', (done: any) => {
-      const action = AuthApiActions.loginRedirect();
+      const action = authApiActions.loginRedirect();
 
       actions$ = of(action);
 
@@ -112,7 +110,7 @@ describe('AuthEffects', () => {
     });
 
     it('should dispatch a RouterNavigation action when auth.logout is dispatched', (done: any) => {
-      const action = AuthActions.logout();
+      const action = authActions.logout();
 
       actions$ = of(action);
 
@@ -125,8 +123,8 @@ describe('AuthEffects', () => {
 
   describe('logoutConfirmation$', () => {
     it('should dispatch a Logout action if dialog closes with true result', () => {
-      const action = AuthActions.logoutConfirmation();
-      const completion = AuthActions.logout();
+      const action = authActions.logoutConfirmation();
+      const completion = authActions.logout();
 
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
@@ -139,8 +137,8 @@ describe('AuthEffects', () => {
     });
 
     it('should dispatch a LogoutConfirmationDismiss action if dialog closes with falsy result', () => {
-      const action = AuthActions.logoutConfirmation();
-      const completion = AuthActions.logoutConfirmationDismiss();
+      const action = authActions.logoutConfirmation();
+      const completion = authActions.logoutConfirmationDismiss();
 
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });

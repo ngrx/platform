@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ViewBookPageActions } from '@example-app/books/actions';
+import { viewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 
 /**
  * Note: Container components are also reusable. Whether or not
@@ -26,7 +26,7 @@ export class ViewBookPageComponent implements OnDestroy {
 
   constructor(store: Store, route: ActivatedRoute) {
     this.actionsSubscription = route.params
-      .pipe(map((params) => ViewBookPageActions.selectBook({ id: params.id })))
+      .pipe(map((params) => viewBookPageActions.selectBook({ id: params.id })))
       .subscribe((action) => store.dispatch(action));
   }
 

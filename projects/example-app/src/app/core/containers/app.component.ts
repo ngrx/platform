@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { AuthActions } from '@example-app/auth/actions';
+import { authActions } from '@example-app/auth/actions/auth.actions';
 import * as fromAuth from '@example-app/auth/reducers';
 import * as fromRoot from '@example-app/reducers';
-import { LayoutActions } from '@example-app/core/actions';
+import { layoutActions } from '@example-app/core/actions/layout.actions';
 
 @Component({
   selector: 'bc-app',
@@ -67,14 +67,14 @@ export class AppComponent {
      * updates and user interaction through the life of our
      * application.
      */
-    this.store.dispatch(LayoutActions.closeSidenav());
+    this.store.dispatch(layoutActions.closeSidenav());
   }
 
   openSidenav() {
-    this.store.dispatch(LayoutActions.openSidenav());
+    this.store.dispatch(layoutActions.openSidenav());
   }
 
   logout() {
-    this.store.dispatch(AuthActions.logoutConfirmation());
+    this.store.dispatch(authActions.logoutConfirmation());
   }
 }

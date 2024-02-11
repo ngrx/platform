@@ -3,7 +3,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { SelectedBookPageActions } from '@example-app/books/actions';
+import { selectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import {
   BookAuthorsComponent,
   BookDetailComponent,
@@ -45,7 +45,7 @@ describe('Selected Book Page', () => {
 
   it('should dispatch a collection.AddBook action when addToCollection is called', () => {
     const $event: Book = generateMockBook();
-    const action = SelectedBookPageActions.addBook({ book: $event });
+    const action = selectedBookPageActions.addBook({ book: $event });
 
     instance.addToCollection($event);
 
@@ -54,7 +54,7 @@ describe('Selected Book Page', () => {
 
   it('should dispatch a collection.RemoveBook action on removeFromCollection', () => {
     const $event: Book = generateMockBook();
-    const action = SelectedBookPageActions.removeBook({ book: $event });
+    const action = selectedBookPageActions.removeBook({ book: $event });
 
     instance.removeFromCollection($event);
 
