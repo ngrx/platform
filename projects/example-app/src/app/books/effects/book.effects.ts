@@ -12,10 +12,8 @@ import {
 } from 'rxjs/operators';
 
 import { Book } from '@example-app/books/models';
-import {
-  BooksApiActions,
-  FindBookPageActions,
-} from '@example-app/books/actions';
+import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { GoogleBooksService } from '@example-app/core/services';
 
 /**

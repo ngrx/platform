@@ -1,8 +1,10 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 
 import { Book } from '@example-app/books/models';
 
-export const loadBook = createAction(
-  '[Book Exists Guard] Load Book',
-  props<{ book: Book }>()
-);
+export const BookActions = createActionGroup({
+  source: 'Book Exists Guard',
+  events: {
+    'Load Book': props<{ book: Book }>(),
+  },
+});

@@ -10,7 +10,7 @@ import {
 } from '@example-app/books/components';
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageComponent } from '@example-app/books/containers';
-import { ViewBookPageActions } from '@example-app/books/actions';
+import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { MaterialModule } from '@example-app/material';
 

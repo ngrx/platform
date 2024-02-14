@@ -1,6 +1,11 @@
-import { createAction } from '@ngrx/store';
+import { createActionGroup, emptyProps } from '@ngrx/store';
 
-/**
- * Load Collection Action
- */
-export const enter = createAction('[Collection Page] Enter');
+export const CollectionPageActions = createActionGroup({
+  source: 'Collection Page',
+  events: {
+    /**
+     * Load Collection Action
+     */
+    Enter: emptyProps(),
+  },
+});

@@ -4,15 +4,13 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
-import {
-  LoginPageActions,
-  AuthActions,
-  AuthApiActions,
-} from '@example-app/auth/actions';
+import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
+import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { AuthActions } from '@example-app/auth/actions/auth.actions';
 import { Credentials } from '@example-app/auth/models';
 import { AuthService } from '@example-app/auth/services';
 import { LogoutConfirmationDialogComponent } from '@example-app/auth/components';
-import { UserActions } from '@example-app/core/actions';
+import { UserActions } from '@example-app/core/actions/user.actions';
 
 @Injectable()
 export class AuthEffects {

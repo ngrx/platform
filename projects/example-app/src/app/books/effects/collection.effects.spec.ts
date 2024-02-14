@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  CollectionApiActions,
-  CollectionPageActions,
-  SelectedBookPageActions,
-} from '@example-app/books/actions';
+import { CollectionApiActions } from '@example-app/books/actions/collection-api.actions';
+import { CollectionPageActions } from '@example-app/books/actions/collection-page.actions';
+import { SelectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import { CollectionEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
 import {

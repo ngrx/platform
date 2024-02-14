@@ -4,7 +4,7 @@ import { fromEvent, merge, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { createEffect } from '@ngrx/effects';
-import { UserActions } from '@example-app/core/actions';
+import { UserActions } from '@example-app/core/actions/user.actions';
 
 @Injectable()
 export class UserEffects {

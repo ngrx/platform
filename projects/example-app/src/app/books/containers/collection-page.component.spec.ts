@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { CollectionPageActions } from '@example-app/books/actions';
+import { CollectionPageActions } from '@example-app/books/actions/collection-page.actions';
 import {
   BookAuthorsComponent,
   BookPreviewComponent,

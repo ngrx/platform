@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { FindBookPageActions } from '@example-app/books/actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
 

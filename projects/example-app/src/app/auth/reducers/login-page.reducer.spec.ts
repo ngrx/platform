@@ -1,7 +1,8 @@
 import { reducer } from '@example-app/auth/reducers/login-page.reducer';
 import * as fromLoginPage from '@example-app/auth/reducers/login-page.reducer';
 
-import { AuthApiActions, LoginPageActions } from '@example-app/auth/actions';
+import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
+import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
 
 import { Credentials, User } from '@example-app/auth/models';
 

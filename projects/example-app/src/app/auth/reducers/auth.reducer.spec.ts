@@ -1,6 +1,7 @@
 import { reducer } from '@example-app/auth/reducers/auth.reducer';
 import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
-import { AuthApiActions, AuthActions } from '@example-app/auth/actions';
+import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { AuthActions } from '@example-app/auth/actions/auth.actions';
 
 import { User } from '@example-app/auth/models';
 

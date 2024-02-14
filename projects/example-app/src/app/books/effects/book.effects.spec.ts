@@ -5,10 +5,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 
-import {
-  BooksApiActions,
-  FindBookPageActions,
-} from '@example-app/books/actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
+import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
 import { BookEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
 import { GoogleBooksService } from '@example-app/core/services';

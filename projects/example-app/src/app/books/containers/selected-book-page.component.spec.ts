@@ -3,7 +3,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { SelectedBookPageActions } from '@example-app/books/actions';
+import { SelectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import {
   BookAuthorsComponent,
   BookDetailComponent,

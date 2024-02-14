@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from '@example-app/auth/containers';
 import { LoginFormComponent } from '@example-app/auth/components';
 import * as fromAuth from '@example-app/auth/reducers';
-import { LoginPageActions } from '@example-app/auth/actions';
+import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { MaterialModule } from '@example-app/material';
 

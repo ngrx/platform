@@ -1,11 +1,9 @@
 import { reducer } from '@example-app/books/reducers/books.reducer';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
-import {
-  BooksApiActions,
-  BookActions,
-  ViewBookPageActions,
-  CollectionApiActions,
-} from '@example-app/books/actions';
+import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
+import { BookActions } from '@example-app/books/actions/book.actions';
+import { CollectionApiActions } from '@example-app/books/actions/collection-api.actions';
+import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { Book, generateMockBook } from '@example-app/books/models';
 
 describe('BooksReducer', () => {
