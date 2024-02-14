@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { findBookPageActions } from '@example-app/books/actions/find-book-page.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import {
   BookAuthorsComponent,
   BookPreviewComponent,
@@ -67,7 +67,7 @@ describe('Find Book Page', () => {
 
   it('should dispatch a book.Search action on search', () => {
     const $event = 'book name';
-    const action = findBookPageActions.searchBooks({ query: $event });
+    const action = FindBookPageActions.searchBooks({ query: $event });
 
     instance.search($event);
 

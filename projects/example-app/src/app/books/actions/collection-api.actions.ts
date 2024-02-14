@@ -2,7 +2,7 @@ import { createActionGroup, props } from '@ngrx/store';
 
 import { Book } from '@example-app/books/models';
 
-export const collectionApiActions = createActionGroup({
+export const CollectionApiActions = createActionGroup({
   source: 'Collection/API',
   events: {
     /**

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { layoutActions } from '@example-app/core/actions/layout.actions';
-import { authActions } from '@example-app/auth/actions/auth.actions';
+import { LayoutActions } from '@example-app/core/actions/layout.actions';
+import { AuthActions } from '@example-app/auth/actions/auth.actions';
 
 export const layoutFeatureKey = 'layout';
 
@@ -15,9 +15,9 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(layoutActions.closeSidenav, () => ({ showSidenav: false })),
-  on(layoutActions.openSidenav, () => ({ showSidenav: true })),
-  on(authActions.logoutConfirmation, () => ({ showSidenav: false }))
+  on(LayoutActions.closeSidenav, () => ({ showSidenav: false })),
+  on(LayoutActions.openSidenav, () => ({ showSidenav: true })),
+  on(AuthActions.logoutConfirmation, () => ({ showSidenav: false }))
 );
 
 export const selectShowSidenav = (state: State) => state.showSidenav;

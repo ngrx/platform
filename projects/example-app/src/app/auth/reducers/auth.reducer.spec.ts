@@ -1,7 +1,7 @@
 import { reducer } from '@example-app/auth/reducers/auth.reducer';
 import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
-import { authApiActions } from '@example-app/auth/actions/auth-api.actions';
-import { authActions } from '@example-app/auth/actions/auth.actions';
+import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { AuthActions } from '@example-app/auth/actions/auth.actions';
 
 import { User } from '@example-app/auth/models';
 
@@ -26,7 +26,7 @@ describe('AuthReducer', () => {
   describe('LOGIN_SUCCESS', () => {
     it('should add a user set loggedIn to true in auth state', () => {
       const user = { name: 'test' } as User;
-      const createAction = authApiActions.loginSuccess({ user });
+      const createAction = AuthApiActions.loginSuccess({ user });
 
       const result = reducer(fromAuth.initialState, createAction);
 
@@ -39,7 +39,7 @@ describe('AuthReducer', () => {
       const initialState = {
         user: { name: 'test' },
       } as fromAuth.State;
-      const createAction = authActions.logout();
+      const createAction = AuthActions.logout();
 
       const result = reducer(initialState, createAction);
 

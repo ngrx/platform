@@ -1,8 +1,8 @@
 import { reducer } from '@example-app/auth/reducers/login-page.reducer';
 import * as fromLoginPage from '@example-app/auth/reducers/login-page.reducer';
 
-import { loginPageActions } from '@example-app/auth/actions/login-page.actions';
-import { authApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
+import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
 
 import { Credentials, User } from '@example-app/auth/models';
 
@@ -20,7 +20,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN', () => {
     it('should make pending to true', () => {
       const user = { username: 'test' } as Credentials;
-      const createAction = loginPageActions.login({ credentials: user });
+      const createAction = LoginPageActions.login({ credentials: user });
 
       const result = reducer(fromLoginPage.initialState, createAction);
 
@@ -31,7 +31,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_SUCCESS', () => {
     it('should have no error and no pending state', () => {
       const user = { name: 'test' } as User;
-      const createAction = authApiActions.loginSuccess({ user });
+      const createAction = AuthApiActions.loginSuccess({ user });
 
       const result = reducer(fromLoginPage.initialState, createAction);
 
@@ -42,7 +42,7 @@ describe('LoginPageReducer', () => {
   describe('LOGIN_FAILURE', () => {
     it('should have an error and no pending state', () => {
       const error = 'login failed';
-      const createAction = authApiActions.loginFailure({ error });
+      const createAction = AuthApiActions.loginFailure({ error });
 
       const result = reducer(fromLoginPage.initialState, createAction);
 

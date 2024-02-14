@@ -1,5 +1,5 @@
-import { booksApiActions } from '@example-app/books/actions/books-api.actions';
-import { findBookPageActions } from '@example-app/books/actions/find-book-page.actions';
+import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { createReducer, on } from '@ngrx/store';
 
 export const searchFeatureKey = 'search';
@@ -20,7 +20,7 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(findBookPageActions.searchBooks, (state, { query }) => {
+  on(FindBookPageActions.searchBooks, (state, { query }) => {
     return query === ''
       ? {
           ids: [],
@@ -35,13 +35,13 @@ export const reducer = createReducer(
           query,
         };
   }),
-  on(booksApiActions.searchSuccess, (state, { books }) => ({
+  on(BooksApiActions.searchSuccess, (state, { books }) => ({
     ids: books.map((book) => book.id),
     loading: false,
     error: '',
     query: state.query,
   })),
-  on(booksApiActions.searchFailure, (state, { errorMsg }) => ({
+  on(BooksApiActions.searchFailure, (state, { errorMsg }) => ({
     ...state,
     loading: false,
     error: errorMsg,

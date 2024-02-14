@@ -2,7 +2,7 @@ import { createActionGroup, props } from '@ngrx/store';
 
 import { Book } from '@example-app/books/models';
 
-export const selectedBookPageActions = createActionGroup({
+export const SelectedBookPageActions = createActionGroup({
   source: 'Selected Book Page',
   events: {
     /**

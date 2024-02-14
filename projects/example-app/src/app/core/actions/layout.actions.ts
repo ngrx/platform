@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps } from '@ngrx/store';
 
-export const layoutActions = createActionGroup({
+export const LayoutActions = createActionGroup({
   source: 'Layout',
   events: {
     'Open Sidenav': emptyProps(),

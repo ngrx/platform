@@ -10,7 +10,7 @@ import {
 } from '@example-app/books/components';
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageComponent } from '@example-app/books/containers';
-import { viewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
+import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { MaterialModule } from '@example-app/material';
 
@@ -52,7 +52,7 @@ describe('View Book Page', () => {
   });
 
   it('should dispatch a book.Select action on init', () => {
-    const action = viewBookPageActions.selectBook({ id: '2' });
+    const action = ViewBookPageActions.selectBook({ id: '2' });
 
     (route.params as BehaviorSubject<any>).next({ id: '2' });
 

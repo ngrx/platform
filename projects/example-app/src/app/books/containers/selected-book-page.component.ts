@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { selectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
+import { SelectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
 
@@ -32,10 +32,10 @@ export class SelectedBookPageComponent {
   }
 
   addToCollection(book: Book) {
-    this.store.dispatch(selectedBookPageActions.addBook({ book }));
+    this.store.dispatch(SelectedBookPageActions.addBook({ book }));
   }
 
   removeFromCollection(book: Book) {
-    this.store.dispatch(selectedBookPageActions.removeBook({ book }));
+    this.store.dispatch(SelectedBookPageActions.removeBook({ book }));
   }
 }

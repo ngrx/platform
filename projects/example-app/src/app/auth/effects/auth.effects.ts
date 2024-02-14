@@ -4,24 +4,24 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
-import { loginPageActions } from '@example-app/auth/actions/login-page.actions';
-import { authApiActions } from '@example-app/auth/actions/auth-api.actions';
-import { authActions } from '@example-app/auth/actions/auth.actions';
+import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
+import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
+import { AuthActions } from '@example-app/auth/actions/auth.actions';
 import { Credentials } from '@example-app/auth/models';
 import { AuthService } from '@example-app/auth/services';
 import { LogoutConfirmationDialogComponent } from '@example-app/auth/components';
-import { userActions } from '@example-app/core/actions/user.actions';
+import { UserActions } from '@example-app/core/actions/user.actions';
 
 @Injectable()
 export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loginPageActions.login),
+      ofType(LoginPageActions.login),
       map((action) => action.credentials),
       exhaustMap((auth: Credentials) =>
         this.authService.login(auth).pipe(
-          map((user) => authApiActions.loginSuccess({ user })),
-          catchError((error) => of(authApiActions.loginFailure({ error })))
+          map((user) => AuthApiActions.loginSuccess({ user })),
+          catchError((error) => of(AuthApiActions.loginFailure({ error })))
         )
       )
     )
@@ -30,7 +30,7 @@ export class AuthEffects {
   loginSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(authApiActions.loginSuccess),
+        ofType(AuthApiActions.loginSuccess),
         tap(() => this.router.navigate(['/']))
       ),
     { dispatch: false }
@@ -39,7 +39,7 @@ export class AuthEffects {
   loginRedirect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(authApiActions.loginRedirect, authActions.logout),
+        ofType(AuthApiActions.loginRedirect, AuthActions.logout),
         tap(() => {
           this.router.navigate(['/login']);
         })
@@ -49,7 +49,7 @@ export class AuthEffects {
 
   logoutConfirmation$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.logoutConfirmation),
+      ofType(AuthActions.logoutConfirmation),
       exhaustMap(() => {
         const dialogRef = this.dialog.open<
           LogoutConfirmationDialogComponent,
@@ -60,15 +60,15 @@ export class AuthEffects {
         return dialogRef.afterClosed();
       }),
       map((result) =>
-        result ? authActions.logout() : authActions.logoutConfirmationDismiss()
+        result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
       )
     )
   );
 
   logoutIdleUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(userActions.idleTimeout),
-      map(() => authActions.logout())
+      ofType(UserActions.idleTimeout),
+      map(() => AuthActions.logout())
     )
   );
 

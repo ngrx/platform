@@ -5,8 +5,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 
-import { findBookPageActions } from '@example-app/books/actions/find-book-page.actions';
-import { booksApiActions } from '@example-app/books/actions/books-api.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
+import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
 import { BookEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
 import { GoogleBooksService } from '@example-app/core/services';
@@ -38,8 +38,8 @@ describe('BookEffects', () => {
       const book1 = { id: '111', volumeInfo: {} } as Book;
       const book2 = { id: '222', volumeInfo: {} } as Book;
       const books = [book1, book2];
-      const action = findBookPageActions.searchBooks({ query: 'query' });
-      const completion = booksApiActions.searchSuccess({ books });
+      const action = FindBookPageActions.searchBooks({ query: 'query' });
+      const completion = BooksApiActions.searchSuccess({ books });
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
@@ -55,8 +55,8 @@ describe('BookEffects', () => {
     });
 
     it('should return a book.SearchError if the books service throws', () => {
-      const action = findBookPageActions.searchBooks({ query: 'query' });
-      const completion = booksApiActions.searchFailure({
+      const action = FindBookPageActions.searchBooks({ query: 'query' });
+      const completion = BooksApiActions.searchFailure({
         errorMsg: 'Unexpected Error. Try again later.',
       });
       const error = { message: 'Unexpected Error. Try again later.' };
@@ -75,7 +75,7 @@ describe('BookEffects', () => {
     });
 
     it(`should not do anything if the query is an empty string`, () => {
-      const action = findBookPageActions.searchBooks({ query: '' });
+      const action = FindBookPageActions.searchBooks({ query: '' });
 
       actions$ = hot('-a---', { a: action });
       const expected = cold('---');

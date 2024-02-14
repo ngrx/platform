@@ -4,7 +4,7 @@ import { fromEvent, merge, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { createEffect } from '@ngrx/effects';
-import { userActions } from '@example-app/core/actions/user.actions';
+import { UserActions } from '@example-app/core/actions/user.actions';
 
 @Injectable()
 export class UserEffects {
@@ -16,7 +16,7 @@ export class UserEffects {
     merge(this.clicks$, this.keys$, this.mouse$).pipe(
       // 5 minute inactivity timeout
       switchMap(() => timer(5 * 60 * 1000)),
-      map(() => userActions.idleTimeout())
+      map(() => UserActions.idleTimeout())
     )
   );
 }

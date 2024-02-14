@@ -1,9 +1,9 @@
 import { reducer } from '@example-app/books/reducers/books.reducer';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
-import { booksApiActions } from '@example-app/books/actions/books-api.actions';
-import { bookActions } from '@example-app/books/actions/book.actions';
-import { collectionApiActions } from '@example-app/books/actions/collection-api.actions';
-import { viewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
+import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
+import { BookActions } from '@example-app/books/actions/book.actions';
+import { CollectionApiActions } from '@example-app/books/actions/collection-api.actions';
+import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { Book, generateMockBook } from '@example-app/books/models';
 
 describe('BooksReducer', () => {
@@ -29,8 +29,8 @@ describe('BooksReducer', () => {
 
   describe('SEARCH_COMPLETE & LOAD_SUCCESS', () => {
     type BooksActions =
-      | typeof booksApiActions.searchSuccess
-      | typeof collectionApiActions.loadBooksSuccess;
+      | typeof BooksApiActions.searchSuccess
+      | typeof CollectionApiActions.loadBooksSuccess;
     function noExistingBooks(
       action: BooksActions,
       booksInitialState: any,
@@ -58,24 +58,24 @@ describe('BooksReducer', () => {
     }
 
     it('should add all books in the payload when none exist', () => {
-      noExistingBooks(booksApiActions.searchSuccess, initialState, [
+      noExistingBooks(BooksApiActions.searchSuccess, initialState, [
         book1,
         book2,
       ]);
 
-      noExistingBooks(collectionApiActions.loadBooksSuccess, initialState, [
+      noExistingBooks(CollectionApiActions.loadBooksSuccess, initialState, [
         book1,
         book2,
       ]);
     });
 
     it('should add only books when books already exist', () => {
-      existingBooks(booksApiActions.searchSuccess, initialState, [
+      existingBooks(BooksApiActions.searchSuccess, initialState, [
         book2,
         book3,
       ]);
 
-      existingBooks(collectionApiActions.loadBooksSuccess, initialState, [
+      existingBooks(CollectionApiActions.loadBooksSuccess, initialState, [
         book2,
         book3,
       ]);
@@ -92,7 +92,7 @@ describe('BooksReducer', () => {
     };
 
     it('should add a single book, if the book does not exist', () => {
-      const action = bookActions.loadBook({ book: book1 });
+      const action = BookActions.loadBook({ book: book1 });
 
       const result = reducer(fromBooks.initialState, action);
 
@@ -100,7 +100,7 @@ describe('BooksReducer', () => {
     });
 
     it('should return the existing state if the book exists', () => {
-      const action = bookActions.loadBook({ book: book1 });
+      const action = BookActions.loadBook({ book: book1 });
 
       const result = reducer(expectedResult, action);
 
@@ -110,7 +110,7 @@ describe('BooksReducer', () => {
 
   describe('SELECT', () => {
     it('should set the selected book id on the state', () => {
-      const action = viewBookPageActions.selectBook({ id: book1.id });
+      const action = ViewBookPageActions.selectBook({ id: book1.id });
 
       const result = reducer(initialState, action);
 

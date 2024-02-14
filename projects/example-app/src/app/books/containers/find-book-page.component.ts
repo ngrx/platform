@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { findBookPageActions } from '@example-app/books/actions/find-book-page.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
 
@@ -36,6 +36,6 @@ export class FindBookPageComponent {
   }
 
   search(query: string) {
-    this.store.dispatch(findBookPageActions.searchBooks({ query }));
+    this.store.dispatch(FindBookPageActions.searchBooks({ query }));
   }
 }

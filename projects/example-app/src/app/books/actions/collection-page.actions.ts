@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps } from '@ngrx/store';
 
-export const collectionPageActions = createActionGroup({
+export const CollectionPageActions = createActionGroup({
   source: 'Collection Page',
   events: {
     /**
