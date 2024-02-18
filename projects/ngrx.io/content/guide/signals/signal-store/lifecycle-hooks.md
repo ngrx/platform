@@ -1,39 +1,67 @@
 # Lifecycle Hooks
 
-You can also create lifecycle hooks that are called when the store is created or destroyed.
-Lifecycle hooks can be used to initialize fetching data, updating state, and more.
+The `@ngrx/signals` package provides the `withHooks` feature for incorporating lifecycle hooks into a SignalStore.
+This feature enables performing additional logic when the store is initialized or destroyed.
+
+The `withHooks` feature has two signatures.
+The first signature expects an object with `onInit` and/or `onDestroy` methods.
+Both methods receive the store instance as input arguments.
 
 <code-example header="counter.store.ts">
+
 import { computed } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
-import {
-  signalStore,
-  withState,
-  patchState,
-  withComputed,
-  withHooks,
-  withMethods,
-} from '@ngrx/signals';
+import { patchState, signalStore, withState, withHooks, withMethods } from '@ngrx/signals';
 
 export const CounterStore = signalStore(
   withState({ count: 0 }),
-  withMethods(({ count, ...store }) => ({
-    increment() {
-      patchState(store, { count: count() + 1 });
+  withMethods((store) => ({
+    increment(): void {
+      patchState(store, (state) => ({ count: state.count + 1 }));
     },
   })),
   withHooks({
-    onInit({ increment }) {
+    onInit(store) {
+      // 👇 Increment the `count` every 2 seconds.
       interval(2_000)
+        // 👇 Automatically unsubscribe when the store is destroyed.
         .pipe(takeUntilDestroyed())
-        .subscribe(() => increment());
+        .subscribe(() => store.increment());
     },
-    onDestroy({ count }) {
-      console.log('count on destroy', count());
+    onDestroy(store) {
+      console.log('count on destroy', store.count());
     },
   }),
 );
+
 </code-example>
 
-In the example above, the `onInit` hook subscribes to an interval observable, and calls the `increment` method on the store to increment the count every 2 seconds. The lifecycle methods also have access to the injection context for automatic cleanup using the `takeUntilDestroyed()` function from Angular.
+The `onInit` hook is executed within the injection context, enabling the injection of dependencies or the utilization of functions that must be invoked within the injection context, such as `takeUntilDestroyed`.
+
+
+If there is a need to share code between lifecycle hooks or use injected dependencies within the `onDestroy` hook, the second signature can be utilized.
+Similar to the `withMethods` and `withComputed` features, the second signature of the `withHooks` feature expects a factory function.
+This function receives a store instance as an input argument, returns an object with `onInit` and/or `onDestroy` methods, and is executed within the injection context.
+
+<code-example header="counter.store.ts">
+
+export const CounterStore = signalStore(
+  /* ... */
+  withHooks((store) => {
+    const logger = inject(Logger);
+    let interval = 0;
+
+    return {
+      onInit() {
+        interval = setInterval(() => store.increment(), 2_000);
+      },
+      onDestroy() {
+        logger.info('count on destroy', store.count());
+        clearInterval(interval);
+      },
+    };
+  }),
+);
+
+</code-example>
