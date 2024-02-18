@@ -24,7 +24,7 @@ Detailed installation instructions can be found on the [Installation](guide/sign
 
 ## Main Features
 
-- [SignalStore](guide/signals/signal-store): A fully-featured state management solution, offering a powerful and opinionated way to manage application state.
+- [SignalStore](guide/signals/signal-store): A fully-featured state management solution that provides native support for Angular Signals and offers a robust way to manage application state.
 - [SignalState](guide/signals/signal-state): A lightweight utility for managing signal-based state in Angular components and services in a concise and minimalistic manner.
 - [RxJS Integration](guide/signals/rxjs-integration): A plugin for opt-in integration with RxJS, enabling easier handling of asynchronous side effects.
 - [Entity Management](guide/signals/signal-store/entity-management): A plugin for manipulating and querying entity collections in a simple and performant way.
