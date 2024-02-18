@@ -301,25 +301,25 @@ describe('signalStore', () => {
       expect(messages).toEqual(['init NgRx Store', 'destroy NgRx Store']);
     });
 
-    it('executes hooks without injection context', () => {
+    it('executes onInit hook in injection context', () => {
       const messages: string[] = [];
+      const TOKEN = new InjectionToken('TOKEN', {
+        providedIn: 'root',
+        factory: () => 'init',
+      });
       const Store = signalStore(
         withState({ name: 'NgRx Store' }),
         withHooks({
-          onInit(store) {
-            messages.push(`init ${store.name()}`);
-          },
-          onDestroy(store) {
-            messages.push(`destroy ${store.name()}`);
+          onInit(store, token = inject(TOKEN)) {
+            messages.push(`${token} ${store.name()}`);
           },
         })
       );
-      const { destroy } = createLocalService(Store);
+
+      TestBed.configureTestingModule({ providers: [Store] });
+      TestBed.inject(Store);
 
       expect(messages).toEqual(['init NgRx Store']);
-
-      destroy();
-      expect(messages).toEqual(['init NgRx Store', 'destroy NgRx Store']);
     });
 
     it('succeeds with onDestroy and providedIn: root', () => {
