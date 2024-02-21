@@ -24,7 +24,7 @@ export type SignalStoreProps<FeatureResult extends SignalStoreFeatureResult> =
 
 export type SignalsDictionary = Record<string, Signal<unknown>>;
 
-export type MethodsDictionary = Record<string, (...args: any[]) => unknown>;
+export type MethodsDictionary = Record<string, Function>;
 
 export type SignalStoreHooks = {
   onInit?: () => void;

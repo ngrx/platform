@@ -623,6 +623,23 @@ describe('signalStore', () => {
     );
   });
 
+  it('correctly infers the type of methods with generics', () => {
+    const snippet = `
+      const Store = signalStore(
+        withMethods(() => ({
+          log<Str extends string>(str: Str) {
+            console.log(str);
+          },
+        }))
+      );
+
+      const store = inject(Store);
+    `;
+
+    expectSnippet(snippet + `store.log('ngrx');`).toSucceed();
+    expectSnippet(snippet + `store.log(10);`).toFail();
+  });
+
   describe('custom features', () => {
     const baseSnippet = `
       function withX() {
