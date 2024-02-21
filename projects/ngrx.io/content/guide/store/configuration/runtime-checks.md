@@ -51,12 +51,12 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state, { todo }) => ({
+  on(addTodo, (state, { todo }) => {
     // Violation 1: we assign a new value to `todoInput` directly
     state.todoInput = '',
     // Violation 2: `push` modifies the array
     state.todos.push(todo)
-  }))
+  })
 );
 ```
 
@@ -81,14 +81,14 @@ Example violation of the rule:
 
 ```ts
 export const reducer = createReducer(initialState,
-  on(addTodo, (state, { todo }) => ({
+  on(addTodo, (state, { todo }) => {
     // Violation, it's not allowed to modify an action
     todo.id = generateUniqueId();
     return {
       ...state,
       todos: [...state.todos, todo]
     }
-  }))
+  })
 );
 ```
 
