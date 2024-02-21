@@ -1,3 +1,19 @@
+<a name="17.1.1"></a>
+
+## [17.1.1](https://github.com/ngrx/platform/compare/17.1.0...17.1.1) (2024-02-21)
+
+### Bug Fixes
+
+- **signals:** add `StateSignal` to the public API ([#4247](https://github.com/ngrx/platform/issues/4247)) ([3d45e5a](https://github.com/ngrx/platform/commit/3d45e5a))
+- **signals:** correctly infer the type of methods with generics ([#4249](https://github.com/ngrx/platform/issues/4249)) ([70517ea](https://github.com/ngrx/platform/commit/70517ea))
+- **signals:** run `rxMethod` outside of reactive context ([#4224](https://github.com/ngrx/platform/issues/4224)) ([3a691d9](https://github.com/ngrx/platform/commit/3a691d9))
+- **store-devtools:** replace direct with indirect `eval` ([#4216](https://github.com/ngrx/platform/issues/4216)) ([1df0eb5](https://github.com/ngrx/platform/commit/1df0eb5)), closes [#4213](https://github.com/ngrx/platform/issues/4213)
+
+### Performance Improvements
+
+- **signals:** avoid creating unnecessary objects in excludeKeys ([#4240](https://github.com/ngrx/platform/issues/4240)) ([b90da9d](https://github.com/ngrx/platform/commit/b90da9d))
+- **signals:** avoid unecessary observable conversions in rxMethod ([#4219](https://github.com/ngrx/platform/issues/4219)) ([fa45d92](https://github.com/ngrx/platform/commit/fa45d92))
+
 <a name="17.1.0"></a>
 
 # [17.1.0](https://github.com/ngrx/platform/compare/17.0.1...17.1.0) (2024-01-16)
