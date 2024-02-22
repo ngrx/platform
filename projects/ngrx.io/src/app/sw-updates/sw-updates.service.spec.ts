@@ -1,6 +1,12 @@
 import { ApplicationRef } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { SwUpdate } from '@angular/service-worker';
+import {
+    discardPeriodicTasks,
+    fakeAsync,
+    flushMicrotasks,
+    TestBed,
+    tick,
+} from '@angular/core/testing';
+import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { Subject } from 'rxjs';
 
 import { Logger } from 'app/shared/logger.service';
@@ -93,7 +99,7 @@ describe('SwUpdatesService', () => {
                 appRef.isStable.next(true);
                 expect(swu.activateUpdate).not.toHaveBeenCalled();
 
-                swu.$$availableSubj.next({ available: { hash: 'foo' } });
+                swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
                 expect(swu.activateUpdate).toHaveBeenCalled();
             })
         )
@@ -109,7 +115,7 @@ describe('SwUpdatesService', () => {
                 tick(checkInterval);
                 expect(swu.checkForUpdate).toHaveBeenCalledTimes(1);
 
-                swu.$$availableSubj.next({ available: { hash: 'foo' } });
+                swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
 
                 tick(checkInterval);
                 expect(swu.checkForUpdate).toHaveBeenCalledTimes(2);
@@ -124,17 +130,22 @@ describe('SwUpdatesService', () => {
 
     it(
         'should emit on `updateActivated` when an update has been activated',
-        run(() => {
-            const activatedVersions: (string | undefined)[] = [];
-            service.updateActivated.subscribe(v => activatedVersions.push(v));
+        fakeAsync(
+            run(() => {
+                let isActivated = false;
+                service.updateActivated.subscribe(() => isActivated = true);
 
-            swu.$$availableSubj.next({ available: { hash: 'foo' } });
-            swu.$$activatedSubj.next({ current: { hash: 'bar' } });
-            swu.$$availableSubj.next({ available: { hash: 'baz' } });
-            swu.$$activatedSubj.next({ current: { hash: 'qux' } });
+                swu.versionUpdates.next({ type: 'NO_NEW_VERSION_DETECTED' } as VersionEvent);
+                flushMicrotasks();
 
-            expect(activatedVersions).toEqual(['bar', 'qux']);
-        })
+                expect(isActivated).toBe(false);
+
+                swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
+                flushMicrotasks();
+
+                expect(isActivated).toBe(true);
+            })
+        )
     );
 
     describe('when `SwUpdate` is not enabled', () => {
@@ -149,8 +160,7 @@ describe('SwUpdatesService', () => {
                     tick(checkInterval);
                     tick(checkInterval);
 
-                    swu.$$availableSubj.next({ available: { hash: 'foo' } });
-                    swu.$$activatedSubj.next({ current: { hash: 'bar' } });
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
 
                     tick(checkInterval);
                     tick(checkInterval);
@@ -164,7 +174,7 @@ describe('SwUpdatesService', () => {
             'should not activate available updates',
             fakeAsync(
                 runDeactivated(() => {
-                    swu.$$availableSubj.next({ available: { hash: 'foo' } });
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
                     expect(swu.activateUpdate).not.toHaveBeenCalled();
                 })
             )
@@ -172,17 +182,18 @@ describe('SwUpdatesService', () => {
 
         it(
             'should never emit on `updateActivated`',
-            runDeactivated(() => {
-                const activatedVersions: (string | undefined)[] = [];
-                service.updateActivated.subscribe(v => activatedVersions.push(v));
+            fakeAsync(
+                runDeactivated(() => {
+                    let isActivated = false;
+                    service.updateActivated.subscribe(() => isActivated = true);
 
-                swu.$$availableSubj.next({ available: { hash: 'foo' } });
-                swu.$$activatedSubj.next({ current: { hash: 'bar' } });
-                swu.$$availableSubj.next({ available: { hash: 'baz' } });
-                swu.$$activatedSubj.next({ current: { hash: 'qux' } });
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
+                    swu.versionUpdates.next({ type: 'VERSION_INSTALLATION_FAILED' } as VersionEvent);
+                    flushMicrotasks();
 
-                expect(activatedVersions).toEqual([]);
-            })
+                    expect(isActivated).toEqual(false);
+                })
+            )
         );
     });
 
@@ -215,8 +226,7 @@ describe('SwUpdatesService', () => {
                     service.ngOnDestroy();
                     swu.checkForUpdate.calls.reset();
 
-                    swu.$$availableSubj.next({ available: { hash: 'foo' } });
-                    swu.$$activatedSubj.next({ current: { hash: 'baz' } });
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
 
                     tick(checkInterval);
                     tick(checkInterval);
@@ -231,7 +241,7 @@ describe('SwUpdatesService', () => {
             fakeAsync(
                 run(() => {
                     service.ngOnDestroy();
-                    swu.$$availableSubj.next({ available: { hash: 'foo' } });
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
 
                     expect(swu.activateUpdate).not.toHaveBeenCalled();
                 })
@@ -240,18 +250,23 @@ describe('SwUpdatesService', () => {
 
         it(
             'should stop emitting on `updateActivated`',
-            run(() => {
-                const activatedVersions: (string | undefined)[] = [];
-                service.updateActivated.subscribe(v => activatedVersions.push(v));
+            fakeAsync(
+                run(() => {
+                    let activatedCount = 0;
+                    service.updateActivated.subscribe(() => activatedCount++);
 
-                swu.$$availableSubj.next({ available: { hash: 'foo' } });
-                swu.$$activatedSubj.next({ current: { hash: 'bar' } });
-                service.ngOnDestroy();
-                swu.$$availableSubj.next({ available: { hash: 'baz' } });
-                swu.$$activatedSubj.next({ current: { hash: 'qux' } });
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
+                    flushMicrotasks();
 
-                expect(activatedVersions).toEqual(['bar']);
-            })
+                    expect(activatedCount).toEqual(1);
+
+                    service.ngOnDestroy();
+                    swu.versionUpdates.next({ type: 'VERSION_READY' } as VersionEvent);
+                    flushMicrotasks();
+
+                    expect(activatedCount).toEqual(1);
+                })
+            )
         );
     });
 });
@@ -266,15 +281,11 @@ class MockLogger {
 }
 
 class MockSwUpdate {
-    $$availableSubj = new Subject<{ available: { hash: string } }>();
-    $$activatedSubj = new Subject<{ current: { hash: string } }>();
-
-    available = this.$$availableSubj.asObservable();
-    activated = this.$$activatedSubj.asObservable();
+    versionUpdates = new Subject<VersionEvent>();
 
     activateUpdate = jasmine
         .createSpy('MockSwUpdate.activateUpdate')
-        .and.callFake(() => Promise.resolve());
+        .and.callFake(() => Promise.resolve(true));
 
     checkForUpdate = jasmine
         .createSpy('MockSwUpdate.checkForUpdate')

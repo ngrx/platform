@@ -94,27 +94,27 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "site:build"
+            "buildTarget": "site:build"
           },
           "configurations": {
             "fast": {
-              "browserTarget": "site:build:fast"
+              "buildTarget": "site:build:fast"
             },
             "next": {
-              "browserTarget": "site:build:next"
+              "buildTarget": "site:build:next"
             },
             "stable": {
-              "browserTarget": "site:build:stable"
+              "buildTarget": "site:build:stable"
             },
             "archive": {
-              "browserTarget": "site:build:archive"
+              "buildTarget": "site:build:archive"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "site:build"
+            "buildTarget": "site:build"
           }
         },
         "test": {

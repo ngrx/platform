@@ -1,7 +1,7 @@
 import { ApplicationRef, Injectable, OnDestroy } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { concat, interval, NEVER, Observable, Subject } from 'rxjs';
-import { first, map, takeUntil, tap } from 'rxjs/operators';
+import { concat, interval, Subject } from 'rxjs';
+import { filter, first, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { Logger } from 'app/shared/logger.service';
 
@@ -20,7 +20,7 @@ import { Logger } from 'app/shared/logger.service';
 export class SwUpdatesService implements OnDestroy {
     private checkInterval = 1000 * 60 * 60 * 6; // 6 hours
     private onDestroy = new Subject<void>();
-    updateActivated: Observable<string>;
+    updateActivated = new Subject<void>();
 
     constructor(
         appRef: ApplicationRef,
@@ -28,7 +28,6 @@ export class SwUpdatesService implements OnDestroy {
         private swu: SwUpdate
     ) {
         if (!swu.isEnabled) {
-            this.updateActivated = NEVER.pipe(takeUntil(this.onDestroy));
             return;
         }
 
@@ -42,19 +41,20 @@ export class SwUpdatesService implements OnDestroy {
             .subscribe(() => this.swu.checkForUpdate());
 
         // Activate available updates.
-        this.swu.available
+        this.swu.versionUpdates
             .pipe(
+                filter(evt => evt.type === 'VERSION_READY'),
                 tap(evt => this.log(`Update available: ${JSON.stringify(evt)}`)),
+                switchMap(() => this.swu.activateUpdate()),
                 takeUntil(this.onDestroy)
             )
-            .subscribe(() => this.swu.activateUpdate());
+            .subscribe((isActivated) => {
+                this.log(`Update activated: ${isActivated}`);
 
-        // Notify about activated updates.
-        this.updateActivated = this.swu.activated.pipe(
-            tap(evt => this.log(`Update activated: ${JSON.stringify(evt)}`)),
-            map(evt => evt.current.hash),
-            takeUntil(this.onDestroy)
-        );
+                if (isActivated) {
+                    this.updateActivated.next();
+                }
+            });
     }
 
     ngOnDestroy() {
