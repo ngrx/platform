@@ -60,7 +60,7 @@ For enhanced performance, deeply nested signals are generated lazily and initial
 
 ## Updating State
 
-The `patchState` function provides a type-safe way to perform immutable updates on pieces of state.
+The `patchState` function provides a type-safe way to perform updates on pieces of state.
 It takes a SignalState or SignalStore instance as the first argument, followed by a sequence of partial states or partial state updaters as additional arguments.
 
 ```ts
@@ -81,6 +81,12 @@ patchState(
   (state) => ({ user: { ...state.user, lastName: 'Hendrix' } })
 );
 ```
+
+<div class="alert is-critical">
+
+Updaters passed to the `patchState` function must perform state updates in an immutable manner.
+
+</div>
 
 ### Custom State Updaters
 
