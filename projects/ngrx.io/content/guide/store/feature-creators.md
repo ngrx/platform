@@ -129,6 +129,21 @@ The `extraSelectors` option accepts a function that takes the generated selector
 Reusing extra selectors can be done by defining `extraSelectors` factory in the following way:
 
 <code-example header="books.feature.ts">
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { Book } from './book.model';
+
+import * as BookListPageActions from './book-list-page.actions';
+
+interface State {
+  books: Book[];
+  query: string;
+}
+
+const initialState: State = {
+  books: [],
+  query: '',
+};
+
 export const booksFeature = createFeature({
   name: 'books',
   reducer: createReducer(
