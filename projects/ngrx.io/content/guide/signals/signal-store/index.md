@@ -141,6 +141,8 @@ export class BooksComponent {
 
 </code-example>
 
+The value wrapped inside a Signal object can be easily accessed at any time by calling the Signal as a function with no arguments.
+
 The `@ngrx/signals` package also offers the `getState` function to get the current state value of the SignalStore.
 When used within the reactive context, state changes are automatically tracked.
 
