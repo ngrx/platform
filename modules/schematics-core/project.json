@@ -18,8 +18,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "modules/schematics-core/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "modules/schematics-core/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/modules/schematics-core"]
     }
