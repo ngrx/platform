@@ -62,11 +62,7 @@ export class ToggleAction implements Action {
 export class SetActionsActive implements Action {
   readonly type = SET_ACTIONS_ACTIVE;
 
-  constructor(
-    public start: number,
-    public end: number,
-    public active: boolean = true
-  ) {}
+  constructor(public start: number, public end: number, public active = true) {}
 }
 
 export class JumpToState implements Action {

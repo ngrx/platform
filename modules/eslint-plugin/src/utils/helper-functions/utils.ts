@@ -251,9 +251,10 @@ export function getImplementsSchemaFixer(
   { id, implements: classImplements }: TSESTree.ClassDeclaration,
   interfaceName: string
 ) {
-  const [implementsNodeReplace, implementsTextReplace] = classImplements
-    ? [getLast(classImplements), `, ${interfaceName}`]
-    : [id as TSESTree.Identifier, ` implements ${interfaceName}`];
+  const [implementsNodeReplace, implementsTextReplace] =
+    classImplements && classImplements.length
+      ? [getLast(classImplements), `, ${interfaceName}`]
+      : [id as TSESTree.Identifier, ` implements ${interfaceName}`];
 
   return { implementsNodeReplace, implementsTextReplace } as const;
 }

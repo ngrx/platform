@@ -57,10 +57,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "data-example-app:build:production"
+          "buildTarget": "data-example-app:build:production"
         },
         "development": {
-          "browserTarget": "data-example-app:build:development"
+          "buildTarget": "data-example-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "data-example-app:build"
+        "buildTarget": "data-example-app:build"
       }
     },
     "lint": {
@@ -85,8 +85,7 @@
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "projects/data-example-app/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": true
+        "runInBand": true
       }
     }
   },

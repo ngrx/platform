@@ -61,7 +61,7 @@ import { FooStore } from './foo/foo.store';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrl: './app.component.css',
   providers: [FooStore]
 })
 export class AppComponent {

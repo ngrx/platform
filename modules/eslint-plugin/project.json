@@ -19,7 +19,8 @@
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "modules/eslint-plugin/jest.config.ts",
-        "runInBand": true
+        "runInBand": true,
+        "passWithNoTests": false
       },
       "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
     },

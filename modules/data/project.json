@@ -44,7 +44,8 @@
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "modules/data/jest.config.ts",
-        "runInBand": true
+        "runInBand": true,
+        "passWithNoTests": false
       },
       "outputs": ["{workspaceRoot}/coverage/modules/data"]
     }

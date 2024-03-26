@@ -7,3 +7,5 @@
 package-lock.json
 package.json
 yarn.lock
+
+/.nx/cache
