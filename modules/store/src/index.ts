@@ -11,6 +11,7 @@ export {
   ActionCreatorProps,
   Selector,
   SelectorWithProps,
+  TypedAction,
   RuntimeChecks,
   FunctionWithParametersType,
 } from './models';
