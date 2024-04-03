@@ -183,7 +183,7 @@ describe('Feature Schematic', () => {
       ...defaultOptions,
       name: 'foo/Foo',
       group: true,
-      module: 'app',
+      module: '../app',
     };
 
     const tree = await schematicRunner.runSchematic(
