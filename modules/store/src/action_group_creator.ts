@@ -138,17 +138,16 @@ export function createActionGroup<
   Events extends Record<string, ActionCreatorProps<unknown> | Creator>
 >(config: ActionGroupConfig<Source, Events>): ActionGroup<Source, Events> {
   const { source, events } = config;
-
-  return Object.keys(events).reduce(
-    (actionGroup, eventName) => ({
+  return Object.entries(events).reduce((actionGroup, [eventName, event]) => {
+    return {
       ...actionGroup,
+      // TODO: fix the any type
       [toActionName(eventName)]: createAction(
         toActionType(source, eventName),
-        events[eventName]
+        event as any
       ),
-    }),
-    {} as ActionGroup<Source, Events>
-  );
+    };
+  }, {} as ActionGroup<Source, Events>);
 }
 
 export function emptyProps(): ActionCreatorProps<void> {
