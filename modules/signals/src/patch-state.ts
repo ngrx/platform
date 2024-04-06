@@ -6,7 +6,9 @@ export type PartialStateUpdater<State extends object> = (
 
 export function patchState<State extends object>(
   stateSignal: StateSignal<State>,
-  ...updaters: Array<Partial<State & {}> | PartialStateUpdater<State & {}>>
+  ...updaters: NoInfer<
+    Array<Partial<State & {}> | PartialStateUpdater<State & {}>>
+  >
 ): void {
   stateSignal[STATE_SIGNAL].update((currentState) =>
     updaters.reduce(
