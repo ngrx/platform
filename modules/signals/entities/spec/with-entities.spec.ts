@@ -1,6 +1,6 @@
 import { isSignal } from '@angular/core';
-import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, withEntities } from '../src';
+import { patchState, signalStore, type, withState } from '@ngrx/signals';
+import { addEntities, removeAllEntities, withEntities } from '../src';
 import { Todo, todo2, todo3, User, user1, user2 } from './mocks';
 
 describe('withEntities', () => {
@@ -83,5 +83,20 @@ describe('withEntities', () => {
     expect(store.todoEntityMap()).toEqual({ y: todo2, z: todo3 });
     expect(store.todoIds()).toEqual(['y', 'z']);
     expect(store.todoEntities()).toEqual([todo2, todo3]);
+  });
+
+  it('combines entity feature with regular state', () => {
+    const Store = signalStore(
+      withState({ loading: false }),
+      withEntities<User>()
+    );
+    const store = new Store();
+
+    expect(store.loading).toBe(false);
+
+    patchState(store, removeAllEntities(), { loading: true });
+
+    expect(store.entityMap()).toEqual({});
+    expect(store.loading).toBe(true);
   });
 });
