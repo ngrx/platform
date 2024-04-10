@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators';
 import { Book } from '@example-app/books/models';
 
 export function storageFactory() {
-  return typeof window === undefined || typeof localStorage === undefined
+  return typeof window === 'undefined' || typeof localStorage === 'undefined'
     ? null
     : localStorage;
 }

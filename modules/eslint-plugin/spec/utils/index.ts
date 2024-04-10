@@ -13,7 +13,7 @@ export function ruleTester(environment?: {
   }
 
   return new TSESLint.RuleTester({
-    parser: resolve('./node_modules/@typescript-eslint/parser'),
+    parser: resolve('./node_modules/@typescript-eslint/parser/dist'),
     parserOptions: {
       project: resolve('./modules/eslint-plugin/spec/tsconfig.json'),
       ecmaVersion: 2020,

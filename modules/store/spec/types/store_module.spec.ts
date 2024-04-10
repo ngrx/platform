@@ -44,7 +44,7 @@ describe('StoreModule', () => {
           metaReducers: [metaReducer]
         });
       `).toFail(
-        /Type '{ notExisting: number; }' is not assignable to type 'InitialState<State>/
+        /Object literal may only specify known properties, and 'notExisting' does not exist in type 'Partial<State> | TypeId<Partial<State>>/
       );
     });
   });
@@ -66,7 +66,7 @@ describe('StoreModule', () => {
           metaReducers: [metaReducer]
         });
       `).toFail(
-        /Type '{ notExisting: number; }' is not assignable to type 'InitialState<State>/
+        /Object literal may only specify known properties, and 'notExisting' does not exist in type 'Partial<State> | TypeId<Partial<State>>/
       );
     });
 
