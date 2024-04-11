@@ -23,8 +23,9 @@ type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
 export function createEffect<
   C extends EffectConfig & { functional?: false },
   DT extends DispatchType<C>,
-  OT extends ObservableType<DT, OT>,
-  R extends EffectResult<OT>
+  OTP,
+  R extends EffectResult<OT>,
+  OT extends ObservableType<DT, OTP>
 >(
   source: () => R & ConditionallyDisallowActionCreator<DT, R>,
   config?: C
