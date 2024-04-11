@@ -1,3 +1,19 @@
+<a name="17.2.0"></a>
+
+# [17.2.0](https://github.com/ngrx/platform/compare/17.1.1...17.2.0) (2024-04-11)
+
+### Bug Fixes
+
+- **effects:** make createEffect work with TS 5.3 ([#4296](https://github.com/ngrx/platform/issues/4296)) ([19c1f11](https://github.com/ngrx/platform/commit/19c1f11))
+- **ngrx.io:** set correct path for pwa icons ([#4263](https://github.com/ngrx/platform/issues/4263)) ([703a9c7](https://github.com/ngrx/platform/commit/703a9c7))
+- **schematics:** correct module while generating a feature ([#4289](https://github.com/ngrx/platform/issues/4289)) ([7ecffe8](https://github.com/ngrx/platform/commit/7ecffe8)), closes [#4281](https://github.com/ngrx/platform/issues/4281)
+- **signals:** make patchState work with TS 5.4 ([#4294](https://github.com/ngrx/platform/issues/4294)) ([6b440ee](https://github.com/ngrx/platform/commit/6b440ee))
+
+### Features
+
+- **component-store:** deprecate `tapResponse` export ([#4259](https://github.com/ngrx/platform/issues/4259)) ([a5958a0](https://github.com/ngrx/platform/commit/a5958a0))
+- **effects:** deprecate `concatLatestFrom` export ([#4260](https://github.com/ngrx/platform/issues/4260)) ([79674b7](https://github.com/ngrx/platform/commit/79674b7))
+
 <a name="17.1.1"></a>
 
 ## [17.1.1](https://github.com/ngrx/platform/compare/17.1.0...17.1.1) (2024-02-21)
