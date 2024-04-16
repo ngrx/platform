@@ -312,8 +312,10 @@ export const BooksStore = signalStore(
           return booksService.getByQuery(query).pipe(
             tapResponse({
               next: (books) => patchState(store, { books }),
-              error: console.error,
-              finalize: () => patchState(store, { isLoading: false }),
+              error: (err) => {
+                patchState(store, { isLoading: false });
+                console.error(err);
+              },
             })
           );
         })
