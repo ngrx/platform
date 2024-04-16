@@ -38,7 +38,8 @@ describe('AppComponent', () => {
   store = TestBed.inject(MockStore);
   fixture = TestBed.createComponent(AppComponent);
   component = fixture.componentInstance;
-
+  
+  //#docregion mockSelector
   mockBooksSelector = store.overrideSelector(selectBooks, [
     {
       id: 'firstId',
@@ -55,7 +56,6 @@ describe('AppComponent', () => {
   spyOn(store, 'dispatch').and.callFake(() => {});
 
   it('should update the UI when the store changes', () => {
-    //#docregion mockSelector
     mockBooksSelector.setResult([
       {
         id: 'firstId',
@@ -94,8 +94,8 @@ describe('AppComponent', () => {
       fixture.debugElement.queryAll(By.css('.book-collection .book-item'))
         .length
     ).toBe(1);
-    //#enddocregion mockSelector
   });
+  //#enddocregion mockSelector
 });
 
 //#docregion resetMockSelector
