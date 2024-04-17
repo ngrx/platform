@@ -311,7 +311,7 @@ export const BooksStore = signalStore(
         switchMap((query) => {
           return booksService.getByQuery(query).pipe(
             tapResponse({
-              next: (books) => patchState(store, { books }),
+              next: (books) => patchState(store, { books, isLoading: false }),
               error: (err) => {
                 patchState(store, { isLoading: false });
                 console.error(err);
