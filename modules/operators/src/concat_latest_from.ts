@@ -24,7 +24,7 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
  * Select the active customer from the NgRx Store
  *
  * ```ts
- * import { concatLatestFrom } from '@ngrx/effects';
+ * import { concatLatestFrom } from '@ngrx/operators';
  * import * as fromCustomers from '../customers';
  *
  * this.actions$.pipe(
@@ -35,7 +35,7 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
  * Select a customer from the NgRx Store by its id that is available on the action
  *
  * ```ts
- * import { concatLatestFrom } from '@ngrx/effects';
+ * import { concatLatestFrom } from '@ngrx/operators';
  * import * fromCustomers from '../customers';
  *
  * this.actions$.pipe(
