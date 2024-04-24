@@ -71,7 +71,7 @@
       "type": "boolean",
       "aliases": ["e"],
       "x-prompt": "Should we use @ngrx/entity to create the reducer?",
-      "default": "false"
+      "default": false
     }
   },
   "required": []
