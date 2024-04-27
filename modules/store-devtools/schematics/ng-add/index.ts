@@ -23,9 +23,9 @@ import { Schema as StoreDevtoolsOptions } from './schema';
 import {
   addFunctionalProvidersToStandaloneBootstrap,
   callsProvidersFunction,
-} from '@schematics/angular/private/standalone';
+} from '../../schematics-core/utility/standalone';
 import { getProjectMainFile } from '../../schematics-core/utility/project';
-import { isStandaloneApp } from '../../schematics-core/utility/standalone';
+import { isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 
 function addImportToNgModule(options: StoreDevtoolsOptions): Rule {
   return (host: Tree) => {
