@@ -90,3 +90,25 @@ There is also another signature of the `tapResponse` operator that accepts the o
     );
   });
 </code-example>
+
+## mapResponse
+
+The `mapResponse` operator is particularly useful in scenarios where you need to transform data and handle potential errors with minimal boilerplate.
+
+In the example below, we use `mapResponse` within an NgRx effect to handle loading movies from an API. It demonstrates how to map successful API responses to an action indicating success, and how to handle errors by dispatching an error action.
+
+<code-example header="movies.effects.ts">
+  loadMovies$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType('[Movies Page] Load Movies'),
+      exhaustMap(() => this.moviesService.getAll()
+        .pipe(
+          mapResponse({
+            next: (movies) => ({ type: '[Movies API] Movies Loaded Success', payload: movies }),
+            error: () => of({ type: '[Movies API] Movies Loaded Error' })
+          })
+        )
+      )
+    )
+  );
+</code-example>
