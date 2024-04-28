@@ -158,7 +158,7 @@
     "karma-jasmine-html-reporter": "2.0.0",
     "lint-staged": "^8.0.0",
     "ncp": "^2.0.0",
-    "ng-packagr": "17.3.0",
+    "ng-packagr": "18.0.0-next.4",
     "npm-run-all": "^4.1.5",
     "nx": "18.0.8",
     "nyc": "^10.1.2",
