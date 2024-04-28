@@ -3,55 +3,51 @@ import { mapResponse } from '..';
 import { concatMap, finalize } from 'rxjs/operators';
 
 describe('mapResponse', () => {
-  it('should invoke next callback on next', () => {
-    const nextCallback = jest.fn<void, [number]>();
+  it('should map the emitted value using the next callback', () => {
+    const results: number[] = [];
 
     of(1, 2, 3)
       .pipe(
         mapResponse({
-          next: nextCallback,
+          next: (value) => value + 1,
           error: noop,
         })
       )
-      .subscribe();
+      .subscribe((result) => {
+        results.push(result as number);
+      });
 
-    expect(nextCallback.mock.calls).toEqual([[1], [2], [3]]);
+    expect(results).toEqual([2, 3, 4]);
   });
 
-  it('should invoke error callback on error', () => {
-    const errorCallback = jest.fn<void, [{ message: string }]>();
-    const error = { message: 'error' };
-
-    throwError(() => error)
+  it('should map the thrown error using the error callback', () => {
+    throwError(() => 'error')
       .pipe(
         mapResponse({
           next: noop,
-          error: errorCallback,
+          error: (error) => `mapped ${error}`,
         })
       )
-      .subscribe();
-
-    expect(errorCallback).toHaveBeenCalledWith(error);
+      .subscribe((result) => {
+        expect(result).toBe('mapped error');
+      });
   });
 
-  it('should invoke error callback on the exception thrown in next', () => {
-    const errorCallback = jest.fn<void, [{ message: string }]>();
-    const error = { message: 'error' };
-
+  it('should map the error thrown in next callback using error callback', () => {
     function producesError() {
-      throw error;
+      throw 'error';
     }
 
     of(1)
       .pipe(
         mapResponse({
           next: producesError,
-          error: errorCallback,
+          error: (error) => `mapped ${error}`,
         })
       )
-      .subscribe();
-
-    expect(errorCallback).toHaveBeenCalledWith(error);
+      .subscribe((result) => {
+        expect(result).toBe('mapped error');
+      });
   });
 
   it('should not unsubscribe from outer observable on inner observable error', () => {
