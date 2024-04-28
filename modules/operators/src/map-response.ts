@@ -11,11 +11,7 @@ export function mapResponse<T, E, R1, R2>(
 ): (source$: Observable<T>) => Observable<R1 | R2> {
   return (source$) =>
     source$.pipe(
-      map((value) => {
-        return observer.next(value);
-      }),
-      catchError((error) => {
-        return of(observer.error(error));
-      })
+      map((value) => observer.next(value)),
+      catchError((error) => of(observer.error(error)))
     );
 }
