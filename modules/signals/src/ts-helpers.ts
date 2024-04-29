@@ -1,5 +1,10 @@
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
+export type RemoveUnderscore<K> = K extends `_${string}` ? never : K;
+export type PrettifyWithoutUnderscores<T> = {
+  [K in keyof T as RemoveUnderscore<K>]: T[K];
+} & {};
+
 export type IsRecord<T> = T extends object
   ? T extends unknown[]
     ? false
