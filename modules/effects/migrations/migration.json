@@ -20,6 +20,11 @@
       "description": "The road to v15 beta",
       "version": "15-beta",
       "factory": "./15_0_0-beta/index"
+    },
+    "ngrx-effects-migration-18": {
+      "description": "use ngrx operators",
+      "version": "18",
+      "factory": "./18_0_0/index"
     }
   }
 }
