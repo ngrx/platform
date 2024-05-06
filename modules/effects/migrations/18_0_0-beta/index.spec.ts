@@ -6,7 +6,7 @@ import { createWorkspace } from '@ngrx/schematics-core/testing';
 import { tags } from '@angular-devkit/core';
 import * as path from 'path';
 
-describe('Effects Migration to 18.0.0', () => {
+describe('Effects Migration to 18.0.0-beta', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
   const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
 
@@ -85,7 +85,7 @@ export class SomeEffects {
         appTree.create('main.ts', input);
 
         const tree = await schematicRunner.runSchematic(
-          `ngrx-effects-migration-18`,
+          `ngrx-effects-migration-18-beta`,
           {},
           appTree
         );
@@ -107,7 +107,7 @@ export class SomeEffects {
     ).toBeUndefined();
 
     const tree = await schematicRunner.runSchematic(
-      `ngrx-effects-migration-18`,
+      `ngrx-effects-migration-18-beta`,
       {},
       appTree
     );
