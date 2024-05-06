@@ -22,7 +22,7 @@
       "factory": "./15_0_0-beta/index"
     },
     "ngrx-effects-migration-18-beta": {
-      "description": "use ngrx operators",
+      "description": "As of NgRx v18, the `concatLatestFrom` import has been removed from `@ngrx/effects` in favor of the `@ngrx/operators` package.",
       "version": "18-beta",
       "factory": "./18_0_0-beta/index"
     }
