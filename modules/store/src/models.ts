@@ -1,12 +1,7 @@
 import { type ValueEqualityFn } from '@angular/core';
 
-export interface Action {
-  type: string;
-}
-
-// declare to make it property-renaming safe
-export declare interface TypedAction<T extends string> extends Action {
-  readonly type: T;
+export interface Action<Type extends string = string> {
+  type: Type;
 }
 
 export type ActionType<A> = A extends ActionCreator<infer T, infer C>
@@ -132,7 +127,7 @@ export type NotAllowedInPropsCheck<T> = T extends object
 export type ActionCreator<
   T extends string = string,
   C extends Creator = Creator
-> = C & TypedAction<T>;
+> = C & Action<T>;
 
 export interface ActionCreatorProps<T> {
   _as: 'props';

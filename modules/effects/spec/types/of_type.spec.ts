@@ -19,27 +19,21 @@ describe('ofType()', () => {
       expectSnippet(`
         const actionA = createAction('Action A');
         const effect = actions$.pipe(ofType(actionA))
-      `).toInfer('effect', 'Observable<TypedAction<"Action A">>');
+      `).toInfer('effect', 'Observable<Action<"Action A">>');
     });
 
     it('should infer correctly with props', () => {
       expectSnippet(`
         const actionA = createAction('Action A', props<{ foo: string }>());
         const effect = actions$.pipe(ofType(actionA))
-      `).toInfer(
-        'effect',
-        'Observable<{ foo: string; } & TypedAction<"Action A">>'
-      );
+      `).toInfer('effect', 'Observable<{ foo: string; } & Action<"Action A">>');
     });
 
     it('should infer correctly with function', () => {
       expectSnippet(`
         const actionA = createAction('Action A', (foo: string) => ({ foo }));
         const effect = actions$.pipe(ofType(actionA))
-      `).toInfer(
-        'effect',
-        'Observable<{ foo: string; } & TypedAction<"Action A">>'
-      );
+      `).toInfer('effect', 'Observable<{ foo: string; } & Action<"Action A">>');
     });
 
     it('should infer correctly with multiple actions (with over 5 actions)', () => {
@@ -55,7 +49,7 @@ describe('ofType()', () => {
         const effect = actions$.pipe(ofType(actionA, actionB, actionC, actionD, actionE, actionF, actionG))
       `).toInfer(
         'effect',
-        'Observable<TypedAction<"Action A"> | TypedAction<"Action B"> | TypedAction<"Action C"> | TypedAction<"Action D"> | TypedAction<"Action E"> | TypedAction<...> | TypedAction<...>>'
+        'Observable<Action<"Action A"> | Action<"Action B"> | Action<"Action C"> | Action<"Action D"> | Action<"Action E"> | Action<"Action F"> | Action<...>>'
       );
     });
   });
@@ -106,7 +100,7 @@ describe('ofType()', () => {
       expectSnippet(`
         const actions$ = {} as Actions<ActionA | ActionB | ActionC | ActionD | ActionE | ActionF>;
         const effect = actions$.pipe(ofType(ACTION_A, ACTION_B, ACTION_C, ACTION_D, ACTION_E, ACTION_F))
-      `).toInfer('effect', 'Observable<Action>');
+      `).toInfer('effect', 'Observable<Action<string>>');
     });
 
     it('should infer to never when the action is not in Actions', () => {

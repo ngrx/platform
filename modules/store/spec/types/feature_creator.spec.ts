@@ -67,7 +67,7 @@ describe('createFeature()', () => {
     `);
 
     snippet.toInfer('name', '"products"');
-    snippet.toInfer('reducer', 'ActionReducer<State, Action>');
+    snippet.toInfer('reducer', 'ActionReducer<State, Action<string>>');
     snippet.toInfer(
       'selectProductsState',
       'MemoizedSelector<Record<string, any>, State, (featureState: State) => State>'
@@ -103,7 +103,10 @@ describe('createFeature()', () => {
     `);
 
     snippet.toInfer('name', '"counter"');
-    snippet.toInfer('reducer', 'ActionReducer<{ count: number; }, Action>');
+    snippet.toInfer(
+      'reducer',
+      'ActionReducer<{ count: number; }, Action<string>>'
+    );
     snippet.toInfer(
       'selectCounterState',
       'MemoizedSelector<Record<string, any>, { count: number; }, (featureState: { count: number; }) => { count: number; }>'
@@ -260,7 +263,7 @@ describe('createFeature()', () => {
       `);
 
       snippet.toInfer('name', '"counter"');
-      snippet.toInfer('reducer', 'ActionReducer<State, Action>');
+      snippet.toInfer('reducer', 'ActionReducer<State, Action<string>>');
       snippet.toInfer(
         'selectCounterState',
         'MemoizedSelector<Record<string, any>, State, (featureState: State) => State>'
@@ -314,7 +317,10 @@ describe('createFeature()', () => {
       `);
 
       snippet.toInfer('name', '"counter"');
-      snippet.toInfer('reducer', 'ActionReducer<{ count: number; }, Action>');
+      snippet.toInfer(
+        'reducer',
+        'ActionReducer<{ count: number; }, Action<string>>'
+      );
       snippet.toInfer(
         'selectCounterState',
         'MemoizedSelector<Record<string, any>, { count: number; }, (featureState: { count: number; }) => { count: number; }>'
