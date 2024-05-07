@@ -11,7 +11,7 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
-// @ts-ignore
+// @ts-expect-error
 export function signalStore<F1 extends SignalStoreFeatureResult>(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>
 ): Type<SignalStoreProps<F1> & StateSignal<Prettify<F1['state']>>>;
@@ -652,7 +652,7 @@ export function signalStore<
   F17 extends SignalStoreFeatureResult,
   F18 extends SignalStoreFeatureResult,
   F19 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]
   >
@@ -702,7 +702,7 @@ export function signalStore<
   F18 extends SignalStoreFeatureResult,
   F19 extends SignalStoreFeatureResult,
   F20 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]
   >
@@ -754,7 +754,7 @@ export function signalStore<
   F19 extends SignalStoreFeatureResult,
   F20 extends SignalStoreFeatureResult,
   F21 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21]
   >
@@ -808,7 +808,7 @@ export function signalStore<
   F20 extends SignalStoreFeatureResult,
   F21 extends SignalStoreFeatureResult,
   F22 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22]
   >
@@ -864,7 +864,7 @@ export function signalStore<
   F21 extends SignalStoreFeatureResult,
   F22 extends SignalStoreFeatureResult,
   F23 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23]
   >
@@ -922,7 +922,7 @@ export function signalStore<
   F22 extends SignalStoreFeatureResult,
   F23 extends SignalStoreFeatureResult,
   F24 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24]
   >
@@ -982,7 +982,7 @@ export function signalStore<
   F23 extends SignalStoreFeatureResult,
   F24 extends SignalStoreFeatureResult,
   F25 extends SignalStoreFeatureResult,
-  // @ts-ignore
+  // @ts-expect-error
   R extends SignalStoreFeatureResult = MergeFeatureResults<
     [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25]
   >
