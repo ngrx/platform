@@ -142,7 +142,7 @@ export function createActionGroup<
       ...actionGroup,
       [toActionName(eventName)]: createAction(
         toActionType(source, eventName),
-        events[eventName]
+        (events as any)[eventName]
       ),
     }),
     {} as ActionGroup<Source, Events>

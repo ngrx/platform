@@ -28,12 +28,12 @@ import {
 } from '../../schematics-core';
 import { Schema as EffectOptions } from './schema';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { getProjectMainFile } from '../../schematics-core/utility/project';
+import { isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import {
   addFunctionalProvidersToStandaloneBootstrap,
   callsProvidersFunction,
-} from '@schematics/angular/private/standalone';
-import { getProjectMainFile } from '../../schematics-core/utility/project';
-import { isStandaloneApp } from '../../schematics-core/utility/standalone';
+} from '../../schematics-core/utility/standalone';
 
 function addImportToNgModule(options: EffectOptions): Rule {
   return (host: Tree) => {

@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Effects ng-add Schematic Effects ng-add Schematic for standalone application provides full effects setup 1`] = `
-"import { ApplicationConfig } from '@angular/core';
+"import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 import { FooEffects } from './foo/foo.effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideEffects(FooEffects)]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEffects(FooEffects)]
 };
 "
 `;
 
 exports[`Effects ng-add Schematic Effects ng-add Schematic for standalone application provides minimal effects setup 1`] = `
-"import { ApplicationConfig } from '@angular/core';
+"import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideEffects()]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEffects()]
 };
 "
 `;

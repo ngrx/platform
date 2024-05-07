@@ -31,12 +31,12 @@ import {
   parseName,
 } from '../../schematics-core';
 import { Schema as RootStoreOptions } from './schema';
+import { getProjectMainFile } from '../../schematics-core/utility/project';
 import {
   addFunctionalProvidersToStandaloneBootstrap,
   callsProvidersFunction,
-} from '@schematics/angular/private/standalone';
-import { getProjectMainFile } from '../../schematics-core/utility/project';
-import { isStandaloneApp } from '../../schematics-core/utility/standalone';
+} from '../../schematics-core/utility/standalone';
+import { isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 
 function addImportToNgModule(options: RootStoreOptions): Rule {
   return (host: Tree) => {

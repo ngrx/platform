@@ -31,11 +31,11 @@ import {
 } from '../../schematics-core';
 import { Schema as EntityDataOptions } from './schema';
 import { getProjectMainFile } from '../../schematics-core/utility/project';
-import { isStandaloneApp } from '../../schematics-core/utility/standalone';
 import {
   addFunctionalProvidersToStandaloneBootstrap,
   callsProvidersFunction,
-} from '@schematics/angular/private/standalone';
+} from '../../schematics-core/utility/standalone';
+import { isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 
 function addNgRxDataToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
