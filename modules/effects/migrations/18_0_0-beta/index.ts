@@ -14,6 +14,7 @@ import {
   visitTSSourceFiles,
 } from '../../schematics-core';
 import * as os from 'os';
+import { createRemoveChange } from '../../schematics-core/utility/change';
 
 export function migrateConcatLatestFromImport(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
@@ -21,52 +22,96 @@ export function migrateConcatLatestFromImport(): Rule {
     addPackageToPackageJson(tree, 'dependencies', '@ngrx/operators', '^18.0.0');
 
     visitTSSourceFiles(tree, (sourceFile) => {
-      visitImportDeclarations(sourceFile, (node) => {
-        const namedBindings = getEffectsNamedBinding(node);
+      const importDeclarations = new Array<ts.ImportDeclaration>();
+      getImportDeclarations(sourceFile, importDeclarations);
 
-        if (!namedBindings) {
-          return;
-        }
-
-        const otherImports = namedBindings.elements
-          .filter((element) => element.name.getText() !== 'concatLatestFrom')
-          .map((element) => element.name.getText())
-          .join(', ');
-
-        namedBindings.elements.forEach((element) => {
-          if (element.name.getText() === 'concatLatestFrom') {
-            const originalImport = node.getText();
-            const newEffectsImport = `import { ${otherImports} } from '@ngrx/effects';`;
-            const newOperatorsImport = `import { concatLatestFrom } from '@ngrx/operators';`;
-
-            // Replace the original import with the new import from '@ngrx/effects'
-            if (otherImports) {
-              changes.push(
-                createReplaceChange(
-                  sourceFile,
-                  node,
-                  originalImport,
-                  newEffectsImport
-                ),
-                new InsertChange(
-                  sourceFile.fileName,
-                  node.getEnd() + 1,
-                  `${newOperatorsImport}${os.EOL}`
-                )
-              );
-            } else {
-              changes.push(
-                createReplaceChange(
-                  sourceFile,
-                  node,
-                  node.getText(),
-                  `import { concatLatestFrom } from '@ngrx/operators';`
-                )
-              );
-            }
+      const effectsImportsAndDeclaration = importDeclarations
+        .map((effectsImportDeclaration) => {
+          const effectsImports = getEffectsNamedBinding(
+            effectsImportDeclaration
+          );
+          if (effectsImports) {
+            return { effectsImports, effectsImportDeclaration };
+          } else {
+            return undefined;
           }
-        });
-      });
+        })
+        .find(Boolean);
+
+      if (!effectsImportsAndDeclaration) {
+        return;
+      }
+
+      const { effectsImports, effectsImportDeclaration } =
+        effectsImportsAndDeclaration;
+
+      const operatorsImportDeclaration = importDeclarations.find((node) =>
+        node.moduleSpecifier.getText().includes('@ngrx/operators')
+      );
+
+      const otherEffectsImports = effectsImports.elements
+        .filter((element) => element.name.getText() !== 'concatLatestFrom')
+        .map((element) => element.name.getText())
+        .join(', ');
+
+      // Remove `concatLatestFrom` from @ngrx/effects and leave the other imports
+      if (otherEffectsImports) {
+        changes.push(
+          createReplaceChange(
+            sourceFile,
+            effectsImportDeclaration,
+            effectsImportDeclaration.getText(),
+            `import { ${otherEffectsImports} } from '@ngrx/effects';`
+          )
+        );
+      }
+      // Remove complete @ngrx/effects import because it contains only `concatLatestFrom`
+      else {
+        changes.push(
+          createRemoveChange(
+            sourceFile,
+            effectsImportDeclaration,
+            effectsImportDeclaration.getStart(),
+            effectsImportDeclaration.getEnd() + 1
+          )
+        );
+      }
+
+      let importAppendedInExistingDeclaration = false;
+      if (operatorsImportDeclaration?.importClause?.namedBindings) {
+        const bindings = operatorsImportDeclaration.importClause.namedBindings;
+        if (ts.isNamedImports(bindings)) {
+          // Add import to existing @ngrx/operators
+          const updatedImports = [
+            ...bindings.elements.map((element) => element.name.getText()),
+            'concatLatestFrom',
+          ];
+          const newOperatorsImport = `import { ${updatedImports.join(
+            ', '
+          )} } from '@ngrx/operators';`;
+          changes.push(
+            createReplaceChange(
+              sourceFile,
+              operatorsImportDeclaration,
+              operatorsImportDeclaration.getText(),
+              newOperatorsImport
+            )
+          );
+          importAppendedInExistingDeclaration = true;
+        }
+      }
+
+      if (!importAppendedInExistingDeclaration) {
+        // Add new @ngrx/operators import line
+        const newOperatorsImport = `import { concatLatestFrom } from '@ngrx/operators';`;
+        changes.push(
+          new InsertChange(
+            sourceFile.fileName,
+            effectsImportDeclaration.getEnd() + 1,
+            `${newOperatorsImport}${os.EOL}`
+          )
+        );
+      }
 
       commitChanges(tree, sourceFile.fileName, changes);
 
@@ -79,16 +124,16 @@ export function migrateConcatLatestFromImport(): Rule {
   };
 }
 
-function visitImportDeclarations(
+function getImportDeclarations(
   node: ts.Node,
-  visitor: (node: ts.ImportDeclaration) => void
-) {
+  imports: ts.ImportDeclaration[]
+): void {
   if (ts.isImportDeclaration(node)) {
-    visitor(node);
+    imports.push(node);
   }
 
   ts.forEachChild(node, (childNode) =>
-    visitImportDeclarations(childNode, visitor)
+    getImportDeclarations(childNode, imports)
   );
 }
 

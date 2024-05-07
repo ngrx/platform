@@ -16,49 +16,64 @@ describe('Effects Migration to 18.0.0-beta', () => {
     appTree = await createWorkspace(schematicRunner, appTree);
   });
 
+  const verifySchematic = async (input: string, output: string) => {
+    appTree.create('main.ts', input);
+
+    const tree = await schematicRunner.runSchematic(
+      `ngrx-effects-migration-18-beta`,
+      {},
+      appTree
+    );
+
+    const actual = tree.readContent('main.ts');
+
+    expect(actual).toBe(output);
+  };
+
   describe('replacements', () => {
-    const testParams = [
-      {
-        name: 'should replace the import',
-        input: tags.stripIndent`
+    it('should replace the import', async () => {
+      const input = tags.stripIndent`
 import { concatLatestFrom } from '@ngrx/effects';
 
 @Injectable()
 export class SomeEffects {
 
 }
-      `,
-        output: tags.stripIndent`
+      `;
+      const output = tags.stripIndent`
 import { concatLatestFrom } from '@ngrx/operators';
 
 @Injectable()
 export class SomeEffects {
 
 }
-      `,
-      },
-      {
-        name: 'should also work with " as in imports',
-        input: tags.stripIndent`
+      `;
+
+      await verifySchematic(input, output);
+    });
+
+    it('should also work with " in imports', async () => {
+      const input = tags.stripIndent`
 import { concatLatestFrom } from "@ngrx/effects";
 
 @Injectable()
 export class SomeEffects {
 
 }
-      `,
-        output: tags.stripIndent`
+      `;
+      const output = tags.stripIndent`
 import { concatLatestFrom } from '@ngrx/operators';
 
 @Injectable()
 export class SomeEffects {
 
 }
-      `,
-      },
-      {
-        name: 'should replace if multiple imports are inside an import',
-        input: tags.stripIndent`
+      `;
+      await verifySchematic(input, output);
+    });
+
+    it('should replace if multiple imports are inside an import statement', async () => {
+      const input = tags.stripIndent`
 import { Actions, concatLatestFrom } from '@ngrx/effects';
 
 @Injectable()
@@ -66,8 +81,8 @@ export class SomeEffects {
   actions$ = inject(Actions);
 
 }
-      `,
-        output: tags.stripIndent`
+      `;
+      const output = tags.stripIndent`
 import { Actions } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 
@@ -76,25 +91,34 @@ export class SomeEffects {
   actions$ = inject(Actions);
 
 }
-      `,
-      },
-    ];
+      `;
 
-    for (const { name, input, output } of testParams) {
-      it(name, async () => {
-        appTree.create('main.ts', input);
+      await verifySchematic(input, output);
+    });
 
-        const tree = await schematicRunner.runSchematic(
-          `ngrx-effects-migration-18-beta`,
-          {},
-          appTree
-        );
+    it('should add concatLatestFrom to existing import', async () => {
+      const input = tags.stripIndent`
+import { Actions, concatLatestFrom } from '@ngrx/effects';
+import { tapResponse } from '@ngrx/operators';
 
-        const actual = tree.readContent('main.ts');
+@Injectable()
+export class SomeEffects {
+  actions$ = inject(Actions);
 
-        expect(actual).toBe(output);
-      });
-    }
+}
+      `;
+      const output = tags.stripIndent`
+import { Actions } from '@ngrx/effects';
+import { tapResponse, concatLatestFrom } from '@ngrx/operators';
+
+@Injectable()
+export class SomeEffects {
+  actions$ = inject(Actions);
+
+}
+      `;
+      await verifySchematic(input, output);
+    });
   });
 
   it('should add if they are missing', async () => {
