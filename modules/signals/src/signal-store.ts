@@ -314,10 +314,7 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
   f10: SignalStoreFeature<
     MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
     F10
@@ -348,14 +345,8 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
   f11: SignalStoreFeature<
     MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
     F11
@@ -387,18 +378,9 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
   f12: SignalStoreFeature<
     MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
     F12
@@ -431,22 +413,10 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
   f13: SignalStoreFeature<
     MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
     F13
@@ -480,30 +450,13 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
   f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>,
     F14
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -536,36 +489,14 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
   f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>,
     F15
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -599,42 +530,15 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
   f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>,
     F16
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -669,48 +573,16 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
   f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>,
     F17
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -734,25 +606,7 @@ export function signalStore<
   F17 extends SignalStoreFeatureResult,
   F18 extends SignalStoreFeatureResult,
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18]
   >
 >(
   config: SignalStoreConfig,
@@ -764,72 +618,17 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
   f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>,
     F18
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -855,128 +654,30 @@ export function signalStore<
   F19 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]
   >
 >(
   config: SignalStoreConfig,
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
-  f2: SignalStoreFeature<{} & F1, F2>,
+  f2: SignalStoreFeature<{} & F1, F2>,  
   f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>,
   f4: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3]>, F4>,
   f5: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4]>, F5>,
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
   f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>,
     F19
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -1003,28 +704,7 @@ export function signalStore<
   F20 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F9,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19,
-      F20
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]
   >
 >(
   config: SignalStoreConfig,
@@ -1036,123 +716,19 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
-  f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
-    F19
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
+  f19: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>, F19>,
   f20: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]>,
     F20
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -1180,28 +756,7 @@ export function signalStore<
   F21 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19,
-      F20,
-      F21
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21]
   >
 >(
   config: SignalStoreConfig,
@@ -1213,150 +768,20 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
-  f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
-    F19
-  >,
-  f20: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19
-      ]
-    >,
-    F20
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
+  f19: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>, F19>,
+  f20: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]>, F20>,
   f21: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]>,
     F21
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -1385,29 +810,7 @@ export function signalStore<
   F22 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19,
-      F20,
-      F21,
-      F22
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22]
   >
 >(
   config: SignalStoreConfig,
@@ -1419,178 +822,21 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
-  f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
-    F19
-  >,
-  f20: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19
-      ]
-    >,
-    F20
-  >,
-  f21: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20
-      ]
-    >,
-    F21
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
+  f19: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>, F19>,
+  f20: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]>, F20>,
+  f21: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]>, F21>,
   f22: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21]>,
     F22
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -1620,30 +866,7 @@ export function signalStore<
   F23 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19,
-      F20,
-      F21,
-      F22,
-      F23
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23]
   >
 >(
   config: SignalStoreConfig,
@@ -1655,207 +878,22 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
-  f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
-    F19
-  >,
-  f20: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19
-      ]
-    >,
-    F20
-  >,
-  f21: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20
-      ]
-    >,
-    F21
-  >,
-  f22: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21
-      ]
-    >,
-    F22
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
+  f19: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>, F19>,
+  f20: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]>, F20>,
+  f21: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]>, F21>,
+  f22: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21]>, F22>,
   f23: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21,
-        F22
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22]>,
     F23
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -1886,31 +924,7 @@ export function signalStore<
   F24 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19,
-      F20,
-      F21,
-      F22,
-      F23,
-      F24
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24]
   >
 >(
   config: SignalStoreConfig,
@@ -1922,237 +936,23 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
-  f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
-    F19
-  >,
-  f20: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19
-      ]
-    >,
-    F20
-  >,
-  f21: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20
-      ]
-    >,
-    F21
-  >,
-  f22: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21
-      ]
-    >,
-    F22
-  >,
-  f23: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21,
-        F22
-      ]
-    >,
-    F23
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
+  f19: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>, F19>,
+  f20: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]>, F20>,
+  f21: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]>, F21>,
+  f22: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21]>, F22>,
+  f23: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22]>, F23>,
   f24: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21,
-        F22,
-        F23
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23]>,
     F24
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
@@ -2184,32 +984,7 @@ export function signalStore<
   F25 extends SignalStoreFeatureResult,
   // @ts-ignore
   R extends SignalStoreFeatureResult = MergeFeatureResults<
-    [
-      F1,
-      F2,
-      F3,
-      F4,
-      F5,
-      F6,
-      F7,
-      F8,
-      F10,
-      F11,
-      F12,
-      F13,
-      F14,
-      F15,
-      F16,
-      F17,
-      F18,
-      F19,
-      F20,
-      F21,
-      F22,
-      F23,
-      F24,
-      F25
-    ]
+    [F1, F2, F3, F4, F5, F6, F7, F8, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25]
   >
 >(
   config: SignalStoreConfig,
@@ -2221,268 +996,24 @@ export function signalStore<
   f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>,
   f7: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>, F7>,
   f8: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7]>, F8>,
-  f9: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>,
-    F9
-  >,
-  f10: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>,
-    F10
-  >,
-  f11: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>,
-    F11
-  >,
-  f12: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>,
-    F12
-  >,
-  f13: SignalStoreFeature<
-    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>,
-    F13
-  >,
-  f14: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]
-    >,
-    F14
-  >,
-  f15: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]
-    >,
-    F15
-  >,
-  f16: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]
-    >,
-    F16
-  >,
-  f17: SignalStoreFeature<
-    MergeFeatureResults<
-      [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]
-    >,
-    F17
-  >,
-  f18: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17
-      ]
-    >,
-    F18
-  >,
-  f19: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18
-      ]
-    >,
-    F19
-  >,
-  f20: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19
-      ]
-    >,
-    F20
-  >,
-  f21: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20
-      ]
-    >,
-    F21
-  >,
-  f22: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21
-      ]
-    >,
-    F22
-  >,
-  f23: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21,
-        F22
-      ]
-    >,
-    F23
-  >,
-  f24: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21,
-        F22,
-        F23
-      ]
-    >,
-    F24
-  >,
+  f9: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8]>, F9>,
+  f10: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9]>, F10>,
+  f11: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10]>, F11>,
+  f12: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11]>, F12>,
+  f13: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12]>, F13>,
+  f14: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13]>, F14>,
+  f15: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14]>, F15>,
+  f16: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15]>, F16>,
+  f17: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16]>, F17>,
+  f18: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17]>, F18>,
+  f19: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18]>, F19>,
+  f20: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19]>, F20>,
+  f21: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]>, F21>,
+  f22: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21]>, F22>,
+  f23: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22]>, F23>,
+  f24: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23]>, F24>,
   f25: SignalStoreFeature<
-    MergeFeatureResults<
-      [
-        F1,
-        F2,
-        F3,
-        F4,
-        F5,
-        F6,
-        F7,
-        F8,
-        F9,
-        F10,
-        F11,
-        F12,
-        F13,
-        F14,
-        F15,
-        F16,
-        F17,
-        F18,
-        F19,
-        F20,
-        F21,
-        F22,
-        F23,
-        F24
-      ]
-    >,
+    MergeFeatureResults<[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24]>,
     F25
   >
 ): Type<SignalStoreProps<R> & StateSignal<Prettify<R['state']>>>;
