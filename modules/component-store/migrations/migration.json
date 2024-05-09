@@ -1,4 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {}
+  "schematics": {
+    "ngrx-component-store-migration-18-beta": {
+      "description": "As of NgRx v18, the `tapResponse` import has been removed from `@ngrx/component-store` in favor of the `@ngrx/operators` package.",
+      "version": "18-beta",
+      "factory": "./18_0_0-beta/index"
+    }
+  }
 }
