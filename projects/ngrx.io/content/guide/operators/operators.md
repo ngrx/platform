@@ -98,17 +98,21 @@ The `mapResponse` operator is particularly useful in scenarios where you need to
 In the example below, we use `mapResponse` within an NgRx effect to handle loading movies from an API. It demonstrates how to map successful API responses to an action indicating success, and how to handle errors by dispatching an error action.
 
 <code-example header="movies.effects.ts">
-  loadMovies$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType('[Movies Page] Load Movies'),
-      exhaustMap(() => this.moviesService.getAll()
-        .pipe(
-          mapResponse({
-            next: (movies) => ({ type: '[Movies API] Movies Loaded Success', payload: movies }),
-            error: () => of({ type: '[Movies API] Movies Loaded Error' })
-          })
+  export const loadMovies = createEffect(
+    (actions$ = inject(Actions), moviesService = inject(MoviesService)) => {
+      return actions$.pipe(
+        ofType(MoviesPageActions.opened),
+        exhaustMap(() =>
+          moviesService.getAll().pipe(
+            mapResponse({
+              next: (movies) => MoviesApiActions.moviesLoadedSuccess({ movies }),
+              error: (error: { message: string }) =>
+                MoviesApiActions.moviesLoadedFailure({ errorMsg: error.message }),
+            })
+          )
         )
-      )
-    )
+      );
+    },
+    { functional: true }
   );
 </code-example>
