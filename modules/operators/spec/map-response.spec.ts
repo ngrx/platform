@@ -20,7 +20,7 @@ describe('mapResponse', () => {
     expect(results).toEqual([2, 3, 4]);
   });
 
-  it('should map the thrown error using the error callback', () => {
+  it('should map the thrown error using the error callback', (done) => {
     throwError(() => 'error')
       .pipe(
         mapResponse({
@@ -30,10 +30,11 @@ describe('mapResponse', () => {
       )
       .subscribe((result) => {
         expect(result).toBe('mapped error');
+        done();
       });
   });
 
-  it('should map the error thrown in next callback using error callback', () => {
+  it('should map the error thrown in next callback using error callback', (done) => {
     function producesError() {
       throw 'error';
     }
@@ -47,6 +48,7 @@ describe('mapResponse', () => {
       )
       .subscribe((result) => {
         expect(result).toBe('mapped error');
+        done();
       });
   });
 
