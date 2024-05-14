@@ -30,6 +30,7 @@ type MapResponseObserver<T, E, R1, R2> = {
  *     })
  *   );
  * });
+ * ```
  */
 export function mapResponse<T, E, R1, R2>(
   observer: MapResponseObserver<T, E, R1, R2>
