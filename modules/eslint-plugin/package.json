@@ -35,6 +35,9 @@
     ],
     "migrations": "./migrations/migration.json"
   },
+  "ng-add": {
+    "save": "devDependencies"
+  },
   "sideEffects": false,
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^5.4.0",
