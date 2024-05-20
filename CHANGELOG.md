@@ -1,3 +1,44 @@
+<a name="18.0.0-beta.0"></a>
+
+# [18.0.0-beta.0](https://github.com/ngrx/platform/compare/17.2.0...18.0.0-beta.0) (2024-05-20)
+
+### Bug Fixes
+
+- **eslint-plugin:** add as devDependency via ng add ([#4343](https://github.com/ngrx/platform/issues/4343)) ([4fe7b7f](https://github.com/ngrx/platform/commit/4fe7b7f))
+- **schematics:** set correct default value type ([#4307](https://github.com/ngrx/platform/issues/4307)) ([51034e6](https://github.com/ngrx/platform/commit/51034e6))
+
+### Features
+
+- **component-store:** add migrator for `tapResponse` ([#4321](https://github.com/ngrx/platform/issues/4321)) ([0ae21c9](https://github.com/ngrx/platform/commit/0ae21c9)), closes [#4261](https://github.com/ngrx/platform/issues/4261)
+- **effects:** add migrator for `concatLatestFrom` ([#4311](https://github.com/ngrx/platform/issues/4311)) ([d264c56](https://github.com/ngrx/platform/commit/d264c56)), closes [#4262](https://github.com/ngrx/platform/issues/4262)
+- **operators:** add `mapResponse` ([#4302](https://github.com/ngrx/platform/issues/4302)) ([c460920](https://github.com/ngrx/platform/commit/c460920)), closes [#4230](https://github.com/ngrx/platform/issues/4230)
+- **store:** add TypedAction migration ([#4325](https://github.com/ngrx/platform/issues/4325)) ([f76a401](https://github.com/ngrx/platform/commit/f76a401))
+- upgrade Angular dependencies to v18 pre-release versions ([#4308](https://github.com/ngrx/platform/issues/4308)) ([62f3971](https://github.com/ngrx/platform/commit/62f3971))
+- **store:** merge Action and TypedAction intefaces ([#4318](https://github.com/ngrx/platform/issues/4318)) ([c8bde71](https://github.com/ngrx/platform/commit/c8bde71))
+
+### BREAKING CHANGES
+
+- The minimum required version of Angular has been updated
+
+BEFORE:
+
+The minimum required version of Angular is 17.x
+
+AFTER:
+
+The minimum required version of Angular is 18.x
+
+- **store:** The Action and TypedAction interfaces are merged into one interface.
+
+BEFORE:
+
+There was a separation between the Action and TypedAction interfaces.
+
+AFTER:
+
+The Action interface accepts a generic type parameter that represents the payload type (defaults to string).
+The TypedAction interface is removed.
+
 <a name="17.2.0"></a>
 
 # [17.2.0](https://github.com/ngrx/platform/compare/17.1.1...17.2.0) (2024-04-11)
