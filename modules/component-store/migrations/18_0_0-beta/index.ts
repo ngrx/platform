@@ -13,7 +13,6 @@ import {
   InsertChange,
   visitTSSourceFiles,
 } from '../../schematics-core';
-import * as os from 'os';
 import { createRemoveChange } from '../../schematics-core/utility/change';
 
 export function migrateTapResponseImport(): Rule {
@@ -108,7 +107,7 @@ export function migrateTapResponseImport(): Rule {
           new InsertChange(
             sourceFile.fileName,
             componentStoreImportDeclaration.getEnd() + 1,
-            `${newOperatorsImport}${os.EOL}`
+            `${newOperatorsImport}\n`
           )
         );
       }
