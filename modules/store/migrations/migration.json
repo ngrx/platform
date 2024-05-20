@@ -35,6 +35,11 @@
       "description": "The road to v16.0-beta",
       "version": "16.0.0-beta",
       "factory": "./16_0_0-beta/index"
+    },
+    "ngrx-store-migration-18-beta": {
+      "description": "As of NgRx v18, the `TypedAction` has been removed in favor of `Action`.",
+      "version": "18-beta",
+      "factory": "./18_0_0-beta/index"
     }
   }
 }
