@@ -1,3 +1,7 @@
+<a name="18.0.0-beta.1"></a>
+
+# [18.0.0-beta.1](https://github.com/ngrx/platform/compare/18.0.0-beta.0...18.0.0-beta.1) (2024-05-20)
+
 <a name="18.0.0-beta.0"></a>
 
 # [18.0.0-beta.0](https://github.com/ngrx/platform/compare/17.2.0...18.0.0-beta.0) (2024-05-20)
