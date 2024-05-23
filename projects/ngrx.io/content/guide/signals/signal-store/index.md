@@ -11,7 +11,7 @@ Through the combination of store features, the SignalStore gains state, computed
 Based on the utilized features, the `signalStore` function returns an injectable service that can be provided and injected where needed.
 
 The `withState` feature is used to add state properties to the SignalStore.
-This feature accepts initial state as an input argument.
+This feature accepts initial state as an input argument. As with `signalState`, the state's type must be a record/object literal.
 
 <code-example header="books.store.ts">
 

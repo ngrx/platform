@@ -19,7 +19,9 @@ const userState = signalState<UserState>({
 });
 ```
 
-As a result, it returns an extended version of a signal that possesses all the capabilities of a read-only signal.
+The state's type must be a record/object literal. Add arrays or primitive values to properties.
+
+`signalState` returns an extended version of a signal that possesses all the capabilities of a read-only signal.
 
 ```ts
 import { computed, effect } from '@angular/core';
