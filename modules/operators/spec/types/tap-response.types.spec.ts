@@ -3,7 +3,7 @@ import { compilerOptions } from './utils';
 
 describe('tapResponse types', () => {
   const snippetFactory = (code: string): string => `
-    import { tapResponse } from '@ngrx/component-store';
+    import { tapResponse } from '@ngrx/operators';
     import { noop, of } from 'rxjs';
 
     ${code}
