@@ -1,5 +1,3 @@
-import * as operators from '@ngrx/operators';
-
 export { createEffect } from './effect_creator';
 export { EffectConfig } from './models';
 export { getEffectsMetadata } from './effects_metadata';
@@ -30,8 +28,3 @@ export {
 } from './lifecycle_hooks';
 export { USER_PROVIDED_EFFECTS } from './tokens';
 export { provideEffects } from './provide_effects';
-
-/**
- * @deprecated Use `concatLatestFrom` from `@ngrx/operators` instead.
- */
-export const concatLatestFrom = operators.concatLatestFrom;
