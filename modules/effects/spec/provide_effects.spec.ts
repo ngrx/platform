@@ -10,9 +10,9 @@ import {
   provideStore,
   Store,
 } from '@ngrx/store';
+import { concatLatestFrom } from '@ngrx/operators';
 import {
   Actions,
-  concatLatestFrom,
   createEffect,
   EffectsRunner,
   ofType,
