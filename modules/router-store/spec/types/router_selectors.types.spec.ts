@@ -53,7 +53,7 @@ describe('getRouterSelectors', () => {
     );
   });
 
-  it('selectQueryParam should return string', () => {
+  it('selectQueryParam should return string or string[]', () => {
     expectSnippet(`
       export const selectIdFromRoute = selectQueryParam('id')
       export const selector = createSelector(
@@ -62,7 +62,7 @@ describe('getRouterSelectors', () => {
       );
     `).toInfer(
       'selector',
-      'MemoizedSelector<State, string, (s1: string) => string>'
+      'MemoizedSelector<State, string | string[], (s1: string | string[]) => string | string[]>'
     );
   });
 

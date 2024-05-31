@@ -5,7 +5,9 @@ export type RouterStateSelectors<V> = {
   selectCurrentRoute: MemoizedSelector<V, any>;
   selectFragment: MemoizedSelector<V, string | undefined>;
   selectQueryParams: MemoizedSelector<V, Params>;
-  selectQueryParam: (param: string) => MemoizedSelector<V, string | undefined>;
+  selectQueryParam: (
+    param: string
+  ) => MemoizedSelector<V, string | string[] | undefined>;
   selectRouteParams: MemoizedSelector<V, Params>;
   selectRouteParam: (param: string) => MemoizedSelector<V, string | undefined>;
   selectRouteData: MemoizedSelector<V, Data>;
