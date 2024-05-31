@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -20,7 +20,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'Prefer combining selectors at the selector level.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {

@@ -3,7 +3,6 @@
 Use a consistent name for the global store.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No

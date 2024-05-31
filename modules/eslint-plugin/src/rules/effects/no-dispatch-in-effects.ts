@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -28,8 +28,6 @@ export default createRule<Options, MessageIds>({
     hasSuggestions: true,
     docs: {
       description: '`Effect` should not call `store.dispatch`.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {

@@ -1,11 +1,11 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
-import { isCallExpression, isIdentifier } from 'eslint-etc';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
   asPattern,
   getNgRxStores,
-  isMemberExpression,
+  isCallExpression,
+  isIdentifier,
   namedCallableExpression,
   pipeExpression,
 } from '../../utils';
@@ -22,7 +22,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'Avoid mapping logic outside the selector level.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {
@@ -46,7 +45,7 @@ export default createRule<Options, MessageIds>({
     )}[callee.object.callee.property.name='select']` as const;
 
     function isInCreateEffect(node: TSESTree.CallExpression) {
-      let parent = node.parent;
+      let parent: TSESTree.Node | undefined = node.parent;
       while (parent) {
         if (
           isCallExpression(parent) &&
@@ -65,7 +64,7 @@ export default createRule<Options, MessageIds>({
     const selectorQuery = `:matches(${selectSelector}, ${pipeWithSelectAndMapSelector})`;
     return {
       [`${selectorQuery} > CallExpression:has(ThisExpression)`](
-        node: TSESTree.CallExpression
+        _node: TSESTree.CallExpression
       ) {
         pipeHasThisExpression = true;
       },

@@ -1,5 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
-import { getTypeServices } from 'eslint-etc';
+import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import * as ts from 'typescript';
 import { createRule } from '../../rule-creator';
@@ -28,7 +27,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'effects',
     docs: {
       description: 'Avoid `Effect` that re-emit filtered actions.',
-      recommended: 'warn',
       requiresTypeChecking: true,
     },
     schema: [],
@@ -45,7 +43,8 @@ export default createRule<Options, MessageIds>({
       return {};
     }
 
-    const { getType, typeChecker } = getTypeServices(context);
+    const services = ESLintUtils.getParserServices(context);
+    const typeChecker = services.program.getTypeChecker();
 
     function checkNode(pipeCallExpression: TSESTree.CallExpression) {
       const operatorCallExpression = pipeCallExpression.arguments.find(
@@ -57,7 +56,7 @@ export default createRule<Options, MessageIds>({
       if (!operatorCallExpression) {
         return;
       }
-      const operatorType = getType(operatorCallExpression);
+      const operatorType = services.getTypeAtLocation(operatorCallExpression);
       const [signature] = typeChecker.getSignaturesOfType(
         operatorType,
         ts.SignatureKind.Call
@@ -77,7 +76,7 @@ export default createRule<Options, MessageIds>({
         return;
       }
 
-      const pipeType = getType(pipeCallExpression);
+      const pipeType = services.getTypeAtLocation(pipeCallExpression);
       if (!isTypeReference(pipeType)) {
         return;
       }

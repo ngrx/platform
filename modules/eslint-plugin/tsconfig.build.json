@@ -3,15 +3,20 @@
     "baseUrl": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "downlevelIteration": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "outDir": "../../dist/modules/eslint-plugin",
     "sourceMap": true,
     "inlineSources": true,
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "declaration": true,
+    "target": "es2022",
+    "resolveJsonModule": true
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts", "test-setup.ts"]

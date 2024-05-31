@@ -19,13 +19,10 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'Use a consistent name for the global store.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [
       {
         type: 'string',
-        additionalProperties: false,
       },
     ],
     messages: {

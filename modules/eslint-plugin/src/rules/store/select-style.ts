@@ -1,4 +1,4 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -48,14 +48,12 @@ export default createRule<Options, MessageIds>({
     docs: {
       description:
         'Selector can be used either with `select` as a pipeable operator or as a method.',
-      recommended: 'warn',
     },
     fixable: 'code',
     schema: [
       {
         type: 'string',
         enum: [SelectStyle.Method, SelectStyle.Operator],
-        additionalProperties: false,
       },
     ],
     messages: {
@@ -103,7 +101,7 @@ export default createRule<Options, MessageIds>({
             getImportRemoveFix(sourceCode, [node.parent], 'select', fixer),
         });
 
-        const [{ references }] = context.getDeclaredVariables(node);
+        const [{ references }] = sourceCode.getDeclaredVariables(node);
 
         for (const { identifier } of references) {
           context.report({

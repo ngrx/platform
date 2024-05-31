@@ -10,7 +10,7 @@ version: 2.1
 # See https://blog.daemonl.com/2016/02/yaml.html
 # To validate changes, use an online parser, eg.
 # https://yaml-online-parser.appspot.com/
-var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.14.1
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}-0.18.0
 var_2: &run_in_node
   docker:
     - image: cimg/node:20.11
