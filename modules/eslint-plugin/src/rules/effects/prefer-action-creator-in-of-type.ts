@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 
@@ -15,7 +15,6 @@ export default createRule<Options, MessageIds>({
     docs: {
       description:
         'Using `action creator` in `ofType` is preferred over `string`.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {

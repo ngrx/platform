@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -21,7 +21,6 @@ export default createRule<Options, MessageIds>({
     docs: {
       description:
         '`Effect` should not be listed as a provider if it is added to the `EffectsModule`.',
-      recommended: 'error',
     },
     fixable: 'code',
     schema: [],

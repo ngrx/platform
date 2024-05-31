@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import { asPattern, getNgRxStores, namedCallableExpression } from '../../utils';
@@ -16,7 +16,6 @@ export default createRule<Options, MessageIds>({
     docs: {
       description:
         'Using the `async` pipe is preferred over `store` subscription.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {

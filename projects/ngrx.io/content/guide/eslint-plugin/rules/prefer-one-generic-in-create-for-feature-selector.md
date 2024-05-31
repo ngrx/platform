@@ -3,7 +3,6 @@
 Prefer using a single generic to define the feature state.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No

@@ -1,7 +1,4 @@
-import type {
-  ESLintUtils,
-  TSESLint,
-} from '@typescript-eslint/experimental-utils';
+import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
 import * as path from 'path';
 import rule, {
   noReducerInKeyNames,

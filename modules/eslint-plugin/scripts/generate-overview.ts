@@ -1,8 +1,10 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { EOL } from 'os';
 import { format, resolveConfig } from 'prettier';
-import { rules } from '../src/rules';
-import { configs } from '../src/configs';
+import {
+  configsForGenerate,
+  rulesForGenerate,
+} from '../src/utils/helper-functions/rules';
 
 const prettierConfig = resolveConfig.sync(__dirname);
 const OVERVIEW = './projects/ngrx.io/content/guide/eslint-plugin/index.md';
@@ -13,35 +15,31 @@ generateRules();
 generateConfigurations();
 
 function generateRules() {
-  const moduleRules = Object.entries(rules).reduce<Record<string, string[][]>>(
-    (all, [ruleName, { meta }]) => {
-      all[meta.ngrxModule] = (all[meta.ngrxModule] ?? []).concat([
-        [
-          `[@ngrx/${ruleName}]${
-            meta.docs?.url
-              ? '(' +
-                meta.docs.url
-                  .replace('https://ngrx.io', '')
-                  .replace('.md', '') +
-                ')'
-              : ''
-          }`,
-          meta.docs?.description ?? 'TODO',
-          meta.type,
-          `${meta.docs?.recommended}`,
-          meta.fixable ? 'Yes' : 'No',
-          meta.hasSuggestions ? 'Yes' : 'No',
-          meta.schema.length ? 'Yes' : 'No',
-          meta.docs?.requiresTypeChecking ? 'Yes' : 'No',
-        ],
-      ]);
-      return all;
-    },
-    {}
-  );
+  const moduleRules = Object.entries(rulesForGenerate).reduce<
+    Record<string, string[][]>
+  >((all, [ruleName, { meta }]) => {
+    all[meta.ngrxModule] = (all[meta.ngrxModule] ?? []).concat([
+      [
+        `[@ngrx/${ruleName}]${
+          meta.docs?.url
+            ? '(' +
+              meta.docs.url.replace('https://ngrx.io', '').replace('.md', '') +
+              ')'
+            : ''
+        }`,
+        meta.docs?.description ?? 'TODO',
+        meta.type,
+        meta.fixable ? 'Yes' : 'No',
+        meta.hasSuggestions ? 'Yes' : 'No',
+        Array.isArray(meta.schema) && meta.schema.length ? 'Yes' : 'No',
+        meta.docs?.requiresTypeChecking ? 'Yes' : 'No',
+      ],
+    ]);
+    return all;
+  }, {});
 
-  const tableHeader = `| Name | Description | Recommended | Category | Fixable | Has suggestions | Configurable | Requires type information
-| --- | --- | --- | --- | --- | --- | --- | --- |`;
+  const tableHeader = `| Name | Description | Category | Fixable | Has suggestions | Configurable | Requires type information
+| --- | --- | --- | --- | --- | --- | --- |`;
 
   const configTable = Object.entries(moduleRules).map(
     ([ngrxModule, pluginRules]) => {
@@ -75,14 +73,12 @@ function generateConfigurations() {
   const tableHeader = `| Name |
   | --- |`;
 
-  const config = Object.keys(configs);
-
   const overview = readFileSync(OVERVIEW, 'utf-8');
   const start = overview.indexOf('<!-- CONFIGURATIONS-CONFIG:START -->');
   const end = overview.indexOf('<!-- CONFIGURATIONS-CONFIG:END -->');
 
-  const configTable = config.map(
-    (configName) => `| [${configName}](${GH_CONFIGS}/${configName}.ts) |`
+  const configTable = configsForGenerate.map(
+    (configName) => `| [${configName}](${GH_CONFIGS}/${configName}.json) |`
   );
   const newOverview = format(
     `${overview.substring(

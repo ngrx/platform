@@ -3,7 +3,6 @@
 A block statement is easier to troubleshoot.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No

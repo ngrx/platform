@@ -1,5 +1,5 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/experimental-utils';
-import { ASTUtils } from '@typescript-eslint/experimental-utils';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
+import { ASTUtils } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import { createEffectExpression } from '../../utils';
@@ -16,7 +16,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'effects',
     docs: {
       description: 'A block statement is easier to troubleshoot.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {

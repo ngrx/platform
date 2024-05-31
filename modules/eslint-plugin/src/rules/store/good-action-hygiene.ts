@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import { actionCreatorWithLiteral } from '../../utils';
@@ -15,7 +15,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'Ensures the use of good action hygiene.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {

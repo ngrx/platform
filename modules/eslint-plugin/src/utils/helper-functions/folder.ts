@@ -3,7 +3,7 @@ import * as path from 'path';
 
 export function* traverseFolder(
   folder: string,
-  extensions = ['.ts', '.js']
+  extensions: string[]
 ): Generator<{ folder: string; file: string; path: string }> {
   const folders = fs.readdirSync(folder, { withFileTypes: true });
   for (const folderEntry of folders) {

@@ -3,7 +3,6 @@
 There should only be one global store injected.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No

@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.build",
+  "compilerOptions": {},
+  "files": ["index.ts"],
+  "angularCompilerOptions": {}
+}

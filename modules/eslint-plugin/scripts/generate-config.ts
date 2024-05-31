@@ -2,118 +2,60 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { format, resolveConfig } from 'prettier';
 import type { NgRxRuleModule } from '../src/rule-creator';
-import { rules } from '../src/rules';
+import { rulesForGenerate } from '../src/utils/helper-functions/rules';
 
 const prettierConfig = resolveConfig.sync(__dirname);
 
 const RULE_MODULE = '@ngrx';
 const CONFIG_DIRECTORY = './modules/eslint-plugin/src/configs/';
 
-writeConfig(
-  'recommended',
-  (rule) =>
-    !!rule.meta.docs?.recommended && !rule.meta.docs?.requiresTypeChecking
-);
-
-writeConfig('all', (rule) => !rule.meta.docs?.requiresTypeChecking);
+writeConfig('recommended', (rule) => !rule.meta.docs?.requiresTypeChecking);
+writeConfig('all', (_rule) => true);
 
 writeConfig(
-  'strict',
-  (rule) => !rule.meta.docs?.requiresTypeChecking,
-  () => 'error'
-);
-
-writeConfig(
-  'recommended-requiring-type-checking',
-  (rule) => !!rule.meta.docs?.recommended
-);
-
-writeConfig('all-requiring-type-checking', () => true);
-
-writeConfig(
-  'strict-requiring-type-checking',
-  () => true,
-  () => 'error'
-);
-
-writeConfig(
-  'store',
+  'store-recommended',
   (rule) =>
     rule.meta.ngrxModule === 'store' && !rule.meta.docs?.requiresTypeChecking
 );
+writeConfig('store-all', (rule) => rule.meta.ngrxModule === 'store');
 
 writeConfig(
-  'store-strict',
-  (rule) =>
-    rule.meta.ngrxModule === 'store' && !rule.meta.docs?.requiresTypeChecking,
-  () => 'error'
-);
-
-writeConfig(
-  'effects',
+  'effects-recommended',
   (rule) =>
     rule.meta.ngrxModule === 'effects' && !rule.meta.docs?.requiresTypeChecking
 );
+writeConfig('effects-all', (rule) => rule.meta.ngrxModule === 'effects');
 
 writeConfig(
-  'effects-strict',
-  (rule) =>
-    rule.meta.ngrxModule === 'effects' && !rule.meta.docs?.requiresTypeChecking,
-  () => 'error'
-);
-
-writeConfig(
-  'effects-requiring-type-checking',
-  (rule) => rule.meta.ngrxModule === 'effects'
-);
-
-writeConfig(
-  'effects-strict-requiring-type-checking',
-  (rule) => rule.meta.ngrxModule === 'effects',
-  () => 'error'
-);
-
-writeConfig(
-  'component-store',
+  'component-store-recommended',
   (rule) =>
     rule.meta.ngrxModule === 'component-store' &&
     !rule.meta.docs?.requiresTypeChecking
 );
 
 writeConfig(
-  'component-store-strict',
-  (rule) =>
-    rule.meta.ngrxModule === 'component-store' &&
-    !rule.meta.docs?.requiresTypeChecking,
-  () => 'error'
+  'component-store-all',
+  (rule) => rule.meta.ngrxModule === 'component-store'
 );
 
 function writeConfig(
   configName:
     | 'all'
     | 'recommended'
-    | 'strict'
-    | 'all-requiring-type-checking'
-    | 'recommended-requiring-type-checking'
-    | 'strict-requiring-type-checking'
-    | 'store'
-    | 'store-strict'
-    | 'effects'
-    | 'effects-requiring-type-checking'
-    | 'effects-strict'
-    | 'effects-strict-requiring-type-checking'
-    | 'component-store'
-    | 'component-store-strict',
-  predicate: (rule: NgRxRuleModule<[], string>) => boolean,
-  setting = (rule: NgRxRuleModule<[], string>) =>
-    rule.meta.docs?.recommended || 'warn'
+    | 'store-recommended'
+    | 'store-all'
+    | 'effects-recommended'
+    | 'effects-all'
+    | 'component-store-recommended'
+    | 'component-store-all',
+  predicate: (rule: NgRxRuleModule<[], string>) => boolean
 ) {
-  const rulesForConfig = Object.entries(rules).filter(([_, rule]) =>
+  const rulesForConfig = Object.entries(rulesForGenerate).filter(([_, rule]) =>
     predicate(rule)
   );
   const configRules = rulesForConfig.reduce<Record<string, string>>(
-    (rules, [ruleName, rule]) => {
-      rules[`${RULE_MODULE}/${ruleName}`] = setting(rule);
+    (rules, [ruleName, _rule]) => {
+      rules[`${RULE_MODULE}/${ruleName}`] = 'error';
       return rules;
     },
     {}
@@ -127,22 +69,66 @@ function writeConfig(
         }
       : null;
 
-  const code = `
-/**
- * DO NOT EDIT
- * This file is generated
- */
+  const tsCode = `
+    /**
+   * DO NOT EDIT
+   * This file is generated
+   */
 
-export = {
-  parser: "@typescript-eslint/parser",
-  ${parserOptions ? `parserOptions: ${JSON.stringify(parserOptions)},` : ''}
-  plugins: ["${RULE_MODULE}"],
-  rules: ${JSON.stringify(configRules)},
-}
-`;
-  const config = format(code, {
+    import type { TSESLint } from '@typescript-eslint/utils';
+
+    export default (
+      plugin: TSESLint.FlatConfig.Plugin,
+      parser: TSESLint.FlatConfig.Parser,
+    ): TSESLint.FlatConfig.ConfigArray => [
+      {
+        name: 'ngrx/base',
+        languageOptions: {
+          parser,
+          sourceType: 'module',
+        },
+        plugins: {
+          '@ngrx': plugin,
+        },
+      },
+      {
+        name: 'ngrx/${configName}',
+        languageOptions: {
+          parser,
+          ${
+            parserOptions
+              ? `parserOptions: ${JSON.stringify(parserOptions, null, 2)},`
+              : ''
+          }
+        },
+        rules: ${JSON.stringify(configRules, null, 2)}
+      },
+    ];`;
+  const tsConfigFormatted = format(tsCode, {
     parser: 'typescript',
     ...prettierConfig,
   });
-  writeFileSync(join(CONFIG_DIRECTORY, `${configName}.ts`), config);
+  writeFileSync(join(CONFIG_DIRECTORY, `${configName}.ts`), tsConfigFormatted);
+
+  const jsonConfig: { [key: string]: any } = {
+    parser: '@typescript-eslint/parser',
+    plugins: ['@ngrx'],
+    rules: configRules,
+  };
+  if (configName.includes('all')) {
+    jsonConfig.parserOptions = {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+      project: './tsconfig.json',
+    };
+  }
+  const jsonConfigFormatted = format(JSON.stringify(jsonConfig, null, 2), {
+    parser: 'json',
+    ...prettierConfig,
+  });
+
+  writeFileSync(
+    join(CONFIG_DIRECTORY, `${configName}.json`),
+    jsonConfigFormatted
+  );
 }

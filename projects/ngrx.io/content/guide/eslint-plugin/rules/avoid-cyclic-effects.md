@@ -3,7 +3,6 @@
 Avoid `Effect` that re-emit filtered actions.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: Yes

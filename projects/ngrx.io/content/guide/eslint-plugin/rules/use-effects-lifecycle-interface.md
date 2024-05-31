@@ -3,7 +3,6 @@
 Ensures classes implement lifecycle interfaces corresponding to the declared lifecycle methods.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No

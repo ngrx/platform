@@ -3,7 +3,6 @@
 Using the `async` pipe is preferred over `store` subscription.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No
