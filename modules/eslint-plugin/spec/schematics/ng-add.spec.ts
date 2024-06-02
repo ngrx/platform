@@ -31,7 +31,7 @@ test('registers the plugin with a different config', async () => {
   const initialConfig = {};
   appTree.create('./.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
-  const options = { config: 'strict' };
+  const options = { config: 'recommended' };
   await schematicRunner.runSchematic('ng-add', options, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
