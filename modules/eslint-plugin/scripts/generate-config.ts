@@ -38,6 +38,15 @@ writeConfig(
   (rule) => rule.meta.ngrxModule === 'component-store'
 );
 
+writeConfig(
+  'operators-recommended',
+  (rule) =>
+    rule.meta.ngrxModule === 'operators' &&
+    !rule.meta.docs?.requiresTypeChecking
+);
+
+writeConfig('operators-all', (rule) => rule.meta.ngrxModule === 'operators');
+
 function writeConfig(
   configName:
     | 'all'
@@ -47,7 +56,9 @@ function writeConfig(
     | 'effects-recommended'
     | 'effects-all'
     | 'component-store-recommended'
-    | 'component-store-all',
+    | 'component-store-all'
+    | 'operators-recommended'
+    | 'operators-all',
   predicate: (rule: NgRxRuleModule<[], string>) => boolean
 ) {
   const rulesForConfig = Object.entries(rulesForGenerate).filter(([_, rule]) =>

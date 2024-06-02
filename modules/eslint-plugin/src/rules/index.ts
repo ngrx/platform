@@ -8,7 +8,6 @@ import noDispatchInEffects from './effects/no-dispatch-in-effects';
 import noEffectsInProviders from './effects/no-effects-in-providers';
 import noMultipleActionsInEffects from './effects/no-multiple-actions-in-effects';
 import preferActionCreatorInOfType from './effects/prefer-action-creator-in-of-type';
-import preferConcatLatestFrom from './effects/prefer-concat-latest-from';
 import preferEffectCallbackInBlockStatement from './effects/prefer-effect-callback-in-block-statement';
 import useEffectsLifecycleInterface from './effects/use-effects-lifecycle-interface';
 // store
@@ -30,6 +29,8 @@ import preferSelectorInSelect from './store/prefer-selector-in-select';
 import prefixSelectorsWithSelect from './store/prefix-selectors-with-select';
 import selectStyle from './store/select-style';
 import useConsistentGlobalStoreName from './store/use-consistent-global-store-name';
+// operators
+import preferConcatLatestFrom from './operators/prefer-concat-latest-from';
 
 export const rules = {
   // component-store
@@ -44,7 +45,6 @@ export const rules = {
   'no-effects-in-providers': noEffectsInProviders,
   'no-multiple-actions-in-effects': noMultipleActionsInEffects,
   'prefer-action-creator-in-of-type': preferActionCreatorInOfType,
-  'prefer-concat-latest-from': preferConcatLatestFrom,
   'prefer-effect-callback-in-block-statement':
     preferEffectCallbackInBlockStatement,
   'use-effects-lifecycle-interface': useEffectsLifecycleInterface,
@@ -69,4 +69,6 @@ export const rules = {
   'prefix-selectors-with-select': prefixSelectorsWithSelect,
   'select-style': selectStyle,
   'use-consistent-global-store-name': useConsistentGlobalStoreName,
+  // operators
+  'prefer-concat-latest-from': preferConcatLatestFrom,
 };

@@ -7,6 +7,8 @@ import effectsRecommended from './configs/effects-recommended.json';
 import effectsAll from './configs/effects-all.json';
 import storeRecommended from './configs/store-recommended.json';
 import storeAll from './configs/store-all.json';
+import operatorsRecommended from './configs/operators-recommended.json';
+import operatorsAll from './configs/operators-all.json';
 
 export = {
   configs: {
@@ -18,6 +20,8 @@ export = {
     'effects-all': effectsAll,
     'store-recommended': storeRecommended,
     'store-all': storeAll,
+    'operators-recommended': operatorsRecommended,
+    'operators-all': operatorsAll,
   },
   rules,
 };
