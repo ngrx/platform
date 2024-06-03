@@ -1,0 +1,79 @@
+{
+  "name": "www",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "dependsOn": [{ "target": "collect-docs" }],
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/projects/www/.nitro",
+        "{workspaceRoot}/dist/projects/www/ssr",
+        "{workspaceRoot}/dist/projects/www/analog"
+      ],
+      "options": {
+        "main": "projects/www/src/main.ts",
+        "configFile": "projects/www/vite.config.ts",
+        "outputPath": "dist/projects/www/client",
+        "tsConfig": "projects/www/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "www:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "www:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "www:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/platform:vitest",
+      "outputs": ["{projectRoot}/coverage"]
+    },
+    "collect-docs": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "collect-docs"
+      },
+      "dependsOn": [
+        {
+          "projects": [
+            "component",
+            "component-store",
+            "data",
+            "effects",
+            "entity",
+            "operators",
+            "router-store",
+            "signals",
+            "store",
+            "store-devtools"
+          ],
+          "target": "build"
+        }
+      ]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "projects/www/src"
+}

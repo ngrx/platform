@@ -84,3 +84,8 @@ migrations.json
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
+
+# www reference files
+projects/www/src/app/reference/**/*.json
+.nx/cache
+.nx/workspace-data
