@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -19,7 +19,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'component-store',
     docs: {
       description: '`Updater` should have an explicit return type.',
-      recommended: 'warn',
     },
     schema: [],
     messages: {

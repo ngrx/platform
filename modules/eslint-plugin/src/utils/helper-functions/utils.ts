@@ -1,5 +1,5 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/experimental-utils';
-import { ASTUtils } from '@typescript-eslint/experimental-utils';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
+import { ASTUtils } from '@typescript-eslint/utils';
 import {
   isCallExpression,
   isIdentifier,
@@ -126,7 +126,7 @@ export function getImportAddFix({
   moduleName: string;
   node: TSESTree.Node;
 }): TSESLint.RuleFix | TSESLint.RuleFix[] {
-  const fullImport = `import { ${importName} } from '${moduleName}';\n`;
+  const fullImport = `import { ${importName} } from '${moduleName}';`;
   const importDeclarations = getImportDeclarations(node, moduleName);
 
   if (!importDeclarations?.length) {
@@ -328,7 +328,7 @@ function getInjectedParametersWithSourceCode(
     return { sourceCode };
   }
 
-  const variables = context.getDeclaredVariables(importSpecifier);
+  const variables = sourceCode.getDeclaredVariables(importSpecifier);
   const typedVariable = variables.find(({ name }) => name === importName);
   const identifiers = typedVariable?.references?.reduce<
     readonly InjectedParameter[]

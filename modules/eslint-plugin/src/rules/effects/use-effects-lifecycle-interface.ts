@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -21,7 +21,6 @@ export default createRule<Options, MessageIds>({
     docs: {
       description:
         'Ensures classes implement lifecycle interfaces corresponding to the declared lifecycle methods.',
-      recommended: 'warn',
     },
     fixable: 'code',
     schema: [],

@@ -1,6 +1,8 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
-import { AST_NODE_TYPES } from '@typescript-eslint/experimental-utils';
-import { getTypeServices } from 'eslint-etc';
+import {
+  AST_NODE_TYPES,
+  ESLintUtils,
+  type TSESTree,
+} from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -12,7 +14,7 @@ import {
 export const messageId = 'noMultipleActionsInEffects';
 
 type MessageIds = typeof messageId;
-type Options = readonly [];
+type Options = readonly unknown[];
 type EffectsMapLikeOperatorsReturn =
   | TSESTree.ArrowFunctionExpression
   | TSESTree.CallExpression
@@ -25,7 +27,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'effects',
     docs: {
       description: '`Effect` should not return multiple actions.',
-      recommended: 'warn',
       requiresTypeChecking: true,
     },
     schema: [],
@@ -40,18 +41,28 @@ export default createRule<Options, MessageIds>({
         node: EffectsMapLikeOperatorsReturn
       ) {
         const nodeToReport = getNodeToReport(node);
-
-        if (
-          !nodeToReport ||
-          !getTypeServices(context).couldBeType(nodeToReport, 'Array')
-        ) {
+        if (!nodeToReport) {
           return;
         }
 
-        context.report({
-          node: nodeToReport,
-          messageId,
-        });
+        const services = ESLintUtils.getParserServices(context);
+        const typeChecker = services.program.getTypeChecker();
+        const type = services.getTypeAtLocation(nodeToReport);
+
+        if (typeChecker.isArrayType(type)) {
+          context.report({
+            node: nodeToReport,
+            messageId,
+          });
+        } else if (
+          type.isUnion() &&
+          type.types.some((ut) => !typeChecker.isArrayType(ut))
+        ) {
+          context.report({
+            node: nodeToReport,
+            messageId,
+          });
+        }
       },
     };
   },

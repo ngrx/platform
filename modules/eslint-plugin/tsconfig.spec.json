@@ -5,7 +5,8 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "types": ["jest", "node"],
-    "target": "es2016"
+    "target": "ES2022",
+    "resolveJsonModule": true
   },
   "files": ["test-setup.ts"],
   "include": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]

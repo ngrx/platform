@@ -3,7 +3,6 @@
 `Effect` should not return multiple actions.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: Yes

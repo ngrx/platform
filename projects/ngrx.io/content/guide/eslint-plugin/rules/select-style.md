@@ -3,7 +3,6 @@
 Selector can be used either with `select` as a pipeable operator or as a method.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No

@@ -1,13 +1,9 @@
-import type {
-  ESLintUtils,
-  TSESLint,
-} from '@typescript-eslint/experimental-utils';
-import { fromFixture } from 'eslint-etc';
+import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
 import * as path from 'path';
 import rule, {
   messageId,
 } from '../../../src/rules/effects/use-effects-lifecycle-interface';
-import { ruleTester } from '../../utils';
+import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
@@ -70,7 +66,6 @@ class UserEffects {
 }`,
     {
       output: `import { OnInitEffects } from '@ngrx/effects';
-
 class UserEffects implements OnInitEffects {
   ngrxOnInitEffects() {}
 }`,
@@ -100,7 +95,6 @@ class UserEffects {
 }`,
     {
       output: `import { OnRunEffects } from '@ngrx/effects';
-
 import { Injectable } from '@angular/core'
 class UserEffects implements OnRunEffects {
   ngrxOnRunEffects() {}
@@ -116,7 +110,6 @@ class UserEffects {
 }`,
     {
       output: `import { OnInitEffects } from '@ngrx/effects';
-
 import * as ngrx from '@ngrx/effects'
 class UserEffects implements OnInitEffects {
   ngrxOnInitEffects() {}

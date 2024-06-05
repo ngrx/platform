@@ -3,7 +3,6 @@
 `Effect` should not call `store.dispatch`.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No
