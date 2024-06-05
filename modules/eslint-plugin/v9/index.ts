@@ -13,6 +13,8 @@ import effectsRecommended from '../src/configs/effects-recommended';
 import effectsAll from '../src/configs/effects-all';
 import componentStoreRecommended from '../src/configs/component-store-recommended';
 import componentStoreAll from '../src/configs/component-store-all';
+import operatorsRecommended from '../src/configs/operators-recommended';
+import operatorsAll from '../src/configs/operators-all';
 
 const meta = { name: packageName, version: packageVersion };
 
@@ -32,6 +34,9 @@ const configs = {
 
   componentStoreRecommended: componentStoreRecommended(tsPlugin, parser),
   componentStoreAll: componentStoreAll(tsPlugin, parser),
+
+  operatorsRecommended: operatorsRecommended(tsPlugin, parser),
+  operatorsAll: operatorsAll(tsPlugin, parser),
 };
 
 /*
