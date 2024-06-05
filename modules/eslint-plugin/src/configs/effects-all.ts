@@ -35,7 +35,6 @@ export default (
       '@ngrx/no-effects-in-providers': 'error',
       '@ngrx/no-multiple-actions-in-effects': 'error',
       '@ngrx/prefer-action-creator-in-of-type': 'error',
-      '@ngrx/prefer-concat-latest-from': 'error',
       '@ngrx/prefer-effect-callback-in-block-statement': 'error',
       '@ngrx/use-effects-lifecycle-interface': 'error',
     },

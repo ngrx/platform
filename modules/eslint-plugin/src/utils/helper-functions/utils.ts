@@ -126,7 +126,7 @@ export function getImportAddFix({
   moduleName: string;
   node: TSESTree.Node;
 }): TSESLint.RuleFix | TSESLint.RuleFix[] {
-  const fullImport = `import { ${importName} } from '${moduleName}';\n`;
+  const fullImport = `import { ${importName} } from '${moduleName}';`;
   const importDeclarations = getImportDeclarations(node, moduleName);
 
   if (!importDeclarations?.length) {

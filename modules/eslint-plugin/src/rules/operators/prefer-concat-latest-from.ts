@@ -30,8 +30,7 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'effects',
-    version: '>=12.0.0',
+    ngrxModule: 'operators',
     docs: {
       description: `Use \`${concatLatestFromKeyword}\` instead of \`${withLatestFromKeyword}\` to prevent the selector from firing until the correct \`Action\` is dispatched.`,
     },
@@ -121,7 +120,7 @@ function getFixes(
     getImportAddFix({
       fixer,
       importName: concatLatestFromKeyword,
-      moduleName: NGRX_MODULE_PATHS.effects,
+      moduleName: NGRX_MODULE_PATHS.operators,
       node,
     }),
     ...(isUsingDeprecatedProjectorArgument && nextToken

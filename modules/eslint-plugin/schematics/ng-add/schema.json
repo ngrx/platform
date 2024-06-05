@@ -16,7 +16,9 @@
         "effects-recommended",
         "effects-all",
         "component-store-recommended",
-        "component-store-all"
+        "component-store-all",
+        "operators-recommended",
+        "operators-all"
       ],
       "x-prompt": {
         "message": "Which ESLint configuration would you like to use?",
@@ -53,6 +55,14 @@
           {
             "value": "component-store-all",
             "label": "component-store-all"
+          },
+          {
+            "value": "operators-recommended",
+            "label": "operators-recommended"
+          },
+          {
+            "value": "operators-all",
+            "label": "operators-all"
           }
         ]
       }
