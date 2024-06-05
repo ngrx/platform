@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import { actionCreatorPropsComputed } from '../../utils';
@@ -20,8 +20,6 @@ export default createRule<Options, MessageIds>({
     docs: {
       description:
         'Prefer using inline types instead of interfaces, types or classes.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {

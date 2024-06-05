@@ -1,4 +1,4 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -23,8 +23,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'There should only be one global store injected.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {

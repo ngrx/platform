@@ -3,7 +3,6 @@
 `Updater` should have an explicit return type.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

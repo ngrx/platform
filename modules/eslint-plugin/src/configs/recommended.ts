@@ -3,37 +3,55 @@
  * This file is generated
  */
 
-export = {
-  parser: '@typescript-eslint/parser',
+import type { TSESLint } from '@typescript-eslint/utils';
 
-  plugins: ['@ngrx'],
-  rules: {
-    '@ngrx/avoid-combining-component-store-selectors': 'warn',
-    '@ngrx/avoid-mapping-component-store-selectors': 'warn',
-    '@ngrx/updater-explicit-return-type': 'warn',
-    '@ngrx/no-dispatch-in-effects': 'warn',
-    '@ngrx/no-effects-in-providers': 'error',
-    '@ngrx/prefer-action-creator-in-of-type': 'warn',
-    '@ngrx/prefer-concat-latest-from': 'warn',
-    '@ngrx/prefer-effect-callback-in-block-statement': 'warn',
-    '@ngrx/use-effects-lifecycle-interface': 'warn',
-    '@ngrx/avoid-combining-selectors': 'warn',
-    '@ngrx/avoid-dispatching-multiple-actions-sequentially': 'warn',
-    '@ngrx/avoid-duplicate-actions-in-reducer': 'warn',
-    '@ngrx/avoid-mapping-selectors': 'warn',
-    '@ngrx/good-action-hygiene': 'warn',
-    '@ngrx/no-multiple-global-stores': 'warn',
-    '@ngrx/no-reducer-in-key-names': 'warn',
-    '@ngrx/no-store-subscription': 'warn',
-    '@ngrx/no-typed-global-store': 'warn',
-    '@ngrx/on-function-explicit-return-type': 'warn',
-    '@ngrx/prefer-action-creator-in-dispatch': 'warn',
-    '@ngrx/prefer-action-creator': 'warn',
-    '@ngrx/prefer-inline-action-props': 'warn',
-    '@ngrx/prefer-one-generic-in-create-for-feature-selector': 'warn',
-    '@ngrx/prefer-selector-in-select': 'warn',
-    '@ngrx/prefix-selectors-with-select': 'warn',
-    '@ngrx/select-style': 'warn',
-    '@ngrx/use-consistent-global-store-name': 'warn',
+export default (
+  plugin: TSESLint.FlatConfig.Plugin,
+  parser: TSESLint.FlatConfig.Parser
+): TSESLint.FlatConfig.ConfigArray => [
+  {
+    name: 'ngrx/base',
+    languageOptions: {
+      parser,
+      sourceType: 'module',
+    },
+    plugins: {
+      '@ngrx': plugin,
+    },
   },
-};
+  {
+    name: 'ngrx/recommended',
+    languageOptions: {
+      parser,
+    },
+    rules: {
+      '@ngrx/avoid-combining-component-store-selectors': 'error',
+      '@ngrx/avoid-mapping-component-store-selectors': 'error',
+      '@ngrx/updater-explicit-return-type': 'error',
+      '@ngrx/no-dispatch-in-effects': 'error',
+      '@ngrx/no-effects-in-providers': 'error',
+      '@ngrx/prefer-action-creator-in-of-type': 'error',
+      '@ngrx/prefer-effect-callback-in-block-statement': 'error',
+      '@ngrx/use-effects-lifecycle-interface': 'error',
+      '@ngrx/prefer-concat-latest-from': 'error',
+      '@ngrx/avoid-combining-selectors': 'error',
+      '@ngrx/avoid-dispatching-multiple-actions-sequentially': 'error',
+      '@ngrx/avoid-duplicate-actions-in-reducer': 'error',
+      '@ngrx/avoid-mapping-selectors': 'error',
+      '@ngrx/good-action-hygiene': 'error',
+      '@ngrx/no-multiple-global-stores': 'error',
+      '@ngrx/no-reducer-in-key-names': 'error',
+      '@ngrx/no-store-subscription': 'error',
+      '@ngrx/no-typed-global-store': 'error',
+      '@ngrx/on-function-explicit-return-type': 'error',
+      '@ngrx/prefer-action-creator-in-dispatch': 'error',
+      '@ngrx/prefer-action-creator': 'error',
+      '@ngrx/prefer-inline-action-props': 'error',
+      '@ngrx/prefer-one-generic-in-create-for-feature-selector': 'error',
+      '@ngrx/prefer-selector-in-select': 'error',
+      '@ngrx/prefix-selectors-with-select': 'error',
+      '@ngrx/select-style': 'error',
+      '@ngrx/use-consistent-global-store-name': 'error',
+    },
+  },
+];

@@ -5,7 +5,6 @@
 Use `concatLatestFrom` instead of `withLatestFrom` to prevent the selector from firing until the correct `Action` is dispatched.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No
@@ -75,5 +74,5 @@ To report only needed uses of `withLatestFrom` use:
 
 ## Further reading
 
-- [`concatLatestFrom` API](api/effects/concatLatestFrom)
+- [`concatLatestFrom` API](api/operators/concatLatestFrom)
 - [Incorporating State](guide/effects#incorporating-state)

@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import { createReducer, getNodeToCommaRemoveFix } from '../../utils';
@@ -21,8 +21,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'A `Reducer` should handle an `Action` once.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {

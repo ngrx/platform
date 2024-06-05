@@ -1,13 +1,13 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import * as path from 'path';
 import { format, resolveConfig } from 'prettier';
-import { rules } from '../src/rules';
+import { rulesForGenerate } from '../src/utils/helper-functions/rules';
 
 const prettierConfig = resolveConfig.sync(__dirname);
 const PLACEHOLDER = '<!-- MANUAL-DOC:START -->';
 const RULES_PATH = './projects/ngrx.io/content/guide/eslint-plugin/rules';
 
-for (const [ruleName, { meta }] of Object.entries(rules)) {
+for (const [ruleName, { meta }] of Object.entries(rulesForGenerate)) {
   const docPath = path.join(RULES_PATH, `${ruleName}.md`);
   if (!existsSync(docPath)) {
     writeFileSync(docPath, ``);
@@ -24,11 +24,12 @@ ${meta.version ? '> Required NgRx Version Range: ${meta.version}' : ''}
 ${meta.docs?.description}
 
 - **Type**: ${meta.type}
-- **Recommended**: ${meta.docs?.recommended ? 'Yes' : 'No'}
 - **Fixable**: ${meta.fixable ? 'Yes' : 'No'}
 - **Suggestion**: ${meta.hasSuggestions ? 'Yes' : 'No'}
 - **Requires type checking**: ${meta.docs?.requiresTypeChecking ? 'Yes' : 'No'}
-- **Configurable**: ${meta.schema.length ? 'Yes' : 'No'}
+- **Configurable**: ${
+      Array.isArray(meta.schema) && meta.schema.length ? 'Yes' : 'No'
+    }
 
 <!-- Everything above this generated, do not edit -->
 <!-- MANUAL-DOC:START -->

@@ -10,18 +10,15 @@
       "default": "recommended",
       "enum": [
         "recommended",
-        "recommended-requiring-type-checking",
-        "strict",
-        "strict-requiring-type-checking",
-        "store",
-        "store-strict",
-        "effects",
-        "effects-requiring-type-checking",
-        "effects-strict",
-        "component-store",
-        "component-store-strict",
         "all",
-        "all-requiring-type-checking"
+        "store-recommended",
+        "store-all",
+        "effects-recommended",
+        "effects-all",
+        "component-store-recommended",
+        "component-store-all",
+        "operators-recommended",
+        "operators-all"
       ],
       "x-prompt": {
         "message": "Which ESLint configuration would you like to use?",
@@ -32,52 +29,40 @@
             "label": "recommended"
           },
           {
-            "value": "recommended-requiring-type-checking",
-            "label": "recommended with type checking"
-          },
-          {
-            "value": "strict",
-            "label": "strict"
-          },
-          {
-            "value": "strict-requiring-type-checking",
-            "label": "strict with type checking"
-          },
-          {
-            "value": "store",
-            "label": "store"
-          },
-          {
-            "value": "store-strict",
-            "label": "strict store"
-          },
-          {
-            "value": "effects",
-            "label": "effects"
-          },
-          {
-            "value": "effects-requiring-type-checking",
-            "label": "effects with type checking"
-          },
-          {
-            "value": "effects-strict",
-            "label": "strict effects"
-          },
-          {
-            "value": "component-store",
-            "label": "component-store"
-          },
-          {
-            "value": "component-store-strict",
-            "label": "strict component-store"
-          },
-          {
             "value": "all",
             "label": "all"
           },
           {
-            "value": "all-requiring-type-checking",
-            "label": "all with type checking"
+            "value": "store-recommended",
+            "label": "store-recommended"
+          },
+          {
+            "value": "store-all",
+            "label": "store-all"
+          },
+          {
+            "value": "effects-recommended",
+            "label": "effects-recommended"
+          },
+          {
+            "value": "effects-all",
+            "label": "effects-all"
+          },
+          {
+            "value": "component-store-recommended",
+            "label": "component-store-recommended"
+          },
+          {
+            "value": "component-store-all",
+            "label": "component-store-all"
+          },
+          {
+            "value": "operators-recommended",
+            "label": "operators-recommended"
+          },
+          {
+            "value": "operators-all",
+            "label": "operators-all"
           }
         ]
       }

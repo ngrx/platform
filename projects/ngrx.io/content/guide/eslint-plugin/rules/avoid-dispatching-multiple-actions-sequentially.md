@@ -3,7 +3,6 @@
 It is recommended to only dispatch one `Action` at a time.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

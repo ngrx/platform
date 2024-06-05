@@ -1,14 +1,9 @@
-import type {
-  ESLintUtils,
-  TSESLint,
-} from '@typescript-eslint/experimental-utils';
-import { fromFixture } from 'eslint-etc';
+import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
 import * as path from 'path';
 import rule, {
   messageId,
-} from '../../../src/rules/effects/prefer-concat-latest-from';
-import { NGRX_MODULE_PATHS } from '../../../src/utils';
-import { ruleTester } from '../../utils';
+} from '../../../src/rules/operators/prefer-concat-latest-from';
+import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
@@ -136,8 +131,8 @@ class NotOk {
   constructor(private readonly actions$: Actions) {}
 }`,
     {
-      output: `
-import { Actions, concatLatestFrom } from '@ngrx/effects'
+      output: `import { concatLatestFrom } from '@ngrx/operators';
+import { Actions } from '@ngrx/effects'
 import { of, withLatestFrom } from 'rxjs'
 
 class NotOk {
@@ -183,6 +178,7 @@ class NotOk {
   fromFixture(
     `
 import { Actions } from '@ngrx/effects'
+import { tapResponse } from '@ngrx/operators'
 import { of, withLatestFrom } from 'rxjs'
 
 class NotOk1 {
@@ -207,7 +203,8 @@ class NotOk1 {
 }`,
     {
       output: `
-import { Actions, concatLatestFrom } from '@ngrx/effects'
+import { Actions } from '@ngrx/effects'
+import { tapResponse, concatLatestFrom } from '@ngrx/operators'
 import { of, withLatestFrom } from 'rxjs'
 
 class NotOk1 {
@@ -249,7 +246,7 @@ class NotOk2 {
 }`,
     {
       options: [{ strict: true }],
-      output: `import { concatLatestFrom } from '@ngrx/effects';\n
+      output: `import { concatLatestFrom } from '@ngrx/operators';
 import { of, withLatestFrom } from 'rxjs'
 
 class NotOk2 {
@@ -267,7 +264,7 @@ class NotOk2 {
   ),
   fromFixture(
     `
-import { concatLatestFrom } from '@ngrx/effects'
+import { concatLatestFrom } from '@ngrx/operators'
 import { of, withLatestFrom } from 'rxjs'
 
 class NotOk3 {
@@ -288,8 +285,8 @@ class NotOk3 {
 }`,
     {
       options: [{ strict: true }],
-      output: `import { map } from 'rxjs/operators';\n
-import { concatLatestFrom } from '@ngrx/effects'
+      output: `import { map } from 'rxjs/operators';
+import { concatLatestFrom } from '@ngrx/operators'
 import { of, withLatestFrom } from 'rxjs'
 
 class NotOk3 {
@@ -331,8 +328,8 @@ class NotOk4 {
   )
 }`,
     {
-      output: `
-import { Actions, concatLatestFrom } from '@ngrx/effects'
+      output: `import { concatLatestFrom } from '@ngrx/operators';
+import { Actions } from '@ngrx/effects'
 import { of, withLatestFrom } from 'rxjs'
 import { inject } from '@angular/core'
 
@@ -380,8 +377,8 @@ class NotOk5 {
   }
 }`,
     {
-      output: `
-import { Actions, concatLatestFrom } from '@ngrx/effects'
+      output: `import { concatLatestFrom } from '@ngrx/operators';
+import { Actions } from '@ngrx/effects'
 import { of, withLatestFrom } from 'rxjs'
 import { inject } from '@angular/core'
 
@@ -409,29 +406,7 @@ class NotOk5 {
   ),
 ];
 
-const validNgrx11 = [
-  `
-import { of, withLatestFrom } from 'rxjs';
-
-class Ok {
-  effect = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(CollectionApiActions.addBookSuccess),
-        withLatestFrom(action => this.store.select(fromBooks.getCollectionBookIds)),
-        switchMap(([action, bookCollection]) => {
-          return of({ type: 'noop' })
-        }),
-      ),
-  );
-}`,
-];
-
-ruleTester({ ngrxModule: NGRX_MODULE_PATHS.effects, version: '12.0.0' }).run(
-  path.parse(__filename).name,
-  rule,
-  {
-    valid: valid(),
-    invalid: invalid(),
-  }
-);
+ruleTester().run(path.parse(__filename).name, rule, {
+  valid: valid(),
+  invalid: invalid(),
+});

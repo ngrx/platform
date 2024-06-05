@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 
@@ -20,8 +20,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'Prefer using a single generic to define the feature state.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {

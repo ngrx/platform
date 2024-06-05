@@ -25,12 +25,18 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
+      }
     },
     {
       "files": ["*.ts"],
@@ -46,9 +52,7 @@
         ],
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/prefer-namespace-keyword": "error",
-        // because we're using object
         "@typescript-eslint/ban-types": "warn",
-        // because we have empty constructors for DI
         "@typescript-eslint/no-empty-function": "warn",
         "eqeqeq": ["off", "smart"],
         "id-blacklist": [

@@ -1,14 +1,10 @@
-import type {
-  ESLintUtils,
-  TSESLint,
-} from '@typescript-eslint/experimental-utils';
-import { fromFixture } from 'eslint-etc';
+import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
 import * as path from 'path';
 import rule, {
   noMultipleGlobalStores,
   noMultipleGlobalStoresSuggest,
 } from '../../../src/rules/store/no-multiple-global-stores';
-import { ruleTester } from '../../utils';
+import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

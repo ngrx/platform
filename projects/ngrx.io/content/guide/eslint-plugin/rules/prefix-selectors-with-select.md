@@ -1,9 +1,8 @@
 # prefix-selectors-with-select
 
-The selector should start with "select", for example "selectThing".
+The selector should start with "select", for example "selectEntity".
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No

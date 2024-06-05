@@ -7,7 +7,7 @@ import {
   isCallExpression,
   isTSInstantiationExpression,
 } from '../../utils';
-import type { TSESTree } from '@typescript-eslint/experimental-utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 
 export const noTypedStore = 'noTypedStore';
 export const noTypedStoreSuggest = 'noTypedStoreSuggest';
@@ -23,8 +23,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: 'The global store should not be typed.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {
@@ -51,7 +49,7 @@ export default createRule<Options, MessageIds>({
             ) {
               const [storeArgument] = parent.value.arguments;
               if (isTSInstantiationExpression(storeArgument)) {
-                report(storeArgument.typeParameters);
+                report(storeArgument.typeArguments);
               }
             }
 
@@ -60,24 +58,24 @@ export default createRule<Options, MessageIds>({
 
           if (
             !isTSTypeReference(identifier.typeAnnotation.typeAnnotation) ||
-            !identifier.typeAnnotation.typeAnnotation.typeParameters
+            !identifier.typeAnnotation.typeAnnotation.typeArguments
           ) {
             continue;
           }
 
-          report(identifier.typeAnnotation.typeAnnotation.typeParameters);
+          report(identifier.typeAnnotation.typeAnnotation.typeArguments);
         }
       },
     };
 
-    function report(typeParameters: TSESTree.TSTypeParameterInstantiation) {
+    function report(typeArguments: TSESTree.TSTypeParameterInstantiation) {
       context.report({
-        node: typeParameters,
+        node: typeArguments,
         messageId: noTypedStore,
         suggest: [
           {
             messageId: noTypedStoreSuggest,
-            fix: (fixer) => fixer.remove(typeParameters),
+            fix: (fixer) => fixer.remove(typeArguments),
           },
         ],
       });

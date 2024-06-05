@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
   "name": "Platform",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:0-18-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1.0-20-bullseye",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
@@ -14,8 +14,8 @@
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "yarn install",
-  "onCreateCommand": "sudo cp .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt",
   "waitFor": "postCreateCommand",
+  "onCreateCommand": "sudo cp .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt",
 
   // Configure tool-specific properties.
   "customizations": {

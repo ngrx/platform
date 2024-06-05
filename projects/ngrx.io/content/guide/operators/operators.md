@@ -91,6 +91,12 @@ There is also another signature of the `tapResponse` operator that accepts the o
   });
 </code-example>
 
+<div class="alert is-helpful">
+
+The `tapResponse` operator has been moved from `@ngrx/component-store` to `@ngrx/operators`. If you're looking for the older documentation (prior to v18), see the [v17 documentation](https://v17.ngrx.io/guide/component-store/effect#tapresponse).
+
+</div>
+
 ## mapResponse
 
 The `mapResponse` operator is particularly useful in scenarios where you need to transform data and handle potential errors with minimal boilerplate.

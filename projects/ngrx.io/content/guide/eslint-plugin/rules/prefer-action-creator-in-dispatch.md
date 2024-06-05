@@ -3,7 +3,6 @@
 Using `action creator` in `dispatch` is preferred over `object` or old `Action`.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

@@ -1,5 +1,5 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/experimental-utils';
-import { ASTUtils } from '@typescript-eslint/experimental-utils';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
+import { ASTUtils } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import { getLast, onFunctionWithoutType } from '../../utils';
@@ -21,8 +21,6 @@ export default createRule<Options, MessageIds>({
     ngrxModule: 'store',
     docs: {
       description: '`On` function should have an explicit return type.',
-      recommended: 'warn',
-      suggestion: true,
     },
     schema: [],
     messages: {

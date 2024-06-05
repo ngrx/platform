@@ -1,5 +1,8 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/experimental-utils';
-import { isArrowFunctionExpression } from 'eslint-etc';
+import {
+  AST_NODE_TYPES,
+  type TSESLint,
+  type TSESTree,
+} from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
@@ -27,11 +30,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'effects',
-    version: '>=12.0.0',
+    ngrxModule: 'operators',
     docs: {
       description: `Use \`${concatLatestFromKeyword}\` instead of \`${withLatestFromKeyword}\` to prevent the selector from firing until the correct \`Action\` is dispatched.`,
-      recommended: 'warn',
     },
     fixable: 'code',
     schema: [
@@ -112,14 +113,14 @@ function getFixes(
     sourceCode.getTokenAfter(firstArgument);
   return [
     fixer.replaceText(node, concatLatestFromKeyword),
-    ...(isArrowFunctionExpression(firstArgument)
+    ...(firstArgument.type == AST_NODE_TYPES.ArrowFunctionExpression
       ? []
       : [fixer.insertTextBefore(firstArgument, '() => ')]),
   ].concat(
     getImportAddFix({
       fixer,
       importName: concatLatestFromKeyword,
-      moduleName: NGRX_MODULE_PATHS.effects,
+      moduleName: NGRX_MODULE_PATHS.operators,
       node,
     }),
     ...(isUsingDeprecatedProjectorArgument && nextToken
