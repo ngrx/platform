@@ -20,7 +20,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/signals-all',
+    name: 'ngrx/effects',
     languageOptions: {
       parser,
       parserOptions: {
@@ -30,8 +30,13 @@ export default (
       },
     },
     rules: {
-      '@ngrx/signal-state-no-arrays-at-root-level': 'error',
-      '@ngrx/with-state-no-arrays-at-root-level': 'error',
+      '@ngrx/avoid-cyclic-effects': 'error',
+      '@ngrx/no-dispatch-in-effects': 'error',
+      '@ngrx/no-effects-in-providers': 'error',
+      '@ngrx/no-multiple-actions-in-effects': 'error',
+      '@ngrx/prefer-action-creator-in-of-type': 'error',
+      '@ngrx/prefer-effect-callback-in-block-statement': 'error',
+      '@ngrx/use-effects-lifecycle-interface': 'error',
     },
   },
 ];

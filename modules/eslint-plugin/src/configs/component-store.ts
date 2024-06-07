@@ -20,16 +20,14 @@ export default (
     },
   },
   {
-    name: 'ngrx/effects-recommended',
+    name: 'ngrx/component-store',
     languageOptions: {
       parser,
     },
     rules: {
-      '@ngrx/no-dispatch-in-effects': 'error',
-      '@ngrx/no-effects-in-providers': 'error',
-      '@ngrx/prefer-action-creator-in-of-type': 'error',
-      '@ngrx/prefer-effect-callback-in-block-statement': 'error',
-      '@ngrx/use-effects-lifecycle-interface': 'error',
+      '@ngrx/avoid-combining-component-store-selectors': 'error',
+      '@ngrx/avoid-mapping-component-store-selectors': 'error',
+      '@ngrx/updater-explicit-return-type': 'error',
     },
   },
 ];

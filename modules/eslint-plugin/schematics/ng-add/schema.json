@@ -7,72 +7,42 @@
     "config": {
       "description": "The config to be used.",
       "type": "string",
-      "default": "recommended",
+      "default": "all",
       "enum": [
-        "recommended",
         "all",
-        "store-recommended",
-        "store-all",
-        "effects-recommended",
-        "effects-all",
-        "component-store-recommended",
-        "component-store-all",
-        "operators-recommended",
-        "operators-all",
-        "signals-recommended",
-        "signals-all"
+        "component-store",
+        "effects",
+        "operators",
+        "signals",
+        "store"
       ],
       "x-prompt": {
         "message": "Which ESLint configuration would you like to use?",
         "type": "list",
         "items": [
           {
-            "value": "recommended",
-            "label": "recommended"
-          },
-          {
             "value": "all",
             "label": "all"
           },
           {
-            "value": "store-recommended",
-            "label": "store-recommended"
+            "value": "component-store",
+            "label": "component-store"
           },
           {
-            "value": "store-all",
-            "label": "store-all"
+            "value": "effects",
+            "label": "effects"
           },
           {
-            "value": "effects-recommended",
-            "label": "effects-recommended"
+            "value": "operators",
+            "label": "operators"
           },
           {
-            "value": "effects-all",
-            "label": "effects-all"
+            "value": "signals",
+            "label": "signals"
           },
           {
-            "value": "component-store-recommended",
-            "label": "component-store-recommended"
-          },
-          {
-            "value": "component-store-all",
-            "label": "component-store-all"
-          },
-          {
-            "value": "operators-recommended",
-            "label": "operators-recommended"
-          },
-          {
-            "value": "operators-all",
-            "label": "operators-all"
-          },
-          {
-            "value": "signals-recommended",
-            "label": "signals-recommended"
-          },
-          {
-            "value": "signals-all",
-            "label": "signals-all"
+            "value": "store",
+            "label": "store"
           }
         ]
       }

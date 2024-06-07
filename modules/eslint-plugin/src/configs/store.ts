@@ -20,7 +20,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/store-all',
+    name: 'ngrx/store',
     languageOptions: {
       parser,
     },

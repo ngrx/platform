@@ -110,19 +110,7 @@ Instead of manually configuring the rules, there are also [preconfigured configu
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------- |
-| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                                                 |
-| [component-store-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store-all.json)                 |
-| [component-store-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store-recommended.json) |
-| [effects-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-all.json)                                 |
-| [effects-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-recommended.json)                 |
-| [operators-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators-all.json)                             |
-| [operators-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators-recommended.json)             |
-| [recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/recommended.json)                                 |
-| [signals-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals-all.json)                                 |
-| [signals-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals-recommended.json)                 |
-| [store-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store-all.json)                                     |
-| [store-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store-recommended.json)                     |
+| Name |
+| ---- |
 
   <!-- CONFIGURATIONS-CONFIG:END -->
