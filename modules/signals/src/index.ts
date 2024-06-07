@@ -1,3 +1,4 @@
+export { DeepSignal } from './deep-signal';
 export { getState } from './get-state';
 export { PartialStateUpdater, patchState } from './patch-state';
 export { signalState } from './signal-state';
@@ -10,4 +11,3 @@ export { withComputed } from './with-computed';
 export { withHooks } from './with-hooks';
 export { withMethods } from './with-methods';
 export { withState } from './with-state';
-export { DeepSignal } from './deep-signal';
