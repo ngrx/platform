@@ -15,6 +15,8 @@ import componentStoreRecommended from '../src/configs/component-store-recommende
 import componentStoreAll from '../src/configs/component-store-all';
 import operatorsRecommended from '../src/configs/operators-recommended';
 import operatorsAll from '../src/configs/operators-all';
+import signalsRecommended from '../src/configs/signals-recommended';
+import signalsAll from '../src/configs/signals-all';
 
 const meta = { name: packageName, version: packageVersion };
 
@@ -37,6 +39,9 @@ const configs = {
 
   operatorsRecommended: operatorsRecommended(tsPlugin, parser),
   operatorsAll: operatorsAll(tsPlugin, parser),
+
+  signalsRecommended: signalsRecommended(tsPlugin, parser),
+  signalsAll: signalsAll(tsPlugin, parser),
 };
 
 /*

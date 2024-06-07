@@ -47,6 +47,14 @@ writeConfig(
 
 writeConfig('operators-all', (rule) => rule.meta.ngrxModule === 'operators');
 
+writeConfig(
+  'signals-recommended',
+  (rule) =>
+    rule.meta.ngrxModule === 'signals' && !rule.meta.docs?.requiresTypeChecking
+);
+
+writeConfig('signals-all', (rule) => rule.meta.ngrxModule === 'signals');
+
 function writeConfig(
   configName:
     | 'all'
@@ -58,7 +66,9 @@ function writeConfig(
     | 'component-store-recommended'
     | 'component-store-all'
     | 'operators-recommended'
-    | 'operators-all',
+    | 'operators-all'
+    | 'signals-recommended'
+    | 'signals-all',
   predicate: (rule: NgRxRuleModule<[], string>) => boolean
 ) {
   const rulesForConfig = Object.entries(rulesForGenerate).filter(([_, rule]) =>

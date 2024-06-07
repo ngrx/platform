@@ -34,6 +34,7 @@ export default (
       '@ngrx/prefer-effect-callback-in-block-statement': 'error',
       '@ngrx/use-effects-lifecycle-interface': 'error',
       '@ngrx/prefer-concat-latest-from': 'error',
+      '@ngrx/signal-state-no-arrays-at-root-level': 'error',
       '@ngrx/avoid-combining-selectors': 'error',
       '@ngrx/avoid-dispatching-multiple-actions-sequentially': 'error',
       '@ngrx/avoid-duplicate-actions-in-reducer': 'error',

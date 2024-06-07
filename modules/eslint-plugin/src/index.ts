@@ -9,6 +9,8 @@ import storeRecommended from './configs/store-recommended.json';
 import storeAll from './configs/store-all.json';
 import operatorsRecommended from './configs/operators-recommended.json';
 import operatorsAll from './configs/operators-all.json';
+import signalsRecommended from './configs/signals-recommended';
+import signalsAll from './configs/signals-all';
 
 export = {
   configs: {
@@ -22,6 +24,8 @@ export = {
     'store-all': storeAll,
     'operators-recommended': operatorsRecommended,
     'operators-all': operatorsAll,
+    'signals-recommended': signalsRecommended,
+    'signals-all': signalsAll,
   },
   rules,
 };

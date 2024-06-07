@@ -3,6 +3,7 @@ export const NGRX_MODULE_PATHS = {
   effects: '@ngrx/effects',
   store: '@ngrx/store',
   operators: '@ngrx/operators',
+  signals: '@ngrx/signals',
 } as const;
 
 export type NGRX_MODULE = keyof typeof NGRX_MODULE_PATHS;

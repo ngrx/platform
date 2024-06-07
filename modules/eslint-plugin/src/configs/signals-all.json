@@ -1,0 +1,13 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@ngrx"],
+  "rules": {
+    "@ngrx/signal-state-no-arrays-at-root-level": "error",
+    "@ngrx/with-state-no-arrays-at-root-level": "error"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  }
+}
