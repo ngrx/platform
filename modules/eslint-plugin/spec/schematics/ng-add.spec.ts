@@ -10,7 +10,7 @@ const schematicRunner = new SchematicTestRunner(
   path.join(__dirname, '../../schematics/collection.json')
 );
 
-test('registers the plugin with the recommended config', async () => {
+test('registers the plugin with the all config', async () => {
   const appTree = new UnitTestTree(Tree.empty());
 
   const initialConfig = {};
@@ -21,7 +21,7 @@ test('registers the plugin with the recommended config', async () => {
   const eslintContent = appTree.readContent(`.eslintrc.json`);
   const eslintJson = JSON.parse(eslintContent);
   expect(eslintJson).toEqual({
-    overrides: [{ files: ['*.ts'], extends: [`plugin:@ngrx/recommended`] }],
+    overrides: [{ files: ['*.ts'], extends: [`plugin:@ngrx/all`] }],
   });
 });
 
@@ -31,7 +31,7 @@ test('registers the plugin with a different config', async () => {
   const initialConfig = {};
   appTree.create('./.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
-  const options = { config: 'recommended' };
+  const options = { config: 'store' };
   await schematicRunner.runSchematic('ng-add', options, appTree);
 
   const eslintContent = appTree.readContent(`.eslintrc.json`);
@@ -110,7 +110,7 @@ test('registers the plugin in overrides when it supports TS', async () => {
       },
       {
         files: ['*.ts'],
-        extends: [`plugin:@ngrx/recommended`],
+        extends: [`plugin:@ngrx/all`],
       },
     ],
   });
@@ -120,7 +120,7 @@ test('does not add the plugin if it is already added manually', async () => {
   const appTree = new UnitTestTree(Tree.empty());
 
   const initialConfig = {
-    extends: ['plugin:@ngrx/recommended'],
+    extends: ['plugin:@ngrx/all'],
   };
   appTree.create('.eslintrc.json', JSON.stringify(initialConfig, null, 2));
 
@@ -137,7 +137,7 @@ test('does not add the plugin if it is already added manually as an override', a
   const initialConfig = {
     overrides: [
       {
-        extends: ['plugin:@ngrx/recommended'],
+        extends: ['plugin:@ngrx/all'],
       },
     ],
   };

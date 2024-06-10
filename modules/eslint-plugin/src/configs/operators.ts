@@ -20,14 +20,12 @@ export default (
     },
   },
   {
-    name: 'ngrx/component-store-recommended',
+    name: 'ngrx/operators',
     languageOptions: {
       parser,
     },
     rules: {
-      '@ngrx/avoid-combining-component-store-selectors': 'error',
-      '@ngrx/avoid-mapping-component-store-selectors': 'error',
-      '@ngrx/updater-explicit-return-type': 'error',
+      '@ngrx/prefer-concat-latest-from': 'error',
     },
   },
 ];

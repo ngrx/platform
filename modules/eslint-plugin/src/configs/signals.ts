@@ -20,12 +20,18 @@ export default (
     },
   },
   {
-    name: 'ngrx/operators-recommended',
+    name: 'ngrx/signals',
     languageOptions: {
       parser,
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        project: './tsconfig.json',
+      },
     },
     rules: {
-      '@ngrx/prefer-concat-latest-from': 'error',
+      '@ngrx/signal-state-no-arrays-at-root-level': 'error',
+      '@ngrx/with-state-no-arrays-at-root-level': 'error',
     },
   },
 ];

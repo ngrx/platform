@@ -73,6 +73,13 @@ Instead of manually configuring the rules, there are also [preconfigured configu
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- | --------------- | ------------ | ------------------------- |
 | [@ngrx/prefer-concat-latest-from](/guide/eslint-plugin/rules/prefer-concat-latest-from) | Use `concatLatestFrom` instead of `withLatestFrom` to prevent the selector from firing until the correct `Action` is dispatched. | problem  | Yes     | No              | Yes          | No                        |
 
+### signals
+
+| Name                                                                                                          | Description                                                            | Category | Fixable | Has suggestions | Configurable | Requires type information |
+| ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------- | ------- | --------------- | ------------ | ------------------------- |
+| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level) | signalState should accept a record or dictionary as an input argument. | problem  | No      | No              | No           | No                        |
+| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)     | withState should accept a record or dictionary as an input argument.   | problem  | No      | No              | No           | Yes                       |
+
 ### store
 
 | Name                                                                                                                                    | Description                                                                      | Category   | Fixable | Has suggestions | Configurable | Requires type information |
@@ -103,17 +110,7 @@ Instead of manually configuring the rules, there are also [preconfigured configu
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------- |
-| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                                                 |
-| [component-store-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store-all.json)                 |
-| [component-store-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store-recommended.json) |
-| [effects-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-all.json)                                 |
-| [effects-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-recommended.json)                 |
-| [operators-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators-all.json)                             |
-| [operators-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators-recommended.json)             |
-| [recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/recommended.json)                                 |
-| [store-all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store-all.json)                                     |
-| [store-recommended](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store-recommended.json)                     |
+| Name |
+| ---- |
 
   <!-- CONFIGURATIONS-CONFIG:END -->

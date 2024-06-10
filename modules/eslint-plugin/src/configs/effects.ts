@@ -20,7 +20,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/effects-all',
+    name: 'ngrx/effects',
     languageOptions: {
       parser,
       parserOptions: {
