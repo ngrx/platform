@@ -1,3 +1,41 @@
+<a name="18.0.0-rc.0"></a>
+
+# [18.0.0-rc.0](https://github.com/ngrx/platform/compare/18.0.0-beta.1...18.0.0-rc.0) (2024-06-10)
+
+### Bug Fixes
+
+- **router-store:** include string[] as return type for selectQueryParam ([#4369](https://github.com/ngrx/platform/issues/4369)) ([b0b43f7](https://github.com/ngrx/platform/commit/b0b43f7))
+- **signals:** export DeepSignal ([#4377](https://github.com/ngrx/platform/issues/4377)) ([fa26c5c](https://github.com/ngrx/platform/commit/fa26c5c))
+
+### Features
+
+- **component-store:** remove tapResponse operator ([#4366](https://github.com/ngrx/platform/issues/4366)) ([285c810](https://github.com/ngrx/platform/commit/285c810))
+- **effects:** remove concatLatestFrom operator ([#4367](https://github.com/ngrx/platform/issues/4367)) ([1a1b6df](https://github.com/ngrx/platform/commit/1a1b6df))
+- **eslint-plugin:** add signals rules ([#4380](https://github.com/ngrx/platform/issues/4380)) ([c002466](https://github.com/ngrx/platform/commit/c002466))
+- **eslint-plugin:** support ESLint v9 (and v8) ([#4371](https://github.com/ngrx/platform/issues/4371)) ([e8d9ffa](https://github.com/ngrx/platform/commit/e8d9ffa))
+
+### BREAKING CHANGES
+
+- **effects:** The concatLatestFrom operator has been removed from @ngrx/effects in favor of the @ngrx/operators package.
+
+BEFORE:
+
+import { concatLatestFrom } from '@ngrx/effects';
+
+AFTER:
+
+import { concatLatestFrom } from '@ngrx/operators';
+
+- **component-store:** The tapResponse operator has been removed from @ngrx/component-store in favor of the @ngrx/operators package.
+
+BEFORE:
+
+import { tapResponse } from '@ngrx/component-store';
+
+AFTER:
+
+import { tapResponse } from '@ngrx/operators';
+
 <a name="18.0.0-beta.1"></a>
 
 # [18.0.0-beta.1](https://github.com/ngrx/platform/compare/18.0.0-beta.0...18.0.0-beta.1) (2024-05-20)
