@@ -110,7 +110,13 @@ Instead of manually configuring the rules, there are also [preconfigured configu
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name |
-| ---- |
+| Name                                                                                                                 |
+| -------------------------------------------------------------------------------------------------------------------- |
+| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                         |
+| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.json) |
+| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.json)                 |
+| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.json)             |
+| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.json)                 |
+| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.json)                     |
 
   <!-- CONFIGURATIONS-CONFIG:END -->
