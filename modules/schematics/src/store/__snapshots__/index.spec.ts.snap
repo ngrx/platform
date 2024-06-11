@@ -20,6 +20,31 @@ export class AppModule { }
 "
 `;
 
+exports[`Store Schematic should add a feature key if not root 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+"
+`;
+
 exports[`Store Schematic should add the initial config correctly into an empty module 1`] = `
 "
         import { NgModule, isDevMode } from '@angular/core';
@@ -102,6 +127,31 @@ export class AppModule { }
 "
 `;
 
+exports[`Store Schematic should import a feature a specified module 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+"
+`;
+
 exports[`Store Schematic should import into a specified module 1`] = `
 "import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -127,6 +177,30 @@ export class AppModule { }
 "
 `;
 
+exports[`Store Schematic should import into a specified module 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+"
+`;
+
 exports[`Store Schematic should not add a feature key if root 1`] = `
 "import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -144,6 +218,30 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+"
+`;
+
+exports[`Store Schematic should not add a feature key if root 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
@@ -167,6 +265,31 @@ import * as fromFoo from './reducers';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+"
+`;
+
+exports[`Store Schematic should not skip the initial store setup files if the minimal flag is provided with a feature 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+export const fooFeatureKey = 'foo';
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
@@ -214,6 +337,31 @@ export class AppModule { }
 "
 `;
 
+exports[`Store Schematic should support a custom feature state interface name 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+export const featureFeatureKey = 'feature';
+
+export interface FeatureState {
+
+}
+
+export const reducers: ActionReducerMap<FeatureState> = {
+
+};
+
+
+export const metaReducers: MetaReducer<FeatureState>[] = isDevMode() ? [] : [];
+"
+`;
+
 exports[`Store Schematic should support a custom root state interface name 1`] = `
 "import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -231,6 +379,30 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+"
+`;
+
+exports[`Store Schematic should support a custom root state interface name 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+
+export interface AppState {
+
+}
+
+export const reducers: ActionReducerMap<AppState> = {
+
+};
+
+
+export const metaReducers: MetaReducer<AppState>[] = isDevMode() ? [] : [];
 "
 `;
 
@@ -254,6 +426,31 @@ export class AppModule { }
 "
 `;
 
+exports[`Store Schematic should support a default feature state interface name 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+export const featureFeatureKey = 'feature';
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+"
+`;
+
 exports[`Store Schematic should support a default root state interface name 1`] = `
 "import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -271,5 +468,29 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+"
+`;
+
+exports[`Store Schematic should support a default root state interface name 2`] = `
+"import { isDevMode } from '@angular/core';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+
+
+export interface State {
+
+}
+
+export const reducers: ActionReducerMap<State> = {
+
+};
+
+
+export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;

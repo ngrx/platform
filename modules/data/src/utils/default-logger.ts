@@ -5,19 +5,31 @@ import { Logger } from './interfaces';
 export class DefaultLogger implements Logger {
   error(message?: any, extra?: any) {
     if (message) {
-      extra ? console.error(message, extra) : console.error(message);
+      if (extra) {
+        console.error(message, extra);
+      } else {
+        console.error(message);
+      }
     }
   }
 
   log(message?: any, extra?: any) {
     if (message) {
-      extra ? console.log(message, extra) : console.log(message);
+      if (extra) {
+        console.log(message, extra);
+      } else {
+        console.log(message);
+      }
     }
   }
 
   warn(message?: any, extra?: any) {
     if (message) {
-      extra ? console.warn(message, extra) : console.warn(message);
+      if (extra) {
+        console.warn(message, extra);
+      } else {
+        console.warn(message);
+      }
     }
   }
 }

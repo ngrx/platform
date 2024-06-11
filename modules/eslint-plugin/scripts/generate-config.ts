@@ -39,7 +39,7 @@ function writeConfig(
     },
     {}
   );
-  const parserOptions: null | Record<string, string | number> =
+  const requireParserOptions: null | Record<string, string | number> =
     rulesForConfig.some(([_, rule]) => rule.meta.docs?.requiresTypeChecking)
       ? {
           ecmaVersion: 2020,
@@ -75,8 +75,12 @@ function writeConfig(
         languageOptions: {
           parser,
           ${
-            parserOptions
-              ? `parserOptions: ${JSON.stringify(parserOptions, null, 2)},`
+            requireParserOptions
+              ? `parserOptions: ${JSON.stringify(
+                  requireParserOptions,
+                  null,
+                  2
+                )},`
               : ''
           }
         },
@@ -94,7 +98,7 @@ function writeConfig(
     plugins: ['@ngrx'],
     rules: configRules,
   };
-  if (configName.includes('all')) {
+  if (requireParserOptions) {
     jsonConfig.parserOptions = {
       ecmaVersion: 2020,
       sourceType: 'module',
