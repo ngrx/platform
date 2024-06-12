@@ -1,3 +1,11 @@
+<a name="18.0.0-rc.1"></a>
+
+# [18.0.0-rc.1](https://github.com/ngrx/platform/compare/18.0.0-rc.0...18.0.0-rc.1) (2024-06-12)
+
+### Bug Fixes
+
+- **eslint-plugin:** include signals to ESLint v8 rules ([#4387](https://github.com/ngrx/platform/issues/4387)) ([7c75dcf](https://github.com/ngrx/platform/commit/7c75dcf)), closes [#4385](https://github.com/ngrx/platform/issues/4385)
+
 <a name="18.0.0-rc.0"></a>
 
 # [18.0.0-rc.0](https://github.com/ngrx/platform/compare/18.0.0-beta.1...18.0.0-rc.0) (2024-06-10)
