@@ -15,7 +15,8 @@ import {
 function replaceWithRuntimeChecks(): Rule {
   return (tree: Tree) => {
     // only add runtime checks when ngrx-store-freeze is used
-    visitTSSourceFiles<boolean>(tree, removeUsages) &&
+    const _ =
+      visitTSSourceFiles<boolean>(tree, removeUsages) &&
       visitTSSourceFiles(tree, insertRuntimeChecks);
   };
 }

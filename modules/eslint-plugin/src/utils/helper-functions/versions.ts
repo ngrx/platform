@@ -15,7 +15,7 @@ function getNgrxVersion(pkg: string): string {
 
 function readPlatformVersion(pkg: string) {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
     const ngrxVersion = require(`${pkg}/package.json`) as {
       version?: string;
     };

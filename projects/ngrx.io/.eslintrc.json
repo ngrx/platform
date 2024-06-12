@@ -43,7 +43,6 @@
             "accessibility": "explicit"
           }
         ],
-        "@typescript-eslint/indent": "error",
         "@typescript-eslint/member-delimiter-style": [
           "off",
           {
@@ -68,9 +67,7 @@
         ],
         "@typescript-eslint/no-unused-expressions": "error",
         "@typescript-eslint/prefer-function-type": "error",
-        "@typescript-eslint/quotes": ["error", "single"],
         "@typescript-eslint/semi": ["off", null],
-        "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
         "@typescript-eslint/no-non-null-assertion": "off",
         "brace-style": ["error", "1tbs"],

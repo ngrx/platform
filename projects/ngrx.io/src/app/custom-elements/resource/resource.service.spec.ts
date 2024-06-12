@@ -91,7 +91,6 @@ describe('ResourceService', () => {
 });
 
 function getTestResources() {
-    /* eslint-disable @typescript-eslint/quotes */
     return {
         'Cat 3': {
             order: 3,

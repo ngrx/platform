@@ -14,7 +14,7 @@ type CreateRuleMeta<
   TMessageIds extends string,
   TOptions extends readonly unknown[]
 > = {
-  docs: Omit<TSESLint.RuleMetaDataDocs<TOptions>, 'url'> & {
+  docs: Omit<TSESLint.RuleMetaDataDocs, 'url'> & {
     requiresTypeChecking?: boolean;
   };
 } & Omit<Meta<TMessageIds, TOptions>, 'docs'>;

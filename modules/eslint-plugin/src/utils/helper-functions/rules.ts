@@ -7,7 +7,7 @@ const interopRequireDefault = (obj: any): { default: unknown } =>
   obj && obj.__esModule ? obj : { default: obj };
 
 const importDefault = (moduleName: string) =>
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
   interopRequireDefault(require(moduleName)).default;
 
 const rulesDir = path.join(__dirname, '../../rules');

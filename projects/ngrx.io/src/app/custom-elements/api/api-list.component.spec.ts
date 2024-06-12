@@ -241,7 +241,6 @@ class TestApiService {
     sections = this.sectionsSubject.asObservable();
 }
 
-/* eslint-disable @typescript-eslint/quotes */
 const apiSections: ApiSection[] = [
     {
         name: 'common',

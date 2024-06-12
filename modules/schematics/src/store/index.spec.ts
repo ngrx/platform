@@ -79,7 +79,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should create the initial store to specified project if provided', async () => {
@@ -132,7 +132,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should fail if specified module does not exist', async () => {
@@ -153,7 +153,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should support a default root state interface name', async () => {
@@ -167,7 +167,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should support a custom root state interface name', async () => {
@@ -185,7 +185,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should support a default feature state interface name', async () => {
@@ -199,7 +199,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should support a custom feature state interface name', async () => {
@@ -218,7 +218,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should fail if a feature state name is not specified', async () => {
@@ -255,7 +255,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should not add a feature key if root', async () => {
@@ -269,7 +269,7 @@ describe('Store Schematic', () => {
     expect(tree.readContent(modulePath)).toMatchSnapshot();
 
     expect(tree.files.indexOf(reducersPath)).toBeGreaterThanOrEqual(0);
-    expect(tree.readContent(reducersPath)).toMatchSnapshot;
+    expect(tree.readContent(reducersPath)).toMatchSnapshot();
   });
 
   it('should add the initial config correctly into an empty module', async () => {
