@@ -27,8 +27,8 @@ Choose one, two, or three full days of the **NgRx and Modern Angular Architectur
 
 ## Upcoming Workshops
 
-- April 24 to 26, 2024 in a US-friendly timezone (Start time is 8 am PT / 11 am ET) <a href="https://ti.to/ngrx/workshop-april-2024?source=ngrx_io" target="_blank">Click here to register</a>
-- May 15 to 17, 2024 in a Europe-friendly timezone (Start time is 10 am CET) <a href="https://ti.to/ngrx/workshop-may-2024?source=ngrx_io" target="_blank">Click here to register</a>
+- September 18 to 20, 2024 in a US-friendly timezone (Start time is 8 am PT / 11 am ET) <a href="https://ti.to/ngrx/workshop-september-2024?source=ngrx_io" target="_blank">Click here to register</a>
+- October 16 to 18, 2024 in a Europe-friendly timezone (Start time is 10 am CET) <a href="https://ti.to/ngrx/workshop-october-2024?source=ngrx_io" target="_blank">Click here to register</a>
 
 ## Participating NgRx Team Members
 
