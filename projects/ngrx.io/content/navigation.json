@@ -292,7 +292,7 @@
                 {
                   "title": "Lifecycle Hooks",
                   "url": "guide/signals/signal-store/lifecycle-hooks"
-                },                
+                },
                 {
                   "title": "Custom Store Features",
                   "url": "guide/signals/signal-store/custom-store-features"
@@ -700,6 +700,10 @@
     }
   ],
   "docVersions": [
+    {
+      "title": "v17",
+      "url": "https://v17.ngrx.io"
+    },
     {
       "title": "v16",
       "url": "https://v16.ngrx.io"
