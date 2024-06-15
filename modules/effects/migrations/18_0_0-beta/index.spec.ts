@@ -5,6 +5,7 @@ import {
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 import { tags } from '@angular-devkit/core';
 import * as path from 'path';
+import { LogEntry } from '@angular-devkit/core/src/logger';
 
 describe('Effects Migration to 18.0.0-beta', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
@@ -121,7 +122,95 @@ export class SomeEffects {
     });
   });
 
-  it('should add if they are missing', async () => {
+  it('should work with prior import from same namespace', async () => {
+    const input = tags.stripIndent`
+import { Actions } from '@ngrx/effects';
+import { concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+
+class SomeEffects {}
+      `;
+    const output = tags.stripIndent`
+import { Actions } from '@ngrx/effects';
+import { createEffect, ofType } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
+
+class SomeEffects {}
+      `;
+    await verifySchematic(input, output);
+  });
+
+  it('should operate on multiple files', async () => {
+    const inputMainOne = tags.stripIndent`
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { tap } from 'rxjs/operators';
+
+class SomeEffects {}
+`;
+
+    const outputMainOne = tags.stripIndent`
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
+import { tap } from 'rxjs/operators';
+
+class SomeEffects {}
+`;
+
+    const inputMainTwo = tags.stripIndent`
+import { provideEffects } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+
+class SomeEffects {}
+`;
+
+    const outputMainTwo = tags.stripIndent`
+import { provideEffects } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
+
+class SomeEffects {}
+`;
+    appTree.create('mainOne.ts', inputMainOne);
+    appTree.create('mainTwo.ts', inputMainTwo);
+
+    const tree = await schematicRunner.runSchematic(
+      `ngrx-effects-migration-18-beta`,
+      {},
+      appTree
+    );
+
+    const actualMainOne = tree.readContent('mainOne.ts');
+    const actualMainTwo = tree.readContent('mainTwo.ts');
+
+    expect(actualMainOne).toBe(outputMainOne);
+    expect(actualMainTwo).toBe(outputMainTwo);
+  });
+
+  it('should report a warning on multiple imports of concatLatestFrom', async () => {
+    const input = tags.stripIndent`
+import { concatLatestFrom } from '@ngrx/effects';
+import { concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+
+class SomeEffects {}
+      `;
+
+    appTree.create('main.ts', input);
+    const logEntries: LogEntry[] = [];
+    schematicRunner.logger.subscribe((logEntry) => logEntries.push(logEntry));
+    await schematicRunner.runSchematic(
+      `ngrx-effects-migration-18-beta`,
+      {},
+      appTree
+    );
+
+    expect(logEntries).toHaveLength(1);
+    expect(logEntries[0]).toMatchObject({
+      message:
+        '[@ngrx/effects] Skipping because of multiple `concatLatestFrom` imports',
+      level: 'warn',
+    });
+  });
+
+  it('should add @ngrx/operators if they are missing', async () => {
     const originalPackageJson = JSON.parse(
       appTree.readContent('/package.json')
     );
