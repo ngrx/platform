@@ -31,7 +31,7 @@ Type safety is promoted throughout the architecture with reliance on the TypeScr
 
 ### Immutability and Performance
 
-[Store](guide/store) is built on a single, immutable data structure which makes change detection a relatively straightforward task using the [`OnPush`](https://angular.io/api/core/ChangeDetectionStrategy#OnPush) strategy. NgRx Store also provides APIs for creating memoized selector functions that optimize retrieving data from your state.
+[Store](guide/store) is built on a single, immutable data structure which makes change detection a relatively straightforward task using the [`OnPush`](https://angular.dev/api/core/ChangeDetectionStrategy#OnPush) strategy. NgRx Store also provides APIs for creating memoized selector functions that optimize retrieving data from your state.
 
 ### Encapsulation
 
