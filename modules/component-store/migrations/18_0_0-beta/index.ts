@@ -14,33 +14,50 @@ import {
   visitTSSourceFiles,
 } from '../../schematics-core';
 import { createRemoveChange } from '../../schematics-core/utility/change';
+import * as os from 'node:os';
 
 export function migrateTapResponseImport(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
-    const changes: Change[] = [];
     addPackageToPackageJson(tree, 'dependencies', '@ngrx/operators', '^18.0.0');
 
     visitTSSourceFiles(tree, (sourceFile) => {
       const importDeclarations = new Array<ts.ImportDeclaration>();
       getImportDeclarations(sourceFile, importDeclarations);
 
-      const componentStoreImportsAndDeclaration = importDeclarations
+      const componentStoreImportsAndDeclarations = importDeclarations
         .map((componentStoreImportDeclaration) => {
           const componentStoreImports = getComponentStoreNamedBinding(
             componentStoreImportDeclaration
           );
           if (componentStoreImports) {
-            return { componentStoreImports, componentStoreImportDeclaration };
+            if (
+              componentStoreImports.elements.some(
+                (element) => element.name.getText() === 'tapResponse'
+              )
+            ) {
+              return { componentStoreImports, componentStoreImportDeclaration };
+            }
+            return undefined;
           } else {
             return undefined;
           }
         })
-        .find(Boolean);
+        .filter(Boolean);
 
-      if (!componentStoreImportsAndDeclaration) {
+      if (componentStoreImportsAndDeclarations.length === 0) {
+        return;
+      } else if (componentStoreImportsAndDeclarations.length > 1) {
+        ctx.logger.warn(
+          '[@ngrx/component-store] Skipping because of multiple `tapResponse` imports'
+        );
         return;
       }
 
+      const [componentStoreImportsAndDeclaration] =
+        componentStoreImportsAndDeclarations;
+      if (!componentStoreImportsAndDeclaration) {
+        return;
+      }
       const { componentStoreImports, componentStoreImportDeclaration } =
         componentStoreImportsAndDeclaration;
 
@@ -53,6 +70,7 @@ export function migrateTapResponseImport(): Rule {
         .map((element) => element.name.getText())
         .join(', ');
 
+      const changes: Change[] = [];
       // Remove `tapResponse` from @ngrx/component-store and leave the other imports
       if (otherComponentStoreImports) {
         changes.push(
@@ -107,7 +125,7 @@ export function migrateTapResponseImport(): Rule {
           new InsertChange(
             sourceFile.fileName,
             componentStoreImportDeclaration.getEnd() + 1,
-            `${newOperatorsImport}\n`
+            `${newOperatorsImport}${os.EOL}`
           )
         );
       }
