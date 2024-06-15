@@ -1,6 +1,7 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
 import { addEntities, updateEntity, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
+import { selectTodoId } from '../helpers';
 
 describe('updateEntity', () => {
   it('updates entity', () => {
@@ -56,7 +57,7 @@ describe('updateEntity', () => {
   it('does not modify entity state if entity do not exist', () => {
     const todoMeta = {
       entity: type<Todo>(),
-      idKey: '_id',
+      selectId: selectTodoId,
     } as const;
 
     const Store = signalStore(withEntities(todoMeta));
@@ -102,7 +103,7 @@ describe('updateEntity', () => {
       store,
       addEntities([todo1, todo2, todo3], {
         collection: 'todo',
-        idKey: '_id',
+        selectId: selectTodoId,
       }),
       updateEntity(
         { id: todo1._id, changes: { text: '' } },

@@ -21,11 +21,7 @@ export type NamedEntityComputed<Entity, Collection extends string> = {
   [K in keyof EntityComputed<Entity> as `${Collection}${Capitalize<K>}`]: EntityComputed<Entity>[K];
 };
 
-export type EntityIdProps<Entity> = {
-  [K in keyof Entity as Entity[K] extends EntityId ? K : never]: Entity[K];
-};
-
-export type EntityIdKey<Entity> = keyof EntityIdProps<Entity> & string;
+export type SelectEntityId<Entity> = (entity: Entity) => EntityId;
 
 export type EntityPredicate<Entity> = (entity: Entity) => boolean;
 

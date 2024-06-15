@@ -1,6 +1,7 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
 import { setAllEntities, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
+import { selectTodoId as selectId } from '../helpers';
 
 describe('setAllEntities', () => {
   it('replaces entity collection with provided entities', () => {
@@ -57,34 +58,34 @@ describe('setAllEntities', () => {
     expect(store.userEntities()).toEqual([]);
   });
 
-  it('replaces entity collection with provided entities with the specified idKey', () => {
+  it('replaces entity collection with provided entities with a custom id', () => {
     const Store = signalStore(withEntities<Todo>());
     const store = new Store();
 
-    patchState(store, setAllEntities([todo2, todo3], { idKey: '_id' }));
+    patchState(store, setAllEntities([todo2, todo3], { selectId }));
 
     expect(store.entityMap()).toEqual({ y: todo2, z: todo3 });
     expect(store.ids()).toEqual(['y', 'z']);
     expect(store.entities()).toEqual([todo2, todo3]);
 
-    patchState(store, setAllEntities([todo3, todo2, todo1], { idKey: '_id' }));
+    patchState(store, setAllEntities([todo3, todo2, todo1], { selectId }));
 
     expect(store.entityMap()).toEqual({ z: todo3, y: todo2, x: todo1 });
     expect(store.ids()).toEqual(['z', 'y', 'x']);
     expect(store.entities()).toEqual([todo3, todo2, todo1]);
 
-    patchState(store, setAllEntities([] as Todo[], { idKey: '_id' }));
+    patchState(store, setAllEntities([] as Todo[], { selectId }));
 
     expect(store.entityMap()).toEqual({});
     expect(store.ids()).toEqual([]);
     expect(store.entities()).toEqual([]);
   });
 
-  it('replaces specified entity collection with provided entities with the specified idKey', () => {
+  it('replaces specified entity collection with provided entities with a custom id', () => {
     const todoMeta = {
       entity: type<Todo>(),
       collection: 'todo',
-      idKey: '_id',
+      selectId,
     } as const;
 
     const Store = signalStore(withEntities(todoMeta));

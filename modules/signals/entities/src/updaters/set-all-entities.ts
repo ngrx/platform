@@ -1,12 +1,12 @@
 import { PartialStateUpdater } from '@ngrx/signals';
 import {
   EntityId,
-  EntityIdKey,
   EntityState,
   NamedEntityState,
+  SelectEntityId,
 } from '../models';
 import {
-  getEntityIdKey,
+  getEntityIdSelector,
   getEntityStateKeys,
   setEntitiesMutably,
 } from '../helpers';
@@ -16,7 +16,7 @@ export function setAllEntities<Entity extends { id: EntityId }>(
 ): PartialStateUpdater<EntityState<Entity>>;
 export function setAllEntities<Entity, Collection extends string>(
   entities: Entity[],
-  config: { collection: Collection; idKey: EntityIdKey<Entity> }
+  config: { collection: Collection; selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function setAllEntities<
   Entity extends { id: EntityId },
@@ -27,18 +27,18 @@ export function setAllEntities<
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function setAllEntities<Entity>(
   entities: Entity[],
-  config: { idKey: EntityIdKey<Entity> }
+  config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
 export function setAllEntities(
   entities: any[],
-  config?: { collection?: string; idKey?: string }
+  config?: { collection?: string; selectId?: SelectEntityId<any> }
 ): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
-  const idKey = getEntityIdKey(config);
+  const selectId = getEntityIdSelector(config);
   const stateKeys = getEntityStateKeys(config);
 
   return () => {
     const state: EntityState<any> = { entityMap: {}, ids: [] };
-    setEntitiesMutably(state, entities, idKey);
+    setEntitiesMutably(state, entities, selectId);
 
     return {
       [stateKeys.entityMapKey]: state.entityMap,

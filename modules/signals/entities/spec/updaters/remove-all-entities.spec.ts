@@ -1,6 +1,7 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
 import { removeAllEntities, setAllEntities, withEntities } from '../../src';
 import { Todo, todo1, todo2, User, user1, user2 } from '../mocks';
+import { selectTodoId } from '../helpers';
 
 describe('removeAllEntities', () => {
   it('removes all entities', () => {
@@ -27,7 +28,7 @@ describe('removeAllEntities', () => {
       store,
       setAllEntities([todo1, todo2], {
         collection: 'todo',
-        idKey: '_id',
+        selectId: selectTodoId,
       })
     );
     patchState(store, removeAllEntities({ collection: 'todo' }));

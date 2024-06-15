@@ -1,6 +1,7 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
 import { addEntities, updateAllEntities, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
+import { selectTodoId } from '../helpers';
 
 describe('updateAllEntities', () => {
   it('updates all entities', () => {
@@ -76,7 +77,7 @@ describe('updateAllEntities', () => {
       store,
       addEntities([todo1, todo2, todo3], {
         collection: 'todo',
-        idKey: '_id',
+        selectId: selectTodoId,
       }),
       updateAllEntities({ completed: false }, { collection: 'todo' })
     );

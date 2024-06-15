@@ -1,6 +1,7 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
 import { addEntities, updateEntities, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
+import { selectTodoId } from '../helpers';
 
 describe('updateEntities', () => {
   it('updates entities by ids', () => {
@@ -37,7 +38,10 @@ describe('updateEntities', () => {
     const Store = signalStore(withEntities<Todo>());
     const store = new Store();
 
-    patchState(store, addEntities([todo1, todo2, todo3], { idKey: '_id' }));
+    patchState(
+      store,
+      addEntities([todo1, todo2, todo3], { selectId: selectTodoId })
+    );
 
     patchState(
       store,
@@ -181,7 +185,7 @@ describe('updateEntities', () => {
     const todoMeta = {
       entity: type<Todo>(),
       collection: 'todo',
-      idKey: '_id',
+      selectId: selectTodoId,
     } as const;
 
     const Store = signalStore(withEntities(todoMeta));

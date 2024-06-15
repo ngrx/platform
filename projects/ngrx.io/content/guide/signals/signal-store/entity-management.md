@@ -217,9 +217,9 @@ patchState(this.todoStore, removeEntities([2, 4]));
 
 The default property name for an identifier is `id` and is of type `string` or `number`.
 
-It is possible to specify a different name, but the type must still be `string` or `number`. You can specify the id only when adding or setting an entity. It is not possible to define it via `withEntities`.
+It is possible to specify a custom ID selector, but the return type must still be `string` or `number`. Custom ID selector should be provided when adding or setting an entity. It is not possible to define it via `withEntities`.
 
-Therefore, all variations of the `add*` and `set*` functions have an optional (last) parameter, which is an object literal and allows to define the id property via `idKey`.
+Therefore, all variations of the `add*` and `set*` functions have an optional (last) parameter, which is an object literal and allows to specify the `selectId` function.
 
 For example:
 
@@ -230,6 +230,8 @@ interface Todo {
   finished: boolean;
 }
 
+const selectId: SelectEntityId<Todo> = (todo) => todo.key;
+
 patchState(
   this.todoStore,
   addEntities(
@@ -237,11 +239,11 @@ patchState(
       { key: 2, name: 'Car Washing', finished: false },
       { key: 3, name: 'Cat Feeding', finished: false },
     ],
-    { idKey: 'key' }
+    { selectId }
   )
 );
 
-patchState(this.todoStore, setEntity({ key: 4, name: 'Dog Feeding', finished: false }, { idKey: 'key' }));
+patchState(this.todoStore, setEntity({ key: 4, name: 'Dog Feeding', finished: false }, { selectId }));
 ```
 
 The `update*` and `remove*` methods, which expect an id value, automatically pick the right one. That is possible because every entity belongs to a map with its id as the key.
@@ -306,9 +308,11 @@ The names of the state properties changed from:
 
 All functions that operate on entities require a collection parameter. Those are `add*`, `set*`, `update*`, and `remove*`. They are type-safe because you need to provide the collection to avoid getting a compilation error.
 
-If you have a customized id property, you need to include the `idKey` parameter in the object literal, too:
+If you have a customized id property, you need to include the `selectId` function in the object literal, too:
 
 ```typescript
+const selectId: SelectEntityId<Todo> = (todo) => todo.key;
+
 patchState(
   this.todoStore,
   addEntities(
@@ -316,7 +320,7 @@ patchState(
       { key: 2, name: 'Car Washing', finished: false },
       { key: 3, name: 'Cat Feeding', finished: false },
     ],
-    { idKey: 'key', collection: 'todo' }
+    { selectId, collection: 'todo' }
   )
 );
 ```
