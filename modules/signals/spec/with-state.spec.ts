@@ -17,8 +17,8 @@ describe('withState', () => {
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(initialState).toEqual({});
 
-    expect(Object.keys(store.slices)).toEqual(['foo', 'x']);
-    expect(Object.keys(initialStore.slices)).toEqual([]);
+    expect(Object.keys(store.stateSignals)).toEqual(['foo', 'x']);
+    expect(Object.keys(initialStore.stateSignals)).toEqual([]);
   });
 
   it('creates deep signals for each state slice', () => {
@@ -29,14 +29,14 @@ describe('withState', () => {
       x: { y: 'z' },
     })(initialStore);
 
-    expect(store.slices.foo()).toBe('bar');
-    expect(isSignal(store.slices.foo)).toBe(true);
+    expect(store.stateSignals.foo()).toBe('bar');
+    expect(isSignal(store.stateSignals.foo)).toBe(true);
 
-    expect(store.slices.x()).toEqual({ y: 'z' });
-    expect(isSignal(store.slices.x)).toBe(true);
+    expect(store.stateSignals.x()).toEqual({ y: 'z' });
+    expect(isSignal(store.stateSignals.x)).toBe(true);
 
-    expect(store.slices.x.y()).toBe('z');
-    expect(isSignal(store.slices.x.y)).toBe(true);
+    expect(store.stateSignals.x.y()).toBe('z');
+    expect(isSignal(store.stateSignals.x.y)).toBe(true);
   });
 
   it('patches state signal and creates deep signals for state slices provided via factory', () => {
@@ -49,9 +49,9 @@ describe('withState', () => {
     const state = store[STATE_SIGNAL]();
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
-    expect(store.slices.foo()).toBe('bar');
-    expect(store.slices.x()).toEqual({ y: 'z' });
-    expect(store.slices.x.y()).toBe('z');
+    expect(store.stateSignals.foo()).toBe('bar');
+    expect(store.stateSignals.x()).toEqual({ y: 'z' });
+    expect(store.stateSignals.x.y()).toBe('z');
   });
 
   it('overrides previously defined state slices, signals, and methods with the same name', () => {
@@ -77,10 +77,16 @@ describe('withState', () => {
       p3: 'p3',
     }))(initialStore);
 
-    expect(Object.keys(store.slices)).toEqual(['p1', 'p2', 's2', 'm2', 'p3']);
-    expect(store.slices.p2()).toBe(100);
+    expect(Object.keys(store.stateSignals)).toEqual([
+      'p1',
+      'p2',
+      's2',
+      'm2',
+      'p3',
+    ]);
+    expect(store.stateSignals.p2()).toBe(100);
 
-    expect(Object.keys(store.signals)).toEqual(['s1']);
+    expect(Object.keys(store.computedSignals)).toEqual(['s1']);
     expect(Object.keys(store.methods)).toEqual(['m1']);
   });
 });

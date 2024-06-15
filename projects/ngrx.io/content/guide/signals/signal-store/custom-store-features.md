@@ -244,13 +244,13 @@ In addition to state, it's also possible to define expected computed properties 
 
 <code-example header="baz.feature.ts">
 
-import { computed, Signal } from '@angular/core';
-import { signalStoreFeature, type, withComputed, withHooks } from '@ngrx/signals';
+import { Signal } from '@angular/core';
+import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
 
 export function withBaz() {
   return signalStoreFeature(
     {
-      signals: type&lt;{ foo: Signal&lt;number> }&gt;(),
+      computed: type&lt;{ foo: Signal&lt;number&gt; }&gt;(),
       methods: type&lt;{ bar(): void }&gt;(),
     },
     withMethods(({ foo, bar }) => ({

@@ -5,9 +5,7 @@ import { IsKnownRecord, Prettify } from './ts-helpers';
 
 export type SignalStoreConfig = { providedIn: 'root' };
 
-export type SignalStoreSlices<State> = IsKnownRecord<
-  Prettify<State>
-> extends true
+export type StateSignals<State> = IsKnownRecord<Prettify<State>> extends true
   ? {
       [Key in keyof State]: IsKnownRecord<State[Key]> extends true
         ? DeepSignal<State[Key]>
@@ -17,8 +15,8 @@ export type SignalStoreSlices<State> = IsKnownRecord<
 
 export type SignalStoreProps<FeatureResult extends SignalStoreFeatureResult> =
   Prettify<
-    SignalStoreSlices<FeatureResult['state']> &
-      FeatureResult['signals'] &
+    StateSignals<FeatureResult['state']> &
+      FeatureResult['computed'] &
       FeatureResult['methods']
   >;
 
@@ -33,29 +31,29 @@ export type SignalStoreHooks = {
 
 export type InnerSignalStore<
   State extends object = object,
-  Signals extends SignalsDictionary = SignalsDictionary,
+  ComputedSignals extends SignalsDictionary = SignalsDictionary,
   Methods extends MethodsDictionary = MethodsDictionary
 > = {
-  slices: SignalStoreSlices<State>;
-  signals: Signals;
+  stateSignals: StateSignals<State>;
+  computedSignals: ComputedSignals;
   methods: Methods;
   hooks: SignalStoreHooks;
 } & StateSignal<State>;
 
 export type SignalStoreFeatureResult = {
   state: object;
-  signals: SignalsDictionary;
+  computed: SignalsDictionary;
   methods: MethodsDictionary;
 };
 
-export type EmptyFeatureResult = { state: {}; signals: {}; methods: {} };
+export type EmptyFeatureResult = { state: {}; computed: {}; methods: {} };
 
 export type SignalStoreFeature<
   Input extends SignalStoreFeatureResult = SignalStoreFeatureResult,
   Output extends SignalStoreFeatureResult = SignalStoreFeatureResult
 > = (
-  store: InnerSignalStore<Input['state'], Input['signals'], Input['methods']>
-) => InnerSignalStore<Output['state'], Output['signals'], Output['methods']>;
+  store: InnerSignalStore<Input['state'], Input['computed'], Input['methods']>
+) => InnerSignalStore<Output['state'], Output['computed'], Output['methods']>;
 
 export type MergeFeatureResults<
   FeatureResults extends SignalStoreFeatureResult[]
@@ -78,7 +76,7 @@ export type MergeFeatureResults<
 
 type FeatureResultKeys<FeatureResult extends SignalStoreFeatureResult> =
   | keyof FeatureResult['state']
-  | keyof FeatureResult['signals']
+  | keyof FeatureResult['computed']
   | keyof FeatureResult['methods'];
 
 type MergeTwoFeatureResults<
@@ -86,6 +84,6 @@ type MergeTwoFeatureResults<
   Second extends SignalStoreFeatureResult
 > = {
   state: Omit<First['state'], FeatureResultKeys<Second>>;
-  signals: Omit<First['signals'], FeatureResultKeys<Second>>;
+  computed: Omit<First['computed'], FeatureResultKeys<Second>>;
   methods: Omit<First['methods'], FeatureResultKeys<Second>>;
 } & Second;

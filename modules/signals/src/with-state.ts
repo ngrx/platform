@@ -38,19 +38,19 @@ export function withState<State extends object>(
       ...state,
     }));
 
-    const slices = stateKeys.reduce((acc, key) => {
-      const slice = computed(
+    const stateSignals = stateKeys.reduce((acc, key) => {
+      const sliceSignal = computed(
         () => (store[STATE_SIGNAL]() as Record<string, unknown>)[key]
       );
-      return { ...acc, [key]: toDeepSignal(slice) };
+      return { ...acc, [key]: toDeepSignal(sliceSignal) };
     }, {} as SignalsDictionary);
-    const signals = excludeKeys(store.signals, stateKeys);
+    const computedSignals = excludeKeys(store.computedSignals, stateKeys);
     const methods = excludeKeys(store.methods, stateKeys);
 
     return {
       ...store,
-      slices: { ...store.slices, ...slices },
-      signals,
+      stateSignals: { ...store.stateSignals, ...stateSignals },
+      computedSignals,
       methods,
     } as InnerSignalStore<State>;
   };

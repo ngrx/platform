@@ -11,11 +11,11 @@ describe('withComputed', () => {
 
     const store = withComputed(() => ({ s1, s2 }))(initialStore);
 
-    expect(Object.keys(store.signals)).toEqual(['s1', 's2']);
-    expect(Object.keys(initialStore.signals)).toEqual([]);
+    expect(Object.keys(store.computedSignals)).toEqual(['s1', 's2']);
+    expect(Object.keys(initialStore.computedSignals)).toEqual([]);
 
-    expect(store.signals.s1).toBe(s1);
-    expect(store.signals.s2).toBe(s2);
+    expect(store.computedSignals.s1).toBe(s1);
+    expect(store.computedSignals.s2).toBe(s2);
   });
 
   it('overrides previously defined slices, signals, and methods with the same name', () => {
@@ -42,10 +42,16 @@ describe('withComputed', () => {
       s3: signal({ s: 3 }).asReadonly(),
     }))(initialStore);
 
-    expect(Object.keys(store.signals)).toEqual(['s1', 's2', 'p1', 'm1', 's3']);
-    expect(store.signals.s2).toBe(s2);
+    expect(Object.keys(store.computedSignals)).toEqual([
+      's1',
+      's2',
+      'p1',
+      'm1',
+      's3',
+    ]);
+    expect(store.computedSignals.s2).toBe(s2);
 
-    expect(Object.keys(store.slices)).toEqual(['p2']);
+    expect(Object.keys(store.stateSignals)).toEqual(['p2']);
     expect(Object.keys(store.methods)).toEqual(['m2']);
   });
 });
