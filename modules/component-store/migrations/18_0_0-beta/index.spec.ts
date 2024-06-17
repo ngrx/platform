@@ -208,7 +208,7 @@ class SomeEffects {}
     expect(logEntries[0]).toMatchObject({
       message:
         '[@ngrx/component-store] Skipping because of multiple `tapResponse` imports',
-      level: 'warn',
+      level: 'info',
     });
   });
 

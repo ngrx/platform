@@ -14,7 +14,6 @@ import {
   visitTSSourceFiles,
 } from '../../schematics-core';
 import { createRemoveChange } from '../../schematics-core/utility/change';
-import * as os from 'node:os';
 
 export function migrateTapResponseImport(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
@@ -47,7 +46,7 @@ export function migrateTapResponseImport(): Rule {
       if (componentStoreImportsAndDeclarations.length === 0) {
         return;
       } else if (componentStoreImportsAndDeclarations.length > 1) {
-        ctx.logger.warn(
+        ctx.logger.info(
           '[@ngrx/component-store] Skipping because of multiple `tapResponse` imports'
         );
         return;
@@ -125,7 +124,7 @@ export function migrateTapResponseImport(): Rule {
           new InsertChange(
             sourceFile.fileName,
             componentStoreImportDeclaration.getEnd() + 1,
-            `${newOperatorsImport}${os.EOL}`
+            `${newOperatorsImport}\n` // not os-independent for snapshot tests
           )
         );
       }
