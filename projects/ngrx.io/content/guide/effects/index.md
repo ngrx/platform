@@ -182,7 +182,7 @@ The `loadMovies$` effect returns a new observable in case an error occurs while 
 
 Functional effects are also created by using the `createEffect` function. They provide the ability to create effects outside the effect classes.
 
-To create a functional effect, add the `functional: true` flag to the effect config. Then, to inject services into the effect, use the [`inject` function](https://angular.io/api/core/inject).
+To create a functional effect, add the `functional: true` flag to the effect config. Then, to inject services into the effect, use the [`inject` function](https://angular.dev/api/core/inject).
 
 <code-example header="actors.effects.ts">
 import { inject } from '@angular/core';
@@ -223,7 +223,7 @@ export const displayErrorAlert = createEffect(
 
 <div class="alert is-important">
 
-It's recommended to inject all dependencies as effect function arguments for easier testing. However, it's also possible to inject dependencies in the effect function body. In that case, the [`inject` function](https://angular.io/api/core/inject) must be called within the synchronous context.
+It's recommended to inject all dependencies as effect function arguments for easier testing. However, it's also possible to inject dependencies in the effect function body. In that case, the [`inject` function](https://angular.dev/api/core/inject) must be called within the synchronous context.
 
 </div>
 

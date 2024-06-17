@@ -79,12 +79,6 @@ export const scoreboardReducer = createReducer(
 
 </code-example>
 
-<div class="alert is-important">
-
-**Note:** The exported `reducer` function is no longer required if you use the default Ivy AOT compiler (or JIT). It is only necessary with the View Engine AOT compiler as [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) there.
-
-</div>
-
 In the example above, the reducer is handling 4 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, `[Scoreboard Page] Score Reset` and `[Scoreboard Page] Set Scores`. Each action is strongly-typed. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
 
 

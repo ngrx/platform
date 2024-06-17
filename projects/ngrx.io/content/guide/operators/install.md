@@ -2,7 +2,7 @@
 
 ## Installing with `ng add`
 
-You can install the `@ngrx/operators` to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+You can install the `@ngrx/operators` to your project with the following `ng add` command <a href="https://angular.dev/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/operators@latest
