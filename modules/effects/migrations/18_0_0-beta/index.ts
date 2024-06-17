@@ -14,7 +14,6 @@ import {
   visitTSSourceFiles,
 } from '../../schematics-core';
 import { createRemoveChange } from '../../schematics-core/utility/change';
-import * as os from 'node:os';
 
 export function migrateConcatLatestFromImport(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
@@ -48,7 +47,7 @@ export function migrateConcatLatestFromImport(): Rule {
       if (effectsImportsAndDeclarations.length === 0) {
         return;
       } else if (effectsImportsAndDeclarations.length > 1) {
-        ctx.logger.warn(
+        ctx.logger.info(
           '[@ngrx/effects] Skipping because of multiple `concatLatestFrom` imports'
         );
         return;
@@ -126,7 +125,7 @@ export function migrateConcatLatestFromImport(): Rule {
           new InsertChange(
             sourceFile.fileName,
             effectsImportDeclaration.getEnd() + 1,
-            `${newOperatorsImport}${os.EOL}`
+            `${newOperatorsImport}\n` // not os-independent for snapshot tests
           )
         );
       }

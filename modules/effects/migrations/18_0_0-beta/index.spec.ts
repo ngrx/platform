@@ -185,7 +185,7 @@ class SomeEffects {}
     expect(actualMainTwo).toBe(outputMainTwo);
   });
 
-  it('should report a warning on multiple imports of concatLatestFrom', async () => {
+  it('should report an info on multiple imports of concatLatestFrom', async () => {
     const input = tags.stripIndent`
 import { concatLatestFrom } from '@ngrx/effects';
 import { concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
@@ -206,7 +206,7 @@ class SomeEffects {}
     expect(logEntries[0]).toMatchObject({
       message:
         '[@ngrx/effects] Skipping because of multiple `concatLatestFrom` imports',
-      level: 'warn',
+      level: 'info',
     });
   });
 
