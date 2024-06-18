@@ -17,26 +17,43 @@ import { createRemoveChange } from '../../schematics-core/utility/change';
 
 export function migrateConcatLatestFromImport(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
-    const changes: Change[] = [];
     addPackageToPackageJson(tree, 'dependencies', '@ngrx/operators', '^18.0.0');
 
     visitTSSourceFiles(tree, (sourceFile) => {
       const importDeclarations = new Array<ts.ImportDeclaration>();
+
       getImportDeclarations(sourceFile, importDeclarations);
 
-      const effectsImportsAndDeclaration = importDeclarations
+      const effectsImportsAndDeclarations = importDeclarations
         .map((effectsImportDeclaration) => {
           const effectsImports = getEffectsNamedBinding(
             effectsImportDeclaration
           );
           if (effectsImports) {
-            return { effectsImports, effectsImportDeclaration };
+            if (
+              effectsImports.elements.some(
+                (element) => element.name.getText() === 'concatLatestFrom'
+              )
+            ) {
+              return { effectsImports, effectsImportDeclaration };
+            }
+            return undefined;
           } else {
             return undefined;
           }
         })
-        .find(Boolean);
+        .filter(Boolean);
 
+      if (effectsImportsAndDeclarations.length === 0) {
+        return;
+      } else if (effectsImportsAndDeclarations.length > 1) {
+        ctx.logger.info(
+          '[@ngrx/effects] Skipping because of multiple `concatLatestFrom` imports'
+        );
+        return;
+      }
+
+      const [effectsImportsAndDeclaration] = effectsImportsAndDeclarations;
       if (!effectsImportsAndDeclaration) {
         return;
       }
@@ -53,6 +70,7 @@ export function migrateConcatLatestFromImport(): Rule {
         .map((element) => element.name.getText())
         .join(', ');
 
+      const changes: Change[] = [];
       // Remove `concatLatestFrom` from @ngrx/effects and leave the other imports
       if (otherEffectsImports) {
         changes.push(
@@ -107,7 +125,7 @@ export function migrateConcatLatestFromImport(): Rule {
           new InsertChange(
             sourceFile.fileName,
             effectsImportDeclaration.getEnd() + 1,
-            `${newOperatorsImport}\n`
+            `${newOperatorsImport}\n` // not os-independent for snapshot tests
           )
         );
       }
