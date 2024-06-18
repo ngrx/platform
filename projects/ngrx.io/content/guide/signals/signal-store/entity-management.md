@@ -217,7 +217,7 @@ patchState(this.todoStore, removeEntities([2, 4]));
 
 The default property name for an identifier is `id` and is of type `string` or `number`.
 
-It is possible to specify a custom ID selector, but the return type must still be `string` or `number`. Custom ID selector should be provided when adding or setting an entity. It is not possible to define it via `withEntities`.
+It is possible to specify a custom ID selector, but the return type must still be a `string` or `number`. Custom ID selectors should be provided when adding or setting an entity. It is not possible to define it via `withEntities`.
 
 Therefore, all variations of the `add*` and `set*` functions have an optional (last) parameter, which is an object literal and allows to specify the `selectId` function.
 
