@@ -308,8 +308,8 @@ export function signalStore(
         (store, feature) => feature(store),
         getInitialInnerStore()
       );
-      const { slices, signals, methods, hooks } = innerStore;
-      const props = { ...slices, ...signals, ...methods };
+      const { stateSignals, computedSignals, methods, hooks } = innerStore;
+      const props = { ...stateSignals, ...computedSignals, ...methods };
 
       (this as any)[STATE_SIGNAL] = innerStore[STATE_SIGNAL];
 
@@ -335,8 +335,8 @@ export function signalStore(
 export function getInitialInnerStore(): InnerSignalStore {
   return {
     [STATE_SIGNAL]: signal({}),
-    slices: {},
-    signals: {},
+    stateSignals: {},
+    computedSignals: {},
     methods: {},
     hooks: {},
   };

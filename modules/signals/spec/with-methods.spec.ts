@@ -18,7 +18,7 @@ describe('withMethods', () => {
     expect(store.methods.m2).toBe(m2);
   });
 
-  it('overrides previously defined slices, signals, and methods with the same name', () => {
+  it('overrides previously defined state signals, computed signals, and methods with the same name', () => {
     const initialStore = [
       withState({
         p1: 'p1',
@@ -45,7 +45,7 @@ describe('withMethods', () => {
     expect(Object.keys(store.methods)).toEqual(['m1', 'm2', 'p2', 's1', 'm3']);
     expect(store.methods.m2).toBe(m2);
 
-    expect(Object.keys(store.slices)).toEqual(['p1']);
-    expect(Object.keys(store.signals)).toEqual(['s2']);
+    expect(Object.keys(store.stateSignals)).toEqual(['p1']);
+    expect(Object.keys(store.computedSignals)).toEqual(['s2']);
   });
 });

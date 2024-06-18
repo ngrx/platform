@@ -7,7 +7,7 @@ import {
   SignalsDictionary,
   SignalStoreFeature,
   SignalStoreFeatureResult,
-  SignalStoreSlices,
+  StateSignals,
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
@@ -17,8 +17,8 @@ export function withMethods<
 >(
   methodsFactory: (
     store: Prettify<
-      SignalStoreSlices<Input['state']> &
-        Input['signals'] &
+      StateSignals<Input['state']> &
+        Input['computed'] &
         Input['methods'] &
         StateSignal<Prettify<Input['state']>>
     >
@@ -27,18 +27,18 @@ export function withMethods<
   return (store) => {
     const methods = methodsFactory({
       [STATE_SIGNAL]: store[STATE_SIGNAL],
-      ...store.slices,
-      ...store.signals,
+      ...store.stateSignals,
+      ...store.computedSignals,
       ...store.methods,
     });
     const methodsKeys = Object.keys(methods);
-    const slices = excludeKeys(store.slices, methodsKeys);
-    const signals = excludeKeys(store.signals, methodsKeys);
+    const stateSignals = excludeKeys(store.stateSignals, methodsKeys);
+    const computedSignals = excludeKeys(store.computedSignals, methodsKeys);
 
     return {
       ...store,
-      slices,
-      signals,
+      stateSignals,
+      computedSignals,
       methods: { ...store.methods, ...methods },
     } as InnerSignalStore<Record<string, unknown>, SignalsDictionary, Methods>;
   };

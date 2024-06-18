@@ -3,14 +3,14 @@ import {
   EmptyFeatureResult,
   SignalStoreFeature,
   SignalStoreFeatureResult,
-  SignalStoreSlices,
+  StateSignals,
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
 type HookFn<Input extends SignalStoreFeatureResult> = (
   store: Prettify<
-    SignalStoreSlices<Input['state']> &
-      Input['signals'] &
+    StateSignals<Input['state']> &
+      Input['computed'] &
       Input['methods'] &
       StateSignal<Prettify<Input['state']>>
   >
@@ -18,8 +18,8 @@ type HookFn<Input extends SignalStoreFeatureResult> = (
 
 type HooksFactory<Input extends SignalStoreFeatureResult> = (
   store: Prettify<
-    SignalStoreSlices<Input['state']> &
-      Input['signals'] &
+    StateSignals<Input['state']> &
+      Input['computed'] &
       Input['methods'] &
       StateSignal<Prettify<Input['state']>>
   >
@@ -47,8 +47,8 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
   return (store) => {
     const storeProps = {
       [STATE_SIGNAL]: store[STATE_SIGNAL],
-      ...store.slices,
-      ...store.signals,
+      ...store.stateSignals,
+      ...store.computedSignals,
       ...store.methods,
     };
     const hooks =

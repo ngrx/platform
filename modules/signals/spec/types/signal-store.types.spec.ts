@@ -653,7 +653,7 @@ describe('signalStore', () => {
         return signalStoreFeature(
           {
             state: type<{ q1: string }>(),
-            signals: type<{ sig: Signal<boolean> }>(),
+            computed: type<{ sig: Signal<boolean> }>(),
           },
           withState({ y: initialY }),
           withComputed(() => ({ sigY: computed(() => 'sigY') })),
@@ -739,7 +739,7 @@ describe('signalStore', () => {
         );
 
         const feature = signalStoreFeature(
-          { signals: type<{ sig: Signal<boolean> }>() },
+          { computed: type<{ sig: Signal<boolean> }>() },
           withX(),
           withState({ q1: 'q1' }),
           withY(),
@@ -785,7 +785,7 @@ describe('signalStore', () => {
         ${baseSnippet}
 
         const feature = signalStoreFeature(
-          { signals: type<{ sig: Signal<boolean> }>() },
+          { computed: type<{ sig: Signal<boolean> }>() },
           withComputed(() => ({ sig: computed(() => 1) })),
           withX(),
           withState({ q1: 'q1' }),
@@ -817,7 +817,7 @@ describe('signalStore', () => {
         );
 
         const feature = signalStoreFeature(
-          { signals: type<{ sig: Signal<boolean> }>() },
+          { computed: type<{ sig: Signal<boolean> }>() },
           withComputed(() => ({ sig: computed(() => 1) })),
           withX(),
           withState({ q1: 'q1' }),
@@ -860,7 +860,7 @@ describe('signalStore', () => {
               entities: Entity[];
               selectedEntity: Entity | null;
             };
-            signals: {
+            computed: {
               selectedEntity2: Signal<Entity | undefined>;
             };
             methods: {
