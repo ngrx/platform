@@ -1,7 +1,11 @@
 import { Signal } from '@angular/core';
 import { DeepSignal } from './deep-signal';
 import { StateSignal } from './state-signal';
-import { IsKnownRecord, Prettify } from './ts-helpers';
+import {
+  IsKnownRecord,
+  Prettify,
+  PrettifyWithoutUnderscores,
+} from './ts-helpers';
 
 export type SignalStoreConfig = { providedIn: 'root' };
 
@@ -16,7 +20,7 @@ export type SignalStoreSlices<State> = IsKnownRecord<
   : {};
 
 export type SignalStoreProps<FeatureResult extends SignalStoreFeatureResult> =
-  Prettify<
+  PrettifyWithoutUnderscores<
     SignalStoreSlices<FeatureResult['state']> &
       FeatureResult['signals'] &
       FeatureResult['methods']

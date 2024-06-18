@@ -198,6 +198,125 @@ describe('signalStore', () => {
     expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
   });
 
+  it('does not access state slices starting with _ from store = signalStore()', () => {
+    expectSnippet(`
+      const Store = signalStore(
+        withState({ _user: { _userId: '' } }),
+        withComputed(({ _user }) => ({
+          _userId: computed(() => _user._userId()),
+        })),
+        withMethods((store) => ({
+            doNothing(): void {
+              store._user();
+            },
+          }),
+        ),
+        withHooks({
+          onInit(store): void {
+            store.doNothing();
+          },
+        }),
+      );
+
+      const store = new Store();
+      const value = store._user;
+    `).toFail();
+
+    expectSnippet(`
+      const Store = signalStore(
+        withState({ _user: { _userId: '' } }),
+        withComputed(({ _user }) => ({
+          _userId: computed(() => _user._userId()),
+        })),
+        withMethods((store) => ({
+            doNothing(): void {
+              store._user();
+            },
+          }),
+        ),
+        withHooks({
+          onInit(store): void {
+            store.doNothing();
+          },
+        }),
+      );
+
+      const store = new Store();
+      const value = store._userId;
+    `).toFail();
+
+    expectSnippet(`
+      const Store = signalStore(
+        withState({ _user: { _userId: '' } }),
+        withComputed(({ _user }) => ({
+          _userId: computed(() => _user._userId()),
+        })),
+        withMethods((store) => ({
+            _doNothing(): void {
+              store._user();
+            },
+          }),
+        ),
+        withHooks({
+          onInit(store): void {
+            store._doNothing();
+          },
+        }),
+      );
+
+      const store = new Store();
+      const value = store._doNothing;
+    `).toFail();
+
+    expectSnippet(`
+      const Store = signalStore(
+        withState({ user: { _userId: '' } }),
+        withComputed(({ user }) => ({
+          _userId: computed(() => user._userId()),
+        })),
+        withMethods((store) => ({
+            doNothing(): void {
+              store.user();
+            },
+          }),
+        ),
+        withHooks({
+          onInit(store): void {
+            store.doNothing();
+          },
+        }),
+      );
+
+      const store = new Store();
+      const value = store.user._userId;
+    `).toSucceed();
+
+    expectSnippet(`
+      const Store = signalStore(
+        withState({ _user: { _userId: '' } }),
+        withComputed(({ _user }) => ({
+          _userId: computed(() => _user._userId()),
+        })),
+        withMethods((store) => ({
+            doNothing(): void {
+              store._user();
+              store._user._userId();
+              store._userId();
+            },
+          }),
+        ),
+        withHooks({
+          onInit(store): void {
+            store.doNothing();
+          },
+        }),
+      );
+
+      const store = new Store();
+      const value = store.doNothing;
+    `).toSucceed();
+  });
+
   it('succeeds when state is an empty object', () => {
     const snippet = `const Store = signalStore(withState({}))`;
 
