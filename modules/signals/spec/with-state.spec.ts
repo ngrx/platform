@@ -54,7 +54,7 @@ describe('withState', () => {
     expect(store.stateSignals.x.y()).toBe('z');
   });
 
-  it('overrides previously defined state slices, signals, and methods with the same name', () => {
+  it('overrides previously defined state signals, computed signals, and methods with the same name', () => {
     const initialStore = [
       withState({
         p1: 10,

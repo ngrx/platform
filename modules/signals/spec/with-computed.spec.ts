@@ -3,7 +3,7 @@ import { withComputed, withMethods, withState } from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
 
 describe('withComputed', () => {
-  it('adds signals to the store immutably', () => {
+  it('adds computed signals to the store immutably', () => {
     const initialStore = getInitialInnerStore();
 
     const s1 = signal('s1').asReadonly();
@@ -18,7 +18,7 @@ describe('withComputed', () => {
     expect(store.computedSignals.s2).toBe(s2);
   });
 
-  it('overrides previously defined slices, signals, and methods with the same name', () => {
+  it('overrides previously defined state signals, computed signals, and methods with the same name', () => {
     const initialStore = [
       withState({
         p1: 10,

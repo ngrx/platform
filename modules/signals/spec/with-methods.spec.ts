@@ -18,7 +18,7 @@ describe('withMethods', () => {
     expect(store.methods.m2).toBe(m2);
   });
 
-  it('overrides previously defined slices, signals, and methods with the same name', () => {
+  it('overrides previously defined state signals, computed signals, and methods with the same name', () => {
     const initialStore = [
       withState({
         p1: 'p1',
