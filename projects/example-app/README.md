@@ -5,7 +5,7 @@ Example application utilizing @ngrx libraries, showcasing common patterns and be
 This app is a book collection manager. The user can authenticate, use the Google Books API to search for
 books and add them to their collection. This application utilizes [@ngrx/store](https://ngrx.io/guide/store) to manage
 the state of the app and to cache requests made to the Google Books API;
-[@ngrx/effects](https://ngrx.io/guide/effects) to isolate side effects; [@angular/router](https://angular.io/guide/router) to manage navigation between routes; [@angular/material](https://github.com/angular/material2) to provide design and styling.
+[@ngrx/effects](https://ngrx.io/guide/effects) to isolate side effects; [@angular/router](https://angular.dev/guide/routing) to manage navigation between routes; [@angular/material](https://github.com/angular/material2) to provide design and styling.
 
 Built with [@angular/cli](https://github.com/angular/angular-cli)
 
@@ -16,7 +16,7 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
 - [@ngrx/router-store](https://ngrx.io/guide/router-store) - Bindings to connect the Angular Router to @ngrx/store
 - [@ngrx/entity](https://ngrx.io/guide/entity) - Entity State adapter for managing record collections.
 - [@ngrx/store-devtools](https://ngrx.io/guide/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
-- [@angular/router](https://angular.io/guide/router) - Angular Router
+- [@angular/router](https://angular.dev/guide/routing) - Angular Router
 - [@angular/material](https://material.angular.io) - Angular Material
 - [jest](https://jestjs.io) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
 

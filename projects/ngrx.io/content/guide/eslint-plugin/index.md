@@ -1,17 +1,19 @@
 # Overview
 
-Use [ESLint](https://eslint.org/) to follow the best practices and to avoid common pitfalls in your application.
+You can use [ESLint](https://eslint.org/) to follow best practices and avoid common pitfalls in your application.
 
-The NgRx ESLint Plugin is no different and promotes the key concepts to create a maintainable project. It consists of @ngrx/store, @ngrx/effects, and @ngrx/component-store rules and a handful of preconfigured configurations.
+The NgRx ESLint Plugin is no different and promotes the key concepts to create maintainable projects.
+It consists of [rules](#rules) that are grouped into predefined [configurations](#configurations) for each NgRx package to help you get started quickly.
 
-The plugin comes with a number of rules that help address most popular NgRx malpractices. The rules are configurable so that you can choose the ones you want to follow, and which rules should give a linting error or warning.
+By default, all rules have set the severity level to `error`.
+Some rules also include a recommendation or an automatic fix using `ng lint --fix`.
 
-Some rules also allow automatic fixes with `ng lint --fix`.
+## Configuration and Usage
 
-## Adding rules
+### ESLint v8
 
-To use the a [rule](#rules), import the NgRx plugin via `plugins` or `extends`.
-You can add a rule by adding the rule to the `rules` collection.
+To use the NgRx ESLint Plugin with ESLint v8, add it to your ESLint file (e.g. `.eslintrc.json`).
+Add the `@ngrx` plugin to the `plugins` section and add the rules you want to use within your project to the `rules` section.
 
 ```json
 {
@@ -22,24 +24,70 @@ You can add a rule by adding the rule to the `rules` collection.
 }
 ```
 
-or
+For rules that require type information, the ESLint configuration needs to provide the `parserOptions.project` property, otherwise the rule throws an error.
 
 ```json
 {
-  "extends": ["@ngrx/recommended"],
+  "plugins": ["@ngrx"],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
   "rules": {
-    "@ngrx/good-action-hygiene": "error"
+    "@ngrx/avoid-cyclic-effects": "error"
   }
 }
 ```
 
-Instead of manually configuring the rules, there are also [preconfigured configurations](#configurations). To use a configuration, add it to `extends`:
+Instead of adding rules individually, you can use one of the [preconfigured configurations](#configurations) by adding it to the `extends` section.
+This automatically includes all rules of the configuration.
+To override a specific rule, add it to the `rules` section and adjust the severity level or the configuration.
 
 ```json
 {
-  "extends": ["@ngrx/recommended-requiring-type-checking"],
-  "rules": {}
+  "extends": ["@ngrx/all"],
+  "rules": {
+    "@ngrx/good-action-hygiene": "warn"
+  }
 }
+```
+
+Instead of including all NgRx rules, you can also use a specific configuration for a package.
+This is useful if you only use a specific package, as it only includes the rules relevant to that package.
+
+```json
+{
+  "extends": ["@ngrx/signals"]
+}
+```
+
+### ESLint v9
+
+To use the NgRx ESLint Plugin with ESLint v9, include the desired configurations within your ESLint configuration file (e.g. `eslint.config.js`).
+Optionally override some rules via the `rules` property.
+
+Import the NgRx Plugin via `@ngrx/eslint-plugin/v9` and use one or more predefined [configurations](#configurations) by adding them to the `extends` array.
+
+```ts
+const tseslint = require("typescript-eslint");
+const ngrx = require("@ngrx/eslint-plugin/v9");
+
+module.exports = tseslint.config({
+  files: ["**/*.ts"],
+  extends: [
+    // 👇 Use all rules at once
+    ...ngrx.configs.all,
+    // 👇 Or only import the rules for a specific package
+    ...ngrx.configs.store,
+    ...ngrx.configs.effects,
+    ...ngrx.configs.componentStore,
+    ...ngrx.configs.operators,
+    ...ngrx.configs.signals,
+  ],
+  rules: {
+    // 👇 Configure specific rules
+    "@ngrx/with-state-no-arrays-at-root-level": "warn",
+  },
+});
 ```
 
 ## Rules

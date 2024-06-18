@@ -2,7 +2,7 @@
 
 ## Installing with `ng add`
 
-You can make `@ngrx/schematics` the default collection for your application with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+You can make `@ngrx/schematics` the default collection for your application with the following `ng add` command <a href="https://angular.dev/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/schematics@latest

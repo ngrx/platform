@@ -144,7 +144,7 @@ Perhaps the camelCased property names on the client-side entity are PascalCased 
 Maybe a server-side property is spelled differently than on the client.
 Maybe the client entity should have some properties that don't belong on the server entity (or vice-versa).
 
-Today you could transform the data in both directions with [`HttpClient` interceptors](https://angular.io/guide/http#intercepting-requests-and-responses).
+Today you could transform the data in both directions with [`HttpClient` interceptors](https://angular.dev/guide/http/interceptors).
 But this seems like a problem that would be more easily and transparently addressed as a feature of `NgRx Data`.
 
 ## No request concurrency checking
