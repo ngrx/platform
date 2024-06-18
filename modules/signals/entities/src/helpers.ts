@@ -4,10 +4,15 @@ import {
   EntityId,
   EntityPredicate,
   EntityState,
+  SelectEntityId,
 } from './models';
 
-export function getEntityIdKey(config?: { idKey?: string }): string {
-  return config?.idKey ?? 'id';
+const defaultSelectId: SelectEntityId<{ id: EntityId }> = (entity) => entity.id;
+
+export function getEntityIdSelector(config?: {
+  selectId?: SelectEntityId<any>;
+}): SelectEntityId<any> {
+  return config?.selectId ?? defaultSelectId;
 }
 
 export function getEntityStateKeys(config?: { collection?: string }): {
@@ -65,9 +70,9 @@ export function getEntityUpdaterResult(
 export function addEntityMutably(
   state: EntityState<any>,
   entity: any,
-  idKey: string
+  selectId: SelectEntityId<any>
 ): DidMutate {
-  const id = entity[idKey];
+  const id = selectId(entity);
 
   if (state.entityMap[id]) {
     return DidMutate.None;
@@ -82,12 +87,12 @@ export function addEntityMutably(
 export function addEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
-  idKey: string
+  selectId: SelectEntityId<any>
 ): DidMutate {
   let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    const result = addEntityMutably(state, entity, idKey);
+    const result = addEntityMutably(state, entity, selectId);
 
     if (result === DidMutate.Both) {
       didMutate = result;
@@ -100,9 +105,9 @@ export function addEntitiesMutably(
 export function setEntityMutably(
   state: EntityState<any>,
   entity: any,
-  idKey: string
+  selectId: SelectEntityId<any>
 ): DidMutate {
-  const id = entity[idKey];
+  const id = selectId(entity);
 
   if (state.entityMap[id]) {
     state.entityMap[id] = entity;
@@ -118,12 +123,12 @@ export function setEntityMutably(
 export function setEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
-  idKey: string
+  selectId: SelectEntityId<any>
 ): DidMutate {
   let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    const result = setEntityMutably(state, entity, idKey);
+    const result = setEntityMutably(state, entity, selectId);
 
     if (didMutate === DidMutate.Both) {
       continue;

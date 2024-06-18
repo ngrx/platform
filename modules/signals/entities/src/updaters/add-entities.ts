@@ -1,14 +1,14 @@
 import { PartialStateUpdater } from '@ngrx/signals';
 import {
   EntityId,
-  EntityIdKey,
   EntityState,
   NamedEntityState,
+  SelectEntityId,
 } from '../models';
 import {
   addEntitiesMutably,
   cloneEntityState,
-  getEntityIdKey,
+  getEntityIdSelector,
   getEntityStateKeys,
   getEntityUpdaterResult,
 } from '../helpers';
@@ -18,7 +18,7 @@ export function addEntities<Entity extends { id: EntityId }>(
 ): PartialStateUpdater<EntityState<Entity>>;
 export function addEntities<Entity, Collection extends string>(
   entities: Entity[],
-  config: { collection: Collection; idKey: EntityIdKey<Entity> }
+  config: { collection: Collection; selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function addEntities<
   Entity extends { id: EntityId },
@@ -29,18 +29,18 @@ export function addEntities<
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function addEntities<Entity>(
   entities: Entity[],
-  config: { idKey: EntityIdKey<Entity> }
+  config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
 export function addEntities(
   entities: any[],
-  config?: { collection?: string; idKey?: string }
+  config?: { collection?: string; selectId?: SelectEntityId<any> }
 ): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
-  const idKey = getEntityIdKey(config);
+  const selectId = getEntityIdSelector(config);
   const stateKeys = getEntityStateKeys(config);
 
   return (state) => {
     const clonedState = cloneEntityState(state, stateKeys);
-    const didMutate = addEntitiesMutably(clonedState, entities, idKey);
+    const didMutate = addEntitiesMutably(clonedState, entities, selectId);
 
     return getEntityUpdaterResult(clonedState, stateKeys, didMutate);
   };

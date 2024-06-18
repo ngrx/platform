@@ -1,6 +1,7 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
 import { addEntity, withEntities } from '../../src';
 import { Todo, todo1, todo2, User, user1, user2 } from '../mocks';
+import { selectTodoId as selectId } from '../helpers';
 
 describe('addEntity', () => {
   it('adds entity if it does not exist', () => {
@@ -96,31 +97,31 @@ describe('addEntity', () => {
     expect(store.userEntities()).toEqual([user1]);
   });
 
-  it('adds entity with the specified idKey if it does not exist', () => {
+  it('adds entity with a custom id if it does not exist', () => {
     const Store = signalStore(withEntities<Todo>());
     const store = new Store();
 
-    patchState(store, addEntity(todo1, { idKey: '_id' }));
+    patchState(store, addEntity(todo1, { selectId }));
 
     expect(store.entityMap()).toEqual({ x: todo1 });
     expect(store.ids()).toEqual(['x']);
     expect(store.entities()).toEqual([todo1]);
 
-    patchState(store, addEntity(todo2, { idKey: '_id' }));
+    patchState(store, addEntity(todo2, { selectId }));
 
     expect(store.entityMap()).toEqual({ x: todo1, y: todo2 });
     expect(store.ids()).toEqual(['x', 'y']);
     expect(store.entities()).toEqual([todo1, todo2]);
   });
 
-  it('does not add entity with the specified idKey if it already exists', () => {
+  it('does not add entity with a custom id if it already exists', () => {
     const Store = signalStore(withEntities<Todo>());
     const store = new Store();
 
     patchState(
       store,
-      addEntity(todo1, { idKey: '_id' }),
-      addEntity(todo2, { idKey: '_id' })
+      addEntity(todo1, { selectId }),
+      addEntity(todo2, { selectId })
     );
 
     const entityMap = store.entityMap();
@@ -129,10 +130,10 @@ describe('addEntity', () => {
 
     patchState(
       store,
-      addEntity(todo1, { idKey: '_id' }),
-      addEntity({ ...todo1, text: 'NgRx' }, { idKey: '_id' }),
-      addEntity(todo2, { idKey: '_id' }),
-      addEntity(todo1, { idKey: '_id' })
+      addEntity(todo1, { selectId }),
+      addEntity({ ...todo1, text: 'NgRx' }, { selectId }),
+      addEntity(todo2, { selectId }),
+      addEntity(todo1, { selectId })
     );
 
     expect(store.entityMap()).toBe(entityMap);
@@ -143,7 +144,7 @@ describe('addEntity', () => {
     expect(store.entities()).toEqual([todo1, todo2]);
   });
 
-  it('adds entity with the specified idKey to the specified collection if it does not exist', () => {
+  it('adds entity with a custom id to the specified collection if it does not exist', () => {
     const Store = signalStore(
       withEntities({
         entity: type<Todo>(),
@@ -152,24 +153,24 @@ describe('addEntity', () => {
     );
     const store = new Store();
 
-    patchState(store, addEntity(todo1, { collection: 'todo', idKey: '_id' }));
+    patchState(store, addEntity(todo1, { collection: 'todo', selectId }));
 
     expect(store.todoEntityMap()).toEqual({ x: todo1 });
     expect(store.todoIds()).toEqual(['x']);
     expect(store.todoEntities()).toEqual([todo1]);
 
-    patchState(store, addEntity(todo2, { collection: 'todo', idKey: '_id' }));
+    patchState(store, addEntity(todo2, { collection: 'todo', selectId }));
 
     expect(store.todoEntityMap()).toEqual({ x: todo1, y: todo2 });
     expect(store.todoIds()).toEqual(['x', 'y']);
     expect(store.todoEntities()).toEqual([todo1, todo2]);
   });
 
-  it('does not add entity with the specified idKey to the specified collection if it already exists', () => {
+  it('does not add entity with a custom id to the specified collection if it already exists', () => {
     const todoMeta = {
       entity: type<Todo>(),
       collection: 'todo',
-      idKey: '_id',
+      selectId,
     } as const;
 
     const Store = signalStore(withEntities(todoMeta));

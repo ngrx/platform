@@ -10,5 +10,11 @@ export { updateEntity } from './updaters/update-entity';
 export { updateEntities } from './updaters/update-entities';
 export { updateAllEntities } from './updaters/update-all-entities';
 
-export { EntityId, EntityMap, EntityState, NamedEntityState } from './models';
+export {
+  EntityId,
+  EntityMap,
+  EntityState,
+  NamedEntityState,
+  SelectEntityId,
+} from './models';
 export { withEntities } from './with-entities';
